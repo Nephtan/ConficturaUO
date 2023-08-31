@@ -1,0 +1,9 @@
+Community Beehive - Based off the original Apiculture package. Suitable for placement in a 'community' area
+and not require tending. BeehiveHeal potions may not be used on these, nor are they needed. Generates up to
+1 wax and 1 honey every 7-11 minutes, to a maximum of 10 each. May not generate wax, honey, or both on a cycle.
+
+
+There are two types of wax out there, "Beeswax" and "BeesWax". (Note case) The apiculture package I included
+has a melting pot for wax, and can create candles. The other apiculture package that I recommend uses a
+different capitalization of "beeswax". There are also wax tools for that package. Change "beeswax" in this
+script as appropriate for your shard.

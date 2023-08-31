@@ -1,0 +1,54 @@
+<html>
+   <head>
+      <title>RunUO Documentation - Class Overview - BaseShoppe</title>
+   </head>
+   <body bgcolor="white" style="font-family: Courier New" text="Black" link="Black" vlink="Black" alink="#808080">
+      <h4><a href="../namespaces/Server.Items.html">Back to Server.Items</a></h4>
+      <h2>BaseShoppe : <!-- DBG-1 --><a href="Item.html">Item</a>, <!-- DBG-2.2 --><a href="IHued.html">IHued</a>, <!-- DBG-2.1 --><font color="blue">IComparable</font>&lt;<a href="Item.html">Item</a>&gt;, <!-- DBG-2.2 --><a href="ISerializable.html">ISerializable</a>, <!-- DBG-2.2 --><a href="ISpawnable.html">ISpawnable</a>, <!-- DBG-2.2 --><a href="IEntity.html">IEntity</a>, <!-- DBG-2.2 --><a href="IPoint3D.html">IPoint3D</a>, <!-- DBG-2.2 --><a href="IPoint2D.html">IPoint2D</a>, <!-- DBG-2.1 --><font color="blue">IComparable</font>, <!-- DBG-2.1 --><font color="blue">IComparable</font>&lt;<a href="IEntity.html">IEntity</a>&gt;, <!-- DBG-2.2 --><a href="ISecurable.html">ISecurable</a></h2>
+<h4>Derived Types: <!-- DBG-3 --><a href="AlchemistShoppe.html">AlchemistShoppe</a>, <!-- DBG-3 --><a href="BakerShoppe.html">BakerShoppe</a>, <!-- DBG-3 --><a href="BlacksmithShoppe.html">BlacksmithShoppe</a>, <!-- DBG-3 --><a href="BowyerShoppe.html">BowyerShoppe</a>, <!-- DBG-3 --><a href="CarpentryShoppe.html">CarpentryShoppe</a>, <!-- DBG-3 --><a href="CartographyShoppe.html">CartographyShoppe</a>, <!-- DBG-3 --><a href="HerbalistShoppe.html">HerbalistShoppe</a>, <!-- DBG-3 --><a href="LibrarianShoppe.html">LibrarianShoppe</a>, <!-- DBG-3 --><a href="MorticianShoppe.html">MorticianShoppe</a>, <!-- DBG-3 --><a href="TailorShoppe.html">TailorShoppe</a>, <!-- DBG-3 --><a href="TinkerShoppe.html">TinkerShoppe</a></h4>
+<h4>Nested Types: <!-- DBG-4 --><a href="CashOutEntry.html">CashOutEntry</a>, <!-- DBG-4 --><a href="CustomerTimer.html">CustomerTimer</a>, <!-- DBG-4 --><a href="QuickTimer.html">QuickTimer</a></h4>
+      (<font color="blue">static</font>) <font color="blue">bool</font> AlreadyHasShoppe( <!-- DBG-0 --><a href="Mobile.html">Mobile</a> from, <!-- DBG-0 --><a href="Item.html">Item</a> shelf )<br>
+      (<font color="blue">static</font>) <font color="blue">int</font> GetSkillValue( <font color="blue">int</font> job, <!-- DBG-0 --><a href="Mobile.html">Mobile</a> from )<br>
+      (<font color="blue">static</font>) <font color="blue">void</font> GiveNewShoppe( <!-- DBG-0 --><a href="Mobile.html">Mobile</a> from, <!-- DBG-0 --><a href="Mobile.html">Mobile</a> merchant )<br>
+      (<font color="blue">static</font>) <font color="blue">string</font> MakeTask( <!-- DBG-0 --><a href="BaseShoppe.html">BaseShoppe</a> shoppe )<br>
+      (<font color="blue">static</font>) <font color="blue">void</font> ProgressSkill( <!-- DBG-0 --><a href="Mobile.html">Mobile</a> from, <!-- DBG-0 --><a href="BaseShoppe.html">BaseShoppe</a> shoppe )<br>
+      (<font color="blue">ctor</font>) BaseShoppe()<br>
+      (<font color="blue">ctor</font>) BaseShoppe( <!-- DBG-0 --><a href="Serial.html">Serial</a> serial )<br>
+      <font color="blue">string</font> Customer_01( <font color="blue">get</font>; <font color="blue">set</font>; )<br>
+      <font color="blue">string</font> Customer_02( <font color="blue">get</font>; <font color="blue">set</font>; )<br>
+      <font color="blue">string</font> Customer_03( <font color="blue">get</font>; <font color="blue">set</font>; )<br>
+      <font color="blue">string</font> Customer_04( <font color="blue">get</font>; <font color="blue">set</font>; )<br>
+      <font color="blue">string</font> Customer_05( <font color="blue">get</font>; <font color="blue">set</font>; )<br>
+      <font color="blue">string</font> Customer_06( <font color="blue">get</font>; <font color="blue">set</font>; )<br>
+      <font color="blue">string</font> Customer_07( <font color="blue">get</font>; <font color="blue">set</font>; )<br>
+      <font color="blue">string</font> Customer_08( <font color="blue">get</font>; <font color="blue">set</font>; )<br>
+      <font color="blue">string</font> Customer_09( <font color="blue">get</font>; <font color="blue">set</font>; )<br>
+      <font color="blue">string</font> Customer_10( <font color="blue">get</font>; <font color="blue">set</font>; )<br>
+      <font color="blue">string</font> Customer_11( <font color="blue">get</font>; <font color="blue">set</font>; )<br>
+      <font color="blue">string</font> Customer_12( <font color="blue">get</font>; <font color="blue">set</font>; )<br>
+      <!-- DBG-0 --><a href="SecureLevel.html">SecureLevel</a> Level( <font color="blue">get</font>; <font color="blue">set</font>; )<br>
+      <!-- DBG-0 --><a href="NpcGuild.html">NpcGuild</a> Shelf_Guild( <font color="blue">get</font>; <font color="blue">set</font>; )<br>
+      <font color="blue">int</font> Shelf_Item( <font color="blue">get</font>; <font color="blue">set</font>; )<br>
+      <font color="blue">string</font> Shelf_Resources( <font color="blue">get</font>; <font color="blue">set</font>; )<br>
+      <font color="blue">int</font> Shelf_Skill( <font color="blue">get</font>; <font color="blue">set</font>; )<br>
+      <font color="blue">int</font> Shelf_Sound( <font color="blue">get</font>; <font color="blue">set</font>; )<br>
+      <font color="blue">string</font> Shelf_Title( <font color="blue">get</font>; <font color="blue">set</font>; )<br>
+      <font color="blue">string</font> Shelf_Tools( <font color="blue">get</font>; <font color="blue">set</font>; )<br>
+      <font color="blue">int</font> Shoppe_Gold( <font color="blue">get</font>; <font color="blue">set</font>; )<br>
+      <font color="blue">string</font> Shoppe_Name( <font color="blue">get</font>; <font color="blue">set</font>; )<br>
+      <!-- DBG-0 --><a href="Mobile.html">Mobile</a> Shoppe_Owner( <font color="blue">get</font>; <font color="blue">set</font>; )<br>
+      <font color="blue">int</font> Shoppe_Page( <font color="blue">get</font>; <font color="blue">set</font>; )<br>
+      <font color="blue">int</font> Shoppe_Reputation( <font color="blue">get</font>; <font color="blue">set</font>; )<br>
+      <font color="blue">int</font> Shoppe_Resources( <font color="blue">get</font>; <font color="blue">set</font>; )<br>
+      <font color="blue">int</font> Shoppe_Tools( <font color="blue">get</font>; <font color="blue">set</font>; )<br>
+      <font color="blue">virtual</font> <font color="blue">void</font> AddNameProperties( <!-- DBG-0 --><a href="ObjectPropertyList.html">ObjectPropertyList</a> list )<br>
+      <font color="blue">bool</font> CheckAccess( <!-- DBG-0 --><a href="Mobile.html">Mobile</a> m )<br>
+      <font color="blue">void</font> Customers()<br>
+      <font color="blue">virtual</font> <font color="blue">void</font> Deserialize( <!-- DBG-0 --><a href="GenericReader.html">GenericReader</a> reader )<br>
+      <font color="blue">virtual</font> <font color="blue">void</font> GetContextMenuEntries( <!-- DBG-0 --><a href="Mobile.html">Mobile</a> from, <font color="blue">List</font>&lt;<a href="ContextMenuEntry.html">ContextMenuEntry</a>&gt; list )<br>
+      <font color="blue">virtual</font> <font color="blue">void</font> OnDoubleClick( <!-- DBG-0 --><a href="Mobile.html">Mobile</a> from )<br>
+      <font color="blue">virtual</font> <font color="blue">bool</font> OnDragDrop( <!-- DBG-0 --><a href="Mobile.html">Mobile</a> from, <!-- DBG-0 --><a href="Item.html">Item</a> dropped )<br>
+      <font color="blue">virtual</font> <font color="blue">void</font> Serialize( <!-- DBG-0 --><a href="GenericWriter.html">GenericWriter</a> writer )<br>
+      <font color="blue">void</font> SetupShelf()<br>
+   </body>
+</html>

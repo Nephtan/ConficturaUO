@@ -1,0 +1,45 @@
+<html>
+   <head>
+      <title>RunUO Documentation - Class Overview - JediSpell</title>
+   </head>
+   <body bgcolor="white" style="font-family: Courier New" text="Black" link="Black" vlink="Black" alink="#808080">
+      <h4><a href="../namespaces/Server.Spells.Jedi.html">Back to Server.Spells.Jedi</a></h4>
+      <h2>JediSpell : <!-- DBG-1 --><a href="Spell.html">Spell</a>, <!-- DBG-2.2 --><a href="ISpell.html">ISpell</a></h2>
+<h4>Derived Types: <!-- DBG-3 --><a href="Celerity.html">Celerity</a>, <!-- DBG-3 --><a href="Deflection.html">Deflection</a>, <!-- DBG-3 --><a href="ForceGrip.html">ForceGrip</a>, <!-- DBG-3 --><a href="MindsEye.html">MindsEye</a>, <!-- DBG-3 --><a href="Mirage.html">Mirage</a>, <!-- DBG-3 --><a href="PsychicAura.html">PsychicAura</a>, <!-- DBG-3 --><a href="Replicate.html">Replicate</a>, <!-- DBG-3 --><a href="SoothingTouch.html">SoothingTouch</a>, <!-- DBG-3 --><a href="StasisField.html">StasisField</a>, <!-- DBG-3 --><a href="ThrowSabre.html">ThrowSabre</a></h4>
+      (<font color="blue">static</font>) <font color="blue">void</font> CastSpell( <!-- DBG-0 --><a href="Mobile.html">Mobile</a> from, <font color="blue">int</font> spell )<br>
+      (<font color="blue">static</font>) <font color="blue">int</font> ComputePowerValue( <!-- DBG-0 --><a href="Mobile.html">Mobile</a> from, <font color="blue">int</font> div )<br>
+      (<font color="blue">static</font>) <font color="blue">void</font> DrainCrystals( <!-- DBG-0 --><a href="Mobile.html">Mobile</a> from, <font color="blue">int</font> tithing )<br>
+      (<font color="blue">static</font>) <font color="blue">int</font> GetCrystals( <!-- DBG-0 --><a href="Mobile.html">Mobile</a> from )<br>
+      (<font color="blue">static</font>) <font color="blue">double</font> GetJediDamage( <!-- DBG-0 --><a href="Mobile.html">Mobile</a> from )<br>
+      (<font color="blue">static</font>) <font color="blue">bool</font> GetJediSkill( <!-- DBG-0 --><a href="Mobile.html">Mobile</a> from, <font color="blue">int</font> skill )<br>
+      (<font color="blue">static</font>) <font color="blue">double</font> GetJediSkillMax( <!-- DBG-0 --><a href="Mobile.html">Mobile</a> from )<br>
+      (<font color="blue">static</font>) <font color="blue">int</font> GetTithing( <!-- DBG-0 --><a href="Mobile.html">Mobile</a> Caster, <!-- DBG-0 --><a href="JediSpell.html">JediSpell</a> spell )<br>
+      (<font color="blue">static</font>) <font color="blue">bool</font> HasSpell( <!-- DBG-0 --><a href="Mobile.html">Mobile</a> from, <font color="blue">int</font> spellID )<br>
+      (<font color="blue">static</font>) <font color="blue">void</font> InvokeCommand( <font color="blue">string</font> c, <!-- DBG-0 --><a href="Mobile.html">Mobile</a> from )<br>
+      (<font color="blue">static</font>) <font color="blue">bool</font> JediNotIllegal( <!-- DBG-0 --><a href="Mobile.html">Mobile</a> from, <font color="blue">bool</font> checkSword )<br>
+      (<font color="blue">static</font>) <font color="blue">string</font> SpellInfo( <font color="blue">int</font> spellID, <font color="blue">int</font> slice )<br>
+      (<font color="blue">ctor</font>) JediSpell( <!-- DBG-0 --><a href="Mobile.html">Mobile</a> caster, <!-- DBG-0 --><a href="Item.html">Item</a> scroll, <!-- DBG-0 --><a href="SpellInfo.html">SpellInfo</a> info )<br>
+      <font color="blue">int</font> CastRecoveryBase( <font color="blue">get</font>; )<br>
+      <!-- DBG-0 --><a href="SkillName.html">SkillName</a> CastSkill( <font color="blue">get</font>; )<br>
+      <font color="blue">bool</font> ClearHandsOnCast( <font color="blue">get</font>; )<br>
+      <!-- DBG-0 --><a href="SkillName.html">SkillName</a> DamageSkill( <font color="blue">get</font>; )<br>
+      <font color="blue">int</font> RequiredMana( <font color="blue">get</font>; )<br>
+      <font color="blue">double</font> RequiredSkill( <font color="blue">get</font>; )<br>
+      <font color="blue">int</font> RequiredTithing( <font color="blue">get</font>; )<br>
+      <font color="blue">int</font> spellIndex( <font color="blue">get</font>; )<br>
+      <font color="blue">virtual</font> <font color="blue">bool</font> CheckCast()<br>
+      <font color="blue">virtual</font> <font color="blue">bool</font> CheckFizzle()<br>
+      <font color="blue">virtual</font> <font color="blue">bool</font> CheckResisted( <!-- DBG-0 --><a href="Mobile.html">Mobile</a> target )<br>
+      <font color="blue">int</font> ComputePowerValue( <font color="blue">int</font> div )<br>
+      <font color="blue">virtual</font> <font color="blue">void</font> DoFizzle()<br>
+      <font color="blue">virtual</font> <font color="blue">void</font> DoHurtFizzle()<br>
+      <font color="blue">virtual</font> <font color="blue">void</font> FinishSequence()<br>
+      <font color="blue">virtual</font> <font color="blue">void</font> GetCastSkills( <font color="blue">out</font> <font color="blue">double</font> min, <font color="blue">out</font> <font color="blue">double</font> max )<br>
+      <font color="blue">virtual</font> <font color="blue">int</font> GetMana()<br>
+      <font color="blue">virtual</font> <font color="blue">double</font> GetResistPercent( <!-- DBG-0 --><a href="Mobile.html">Mobile</a> target )<br>
+      <font color="blue">virtual</font> <font color="blue">double</font> GetResistPercentForCircle( <!-- DBG-0 --><a href="Mobile.html">Mobile</a> target )<br>
+      <font color="blue">virtual</font> <font color="blue">void</font> OnBeginCast()<br>
+      <font color="blue">virtual</font> <font color="blue">void</font> OnDisturb( <!-- DBG-0 --><a href="DisturbType.html">DisturbType</a> type, <font color="blue">bool</font> message )<br>
+      <font color="blue">virtual</font> <font color="blue">void</font> SayMantra()<br>
+   </body>
+</html>

@@ -1,0 +1,302 @@
+[*]August 31st, 2023, 8:30am CST
+Nephtan
+Updates:
+ * Cotton and Flax are now able to be spun directly from your pack animal's pack.
+
+[*]August 26th, 2023, 11:00am CST
+Nephtan
+News:
+ * At the next scheduled server restart, Cotton and Flax will be able to be spun directly from your pack animal's pack.
+
+[*]May 31st, 2023, 10:00am CST
+Nephtan
+News:
+ * Research spells updated!
+
+Updates:
+ * AOS magic damage methods added to Research magic, allowing SDI, Intelligence, and Inscription bonuses to come into play.
+
+[*]May 24th, 2023, 3:00pm CST
+Nephtan
+News:
+ * Several key updates rolling out today to address a variety of issues. Details are provided below.
+
+Updates:
+ * Adjusted damage for a number of elemental spells.
+ * Admin-level change: Renamed a targeting mobile to TARGET from MOUSE.
+ * Modified Research Magic spells to function as described.
+ * Reduced Research Magic spell damage, halving the damage cap.
+ * A forthcoming update will introduce AOS damage to Research Magic, bringing SDI into the equation.
+ * Deployed a potential fix for infinite loop monster spawning while at sea.
+ * Implemented a potential fix for the wandering healer random land spawning issue.
+ * Rectified an issue that resulted in bearskin rugs appearing on land.
+ * Adjusted player corpse decay so they will turn to bones after 8 hours, and decay completely after 24 hours.
+ * Adjusted the wording regarding gold and crystals on the jedi datacron to be more clear about what to do.
+
+Thank you for your continued support. Enjoy your gaming experience and stay tuned for more updates!
+
+[*]May 12th, 2023, 7:15pm CST
+Nephtan
+News:
+ * I will restart the server Monday morning, May 15th, between 9am and 10am CST to apply May 12th updates listed below.
+
+Updates:
+ * New consensual PvP system implemented. Players can now register their status as PvP or PvE using the "[ChoosePvP" command. Rules for harmful and beneficial actions have been updated as per this new system.
+ * New players will now be greeted by Thuvia, the goddess of protection, in the starting area.
+ * Creatures controlled by a player will adopt the same rules as their controlling player.
+
+This change introduces a more structured and balanced approach to player interactions, providing you with more control over your in-game experiences.
+
+Remember, your choices have consequences. Choose wisely!
+
+[*]May 8th, 2023, 8:50pm CST
+Nephtan
+News:
+ * I will restart the server tomorrow morning, May 9th, between 9am and 10am CST to apply May 8th updates listed below.
+
+Updates:
+ * Fixed yet another bug with elementalism where its damage with some spells is unintentionally doubled. Main affected spells, as of now, are Elemental Devastation and Elemental Fall.
+ * Cast delay reduced from 3 seconds to 2 seconds for Monk's Purity of Body ability
+ * Offline Character Clones damage resistances capped at 70
+
+[*]May 7th, 2023, 11:45pm CST
+Nephtan
+News:
+ * I will restart the server tomorrow morning, May 8th, around 9am CST to apply May 6th and May 7th changes listed below.
+Changes:
+ * Updates
+    - Fixed bug with Elemental Devastation where it was doing damage twice, once with air, once again with player's selected element.
+    - Fixed bug with Elemental Devastation where water element was doing fire damage. 
+
+[*]May 6th, 2023, 7:08pm CST
+Nephtan
+Changes:
+ * Updates
+    - Fixed bug in player death code causing deaths not to be logged.
+    - Death logs updated to show when a player is killed by a clone of another player.
+
+[*]May 5th, 2023, 1:20pm CST
+Nephtan
+Changes:
+ * Update to Offline Clones.
+    - Fixed bug where [loot command would move the unmovable items from a clone's corpse to the player's backpack.
+    - Clones are now hirable.
+
+[*]May 4th, 2023, 9:05pm CST
+Nephtan
+Changes: (at next server restart)
+ * Update to Offline Clones.
+    - Offline Player clones updated to display their real life hire time, per hour, rather than saying "a day".
+
+[*]May 3rd, 2023, 10:15pm CST
+Nephtan
+Changes: (at next server restart)
+ * Update to Offline Clones. (Thanks Samui for the idea!)
+    - Offline Player Clones can be hired using their Context Menu.
+    - Hire price is based on the clone's combat/magic skills.
+    - Be careful! Clones will vanish when the original player logs in. This means your clone allies may abandon you mid-dungeon.
+
+[*]May 1st, 2023, 9:00am CST
+Nephtan
+Changes: 
+ - Consolidated cloth appearances for cut and folded.
+ - Added an option to fold up cut cloth by double clicking it.
+ - Creatures flee faster at low health.
+ - Offline Clones Revamped. Harder, better, faster stronger, and more accurate.
+
+[*]April 18th, 2023, 5:38pm CST
+Nephtan
+Changes: (These will take effect at the next server restart)
+ - Fixed a problem with the Research spell Restoration where it sets mana and stamina rather than "healing" it.
+
+[*]April 17th, 2023, 11:03pm CST
+Nephtan
+Changes: (These will take effect at the next server restart)
+ - Updated farming to accept dirt tiles from Lawn Tools and Remodeling tools for seed planting.
+
+[*]April 16th, 2023, 8:22pm CST
+Nephtan
+Changes: (These will take effect at the next server restart)
+ - Updated Research spell info gumps to reflect updated damage caps. 
+ - Some Research spells damage was not previously updated. All Research spells now have their damage caps doubled.
+ - Fixed damage calculation with Poison Strike where it was 10x more powerful than it should have been. (Base update to R&R)
+ - Sharpening Stones will now work on Bardiche, Halberd, and Scythe
+Clarifications:
+ - The server restarts 7 days from its last restart. This is contrary to my previous statement that server restarts would occur weekly on Wednesdays.
+
+[*]April 15th, 2023, 10:15am CST
+Nephtan
+Changes:
+ - Raised the damage cap for damage dealing Research spells. This will take effect at the next server restart. 
+
+[*]April 11th, 2023, 9:30pm CST
+Nephtan
+Changes & Additions:
+ - Introducing an old favorite.. Champion Spawns! The first of these will be active in the Fires of Hell, Level 1, sometime tomorrow, April 12th, 2023. Please gather a friend or two for this new (old) revision to Champion Spawns here on Confictura!
+
+[*]April 7th, 2023, 7:00pm CST
+Nephtan
+Changes:
+ - Fixed a few bugs, graphics and UI problems with the ancient magic research spells. These changes will take effect at the next server restart.
+
+[*]April 5th, 2023, 8:00am CST
+Nephtan
+Changes:
+ - Automatic restarts will now happen weekly on Wednesdays rather than daily.
+
+[*]April 1st, 2023, 8:00am CST
+Nephtan
+Changes:
+ - Implemented a fix for the Mass Might spell where it would decrease strength under the right skill conditions. It's minimum strength increase is now 1.
+
+[*]March 31th, 2023, 8:00am CST
+Nephtan
+Changes:
+ - Implemented a potential patch for sage and courier quests, regarding the dungeon pedestal locations. 
+
+[*]March 30th, 2023, 8:00am CST
+Nephtan
+News:
+ - Update is in the works for the Sage Artefact quests and Currier quests. Look out for the update coming in the next couple of days.
+
+[*]March 29th, 2023, 6:00am CST
+Nephtan
+Changes:
+ - Changed daily server restart time to 8:00am CST starting tomorrow. Closer to a reasonable time to be available should a restart fail.
+ - Implemented a fix for the new random encounter system that would cause server crashes without automatic restarts.
+
+[*]March 28th, 2023, 6:00am CST
+Nephtan
+Changes:
+ - Master Cook, Gardener (seeds and farm supplies), and Wine Crafter vendors added to Sosaria map
+ - Better Boat Gump added. Eventually will replace tillerman gump on boats and carpets. To use now, enter [bcblack, [bcwhite, or [bctransparent command while on a boat. Transparent is my favorite!
+
+[*]March 27th, 2023, 6:00am CST
+Nephtan
+Changes:
+ - Fixed an issue with the jester's hilarity ability
+ - Editted the welcoming gypsy's conversation to come from the first person.
+ - Fixed an issue with jester abilities that would cause server crashes.
+ - Fixed a bedroll issue when in public areas like banks and taverns (previous fix expanded upon)
+ - Expanded the definition of knives for skinning leather
+
+[*]March 25th, 2023, 6:00am CST
+Nephtan
+Changes:
+ - Fixed an issue with the Jester Hilarity spell causing a server crash.
+
+[*]March 24th, 2023, 6:00am CST
+Nephtan
+Changes:
+*New Hunger and Thirst system*
+ - Hunger and thirst do not decay if the player is inside an inn, house, or various safe public spaces, or if their Camping skill exceeds a random value between 1 and 200, or if their race has no food or drink requirement.
+ - Player hunger and thirst levels affect their hit points, stamina, and mana when they reach critical levels.
+ - Local overhead messages inform players about their hunger and thirst levels at specific values.
+ - A popup is displayed when the player's hunger or thirst level drops below 6.
+ - Expanded the 'random daemons, balrons, dragons and wyrms' settings.xml option to encompass or omit more of the land.
+
+[*]March 21st, 2023, 6:00am CST
+Nephtan
+Changes:
+ - Fixed an issue where the quick bar was not counting crystals properly.
+ - Corrected a crash where shinobi items could not be created as legendary or artifact types.
+ - Increased strength and storage weight for invulnerable porter-type creature followers.
+ - Fixed an issue with Druidism not working on special acquired creatures.
+ - Preliminary code for Farming, Cooking, Brewing, Juicing and Winemaking implemented.
+ - In-game staff tool for decoration similar to Pandora's Box.
+ - Preliminary code for Random Encounters implemented.
+ - Admin commands for live season changes.
+
+[*]March 19th, 2023, 6:00am CST
+Nephtan
+Changes:
+ - Mage Armor properly applies to levelable artifact armors.
+
+[*]March 18th, 2023, 6:00am CST
+Nephtan
+Changes:
+ - Offline clones removed from public areas such as Banks and Taverns
+
+[*]March 15th, 2023, 6:00am CST
+Nephtan
+Changes:
+ - Offline clones reactivated with morning server restart. Issue with mounts that caused a server crash has been resolved.
+ - Saw Mill Addons will now be named "Saw Mill" rather than "Addon Component". They should also function again if they are not sawing logs.
+
+[*]March 14th, 2023, 8:35pm CST
+Nephtan
+Changes:
+ - Removed Clones as an issue with mounts is causing a crash. Will be added in very near future update when the problem is solved.
+ - Added ability for ore and logs to be smelted or cut into to boards from a pack animal's pack.
+
+[*]March 14th, 2023, 8:00pm CST
+Nephtan
+Changes:
+ - When you log into the server you may notice some faces you're familiar with, but not normally used to seeing. The faces of your own characters as they inhabit the game world!! Starting now, an offline clone of every human character who has entered the world proper will be created on the very spot that character last logged out. The offline clone will have all of the character's stats, skills, and items equipped that the original character had on when they logged out. In addition, if a character's skill is high enough, their offline clone will be able to train other characters for gold in the same way vendors can train skills.
+
+[*]March 10th, 2023, 6:00am CST
+Nephtan
+Changes:
+ - Ability to change color and appearance of arifacts enabled. The names are unchangable, however.
+ - Can now walk through your own tamed creatures without suffering stamina loss. Stamina loss still normally applies to moving through any other creatures.
+ - Items you set in your house no longer decay even if not locked down or secured.
+
+[*]March 8th, 2023, 6:00am CST
+Nephtan
+Changes:
+ - Ability for staff to swap players' characters between accounts.
+ - '[vote' command added that opens a web browser where players can vote for Confictura on UOGateway.com once every 24 hours.
+    > Six voting stones will be added to the bank, allowing players to vote for Confictura on UOGateway.com, Games Top 100, TopG.org, UO Portal, Arena Top 100, and Shard Portal, once every 24 hours each.
+
+[*]March 5th, 2023, 6:00am CST
+Nephtan
+Changes:
+ - Creatures in Sanctum of Saltmarsh were being shy, ran away and hid themselves after being tamed. This has been fixed. Thank you Dingus!
+
+[*]March 3rd, 2023, 6:00am CST
+Nephtan
+Changes:
+ - Enabled line of sight. You still have full view of the map, but enemies will not appear unless your character has line of sight and they are night invisible
+ - Elementalism Protection spell was not functioning. This has been fixed.
+ - Time between accepting sage artifact advice reduced from 14 days to 7 days
+
+[*]March 2nd, 2023, 6:00am CST
+Nephtan
+Changes:
+ - Major exploit closed.
+ - Added code to display Intelligence and Dexterity requirements on armor and weapons in the rare cases that they have them.
+ - Moved certain roleplay-centric commands to Counselor access level for future scenarios.
+ - Staff Tool - Access level stone - Easily swaps access level between staff and player as many aspects of the world outright ignore staff characters. Useful for testing and assisting players.
+
+[*]March 1st, 2023, 6:00am CST
+Nephtan
+Changes:
+ - Saw Mill house addons now function for turning logs into boards the same way a saw mill in a carpenter shop does.
+
+[*]February 28th, 2023
+Nephtan
+Changes:
+ - Implemented shove-through. This works like Felucca rules for shoving through other creatures. When you have full stamina, you can shove through an adjacent creature and you will lose some stamina. If you do not have full stamina, you can not shove through an adjacent creature.
+ - Time between auto-saves decreased from 30 minutes to 10 minutes. In the event of a crash, we should never have to revert more than 10 minutes.
+
+[*]February 27th, 2023
+Nephtan
+Changes:
+ - Artifact skinning knives now function as regular skinning knives do when skinning.
+ - Server restarts daily at 6am CST, beginning today. When a change is incorporated, it will activate after the daily server restart.
+
+[*]February 23rd, 2023
+Nephtan
+There have been some bugs reported and some bugs fixed thanks to all of the new players who have joined the server.
+-----
+Info:
+There are almost 300 classic artifacts in the game, as well as artifacts created for this game that are specifically named and designed. These are items like 'Stormbringer' or 'Conan's Lost Sword'. By default, these items will retain their appearance and color no matter what is done to them.
+-----
+Changes:
+ - Wandering Healers piling up on their spawner in the middle of the ocean. This has been fixed.
+ - The Dread Isles, Ice Island Dock. Code added to make it possible to dry dock boats here if a few players build a town nearby. Admin must activate.
+ - Paperdoll gump shows only as horns on a grey human figure. This is fixed in the code and will activate at the next server restart. If your small fairy paperdoll gump is incorrect after the next server restart, contact a staff member to assist you.
+
+[*]January 5th, 2023
+Nephtan
+Welcome to Confictura: Legends & Adventure! Prepare to embark on a journey of sword and sorcery, demons and dragons, but with much treasure...

@@ -1,0 +1,34 @@
+<html>
+   <head>
+      <title>RunUO Documentation - Class Overview - WeightReductionContainer</title>
+   </head>
+   <body bgcolor="white" style="font-family: Courier New" text="Black" link="Black" vlink="Black" alink="#808080">
+      <h4><a href="../namespaces/Server.Items.html">Back to Server.Items</a></h4>
+      <h2>WeightReductionContainer : <!-- DBG-1 --><a href="Container.html">Container</a>, <!-- DBG-2.2 --><a href="IHued.html">IHued</a>, <!-- DBG-2.1 --><font color="blue">IComparable</font>&lt;<a href="Item.html">Item</a>&gt;, <!-- DBG-2.2 --><a href="ISerializable.html">ISerializable</a>, <!-- DBG-2.2 --><a href="ISpawnable.html">ISpawnable</a>, <!-- DBG-2.2 --><a href="IEntity.html">IEntity</a>, <!-- DBG-2.2 --><a href="IPoint3D.html">IPoint3D</a>, <!-- DBG-2.2 --><a href="IPoint2D.html">IPoint2D</a>, <!-- DBG-2.1 --><font color="blue">IComparable</font>, <!-- DBG-2.1 --><font color="blue">IComparable</font>&lt;<a href="IEntity.html">IEntity</a>&gt;</h2>
+<h4>Derived Types: <!-- DBG-3 --><a href="BagofWonder.html">BagofWonder</a>, <!-- DBG-3 --><a href="LargeBagofHolding.html">LargeBagofHolding</a>, <!-- DBG-3 --><a href="MediumBagofHolding.html">MediumBagofHolding</a>, <!-- DBG-3 --><a href="MysticBox.html">MysticBox</a>, <!-- DBG-3 --><a href="SmallBagofHolding.html">SmallBagofHolding</a></h4>
+      (<font color="blue">ctor</font>) WeightReductionContainer()<br>
+      (<font color="blue">ctor</font>) WeightReductionContainer( <font color="blue">int</font> itemID )<br>
+      (<font color="blue">ctor</font>) WeightReductionContainer( <!-- DBG-0 --><a href="Serial.html">Serial</a> serial )<br>
+      TimeSpan AccessDelay( <font color="blue">get</font>; )<br>
+      <font color="blue">string</font> AccessDelayMessage( <font color="blue">get</font>; )<br>
+      <font color="blue">string</font> AddAccessMessage( <font color="blue">get</font>; )<br>
+      <font color="blue">int</font> ContainerHue( <font color="blue">get</font>; )<br>
+      <!-- DBG-0 --><a href="LootType.html">LootType</a> ContainerLootType( <font color="blue">get</font>; )<br>
+      <font color="blue">int</font> ContainerMaxItems( <font color="blue">get</font>; )<br>
+      <font color="blue">double</font> ContainerWeight( <font color="blue">get</font>; )<br>
+      <font color="blue">int</font> DefaultMaxItems( <font color="blue">get</font>; )<br>
+      <font color="blue">bool</font> DisplayWeightReductionProperty( <font color="blue">get</font>; )<br>
+      <font color="blue">int</font> MaxItems( <font color="blue">get</font>; <font color="blue">set</font>; )<br>
+      <font color="blue">int</font> MaxWeight( <font color="blue">get</font>; )<br>
+      <font color="blue">string</font> RemoveAccessMessage( <font color="blue">get</font>; )<br>
+      <font color="blue">double</font> WeightReductionAmount( <font color="blue">get</font>; )<br>
+      <font color="blue">virtual</font> <font color="blue">void</font> AddNameProperty( <!-- DBG-0 --><a href="ObjectPropertyList.html">ObjectPropertyList</a> list )<br>
+      <font color="blue">virtual</font> <font color="blue">bool</font> CheckLift( <!-- DBG-0 --><a href="Mobile.html">Mobile</a> from, <!-- DBG-0 --><a href="Item.html">Item</a> item, <font color="blue">ref</font> <!-- DBG-0 --><a href="LRReason.html">LRReason</a> reject )<br>
+      <font color="blue">virtual</font> <font color="blue">void</font> Deserialize( <!-- DBG-0 --><a href="GenericReader.html">GenericReader</a> reader )<br>
+      <font color="blue">virtual</font> <font color="blue">int</font> GetTotal( <!-- DBG-0 --><a href="TotalType.html">TotalType</a> type )<br>
+      <font color="blue">virtual</font> <font color="blue">bool</font> OnDragDrop( <!-- DBG-0 --><a href="Mobile.html">Mobile</a> from, <!-- DBG-0 --><a href="Item.html">Item</a> dropped )<br>
+      <font color="blue">virtual</font> <font color="blue">void</font> Serialize( <!-- DBG-0 --><a href="GenericWriter.html">GenericWriter</a> writer )<br>
+      <font color="blue">double</font> TotalItemWeights()<br>
+      <font color="blue">virtual</font> <font color="blue">void</font> UpdateTotal( <!-- DBG-0 --><a href="Item.html">Item</a> sender, <!-- DBG-0 --><a href="TotalType.html">TotalType</a> type, <font color="blue">int</font> delta )<br>
+   </body>
+</html>

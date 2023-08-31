@@ -1,0 +1,8 @@
+AccessLevelStone
+
+The name pretty much says it, this stone allows a staffmember to toggle between 
+Player and his AccessLevel, if the stone is used by someone else than his owner, 
+if this person has greater accesslevel than the owner, he becomes the owner, elseway 
+the stone is deleted.
+
+just drop in your scripts\ folder ^^

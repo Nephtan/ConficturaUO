@@ -1,0 +1,66 @@
+##############################
+Log started on 1/4/2023 6:50:04 AM
+
+1/4/2023 6:50:38 AM: 127.0.0.1: Owner 0x1 "Dungeon Master" ('Admin') used command 'go '
+##############################
+Log started on 1/4/2023 7:07:53 AM
+
+1/4/2023 7:08:22 AM: 127.0.0.1: Owner 0x1 "Dungeon Master" ('Admin') used command 'admin '
+1/4/2023 7:08:26 AM: 127.0.0.1: Owner 0x1 "Dungeon Master" ('Admin') used command 'password '
+1/4/2023 7:08:34 AM: 127.0.0.1: Owner 0x1 "Dungeon Master" ('Admin') used command 'password jl73kqrm'
+1/4/2023 7:08:42 AM: 127.0.0.1: Owner 0x1 "Dungeon Master" ('Admin') used command 'password jl73kqrm jl73kqrm'
+1/4/2023 7:09:15 AM: 127.0.0.1: Owner 0x1 "Dungeon Master" ('Admin') used command 'buildworld '
+1/4/2023 7:31:41 AM: 127.0.0.1: Player 0x1B989 "Viktur" ('Xork') used command 'skilllist '
+1/4/2023 7:32:08 AM: 127.0.0.1: Player 0x1B989 "Viktur" ('Xork') used command 'skilllist '
+##############################
+Log started on 1/4/2023 9:44:01 AM
+
+1/4/2023 9:47:09 AM: 127.0.0.1: Owner 0x1 "Dungeon Master" ('Admin') used command 'buildworld '
+1/4/2023 9:47:18 AM: 127.0.0.1: Owner 0x1 "Dungeon Master" ('Admin') used command 'go 3 3'
+1/4/2023 9:47:46 AM: 127.0.0.1: Owner 0x1 "Dungeon Master" ('Admin') used command 'tele '
+1/4/2023 9:47:50 AM: 127.0.0.1: Owner 0x1 "Dungeon Master" ('Admin') used command 'get z'
+##############################
+Log started on 1/4/2023 9:50:01 AM
+
+1/4/2023 9:51:49 AM: 127.0.0.1: Owner 0x1 "Dungeon Master" ('Admin') used command 'buildworld '
+1/4/2023 9:52:28 AM: 127.0.0.1: Owner 0x1 "Dungeon Master" ('Admin') used command 'go 6 6'
+1/4/2023 9:53:33 AM: 127.0.0.1: Owner 0x1 "Dungeon Master" ('Admin') used command 'restart '
+##############################
+Log started on 1/4/2023 9:53:45 AM
+
+1/4/2023 9:53:55 AM: 127.0.0.1: Owner 0x1 "Dungeon Master" ('Admin') used command 'go 7 7'
+1/4/2023 9:54:29 AM: 127.0.0.1: Owner 0x1 "Dungeon Master" ('Admin') used command 'buildworld '
+##############################
+Log started on 1/4/2023 9:56:02 AM
+
+1/4/2023 9:56:35 AM: 127.0.0.1: Owner 0x1 "Dungeon Master" ('Admin') used command 'buildworld '
+1/4/2023 9:56:49 AM: 127.0.0.1: Owner 0x1 "Dungeon Master" ('Admin') used command 'go '
+1/4/2023 9:57:15 AM: 127.0.0.1: Owner 0x1 "Dungeon Master" ('Admin') used command 'props '
+##############################
+Log started on 1/4/2023 10:11:35 AM
+
+##############################
+Log started on 1/4/2023 10:13:02 AM
+
+##############################
+Log started on 1/4/2023 10:17:51 AM
+
+1/4/2023 10:24:52 AM: 127.0.0.1: Owner 0x1 "Dungeon Master" ('Admin') used command 'add arrow 100'
+1/4/2023 10:24:53 AM: 127.0.0.1: Owner 0x1 "Dungeon Master" ('Admin') building at (2974, 1045, 25) in Sosaria: "arrow" "100"
+1/4/2023 10:24:53 AM: 127.0.0.1: Serials: 0x4002FC46; 
+1/4/2023 10:24:54 AM: 127.0.0.1: Owner 0x1 "Dungeon Master" ('Admin') used command 'who '
+1/4/2023 10:24:57 AM: 127.0.0.1: Owner 0x1 "Dungeon Master" ('Admin') bringing 0x1B989 "Viktur" ('Xork') to Location (2977, 1044, 25), Map Sosaria
+##############################
+Log started on 1/4/2023 10:26:58 AM
+
+1/4/2023 10:27:31 AM: 127.0.0.1: Owner 0x1 "Dungeon Master" ('Admin') used command 'add bow'
+1/4/2023 10:27:32 AM: 127.0.0.1: Owner 0x1 "Dungeon Master" ('Admin') building at (2975, 1043, 25) in Sosaria: "bow"
+1/4/2023 10:27:32 AM: 127.0.0.1: Serials: 0x40026265; 
+1/4/2023 10:27:35 AM: 127.0.0.1: Owner 0x1 "Dungeon Master" ('Admin') used command 'add arrow 100'
+1/4/2023 10:27:36 AM: 127.0.0.1: Owner 0x1 "Dungeon Master" ('Admin') building at (2976, 1041, 25) in Sosaria: "arrow" "100"
+1/4/2023 10:27:36 AM: 127.0.0.1: Serials: 0x40026DDF; 
+1/4/2023 10:27:49 AM: 127.0.0.1: Owner 0x1 "Dungeon Master" ('Admin') used command 'who '
+1/4/2023 10:27:51 AM: 127.0.0.1: Owner 0x1 "Dungeon Master" ('Admin') bringing 0x1B989 "Viktur" ('Xork') to Location (2974, 1042, 25), Map Sosaria
+##############################
+Log started on 1/4/2023 11:50:05 PM
+

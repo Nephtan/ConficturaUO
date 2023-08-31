@@ -1,0 +1,56 @@
+<html>
+   <head>
+      <title>RunUO Documentation - Class Overview - apiBeeHive</title>
+   </head>
+   <body bgcolor="white" style="font-family: Courier New" text="Black" link="Black" vlink="Black" alink="#808080">
+      <h4><a href="../namespaces/Server.Engines.Apiculture.html">Back to Server.Engines.Apiculture</a></h4>
+      <h2>apiBeeHive : <!-- DBG-1 --><a href="BaseAddon.html">BaseAddon</a>, <!-- DBG-2.2 --><a href="IHued.html">IHued</a>, <!-- DBG-2.1 --><font color="blue">IComparable</font>&lt;<a href="Item.html">Item</a>&gt;, <!-- DBG-2.2 --><a href="ISerializable.html">ISerializable</a>, <!-- DBG-2.2 --><a href="ISpawnable.html">ISpawnable</a>, <!-- DBG-2.2 --><a href="IEntity.html">IEntity</a>, <!-- DBG-2.2 --><a href="IPoint3D.html">IPoint3D</a>, <!-- DBG-2.2 --><a href="IPoint2D.html">IPoint2D</a>, <!-- DBG-2.1 --><font color="blue">IComparable</font>, <!-- DBG-2.1 --><font color="blue">IComparable</font>&lt;<a href="IEntity.html">IEntity</a>&gt;, <!-- DBG-2.2 --><a href="IChopable.html">IChopable</a>, <!-- DBG-2.2 --><a href="IAddon.html">IAddon</a></h2>
+      (<font color="blue">ctor</font>) apiBeeHive()<br>
+      (<font color="blue">ctor</font>) apiBeeHive( <!-- DBG-0 --><a href="Serial.html">Serial</a> serial )<br>
+      <!-- DBG-0 --><a href="apiBeeHiveComponent.html">apiBeeHiveComponent</a> BeeHiveComponent( <font color="blue">get</font>; )<br>
+      <!-- DBG-0 --><a href="BaseAddonDeed.html">BaseAddonDeed</a> Deed( <font color="blue">get</font>; )<br>
+      <font color="blue">int</font> DiseaseLevel( <font color="blue">get</font>; <font color="blue">set</font>; )<br>
+      <font color="blue">int</font> FlowersInRange( <font color="blue">get</font>; <font color="blue">set</font>; )<br>
+      <font color="blue">bool</font> HasMaladies( <font color="blue">get</font>; )<br>
+      <font color="blue">int</font> Health( <font color="blue">get</font>; <font color="blue">set</font>; )<br>
+      <font color="blue">int</font> HiveAge( <font color="blue">get</font>; <font color="blue">set</font>; )<br>
+      <!-- DBG-0 --><a href="HiveStatus.html">HiveStatus</a> HiveStage( <font color="blue">get</font>; <font color="blue">set</font>; )<br>
+      <font color="blue">int</font> Honey( <font color="blue">get</font>; <font color="blue">set</font>; )<br>
+      <font color="blue">bool</font> IsCheckable( <font color="blue">get</font>; )<br>
+      <font color="blue">bool</font> IsFullAgilityPotion( <font color="blue">get</font>; )<br>
+      <font color="blue">bool</font> IsFullCurePotion( <font color="blue">get</font>; )<br>
+      <font color="blue">bool</font> IsFullHealPotion( <font color="blue">get</font>; )<br>
+      <font color="blue">bool</font> IsFullPoisonPotion( <font color="blue">get</font>; )<br>
+      <font color="blue">bool</font> IsFullStrengthPotion( <font color="blue">get</font>; )<br>
+      <font color="blue">bool</font> IsGrowable( <font color="blue">get</font>; )<br>
+      <!-- DBG-0 --><a href="HiveGrowthIndicator.html">HiveGrowthIndicator</a> LastGrowth( <font color="blue">get</font>; <font color="blue">set</font>; )<br>
+      <font color="blue">int</font> MaxHealth( <font color="blue">get</font>; )<br>
+      DateTime NextCheck( <font color="blue">get</font>; <font color="blue">set</font>; )<br>
+      <!-- DBG-0 --><a href="HiveHealth.html">HiveHealth</a> OverallHealth( <font color="blue">get</font>; )<br>
+      <font color="blue">int</font> ParasiteLevel( <font color="blue">get</font>; <font color="blue">set</font>; )<br>
+      <font color="blue">int</font> Population( <font color="blue">get</font>; <font color="blue">set</font>; )<br>
+      <font color="blue">int</font> potAgility( <font color="blue">get</font>; <font color="blue">set</font>; )<br>
+      <font color="blue">int</font> potCure( <font color="blue">get</font>; <font color="blue">set</font>; )<br>
+      <font color="blue">int</font> potHeal( <font color="blue">get</font>; <font color="blue">set</font>; )<br>
+      <font color="blue">int</font> potPoison( <font color="blue">get</font>; <font color="blue">set</font>; )<br>
+      <font color="blue">int</font> potStrength( <font color="blue">get</font>; <font color="blue">set</font>; )<br>
+      <font color="blue">int</font> Range( <font color="blue">get</font>; )<br>
+      <font color="blue">int</font> WaterInRange( <font color="blue">get</font>; <font color="blue">set</font>; )<br>
+      <font color="blue">int</font> Wax( <font color="blue">get</font>; <font color="blue">set</font>; )<br>
+      <font color="blue">void</font> ApplyBenefitEffects()<br>
+      <font color="blue">bool</font> ApplyMaladiesEffects()<br>
+      <font color="blue">bool</font> ApplyPotion( <!-- DBG-0 --><a href="PotionEffect.html">PotionEffect</a> effect, <font color="blue">bool</font> testOnly, <font color="blue">out</font> <font color="blue">string</font> message )<br>
+      <font color="blue">virtual</font> <font color="blue">void</font> Delete()<br>
+      <font color="blue">virtual</font> <font color="blue">void</font> Deserialize( <!-- DBG-0 --><a href="GenericReader.html">GenericReader</a> reader )<br>
+      <font color="blue">void</font> Die()<br>
+      <font color="blue">void</font> FindFlowersInRange()<br>
+      <font color="blue">void</font> FindWaterInRange()<br>
+      <font color="blue">void</font> Grow()<br>
+      <font color="blue">bool</font> IsUsableBy( <!-- DBG-0 --><a href="Mobile.html">Mobile</a> from )<br>
+      <font color="blue">void</font> Pour( <!-- DBG-0 --><a href="Mobile.html">Mobile</a> from, <!-- DBG-0 --><a href="Item.html">Item</a> item )<br>
+      <!-- DBG-0 --><a href="ResourceStatus.html">ResourceStatus</a> ScaleFlower()<br>
+      <!-- DBG-0 --><a href="ResourceStatus.html">ResourceStatus</a> ScaleWater()<br>
+      <font color="blue">virtual</font> <font color="blue">void</font> Serialize( <!-- DBG-0 --><a href="GenericWriter.html">GenericWriter</a> writer )<br>
+      <font color="blue">void</font> UpdateMaladies()<br>
+   </body>
+</html>

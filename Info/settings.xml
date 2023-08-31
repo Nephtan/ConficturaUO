@@ -1,0 +1,341 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+
+<settings>
+
+// Enables commands to be entered into the server console. WARNING: May cause crashes so enable it at your own risk.
+
+<setting>true</setting>
+
+// The game saves itself after this many minutes in decimal format between 10 and 240 minutes.
+
+<setting>10.0</setting>
+
+// If true, saves the game when your character logs out. Helpful for single player games.
+
+<setting>false</setting>
+
+// If true, the blackjack tables will retain their settings and information if the server ever restarts. Better for persistent worlds.
+
+<setting>true</setting>
+
+// The percent chance a floor trap will trigger in whole number format and no less than 5 percent.
+
+<setting>20</setting>
+
+// The percent chance an item will be unidentified and no less than 10 percent.
+
+<setting>30</setting>
+
+// If true, a player character cannot use macros to improve their skills quickly.
+
+<setting>false</setting>
+
+// You can increase the rate that stats gain from 50.0 (slow) to 10.0 (fast).
+
+<setting>33.3</setting>
+
+// How many minutes between stat gains which helps with the above setting.
+
+<setting>0.0</setting>
+
+// How many minutes between stat gains for pets that you can train. This can be between 1.0 to 60.0 minutes.
+
+<setting>5.0</setting>
+
+// The amount of minutes before you can take a bulletin board quest after finishing one.
+
+<setting>60</setting>
+
+// The amount of minutes before you can take a sage artifact quest after finishing one.
+
+<setting>8640</setting>
+
+// The percent of gold you get from creatures, treasure, cargo, museum searches, shoppes, and some quests between 5 (low) to 100 (high).
+
+<setting>25</setting>
+
+// If false, characters will get a CAPTCHA windows occasionally to avoid unattended resource gathering with macros.
+
+<setting>true</setting>
+
+// If true, all creatures will have an ability to detect hidden characters based on their difficulty level.
+
+<setting>true</setting>
+
+// If true, guards will instantly kill criminal and murderer characters. If false, the guards will chase them and try to send them to prison.
+
+<setting>false</setting>
+
+// If true, guards will pay attention to enemies outside of their town borders.
+
+<setting>true</setting>
+
+// If true, guards will move quicker to catch criminals but this only works if they do not sentence them to death.
+
+<setting>true</setting>
+
+// If true, some areas will not allow you to mount a creature for riding. This makes dungeons (for example) more challenging.
+
+<setting>true</setting>
+
+// If true, new characters can choose to take the alien origin route.
+
+<setting>true</setting>
+
+// If true, anytime a character makes a saving throw to avoid a trap will be notified. Otherwise, they will never know they avoided it.
+
+<setting>true</setting>
+
+// If true, characters can only identify items (that require a double click) within their backpack.
+
+<setting>false</setting>
+
+// If you think animal tamer pets ruin game balance, then increase this amount in decimal format to increase damage done to them.
+
+<setting>1.0</setting>
+
+// Again, if you think animal tamer pets ruin game balance, then you can set a 0-100 percent chance they will get a critical double damage hit against them.
+
+<setting>5</setting>
+
+// Spell damage toward monsters can be between 25 and 200 percent.
+
+<setting>200</setting>
+
+// Spell damage toward player characters can be between 25 and 200 percent.
+
+<setting>100</setting>
+
+// If you play a single player game, then setting this to true will enable the game to run certain routines to keep the world in shape where a constantly running server will do this for you if set to false.
+
+<setting>false</setting>
+
+// The gold reward from bulletin board quests is modified below between 50 and 250 percent.
+
+<setting>150</setting>
+
+// This setting between 0.5 and 2.0 (decimal format) will give a character that much hit points, mana, or stamina based on the attribute. So a strength of 100 will give a character 200 hit points if this is set at 2.0.
+
+<setting>2.0</setting>
+
+// This is the body value for standard Wyrms. 723 is the newer, larger creatures. 12 is the classic wyrm where 59 is the dragon body.
+
+<setting>723</setting>
+
+// If true, the purple named adventurers will attack nearby monsters and not just the characters that are criminals, murderers, or have low karma.
+
+<setting>true</setting>
+
+// If true, then followers will attempt to keep up with you if you are running fast.
+
+<setting>true</setting>
+
+// If true, then followers will not stack on top of each other but instead spread out a bit.
+
+<setting>false</setting>
+
+// If true, then followers will not only guard you when commanded, but guard the other followers in your group.
+
+<setting>true</setting>
+
+// The number of days, no less than 5.0 (decimal format), that a boat or magic carpet will decay if on the sea not used.
+
+<setting>365.0</setting>
+
+// The number of days, no less than 30.0 (decimal format), that a home will decay if an owner never shows up.
+
+<setting>365.0</setting>
+
+// If false, then houses never decay and the above setting is ignored.
+
+<setting>false</setting>
+
+// The amount of houses an account's characters may own. A -1 setting will be unlimited.
+
+<setting>-1</setting>
+
+// If true, then dungeon environments will have random sounds as you traverse the corridors.
+
+<setting>true</setting>
+
+// Percent chance (whole number) that a vendor sells a common item.
+
+<setting>50</setting>
+
+// Percent chance (whole number) that a vendor sells a very common item.
+
+<setting>80</setting>
+
+// Percent chance (whole number) that a vendor sells a rare item.
+
+<setting>25</setting>
+
+// Percent chance (whole number) that a vendor sells a very rare item.
+
+<setting>5</setting>
+
+// Percent chance (whole number) that a vendor buys a common item.
+
+<setting>50</setting>
+
+// Percent chance (whole number) that a vendor buys a very common item.
+
+<setting>80</setting>
+
+// Percent chance (whole number) that a vendor buys a rare item.
+
+<setting>70</setting>
+
+// If true, then your world will use shiny metal colors whenever possible. If you ever change this, delete the colors.set file in the Info folder and restart the server so the current items can have their color changed.
+
+<setting>true</setting>
+
+// If true, then your world will use newer leather colors whenever possible. If you ever change this, delete the colors.set file in the Info folder and restart the server so the current items can have their color changed.
+
+<setting>true</setting>
+
+// If true, then some of the great forest cats will use the larger model. If false, then they will use the classic smaller model. If you change this, then run the [buildworld command when the server restarts.
+
+<setting>true</setting>
+
+// If true, then elephants will be in your game world. If you change this, then run the [buildworld command when the server restarts.
+
+<setting>true</setting>
+
+// If true, then zebras will be in your game world. If you change this, then run the [buildworld command when the server restarts.
+
+<setting>true</setting>
+
+// If true, then foxes will be in your game world. If you change this, then run the [buildworld command when the server restarts.
+
+<setting>true</setting>
+
+// If true, the public basement system is active. This lets players buy basement doors for their homes and basement doors will appear in some trade shops. These lead to the same basement public area and is usually used for multiplayer game environments.
+
+<setting>true</setting>
+
+// If true, then characters on mounts will dismount when they enter a building. They should mount their steed again when they leave.
+
+<setting>true</setting>
+
+// If true, then characters on mounts will dismount when they enter a player character's home. They should mount their steed again when they leave.
+
+<setting>true</setting>
+
+// If true, then characters will be able to set a custom title for their character in the HELP section.
+
+<setting>false</setting>
+
+// If true, this means that the players can dye construction contracts so their pre-designed home is entirely in that same color.
+
+<setting>true</setting>
+
+// If true, then players can make use of the custom house system. Otherwise they can only purchase the pre-built classic houses.
+
+<setting>true</setting>
+
+// If true, then players have a chance for some slight magical properties on crafted exceptional items (armor, weapons, clothing, quivers, jewelry, or instruments) where the better the skill, material, and if they are in the guild will determine effectiveness.
+
+<setting>true</setting>
+
+// If set to 1,000 gold or higher, then the bribery system will be enabled that allows characters to give this amount of gold to the Assassin Guildmaster so they can bribe the right people and remove a murder count one at a time (never applies to fugitives, and assassin guild members only pay half this amount).
+
+<setting>50000</setting>
+
+// If true, then creatures will not be seen behind dungeon doors and walls or around corners unless they are searching for blood. It only applies to creatures in dungeons, caves, or outside dangerous areas like cemeteries. If you change this, then run the [buildworld command when the server restarts.
+
+<setting>true</setting>
+
+// There are almost 300 classic artifacts in the game, as well as artifacts created for this game that are specifically named and designed. These are items like 'Stormbringer' or 'Conan's Lost Sword'. By default, these items will retain their appearance and color no matter what is done to them. Setting this to true will allow a player to use items like the Magic Scissors or Magic Hammer to change the appearance of the items, but they will always retain their name. This is false by default.
+
+<setting>true</setting>
+
+// The below value should be set to a whole number from 1-100, where the amount of resources one gets (ore, logs, hides, herbs, jars of body parts, meat, feathers, scales, wool, wheat, furs, fish, sand, and blank scrolls) will be modified in some way by this value. The Isles of Dread will still have a slightly more amount than the other lands as intended. Certain skills will still enhance what is found too as they normally do. Increasing this from 1 is meant for games where resource gathering is to be made easier, so an increase in this will also cause the harvesting skill to raise faster as well, but only when successful resources are gathered (lumberjacking, mining, fishing, forensics, cooking, and inscription).
+
+<setting>1</setting>
+
+// If true, then some merchants may sell large volumes of resources (ingots, ore, boards, leather, hides, cloth, bottles, jars, and blank scrolls) and more types, except for non-magical resources (reagents). The resources sold may appear based on their rarity and location of the merchant (verite, cherry wood, deep sea leather, etc). EXAMPLE: If you can only get obsidian in the Serpent Island, then you will only find obsidian ingots available for sale in that land. Those that set this to true, want a game where they would like to craft items and spend gold gathering the resources more often than harvesting.
+
+<setting>false</setting>
+
+// If true, then adventurers that gather in towns may have a humanoid, pet, or summoned companion with them. These gatherings are when 2-4 adventurers stand in a circle and face each other, usually holding weapons and sometimes riding mounts. This setting adds a bit of fantasy world atmosphere and lets players know that they too can perhaps have such a follower. There is only about a 5% chance one will appear and then only 1 will appear in a group.
+
+<setting>true</setting>
+
+// If true, then special merchant books may appear in the leather, carpenter, bowyer, and blacksmith shops. These books will have a list of items a character can buy that would be made from special materials like valorite metal, serpent leather, or hickory wood (as examples). Every 250 minutes they will switch to either be a different material type or there is simply a 50% chance they will not appear in the shop until the next scheduled run. Some materials will never appear in shops if the material is specific to a particular land. EXAMPLE: If you can only get obsidian in the Serpent Island, then you will may only find obsidian items available for sale in that land.
+
+<setting>true</setting>
+
+// If true, then anything you set in you home will never decay. This makes the housing system's storage capacity useless as any home can hold any amount of items, and it may convince players to never bother with a castle or dungeon home because there is no storage limits on any house. But if you don't want to worry about this game element in your world then you can allow players to drop things on the floor without worrying about locking or securing them down. Players still need to lock items down if they are going to decorate their home and they want them unmovable or able to be manipulated with the homeowner tools.
+
+<setting>true</setting>
+
+// The below setting is the number of minutes that a player character corpse will turn into bones, which can be used in conjunction with the setting below. These two settings, when added together, are the total number of minutes that a player has to find their corpse and potentially collect their belongings. The default for this setting is 10 minutes and the below is 110 minutes for a combined 2 hours or 120 minutes.
+
+<setting>480</setting>
+
+// The below setting is the number of minutes that a player character bones will decay. This option, as well as the option above, could potentially be used to have player character corpses remain longer or for a more difficult style of play where the corpse and belongings vanish immediatley. If running a multiplayer game, where PVP is promoted and you want to use a more difficult style of play, then setting these two combined minutes to something long enough for an enemy player to take the dead character's belongings may be desired. The default is 110 minutes.
+
+<setting>960</setting>
+
+// If true, then co-owners of houses will have the same permissions as owners. The security choice gump will then specify this dual ownership when choosing an item security level. The default setting is false, where co-owners have much more limited permissions as the standard game allows.
+
+<setting>false</setting>
+
+// When true (default setting), characters can use lawn tools (from architects) to add items to the outside of their home like trees, shrubs, fences, lave, water, and other items. Lawn tools require an amount of gold to place items. If this was previously true and characters placed lawn items, and then you set it to false, the lawn items will refund the gold back to the character's bank box and the lawn tools will be removed from the game.
+
+<setting>true</setting>
+
+// When true (default setting), characters can use remodeling tools (from architects) to add items to their home like walls, doors, tiles, and other items. Remodeling tools require an amount of gold to place items. If this was previously true and characters placed remodeling items, and then you set it to false, the remodeling items will refund the gold back to the character's bank box and the remodeling tools will be removed from the game.
+
+<setting>true</setting>
+
+// Set to the number 0 to disable. The other values are 1, 2, or 3 where the default is 1. When greater than 0, you will enable the creature character feature of the game. This allows players to become a creature of the game as their player character. They can play like the game normally plays, but since they would be using creature models their appearance will remain static (some species have options to change appearances to other models). They can equip and use things normally (except cloaks and quivers), but their equipment will be displayed as icons on their paperdoll so they can manage their inventory. They will not be able to start as alien races if that option is enabled, but they can do the other starting area options if their alignment allows. Disabling this option, at a later time, will return all characters back to human upon world restart. The different values indicate the size of creatures allowed to choose from. Option '1' allows for roughly human height humanoids like lizardment, ratmen, trolls, and ogres. Option '2' allows for option '1' and includes larger creatures like ogre lords, ettins, and daemons. Option '3' includes the first two options, but also allows for creatures such as giants and balrons. There is a more details explanation of this system using the gypsy's shelf in her starting tent.
+
+<setting>1</setting>
+
+// This setting is the number of days a character must exist before a player can delete them.
+
+<setting>7.0</setting>
+
+// If true, players can just type in a name and password and it will create an account for them.
+
+<setting>true</setting>
+
+// The port you want your server to listen on.
+
+<setting>4506</setting>
+
+// To use special weapon abilities, this is the minimum skill level required (weapon skill and tactics) where the default is 70.0 (minimum of 20.0). Each ability requires 10 additional points above the previous (70, 80, 90, etc).
+
+<setting>70.0</setting>
+
+// The below setting default is '5', where this value can be between 0 and 20. This is the number of extra stabled pets players get (beyond the normal amount of '2'), where anything more will rely on their skills in druidism, taming, veterinary, and herding.
+
+<setting>5</setting>
+
+// Increasing this decimal number will only increase the hit points of creatures that percentage, so setting this to 1.0 will double the hit points of creatures (adding an additional 100% on top of their normal hit points). Setting it to 0.8 will increase their hit points by 80%...etc...
+
+<setting>0.0</setting>
+
+// This decimal number can be adjusted to set the maximum skill one can gain from training dummies, training daemons, and archery buttes.
+
+<setting>25.0</setting>
+
+// This decimal number can be adjusted to set the maximum skill one can gain from pickpocket dips.
+
+<setting>50.0</setting>
+
+// This whole number (default '1') can be set from 1-100, where it multiplies the skill gain check on training dummies, pickpocket dips, and archery buttes.
+
+<setting>1</setting>
+
+// If true, then the land will spawn random powerful daemons/balrons/dragons/wyrms/angels/etc that will spread throughout the land.
+
+<setting>true</setting>
+
+// If true, then characters will not get hungry or thirsty when inside places like banks, inns, or houses...allowing you to step away from the game without your character starving eventually.
+
+<setting>true</setting>
+
+</settings>

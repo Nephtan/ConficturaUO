@@ -1,0 +1,11 @@
+##############################
+Log started on 8/31/2023 8:23:22 AM
+
+8/31/2023 8:26:36 AM: 192.168.16.101: Owner 0x186E6 "Nephtan" ('Admin') used command 'motd '
+8/31/2023 8:28:01 AM: 192.168.16.101: Owner 0x186E6 "Nephtan" ('Admin') used command 'motd '
+8/31/2023 8:28:16 AM: 192.168.16.101: Owner 0x186E6 "Nephtan" ('Admin') used command 'motd '
+8/31/2023 9:11:31 AM: 192.168.16.101: Owner 0x186E6 "Nephtan" ('Admin') used command 'go '
+8/31/2023 9:11:53 AM: 192.168.16.101: Owner 0x186E6 "Nephtan" ('Admin') used command 'M Tele'
+8/31/2023 9:24:27 AM: 192.168.16.101: Owner 0x186E6 "Nephtan" ('Admin') used command 'admin '
+8/31/2023 9:25:49 AM: 192.168.16.101: Owner 0x186E6 "Nephtan" ('Admin') used command 'getfollowers '
+8/31/2023 9:25:50 AM: 192.168.16.101: Owner 0x186E6 "Nephtan" ('Admin') getting all followers of 0x4F238 "Cassandra" ('archer2')

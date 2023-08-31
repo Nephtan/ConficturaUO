@@ -1,0 +1,19 @@
+##############################
+Log started on 12/31/2022 3:11:04 AM
+
+12/31/2022 3:16:18 AM: 127.0.0.1: Owner 0x1 "Dungeon Master" ('Admin') used command 'buildworld '
+12/31/2022 3:16:43 AM: 127.0.0.1: Owner 0x1 "Dungeon Master" ('Admin') used command 'go '
+12/31/2022 3:16:55 AM: 127.0.0.1: Owner 0x1 "Dungeon Master" ('Admin') used command 'm tele'
+12/31/2022 3:17:09 AM: 127.0.0.1: Owner 0x1 "Dungeon Master" ('Admin') used command 'add goldens'
+12/31/2022 3:17:14 AM: 127.0.0.1: Owner 0x1 "Dungeon Master" ('Admin') building at (197, 1737, 37) in SavagedEmpire: "GoldenSerpent"
+12/31/2022 3:17:14 AM: 127.0.0.1: Serials: 0x10A12; 
+12/31/2022 3:17:18 AM: 127.0.0.1: Owner 0x1 "Dungeon Master" ('Admin') used command 'remove '
+12/31/2022 3:17:20 AM: 127.0.0.1: Owner 0x1 "Dungeon Master" ('Admin') deleting 0x10A12 "a golden serpent" (no account)
+12/31/2022 3:27:08 AM: 127.0.0.1: Owner 0x1 "Dungeon Master" ('Admin') used command 'm tele'
+12/31/2022 3:28:55 AM: 127.0.0.1: Owner 0x1 "Dungeon Master" ('Admin') used command 'add broton'
+12/31/2022 3:29:00 AM: 127.0.0.1: Owner 0x1 "Dungeon Master" ('Admin') used command 'add bronto'
+12/31/2022 3:29:02 AM: 127.0.0.1: Owner 0x1 "Dungeon Master" ('Admin') building at (357, 1593, 45) in SavagedEmpire: "Brontosaur"
+12/31/2022 3:29:02 AM: 127.0.0.1: Serials: 0x10A21; 
+12/31/2022 3:29:07 AM: 127.0.0.1: Owner 0x1 "Dungeon Master" ('Admin') used command 'remove '
+12/31/2022 3:29:10 AM: 127.0.0.1: Owner 0x1 "Dungeon Master" ('Admin') deleting 0x10A21 "a brontosaur" (no account)
+12/31/2022 3:29:13 AM: 127.0.0.1: Owner 0x1 "Dungeon Master" ('Admin') used command 'go '

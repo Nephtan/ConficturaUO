@@ -1,0 +1,35 @@
+##############################
+Log started on 1/5/2023 12:03:57 AM
+
+1/5/2023 12:08:24 AM: 192.168.16.101: Owner 0x1 "Dungeon Master" ('Admin') used command 'admin '
+1/5/2023 12:08:42 AM: 192.168.16.101: Owner 0x1 "Dungeon Master" ('Admin') changing password of account Admin
+1/5/2023 12:08:54 AM: 192.168.16.101: Owner 0x1 "Dungeon Master" ('Admin') used command 'go '
+1/5/2023 12:09:06 AM: 192.168.16.101: Owner 0x1 "Dungeon Master" ('Admin') used command 'go '
+##############################
+Log started on 1/5/2023 8:58:13 AM
+
+1/5/2023 12:40:41 PM: 192.168.16.101: Owner 0x1 "Dungeon Master" ('Admin') used command 'buildworld '
+1/5/2023 12:40:59 PM: 192.168.16.101: Owner 0x1 "Dungeon Master" ('Admin') used command 'go '
+##############################
+Log started on 1/5/2023 3:56:23 PM
+
+1/5/2023 10:19:44 PM: 192.168.16.101: Owner 0x1 "Dungeon Master" ('Admin') used command 'docgen '
+1/5/2023 10:22:38 PM: 192.168.16.101: Owner 0x1 "Dungeon Master" ('Admin') used command 'setallskills 100'
+1/5/2023 10:22:39 PM: 192.168.16.101: Owner 0x1 "Dungeon Master" ('Admin') set property 'EverySkill.Base' of 0x1 "Dungeon Master" ('Admin') to '100'
+1/5/2023 10:26:13 PM: 192.168.16.101: Owner 0x1 "Dungeon Master" ('Admin') used command 'hide '
+1/5/2023 10:26:14 PM: 192.168.16.101: Owner 0x1 "Dungeon Master" ('Admin') hiding 0x1 "Dungeon Master" ('Admin')
+1/5/2023 10:27:19 PM: 192.168.16.101: Owner 0x1 "Dungeon Master" ('Admin') used command 'helpadmin '
+1/5/2023 10:29:19 PM: 192.168.16.101: Owner 0x1 "Dungeon Master" ('Admin') used command 'helpadmin '
+1/5/2023 10:31:38 PM: 192.168.16.101: Owner 0x1 "Dungeon Master" ('Admin') used command 'get hunger'
+1/5/2023 10:31:51 PM: 192.168.16.101: Owner 0x1 "Dungeon Master" ('Admin') used command 'set hunger 60000'
+1/5/2023 10:31:52 PM: 192.168.16.101: Owner 0x1 "Dungeon Master" ('Admin') set property 'hunger' of 0x1 "Dungeon Master" ('Admin') to '60000'
+1/5/2023 10:31:58 PM: 192.168.16.101: Owner 0x1 "Dungeon Master" ('Admin') used command 'set thirst 60000'
+1/5/2023 10:32:00 PM: 192.168.16.101: Owner 0x1 "Dungeon Master" ('Admin') set property 'thirst' of 0x1 "Dungeon Master" ('Admin') to '60000'
+1/5/2023 10:32:19 PM: 192.168.16.101: Owner 0x1 "Dungeon Master" ('Admin') used command 'add hid'
+1/5/2023 10:35:46 PM: 192.168.16.101: Owner 0x1 "Dungeon Master" ('Admin') used command 'tele '
+1/5/2023 10:49:29 PM: 192.168.16.101: Owner 0x1 "Dungeon Master" ('Admin') used command 'addtopack gold 10000'
+1/5/2023 10:49:31 PM: 192.168.16.101: Owner 0x1 "Dungeon Master" ('Admin') building at (3010, 915, 0) in Sosaria: "gold" "10000"
+1/5/2023 10:49:31 PM: 192.168.16.101: Serials: 
+1/5/2023 10:49:42 PM: 192.168.16.101: Owner 0x1 "Dungeon Master" ('Admin') used command 'addtopack gold 50000'
+1/5/2023 10:49:44 PM: 192.168.16.101: Owner 0x1 "Dungeon Master" ('Admin') building at (3010, 915, 0) in Sosaria: "gold" "50000"
+1/5/2023 10:49:44 PM: 192.168.16.101: Serials: 0x4003B71E; 

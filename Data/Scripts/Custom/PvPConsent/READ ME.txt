@@ -1,0 +1,258 @@
+Foreword by Falkor:
+This system was for RunUO 2.0 and will require careful merging to use with ServUO.  This is especially true for the playermobile edits which will also involve new a new case for the ser/deser process.
+
+
+Created by Mortis for everyone to enjoy. Feel free to add or edit.
+
+V.2.1 Changes:
+Added Event Moongate for all players that only changes NONPK for the event.
+Allowing NONPK to fight other players in events.
+Place one gate where players will go to join the event and one at the event to change them back for normal play.
+You will need to use [props on them to set map and location.
+Fixed Readme.txt as forgot to add one edit the one on line 35 in this document.
+
+V.2.0 Changes:
+Added support for guilds and factions.
+
+Add [goddessofprotection
+
+She will speak on movement and by keywords in order to have players become PK or NONPK.
+
+Made two custom swords that can only be equiped by a PK or NONPK player as a base to show how to have PK or NONPK allowed only items.
+
+Note: Line numbers change when code is added. Line numbers stated here are before code is added.
+
+*******************Edits for Notoriety.cs**********************
+For V.2.1
+
+At about line 130 just under
+			#region Factions
+			Faction targetFaction = Faction.Find( target, true );
+
+			if( (!Core.ML || map == Faction.Facet) && targetFaction != null )
+			{
+				if( Faction.Find( from, true ) != targetFaction )
+					return false;
+			}
+			#endregion
+
+Add
+//##############EDIT FOR NONPK AND FACTIONS####################
+			if( map != null && ((PlayerMobile)target).NONPK == NONPK.NONPK && (map.Rules & MapRules.BeneficialRestrictions) == 0 )
+				return true; // In felucca, anything goes
+//##############EDIT FOR NONPK AND FACTIONS####################
+
+At line 208 just under         
+
+			if( (pmFrom != null && pmFrom.DuelContext != null && pmFrom.DuelContext.Started) || (pmTarg != null && pmTarg.DuelContext != null && pmTarg.DuelContext.Started) )
+				return false;
+
+			Engines.ConPVP.SafeZone sz = from.Region.GetRegion( typeof( Engines.ConPVP.SafeZone ) ) as Engines.ConPVP.SafeZone;
+
+			if( sz != null /*&& sz.IsDisabled()*/ )
+				return false;
+
+			sz = target.Region.GetRegion( typeof( Engines.ConPVP.SafeZone ) ) as Engines.ConPVP.SafeZone;
+
+			if( sz != null /*&& sz.IsDisabled()*/ )
+				return false;
+			#endregion
+
+			Map map = from.Map;
+
+For V.2.1
+Add
+If upgrading just replace the old edit.
+//#############ADDED FOR Factions, Guilds And NONPK##########################
+
+			Guild fromGuildNONPK = GetGuildFor( from.Guild as Guild, from );
+			Guild targetGuildNONPK = GetGuildFor( target.Guild as Guild, target );
+
+			if( fromGuildNONPK != null && targetGuildNONPK != null && (fromGuildNONPK == targetGuildNONPK || fromGuildNONPK.IsAlly( targetGuildNONPK ) || fromGuildNONPK.IsEnemy( targetGuildNONPK )) && ((PlayerMobile)target).NONPK == NONPK.NONPK )
+				return true; // Guild allies or enemies can be harmful
+
+				Faction srcFaction = Faction.Find( from, true, true );
+				Faction trgFaction = Faction.Find( target, true, true );
+			if (srcFaction != null && trgFaction != null && srcFaction != trgFaction && from.Map == Faction.Facet && from is PlayerMobile &&  target.Player && ((PlayerMobile)target).NONPK == NONPK.NONPK && map != null && (map.Rules & MapRules.HarmfulRestrictions) == 0 )
+				return true;
+
+			if ( from is PlayerMobile &&  target.Player && ((PlayerMobile)target).NONPK == NONPK.NONPK && map != null && (map.Rules & MapRules.HarmfulRestrictions) == 0  )//&& map != null 
+                                              from.SendMessage( 33, "You cannot attack [*NONPK*] players. Unless you are in the same Guild or waring the NONPK players Guild" );
+                                          else
+
+			if ( from is PlayerMobile && target.Player && ((PlayerMobile)from).NONPK == NONPK.NONPK && map != null && (map.Rules & MapRules.HarmfulRestrictions) == 0  )
+                                              from.SendMessage( 33, "You are [*NONPK*] and cannot attack players. Unless you are in the same Guild or waring the NONPK players Guild" );
+                                          else
+//#############ADDED FOR Factions, Guilds And NONPK##########################
+
+
+Then at about line 409 just under
+
+				master = bc.ControlMaster;
+
+				if ( Core.ML && master != null )
+				{
+					if ( ( source == master && CheckAggressor( target.Aggressors, source ) ) || ( CheckAggressor( source.Aggressors, bc ) ) )
+						return Notoriety.CanBeAttacked;
+					else
+						return MobileNotoriety( source, master );
+				}
+
+				if( !bc.Summoned && !bc.Controlled && ((PlayerMobile)source).EnemyOfOneType == target.GetType() )
+					return Notoriety.Enemy;
+			}
+
+Add
+
+//###############ADDED FOR NONPK SO NONPK CANT ATTACK REDS##################
+			if ( source is PlayerMobile && target is PlayerMobile && target.Kills >= 5 && ((PlayerMobile)source).NONPK == NONPK.NONPK ) 
+				return Notoriety.Innocent;
+                                          else
+//#################ADDED FOR NONPK SO NONPK CANT ATTACK REDS###############
+
+
+At about line 412 just after
+
+			if ( target.Kills >= 5 || ( target.Body.IsMonster && IsSummoned( target as BaseCreature ) && !( target is BaseFamiliar ) && !( target is ArcaneFey ) && !( target is Golem ) ) || ( target is BaseCreature && ( ( (BaseCreature)target ).AlwaysMurderer || ( (BaseCreature)target ).IsAnimatedDead ) ) )
+				return Notoriety.Murderer;
+
+Add
+
+//#############ADDED FOR NONPK##########################
+
+			 if ( target is PlayerMobile && target.Criminal && ((PlayerMobile)target).NONPK == NONPK.NONPK )
+				return Notoriety.Innocent;
+                                          else
+//#############ADDED FOR NONPK##########################
+
+
+
+**************Edits for PLayerMobile********************
+
+
+At line 50
+
+just below
+
+	public enum NpcGuild
+	{
+		None,
+		MagesGuild,
+		WarriorsGuild,
+		ThievesGuild,
+		RangersGuild,
+		HealersGuild,
+		MinersGuild,
+		MerchantsGuild,
+		TinkersGuild,
+		TailorsGuild,
+		FishermensGuild,
+		BardsGuild,
+		BlacksmithsGuild
+	}
+
+Add
+for V.2.1
+If upgrading you can just add in
+
+			NONPKinEvent,
+or replace all with.
+
+
+		public enum NONPK
+		{
+			Null,
+			NONPK,
+			NONPKinEvent,
+			PK
+		}
+
+Then at about line 96
+
+just after
+
+		private DesignContext m_DesignContext;
+
+
+Add
+
+		private NONPK m_NONPK;
+
+
+Then at about line 172
+
+
+Just after
+
+		public Server.Guilds.RankDefinition GuildRank
+		{
+			get
+			{
+				if( this.AccessLevel >= AccessLevel.GameMaster )
+					return Server.Guilds.RankDefinition.Leader;
+				else
+					return m_GuildRank;
+			}
+			set{ m_GuildRank = value; }
+		}
+
+
+Add
+
+
+		[CommandProperty(AccessLevel.Administrator)] 
+		public NONPK NONPK
+		{ 
+			get{return m_NONPK;} 
+            		set{m_NONPK = value;} 
+		}
+
+
+Then we go to serialize/Deserialize
+
+To Deserialize we add case 29
+
+like
+
+			switch ( version )
+			{
+				case 29:
+				{
+					m_NONPK = (NONPK)reader.ReadInt();
+
+					goto case 28;
+				}
+				case 28:
+				{
+					m_PeacedUntil = reader.ReadDateTime();
+
+					goto case 27;
+				}
+
+To serialize we change
+
+			writer.Write( (int) 28 ); // version
+
+To
+
+
+			writer.Write( (int) 29 ); // version
+
+Then add
+
+             		writer.Write( (int) m_NONPK );
+
+Like
+
+			CheckKillDecay();
+
+			CheckAtrophies( this );
+
+			base.Serialize( writer );
+
+			writer.Write( (int) 29 ); // version
+
+             		writer.Write( (int) m_NONPK );
+			writer.Write( (DateTime) m_PeacedUntil );
+			writer.Write( (DateTime) m_AnkhNextUse );
+			writer.Write( m_AutoStabled, true );

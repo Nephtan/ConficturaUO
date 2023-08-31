@@ -1,0 +1,4 @@
+﻿The books are saved in: C:\ULTIMA ONLINE\RunUO 1.0\Data\books !!!
+
+
+There you can delete them. Don’t forget to restart the server!

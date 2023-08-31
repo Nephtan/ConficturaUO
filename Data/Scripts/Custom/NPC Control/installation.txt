@@ -1,0 +1,19 @@
+|*****Instalation*****>
+Notice strings in engish are commented in the code, so you can replace the germans.
+
+To uncontrol at death add the following lines to the PlayerMobbile.cs or edit the OnBeforeDeath() function.
+
+	public override bool OnBeforeDeath()
+	{
+		if (Server.Commands.ControlCommand.UncontrolDeath( (Mobile)this )) 
+		{
+		  return base.OnBeforeDeath();
+		}
+		else {
+		  return false; 
+		}
+	}
+	
+And now: Have fun...
+
+*********************************************/

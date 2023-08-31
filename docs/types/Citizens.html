@@ -1,0 +1,40 @@
+<html>
+   <head>
+      <title>RunUO Documentation - Class Overview - Citizens</title>
+   </head>
+   <body bgcolor="white" style="font-family: Courier New" text="Black" link="Black" vlink="Black" alink="#808080">
+      <h4><a href="../namespaces/Server.Mobiles.html">Back to Server.Mobiles</a></h4>
+      <h2>Citizens : <!-- DBG-1 --><a href="BaseCreature.html">BaseCreature</a>, <!-- DBG-2.2 --><a href="IHued.html">IHued</a>, <!-- DBG-2.1 --><font color="blue">IComparable</font>&lt;<a href="Mobile.html">Mobile</a>&gt;, <!-- DBG-2.2 --><a href="ISerializable.html">ISerializable</a>, <!-- DBG-2.2 --><a href="ISpawnable.html">ISpawnable</a>, <!-- DBG-2.2 --><a href="IEntity.html">IEntity</a>, <!-- DBG-2.2 --><a href="IPoint3D.html">IPoint3D</a>, <!-- DBG-2.2 --><a href="IPoint2D.html">IPoint2D</a>, <!-- DBG-2.1 --><font color="blue">IComparable</font>, <!-- DBG-2.1 --><font color="blue">IComparable</font>&lt;<a href="IEntity.html">IEntity</a>&gt;, <!-- DBG-2.2 --><a href="IHonorTarget.html">IHonorTarget</a></h2>
+<h4>Derived Types: <!-- DBG-3 --><a href="AdventurerEast.html">AdventurerEast</a>, <!-- DBG-3 --><a href="AdventurerNorth.html">AdventurerNorth</a>, <!-- DBG-3 --><a href="AdventurerSouth.html">AdventurerSouth</a>, <!-- DBG-3 --><a href="AdventurerWest.html">AdventurerWest</a>, <!-- DBG-3 --><a href="DragonRider.html">DragonRider</a>, <!-- DBG-3 --><a href="HouseVisitor.html">HouseVisitor</a>, <!-- DBG-3 --><a href="Humanoid.html">Humanoid</a>, <!-- DBG-3 --><a href="TavernPatronEast.html">TavernPatronEast</a>, <!-- DBG-3 --><a href="TavernPatronNorth.html">TavernPatronNorth</a>, <!-- DBG-3 --><a href="TavernPatronSouth.html">TavernPatronSouth</a>, <!-- DBG-3 --><a href="TavernPatronWest.html">TavernPatronWest</a>, <!-- DBG-3 --><a href="TradesmanAlchemist.html">TradesmanAlchemist</a>, <!-- DBG-3 --><a href="TradesmanBard.html">TradesmanBard</a>, <!-- DBG-3 --><a href="TradesmanButcher.html">TradesmanButcher</a>, <!-- DBG-3 --><a href="TradesmanCook.html">TradesmanCook</a>, <!-- DBG-3 --><a href="TradesmanLeather.html">TradesmanLeather</a>, <!-- DBG-3 --><a href="TradesmanLogger.html">TradesmanLogger</a>, <!-- DBG-3 --><a href="TradesmanLumber.html">TradesmanLumber</a>, <!-- DBG-3 --><a href="TradesmanMiner.html">TradesmanMiner</a>, <!-- DBG-3 --><a href="TradesmanSmelter.html">TradesmanSmelter</a>, <!-- DBG-3 --><a href="TradesmanSmith.html">TradesmanSmith</a>, <!-- DBG-3 --><a href="TrainingBow.html">TrainingBow</a>, <!-- DBG-3 --><a href="TrainingFishing.html">TrainingFishing</a>, <!-- DBG-3 --><a href="TrainingMagery.html">TrainingMagery</a>, <!-- DBG-3 --><a href="TrainingSingle.html">TrainingSingle</a>, <!-- DBG-3 --><a href="TrainingSpirits.html">TrainingSpirits</a>, <!-- DBG-3 --><a href="Warriors.html">Warriors</a></h4>
+<h4>Nested Types: <!-- DBG-4 --><a href="CitizenGump.html">CitizenGump</a>, <!-- DBG-4 --><a href="SpeechGumpEntry.html">SpeechGumpEntry</a></h4>
+      (<font color="blue">static</font>) <font color="blue">void</font> CreateCitizenss( <!-- DBG-0 --><a href="Item.html">Item</a> spot )<br>
+      (<font color="blue">static</font>) <font color="blue">void</font> CreateDaemons( <!-- DBG-0 --><a href="Item.html">Item</a> spot )<br>
+      (<font color="blue">static</font>) <font color="blue">void</font> CreateDragonRider( <!-- DBG-0 --><a href="Point3D.html">Point3D</a> loc, <!-- DBG-0 --><a href="Map.html">Map</a> map, <!-- DBG-0 --><a href="Direction.html">Direction</a> direction )<br>
+      (<font color="blue">static</font>) <font color="blue">void</font> CreateDragonRiders()<br>
+      (<font color="blue">static</font>) <font color="blue">void</font> CreatePets( <!-- DBG-0 --><a href="Item.html">Item</a> spot )<br>
+      (<font color="blue">static</font>) <font color="blue">void</font> MountCitizens( <!-- DBG-0 --><a href="Mobile.html">Mobile</a> m, <font color="blue">bool</font> includeDragyns )<br>
+      (<font color="blue">static</font>) <font color="blue">bool</font> PeopleMeetingHere( <!-- DBG-0 --><a href="Item.html">Item</a> spot )<br>
+      (<font color="blue">static</font>) <font color="blue">void</font> PopulateCities()<br>
+      (<font color="blue">ctor</font>) Citizens()<br>
+      (<font color="blue">ctor</font>) Citizens( <!-- DBG-0 --><a href="Serial.html">Serial</a> serial )<br>
+      <font color="blue">int</font> Citizen_Cost( <font color="blue">get</font>; <font color="blue">set</font>; )<br>
+      <font color="blue">string</font> Citizen_Phrase( <font color="blue">get</font>; <font color="blue">set</font>; )<br>
+      <font color="blue">string</font> Citizen_Rumor( <font color="blue">get</font>; <font color="blue">set</font>; )<br>
+      <font color="blue">int</font> Citizen_Service( <font color="blue">get</font>; <font color="blue">set</font>; )<br>
+      <font color="blue">int</font> Citizen_Type( <font color="blue">get</font>; <font color="blue">set</font>; )<br>
+      <font color="blue">bool</font> DeleteCorpseOnDeath( <font color="blue">get</font>; )<br>
+      <font color="blue">bool</font> InitialInnocent( <font color="blue">get</font>; )<br>
+      DateTime NextTalk( <font color="blue">get</font>; <font color="blue">set</font>; )<br>
+      <font color="blue">bool</font> PlayerRangeSensitive( <font color="blue">get</font>; )<br>
+      <font color="blue">virtual</font> <font color="blue">void</font> Deserialize( <!-- DBG-0 --><a href="GenericReader.html">GenericReader</a> reader )<br>
+      <font color="blue">virtual</font> <font color="blue">void</font> GetContextMenuEntries( <!-- DBG-0 --><a href="Mobile.html">Mobile</a> from, <font color="blue">List</font>&lt;<a href="ContextMenuEntry.html">ContextMenuEntry</a>&gt; list )<br>
+      <font color="blue">virtual</font> <font color="blue">bool</font> IsEnemy( <!-- DBG-0 --><a href="Mobile.html">Mobile</a> m )<br>
+      <font color="blue">virtual</font> <font color="blue">void</font> OnAfterSpawn()<br>
+      <font color="blue">virtual</font> <font color="blue">bool</font> OnBeforeDeath()<br>
+      <font color="blue">virtual</font> <font color="blue">bool</font> OnDragDrop( <!-- DBG-0 --><a href="Mobile.html">Mobile</a> from, <!-- DBG-0 --><a href="Item.html">Item</a> dropped )<br>
+      <font color="blue">virtual</font> <font color="blue">void</font> OnMapChange( <!-- DBG-0 --><a href="Map.html">Map</a> oldMap )<br>
+      <font color="blue">virtual</font> <font color="blue">void</font> OnMovement( <!-- DBG-0 --><a href="Mobile.html">Mobile</a> m, <!-- DBG-0 --><a href="Point3D.html">Point3D</a> oldLocation )<br>
+      <font color="blue">virtual</font> <font color="blue">void</font> Serialize( <!-- DBG-0 --><a href="GenericWriter.html">GenericWriter</a> writer )<br>
+      <font color="blue">void</font> SetupCitizen()<br>
+   </body>
+</html>

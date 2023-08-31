@@ -1,0 +1,7 @@
+4/24/2023 11:28:10 AM: 192.168.16.101: Owner 0x186E6 "a lapwing" (no account) used command 'refresh '
+4/24/2023 11:28:48 AM: 192.168.16.101: Owner 0x186E6 "a lapwing" (no account) used command 'set hunger 30'
+4/24/2023 11:28:50 AM: 192.168.16.101: Owner 0x186E6 "a lapwing" (no account) set property 'hunger' of 0x2347A "Google" ('144144') to '30'
+4/24/2023 11:28:54 AM: 192.168.16.101: Owner 0x186E6 "a lapwing" (no account) used command 'set thirst 30'
+4/24/2023 11:28:55 AM: 192.168.16.101: Owner 0x186E6 "a lapwing" (no account) set property 'thirst' of 0x2347A "Google" ('144144') to '30'
+4/24/2023 11:28:58 AM: 192.168.16.101: Owner 0x186E6 "a lapwing" (no account) used command 'refresh '
+4/24/2023 11:29:14 AM: 192.168.16.101: Owner 0x186E6 "a lapwing" (no account) is cloning 0x43A14 "Nephtan" ('Admin')

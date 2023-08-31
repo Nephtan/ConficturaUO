@@ -1,0 +1,140 @@
+8/27/2023 12:09:11 PM: 75.31.90.226: GameMaster 0xEC21 "Dingus" ('namrehs') used command 'add '
+8/27/2023 12:10:02 PM: 75.31.90.226: GameMaster 0xEC21 "Dingus" ('namrehs') used command 'add bagofholding'
+8/27/2023 12:10:04 PM: 75.31.90.226: GameMaster 0xEC21 "Dingus" ('namrehs') building at (3071, 1076, 5) in Sosaria: "bagofholding"
+8/27/2023 12:10:04 PM: 75.31.90.226: Serials: 0x40280661; 
+8/27/2023 12:10:10 PM: 75.31.90.226: GameMaster 0xEC21 "Dingus" ('namrehs') used command 'props '
+8/27/2023 12:10:18 PM: 75.31.90.226: GameMaster 0xEC21 "Dingus" ('namrehs') set property 'MaxItems' of 0x40280661 (BagOfHolding) to '20'
+8/27/2023 12:10:42 PM: 75.31.90.226: GameMaster 0xEC21 "Dingus" ('namrehs') used command 'add magickey'
+8/27/2023 12:11:03 PM: 75.31.90.226: GameMaster 0xEC21 "Dingus" ('namrehs') building at (3068, 1082, 5) in Sosaria: "MagicSkeltonsKey"
+8/27/2023 12:11:03 PM: 75.31.90.226: Serials: 0x40282264; 
+8/27/2023 12:12:27 PM: 75.31.90.226: GameMaster 0xEC21 "Dingus" ('namrehs') building at (3068, 1082, 5) in Sosaria: "WaterFlask"
+8/27/2023 12:12:27 PM: 75.31.90.226: Serials: 0x4028276D; 
+8/27/2023 12:12:41 PM: 75.31.90.226: GameMaster 0xEC21 "Dingus" ('namrehs') used command 'add '
+8/27/2023 12:14:16 PM: 75.31.90.226: GameMaster 0xEC21 "Dingus" ('namrehs') used command 'add '
+8/27/2023 12:15:45 PM: 75.31.90.226: GameMaster 0xEC21 "Dingus" ('namrehs') used command 'add everlasting'
+8/27/2023 12:15:49 PM: 75.31.90.226: GameMaster 0xEC21 "Dingus" ('namrehs') building at (3067, 1082, 8) in Sosaria: "EverlastingBottle"
+8/27/2023 12:15:49 PM: 75.31.90.226: Serials: 0x40282D65; 
+8/27/2023 12:15:54 PM: 75.31.90.226: GameMaster 0xEC21 "Dingus" ('namrehs') building at (3068, 1082, 5) in Sosaria: "EverlastingLoaf"
+8/27/2023 12:15:54 PM: 75.31.90.226: Serials: 0x40282D85; 
+8/27/2023 12:16:39 PM: 75.31.90.226: GameMaster 0xEC21 "Dingus" ('namrehs') used command 'setskill taming 100'
+8/27/2023 12:16:39 PM: 75.31.90.226: GameMaster 0xEC21 "Dingus" ('namrehs') set property 'Taming.Base' of 0xBFDC "Luck" ('sherman') to '100'
+8/27/2023 12:17:29 PM: 75.31.90.226: GameMaster 0xEC21 "Dingus" ('namrehs') used command 'setskill druidism 100'
+8/27/2023 12:17:30 PM: 75.31.90.226: GameMaster 0xEC21 "Dingus" ('namrehs') set property 'Druidism.Base' of 0xBFDC "Luck" ('sherman') to '100'
+8/27/2023 12:17:39 PM: 75.31.90.226: GameMaster 0xEC21 "Dingus" ('namrehs') used command 'setskill veterinary 100'
+8/27/2023 12:17:40 PM: 75.31.90.226: GameMaster 0xEC21 "Dingus" ('namrehs') set property 'Veterinary.Base' of 0xBFDC "Luck" ('sherman') to '100'
+8/27/2023 12:17:50 PM: 75.31.90.226: GameMaster 0xEC21 "Dingus" ('namrehs') used command 'setskill herding 100'
+8/27/2023 12:17:50 PM: 75.31.90.226: GameMaster 0xEC21 "Dingus" ('namrehs') set property 'Herding.Base' of 0xBFDC "Luck" ('sherman') to '100'
+8/27/2023 12:18:05 PM: 75.31.90.226: GameMaster 0xEC21 "Dingus" ('namrehs') used command 'setskill magicresist 100'
+8/27/2023 12:18:06 PM: 75.31.90.226: GameMaster 0xEC21 "Dingus" ('namrehs') set property 'MagicResist.Base' of 0xBFDC "Luck" ('sherman') to '100'
+8/27/2023 12:18:13 PM: 75.31.90.226: GameMaster 0xEC21 "Dingus" ('namrehs') used command 'setskill removetrap 100'
+8/27/2023 12:18:14 PM: 75.31.90.226: GameMaster 0xEC21 "Dingus" ('namrehs') set property 'RemoveTrap.Base' of 0xBFDC "Luck" ('sherman') to '100'
+8/27/2023 12:18:28 PM: 75.31.90.226: GameMaster 0xEC21 "Dingus" ('namrehs') used command 'setskill snooping 100'
+8/27/2023 12:18:29 PM: 75.31.90.226: GameMaster 0xEC21 "Dingus" ('namrehs') set property 'Snooping.Base' of 0xBFDC "Luck" ('sherman') to '100'
+8/27/2023 12:18:34 PM: 75.31.90.226: GameMaster 0xEC21 "Dingus" ('namrehs') used command 'setskill stealing 100'
+8/27/2023 12:18:36 PM: 75.31.90.226: GameMaster 0xEC21 "Dingus" ('namrehs') set property 'Stealing.Base' of 0xBFDC "Luck" ('sherman') to '100'
+8/27/2023 12:19:10 PM: 75.31.90.226: GameMaster 0xEC21 "Dingus" ('namrehs') used command 'setskill mercantile 55'
+8/27/2023 12:19:11 PM: 75.31.90.226: GameMaster 0xEC21 "Dingus" ('namrehs') set property 'Mercantile.Base' of 0xBFDC "Luck" ('sherman') to '55'
+8/27/2023 12:21:01 PM: 75.31.90.226: GameMaster 0xEC21 "Dingus" ('namrehs') used command 'add hercul'
+8/27/2023 12:21:17 PM: 75.31.90.226: GameMaster 0xEC21 "Dingus" ('namrehs') used command 'addtopack hercules'
+8/27/2023 12:21:22 PM: 75.31.90.226: GameMaster 0xEC21 "Dingus" ('namrehs') used command 'add '
+8/27/2023 12:21:27 PM: 75.31.90.226: GameMaster 0xEC21 "Dingus" ('namrehs') used command 'add beltof'
+8/27/2023 12:21:30 PM: 75.31.90.226: GameMaster 0xEC21 "Dingus" ('namrehs') building at (3068, 1082, 5) in Sosaria: "Artifact_BeltofHercules"
+8/27/2023 12:21:30 PM: 75.31.90.226: Serials: 0x40283594; 
+8/27/2023 12:23:04 PM: 75.31.90.226: GameMaster 0xEC21 "Dingus" ('namrehs') used command 'addtopack everlastingdrink'
+8/27/2023 12:23:05 PM: 75.31.90.226: GameMaster 0xEC21 "Dingus" ('namrehs') building at (3068, 1081, 5) in Sosaria: "everlastingdrink"
+8/27/2023 12:23:11 PM: 75.31.90.226: GameMaster 0xEC21 "Dingus" ('namrehs') used command 'add everlasting'
+8/27/2023 12:23:15 PM: 75.31.90.226: GameMaster 0xEC21 "Dingus" ('namrehs') building at (3069, 1081, 5) in Sosaria: "EverlastingBottle"
+8/27/2023 12:23:15 PM: 75.31.90.226: Serials: 0x40283714; 
+8/27/2023 12:23:18 PM: 75.31.90.226: GameMaster 0xEC21 "Dingus" ('namrehs') building at (3069, 1080, 5) in Sosaria: "EverlastingLoaf"
+8/27/2023 12:23:18 PM: 75.31.90.226: Serials: 0x40283720; 
+8/27/2023 12:28:25 PM: 75.31.90.226: GameMaster 0xEC21 "Dingus" ('namrehs') used command 'add backpack'
+8/27/2023 12:28:28 PM: 75.31.90.226: GameMaster 0xEC21 "Dingus" ('namrehs') used command 'add pack'
+8/27/2023 12:28:48 PM: 75.31.90.226: GameMaster 0xEC21 "Dingus" ('namrehs') building at (3070, 1081, 5) in Sosaria: "RuggedBackpack"
+8/27/2023 12:28:48 PM: 75.31.90.226: Serials: 0x40283B87; 
+8/27/2023 12:57:33 PM: 75.31.90.226: GameMaster 0xEC21 "Dingus" ('namrehs') used command 'add soulstone'
+8/27/2023 12:57:35 PM: 75.31.90.226: GameMaster 0xEC21 "Dingus" ('namrehs') building at (3068, 1081, 5) in Sosaria: "soulstone"
+8/27/2023 12:57:35 PM: 75.31.90.226: Serials: 0x402856A1; 
+8/27/2023 1:02:27 PM: 75.31.90.226: GameMaster 0xEC21 "Dingus" ('namrehs') used command 'props '
+8/27/2023 1:03:55 PM: 75.31.90.226: GameMaster 0xEC21 "Dingus" ('namrehs') used command 'setskill camping 100'
+8/27/2023 1:03:56 PM: 75.31.90.226: GameMaster 0xEC21 "Dingus" ('namrehs') set property 'Camping.Base' of 0xBFDC "Luck" ('sherman') to '100'
+8/27/2023 1:04:06 PM: 75.31.90.226: GameMaster 0xEC21 "Dingus" ('namrehs') used command 'setskill mercantile 75'
+8/27/2023 1:04:07 PM: 75.31.90.226: GameMaster 0xEC21 "Dingus" ('namrehs') set property 'Mercantile.Base' of 0xBFDC "Luck" ('sherman') to '75'
+8/27/2023 1:05:39 PM: 75.31.90.226: GameMaster 0xEC21 "Dingus" ('namrehs') used command 'setskill healing 80'
+8/27/2023 1:05:40 PM: 75.31.90.226: GameMaster 0xEC21 "Dingus" ('namrehs') set property 'Healing.Base' of 0xBFDC "Luck" ('sherman') to '80'
+8/27/2023 1:06:18 PM: 75.31.90.226: GameMaster 0xEC21 "Dingus" ('namrehs') used command 'set elementalism 30'
+8/27/2023 1:06:31 PM: 75.31.90.226: GameMaster 0xEC21 "Dingus" ('namrehs') used command 'set elementalism 30'
+8/27/2023 1:06:40 PM: 75.31.90.226: GameMaster 0xEC21 "Dingus" ('namrehs') used command 'set spellweaving 30'
+8/27/2023 1:06:50 PM: 75.31.90.226: GameMaster 0xEC21 "Dingus" ('namrehs') used command 'setskill elementalism 30'
+8/27/2023 1:06:50 PM: 75.31.90.226: GameMaster 0xEC21 "Dingus" ('namrehs') set property 'Elementalism.Base' of 0xBFDC "Luck" ('sherman') to '30'
+8/27/2023 1:06:56 PM: 75.31.90.226: GameMaster 0xEC21 "Dingus" ('namrehs') used command 'setskill healing 100'
+8/27/2023 1:06:57 PM: 75.31.90.226: GameMaster 0xEC21 "Dingus" ('namrehs') set property 'Healing.Base' of 0xBFDC "Luck" ('sherman') to '100'
+8/27/2023 3:00:28 PM: 75.31.90.226: GameMaster 0xEC21 "Dingus" ('namrehs') used command 'go '
+8/27/2023 3:00:46 PM: 75.31.90.226: GameMaster 0xEC21 "Dingus" ('namrehs') used command 'm tele'
+8/27/2023 3:00:55 PM: 75.31.90.226: GameMaster 0xEC21 "Dingus" ('namrehs') used command 'go '
+8/27/2023 3:01:28 PM: 75.31.90.226: GameMaster 0xEC21 "Dingus" ('namrehs') used command 'get '
+8/27/2023 3:01:32 PM: 75.31.90.226: GameMaster 0xEC21 "Dingus" ('namrehs') used command 'who '
+8/27/2023 3:01:38 PM: 75.31.90.226: GameMaster 0xEC21 "Dingus" ('namrehs') bringing 0xBFDC "Luck" ('sherman') to Location (318, 327, 5), Map IslesDread
+8/27/2023 3:23:51 PM: 75.31.90.226: GameMaster 0xEC21 "Dingus" ('namrehs') used command 'who '
+8/27/2023 3:23:55 PM: 75.31.90.226: GameMaster 0xEC21 "Dingus" ('namrehs') going to 0xBFDC "Luck" ('sherman'), Location (3071, 1076, 5), Map Sosaria
+8/27/2023 3:24:10 PM: 75.31.90.226: GameMaster 0xEC21 "Dingus" ('namrehs') used command 'add board 1000'
+8/27/2023 3:24:11 PM: 75.31.90.226: GameMaster 0xEC21 "Dingus" ('namrehs') building at (3070, 1077, 5) in Sosaria: "board" "1000"
+8/27/2023 3:24:11 PM: 75.31.90.226: Serials: 0x402A0362; 
+8/27/2023 3:24:15 PM: 75.31.90.226: GameMaster 0xEC21 "Dingus" ('namrehs') used command 'add woodenchest'
+8/27/2023 3:24:17 PM: 75.31.90.226: GameMaster 0xEC21 "Dingus" ('namrehs') building at (3068, 1075, 5) in Sosaria: "woodenchest"
+8/27/2023 3:24:17 PM: 75.31.90.226: Serials: 0x402A038F; 
+8/27/2023 3:24:18 PM: 75.31.90.226: GameMaster 0xEC21 "Dingus" ('namrehs') used command 'add woodenchest'
+8/27/2023 3:24:18 PM: 75.31.90.226: GameMaster 0xEC21 "Dingus" ('namrehs') building at (3069, 1074, 5) in Sosaria: "woodenchest"
+8/27/2023 3:24:18 PM: 75.31.90.226: Serials: 0x402A0394; 
+8/27/2023 3:24:20 PM: 75.31.90.226: GameMaster 0xEC21 "Dingus" ('namrehs') used command 'add woodenchest'
+8/27/2023 3:24:21 PM: 75.31.90.226: GameMaster 0xEC21 "Dingus" ('namrehs') building at (3070, 1074, 5) in Sosaria: "woodenchest"
+8/27/2023 3:24:21 PM: 75.31.90.226: Serials: 0x402A03B8; 
+8/27/2023 3:25:56 PM: 75.31.90.226: GameMaster 0xEC21 "Dingus" ('namrehs') used command 'setskill tailoring 100'
+8/27/2023 3:25:57 PM: 75.31.90.226: GameMaster 0xEC21 "Dingus" ('namrehs') set property 'Tailoring.Base' of 0x9748 "Rivi" ('sherman') to '100'
+8/27/2023 3:26:34 PM: 75.31.90.226: GameMaster 0xEC21 "Dingus" ('namrehs') used command 'setskill armoslore 100'
+8/27/2023 3:26:45 PM: 75.31.90.226: GameMaster 0xEC21 "Dingus" ('namrehs') used command 'setskill armslore 100'
+8/27/2023 3:26:46 PM: 75.31.90.226: GameMaster 0xEC21 "Dingus" ('namrehs') set property 'ArmsLore.Base' of 0x9748 "Rivi" ('sherman') to '100'
+8/27/2023 3:27:09 PM: 75.31.90.226: GameMaster 0xEC21 "Dingus" ('namrehs') used command 'setskill inscription 100'
+8/27/2023 3:27:13 PM: 75.31.90.226: GameMaster 0xEC21 "Dingus" ('namrehs') used command 'setskill scribe 100'
+8/27/2023 3:27:18 PM: 75.31.90.226: GameMaster 0xEC21 "Dingus" ('namrehs') used command 'setskill inscribe 100'
+8/27/2023 3:27:19 PM: 75.31.90.226: GameMaster 0xEC21 "Dingus" ('namrehs') set property 'Inscribe.Base' of 0x9748 "Rivi" ('sherman') to '100'
+8/27/2023 3:33:58 PM: 75.31.90.226: GameMaster 0xEC21 "Dingus" ('namrehs') used command 'add forg'
+8/27/2023 3:34:04 PM: 75.31.90.226: GameMaster 0xEC21 "Dingus" ('namrehs') building at (3069, 1082, 5) in Sosaria: "DwarvenForge"
+8/27/2023 3:34:04 PM: 75.31.90.226: Serials: 0x402A0E94; 
+8/27/2023 3:34:22 PM: 75.31.90.226: GameMaster 0xEC21 "Dingus" ('namrehs') used command 'add anvil'
+8/27/2023 3:34:24 PM: 75.31.90.226: GameMaster 0xEC21 "Dingus" ('namrehs') building at (3069, 1082, 5) in Sosaria: "anvil"
+8/27/2023 3:34:24 PM: 75.31.90.226: Serials: 0x402A0EDF; 
+8/27/2023 3:34:56 PM: 75.31.90.226: GameMaster 0xEC21 "Dingus" ('namrehs') used command 'add yard'
+8/27/2023 3:35:03 PM: 75.31.90.226: GameMaster 0xEC21 "Dingus" ('namrehs') used command 'add tool'
+8/27/2023 3:35:18 PM: 75.31.90.226: GameMaster 0xEC21 "Dingus" ('namrehs') building at (3069, 1082, 5) in Sosaria: "LawnTools"
+8/27/2023 3:35:18 PM: 75.31.90.226: Serials: 0x402A0FC3; 
+8/28/2023 8:22:08 AM: 75.31.90.226: GameMaster 0xEC21 "Dingus" ('namrehs') used command 'props '
+8/28/2023 8:22:54 AM: 75.31.90.226: GameMaster 0xEC21 "Dingus" ('namrehs') used command 'props '
+8/28/2023 8:23:04 AM: 75.31.90.226: GameMaster 0xEC21 "Dingus" ('namrehs') set property 'LowerRegCost' of ... to '100'
+8/28/2023 8:24:42 AM: 75.31.90.226: GameMaster 0xEC21 "Dingus" ('namrehs') used command 'who '
+8/28/2023 8:25:48 AM: 75.31.90.226: GameMaster 0xEC21 "Dingus" ('namrehs') used command 'who '
+8/28/2023 8:25:56 AM: 75.31.90.226: GameMaster 0xEC21 "Dingus" ('namrehs') opening properties gump of 0x4F238 "Cassandra" ('archer2') 
+8/28/2023 8:30:01 AM: 75.31.90.226: GameMaster 0xEC21 "Dingus" ('namrehs') used command 'props '
+8/28/2023 8:34:13 AM: 75.31.90.226: GameMaster 0xEC21 "Dingus" ('namrehs') used command 'props '
+8/28/2023 8:34:23 AM: 75.31.90.226: GameMaster 0xEC21 "Dingus" ('namrehs') set property 'LowerRegCost' of ... to '0'
+8/29/2023 4:37:33 PM: 75.31.90.226: GameMaster 0xEC21 "Dingus" ('namrehs') used command 'go '
+8/29/2023 4:37:58 PM: 75.31.90.226: GameMaster 0xEC21 "Dingus" ('namrehs') used command 'who '
+8/29/2023 4:38:05 PM: 75.31.90.226: GameMaster 0xEC21 "Dingus" ('namrehs') bringing 0x41275 "Tiny Tim" ('Holseker') to Location (3568, 3410, 0), Map Sosaria
+8/29/2023 4:38:36 PM: 75.31.90.226: GameMaster 0xEC21 "Dingus" ('namrehs') used command 'go '
+8/29/2023 4:39:43 PM: 75.31.90.226: GameMaster 0xEC21 "Dingus" ('namrehs') used command 'm tele'
+8/29/2023 4:39:53 PM: 75.31.90.226: GameMaster 0xEC21 "Dingus" ('namrehs') used command 'who '
+8/29/2023 4:39:56 PM: 75.31.90.226: GameMaster 0xEC21 "Dingus" ('namrehs') bringing 0x41275 "Tiny Tim" ('Holseker') to Location (4517, 1275, 2), Map Sosaria
+8/29/2023 4:40:20 PM: 75.31.90.226: GameMaster 0xEC21 "Dingus" ('namrehs') used command 'who '
+8/29/2023 4:40:34 PM: 75.31.90.226: GameMaster 0xEC21 "Dingus" ('namrehs') going to 0xBFDC "Luck" ('sherman'), Location (3070, 1081, 5), Map Sosaria
+8/29/2023 4:40:53 PM: 75.31.90.226: GameMaster 0xEC21 "Dingus" ('namrehs') used command 'where '
+8/29/2023 4:40:58 PM: 75.31.90.226: GameMaster 0xEC21 "Dingus" ('namrehs') used command 'speedboost '
+8/29/2023 9:16:54 PM: 75.31.90.226: GameMaster 0xEC21 "Dingus" ('namrehs') used command 'addtopack HomeownerTools'
+8/29/2023 9:16:55 PM: 75.31.90.226: GameMaster 0xEC21 "Dingus" ('namrehs') building at (3070, 1075, 5) in Sosaria: "HomeownerTools"
+8/29/2023 9:16:59 PM: 75.31.90.226: GameMaster 0xEC21 "Dingus" ('namrehs') used command 'add homeo'
+8/29/2023 9:17:04 PM: 75.31.90.226: GameMaster 0xEC21 "Dingus" ('namrehs') used command 'add tools'
+8/29/2023 9:17:33 PM: 75.31.90.226: GameMaster 0xEC21 "Dingus" ('namrehs') building at (3070, 1076, 5) in Sosaria: "ShantyTools"
+8/29/2023 9:17:33 PM: 75.31.90.226: Serials: 0x404AFA6C; 
+8/29/2023 9:18:48 PM: 75.31.90.226: GameMaster 0xEC21 "Dingus" ('namrehs') building at (3070, 1076, 5) in Sosaria: "InteriorDecorator"
+8/29/2023 9:18:48 PM: 75.31.90.226: Serials: 0x404AFBB0; 
+8/30/2023 8:57:28 AM: 75.31.90.226: GameMaster 0xEC21 "Dingus" ('namrehs') used command 'add scissors'
+8/30/2023 8:57:29 AM: 75.31.90.226: GameMaster 0xEC21 "Dingus" ('namrehs') building at (3071, 1076, 5) in Sosaria: "scissors"
+8/30/2023 8:57:29 AM: 75.31.90.226: Serials: 0x40517E9D; 
