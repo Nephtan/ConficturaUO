@@ -122,6 +122,29 @@ namespace Server.Regions
 
         public override bool AllowHarmful(Mobile from, Mobile target)
         {
+            if (from is PlayerMobile && target is PlayerMobile)
+            {
+                BaseCreature attackerCreature = from as BaseCreature;
+                Mobile attackerController = attackerCreature != null && (attackerCreature.Controlled || attackerCreature.Summoned) ? (attackerCreature.ControlMaster ?? attackerCreature.SummonMaster) : null;
+
+                bool fromIsNonPk = (attackerController is PlayerMobile && ((PlayerMobile)attackerController).NONPK == NONPK.NONPK) || (from is PlayerMobile && ((PlayerMobile)from).NONPK == NONPK.NONPK);
+                bool targetIsNonPk = target is PlayerMobile && ((PlayerMobile)target).NONPK == NONPK.NONPK;
+                bool targetIsNeutral = target is PlayerMobile && ((PlayerMobile)target).NONPK == NONPK.Null;
+                bool targetIsPk = target is PlayerMobile && ((PlayerMobile)target).NONPK == NONPK.PK;
+
+                if (fromIsNonPk && (targetIsPk || targetIsNeutral))
+                {
+                    (attackerController ?? from).SendMessage(33, "You have chosen the path of [PvE] and cannot attack players.");
+                    return false;
+                }
+
+                if (targetIsNonPk)
+                {
+                    (attackerController ?? from).SendMessage(33, "You cannot attack [PvE] players.");
+                    return false;
+                }
+            }
+
             if (from is Warriors && !(target is Warriors))
                 return false;
 
@@ -531,40 +554,40 @@ namespace Server.Regions
                 switch (m_SpawnZLevel)
                 {
                     case SpawnZLevel.Lowest:
-                    {
-                        z = int.MaxValue;
-
-                        for (int j = 0; j < m_SpawnBuffer1.Count; j++)
                         {
-                            int l = m_SpawnBuffer1[j];
+                            z = int.MaxValue;
 
-                            if (l < z)
-                                z = l;
+                            for (int j = 0; j < m_SpawnBuffer1.Count; j++)
+                            {
+                                int l = m_SpawnBuffer1[j];
+
+                                if (l < z)
+                                    z = l;
+                            }
+
+                            break;
                         }
-
-                        break;
-                    }
                     case SpawnZLevel.Highest:
-                    {
-                        z = int.MinValue;
-
-                        for (int j = 0; j < m_SpawnBuffer1.Count; j++)
                         {
-                            int l = m_SpawnBuffer1[j];
+                            z = int.MinValue;
 
-                            if (l > z)
-                                z = l;
+                            for (int j = 0; j < m_SpawnBuffer1.Count; j++)
+                            {
+                                int l = m_SpawnBuffer1[j];
+
+                                if (l > z)
+                                    z = l;
+                            }
+
+                            break;
                         }
-
-                        break;
-                    }
                     default: // SpawnZLevel.Random
-                    {
-                        int index = Utility.Random(m_SpawnBuffer1.Count);
-                        z = m_SpawnBuffer1[index];
+                        {
+                            int index = Utility.Random(m_SpawnBuffer1.Count);
+                            z = m_SpawnBuffer1[index];
 
-                        break;
-                    }
+                            break;
+                        }
                 }
 
                 m_SpawnBuffer1.Clear();

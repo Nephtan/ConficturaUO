@@ -58,23 +58,12 @@ namespace Server.Regions
             if (from is PlayerMobile && target is PlayerMobile)
             {
                 BaseCreature attackerCreature = from as BaseCreature;
-                Mobile attackerController =
-                    attackerCreature != null
-                    && (attackerCreature.Controlled || attackerCreature.Summoned)
-                        ? (attackerCreature.ControlMaster ?? attackerCreature.SummonMaster)
-                        : null;
+                Mobile attackerController = attackerCreature != null && (attackerCreature.Controlled || attackerCreature.Summoned) ? (attackerCreature.ControlMaster ?? attackerCreature.SummonMaster) : null;
 
-                bool fromIsNonPk =
-                    (
-                        attackerController is PlayerMobile
-                        && ((PlayerMobile)attackerController).NONPK == NONPK.NONPK
-                    ) || (from is PlayerMobile && ((PlayerMobile)from).NONPK == NONPK.NONPK);
-                bool targetIsNonPk =
-                    target is PlayerMobile && ((PlayerMobile)target).NONPK == NONPK.NONPK;
-                bool targetIsNeutral =
-                    target is PlayerMobile && ((PlayerMobile)target).NONPK == NONPK.Null;
-                bool targetIsPk =
-                    target is PlayerMobile && ((PlayerMobile)target).NONPK == NONPK.PK;
+                bool fromIsNonPk = (attackerController is PlayerMobile && ((PlayerMobile)attackerController).NONPK == NONPK.NONPK) || (from is PlayerMobile && ((PlayerMobile)from).NONPK == NONPK.NONPK);
+                bool targetIsNonPk = target is PlayerMobile && ((PlayerMobile)target).NONPK == NONPK.NONPK;
+                bool targetIsNeutral = target is PlayerMobile && ((PlayerMobile)target).NONPK == NONPK.Null;
+                bool targetIsPk = target is PlayerMobile && ((PlayerMobile)target).NONPK == NONPK.PK;
 
                 if (fromIsNonPk && (targetIsPk || targetIsNeutral))
                 {

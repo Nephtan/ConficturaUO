@@ -2,10 +2,21 @@ using System;
 using System.Xml;
 using Server;
 using Server.Mobiles;
+using Server.Gumps;
+using Server.Spells;
+using Server.Spells.Seventh;
+using Server.Spells.Fourth;
+using Server.Spells.Sixth;
+using Server.Spells.Chivalry;
+using Server.Spells.Undead;
+using Server.Spells.Herbalist;
 using System.Text;
 using System.IO;
 using Server.Network;
 using Server.Misc;
+using System.Collections.Generic;
+using System.Collections;
+using Server.Items;
 
 namespace Server.Regions
 {
@@ -13,6 +24,34 @@ namespace Server.Regions
     {
         public CaveRegion(XmlElement xml, Map map, Region parent)
             : base(xml, map, parent) { }
+
+        public override bool AllowHarmful(Mobile from, Mobile target)
+        {
+            if (from is PlayerMobile && target is PlayerMobile)
+            {
+                BaseCreature attackerCreature = from as BaseCreature;
+                Mobile attackerController = attackerCreature != null && (attackerCreature.Controlled || attackerCreature.Summoned) ? (attackerCreature.ControlMaster ?? attackerCreature.SummonMaster) : null;
+
+                bool fromIsNonPk = (attackerController is PlayerMobile && ((PlayerMobile)attackerController).NONPK == NONPK.NONPK) || (from is PlayerMobile && ((PlayerMobile)from).NONPK == NONPK.NONPK);
+                bool targetIsNonPk = target is PlayerMobile && ((PlayerMobile)target).NONPK == NONPK.NONPK;
+                bool targetIsNeutral = target is PlayerMobile && ((PlayerMobile)target).NONPK == NONPK.Null;
+                bool targetIsPk = target is PlayerMobile && ((PlayerMobile)target).NONPK == NONPK.PK;
+
+                if (fromIsNonPk && (targetIsPk || targetIsNeutral))
+                {
+                    (attackerController ?? from).SendMessage(33, "You have chosen the path of [PvE] and cannot attack players.");
+                    return false;
+                }
+
+                if (targetIsNonPk)
+                {
+                    (attackerController ?? from).SendMessage(33, "You cannot attack [PvE] players.");
+                    return false;
+                }
+            }
+
+            return base.AllowHarmful(from, target);
+        }
 
         public override bool AllowHousing(Mobile from, Point3D p)
         {
