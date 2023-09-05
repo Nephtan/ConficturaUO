@@ -6362,5 +6362,54 @@ namespace Server.Mobiles
 
             m_AutoStabled.Clear();
         }
+
+        private Container m_AutoLootBag;
+
+        public Container AutoLootBag
+        {
+            get
+            {
+                if (m_AutoLootBag != null && !m_AutoLootBag.Deleted)
+                    return m_AutoLootBag;
+
+                return m_AutoLootBag = LootChoiceUpdates.GetAutoLootBag();
+            }
+        }
+
+        public bool PlaceInAutoLootBag(Item item)
+        {
+            if (item.Deleted)
+                return false;
+
+            Container pack = this.AutoLootBag;
+
+            return pack != null && pack.TryDropItem(this, item, false);
+        }
+
+        public bool AddToAutoLootBag(Item item)
+        {
+            if (item.Deleted)
+                return false;
+
+            if (!PlaceInAutoLootBag(item))
+            {
+                
+                Point3D loc = Location;
+                Map map = Map;
+
+                if ((map == null || map == Map.Internal) && LogoutMap != null)
+                {
+                    loc = LogoutLocation;
+                    map = LogoutMap;
+                }
+
+                item.MoveToWorld(loc, map);
+                return false;
+            }
+
+            return true;
+        }
+
+
     }
 }

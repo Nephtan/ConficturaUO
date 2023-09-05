@@ -3078,7 +3078,7 @@ namespace Server.Misc
                     if (stuff.Movable)
                     {
                         sound = 1;
-                        if (!m.AddToAutoLootBag(stuff))
+                        if (!((PlayerMobile)m).AddToAutoLootBag(stuff))
                         {
                             m.AddToBackpack(stuff);
                         }

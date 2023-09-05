@@ -10279,18 +10279,7 @@ namespace Server
             }
         }
 
-        private Container m_AutoLootBag;
-
-        public Container AutoLootBag
-        {
-            get
-            {
-                if (m_AutoLootBag != null && !m_AutoLootBag.Deleted && m_AutoLootBag.Parent == m_Backpack)
-                    return m_AutoLootBag;
-
-                return m_AutoLootBag = LootChoiceUpdates.GetAutoLootBag();
-            }
-        }
+        
 
         public virtual bool KeepsItemsOnDeath
         { get { return m_AccessLevel > AccessLevel.Player; } }
@@ -10478,38 +10467,7 @@ namespace Server
             return true;
         }
 
-        public bool PlaceInAutoLootBag(Item item)
-        {
-            if (item.Deleted)
-                return false;
-
-            Container pack = this.AutoLootBag;
-
-            return pack != null && pack.TryDropItem(this, item, false);
-        }
-
-        public bool AddToAutoLootBag(Item item)
-        {
-            if (item.Deleted)
-                return false;
-
-            if (!PlaceInAutoLootBag(item))
-            {
-                Point3D loc = m_Location;
-                Map map = m_Map;
-
-                if ((map == null || map == Map.Internal) && m_LogoutMap != null)
-                {
-                    loc = m_LogoutLocation;
-                    map = m_LogoutMap;
-                }
-
-                item.MoveToWorld(loc, map);
-                return false;
-            }
-
-            return true;
-        }
+        
 
         public virtual bool CheckLift(Mobile from, Item item, ref LRReason reject)
         {
