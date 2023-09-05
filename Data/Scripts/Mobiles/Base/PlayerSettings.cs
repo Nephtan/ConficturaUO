@@ -16,7 +16,7 @@ using Server.Spells.Seventh;
 
 namespace Server.Misc
 {
-    class PlayerSettings
+    internal class PlayerSettings
     {
         public static int GetMySpellHue(bool mod, Mobile m, int hue) // ----------------------------------------------------------------------------------------
         {
@@ -194,18 +194,23 @@ namespace Server.Misc
                 case 0:
                     wTitle = "Emperor";
                     break;
+
                 case 1:
                     wTitle = "Duke";
                     break;
+
                 case 2:
                     wTitle = "Earl";
                     break;
+
                 case 3:
                     wTitle = "Baron";
                     break;
+
                 case 4:
                     wTitle = "King";
                     break;
+
                 case 5:
                     wTitle = "Prince";
                     break;
@@ -221,18 +226,23 @@ namespace Server.Misc
                     case 0:
                         wTitle = "Empress";
                         break;
+
                     case 1:
                         wTitle = "Duchess";
                         break;
+
                     case 2:
                         wTitle = "Countess";
                         break;
+
                     case 3:
                         wTitle = "Baroness";
                         break;
+
                     case 4:
                         wTitle = "Queen";
                         break;
+
                     case 5:
                         wTitle = "Princess";
                         break;
@@ -3068,7 +3078,10 @@ namespace Server.Misc
                     if (stuff.Movable)
                     {
                         sound = 1;
-                        m.AddToBackpack(stuff);
+                        if (!m.AddToAutoLootBag(stuff))
+                        {
+                            m.AddToBackpack(stuff);
+                        }
                     }
                 }
 

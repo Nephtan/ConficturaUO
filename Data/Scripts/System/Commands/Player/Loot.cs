@@ -9,11 +9,15 @@ using Server.Commands;
 using Server.Commands.Generic;
 using Server.Prompts;
 using Server.Gumps;
+using System.Diagnostics;
+using Server.Targeting;
 
 namespace Server.Misc
 {
-    class LootChoiceUpdates
+    internal class LootChoiceUpdates
     {
+        private static Container lootbag = null;
+
         public static void UpdateLootChoice(Mobile m, int nChange)
         {
             LootChoiceUpdates.InitializeLootChoice(m);
@@ -51,6 +55,45 @@ namespace Server.Misc
             if (((PlayerMobile)m).CharacterLoot == "" || ((PlayerMobile)m).CharacterLoot == null)
             {
                 ((PlayerMobile)m).CharacterLoot = "0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#";
+            }
+        }
+
+        public static void SelectLootBag(Mobile from)
+        {
+            from.BeginTarget(
+                -1,
+                false,
+                TargetFlags.None,
+                new TargetCallback(OnAutoLootBagSelected)
+            );
+            from.SendMessage("Target the container for autoloot items: ");
+        }
+
+        public static Container GetAutoLootBag()
+        {
+            return lootbag;
+        }
+
+        private static void SetAutoLootBag(Container container)
+        {
+            lootbag = container;
+        }
+
+        private static void OnAutoLootBagSelected(Mobile from, object targeted)
+        {
+            if (targeted is Container)
+            {
+                SetAutoLootBag((Container)targeted);
+            }
+            else
+            {
+                from.BeginTarget(
+                        -1,
+                        false,
+                        TargetFlags.None,
+                        new TargetCallback(OnAutoLootBagSelected)
+                    );
+                from.SendMessage("That is not a container. Try again.");
             }
         }
     }
@@ -113,8 +156,8 @@ namespace Server.Gumps
             );
 
             // Modify this inside the LootChoices constructor, perhaps near the beginning after AddPage(0);
-            AddButton(200, 50, 4005, 4005, 100, GumpButtonType.Reply, 0);
-            AddHtml(236, 50, 150, 20, @"<BODY><BASEFONT Color=" + color + ">Select Bag</BASEFONT></BODY>", (bool)false, (bool)false);
+            AddButton(60, 12, 4005, 4005, 100, GumpButtonType.Reply, 0);
+            AddHtml(96, 12, 150, 20, @"<BODY><BASEFONT Color=" + color + ">Select Bag</BASEFONT></BODY>", (bool)false, (bool)false);
 
             AddButton(384, 10, 4017, 4017, 0, GumpButtonType.Reply, 0);
 
@@ -466,6 +509,11 @@ namespace Server.Gumps
         public override void OnResponse(NetState sender, RelayInfo info)
         {
             Mobile from = sender.Mobile;
+
+            if (info.ButtonID == 100)
+            {
+                LootChoiceUpdates.SelectLootBag(from);
+            }
 
             if (info.ButtonID == 99)
             {
