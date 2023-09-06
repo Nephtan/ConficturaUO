@@ -6363,50 +6363,41 @@ namespace Server.Mobiles
             m_AutoStabled.Clear();
         }
 
+
+        // Taking care of the autoloot bag
+
         private Container m_AutoLootBag;
 
         public Container AutoLootBag
         {
             get
             {
-                if (m_AutoLootBag != null && !m_AutoLootBag.Deleted)
-                    return m_AutoLootBag;
+                if (m_AutoLootBag == null)
+                {
+                    m_AutoLootBag = LootChoiceUpdates.GetAutoLootBag();
+                }
 
-                return m_AutoLootBag = LootChoiceUpdates.GetAutoLootBag();
+                if (m_AutoLootBag != null && (m_AutoLootBag.Deleted || m_AutoLootBag.Parent != Backpack))
+                {
+                    LootChoiceUpdates.ClearAutoLootBag();
+                    return null;
+                }
+
+                return m_AutoLootBag;
+                
             }
-        }
-
-        public bool PlaceInAutoLootBag(Item item)
-        {
-            if (item.Deleted)
-                return false;
-
-            Container pack = this.AutoLootBag;
-
-            return pack != null && pack.TryDropItem(this, item, false);
         }
 
         public bool AddToAutoLootBag(Item item)
         {
-            if (item.Deleted)
-                return false;
+            Container pack = AutoLootBag;
 
-            if (!PlaceInAutoLootBag(item))
+            if (item.Deleted || pack == null)
             {
-                
-                Point3D loc = Location;
-                Map map = Map;
-
-                if ((map == null || map == Map.Internal) && LogoutMap != null)
-                {
-                    loc = LogoutLocation;
-                    map = LogoutMap;
-                }
-
-                item.MoveToWorld(loc, map);
                 return false;
             }
 
+            pack.TryDropItem(this, item, false);
             return true;
         }
 

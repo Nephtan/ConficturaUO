@@ -58,6 +58,11 @@ namespace Server.Misc
             }
         }
 
+        public static void ClearAutoLootBag() 
+        {
+            lootbag = null;
+        }
+
         public static void SelectLootBag(Mobile from)
         {
             from.BeginTarget(
@@ -84,6 +89,7 @@ namespace Server.Misc
             if (targeted is Container)
             {
                 SetAutoLootBag((Container)targeted);
+                from.SendMessage("The autoloot bag is successfully set.");
             }
             else
             {
