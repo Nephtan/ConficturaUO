@@ -14,7 +14,7 @@ using Server.Targeting;
 
 namespace Server.Misc
 {
-    internal class LootChoiceUpdates
+    class LootChoiceUpdates
     {
         private static Container lootbag = null;
 

@@ -16,7 +16,7 @@ using Server.Spells.Seventh;
 
 namespace Server.Misc
 {
-    internal class PlayerSettings
+    class PlayerSettings
     {
         public static int GetMySpellHue(bool mod, Mobile m, int hue) // ----------------------------------------------------------------------------------------
         {
