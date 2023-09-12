@@ -518,6 +518,7 @@ namespace Confictura.Custom
         private int m_HoldGold = 8;
         private Timer m_PayTimer;
         private static Hashtable m_HireTable = new Hashtable();
+        private bool m_IsTraining = false; // Flag to determine if the player is currently training
 
         public int Pay
         {
@@ -569,6 +570,7 @@ namespace Confictura.Custom
             {
                 Skills[i].Base = Original.Skills[i].Base;
             }
+            Payday(this);
 
             // Set maximum hit points, stamina, and mana
             SetHits(Str * 2);
@@ -654,8 +656,33 @@ namespace Confictura.Custom
             }
         }
 
+        public bool TryTrainSkill(Mobile from, Item item)
+        {
+            if (item is Gold && CheckTeachingMatch(from))
+            {
+                if (Teach(m_Teaching, from, item.Amount, true))
+                {
+                    item.Delete();
+                    return true;
+                }
+            }
+            return false;
+        }
+
         public override bool OnDragDrop(Mobile from, Item item)
         {
+            // First, check if the player is trying to train a skill
+            if (TryTrainSkill(from, item))
+            {
+                return true;
+            }
+
+            if (m_Pay <= 0) // Check if the pay is above 0
+            {
+                SayTo(from, "I am not skilled enough to be hired.");
+                return false;
+            }
+
             if (m_Pay != 0)
             {
                 // Is the creature already hired
@@ -886,35 +913,17 @@ namespace Confictura.Custom
             return true;
         }
 
-        #region [ OnSpeech ]
         internal void SayHireCost()
         {
-            Say(
-                string.Format(
-                    "I am available for hire for {0} gold coins per hour. If thou dost give me gold, I will work for thee.",
-                    m_Pay
-                )
-            );
-        }
-
-        public override void OnSpeech(SpeechEventArgs e)
-        {
-            if (!e.Handled && e.Mobile.InRange(this, 6))
+            if (m_Pay > 0)
             {
-                int[] keywords = e.Keywords;
-                string speech = e.Speech;
-
-                // Check for a greeting or 'Hire'
-                if ((e.HasKeyword(0x003B) == true) || (e.HasKeyword(0x0162) == true))
-                {
-                    e.Handled = Payday(this);
-                    this.SayHireCost();
-                }
+                Say(string.Format("I am available for hire for {0} gold coins per hour. If thou dost give me gold, I will work for thee.", m_Pay));
             }
-
-            base.OnSpeech(e);
+            else
+            {
+                Say("I am not skilled enough to be hired.");
+            }
         }
-        #endregion
 
         public virtual Mobile GetOwner()
         {
