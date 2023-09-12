@@ -139,6 +139,10 @@ namespace Server.Misc
             if (attacker == null || target == null)
                 return false;
 
+            BaseCreature bcAttacker = attacker as BaseCreature;
+            if (bcAttacker != null && bcAttacker.BardProvoked && bcAttacker.BardTarget == target)
+                return true;
+
             // Check if the attacker is a controlled creature and if so, set the controller.
             BaseCreature attackerCreature = attacker as BaseCreature;
             Mobile attackerController =

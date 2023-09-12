@@ -13,7 +13,7 @@
   <Accounts>
     <Account>
       <Name>admin</Name>
-      <PasswordHash>27c7268a92044c645a665b827c120b07</PasswordHash>
+      <PasswordHash></PasswordHash>
       <AccessLevel>255</AccessLevel>
       <LastPos x="0" y="0"/>
       <Regions/>

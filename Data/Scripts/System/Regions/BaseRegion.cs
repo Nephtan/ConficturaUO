@@ -124,6 +124,14 @@ namespace Server.Regions
         {
             if (from is PlayerMobile && target is PlayerMobile)
             {
+                // Check if the creature is provoked and allow it to attack
+                if (from is BaseCreature)
+                {
+                    BaseCreature bc = from as BaseCreature;
+                    if (bc.BardProvoked && bc.BardTarget == target)
+                        return true;
+                }
+
                 BaseCreature attackerCreature = from as BaseCreature;
                 Mobile attackerController = attackerCreature != null && (attackerCreature.Controlled || attackerCreature.Summoned) ? (attackerCreature.ControlMaster ?? attackerCreature.SummonMaster) : null;
 
