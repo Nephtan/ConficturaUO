@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Server;
+using Server.Mobiles;
 using Server.Network;
 using Server.Targeting;
 using Server.Spells;
@@ -49,7 +50,7 @@ namespace Server.Items
                 return;
             }
             */
-            
+
             int delay = GetDelay(from);
 
             if (delay > 0)
@@ -318,15 +319,51 @@ namespace Server.Items
 
             public override bool OnMoveOver(Mobile m)
             {
-                if (Visible && m_From != null)
+                if (Visible && m_From != null && IsValidTarget(m_From, m))
                 {
                     m_From.DoHarmful(m);
-
                     AOS.Damage(m, m_From, GetDamage(), 0, 100, 0, 0, 0);
                     m.PlaySound(0x208);
                 }
-
                 return true;
+            }
+
+            private bool IsValidTarget(Mobile thrower, Mobile target)
+            {
+                // If the target is a computer-controlled mobile, allow damage.
+                if (!(target is PlayerMobile))
+                    return true;
+
+                // Check if the thrower is a player.
+                PlayerMobile playerThrower = thrower as PlayerMobile;
+                if (playerThrower != null)  // Check if the casting was successful.
+                {
+                    NONPK throwerStatus = playerThrower.NONPK;
+
+                    // Check if the target is a player.
+                    PlayerMobile playerTarget = target as PlayerMobile;
+                    if (playerTarget != null) // Check if the casting was successful.
+                    {
+                        NONPK targetStatus = playerTarget.NONPK;
+
+                        if (throwerStatus == NONPK.NONPK)
+                        {
+                            // PvE players only harm themselves.
+                            return thrower == target;
+                        }
+                        else if (throwerStatus == NONPK.PK)
+                        {
+                            // PvP players harm PvP and Neutral players.
+                            return targetStatus == NONPK.PK || targetStatus == NONPK.Null;
+                        }
+                        else if (throwerStatus == NONPK.Null)
+                        {
+                            // Neutral players harm PvP and Neutral players.
+                            return targetStatus == NONPK.PK || targetStatus == NONPK.Null;
+                        }
+                    }
+                }
+                return false; // By default, no damage is applied.
             }
 
             private class InternalTimer : Timer
@@ -345,9 +382,9 @@ namespace Server.Items
 
                 protected override void OnTick()
                 {
-                    if (m_Item.Deleted)
-                        return;
+                    if (m_Item.Deleted) return;
 
+                    // Check if the timer has reached its end, and if so, delete the item.
                     if (DateTime.Now > m_End)
                     {
                         m_Item.Delete();
@@ -355,13 +392,15 @@ namespace Server.Items
                         return;
                     }
 
+                    // Get the player who threw the potion.
                     Mobile from = m_Item.From;
 
-                    if (m_Item.Map == null || from == null)
-                        return;
+                    // Check if the item map and thrower are valid.
+                    if (m_Item.Map == null || from == null) return;
 
                     List<Mobile> mobiles = new List<Mobile>();
 
+                    // Get all mobiles in range of the explosion.
                     foreach (Mobile mobile in m_Item.GetMobilesInRange(0))
                         mobiles.Add(mobile);
 
@@ -369,19 +408,16 @@ namespace Server.Items
                     {
                         Mobile m = mobiles[i];
 
-                        if (
-                            (m.Z + 16) > m_Item.Z
-                            && (m_Item.Z + 12) > m.Z
-                            && (!Core.AOS || m != from)
-                            && SpellHelper.ValidIndirectTarget(from, m)
-                            && from.CanBeHarmful(m, false)
-                        )
+                        // Check various conditions to see if the target mobile 'm' can be harmed.
+                        if ((m.Z + 16) > m_Item.Z && (m_Item.Z + 12) > m.Z && (!Core.AOS || m != from) && SpellHelper.ValidIndirectTarget(from, m) && from.CanBeHarmful(m, false))
                         {
-                            if (from != null)
-                                from.DoHarmful(m);
-
-                            AOS.Damage(m, from, m_Item.GetDamage(), 0, 100, 0, 0, 0);
-                            m.PlaySound(0x208);
+                            // This is a new condition we added. Check if 'm' is a valid target based on the PvP/PvE/Neutral rules.
+                            if (m_Item.IsValidTarget(from, m))
+                            {
+                                if (from != null) from.DoHarmful(m);
+                                AOS.Damage(m, from, m_Item.GetDamage(), 0, 100, 0, 0, 0);
+                                m.PlaySound(0x208);
+                            }
                         }
                     }
                 }
