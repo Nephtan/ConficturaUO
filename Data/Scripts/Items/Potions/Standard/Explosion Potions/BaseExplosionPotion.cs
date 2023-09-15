@@ -79,11 +79,14 @@ namespace Server.Items
                 from.SendMessage("You cannot do that yet.");
                 return;
             }
+            // Commenting out this block to allow PvE players to throw potions.
+            /*
             else if (!from.Region.AllowHarmful(from, from))
             {
                 from.SendMessage("That doesn't feel like a good idea.");
                 return;
             }
+            */
 
             ThrowTarget targ = from.Target as ThrowTarget;
             this.Stackable = false; // Scavenged explosion potions won't stack with those ones in backpack, and still will explode.

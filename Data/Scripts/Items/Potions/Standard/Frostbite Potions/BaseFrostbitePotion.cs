@@ -41,11 +41,14 @@ namespace Server.Items
                 from.SendMessage("You cannot do that yet.");
                 return;
             }
+            // Commenting out this block to allow PvE players to throw potions.
+            /*
             else if (!from.Region.AllowHarmful(from, from))
             {
                 from.SendMessage("That doesn't feel like a good idea.");
                 return;
             }
+            */
 
             int delay = GetDelay(from);
 

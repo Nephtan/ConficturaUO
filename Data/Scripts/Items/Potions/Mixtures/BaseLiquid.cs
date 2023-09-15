@@ -55,11 +55,14 @@ namespace Server.Items
             {
                 from.SendLocalizedMessage(1060640); // The item must be in your backpack to use it.
             }
+            // Commenting out this block to allow PvE players to throw potions.
+            /*
             else if (!from.Region.AllowHarmful(from, from))
             {
                 from.SendMessage("That doesn't feel like a good idea.");
                 return;
             }
+            */
             else if (Server.Items.MonsterSplatter.TooMuchSplatter(from))
             {
                 from.SendMessage("There is too much liquid on the ground already.");
