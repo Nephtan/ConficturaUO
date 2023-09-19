@@ -8294,7 +8294,7 @@ namespace Server.Mobiles
             return true;
         }
 
-        private SkillName m_Teaching = (SkillName)(-1);
+        public SkillName m_Teaching = (SkillName)(-1);
 
         public virtual bool Teach(SkillName skill, Mobile m, int maxPointsToLearn, bool doTeach)
         {
