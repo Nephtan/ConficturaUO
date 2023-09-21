@@ -64,474 +64,361 @@ namespace Server.Items
             return v;
         }
 
-        public override bool OnMoveOver(Mobile m)
+        public bool CanDealDamageTo(Mobile from, Mobile target)
         {
-            bool hurts = true;
+            PlayerMobile fromPlayer = from as PlayerMobile;
+            PlayerMobile targetPlayer = target as PlayerMobile;
 
-            if (m.Blessed)
-                hurts = false;
-
-            if (!m.Alive)
-                hurts = false;
-
-            if (owner is BaseCreature && m is BaseCreature)
+            if (fromPlayer == null || targetPlayer == null)
             {
-                BaseCreature bc = (BaseCreature)m;
-
-                if (!bc.Controlled)
-                    hurts = false;
+                return true; // If either is not a player, allow damage.
             }
 
-            if (hurts)
+            // PvP can damage anyone except PvE
+            if (fromPlayer.NONPK == NONPK.PK && targetPlayer.NONPK != NONPK.NONPK)
             {
-                SlayerEntry SilverSlayer = SlayerGroup.GetEntryByName(SlayerName.Silver);
-                SlayerEntry ExorcismSlayer = SlayerGroup.GetEntryByName(SlayerName.Exorcism);
+                return true;
+            }
 
-                if (m is PlayerMobile && Spells.Research.ResearchAirWalk.UnderEffect(m))
-                {
-                    Point3D air = new Point3D((m.X + 1), (m.Y + 1), (m.Z + 5));
-                    Effects.SendLocationParticles(
-                        EffectItem.Create(air, m.Map, EffectItem.DefaultDuration),
-                        0x2007,
-                        9,
-                        32,
-                        Server.Misc.PlayerSettings.GetMySpellHue(true, m, 0),
-                        0,
-                        5022,
-                        0
-                    );
-                    m.PlaySound(0x014);
-                }
-                else if (this.Name == "hot magma" && !(m is MagmaElemental))
-                {
-                    owner.DoHarmful(m);
-                    Effects.SendLocationParticles(
-                        EffectItem.Create(m.Location, m.Map, EffectItem.DefaultDuration),
-                        0x3709,
-                        10,
-                        30,
-                        5052
-                    );
-                    Effects.PlaySound(m.Location, m.Map, 0x225);
-                    AOS.Damage(m, owner, Hurt(owner, 24, 48), 0, 100, 0, 0, 0);
-                    //												Ph,		Fr,		Cd,		Ps,		Eg
-                }
-                else if (this.Name == "quick silver")
-                {
-                    owner.DoHarmful(m);
-                    Effects.PlaySound(m.Location, m.Map, 0x4D1);
-                    AOS.Damage(m, owner, Hurt(owner, 24, 48), 50, 0, 0, 0, 50);
-                    //												Ph,		Fr,		Cd,		Ps,		Eg
-                }
-                else if (
-                    this.Name == "holy water" && (SilverSlayer.Slays(m) || ExorcismSlayer.Slays(m))
-                )
-                {
-                    owner.DoHarmful(m);
-                    Effects.SendLocationParticles(
-                        EffectItem.Create(m.Location, m.Map, EffectItem.DefaultDuration),
-                        0x3709,
-                        10,
-                        30,
-                        5052
-                    );
-                    Effects.PlaySound(m.Location, m.Map, 0x225);
-                    AOS.Damage(m, owner, Hurt(owner, 40, 60), 20, 20, 20, 20, 20);
-                    //												Ph,		Fr,		Cd,		Ps,		Eg
-                }
-                else if (
-                    this.Name == "glowing goo" && !(m is GlowBeetle) && !(m is GlowBeetleRiding)
-                )
-                {
-                    owner.DoHarmful(m);
-                    Effects.SendLocationParticles(
-                        EffectItem.Create(m.Location, m.Map, EffectItem.DefaultDuration),
-                        0x36B0,
-                        1,
-                        14,
-                        63,
-                        7,
-                        9915,
-                        0
-                    );
-                    int eSound = 0x229;
-                    if (m.Body == 0x190 && m is PlayerMobile)
-                    {
-                        eSound = 0x43F;
-                    }
-                    else if (m.Body == 0x191 && m is PlayerMobile)
-                    {
-                        eSound = 0x32D;
-                    }
-                    Effects.PlaySound(m.Location, m.Map, eSound);
-                    AOS.Damage(m, owner, Hurt(owner, 24, 48), 0, 0, 0, 50, 50);
-                    //												Ph,		Fr,		Cd,		Ps,		Eg
-                }
-                else if (this.Name == "scorching ooze" && !(m is Lavapede))
-                {
-                    owner.DoHarmful(m);
-                    Effects.SendLocationParticles(
-                        EffectItem.Create(m.Location, m.Map, EffectItem.DefaultDuration),
-                        0x36B0,
-                        1,
-                        14,
-                        63,
-                        7,
-                        9915,
-                        0
-                    );
-                    int eSound = 0x229;
-                    if (m.Body == 0x190 && m is PlayerMobile)
-                    {
-                        eSound = 0x43F;
-                    }
-                    else if (m.Body == 0x191 && m is PlayerMobile)
-                    {
-                        eSound = 0x32D;
-                    }
-                    Effects.PlaySound(m.Location, m.Map, eSound);
-                    AOS.Damage(m, owner, Hurt(owner, 24, 48), 0, 100, 0, 0, 0);
-                    //												Ph,		Fr,		Cd,		Ps,		Eg
-                }
-                else if (this.Name == "blue slime" && !(m is SlimeDevil))
-                {
-                    owner.DoHarmful(m);
-                    Effects.PlaySound(m.Location, m.Map, 0x4D1);
-                    AOS.Damage(m, owner, Hurt(owner, 24, 48), 0, 0, 100, 0, 0);
-                    //												Ph,		Fr,		Cd,		Ps,		Eg
-                }
-                else if (this.Name == "swamp muck" && !(m is SwampThing))
-                {
-                    owner.DoHarmful(m);
-                    Effects.PlaySound(m.Location, m.Map, 0x4D1);
-                    AOS.Damage(m, owner, Hurt(owner, 24, 48), 50, 0, 0, 50, 0);
-                    //												Ph,		Fr,		Cd,		Ps,		Eg
-                }
-                else if (this.Name == "poisonous slime" && !(m is AbyssCrawler))
-                {
-                    owner.DoHarmful(m);
-                    Effects.PlaySound(m.Location, m.Map, 0x4D1);
-                    AOS.Damage(m, owner, Hurt(owner, 24, 48), 0, 0, 0, 100, 0);
-                    //												Ph,		Fr,		Cd,		Ps,		Eg
-                }
-                else if (this.Name == "poison spit" && !(m is Neptar) && !(m is NeptarWizard))
-                {
-                    owner.DoHarmful(m);
-                    Effects.PlaySound(m.Location, m.Map, 0x4D1);
-                    AOS.Damage(m, owner, Hurt(owner, 24, 48), 0, 0, 0, 100, 0);
-                    //												Ph,		Fr,		Cd,		Ps,		Eg
-                }
-                else if (this.Name == "poison spittle" && !(m is Lurker))
-                {
-                    owner.DoHarmful(m);
-                    Effects.PlaySound(m.Location, m.Map, 0x4D1);
-                    AOS.Damage(m, owner, Hurt(owner, 24, 48), 0, 0, 0, 100, 0);
-                    //												Ph,		Fr,		Cd,		Ps,		Eg
-                }
-                else if (
-                    this.Name == "fungal slime"
-                    && !(m is Fungal)
-                    && !(m is FungalMage)
-                    && !(m is CreepingFungus)
-                )
-                {
-                    owner.DoHarmful(m);
-                    Effects.PlaySound(m.Location, m.Map, 0x4D1);
-                    AOS.Damage(m, owner, Hurt(owner, 24, 48), 50, 0, 0, 50, 0);
-                    //												Ph,		Fr,		Cd,		Ps,		Eg
-                }
-                else if (this.Name == "spider ooze" && !(m is ZombieSpider))
-                {
-                    owner.DoHarmful(m);
-                    Effects.PlaySound(m.Location, m.Map, 0x4D1);
-                    AOS.Damage(m, owner, Hurt(owner, 24, 48), 50, 0, 0, 50, 0);
-                    //												Ph,		Fr,		Cd,		Ps,		Eg
-                }
-                else if (this.Name == "acidic slime" && !(m is ToxicElemental))
-                {
-                    owner.DoHarmful(m);
-                    Effects.PlaySound(m.Location, m.Map, 0x231);
-                    AOS.Damage(m, owner, Hurt(owner, 24, 48), 50, 0, 0, 50, 0);
-                    //												Ph,		Fr,		Cd,		Ps,		Eg
-                }
-                else if (
-                    this.Name == "acidic ichor"
-                    && !(m is AntaurKing)
-                    && !(m is AntaurProgenitor)
-                    && !(m is AntaurSoldier)
-                    && !(m is AntaurWorker)
-                )
-                {
-                    owner.DoHarmful(m);
-                    Effects.PlaySound(m.Location, m.Map, 0x231);
-                    AOS.Damage(m, owner, Hurt(owner, 24, 48), 50, 0, 0, 50, 0);
-                    //												Ph,		Fr,		Cd,		Ps,		Eg
-                }
-                else if (this.Name == "thick blood" && !(m is BloodElemental) && !(m is BloodDemon))
-                {
-                    owner.DoHarmful(m);
-                    Effects.SendLocationParticles(
-                        EffectItem.Create(m.Location, m.Map, EffectItem.DefaultDuration),
-                        0x36B0,
-                        1,
-                        14,
-                        0x25,
-                        7,
-                        9915,
-                        0
-                    );
-                    int eSound = 0x229;
-                    if (m.Body == 0x190 && m is PlayerMobile)
-                    {
-                        eSound = 0x43F;
-                    }
-                    else if (m.Body == 0x191 && m is PlayerMobile)
-                    {
-                        eSound = 0x32D;
-                    }
-                    Effects.PlaySound(m.Location, m.Map, eSound);
-                    AOS.Damage(m, owner, Hurt(owner, 24, 48), 0, 0, 0, 100, 0);
-                    //												Ph,		Fr,		Cd,		Ps,		Eg
-                }
-                else if (this.Name == "infected blood" && !(m is Infected))
-                {
-                    owner.DoHarmful(m);
-                    Effects.SendLocationParticles(
-                        EffectItem.Create(m.Location, m.Map, EffectItem.DefaultDuration),
-                        0x36B0,
-                        1,
-                        14,
-                        0x25,
-                        7,
-                        9915,
-                        0
-                    );
-                    int eSound = 0x229;
-                    if (m.Body == 0x190 && m is PlayerMobile)
-                    {
-                        eSound = 0x43F;
-                    }
-                    else if (m.Body == 0x191 && m is PlayerMobile)
-                    {
-                        eSound = 0x32D;
-                    }
-                    Effects.PlaySound(m.Location, m.Map, eSound);
-                    AOS.Damage(m, owner, Hurt(owner, 24, 48), 0, 0, 0, 100, 0);
-                    //												Ph,		Fr,		Cd,		Ps,		Eg
-                }
-                else if (this.Name == "alien blood" && !(m is Xenomorph) && !(m is Xenomutant))
-                {
-                    owner.DoHarmful(m);
-                    Effects.SendLocationParticles(
-                        EffectItem.Create(m.Location, m.Map, EffectItem.DefaultDuration),
-                        0x36B0,
-                        1,
-                        14,
-                        0x25,
-                        7,
-                        9915,
-                        0
-                    );
-                    int eSound = 0x229;
-                    if (m.Body == 0x190 && m is PlayerMobile)
-                    {
-                        eSound = 0x43F;
-                    }
-                    else if (m.Body == 0x191 && m is PlayerMobile)
-                    {
-                        eSound = 0x32D;
-                    }
-                    Effects.PlaySound(m.Location, m.Map, eSound);
-                    AOS.Damage(m, owner, Hurt(owner, 24, 48), 20, 20, 20, 20, 20);
-                    //												Ph,		Fr,		Cd,		Ps,		Eg
-                }
-                else if (this.Name == "green blood" && !(m is ZombieGiant))
-                {
-                    owner.DoHarmful(m);
-                    Effects.SendLocationParticles(
-                        EffectItem.Create(m.Location, m.Map, EffectItem.DefaultDuration),
-                        0x36B0,
-                        1,
-                        14,
-                        0x25,
-                        7,
-                        9915,
-                        0
-                    );
-                    int eSound = 0x229;
-                    if (m.Body == 0x190 && m is PlayerMobile)
-                    {
-                        eSound = 0x43F;
-                    }
-                    else if (m.Body == 0x191 && m is PlayerMobile)
-                    {
-                        eSound = 0x32D;
-                    }
-                    Effects.PlaySound(m.Location, m.Map, eSound);
-                    AOS.Damage(m, owner, Hurt(owner, 24, 48), 20, 0, 0, 80, 0);
-                    //												Ph,		Fr,		Cd,		Ps,		Eg
-                }
-                else if (this.Name == "toxic blood" && !(m is Mutant))
-                {
-                    owner.DoHarmful(m);
-                    Effects.SendLocationParticles(
-                        EffectItem.Create(m.Location, m.Map, EffectItem.DefaultDuration),
-                        0x36B0,
-                        1,
-                        14,
-                        0x25,
-                        7,
-                        9915,
-                        0
-                    );
-                    int eSound = 0x229;
-                    if (m.Body == 0x190 && m is PlayerMobile)
-                    {
-                        eSound = 0x43F;
-                    }
-                    else if (m.Body == 0x191 && m is PlayerMobile)
-                    {
-                        eSound = 0x32D;
-                    }
-                    Effects.PlaySound(m.Location, m.Map, eSound);
-                    AOS.Damage(m, owner, Hurt(owner, 24, 48), 0, 0, 0, 100, 0);
-                    //												Ph,		Fr,		Cd,		Ps,		Eg
-                }
-                else if (
-                    this.Name == "freezing water"
-                    && !(m is WaterElemental)
-                    && !(m is WaterWeird)
-                    && !(m is DeepWaterElemental)
-                    && !(m is Dagon)
-                )
-                {
-                    owner.DoHarmful(m);
-                    Effects.PlaySound(m.Location, m.Map, 0x4D1);
-                    AOS.Damage(m, owner, Hurt(owner, 20, 40), 0, 0, 100, 0, 0);
-                    //												Ph,		Fr,		Cd,		Ps,		Eg
-                }
-                else if (
-                    this.Name == "deep water"
-                    && !(m is WaterElemental)
-                    && !(m is WaterWeird)
-                    && !(m is DeepWaterElemental)
-                    && !(m is Dagon)
-                )
-                {
-                    owner.DoHarmful(m);
-                    Effects.PlaySound(m.Location, m.Map, 0x4D1);
-                    AOS.Damage(m, owner, Hurt(owner, 40, 60), 0, 0, 100, 0, 0);
-                    //												Ph,		Fr,		Cd,		Ps,		Eg
-                }
-                else if (
-                    this.Name == "lesser poison potion"
-                    || this.Name == "poison potion"
-                    || this.Name == "greater poison potion" | this.Name == "deadly poison potion"
-                    || this.Name == "lethal poison potion"
-                )
-                {
-                    int pSkill = (int)(owner.Skills[SkillName.Poisoning].Value / 50);
-                    int tSkill = (int)(owner.Skills[SkillName.Tasting].Value / 33);
-                    int aSkill = (int)(owner.Skills[SkillName.Alchemy].Value / 33);
+            // Neutral can damage PvP and other Neutrals, but not PvE
+            if (fromPlayer.NONPK == NONPK.Null && (targetPlayer.NONPK == NONPK.PK || targetPlayer.NONPK == NONPK.Null))
+            {
+                return true;
+            }
 
-                    int pMin = pSkill + tSkill + aSkill;
-                    int pMax = pMin * 2;
-                    Poison pois = Poison.Lesser;
+            // PvE can't damage anyone
+            if (fromPlayer.NONPK == NONPK.NONPK)
+            {
+                return false;
+            }
 
-                    if (this.Name == "poison potion")
+            return false; // By default, no damage allowed.
+        }
+
+        public override bool OnMoveOver(Mobile m)
+        {
+            if (!CanDealDamageTo(this.owner, m))
+            {
+                return true; // Block damage and let the mobile move over.
+            }
+
+            if (m.Blessed || !m.Alive || (owner is BaseCreature && m is BaseCreature && !((BaseCreature)m).Controlled))
+            {
+                return true;
+            }
+
+            SlayerEntry SilverSlayer = SlayerGroup.GetEntryByName(SlayerName.Silver);
+            SlayerEntry ExorcismSlayer = SlayerGroup.GetEntryByName(SlayerName.Exorcism);
+
+            switch (this.Name)
+            {
+                case "hot magma":
+                    if (!(m is MagmaElemental))
                     {
-                        pMin = pMin + 2;
-                        pMax = pMax + 2;
-                        pois = Poison.Regular;
+                        HandleDamageEffect(m, 0x3709, 0x225, Hurt(owner, 24, 48), 0, 100);
                     }
-                    else if (this.Name == "greater poison potion")
+                    break;
+
+                case "quick silver":
+                    HandleDamageEffect(m, soundId: 0x4D1, damage: Hurt(owner, 24, 48), phys: 50, energy: 50);
+                    break;
+
+                case "holy water":
+                    if (SilverSlayer.Slays(m) || ExorcismSlayer.Slays(m))
                     {
-                        pMin = pMin + 3;
-                        pMax = pMax + 3;
-                        pois = Poison.Greater;
+                        HandleDamageEffect(m, 0x3709, 0x225, Hurt(owner, 40, 60), 20, 20, 20, 20, 20);
                     }
-                    else if (this.Name == "deadly poison potion")
+                    break;
+
+                case "glowing goo":
+                    if (!(m is GlowBeetle) && !(m is GlowBeetleRiding))
                     {
-                        pMin = pMin + 4;
-                        pMax = pMax + 4;
-                        pois = Poison.Deadly;
+                        int eSound = (m is PlayerMobile && (m.Body == 0x190 || m.Body == 0x191))
+                            ? (m.Body == 0x190 ? 0x43F : 0x32D)
+                            : 0x229;
+
+                        HandleDamageEffect(m, 0x36B0, eSound, Hurt(owner, 24, 48), energy: 50, pois: 50);
                     }
-                    else if (this.Name == "lethal poison potion")
+                    break;
+
+                case "scorching ooze":
+                    if (!(m is Lavapede))
                     {
-                        pMin = pMin + 5;
-                        pMax = pMax + 5;
-                        pois = Poison.Lethal;
+                        int eSound = (m.Body == 0x190 && m is PlayerMobile) ? 0x43F : (m.Body == 0x191 && m is PlayerMobile) ? 0x32D : 0x229;
+                        HandleDamageEffect(m, 0x36B0, eSound, Hurt(owner, 24, 48), 0, 100);
+                    }
+                    break;
+
+                case "blue slime":
+                    if (!(m is SlimeDevil))
+                    {
+                        HandleDamageEffect(m, soundId: 0x4D1, damage: Hurt(owner, 24, 48), cold: 100);
+                    }
+                    break;
+
+                case "swamp muck":
+                    if (!(m is SwampThing))
+                    {
+                        HandleDamageEffect(m, soundId: 0x4D1, damage: Hurt(owner, 24, 48), phys: 50, energy: 50);
+                    }
+                    break;
+
+                case "poisonous slime":
+                    if (!(m is AbyssCrawler))
+                    {
+                        HandleDamageEffect(m, soundId: 0x4D1, damage: Hurt(owner, 24, 48), pois: 100);
+                    }
+                    break;
+
+                case "poison spit":
+                    if (!(m is Neptar) && !(m is NeptarWizard))
+                    {
+                        HandleDamageEffect(m, soundId: 0x4D1, damage: Hurt(owner, 24, 48), pois: 100);
+                    }
+                    break;
+
+                case "poison spittle":
+                    if (!(m is Lurker))
+                    {
+                        HandleDamageEffect(m, soundId: 0x4D1, damage: Hurt(owner, 24, 48), pois: 100);
+                    }
+                    break;
+
+                case "fungal slime":
+                    if (!(m is Fungal) && !(m is FungalMage) && !(m is CreepingFungus))
+                    {
+                        HandleDamageEffect(m, soundId: 0x4D1, damage: Hurt(owner, 24, 48), phys: 50, energy: 50);
+                    }
+                    break;
+
+                case "spider ooze":
+                    if (!(m is ZombieSpider))
+                    {
+                        HandleDamageEffect(m, soundId: 0x4D1, damage: Hurt(owner, 24, 48), phys: 50, energy: 50);
+                    }
+                    break;
+
+                case "acidic slime":
+                    if (!(m is ToxicElemental))
+                    {
+                        HandleDamageEffect(m, 0x231, Hurt(owner, 24, 48), 50);
+                    }
+                    break;
+
+                case "acidic ichor":
+                    if (!(m is AntaurKing) && !(m is AntaurProgenitor) && !(m is AntaurSoldier) && !(m is AntaurWorker))
+                    {
+                        HandleDamageEffect(m, soundId: 0x231, damage: Hurt(owner, 24, 48), phys: 50, energy: 50);
+                    }
+                    break;
+
+                case "thick blood":
+                    if (!(m is BloodElemental) && !(m is BloodDemon))
+                    {
+                        int eSound = 0x229;
+                        if (m.Body == 0x190 && m is PlayerMobile)
+                        {
+                            eSound = 0x43F;
+                        }
+                        else if (m.Body == 0x191 && m is PlayerMobile)
+                        {
+                            eSound = 0x32D;
+                        }
+
+                        HandleDamageEffect(m, particleId: 0x36B0, soundId: eSound, damage: Hurt(owner, 24, 48), pois: 100);
+                    }
+                    break;
+
+                case "infected blood":
+                    if (!(m is Infected))
+                    {
+                        int eSound = 0x229;
+                        if (m.Body == 0x190 && m is PlayerMobile)
+                        {
+                            eSound = 0x43F;
+                        }
+                        else if (m.Body == 0x191 && m is PlayerMobile)
+                        {
+                            eSound = 0x32D;
+                        }
+
+                        HandleDamageEffect(m, 0x36B0, eSound, Hurt(owner, 24, 48), pois: 100);
+                    }
+                    break;
+
+                case "alien blood":
+                    if (!(m is Xenomorph) && !(m is Xenomutant))
+                    {
+                        int eSound = 0x229;
+                        if (m.Body == 0x190 && m is PlayerMobile)
+                        {
+                            eSound = 0x43F;
+                        }
+                        else if (m.Body == 0x191 && m is PlayerMobile)
+                        {
+                            eSound = 0x32D;
+                        }
+
+                        HandleDamageEffect(m, 0x36B0, eSound, Hurt(owner, 24, 48), 20, 20, 20, 20, 20);
+                    }
+                    break;
+
+                case "green blood":
+                    if (!(m is ZombieGiant))
+                    {
+                        int eSound = 0x229;
+                        if (m.Body == 0x190 && m is PlayerMobile)
+                        {
+                            eSound = 0x43F;
+                        }
+                        else if (m.Body == 0x191 && m is PlayerMobile)
+                        {
+                            eSound = 0x32D;
+                        }
+
+                        HandleDamageEffect(m, 0x36B0, eSound, Hurt(owner, 24, 48), phys: 20, energy: 80);
+                    }
+                    break;
+
+                case "toxic blood":
+                    if (!(m is Mutant))
+                    {
+                        int eSound = 0x229;
+                        if (m.Body == 0x190 && m is PlayerMobile)
+                        {
+                            eSound = 0x43F;
+                        }
+                        else if (m.Body == 0x191 && m is PlayerMobile)
+                        {
+                            eSound = 0x32D;
+                        }
+
+                        HandleDamageEffect(m, 0x36B0, eSound, Hurt(owner, 24, 48), pois: 100);
+                    }
+                    break;
+
+                case "freezing water":
+                    if (!(m is WaterElemental || m is WaterWeird || m is DeepWaterElemental || m is Dagon))
+                    {
+                        HandleDamageEffect(m, soundId: 0x4D1, damage: Hurt(owner, 20, 40), cold: 100);
+                    }
+                    break;
+
+                case "deep water":
+                    if (!(m is WaterElemental || m is WaterWeird || m is DeepWaterElemental || m is Dagon))
+                    {
+                        HandleDamageEffect(m, soundId: 0x4D1, damage: Hurt(owner, 40, 60), cold: 100);
+                    }
+                    break;
+
+                case "lesser poison potion":
+                case "poison potion":
+                case "greater poison potion":
+                case "deadly poison potion":
+                case "lethal poison potion":
+                    {
+                        int pSkill = (int)(owner.Skills[SkillName.Poisoning].Value / 50);
+                        int tSkill = (int)(owner.Skills[SkillName.Tasting].Value / 33);
+                        int aSkill = (int)(owner.Skills[SkillName.Alchemy].Value / 33);
+                        int pMin = pSkill + tSkill + aSkill;
+                        int pMax = pMin * 2;
+                        Poison pois = Poison.Lesser;
+
+                        switch (this.Name)
+                        {
+                            case "poison potion":
+                                pMin += 2; pMax += 2;
+                                pois = Poison.Regular;
+                                break;
+                            case "greater poison potion":
+                                pMin += 3; pMax += 3;
+                                pois = Poison.Greater;
+                                break;
+                            case "deadly poison potion":
+                                pMin += 4; pMax += 4;
+                                pois = Poison.Deadly;
+                                break;
+                            case "lethal poison potion":
+                                pMin += 5; pMax += 5;
+                                pois = Poison.Lethal;
+                                break;
+                        }
+
+                        if (pMin >= Utility.RandomMinMax(1, 16))
+                        {
+                            m.ApplyPoison(owner, pois);
+                        }
+
+                        HandleDamageEffect(m, soundId: 0x4D1, damage: Hurt(owner, pMin, pMax), pois: 100);
+                        break;
                     }
 
-                    if (pMin >= Utility.RandomMinMax(1, 16))
-                    {
-                        m.ApplyPoison(owner, pois);
-                    }
+                case "liquid fire":
+                    int liqMinFire = Server.Items.BaseLiquid.GetLiquidBonus(owner);
+                    int liqMaxFire = liqMinFire * 2;
 
-                    owner.DoHarmful(m);
-                    Effects.PlaySound(m.Location, m.Map, 0x4D1);
-                    AOS.Damage(m, owner, Hurt(owner, pMin, pMax), 0, 0, 0, 100, 0);
-                    //													Ph,		Fr,		Cd,		Ps,		Eg
-                }
-                else if (this.Name == "liquid fire")
-                {
-                    int liqMin = Server.Items.BaseLiquid.GetLiquidBonus(owner);
-                    int liqMax = liqMin * 2;
-                    owner.DoHarmful(m);
-                    Effects.SendLocationEffect(m.Location, m.Map, 0x3709, 30, 10);
-                    m.PlaySound(0x208);
-                    AOS.Damage(m, owner, Hurt(owner, liqMin, liqMax), 20, 80, 0, 0, 0);
-                    //														Ph,		Fr,		Cd,		Ps,		Eg
-                }
-                else if (this.Name == "liquid goo")
-                {
-                    int liqMin = Server.Items.BaseLiquid.GetLiquidBonus(owner);
-                    int liqMax = liqMin * 2;
-                    owner.DoHarmful(m);
-                    Effects.SendLocationEffect(
-                        m.Location,
-                        m.Map,
-                        Utility.RandomList(0x3967, 0x3979),
-                        30,
-                        10
-                    );
-                    m.PlaySound(0x5C3);
-                    AOS.Damage(m, owner, Hurt(owner, liqMin, liqMax), 20, 0, 0, 0, 80);
-                    //														Ph,		Fr,		Cd,		Ps,		Eg
-                }
-                else if (this.Name == "liquid ice")
-                {
-                    int liqMin = Server.Items.BaseLiquid.GetLiquidBonus(owner);
-                    int liqMax = liqMin * 2;
-                    owner.DoHarmful(m);
-                    Effects.SendLocationEffect(m.Location, m.Map, 0x1A84, 30, 10, 0x9C1, 0);
-                    m.PlaySound(0x10B);
-                    AOS.Damage(m, owner, Hurt(owner, liqMin, liqMax), 20, 0, 80, 0, 0);
-                    //														Ph,		Fr,		Cd,		Ps,		Eg
-                }
-                else if (this.Name == "liquid rot")
-                {
-                    int liqMin = Server.Items.BaseLiquid.GetLiquidBonus(owner);
-                    int liqMax = liqMin * 2;
-                    owner.DoHarmful(m);
-                    Effects.SendLocationEffect(m.Location, m.Map, 0x3400, 60);
-                    Effects.PlaySound(m.Location, m.Map, 0x108);
-                    AOS.Damage(m, owner, Hurt(owner, liqMin, liqMax), 20, 0, 0, 80, 0);
-                    //														Ph,		Fr,		Cd,		Ps,		Eg
-                }
-                else if (this.Name == "liquid pain")
-                {
-                    int liqMin = Server.Items.BaseLiquid.GetLiquidBonus(owner);
-                    int liqMax = liqMin * 2;
-                    owner.DoHarmful(m);
+                    HandleDamageEffect(m, 0x3709, 0x208, Hurt(owner, liqMinFire, liqMaxFire), phys: 20, fire: 80);
+                    break;
+
+                case "liquid goo":
+                    int liqMinGoo = Server.Items.BaseLiquid.GetLiquidBonus(owner);
+                    int liqMaxGoo = liqMinGoo * 2;
+
+                    HandleDamageEffect(m, Utility.RandomList(0x3967, 0x3979), 0x5C3, Hurt(owner, liqMinGoo, liqMaxGoo), energy: 80);
+                    break;
+
+                case "liquid ice":
+                    int liqMinIce = Server.Items.BaseLiquid.GetLiquidBonus(owner);
+                    int liqMaxIce = liqMinIce * 2;
+
+                    HandleDamageEffect(m, 0x1A84, 0x10B, Hurt(owner, liqMinIce, liqMaxIce), cold: 80);
+                    break;
+
+                case "liquid rot":
+                    int liqMinRot = Server.Items.BaseLiquid.GetLiquidBonus(owner);
+                    int liqMaxRot = liqMinRot * 2;
+
+                    HandleDamageEffect(m, 0x3400, 0x108, Hurt(owner, liqMinRot, liqMaxRot), 20, 0, 0, 80, 0);
+                    break;
+
+                case "liquid pain":
+                    int liqMinPain = Server.Items.BaseLiquid.GetLiquidBonus(owner);
+                    int liqMaxPain = liqMinPain * 2;
+
                     m.FixedParticles(0x37C4, 1, 8, 9916, 39, 3, EffectLayer.Head);
                     m.FixedParticles(0x37C4, 1, 8, 9502, 39, 4, EffectLayer.Head);
                     m.PlaySound(0x210);
-                    AOS.Damage(m, owner, Hurt(owner, liqMin, liqMax), 80, 5, 5, 5, 5);
-                    //														Ph,		Fr,		Cd,		Ps,		Eg
-                }
+
+                    HandleDamageEffect(m, damage: Hurt(owner, liqMinPain, liqMaxPain), phys: 80, fire: 5, cold: 5, pois: 5, energy: 5);
+                    break;
             }
+
             return true;
+        }
+
+        private void HandleDamageEffect(Mobile m, int particleId = 0, int soundId = 0, int damage = 0, int phys = 0, int fire = 0, int cold = 0, int pois = 0, int energy = 0)
+        {
+            if (!CanDealDamageTo(this.owner, m))
+            {
+                return; // Block damage and exit the method.
+            }
+
+            owner.DoHarmful(m);
+
+            if (particleId != 0)
+            {
+                Effects.SendLocationParticles(EffectItem.Create(m.Location, m.Map, EffectItem.DefaultDuration), particleId, 10, 30, 5052);
+            }
+
+            if (soundId != 0)
+            {
+                Effects.PlaySound(m.Location, m.Map, soundId);
+            }
+
+            if (damage != 0)
+            {
+                AOS.Damage(m, owner, damage, phys, fire, cold, pois, energy);
+            }
         }
 
         public static void AddSplatter(
