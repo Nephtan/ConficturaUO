@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using Server;
+using Server.Mobiles;
 using Server.Network;
 using Server.Targeting;
 using Server.Spells;
@@ -332,11 +333,33 @@ namespace Server.Items
                 {
                     Mobile m = (Mobile)o;
 
-                    if (from != null)
-                        from.DoHarmful(m);
+                    // Type-check first and then cast
+                    PlayerMobile thrower = from as PlayerMobile;
+                    PlayerMobile target = m as PlayerMobile;
+
+                    if (thrower != null && target != null)
+                    {
+                        // If the thrower is PvE, they should only be able to damage themselves
+                        if (thrower.NONPK == NONPK.NONPK)
+                        {
+                            if (thrower != target)
+                            {
+                                continue;
+                            }
+                        }
+                        // If the thrower is PvP or Neutral, they shouldn't damage PvE players
+                        else
+                        {
+                            if (target.NONPK == NONPK.NONPK)
+                            {
+                                continue;
+                            }
+                        }
+                    }
+
+                    if (from != null) from.DoHarmful(m);
 
                     int damage = Utility.RandomMinMax(min, max);
-
                     damage += alchemyBonus;
 
                     if (!Core.AOS && damage > 40)
