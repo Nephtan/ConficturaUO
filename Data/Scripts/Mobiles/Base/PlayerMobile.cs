@@ -6293,6 +6293,10 @@ namespace Server.Mobiles
                     )
                         continue;
 
+                    if (this.Stabled.Count >= Server.Mobiles.AnimalTrainer.GetMaxStabled(this)) 
+                        continue;
+                    
+
                     pet.ControlTarget = null;
                     pet.ControlOrder = OrderType.Stay;
                     pet.Internalize();
