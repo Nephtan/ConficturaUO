@@ -401,8 +401,11 @@ namespace Server.Gumps
 
                 AddItem(269, 349, 4775);
                 AddItem(586, 349, 4776);
-                AddButton(317, 375, 4014, 4014, prev, GumpButtonType.Reply, 0);
-                AddButton(552, 375, 4005, 4005, next, GumpButtonType.Reply, 0);
+
+                if (prev != 20)
+                    AddButton(317, 375, 4014, 4014, prev, GumpButtonType.Reply, 0); // prev is always 20 when it's the last card
+                if (next != 20)
+                    AddButton(552, 375, 4005, 4005, next, GumpButtonType.Reply, 0); // next is always 20 when it's the last card
 
                 AddHtml(
                     269,
