@@ -614,12 +614,12 @@ namespace Server.Mobiles
             }
         }
 
-        public int ChargePerDay
+        public virtual int ChargePerDay
         {
             get { return 1; }
         }
 
-        public int ChargePerRealWorldDay
+        public virtual int ChargePerRealWorldDay
         {
             get { return 1; }
         }

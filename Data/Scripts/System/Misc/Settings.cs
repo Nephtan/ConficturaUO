@@ -21,7 +21,7 @@ namespace Server.Misc
     {
         public static string ServerName()
         {
-            return "Confictura: Legend & Adventure";
+            return "Confictura: Test";
         }
 
         public static string Version()
@@ -1306,7 +1306,7 @@ namespace Server.Misc
                 ""
                 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-                                + "LIZARD - 24 May 2023<br>"
+                + "LIZARD - 24 May 2023<br>"
                 + "<br>"
                 + "* Fixed an issue with the last update causing vendors to vanish.<br>"
                 + "* Fixed damages for a couple of elemental spells.<br>"

@@ -1,10 +1,12 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using Server;
 using Server.Commands;
 using Server.Gumps;
 using Server.Mobiles;
 using Server.Network;
+using Server.Regions;
 using Server.Spells;
 
 namespace Server.Items
@@ -403,6 +405,9 @@ namespace Server.Items
 
             AddBackground(0, 0, 380, 280, 5054);
 
+            AddButton(10, 185, 4005, 4007, 2, GumpButtonType.Reply, 0);
+            AddHtml(45, 185, 140, 25, @"Player City Menu", false, false);
+
             AddButton(10, 210, 4005, 4007, 1, GumpButtonType.Reply, 0);
             AddHtmlLocalized(45, 210, 140, 25, 1011036, false, false); // OKAY
 
@@ -453,6 +458,31 @@ namespace Server.Items
                 return;
             else if (m_Mobile.Deleted || m_Moongate.Deleted || m_Mobile.Map == null)
                 return;
+
+            if (info.ButtonID == 2) //City
+            {
+                ArrayList a = new ArrayList();
+
+                foreach (Item i in World.Items.Values)
+                {
+                    if (i is CityManagementStone)
+                    {
+                        CityManagementStone s = (CityManagementStone)i;
+
+                        if (s.HasMoongate == true && s.IsRegistered == true)
+                            a.Add(i);
+                    }
+                }
+
+                if (a.Count == 0)
+                {
+                    m_Mobile.SendGump(new NoCitiesGump());
+                }
+                else
+                {
+                    m_Mobile.SendGump(new PCMoongateGump(m_Moongate, 0, null, null));
+                }
+            }
 
             int[] switches = info.Switches;
 
@@ -506,15 +536,37 @@ namespace Server.Items
             }
             else
             {
-                BaseCreature.TeleportPets(m_Mobile, entry.Location, list.Map);
+                CityManagementStone outgoingCity = null;
+                Region currentRegion = Region.Find(m_Mobile.Location, m_Mobile.Map);
 
-                m_Mobile.Combatant = null;
-                m_Mobile.Warmode = false;
-                m_Mobile.Hidden = true;
+                if (currentRegion != null)
+                {
+                    if (currentRegion is PlayerCityRegion)
+                    {
+                        PlayerCityRegion pcr = (PlayerCityRegion)currentRegion;
 
-                m_Mobile.MoveToWorld(entry.Location, list.Map);
+                        outgoingCity = pcr.Stone;
+                    }
+                }
 
-                Effects.PlaySound(entry.Location, list.Map, 0x1FE);
+                if (outgoingCity != null && outgoingCity.TravelTax >= 1)
+                {
+                    m_Mobile.SendGump(
+                        new PCMoongateToll2Gump(m_Moongate, outgoingCity, entry.Location, list.Map)
+                    );
+                }
+                else
+                {
+                    BaseCreature.TeleportPets(m_Mobile, entry.Location, list.Map);
+
+                    m_Mobile.Combatant = null;
+                    m_Mobile.Warmode = false;
+                    m_Mobile.Hidden = true;
+
+                    m_Mobile.MoveToWorld(entry.Location, list.Map);
+
+                    Effects.PlaySound(entry.Location, list.Map, 0x1FE);
+                }
             }
         }
     }
