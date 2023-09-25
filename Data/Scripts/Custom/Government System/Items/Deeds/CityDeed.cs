@@ -33,7 +33,7 @@ namespace Server.Items
 
 				if ( from.AccessLevel >= AccessLevel.GameMaster || reg.AllowHousing( from, p ) )
 				{
-					if ( PlayerGovernmentSystem.CheckIfInIlsh( from ) )
+					if ( PlayerGovernmentSystem.CheckIfInUnderworld( from ) )
 					{
 						from.SendMessage( "You cannot place this structure on this facet." );
 					}
