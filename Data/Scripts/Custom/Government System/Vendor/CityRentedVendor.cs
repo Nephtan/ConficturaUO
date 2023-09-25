@@ -9,367 +9,373 @@ using Server.Prompts;
 using Server.Items;
 using Server.Regions;
 
-
 namespace Server.Mobiles
 {
+    public class CityRentedVendor : CityPlayerVendor
+    {
+        private VendorRentalDuration m_RentalDuration;
+        private int m_RentalPrice;
+        private bool m_LandlordRenew;
+        private bool m_RenterRenew;
+        private int m_RenewalPrice;
+        private CityManagementStone m_Stone;
+        private Mobile m_Landlord;
 
-public class CityRentedVendor : CityPlayerVendor
-	{
-		private VendorRentalDuration m_RentalDuration;
-		private int m_RentalPrice;
-		private bool m_LandlordRenew;
-		private bool m_RenterRenew;
-		private int m_RenewalPrice;
-		private CityManagementStone m_Stone;
-		private Mobile m_Landlord;
-		
+        private int m_RentalGold;
 
-		private int m_RentalGold;
+        private DateTime m_RentalExpireTime;
+        private Timer m_RentalExpireTimer;
 
-		private DateTime m_RentalExpireTime;
-		private Timer m_RentalExpireTimer;
+        public CityRentedVendor(
+            Mobile landlord,
+            Mobile owner,
+            VendorRentalDuration duration,
+            int rentalPrice,
+            bool landlordRenew,
+            int rentalGold,
+            CityManagementStone stone
+        )
+            : base(owner, stone)
+        {
+            m_RentalDuration = duration;
+            m_RentalPrice = m_RenewalPrice = rentalPrice;
+            m_LandlordRenew = landlordRenew;
+            m_RenterRenew = false;
+            m_Stone = stone;
+            m_Landlord = landlord;
 
-		public CityRentedVendor( Mobile landlord, Mobile owner, VendorRentalDuration duration, int rentalPrice, bool landlordRenew, int rentalGold, CityManagementStone stone ) : base( owner, stone )
-		{
-			m_RentalDuration = duration;
-			m_RentalPrice = m_RenewalPrice = rentalPrice;
-			m_LandlordRenew = landlordRenew;
-			m_RenterRenew = false;
-			m_Stone = stone;
-			m_Landlord = landlord;
-			
+            m_RentalGold = rentalGold;
 
-			m_RentalGold = rentalGold;
+            m_RentalExpireTime = DateTime.Now + duration.Duration;
+            m_RentalExpireTimer = new RentalExpireTimer(this, duration.Duration, m_Stone);
+            m_RentalExpireTimer.Start();
+        }
 
-			m_RentalExpireTime = DateTime.Now + duration.Duration;
-			m_RentalExpireTimer = new RentalExpireTimer( this, duration.Duration, m_Stone );
-			m_RentalExpireTimer.Start();
-		}
+        public CityRentedVendor(Serial serial)
+            : base(serial) { }
 
-		public CityRentedVendor( Serial serial ) : base( serial )
-		{
-		}
+        public CityManagementStone Stone
+        {
+            get { return m_Stone; }
+        }
 
-		public CityManagementStone Stone
-		{
-			get{ return m_Stone; }
-		}
-		
-		public VendorRentalDuration RentalDuration
-		{
-			get{ return m_RentalDuration; }
-		}
+        public VendorRentalDuration RentalDuration
+        {
+            get { return m_RentalDuration; }
+        }
 
-		[CommandProperty( AccessLevel.GameMaster )]
-		public int RentalPrice
-		{
-			get{ return m_RentalPrice; }
-			set{ m_RentalPrice = value; }
-		}
+        [CommandProperty(AccessLevel.GameMaster)]
+        public int RentalPrice
+        {
+            get { return m_RentalPrice; }
+            set { m_RentalPrice = value; }
+        }
 
-		[CommandProperty( AccessLevel.GameMaster )]
-		public bool LandlordRenew
-		{
-			get{ return m_LandlordRenew; }
-			set{ m_LandlordRenew = value; }
-		}
+        [CommandProperty(AccessLevel.GameMaster)]
+        public bool LandlordRenew
+        {
+            get { return m_LandlordRenew; }
+            set { m_LandlordRenew = value; }
+        }
 
-		[CommandProperty( AccessLevel.GameMaster )]
-		public bool RenterRenew
-		{
-			get{ return m_RenterRenew; }
-			set{ m_RenterRenew = value; }
-		}
+        [CommandProperty(AccessLevel.GameMaster)]
+        public bool RenterRenew
+        {
+            get { return m_RenterRenew; }
+            set { m_RenterRenew = value; }
+        }
 
-		[CommandProperty( AccessLevel.GameMaster )]
-		public bool Renew
-		{
-			get{ return LandlordRenew && RenterRenew;  }
-		}
+        [CommandProperty(AccessLevel.GameMaster)]
+        public bool Renew
+        {
+            get { return LandlordRenew && RenterRenew; }
+        }
 
-		[CommandProperty( AccessLevel.GameMaster )]
-		public int RenewalPrice
-		{
-			get{ return m_RenewalPrice; }
-			set{ m_RenewalPrice = value; }
-		}
+        [CommandProperty(AccessLevel.GameMaster)]
+        public int RenewalPrice
+        {
+            get { return m_RenewalPrice; }
+            set { m_RenewalPrice = value; }
+        }
 
-		[CommandProperty( AccessLevel.GameMaster )]
-		public int RentalGold
-		{
-			get{ return m_RentalGold; }
-			set{ m_RentalGold = value; }
-		}
+        [CommandProperty(AccessLevel.GameMaster)]
+        public int RentalGold
+        {
+            get { return m_RentalGold; }
+            set { m_RentalGold = value; }
+        }
 
-		[CommandProperty( AccessLevel.GameMaster )]
-		public DateTime RentalExpireTime
-		{
-			get{ return m_RentalExpireTime; }
-		}
+        [CommandProperty(AccessLevel.GameMaster)]
+        public DateTime RentalExpireTime
+        {
+            get { return m_RentalExpireTime; }
+        }
 
-		public override bool IsOwner( Mobile m )
-		{
-			return m == Owner || m.AccessLevel >= AccessLevel.GameMaster;
-		}
+        public override bool IsOwner(Mobile m)
+        {
+            return m == Owner || m.AccessLevel >= AccessLevel.GameMaster;
+        }
 
-		[CommandProperty( AccessLevel.GameMaster )]
-		public Mobile Landlord
-		{
-			get{ return m_Landlord; }
-			
-		}
+        [CommandProperty(AccessLevel.GameMaster)]
+        public Mobile Landlord
+        {
+            get { return m_Landlord; }
+        }
 
-		public static bool IsLegitmateVendor( Mobile from, Mobile m )
-		{
-			PlayerMobile pm = (PlayerMobile)from;
-			
-			
-			if ( ( m is CityRentedVendor || m is CityPlayerVendor ) &&  pm.City != null )
-			{
-				CityManagementStone stone = pm.City;
-				Region r = m.Region;
-				Region reg = from.Region;
-				
-				if ( r is CityMarketRegion )
-				{
-					CityMarketRegion region = (CityMarketRegion)r;
-					if ( region.Stone == stone )
-						return true;
-				}
-				else if ( reg is CityMarketRegion )
-				{
-					CityMarketRegion region = (CityMarketRegion)reg;
-					if ( region.Stone == stone && ((CityPlayerVendor)m).IsVendorInTown() )
-						return true;
-				}
-					
-				return false;
-				
-			}
-			else
-				return false;
-		}
-		
-				
-		
-		public bool IsLandlord( Mobile m )
-		{
-			if ( m == Landlord )
-				return true;
-			else
-				return false;
-		}
+        public static bool IsLegitmateVendor(Mobile from, Mobile m)
+        {
+            PlayerMobile pm = (PlayerMobile)from;
 
-		public void ComputeRentalExpireDelay( out int days, out int hours )
-		{
-			TimeSpan delay = RentalExpireTime - DateTime.Now;
+            if ((m is CityRentedVendor || m is CityPlayerVendor) && pm.City != null)
+            {
+                CityManagementStone stone = pm.City;
+                Region r = m.Region;
+                Region reg = from.Region;
 
-			if ( delay <= TimeSpan.Zero )
-			{
-				days = 0;
-				hours = 0;
-			}
-			else
-			{
-				days = delay.Days;
-				hours = delay.Hours;
-			}
-		}
+                if (r is CityMarketRegion)
+                {
+                    CityMarketRegion region = (CityMarketRegion)r;
+                    if (region.Stone == stone)
+                        return true;
+                }
+                else if (reg is CityMarketRegion)
+                {
+                    CityMarketRegion region = (CityMarketRegion)reg;
+                    if (region.Stone == stone && ((CityPlayerVendor)m).IsVendorInTown())
+                        return true;
+                }
 
-		public void SendRentalExpireMessage( Mobile to )
-		{
-			int days, hours;
-			ComputeRentalExpireDelay( out days, out hours );
+                return false;
+            }
+            else
+                return false;
+        }
 
-			to.SendLocalizedMessage( 1062464, days.ToString() + "\t" + hours.ToString() ); // The rental contract on this vendor will expire in ~1_DAY~ day(s) and ~2_HOUR~ hour(s).
-		}
+        public bool IsLandlord(Mobile m)
+        {
+            if (m == Landlord)
+                return true;
+            else
+                return false;
+        }
 
-		public override void OnAfterDelete()
-		{
-			base.OnAfterDelete();
+        public void ComputeRentalExpireDelay(out int days, out int hours)
+        {
+            TimeSpan delay = RentalExpireTime - DateTime.Now;
 
-			m_RentalExpireTimer.Stop();
-		}
+            if (delay <= TimeSpan.Zero)
+            {
+                days = 0;
+                hours = 0;
+            }
+            else
+            {
+                days = delay.Days;
+                hours = delay.Hours;
+            }
+        }
 
-		
-		public override void GetContextMenuEntries( Mobile from, List<ContextMenuEntry> list )
-		{
-			if ( from.Alive )
-			{
-				if ( IsOwner( from ) )
-				{
-					list.Add( new ContractOptionsEntry( this ) );
-					
-				}
-				if ( from == m_Stone.Mayor )
-				{
-					list.Add( new RejectContract( this ) );
-				}
-				
-				
-			}
+        public void SendRentalExpireMessage(Mobile to)
+        {
+            int days,
+                hours;
+            ComputeRentalExpireDelay(out days, out hours);
 
-			base.GetContextMenuEntries( from, list );
-		}
+            to.SendLocalizedMessage(1062464, days.ToString() + "\t" + hours.ToString()); // The rental contract on this vendor will expire in ~1_DAY~ day(s) and ~2_HOUR~ hour(s).
+        }
 
-		private class RejectContract : ContextMenuEntry  
-		{
-			private CityRentedVendor m_Vendor;
-						
-			public RejectContract( CityRentedVendor vendor ) : base( 6218 )
-			{
-				m_Vendor = vendor;
-			}
-			
-			public override void OnClick()
-			{
-				Mobile owner = m_Vendor.Owner;
-				
-				m_Vendor.LandlordRenew = false;
-				owner.SendMessage( "Your vendor contract has been cancelled, you have until the end of the contract to clean them off!" );				
-				
-				
-			}
-		}
-		
-		
-		
-		private class ContractOptionsEntry : ContextMenuEntry
-		{
-			private CityRentedVendor m_Vendor;
+        public override void OnAfterDelete()
+        {
+            base.OnAfterDelete();
 
-			public ContractOptionsEntry( CityRentedVendor vendor ) : base( 6209 )
-			{
-				m_Vendor = vendor;
-			}
+            m_RentalExpireTimer.Stop();
+        }
 
-			public override void OnClick()
-			{
-				Mobile from = Owner.From;
+        public override void GetContextMenuEntries(Mobile from, List<ContextMenuEntry> list)
+        {
+            if (from.Alive)
+            {
+                if (IsOwner(from))
+                {
+                    list.Add(new ContractOptionsEntry(this));
+                }
+                if (from == m_Stone.Mayor)
+                {
+                    list.Add(new RejectContract(this));
+                }
+            }
 
-				if ( m_Vendor.Deleted || !from.CheckAlive() )
-					return;
+            base.GetContextMenuEntries(from, list);
+        }
 
-				if ( m_Vendor.IsOwner( from ) )
-				{
-					from.CloseGump( typeof( CityRenterVendorRentalGump ) );
-					from.SendGump( new CityRenterVendorRentalGump( m_Vendor ) ); 
-					m_Vendor.SendRentalExpireMessage( from );
-				}
-				
-			}
-		}
+        private class RejectContract : ContextMenuEntry
+        {
+            private CityRentedVendor m_Vendor;
 
-		
+            public RejectContract(CityRentedVendor vendor)
+                : base(6218)
+            {
+                m_Vendor = vendor;
+            }
 
-		public override void Serialize( GenericWriter writer )
-		{
-			base.Serialize( writer );
+            public override void OnClick()
+            {
+                Mobile owner = m_Vendor.Owner;
 
-			writer.WriteEncodedInt( 0 ); // version
+                m_Vendor.LandlordRenew = false;
+                owner.SendMessage(
+                    "Your vendor contract has been cancelled, you have until the end of the contract to clean them off!"
+                );
+            }
+        }
 
-			writer.Write( (Item) m_Stone );
-			writer.Write( (Mobile) m_Landlord );
-			writer.WriteEncodedInt( m_RentalDuration.ID );
+        private class ContractOptionsEntry : ContextMenuEntry
+        {
+            private CityRentedVendor m_Vendor;
 
-			writer.Write( (int) m_RentalPrice );
-			writer.Write( (bool) m_LandlordRenew );
-			writer.Write( (bool) m_RenterRenew );
-			writer.Write( (int) m_RenewalPrice );
+            public ContractOptionsEntry(CityRentedVendor vendor)
+                : base(6209)
+            {
+                m_Vendor = vendor;
+            }
 
-			writer.Write( (int) m_RentalGold );
+            public override void OnClick()
+            {
+                Mobile from = Owner.From;
 
-			writer.WriteDeltaTime( (DateTime) m_RentalExpireTime );
-		}
+                if (m_Vendor.Deleted || !from.CheckAlive())
+                    return;
 
-		public override void Deserialize( GenericReader reader )
-		{
-			base.Deserialize( reader );
+                if (m_Vendor.IsOwner(from))
+                {
+                    from.CloseGump(typeof(CityRenterVendorRentalGump));
+                    from.SendGump(new CityRenterVendorRentalGump(m_Vendor));
+                    m_Vendor.SendRentalExpireMessage(from);
+                }
+            }
+        }
 
-			int version = reader.ReadEncodedInt();
+        public override void Serialize(GenericWriter writer)
+        {
+            base.Serialize(writer);
 
-			m_Stone = (CityManagementStone)reader.ReadItem();
-			m_Landlord = reader.ReadMobile();
-			int durationID = reader.ReadEncodedInt();
-			if ( durationID < VendorRentalDuration.Instances.Length )
-				m_RentalDuration = VendorRentalDuration.Instances[durationID];
-			else
-				m_RentalDuration = VendorRentalDuration.Instances[0];
+            writer.WriteEncodedInt(0); // version
 
-			m_RentalPrice = reader.ReadInt();
-			m_LandlordRenew = reader.ReadBool();
-			m_RenterRenew = reader.ReadBool();
-			m_RenewalPrice = reader.ReadInt();
+            writer.Write((Item)m_Stone);
+            writer.Write((Mobile)m_Landlord);
+            writer.WriteEncodedInt(m_RentalDuration.ID);
 
-			m_RentalGold = reader.ReadInt();
+            writer.Write((int)m_RentalPrice);
+            writer.Write((bool)m_LandlordRenew);
+            writer.Write((bool)m_RenterRenew);
+            writer.Write((int)m_RenewalPrice);
 
-			m_RentalExpireTime = reader.ReadDeltaTime();
+            writer.Write((int)m_RentalGold);
 
-			TimeSpan delay = m_RentalExpireTime - DateTime.Now;
-			m_RentalExpireTimer = new RentalExpireTimer( this, delay > TimeSpan.Zero ? delay : TimeSpan.Zero, m_Stone );
-			m_RentalExpireTimer.Start();
-		}
+            writer.WriteDeltaTime((DateTime)m_RentalExpireTime);
+        }
 
-		private class RentalExpireTimer : Timer
-		{
-			private CityRentedVendor m_Vendor;
-			private CityManagementStone m_Stone;
+        public override void Deserialize(GenericReader reader)
+        {
+            base.Deserialize(reader);
 
-			public RentalExpireTimer( CityRentedVendor vendor, TimeSpan delay, CityManagementStone stone ) : base( delay, vendor.RentalDuration.Duration )
-			{
-				m_Vendor = vendor;
-				m_Stone = stone;
+            int version = reader.ReadEncodedInt();
 
-				Priority = TimerPriority.OneMinute;
-			}
+            m_Stone = (CityManagementStone)reader.ReadItem();
+            m_Landlord = reader.ReadMobile();
+            int durationID = reader.ReadEncodedInt();
+            if (durationID < VendorRentalDuration.Instances.Length)
+                m_RentalDuration = VendorRentalDuration.Instances[durationID];
+            else
+                m_RentalDuration = VendorRentalDuration.Instances[0];
 
-			protected override void OnTick()
-			{
-				int renewalPrice = m_Vendor.RenewalPrice;
+            m_RentalPrice = reader.ReadInt();
+            m_LandlordRenew = reader.ReadBool();
+            m_RenterRenew = reader.ReadBool();
+            m_RenewalPrice = reader.ReadInt();
 
-				if ( m_Vendor.Renew && m_Vendor.HoldGold >= renewalPrice )
-				{
-					m_Vendor.HoldGold -= renewalPrice;
-					m_Stone.CityTreasury+= renewalPrice;
-					
+            m_RentalGold = reader.ReadInt();
 
-					m_Vendor.RentalPrice = renewalPrice;
-					
+            m_RentalExpireTime = reader.ReadDeltaTime();
 
-					m_Vendor.m_RentalExpireTime = DateTime.Now + m_Vendor.RentalDuration.Duration;
-				}
-				else
-				{
-					m_Vendor.Destroy( false );
-				}
-			}
-		}
-	}
+            TimeSpan delay = m_RentalExpireTime - DateTime.Now;
+            m_RentalExpireTimer = new RentalExpireTimer(
+                this,
+                delay > TimeSpan.Zero ? delay : TimeSpan.Zero,
+                m_Stone
+            );
+            m_RentalExpireTimer.Start();
+        }
 
+        private class RentalExpireTimer : Timer
+        {
+            private CityRentedVendor m_Vendor;
+            private CityManagementStone m_Stone;
 
+            public RentalExpireTimer(
+                CityRentedVendor vendor,
+                TimeSpan delay,
+                CityManagementStone stone
+            )
+                : base(delay, vendor.RentalDuration.Duration)
+            {
+                m_Vendor = vendor;
+                m_Stone = stone;
 
-public class CityRenterVendorRentalGump : BaseVendorRentalGump 
-	{
-		private CityRentedVendor m_Vendor;
+                Priority = TimerPriority.OneMinute;
+            }
 
-		public CityRenterVendorRentalGump( CityRentedVendor vendor ) : base(
-			GumpType.VendorRenter, vendor.RentalDuration, vendor.RentalPrice, vendor.RenewalPrice,
-			vendor.Landlord, vendor.Owner, vendor.LandlordRenew, vendor.RenterRenew, vendor.Renew )
-		{
-			m_Vendor = vendor;
-		}
+            protected override void OnTick()
+            {
+                int renewalPrice = m_Vendor.RenewalPrice;
 
-		protected override bool IsValidResponse( Mobile from )
-		{
-			return m_Vendor.CanInteractWith( from, true );
-		}
+                if (m_Vendor.Renew && m_Vendor.HoldGold >= renewalPrice)
+                {
+                    m_Vendor.HoldGold -= renewalPrice;
+                    m_Stone.CityTreasury += renewalPrice;
 
-		protected override void RenterRenewOnExpiration( Mobile from )
-		{
-			m_Vendor.RenterRenew = !m_Vendor.RenterRenew;
-			
+                    m_Vendor.RentalPrice = renewalPrice;
 
-			from.SendGump( new CityRenterVendorRentalGump( m_Vendor ) );
-		}
-	}
+                    m_Vendor.m_RentalExpireTime = DateTime.Now + m_Vendor.RentalDuration.Duration;
+                }
+                else
+                {
+                    m_Vendor.Destroy(false);
+                }
+            }
+        }
+    }
+
+    public class CityRenterVendorRentalGump : BaseVendorRentalGump
+    {
+        private CityRentedVendor m_Vendor;
+
+        public CityRenterVendorRentalGump(CityRentedVendor vendor)
+            : base(
+                GumpType.VendorRenter,
+                vendor.RentalDuration,
+                vendor.RentalPrice,
+                vendor.RenewalPrice,
+                vendor.Landlord,
+                vendor.Owner,
+                vendor.LandlordRenew,
+                vendor.RenterRenew,
+                vendor.Renew
+            )
+        {
+            m_Vendor = vendor;
+        }
+
+        protected override bool IsValidResponse(Mobile from)
+        {
+            return m_Vendor.CanInteractWith(from, true);
+        }
+
+        protected override void RenterRenewOnExpiration(Mobile from)
+        {
+            m_Vendor.RenterRenew = !m_Vendor.RenterRenew;
+
+            from.SendGump(new CityRenterVendorRentalGump(m_Vendor));
+        }
+    }
 }

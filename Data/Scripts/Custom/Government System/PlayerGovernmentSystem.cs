@@ -75,15 +75,15 @@ namespace Server
         public static int Level6 = 56; // Default 200 55
 
         /*
-		* Member Rules
-		*
-		* As long as a member has a house withing the city limits they can bacome an member of the city.
-		* Member cannot be a member of another city. Unless multi houses per account is enabled.
-		* However the same member cannot be a member of 2 differant cities.
-		* A member can join as many charactors to the city from thier account as they wish.
-		* Each charactor from the members account counts as a member to the citys total population.
-		* So in theory one account counts as 6 members to the city. (If 6 chars are enabled.) & if all are joined.
-		*/
+        * Member Rules
+        *
+        * As long as a member has a house withing the city limits they can bacome an member of the city.
+        * Member cannot be a member of another city. Unless multi houses per account is enabled.
+        * However the same member cannot be a member of 2 differant cities.
+        * A member can join as many charactors to the city from thier account as they wish.
+        * Each charactor from the members account counts as a member to the citys total population.
+        * So in theory one account counts as 6 members to the city. (If 6 chars are enabled.) & if all are joined.
+        */
 
         // Title for cities at each level.
         public static string Title1 = "outpost";
@@ -114,7 +114,6 @@ namespace Server
             CheckCitySystemVersion();
         }
 
-
         public static void PlaceCityHall(Mobile from, Point3D p, CityDeed deed)
         {
             if (CheckPlacement(from, p, deed.MultiID, deed.Offset))
@@ -129,7 +128,11 @@ namespace Server
                     int offset = CityRangeOffset * 2;
 
                     from.SendMessage("Another city is too close to place your city hall here.");
-                    from.SendMessage(38, "You must be at least {0} yards (tiles) away from any other city in order to place your city hall.", offset);
+                    from.SendMessage(
+                        38,
+                        "You must be at least {0} yards (tiles) away from any other city in order to place your city hall.",
+                        offset
+                    );
                 }
             }
         }
@@ -152,14 +155,21 @@ namespace Server
             {
                 return true;
             }
-            else if (res == HousePlacementResult.BadItem || res == HousePlacementResult.BadLand || res == HousePlacementResult.BadStatic || res == HousePlacementResult.BadRegionHidden)
+            else if (
+                res == HousePlacementResult.BadItem
+                || res == HousePlacementResult.BadLand
+                || res == HousePlacementResult.BadStatic
+                || res == HousePlacementResult.BadRegionHidden
+            )
             {
                 from.SendLocalizedMessage(1043287); // The house could not be created here.  Either something is blocking the house, or the house would not be on valid terrain.
                 return false;
             }
             else if (res == HousePlacementResult.NoSurface)
             {
-                from.SendMessage("The house could not be created here.  Part of the foundation would not be on any surface.");
+                from.SendMessage(
+                    "The house could not be created here.  Part of the foundation would not be on any surface."
+                );
                 return false;
             }
             else if (res == HousePlacementResult.BadRegion)
@@ -186,10 +196,10 @@ namespace Server
             if (NeedsForensics)
                 if (from.Skills[SkillName.Forensics].Base >= 35.0)
                     return true;
-                else return false;
+                else
+                    return false;
             else
                 return true;
-
         }
 
         public static bool CheckCitiesInRange(Mobile from, Point3D p)
@@ -219,7 +229,6 @@ namespace Server
                         Region r = rect.Region;
                         if (r is GuardedRegion || r is PlayerCityRegion)
                             return true;
-
                     }
                 }
             }
@@ -229,7 +238,6 @@ namespace Server
 
         public static bool CheckIfMayor(Mobile from)
         {
-
             foreach (Item item in World.Items.Values)
             {
                 if (item is CityManagementStone)
@@ -245,7 +253,6 @@ namespace Server
 
         public static bool CheckIfCitizen(Mobile from)
         {
-
             foreach (Item item in World.Items.Values)
             {
                 if (item is CityManagementStone)
@@ -271,7 +278,6 @@ namespace Server
             if (a == null)
                 return allHouses;
 
-
             for (int i = 0; i < a.Length; ++i)
             {
                 Mobile mob = a[i];
@@ -282,16 +288,13 @@ namespace Server
             return allHouses;
         }
 
-
         public static bool CheckIfSpecificHouseInCity(BaseHouse h, Region region)
         {
-
             if (h != null)
             {
                 int X = h.Sign.X;
                 int Y = h.Sign.Y + 1;
                 int Z = h.Sign.Z;
-
 
                 Point3D hsp = new Point3D(X, Y, Z);
                 Map hsm = h.Sign.Map;
@@ -303,7 +306,6 @@ namespace Server
             }
             return false;
         }
-
 
         public static bool CheckIfHouseInCity(Mobile from, Region cityRegion)
         {
@@ -402,7 +404,6 @@ namespace Server
 
         public static bool CheckCityName(string text)
         {
-
             foreach (Item item in World.Items.Values)
             {
                 if (item is CityManagementStone)
@@ -551,10 +552,7 @@ namespace Server
             }
 
             return false;
-
-
         }
-
 
         public static bool IsAtCity(Mobile from)
         {
@@ -567,7 +565,6 @@ namespace Server
                 if (cityreg == city.PCRegion)
                     return true;
             }
-
 
             return false;
         }
@@ -584,11 +581,7 @@ namespace Server
                     return false;
             }
             return false;
-
         }
-
-
-
 
         public static bool IsMemberOf(Mobile from, CityManagementStone stone)
         {
@@ -631,13 +624,10 @@ namespace Server
                 else
                     return false;
             }
-
-
         }
 
         public static bool AreThereVendors(Mobile from)
         {
-
             if (from == null)
                 return false;
 
@@ -650,14 +640,12 @@ namespace Server
                     else
                         return false;
                 }
-
             }
             return false;
         }
 
         public static void CheckCitySystemVersion()
         {
-
             bool SystemUpgrade = false;
 
             if (!File.Exists(FileName))
@@ -679,22 +667,19 @@ namespace Server
                     }
                     if (FileVersion != SystemVersion)
                         SystemUpgrade = true;
-
-
                 }
                 catch
                 {
                     Console.WriteLine("Error Reading City Version File!");
                     return;
                 }
-
             }
             if (SystemUpgrade)
-                Console.WriteLine("The city system needs to be upgraded, please run the [upgradecitysystem command!");
+                Console.WriteLine(
+                    "The city system needs to be upgraded, please run the [upgradecitysystem command!"
+                );
             else
                 Console.WriteLine("City system current.  Version {0}", SystemVersion);
-
         }
-
     }
 }
