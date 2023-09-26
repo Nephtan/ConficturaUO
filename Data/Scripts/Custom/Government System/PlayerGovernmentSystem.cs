@@ -589,10 +589,7 @@ namespace Server
             {
                 if (h != null && (h.HasPersonalVendors || h.HasRentedVendors))
                 {
-                    if (h.HasPersonalVendors || h.HasRentedVendors)
-                        return true;
-                    else
-                        return false;
+                    return true;
                 }
             }
             return false;
