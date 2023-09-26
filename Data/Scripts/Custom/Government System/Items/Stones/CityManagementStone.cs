@@ -498,6 +498,14 @@ namespace Server.Items
             m_Time = DateTime.Now + PlayerGovernmentSystem.StartUpdate;
             m_Timer = new CityUpdateTimer(m_Time, this);
             m_Timer.Start();
+
+            PlayerGovernmentSystem.AllCityStones.Add(this);
+        }
+
+        public override void Delete()
+        {
+            PlayerGovernmentSystem.AllCityStones.Remove(this);
+            base.Delete();
         }
 
         public override void OnDoubleClick(Mobile from)
@@ -1083,188 +1091,188 @@ namespace Server.Items
             switch (level)
             {
                 case 1:
-                {
-                    for (int i = 0; i < toDelete.Count; i++)
                     {
-                        if (toDelete[i] is CivicSign)
+                        for (int i = 0; i < toDelete.Count; i++)
                         {
-                            CivicSign sign = toDelete[i] as CivicSign;
-                            if (sign.Type == CivicSignType.Garden)
+                            if (toDelete[i] is CivicSign)
                             {
-                                RecCivicSign recsign = (RecCivicSign)sign;
-                                if (recsign.CityLevel > level)
-                                    this.Gardens.Remove(sign);
-                                else
-                                    continue;
+                                CivicSign sign = toDelete[i] as CivicSign;
+                                if (sign.Type == CivicSignType.Garden)
+                                {
+                                    RecCivicSign recsign = (RecCivicSign)sign;
+                                    if (recsign.CityLevel > level)
+                                        this.Gardens.Remove(sign);
+                                    else
+                                        continue;
+                                }
+
+                                if (sign.Type == CivicSignType.Moongate)
+                                    m_IsRegistered = false;
+                                if (sign.Type == CivicSignType.Park)
+                                    this.Parks.Remove(sign);
+                                if (sign.Type == CivicSignType.Healer)
+                                    this.ResStone = null;
+
+                                m_IsGuarded = false;
+
+                                killsign.Add(sign);
+                                sign.Delete();
                             }
-
-                            if (sign.Type == CivicSignType.Moongate)
-                                m_IsRegistered = false;
-                            if (sign.Type == CivicSignType.Park)
-                                this.Parks.Remove(sign);
-                            if (sign.Type == CivicSignType.Healer)
-                                this.ResStone = null;
-
-                            m_IsGuarded = false;
-
-                            killsign.Add(sign);
-                            sign.Delete();
                         }
-                    }
 
-                    goto case 10;
-                }
+                        goto case 10;
+                    }
                 case 2:
-                {
-                    for (int i = 0; i < toDelete.Count; i++)
                     {
-                        if (toDelete[i] is CivicSign)
+                        for (int i = 0; i < toDelete.Count; i++)
                         {
-                            CivicSign sign = toDelete[i] as CivicSign;
-                            if (sign.Type == CivicSignType.Bank)
-                                continue;
-
-                            if (sign.Type == CivicSignType.Garden)
+                            if (toDelete[i] is CivicSign)
                             {
-                                RecCivicSign recsign = (RecCivicSign)sign;
-                                if (recsign.CityLevel > level)
-                                    this.Gardens.Remove(sign);
-                                else
+                                CivicSign sign = toDelete[i] as CivicSign;
+                                if (sign.Type == CivicSignType.Bank)
                                     continue;
+
+                                if (sign.Type == CivicSignType.Garden)
+                                {
+                                    RecCivicSign recsign = (RecCivicSign)sign;
+                                    if (recsign.CityLevel > level)
+                                        this.Gardens.Remove(sign);
+                                    else
+                                        continue;
+                                }
+
+                                if (sign.Type == CivicSignType.Moongate)
+                                    m_IsRegistered = false;
+                                if (sign.Type == CivicSignType.Park)
+                                    this.Parks.Remove(sign);
+                                if (sign.Type == CivicSignType.Healer)
+                                    this.ResStone = null;
+
+                                m_IsGuarded = false;
+
+                                killsign.Add(sign);
+                                sign.Delete();
                             }
-
-                            if (sign.Type == CivicSignType.Moongate)
-                                m_IsRegistered = false;
-                            if (sign.Type == CivicSignType.Park)
-                                this.Parks.Remove(sign);
-                            if (sign.Type == CivicSignType.Healer)
-                                this.ResStone = null;
-
-                            m_IsGuarded = false;
-
-                            killsign.Add(sign);
-                            sign.Delete();
                         }
-                    }
 
-                    goto case 10;
-                }
+                        goto case 10;
+                    }
                 case 3:
-                {
-                    for (int i = 0; i < toDelete.Count; i++)
                     {
-                        if (toDelete[i] is CivicSign)
+                        for (int i = 0; i < toDelete.Count; i++)
                         {
-                            CivicSign sign = toDelete[i] as CivicSign;
-                            if (
-                                sign.Type == CivicSignType.Bank
-                                || sign.Type == CivicSignType.Moongate
-                                || sign.Type == CivicSignType.Market
-                            )
-                                continue;
-
-                            if (sign.Type == CivicSignType.Garden)
+                            if (toDelete[i] is CivicSign)
                             {
-                                RecCivicSign recsign = (RecCivicSign)sign;
-                                if (recsign.CityLevel > level)
-                                    this.Gardens.Remove(sign);
-                                else
+                                CivicSign sign = toDelete[i] as CivicSign;
+                                if (
+                                    sign.Type == CivicSignType.Bank
+                                    || sign.Type == CivicSignType.Moongate
+                                    || sign.Type == CivicSignType.Market
+                                )
                                     continue;
+
+                                if (sign.Type == CivicSignType.Garden)
+                                {
+                                    RecCivicSign recsign = (RecCivicSign)sign;
+                                    if (recsign.CityLevel > level)
+                                        this.Gardens.Remove(sign);
+                                    else
+                                        continue;
+                                }
+
+                                if (sign.Type == CivicSignType.Park)
+                                    this.Parks.Remove(sign);
+                                if (sign.Type == CivicSignType.Healer)
+                                    this.ResStone = null;
+                                killsign.Add(sign);
+                                sign.Delete();
                             }
-
-                            if (sign.Type == CivicSignType.Park)
-                                this.Parks.Remove(sign);
-                            if (sign.Type == CivicSignType.Healer)
-                                this.ResStone = null;
-                            killsign.Add(sign);
-                            sign.Delete();
                         }
-                    }
 
-                    goto case 10;
-                }
+                        goto case 10;
+                    }
                 case 4:
-                {
-                    for (int i = 0; i < toDelete.Count; i++)
                     {
-                        if (toDelete[i] is CivicSign)
+                        for (int i = 0; i < toDelete.Count; i++)
                         {
-                            CivicSign sign = toDelete[i] as CivicSign;
-
-                            if (
-                                sign.Type == CivicSignType.Bank
-                                || sign.Type == CivicSignType.Moongate
-                                || sign.Type == CivicSignType.Healer
-                                || sign.Type == CivicSignType.Garden
-                                || sign.Type == CivicSignType.Market
-                            )
-                                continue;
-
-                            if (sign.Type == CivicSignType.Park)
+                            if (toDelete[i] is CivicSign)
                             {
-                                RecCivicSign recsign = (RecCivicSign)sign;
-                                if (recsign.CityLevel > level)
-                                    this.Parks.Remove(sign);
-                                else
+                                CivicSign sign = toDelete[i] as CivicSign;
+
+                                if (
+                                    sign.Type == CivicSignType.Bank
+                                    || sign.Type == CivicSignType.Moongate
+                                    || sign.Type == CivicSignType.Healer
+                                    || sign.Type == CivicSignType.Garden
+                                    || sign.Type == CivicSignType.Market
+                                )
                                     continue;
+
+                                if (sign.Type == CivicSignType.Park)
+                                {
+                                    RecCivicSign recsign = (RecCivicSign)sign;
+                                    if (recsign.CityLevel > level)
+                                        this.Parks.Remove(sign);
+                                    else
+                                        continue;
+                                }
+
+                                killsign.Add(sign);
+                                sign.Delete();
                             }
-
-                            killsign.Add(sign);
-                            sign.Delete();
                         }
-                    }
 
-                    goto case 10;
-                }
+                        goto case 10;
+                    }
                 case 5:
-                {
-                    for (int i = 0; i < toDelete.Count; i++)
                     {
-                        if (toDelete[i] is CivicSign)
+                        for (int i = 0; i < toDelete.Count; i++)
                         {
-                            CivicSign sign = toDelete[i] as CivicSign;
-
-                            if (
-                                sign.Type == CivicSignType.Bank
-                                || sign.Type == CivicSignType.Moongate
-                                || sign.Type == CivicSignType.Healer
-                                || sign.Type == CivicSignType.Garden
-                                || sign.Type == CivicSignType.Stable
-                                || sign.Type == CivicSignType.Market
-                            )
-                                continue;
-
-                            if (sign.Type == CivicSignType.Park)
+                            if (toDelete[i] is CivicSign)
                             {
-                                RecCivicSign recsign = (RecCivicSign)sign;
-                                if (recsign.CityLevel > level)
-                                    this.Parks.Remove(sign);
-                                else
+                                CivicSign sign = toDelete[i] as CivicSign;
+
+                                if (
+                                    sign.Type == CivicSignType.Bank
+                                    || sign.Type == CivicSignType.Moongate
+                                    || sign.Type == CivicSignType.Healer
+                                    || sign.Type == CivicSignType.Garden
+                                    || sign.Type == CivicSignType.Stable
+                                    || sign.Type == CivicSignType.Market
+                                )
                                     continue;
+
+                                if (sign.Type == CivicSignType.Park)
+                                {
+                                    RecCivicSign recsign = (RecCivicSign)sign;
+                                    if (recsign.CityLevel > level)
+                                        this.Parks.Remove(sign);
+                                    else
+                                        continue;
+                                }
+
+                                killsign.Add(sign);
+                                sign.Delete();
                             }
-
-                            killsign.Add(sign);
-                            sign.Delete();
                         }
-                    }
 
-                    goto case 10;
-                }
+                        goto case 10;
+                    }
                 case 6:
-                {
-                    break;
-                }
-                case 10:
-                {
-                    if (killsign != null)
                     {
-                        foreach (CivicSign s in killsign)
-                        {
-                            toDelete.Remove(s);
-                        }
+                        break;
                     }
-                    break;
-                }
+                case 10:
+                    {
+                        if (killsign != null)
+                        {
+                            foreach (CivicSign s in killsign)
+                            {
+                                toDelete.Remove(s);
+                            }
+                        }
+                        break;
+                    }
             }
         }
 
@@ -1992,83 +2000,83 @@ namespace Server.Items
             switch (version)
             {
                 case 6:
-                {
-                    m_Addons = reader.ReadItemList();
-                    goto case 5;
-                }
+                    {
+                        m_Addons = reader.ReadItemList();
+                        goto case 5;
+                    }
 
                 case 5:
-                {
-                    m_HasMarket = reader.ReadBool();
-                    goto case 4;
-                }
+                    {
+                        m_HasMarket = reader.ReadBool();
+                        goto case 4;
+                    }
 
                 case 4:
-                {
-                    m_RegionCoords = ReadRect3DArray(reader);
-                    goto case 3;
-                }
+                    {
+                        m_RegionCoords = ReadRect3DArray(reader);
+                        goto case 3;
+                    }
 
                 case 3:
-                {
-                    m_votingstone = (CityVotingStone)reader.ReadItem();
-                    m_AssistMayor = reader.ReadMobile();
-                    goto case 2;
-                }
+                    {
+                        m_votingstone = (CityVotingStone)reader.ReadItem();
+                        m_AssistMayor = reader.ReadMobile();
+                        goto case 2;
+                    }
 
                 case 2:
-                {
-                    m_resstone = (CityResurrectionStone)reader.ReadItem();
-                    goto case 1;
-                }
+                    {
+                        m_resstone = (CityResurrectionStone)reader.ReadItem();
+                        goto case 1;
+                    }
 
                 case 1: // City Resurrection Stone Update
-                {
-                    m_ResFee = reader.ReadInt();
-                    m_CorpseFee = reader.ReadInt();
-                    goto case 0;
-                }
+                    {
+                        m_ResFee = reader.ReadInt();
+                        m_CorpseFee = reader.ReadInt();
+                        goto case 0;
+                    }
                 case 0: // Beta Release
-                {
-                    m_Time = reader.ReadDeltaTime();
-                    m_Mayor = reader.ReadMobile();
-                    m_Coords = ReadRect2DArray(reader);
-                    m_IsGuarded = reader.ReadBool();
-                    m_AllowHouses = reader.ReadBool();
-                    m_Level = reader.ReadInt();
-                    m_CityName = reader.ReadString();
-                    m_toDelete = reader.ReadItemList();
-                    m_Members = reader.ReadMobileList();
-                    m_TravelTax = reader.ReadInt();
-                    m_IncomeTax = reader.ReadInt();
-                    m_HousingTax = reader.ReadInt();
-                    m_CityTreasury = reader.ReadInt();
-                    m_CityRules = reader.ReadString();
-                    m_CityWebURL = reader.ReadString();
-                    m_Center = reader.ReadPoint2D();
-                    m_MoongateLocation = reader.ReadPoint3D();
-                    m_Sponsored = reader.ReadMobileList();
-                    m_isLockedDown = reader.ReadItemList();
-                    m_MaxDecore = reader.ReadInt();
-                    m_CurrentDecore = reader.ReadInt();
-                    m_IsRegistered = reader.ReadBool();
-                    m_Banned = reader.ReadMobileList();
-                    m_Waring = reader.ReadItemList();
-                    m_WarsDeclared = reader.ReadItemList();
-                    m_WarsInvited = reader.ReadItemList();
-                    m_Allegiances = reader.ReadItemList();
-                    m_AllegiancesDeclared = reader.ReadItemList();
-                    m_AllegiancesInvited = reader.ReadItemList();
-                    m_HasBank = reader.ReadBool();
-                    m_HasTavern = reader.ReadBool();
-                    m_HasHealer = reader.ReadBool();
-                    m_HasMoongate = reader.ReadBool();
-                    m_HasStable = reader.ReadBool();
-                    m_Gardens = reader.ReadItemList();
-                    m_Parks = reader.ReadItemList();
-                    m_Vendors = reader.ReadMobileList();
-                    break;
-                }
+                    {
+                        m_Time = reader.ReadDeltaTime();
+                        m_Mayor = reader.ReadMobile();
+                        m_Coords = ReadRect2DArray(reader);
+                        m_IsGuarded = reader.ReadBool();
+                        m_AllowHouses = reader.ReadBool();
+                        m_Level = reader.ReadInt();
+                        m_CityName = reader.ReadString();
+                        m_toDelete = reader.ReadItemList();
+                        m_Members = reader.ReadMobileList();
+                        m_TravelTax = reader.ReadInt();
+                        m_IncomeTax = reader.ReadInt();
+                        m_HousingTax = reader.ReadInt();
+                        m_CityTreasury = reader.ReadInt();
+                        m_CityRules = reader.ReadString();
+                        m_CityWebURL = reader.ReadString();
+                        m_Center = reader.ReadPoint2D();
+                        m_MoongateLocation = reader.ReadPoint3D();
+                        m_Sponsored = reader.ReadMobileList();
+                        m_isLockedDown = reader.ReadItemList();
+                        m_MaxDecore = reader.ReadInt();
+                        m_CurrentDecore = reader.ReadInt();
+                        m_IsRegistered = reader.ReadBool();
+                        m_Banned = reader.ReadMobileList();
+                        m_Waring = reader.ReadItemList();
+                        m_WarsDeclared = reader.ReadItemList();
+                        m_WarsInvited = reader.ReadItemList();
+                        m_Allegiances = reader.ReadItemList();
+                        m_AllegiancesDeclared = reader.ReadItemList();
+                        m_AllegiancesInvited = reader.ReadItemList();
+                        m_HasBank = reader.ReadBool();
+                        m_HasTavern = reader.ReadBool();
+                        m_HasHealer = reader.ReadBool();
+                        m_HasMoongate = reader.ReadBool();
+                        m_HasStable = reader.ReadBool();
+                        m_Gardens = reader.ReadItemList();
+                        m_Parks = reader.ReadItemList();
+                        m_Vendors = reader.ReadMobileList();
+                        break;
+                    }
             }
 
             m_Timer = new CityUpdateTimer(m_Time, this);

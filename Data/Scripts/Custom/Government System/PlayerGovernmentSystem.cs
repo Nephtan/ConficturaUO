@@ -1,5 +1,4 @@
 using System;
-using Server;
 using Server.Items;
 using Server.Gumps;
 using Server.Multis;
@@ -75,15 +74,14 @@ namespace Server
         public static int Level6 = 56; // Default 200 55
 
         /*
-        * Member Rules
-        *
-        * As long as a member has a house withing the city limits they can bacome an member of the city.
-        * Member cannot be a member of another city. Unless multi houses per account is enabled.
-        * However the same member cannot be a member of 2 differant cities.
-        * A member can join as many charactors to the city from thier account as they wish.
-        * Each charactor from the members account counts as a member to the citys total population.
-        * So in theory one account counts as 6 members to the city. (If 6 chars are enabled.) & if all are joined.
-        */
+         * Member Rules:
+         *
+         * 1. If any character on an account owns a house within the city limits, all characters on that account are eligible for city membership.
+         * 2. Characters cannot belong to multiple cities, even if they own multiple houses in different cities.
+         * 3. Members can join multiple characters from their account to a single city.
+         * 4. Each character from the member's account contributes to the city's total population count.
+         * 5. For example, if 6 characters are enabled per account and all join the city, that account contributes 6 members to the city's population.
+         */
 
         // Title for cities at each level.
         public static string Title1 = "outpost";
@@ -93,7 +91,7 @@ namespace Server
         public static string Title5 = "metropolis";
         public static string Title6 = "empire";
 
-        // Enable city placement for Underworld (Note: need to let players place houses as well in ilsh.)
+        // Enable city placement for Underworld (Note: need to let players place houses as well in the Underworld.)
         public static bool EnableUnderworld = false;
 
         // Max amounts of cities per map.
@@ -151,44 +149,45 @@ namespace Server
             Point3D center = new Point3D(p.X - offset.X, p.Y - offset.Y, p.Z - offset.Z);
             HousePlacementResult res = HousePlacement.Check(from, multiId, center, out toMove);
 
-            if (res == HousePlacementResult.Valid)
+            switch (res)
             {
-                return true;
+                case HousePlacementResult.Valid:
+                    return true;
+                case HousePlacementResult.BadItem:
+                case HousePlacementResult.BadLand:
+                case HousePlacementResult.BadStatic:
+                case HousePlacementResult.BadRegionHidden:
+                    return HandleInvalidTerrain(from);
+                case HousePlacementResult.NoSurface:
+                    return HandleNoSurface(from);
+                case HousePlacementResult.BadRegion:
+                    return HandleInvalidRegion(from);
+                default:
+                    return false;
             }
-            else if (
-                res == HousePlacementResult.BadItem
-                || res == HousePlacementResult.BadLand
-                || res == HousePlacementResult.BadStatic
-                || res == HousePlacementResult.BadRegionHidden
-            )
-            {
-                from.SendLocalizedMessage(1043287); // The house could not be created here.  Either something is blocking the house, or the house would not be on valid terrain.
-                return false;
-            }
-            else if (res == HousePlacementResult.NoSurface)
-            {
-                from.SendMessage(
-                    "The house could not be created here.  Part of the foundation would not be on any surface."
-                );
-                return false;
-            }
-            else if (res == HousePlacementResult.BadRegion)
-            {
-                from.SendLocalizedMessage(501265); // Housing cannot be created in this area.
-                return false;
-            }
-            else
-            {
-                return false;
-            }
+        }
+
+        private static bool HandleInvalidTerrain(Mobile from)
+        {
+            from.SendLocalizedMessage(1043287); // The house could not be created here.  Either something is blocking the house, or the house would not be on valid terrain.
+            return false;
+        }
+
+        private static bool HandleNoSurface(Mobile from)
+        {
+            from.SendMessage("The house could not be created here.  Part of the foundation would not be on any surface.");
+            return false;
+        }
+
+        private static bool HandleInvalidRegion(Mobile from)
+        {
+            from.SendLocalizedMessage(501265); // Housing cannot be created in this area.
+            return false;
         }
 
         public static bool CheckIfInUnderworld(Mobile from)
         {
-            if (from.Map == Map.Underworld && EnableUnderworld == false)
-                return true;
-
-            return false;
+            return from.Map == Map.Underworld && !EnableUnderworld;
         }
 
         public static bool CheckIfCanBeMayor(Mobile from)
@@ -204,18 +203,13 @@ namespace Server
 
         public static bool CheckCitiesInRange(Mobile from, Point3D p)
         {
-            // Very Speical Thanks To ArteGordon For His Help On This Bool
-
             Map map = from.Map;
-
             int offset = CityRangeOffset;
             int offset2 = offset * 3;
-
             int x1 = p.X - offset;
             int y1 = p.Y - offset;
             int width = offset2;
             int height = offset2;
-
             int depth = p.Z;
 
             for (int x = x1; x <= x1 + width; x += Map.SectorSize)
@@ -223,49 +217,36 @@ namespace Server
                 for (int y = y1; y <= y1 + height; y += Map.SectorSize)
                 {
                     Sector s = map.GetSector(new Point3D(x, y, depth));
-
                     foreach (RegionRect rect in s.RegionRects)
                     {
                         Region r = rect.Region;
                         if (r is GuardedRegion || r is PlayerCityRegion)
-                            return true;
+                        {
+                            return true;  // Return as soon as a matching region is found
+                        }
                     }
                 }
             }
-
             return false;
         }
 
+        public static List<CityManagementStone> AllCityStones = new List<CityManagementStone>();
+
         public static bool CheckIfMayor(Mobile from)
         {
-            foreach (Item item in World.Items.Values)
+            foreach (CityManagementStone stone in AllCityStones)
             {
-                if (item is CityManagementStone)
-                {
-                    CityManagementStone stone = (CityManagementStone)item;
-                    if (stone.Mayor == from)
-                        return true;
-                }
+                if (stone.Mayor == from) return true;
             }
-
             return false;
         }
 
         public static bool CheckIfCitizen(Mobile from)
         {
-            foreach (Item item in World.Items.Values)
+            foreach (CityManagementStone stone in AllCityStones)
             {
-                if (item is CityManagementStone)
-                {
-                    CityManagementStone stone = (CityManagementStone)item;
-                    foreach (Mobile m in stone.Citizens)
-                    {
-                        if (from == m)
-                            return true;
-                    }
-                }
+                if (stone.Citizens.Contains(from)) return true;
             }
-
             return false;
         }
 
@@ -310,24 +291,28 @@ namespace Server
         public static bool CheckIfHouseInCity(Mobile from, Region cityRegion)
         {
             if (from == null || cityRegion == null)
-                return false;
+                return false;  // Did not find the house within the city
 
             List<BaseHouse> houses = GetAllHousesIncludingOwned(from);
             foreach (BaseHouse house in houses)
             {
                 if (house != null)
                 {
-                    // Check multiple points around the house to see if any of them reside within the city region
+                    // Check the house's sign point
+                    if (CheckIfSpecificHouseInCity(house, cityRegion))
+                        return true;  // Found the house within the city
+
+                    // Check multiple points around the house 
                     foreach (Point3D point in GetHouseCheckPoints(house))
                     {
                         Region reg = Region.Find(point, house.Map);
                         if (reg == cityRegion)
-                            return true; // Found the house within the city
+                            return true;  // Found the house within the city
                     }
                 }
             }
 
-            return false;
+            return false;  // Did not find the house within the city
         }
 
         private static List<BaseHouse> GetAllHousesIncludingOwned(Mobile m)
@@ -358,41 +343,34 @@ namespace Server
 
         public static bool CheckMapCityLimit(Mobile from)
         {
-            ArrayList count = new ArrayList();
-
+            List<Item> count = new List<Item>();
             foreach (Item item in World.Items.Values)
             {
-                if (item is CityManagementStone)
+                if (item is CityManagementStone && item.Map == from.Map)
                 {
-                    if (item.Map == from.Map)
-                        count.Add(item);
+                    count.Add(item);
                 }
             }
 
             if (from.Map == Map.Lodor)
             {
-                if (count.Count >= MaxCitiesForLodor)
-                    return true;
+                if (count.Count >= MaxCitiesForLodor) return true;
             }
             else if (from.Map == Map.Sosaria)
             {
-                if (count.Count >= MaxCitiesForSosaria)
-                    return true;
+                if (count.Count >= MaxCitiesForSosaria) return true;
             }
             else if (from.Map == Map.Underworld)
             {
-                if (count.Count >= MaxCitiesForUnderworld)
-                    return true;
+                if (count.Count >= MaxCitiesForUnderworld) return true;
             }
             else if (from.Map == Map.SerpentIsland)
             {
-                if (count.Count >= MaxCitiesForSerpentIsland)
-                    return true;
+                if (count.Count >= MaxCitiesForSerpentIsland) return true;
             }
             else if (from.Map == Map.IslesDread)
             {
-                if (count.Count >= MaxCitiesForIslesDread)
-                    return true;
+                if (count.Count >= MaxCitiesForIslesDread) return true;
             }
             else
             {
@@ -420,40 +398,28 @@ namespace Server
 
         public static bool CheckIfBanned(Mobile from, Mobile target)
         {
-            if (from is PlayerMobile && target is PlayerMobile)
-            {
-                if (target.Region is PlayerCityRegion && from.Region is PlayerCityRegion)
-                {
-                    PlayerMobile pm = (PlayerMobile)from;
-                    CityManagementStone stone = pm.City;
+            // Check basic conditions
+            if (!(from is PlayerMobile) || !(target is PlayerMobile))
+                return false;
 
-                    if (stone != null)
-                    {
-                        if (stone.PCRegion == target.Region)
-                        {
-                            bool isBanned = false;
-                            bool isMember = false;
+            if (!(from.Region is PlayerCityRegion) || !(target.Region is PlayerCityRegion))
+                return false;
 
-                            foreach (Mobile checkBan in stone.Banned)
-                            {
-                                if (target == checkBan)
-                                    isBanned = true;
-                            }
+            // Get the city stone of the 'from' player
+            PlayerMobile pm = (PlayerMobile)from;
+            CityManagementStone stone = pm.City;
 
-                            foreach (Mobile checkMem in stone.Citizens)
-                            {
-                                if (from == checkMem)
-                                    isMember = true;
-                            }
+            if (stone == null)
+                return false;
 
-                            if (isBanned == true && isMember == true)
-                                return true;
-                        }
-                    }
-                }
-            }
+            if (stone.PCRegion != target.Region)
+                return false;
 
-            return false;
+            // Check if 'from' is a member and 'target' is banned
+            bool isMember = stone.Citizens.Contains(from);
+            bool isBanned = stone.Banned.Contains(target);
+
+            return isMember && isBanned;
         }
 
         public static bool CheckBanLootable(Mobile from, Mobile target)
@@ -529,7 +495,7 @@ namespace Server
         {
             PlayerMobile pm = (PlayerMobile)from;
 
-            if (pm.City.Mayor == from)
+            if (pm.City != null && pm.City.Mayor == from)
             {
                 if (pm.City.Level >= level)
                     return true;
@@ -589,15 +555,7 @@ namespace Server
             if (pm.City == null)
                 return false;
 
-            foreach (Mobile mob in stone.Citizens)
-            {
-                if (mob == from)
-                {
-                    return true;
-                    break;
-                }
-            }
-            return false;
+            return stone.Citizens.Contains(from);
         }
 
         public static Rectangle3D[] FormatRegion(Rectangle2D box)
@@ -614,16 +572,12 @@ namespace Server
             PlayerMobile pm = (PlayerMobile)from;
             if (pm.City == null)
                 return false;
-            else
-            {
-                CityManagementStone stone = pm.City;
-                Point3D p = new Point3D(item.X, item.Y, item.Z);
-                Region target = Region.Find(p, item.Map);
-                if (stone.PCRegion == target)
-                    return true;
-                else
-                    return false;
-            }
+
+            CityManagementStone stone = pm.City;
+            Point3D p = new Point3D(item.X, item.Y, item.Z);
+            Region target = Region.Find(p, item.Map);
+
+            return stone.PCRegion != null && stone.PCRegion == target;
         }
 
         public static bool AreThereVendors(Mobile from)
@@ -633,7 +587,7 @@ namespace Server
 
             foreach (BaseHouse h in BaseHouse.GetHouses(from))
             {
-                if (h != null)
+                if (h != null && (h.HasPersonalVendors || h.HasRentedVendors))
                 {
                     if (h.HasPersonalVendors || h.HasRentedVendors)
                         return true;
