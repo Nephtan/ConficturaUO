@@ -121,89 +121,88 @@ namespace Confictura.Custom
 
         static void CheckFirstRun()
         {
+            // Initialize counters for total clones and processed clones.
             int totalClones = 0;
             int processedClones = 0;
 
+            // Create a dictionary to store existing clones and their associated original players.
+            Dictionary<PlayerMobile, CharacterClone> existingClones = new Dictionary<PlayerMobile, CharacterClone>();
+
+            // Identify existing clones and store them in the dictionary.
             foreach (var mobile in new List<Mobile>(World.Mobiles.Values))
             {
-                if (mobile is CharacterClone)
+                CharacterClone clone = mobile as CharacterClone;
+                if (clone != null)
+                {
+                    PlayerMobile originalPlayer = clone.Original as PlayerMobile;
+                    if (originalPlayer != null)
+                    {
+                        existingClones[originalPlayer] = clone;
+                    }
+                }
+            }
+
+            // Identify all valid PlayerMobiles that are alive, have Player access level, and don't have an existing clone.
+            foreach (var mobile in new List<Mobile>(World.Mobiles.Values))
+            {
+                PlayerMobile playerMobile = mobile as PlayerMobile;
+                if (playerMobile != null && playerMobile.Alive && playerMobile.AccessLevel == AccessLevel.Player && !existingClones.ContainsKey(playerMobile))
+                {
+                    // Store the original map and location for later restoration.
+                    Map originalMap = playerMobile.Map;
+                    Point3D originalLocation = playerMobile.Location;
+
+                    // Temporarily move the player to their logout map and location.
+                    playerMobile.Map = playerMobile.LogoutMap;
+                    playerMobile.Location = playerMobile.LogoutLocation;
+
+                    // Adjust the player's X-coordinate (this is to trigger the race item body transformation for players playing as races other than human).
+                    playerMobile.X += 1;
+                    playerMobile.X -= 1;
+
+                    // Increment the total clones counter.
+                    totalClones++;
+                }
+            }
+
+            // Create clones for each identified PlayerMobile.
+            Console.Write("Cloning Offline Players... "); // Display the initial message.
+            foreach (var mobile in new List<Mobile>(World.Mobiles.Values))
+            {
+                PlayerMobile playerMobile = mobile as PlayerMobile;
+                if (playerMobile != null && playerMobile.Alive && playerMobile.AccessLevel == AccessLevel.Player && !existingClones.ContainsKey(playerMobile))
+                {
+                    CreateCloneOf(playerMobile);
+
+                    // Increment the processed clones counter and display progress in the console.
+                    processedClones++;
+                    Console.CursorLeft = 27; // Adjust cursor position to after the initial message.
+                    Console.Write(String.Format("{0}/{1}", processedClones, totalClones));
+                }
+            }
+
+            // Move to the next line in the console after displaying progress.
+            Console.WriteLine();
+
+            // Delete any CharacterClones that are in invalid regions.
+            foreach (var mobile in new List<Mobile>(World.Mobiles.Values))
+            {
+                if (mobile is CharacterClone &&
+                    (mobile.Region.IsPartOf(typeof(StartRegion)) ||
+                     mobile.Region.IsPartOf(typeof(PublicRegion)) ||
+                     mobile.Region.IsPartOf(typeof(CrashRegion)) ||
+                     mobile.Region.IsPartOf(typeof(PrisonArea)) ||
+                     mobile.Region.IsPartOf(typeof(SafeRegion))))
                 {
                     mobile.Delete();
                 }
             }
 
+            // Restore the original location and map of each PlayerMobile.
             foreach (var mobile in new List<Mobile>(World.Mobiles.Values))
             {
                 PlayerMobile playerMobile = mobile as PlayerMobile;
-                if (
-                    playerMobile != null
-                    && playerMobile.Alive
-                    && playerMobile.AccessLevel == AccessLevel.Player
-                )
-                {
-                    // Store the original map and location
-                    Map originalMap = playerMobile.Map;
-                    Point3D originalLocation = playerMobile.Location;
-
-                    // Move the player to the logout map
-                    playerMobile.Map = playerMobile.LogoutMap;
-                    playerMobile.Location = playerMobile.LogoutLocation;
-
-                    // Move the player one tile in the X direction and back
-                    playerMobile.X += 1;
-                    playerMobile.X -= 1;
-
-                    totalClones++;
-                }
-            }
-
-            Console.Write("Cloning offline players. ");
-
-            foreach (var mobile in new List<Mobile>(World.Mobiles.Values))
-            {
-                PlayerMobile playerMobile = mobile as PlayerMobile;
-                if (
-                    playerMobile != null
-                    && playerMobile.Alive
-                    && playerMobile.AccessLevel == AccessLevel.Player
-                )
-                {
-                    CreateCloneOf(playerMobile);
-                    processedClones++;
-
-                    Console.CursorLeft = 24;
-                    Console.Write(String.Format("{0}/{1}", processedClones, totalClones));
-                }
-            }
-
-            Console.WriteLine(); // To move the console cursor to the next line after the progress output
-
-            foreach (var mobile in new List<Mobile>(World.Mobiles.Values))
-            {
-                if (mobile is CharacterClone)
-                {
-                    if (
-                        mobile.Region.IsPartOf(typeof(StartRegion))
-                        || mobile.Region.IsPartOf(typeof(PublicRegion))
-                        || mobile.Region.IsPartOf(typeof(CrashRegion))
-                        || mobile.Region.IsPartOf(typeof(PrisonArea))
-                        || mobile.Region.IsPartOf(typeof(SafeRegion))
-                    )
-                    {
-                        mobile.Delete();
-                    }
-                }
-            }
-
-            // Move the original mobile back to the Internal map after processing
-            foreach (var mobile in new List<Mobile>(World.Mobiles.Values))
-            {
-                PlayerMobile playerMobile = mobile as PlayerMobile;
-                if (
-                    playerMobile != null
-                    && playerMobile.Alive
-                    && playerMobile.AccessLevel == AccessLevel.Player
-                )
+                if (playerMobile != null && playerMobile.Alive && playerMobile.AccessLevel == AccessLevel.Player)
                 {
                     playerMobile.Map = Map.Internal;
                     playerMobile.Location = playerMobile.LogoutLocation;
