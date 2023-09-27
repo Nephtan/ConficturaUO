@@ -85,14 +85,20 @@ namespace Server.Items
             }
             else
             {
-                m.CloseGump(typeof(MoongateGump));
-                m.SendGump(new MoongateGump(m, this));
+                // We will bypass the standard MoongateGump and directly show the PCMoongateGump.
+                ShowPCMoongateGump(m);
 
                 if (!m.Hidden || m.AccessLevel == AccessLevel.Player)
                     Effects.PlaySound(m.Location, m.Map, 0x20E);
 
                 return true;
             }
+        }
+
+        private void ShowPCMoongateGump(Mobile m)
+        {
+            MoongateGump gump = new MoongateGump(m, this);
+            gump.ShowPCMoongateGump();
         }
 
         public override void Serialize(GenericWriter writer)
@@ -452,6 +458,29 @@ namespace Server.Items
             }
         }
 
+        public void ShowPCMoongateGump()
+        {
+            ArrayList a = new ArrayList();
+            foreach (Item i in World.Items.Values)
+            {
+                if (i is CityManagementStone)
+                {
+                    CityManagementStone s = (CityManagementStone)i;
+                    if (s.HasMoongate == true && s.IsRegistered == true)
+                        a.Add(i);
+                }
+            }
+
+            if (a.Count == 0)
+            {
+                m_Mobile.SendGump(new NoCitiesGump());
+            }
+            else
+            {
+                m_Mobile.SendGump(new PCMoongateGump(m_Moongate, 0, null, null));
+            }
+        }
+
         public override void OnResponse(NetState state, RelayInfo info)
         {
             if (info.ButtonID == 0) // Cancel
@@ -459,29 +488,9 @@ namespace Server.Items
             else if (m_Mobile.Deleted || m_Moongate.Deleted || m_Mobile.Map == null)
                 return;
 
-            if (info.ButtonID == 2) //City
+            if (info.ButtonID == 2)
             {
-                ArrayList a = new ArrayList();
-
-                foreach (Item i in World.Items.Values)
-                {
-                    if (i is CityManagementStone)
-                    {
-                        CityManagementStone s = (CityManagementStone)i;
-
-                        if (s.HasMoongate == true && s.IsRegistered == true)
-                            a.Add(i);
-                    }
-                }
-
-                if (a.Count == 0)
-                {
-                    m_Mobile.SendGump(new NoCitiesGump());
-                }
-                else
-                {
-                    m_Mobile.SendGump(new PCMoongateGump(m_Moongate, 0, null, null));
-                }
+                ShowPCMoongateGump();
             }
 
             int[] switches = info.Switches;
