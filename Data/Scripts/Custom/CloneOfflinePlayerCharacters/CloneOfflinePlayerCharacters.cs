@@ -160,8 +160,11 @@ namespace Confictura.Custom
                     playerMobile.X += 1;
                     playerMobile.X -= 1;
 
-                    // Increment the total clones counter.
-                    totalClones++;
+                    if (IsValidRegion(playerMobile))
+                    {
+                        // Increment the total clones counter.
+                        totalClones++;
+                    }
                 }
             }
 
@@ -175,7 +178,10 @@ namespace Confictura.Custom
                     CreateCloneOf(playerMobile);
 
                     // Increment the processed clones counter and display progress in the console.
-                    processedClones++;
+                    if (IsValidRegion(playerMobile))
+                    {
+                        processedClones++;
+                    }
                     Console.CursorLeft = 27; // Adjust cursor position to after the initial message.
                     Console.Write(String.Format("{0}/{1}", processedClones, totalClones));
                 }
