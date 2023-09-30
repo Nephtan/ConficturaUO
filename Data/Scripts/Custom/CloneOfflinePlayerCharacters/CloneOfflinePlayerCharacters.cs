@@ -139,6 +139,11 @@ namespace Confictura.Custom
                     {
                         existingClones[originalPlayer] = clone;
                     }
+
+                    if (clone.RaceID != 0)
+                    {
+                        clone.HueMod = 0;
+                    }
                 }
             }
 
@@ -210,8 +215,8 @@ namespace Confictura.Custom
                 PlayerMobile playerMobile = mobile as PlayerMobile;
                 if (playerMobile != null && playerMobile.Alive && playerMobile.AccessLevel == AccessLevel.Player)
                 {
-                    playerMobile.Map = Map.Internal;
                     playerMobile.Location = playerMobile.LogoutLocation;
+                    playerMobile.Map = Map.Internal;
                 }
             }
         }
@@ -596,6 +601,7 @@ namespace Confictura.Custom
             {
                 Map = LogoutMap;
             }
+
             //if (Kills >= 1)
             //{
             //    FightMode = FightMode.Aggressor;
