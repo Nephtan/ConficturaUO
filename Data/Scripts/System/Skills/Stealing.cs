@@ -13,6 +13,7 @@ using Server.Spells.Necromancy;
 using Server.Spells;
 using Server.Spells.Ninjitsu;
 using Server.Misc;
+using Confictura.Custom;
 
 namespace Server.SkillHandlers
 {
@@ -266,6 +267,10 @@ namespace Server.SkillHandlers
                 else if (root is PlayerVendor || root is PlayerBarkeeper)
                 {
                     m_Thief.SendLocalizedMessage(502709); // You can't steal from vendors.
+                }
+                else if (root is CharacterClone)
+                {
+                    m_Thief.SendLocalizedMessage(502710); // You can't steal that!
                 }
                 else if (!m_Thief.CanSee(toSteal))
                 {
