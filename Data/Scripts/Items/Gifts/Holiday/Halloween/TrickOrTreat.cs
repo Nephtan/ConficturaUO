@@ -44,52 +44,53 @@ namespace Server.Misc
                                 {
                                     Container cont = m.Backpack;
 
-                                    if (m is KungFu)
+                                    if (cont != null && cont.ConsumeTotal(typeof(Gold), 1))
                                     {
-                                        from.Direction = from.GetDirectionTo(m);
-                                        m.Direction = m.GetDirectionTo(from);
-                                        m.Say("Sorry, I do not celebrate Halloween.");
-                                    }
-                                    else if ((m is BaseVendor) && (player.BodyMod == 0))
-                                    {
-                                        from.Direction = from.GetDirectionTo(m);
-                                        m.Direction = m.GetDirectionTo(from);
-                                        m.Say(
-                                            "You are not in costume so how can you go trick or treating?"
-                                        );
-                                    }
-                                    else if ((m is BaseVendor) && (Utility.Random(100) > 80))
-                                    {
-                                        Gold m_Gold = (Gold)m.Backpack.FindItemByType(typeof(Gold));
-                                        int m_Amount = m.Backpack.GetAmount(typeof(Gold));
-                                        from.Direction = from.GetDirectionTo(m);
-                                        m.Direction = m.GetDirectionTo(from);
-                                        cont.ConsumeTotal(typeof(Gold), m_Amount);
-                                        m.Say(
-                                            "Sorry, I don't have anything to give you at the moment."
-                                        );
-                                    }
-                                    else if (
-                                        (m is BaseVendor) && (cont.ConsumeTotal(typeof(Gold), 1))
-                                    )
-                                    {
-                                        Gold m_Gold = (Gold)m.Backpack.FindItemByType(typeof(Gold));
-                                        int m_Amount = m.Backpack.GetAmount(typeof(Gold));
-                                        from.Direction = from.GetDirectionTo(m);
-                                        m.Direction = m.GetDirectionTo(from);
-                                        TrickOrTreat.GiveTreat(from, m, tb);
-                                        tb.ConsumeUse(from);
-                                        cont.ConsumeTotal(typeof(Gold), m_Amount);
+                                        if (m is KungFu)
+                                        {
+                                            from.Direction = from.GetDirectionTo(m);
+                                            m.Direction = m.GetDirectionTo(from);
+                                            m.Say("Sorry, I do not celebrate Halloween.");
+                                        }
+                                        else if ((m is BaseVendor) && (player.BodyMod == 0))
+                                        {
+                                            from.Direction = from.GetDirectionTo(m);
+                                            m.Direction = m.GetDirectionTo(from);
+                                            m.Say(
+                                                "You are not in costume so how can you go trick or treating?"
+                                            );
+                                        }
+                                        else if ((m is BaseVendor) && (Utility.Random(100) > 80))
+                                        {
+                                            Gold m_Gold = (Gold)m.Backpack.FindItemByType(typeof(Gold));
+                                            int m_Amount = m.Backpack.GetAmount(typeof(Gold));
+                                            from.Direction = from.GetDirectionTo(m);
+                                            m.Direction = m.GetDirectionTo(from);
+                                            cont.ConsumeTotal(typeof(Gold), m_Amount);
+                                            m.Say(
+                                                "Sorry, I don't have anything to give you at the moment."
+                                            );
+                                        }
+                                        else if ((m is BaseVendor) && (cont.ConsumeTotal(typeof(Gold), 1)))  // Line 72
+                                        {
+                                            Gold m_Gold = (Gold)m.Backpack.FindItemByType(typeof(Gold));
+                                            int m_Amount = m.Backpack.GetAmount(typeof(Gold));
+                                            from.Direction = from.GetDirectionTo(m);
+                                            m.Direction = m.GetDirectionTo(from);
+                                            TrickOrTreat.GiveTreat(from, m, tb);
+                                            tb.ConsumeUse(from);
+                                            cont.ConsumeTotal(typeof(Gold), m_Amount);
 
-                                        return;
-                                    }
-                                    else if (m is BaseVendor)
-                                    {
-                                        from.Direction = from.GetDirectionTo(m);
-                                        m.Direction = m.GetDirectionTo(from);
-                                        m.Say(
-                                            "Sorry, I don't have anything to give you at the moment."
-                                        );
+                                            return;
+                                        }
+                                        else if (m is BaseVendor)
+                                        {
+                                            from.Direction = from.GetDirectionTo(m);
+                                            m.Direction = m.GetDirectionTo(from);
+                                            m.Say(
+                                                "Sorry, I don't have anything to give you at the moment."
+                                            );
+                                        }
                                     }
                                 }
 
