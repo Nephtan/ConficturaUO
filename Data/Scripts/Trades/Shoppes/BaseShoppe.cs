@@ -634,11 +634,13 @@ namespace Server.Items
                     ShoppeResources = ShoppeResources + dropped.Amount;
                     if (ShoppeResources >= 5000)
                     {
+                        dropped.Amount = ShoppeResources - 5000;
                         ShoppeResources = 5000;
                         from.SendMessage("You add more resources but now your shoppe is full.");
                     }
                     from.SendSound(0x42);
-                    dropped.Delete();
+                    if ((ShoppeResources == 5000) && (dropped.Amount > 0)) from.AddToBackpack(dropped);
+                    else dropped.Delete();
                     return true;
                 }
             }
