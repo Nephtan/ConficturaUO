@@ -57,21 +57,35 @@ namespace Server.Items
         public string getCustomersWaiting()
         {
             int currentCustomers = 0;
-            if (this.Customer01 != "") currentCustomers++;
-            if (this.Customer02 != "") currentCustomers++;
-            if (this.Customer03 != "") currentCustomers++;
-            if (this.Customer04 != "") currentCustomers++;
-            if (this.Customer05 != "") currentCustomers++;
-            if (this.Customer06 != "") currentCustomers++;
-            if (this.Customer07 != "") currentCustomers++;
-            if (this.Customer08 != "") currentCustomers++;
-            if (this.Customer09 != "") currentCustomers++;
-            if (this.Customer10 != "") currentCustomers++;
-            if (this.Customer11 != "") currentCustomers++;
-            if (this.Customer12 != "") currentCustomers++;
+            if (this.Customer01 != "")
+                currentCustomers++;
+            if (this.Customer02 != "")
+                currentCustomers++;
+            if (this.Customer03 != "")
+                currentCustomers++;
+            if (this.Customer04 != "")
+                currentCustomers++;
+            if (this.Customer05 != "")
+                currentCustomers++;
+            if (this.Customer06 != "")
+                currentCustomers++;
+            if (this.Customer07 != "")
+                currentCustomers++;
+            if (this.Customer08 != "")
+                currentCustomers++;
+            if (this.Customer09 != "")
+                currentCustomers++;
+            if (this.Customer10 != "")
+                currentCustomers++;
+            if (this.Customer11 != "")
+                currentCustomers++;
+            if (this.Customer12 != "")
+                currentCustomers++;
             string returnString = null;
-            if (currentCustomers == 0) returnString = "No customers waiting";
-            else returnString = currentCustomers.ToString() + " Customers are waiting!";
+            if (currentCustomers == 0)
+                returnString = "No customers waiting";
+            else
+                returnString = currentCustomers.ToString() + " Customers are waiting!";
             return returnString;
         }
 
@@ -661,8 +675,10 @@ namespace Server.Items
                         from.SendMessage("You add more resources but now your shoppe is full.");
                     }
                     from.SendSound(0x42);
-                    if ((ShoppeResources == 5000) && (dropped.Amount > 0)) from.AddToBackpack(dropped);
-                    else dropped.Delete();
+                    if ((ShoppeResources == 5000) && (dropped.Amount > 0))
+                        from.AddToBackpack(dropped);
+                    else
+                        dropped.Delete();
                     return true;
                 }
             }

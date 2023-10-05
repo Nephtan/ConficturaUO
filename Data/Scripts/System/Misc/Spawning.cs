@@ -1459,10 +1459,8 @@ namespace Server.Mobiles
 
         public static void ActivateSpawner(Mobile m)
         {
-            if (
-                m is BaseCreature
-                && ((BaseCreature)m).SpawnerID > 0
-                /* && !((BaseCreature)m).Controlled */
+            if (m is BaseCreature && ((BaseCreature)m).SpawnerID > 0
+            /* && !((BaseCreature)m).Controlled */
             )
             {
                 bool run = true;

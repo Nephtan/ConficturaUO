@@ -1623,12 +1623,17 @@ namespace Server.Items
 
                                                 if (enchant is StaffFiveParts)
                                                 {
-                                                    StaffFiveParts sourceStaff = (StaffFiveParts)enchant;
-                                                    newItem = new StaffFiveParts(sourceStaff.Staff_Owner, sourceStaff.Staff_Magic);
+                                                    StaffFiveParts sourceStaff =
+                                                        (StaffFiveParts)enchant;
+                                                    newItem = new StaffFiveParts(
+                                                        sourceStaff.Staff_Owner,
+                                                        sourceStaff.Staff_Magic
+                                                    );
                                                 }
                                                 else
                                                 {
-                                                    newItem = (Item)Activator.CreateInstance(itemType);  // Line 1631
+                                                    newItem = (Item)
+                                                        Activator.CreateInstance(itemType); // Line 1631
                                                 }
 
                                                 string nameItem = newItem.Name;

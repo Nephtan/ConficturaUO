@@ -357,7 +357,8 @@ namespace Server.Items
                         }
                     }
 
-                    if (from != null) from.DoHarmful(m);
+                    if (from != null)
+                        from.DoHarmful(m);
 
                     int damage = Utility.RandomMinMax(min, max);
                     damage += alchemyBonus;

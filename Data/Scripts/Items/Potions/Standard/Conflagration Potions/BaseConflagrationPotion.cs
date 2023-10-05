@@ -43,7 +43,6 @@ namespace Server.Items
                 return;
             }
 
-
             int delay = GetDelay(from);
 
             if (delay > 0)
@@ -329,7 +328,7 @@ namespace Server.Items
 
                 // Check if the thrower is a player.
                 PlayerMobile playerThrower = thrower as PlayerMobile;
-                if (playerThrower != null)  // Check if the casting was successful.
+                if (playerThrower != null) // Check if the casting was successful.
                 {
                     NONPK throwerStatus = playerThrower.NONPK;
 
@@ -375,7 +374,8 @@ namespace Server.Items
 
                 protected override void OnTick()
                 {
-                    if (m_Item.Deleted) return;
+                    if (m_Item.Deleted)
+                        return;
 
                     // Check if the timer has reached its end, and if so, delete the item.
                     if (DateTime.Now > m_End)
@@ -389,7 +389,8 @@ namespace Server.Items
                     Mobile from = m_Item.From;
 
                     // Check if the item map and thrower are valid.
-                    if (m_Item.Map == null || from == null) return;
+                    if (m_Item.Map == null || from == null)
+                        return;
 
                     List<Mobile> mobiles = new List<Mobile>();
 
@@ -402,12 +403,19 @@ namespace Server.Items
                         Mobile m = mobiles[i];
 
                         // Check various conditions to see if the target mobile 'm' can be harmed.
-                        if ((m.Z + 16) > m_Item.Z && (m_Item.Z + 12) > m.Z && (!Core.AOS || m != from) && SpellHelper.ValidIndirectTarget(from, m) && from.CanBeHarmful(m, false))
+                        if (
+                            (m.Z + 16) > m_Item.Z
+                            && (m_Item.Z + 12) > m.Z
+                            && (!Core.AOS || m != from)
+                            && SpellHelper.ValidIndirectTarget(from, m)
+                            && from.CanBeHarmful(m, false)
+                        )
                         {
                             // This is a new condition we added. Check if 'm' is a valid target based on the PvP/PvE/Neutral rules.
                             if (m_Item.IsValidTarget(from, m))
                             {
-                                if (from != null) from.DoHarmful(m);
+                                if (from != null)
+                                    from.DoHarmful(m);
                                 AOS.Damage(m, from, m_Item.GetDamage(), 0, 100, 0, 0, 0);
                                 m.PlaySound(0x208);
                             }
