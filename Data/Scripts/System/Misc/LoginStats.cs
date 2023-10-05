@@ -24,7 +24,9 @@ namespace Server.Misc
             if (m.AccessLevel >= AccessLevel.GameMaster)
                 m.SendMessage("You can type '[helpadmin' to learn the commands for this server.");
             else
-                m.SendMessage("You can use the 'Help' button on your paperdoll for more information.");
+                m.SendMessage(
+                    "You can use the 'Help' button on your paperdoll for more information."
+                );
 
             PlayerMobile pm = (PlayerMobile)m;
 

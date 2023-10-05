@@ -148,7 +148,7 @@ namespace Server
             }
 
             public TAFGump(Mobile from, string initialText)
-                            : base(30, 20)
+                : base(30, 20)
             {
                 if (from == null)
                     return;
@@ -182,7 +182,12 @@ namespace Server
                 bool toldfriend = ToldAFriend(from);
                 if (!toldfriend)
                 {
-                    this.AddLabel(175, 205, 50, String.Format("Who referred you to {0}?", TAFShardName));
+                    this.AddLabel(
+                        175,
+                        205,
+                        50,
+                        String.Format("Who referred you to {0}?", TAFShardName)
+                    );
                     this.AddButton(450, 230, 4023, 4025, 1, GumpButtonType.Reply, 0); //Okay for acct name button
                     this.AddImageTiled(265, 230, 140, 20, 0xBBC);
                     this.AddTextEntry(270, 230, 200, 20, 1152, 2, "");

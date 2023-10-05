@@ -126,7 +126,8 @@ namespace Confictura.Custom
             int processedClones = 0;
 
             // Create a dictionary to store existing clones and their associated original players.
-            Dictionary<PlayerMobile, CharacterClone> existingClones = new Dictionary<PlayerMobile, CharacterClone>();
+            Dictionary<PlayerMobile, CharacterClone> existingClones =
+                new Dictionary<PlayerMobile, CharacterClone>();
 
             // Identify existing clones and store them in the dictionary.
             foreach (var mobile in new List<Mobile>(World.Mobiles.Values))
@@ -151,7 +152,12 @@ namespace Confictura.Custom
             foreach (var mobile in new List<Mobile>(World.Mobiles.Values))
             {
                 PlayerMobile playerMobile = mobile as PlayerMobile;
-                if (playerMobile != null && playerMobile.Alive && playerMobile.AccessLevel == AccessLevel.Player && !existingClones.ContainsKey(playerMobile))
+                if (
+                    playerMobile != null
+                    && playerMobile.Alive
+                    && playerMobile.AccessLevel == AccessLevel.Player
+                    && !existingClones.ContainsKey(playerMobile)
+                )
                 {
                     // Store the original map and location for later restoration.
                     Map originalMap = playerMobile.Map;
@@ -178,7 +184,12 @@ namespace Confictura.Custom
             foreach (var mobile in new List<Mobile>(World.Mobiles.Values))
             {
                 PlayerMobile playerMobile = mobile as PlayerMobile;
-                if (playerMobile != null && playerMobile.Alive && playerMobile.AccessLevel == AccessLevel.Player && !existingClones.ContainsKey(playerMobile))
+                if (
+                    playerMobile != null
+                    && playerMobile.Alive
+                    && playerMobile.AccessLevel == AccessLevel.Player
+                    && !existingClones.ContainsKey(playerMobile)
+                )
                 {
                     CreateCloneOf(playerMobile);
 
@@ -198,12 +209,16 @@ namespace Confictura.Custom
             // Delete any CharacterClones that are in invalid regions.
             foreach (var mobile in new List<Mobile>(World.Mobiles.Values))
             {
-                if (mobile is CharacterClone &&
-                    (mobile.Region.IsPartOf(typeof(StartRegion)) ||
-                     mobile.Region.IsPartOf(typeof(PublicRegion)) ||
-                     mobile.Region.IsPartOf(typeof(CrashRegion)) ||
-                     mobile.Region.IsPartOf(typeof(PrisonArea)) ||
-                     mobile.Region.IsPartOf(typeof(SafeRegion))))
+                if (
+                    mobile is CharacterClone
+                    && (
+                        mobile.Region.IsPartOf(typeof(StartRegion))
+                        || mobile.Region.IsPartOf(typeof(PublicRegion))
+                        || mobile.Region.IsPartOf(typeof(CrashRegion))
+                        || mobile.Region.IsPartOf(typeof(PrisonArea))
+                        || mobile.Region.IsPartOf(typeof(SafeRegion))
+                    )
+                )
                 {
                     mobile.Delete();
                 }
@@ -213,7 +228,11 @@ namespace Confictura.Custom
             foreach (var mobile in new List<Mobile>(World.Mobiles.Values))
             {
                 PlayerMobile playerMobile = mobile as PlayerMobile;
-                if (playerMobile != null && playerMobile.Alive && playerMobile.AccessLevel == AccessLevel.Player)
+                if (
+                    playerMobile != null
+                    && playerMobile.Alive
+                    && playerMobile.AccessLevel == AccessLevel.Player
+                )
                 {
                     playerMobile.Location = playerMobile.LogoutLocation;
                     playerMobile.Map = Map.Internal;
@@ -922,7 +941,12 @@ namespace Confictura.Custom
         {
             if (m_Pay > 0)
             {
-                Say(string.Format("I am available for hire for {0} gold coins per hour. If thou dost give me gold, I will work for thee.", m_Pay));
+                Say(
+                    string.Format(
+                        "I am available for hire for {0} gold coins per hour. If thou dost give me gold, I will work for thee.",
+                        m_Pay
+                    )
+                );
             }
             else
             {

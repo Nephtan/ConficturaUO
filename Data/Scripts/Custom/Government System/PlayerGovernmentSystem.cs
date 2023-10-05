@@ -175,7 +175,9 @@ namespace Server
 
         private static bool HandleNoSurface(Mobile from)
         {
-            from.SendMessage("The house could not be created here.  Part of the foundation would not be on any surface.");
+            from.SendMessage(
+                "The house could not be created here.  Part of the foundation would not be on any surface."
+            );
             return false;
         }
 
@@ -222,7 +224,7 @@ namespace Server
                         Region r = rect.Region;
                         if (r is GuardedRegion || r is PlayerCityRegion)
                         {
-                            return true;  // Return as soon as a matching region is found
+                            return true; // Return as soon as a matching region is found
                         }
                     }
                 }
@@ -236,7 +238,8 @@ namespace Server
         {
             foreach (CityManagementStone stone in AllCityStones)
             {
-                if (stone.Mayor == from) return true;
+                if (stone.Mayor == from)
+                    return true;
             }
             return false;
         }
@@ -245,7 +248,8 @@ namespace Server
         {
             foreach (CityManagementStone stone in AllCityStones)
             {
-                if (stone.Citizens.Contains(from)) return true;
+                if (stone.Citizens.Contains(from))
+                    return true;
             }
             return false;
         }
@@ -291,7 +295,7 @@ namespace Server
         public static bool CheckIfHouseInCity(Mobile from, Region cityRegion)
         {
             if (from == null || cityRegion == null)
-                return false;  // Did not find the house within the city
+                return false; // Did not find the house within the city
 
             List<BaseHouse> houses = GetAllHousesIncludingOwned(from);
             foreach (BaseHouse house in houses)
@@ -300,19 +304,19 @@ namespace Server
                 {
                     // Check the house's sign point
                     if (CheckIfSpecificHouseInCity(house, cityRegion))
-                        return true;  // Found the house within the city
+                        return true; // Found the house within the city
 
-                    // Check multiple points around the house 
+                    // Check multiple points around the house
                     foreach (Point3D point in GetHouseCheckPoints(house))
                     {
                         Region reg = Region.Find(point, house.Map);
                         if (reg == cityRegion)
-                            return true;  // Found the house within the city
+                            return true; // Found the house within the city
                     }
                 }
             }
 
-            return false;  // Did not find the house within the city
+            return false; // Did not find the house within the city
         }
 
         private static List<BaseHouse> GetAllHousesIncludingOwned(Mobile m)
@@ -354,23 +358,28 @@ namespace Server
 
             if (from.Map == Map.Lodor)
             {
-                if (count.Count >= MaxCitiesForLodor) return true;
+                if (count.Count >= MaxCitiesForLodor)
+                    return true;
             }
             else if (from.Map == Map.Sosaria)
             {
-                if (count.Count >= MaxCitiesForSosaria) return true;
+                if (count.Count >= MaxCitiesForSosaria)
+                    return true;
             }
             else if (from.Map == Map.Underworld)
             {
-                if (count.Count >= MaxCitiesForUnderworld) return true;
+                if (count.Count >= MaxCitiesForUnderworld)
+                    return true;
             }
             else if (from.Map == Map.SerpentIsland)
             {
-                if (count.Count >= MaxCitiesForSerpentIsland) return true;
+                if (count.Count >= MaxCitiesForSerpentIsland)
+                    return true;
             }
             else if (from.Map == Map.IslesDread)
             {
-                if (count.Count >= MaxCitiesForIslesDread) return true;
+                if (count.Count >= MaxCitiesForIslesDread)
+                    return true;
             }
             else
             {

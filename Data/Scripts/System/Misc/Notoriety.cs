@@ -137,7 +137,7 @@ namespace Server.Misc
 
             if (PlayerGovernmentSystem.CheckCityAlly(from, target))
                 return true;
-                
+
             // Otherwise, check the beneficial status between the from mobile and the target mobile.
             return CheckBeneficialStatus(GetGuildStatus(from), GetGuildStatus(target));
         }

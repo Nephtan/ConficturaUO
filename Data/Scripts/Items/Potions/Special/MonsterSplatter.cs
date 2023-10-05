@@ -81,7 +81,10 @@ namespace Server.Items
             }
 
             // Neutral can damage PvP and other Neutrals, but not PvE
-            if (fromPlayer.NONPK == NONPK.Null && (targetPlayer.NONPK == NONPK.PK || targetPlayer.NONPK == NONPK.Null))
+            if (
+                fromPlayer.NONPK == NONPK.Null
+                && (targetPlayer.NONPK == NONPK.PK || targetPlayer.NONPK == NONPK.Null)
+            )
             {
                 return true;
             }
@@ -102,7 +105,11 @@ namespace Server.Items
                 return true; // Block damage and let the mobile move over.
             }
 
-            if (m.Blessed || !m.Alive || (owner is BaseCreature && m is BaseCreature && !((BaseCreature)m).Controlled))
+            if (
+                m.Blessed
+                || !m.Alive
+                || (owner is BaseCreature && m is BaseCreature && !((BaseCreature)m).Controlled)
+            )
             {
                 return true;
             }
@@ -120,31 +127,60 @@ namespace Server.Items
                     break;
 
                 case "quick silver":
-                    HandleDamageEffect(m, soundId: 0x4D1, damage: Hurt(owner, 24, 48), phys: 50, energy: 50);
+                    HandleDamageEffect(
+                        m,
+                        soundId: 0x4D1,
+                        damage: Hurt(owner, 24, 48),
+                        phys: 50,
+                        energy: 50
+                    );
                     break;
 
                 case "holy water":
                     if (SilverSlayer.Slays(m) || ExorcismSlayer.Slays(m))
                     {
-                        HandleDamageEffect(m, 0x3709, 0x225, Hurt(owner, 40, 60), 20, 20, 20, 20, 20);
+                        HandleDamageEffect(
+                            m,
+                            0x3709,
+                            0x225,
+                            Hurt(owner, 40, 60),
+                            20,
+                            20,
+                            20,
+                            20,
+                            20
+                        );
                     }
                     break;
 
                 case "glowing goo":
                     if (!(m is GlowBeetle) && !(m is GlowBeetleRiding))
                     {
-                        int eSound = (m is PlayerMobile && (m.Body == 0x190 || m.Body == 0x191))
-                            ? (m.Body == 0x190 ? 0x43F : 0x32D)
-                            : 0x229;
+                        int eSound =
+                            (m is PlayerMobile && (m.Body == 0x190 || m.Body == 0x191))
+                                ? (m.Body == 0x190 ? 0x43F : 0x32D)
+                                : 0x229;
 
-                        HandleDamageEffect(m, 0x36B0, eSound, Hurt(owner, 24, 48), energy: 50, pois: 50);
+                        HandleDamageEffect(
+                            m,
+                            0x36B0,
+                            eSound,
+                            Hurt(owner, 24, 48),
+                            energy: 50,
+                            pois: 50
+                        );
                     }
                     break;
 
                 case "scorching ooze":
                     if (!(m is Lavapede))
                     {
-                        int eSound = (m.Body == 0x190 && m is PlayerMobile) ? 0x43F : (m.Body == 0x191 && m is PlayerMobile) ? 0x32D : 0x229;
+                        int eSound =
+                            (m.Body == 0x190 && m is PlayerMobile)
+                                ? 0x43F
+                                : (m.Body == 0x191 && m is PlayerMobile)
+                                    ? 0x32D
+                                    : 0x229;
                         HandleDamageEffect(m, 0x36B0, eSound, Hurt(owner, 24, 48), 0, 100);
                     }
                     break;
@@ -152,49 +188,87 @@ namespace Server.Items
                 case "blue slime":
                     if (!(m is SlimeDevil))
                     {
-                        HandleDamageEffect(m, soundId: 0x4D1, damage: Hurt(owner, 24, 48), cold: 100);
+                        HandleDamageEffect(
+                            m,
+                            soundId: 0x4D1,
+                            damage: Hurt(owner, 24, 48),
+                            cold: 100
+                        );
                     }
                     break;
 
                 case "swamp muck":
                     if (!(m is SwampThing))
                     {
-                        HandleDamageEffect(m, soundId: 0x4D1, damage: Hurt(owner, 24, 48), phys: 50, energy: 50);
+                        HandleDamageEffect(
+                            m,
+                            soundId: 0x4D1,
+                            damage: Hurt(owner, 24, 48),
+                            phys: 50,
+                            energy: 50
+                        );
                     }
                     break;
 
                 case "poisonous slime":
                     if (!(m is AbyssCrawler))
                     {
-                        HandleDamageEffect(m, soundId: 0x4D1, damage: Hurt(owner, 24, 48), pois: 100);
+                        HandleDamageEffect(
+                            m,
+                            soundId: 0x4D1,
+                            damage: Hurt(owner, 24, 48),
+                            pois: 100
+                        );
                     }
                     break;
 
                 case "poison spit":
                     if (!(m is Neptar) && !(m is NeptarWizard))
                     {
-                        HandleDamageEffect(m, soundId: 0x4D1, damage: Hurt(owner, 24, 48), pois: 100);
+                        HandleDamageEffect(
+                            m,
+                            soundId: 0x4D1,
+                            damage: Hurt(owner, 24, 48),
+                            pois: 100
+                        );
                     }
                     break;
 
                 case "poison spittle":
                     if (!(m is Lurker))
                     {
-                        HandleDamageEffect(m, soundId: 0x4D1, damage: Hurt(owner, 24, 48), pois: 100);
+                        HandleDamageEffect(
+                            m,
+                            soundId: 0x4D1,
+                            damage: Hurt(owner, 24, 48),
+                            pois: 100
+                        );
                     }
                     break;
 
                 case "fungal slime":
                     if (!(m is Fungal) && !(m is FungalMage) && !(m is CreepingFungus))
                     {
-                        HandleDamageEffect(m, soundId: 0x4D1, damage: Hurt(owner, 24, 48), phys: 50, energy: 50);
+                        HandleDamageEffect(
+                            m,
+                            soundId: 0x4D1,
+                            damage: Hurt(owner, 24, 48),
+                            phys: 50,
+                            energy: 50
+                        );
                     }
                     break;
 
                 case "spider ooze":
                     if (!(m is ZombieSpider))
                     {
-                        HandleDamageEffect(m, soundId: 0x4D1, damage: Hurt(owner, 24, 48), phys: 50, energy: 50);
+                        HandleDamageEffect(
+                            m,
+                            soundId: 0x4D1,
+                            damage: Hurt(owner, 24, 48),
+                            phys: 50,
+                            energy: 50
+                        );
                     }
                     break;
 
@@ -206,9 +280,20 @@ namespace Server.Items
                     break;
 
                 case "acidic ichor":
-                    if (!(m is AntaurKing) && !(m is AntaurProgenitor) && !(m is AntaurSoldier) && !(m is AntaurWorker))
+                    if (
+                        !(m is AntaurKing)
+                        && !(m is AntaurProgenitor)
+                        && !(m is AntaurSoldier)
+                        && !(m is AntaurWorker)
+                    )
                     {
-                        HandleDamageEffect(m, soundId: 0x231, damage: Hurt(owner, 24, 48), phys: 50, energy: 50);
+                        HandleDamageEffect(
+                            m,
+                            soundId: 0x231,
+                            damage: Hurt(owner, 24, 48),
+                            phys: 50,
+                            energy: 50
+                        );
                     }
                     break;
 
@@ -225,7 +310,13 @@ namespace Server.Items
                             eSound = 0x32D;
                         }
 
-                        HandleDamageEffect(m, particleId: 0x36B0, soundId: eSound, damage: Hurt(owner, 24, 48), pois: 100);
+                        HandleDamageEffect(
+                            m,
+                            particleId: 0x36B0,
+                            soundId: eSound,
+                            damage: Hurt(owner, 24, 48),
+                            pois: 100
+                        );
                     }
                     break;
 
@@ -259,7 +350,17 @@ namespace Server.Items
                             eSound = 0x32D;
                         }
 
-                        HandleDamageEffect(m, 0x36B0, eSound, Hurt(owner, 24, 48), 20, 20, 20, 20, 20);
+                        HandleDamageEffect(
+                            m,
+                            0x36B0,
+                            eSound,
+                            Hurt(owner, 24, 48),
+                            20,
+                            20,
+                            20,
+                            20,
+                            20
+                        );
                     }
                     break;
 
@@ -276,7 +377,14 @@ namespace Server.Items
                             eSound = 0x32D;
                         }
 
-                        HandleDamageEffect(m, 0x36B0, eSound, Hurt(owner, 24, 48), phys: 20, energy: 80);
+                        HandleDamageEffect(
+                            m,
+                            0x36B0,
+                            eSound,
+                            Hurt(owner, 24, 48),
+                            phys: 20,
+                            energy: 80
+                        );
                     }
                     break;
 
@@ -298,16 +406,40 @@ namespace Server.Items
                     break;
 
                 case "freezing water":
-                    if (!(m is WaterElemental || m is WaterWeird || m is DeepWaterElemental || m is Dagon))
+                    if (
+                        !(
+                            m is WaterElemental
+                            || m is WaterWeird
+                            || m is DeepWaterElemental
+                            || m is Dagon
+                        )
+                    )
                     {
-                        HandleDamageEffect(m, soundId: 0x4D1, damage: Hurt(owner, 20, 40), cold: 100);
+                        HandleDamageEffect(
+                            m,
+                            soundId: 0x4D1,
+                            damage: Hurt(owner, 20, 40),
+                            cold: 100
+                        );
                     }
                     break;
 
                 case "deep water":
-                    if (!(m is WaterElemental || m is WaterWeird || m is DeepWaterElemental || m is Dagon))
+                    if (
+                        !(
+                            m is WaterElemental
+                            || m is WaterWeird
+                            || m is DeepWaterElemental
+                            || m is Dagon
+                        )
+                    )
                     {
-                        HandleDamageEffect(m, soundId: 0x4D1, damage: Hurt(owner, 40, 60), cold: 100);
+                        HandleDamageEffect(
+                            m,
+                            soundId: 0x4D1,
+                            damage: Hurt(owner, 40, 60),
+                            cold: 100
+                        );
                     }
                     break;
 
@@ -316,69 +448,107 @@ namespace Server.Items
                 case "greater poison potion":
                 case "deadly poison potion":
                 case "lethal poison potion":
+                {
+                    int pSkill = (int)(owner.Skills[SkillName.Poisoning].Value / 50);
+                    int tSkill = (int)(owner.Skills[SkillName.Tasting].Value / 33);
+                    int aSkill = (int)(owner.Skills[SkillName.Alchemy].Value / 33);
+                    int pMin = pSkill + tSkill + aSkill;
+                    int pMax = pMin * 2;
+                    Poison pois = Poison.Lesser;
+
+                    switch (this.Name)
                     {
-                        int pSkill = (int)(owner.Skills[SkillName.Poisoning].Value / 50);
-                        int tSkill = (int)(owner.Skills[SkillName.Tasting].Value / 33);
-                        int aSkill = (int)(owner.Skills[SkillName.Alchemy].Value / 33);
-                        int pMin = pSkill + tSkill + aSkill;
-                        int pMax = pMin * 2;
-                        Poison pois = Poison.Lesser;
-
-                        switch (this.Name)
-                        {
-                            case "poison potion":
-                                pMin += 2; pMax += 2;
-                                pois = Poison.Regular;
-                                break;
-                            case "greater poison potion":
-                                pMin += 3; pMax += 3;
-                                pois = Poison.Greater;
-                                break;
-                            case "deadly poison potion":
-                                pMin += 4; pMax += 4;
-                                pois = Poison.Deadly;
-                                break;
-                            case "lethal poison potion":
-                                pMin += 5; pMax += 5;
-                                pois = Poison.Lethal;
-                                break;
-                        }
-
-                        if (pMin >= Utility.RandomMinMax(1, 16))
-                        {
-                            m.ApplyPoison(owner, pois);
-                        }
-
-                        HandleDamageEffect(m, soundId: 0x4D1, damage: Hurt(owner, pMin, pMax), pois: 100);
-                        break;
+                        case "poison potion":
+                            pMin += 2;
+                            pMax += 2;
+                            pois = Poison.Regular;
+                            break;
+                        case "greater poison potion":
+                            pMin += 3;
+                            pMax += 3;
+                            pois = Poison.Greater;
+                            break;
+                        case "deadly poison potion":
+                            pMin += 4;
+                            pMax += 4;
+                            pois = Poison.Deadly;
+                            break;
+                        case "lethal poison potion":
+                            pMin += 5;
+                            pMax += 5;
+                            pois = Poison.Lethal;
+                            break;
                     }
+
+                    if (pMin >= Utility.RandomMinMax(1, 16))
+                    {
+                        m.ApplyPoison(owner, pois);
+                    }
+
+                    HandleDamageEffect(
+                        m,
+                        soundId: 0x4D1,
+                        damage: Hurt(owner, pMin, pMax),
+                        pois: 100
+                    );
+                    break;
+                }
 
                 case "liquid fire":
                     int liqMinFire = Server.Items.BaseLiquid.GetLiquidBonus(owner);
                     int liqMaxFire = liqMinFire * 2;
 
-                    HandleDamageEffect(m, 0x3709, 0x208, Hurt(owner, liqMinFire, liqMaxFire), phys: 20, fire: 80);
+                    HandleDamageEffect(
+                        m,
+                        0x3709,
+                        0x208,
+                        Hurt(owner, liqMinFire, liqMaxFire),
+                        phys: 20,
+                        fire: 80
+                    );
                     break;
 
                 case "liquid goo":
                     int liqMinGoo = Server.Items.BaseLiquid.GetLiquidBonus(owner);
                     int liqMaxGoo = liqMinGoo * 2;
 
-                    HandleDamageEffect(m, Utility.RandomList(0x3967, 0x3979), 0x5C3, Hurt(owner, liqMinGoo, liqMaxGoo), energy: 80);
+                    HandleDamageEffect(
+                        m,
+                        Utility.RandomList(0x3967, 0x3979),
+                        0x5C3,
+                        Hurt(owner, liqMinGoo, liqMaxGoo),
+                        energy: 80
+                    );
                     break;
 
                 case "liquid ice":
                     int liqMinIce = Server.Items.BaseLiquid.GetLiquidBonus(owner);
                     int liqMaxIce = liqMinIce * 2;
 
-                    HandleDamageEffect(m, 0x1A84, 0x10B, Hurt(owner, liqMinIce, liqMaxIce), cold: 80);
+                    HandleDamageEffect(
+                        m,
+                        0x1A84,
+                        0x10B,
+                        Hurt(owner, liqMinIce, liqMaxIce),
+                        cold: 80
+                    );
                     break;
 
                 case "liquid rot":
                     int liqMinRot = Server.Items.BaseLiquid.GetLiquidBonus(owner);
                     int liqMaxRot = liqMinRot * 2;
 
-                    HandleDamageEffect(m, 0x3400, 0x108, Hurt(owner, liqMinRot, liqMaxRot), 20, 0, 0, 80, 0);
+                    HandleDamageEffect(
+                        m,
+                        0x3400,
+                        0x108,
+                        Hurt(owner, liqMinRot, liqMaxRot),
+                        20,
+                        0,
+                        0,
+                        80,
+                        0
+                    );
                     break;
 
                 case "liquid pain":
@@ -389,14 +559,32 @@ namespace Server.Items
                     m.FixedParticles(0x37C4, 1, 8, 9502, 39, 4, EffectLayer.Head);
                     m.PlaySound(0x210);
 
-                    HandleDamageEffect(m, damage: Hurt(owner, liqMinPain, liqMaxPain), phys: 80, fire: 5, cold: 5, pois: 5, energy: 5);
+                    HandleDamageEffect(
+                        m,
+                        damage: Hurt(owner, liqMinPain, liqMaxPain),
+                        phys: 80,
+                        fire: 5,
+                        cold: 5,
+                        pois: 5,
+                        energy: 5
+                    );
                     break;
             }
 
             return true;
         }
 
-        private void HandleDamageEffect(Mobile m, int particleId = 0, int soundId = 0, int damage = 0, int phys = 0, int fire = 0, int cold = 0, int pois = 0, int energy = 0)
+        private void HandleDamageEffect(
+            Mobile m,
+            int particleId = 0,
+            int soundId = 0,
+            int damage = 0,
+            int phys = 0,
+            int fire = 0,
+            int cold = 0,
+            int pois = 0,
+            int energy = 0
+        )
         {
             if (!CanDealDamageTo(this.owner, m))
             {
@@ -407,7 +595,13 @@ namespace Server.Items
 
             if (particleId != 0)
             {
-                Effects.SendLocationParticles(EffectItem.Create(m.Location, m.Map, EffectItem.DefaultDuration), particleId, 10, 30, 5052);
+                Effects.SendLocationParticles(
+                    EffectItem.Create(m.Location, m.Map, EffectItem.DefaultDuration),
+                    particleId,
+                    10,
+                    30,
+                    5052
+                );
             }
 
             if (soundId != 0)

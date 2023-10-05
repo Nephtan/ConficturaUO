@@ -58,7 +58,7 @@ namespace Server.Misc
             }
         }
 
-        public static void ClearAutoLootBag() 
+        public static void ClearAutoLootBag()
         {
             lootbag = null;
         }
@@ -94,11 +94,11 @@ namespace Server.Misc
             else
             {
                 from.BeginTarget(
-                        -1,
-                        false,
-                        TargetFlags.None,
-                        new TargetCallback(OnAutoLootBagSelected)
-                    );
+                    -1,
+                    false,
+                    TargetFlags.None,
+                    new TargetCallback(OnAutoLootBagSelected)
+                );
                 from.SendMessage("That is not a container. Try again.");
             }
         }
@@ -163,7 +163,15 @@ namespace Server.Gumps
 
             // Modify this inside the LootChoices constructor, perhaps near the beginning after AddPage(0);
             AddButton(60, 12, 4005, 4005, 100, GumpButtonType.Reply, 0);
-            AddHtml(96, 12, 150, 20, @"<BODY><BASEFONT Color=" + color + ">Select Bag</BASEFONT></BODY>", (bool)false, (bool)false);
+            AddHtml(
+                96,
+                12,
+                150,
+                20,
+                @"<BODY><BASEFONT Color=" + color + ">Select Bag</BASEFONT></BODY>",
+                (bool)false,
+                (bool)false
+            );
 
             AddButton(384, 10, 4017, 4017, 0, GumpButtonType.Reply, 0);
 
