@@ -1306,7 +1306,7 @@ namespace Server.Misc
                 ""
                 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-                                + "LIZARD - 24 May 2023<br>"
+                + "LIZARD - 24 May 2023<br>"
                 + "<br>"
                 + "* Fixed an issue with the last update causing vendors to vanish.<br>"
                 + "* Fixed damages for a couple of elemental spells.<br>"
@@ -1325,7 +1325,7 @@ namespace Server.Misc
                 + "* Fixed an issue with bearskin rugs spawning in the land.<br>"
                 + "<br>"
                 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-                
+
                 + "UNICORN - 7 May 2023<br>"
                 + "<br>"
                 + "* Consolidated cloth appearances for cut and folded.<br>"

@@ -6293,9 +6293,8 @@ namespace Server.Mobiles
                     )
                         continue;
 
-                    if (this.Stabled.Count >= Server.Mobiles.AnimalTrainer.GetMaxStabled(this)) 
+                    if (this.Stabled.Count >= Server.Mobiles.AnimalTrainer.GetMaxStabled(this))
                         continue;
-                    
 
                     pet.ControlTarget = null;
                     pet.ControlOrder = OrderType.Stay;
@@ -6367,7 +6366,6 @@ namespace Server.Mobiles
             m_AutoStabled.Clear();
         }
 
-
         // Taking care of the autoloot bag
 
         private Container m_AutoLootBag;
@@ -6381,14 +6379,16 @@ namespace Server.Mobiles
                     m_AutoLootBag = LootChoiceUpdates.GetAutoLootBag();
                 }
 
-                if (m_AutoLootBag != null && (m_AutoLootBag.Deleted || m_AutoLootBag.Parent != Backpack))
+                if (
+                    m_AutoLootBag != null
+                    && (m_AutoLootBag.Deleted || m_AutoLootBag.Parent != Backpack)
+                )
                 {
                     LootChoiceUpdates.ClearAutoLootBag();
                     return null;
                 }
 
                 return m_AutoLootBag;
-                
             }
         }
 
@@ -6404,7 +6404,5 @@ namespace Server.Mobiles
             pack.TryDropItem(this, item, false);
             return true;
         }
-
-
     }
 }

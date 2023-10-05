@@ -15,14 +15,17 @@ namespace Server.Items
     {
         [Constructable]
         public RandomGiftBox()
-            : base(Utility.RandomDouble() > 0.75d ? Utility.Random(0x232A, 2) : Utility.Random(0x46A2, 6))
+            : base(
+                Utility.RandomDouble() > 0.75d
+                    ? Utility.Random(0x232A, 2)
+                    : Utility.Random(0x46A2, 6)
+            )
         {
             SetHue();
         }
 
         public RandomGiftBox(Serial serial)
-            : base(serial)
-        { }
+            : base(serial) { }
 
         private void SetHue()
         {
@@ -38,14 +41,22 @@ namespace Server.Items
             {
                 switch (ItemID)
                 {
-                    case 0x232A: return 0x11B;
-                    case 0x232B: return 0x11B;
-                    case 0x46A2: return 0x11B;
-                    case 0x46A3: return 0x11C;
-                    case 0x46A4: return 0x11D;
-                    case 0x46A5: return 0x11E;
-                    case 0x46A6: return 0x11E;
-                    default: return 0x11F;
+                    case 0x232A:
+                        return 0x11B;
+                    case 0x232B:
+                        return 0x11B;
+                    case 0x46A2:
+                        return 0x11B;
+                    case 0x46A3:
+                        return 0x11C;
+                    case 0x46A4:
+                        return 0x11D;
+                    case 0x46A5:
+                        return 0x11E;
+                    case 0x46A6:
+                        return 0x11E;
+                    default:
+                        return 0x11F;
                 }
             }
         }
@@ -53,7 +64,10 @@ namespace Server.Items
         public override void OnAfterDuped(Item newItem)
         {
             RandomGiftBox that = (RandomGiftBox)newItem;
-            that.ItemID = Utility.RandomDouble() > 0.75d ? Utility.Random(0x232A, 2) : Utility.Random(0x46A2, 6);
+            that.ItemID =
+                Utility.RandomDouble() > 0.75d
+                    ? Utility.Random(0x232A, 2)
+                    : Utility.Random(0x46A2, 6);
             that.SetHue();
             that.InvalidateProperties();
         }
@@ -199,20 +213,23 @@ namespace Server.Customs
 
                         if (copy is Server.Items.Container)
                         {
-                            DupeContainer((Server.Items.Container)copy, (Server.Items.Container)newItem);
+                            DupeContainer(
+                                (Server.Items.Container)copy,
+                                (Server.Items.Container)newItem
+                            );
                         }
                     }
 
                     done = true;
                 }
-                catch
-                {
-                }
+                catch { }
             }
 
             if (!done)
             {
-                Console.WriteLine("Unable to copy an item in a Pandora's Gift Box. All items must have a 0 parameter constructor.");
+                Console.WriteLine(
+                    "Unable to copy an item in a Pandora's Gift Box. All items must have a 0 parameter constructor."
+                );
             }
         }
 
@@ -226,8 +243,13 @@ namespace Server.Customs
 
         public void TryGift(Mobile m)
         {
-            if (m == null || m.Backpack == null || m.BankBox == null ||
-                !m_Active || Items.Count <= 0)
+            if (
+                m == null
+                || m.Backpack == null
+                || m.BankBox == null
+                || !m_Active
+                || Items.Count <= 0
+            )
                 return;
             if (m_OnePerAccount && m_AccountsGivenTo.Contains(m.Account.Username))
                 return;
@@ -258,7 +280,6 @@ namespace Server.Customs
                     m_AccountsGivenTo.Add(m.Account.Username);
                 }
             }
-
             else if (!m_MobilesGivenTo.Contains(m))
             {
                 m_MobilesGivenTo.Add(m);
@@ -339,12 +360,14 @@ namespace Server.Customs
         {
             private bool m_Activate;
             private PandorasGiftBox m_Parent;
+
             public EnableContextMenuEntry(bool activate, PandorasGiftBox parent)
                 : base(activate ? 1011034 : 1011035)
             {
                 m_Activate = activate;
                 m_Parent = parent;
             }
+
             public override void OnClick()
             {
                 m_Parent.Active = m_Activate;

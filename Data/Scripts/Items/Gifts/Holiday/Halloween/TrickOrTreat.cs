@@ -62,7 +62,8 @@ namespace Server.Misc
                                         }
                                         else if ((m is BaseVendor) && (Utility.Random(100) > 80))
                                         {
-                                            Gold m_Gold = (Gold)m.Backpack.FindItemByType(typeof(Gold));
+                                            Gold m_Gold = (Gold)
+                                                m.Backpack.FindItemByType(typeof(Gold));
                                             int m_Amount = m.Backpack.GetAmount(typeof(Gold));
                                             from.Direction = from.GetDirectionTo(m);
                                             m.Direction = m.GetDirectionTo(from);
@@ -71,9 +72,13 @@ namespace Server.Misc
                                                 "Sorry, I don't have anything to give you at the moment."
                                             );
                                         }
-                                        else if ((m is BaseVendor) && (cont.ConsumeTotal(typeof(Gold), 1)))  // Line 72
+                                        else if (
+                                            (m is BaseVendor)
+                                            && (cont.ConsumeTotal(typeof(Gold), 1))
+                                        ) // Line 72
                                         {
-                                            Gold m_Gold = (Gold)m.Backpack.FindItemByType(typeof(Gold));
+                                            Gold m_Gold = (Gold)
+                                                m.Backpack.FindItemByType(typeof(Gold));
                                             int m_Amount = m.Backpack.GetAmount(typeof(Gold));
                                             from.Direction = from.GetDirectionTo(m);
                                             m.Direction = m.GetDirectionTo(from);
