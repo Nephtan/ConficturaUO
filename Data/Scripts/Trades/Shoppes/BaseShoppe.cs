@@ -41,6 +41,7 @@ namespace Server.Items
             {
                 list.Add(1070722, "Owner: " + ShoppeOwner.Name + "");
             }
+            list.Add(1070722, getCustomersWaiting());
         }
 
         public override void GetContextMenuEntries(Mobile from, List<ContextMenuEntry> list)
@@ -51,6 +52,27 @@ namespace Server.Items
             {
                 list.Add(new CashOutEntry(from, this));
             }
+        }
+
+        public string getCustomersWaiting()
+        {
+            int currentCustomers = 0;
+            if (this.Customer01 != "") currentCustomers++;
+            if (this.Customer02 != "") currentCustomers++;
+            if (this.Customer03 != "") currentCustomers++;
+            if (this.Customer04 != "") currentCustomers++;
+            if (this.Customer05 != "") currentCustomers++;
+            if (this.Customer06 != "") currentCustomers++;
+            if (this.Customer07 != "") currentCustomers++;
+            if (this.Customer08 != "") currentCustomers++;
+            if (this.Customer09 != "") currentCustomers++;
+            if (this.Customer10 != "") currentCustomers++;
+            if (this.Customer11 != "") currentCustomers++;
+            if (this.Customer12 != "") currentCustomers++;
+            string returnString = null;
+            if (currentCustomers == 0) returnString = "No customers waiting";
+            else returnString = currentCustomers.ToString() + " Customers are waiting!";
+            return returnString;
         }
 
         public static string MakeTask(BaseShoppe shoppe)
