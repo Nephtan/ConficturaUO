@@ -252,7 +252,13 @@ namespace Server.Mobiles
                         y,
                         349,
                         20,
-                        @"<BODY><BASEFONT Color=" + color + ">" + pet.Name + " | " + CheckBondingStatus(pet) + "</BASEFONT></BODY>",
+                        @"<BODY><BASEFONT Color="
+                            + color
+                            + ">"
+                            + pet.Name
+                            + " | "
+                            + CheckBondingStatus(pet)
+                            + "</BASEFONT></BODY>",
                         (bool)false,
                         (bool)false
                     );
@@ -266,9 +272,9 @@ namespace Server.Mobiles
                 {
                     BondInfo = "Bonded";
                 }
-                else if (pet.BondingBegin == DateTime.MinValue) 
-                { 
-                    BondInfo = "not bonding"; 
+                else if (pet.BondingBegin == DateTime.MinValue)
+                {
+                    BondInfo = "not bonding";
                 }
                 else
                 {
@@ -277,12 +283,17 @@ namespace Server.Mobiles
                     TimeSpan daystobond = willbebonded - today;
                     if ((daystobond.Days > 0) || (daystobond.Hours > 0) || (daystobond.Minutes > 0))
                     {
-                        BondInfo = string.Format("{0} days, {1} hours and {2} minutes until it bonds", daystobond.Days, daystobond.Hours, daystobond.Minutes);
+                        BondInfo = string.Format(
+                            "{0} days, {1} hours and {2} minutes until it bonds",
+                            daystobond.Days,
+                            daystobond.Hours,
+                            daystobond.Minutes
+                        );
                     }
-                    else 
-                    { 
-                        BondInfo = "Ready to bond!"; 
-                    }                            
+                    else
+                    {
+                        BondInfo = "Ready to bond!";
+                    }
                 }
                 return BondInfo;
             }
