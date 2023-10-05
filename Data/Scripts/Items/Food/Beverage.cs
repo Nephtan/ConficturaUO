@@ -102,29 +102,29 @@ namespace Server.Items
             switch (version)
             {
                 case 0:
+                {
+                    if (CheckType("BottleAle"))
                     {
-                        if (CheckType("BottleAle"))
-                        {
-                            Quantity = MaxQuantity;
-                            Content = BeverageType.Ale;
-                        }
-                        else if (CheckType("BottleLiquor"))
-                        {
-                            Quantity = MaxQuantity;
-                            Content = BeverageType.Liquor;
-                        }
-                        else if (CheckType("BottleWine"))
-                        {
-                            Quantity = MaxQuantity;
-                            Content = BeverageType.Wine;
-                        }
-                        else
-                        {
-                            throw new Exception(World.LoadingType);
-                        }
-
-                        break;
+                        Quantity = MaxQuantity;
+                        Content = BeverageType.Ale;
                     }
+                    else if (CheckType("BottleLiquor"))
+                    {
+                        Quantity = MaxQuantity;
+                        Content = BeverageType.Liquor;
+                    }
+                    else if (CheckType("BottleWine"))
+                    {
+                        Quantity = MaxQuantity;
+                        Content = BeverageType.Wine;
+                    }
+                    else
+                    {
+                        throw new Exception(World.LoadingType);
+                    }
+
+                    break;
+                }
             }
         }
     }
@@ -414,54 +414,54 @@ namespace Server.Items
             switch (version)
             {
                 case 0:
+                {
+                    if (CheckType("MugAle"))
                     {
-                        if (CheckType("MugAle"))
-                        {
-                            Quantity = MaxQuantity;
-                            Content = BeverageType.Ale;
-                        }
-                        else if (CheckType("GlassCider"))
-                        {
-                            Quantity = MaxQuantity;
-                            Content = BeverageType.Cider;
-                        }
-                        else if (CheckType("GlassLiquor"))
-                        {
-                            Quantity = MaxQuantity;
-                            Content = BeverageType.Liquor;
-                        }
-                        else if (CheckType("GlassMilk"))
-                        {
-                            Quantity = MaxQuantity;
-                            Content = BeverageType.Milk;
-                        }
-                        else if (CheckType("GlassWine"))
-                        {
-                            Quantity = MaxQuantity;
-                            Content = BeverageType.Wine;
-                        }
-                        else if (CheckType("GlassWater"))
-                        {
-                            Quantity = MaxQuantity;
-                            Content = BeverageType.Water;
-                        }
-                        else if (CheckType("GlassJuice"))
-                        {
-                            Quantity = MaxQuantity;
-                            Content = BeverageType.Juice;
-                        }
-                        else if (CheckType("GlassMead"))
-                        {
-                            Quantity = MaxQuantity;
-                            Content = BeverageType.Mead;
-                        }
-                        else
-                        {
-                            throw new Exception(World.LoadingType);
-                        }
-
-                        break;
+                        Quantity = MaxQuantity;
+                        Content = BeverageType.Ale;
                     }
+                    else if (CheckType("GlassCider"))
+                    {
+                        Quantity = MaxQuantity;
+                        Content = BeverageType.Cider;
+                    }
+                    else if (CheckType("GlassLiquor"))
+                    {
+                        Quantity = MaxQuantity;
+                        Content = BeverageType.Liquor;
+                    }
+                    else if (CheckType("GlassMilk"))
+                    {
+                        Quantity = MaxQuantity;
+                        Content = BeverageType.Milk;
+                    }
+                    else if (CheckType("GlassWine"))
+                    {
+                        Quantity = MaxQuantity;
+                        Content = BeverageType.Wine;
+                    }
+                    else if (CheckType("GlassWater"))
+                    {
+                        Quantity = MaxQuantity;
+                        Content = BeverageType.Water;
+                    }
+                    else if (CheckType("GlassJuice"))
+                    {
+                        Quantity = MaxQuantity;
+                        Content = BeverageType.Juice;
+                    }
+                    else if (CheckType("GlassMead"))
+                    {
+                        Quantity = MaxQuantity;
+                        Content = BeverageType.Mead;
+                    }
+                    else
+                    {
+                        throw new Exception(World.LoadingType);
+                    }
+
+                    break;
+                }
             }
         }
     }
@@ -501,61 +501,61 @@ namespace Server.Items
             switch (Content)
             {
                 case BeverageType.Ale:
-                    {
-                        if (ItemID == 0x1F96)
-                            return ItemID;
+                {
+                    if (ItemID == 0x1F96)
+                        return ItemID;
 
-                        return 0x1F95;
-                    }
+                    return 0x1F95;
+                }
                 case BeverageType.Cider:
-                    {
-                        if (ItemID == 0x1F98)
-                            return ItemID;
+                {
+                    if (ItemID == 0x1F98)
+                        return ItemID;
 
-                        return 0x1F97;
-                    }
+                    return 0x1F97;
+                }
                 case BeverageType.Liquor:
-                    {
-                        if (ItemID == 0x1F9A)
-                            return ItemID;
+                {
+                    if (ItemID == 0x1F9A)
+                        return ItemID;
 
-                        return 0x1F99;
-                    }
+                    return 0x1F99;
+                }
                 case BeverageType.Milk:
-                    {
-                        if (ItemID == 0x9AD)
-                            return ItemID;
+                {
+                    if (ItemID == 0x9AD)
+                        return ItemID;
 
-                        return 0x9F0;
-                    }
+                    return 0x9F0;
+                }
                 case BeverageType.Wine:
-                    {
-                        if (ItemID == 0x1F9C)
-                            return ItemID;
+                {
+                    if (ItemID == 0x1F9C)
+                        return ItemID;
 
-                        return 0x1F9B;
-                    }
+                    return 0x1F9B;
+                }
                 case BeverageType.Water:
-                    {
-                        if (ItemID == 0xFF8 || ItemID == 0xFF9 || ItemID == 0x1F9E)
-                            return ItemID;
+                {
+                    if (ItemID == 0xFF8 || ItemID == 0xFF9 || ItemID == 0x1F9E)
+                        return ItemID;
 
-                        return 0x1F9D;
-                    }
+                    return 0x1F9D;
+                }
                 case BeverageType.Juice:
-                    {
-                        if (ItemID == 0x1F9C)
-                            return ItemID;
+                {
+                    if (ItemID == 0x1F9C)
+                        return ItemID;
 
-                        return 0x1F9B;
-                    }
+                    return 0x1F9B;
+                }
                 case BeverageType.Mead:
-                    {
-                        if (ItemID == 0x1F9C)
-                            return ItemID;
+                {
+                    if (ItemID == 0x1F9C)
+                        return ItemID;
 
-                        return 0x1F97;
-                    }
+                    return 0x1F97;
+                }
             }
 
             return 0;
@@ -596,59 +596,59 @@ namespace Server.Items
             switch (version)
             {
                 case 0:
+                {
+                    if (CheckType("PitcherAle"))
                     {
-                        if (CheckType("PitcherAle"))
-                        {
-                            Quantity = MaxQuantity;
-                            Content = BeverageType.Ale;
-                        }
-                        else if (CheckType("PitcherCider"))
-                        {
-                            Quantity = MaxQuantity;
-                            Content = BeverageType.Cider;
-                        }
-                        else if (CheckType("PitcherLiquor"))
-                        {
-                            Quantity = MaxQuantity;
-                            Content = BeverageType.Liquor;
-                        }
-                        else if (CheckType("PitcherMilk"))
-                        {
-                            Quantity = MaxQuantity;
-                            Content = BeverageType.Milk;
-                        }
-                        else if (CheckType("PitcherWine"))
-                        {
-                            Quantity = MaxQuantity;
-                            Content = BeverageType.Wine;
-                        }
-                        else if (CheckType("PitcherWater"))
-                        {
-                            Quantity = MaxQuantity;
-                            Content = BeverageType.Water;
-                        }
-                        else if (CheckType("GlassPitcher"))
-                        {
-                            Quantity = 0;
-                            Content = BeverageType.Water;
-                        }
-                        else if (CheckType("PitcherJuice"))
-                        {
-                            Quantity = MaxQuantity;
-                            Content = BeverageType.Juice;
-                        }
-                        else if (CheckType("PitcherMead"))
-                        {
-                            Quantity = MaxQuantity;
-                            Content = BeverageType.Mead;
-                        }
-                        else
-                        {
-                            throw new Exception(World.LoadingType);
-                        }
-
-                        break;
+                        Quantity = MaxQuantity;
+                        Content = BeverageType.Ale;
                     }
+                    else if (CheckType("PitcherCider"))
+                    {
+                        Quantity = MaxQuantity;
+                        Content = BeverageType.Cider;
+                    }
+                    else if (CheckType("PitcherLiquor"))
+                    {
+                        Quantity = MaxQuantity;
+                        Content = BeverageType.Liquor;
+                    }
+                    else if (CheckType("PitcherMilk"))
+                    {
+                        Quantity = MaxQuantity;
+                        Content = BeverageType.Milk;
+                    }
+                    else if (CheckType("PitcherWine"))
+                    {
+                        Quantity = MaxQuantity;
+                        Content = BeverageType.Wine;
+                    }
+                    else if (CheckType("PitcherWater"))
+                    {
+                        Quantity = MaxQuantity;
+                        Content = BeverageType.Water;
+                    }
+                    else if (CheckType("GlassPitcher"))
+                    {
+                        Quantity = 0;
+                        Content = BeverageType.Water;
+                    }
+                    else if (CheckType("PitcherJuice"))
+                    {
+                        Quantity = MaxQuantity;
+                        Content = BeverageType.Juice;
+                    }
+                    else if (CheckType("PitcherMead"))
+                    {
+                        Quantity = MaxQuantity;
+                        Content = BeverageType.Mead;
+                    }
+                    else
+                    {
+                        throw new Exception(World.LoadingType);
+                    }
+
+                    break;
+                }
             }
         }
     }
@@ -878,46 +878,44 @@ namespace Server.Items
         {
             // Ensure the vessel is empty, fillable, and the use is valid before proceeding
             if (!IsEmpty || !Fillable || !ValidateUse(from, false))
-                return;  // Exit method if conditions are not met
+                return; // Exit method if conditions are not met
 
             // Determine the type of target to decide the filling action
             if (targ is StaticTarget)
             {
-                int id = ((StaticTarget)targ).ItemID;  // Extract item ID from static target
+                int id = ((StaticTarget)targ).ItemID; // Extract item ID from static target
 
                 // Check if the static target is a valid water source
                 if (DrinkingFunctions.CheckWaterTarget(id))
                 {
-                    Content = BeverageType.Water;  // Set beverage type to water
-                    Quantity = MaxQuantity;  // Fill to maximum quantity
-                    from.SendLocalizedMessage(1010089);  // Notify player: You fill the container with water.
-                    from.PlaySound(0x240);  // Play a water pouring sound
+                    Content = BeverageType.Water; // Set beverage type to water
+                    Quantity = MaxQuantity; // Fill to maximum quantity
+                    from.SendLocalizedMessage(1010089); // Notify player: You fill the container with water.
+                    from.PlaySound(0x240); // Play a water pouring sound
                 }
             }
-
             // Check if target is an item and a valid water source
             else if (targ is Item && DrinkingFunctions.CheckWaterTarget(((Item)targ).ItemID))
             {
-                int id = ((Item)targ).ItemID;  // Extract item ID from item target
+                int id = ((Item)targ).ItemID; // Extract item ID from item target
 
                 // Check if the item is a valid water source
                 if (DrinkingFunctions.CheckWaterTarget(id))
                 {
-                    Content = BeverageType.Water;  // Set beverage type to water
-                    Quantity = MaxQuantity;  // Fill to maximum quantity
-                    from.SendLocalizedMessage(1010089);  // Notify player: You fill the container with water.
-                    from.PlaySound(0x240);  // Play a water pouring sound
+                    Content = BeverageType.Water; // Set beverage type to water
+                    Quantity = MaxQuantity; // Fill to maximum quantity
+                    from.SendLocalizedMessage(1010089); // Notify player: You fill the container with water.
+                    from.PlaySound(0x240); // Play a water pouring sound
                 }
             }
-
             // Check if the target is a BaseBeverage
             else if (targ is BaseBeverage)
             {
-                BaseBeverage bev = (BaseBeverage)targ;  // Cast target object to BaseBeverage type
+                BaseBeverage bev = (BaseBeverage)targ; // Cast target object to BaseBeverage type
 
                 // Check if the target beverage is empty or not validated for use
                 if (bev.IsEmpty || !bev.ValidateUse(from, true))
-                    return;  // Exit method if conditions are not met
+                    return; // Exit method if conditions are not met
 
                 // Transfer content, poison, and poisoner information from target beverage to this beverage
                 this.Content = bev.Content;
@@ -927,23 +925,22 @@ namespace Server.Items
                 // Determine the quantity to transfer based on available quantity in target beverage and max quantity of this beverage
                 if (bev.Quantity > this.MaxQuantity)
                 {
-                    this.Quantity = this.MaxQuantity;  // Fill to maximum quantity
-                    bev.Quantity -= this.MaxQuantity;  // Deduct filled quantity from target beverage
+                    this.Quantity = this.MaxQuantity; // Fill to maximum quantity
+                    bev.Quantity -= this.MaxQuantity; // Deduct filled quantity from target beverage
                 }
                 else
                 {
-                    this.Quantity += bev.Quantity;  // Add available quantity to this beverage
-                    bev.Quantity = 0;  // Set target beverage quantity to zero
+                    this.Quantity += bev.Quantity; // Add available quantity to this beverage
+                    bev.Quantity = 0; // Set target beverage quantity to zero
                 }
             }
-
             // Check if target is an item representing a water source or an addon component representing a water source
             else if (targ is Item)
             {
-                Item item = (Item)targ;  // Cast target to Item
-                IWaterSource src;  // Interface for water source
+                Item item = (Item)targ; // Cast target to Item
+                IWaterSource src; // Interface for water source
 
-                src = (item as IWaterSource);  // Try to cast item to IWaterSource interface
+                src = (item as IWaterSource); // Try to cast item to IWaterSource interface
 
                 // Check if item is an addon component and try to cast the addon to IWaterSource
                 if (src == null && item is AddonComponent)
@@ -951,7 +948,7 @@ namespace Server.Items
 
                 // Check if cast was unsuccessful or water source is empty
                 if (src == null || src.Quantity <= 0)
-                    return;  // Exit method if conditions are not met
+                    return; // Exit method if conditions are not met
 
                 // Check if player is on the same map, within range, and has line of sight to the item
                 if (
@@ -960,40 +957,39 @@ namespace Server.Items
                     || !from.InLOS(item)
                 )
                 {
-                    from.LocalOverheadMessage(MessageType.Regular, 0x3B2, 1019045);  // Notify player: I can't reach that.
-                    return;  // Exit method if conditions are not met
+                    from.LocalOverheadMessage(MessageType.Regular, 0x3B2, 1019045); // Notify player: I can't reach that.
+                    return; // Exit method if conditions are not met
                 }
 
-                this.Content = BeverageType.Water;  // Set beverage type to water
-                this.Poison = null;  // Clear any poison values
-                this.Poisoner = null;  // Clear poisoner values
+                this.Content = BeverageType.Water; // Set beverage type to water
+                this.Poison = null; // Clear any poison values
+                this.Poisoner = null; // Clear poisoner values
 
                 // Determine the quantity to transfer based on available quantity in source and max quantity of vessel
                 if (src.Quantity > this.MaxQuantity)
                 {
-                    this.Quantity = this.MaxQuantity;  // Fill to maximum quantity
-                    src.Quantity -= this.MaxQuantity;  // Deduct filled quantity from source
+                    this.Quantity = this.MaxQuantity; // Fill to maximum quantity
+                    src.Quantity -= this.MaxQuantity; // Deduct filled quantity from source
                 }
                 else
                 {
-                    this.Quantity += src.Quantity;  // Add available quantity to vessel
-                    src.Quantity = 0;  // Set source quantity to zero
+                    this.Quantity += src.Quantity; // Add available quantity to vessel
+                    src.Quantity = 0; // Set source quantity to zero
                 }
 
-                from.SendLocalizedMessage(1010089);  // Notify player: You fill the container with water.
+                from.SendLocalizedMessage(1010089); // Notify player: You fill the container with water.
             }
-
             // Check if target is a cow and if cow allows milking
             else if (targ is Cow)
             {
-                Cow cow = (Cow)targ;  // Cast target to Cow
+                Cow cow = (Cow)targ; // Cast target to Cow
 
                 // Try to milk the cow
                 if (cow.TryMilk(from))
                 {
-                    Content = BeverageType.Milk;  // Set beverage type to milk
-                    Quantity = MaxQuantity;  // Fill to maximum quantity
-                    from.SendLocalizedMessage(1080197);  // Notify player: You fill the container with milk.
+                    Content = BeverageType.Milk; // Set beverage type to milk
+                    Quantity = MaxQuantity; // Fill to maximum quantity
+                    from.SendLocalizedMessage(1080197); // Notify player: You fill the container with milk.
                 }
             }
         }
@@ -1445,17 +1441,17 @@ namespace Server.Items
             switch (version)
             {
                 case 1:
-                    {
-                        m_Poisoner = reader.ReadMobile();
-                        goto case 0;
-                    }
+                {
+                    m_Poisoner = reader.ReadMobile();
+                    goto case 0;
+                }
                 case 0:
-                    {
-                        m_Poison = Poison.Deserialize(reader);
-                        m_Content = (BeverageType)reader.ReadInt();
-                        m_Quantity = reader.ReadInt();
-                        break;
-                    }
+                {
+                    m_Poison = Poison.Deserialize(reader);
+                    m_Content = (BeverageType)reader.ReadInt();
+                    m_Quantity = reader.ReadInt();
+                    break;
+                }
             }
         }
     }

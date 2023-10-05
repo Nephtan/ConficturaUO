@@ -330,7 +330,7 @@ namespace Server.Items
 
                 // Check if the thrower is a player.
                 PlayerMobile playerThrower = thrower as PlayerMobile;
-                if (playerThrower != null)  // Check if the casting was successful.
+                if (playerThrower != null) // Check if the casting was successful.
                 {
                     NONPK throwerStatus = playerThrower.NONPK;
 
@@ -359,7 +359,6 @@ namespace Server.Items
                 }
                 return false; // By default, no damage is applied.
             }
-
 
             private class InternalTimer : Timer
             {
@@ -406,11 +405,18 @@ namespace Server.Items
                         Mobile m = mobiles[i];
 
                         // Check various conditions to see if the target mobile 'm' can be harmed.
-                        if ((m.Z + 16) > m_Item.Z && (m_Item.Z + 12) > m.Z && (!Core.AOS || m != from) && SpellHelper.ValidIndirectTarget(from, m) && from.CanBeHarmful(m, false))
+                        if (
+                            (m.Z + 16) > m_Item.Z
+                            && (m_Item.Z + 12) > m.Z
+                            && (!Core.AOS || m != from)
+                            && SpellHelper.ValidIndirectTarget(from, m)
+                            && from.CanBeHarmful(m, false)
+                        )
                         {
                             if (m_Item.IsValidTarget(from, m))
                             {
-                                if (from != null) from.DoHarmful(m);
+                                if (from != null)
+                                    from.DoHarmful(m);
                                 AOS.Damage(m, from, m_Item.GetDamage(), 0, 0, 100, 0, 0);
                                 m.PlaySound(0x108);
                             }
