@@ -139,6 +139,11 @@ namespace Confictura.Custom
                     {
                         existingClones[originalPlayer] = clone;
                     }
+
+                    if (clone.RaceID != 0)
+                    {
+                        clone.HueMod = 0;
+                    }
                 }
             }
 
@@ -210,8 +215,8 @@ namespace Confictura.Custom
                 PlayerMobile playerMobile = mobile as PlayerMobile;
                 if (playerMobile != null && playerMobile.Alive && playerMobile.AccessLevel == AccessLevel.Player)
                 {
-                    playerMobile.Map = Map.Internal;
                     playerMobile.Location = playerMobile.LogoutLocation;
+                    playerMobile.Map = Map.Internal;
                 }
             }
         }
@@ -596,6 +601,7 @@ namespace Confictura.Custom
             {
                 Map = LogoutMap;
             }
+
             //if (Kills >= 1)
             //{
             //    FightMode = FightMode.Aggressor;
@@ -651,14 +657,8 @@ namespace Confictura.Custom
 
         public override void OnDoubleClick(Mobile from)
         {
-            if (from == this || (from.AccessLevel > AccessLevel.Counselor))
-            {
-                base.OnDoubleClick(from);
-            }
-            else
-            {
-                from.SendMessage("You cannot access this clone's backpack.");
-            }
+            base.DisplayPaperdollTo(from);
+            base.OnDoubleClick(from);
         }
 
         public bool TryTrainSkill(Mobile from, Item item)
@@ -1063,13 +1063,22 @@ namespace Confictura.Custom
 
         public override bool IsAccessibleTo(Mobile m)
         {
-            if (m is PlayerMobile && (m.AccessLevel < AccessLevel.GameMaster))
+            if (m is PlayerMobile && (m.AccessLevel < AccessLevel.Owner))
             {
                 m.SendMessage("You cannot access this clone's backpack.");
                 return false;
             }
 
             return base.IsAccessibleTo(m);
+        }
+
+        public override void OnDoubleClick(Mobile from)
+        {
+            if (from is PlayerMobile && (from.AccessLevel < AccessLevel.Owner))
+            {
+                from.SendMessage("You cannot access this clone's backpack.");
+                base.OnDoubleClick(from);
+            }
         }
 
         public BackpackClone(Serial serial)
