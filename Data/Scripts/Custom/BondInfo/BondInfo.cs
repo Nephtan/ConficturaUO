@@ -39,7 +39,11 @@ namespace Server.Commands
                 BaseCreature targ = (BaseCreature)targeted;
                 if (targ.ControlMaster == from)
                 {
-                    if (targ.BondingBegin == DateTime.MinValue)
+                    if (targ.IsBonded == true)
+                    {
+                        from.SendMessage("Bonded");
+                    }
+                    else if (targ.BondingBegin == DateTime.MinValue)
                     {
                         from.SendMessage(
                             "Your pet hasn't started to bond yet, please feed it and try again."
@@ -47,17 +51,29 @@ namespace Server.Commands
                     }
                     else
                     {
+                        string BondInfo;
                         DateTime today = DateTime.Now;
                         DateTime willbebonded = targ.BondingBegin + targ.BondingDelay;
-                        TimeSpan bondedfor = targ.BondingBegin - today;
                         TimeSpan daystobond = willbebonded - today;
-                        string BondInfo = string.Format(
-                            "The pet started bonding with you at {0}. Its {1} days, {2} hours and {3} minutes until it bonds",
-                            targ.BondingBegin,
-                            daystobond.Days,
-                            daystobond.Hours,
-                            daystobond.Minutes
-                        );
+                        if (
+                            (daystobond.Days > 0)
+                            || (daystobond.Hours > 0)
+                            || (daystobond.Minutes > 0)
+                        )
+                        {
+                            BondInfo = string.Format(
+                                "The pet started bonding with you at {0}. Its {1} days, {2} hours and {3} minutes until it bonds",
+                                targ.BondingBegin,
+                                daystobond.Days,
+                                daystobond.Hours,
+                                daystobond.Minutes
+                            );
+                        }
+                        else
+                        {
+                            BondInfo = "Ready to bond!";
+                        }
+
                         from.SendMessage(BondInfo);
                     }
                 }
