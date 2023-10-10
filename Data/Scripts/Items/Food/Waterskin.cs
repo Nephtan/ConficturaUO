@@ -3,6 +3,7 @@ using System.Collections;
 using Server.Network;
 using Server.Prompts;
 using Server.Targeting;
+using Server.Gumps;
 
 namespace Server.Items
 {
@@ -69,7 +70,7 @@ namespace Server.Items
                     // increase characters thirst value based on type of drink
                     if (from.Thirst < 20)
                     {
-                        from.Thirst += 5;
+                        from.Thirst = (from.Thirst <= 15) ? from.Thirst += 5 : from.Thirst = 20;
                         // Send message to character about their current thirst value
                         int iThirst = from.Thirst;
                         if (iThirst < 5)
@@ -80,6 +81,16 @@ namespace Server.Items
                             from.SendMessage("You drink the water and feel much less thirsty");
                         else
                             from.SendMessage("You drink the water and are no longer thirsty");
+
+                        if (from.HasGump((typeof(gumpfaim))))
+                        {
+                            try
+                            {
+                                from.CloseGump(typeof(gumpfaim));
+                                from.SendGump(new Server.Gumps.gumpfaim(from)); // popup Thirst gump.
+                            }
+                            catch { }
+                        }
 
                         if (from.Body.IsHuman && !from.Mounted)
                             from.Animate(34, 5, 1, true, false, 0);
