@@ -8,6 +8,7 @@ using Server.Targeting;
 using Server.Engines.Plants;
 using Server.Engines.Quests;
 using Server.ContextMenus;
+using Server.Gumps;
 
 namespace Server.Items
 {
@@ -1195,6 +1196,15 @@ namespace Server.Items
                         );
                     else
                         from.SendMessage("You feel quite full after consuming the beverage.");
+                }
+                if (from.HasGump((typeof(gumpfaim))))
+                {
+                    try
+                    {
+                        from.CloseGump(typeof(gumpfaim));
+                        from.SendGump(new Server.Gumps.gumpfaim(from)); // popup Thirst gump.
+                    }
+                    catch { }
                 }
 
                 if (ContainsAlchohol)

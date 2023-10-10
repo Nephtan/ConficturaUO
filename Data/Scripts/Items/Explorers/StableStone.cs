@@ -302,7 +302,7 @@ namespace Server.Items
                     DateTime today = DateTime.Now;
                     DateTime willbebonded = pet.BondingBegin + pet.BondingDelay;
                     TimeSpan daystobond = willbebonded - today;
-                    if ((daystobond.Days > 0) || (daystobond.Hours > 0) || (daystobond.Minutes > 0))
+                    if (daystobond.TotalDays > 0)
                     {
                         BondInfo = string.Format(
                             "{0} days, {1} hours and {2} minutes until it bonds",

@@ -3,6 +3,7 @@ using System.Collections;
 using Server.Network;
 using System.Collections.Generic;
 using Server.ContextMenus;
+using Server.Gumps;
 
 namespace Server.Items
 {
@@ -193,6 +194,16 @@ namespace Server.Items
                 iEaten = 1;
                 from.Hunger = 20;
                 from.SendLocalizedMessage(500872); // You manage to eat the food, but you are stuffed!
+
+                if (from.HasGump((typeof(gumpfaim))))
+                {
+                    try
+                    {
+                        from.CloseGump(typeof(gumpfaim));
+                        from.SendGump(new Server.Gumps.gumpfaim(from)); // popup Thirst gump.
+                    }
+                    catch { }
+                }
             }
             else
             {
@@ -207,6 +218,16 @@ namespace Server.Items
                     from.SendLocalizedMessage(500870); // After eating the food, you feel much less hungry.
                 else
                     from.SendLocalizedMessage(500871); // You feel quite full after consuming the food.
+
+                if (from.HasGump((typeof(gumpfaim))))
+                {
+                    try
+                    {
+                        from.CloseGump(typeof(gumpfaim));
+                        from.SendGump(new Server.Gumps.gumpfaim(from)); // popup Thirst gump.
+                    }
+                    catch { }
+                }
             }
 
             if (iEaten > 0)
