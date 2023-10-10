@@ -469,7 +469,7 @@ namespace Server.Items
                 // increase characters thirst value based on type of drink
                 if (from.Thirst < 20)
                 {
-                    from.Thirst += 5;
+                    from.Thirst = (from.Thirst <= 15) ? from.Thirst += 5 : from.Thirst = 20;
                     // Send message to character about their current thirst value
                     int iThirst = from.Thirst;
                     if (iThirst < 5)
