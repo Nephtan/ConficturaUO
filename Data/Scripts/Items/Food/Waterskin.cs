@@ -241,7 +241,7 @@ namespace Server.Items
             }
             else if (from.Thirst < 20)
             {
-                from.Thirst += 5;
+                from.Thirst = (from.Thirst <= 15) ? from.Thirst += 5 : from.Thirst = 20;
                 // Send message to character about their current thirst value
                 int iThirst = from.Thirst;
                 if (iThirst < 5)
@@ -252,6 +252,16 @@ namespace Server.Items
                     from.SendMessage("You drink the dirty water and feel much less thirsty");
                 else
                     from.SendMessage("You drink the dirty water and are no longer thirsty");
+
+                if (from.HasGump((typeof(gumpfaim))))
+                {
+                    try
+                    {
+                        from.CloseGump(typeof(gumpfaim));
+                        from.SendGump(new Server.Gumps.gumpfaim(from)); // popup Thirst gump.
+                    }
+                    catch { }
+                }
 
                 this.Consume();
 
