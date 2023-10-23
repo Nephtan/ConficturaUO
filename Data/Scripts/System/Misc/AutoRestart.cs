@@ -132,7 +132,7 @@ namespace Server.Misc
         }
 
         private static RestartType RestartFrequency = RestartType.Weekly; // The server restarts daily or weekly on a particular day of the week.
-        private static DayOfWeek RestartDay = DayOfWeek.Sunday; // IF the server restarts weekly, the day of week is set here.
+        private static DayOfWeek RestartDay = DayOfWeek.Wednesday; // IF the server restarts weekly, the day of week is set here.
         private static TimeSpan RestartDelay = TimeSpan.Zero; // Here we set how long to delay the restart once the timer has finished.
 
         private static bool m_Enabled = true; // is auto-restarting enabled?
@@ -141,7 +141,7 @@ namespace Server.Misc
             get { return m_Enabled; }
         }
 
-        private static TimeSpan RestartTimeOfDay = TimeSpan.FromHours(17.50); // The time of day at which to restart (in Server time.)
+        private static TimeSpan RestartTimeOfDay = TimeSpan.FromHours(9); // The time of day at which to restart (in Server time.)
         private static List<double> WarningDelays;
         private static string RestartMessage = "The server will be restarting for routine maintenance";
         private static bool m_Restarting;
