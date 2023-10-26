@@ -27,7 +27,7 @@ namespace Server.Items
             {
                 from.PlaySound(0x249);
                 string sText =
-                    "The demon opened the black gate and unleashed chaos across Lodoria. Where the dwarven armies had fallen, the elven forces assembled all of their magic and sent the beast back to the void. While the world itself provided the natural forces to summon the demon, now it has diminished to the core of the world. This is where we have been searching for centuries, deep below the city of Lodoria. The drow have joined our cause and aided us in constructing our city deep below, where we can keep searching in secret. Now that my research in Doom is complete, I will return to the cemetery at night as not to be seen.";
+                    "The demon opened the black gate and unleashed chaos across Lodoria, where the dwarven armies had been defeated. The elven forces gathered their magic and banished the beast back to the void. Although the world had provided the natural forces to summon the demon, its power had now diminished to the core of the world. For centuries, we had been searching for this place deep beneath the city of Lodoria. The drow joined our cause and assisted in the construction of our hidden city below. Here, we could continue our secret search. With my research in Doom completed, I will now return to the cemetery at night to avoid being seen.";
 
                 this.Closable = true;
                 this.Disposable = true;
