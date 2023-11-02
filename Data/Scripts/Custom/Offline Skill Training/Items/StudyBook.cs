@@ -13,10 +13,10 @@ namespace Server.Items
 		//Remember: 1 SkillGainedPerTick below would translate to a 0.1 skill increase!
 		private static readonly int SkillGainInterval = 10;//This is the number of minutes that pass before a skill gain happens while studying.
 		private static readonly int SkillGainedPerTick = 1;//This is the skill gain for each gain interval that has passed.
-		private static readonly int SkillGainMax = 200;//This is the maximum gain that can be achieved from one study session.
+		private static readonly int SkillGainMax = 350;//This is the maximum gain that can be achieved from one study session.
 		private static readonly int HoursTilAcceleratedSkillGain = 5;//This is the amount of study hours required to gain a Scroll of Alacrity effect.
 		private static readonly TimeSpan AcceleratedSkillGainTime = TimeSpan.FromMinutes(30.0);//This is the duration of the accellerated skill gain.
-		private static readonly bool AllowSkillAcceleration = false;//Set this to false if you don't want your players to receive accellerated skill gain.
+		private static readonly bool AllowSkillAcceleration = true;//Set this to false if you don't want your players to receive accellerated skill gain.
 		private SkillName _TrainingSkill;
 		private int _MaxSkillTrained;
 		private Mobile _Reader;
@@ -162,7 +162,7 @@ namespace Server.Items
 			this._IsInUse = false;
 			this._Reader = null;
 			this.Movable = true;
-			from.SendMessage(0, "You studied for {0} hours and {1} minutes.", (int)difference.TotalHours, (int)difference.TotalMinutes);
+			from.SendMessage(0, "You studied for {0} hours and {1} minutes.", (int)difference.TotalHours, (int)difference.Minutes);
 
 			if (Utility.RandomDouble() > 0.95)
 			{
@@ -173,7 +173,7 @@ namespace Server.Items
 
 			if (difference.TotalHours >= HoursTilAcceleratedSkillGain && AllowSkillAcceleration && from is PlayerMobile)
 			{
-				from.SendMessage(0, "Due to the length time you studied, you are gaining {0} skill at an accelerated rate!", GetName());
+				from.SendMessage(0, "Due to the length of time you studied, you are gaining {0} skill at an accelerated rate!", GetName());
 				PlayerMobile pm = from as PlayerMobile;
 				Effects.PlaySound(from.Location, from.Map, 0x1E9);
 				Effects.SendTargetParticles(from, 0x373A, 35, 45, 0x00, 0x00, 9502, (EffectLayer)255, 0x100);
