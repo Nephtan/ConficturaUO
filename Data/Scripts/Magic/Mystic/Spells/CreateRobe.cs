@@ -16,7 +16,7 @@ namespace Server.Spells.Mystic
         }
         public override int RequiredTithing
         {
-            get { return 150; }
+            get { return 40; }
         }
         public override double RequiredSkill
         {
