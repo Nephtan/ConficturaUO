@@ -21,7 +21,7 @@ namespace Server.Spells.HolyMan
         }
         public override int RequiredTithing
         {
-            get { return 80; }
+            get { return 15; }
         }
         public override double RequiredSkill
         {
