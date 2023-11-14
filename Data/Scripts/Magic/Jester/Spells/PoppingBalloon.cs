@@ -22,7 +22,7 @@ namespace Server.Spells.Jester
         }
         public override int RequiredTithing
         {
-            get { return 100; }
+            get { return 30; }
         }
         public override int RequiredMana
         {
