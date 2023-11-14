@@ -23,7 +23,7 @@ namespace Server.Spells.HolyMan
         }
         public override int RequiredTithing
         {
-            get { return 100; }
+            get { return 15; }
         }
         public override double RequiredSkill
         {
