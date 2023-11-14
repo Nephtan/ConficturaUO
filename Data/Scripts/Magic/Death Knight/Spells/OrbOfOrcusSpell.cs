@@ -20,7 +20,7 @@ namespace Server.Spells.DeathKnight
         }
         public override int RequiredTithing
         {
-            get { return 200; }
+            get { return 80; }
         }
         public override double RequiredSkill
         {
