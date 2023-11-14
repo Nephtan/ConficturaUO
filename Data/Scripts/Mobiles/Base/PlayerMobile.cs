@@ -4981,7 +4981,12 @@ namespace Server.Mobiles
 
             string sTitle =
                 "" + GetPlayerInfo.GetSkillTitle(this) + GetPlayerInfo.GetNPCGuild(this);
-            list.Add(Utility.FixHtml(sTitle));
+
+            if (AccessLevel < AccessLevel.Counselor)
+                list.Add(Utility.FixHtml(sTitle));
+
+            if (AccessLevel > AccessLevel.Player)
+                list.Add(1060847, "{0}\t{1}", "Shard", Enum.GetName(typeof(AccessLevel), AccessLevel));
 
             if (Core.ML)
             {
