@@ -4374,326 +4374,326 @@ namespace Server.Mobiles
             switch (version)
             {
                 case 34:
-                {
-                    m_City = (CityManagementStone)reader.ReadItem();
-                    m_CityTitle = reader.ReadString();
-                    m_ShowCityTitle = reader.ReadBool();
-                    m_OwesBackTaxes = reader.ReadBool();
-                    m_BackTaxesAmount = reader.ReadInt();
-                    goto case 33;
-                }
-                case 33:
-                {
-                    m_NONPK = (NONPK)reader.ReadInt();
-                    Title = reader.ReadString();
-                    goto case 32;
-                }
-                case 32:
-                {
-                    m_Camp = reader.ReadDateTime();
-                    m_Bedroll = reader.ReadDateTime();
-
-                    goto case 31;
-                }
-                case 31:
-                {
-                    MyChat = reader.ReadString();
-
-                    goto case 30;
-                }
-                case 30:
-                {
-                    RegBar = reader.ReadString();
-                    MyLibrary = reader.ReadString();
-
-                    goto case 29;
-                }
-                case 29:
-                {
-                    CharacterMOTD = reader.ReadInt();
-                    CharacterSkill = reader.ReadInt();
-                    CharacterKeys = reader.ReadString();
-                    CharacterDiscovered = reader.ReadString();
-                    CharacterSheath = reader.ReadInt();
-                    CharacterGuilds = reader.ReadInt();
-                    CharacterBoatDoor = reader.ReadString();
-                    CharacterPublicDoor = reader.ReadString();
-                    CharacterBegging = reader.ReadInt();
-                    CharacterWepAbNames = reader.ReadInt();
-                    CharacterElement = reader.ReadInt();
-
-                    ArtifactQuestTime = reader.ReadString();
-                    StandardQuest = reader.ReadString();
-                    FishingQuest = reader.ReadString();
-                    AssassinQuest = reader.ReadString();
-                    MessageQuest = reader.ReadString();
-                    BardsTaleQuest = reader.ReadString();
-
-                    SpellBarsMage1 = reader.ReadString();
-                    SpellBarsMage2 = reader.ReadString();
-                    SpellBarsMage3 = reader.ReadString();
-                    SpellBarsMage4 = reader.ReadString();
-                    SpellBarsNecro1 = reader.ReadString();
-                    SpellBarsNecro2 = reader.ReadString();
-                    SpellBarsKnight1 = reader.ReadString();
-                    SpellBarsKnight2 = reader.ReadString();
-                    SpellBarsDeath1 = reader.ReadString();
-                    SpellBarsDeath2 = reader.ReadString();
-                    SpellBarsBard1 = reader.ReadString();
-                    SpellBarsBard2 = reader.ReadString();
-                    SpellBarsPriest1 = reader.ReadString();
-                    SpellBarsPriest2 = reader.ReadString();
-                    SpellBarsWizard1 = reader.ReadString();
-                    SpellBarsWizard2 = reader.ReadString();
-                    SpellBarsWizard3 = reader.ReadString();
-                    SpellBarsMonk1 = reader.ReadString();
-                    SpellBarsMonk2 = reader.ReadString();
-                    SpellBarsElly1 = reader.ReadString();
-                    SpellBarsElly2 = reader.ReadString();
-
-                    QuickBar = reader.ReadString();
-                    ThiefQuest = reader.ReadString();
-                    KilledSpecialMonsters = reader.ReadString();
-                    MusicPlaylist = reader.ReadString();
-                    CharacterWanted = reader.ReadString();
-                    CharacterLoot = reader.ReadString();
-                    CharMusical = reader.ReadString();
-                    EpicQuestName = reader.ReadString();
-                    CharacterBarbaric = reader.ReadInt();
-                    SkillDisplay = reader.ReadInt();
-                    MagerySpellHue = reader.ReadInt();
-                    ClassicPoisoning = reader.ReadInt();
-                    CharacterEvil = reader.ReadInt();
-                    CharacterOriental = reader.ReadInt();
-                    GumpHue = reader.ReadInt();
-                    WeaponBarOpen = reader.ReadInt();
-                    EpicQuestNumber = reader.ReadInt();
-
-                    goto case 28;
-                }
-                case 28:
-                {
-                    m_PeacedUntil = reader.ReadDateTime();
-
-                    goto case 27;
-                }
-                case 27:
-                {
-                    m_AnkhNextUse = reader.ReadDateTime();
-
-                    goto case 26;
-                }
-                case 26:
-                {
-                    m_AutoStabled = reader.ReadStrongMobileList();
-
-                    goto case 25;
-                }
-                case 25:
-                {
-                    int recipeCount = reader.ReadInt();
-
-                    if (recipeCount > 0)
                     {
-                        m_AcquiredRecipes = new Dictionary<int, bool>();
-
-                        for (int i = 0; i < recipeCount; i++)
-                        {
-                            int r = reader.ReadInt();
-                            if (reader.ReadBool()) //Don't add in recipies which we haven't gotten or have been removed
-                                m_AcquiredRecipes.Add(r, true);
-                        }
+                        m_City = (CityManagementStone)reader.ReadItem();
+                        m_CityTitle = reader.ReadString();
+                        m_ShowCityTitle = reader.ReadBool();
+                        m_OwesBackTaxes = reader.ReadBool();
+                        m_BackTaxesAmount = reader.ReadInt();
+                        goto case 33;
                     }
-                    goto case 24;
-                }
+                case 33:
+                    {
+                        m_NONPK = (NONPK)reader.ReadInt();
+                        Title = reader.ReadString();
+                        goto case 32;
+                    }
+                case 32:
+                    {
+                        m_Camp = reader.ReadDateTime();
+                        m_Bedroll = reader.ReadDateTime();
+
+                        goto case 31;
+                    }
+                case 31:
+                    {
+                        MyChat = reader.ReadString();
+
+                        goto case 30;
+                    }
+                case 30:
+                    {
+                        RegBar = reader.ReadString();
+                        MyLibrary = reader.ReadString();
+
+                        goto case 29;
+                    }
+                case 29:
+                    {
+                        CharacterMOTD = reader.ReadInt();
+                        CharacterSkill = reader.ReadInt();
+                        CharacterKeys = reader.ReadString();
+                        CharacterDiscovered = reader.ReadString();
+                        CharacterSheath = reader.ReadInt();
+                        CharacterGuilds = reader.ReadInt();
+                        CharacterBoatDoor = reader.ReadString();
+                        CharacterPublicDoor = reader.ReadString();
+                        CharacterBegging = reader.ReadInt();
+                        CharacterWepAbNames = reader.ReadInt();
+                        CharacterElement = reader.ReadInt();
+
+                        ArtifactQuestTime = reader.ReadString();
+                        StandardQuest = reader.ReadString();
+                        FishingQuest = reader.ReadString();
+                        AssassinQuest = reader.ReadString();
+                        MessageQuest = reader.ReadString();
+                        BardsTaleQuest = reader.ReadString();
+
+                        SpellBarsMage1 = reader.ReadString();
+                        SpellBarsMage2 = reader.ReadString();
+                        SpellBarsMage3 = reader.ReadString();
+                        SpellBarsMage4 = reader.ReadString();
+                        SpellBarsNecro1 = reader.ReadString();
+                        SpellBarsNecro2 = reader.ReadString();
+                        SpellBarsKnight1 = reader.ReadString();
+                        SpellBarsKnight2 = reader.ReadString();
+                        SpellBarsDeath1 = reader.ReadString();
+                        SpellBarsDeath2 = reader.ReadString();
+                        SpellBarsBard1 = reader.ReadString();
+                        SpellBarsBard2 = reader.ReadString();
+                        SpellBarsPriest1 = reader.ReadString();
+                        SpellBarsPriest2 = reader.ReadString();
+                        SpellBarsWizard1 = reader.ReadString();
+                        SpellBarsWizard2 = reader.ReadString();
+                        SpellBarsWizard3 = reader.ReadString();
+                        SpellBarsMonk1 = reader.ReadString();
+                        SpellBarsMonk2 = reader.ReadString();
+                        SpellBarsElly1 = reader.ReadString();
+                        SpellBarsElly2 = reader.ReadString();
+
+                        QuickBar = reader.ReadString();
+                        ThiefQuest = reader.ReadString();
+                        KilledSpecialMonsters = reader.ReadString();
+                        MusicPlaylist = reader.ReadString();
+                        CharacterWanted = reader.ReadString();
+                        CharacterLoot = reader.ReadString();
+                        CharMusical = reader.ReadString();
+                        EpicQuestName = reader.ReadString();
+                        CharacterBarbaric = reader.ReadInt();
+                        SkillDisplay = reader.ReadInt();
+                        MagerySpellHue = reader.ReadInt();
+                        ClassicPoisoning = reader.ReadInt();
+                        CharacterEvil = reader.ReadInt();
+                        CharacterOriental = reader.ReadInt();
+                        GumpHue = reader.ReadInt();
+                        WeaponBarOpen = reader.ReadInt();
+                        EpicQuestNumber = reader.ReadInt();
+
+                        goto case 28;
+                    }
+                case 28:
+                    {
+                        m_PeacedUntil = reader.ReadDateTime();
+
+                        goto case 27;
+                    }
+                case 27:
+                    {
+                        m_AnkhNextUse = reader.ReadDateTime();
+
+                        goto case 26;
+                    }
+                case 26:
+                    {
+                        m_AutoStabled = reader.ReadStrongMobileList();
+
+                        goto case 25;
+                    }
+                case 25:
+                    {
+                        int recipeCount = reader.ReadInt();
+
+                        if (recipeCount > 0)
+                        {
+                            m_AcquiredRecipes = new Dictionary<int, bool>();
+
+                            for (int i = 0; i < recipeCount; i++)
+                            {
+                                int r = reader.ReadInt();
+                                if (reader.ReadBool()) //Don't add in recipies which we haven't gotten or have been removed
+                                    m_AcquiredRecipes.Add(r, true);
+                            }
+                        }
+                        goto case 24;
+                    }
                 case 24:
-                {
-                    m_LastHonorLoss = reader.ReadDeltaTime();
-                    goto case 23;
-                }
+                    {
+                        m_LastHonorLoss = reader.ReadDeltaTime();
+                        goto case 23;
+                    }
                 case 23:
-                {
-                    m_ChampionTitles = new ChampionTitleInfo(reader);
-                    goto case 22;
-                }
+                    {
+                        m_ChampionTitles = new ChampionTitleInfo(reader);
+                        goto case 22;
+                    }
                 case 22:
-                {
-                    m_LastValorLoss = reader.ReadDateTime();
-                    goto case 21;
-                }
+                    {
+                        m_LastValorLoss = reader.ReadDateTime();
+                        goto case 21;
+                    }
                 case 21:
-                {
-                    m_ToTItemsTurnedIn = reader.ReadEncodedInt();
-                    m_ToTTotalMonsterFame = reader.ReadInt();
-                    goto case 20;
-                }
+                    {
+                        m_ToTItemsTurnedIn = reader.ReadEncodedInt();
+                        m_ToTTotalMonsterFame = reader.ReadInt();
+                        goto case 20;
+                    }
                 case 20:
-                {
-                    m_AllianceMessageHue = reader.ReadEncodedInt();
-                    m_GuildMessageHue = reader.ReadEncodedInt();
+                    {
+                        m_AllianceMessageHue = reader.ReadEncodedInt();
+                        m_GuildMessageHue = reader.ReadEncodedInt();
 
-                    goto case 19;
-                }
+                        goto case 19;
+                    }
                 case 19:
-                {
-                    int rank = reader.ReadEncodedInt();
-                    int maxRank = Guilds.RankDefinition.Ranks.Length - 1;
-                    if (rank > maxRank)
-                        rank = maxRank;
+                    {
+                        int rank = reader.ReadEncodedInt();
+                        int maxRank = Guilds.RankDefinition.Ranks.Length - 1;
+                        if (rank > maxRank)
+                            rank = maxRank;
 
-                    m_GuildRank = Guilds.RankDefinition.Ranks[rank];
-                    m_LastOnline = reader.ReadDateTime();
-                    goto case 18;
-                }
+                        m_GuildRank = Guilds.RankDefinition.Ranks[rank];
+                        m_LastOnline = reader.ReadDateTime();
+                        goto case 18;
+                    }
                 case 18:
-                {
-                    m_SolenFriendship = (SolenFriendship)reader.ReadEncodedInt();
+                    {
+                        m_SolenFriendship = (SolenFriendship)reader.ReadEncodedInt();
 
-                    goto case 17;
-                }
+                        goto case 17;
+                    }
                 case 17: // changed how DoneQuests is serialized
                 case 16:
-                {
-                    m_Quest = QuestSerializer.DeserializeQuest(reader);
-
-                    if (m_Quest != null)
-                        m_Quest.From = this;
-
-                    int count = reader.ReadEncodedInt();
-
-                    if (count > 0)
                     {
-                        m_DoneQuests = new List<QuestRestartInfo>();
+                        m_Quest = QuestSerializer.DeserializeQuest(reader);
 
-                        for (int i = 0; i < count; ++i)
+                        if (m_Quest != null)
+                            m_Quest.From = this;
+
+                        int count = reader.ReadEncodedInt();
+
+                        if (count > 0)
                         {
-                            Type questType = QuestSerializer.ReadType(
-                                QuestSystem.QuestTypes,
-                                reader
-                            );
-                            DateTime restartTime;
+                            m_DoneQuests = new List<QuestRestartInfo>();
 
-                            if (version < 17)
-                                restartTime = DateTime.MaxValue;
-                            else
-                                restartTime = reader.ReadDateTime();
+                            for (int i = 0; i < count; ++i)
+                            {
+                                Type questType = QuestSerializer.ReadType(
+                                    QuestSystem.QuestTypes,
+                                    reader
+                                );
+                                DateTime restartTime;
 
-                            m_DoneQuests.Add(new QuestRestartInfo(questType, restartTime));
+                                if (version < 17)
+                                    restartTime = DateTime.MaxValue;
+                                else
+                                    restartTime = reader.ReadDateTime();
+
+                                m_DoneQuests.Add(new QuestRestartInfo(questType, restartTime));
+                            }
                         }
+
+                        m_Profession = reader.ReadEncodedInt();
+                        goto case 15;
                     }
-
-                    m_Profession = reader.ReadEncodedInt();
-                    goto case 15;
-                }
                 case 15:
-                {
-                    m_LastCompassionLoss = reader.ReadDeltaTime();
-                    goto case 14;
-                }
+                    {
+                        m_LastCompassionLoss = reader.ReadDeltaTime();
+                        goto case 14;
+                    }
                 case 14:
-                {
-                    m_CompassionGains = reader.ReadEncodedInt();
+                    {
+                        m_CompassionGains = reader.ReadEncodedInt();
 
-                    if (m_CompassionGains > 0)
-                        m_NextCompassionDay = reader.ReadDeltaTime();
+                        if (m_CompassionGains > 0)
+                            m_NextCompassionDay = reader.ReadDeltaTime();
 
-                    goto case 13;
-                }
+                        goto case 13;
+                    }
                 case 13: // just removed m_PayedInsurance list
                 case 12:
-                {
-                    m_BOBFilter = new Engines.BulkOrders.BOBFilter(reader);
-                    goto case 11;
-                }
+                    {
+                        m_BOBFilter = new Engines.BulkOrders.BOBFilter(reader);
+                        goto case 11;
+                    }
                 case 11:
-                {
-                    if (version < 13)
                     {
-                        List<Item> payed = reader.ReadStrongItemList();
+                        if (version < 13)
+                        {
+                            List<Item> payed = reader.ReadStrongItemList();
 
-                        for (int i = 0; i < payed.Count; ++i)
-                            payed[i].PayedInsurance = true;
+                            for (int i = 0; i < payed.Count; ++i)
+                                payed[i].PayedInsurance = true;
+                        }
+
+                        goto case 10;
                     }
-
-                    goto case 10;
-                }
                 case 10:
-                {
-                    if (reader.ReadBool())
                     {
-                        m_HairModID = reader.ReadInt();
-                        m_HairModHue = reader.ReadInt();
-                        m_BeardModID = reader.ReadInt();
-                        m_BeardModHue = reader.ReadInt();
-                    }
+                        if (reader.ReadBool())
+                        {
+                            m_HairModID = reader.ReadInt();
+                            m_HairModHue = reader.ReadInt();
+                            m_BeardModID = reader.ReadInt();
+                            m_BeardModHue = reader.ReadInt();
+                        }
 
-                    goto case 9;
-                }
+                        goto case 9;
+                    }
                 case 9:
-                {
-                    SavagePaintExpiration = reader.ReadTimeSpan();
-                    /*
-                                        if ( SavagePaintExpiration > TimeSpan.Zero )
-                                        {
-                                            BodyMod = ( Female ? 184 : 183 );
-                                            HueMod = 0;
-                                        }
-                    */
-                    goto case 8;
-                }
+                    {
+                        SavagePaintExpiration = reader.ReadTimeSpan();
+                        /*
+                                            if ( SavagePaintExpiration > TimeSpan.Zero )
+                                            {
+                                                BodyMod = ( Female ? 184 : 183 );
+                                                HueMod = 0;
+                                            }
+                        */
+                        goto case 8;
+                    }
                 case 8:
-                {
-                    m_NpcGuild = (NpcGuild)reader.ReadInt();
-                    m_NpcGuildJoinTime = reader.ReadDateTime();
-                    m_NpcGuildGameTime = reader.ReadTimeSpan();
-                    goto case 7;
-                }
+                    {
+                        m_NpcGuild = (NpcGuild)reader.ReadInt();
+                        m_NpcGuildJoinTime = reader.ReadDateTime();
+                        m_NpcGuildGameTime = reader.ReadTimeSpan();
+                        goto case 7;
+                    }
                 case 7:
-                {
-                    m_PermaFlags = reader.ReadStrongMobileList();
-                    goto case 6;
-                }
+                    {
+                        m_PermaFlags = reader.ReadStrongMobileList();
+                        goto case 6;
+                    }
                 case 6:
-                {
-                    NextTailorBulkOrder = reader.ReadTimeSpan();
-                    goto case 5;
-                }
+                    {
+                        NextTailorBulkOrder = reader.ReadTimeSpan();
+                        goto case 5;
+                    }
                 case 5:
-                {
-                    NextSmithBulkOrder = reader.ReadTimeSpan();
-                    goto case 4;
-                }
+                    {
+                        NextSmithBulkOrder = reader.ReadTimeSpan();
+                        goto case 4;
+                    }
                 case 4:
-                {
-                    m_LastJusticeLoss = reader.ReadDeltaTime();
-                    m_JusticeProtectors = reader.ReadStrongMobileList();
-                    goto case 3;
-                }
+                    {
+                        m_LastJusticeLoss = reader.ReadDeltaTime();
+                        m_JusticeProtectors = reader.ReadStrongMobileList();
+                        goto case 3;
+                    }
                 case 3:
-                {
-                    m_LastSacrificeGain = reader.ReadDeltaTime();
-                    m_LastSacrificeLoss = reader.ReadDeltaTime();
-                    m_AvailableResurrects = reader.ReadInt();
-                    goto case 2;
-                }
+                    {
+                        m_LastSacrificeGain = reader.ReadDeltaTime();
+                        m_LastSacrificeLoss = reader.ReadDeltaTime();
+                        m_AvailableResurrects = reader.ReadInt();
+                        goto case 2;
+                    }
                 case 2:
-                {
-                    m_Flags = (PlayerFlag)reader.ReadInt();
-                    goto case 1;
-                }
+                    {
+                        m_Flags = (PlayerFlag)reader.ReadInt();
+                        goto case 1;
+                    }
                 case 1:
-                {
-                    m_LongTermElapse = reader.ReadTimeSpan();
-                    m_ShortTermElapse = reader.ReadTimeSpan();
-                    m_GameTime = reader.ReadTimeSpan();
-                    goto case 0;
-                }
+                    {
+                        m_LongTermElapse = reader.ReadTimeSpan();
+                        m_ShortTermElapse = reader.ReadTimeSpan();
+                        m_GameTime = reader.ReadTimeSpan();
+                        goto case 0;
+                    }
                 case 0:
-                {
-                    if (version < 26)
-                        m_AutoStabled = new List<Mobile>();
-                    break;
-                }
+                    {
+                        if (version < 26)
+                            m_AutoStabled = new List<Mobile>();
+                        break;
+                    }
             }
 
             if (m_RecentlyReported == null)
@@ -5065,7 +5065,12 @@ namespace Server.Mobiles
 
             string sTitle =
                 "" + GetPlayerInfo.GetSkillTitle(this) + GetPlayerInfo.GetNPCGuild(this);
-            list.Add(Utility.FixHtml(sTitle));
+
+            if (AccessLevel < AccessLevel.Counselor)
+                list.Add(Utility.FixHtml(sTitle));
+
+            if (AccessLevel > AccessLevel.Player)
+                list.Add(1060847, "{0}\t{1}", "Shard", Enum.GetName(typeof(AccessLevel), AccessLevel));
 
             if (Map == Faction.Facet)
             {
@@ -5980,11 +5985,11 @@ namespace Server.Mobiles
                     switch (version)
                     {
                         case 0:
-                        {
-                            m_Value = reader.ReadEncodedInt();
-                            m_LastDecay = reader.ReadDateTime();
-                            break;
-                        }
+                            {
+                                m_Value = reader.ReadEncodedInt();
+                                m_LastDecay = reader.ReadDateTime();
+                                break;
+                            }
                     }
                 }
 
@@ -6168,29 +6173,29 @@ namespace Server.Mobiles
                 switch (version)
                 {
                     case 0:
-                    {
-                        m_Harrower = reader.ReadEncodedInt();
-
-                        int length = reader.ReadEncodedInt();
-                        m_Values = new TitleInfo[length];
-
-                        for (int i = 0; i < length; i++)
                         {
-                            m_Values[i] = new TitleInfo(reader);
-                        }
+                            m_Harrower = reader.ReadEncodedInt();
 
-                        if (m_Values.Length != ChampionSpawnInfo.Table.Length)
-                        {
-                            TitleInfo[] oldValues = m_Values;
-                            m_Values = new TitleInfo[ChampionSpawnInfo.Table.Length];
+                            int length = reader.ReadEncodedInt();
+                            m_Values = new TitleInfo[length];
 
-                            for (int i = 0; i < m_Values.Length && i < oldValues.Length; i++)
+                            for (int i = 0; i < length; i++)
                             {
-                                m_Values[i] = oldValues[i];
+                                m_Values[i] = new TitleInfo(reader);
                             }
+
+                            if (m_Values.Length != ChampionSpawnInfo.Table.Length)
+                            {
+                                TitleInfo[] oldValues = m_Values;
+                                m_Values = new TitleInfo[ChampionSpawnInfo.Table.Length];
+
+                                for (int i = 0; i < m_Values.Length && i < oldValues.Length; i++)
+                                {
+                                    m_Values[i] = oldValues[i];
+                                }
+                            }
+                            break;
                         }
-                        break;
-                    }
                 }
             }
 

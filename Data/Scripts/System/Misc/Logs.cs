@@ -562,11 +562,11 @@ namespace Server.Misc
             {
                 myShout = myShout.Replace(" !", "!");
             }
-            if (myShout.Contains(" had entered "))
+            if (myShout.Contains(" has entered "))
             {
-                myShout = myShout.Replace(" had entered ", " " + sVerb1 + " ");
+                myShout = myShout.Replace(" has entered ", " " + sVerb1 + " ");
             }
-            if (myShout.Contains(" had left "))
+            if (myShout.Contains(" has left "))
             {
                 myShout = myShout.Replace(" left ", " " + sVerb2 + " ");
             }
@@ -702,17 +702,17 @@ namespace Server.Misc
             }
             ;
 
-            if (mySpeaking.Contains(" had been "))
+            if (mySpeaking.Contains(" has been "))
             {
-                mySpeaking = mySpeaking.Replace(" had been ", " being ");
+                mySpeaking = mySpeaking.Replace(" has been ", " being ");
             }
-            if (mySpeaking.Contains(" had slain "))
+            if (mySpeaking.Contains(" has slain "))
             {
-                mySpeaking = mySpeaking.Replace(" had slain ", " " + sVerb3 + " ");
+                mySpeaking = mySpeaking.Replace(" has slain ", " " + sVerb3 + " ");
             }
-            if (mySpeaking.Contains(" had killed "))
+            if (mySpeaking.Contains(" has killed "))
             {
-                mySpeaking = mySpeaking.Replace(" had killed ", " accidentally killing ");
+                mySpeaking = mySpeaking.Replace(" has killed ", " accidentally killing ");
             }
             if (mySpeaking.Contains(" made a fatal mistake "))
             {
@@ -916,7 +916,7 @@ namespace Server.Misc
                         Killed = Killed + " " + mob.Title;
                     }
                     string sEvent =
-                        m.Name + " " + sTitle + " had slain " + Killed + "#" + sDateString;
+                        m.Name + " " + sTitle + " has slain " + Killed + "#" + sDateString;
                     LoggingFunctions.LogEvent(sEvent, "Logging Battles");
                 }
                 else
@@ -944,7 +944,7 @@ namespace Server.Misc
                             break;
                     }
                     string sEvent =
-                        m.Name + " " + sTitle + " had slain " + privateEnemy + "#" + sDateString;
+                        m.Name + " " + sTitle + " has slain " + privateEnemy + "#" + sDateString;
                     LoggingFunctions.LogEvent(sEvent, "Logging Battles");
                 }
             }
@@ -962,29 +962,29 @@ namespace Server.Misc
                 sTitle = m.Title;
             }
 
-            string sTrip = "had triggered";
+            string sTrip = "has triggered";
             switch (Utility.Random(7))
             {
                 case 0:
-                    sTrip = "had triggered";
+                    sTrip = "has triggered";
                     break;
                 case 1:
-                    sTrip = "had set off";
+                    sTrip = "has set off";
                     break;
                 case 2:
-                    sTrip = "had walked into";
+                    sTrip = "has walked into";
                     break;
                 case 3:
-                    sTrip = "had stumbled into";
+                    sTrip = "has stumbled into";
                     break;
                 case 4:
-                    sTrip = "had been struck with";
+                    sTrip = "has been struck with";
                     break;
                 case 5:
-                    sTrip = "had been affected with";
+                    sTrip = "has been affected with";
                     break;
                 case 6:
-                    sTrip = "had ran into";
+                    sTrip = "has run into";
                     break;
             }
 
@@ -1088,29 +1088,29 @@ namespace Server.Misc
                 sTitle = m.Title;
             }
 
-            string sLoot = "had searched through a";
+            string sLoot = "has searched through a";
             switch (Utility.Random(7))
             {
                 case 0:
-                    sLoot = "had searched through a";
+                    sLoot = "has searched through a";
                     break;
                 case 1:
-                    sLoot = "had found a";
+                    sLoot = "has found a";
                     break;
                 case 2:
-                    sLoot = "had discovered a";
+                    sLoot = "has discovered a";
                     break;
                 case 3:
-                    sLoot = "had looked through a";
+                    sLoot = "has looked through a";
                     break;
                 case 4:
-                    sLoot = "had stumbled upon a";
+                    sLoot = "has stumbled upon a";
                     break;
                 case 5:
-                    sLoot = "had dug through a";
+                    sLoot = "has dug through a";
                     break;
                 case 6:
-                    sLoot = "had opened a";
+                    sLoot = "has opened a";
                     break;
             }
             if (sType == "boat")
@@ -1118,19 +1118,19 @@ namespace Server.Misc
                 switch (Utility.Random(5))
                 {
                     case 0:
-                        sLoot = "had searched through a";
+                        sLoot = "has searched through a";
                         break;
                     case 1:
-                        sLoot = "had found a";
+                        sLoot = "has found a";
                         break;
                     case 2:
-                        sLoot = "had discovered a";
+                        sLoot = "has discovered a";
                         break;
                     case 3:
-                        sLoot = "had looked through a";
+                        sLoot = "has looked through a";
                         break;
                     case 4:
-                        sLoot = "had sailed upon a";
+                        sLoot = "has sailed upon a";
                         break;
                 }
                 if (sBox.Contains("Abandoned") || sBox.Contains("Adrift"))
@@ -1143,19 +1143,19 @@ namespace Server.Misc
                 switch (Utility.Random(5))
                 {
                     case 0:
-                        sLoot = "had searched through a";
+                        sLoot = "has searched through a";
                         break;
                     case 1:
-                        sLoot = "had found a";
+                        sLoot = "has found a";
                         break;
                     case 2:
-                        sLoot = "had discovered a";
+                        sLoot = "has discovered a";
                         break;
                     case 3:
-                        sLoot = "had looked through a";
+                        sLoot = "has looked through a";
                         break;
                     case 4:
-                        sLoot = "had sailed upon a";
+                        sLoot = "has sailed upon a";
                         break;
                 }
                 if (sBox.Contains("Abandoned") || sBox.Contains("Adrift"))
@@ -1792,12 +1792,12 @@ namespace Server.Misc
                 string sEvent;
                 if (sAccess == "login")
                 {
-                    sEvent = m.Name + " " + sTitle + " had entered the realm#" + sDateString;
+                    sEvent = m.Name + " " + sTitle + " has entered the realm#" + sDateString;
                     World.Broadcast(0x35, true, "{0} {1} has entered the realm", m.Name, sTitle);
                 }
                 else
                 {
-                    sEvent = m.Name + " " + sTitle + " had left the realm#" + sDateString;
+                    sEvent = m.Name + " " + sTitle + " has left the realm#" + sDateString;
                     World.Broadcast(0x35, true, "{0} {1} has left the realm", m.Name, sTitle);
                 }
 
