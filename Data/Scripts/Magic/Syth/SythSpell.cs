@@ -156,7 +156,7 @@ namespace Server.Spells.Syth
             {
                 name = "Absorption";
                 icon = "23015";
-                crystal = "500";
+                crystal = "100";
                 skill = "70";
                 mana = "28";
                 mantra = "Taral Wai";
@@ -204,7 +204,7 @@ namespace Server.Spells.Syth
             {
                 name = "Clone";
                 icon = "2261";
-                crystal = "250";
+                crystal = "75";
                 skill = "100";
                 mana = "40";
                 mantra = "Itsu Sutta";
