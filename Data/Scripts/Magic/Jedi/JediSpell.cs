@@ -156,7 +156,7 @@ namespace Server.Spells.Jedi
             {
                 name = "Deflection";
                 icon = "11204";
-                crystal = "500";
+                crystal = "100";
                 skill = "70";
                 mana = "28";
                 mantra = "Morden";
@@ -204,7 +204,7 @@ namespace Server.Spells.Jedi
             {
                 name = "Replicate";
                 icon = "11218";
-                crystal = "250";
+                crystal = "75";
                 skill = "100";
                 mana = "40";
                 mantra = "Leantre";
