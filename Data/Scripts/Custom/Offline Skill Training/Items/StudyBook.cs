@@ -113,7 +113,7 @@ namespace Server.Items
 					toGain /= 2; //Divides any remaining skill gains by 2 before proceeding
 			}
 
-			from.SendMessage(0, "Debug: toGain is " + toGain);
+			// from.SendMessage(0, "Debug: toGain is " + toGain);
 
 			if (toGain > SkillGainMax)
 				toGain = SkillGainMax;
