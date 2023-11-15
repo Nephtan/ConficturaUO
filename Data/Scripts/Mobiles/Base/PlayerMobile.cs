@@ -84,7 +84,8 @@ namespace Server.Mobiles
         LibrariansGuild,
         CulinariansGuild,
         AssassinsGuild,
-        ElementalGuild
+        ElementalGuild,
+        JestersGuild
     }
 
     public enum SolenFriendship

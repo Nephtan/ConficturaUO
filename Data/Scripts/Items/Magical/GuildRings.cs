@@ -76,6 +76,7 @@ namespace Server.Items
                     SkillBonuses.SetValues(2, SkillName.Snooping, 10);
                     SkillBonuses.SetValues(3, SkillName.Stealing, 10);
                     SkillBonuses.SetValues(4, SkillName.Stealth, 10);
+
                     break;
                 case 4:
                     RingGuild = "RangersGuild";
@@ -149,7 +150,6 @@ namespace Server.Items
                 case 15:
                     RingGuild = "DruidsGuild";
                     RingName = "Member of the Druids Guild";
-                    SkillBonuses.SetValues(0, SkillName.Alchemy, 5);
                     SkillBonuses.SetValues(0, SkillName.Druidism, 10);
                     SkillBonuses.SetValues(1, SkillName.Taming, 10);
                     SkillBonuses.SetValues(2, SkillName.Herding, 10);
@@ -200,6 +200,14 @@ namespace Server.Items
                     SkillBonuses.SetValues(0, SkillName.Elementalism, 10);
                     SkillBonuses.SetValues(1, SkillName.Focus, 10);
                     SkillBonuses.SetValues(2, SkillName.Meditation, 10);
+                    break;
+                case 23:
+                    RingGuild = "JestersGuild";
+                    RingName = "Member of the Jesters Guild";
+                    SkillBonuses.SetValues(0, SkillName.Begging, 10);
+                    SkillBonuses.SetValues(1, SkillName.Hiding, 10);
+                    SkillBonuses.SetValues(2, SkillName.Psychology, 10);
+                    SkillBonuses.SetValues(3, SkillName.Stealth, 10);
                     break;
             }
         }

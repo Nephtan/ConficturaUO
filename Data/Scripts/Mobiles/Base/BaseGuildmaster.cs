@@ -367,6 +367,10 @@ namespace Server.Mobiles
                     {
                         GuildType = 22;
                     }
+                    else if (this.NpcGuild == NpcGuild.JestersGuild)
+                    {
+                        GuildType = 23;
+                    }
 
                     from.AddToBackpack(new GuildRings(from, GuildType));
                     from.SendSound(0x3D);
