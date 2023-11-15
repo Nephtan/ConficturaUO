@@ -17,7 +17,7 @@
  * Everything is handled on login, so to receive a reward for a referral both accounts have to remain active.
  *
  * Please note only the referrer receives a reward, but you can easely give a reward to the new player as well.
- * To do this, uncomment lines 78 and 79. The reward can be found at line 313. Modify as you see fit.
+ * To do this, uncomment lines 93 and 94. The reward can be found at line 313. Modify as you see fit.
  */
 using System;
 using System.Collections;
@@ -90,8 +90,10 @@ namespace Server
                                 TAFShardName
                             )
                         );
-                        //m.SendMessage( String.Format( "You receive a reward for your loyalty to {0}.", TAFShardName ) );
-                        //m.AddToBackpack( new ReferrerReward() );
+
+                        m.SendMessage( String.Format( "You receive a reward for your loyalty to {0}.", TAFShardName ) );
+                        m.AddToBackpack( new ReferrerReward() );
+
                         if (Convert.ToBoolean(ac.GetTag("GotAFriend")))
                         {
                             string friends = ac.GetTag("GotFriend") + "," + ac.ToString();
@@ -120,7 +122,6 @@ namespace Server
                         )
                     );
                     m.AddToBackpack(new ReferrerReward());
-                    //m.AddToBackpack( new DarkwindReferrerToken() );//reward token if using raelis vendor stone idea
                 }
                 ac.RemoveTag("GotAFriend");
                 ac.RemoveTag("GotFriend");
@@ -367,18 +368,13 @@ namespace Server
         }
     }
 
-    public class ReferrerReward : HalfApron
+    public class ReferrerReward : StatBall
     {
         [Constructable]
         public ReferrerReward()
             : base()
         {
-            Name = String.Format("{0} Referrer Apron", TellAFriend.TAFShardName);
-            Hue = 1266;
-            LootType = LootType.Blessed;
-            //Attributes.DefendChance = 10;
-            //Resistances.Poison = 5;
-            Attributes.Luck = 25;
+            Name = String.Format("{0} Referral Reward Stat Increase Ball", TellAFriend.TAFShardName);
         }
 
         public ReferrerReward(Serial serial)
