@@ -60,21 +60,21 @@ namespace Server.Items
         }
     }
 
-    public class RoyalCoat : BaseShirt
+    public class RoyalShirt : BaseShirt
     {
         [Constructable]
-        public RoyalCoat()
+        public RoyalShirt()
             : this(0) { }
 
         [Constructable]
-        public RoyalCoat(int hue)
-            : base(0x307, hue)
+        public RoyalShirt(int hue)
+            : base(0x30B, hue)
         {
-            Name = "royal coat";
+            Name = "royal shirt";
             Weight = 2.0;
         }
 
-        public RoyalCoat(Serial serial)
+        public RoyalShirt(Serial serial)
             : base(serial) { }
 
         public override void Serialize(GenericWriter writer)
