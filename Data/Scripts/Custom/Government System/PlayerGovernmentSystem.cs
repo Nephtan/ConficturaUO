@@ -34,7 +34,7 @@ namespace Server
         public static readonly TimeSpan VoteUpdate = TimeSpan.FromDays(14.0); // Default 20160 = 14 Days
 
         // Staring Treasury Amount RECOMMENDED: At least 20k so if player forgets to add, and dont lose on first update.
-        public static int TreasuryAmount = 20000; // Default 20000
+        public static int TreasuryAmount = 150000; // Default 20000
 
         // Level 1 City Limit Offset // See Docs On How To Set this.
         public static int L1CLOffset = 25; // 50x50 Area
@@ -58,20 +58,20 @@ namespace Server
         public static int CityRangeOffset = 130; // 260x260 Area
 
         // Number of Max Lockdowns per City, Per Level
-        public static int Level1LD = 10; // Default 10
-        public static int Level2LD = 50; // Default 50
-        public static int Level3LD = 100; // Default 100
-        public static int Level4LD = 200; // Default 200
-        public static int Level5LD = 300; // Default 300
-        public static int Level6LD = 500; // Default 500
+        public static int Level1LD = 100; // Default 10
+        public static int Level2LD = 200; // Default 50
+        public static int Level3LD = 300; // Default 100
+        public static int Level4LD = 400; // Default 200
+        public static int Level5LD = 500; // Default 300
+        public static int Level6LD = 600; // Default 500
 
         // Number of citizens needed for each city level.
-        public static int Level1 = 12; // Default 20 12
-        public static int Level2 = 20; // Default 40 20
-        public static int Level3 = 35; // Default 60 35
-        public static int Level4 = 45; // Default 80 45
-        public static int Level5 = 50; // Default 100 50
-        public static int Level6 = 56; // Default 200 55
+        public static int Level1 = 6; // Default 20 12
+        public static int Level2 = 12; // Default 40 20
+        public static int Level3 = 18; // Default 60 35
+        public static int Level4 = 24; // Default 80 45
+        public static int Level5 = 30; // Default 100 50
+        public static int Level6 = 36; // Default 200 55
 
         /*
          * Member Rules:
@@ -95,14 +95,14 @@ namespace Server
         public static bool EnableUnderworld = false;
 
         // Max amounts of cities per map.
-        public static int MaxCitiesForLodor = 25;
-        public static int MaxCitiesForSosaria = 25;
-        public static int MaxCitiesForUnderworld = 0; //No Housing In Underworld.. However can be changed.
-        public static int MaxCitiesForSerpentIsland = 0;
-        public static int MaxCitiesForIslesDread = 0;
+        public static int MaxCitiesForLodor = 20;
+        public static int MaxCitiesForSosaria = 20;
+        public static int MaxCitiesForUnderworld = 10; //No Housing In Underworld.. However can be changed.
+        public static int MaxCitiesForSerpentIsland = 10;
+        public static int MaxCitiesForIslesDread = 5;
 
         //Max number of citizens per city
-        public static int MaxCitizensPerCity = 300;
+        public static int MaxCitizensPerCity = 100;
 
         //Max number of banned players NOTE: if 0 will disable city banning.
         public static int MaxBannedPerCity = 50;
