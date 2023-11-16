@@ -11,7 +11,7 @@ namespace Server.Items
     public class StudyBook : Item
     {
 		//Remember: 1 SkillGainedPerTick below would translate to a 0.1 skill increase!
-		private static readonly int SkillGainInterval = 10;//This is the number of minutes that pass before a skill gain happens while studying.
+		private static readonly int SkillGainInterval = 1;//This is the number of minutes that pass before a skill gain happens while studying.
 		private static readonly int SkillGainedPerTick = 1;//This is the skill gain for each gain interval that has passed.
 		private static readonly int SkillGainMax = 350;//This is the maximum gain that can be achieved from one study session.
 		private static readonly int HoursTilAcceleratedSkillGain = 5;//This is the amount of study hours required to gain a Scroll of Alacrity effect.
