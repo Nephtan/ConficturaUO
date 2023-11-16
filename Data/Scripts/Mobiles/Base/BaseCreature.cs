@@ -6200,16 +6200,16 @@ namespace Server.Mobiles
                             corpse.AddCarvedItem(new DinosaurScales(scales), from);
                             break;
                         case ScaleType.All:
-                        {
-                            corpse.AddCarvedItem(new RedScales(scales), from);
-                            corpse.AddCarvedItem(new YellowScales(scales), from);
-                            corpse.AddCarvedItem(new BlackScales(scales), from);
-                            corpse.AddCarvedItem(new GreenScales(scales), from);
-                            corpse.AddCarvedItem(new WhiteScales(scales), from);
-                            corpse.AddCarvedItem(new BlueScales(scales), from);
-                            corpse.AddCarvedItem(new DinosaurScales(scales), from);
-                            break;
-                        }
+                            {
+                                corpse.AddCarvedItem(new RedScales(scales), from);
+                                corpse.AddCarvedItem(new YellowScales(scales), from);
+                                corpse.AddCarvedItem(new BlackScales(scales), from);
+                                corpse.AddCarvedItem(new GreenScales(scales), from);
+                                corpse.AddCarvedItem(new WhiteScales(scales), from);
+                                corpse.AddCarvedItem(new BlueScales(scales), from);
+                                corpse.AddCarvedItem(new DinosaurScales(scales), from);
+                                break;
+                            }
                     }
 
                     from.SendMessage("You cut away some scales, but they remain on the corpse.");
@@ -8310,51 +8310,51 @@ namespace Server.Mobiles
             switch (res)
             {
                 case TeachResult.KnowsMoreThanMe:
-                {
-                    Say(501508); // I cannot teach thee, for thou knowest more than I!
-                    break;
-                }
+                    {
+                        Say(501508); // I cannot teach thee, for thou knowest more than I!
+                        break;
+                    }
                 case TeachResult.KnowsWhatIKnow:
-                {
-                    Say(501509); // I cannot teach thee, for thou knowest all I can teach!
-                    break;
-                }
+                    {
+                        Say(501509); // I cannot teach thee, for thou knowest all I can teach!
+                        break;
+                    }
                 case TeachResult.NotEnoughFreePoints:
                 case TeachResult.SkillNotRaisable:
-                {
-                    m.SendMessage(
-                        "Make sure this skill is marked to raise. If you are near the skill cap you may need to lose some points in another skill first."
-                    );
-                    break;
-                }
+                    {
+                        m.SendMessage(
+                            "Make sure this skill is marked to raise. If you are near the skill cap you may need to lose some points in another skill first."
+                        );
+                        break;
+                    }
                 case TeachResult.Success:
-                {
-                    if (doTeach)
                     {
-                        Say(501539); // Let me show thee something of how this is done.
-                        m.SendLocalizedMessage(501540); // Your skill level increases.
+                        if (doTeach)
+                        {
+                            Say(501539); // Let me show thee something of how this is done.
+                            m.SendLocalizedMessage(501540); // Your skill level increases.
 
-                        m_Teaching = (SkillName)(-1);
+                            m_Teaching = (SkillName)(-1);
 
-                        if (m is PlayerMobile)
-                            ((PlayerMobile)m).Learning = (SkillName)(-1);
+                            if (m is PlayerMobile)
+                                ((PlayerMobile)m).Learning = (SkillName)(-1);
+                        }
+                        else
+                        {
+                            // I will teach thee all I know, if paid the amount in full.  The price is:
+                            Say(1019077, AffixType.Append, String.Format(" {0}", pointsToLearn), "");
+                            Say(1043108); // For less I shall teach thee less.
+
+                            m_Teaching = skill;
+
+                            if (m is PlayerMobile)
+                                ((PlayerMobile)m).Learning = skill;
+                        }
+
+                        Server.Gumps.SkillListingGump.RefreshSkillList(m);
+
+                        return true;
                     }
-                    else
-                    {
-                        // I will teach thee all I know, if paid the amount in full.  The price is:
-                        Say(1019077, AffixType.Append, String.Format(" {0}", pointsToLearn), "");
-                        Say(1043108); // For less I shall teach thee less.
-
-                        m_Teaching = skill;
-
-                        if (m is PlayerMobile)
-                            ((PlayerMobile)m).Learning = skill;
-                    }
-
-                    Server.Gumps.SkillListingGump.RefreshSkillList(m);
-
-                    return true;
-                }
             }
 
             return false;
@@ -9955,7 +9955,30 @@ namespace Server.Mobiles
             SlayerEntry spreaddeath = SlayerGroup.GetEntryByName(SlayerName.Repond);
 
             Mobile deathknight = this.LastKiller; // DEATH KNIGHT HOLDING SOUL LANTERNS
-            if (spreaddeath.Slays(this) && deathknight != null && this.TotalGold > 0) // TURNS THE MONEY TO SOUL COUNT
+
+            // Initialize variables
+            int totalCopper = 0;
+            int totalSilver = 0;
+            int totalEquivalentGold = this.TotalGold;
+            Item copperItem = null;
+            Item silverItem = null;
+            Item dtcoins = null;
+
+            // Check if the creature has a backpack and calculate total equivalent gold
+            if (this.Backpack != null)
+            {
+                copperItem = this.Backpack.FindItemByType(typeof(DDCopper));
+                silverItem = this.Backpack.FindItemByType(typeof(DDSilver));
+                dtcoins = this.Backpack.FindItemByType(typeof(Gold));
+
+                if (copperItem != null) totalCopper = copperItem.Amount;
+                if (silverItem != null) totalSilver = silverItem.Amount;
+
+                totalEquivalentGold += (int)Math.Ceiling(totalCopper / 3.0); // 3 copper = 1 gold, round up
+                totalEquivalentGold += (int)Math.Ceiling(totalSilver / 2.0); // 2 silver = 1 gold, round up
+            }
+
+            if (spreaddeath.Slays(this) && deathknight != null && totalEquivalentGold > 0)
             {
                 if (deathknight is BaseCreature)
                     deathknight = ((BaseCreature)deathknight).GetMaster();
@@ -9967,31 +9990,55 @@ namespace Server.Mobiles
                     if (lantern is SoulLantern)
                     {
                         SoulLantern souls = (SoulLantern)lantern;
-                        souls.TrappedSouls = souls.TrappedSouls + this.TotalGold;
-                        if (souls.TrappedSouls > 100000)
-                        {
-                            souls.TrappedSouls = 100000;
-                        }
+                        souls.TrappedSouls += totalEquivalentGold;
+
+                        if (souls.TrappedSouls > 100000) souls.TrappedSouls = 100000;
+
                         souls.InvalidateProperties();
 
                         Item deathpack = this.FindItemOnLayer(Layer.Backpack);
+
                         if (deathpack != null)
                         {
-                            Item dtcoins = this.Backpack.FindItemByType(typeof(Gold));
-                            dtcoins.Delete();
-                            deathknight.SendMessage("A soul has been claimed.");
-                            Effects.SendLocationParticles(
-                                EffectItem.Create(
-                                    deathknight.Location,
-                                    deathknight.Map,
-                                    EffectItem.DefaultDuration
-                                ),
-                                0x376A,
-                                9,
-                                32,
-                                5008
-                            );
-                            Effects.PlaySound(deathknight.Location, deathknight.Map, 0x1ED);
+                            bool soulClaimed = false;
+
+                            // Check and delete dtcoins
+                            if (dtcoins != null)
+                            {
+                                dtcoins.Delete();
+                                soulClaimed = true;
+                            }
+
+                            // Check and delete copperItem
+                            if (copperItem != null)
+                            {
+                                copperItem.Delete();
+                                soulClaimed = true;
+                            }
+
+                            // Check and delete silverItem
+                            if (silverItem != null)
+                            {
+                                silverItem.Delete();
+                                soulClaimed = true;
+                            }
+
+                            if (soulClaimed)
+                            {
+                                deathknight.SendMessage("A soul has been claimed.");
+                                Effects.SendLocationParticles(
+                                    EffectItem.Create(
+                                        deathknight.Location,
+                                        deathknight.Map,
+                                        EffectItem.DefaultDuration
+                                    ),
+                                    0x376A,
+                                    9,
+                                    32,
+                                    5008
+                                );
+                                Effects.PlaySound(deathknight.Location, deathknight.Map, 0x1ED);
+                            }
                         }
                     }
                 }
@@ -10003,11 +10050,16 @@ namespace Server.Mobiles
             SlayerEntry holydemons = SlayerGroup.GetEntryByName(SlayerName.Exorcism);
 
             Mobile holyman = this.LastKiller; // HOLY MANY HOLDING HOLY SYMBOL
-            if (
-                (holyundead.Slays(this) || holydemons.Slays(this))
-                && holyman != null
-                && this.TotalGold > 0
-            ) // TURNS THE MONEY TO BANISH COUNT
+
+            // Reset variables for independent calculation
+            totalCopper = 0;
+            totalSilver = 0;
+            totalEquivalentGold = this.TotalGold;
+            copperItem = null;
+            silverItem = null;
+            dtcoins = null;
+
+            if ((holyundead.Slays(this) || holydemons.Slays(this)) && holyman != null && totalEquivalentGold > 0) // TURNS THE MONEY TO BANISH COUNT
             {
                 if (holyman is BaseCreature)
                     holyman = ((BaseCreature)holyman).GetMaster();
@@ -10019,21 +10071,46 @@ namespace Server.Mobiles
                     if (symbol is HolySymbol)
                     {
                         HolySymbol banish = (HolySymbol)symbol;
-                        banish.BanishedEvil = banish.BanishedEvil + this.TotalGold;
+                        banish.BanishedEvil += totalEquivalentGold;
+
                         if (banish.BanishedEvil > 100000)
-                        {
                             banish.BanishedEvil = 100000;
-                        }
+
                         banish.InvalidateProperties();
 
                         Item deathpack = this.FindItemOnLayer(Layer.Backpack);
+
                         if (deathpack != null)
                         {
-                            Item dtcoins = this.Backpack.FindItemByType(typeof(Gold));
-                            dtcoins.Delete();
-                            holyman.SendMessage("Evil has been banished.");
-                            holyman.FixedParticles(0x373A, 10, 15, 5018, EffectLayer.Waist);
-                            holyman.PlaySound(0x1EA);
+                            bool evilBanished = false;
+
+                            // Check and delete dtcoins
+                            if (dtcoins != null)
+                            {
+                                dtcoins.Delete();
+                                evilBanished = true;
+                            }
+
+                            // Check and delete copperItem
+                            if (copperItem != null)
+                            {
+                                copperItem.Delete();
+                                evilBanished = true;
+                            }
+
+                            // Check and delete silverItem
+                            if (silverItem != null)
+                            {
+                                silverItem.Delete();
+                                evilBanished = true;
+                            }
+
+                            if (evilBanished)
+                            {
+                                holyman.SendMessage("Evil has been banished.");
+                                holyman.FixedParticles(0x373A, 10, 15, 5018, EffectLayer.Waist);
+                                holyman.PlaySound(0x1EA);
+                            }
                         }
                     }
                 }
