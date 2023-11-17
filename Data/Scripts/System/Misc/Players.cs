@@ -676,6 +676,10 @@ namespace Server.Misc
                 {
                     GuildTitle = " of the Elemental Guild";
                 }
+                else if (pm.NpcGuild == NpcGuild.JestersGuild)
+                {
+                    GuildTitle = " of the Jesters Guild";
+                }
             }
             else if (m is BaseVendor)
             {
@@ -768,6 +772,10 @@ namespace Server.Misc
                 else if (pm.NpcGuild == NpcGuild.ElementalGuild)
                 {
                     GuildTitle = "Elemental Guild";
+                }
+                else if (pm.NpcGuild == NpcGuild.JestersGuild)
+                {
+                    GuildTitle = " of the Jesters Guild";
                 }
             }
             return GuildTitle;
@@ -872,6 +880,10 @@ namespace Server.Misc
                 else if (pm.NpcGuild == NpcGuild.ElementalGuild)
                 {
                     GuildTitle = "The Elemental Guild";
+                }
+                else if (pm.NpcGuild == NpcGuild.JestersGuild)
+                {
+                    GuildTitle = " of the Jesters Guild";
                 }
             }
             return GuildTitle;
