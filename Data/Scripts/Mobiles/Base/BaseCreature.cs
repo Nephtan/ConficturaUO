@@ -9974,8 +9974,8 @@ namespace Server.Mobiles
                 if (copperItem != null) totalCopper = copperItem.Amount;
                 if (silverItem != null) totalSilver = silverItem.Amount;
 
-                totalEquivalentGold += (int)Math.Ceiling(totalCopper / 3.0); // 3 copper = 1 gold, round up
-                totalEquivalentGold += (int)Math.Ceiling(totalSilver / 2.0); // 2 silver = 1 gold, round up
+                totalEquivalentGold += (int)Math.Ceiling(totalCopper / 10.0); // 10 copper = 1 gold, round up
+                totalEquivalentGold += (int)Math.Ceiling(totalSilver / 5.0); // 5 silver = 1 gold, round up
             }
 
             if (spreaddeath.Slays(this) && deathknight != null && totalEquivalentGold > 0)
@@ -10058,6 +10058,20 @@ namespace Server.Mobiles
             copperItem = null;
             silverItem = null;
             dtcoins = null;
+
+            // Check if the creature has a backpack and calculate total equivalent gold
+            if (this.Backpack != null)
+            {
+                copperItem = this.Backpack.FindItemByType(typeof(DDCopper));
+                silverItem = this.Backpack.FindItemByType(typeof(DDSilver));
+                dtcoins = this.Backpack.FindItemByType(typeof(Gold));
+
+                if (copperItem != null) totalCopper = copperItem.Amount;
+                if (silverItem != null) totalSilver = silverItem.Amount;
+
+                totalEquivalentGold += (int)Math.Ceiling(totalCopper / 10.0); // 10 copper = 1 gold, round up
+                totalEquivalentGold += (int)Math.Ceiling(totalSilver / 5.0); // 5 silver = 1 gold, round up
+            }
 
             if ((holyundead.Slays(this) || holydemons.Slays(this)) && holyman != null && totalEquivalentGold > 0) // TURNS THE MONEY TO BANISH COUNT
             {
