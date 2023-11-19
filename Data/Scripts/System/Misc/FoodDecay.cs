@@ -122,7 +122,7 @@ namespace Server.Misc
                         {
                             m.Hunger -= 1;
 
-                            if (m.Hunger < 6)
+                            if ((m.Hunger < 6) || (m.HasGump(typeof(gumpfaim))))
                             {
                                 try
                                 {
@@ -284,7 +284,7 @@ namespace Server.Misc
                         {
                             m.Thirst -= 1;
 
-                            if (m.Thirst < 6)
+                            if ((m.Thirst < 6) || (m.HasGump(typeof(gumpfaim))))
                             {
                                 try
                                 {
