@@ -194,6 +194,17 @@ namespace Server.Mobiles
 
     public class BaseCreature : Mobile, IHonorTarget
     {
+        public virtual bool HoldSmartSpawning
+        {
+            get
+            {
+                // dont smartspawn paragons
+                if (IsParagon) return true;
+
+                return false;
+            }
+        }
+
         public const int MaxLoyalty = 100;
 
         #region Var declarations
@@ -10604,6 +10615,8 @@ namespace Server.Mobiles
                                         titles.Add(info.Mobile);
                                         fame.Add(divedFame);
                                         karma.Add(divedKarma);
+                                        // modification to support XmlQuest Killtasks
+                                        XmlQuest.RegisterKill(this, ds.m_Mobile);
                                     }
                                     else
                                     {
@@ -10618,6 +10631,8 @@ namespace Server.Mobiles
                             titles.Add(ds.m_Mobile);
                             fame.Add(totalFame);
                             karma.Add(totalKarma);
+                            // modification to support XmlQuest Killtasks
+                            XmlQuest.RegisterKill(this, ds.m_Mobile);
                         }
 
                         OnKilledBy(ds.m_Mobile);

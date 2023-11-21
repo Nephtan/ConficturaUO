@@ -896,7 +896,14 @@ namespace Server
             if (m != null)
             {
                 if (Server.Misc.GetPlayerInfo.OrientalPlay(m) == true)
+                {
                     return true;
+                }
+            }
+
+            if (m == null)
+            {
+                return false;
             }
 
             return false;

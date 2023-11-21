@@ -21,92 +21,6 @@ using Server.ContextMenus;
 
 namespace Server.Engines.XmlSpawner2
 {
-    public class XmlSpawnerStub
-    {
-        public static object CreateObject(
-            Type type,
-            string[] typewordargs,
-            bool requireconstructable,
-            bool requireattachable
-        )
-        {
-            if (type == null)
-                return null;
-
-            object o = null;
-
-            int typearglen = 0;
-            if (typewordargs != null)
-                typearglen = typewordargs.Length;
-
-            // ok, there are args in the typename, so we need to invoke the proper constructor
-            ConstructorInfo[] ctors = type.GetConstructors();
-
-            if (ctors == null)
-                return null;
-
-            // go through all the constructors for this type
-            for (int i = 0; i < ctors.Length; ++i)
-            {
-                ConstructorInfo ctor = ctors[i];
-
-                if (ctor == null)
-                    continue;
-
-                // if both requireconstructable and requireattachable are true, then allow either condition
-                if (
-                    !(requireconstructable && Add.IsConstructable(ctor, AccessLevel.Player))
-                    && !(requireattachable && XmlAttach.IsAttachable(ctor))
-                )
-                    continue;
-
-                // check the parameter list of the constructor
-                ParameterInfo[] paramList = ctor.GetParameters();
-
-                // and compare with the argument list provided
-                if (paramList != null && typearglen == paramList.Length)
-                {
-                    // this is a constructor that takes args and matches the number of args passed in to CreateObject
-                    if (paramList.Length > 0)
-                    {
-                        object[] paramValues = null;
-
-                        try
-                        {
-                            paramValues = Add.ParseValues(paramList, typewordargs);
-                        }
-                        catch { }
-
-                        if (paramValues == null)
-                            continue;
-
-                        // ok, have a match on args, so try to construct it
-                        try
-                        {
-                            o = Activator.CreateInstance(type, paramValues);
-                        }
-                        catch { }
-                    }
-                    else
-                    {
-                        // zero argument constructor
-                        try
-                        {
-                            o = Activator.CreateInstance(type);
-                        }
-                        catch { }
-                    }
-
-                    // successfully constructed the object, otherwise try another matching constructor
-                    if (o != null)
-                        break;
-                }
-            }
-
-            return o;
-        }
-    }
-
     [AttributeUsage(AttributeTargets.Constructor)]
     public class Attachable : Attribute
     {
@@ -340,7 +254,7 @@ namespace Server.Engines.XmlSpawner2
                         for (int i = 0; i < list.Count; ++i)
                         {
                             XmlAttachment o = (XmlAttachment)
-                                XmlSpawnerStub.CreateObject(attachtype, args, false, true);
+                                XmlSpawner.CreateObject(attachtype, args, false, true);
 
                             if (o == null)
                             {
@@ -1593,7 +1507,7 @@ namespace Server.Engines.XmlSpawner2
                         if (attachtype != null && attachtype.IsSubclassOf(typeof(XmlAttachment)))
                         {
                             o = (XmlAttachment)
-                                XmlSpawnerStub.CreateObject(attachtype, args, false, true);
+                                XmlSpawner.CreateObject(attachtype, args, false, true);
                         }
 
                         if (o != null)
@@ -1623,9 +1537,9 @@ namespace Server.Engines.XmlSpawner2
                             foreach(XmlAttachment p in plist)
                             {
                                 if(p == null || p.Deleted || (name != null && name != p.Name) || (type != null && type != p.GetType())) continue;
-        
+
                                 from.SendMessage("Found attachment {3} : {0} : {1} : {2}",p.GetType().Name,p.Name,p.OnIdentify(from), p.Serial.Value);
-        
+
                             }
                             */
                         from.SendGump(new XmlGetAttGump(from, targeted, 0, 0));
@@ -1636,7 +1550,7 @@ namespace Server.Engines.XmlSpawner2
                             foreach(XmlAttachment p in plist)
                             {
                                 if(p == null || p.Deleted || (name != null && name != p.Name) || (type != null && type != p.GetType())) continue;
-        
+
                                 from.SendMessage("Deleting attachment {3} : {0} : {1} : {2}",p.GetType().Name,p.Name,p.OnIdentify(from), p.Serial.Value);
                                 p.Delete();
                             }
@@ -2325,8 +2239,13 @@ namespace Server.Engines.XmlSpawner2
             }
         }
 
-        public /* XXX for Random */
-        static void Defrag(object o)
+        private static void SerialDefrag(XmlAttachment a)
+        {
+            if (a != null && a.Deleted)
+                AllAttachments.Remove(a.Serial.Value);
+        }
+
+        public static void Defrag(object o)
         {
             Hashtable attachments = null;
             if (o is Item)
@@ -2387,9 +2306,7 @@ namespace Server.Engines.XmlSpawner2
                 }
             }
             else
-            {
                 attachments.Remove(o);
-            }
         }
 
         public static bool CheckCanEquip(Item item, Mobile from)
@@ -2518,6 +2435,9 @@ namespace Server.Engines.XmlSpawner2
 
                     if (a != null && !a.Deleted)
                     {
+                        // give the attachment an opportunity to modify the properties list of the parent
+                        a.AddProperties(list);
+
                         // get any displayed properties on the attachment
                         string str = a.DisplayedProperties(null);
 
@@ -2552,13 +2472,28 @@ namespace Server.Engines.XmlSpawner2
                 {
                     Serial s = value;
 
+                    bool blockdefaultonuse = false;
+
                     if (s.IsMobile)
                     {
                         Mobile m = World.FindMobile(s);
 
                         if (m != null && !m.Deleted)
                         {
-                            from.Use(m);
+                            // get attachments on the mobile doing the using
+                            ArrayList fromlist = FindAttachments(MobileAttachments, from);
+                            if (fromlist != null)
+                            {
+                                foreach (XmlAttachment a in fromlist)
+                                {
+                                    if (a != null && !a.Deleted)
+                                    {
+                                        if (a.BlockDefaultOnUse(from, m))
+                                            blockdefaultonuse = true;
+                                        a.OnUser(m);
+                                    }
+                                }
+                            }
 
                             // get attachments on the mob
                             ArrayList alist = FindAttachments(MobileAttachments, m);
@@ -2567,9 +2502,16 @@ namespace Server.Engines.XmlSpawner2
                                 foreach (XmlAttachment a in alist)
                                 {
                                     if (a != null && !a.Deleted)
+                                    {
+                                        if (a.BlockDefaultOnUse(from, m))
+                                            blockdefaultonuse = true;
                                         a.OnUse(from);
+                                    }
                                 }
                             }
+
+                            if (!blockdefaultonuse && m != null && !m.Deleted)
+                                from.Use(m);
                         }
                     }
                     else if (s.IsItem)
@@ -2578,7 +2520,20 @@ namespace Server.Engines.XmlSpawner2
 
                         if (item != null && !item.Deleted)
                         {
-                            from.Use(item);
+                            // get attachments on the mobile doing the using
+                            ArrayList fromlist = FindAttachments(MobileAttachments, from);
+                            if (fromlist != null)
+                            {
+                                foreach (XmlAttachment a in fromlist)
+                                {
+                                    if (a != null && !a.Deleted)
+                                    {
+                                        if (a.BlockDefaultOnUse(from, item))
+                                            blockdefaultonuse = true;
+                                        a.OnUser(item);
+                                    }
+                                }
+                            }
 
                             // get attachments on the mob
                             ArrayList alist = FindAttachments(ItemAttachments, item);
@@ -2587,9 +2542,16 @@ namespace Server.Engines.XmlSpawner2
                                 foreach (XmlAttachment a in alist)
                                 {
                                     if (a != null && !a.Deleted)
+                                    {
+                                        if (a.BlockDefaultOnUse(from, item))
+                                            blockdefaultonuse = true;
                                         a.OnUse(from);
+                                    }
                                 }
                             }
+                            // need to check the item again in case it was modified in the OnUse or OnUser method
+                            if (!blockdefaultonuse && item != null && !item.Deleted)
+                                from.Use(item);
                         }
                     }
                 }
@@ -2600,14 +2562,45 @@ namespace Server.Engines.XmlSpawner2
             }
         }
 
+        public static bool OnDragLift(Mobile from, Item item)
+        {
+            // look for attachments on the item
+            if (item != null)
+            {
+                ArrayList attachments = FindAttachments(ItemAttachments, item);
+
+                if (attachments != null)
+                {
+                    foreach (XmlAttachment a in attachments)
+                    {
+                        if (a != null && !a.Deleted && !a.OnDragLift(from, item))
+                            return false;
+                    }
+                }
+            }
+
+            // allow lifts by default
+            return true;
+        }
+
         public class ErrorReporter
         {
             private static void SendEmail(string filePath)
             {
                 Console.Write("XmlSpawner2 Attachment error: Sending email...");
 
-                MailMessage message = new MailMessage("RunUO", Email.CrashAddresses);
+                MailMessage message = null;
+                try
+                {
+                    message = new MailMessage("RunUO@localhost", Email.CrashAddresses);
+                }
+                catch { }
 
+                if (message == null)
+                {
+                    Console.Write("Unable to send email.  Possible invalid email address.");
+                    return;
+                }
                 message.Subject = "Automated XmlSpawner2 Attachment Error Report";
 
                 message.Body =
@@ -2693,7 +2686,7 @@ namespace Server.Engines.XmlSpawner2
                         );
                         op.WriteLine("Operating System: {0}", Environment.OSVersion);
                         op.WriteLine(".NET Framework: {0}", Environment.Version);
-                        op.WriteLine("XmlSpawner2: {0}", "Courageous' Version");
+                        op.WriteLine("XmlSpawner2: {0}", XmlSpawner.Version);
                         op.WriteLine("Time: {0}", DateTime.Now);
 
                         op.WriteLine();

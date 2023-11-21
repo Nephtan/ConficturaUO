@@ -1151,6 +1151,9 @@ namespace Server.Items
             {
                 from.SendLocalizedMessage(500353); // You are not certain...
             }
+
+            //allows the identify skill to reveal attachments
+            Server.Engines.XmlSpawner2.XmlAttach.RevealAttachments(from, o);
         }
     }
 }

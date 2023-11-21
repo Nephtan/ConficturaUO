@@ -74,9 +74,17 @@ namespace Server.Engines.XmlSpawner2
 
         void OnUse(Mobile from);
 
+        void OnUser(object target);
+
+        bool BlockDefaultOnUse(Mobile from, object target);
+
+        bool OnDragLift(Mobile from, Item item);
+
         string OnIdentify(Mobile from);
 
         string DisplayedProperties(Mobile from);
+
+        void AddProperties(ObjectPropertyList list);
 
         string AttachedBy { get; }
 
@@ -361,6 +369,18 @@ namespace Server.Engines.XmlSpawner2
 
         public virtual void OnUse(Mobile from) { }
 
+        public virtual void OnUser(object target) { }
+
+        public virtual bool BlockDefaultOnUse(Mobile from, object target)
+        {
+            return false;
+        }
+
+        public virtual bool OnDragLift(Mobile from, Item item)
+        {
+            return true;
+        }
+
         public void SetAttachedBy(string name)
         {
             m_AttachedBy = name;
@@ -412,11 +432,57 @@ namespace Server.Engines.XmlSpawner2
             return OnIdentify(from);
         }
 
+        public virtual void AddProperties(ObjectPropertyList list) { }
+
         public void InvalidateParentProperties()
         {
             if (AttachedTo is Item)
             {
                 ((Item)AttachedTo).InvalidateProperties();
+            }
+        }
+
+        public void SafeItemDelete(Item item)
+        {
+            Timer.DelayCall(
+                TimeSpan.Zero,
+                new TimerStateCallback(DeleteItemCallback),
+                new object[] { item }
+            );
+        }
+
+        public void DeleteItemCallback(object state)
+        {
+            object[] args = (object[])state;
+
+            Item item = args[0] as Item;
+
+            if (item != null)
+            {
+                // delete the item
+                item.Delete();
+            }
+        }
+
+        public void SafeMobileDelete(Mobile mob)
+        {
+            Timer.DelayCall(
+                TimeSpan.Zero,
+                new TimerStateCallback(DeleteMobileCallback),
+                new object[] { mob }
+            );
+        }
+
+        public void DeleteMobileCallback(object state)
+        {
+            object[] args = (object[])state;
+
+            Mobile mob = args[0] as Mobile;
+
+            if (mob != null)
+            {
+                // delete the mobile
+                mob.Delete();
             }
         }
 

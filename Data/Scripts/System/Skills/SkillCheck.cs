@@ -74,18 +74,43 @@ namespace Server.Misc
 
         public static void Initialize()
         {
+            // Begin mod to enable XmlSpawner skill triggering
             Mobile.SkillCheckLocationHandler = new SkillCheckLocationHandler(
-                Mobile_SkillCheckLocation
-            );
-            Mobile.SkillCheckDirectLocationHandler = new SkillCheckDirectLocationHandler(
-                Mobile_SkillCheckDirectLocation
+                XmlSpawnerSkillCheck.Mobile_SkillCheckLocation
             );
 
-            Mobile.SkillCheckTargetHandler = new SkillCheckTargetHandler(Mobile_SkillCheckTarget);
-            Mobile.SkillCheckDirectTargetHandler = new SkillCheckDirectTargetHandler(
-                Mobile_SkillCheckDirectTarget
+            Mobile.SkillCheckDirectLocationHandler = new SkillCheckDirectLocationHandler(
+                XmlSpawnerSkillCheck.Mobile_SkillCheckDirectLocation
             );
+
+            Mobile.SkillCheckTargetHandler = new SkillCheckTargetHandler(
+                XmlSpawnerSkillCheck.Mobile_SkillCheckTarget
+            );
+
+            Mobile.SkillCheckDirectTargetHandler = new SkillCheckDirectTargetHandler(
+                XmlSpawnerSkillCheck.Mobile_SkillCheckDirectTarget
+            );
+            // End mod to enable XmlSpawner skill triggering
         }
+
+        //public static void Initialize()
+        //{
+        //    Mobile.SkillCheckLocationHandler = new SkillCheckLocationHandler(
+        //        Mobile_SkillCheckLocation
+        //    );
+
+        //    Mobile.SkillCheckDirectLocationHandler = new SkillCheckDirectLocationHandler(
+        //        Mobile_SkillCheckDirectLocation
+        //    );
+
+        //    Mobile.SkillCheckTargetHandler = new SkillCheckTargetHandler(
+        //        Mobile_SkillCheckTarget
+        //    );
+
+        //    Mobile.SkillCheckDirectTargetHandler = new SkillCheckDirectTargetHandler(
+        //        Mobile_SkillCheckDirectTarget
+        //    );
+        //}
 
         public static bool Mobile_SkillCheckLocation(
             Mobile from,
