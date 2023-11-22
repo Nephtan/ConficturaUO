@@ -605,7 +605,7 @@ namespace Server.Spells
         }
         public virtual bool BlocksMovement
         {
-            get { return false; }
+            get { return true; }
         }
 
         public virtual bool CheckNextSpellTime
