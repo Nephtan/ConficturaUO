@@ -72,6 +72,9 @@ namespace Server.Gumps
 
                 Titles.AwardFame(g, fameAward, false);
                 Titles.AwardKarma(g, karmaAward, true);
+
+                // modification to support XmlQuest Killtasks of players
+                Server.Items.XmlQuest.RegisterKill(m, g);
             }
 
             if (m is PlayerMobile && ((PlayerMobile)m).NpcGuild == NpcGuild.ThievesGuild)
@@ -169,49 +172,49 @@ namespace Server.Gumps
             switch (info.ButtonID)
             {
                 case 1:
-                {
-                    Mobile killer = m_Killers[m_Idx];
-                    if (killer != null && !killer.Deleted)
                     {
-                        killer.Kills++;
-                        killer.ShortTermMurders++;
-
-                        if (Core.SE)
+                        Mobile killer = m_Killers[m_Idx];
+                        if (killer != null && !killer.Deleted)
                         {
-                            ((PlayerMobile)from).RecentlyReported.Add(killer);
-                            Timer.DelayCall(
-                                TimeSpan.FromMinutes(10),
-                                new TimerStateCallback(ReportedListExpiry_Callback),
-                                new object[] { from, killer }
-                            );
-                        }
+                            killer.Kills++;
+                            killer.ShortTermMurders++;
 
-                        if (killer is PlayerMobile)
-                        {
-                            PlayerMobile pk = (PlayerMobile)killer;
-                            pk.ResetKillTime();
-                            pk.SendLocalizedMessage(1049067); //You have been reported for murder!
-
-                            if (pk.Kills == 5)
+                            if (Core.SE)
                             {
-                                pk.SendLocalizedMessage(502134); //You are now known as a murderer!
+                                ((PlayerMobile)from).RecentlyReported.Add(killer);
+                                Timer.DelayCall(
+                                    TimeSpan.FromMinutes(10),
+                                    new TimerStateCallback(ReportedListExpiry_Callback),
+                                    new object[] { from, killer }
+                                );
                             }
-                            else if (
-                                SkillHandlers.Stealing.SuspendOnMurder
-                                && pk.Kills == 1
-                                && pk.NpcGuild == NpcGuild.ThievesGuild
-                            )
+
+                            if (killer is PlayerMobile)
                             {
-                                pk.SendLocalizedMessage(501562); // You have been suspended by the Thieves Guild.
+                                PlayerMobile pk = (PlayerMobile)killer;
+                                pk.ResetKillTime();
+                                pk.SendLocalizedMessage(1049067); //You have been reported for murder!
+
+                                if (pk.Kills == 5)
+                                {
+                                    pk.SendLocalizedMessage(502134); //You are now known as a murderer!
+                                }
+                                else if (
+                                    SkillHandlers.Stealing.SuspendOnMurder
+                                    && pk.Kills == 1
+                                    && pk.NpcGuild == NpcGuild.ThievesGuild
+                                )
+                                {
+                                    pk.SendLocalizedMessage(501562); // You have been suspended by the Thieves Guild.
+                                }
                             }
                         }
+                        break;
                     }
-                    break;
-                }
                 case 2:
-                {
-                    break;
-                }
+                    {
+                        break;
+                    }
             }
 
             m_Idx++;

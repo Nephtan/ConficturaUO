@@ -213,6 +213,19 @@ namespace Server.Items
 
                 from.CheckStatTimers();
             }
+
+            // XmlAttachment check for OnEquip and CanEquip
+            if (parent is Mobile)
+            {
+                if (Server.Engines.XmlSpawner2.XmlAttach.CheckCanEquip(this, (Mobile)parent))
+                {
+                    Server.Engines.XmlSpawner2.XmlAttach.CheckOnEquip(this, (Mobile)parent);
+                }
+                else
+                {
+                    ((Mobile)parent).AddToBackpack(this);
+                }
+            }
         }
 
         public override void OnRemoved(object parent)
@@ -231,6 +244,8 @@ namespace Server.Items
 
                 from.CheckStatTimers();
             }
+            // XmlAttachment check for OnRemoved
+            Server.Engines.XmlSpawner2.XmlAttach.CheckOnRemoved(this, parent);
         }
 
         public BaseJewel(Serial serial)
@@ -325,6 +340,9 @@ namespace Server.Items
 
             if (m_HitPoints >= 0 && m_MaxHitPoints > 0)
                 list.Add(1060639, "{0}\t{1}", m_HitPoints, m_MaxHitPoints); // durability ~1_val~ / ~2_val~
+
+            // mod to display attachment properties
+            Server.Engines.XmlSpawner2.XmlAttach.AddAttachmentProperties(this, list);
         }
 
         public override void Serialize(GenericWriter writer)
@@ -353,67 +371,67 @@ namespace Server.Items
             switch (version)
             {
                 case 3:
-                {
-                    m_MaxHitPoints = reader.ReadEncodedInt();
-                    m_HitPoints = reader.ReadEncodedInt();
-
-                    goto case 2;
-                }
-                case 2:
-                {
-                    m_Resource = (CraftResource)reader.ReadEncodedInt();
-                    m_GemType = (GemType)reader.ReadEncodedInt();
-
-                    goto case 1;
-                }
-                case 1:
-                {
-                    m_AosAttributes = new AosAttributes(this, reader);
-                    m_AosResistances = new AosElementAttributes(this, reader);
-                    m_AosSkillBonuses = new AosSkillBonuses(this, reader);
-
-                    if (Core.AOS && Parent is Mobile)
-                        m_AosSkillBonuses.AddTo((Mobile)Parent);
-
-                    int strBonus = m_AosAttributes.BonusStr;
-                    int dexBonus = m_AosAttributes.BonusDex;
-                    int intBonus = m_AosAttributes.BonusInt;
-
-                    if (Parent is Mobile && (strBonus != 0 || dexBonus != 0 || intBonus != 0))
                     {
-                        Mobile m = (Mobile)Parent;
+                        m_MaxHitPoints = reader.ReadEncodedInt();
+                        m_HitPoints = reader.ReadEncodedInt();
 
-                        string modName = Serial.ToString();
-
-                        if (strBonus != 0)
-                            m.AddStatMod(
-                                new StatMod(StatType.Str, modName + "Str", strBonus, TimeSpan.Zero)
-                            );
-
-                        if (dexBonus != 0)
-                            m.AddStatMod(
-                                new StatMod(StatType.Dex, modName + "Dex", dexBonus, TimeSpan.Zero)
-                            );
-
-                        if (intBonus != 0)
-                            m.AddStatMod(
-                                new StatMod(StatType.Int, modName + "Int", intBonus, TimeSpan.Zero)
-                            );
+                        goto case 2;
                     }
+                case 2:
+                    {
+                        m_Resource = (CraftResource)reader.ReadEncodedInt();
+                        m_GemType = (GemType)reader.ReadEncodedInt();
 
-                    if (Parent is Mobile)
-                        ((Mobile)Parent).CheckStatTimers();
+                        goto case 1;
+                    }
+                case 1:
+                    {
+                        m_AosAttributes = new AosAttributes(this, reader);
+                        m_AosResistances = new AosElementAttributes(this, reader);
+                        m_AosSkillBonuses = new AosSkillBonuses(this, reader);
 
-                    break;
-                }
+                        if (Core.AOS && Parent is Mobile)
+                            m_AosSkillBonuses.AddTo((Mobile)Parent);
+
+                        int strBonus = m_AosAttributes.BonusStr;
+                        int dexBonus = m_AosAttributes.BonusDex;
+                        int intBonus = m_AosAttributes.BonusInt;
+
+                        if (Parent is Mobile && (strBonus != 0 || dexBonus != 0 || intBonus != 0))
+                        {
+                            Mobile m = (Mobile)Parent;
+
+                            string modName = Serial.ToString();
+
+                            if (strBonus != 0)
+                                m.AddStatMod(
+                                    new StatMod(StatType.Str, modName + "Str", strBonus, TimeSpan.Zero)
+                                );
+
+                            if (dexBonus != 0)
+                                m.AddStatMod(
+                                    new StatMod(StatType.Dex, modName + "Dex", dexBonus, TimeSpan.Zero)
+                                );
+
+                            if (intBonus != 0)
+                                m.AddStatMod(
+                                    new StatMod(StatType.Int, modName + "Int", intBonus, TimeSpan.Zero)
+                                );
+                        }
+
+                        if (Parent is Mobile)
+                            ((Mobile)Parent).CheckStatTimers();
+
+                        break;
+                    }
                 case 0:
-                {
-                    m_AosAttributes = new AosAttributes(this);
-                    m_AosResistances = new AosElementAttributes(this);
-                    m_AosSkillBonuses = new AosSkillBonuses(this);
+                    {
+                        m_AosAttributes = new AosAttributes(this);
+                        m_AosResistances = new AosElementAttributes(this);
+                        m_AosSkillBonuses = new AosSkillBonuses(this);
 
-                    break;
-                }
+                        break;
+                    }
             }
 
             if (version < 2)

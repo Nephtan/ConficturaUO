@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Server;
 using Server.Multis;
 using Server.Targeting;
+using Server.Mobiles;
 
 namespace Server.Items
 {
@@ -74,12 +75,27 @@ namespace Server.Items
 
                     Server.Spells.SpellHelper.GetSurfaceTop(ref p);
 
-                    BaseHouse house = null;
+                    List<BaseHouse> houses = new List<BaseHouse>();
 
-                    AddonFitResult res = addon.CouldFit(p, map, from, ref house);
+                    PlayerMobile pm = (PlayerMobile)from; //NEW Added for player city
+                    bool ismayor = false;
+                    if (
+                        pm.City != null
+                        && pm.City.Mayor == pm
+                        && PlayerGovernmentSystem.IsAtCity(from)
+                    )
+                        ismayor = true;
+
+                    AddonFitResult res = addon.CouldFit(p, map, from, ref houses);
 
                     if (res == AddonFitResult.Valid)
                         addon.MoveToWorld(new Point3D(p), map);
+                    else if (ismayor)
+                    {
+                        CityManagementStone stone = pm.City;
+                        addon.MoveToWorld(new Point3D(p), map);
+                        stone.AddOns.Add(addon);
+                    }
                     else if (res == AddonFitResult.Blocked)
                         from.SendLocalizedMessage(500269); // You cannot build that there.
                     else if (res == AddonFitResult.NotInHouse)
@@ -92,7 +108,13 @@ namespace Server.Items
                     if (res == AddonFitResult.Valid)
                     {
                         m_Deed.Delete();
-                        house.Addons.Add(addon);
+
+                        foreach (BaseHouse h in houses)
+                            h.Addons.Add(addon);
+                    }
+                    else if (ismayor)
+                    {
+                        m_Deed.Delete();
                     }
                     else
                     {

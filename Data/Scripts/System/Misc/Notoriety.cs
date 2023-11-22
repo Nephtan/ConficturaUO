@@ -129,6 +129,15 @@ namespace Server.Misc
             )
                 return true; // Guild members can be beneficial
 
+            if (PlayerGovernmentSystem.CheckIfBanned(from, target))
+                return false;
+
+            if (PlayerGovernmentSystem.CheckAtWarWith(from, target))
+                return false;
+
+            if (PlayerGovernmentSystem.CheckCityAlly(from, target))
+                return true;
+
             // Otherwise, check the beneficial status between the from mobile and the target mobile.
             return CheckBeneficialStatus(GetGuildStatus(from), GetGuildStatus(target));
         }
@@ -202,6 +211,15 @@ namespace Server.Misc
                         return false;
                 }
             }
+
+            if (PlayerGovernmentSystem.CheckIfBanned(attacker, target))
+                return true;
+
+            if (PlayerGovernmentSystem.CheckAtWarWith(attacker, target))
+                return true;
+
+            if (PlayerGovernmentSystem.CheckCityAlly(attacker, target))
+                return true;
 
             // If none of the above conditions are met, allow harm.
             return true;
@@ -301,6 +319,15 @@ namespace Server.Misc
                         return actual;
                 }
 
+                if (PlayerGovernmentSystem.CheckBanLootable(source, target.Owner))
+                    return Notoriety.Enemy;
+
+                if (PlayerGovernmentSystem.CheckAtWarWith(source, target.Owner))
+                    return Notoriety.Enemy;
+
+                if (PlayerGovernmentSystem.CheckCityAlly(source, target.Owner))
+                    return Notoriety.Ally;
+
                 return Notoriety.Innocent;
             }
             else
@@ -375,6 +402,15 @@ namespace Server.Misc
                     if (list[i] == source)
                         return Notoriety.CanBeAttacked;
                 }
+
+                if (PlayerGovernmentSystem.CheckBanLootable(source, target.Owner))
+                    return Notoriety.Enemy;
+
+                if (PlayerGovernmentSystem.CheckAtWarWith(source, target.Owner))
+                    return Notoriety.Enemy;
+
+                if (PlayerGovernmentSystem.CheckCityAlly(source, target.Owner))
+                    return Notoriety.Ally;
 
                 return Notoriety.Innocent;
             }
@@ -545,6 +581,15 @@ namespace Server.Misc
                     )
                         return Notoriety.CanBeAttacked;
             }
+
+            if (PlayerGovernmentSystem.CheckIfBanned(source, target))
+                return Notoriety.Enemy;
+
+            if (PlayerGovernmentSystem.CheckAtWarWith(source, target))
+                return Notoriety.Enemy;
+
+            if (PlayerGovernmentSystem.CheckCityAlly(source, target))
+                return Notoriety.Ally;
 
             return Notoriety.Innocent;
         }

@@ -1,6 +1,7 @@
 using System;
 using Server.Network;
 using Server.Gumps; // UNIQUE NAMING SYSTEM
+using Server.Mobiles;
 
 namespace Server.Misc
 {
@@ -26,6 +27,44 @@ namespace Server.Misc
                 m.SendMessage(
                     "You can use the 'Help' button on your paperdoll for more information."
                 );
+
+            PlayerMobile pm = (PlayerMobile)m;
+
+            if (pm.OwesBackTaxes == true)
+            {
+                if (pm.City != null)
+                {
+                    if (Banker.Withdraw(m, pm.BackTaxesAmount))
+                    {
+                        m.SendMessage(
+                            "You have paid your back taxes in full from the money in your bank account."
+                        );
+                        pm.City.CityTreasury += pm.BackTaxesAmount;
+                        pm.OwesBackTaxes = false;
+                        pm.BackTaxesAmount = 0;
+                    }
+                    else
+                    {
+                        int balance = Banker.GetBalance(m);
+
+                        if (Banker.Withdraw(m, balance))
+                        {
+                            pm.City.CityTreasury += balance;
+                            pm.BackTaxesAmount -= 0;
+                            m.SendMessage(
+                                "You have made a payment on your back taxes of {0} you now owe {1} in back taxes.",
+                                balance,
+                                pm.BackTaxesAmount
+                            );
+                        }
+                    }
+                }
+                else
+                {
+                    pm.OwesBackTaxes = false;
+                    pm.BackTaxesAmount = 0;
+                }
+            }
 
             //Unique Naming System//
             #region CheckName

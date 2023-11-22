@@ -89,7 +89,17 @@ namespace Server.Gumps
                     if (leftPrice > 0)
                         Banker.Withdraw(from, leftPrice);
 
-                    m_Vendor.HoldGold += m_VI.Price;
+                    if (m_Vendor is CityPlayerVendor)
+                    {
+                        CityPlayerVendor vend = (CityPlayerVendor)m_Vendor;
+                        double rate = Convert.ToDouble(vend.TaxRate) / 100.0;
+                        double tax = Convert.ToDouble(m_VI.Price) * rate;
+                        int taxx = Convert.ToInt32(tax);
+                        vend.IncomeTax += taxx;
+                        vend.HoldGold += (m_VI.Price - taxx);
+                    }
+                    else
+                        m_Vendor.HoldGold += m_VI.Price;
 
                     from.SendLocalizedMessage(503201); // You take the item.
                 }
@@ -187,24 +197,35 @@ namespace Server.Gumps
             AddImage(10, 175, 0x28DC);
             AddImage(537, 0, 0x28DC);
 
-            if (goldHeld < perRealWorldDay)
+            if (vendor is CityPlayerVendor)
             {
-                int goldNeeded = perRealWorldDay - goldHeld;
-
-                AddHtmlLocalized(40, 35, 260, 20, 1038320, 0x7FFF, false, false); // Gold needed for 1 day of vendor salary:
-                AddLabel(300, 35, 0x1F, goldNeeded.ToString());
+                CityPlayerVendor vend = (CityPlayerVendor)vendor;
+                AddHtmlLocalized(40, 108, 260, 20, 1062509, 0x7FFF, false, false); // Shop Name:
+                AddLabel(140, 106, 0x66D, vendor.ShopName);
+                AddLabel(40, 58, 0x480, "Income Tax Rate:");
+                AddLabel(300, 58, 0x480, vend.TaxRate.ToString());
+                AddLabel(320, 58, 0x480, "%");
             }
             else
             {
-                int days = goldHeld / perRealWorldDay;
+                if (goldHeld < perRealWorldDay)
+                {
+                    int goldNeeded = perRealWorldDay - goldHeld;
 
-                AddHtmlLocalized(40, 35, 260, 20, 1038318, 0x7FFF, false, false); // # of days Vendor salary is paid for:
-                AddLabel(300, 35, 0x480, days.ToString());
+                    AddHtmlLocalized(40, 35, 260, 20, 1038320, 0x7FFF, false, false); // Gold needed for 1 day of vendor salary:
+                    AddLabel(300, 35, 0x1F, goldNeeded.ToString());
+                }
+                else
+                {
+                    int days = goldHeld / perRealWorldDay;
+
+                    AddHtmlLocalized(40, 35, 260, 20, 1038318, 0x7FFF, false, false); // # of days Vendor salary is paid for:
+                    AddLabel(300, 35, 0x480, days.ToString());
+                }
+
+                AddHtmlLocalized(40, 58, 260, 20, 1038324, 0x7FFF, false, false); // My charge per real world day is:
+                AddLabel(300, 58, 0x480, perRealWorldDay.ToString());
             }
-
-            AddHtmlLocalized(40, 58, 260, 20, 1038324, 0x7FFF, false, false); // My charge per real world day is:
-            AddLabel(300, 58, 0x480, perRealWorldDay.ToString());
-
             AddHtmlLocalized(40, 82, 260, 20, 1038322, 0x7FFF, false, false); // Gold held in my account:
             AddLabel(300, 82, 0x480, goldHeld.ToString());
 
@@ -306,7 +327,13 @@ namespace Server.Gumps
                 }
                 case 7: // Dismiss Vendor
                 {
-                    m_Vendor.Dismiss(from);
+                    if (m_Vendor is CityPlayerVendor)
+                    {
+                        CityPlayerVendor vend = (CityPlayerVendor)m_Vendor;
+                        vend.Dismiss(from);
+                    }
+                    else
+                        m_Vendor.Dismiss(from);
 
                     break;
                 }
