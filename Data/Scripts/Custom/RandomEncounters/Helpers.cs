@@ -105,31 +105,57 @@ namespace Server.Misc
         // It takes in two parameters: the mobile to calculate the level for, and the type of level to calculate
         public static double CalculateLevelForMobile(Mobile m, LevelType levelType)
         {
-            // Calculate the average of the mobile's strength, dexterity, and intelligence attributes
-            double stats = (m.Str + m.Dex + m.Int) / 3;
+            int fame = m.Fame;
 
-            // Calculate the weighted average of the mobile's skills based on its class and level
-            double skills = CalculateWeightedSkillsForClass(m, levelType);
+            if (fame > 15000)
+            {
+                fame = 15000;
+            }
 
-            // Calculate the fame weight for the mobile, which is a value between 0 and 1 indicating how much fame it has earned
-            double fameWeight = Math.Min(m.Fame, 15000) / 15000.0;
+            int karma = m.Karma;
 
-            // Calculate the karma weight for the mobile, which is a value between 0 and 1 indicating how much karma it has earned
-            double karmaWeight = Math.Min(m.Karma, 15000) / 15000.0;
+            if (karma < 0)
+            {
+                karma = m.Karma * -1;
+            }
 
-            // Calculate a ratio based on the weighted stats and skills, and scale it down to a value between 0 and 1
-            double ratio = (stats * 0.6 + skills * 0.4) / 245.0;
+            if (karma > 15000)
+            {
+                karma = 15000;
+            }
 
-            // Calculate a "normal" value based on the ratio, with a minimum value of 0.1
-            double normal = ratio - 1 < 0.1 ? 0.1 : ratio - 1;
+            int skills = m.Skills.Total;
 
-            // Calculate the final level by multiplying the normal value by 4.0, scaling it up to the expected level range
-            double calcLevel = normal * 7.5;
+            if (skills > 10000)
+            {
+                skills = 10000;
+            }
 
-            // Adjust the calculated level based on the mobile's fame and karma weights, adding 3.0 for each weight
-            calcLevel += ((fameWeight + karmaWeight) * 3.0) * 11.76754;
+            skills = (int)(1.5 * skills); // UP TO 15,000
 
-            // Return the calculated level
+            int stats = m.RawStr + m.RawDex + m.RawInt;
+
+            if (stats > 250)
+            {
+                stats = 250;
+            }
+
+            stats = 60 * stats; // UP TO 15,000
+
+            int calcLevel = (int)((fame + karma + skills + stats) / 600);
+
+            calcLevel = (int)((calcLevel - 10) * 1.12);
+
+            if (calcLevel < 1)
+            {
+                calcLevel = 1;
+            }
+
+            if (calcLevel > 100)
+            {
+                calcLevel = 100;
+            }
+
             return calcLevel;
         }
 
