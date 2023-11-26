@@ -12000,8 +12000,12 @@ namespace Server.Mobiles
 
         public override void OnSectorDeactivate()
         {
-            if (PlayerRangeSensitive && m_AI != null)
-                m_AI.Deactivate();
+            // ARTEGORDONMOD
+            // begin PlayerRangeSensitiveMod delayed inactivation
+            // deactivation will be handled by the AI timer OnTick
+            // if (PlayerRangeSensitive && m_AI != null)
+            //     m_AI.Deactivate();
+            // end PlayerRangeSensitiveMod delayed inactivation
 
             base.OnSectorDeactivate();
         }
