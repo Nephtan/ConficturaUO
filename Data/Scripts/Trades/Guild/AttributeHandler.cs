@@ -995,7 +995,7 @@ namespace Server.Items
                 if (
                     Name == "MageArmor" && armor.MeditationAllowance == ArmorMeditationAllowance.All
                 )
-                    allowed = false;
+                    allowed = true;
 
                 if (Name == "NightSight" && armor.RequiredRace == Race.Elf)
                     allowed = false;
