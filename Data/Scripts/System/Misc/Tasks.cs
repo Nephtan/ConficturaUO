@@ -1,6 +1,12 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.IO;
+using System.Text;
+using Server;
 using Server.Accounting;
-using Server.Commands.Generic;
 using Server.Commands;
+using Server.Commands.Generic;
 using Server.Items;
 using Server.Misc;
 using Server.Mobiles;
@@ -8,12 +14,6 @@ using Server.Network;
 using Server.Regions;
 using Server.Spells;
 using Server.Targeting;
-using Server;
-using System.Collections.Generic;
-using System.Collections;
-using System.IO;
-using System.Text;
-using System;
 
 namespace Server.Items
 {

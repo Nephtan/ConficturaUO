@@ -1,13 +1,13 @@
 using System;
-using Server;
 using System.Collections;
 using System.Globalization;
+using Server;
 using Server.Items;
 using Server.Misc;
 using Server.Network;
+using Server.Prompts;
 using Server.Spells;
 using Server.Spells.Syth;
-using Server.Prompts;
 
 namespace Server.Gumps
 {

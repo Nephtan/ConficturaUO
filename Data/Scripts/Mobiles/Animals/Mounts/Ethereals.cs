@@ -1,11 +1,11 @@
 using System;
-using Server.Mobiles;
-using Server.Items;
-using Server.Spells;
-using Server.Engines.VeteranRewards;
 using System.Collections;
+using Server.Engines.VeteranRewards;
+using Server.Items;
 using Server.Misc;
+using Server.Mobiles;
 using Server.Regions;
+using Server.Spells;
 
 namespace Server.Mobiles
 {
@@ -620,7 +620,8 @@ namespace Server.Mobiles
             public override bool CheckDisturb(DisturbType type, bool checkFirst, bool resistable)
             {
                 if (
-                    type == DisturbType.EquipRequest || type == DisturbType.UseRequest /* || type == DisturbType.Hurt*/
+                    type == DisturbType.EquipRequest
+                    || type == DisturbType.UseRequest /* || type == DisturbType.Hurt*/
                 )
                     return false;
 

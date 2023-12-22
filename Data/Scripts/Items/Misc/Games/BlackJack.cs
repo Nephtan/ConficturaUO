@@ -1,17 +1,17 @@
 #define RC2
 #undef XMLSPAWNER
 using System;
-using Server.Accounting;
-using Server.Network;
+using System.Collections;
 using Server;
-using Server.Items;
-using Server.Targeting;
-using Server.Mobiles;
+using Server.Accounting;
 using Server.Gumps;
+using Server.Items;
+using Server.Mobiles;
+using Server.Network;
+using Server.Targeting;
 #if RC2
 using System.Collections.Generic;
 #endif
-using System.Collections;
 
 namespace Server.Items
 {
@@ -1140,11 +1140,11 @@ namespace Server.Items
             m_BJInfo.activehand = 1;
             m_BJInfo.HandInfo[m_BJInfo.activehand].bet = m_CurrentBet;
             for (int c = 0; c < 12; c++)
-                for (int h = 0; h < 4; h++)
-                    m_BJInfo.HandInfo[h].card[c] = -1;
+            for (int h = 0; h < 4; h++)
+                m_BJInfo.HandInfo[h].card[c] = -1;
             for (int c = 0; c < 2; c++)
-                for (int h = 0; h < 2; h++)
-                    m_BJInfo.HandInfo[h].card[c] = carddeck.GetOneCard();
+            for (int h = 0; h < 2; h++)
+                m_BJInfo.HandInfo[h].card[c] = carddeck.GetOneCard();
             m_BJInfo.HandInfo[0].totalcards = 2;
             m_BJInfo.HandInfo[1].totalcards = 2;
             m_BJInfo.HandInfo[0].status = HandStatus.Waiting;

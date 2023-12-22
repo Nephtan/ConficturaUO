@@ -1,9 +1,9 @@
 using System;
 using System.Text;
 using Server;
+using Server.Items;
 using Server.Network;
 using Server.Targeting;
-using Server.Items;
 
 namespace Server.Commands
 {

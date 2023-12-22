@@ -2,8 +2,8 @@ using System;
 using System.Collections;
 using Server;
 using Server.Gumps;
-using Server.Multis;
 using Server.Mobiles;
+using Server.Multis;
 using Server.Targeting;
 
 namespace Server.Items
@@ -225,7 +225,8 @@ namespace Server.Items
             if (index >= 0 && index < m_Entries.Length)
             {
                 if (
-                    m_From.AccessLevel < AccessLevel.GameMaster && BaseHouse.HasAccountHouse(m_From)
+                    m_From.AccessLevel < AccessLevel.GameMaster
+                    && BaseHouse.HasAccountHouse(m_From)
                 )
                     m_From.SendLocalizedMessage(501271); // You already own a house, you may not place another!
                 else
@@ -438,7 +439,8 @@ namespace Server.Items
                 case HousePlacementResult.Valid:
                 {
                     if (
-                        from.AccessLevel < AccessLevel.GameMaster && BaseHouse.HasAccountHouse(from)
+                        from.AccessLevel < AccessLevel.GameMaster
+                        && BaseHouse.HasAccountHouse(from)
                     )
                     {
                         from.SendLocalizedMessage(501271); // You already own a house, you may not place another!
@@ -549,7 +551,8 @@ namespace Server.Items
                 case HousePlacementResult.Valid:
                 {
                     if (
-                        from.AccessLevel < AccessLevel.GameMaster && BaseHouse.HasAccountHouse(from)
+                        from.AccessLevel < AccessLevel.GameMaster
+                        && BaseHouse.HasAccountHouse(from)
                     )
                     {
                         from.SendLocalizedMessage(501271); // You already own a house, you may not place another!

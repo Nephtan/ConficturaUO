@@ -1,14 +1,14 @@
 using System;
+using System.Collections;
 using System.Data;
 using System.IO;
-using Server.Mobiles;
 using Server;
-using Server.Items;
-using Server.Network;
-using Server.Gumps;
-using System.Collections;
-using Server.Targeting;
 using Server.Engines.XmlSpawner2;
+using Server.Gumps;
+using Server.Items;
+using Server.Mobiles;
+using Server.Network;
+using Server.Targeting;
 
 /*
 ** Changelog
@@ -638,7 +638,6 @@ namespace Server.Gumps
                     m_gumpcallback(from, m_invoker, String.Empty);
                 }
                 else
-
                     switch (m_gumptype)
                     {
                         case 0: // simple acknowledgement gump

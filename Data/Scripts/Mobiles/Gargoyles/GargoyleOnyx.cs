@@ -1,7 +1,7 @@
 using System;
 using Server;
-using Server.Items;
 using Server.Factions;
+using Server.Items;
 
 namespace Server.Mobiles
 {

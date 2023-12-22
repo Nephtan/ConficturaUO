@@ -1,6 +1,6 @@
 using System;
-using Server.Items;
 using Server;
+using Server.Items;
 
 namespace Server.Items
 {

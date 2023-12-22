@@ -19,7 +19,9 @@ namespace Server.SkillHandlers
                 return true;
 
             if (
-                Core.AOS && item is BaseWeapon && ((BaseWeapon)item).Attributes.SpellChanneling != 0
+                Core.AOS
+                && item is BaseWeapon
+                && ((BaseWeapon)item).Attributes.SpellChanneling != 0
             )
                 return true;
 

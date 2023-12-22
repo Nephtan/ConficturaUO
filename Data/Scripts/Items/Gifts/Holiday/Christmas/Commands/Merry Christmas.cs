@@ -1,9 +1,9 @@
 using System;
 using Server;
-using Server.Items;
 using Server.Guilds;
-using Server.Mobiles;
 using Server.Gumps;
+using Server.Items;
+using Server.Mobiles;
 using Server.Network;
 
 namespace Server.Misc
@@ -46,7 +46,8 @@ namespace Server.Misc
                                     if (!m.Player && m.Body.IsHuman && (m is BaseVendor))
                                     {
                                         if (
-                                            m is BaseCreature && (((BaseCreature)m).IsHumanInTown())
+                                            m is BaseCreature
+                                            && (((BaseCreature)m).IsHumanInTown())
                                         )
                                         {
                                             from.Direction = from.GetDirectionTo(m);

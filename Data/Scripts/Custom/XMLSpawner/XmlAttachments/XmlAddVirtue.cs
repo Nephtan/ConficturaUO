@@ -1,9 +1,9 @@
 using System;
+using System.Collections;
 using Server;
 using Server.Items;
-using Server.Network;
 using Server.Mobiles;
-using System.Collections;
+using Server.Network;
 
 namespace Server.Engines.XmlSpawner2
 {

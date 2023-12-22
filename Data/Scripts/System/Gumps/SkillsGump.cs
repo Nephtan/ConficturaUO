@@ -1,9 +1,9 @@
 using System;
 using System.Collections;
 using Server;
+using Server.Commands;
 using Server.Gumps;
 using Server.Network;
-using Server.Commands;
 
 namespace Server.Gumps
 {

@@ -1,9 +1,9 @@
 using System;
 using System.Collections;
+using Server.Gumps;
 using Server.Network;
 using Server.Prompts;
 using Server.Targeting;
-using Server.Gumps;
 
 namespace Server.Items
 {

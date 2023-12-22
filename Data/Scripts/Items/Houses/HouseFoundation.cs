@@ -1739,7 +1739,10 @@ namespace Server.Multis
                             mcl = state.Components;
 
                             if (
-                                x >= mcl.Min.X && y >= mcl.Min.Y && x <= mcl.Max.X && y <= mcl.Max.Y
+                                x >= mcl.Min.X
+                                && y >= mcl.Min.Y
+                                && x <= mcl.Max.X
+                                && y <= mcl.Max.Y
                             )
                             {
                                 mcl.Add(item.ItemID, x, y, z);

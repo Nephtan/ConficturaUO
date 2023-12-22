@@ -1,13 +1,13 @@
 using System;
-using Server;
 using System.Collections;
-using Server.ContextMenus;
 using System.Collections.Generic;
-using Server.Misc;
-using Server.Network;
-using Server.Items;
+using Server;
+using Server.ContextMenus;
 using Server.Gumps;
+using Server.Items;
+using Server.Misc;
 using Server.Mobiles;
+using Server.Network;
 
 namespace Server.Items
 {
@@ -992,14 +992,16 @@ namespace Server.Items
                 warn = false;
             }
             else if (
-                potion == 2 && from.Backpack.FindItemByType(typeof(NaturesPassagePotion)) != null
+                potion == 2
+                && from.Backpack.FindItemByType(typeof(NaturesPassagePotion)) != null
             )
             {
                 (from.Backpack.FindItemByType(typeof(NaturesPassagePotion))).OnDoubleClick(from);
                 warn = false;
             }
             else if (
-                potion == 3 && from.Backpack.FindItemByType(typeof(ShieldOfEarthPotion)) != null
+                potion == 3
+                && from.Backpack.FindItemByType(typeof(ShieldOfEarthPotion)) != null
             )
             {
                 (from.Backpack.FindItemByType(typeof(ShieldOfEarthPotion))).OnDoubleClick(from);
@@ -1021,7 +1023,8 @@ namespace Server.Items
                 warn = false;
             }
             else if (
-                potion == 6 && from.Backpack.FindItemByType(typeof(GraspingRootsPotion)) != null
+                potion == 6
+                && from.Backpack.FindItemByType(typeof(GraspingRootsPotion)) != null
             )
             {
                 (from.Backpack.FindItemByType(typeof(GraspingRootsPotion))).OnDoubleClick(from);
@@ -1033,14 +1036,16 @@ namespace Server.Items
                 warn = false;
             }
             else if (
-                potion == 8 && from.Backpack.FindItemByType(typeof(HerbalHealingPotion)) != null
+                potion == 8
+                && from.Backpack.FindItemByType(typeof(HerbalHealingPotion)) != null
             )
             {
                 (from.Backpack.FindItemByType(typeof(HerbalHealingPotion))).OnDoubleClick(from);
                 warn = false;
             }
             else if (
-                potion == 9 && from.Backpack.FindItemByType(typeof(BlendWithForestPotion)) != null
+                potion == 9
+                && from.Backpack.FindItemByType(typeof(BlendWithForestPotion)) != null
             )
             {
                 (from.Backpack.FindItemByType(typeof(BlendWithForestPotion))).OnDoubleClick(from);
@@ -1052,21 +1057,24 @@ namespace Server.Items
                 warn = false;
             }
             else if (
-                potion == 11 && from.Backpack.FindItemByType(typeof(MushroomGatewayPotion)) != null
+                potion == 11
+                && from.Backpack.FindItemByType(typeof(MushroomGatewayPotion)) != null
             )
             {
                 (from.Backpack.FindItemByType(typeof(MushroomGatewayPotion))).OnDoubleClick(from);
                 warn = false;
             }
             else if (
-                potion == 12 && from.Backpack.FindItemByType(typeof(SwarmOfInsectsPotion)) != null
+                potion == 12
+                && from.Backpack.FindItemByType(typeof(SwarmOfInsectsPotion)) != null
             )
             {
                 (from.Backpack.FindItemByType(typeof(SwarmOfInsectsPotion))).OnDoubleClick(from);
                 warn = false;
             }
             else if (
-                potion == 13 && from.Backpack.FindItemByType(typeof(ProtectiveFairyPotion)) != null
+                potion == 13
+                && from.Backpack.FindItemByType(typeof(ProtectiveFairyPotion)) != null
             )
             {
                 (from.Backpack.FindItemByType(typeof(ProtectiveFairyPotion))).OnDoubleClick(from);
@@ -1078,14 +1086,16 @@ namespace Server.Items
                 warn = false;
             }
             else if (
-                potion == 15 && from.Backpack.FindItemByType(typeof(VolcanicEruptionPotion)) != null
+                potion == 15
+                && from.Backpack.FindItemByType(typeof(VolcanicEruptionPotion)) != null
             )
             {
                 (from.Backpack.FindItemByType(typeof(VolcanicEruptionPotion))).OnDoubleClick(from);
                 warn = false;
             }
             else if (
-                potion == 16 && from.Backpack.FindItemByType(typeof(RestorativeSoilPotion)) != null
+                potion == 16
+                && from.Backpack.FindItemByType(typeof(RestorativeSoilPotion)) != null
             )
             {
                 (from.Backpack.FindItemByType(typeof(RestorativeSoilPotion))).OnDoubleClick(from);

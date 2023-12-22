@@ -1,8 +1,8 @@
 using System;
 using System.Collections;
 using Server.Items;
-using Server.Targeting;
 using Server.Network;
+using Server.Targeting;
 
 namespace Server.Mobiles
 {

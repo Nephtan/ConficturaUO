@@ -1,10 +1,10 @@
+using System.Collections.Generic;
+using System.ComponentModel;
 using Server;
 using Server.Commands;
 using Server.Items;
-using Server.Multis;
 using Server.Mobiles;
-using System.ComponentModel;
-using System.Collections.Generic;
+using Server.Multis;
 
 namespace Server.Commands
 {
@@ -12,7 +12,11 @@ namespace Server.Commands
     {
         public static void Initialize()
         {
-            CommandSystem.Register("ClearDeck", AccessLevel.Player, new CommandEventHandler(ClearDeck_OnCommand));
+            CommandSystem.Register(
+                "ClearDeck",
+                AccessLevel.Player,
+                new CommandEventHandler(ClearDeck_OnCommand)
+            );
         }
 
         [Usage("ClearDeck")]
@@ -41,7 +45,10 @@ namespace Server.Commands
 
                     if (corpseBoat == playerBoat)
                     {
-                        if (!(corpse.Owner is PlayerMobile) || (corpse.Owner is PlayerMobile && corpse.Items.Count == 0))
+                        if (
+                            !(corpse.Owner is PlayerMobile)
+                            || (corpse.Owner is PlayerMobile && corpse.Items.Count == 0)
+                        )
                         {
                             corpsesToDelete.Add(corpse);
                         }

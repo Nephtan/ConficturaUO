@@ -1,9 +1,9 @@
 using System;
 using Server;
-using Server.Mobiles;
-using Server.Network;
 using Server.Gumps;
 using Server.LiarsDice;
+using Server.Mobiles;
+using Server.Network;
 
 namespace Server.Items
 {

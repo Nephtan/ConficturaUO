@@ -2,11 +2,11 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Server;
+using Server.ContextMenus;
+using Server.Gumps;
 using Server.Items;
 using Server.Multis;
 using Server.Network;
-using Server.ContextMenus;
-using Server.Gumps;
 
 namespace Server.Items
 {
@@ -150,7 +150,9 @@ namespace Server.Items
                 return false;
 
             if (
-                board.Deleted || board.Map != from.Map || !from.InRange(board.GetWorldLocation(), 1)
+                board.Deleted
+                || board.Map != from.Map
+                || !from.InRange(board.GetWorldLocation(), 1)
             )
                 return false;
 

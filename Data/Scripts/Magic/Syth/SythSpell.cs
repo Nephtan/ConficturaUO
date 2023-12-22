@@ -1,13 +1,13 @@
 using System;
-using Server;
-using Server.Spells;
-using Server.Network;
-using Server.Mobiles;
-using Server.Items;
-using System.Collections.Generic;
 using System.Collections;
+using System.Collections.Generic;
+using Server;
 using Server.Commands;
 using Server.Commands.Generic;
+using Server.Items;
+using Server.Mobiles;
+using Server.Network;
+using Server.Spells;
 
 namespace Server.Spells.Syth
 {
@@ -294,7 +294,9 @@ namespace Server.Spells.Syth
                     HoldingSword = true;
                 }
                 else if (
-                    twoHand is BaseShield && twoHand.Name != null && (twoHand.Name).Contains("Syth")
+                    twoHand is BaseShield
+                    && twoHand.Name != null
+                    && (twoHand.Name).Contains("Syth")
                 )
                 {
                     WearingCloth = true;

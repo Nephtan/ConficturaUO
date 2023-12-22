@@ -1,8 +1,8 @@
 using System;
 using Server;
+using Server.Items;
 using Server.Mobiles;
 using Server.Targeting;
-using Server.Items;
 
 namespace Server.Engines.Craft
 {
@@ -461,7 +461,8 @@ namespace Server.Engines.Craft
                         number = 1044275; // The item must be in your backpack to repair it.
                     }
                     else if (
-                        clothing.MaxHitPoints <= 0 || clothing.HitPoints == clothing.MaxHitPoints
+                        clothing.MaxHitPoints <= 0
+                        || clothing.HitPoints == clothing.MaxHitPoints
                     )
                     {
                         number = 1044281; // That item is in full repair

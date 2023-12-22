@@ -8,10 +8,10 @@ a pti gump mimi, which numerically gives you the value of your hunger and thirst
 
 using System;
 using Server;
+using Server.Commands;
+using Server.Gumps;
 using Server.Mobiles;
 using Server.Network;
-using Server.Gumps;
-using Server.Commands;
 
 namespace Server.Commands
 {

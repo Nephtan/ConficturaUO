@@ -1,10 +1,10 @@
 using System;
 using System.Collections;
-using Server.Targeting;
-using Server.Network;
-using Server.Mobiles;
-using Server.Items;
 using Server.Gumps;
+using Server.Items;
+using Server.Mobiles;
+using Server.Network;
+using Server.Targeting;
 
 namespace Server.Spells.Necromancy
 {

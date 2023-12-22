@@ -1,16 +1,16 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.IO;
+using Server;
 using Server.Accounting;
-using Server.Commands.Generic;
 using Server.Commands;
+using Server.Commands.Generic;
 using Server.Items;
 using Server.Misc;
 using Server.Mobiles;
 using Server.Network;
 using Server.Regions;
-using Server;
-using System.Collections.Generic;
-using System.Collections;
-using System.IO;
-using System;
 
 namespace Server.Misc
 {
@@ -86818,7 +86818,10 @@ namespace Server.Scripts.Commands
                     BaseCreature bc = (BaseCreature)being;
 
                     if (
-                        bc.Home.X > 0 && !bc.IsStabled && !bc.Controlled && bc.ControlMaster == null
+                        bc.Home.X > 0
+                        && !bc.IsStabled
+                        && !bc.Controlled
+                        && bc.ControlMaster == null
                     )
                         beings.Add(being);
 

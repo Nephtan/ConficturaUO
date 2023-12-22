@@ -1,14 +1,14 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using Server;
-using Server.Targeting;
-using Server.Items;
-using Server.Network;
 using Server.ContextMenus;
+using Server.Gumps;
+using Server.Items;
 using Server.Misc;
 using Server.Mobiles;
-using System.Collections;
-using Server.Gumps;
+using Server.Network;
+using Server.Targeting;
 
 namespace Server.Mobiles
 {
@@ -176,7 +176,11 @@ namespace Server.Mobiles
                 }
             }
             else if (
-                this.X >= 0 && this.Y >= 0 && this.X <= 6 && this.Y <= 6 && this.Map == Map.Sosaria
+                this.X >= 0
+                && this.Y >= 0
+                && this.X <= 6
+                && this.Y <= 6
+                && this.Map == Map.Sosaria
             )
             {
                 switch (Utility.RandomMinMax(0, 8))

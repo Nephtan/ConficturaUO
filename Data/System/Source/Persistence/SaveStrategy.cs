@@ -23,36 +23,36 @@ using Server;
 
 namespace Server
 {
-	public abstract class SaveStrategy
-	{
-		public static SaveStrategy Acquire()
-		{
-			if (Core.MultiProcessor)
-			{
-				int processorCount = Core.ProcessorCount;
+    public abstract class SaveStrategy
+    {
+        public static SaveStrategy Acquire()
+        {
+            if (Core.MultiProcessor)
+            {
+                int processorCount = Core.ProcessorCount;
 
-				if (processorCount > 16)
-				{
+                if (processorCount > 16)
+                {
 #if Framework_4_0
-					return new DynamicSaveStrategy();
+                    return new DynamicSaveStrategy();
 #else
-					return new ParallelSaveStrategy(processorCount);
+                    return new ParallelSaveStrategy(processorCount);
 #endif
-				}
-				else
-				{
-					return new DualSaveStrategy();
-				}
-			}
-			else
-			{
-				return new StandardSaveStrategy();
-			}
-		}
+                }
+                else
+                {
+                    return new DualSaveStrategy();
+                }
+            }
+            else
+            {
+                return new StandardSaveStrategy();
+            }
+        }
 
-		public abstract string Name { get; }
-		public abstract void Save(SaveMetrics metrics, bool permitBackgroundWrite);
+        public abstract string Name { get; }
+        public abstract void Save(SaveMetrics metrics, bool permitBackgroundWrite);
 
-		public abstract void ProcessDecay();
-	}
+        public abstract void ProcessDecay();
+    }
 }

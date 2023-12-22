@@ -1,7 +1,7 @@
+using System.ComponentModel;
 using Server;
 using Server.Commands;
 using Server.Network;
-using System.ComponentModel;
 
 namespace Server.Commands
 {

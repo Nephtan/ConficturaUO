@@ -4,8 +4,8 @@ using Server;
 using Server.Items;
 using Server.Mobiles;
 using Server.Network;
-using Server.Spells.Ninjitsu;
 using Server.Spells.Bushido;
+using Server.Spells.Ninjitsu;
 
 namespace Server.Spells
 {

@@ -1,9 +1,9 @@
 using System;
 using Server;
+using Server.Engines.VeteranRewards;
+using Server.Gumps;
 using Server.Mobiles;
 using Server.Targeting;
-using Server.Gumps;
-using Server.Engines.VeteranRewards;
 
 namespace Server.Items
 {

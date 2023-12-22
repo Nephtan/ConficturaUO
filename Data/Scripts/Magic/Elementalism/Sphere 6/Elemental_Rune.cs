@@ -1,9 +1,9 @@
 using System;
 using Server.Items;
-using Server.Targeting;
+using Server.Misc;
 using Server.Network;
 using Server.Regions;
-using Server.Misc;
+using Server.Targeting;
 
 namespace Server.Spells.Elementalism
 {

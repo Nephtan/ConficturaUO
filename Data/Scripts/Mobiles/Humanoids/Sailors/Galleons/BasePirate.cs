@@ -1,11 +1,11 @@
 using System;
-using Server;
-using Server.Misc;
-using Server.Items;
 using System.Collections;
 using System.Collections.Generic;
-using Server.Targeting;
+using Server;
+using Server.Items;
+using Server.Misc;
 using Server.Multis;
+using Server.Targeting;
 
 namespace Server.Mobiles
 {
@@ -848,7 +848,9 @@ namespace Server.Mobiles
                 }
             }
             else if (
-                captain is SailorGuards || captain is SailorElfGuards || captain is SailorOrkGuards
+                captain is SailorGuards
+                || captain is SailorElfGuards
+                || captain is SailorOrkGuards
             )
             {
                 DressGuards(bc, captain);

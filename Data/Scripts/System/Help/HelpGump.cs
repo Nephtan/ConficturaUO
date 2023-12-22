@@ -1,19 +1,19 @@
 using System;
-using Server;
-using Server.Gumps;
-using Server.Network;
-using Server.Menus;
-using Server.Menus.Questions;
-using Server.Accounting;
-using Server.Multis;
-using Server.Mobiles;
-using Server.Regions;
 using System.Collections;
 using System.Collections.Generic;
-using Server.Commands;
-using Server.Misc;
-using Server.Items;
 using System.Globalization;
+using Server;
+using Server.Accounting;
+using Server.Commands;
+using Server.Gumps;
+using Server.Items;
+using Server.Menus;
+using Server.Menus.Questions;
+using Server.Misc;
+using Server.Mobiles;
+using Server.Multis;
+using Server.Network;
+using Server.Regions;
 
 namespace Server.Engines.Help
 {
@@ -2147,556 +2147,556 @@ namespace Server.Engines.Help
                 switch (info.ButtonID)
                 {
                     case 0: // Close/Cancel
-                        {
-                            //from.SendLocalizedMessage( 501235, "", 0x35 ); // Help request aborted.
-                            break;
-                        }
+                    {
+                        //from.SendLocalizedMessage( 501235, "", 0x35 ); // Help request aborted.
+                        break;
+                    }
                     case 1: // MAIN
-                        {
-                            from.SendGump(new Server.Engines.Help.HelpGump(from, info.ButtonID));
-                            break;
-                        }
+                    {
+                        from.SendGump(new Server.Engines.Help.HelpGump(from, info.ButtonID));
+                        break;
+                    }
                     case 2: // AFK
-                        {
-                            InvokeCommand("afk", from);
-                            from.SendGump(new Server.Engines.Help.HelpGump(from, info.ButtonID));
-                            break;
-                        }
+                    {
+                        InvokeCommand("afk", from);
+                        from.SendGump(new Server.Engines.Help.HelpGump(from, info.ButtonID));
+                        break;
+                    }
                     case 3: // Chat
-                        {
-                            InvokeCommand("c", from);
-                            break;
-                        }
+                    {
+                        InvokeCommand("c", from);
+                        break;
+                    }
                     case 4: // Corpse Clear
-                        {
-                            InvokeCommand("corpseclear", from);
-                            from.SendGump(new Server.Engines.Help.HelpGump(from, info.ButtonID));
-                            break;
-                        }
+                    {
+                        InvokeCommand("corpseclear", from);
+                        from.SendGump(new Server.Engines.Help.HelpGump(from, info.ButtonID));
+                        break;
+                    }
                     case 5: // Corpse Search
-                        {
-                            InvokeCommand("corpse", from);
-                            break;
-                        }
+                    {
+                        InvokeCommand("corpse", from);
+                        break;
+                    }
                     case 6: // Emote
-                        {
-                            InvokeCommand("emote", from);
-                            break;
-                        }
+                    {
+                        InvokeCommand("emote", from);
+                        break;
+                    }
                     case 7: // Magic
-                        {
-                            from.SendGump(new Server.Engines.Help.HelpGump(from, 7));
-                            break;
-                        }
+                    {
+                        from.SendGump(new Server.Engines.Help.HelpGump(from, 7));
+                        break;
+                    }
                     case 8: // Moongate
-                        {
-                            InvokeCommand("magicgate", from);
-                            break;
-                        }
+                    {
+                        InvokeCommand("magicgate", from);
+                        break;
+                    }
                     case 9: // MOTD
-                        {
-                            from.CloseGump(typeof(Joeku.MOTD.MOTD_Gump));
-                            Joeku.MOTD.MOTD_Utility.SendGump(from, false, 0, 1);
-                            break;
-                        }
+                    {
+                        from.CloseGump(typeof(Joeku.MOTD.MOTD_Gump));
+                        Joeku.MOTD.MOTD_Utility.SendGump(from, false, 0, 1);
+                        break;
+                    }
                     case 10: // Quests
-                        {
-                            from.SendGump(new Server.Engines.Help.HelpGump(from, info.ButtonID));
-                            break;
-                        }
+                    {
+                        from.SendGump(new Server.Engines.Help.HelpGump(from, info.ButtonID));
+                        break;
+                    }
                     case 11: // Quick Bar
-                        {
-                            from.CloseGump(typeof(QuickBar));
-                            from.SendGump(new QuickBar(from));
-                            break;
-                        }
+                    {
+                        from.CloseGump(typeof(QuickBar));
+                        from.SendGump(new QuickBar(from));
+                        break;
+                    }
                     case 62: // Reagent Bar
-                        {
-                            from.CloseGump(typeof(RegBar));
-                            from.SendGump(new RegBar(from));
-                            break;
-                        }
+                    {
+                        from.CloseGump(typeof(RegBar));
+                        from.SendGump(new RegBar(from));
+                        break;
+                    }
                     case 12: // Settings
-                        {
-                            from.SendGump(new Server.Engines.Help.HelpGump(from, 12));
-                            break;
-                        }
+                    {
+                        from.SendGump(new Server.Engines.Help.HelpGump(from, 12));
+                        break;
+                    }
                     case 13: // Library
-                        {
-                            from.CloseGump(typeof(MyLibrary));
-                            from.SendSound(0x4A);
-                            from.SendGump(new MyLibrary(from, 1));
-                            break;
-                        }
+                    {
+                        from.CloseGump(typeof(MyLibrary));
+                        from.SendSound(0x4A);
+                        from.SendGump(new MyLibrary(from, 1));
+                        break;
+                    }
                     case 14: // Statistics
-                        {
-                            from.CloseGump(typeof(Server.Statistics.StatisticsGump));
-                            from.SendGump(new Server.Statistics.StatisticsGump(from, 1));
-                            break;
-                        }
+                    {
+                        from.CloseGump(typeof(Server.Statistics.StatisticsGump));
+                        from.SendGump(new Server.Statistics.StatisticsGump(from, 1));
+                        break;
+                    }
                     case 15: // Stuck
+                    {
+                        BaseHouse house = BaseHouse.FindHouseAt(from);
+
+                        if (house != null && house.IsAosRules)
                         {
-                            BaseHouse house = BaseHouse.FindHouseAt(from);
-
-                            if (house != null && house.IsAosRules)
-                            {
-                                from.Location = house.BanLocation;
-                            }
-                            else if (from.Region.IsPartOf(typeof(Server.Regions.Jail)))
-                            {
-                                from.SendLocalizedMessage(1041530, "", 0x35); // You'll need a better jailbreak plan then that!
-                            }
-                            else if (
-                                from.CanUseStuckMenu()
-                                && from.Region.CanUseStuckMenu(from)
-                                && !CheckCombat(from)
-                                && !from.Frozen
-                                && !from.Criminal
-                                && (Core.AOS || from.Kills < 5)
-                            )
-                            {
-                                StuckMenu menu = new StuckMenu(from, from, true);
-
-                                menu.BeginClose();
-
-                                from.SendGump(menu);
-                            }
-
-                            break;
+                            from.Location = house.BanLocation;
                         }
+                        else if (from.Region.IsPartOf(typeof(Server.Regions.Jail)))
+                        {
+                            from.SendLocalizedMessage(1041530, "", 0x35); // You'll need a better jailbreak plan then that!
+                        }
+                        else if (
+                            from.CanUseStuckMenu()
+                            && from.Region.CanUseStuckMenu(from)
+                            && !CheckCombat(from)
+                            && !from.Frozen
+                            && !from.Criminal
+                            && (Core.AOS || from.Kills < 5)
+                        )
+                        {
+                            StuckMenu menu = new StuckMenu(from, from, true);
+
+                            menu.BeginClose();
+
+                            from.SendGump(menu);
+                        }
+
+                        break;
+                    }
                     case 16: // Weapon Abilities
-                        {
-                            InvokeCommand("sad", from);
-                            break;
-                        }
+                    {
+                        InvokeCommand("sad", from);
+                        break;
+                    }
                     case 17: // Wealth Bar
-                        {
-                            from.CloseGump(typeof(WealthBar));
-                            from.SendGump(new WealthBar(from));
-                            break;
-                        }
+                    {
+                        from.CloseGump(typeof(WealthBar));
+                        from.SendGump(new WealthBar(from));
+                        break;
+                    }
                     case 18: // Conversations
-                        {
-                            from.CloseGump(typeof(MyChat));
-                            from.SendSound(0x4A);
-                            from.SendGump(new MyChat(from, 1));
-                            break;
-                        }
+                    {
+                        from.CloseGump(typeof(MyChat));
+                        from.SendSound(0x4A);
+                        from.SendGump(new MyChat(from, 1));
+                        break;
+                    }
                     case 19: // Versions
-                        {
-                            from.SendGump(new Server.Engines.Help.HelpGump(from, info.ButtonID));
-                            break;
-                        }
+                    {
+                        from.SendGump(new Server.Engines.Help.HelpGump(from, info.ButtonID));
+                        break;
+                    }
                     case 51: // Weapon Ability Names
+                    {
+                        if (((PlayerMobile)from).CharacterWepAbNames != 1)
                         {
-                            if (((PlayerMobile)from).CharacterWepAbNames != 1)
-                            {
-                                ((PlayerMobile)from).CharacterWepAbNames = 1;
-                            }
-                            else
-                            {
-                                ((PlayerMobile)from).CharacterWepAbNames = 0;
-                            }
-                            from.SendGump(new Server.Engines.Help.HelpGump(from, 12));
-                            break;
+                            ((PlayerMobile)from).CharacterWepAbNames = 1;
                         }
+                        else
+                        {
+                            ((PlayerMobile)from).CharacterWepAbNames = 0;
+                        }
+                        from.SendGump(new Server.Engines.Help.HelpGump(from, 12));
+                        break;
+                    }
                     case 52: // Auto Sheathe
+                    {
+                        if (((PlayerMobile)from).CharacterSheath == 1)
                         {
-                            if (((PlayerMobile)from).CharacterSheath == 1)
-                            {
-                                ((PlayerMobile)from).CharacterSheath = 0;
-                            }
-                            else
-                            {
-                                ((PlayerMobile)from).CharacterSheath = 1;
-                            }
-                            from.SendGump(new Server.Engines.Help.HelpGump(from, 12));
-                            break;
+                            ((PlayerMobile)from).CharacterSheath = 0;
                         }
+                        else
+                        {
+                            ((PlayerMobile)from).CharacterSheath = 1;
+                        }
+                        from.SendGump(new Server.Engines.Help.HelpGump(from, 12));
+                        break;
+                    }
                     case 53: // Musical
-                        {
-                            string tunes = ((PlayerMobile)from).CharMusical;
+                    {
+                        string tunes = ((PlayerMobile)from).CharMusical;
 
-                            if (tunes == "Forest")
-                            {
-                                ((PlayerMobile)from).CharMusical = "Dungeon";
-                            }
-                            else
-                            {
-                                ((PlayerMobile)from).CharMusical = "Forest";
-                            }
-                            from.SendGump(new Server.Engines.Help.HelpGump(from, 12));
-                            break;
+                        if (tunes == "Forest")
+                        {
+                            ((PlayerMobile)from).CharMusical = "Dungeon";
                         }
+                        else
+                        {
+                            ((PlayerMobile)from).CharMusical = "Forest";
+                        }
+                        from.SendGump(new Server.Engines.Help.HelpGump(from, 12));
+                        break;
+                    }
                     case 54: // Private
-                        {
-                            PlayerMobile pm = (PlayerMobile)from;
+                    {
+                        PlayerMobile pm = (PlayerMobile)from;
 
-                            if (pm.PublicMyRunUO == false)
-                            {
-                                pm.PublicMyRunUO = true;
-                            }
-                            else
-                            {
-                                pm.PublicMyRunUO = false;
-                            }
-                            from.SendGump(new Server.Engines.Help.HelpGump(from, 12));
-                            break;
+                        if (pm.PublicMyRunUO == false)
+                        {
+                            pm.PublicMyRunUO = true;
                         }
+                        else
+                        {
+                            pm.PublicMyRunUO = false;
+                        }
+                        from.SendGump(new Server.Engines.Help.HelpGump(from, 12));
+                        break;
+                    }
                     case 55: // Loot
-                        {
-                            from.CloseGump(typeof(LootChoices));
-                            from.SendGump(new LootChoices(from, 1));
-                            break;
-                        }
+                    {
+                        from.CloseGump(typeof(LootChoices));
+                        from.SendGump(new LootChoices(from, 1));
+                        break;
+                    }
                     case 56: // Skill Titles
-                        {
-                            from.CloseGump(typeof(SkillTitleGump));
-                            from.SendGump(new SkillTitleGump(from));
-                            break;
-                        }
+                    {
+                        from.CloseGump(typeof(SkillTitleGump));
+                        from.SendGump(new SkillTitleGump(from));
+                        break;
+                    }
                     case 982: // Skill List
+                    {
+                        if (((PlayerMobile)from).SkillDisplay > 0)
                         {
-                            if (((PlayerMobile)from).SkillDisplay > 0)
-                            {
-                                ((PlayerMobile)from).SkillDisplay = 0;
-                            }
-                            else
-                            {
-                                ((PlayerMobile)from).SkillDisplay = 1;
-                            }
-                            from.SendGump(new Server.Engines.Help.HelpGump(from, 12));
-                            Server.Gumps.SkillListingGump.RefreshSkillList(from);
-                            break;
+                            ((PlayerMobile)from).SkillDisplay = 0;
                         }
+                        else
+                        {
+                            ((PlayerMobile)from).SkillDisplay = 1;
+                        }
+                        from.SendGump(new Server.Engines.Help.HelpGump(from, 12));
+                        Server.Gumps.SkillListingGump.RefreshSkillList(from);
+                        break;
+                    }
                     case 983: // Open Skill List
-                        {
-                            Server.Gumps.SkillListingGump.OpenSkillList(from);
-                            break;
-                        }
+                    {
+                        Server.Gumps.SkillListingGump.OpenSkillList(from);
+                        break;
+                    }
                     case 985: // Gump Images
-                        {
-                            int gump = ((PlayerMobile)from).GumpHue;
+                    {
+                        int gump = ((PlayerMobile)from).GumpHue;
 
-                            if (gump > 0)
-                            {
-                                ((PlayerMobile)from).GumpHue = 0;
-                            }
-                            else
-                            {
-                                ((PlayerMobile)from).GumpHue = 1;
-                            }
-                            from.SendGump(new Server.Engines.Help.HelpGump(from, 12));
-                            break;
+                        if (gump > 0)
+                        {
+                            ((PlayerMobile)from).GumpHue = 0;
                         }
+                        else
+                        {
+                            ((PlayerMobile)from).GumpHue = 1;
+                        }
+                        from.SendGump(new Server.Engines.Help.HelpGump(from, 12));
+                        break;
+                    }
                     case 986: // Weapon Ability Auto-Open
-                        {
-                            int wep = ((PlayerMobile)from).WeaponBarOpen;
+                    {
+                        int wep = ((PlayerMobile)from).WeaponBarOpen;
 
-                            if (wep > 0)
-                            {
-                                ((PlayerMobile)from).WeaponBarOpen = 0;
-                            }
-                            else
-                            {
-                                ((PlayerMobile)from).WeaponBarOpen = 1;
-                            }
-                            from.SendGump(new Server.Engines.Help.HelpGump(from, 12));
-                            break;
+                        if (wep > 0)
+                        {
+                            ((PlayerMobile)from).WeaponBarOpen = 0;
                         }
+                        else
+                        {
+                            ((PlayerMobile)from).WeaponBarOpen = 1;
+                        }
+                        from.SendGump(new Server.Engines.Help.HelpGump(from, 12));
+                        break;
+                    }
                     case 989: // Creature Magic Focus
+                    {
+                        if (from.RaceMagicSchool == 0)
+                            from.RaceMagicSchool = 1;
+                        else if (from.RaceMagicSchool == 1)
+                            from.RaceMagicSchool = 2;
+                        else if (from.RaceMagicSchool == 2)
+                            from.RaceMagicSchool = 3;
+                        else
+                            from.RaceMagicSchool = 0;
+
+                        if (from.FindItemOnLayer(Layer.Special) != null)
                         {
-                            if (from.RaceMagicSchool == 0)
-                                from.RaceMagicSchool = 1;
-                            else if (from.RaceMagicSchool == 1)
-                                from.RaceMagicSchool = 2;
-                            else if (from.RaceMagicSchool == 2)
-                                from.RaceMagicSchool = 3;
-                            else
-                                from.RaceMagicSchool = 0;
-
-                            if (from.FindItemOnLayer(Layer.Special) != null)
-                            {
-                                if (from.FindItemOnLayer(Layer.Special) is BaseRace)
-                                    Server.Items.BaseRace.SetMonsterMagic(
-                                        from,
-                                        (BaseRace)(from.FindItemOnLayer(Layer.Special))
-                                    );
-                            }
-
-                            from.SendGump(new Server.Engines.Help.HelpGump(from, 12));
-                            break;
+                            if (from.FindItemOnLayer(Layer.Special) is BaseRace)
+                                Server.Items.BaseRace.SetMonsterMagic(
+                                    from,
+                                    (BaseRace)(from.FindItemOnLayer(Layer.Special))
+                                );
                         }
+
+                        from.SendGump(new Server.Engines.Help.HelpGump(from, 12));
+                        break;
+                    }
                     case 990: // Creature Type Choice
-                        {
-                            from.RaceSection = 1;
-                            from.SendGump(new Server.Items.RacePotions.RacePotionsGump(from, 1));
-                            break;
-                        }
+                    {
+                        from.RaceSection = 1;
+                        from.SendGump(new Server.Items.RacePotions.RacePotionsGump(from, 1));
+                        break;
+                    }
                     case 991: // Creature Sounds
-                        {
-                            if (!from.RaceMakeSounds)
-                                from.RaceMakeSounds = true;
-                            else
-                                from.RaceMakeSounds = false;
+                    {
+                        if (!from.RaceMakeSounds)
+                            from.RaceMakeSounds = true;
+                        else
+                            from.RaceMakeSounds = false;
 
-                            from.SendGump(new Server.Engines.Help.HelpGump(from, 12));
-                            break;
-                        }
+                        from.SendGump(new Server.Engines.Help.HelpGump(from, 12));
+                        break;
+                    }
                     case 57: // Normal Play
-                        {
-                            ((PlayerMobile)from).CharacterEvil = 0;
-                            ((PlayerMobile)from).CharacterOriental = 0;
-                            ((PlayerMobile)from).CharacterBarbaric = 0;
-                            Server.Items.BarbaricSatchel.GetRidOf(from);
-                            from.SendGump(new Server.Engines.Help.HelpGump(from, 12));
-                            break;
-                        }
+                    {
+                        ((PlayerMobile)from).CharacterEvil = 0;
+                        ((PlayerMobile)from).CharacterOriental = 0;
+                        ((PlayerMobile)from).CharacterBarbaric = 0;
+                        Server.Items.BarbaricSatchel.GetRidOf(from);
+                        from.SendGump(new Server.Engines.Help.HelpGump(from, 12));
+                        break;
+                    }
                     case 58: // Evil Play
+                    {
+                        ((PlayerMobile)from).CharacterEvil = 1;
+                        ((PlayerMobile)from).CharacterOriental = 0;
+                        ((PlayerMobile)from).CharacterBarbaric = 0;
+                        Server.Items.BarbaricSatchel.GetRidOf(from);
+                        from.SendGump(new Server.Engines.Help.HelpGump(from, 12));
+                        break;
+                    }
+                    case 59: // Oriental Play
+                    {
+                        ((PlayerMobile)from).CharacterEvil = 0;
+                        ((PlayerMobile)from).CharacterOriental = 1;
+                        ((PlayerMobile)from).CharacterBarbaric = 0;
+                        Server.Items.BarbaricSatchel.GetRidOf(from);
+                        from.SendGump(new Server.Engines.Help.HelpGump(from, 12));
+                        break;
+                    }
+                    case 60: // Message Color
+                    {
+                        if (from.RainbowMsg)
                         {
-                            ((PlayerMobile)from).CharacterEvil = 1;
-                            ((PlayerMobile)from).CharacterOriental = 0;
+                            from.RainbowMsg = false;
+                        }
+                        else
+                        {
+                            from.RainbowMsg = true;
+                        }
+                        from.SendGump(new Server.Engines.Help.HelpGump(from, 12));
+                        break;
+                    }
+                    case 61: // Auto Attack
+                    {
+                        if (from.NoAutoAttack)
+                        {
+                            from.NoAutoAttack = false;
+                        }
+                        else
+                        {
+                            from.NoAutoAttack = true;
+                        }
+                        from.SendGump(new Server.Engines.Help.HelpGump(from, 12));
+                        break;
+                    }
+                    case 984: // Barbaric Play
+                    {
+                        if (((PlayerMobile)from).CharacterBarbaric == 1 && from.Female)
+                        {
+                            ((PlayerMobile)from).CharacterBarbaric = 2;
+                        }
+                        else if (((PlayerMobile)from).CharacterBarbaric > 0)
+                        {
                             ((PlayerMobile)from).CharacterBarbaric = 0;
                             Server.Items.BarbaricSatchel.GetRidOf(from);
-                            from.SendGump(new Server.Engines.Help.HelpGump(from, 12));
-                            break;
                         }
-                    case 59: // Oriental Play
+                        else
                         {
                             ((PlayerMobile)from).CharacterEvil = 0;
-                            ((PlayerMobile)from).CharacterOriental = 1;
-                            ((PlayerMobile)from).CharacterBarbaric = 0;
-                            Server.Items.BarbaricSatchel.GetRidOf(from);
-                            from.SendGump(new Server.Engines.Help.HelpGump(from, 12));
-                            break;
+                            ((PlayerMobile)from).CharacterOriental = 0;
+                            ((PlayerMobile)from).CharacterBarbaric = 1;
+                            Server.Items.BarbaricSatchel.GivePack(from);
                         }
-                    case 60: // Message Color
-                        {
-                            if (from.RainbowMsg)
-                            {
-                                from.RainbowMsg = false;
-                            }
-                            else
-                            {
-                                from.RainbowMsg = true;
-                            }
-                            from.SendGump(new Server.Engines.Help.HelpGump(from, 12));
-                            break;
-                        }
-                    case 61: // Auto Attack
-                        {
-                            if (from.NoAutoAttack)
-                            {
-                                from.NoAutoAttack = false;
-                            }
-                            else
-                            {
-                                from.NoAutoAttack = true;
-                            }
-                            from.SendGump(new Server.Engines.Help.HelpGump(from, 12));
-                            break;
-                        }
-                    case 984: // Barbaric Play
-                        {
-                            if (((PlayerMobile)from).CharacterBarbaric == 1 && from.Female)
-                            {
-                                ((PlayerMobile)from).CharacterBarbaric = 2;
-                            }
-                            else if (((PlayerMobile)from).CharacterBarbaric > 0)
-                            {
-                                ((PlayerMobile)from).CharacterBarbaric = 0;
-                                Server.Items.BarbaricSatchel.GetRidOf(from);
-                            }
-                            else
-                            {
-                                ((PlayerMobile)from).CharacterEvil = 0;
-                                ((PlayerMobile)from).CharacterOriental = 0;
-                                ((PlayerMobile)from).CharacterBarbaric = 1;
-                                Server.Items.BarbaricSatchel.GivePack(from);
-                            }
-                            from.SendGump(new Server.Engines.Help.HelpGump(from, 12));
-                            break;
-                        }
+                        from.SendGump(new Server.Engines.Help.HelpGump(from, 12));
+                        break;
+                    }
                     case 64: // Poisoning
+                    {
+                        if (((PlayerMobile)from).ClassicPoisoning == 1)
                         {
-                            if (((PlayerMobile)from).ClassicPoisoning == 1)
-                            {
-                                ((PlayerMobile)from).ClassicPoisoning = 0;
-                            }
-                            else
-                            {
-                                ((PlayerMobile)from).ClassicPoisoning = 1;
-                            }
-                            from.SendGump(new Server.Engines.Help.HelpGump(from, 12));
-                            break;
+                            ((PlayerMobile)from).ClassicPoisoning = 0;
                         }
+                        else
+                        {
+                            ((PlayerMobile)from).ClassicPoisoning = 1;
+                        }
+                        from.SendGump(new Server.Engines.Help.HelpGump(from, 12));
+                        break;
+                    }
                     case 65: // Music Playlist
-                        {
-                            from.CloseGump(typeof(MusicPlaylist));
-                            from.SendGump(new MusicPlaylist(from, 1));
-                            break;
-                        }
+                    {
+                        from.CloseGump(typeof(MusicPlaylist));
+                        from.SendGump(new MusicPlaylist(from, 1));
+                        break;
+                    }
                     case 66: // SPELL BARS BELOW ---------------------------------------
-                        {
-                            from.CloseGump(typeof(SetupBarsBard1));
-                            from.SendGump(new SetupBarsBard1(from, 1));
-                            break;
-                        }
+                    {
+                        from.CloseGump(typeof(SetupBarsBard1));
+                        from.SendGump(new SetupBarsBard1(from, 1));
+                        break;
+                    }
                     case 67:
-                        {
-                            from.CloseGump(typeof(SetupBarsBard2));
-                            from.SendGump(new SetupBarsBard2(from, 1));
-                            break;
-                        }
+                    {
+                        from.CloseGump(typeof(SetupBarsBard2));
+                        from.SendGump(new SetupBarsBard2(from, 1));
+                        break;
+                    }
                     case 68:
-                        {
-                            from.CloseGump(typeof(SetupBarsKnight1));
-                            from.SendGump(new SetupBarsKnight1(from, 1));
-                            break;
-                        }
+                    {
+                        from.CloseGump(typeof(SetupBarsKnight1));
+                        from.SendGump(new SetupBarsKnight1(from, 1));
+                        break;
+                    }
                     case 69:
-                        {
-                            from.CloseGump(typeof(SetupBarsKnight2));
-                            from.SendGump(new SetupBarsKnight2(from, 1));
-                            break;
-                        }
+                    {
+                        from.CloseGump(typeof(SetupBarsKnight2));
+                        from.SendGump(new SetupBarsKnight2(from, 1));
+                        break;
+                    }
                     case 70:
-                        {
-                            from.CloseGump(typeof(SetupBarsDeath1));
-                            from.SendGump(new SetupBarsDeath1(from, 1));
-                            break;
-                        }
+                    {
+                        from.CloseGump(typeof(SetupBarsDeath1));
+                        from.SendGump(new SetupBarsDeath1(from, 1));
+                        break;
+                    }
                     case 71:
-                        {
-                            from.CloseGump(typeof(SetupBarsDeath2));
-                            from.SendGump(new SetupBarsDeath2(from, 1));
-                            break;
-                        }
+                    {
+                        from.CloseGump(typeof(SetupBarsDeath2));
+                        from.SendGump(new SetupBarsDeath2(from, 1));
+                        break;
+                    }
                     case 72:
-                        {
-                            from.CloseGump(typeof(SetupBarsMage1));
-                            from.SendGump(new SetupBarsMage1(from, 1));
-                            break;
-                        }
+                    {
+                        from.CloseGump(typeof(SetupBarsMage1));
+                        from.SendGump(new SetupBarsMage1(from, 1));
+                        break;
+                    }
                     case 73:
-                        {
-                            from.CloseGump(typeof(SetupBarsMage2));
-                            from.SendGump(new SetupBarsMage2(from, 1));
-                            break;
-                        }
+                    {
+                        from.CloseGump(typeof(SetupBarsMage2));
+                        from.SendGump(new SetupBarsMage2(from, 1));
+                        break;
+                    }
                     case 74:
-                        {
-                            from.CloseGump(typeof(SetupBarsMage3));
-                            from.SendGump(new SetupBarsMage3(from, 1));
-                            break;
-                        }
+                    {
+                        from.CloseGump(typeof(SetupBarsMage3));
+                        from.SendGump(new SetupBarsMage3(from, 1));
+                        break;
+                    }
                     case 75:
-                        {
-                            from.CloseGump(typeof(SetupBarsMage4));
-                            from.SendGump(new SetupBarsMage4(from, 1));
-                            break;
-                        }
+                    {
+                        from.CloseGump(typeof(SetupBarsMage4));
+                        from.SendGump(new SetupBarsMage4(from, 1));
+                        break;
+                    }
                     case 76:
-                        {
-                            from.CloseGump(typeof(SetupBarsNecro1));
-                            from.SendGump(new SetupBarsNecro1(from, 1));
-                            break;
-                        }
+                    {
+                        from.CloseGump(typeof(SetupBarsNecro1));
+                        from.SendGump(new SetupBarsNecro1(from, 1));
+                        break;
+                    }
                     case 77:
-                        {
-                            from.CloseGump(typeof(SetupBarsNecro2));
-                            from.SendGump(new SetupBarsNecro2(from, 1));
-                            break;
-                        }
+                    {
+                        from.CloseGump(typeof(SetupBarsNecro2));
+                        from.SendGump(new SetupBarsNecro2(from, 1));
+                        break;
+                    }
                     case 78:
-                        {
-                            from.CloseGump(typeof(SetupBarsPriest1));
-                            from.SendGump(new SetupBarsPriest1(from, 1));
-                            break;
-                        }
+                    {
+                        from.CloseGump(typeof(SetupBarsPriest1));
+                        from.SendGump(new SetupBarsPriest1(from, 1));
+                        break;
+                    }
                     case 79:
-                        {
-                            from.CloseGump(typeof(SetupBarsPriest2));
-                            from.SendGump(new SetupBarsPriest2(from, 1));
-                            break;
-                        }
+                    {
+                        from.CloseGump(typeof(SetupBarsPriest2));
+                        from.SendGump(new SetupBarsPriest2(from, 1));
+                        break;
+                    }
                     case 80:
-                        {
-                            from.SendGump(new CustomTitleGump(from));
-                            break;
-                        }
+                    {
+                        from.SendGump(new CustomTitleGump(from));
+                        break;
+                    }
                     case 980:
-                        {
-                            from.CloseGump(typeof(SetupBarsMonk1));
-                            from.SendGump(new SetupBarsMonk1(from, 1));
-                            break;
-                        }
+                    {
+                        from.CloseGump(typeof(SetupBarsMonk1));
+                        from.SendGump(new SetupBarsMonk1(from, 1));
+                        break;
+                    }
                     case 981:
-                        {
-                            from.CloseGump(typeof(SetupBarsMonk2));
-                            from.SendGump(new SetupBarsMonk2(from, 1));
-                            break;
-                        }
+                    {
+                        from.CloseGump(typeof(SetupBarsMonk2));
+                        from.SendGump(new SetupBarsMonk2(from, 1));
+                        break;
+                    }
                     case 978:
-                        {
-                            from.CloseGump(typeof(SetupBarsElement1));
-                            from.SendGump(new SetupBarsElement1(from, 1));
-                            break;
-                        }
+                    {
+                        from.CloseGump(typeof(SetupBarsElement1));
+                        from.SendGump(new SetupBarsElement1(from, 1));
+                        break;
+                    }
                     case 979:
-                        {
-                            from.CloseGump(typeof(SetupBarsElement2));
-                            from.SendGump(new SetupBarsElement2(from, 1));
-                            break;
-                        }
+                    {
+                        from.CloseGump(typeof(SetupBarsElement2));
+                        from.SendGump(new SetupBarsElement2(from, 1));
+                        break;
+                    }
                     case 500:
-                        {
-                            ((PlayerMobile)from).MagerySpellHue = 0x47E;
-                            from.SendGump(new Server.Engines.Help.HelpGump(from, 12));
-                            break;
-                        }
+                    {
+                        ((PlayerMobile)from).MagerySpellHue = 0x47E;
+                        from.SendGump(new Server.Engines.Help.HelpGump(from, 12));
+                        break;
+                    }
                     case 501:
-                        {
-                            ((PlayerMobile)from).MagerySpellHue = 0x94E;
-                            from.SendGump(new Server.Engines.Help.HelpGump(from, 12));
-                            break;
-                        }
+                    {
+                        ((PlayerMobile)from).MagerySpellHue = 0x94E;
+                        from.SendGump(new Server.Engines.Help.HelpGump(from, 12));
+                        break;
+                    }
                     case 502:
-                        {
-                            ((PlayerMobile)from).MagerySpellHue = 0x48D;
-                            from.SendGump(new Server.Engines.Help.HelpGump(from, 12));
-                            break;
-                        }
+                    {
+                        ((PlayerMobile)from).MagerySpellHue = 0x48D;
+                        from.SendGump(new Server.Engines.Help.HelpGump(from, 12));
+                        break;
+                    }
                     case 503:
-                        {
-                            ((PlayerMobile)from).MagerySpellHue = 0x48E;
-                            from.SendGump(new Server.Engines.Help.HelpGump(from, 12));
-                            break;
-                        }
+                    {
+                        ((PlayerMobile)from).MagerySpellHue = 0x48E;
+                        from.SendGump(new Server.Engines.Help.HelpGump(from, 12));
+                        break;
+                    }
                     case 504:
-                        {
-                            ((PlayerMobile)from).MagerySpellHue = 0x48F;
-                            from.SendGump(new Server.Engines.Help.HelpGump(from, 12));
-                            break;
-                        }
+                    {
+                        ((PlayerMobile)from).MagerySpellHue = 0x48F;
+                        from.SendGump(new Server.Engines.Help.HelpGump(from, 12));
+                        break;
+                    }
                     case 505:
-                        {
-                            ((PlayerMobile)from).MagerySpellHue = 0x490;
-                            from.SendGump(new Server.Engines.Help.HelpGump(from, 12));
-                            break;
-                        }
+                    {
+                        ((PlayerMobile)from).MagerySpellHue = 0x490;
+                        from.SendGump(new Server.Engines.Help.HelpGump(from, 12));
+                        break;
+                    }
                     case 506:
-                        {
-                            ((PlayerMobile)from).MagerySpellHue = 0x491;
-                            from.SendGump(new Server.Engines.Help.HelpGump(from, 12));
-                            break;
-                        }
+                    {
+                        ((PlayerMobile)from).MagerySpellHue = 0x491;
+                        from.SendGump(new Server.Engines.Help.HelpGump(from, 12));
+                        break;
+                    }
                     case 507:
-                        {
-                            ((PlayerMobile)from).MagerySpellHue = 0;
-                            from.SendGump(new Server.Engines.Help.HelpGump(from, 12));
-                            break;
-                        }
+                    {
+                        ((PlayerMobile)from).MagerySpellHue = 0;
+                        from.SendGump(new Server.Engines.Help.HelpGump(from, 12));
+                        break;
+                    }
                 }
             }
         }
@@ -3316,7 +3316,8 @@ namespace Server.Engines.Help
                 + "[skilllist - Displays a more condensed list of skills you have set to 'up' and perhaps 'locked'.<BR><BR>"
                 + "[spellhue ## - This command, following by a color reference hue number, will change all of your magery spell effects to that color. A value of '1' will normally render as '0' so avoid that setting as it will not produce the result you may want.<BR><BR>"
                 + "[statistics - Shows you some statistics of the server.<BR><BR>"
-                + "[wealth - Opens a small, horizontal bar showing your gold value for the various forms of currency and gold in your bank and backpack. Currency are items you would have a banker convert to gold for you (silver, copper, xormite, jewels, and crystals). If you put these items in your bank, you can update the values on the wealth bar by right clicking on it.<BR><BR>" + "<br><br>"
+                + "[wealth - Opens a small, horizontal bar showing your gold value for the various forms of currency and gold in your bank and backpack. Currency are items you would have a banker convert to gold for you (silver, copper, xormite, jewels, and crystals). If you put these items in your bank, you can update the values on the wealth bar by right clicking on it.<BR><BR>"
+                + "<br><br>"
                 + "Area Difficulty Levels: When you enter dangerous areas, you will receive a message indicating the specific area you have entered. In addition, there may be a difficulty level indicated in parentheses to provide an indication of the area's difficulty. Below are descriptions for each level.<br><br>"
                 + " - Easy (Not much of a challenge)<br><br>"
                 + " - Normal (An average level of<br>"

@@ -1,9 +1,9 @@
 using System;
-using Server;
 using System.Collections;
+using Server;
 using Server.Items;
-using Server.Targeting;
 using Server.Misc;
+using Server.Targeting;
 
 namespace Server.Mobiles
 {
@@ -149,7 +149,8 @@ namespace Server.Mobiles
                         c.DropItem(harv);
                     }
                     else if (
-                        GetPlayerInfo.LuckyKiller(killer.Luck) && Utility.RandomMinMax(1, 4) == 1
+                        GetPlayerInfo.LuckyKiller(killer.Luck)
+                        && Utility.RandomMinMax(1, 4) == 1
                     )
                     {
                         BaseWeapon axe = new Axe();

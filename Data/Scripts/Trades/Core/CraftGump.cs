@@ -2,8 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Server.Gumps;
-using Server.Network;
 using Server.Items;
+using Server.Network;
 
 namespace Server.Engines.Craft
 {

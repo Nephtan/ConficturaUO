@@ -1,8 +1,8 @@
 using System;
 using Server.Items;
+using Server.Mobiles;
 using Server.Network;
 using Server.Spells;
-using Server.Mobiles;
 
 namespace Server.Items
 {
@@ -298,7 +298,8 @@ namespace Server.Items
                     ammoType = "Throwing Cards";
                 }
                 else if (
-                    glove.GloveType == "Tomatoes" && Server.Misc.GetPlayerInfo.isJester(attacker)
+                    glove.GloveType == "Tomatoes"
+                    && Server.Misc.GetPlayerInfo.isJester(attacker)
                 )
                 {
                     ammoType = "Throwing Tomatoes";

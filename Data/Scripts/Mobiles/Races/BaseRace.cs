@@ -1,8 +1,8 @@
-using Server;
 using System;
-using Server.Mobiles;
-using Server.Misc;
 using System.Collections;
+using Server;
+using Server.Misc;
+using Server.Mobiles;
 
 namespace Server.Items
 {
@@ -404,7 +404,10 @@ namespace Server.Items
                     " Others from the sea dared not enter this magical portal, as it would allow you to join the surface world, but rob you of your ability to survive under the waves as you once did.";
             }
             else if (
-                rRace == "mummy" || rRace == "zombi" || rRace == "skeleton" || rRace == "revenant"
+                rRace == "mummy"
+                || rRace == "zombi"
+                || rRace == "skeleton"
+                || rRace == "revenant"
             )
             {
                 dead =

@@ -2,9 +2,9 @@ using System;
 using System.Collections;
 using Server.Items;
 using Server.Misc;
-using Server.Targeting;
-using Server.Regions;
 using Server.Mobiles;
+using Server.Regions;
+using Server.Targeting;
 
 namespace Server.Mobiles
 {

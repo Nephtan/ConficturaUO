@@ -1,10 +1,10 @@
 using System;
-using Server.Targeting;
-using Server.Network;
-using Server.Regions;
+using System.Collections;
 using Server.Items;
 using Server.Mobiles;
-using System.Collections;
+using Server.Network;
+using Server.Regions;
+using Server.Targeting;
 
 namespace Server.Spells.Jester
 {

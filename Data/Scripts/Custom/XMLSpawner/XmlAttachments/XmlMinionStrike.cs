@@ -1,10 +1,10 @@
 using System;
+using System.Collections;
 using Server;
 using Server.Items;
-using Server.Network;
 using Server.Mobiles;
+using Server.Network;
 using Server.Spells;
-using System.Collections;
 
 namespace Server.Engines.XmlSpawner2
 {

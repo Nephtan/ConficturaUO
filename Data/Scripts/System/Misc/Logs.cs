@@ -1,6 +1,13 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.IO;
+using System.Text;
+using Confictura.Custom;
+using Server;
 using Server.Accounting;
-using Server.Commands.Generic;
 using Server.Commands;
+using Server.Commands.Generic;
 using Server.Guilds;
 using Server.Gumps;
 using Server.Items;
@@ -8,13 +15,6 @@ using Server.Misc;
 using Server.Mobiles;
 using Server.Network;
 using Server.Regions;
-using Server;
-using System.Collections.Generic;
-using System.Collections;
-using System.IO;
-using System.Text;
-using System;
-using Confictura.Custom;
 
 namespace Server.Misc
 {

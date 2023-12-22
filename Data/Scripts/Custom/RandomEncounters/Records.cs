@@ -5,19 +5,19 @@
 //------------------------------------------------------------------------------
 using System;
 using System.Collections;
+using System.Globalization;
 using System.IO;
 using System.Xml;
-using System.Globalization;
 //------------------------------------------------------------------------------
 using Server;
-using Server.Misc;
-using Server.Items;
-using Server.Regions;
-using Server.Mobiles;
-using Server.Targeting;
 using Server.Accounting;
-using Server.Network;
 using Server.Engines.XmlSpawner2;
+using Server.Items;
+using Server.Misc;
+using Server.Mobiles;
+using Server.Network;
+using Server.Regions;
+using Server.Targeting;
 
 //------------------------------------------------------------------------------
 namespace Server.Misc
@@ -535,8 +535,8 @@ namespace Server.Misc
         public void DumpAll()
         {
             foreach (EncounterSet encounterSet in m_PossibleEncounters)
-                foreach (RandomEncounter encounter in encounterSet)
-                    RandomEncounterEngine.DumpEncounter(1, encounter);
+            foreach (RandomEncounter encounter in encounterSet)
+                RandomEncounterEngine.DumpEncounter(1, encounter);
         }
     }
 }

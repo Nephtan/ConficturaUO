@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using Server.Multis;
-using Server.Items;
 using Server.Gumps;
+using Server.Items;
+using Server.Multis;
 
 namespace Server.Misc
 {
@@ -99,7 +99,11 @@ namespace Server.Misc
                 color = 0x9BB;
             }
             else if (
-                item == 0x224A || item == 0x224B || item == 0xCFE || item == 0xD01 || item == 0x224D
+                item == 0x224A
+                || item == 0x224B
+                || item == 0xCFE
+                || item == 0xD01
+                || item == 0x224D
             )
             {
                 color = Utility.RandomList(0xB3A, 0xB25, 0xB26, 0xACE, 0xABF, 0xB70);
@@ -2903,7 +2907,9 @@ namespace Server.Misc
                 );
             }
             else if (
-                m_ItemTitle == "iron gate" || m_ItemTitle == "wooden gate" || m_ItemTitle == "door"
+                m_ItemTitle == "iron gate"
+                || m_ItemTitle == "wooden gate"
+                || m_ItemTitle == "door"
             )
             {
                 gump.AddHtml(

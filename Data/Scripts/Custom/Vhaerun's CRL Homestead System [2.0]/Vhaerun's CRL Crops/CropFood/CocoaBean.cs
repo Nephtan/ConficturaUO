@@ -1,10 +1,10 @@
 using System;
-using System.IO;
 using System.Collections;
+using System.IO;
 using Server;
 using Server.Items;
-using Server.Targeting;
 using Server.Network;
+using Server.Targeting;
 
 namespace Server.Items
 {

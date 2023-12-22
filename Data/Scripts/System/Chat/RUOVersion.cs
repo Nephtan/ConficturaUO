@@ -12,7 +12,6 @@ using System;
 using System.Collections;
 using Server;
 using Server.Network;
-
 #if (RunUO_2_RC1)
 using Server.Commands;
 #endif

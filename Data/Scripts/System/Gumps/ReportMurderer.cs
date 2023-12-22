@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
 using Server.Misc;
-using Server.Network;
 using Server.Mobiles;
+using Server.Network;
 
 namespace Server.Gumps
 {
@@ -172,49 +172,49 @@ namespace Server.Gumps
             switch (info.ButtonID)
             {
                 case 1:
+                {
+                    Mobile killer = m_Killers[m_Idx];
+                    if (killer != null && !killer.Deleted)
                     {
-                        Mobile killer = m_Killers[m_Idx];
-                        if (killer != null && !killer.Deleted)
+                        killer.Kills++;
+                        killer.ShortTermMurders++;
+
+                        if (Core.SE)
                         {
-                            killer.Kills++;
-                            killer.ShortTermMurders++;
+                            ((PlayerMobile)from).RecentlyReported.Add(killer);
+                            Timer.DelayCall(
+                                TimeSpan.FromMinutes(10),
+                                new TimerStateCallback(ReportedListExpiry_Callback),
+                                new object[] { from, killer }
+                            );
+                        }
 
-                            if (Core.SE)
+                        if (killer is PlayerMobile)
+                        {
+                            PlayerMobile pk = (PlayerMobile)killer;
+                            pk.ResetKillTime();
+                            pk.SendLocalizedMessage(1049067); //You have been reported for murder!
+
+                            if (pk.Kills == 5)
                             {
-                                ((PlayerMobile)from).RecentlyReported.Add(killer);
-                                Timer.DelayCall(
-                                    TimeSpan.FromMinutes(10),
-                                    new TimerStateCallback(ReportedListExpiry_Callback),
-                                    new object[] { from, killer }
-                                );
+                                pk.SendLocalizedMessage(502134); //You are now known as a murderer!
                             }
-
-                            if (killer is PlayerMobile)
+                            else if (
+                                SkillHandlers.Stealing.SuspendOnMurder
+                                && pk.Kills == 1
+                                && pk.NpcGuild == NpcGuild.ThievesGuild
+                            )
                             {
-                                PlayerMobile pk = (PlayerMobile)killer;
-                                pk.ResetKillTime();
-                                pk.SendLocalizedMessage(1049067); //You have been reported for murder!
-
-                                if (pk.Kills == 5)
-                                {
-                                    pk.SendLocalizedMessage(502134); //You are now known as a murderer!
-                                }
-                                else if (
-                                    SkillHandlers.Stealing.SuspendOnMurder
-                                    && pk.Kills == 1
-                                    && pk.NpcGuild == NpcGuild.ThievesGuild
-                                )
-                                {
-                                    pk.SendLocalizedMessage(501562); // You have been suspended by the Thieves Guild.
-                                }
+                                pk.SendLocalizedMessage(501562); // You have been suspended by the Thieves Guild.
                             }
                         }
-                        break;
                     }
+                    break;
+                }
                 case 2:
-                    {
-                        break;
-                    }
+                {
+                    break;
+                }
             }
 
             m_Idx++;

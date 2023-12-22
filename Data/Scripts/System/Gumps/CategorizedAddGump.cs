@@ -1,9 +1,9 @@
 using System;
+using System.Collections;
 using System.IO;
 using System.Xml;
-using System.Collections;
-using Server.Network;
 using Server.Commands;
+using Server.Network;
 
 namespace Server.Gumps
 {

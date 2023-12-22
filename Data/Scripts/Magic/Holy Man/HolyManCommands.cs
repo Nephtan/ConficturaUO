@@ -1,12 +1,12 @@
 using System;
-using Server;
-using Server.Items;
 using System.Text;
+using Server;
+using Server.Commands;
+using Server.Items;
 using Server.Mobiles;
 using Server.Network;
 using Server.Spells;
 using Server.Spells.HolyMan;
-using Server.Commands;
 
 namespace Server.Scripts.Commands
 {

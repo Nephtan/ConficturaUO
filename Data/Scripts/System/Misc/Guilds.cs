@@ -1,5 +1,10 @@
-using Server.Commands.Generic;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.IO;
+using Server;
 using Server.Commands;
+using Server.Commands.Generic;
 using Server.Factions;
 using Server.Guilds;
 using Server.Gumps;
@@ -10,11 +15,6 @@ using Server.Network;
 using Server.Prompts;
 using Server.Regions;
 using Server.Targeting;
-using Server;
-using System.Collections.Generic;
-using System.Collections;
-using System.IO;
-using System;
 
 namespace Server.Guilds
 {

@@ -1,11 +1,11 @@
 using System;
 using Server;
 using Server.Commands;
+using Server.Items;
+using Server.Misc;
+using Server.Mobiles;
 using Server.Network;
 using Server.Prompts;
-using Server.Mobiles;
-using Server.Misc;
-using Server.Items;
 
 namespace Server.Items
 {

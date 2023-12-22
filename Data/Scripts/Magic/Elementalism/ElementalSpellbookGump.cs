@@ -4,9 +4,9 @@ using Server;
 using Server.Items;
 using Server.Misc;
 using Server.Network;
+using Server.Prompts;
 using Server.Spells;
 using Server.Spells.Elementalism;
-using Server.Prompts;
 
 namespace Server.Gumps
 {

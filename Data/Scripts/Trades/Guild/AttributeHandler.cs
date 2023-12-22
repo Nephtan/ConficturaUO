@@ -993,7 +993,8 @@ namespace Server.Items
                     allowed = false;
 
                 if (
-                    Name == "MageArmor" && armor.MeditationAllowance == ArmorMeditationAllowance.All
+                    Name == "MageArmor"
+                    && armor.MeditationAllowance == ArmorMeditationAllowance.All
                 )
                     allowed = true;
 

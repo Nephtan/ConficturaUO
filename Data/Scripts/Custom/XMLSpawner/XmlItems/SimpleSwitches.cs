@@ -108,7 +108,7 @@ namespace Server.Items
         }
 
         [CommandProperty(AccessLevel.GameMaster)]
-        new public virtual Direction Direction
+        public new virtual Direction Direction
         {
             get { return base.Direction; }
             set
@@ -513,7 +513,7 @@ namespace Server.Items
         }
 
         [CommandProperty(AccessLevel.GameMaster)]
-        new public virtual Direction Direction
+        public new virtual Direction Direction
         {
             get { return base.Direction; }
             set

@@ -1,11 +1,11 @@
 using System;
-using Server;
 using System.Collections;
-using Server.Targeting;
-using Server.Mobiles;
-using Server.Items;
+using Server;
 using Server.Gumps;
+using Server.Items;
+using Server.Mobiles;
 using Server.Network;
+using Server.Targeting;
 
 namespace Server.Items
 {

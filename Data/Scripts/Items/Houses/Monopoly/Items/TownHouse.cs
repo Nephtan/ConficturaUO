@@ -78,9 +78,9 @@ namespace Knives.TownHouses
 
             c_Sectors.Clear();
             for (int x = minX; x < maxX; ++x)
-                for (int y = minY; y < maxY; ++y)
-                    if (!c_Sectors.Contains(Map.GetSector(new Point2D(x, y))))
-                        c_Sectors.Add(Map.GetSector(new Point2D(x, y)));
+            for (int y = minY; y < maxY; ++y)
+                if (!c_Sectors.Contains(Map.GetSector(new Point2D(x, y))))
+                    c_Sectors.Add(Map.GetSector(new Point2D(x, y)));
 
             foreach (Sector sector in c_Sectors)
                 sector.OnMultiEnter(this);
@@ -203,7 +203,9 @@ namespace Knives.TownHouses
                 return;
 
             if (
-                ((Mobile)o).Target is HouseBanTarget && ForSaleSign != null && ForSaleSign.NoBanning
+                ((Mobile)o).Target is HouseBanTarget
+                && ForSaleSign != null
+                && ForSaleSign.NoBanning
             )
             {
                 ((Mobile)o).Target.Cancel((Mobile)o, TargetCancelType.Canceled);

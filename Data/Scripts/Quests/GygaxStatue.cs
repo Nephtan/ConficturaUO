@@ -1,12 +1,12 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using Server;
+using Server.Gumps;
 using Server.Items;
 using Server.Misc;
-using System.Collections.Generic;
-using System.Collections;
-using Server.Network;
 using Server.Mobiles;
-using Server.Gumps;
+using Server.Network;
 
 namespace Server.Items
 {

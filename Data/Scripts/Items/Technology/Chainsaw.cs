@@ -1,9 +1,9 @@
 using System;
-using Server;
-using Server.Network;
 using System.Text;
+using Server;
 using Server.Items;
 using Server.Mobiles;
+using Server.Network;
 using Server.Targeting;
 
 namespace Server.Items
@@ -144,7 +144,8 @@ namespace Server.Items
                     double maxSkill = difficulty + 25.0;
 
                     if (
-                        difficulty > 50.0 && difficulty > from.Skills[SkillName.Lumberjacking].Value
+                        difficulty > 50.0
+                        && difficulty > from.Skills[SkillName.Lumberjacking].Value
                     )
                     {
                         from.SendMessage("You have no idea how to best cut this type of wood!");

@@ -1,16 +1,16 @@
 using System;
 using System.Collections;
+using System.Net;
 using Server;
+using Server.Accounting;
+using Server.Commands;
+using Server.Gumps;
 using Server.Items;
+using Server.Mobiles;
 using Server.Network;
 using Server.Prompts;
-using System.Net;
-using Server.Accounting;
-using Server.Mobiles;
-using Server.Commands;
 using Server.Regions;
 using Server.Spells;
-using Server.Gumps;
 using Server.Targeting;
 
 namespace Server.Items

@@ -1,10 +1,10 @@
 using System;
 using Server;
+using Server.Engines.VeteranRewards;
 using Server.Gumps;
 using Server.Multis;
 using Server.Network;
 using Server.Targeting;
-using Server.Engines.VeteranRewards;
 
 namespace Server.Items
 {

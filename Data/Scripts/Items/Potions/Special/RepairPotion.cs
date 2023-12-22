@@ -1,9 +1,9 @@
 using System;
-using Server.Network;
 using Server;
-using Server.Targets;
-using Server.Targeting;
 using Server.Items;
+using Server.Network;
+using Server.Targeting;
+using Server.Targets;
 
 namespace Server.Items
 {
@@ -74,7 +74,8 @@ namespace Server.Items
                         from.SendLocalizedMessage(1044275); // The item must be in your backpack to repair it.
                     }
                     else if (
-                        repairing.MaxHitPoints <= 0 || repairing.HitPoints == repairing.MaxHitPoints
+                        repairing.MaxHitPoints <= 0
+                        || repairing.HitPoints == repairing.MaxHitPoints
                     )
                     {
                         from.SendLocalizedMessage(1044281); // That item is in full repair

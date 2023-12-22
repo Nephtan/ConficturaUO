@@ -1,13 +1,13 @@
 using System;
+using System.Collections.Generic;
 using Server;
+using Server.Items;
 using Server.Mobiles;
 using Server.Network;
-using Server.Targeting;
-using System.Collections.Generic;
-using Server.Items;
 using Server.Spells;
 using Server.Spells.Necromancy;
 using Server.Spells.Ninjitsu;
+using Server.Targeting;
 
 namespace Server.Spells.Undead
 {

@@ -1,8 +1,8 @@
 using System;
 using System.Collections;
 using Server;
-using Server.Items;
 using Server.Guilds;
+using Server.Items;
 using Server.Network;
 
 namespace Server.Gumps

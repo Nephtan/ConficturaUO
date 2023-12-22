@@ -1,9 +1,9 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using Server;
 using Server.Gumps;
 using Server.Network;
-using System.Collections;
-using System.Collections.Generic;
 using Server.Regions;
 
 namespace Server.Items

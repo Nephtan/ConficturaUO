@@ -1,17 +1,17 @@
 #define FACTIONS
 using System;
+using System.Collections;
 using System.IO;
+using System.Text;
 using System.Xml;
 using Server;
-using Server.Items;
-using Server.Network;
-using Server.Mobiles;
-using System.Collections;
-using Server.Targeting;
-using Server.Gumps;
-using System.Text;
 using Server.Commands;
 using Server.Commands.Generic;
+using Server.Gumps;
+using Server.Items;
+using Server.Mobiles;
+using Server.Network;
+using Server.Targeting;
 
 namespace Server.Engines.XmlSpawner2
 {
@@ -220,7 +220,11 @@ namespace Server.Engines.XmlSpawner2
                 XmlQuestPoints a = r.QuestPointsAttachment;
 
                 if (
-                    r.Quester != null && !r.Quester.Deleted && r.Rank > 0 && a != null && !a.Deleted
+                    r.Quester != null
+                    && !r.Quester.Deleted
+                    && r.Rank > 0
+                    && a != null
+                    && !a.Deleted
                 )
                 {
                     string guildname = null;
@@ -335,7 +339,11 @@ namespace Server.Engines.XmlSpawner2
                 XmlQuestPoints a = r.QuestPointsAttachment;
 
                 if (
-                    r.Quester != null && !r.Quester.Deleted && r.Rank > 0 && a != null && !a.Deleted
+                    r.Quester != null
+                    && !r.Quester.Deleted
+                    && r.Rank > 0
+                    && a != null
+                    && !a.Deleted
                 )
                 {
                     string guildname = null;

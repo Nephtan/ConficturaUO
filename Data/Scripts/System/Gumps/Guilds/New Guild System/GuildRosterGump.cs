@@ -1,12 +1,12 @@
 using System;
-using Server;
-using Server.Gumps;
-using Server.Network;
-using Server.Mobiles;
 using System.Collections;
-using Server.Targets;
-using Server.Factions;
 using System.Collections.Generic;
+using Server;
+using Server.Factions;
+using Server.Gumps;
+using Server.Mobiles;
+using Server.Network;
+using Server.Targets;
 
 namespace Server.Guilds
 {

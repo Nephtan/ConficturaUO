@@ -50,10 +50,10 @@ m_stoptimer indicates whether the hive should stop "buzzing" even after it's ful
 using System;
 using Server;
 using Server.Items;
+using Server.Mobiles;
+using Server.Network;
 using Server.Prompts;
 using Server.Targeting;
-using Server.Network;
-using Server.Mobiles;
 
 namespace Server.Items
 {

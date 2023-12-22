@@ -2,21 +2,21 @@
 #define BOOKTEXTENTRY
 
 using System;
-using System.Data;
-using System.IO;
 using System.Collections;
 using System.Collections.Generic;
+using System.Data;
+using System.IO;
+using System.Reflection;
+using System.Text;
+using System.Xml;
 using Server;
+using Server.Commands;
+using Server.Gumps;
 using Server.Items;
 using Server.Network;
-using Server.Gumps;
-using Server.Targeting;
-using System.Reflection;
-using Server.Commands;
-using CPA = Server.CommandPropertyAttribute;
-using System.Xml;
 using Server.Spells;
-using System.Text;
+using Server.Targeting;
+using CPA = Server.CommandPropertyAttribute;
 
 /*
 ** Changelog
@@ -1728,8 +1728,9 @@ namespace Server.Mobiles
                     {
                         int index = info.ButtonID - 300;
                         if (index < m_Spawner.SpawnObjects.Length)
-                            m_Spawner.SpawnObjects[index].RestrictKillsToSubgroup =
-                                !m_Spawner.SpawnObjects[index].RestrictKillsToSubgroup;
+                            m_Spawner.SpawnObjects[index].RestrictKillsToSubgroup = !m_Spawner
+                                .SpawnObjects[index]
+                                .RestrictKillsToSubgroup;
                     }
                     else
                     // check the clear on advance flag
@@ -1737,9 +1738,9 @@ namespace Server.Mobiles
                     {
                         int index = info.ButtonID - 400;
                         if (index < m_Spawner.SpawnObjects.Length)
-                            m_Spawner.SpawnObjects[index].ClearOnAdvance = !m_Spawner.SpawnObjects[
-                                index
-                            ].ClearOnAdvance;
+                            m_Spawner.SpawnObjects[index].ClearOnAdvance = !m_Spawner
+                                .SpawnObjects[index]
+                                .ClearOnAdvance;
                     }
                     else
                     // text entry gump scroll buttons
@@ -1869,9 +1870,9 @@ namespace Server.Mobiles
 
                         if (index < m_Spawner.SpawnObjects.Length)
                         {
-                            m_Spawner.SpawnObjects[index].Disabled = !m_Spawner.SpawnObjects[
-                                index
-                            ].Disabled;
+                            m_Spawner.SpawnObjects[index].Disabled = !m_Spawner
+                                .SpawnObjects[index]
+                                .Disabled;
 
                             // clear any current spawns on the disabled entry
                             if (m_Spawner.SpawnObjects[index].Disabled)

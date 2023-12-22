@@ -1,11 +1,11 @@
 using System;
 using System.Collections;
 using Server;
-using Server.Targeting;
-using Server.Network;
-using Server.Mobiles;
 using Server.Factions;
+using Server.Mobiles;
+using Server.Network;
 using Server.Spells;
+using Server.Targeting;
 
 namespace Server.SkillHandlers
 {
@@ -359,7 +359,9 @@ namespace Server.SkillHandlers
                         Stop();
                     }
                     else if (
-                        !m_Tamer.CanSee(m_Creature) || !m_Tamer.InLOS(m_Creature) || !CanPath()
+                        !m_Tamer.CanSee(m_Creature)
+                        || !m_Tamer.InLOS(m_Creature)
+                        || !CanPath()
                     )
                     {
                         m_BeingTamed.Remove(m_Creature);

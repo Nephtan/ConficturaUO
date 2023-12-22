@@ -1,9 +1,9 @@
 using System;
-using System.Text;
 using System.Collections;
+using System.Text;
 using Server.Network;
-using Server.Targeting;
 using Server.Spells;
+using Server.Targeting;
 
 namespace Server.Items
 {

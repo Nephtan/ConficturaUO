@@ -1,8 +1,8 @@
 using System;
 using Server;
+using Server.Factions;
 using Server.Misc;
 using Server.Mobiles;
-using Server.Factions;
 
 namespace Server.Misc
 {
@@ -791,59 +791,59 @@ namespace Server.Misc
             switch (stat)
             {
                 case Stat.Str:
+                {
+                    if (atrophy)
                     {
-                        if (atrophy)
-                        {
-                            if (
-                                CanLower(from, Stat.Dex)
-                                && (from.RawDex < from.RawInt || !CanLower(from, Stat.Int))
-                            )
-                                --from.RawDex;
-                            else if (CanLower(from, Stat.Int))
-                                --from.RawInt;
-                        }
-
-                        if (CanRaise(from, Stat.Str))
-                            ++from.RawStr;
-
-                        break;
+                        if (
+                            CanLower(from, Stat.Dex)
+                            && (from.RawDex < from.RawInt || !CanLower(from, Stat.Int))
+                        )
+                            --from.RawDex;
+                        else if (CanLower(from, Stat.Int))
+                            --from.RawInt;
                     }
+
+                    if (CanRaise(from, Stat.Str))
+                        ++from.RawStr;
+
+                    break;
+                }
                 case Stat.Dex:
+                {
+                    if (atrophy)
                     {
-                        if (atrophy)
-                        {
-                            if (
-                                CanLower(from, Stat.Str)
-                                && (from.RawStr < from.RawInt || !CanLower(from, Stat.Int))
-                            )
-                                --from.RawStr;
-                            else if (CanLower(from, Stat.Int))
-                                --from.RawInt;
-                        }
-
-                        if (CanRaise(from, Stat.Dex))
-                            ++from.RawDex;
-
-                        break;
+                        if (
+                            CanLower(from, Stat.Str)
+                            && (from.RawStr < from.RawInt || !CanLower(from, Stat.Int))
+                        )
+                            --from.RawStr;
+                        else if (CanLower(from, Stat.Int))
+                            --from.RawInt;
                     }
+
+                    if (CanRaise(from, Stat.Dex))
+                        ++from.RawDex;
+
+                    break;
+                }
                 case Stat.Int:
+                {
+                    if (atrophy)
                     {
-                        if (atrophy)
-                        {
-                            if (
-                                CanLower(from, Stat.Str)
-                                && (from.RawStr < from.RawDex || !CanLower(from, Stat.Dex))
-                            )
-                                --from.RawStr;
-                            else if (CanLower(from, Stat.Dex))
-                                --from.RawDex;
-                        }
-
-                        if (CanRaise(from, Stat.Int))
-                            ++from.RawInt;
-
-                        break;
+                        if (
+                            CanLower(from, Stat.Str)
+                            && (from.RawStr < from.RawDex || !CanLower(from, Stat.Dex))
+                        )
+                            --from.RawStr;
+                        else if (CanLower(from, Stat.Dex))
+                            --from.RawDex;
                     }
+
+                    if (CanRaise(from, Stat.Int))
+                        ++from.RawInt;
+
+                    break;
+                }
             }
         }
 
@@ -865,44 +865,44 @@ namespace Server.Misc
             switch (stat)
             {
                 case Stat.Str:
+                {
+                    if (from is BaseCreature && ((BaseCreature)from).Controlled)
                     {
-                        if (from is BaseCreature && ((BaseCreature)from).Controlled)
-                        {
-                            if ((from.LastStrGain + m_PetStatGainDelay) >= DateTime.Now)
-                                return;
-                        }
-                        else if ((from.LastStrGain + m_StatGainDelay) >= DateTime.Now)
+                        if ((from.LastStrGain + m_PetStatGainDelay) >= DateTime.Now)
                             return;
-
-                        from.LastStrGain = DateTime.Now;
-                        break;
                     }
+                    else if ((from.LastStrGain + m_StatGainDelay) >= DateTime.Now)
+                        return;
+
+                    from.LastStrGain = DateTime.Now;
+                    break;
+                }
                 case Stat.Dex:
+                {
+                    if (from is BaseCreature && ((BaseCreature)from).Controlled)
                     {
-                        if (from is BaseCreature && ((BaseCreature)from).Controlled)
-                        {
-                            if ((from.LastDexGain + m_PetStatGainDelay) >= DateTime.Now)
-                                return;
-                        }
-                        else if ((from.LastDexGain + m_StatGainDelay) >= DateTime.Now)
+                        if ((from.LastDexGain + m_PetStatGainDelay) >= DateTime.Now)
                             return;
-
-                        from.LastDexGain = DateTime.Now;
-                        break;
                     }
+                    else if ((from.LastDexGain + m_StatGainDelay) >= DateTime.Now)
+                        return;
+
+                    from.LastDexGain = DateTime.Now;
+                    break;
+                }
                 case Stat.Int:
+                {
+                    if (from is BaseCreature && ((BaseCreature)from).Controlled)
                     {
-                        if (from is BaseCreature && ((BaseCreature)from).Controlled)
-                        {
-                            if ((from.LastIntGain + m_PetStatGainDelay) >= DateTime.Now)
-                                return;
-                        }
-                        else if ((from.LastIntGain + m_StatGainDelay) >= DateTime.Now)
+                        if ((from.LastIntGain + m_PetStatGainDelay) >= DateTime.Now)
                             return;
-
-                        from.LastIntGain = DateTime.Now;
-                        break;
                     }
+                    else if ((from.LastIntGain + m_StatGainDelay) >= DateTime.Now)
+                        return;
+
+                    from.LastIntGain = DateTime.Now;
+                    break;
+                }
             }
 
             bool atrophy = ((from.RawStatTotal / (double)from.StatCap) >= Utility.RandomDouble());

@@ -3,8 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using Server;
 using Server.ContextMenus;
-using Server.Targeting;
 using Server.Network;
+using Server.Targeting;
 
 namespace Server.Items
 {

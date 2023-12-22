@@ -1,7 +1,7 @@
 using System;
+using System.IO;
 using System.Xml.Serialization;
 using Server.Items;
-using System.IO;
 
 /*
  * This book is specifically used for Xml Serialization/Deserialization
@@ -146,21 +146,21 @@ namespace Server.Engines.Publisher
         {
             int count = 0;
             for (int i = 0; i < publishedBook.Pages.Length; i++)
-                for (int j = 0; j < publishedBook.Pages[i].Lines.Length; j++)
-                    if (publishedBook.Pages[i].Lines[j].Trim() != string.Empty)
-                        count++;
+            for (int j = 0; j < publishedBook.Pages[i].Lines.Length; j++)
+                if (publishedBook.Pages[i].Lines[j].Trim() != string.Empty)
+                    count++;
             book.Contents = new XmlBook.Content[count];
             count = 0;
             for (int i = 0; i < publishedBook.Pages.Length; i++)
-                for (int j = 0; j < publishedBook.Pages[i].Lines.Length; j++)
-                    if (publishedBook.Pages[i].Lines[j].Trim() != string.Empty)
-                    {
-                        book.Contents[count] = new XmlBook.Content();
-                        book.Contents[count].Line = j + 1;
-                        book.Contents[count].Page = i + 1;
-                        book.Contents[count].Text = publishedBook.Pages[i].Lines[j];
-                        count++;
-                    }
+            for (int j = 0; j < publishedBook.Pages[i].Lines.Length; j++)
+                if (publishedBook.Pages[i].Lines[j].Trim() != string.Empty)
+                {
+                    book.Contents[count] = new XmlBook.Content();
+                    book.Contents[count].Line = j + 1;
+                    book.Contents[count].Page = i + 1;
+                    book.Contents[count].Text = publishedBook.Pages[i].Lines[j];
+                    count++;
+                }
         }
 
         public static string[] RandomBookIds(int max)

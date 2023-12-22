@@ -3,26 +3,26 @@
 //#define RESTRICTCONSTRUCTABLE
 
 using System;
-using System.Data;
-using System.IO;
 using System.Collections;
 using System.Collections.Generic;
-using Server;
-using Server.Items;
-using Server.Network;
-using Server.Gumps;
-using Server.Targeting;
+using System.Data;
+using System.Diagnostics;
+using System.IO;
 using System.Reflection;
+using System.Text;
+using System.Xml;
+using Server;
+using Server.Accounting;
 using Server.Commands;
 using Server.Commands.Generic;
-using CPA = Server.CommandPropertyAttribute;
-using System.Xml;
-using Server.Spells;
-using System.Text;
-using Server.Accounting;
-using System.Diagnostics;
-using Server.Misc;
 using Server.Engines.XmlSpawner2;
+using Server.Gumps;
+using Server.Items;
+using Server.Misc;
+using Server.Network;
+using Server.Spells;
+using Server.Targeting;
+using CPA = Server.CommandPropertyAttribute;
 
 /*
 ** XmlSpawner2
@@ -3408,73 +3408,73 @@ namespace Server.Mobiles
                     Console.WriteLine(
                         "\t{0} : {1}",
                         (SkillName)i,
-                        XmlSpawnerSkillCheck.RegisteredSkill
-                            .TriggerList((SkillName)i, Map.Lodor)
+                        XmlSpawnerSkillCheck
+                            .RegisteredSkill.TriggerList((SkillName)i, Map.Lodor)
                             .Count
                     );
 
-                count += XmlSpawnerSkillCheck.RegisteredSkill
-                    .TriggerList((SkillName)i, Map.Lodor)
+                count += XmlSpawnerSkillCheck
+                    .RegisteredSkill.TriggerList((SkillName)i, Map.Lodor)
                     .Count;
             }
             Console.WriteLine("Sosaria");
             for (int i = 0; i < XmlSpawnerSkillCheck.RegisteredSkill.MaxSkills + 1; i++)
             {
                 if (
-                    XmlSpawnerSkillCheck.RegisteredSkill
-                        .TriggerList((SkillName)i, Map.Sosaria)
+                    XmlSpawnerSkillCheck
+                        .RegisteredSkill.TriggerList((SkillName)i, Map.Sosaria)
                         .Count > 0
                 )
                     Console.WriteLine(
                         "\t{0} : {1}",
                         (SkillName)i,
-                        XmlSpawnerSkillCheck.RegisteredSkill
-                            .TriggerList((SkillName)i, Map.Sosaria)
+                        XmlSpawnerSkillCheck
+                            .RegisteredSkill.TriggerList((SkillName)i, Map.Sosaria)
                             .Count
                     );
 
-                count += XmlSpawnerSkillCheck.RegisteredSkill
-                    .TriggerList((SkillName)i, Map.Sosaria)
+                count += XmlSpawnerSkillCheck
+                    .RegisteredSkill.TriggerList((SkillName)i, Map.Sosaria)
                     .Count;
             }
             Console.WriteLine("Underworld");
             for (int i = 0; i < XmlSpawnerSkillCheck.RegisteredSkill.MaxSkills + 1; i++)
             {
                 if (
-                    XmlSpawnerSkillCheck.RegisteredSkill
-                        .TriggerList((SkillName)i, Map.Underworld)
+                    XmlSpawnerSkillCheck
+                        .RegisteredSkill.TriggerList((SkillName)i, Map.Underworld)
                         .Count > 0
                 )
                     Console.WriteLine(
                         "\t{0} : {1}",
                         (SkillName)i,
-                        XmlSpawnerSkillCheck.RegisteredSkill
-                            .TriggerList((SkillName)i, Map.Underworld)
+                        XmlSpawnerSkillCheck
+                            .RegisteredSkill.TriggerList((SkillName)i, Map.Underworld)
                             .Count
                     );
 
-                count += XmlSpawnerSkillCheck.RegisteredSkill
-                    .TriggerList((SkillName)i, Map.Underworld)
+                count += XmlSpawnerSkillCheck
+                    .RegisteredSkill.TriggerList((SkillName)i, Map.Underworld)
                     .Count;
             }
             Console.WriteLine("SerpentIsland");
             for (int i = 0; i < XmlSpawnerSkillCheck.RegisteredSkill.MaxSkills + 1; i++)
             {
                 if (
-                    XmlSpawnerSkillCheck.RegisteredSkill
-                        .TriggerList((SkillName)i, Map.SerpentIsland)
+                    XmlSpawnerSkillCheck
+                        .RegisteredSkill.TriggerList((SkillName)i, Map.SerpentIsland)
                         .Count > 0
                 )
                     Console.WriteLine(
                         "\t{0} : {1}",
                         (SkillName)i,
-                        XmlSpawnerSkillCheck.RegisteredSkill
-                            .TriggerList((SkillName)i, Map.SerpentIsland)
+                        XmlSpawnerSkillCheck
+                            .RegisteredSkill.TriggerList((SkillName)i, Map.SerpentIsland)
                             .Count
                     );
 
-                count += XmlSpawnerSkillCheck.RegisteredSkill
-                    .TriggerList((SkillName)i, Map.SerpentIsland)
+                count += XmlSpawnerSkillCheck
+                    .RegisteredSkill.TriggerList((SkillName)i, Map.SerpentIsland)
                     .Count;
             }
 
@@ -3482,20 +3482,20 @@ namespace Server.Mobiles
             for (int i = 0; i < XmlSpawnerSkillCheck.RegisteredSkill.MaxSkills + 1; i++)
             {
                 if (
-                    XmlSpawnerSkillCheck.RegisteredSkill
-                        .TriggerList((SkillName)i, Map.IslesDread)
+                    XmlSpawnerSkillCheck
+                        .RegisteredSkill.TriggerList((SkillName)i, Map.IslesDread)
                         .Count > 0
                 )
                     Console.WriteLine(
                         "\t{0} : {1}",
                         (SkillName)i,
-                        XmlSpawnerSkillCheck.RegisteredSkill
-                            .TriggerList((SkillName)i, Map.IslesDread)
+                        XmlSpawnerSkillCheck
+                            .RegisteredSkill.TriggerList((SkillName)i, Map.IslesDread)
                             .Count
                     );
 
-                count += XmlSpawnerSkillCheck.RegisteredSkill
-                    .TriggerList((SkillName)i, Map.IslesDread)
+                count += XmlSpawnerSkillCheck
+                    .RegisteredSkill.TriggerList((SkillName)i, Map.IslesDread)
                     .Count;
             }
 
@@ -3547,9 +3547,9 @@ namespace Server.Mobiles
         {
             if (index < MaxTraces)
             {
-                XmlSpawner._traceTotal[index] = XmlSpawner._traceTotal[index].Add(
-                    DateTime.Now - _traceStart[index]
-                );
+                XmlSpawner._traceTotal[index] = XmlSpawner
+                    ._traceTotal[index]
+                    .Add(DateTime.Now - _traceStart[index]);
                 //XmlSpawner._traceTotal[index] = XmlSpawner._traceTotal[index].Add(Process.GetCurrentProcess().UserProcessorTime - _traceStart[index]);
                 XmlSpawner._traceCount[index]++;
             }
@@ -11501,7 +11501,10 @@ namespace Server.Mobiles
 
             // check for smart spawning
             if (
-                SmartSpawning && IsFull && !HasActiveSectors && !HasDamagedOrDistantSpawns /*&& !HasHoldSmartSpawning */
+                SmartSpawning
+                && IsFull
+                && !HasActiveSectors
+                && !HasDamagedOrDistantSpawns /*&& !HasHoldSmartSpawning */
             )
             {
                 IsInactivated = true;
@@ -13137,7 +13140,10 @@ namespace Server.Mobiles
                     )
                         return false;
                     else if (
-                        surface && !impassable && !item.Movable && z == (item.Z + id.CalcHeight)
+                        surface
+                        && !impassable
+                        && !item.Movable
+                        && z == (item.Z + id.CalcHeight)
                     )
                         hasSurface = true;
                 }
@@ -13260,9 +13266,9 @@ namespace Server.Mobiles
                     for (int i = 0; i < statictiles.Length; ++i)
                     {
                         StaticTile stile = statictiles[i];
-                        TileFlag sflags = TileData.ItemTable[
-                            stile.ID & TileData.MaxItemValue
-                        ].Flags;
+                        TileFlag sflags = TileData
+                            .ItemTable[stile.ID & TileData.MaxItemValue]
+                            .Flags;
 
                         if (includetilelist != null && includetilelist.Count > 0)
                         {

@@ -1,15 +1,15 @@
 using System;
-using Server;
-using Server.Network;
-using Server.Mobiles;
-using Server.Items;
-using Server.Spells;
-using System.Collections.Generic;
-using Server.Misc;
 using System.Collections;
-using System.Text;
+using System.Collections.Generic;
 using System.IO;
+using System.Text;
+using Server;
+using Server.Items;
+using Server.Misc;
+using Server.Mobiles;
+using Server.Network;
 using Server.Regions;
+using Server.Spells;
 using Server.Targeting;
 
 namespace Server.Items
@@ -773,7 +773,9 @@ namespace Server.Items
                         }
                     }
                     else if (
-                        nTrapType == 12 && SavingThrow(m, "Magic", true) == false && m.Fame > 0
+                        nTrapType == 12
+                        && SavingThrow(m, "Magic", true) == false
+                        && m.Fame > 0
                     ) // FAME TRAP
                     {
                         int FameLoss = (int)(m.Fame - (m.Fame * 0.20));
@@ -1271,7 +1273,9 @@ namespace Server.Items
                         sTrapType = textLog;
                     }
                     else if (
-                        nTrapType == 25 && m.Karma != 0 && SavingThrow(m, "Magic", true) == false
+                        nTrapType == 25
+                        && m.Karma != 0
+                        && SavingThrow(m, "Magic", true) == false
                     ) // ALIGNMENT TRAP
                     {
                         m.Karma = m.Karma * -1;

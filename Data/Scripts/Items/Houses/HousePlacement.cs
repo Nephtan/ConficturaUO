@@ -173,9 +173,9 @@ namespace Server.Multis
                         if (addTile.ID == 0x1) // Nodraw
                             continue;
 
-                        TileFlag addTileFlags = TileData.ItemTable[
-                            addTile.ID & TileData.MaxItemValue
-                        ].Flags;
+                        TileFlag addTileFlags = TileData
+                            .ItemTable[addTile.ID & TileData.MaxItemValue]
+                            .Flags;
 
                         bool isFoundation = (addTile.Z == 0 && (addTileFlags & TileFlag.Wall) != 0);
 
@@ -306,9 +306,9 @@ namespace Server.Multis
                                         if (
                                             breakTile.Height == 0
                                             && breakTile.Z <= 8
-                                            && TileData.ItemTable[
-                                                breakTile.ID & TileData.MaxItemValue
-                                            ].Surface
+                                            && TileData
+                                                .ItemTable[breakTile.ID & TileData.MaxItemValue]
+                                                .Surface
                                         )
                                             shouldBreak = true;
                                     }

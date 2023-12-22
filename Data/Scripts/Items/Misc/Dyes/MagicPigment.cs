@@ -1,10 +1,10 @@
-using Server;
 using System;
 using System.Collections;
-using Server.Network;
-using Server.Targeting;
-using Server.Prompts;
+using Server;
 using Server.Misc;
+using Server.Network;
+using Server.Prompts;
+using Server.Targeting;
 
 namespace Server.Items
 {
@@ -78,7 +78,9 @@ namespace Server.Items
                         from.SendMessage("You can only paint things in your pack.");
                     }
                     else if (
-                        (iDye.Stackable == true) || (iDye.ItemID == 8702) || (iDye.ItemID == 4011)
+                        (iDye.Stackable == true)
+                        || (iDye.ItemID == 8702)
+                        || (iDye.ItemID == 4011)
                     )
                     {
                         from.SendMessage("You cannot paint that.");

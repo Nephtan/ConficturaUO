@@ -1,13 +1,13 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
 using Server.Commands;
 using Server.Items;
 using Server.Misc;
 using Server.Mobiles;
 using Server.Network;
-using Server.Spells.Necromancy;
 using Server.Spells;
-using System.Collections.Generic;
-using System.Collections;
-using System;
+using Server.Spells.Necromancy;
 
 namespace Server.Gumps
 {

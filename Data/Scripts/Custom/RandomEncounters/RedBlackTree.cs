@@ -514,7 +514,8 @@ namespace System.Collections
                         fatherY = fatherX;
                         nodeY = fatherX.Right;
                         if ( /*nodeY != null && */
-                            nodeY.Color)
+                            nodeY.Color
+                        )
                         {
                             nodeY.Color = false;
                             fatherX.Color = true;
@@ -553,7 +554,8 @@ namespace System.Collections
                         fatherY = fatherX;
                         nodeY = fatherX.Left;
                         if ( /*nodeY != null &&*/
-                            nodeY.Color)
+                            nodeY.Color
+                        )
                         {
                             nodeY.Color = false;
                             fatherX.Color = true;

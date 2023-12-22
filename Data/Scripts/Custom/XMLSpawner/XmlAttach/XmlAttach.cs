@@ -1,23 +1,23 @@
 using System;
-using System.Text;
-using Server;
-using Server.Commands;
-using Server.Commands.Generic;
-using Server.Network;
 using System.Collections;
 using System.Collections.Generic;
-using Server.Mobiles;
-using Server.Targeting;
-using CPA = Server.CommandPropertyAttribute;
+using System.Diagnostics;
+using System.IO;
+using System.Net.Mail;
 using System.Reflection;
+using System.Text;
+using Server;
+using Server.Accounting;
+using Server.Commands;
+using Server.Commands.Generic;
+using Server.ContextMenus;
 using Server.Gumps;
 using Server.Items;
-using System.IO;
-using System.Diagnostics;
-using Server.Accounting;
-using System.Net.Mail;
 using Server.Misc;
-using Server.ContextMenus;
+using Server.Mobiles;
+using Server.Network;
+using Server.Targeting;
+using CPA = Server.CommandPropertyAttribute;
 
 namespace Server.Engines.XmlSpawner2
 {
@@ -1227,7 +1227,8 @@ namespace Server.Engines.XmlSpawner2
             Mobile from = args.Mobile;
 
             if (
-                from == null || from.Map == null /*|| from.AccessLevel > AccessLevel.Player */
+                from == null
+                || from.Map == null /*|| from.AccessLevel > AccessLevel.Player */
             )
                 return;
 
@@ -1259,7 +1260,10 @@ namespace Server.Engines.XmlSpawner2
                         foreach (XmlAttachment a in alist)
                         {
                             if (
-                                a != null && !a.Deleted && a.CanActivateInWorld && a.HandlesOnSpeech
+                                a != null
+                                && !a.Deleted
+                                && a.CanActivateInWorld
+                                && a.HandlesOnSpeech
                             )
                             {
                                 a.OnSpeech(args);

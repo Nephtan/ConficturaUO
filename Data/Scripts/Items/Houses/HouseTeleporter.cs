@@ -1,11 +1,11 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using Server;
+using Server.ContextMenus;
 using Server.Gumps;
 using Server.Multis;
 using Server.Targeting;
-using System.Collections.Generic;
-using Server.ContextMenus;
 
 namespace Server.Items
 {

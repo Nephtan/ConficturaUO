@@ -1,13 +1,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Server.Network;
 using Server.Engines.Craft;
-using Server.Targeting;
 using Server.Factions;
+using Server.Network;
+using Server.Targeting;
+using ABT = Server.Items.ArmorBodyType;
 using AMA = Server.Items.ArmorMeditationAllowance;
 using AMT = Server.Items.ArmorMaterialType;
-using ABT = Server.Items.ArmorBodyType;
 
 namespace Server.Items
 {
@@ -1440,285 +1440,285 @@ namespace Server.Items
                 case 7:
                 case 6:
                 case 5:
-                    {
-                        SaveFlag flags = (SaveFlag)reader.ReadEncodedInt();
+                {
+                    SaveFlag flags = (SaveFlag)reader.ReadEncodedInt();
 
-                        if (GetSaveFlag(flags, SaveFlag.Attributes))
-                            m_AosAttributes = new AosAttributes(this, reader);
-                        else
-                            m_AosAttributes = new AosAttributes(this);
-
-                        if (GetSaveFlag(flags, SaveFlag.ArmorAttributes))
-                            m_AosArmorAttributes = new AosArmorAttributes(this, reader);
-                        else
-                            m_AosArmorAttributes = new AosArmorAttributes(this);
-
-                        if (GetSaveFlag(flags, SaveFlag.PhysicalBonus))
-                            m_PhysicalBonus = reader.ReadEncodedInt();
-
-                        if (GetSaveFlag(flags, SaveFlag.FireBonus))
-                            m_FireBonus = reader.ReadEncodedInt();
-
-                        if (GetSaveFlag(flags, SaveFlag.ColdBonus))
-                            m_ColdBonus = reader.ReadEncodedInt();
-
-                        if (GetSaveFlag(flags, SaveFlag.PoisonBonus))
-                            m_PoisonBonus = reader.ReadEncodedInt();
-
-                        if (GetSaveFlag(flags, SaveFlag.EnergyBonus))
-                            m_EnergyBonus = reader.ReadEncodedInt();
-
-                        if (GetSaveFlag(flags, SaveFlag.Identified))
-                            m_Identified = (version >= 7 || reader.ReadBool());
-
-                        if (GetSaveFlag(flags, SaveFlag.MaxHitPoints))
-                            m_MaxHitPoints = reader.ReadEncodedInt();
-
-                        if (GetSaveFlag(flags, SaveFlag.HitPoints))
-                            m_HitPoints = reader.ReadEncodedInt();
-
-                        if (GetSaveFlag(flags, SaveFlag.Crafter))
-                            m_Crafter = reader.ReadMobile();
-
-                        if (GetSaveFlag(flags, SaveFlag.Quality))
-                            m_Quality = (ArmorQuality)reader.ReadEncodedInt();
-                        else
-                            m_Quality = ArmorQuality.Regular;
-
-                        if (version == 5 && m_Quality == ArmorQuality.Low)
-                            m_Quality = ArmorQuality.Regular;
-
-                        if (GetSaveFlag(flags, SaveFlag.Durability))
-                        {
-                            m_Durability = (ArmorDurabilityLevel)reader.ReadEncodedInt();
-
-                            if (m_Durability > ArmorDurabilityLevel.Indestructible)
-                                m_Durability = ArmorDurabilityLevel.Durable;
-                        }
-
-                        if (GetSaveFlag(flags, SaveFlag.Protection))
-                        {
-                            m_Protection = (ArmorProtectionLevel)reader.ReadEncodedInt();
-
-                            if (m_Protection > ArmorProtectionLevel.Invulnerability)
-                                m_Protection = ArmorProtectionLevel.Defense;
-                        }
-
-                        if (GetSaveFlag(flags, SaveFlag.Resource))
-                            m_Resource = (CraftResource)reader.ReadEncodedInt();
-                        else
-                            m_Resource = DefaultResource;
-
-                        if (m_Resource == CraftResource.None)
-                            m_Resource = DefaultResource;
-
-                        if (GetSaveFlag(flags, SaveFlag.BaseArmor))
-                            m_ArmorBase = reader.ReadEncodedInt();
-                        else
-                            m_ArmorBase = -1;
-
-                        if (GetSaveFlag(flags, SaveFlag.StrBonus))
-                            m_StrBonus = reader.ReadEncodedInt();
-                        else
-                            m_StrBonus = -1;
-
-                        if (GetSaveFlag(flags, SaveFlag.DexBonus))
-                            m_DexBonus = reader.ReadEncodedInt();
-                        else
-                            m_DexBonus = -1;
-
-                        if (GetSaveFlag(flags, SaveFlag.IntBonus))
-                            m_IntBonus = reader.ReadEncodedInt();
-                        else
-                            m_IntBonus = -1;
-
-                        if (GetSaveFlag(flags, SaveFlag.StrReq))
-                            m_StrReq = reader.ReadEncodedInt();
-                        else
-                            m_StrReq = -1;
-
-                        if (GetSaveFlag(flags, SaveFlag.DexReq))
-                            m_DexReq = reader.ReadEncodedInt();
-                        else
-                            m_DexReq = -1;
-
-                        if (GetSaveFlag(flags, SaveFlag.IntReq))
-                            m_IntReq = reader.ReadEncodedInt();
-                        else
-                            m_IntReq = -1;
-
-                        if (GetSaveFlag(flags, SaveFlag.MedAllowance))
-                            m_Meditate = (AMA)reader.ReadEncodedInt();
-                        else
-                            m_Meditate = (AMA)(-1);
-
-                        if (GetSaveFlag(flags, SaveFlag.SkillBonuses))
-                            m_AosSkillBonuses = new AosSkillBonuses(this, reader);
-
-                        if (GetSaveFlag(flags, SaveFlag.PlayerConstructed))
-                            m_PlayerConstructed = true;
-
-                        break;
-                    }
-                case 4:
-                    {
+                    if (GetSaveFlag(flags, SaveFlag.Attributes))
                         m_AosAttributes = new AosAttributes(this, reader);
+                    else
+                        m_AosAttributes = new AosAttributes(this);
+
+                    if (GetSaveFlag(flags, SaveFlag.ArmorAttributes))
                         m_AosArmorAttributes = new AosArmorAttributes(this, reader);
-                        goto case 3;
-                    }
-                case 3:
+                    else
+                        m_AosArmorAttributes = new AosArmorAttributes(this);
+
+                    if (GetSaveFlag(flags, SaveFlag.PhysicalBonus))
+                        m_PhysicalBonus = reader.ReadEncodedInt();
+
+                    if (GetSaveFlag(flags, SaveFlag.FireBonus))
+                        m_FireBonus = reader.ReadEncodedInt();
+
+                    if (GetSaveFlag(flags, SaveFlag.ColdBonus))
+                        m_ColdBonus = reader.ReadEncodedInt();
+
+                    if (GetSaveFlag(flags, SaveFlag.PoisonBonus))
+                        m_PoisonBonus = reader.ReadEncodedInt();
+
+                    if (GetSaveFlag(flags, SaveFlag.EnergyBonus))
+                        m_EnergyBonus = reader.ReadEncodedInt();
+
+                    if (GetSaveFlag(flags, SaveFlag.Identified))
+                        m_Identified = (version >= 7 || reader.ReadBool());
+
+                    if (GetSaveFlag(flags, SaveFlag.MaxHitPoints))
+                        m_MaxHitPoints = reader.ReadEncodedInt();
+
+                    if (GetSaveFlag(flags, SaveFlag.HitPoints))
+                        m_HitPoints = reader.ReadEncodedInt();
+
+                    if (GetSaveFlag(flags, SaveFlag.Crafter))
+                        m_Crafter = reader.ReadMobile();
+
+                    if (GetSaveFlag(flags, SaveFlag.Quality))
+                        m_Quality = (ArmorQuality)reader.ReadEncodedInt();
+                    else
+                        m_Quality = ArmorQuality.Regular;
+
+                    if (version == 5 && m_Quality == ArmorQuality.Low)
+                        m_Quality = ArmorQuality.Regular;
+
+                    if (GetSaveFlag(flags, SaveFlag.Durability))
                     {
-                        m_PhysicalBonus = reader.ReadInt();
-                        m_FireBonus = reader.ReadInt();
-                        m_ColdBonus = reader.ReadInt();
-                        m_PoisonBonus = reader.ReadInt();
-                        m_EnergyBonus = reader.ReadInt();
-                        goto case 2;
+                        m_Durability = (ArmorDurabilityLevel)reader.ReadEncodedInt();
+
+                        if (m_Durability > ArmorDurabilityLevel.Indestructible)
+                            m_Durability = ArmorDurabilityLevel.Durable;
                     }
+
+                    if (GetSaveFlag(flags, SaveFlag.Protection))
+                    {
+                        m_Protection = (ArmorProtectionLevel)reader.ReadEncodedInt();
+
+                        if (m_Protection > ArmorProtectionLevel.Invulnerability)
+                            m_Protection = ArmorProtectionLevel.Defense;
+                    }
+
+                    if (GetSaveFlag(flags, SaveFlag.Resource))
+                        m_Resource = (CraftResource)reader.ReadEncodedInt();
+                    else
+                        m_Resource = DefaultResource;
+
+                    if (m_Resource == CraftResource.None)
+                        m_Resource = DefaultResource;
+
+                    if (GetSaveFlag(flags, SaveFlag.BaseArmor))
+                        m_ArmorBase = reader.ReadEncodedInt();
+                    else
+                        m_ArmorBase = -1;
+
+                    if (GetSaveFlag(flags, SaveFlag.StrBonus))
+                        m_StrBonus = reader.ReadEncodedInt();
+                    else
+                        m_StrBonus = -1;
+
+                    if (GetSaveFlag(flags, SaveFlag.DexBonus))
+                        m_DexBonus = reader.ReadEncodedInt();
+                    else
+                        m_DexBonus = -1;
+
+                    if (GetSaveFlag(flags, SaveFlag.IntBonus))
+                        m_IntBonus = reader.ReadEncodedInt();
+                    else
+                        m_IntBonus = -1;
+
+                    if (GetSaveFlag(flags, SaveFlag.StrReq))
+                        m_StrReq = reader.ReadEncodedInt();
+                    else
+                        m_StrReq = -1;
+
+                    if (GetSaveFlag(flags, SaveFlag.DexReq))
+                        m_DexReq = reader.ReadEncodedInt();
+                    else
+                        m_DexReq = -1;
+
+                    if (GetSaveFlag(flags, SaveFlag.IntReq))
+                        m_IntReq = reader.ReadEncodedInt();
+                    else
+                        m_IntReq = -1;
+
+                    if (GetSaveFlag(flags, SaveFlag.MedAllowance))
+                        m_Meditate = (AMA)reader.ReadEncodedInt();
+                    else
+                        m_Meditate = (AMA)(-1);
+
+                    if (GetSaveFlag(flags, SaveFlag.SkillBonuses))
+                        m_AosSkillBonuses = new AosSkillBonuses(this, reader);
+
+                    if (GetSaveFlag(flags, SaveFlag.PlayerConstructed))
+                        m_PlayerConstructed = true;
+
+                    break;
+                }
+                case 4:
+                {
+                    m_AosAttributes = new AosAttributes(this, reader);
+                    m_AosArmorAttributes = new AosArmorAttributes(this, reader);
+                    goto case 3;
+                }
+                case 3:
+                {
+                    m_PhysicalBonus = reader.ReadInt();
+                    m_FireBonus = reader.ReadInt();
+                    m_ColdBonus = reader.ReadInt();
+                    m_PoisonBonus = reader.ReadInt();
+                    m_EnergyBonus = reader.ReadInt();
+                    goto case 2;
+                }
                 case 2:
                 case 1:
-                    {
-                        m_Identified = reader.ReadBool();
-                        goto case 0;
-                    }
+                {
+                    m_Identified = reader.ReadBool();
+                    goto case 0;
+                }
                 case 0:
+                {
+                    m_ArmorBase = reader.ReadInt();
+                    m_MaxHitPoints = reader.ReadInt();
+                    m_HitPoints = reader.ReadInt();
+                    m_Crafter = reader.ReadMobile();
+                    m_Quality = (ArmorQuality)reader.ReadInt();
+                    m_Durability = (ArmorDurabilityLevel)reader.ReadInt();
+                    m_Protection = (ArmorProtectionLevel)reader.ReadInt();
+
+                    AMT mat = (AMT)reader.ReadInt();
+
+                    if (m_ArmorBase == RevertArmorBase)
+                        m_ArmorBase = -1;
+
+                    /*m_BodyPos = (ArmorBodyType)*/
+                    reader.ReadInt();
+
+                    if (version < 4)
                     {
-                        m_ArmorBase = reader.ReadInt();
-                        m_MaxHitPoints = reader.ReadInt();
-                        m_HitPoints = reader.ReadInt();
-                        m_Crafter = reader.ReadMobile();
-                        m_Quality = (ArmorQuality)reader.ReadInt();
-                        m_Durability = (ArmorDurabilityLevel)reader.ReadInt();
-                        m_Protection = (ArmorProtectionLevel)reader.ReadInt();
-
-                        AMT mat = (AMT)reader.ReadInt();
-
-                        if (m_ArmorBase == RevertArmorBase)
-                            m_ArmorBase = -1;
-
-                        /*m_BodyPos = (ArmorBodyType)*/
-                        reader.ReadInt();
-
-                        if (version < 4)
-                        {
-                            m_AosAttributes = new AosAttributes(this);
-                            m_AosArmorAttributes = new AosArmorAttributes(this);
-                        }
-
-                        if (version < 3 && m_Quality == ArmorQuality.Exceptional)
-                            DistributeBonuses(6);
-
-                        if (version >= 2)
-                        {
-                            m_Resource = (CraftResource)reader.ReadInt();
-                        }
-                        else
-                        {
-                            OreInfo info;
-
-                            switch (reader.ReadInt())
-                            {
-                                default:
-                                case 0:
-                                    info = OreInfo.Iron;
-                                    break;
-                                case 1:
-                                    info = OreInfo.DullCopper;
-                                    break;
-                                case 2:
-                                    info = OreInfo.ShadowIron;
-                                    break;
-                                case 3:
-                                    info = OreInfo.Copper;
-                                    break;
-                                case 4:
-                                    info = OreInfo.Bronze;
-                                    break;
-                                case 5:
-                                    info = OreInfo.Gold;
-                                    break;
-                                case 6:
-                                    info = OreInfo.Agapite;
-                                    break;
-                                case 7:
-                                    info = OreInfo.Verite;
-                                    break;
-                                case 8:
-                                    info = OreInfo.Valorite;
-                                    break;
-                            }
-
-                            m_Resource = CraftResources.GetFromOreInfo(info, mat);
-                        }
-
-                        m_StrBonus = reader.ReadInt();
-                        m_DexBonus = reader.ReadInt();
-                        m_IntBonus = reader.ReadInt();
-                        m_StrReq = reader.ReadInt();
-                        m_DexReq = reader.ReadInt();
-                        m_IntReq = reader.ReadInt();
-
-                        if (m_StrBonus == OldStrBonus)
-                            m_StrBonus = -1;
-
-                        if (m_DexBonus == OldDexBonus)
-                            m_DexBonus = -1;
-
-                        if (m_IntBonus == OldIntBonus)
-                            m_IntBonus = -1;
-
-                        if (m_StrReq == OldStrReq)
-                            m_StrReq = -1;
-
-                        if (m_DexReq == OldDexReq)
-                            m_DexReq = -1;
-
-                        if (m_IntReq == OldIntReq)
-                            m_IntReq = -1;
-
-                        m_Meditate = (AMA)reader.ReadInt();
-
-                        if (m_Meditate == OldMedAllowance)
-                            m_Meditate = (AMA)(-1);
-
-                        if (m_Resource == CraftResource.None)
-                        {
-                            if (mat == ArmorMaterialType.Studded || mat == ArmorMaterialType.Leather)
-                                m_Resource = CraftResource.RegularLeather;
-                            else if (mat == ArmorMaterialType.Spined)
-                                m_Resource = CraftResource.SpinedLeather;
-                            else if (mat == ArmorMaterialType.Horned)
-                                m_Resource = CraftResource.HornedLeather;
-                            else if (mat == ArmorMaterialType.Barbed)
-                                m_Resource = CraftResource.BarbedLeather;
-                            else if (mat == ArmorMaterialType.Necrotic)
-                                m_Resource = CraftResource.NecroticLeather;
-                            else if (mat == ArmorMaterialType.Volcanic)
-                                m_Resource = CraftResource.VolcanicLeather;
-                            else if (mat == ArmorMaterialType.Frozen)
-                                m_Resource = CraftResource.FrozenLeather;
-                            else if (mat == ArmorMaterialType.Goliath)
-                                m_Resource = CraftResource.GoliathLeather;
-                            else if (mat == ArmorMaterialType.Draconic)
-                                m_Resource = CraftResource.DraconicLeather;
-                            else if (mat == ArmorMaterialType.Hellish)
-                                m_Resource = CraftResource.HellishLeather;
-                            else if (mat == ArmorMaterialType.Dinosaur)
-                                m_Resource = CraftResource.DinosaurLeather;
-                            else if (mat == ArmorMaterialType.Alien)
-                                m_Resource = CraftResource.AlienLeather;
-                            else
-                                m_Resource = CraftResource.Iron;
-                        }
-
-                        if (m_MaxHitPoints == 0 && m_HitPoints == 0)
-                            m_HitPoints = m_MaxHitPoints = Utility.RandomMinMax(
-                                InitMinHits,
-                                InitMaxHits
-                            );
-
-                        break;
+                        m_AosAttributes = new AosAttributes(this);
+                        m_AosArmorAttributes = new AosArmorAttributes(this);
                     }
+
+                    if (version < 3 && m_Quality == ArmorQuality.Exceptional)
+                        DistributeBonuses(6);
+
+                    if (version >= 2)
+                    {
+                        m_Resource = (CraftResource)reader.ReadInt();
+                    }
+                    else
+                    {
+                        OreInfo info;
+
+                        switch (reader.ReadInt())
+                        {
+                            default:
+                            case 0:
+                                info = OreInfo.Iron;
+                                break;
+                            case 1:
+                                info = OreInfo.DullCopper;
+                                break;
+                            case 2:
+                                info = OreInfo.ShadowIron;
+                                break;
+                            case 3:
+                                info = OreInfo.Copper;
+                                break;
+                            case 4:
+                                info = OreInfo.Bronze;
+                                break;
+                            case 5:
+                                info = OreInfo.Gold;
+                                break;
+                            case 6:
+                                info = OreInfo.Agapite;
+                                break;
+                            case 7:
+                                info = OreInfo.Verite;
+                                break;
+                            case 8:
+                                info = OreInfo.Valorite;
+                                break;
+                        }
+
+                        m_Resource = CraftResources.GetFromOreInfo(info, mat);
+                    }
+
+                    m_StrBonus = reader.ReadInt();
+                    m_DexBonus = reader.ReadInt();
+                    m_IntBonus = reader.ReadInt();
+                    m_StrReq = reader.ReadInt();
+                    m_DexReq = reader.ReadInt();
+                    m_IntReq = reader.ReadInt();
+
+                    if (m_StrBonus == OldStrBonus)
+                        m_StrBonus = -1;
+
+                    if (m_DexBonus == OldDexBonus)
+                        m_DexBonus = -1;
+
+                    if (m_IntBonus == OldIntBonus)
+                        m_IntBonus = -1;
+
+                    if (m_StrReq == OldStrReq)
+                        m_StrReq = -1;
+
+                    if (m_DexReq == OldDexReq)
+                        m_DexReq = -1;
+
+                    if (m_IntReq == OldIntReq)
+                        m_IntReq = -1;
+
+                    m_Meditate = (AMA)reader.ReadInt();
+
+                    if (m_Meditate == OldMedAllowance)
+                        m_Meditate = (AMA)(-1);
+
+                    if (m_Resource == CraftResource.None)
+                    {
+                        if (mat == ArmorMaterialType.Studded || mat == ArmorMaterialType.Leather)
+                            m_Resource = CraftResource.RegularLeather;
+                        else if (mat == ArmorMaterialType.Spined)
+                            m_Resource = CraftResource.SpinedLeather;
+                        else if (mat == ArmorMaterialType.Horned)
+                            m_Resource = CraftResource.HornedLeather;
+                        else if (mat == ArmorMaterialType.Barbed)
+                            m_Resource = CraftResource.BarbedLeather;
+                        else if (mat == ArmorMaterialType.Necrotic)
+                            m_Resource = CraftResource.NecroticLeather;
+                        else if (mat == ArmorMaterialType.Volcanic)
+                            m_Resource = CraftResource.VolcanicLeather;
+                        else if (mat == ArmorMaterialType.Frozen)
+                            m_Resource = CraftResource.FrozenLeather;
+                        else if (mat == ArmorMaterialType.Goliath)
+                            m_Resource = CraftResource.GoliathLeather;
+                        else if (mat == ArmorMaterialType.Draconic)
+                            m_Resource = CraftResource.DraconicLeather;
+                        else if (mat == ArmorMaterialType.Hellish)
+                            m_Resource = CraftResource.HellishLeather;
+                        else if (mat == ArmorMaterialType.Dinosaur)
+                            m_Resource = CraftResource.DinosaurLeather;
+                        else if (mat == ArmorMaterialType.Alien)
+                            m_Resource = CraftResource.AlienLeather;
+                        else
+                            m_Resource = CraftResource.Iron;
+                    }
+
+                    if (m_MaxHitPoints == 0 && m_HitPoints == 0)
+                        m_HitPoints = m_MaxHitPoints = Utility.RandomMinMax(
+                            InitMinHits,
+                            InitMaxHits
+                        );
+
+                    break;
+                }
             }
 
             if (m_AosSkillBonuses == null)

@@ -1,10 +1,10 @@
 using System;
-using Server;
 using System.Collections.Generic;
-using Server.Network;
+using Server;
 using Server.Items;
-using Server.Targeting;
 using Server.Mobiles;
+using Server.Network;
+using Server.Targeting;
 
 namespace Server.Spells.Research
 {

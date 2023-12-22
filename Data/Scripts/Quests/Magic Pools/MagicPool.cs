@@ -1,14 +1,14 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.ComponentModel;
 using Server;
+using Server.ContextMenus;
 using Server.Items;
+using Server.Misc;
+using Server.Mobiles;
 using Server.Network;
 using Server.Spells;
-using Server.Mobiles;
-using System.Collections.Generic;
-using Server.Misc;
-using System.Collections;
-using Server.ContextMenus;
-using System.ComponentModel;
 
 namespace Server.Items
 {
@@ -360,7 +360,11 @@ namespace Server.Items
                                 "After drinking from the pool, you notice your meager coins turn to gold!"
                             );
                             Effects.SendLocationParticles(
-                                EffectItem.Create(from.Location, from.Map, EffectItem.DefaultDuration),
+                                EffectItem.Create(
+                                    from.Location,
+                                    from.Map,
+                                    EffectItem.DefaultDuration
+                                ),
                                 0x3728,
                                 10,
                                 10,
@@ -378,7 +382,7 @@ namespace Server.Items
                         }
                         this.m_Uses = 0;
                     } // Gold Conversion
-                    else if (effectRoll <= 40)  // Gain Stats
+                    else if (effectRoll <= 40) // Gain Stats
                     {
                         if (from.StatCap > (from.RawStatTotal))
                         {
@@ -408,17 +412,23 @@ namespace Server.Items
                             if (water == 1)
                             {
                                 from.RawInt = from.RawInt + up;
-                                from.SendMessage("You drink from the pool and you feel much smarter!");
+                                from.SendMessage(
+                                    "You drink from the pool and you feel much smarter!"
+                                );
                             }
                             else if (water == 2)
                             {
                                 from.RawStr = from.RawStr + up;
-                                from.SendMessage("You drink from the pool and you feel much stronger!");
+                                from.SendMessage(
+                                    "You drink from the pool and you feel much stronger!"
+                                );
                             }
                             else
                             {
                                 from.RawDex = from.RawDex + up;
-                                from.SendMessage("You drink from the pool and you feel much quicker!");
+                                from.SendMessage(
+                                    "You drink from the pool and you feel much quicker!"
+                                );
                             }
 
                             this.m_Uses = 0;
@@ -507,7 +517,11 @@ namespace Server.Items
                                 "After drinking from the pool, you notice one of your equipped items disappears!"
                             );
                             Effects.SendLocationParticles(
-                                EffectItem.Create(from.Location, from.Map, EffectItem.DefaultDuration),
+                                EffectItem.Create(
+                                    from.Location,
+                                    from.Map,
+                                    EffectItem.DefaultDuration
+                                ),
                                 0x3728,
                                 10,
                                 10,
@@ -557,7 +571,11 @@ namespace Server.Items
                                 "After drinking from the pool, you notice all of your coins has turned to lead!"
                             );
                             Effects.SendLocationParticles(
-                                EffectItem.Create(from.Location, from.Map, EffectItem.DefaultDuration),
+                                EffectItem.Create(
+                                    from.Location,
+                                    from.Map,
+                                    EffectItem.DefaultDuration
+                                ),
                                 0x3728,
                                 10,
                                 10,
@@ -613,7 +631,9 @@ namespace Server.Items
                             if (from.RawInt > 10)
                             {
                                 from.RawInt = from.RawInt - 1;
-                                from.SendMessage("Your mind is foggy after drinking from the pool!");
+                                from.SendMessage(
+                                    "Your mind is foggy after drinking from the pool!"
+                                );
                             }
                             else
                             {
@@ -653,7 +673,7 @@ namespace Server.Items
 
                             Timer.DelayCall(
                                 TimeSpan.FromSeconds(1),
-                                delegate ()
+                                delegate()
                                 {
                                     bc.Home = Location;
                                     bc.RangeHome = 5;
@@ -676,7 +696,11 @@ namespace Server.Items
                         else
                         {
                             Effects.SendLocationParticles(
-                                EffectItem.Create(from.Location, from.Map, EffectItem.DefaultDuration),
+                                EffectItem.Create(
+                                    from.Location,
+                                    from.Map,
+                                    EffectItem.DefaultDuration
+                                ),
                                 0x36B0,
                                 1,
                                 14,
@@ -757,11 +781,11 @@ namespace Server.Items
             switch (version)
             {
                 case 0:
-                    {
-                        m_DecayTime = reader.ReadDateTime();
-                        RefreshDecay(false);
-                        break;
-                    }
+                {
+                    m_DecayTime = reader.ReadDateTime();
+                    RefreshDecay(false);
+                    break;
+                }
             }
             m_Pool = reader.ReadEncodedInt();
             m_Uses = reader.ReadEncodedInt();

@@ -1,10 +1,10 @@
 using System;
 using Server;
+using Server.Engines.CannedEvil;
 using Server.Items;
 using Server.Spells;
-using Server.Spells.Seventh;
 using Server.Spells.Fifth;
-using Server.Engines.CannedEvil;
+using Server.Spells.Seventh;
 
 namespace Server.Mobiles
 {

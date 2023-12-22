@@ -1,7 +1,7 @@
 using System;
 using Server;
-using Server.Network;
 using Server.Commands;
+using Server.Network;
 
 namespace Server
 {

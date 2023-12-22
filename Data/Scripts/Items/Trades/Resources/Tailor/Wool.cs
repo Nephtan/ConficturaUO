@@ -152,7 +152,7 @@ namespace Server.Items
             int version = reader.ReadInt();
         }
 
-        new public static void OnSpun(ISpinningWheel wheel, Mobile from, Item yarn)
+        public static new void OnSpun(ISpinningWheel wheel, Mobile from, Item yarn)
         {
             if (yarn != null)
             {

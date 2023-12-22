@@ -1,11 +1,11 @@
 using System;
+using System.Collections;
 using Server;
 using Server.Gumps;
 using Server.Items;
-using Server.Regions;
 using Server.Mobiles;
 using Server.Network;
-using System.Collections;
+using Server.Regions;
 
 namespace Server.Gumps
 {

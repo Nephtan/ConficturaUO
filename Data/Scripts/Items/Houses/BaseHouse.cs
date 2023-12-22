@@ -2,18 +2,18 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Server;
-using Server.Items;
-using Server.Mobiles;
-using Server.Multis.Deeds;
-using Server.Regions;
-using Server.Network;
-using Server.Targeting;
 using Server.Accounting;
 using Server.ContextMenus;
-using Server.Gumps;
-using Server.Misc;
-using Server.Guilds;
 using Server.Engines.BulkOrders;
+using Server.Guilds;
+using Server.Gumps;
+using Server.Items;
+using Server.Misc;
+using Server.Mobiles;
+using Server.Multis.Deeds;
+using Server.Network;
+using Server.Regions;
+using Server.Targeting;
 
 namespace Server.Multis
 {
@@ -3502,8 +3502,8 @@ namespace Server.Multis
                     return;
 
                 for (int x = m_StartX; x <= m_EndX; ++x)
-                    for (int y = m_StartY; y <= m_EndY; ++y)
-                        m_Map.FixColumn(x, y);
+                for (int y = m_StartY; y <= m_EndY; ++y)
+                    m_Map.FixColumn(x, y);
             }
         }
 
