@@ -1,12 +1,12 @@
 using System;
-using Server.Misc;
-using Server.Items;
-using Server.Mobiles;
-using Server.Network;
-using Server.Targeting;
 using System.Collections;
 using System.Collections.Generic;
 using Server.ContextMenus;
+using Server.Items;
+using Server.Misc;
+using Server.Mobiles;
+using Server.Network;
+using Server.Targeting;
 
 namespace Server.Spells.Research
 {

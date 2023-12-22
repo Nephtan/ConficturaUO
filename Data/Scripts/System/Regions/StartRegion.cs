@@ -1,16 +1,16 @@
 using System;
+using System.IO;
+using System.Text;
 using System.Xml;
 using Server;
-using Server.Mobiles;
-using Server.Misc;
 using Server.Gumps;
+using Server.Misc;
+using Server.Mobiles;
 using Server.Spells;
-using Server.Spells.Seventh;
-using Server.Spells.Fourth;
-using Server.Spells.Sixth;
 using Server.Spells.Chivalry;
-using System.Text;
-using System.IO;
+using Server.Spells.Fourth;
+using Server.Spells.Seventh;
+using Server.Spells.Sixth;
 
 namespace Server.Regions
 {

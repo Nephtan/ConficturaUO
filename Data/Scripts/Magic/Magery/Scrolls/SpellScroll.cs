@@ -1,8 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Server.Spells;
 using Server.ContextMenus;
+using Server.Spells;
 
 namespace Server.Items
 {

@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
-using Server.Network;
-using Server.Items;
-using Server.Targeting;
 using Server.Engines.PartySystem;
+using Server.Items;
+using Server.Network;
+using Server.Targeting;
 
 namespace Server.Spells.Fourth
 {

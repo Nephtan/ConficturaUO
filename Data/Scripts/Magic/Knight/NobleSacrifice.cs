@@ -2,13 +2,13 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Server;
+using Server.Gumps;
+using Server.Items;
 using Server.Mobiles;
 using Server.Network;
-using Server.Items;
-using Server.Targeting;
-using Server.Gumps;
-using Server.Spells.Necromancy;
 using Server.Regions;
+using Server.Spells.Necromancy;
+using Server.Targeting;
 
 namespace Server.Spells.Chivalry
 {

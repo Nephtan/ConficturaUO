@@ -1,7 +1,7 @@
 using System;
+using System.Collections.Generic;
 using Server.Engines.Craft;
 using Server.Network;
-using System.Collections.Generic;
 using Server.Targeting;
 
 namespace Server.Items

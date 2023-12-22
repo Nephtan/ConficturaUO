@@ -1,8 +1,8 @@
 // $Id: //depot/c%23/RunUO Core Scripts/RunUO Core Scripts/Items/Weapons/Abilities/ForceArrow.cs#2 $
 
 using System;
-using Server;
 using System.Collections;
+using Server;
 
 namespace Server.Items
 {

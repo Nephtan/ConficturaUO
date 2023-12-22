@@ -1,23 +1,23 @@
 using System;
-using System.Data;
-using System.IO;
 using System.Collections;
 using System.Collections.Generic;
-using Server;
-using Server.Items;
-using Server.Network;
-using Server.Gumps;
-using Server.Targeting;
+using System.Data;
+using System.Globalization;
+using System.IO;
 using System.Reflection;
+using System.Text;
+using System.Xml;
+using Server;
+using Server.Accounting;
 using Server.Commands;
 using Server.Commands.Generic;
-using CPA = Server.CommandPropertyAttribute;
-using System.Xml;
-using Server.Spells;
-using System.Text;
-using System.Globalization;
-using Server.Accounting;
 using Server.Engines.XmlSpawner2;
+using Server.Gumps;
+using Server.Items;
+using Server.Network;
+using Server.Spells;
+using Server.Targeting;
+using CPA = Server.CommandPropertyAttribute;
 
 namespace Server.Mobiles
 {
@@ -1121,7 +1121,8 @@ namespace Server.Mobiles
                     if (info != null)
                         toSet = info.Invoke(null, new object[] { value });
                     else if (
-                        p.PropertyType == typeof(Enum) || p.PropertyType.IsSubclassOf(typeof(Enum))
+                        p.PropertyType == typeof(Enum)
+                        || p.PropertyType.IsSubclassOf(typeof(Enum))
                     )
                         toSet = Enum.Parse(p.PropertyType, value, false);
                     else
@@ -2225,7 +2226,8 @@ namespace Server.Mobiles
                                 remainder = arglist[2];
                             }
                             else if (
-                                kw == valuemodKeyword.RNDLIST || kw == valuemodKeyword.RNDSTRLIST
+                                kw == valuemodKeyword.RNDLIST
+                                || kw == valuemodKeyword.RNDSTRLIST
                             )
                             {
                                 // generate a random number and use it as the property value.  Use the format /RNDLIST,val1,val2,.../

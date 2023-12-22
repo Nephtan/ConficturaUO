@@ -1,10 +1,10 @@
 using System;
 using System.Collections.Generic;
-using Server.Misc;
-using Server.Network;
 using Server.Items;
-using Server.Targeting;
+using Server.Misc;
 using Server.Mobiles;
+using Server.Network;
+using Server.Targeting;
 
 namespace Server.Spells.Seventh
 {

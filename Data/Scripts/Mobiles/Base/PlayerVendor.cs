@@ -3,14 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
 using Server;
-using Server.Items;
-using Server.Mobiles;
+using Server.ContextMenus;
 using Server.Gumps;
+using Server.Items;
+using Server.Misc;
+using Server.Mobiles;
+using Server.Multis;
 using Server.Prompts;
 using Server.Targeting;
-using Server.Misc;
-using Server.Multis;
-using Server.ContextMenus;
 
 namespace Server.Mobiles
 {
@@ -716,7 +716,8 @@ namespace Server.Mobiles
                     }
                 }
                 else if (
-                    (toBackpack || House == null || !House.IsAosRules) && this.Map != Map.Internal
+                    (toBackpack || House == null || !House.IsAosRules)
+                    && this.Map != Map.Internal
                 ) // Case 3 - Move to backpack
                 {
                     Container backpack = new Backpack();

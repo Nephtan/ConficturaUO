@@ -2,8 +2,8 @@ using System;
 using System.Collections;
 using Server;
 using Server.Network;
-using Server.Targeting;
 using Server.Spells;
+using Server.Targeting;
 
 namespace Server.Items
 {

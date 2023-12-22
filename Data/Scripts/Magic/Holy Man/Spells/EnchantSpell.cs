@@ -1,13 +1,13 @@
 using System;
 using System.Collections;
 using Server;
-using Server.Items;
 using Server.Gumps;
-using Server.Spells;
-using Server.Targeting;
+using Server.Items;
+using Server.Misc;
 using Server.Network;
 using Server.Regions;
-using Server.Misc;
+using Server.Spells;
+using Server.Targeting;
 
 namespace Server.Spells.HolyMan
 {

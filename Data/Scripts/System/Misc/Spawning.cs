@@ -1,4 +1,11 @@
-using CPA = Server.CommandPropertyAttribute;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.IO;
+using System.Net;
+using System.Reflection;
+using System.Text;
+using Server;
 using Server.Commands;
 using Server.Gumps;
 using Server.Items;
@@ -6,14 +13,7 @@ using Server.Misc;
 using Server.Mobiles;
 using Server.Network;
 using Server.Regions;
-using Server;
-using System.Collections.Generic;
-using System.Collections;
-using System.IO;
-using System.Net;
-using System.Reflection;
-using System.Text;
-using System;
+using CPA = Server.CommandPropertyAttribute;
 
 namespace Server.Commands
 {
@@ -2230,7 +2230,11 @@ namespace Server.Mobiles
                     m.WhisperHue = 911;
                 }
                 else if (
-                    m.X >= 5457 && m.Y >= 3300 && m.X <= 5459 && m.Y <= 3302 && m.Map == Map.Sosaria
+                    m.X >= 5457
+                    && m.Y >= 3300
+                    && m.X <= 5459
+                    && m.Y <= 3302
+                    && m.Map == Map.Sosaria
                 )
                 {
                     cleanUp = true;
@@ -2238,7 +2242,11 @@ namespace Server.Mobiles
                     m.WhisperHue = 911;
                 }
                 else if (
-                    m.X >= 608 && m.Y >= 4090 && m.X <= 704 && m.Y <= 4096 && m.Map == Map.Sosaria
+                    m.X >= 608
+                    && m.Y >= 4090
+                    && m.X <= 704
+                    && m.Y <= 4096
+                    && m.Map == Map.Sosaria
                 )
                 {
                     cleanUp = true;
@@ -2246,7 +2254,11 @@ namespace Server.Mobiles
                     m.WhisperHue = 911;
                 }
                 else if (
-                    m.X >= 6126 && m.Y >= 827 && m.X <= 6132 && m.Y <= 833 && m.Map == Map.Sosaria
+                    m.X >= 6126
+                    && m.Y >= 827
+                    && m.X <= 6132
+                    && m.Y <= 833
+                    && m.Map == Map.Sosaria
                 )
                 {
                     cleanUp = true;
@@ -2300,21 +2312,33 @@ namespace Server.Mobiles
                     m.WhisperHue = 999;
                 }
                 else if (
-                    m.X >= 5457 && m.Y >= 3300 && m.X <= 5459 && m.Y <= 3302 && m.Map == Map.Sosaria
+                    m.X >= 5457
+                    && m.Y >= 3300
+                    && m.X <= 5459
+                    && m.Y <= 3302
+                    && m.Map == Map.Sosaria
                 )
                 {
                     m.Location = Worlds.GetRandomLocation("the Land of Ambrosia", "sea");
                     m.WhisperHue = 999;
                 }
                 else if (
-                    m.X >= 608 && m.Y >= 4090 && m.X <= 704 && m.Y <= 4096 && m.Map == Map.Sosaria
+                    m.X >= 608
+                    && m.Y >= 4090
+                    && m.X <= 704
+                    && m.Y <= 4096
+                    && m.Map == Map.Sosaria
                 )
                 {
                     m.Location = Worlds.GetRandomLocation("the Island of Umber Veil", "sea");
                     m.WhisperHue = 999;
                 }
                 else if (
-                    m.X >= 6126 && m.Y >= 827 && m.X <= 6132 && m.Y <= 833 && m.Map == Map.Sosaria
+                    m.X >= 6126
+                    && m.Y >= 827
+                    && m.X <= 6132
+                    && m.Y <= 833
+                    && m.Map == Map.Sosaria
                 )
                 {
                     m.Location = Worlds.GetRandomLocation("the Bottle World of Kuldar", "sea");
@@ -2384,13 +2408,21 @@ namespace Server.Mobiles
                     i.Location = Worlds.GetRandomLocation("the Savaged Empire", "land");
                 }
                 else if (
-                    i.X >= 5457 && i.Y >= 3300 && i.X <= 5459 && i.Y <= 3302 && i.Map == Map.Sosaria
+                    i.X >= 5457
+                    && i.Y >= 3300
+                    && i.X <= 5459
+                    && i.Y <= 3302
+                    && i.Map == Map.Sosaria
                 )
                 {
                     i.Location = Worlds.GetRandomLocation("the Land of Ambrosia", "land");
                 }
                 else if (
-                    i.X >= 608 && i.Y >= 4090 && i.X <= 704 && i.Y <= 4096 && i.Map == Map.Sosaria
+                    i.X >= 608
+                    && i.Y >= 4090
+                    && i.X <= 704
+                    && i.Y <= 4096
+                    && i.Map == Map.Sosaria
                 )
                 {
                     i.Location = Worlds.GetRandomLocation("the Island of Umber Veil", "land");
@@ -2430,19 +2462,31 @@ namespace Server.Mobiles
                     i.Location = Worlds.GetRandomLocation("the Savaged Empire", "sea");
                 }
                 else if (
-                    i.X >= 5457 && i.Y >= 3300 && i.X <= 5459 && i.Y <= 3302 && i.Map == Map.Sosaria
+                    i.X >= 5457
+                    && i.Y >= 3300
+                    && i.X <= 5459
+                    && i.Y <= 3302
+                    && i.Map == Map.Sosaria
                 )
                 {
                     i.Location = Worlds.GetRandomLocation("the Land of Ambrosia", "sea");
                 }
                 else if (
-                    i.X >= 608 && i.Y >= 4090 && i.X <= 704 && i.Y <= 4096 && i.Map == Map.Sosaria
+                    i.X >= 608
+                    && i.Y >= 4090
+                    && i.X <= 704
+                    && i.Y <= 4096
+                    && i.Map == Map.Sosaria
                 )
                 {
                     i.Location = Worlds.GetRandomLocation("the Island of Umber Veil", "sea");
                 }
                 else if (
-                    i.X >= 6126 && i.Y >= 827 && i.X <= 6132 && i.Y <= 833 && i.Map == Map.Sosaria
+                    i.X >= 6126
+                    && i.Y >= 827
+                    && i.X <= 6132
+                    && i.Y <= 833
+                    && i.Map == Map.Sosaria
                 )
                 {
                     i.Location = Worlds.GetRandomLocation("the Bottle World of Kuldar", "sea");

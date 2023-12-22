@@ -1,15 +1,15 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Server.Items;
-using Server.Network;
 using Server.ContextMenus;
-using Server.Mobiles;
-using Server.Misc;
 using Server.Engines.BulkOrders;
-using Server.Regions;
 using Server.Factions;
+using Server.Items;
+using Server.Misc;
+using Server.Mobiles;
 using Server.Multis;
+using Server.Network;
+using Server.Regions;
 
 namespace Server.Mobiles
 {
@@ -1346,7 +1346,8 @@ namespace Server.Mobiles
                     Server.Items.OrbOfTheAbyss.ChangeOrb(from, this, dropped);
                 }
                 else if (
-                    dropped is RobotSchematics && (this is Tinker || this is TinkerGuildmaster)
+                    dropped is RobotSchematics
+                    && (this is Tinker || this is TinkerGuildmaster)
                 )
                 {
                     Server.Items.RobotSchematics.ProcessRobotBook(from, this, dropped);

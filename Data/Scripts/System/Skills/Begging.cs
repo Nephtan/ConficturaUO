@@ -1,10 +1,10 @@
 using System;
 using Server;
-using Server.Misc;
-using Server.Targeting;
 using Server.Items;
-using Server.Network;
+using Server.Misc;
 using Server.Mobiles;
+using Server.Network;
+using Server.Targeting;
 
 namespace Server.SkillHandlers
 {
@@ -36,11 +36,9 @@ namespace Server.SkillHandlers
                 || m is PlayerVendor
                 || m is Citizens
             )
-
                 return false;
 
             if (m is PlayerMobile && !m.Criminal && m.Kills < 1)
-
                 return false;
 
             if (m is BaseCreature)
@@ -52,7 +50,6 @@ namespace Server.SkillHandlers
                     || c.FightMode == FightMode.Aggressor
                     || c.FightMode == FightMode.None
                 )
-
                     return false;
             }
             return true;

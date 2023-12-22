@@ -1,11 +1,11 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using Server.Factions;
 using Server.Mobiles;
 using Server.Multis;
-using Server.Targeting;
 using Server.Regions;
-using System.Collections;
-using System.Collections.Generic;
+using Server.Targeting;
 
 namespace Server.Items
 {

@@ -1,13 +1,13 @@
 using System;
-using System.Reflection;
 using System.Collections;
+using System.Reflection;
 using Server;
-using Server.Targeting;
-using Server.Items;
-using Server.Gumps;
-using CPA = Server.CommandPropertyAttribute;
 using Server.Commands;
 using Server.Commands.Generic;
+using Server.Gumps;
+using Server.Items;
+using Server.Targeting;
+using CPA = Server.CommandPropertyAttribute;
 
 namespace Server.Commands
 {
@@ -130,7 +130,8 @@ namespace Server.Commands
                             return null;
                         }
                         else if (
-                            (access & PropertyAccess.Read) != 0 && from.AccessLevel < attr.ReadLevel
+                            (access & PropertyAccess.Read) != 0
+                            && from.AccessLevel < attr.ReadLevel
                         )
                         {
                             failReason = String.Format(

@@ -1,11 +1,11 @@
 using System;
 using System.Collections.Generic;
+using Server.Gumps;
 using Server.Items;
-using Server.Multis;
 using Server.Misc;
 using Server.Mobiles;
+using Server.Multis;
 using Server.Regions;
-using Server.Gumps;
 
 namespace Server.Items
 {
@@ -388,14 +388,16 @@ namespace Server.Items
                     if (!ParentLawnItem.Pieces[i].HasMoved)
                     {
                         ParentLawnItem.Pieces[i].HasMoved = true;
-                        ParentLawnItem.Pieces[i].MoveToWorld(
-                            new Point3D(
-                                ParentLawnItem.Pieces[i].Location.X + xOff,
-                                ParentLawnItem.Pieces[i].Location.Y + yOff,
-                                ParentLawnItem.Pieces[i].Location.Z + zOff
-                            ),
-                            Map
-                        );
+                        ParentLawnItem
+                            .Pieces[i]
+                            .MoveToWorld(
+                                new Point3D(
+                                    ParentLawnItem.Pieces[i].Location.X + xOff,
+                                    ParentLawnItem.Pieces[i].Location.Y + yOff,
+                                    ParentLawnItem.Pieces[i].Location.Z + zOff
+                                ),
+                                Map
+                            );
                     }
                 }
 

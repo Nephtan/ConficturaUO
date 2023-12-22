@@ -1,9 +1,9 @@
 using System;
+using System.Collections;
 using System.IO;
 using System.Xml;
-using System.Collections;
-using Server.Network;
 using Server.Mobiles;
+using Server.Network;
 
 /*
 ** Modified from RunUO 1.0.0 CategorizedAddGump.cs

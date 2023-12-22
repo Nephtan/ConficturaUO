@@ -1,9 +1,9 @@
 using System;
 using Server;
-using Server.Gumps;
-using Server.Network;
-using Server.Mobiles;
 using Server.Engines.Quests;
+using Server.Gumps;
+using Server.Mobiles;
+using Server.Network;
 
 namespace Server.Items
 {
@@ -118,7 +118,8 @@ namespace Server.Items
                     {
                         // skill must point down and its value must be enough
                         if (
-                            from.Skills[i].Lock == SkillLock.Down && from.Skills[i].Base >= newValue
+                            from.Skills[i].Lock == SkillLock.Down
+                            && from.Skills[i].Base >= newValue
                         )
                         {
                             from.Skills[i].Base -= newValue;

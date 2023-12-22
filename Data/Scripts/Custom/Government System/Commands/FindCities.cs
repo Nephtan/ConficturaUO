@@ -1,11 +1,11 @@
 using System;
+using System.Collections;
 using Server;
-using Server.Items;
+using Server.Commands.Generic;
 using Server.Gumps;
+using Server.Items;
 using Server.Mobiles;
 using Server.Targeting;
-using System.Collections;
-using Server.Commands.Generic;
 
 namespace Server.Commands
 {

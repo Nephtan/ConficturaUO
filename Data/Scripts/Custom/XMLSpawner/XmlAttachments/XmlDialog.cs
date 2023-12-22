@@ -1,22 +1,22 @@
 using System;
-using System.Data;
-using System.IO;
 using System.Collections;
-using Server;
-using Server.Items;
-using Server.Network;
-using Server.Gumps;
-using Server.Targeting;
-using System.Reflection;
-using Server.Commands;
-using CPA = Server.CommandPropertyAttribute;
-using System.Xml;
-using Server.Spells;
-using System.Text;
-using Server.Accounting;
+using System.Data;
 using System.Diagnostics;
+using System.IO;
+using System.Reflection;
+using System.Text;
 using System.Text.RegularExpressions;
+using System.Xml;
+using Server;
+using Server.Accounting;
+using Server.Commands;
+using Server.Gumps;
+using Server.Items;
 using Server.Mobiles;
+using Server.Network;
+using Server.Spells;
+using Server.Targeting;
+using CPA = Server.CommandPropertyAttribute;
 
 namespace Server.Engines.XmlSpawner2
 {
@@ -2030,7 +2030,7 @@ namespace Server.Engines.XmlSpawner2
             return true;
         }
 
-        public new static void Initialize()
+        public static new void Initialize()
         {
             XmlSpawner.LoadSettings(
                 new XmlSpawner.AssignSettingsHandler(AssignSettings),

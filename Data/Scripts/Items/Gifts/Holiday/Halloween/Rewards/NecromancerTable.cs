@@ -1,6 +1,6 @@
 using System;
-using Server.Prompts;
 using Server.Network;
+using Server.Prompts;
 
 namespace Server.Items
 {

@@ -1,10 +1,10 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using Server;
+using Server.Misc;
 using Server.Network;
 using Server.Spells;
-using Server.Misc;
-using System.Collections.Generic;
-using System.Collections;
 
 namespace Server.Items
 {

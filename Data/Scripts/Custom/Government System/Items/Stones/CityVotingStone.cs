@@ -1,8 +1,8 @@
 using System;
+using System.Collections;
 using Server;
 using Server.Gumps;
 using Server.Mobiles;
-using System.Collections;
 
 namespace Server.Items
 {

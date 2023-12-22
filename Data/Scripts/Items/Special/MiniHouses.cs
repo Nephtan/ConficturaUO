@@ -51,14 +51,14 @@ namespace Server.Items
             int num = 0;
 
             for (int y = 0; y < size; ++y)
-                for (int x = 0; x < size; ++x)
-                    if (info.Graphics[num] != 0x1) // Veteran Rewards Mod
-                        AddComponent(
-                            new AddonComponent(info.Graphics[num++]),
-                            size - x - 1,
-                            size - y - 1,
-                            0
-                        );
+            for (int x = 0; x < size; ++x)
+                if (info.Graphics[num] != 0x1) // Veteran Rewards Mod
+                    AddComponent(
+                        new AddonComponent(info.Graphics[num++]),
+                        size - x - 1,
+                        size - y - 1,
+                        0
+                    );
         }
 
         public MiniHouseAddon(Serial serial)

@@ -1,17 +1,17 @@
 using System;
 using System.Collections;
-using Server.ContextMenus;
 using System.Collections.Generic;
-using Server.Misc;
-using Server.Network;
-using Server;
-using Server.Items;
-using Server.Gumps;
-using Server.Mobiles;
-using Server.Commands;
-using System.Net;
 using System.Diagnostics;
+using System.Net;
+using Server;
 using Server.Accounting;
+using Server.Commands;
+using Server.ContextMenus;
+using Server.Gumps;
+using Server.Items;
+using Server.Misc;
+using Server.Mobiles;
+using Server.Network;
 
 namespace Server.Mobiles
 {
@@ -160,6 +160,7 @@ namespace Server.Gumps
     public class WelcomeGump : Gump
     {
         private string lang = "EN"; // default language
+
         public WelcomeGump(Mobile from, string language = "EN")
             : base(400, 50)
         {
@@ -192,19 +193,35 @@ namespace Server.Gumps
             AddButton(420, 10, 4011, 4013, 1, GumpButtonType.Reply, 0);
 
             // Switch Language label
-            AddHtml(360, 10, 100, 20, @"<BODY><BASEFONT Color=#94C541>Switch</BASEFONT></BODY>", (bool)false, (bool)false);
-            AddHtml(360, 20, 100, 20, @"<BODY><BASEFONT Color=#94C541>Language:</BASEFONT></BODY>", (bool)false, (bool)false);
+            AddHtml(
+                360,
+                10,
+                100,
+                20,
+                @"<BODY><BASEFONT Color=#94C541>Switch</BASEFONT></BODY>",
+                (bool)false,
+                (bool)false
+            );
+            AddHtml(
+                360,
+                20,
+                100,
+                20,
+                @"<BODY><BASEFONT Color=#94C541>Language:</BASEFONT></BODY>",
+                (bool)false,
+                (bool)false
+            );
         }
 
         public string GetTextByLanguage(string lang)
         {
             if (lang == "IT") // Italian
             {
-                return @"<BODY><BASEFONT Color=#94C541>Per te, il giorno era come qualsiasi altro, ordinario. Tuttavia, quando il sole serale è finalmente scomparso dietro l'orizzonte, ti sei ritirato a letto dove il sonno sembrava inquieto e i sogni erano più vividi. Non riesci a ricordare i dettagli del sogno, ma ricordi di essere stato trascinato da questo mondo attraverso un portale vorticoso. Quando ti sei svegliato, ti sei trovato in questa foresta. I tuoi vestiti notturni sono scomparsi e ora sei vestito con abiti medievali, con una luce in mano.<BR><BR>Nell'oscurità della notte, vedi un fuoco da campo proprio davanti a te. Una tenda colorata è accanto ad esso, con il calore accogliente di lanterne circostanti. Il suono del ruscello nelle vicinanze offre una tranquillità, e puoi vedere un orso grizzly che dorme sonoramente accanto al calore del fuoco. Se fossi disposto a mettere da parte le preoccupazioni della tua vita attuale, senti che questo sarebbe il posto per ricominciare da capo. Decidi di vedere chi è accampato qui e forse scoprire dove ti trovi.</BASEFONT></BODY>";
+                return @"<BODY><BASEFONT Color=#94C541>Per te, il giorno era come qualsiasi altro, ordinario. Tuttavia, quando il sole serale ï¿½ finalmente scomparso dietro l'orizzonte, ti sei ritirato a letto dove il sonno sembrava inquieto e i sogni erano piï¿½ vividi. Non riesci a ricordare i dettagli del sogno, ma ricordi di essere stato trascinato da questo mondo attraverso un portale vorticoso. Quando ti sei svegliato, ti sei trovato in questa foresta. I tuoi vestiti notturni sono scomparsi e ora sei vestito con abiti medievali, con una luce in mano.<BR><BR>Nell'oscuritï¿½ della notte, vedi un fuoco da campo proprio davanti a te. Una tenda colorata ï¿½ accanto ad esso, con il calore accogliente di lanterne circostanti. Il suono del ruscello nelle vicinanze offre una tranquillitï¿½, e puoi vedere un orso grizzly che dorme sonoramente accanto al calore del fuoco. Se fossi disposto a mettere da parte le preoccupazioni della tua vita attuale, senti che questo sarebbe il posto per ricominciare da capo. Decidi di vedere chi ï¿½ accampato qui e forse scoprire dove ti trovi.</BASEFONT></BODY>";
             }
             else if (lang == "ES") // Spanish
             {
-                return @"<BODY><BASEFONT Color=#94C541>Para ti, el día fue ordinario en comparación con cualquier otro. Sin embargo, cuando el sol de la tarde finalmente desapareció bajo el paisaje, te retiraste a la cama donde el sueño se sentía inquieto y los sueños eran más vívidos. No puedes recordar los detalles del sueño, pero recuerdas haber sido arrastrado de este mundo a través de un portal giratorio. Cuando te despertaste, te encontraste en este bosque. Tu ropa de noche ha desaparecido, y ahora estás vestido con atuendos medievales, sosteniendo una luz en tu mano.<BR><BR>A través de la oscuridad de la noche, ves una fogata justo adelante. Una tienda colorida está junto a ella con el resplandor acogedor de las linternas alrededor. Los sonidos del arroyo cercano proporcionan una tranquilidad, y puedes ver a un oso grizzly durmiendo plácidamente junto al calor del fuego. Si fueras a dejar de lado las preocupaciones de tu vida actual, sientes que este sería el lugar para empezar de nuevo. Decides ver quién está acampando aquí y tal vez descubrir dónde te encuentras.</BASEFONT></BODY>";
+                return @"<BODY><BASEFONT Color=#94C541>Para ti, el dï¿½a fue ordinario en comparaciï¿½n con cualquier otro. Sin embargo, cuando el sol de la tarde finalmente desapareciï¿½ bajo el paisaje, te retiraste a la cama donde el sueï¿½o se sentï¿½a inquieto y los sueï¿½os eran mï¿½s vï¿½vidos. No puedes recordar los detalles del sueï¿½o, pero recuerdas haber sido arrastrado de este mundo a travï¿½s de un portal giratorio. Cuando te despertaste, te encontraste en este bosque. Tu ropa de noche ha desaparecido, y ahora estï¿½s vestido con atuendos medievales, sosteniendo una luz en tu mano.<BR><BR>A travï¿½s de la oscuridad de la noche, ves una fogata justo adelante. Una tienda colorida estï¿½ junto a ella con el resplandor acogedor de las linternas alrededor. Los sonidos del arroyo cercano proporcionan una tranquilidad, y puedes ver a un oso grizzly durmiendo plï¿½cidamente junto al calor del fuego. Si fueras a dejar de lado las preocupaciones de tu vida actual, sientes que este serï¿½a el lugar para empezar de nuevo. Decides ver quiï¿½n estï¿½ acampando aquï¿½ y tal vez descubrir dï¿½nde te encuentras.</BASEFONT></BODY>";
             }
             else // English
             {
@@ -237,7 +254,6 @@ namespace Server.Gumps
             }
         }
     }
-
 
     public class GypsyTarotGump : Gump
     {

@@ -539,7 +539,8 @@ namespace Server.Items
                 if (m_Keyword >= 0 && e.HasKeyword(m_Keyword))
                     isMatch = true;
                 else if (
-                    m_Substring != null && e.Speech.ToLower().IndexOf(m_Substring.ToLower()) >= 0
+                    m_Substring != null
+                    && e.Speech.ToLower().IndexOf(m_Substring.ToLower()) >= 0
                 )
                     isMatch = true;
 

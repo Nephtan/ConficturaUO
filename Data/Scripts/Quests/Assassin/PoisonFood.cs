@@ -1,10 +1,10 @@
 using System;
 using System.Collections;
-using Server.Network;
-using Server.Targeting;
-using Server.Prompts;
 using Server.Mobiles;
+using Server.Network;
+using Server.Prompts;
 using Server.Regions;
+using Server.Targeting;
 
 namespace Server.Items
 {

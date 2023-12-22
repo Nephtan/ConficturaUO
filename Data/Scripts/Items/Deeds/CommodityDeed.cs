@@ -1,6 +1,6 @@
 using System;
-using Server.Targeting;
 using Server.Network;
+using Server.Targeting;
 
 namespace Server.Items
 {
@@ -126,7 +126,6 @@ namespace Server.Items
             base.OnSingleClick(from);
 
             if (m_Commodity != null && m_Commodity is ICommodity)
-
                 from.Send(
                     new MessageLocalizedAffix(
                         Serial,

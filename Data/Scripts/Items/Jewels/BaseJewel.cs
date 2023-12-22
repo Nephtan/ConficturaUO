@@ -371,67 +371,67 @@ namespace Server.Items
             switch (version)
             {
                 case 3:
-                    {
-                        m_MaxHitPoints = reader.ReadEncodedInt();
-                        m_HitPoints = reader.ReadEncodedInt();
+                {
+                    m_MaxHitPoints = reader.ReadEncodedInt();
+                    m_HitPoints = reader.ReadEncodedInt();
 
-                        goto case 2;
-                    }
+                    goto case 2;
+                }
                 case 2:
-                    {
-                        m_Resource = (CraftResource)reader.ReadEncodedInt();
-                        m_GemType = (GemType)reader.ReadEncodedInt();
+                {
+                    m_Resource = (CraftResource)reader.ReadEncodedInt();
+                    m_GemType = (GemType)reader.ReadEncodedInt();
 
-                        goto case 1;
-                    }
+                    goto case 1;
+                }
                 case 1:
+                {
+                    m_AosAttributes = new AosAttributes(this, reader);
+                    m_AosResistances = new AosElementAttributes(this, reader);
+                    m_AosSkillBonuses = new AosSkillBonuses(this, reader);
+
+                    if (Core.AOS && Parent is Mobile)
+                        m_AosSkillBonuses.AddTo((Mobile)Parent);
+
+                    int strBonus = m_AosAttributes.BonusStr;
+                    int dexBonus = m_AosAttributes.BonusDex;
+                    int intBonus = m_AosAttributes.BonusInt;
+
+                    if (Parent is Mobile && (strBonus != 0 || dexBonus != 0 || intBonus != 0))
                     {
-                        m_AosAttributes = new AosAttributes(this, reader);
-                        m_AosResistances = new AosElementAttributes(this, reader);
-                        m_AosSkillBonuses = new AosSkillBonuses(this, reader);
+                        Mobile m = (Mobile)Parent;
 
-                        if (Core.AOS && Parent is Mobile)
-                            m_AosSkillBonuses.AddTo((Mobile)Parent);
+                        string modName = Serial.ToString();
 
-                        int strBonus = m_AosAttributes.BonusStr;
-                        int dexBonus = m_AosAttributes.BonusDex;
-                        int intBonus = m_AosAttributes.BonusInt;
+                        if (strBonus != 0)
+                            m.AddStatMod(
+                                new StatMod(StatType.Str, modName + "Str", strBonus, TimeSpan.Zero)
+                            );
 
-                        if (Parent is Mobile && (strBonus != 0 || dexBonus != 0 || intBonus != 0))
-                        {
-                            Mobile m = (Mobile)Parent;
+                        if (dexBonus != 0)
+                            m.AddStatMod(
+                                new StatMod(StatType.Dex, modName + "Dex", dexBonus, TimeSpan.Zero)
+                            );
 
-                            string modName = Serial.ToString();
-
-                            if (strBonus != 0)
-                                m.AddStatMod(
-                                    new StatMod(StatType.Str, modName + "Str", strBonus, TimeSpan.Zero)
-                                );
-
-                            if (dexBonus != 0)
-                                m.AddStatMod(
-                                    new StatMod(StatType.Dex, modName + "Dex", dexBonus, TimeSpan.Zero)
-                                );
-
-                            if (intBonus != 0)
-                                m.AddStatMod(
-                                    new StatMod(StatType.Int, modName + "Int", intBonus, TimeSpan.Zero)
-                                );
-                        }
-
-                        if (Parent is Mobile)
-                            ((Mobile)Parent).CheckStatTimers();
-
-                        break;
+                        if (intBonus != 0)
+                            m.AddStatMod(
+                                new StatMod(StatType.Int, modName + "Int", intBonus, TimeSpan.Zero)
+                            );
                     }
+
+                    if (Parent is Mobile)
+                        ((Mobile)Parent).CheckStatTimers();
+
+                    break;
+                }
                 case 0:
-                    {
-                        m_AosAttributes = new AosAttributes(this);
-                        m_AosResistances = new AosElementAttributes(this);
-                        m_AosSkillBonuses = new AosSkillBonuses(this);
+                {
+                    m_AosAttributes = new AosAttributes(this);
+                    m_AosResistances = new AosElementAttributes(this);
+                    m_AosSkillBonuses = new AosSkillBonuses(this);
 
-                        break;
-                    }
+                    break;
+                }
             }
 
             if (version < 2)

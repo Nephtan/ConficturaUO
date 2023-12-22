@@ -1,9 +1,9 @@
 using System;
 using System.Collections;
 using Server.Mobiles;
-using Server.Spells.Necromancy;
 using Server.Network;
 using Server.Spells;
+using Server.Spells.Necromancy;
 
 namespace Server.Items
 {

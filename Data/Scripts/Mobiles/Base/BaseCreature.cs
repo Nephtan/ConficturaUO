@@ -1,23 +1,23 @@
 using System;
-using System.Collections.Generic;
 using System.Collections;
-using Server.Regions;
-using Server.Targeting;
-using Server.Network;
-using Server.Multis;
-using Server.Spells;
-using Server.Misc;
-using Server.Items;
-using Server.ContextMenus;
-using Server.Engines.Quests;
-using Server.Engines.PartySystem;
-using Server.Factions;
-using Server.Spells.Bushido;
-using Server.Spells.Necromancy;
-using Server.Spells.Elementalism;
+using System.Collections.Generic;
+using System.IO;
 using System.Text;
 using Server;
-using System.IO;
+using Server.ContextMenus;
+using Server.Engines.PartySystem;
+using Server.Engines.Quests;
+using Server.Factions;
+using Server.Items;
+using Server.Misc;
+using Server.Multis;
+using Server.Network;
+using Server.Regions;
+using Server.Spells;
+using Server.Spells.Bushido;
+using Server.Spells.Elementalism;
+using Server.Spells.Necromancy;
+using Server.Targeting;
 
 namespace Server.Mobiles
 {
@@ -199,7 +199,8 @@ namespace Server.Mobiles
             get
             {
                 // dont smartspawn paragons
-                if (IsParagon) return true;
+                if (IsParagon)
+                    return true;
 
                 return false;
             }
@@ -6211,16 +6212,16 @@ namespace Server.Mobiles
                             corpse.AddCarvedItem(new DinosaurScales(scales), from);
                             break;
                         case ScaleType.All:
-                            {
-                                corpse.AddCarvedItem(new RedScales(scales), from);
-                                corpse.AddCarvedItem(new YellowScales(scales), from);
-                                corpse.AddCarvedItem(new BlackScales(scales), from);
-                                corpse.AddCarvedItem(new GreenScales(scales), from);
-                                corpse.AddCarvedItem(new WhiteScales(scales), from);
-                                corpse.AddCarvedItem(new BlueScales(scales), from);
-                                corpse.AddCarvedItem(new DinosaurScales(scales), from);
-                                break;
-                            }
+                        {
+                            corpse.AddCarvedItem(new RedScales(scales), from);
+                            corpse.AddCarvedItem(new YellowScales(scales), from);
+                            corpse.AddCarvedItem(new BlackScales(scales), from);
+                            corpse.AddCarvedItem(new GreenScales(scales), from);
+                            corpse.AddCarvedItem(new WhiteScales(scales), from);
+                            corpse.AddCarvedItem(new BlueScales(scales), from);
+                            corpse.AddCarvedItem(new DinosaurScales(scales), from);
+                            break;
+                        }
                     }
 
                     from.SendMessage("You cut away some scales, but they remain on the corpse.");
@@ -8321,51 +8322,51 @@ namespace Server.Mobiles
             switch (res)
             {
                 case TeachResult.KnowsMoreThanMe:
-                    {
-                        Say(501508); // I cannot teach thee, for thou knowest more than I!
-                        break;
-                    }
+                {
+                    Say(501508); // I cannot teach thee, for thou knowest more than I!
+                    break;
+                }
                 case TeachResult.KnowsWhatIKnow:
-                    {
-                        Say(501509); // I cannot teach thee, for thou knowest all I can teach!
-                        break;
-                    }
+                {
+                    Say(501509); // I cannot teach thee, for thou knowest all I can teach!
+                    break;
+                }
                 case TeachResult.NotEnoughFreePoints:
                 case TeachResult.SkillNotRaisable:
-                    {
-                        m.SendMessage(
-                            "Make sure this skill is marked to raise. If you are near the skill cap you may need to lose some points in another skill first."
-                        );
-                        break;
-                    }
+                {
+                    m.SendMessage(
+                        "Make sure this skill is marked to raise. If you are near the skill cap you may need to lose some points in another skill first."
+                    );
+                    break;
+                }
                 case TeachResult.Success:
+                {
+                    if (doTeach)
                     {
-                        if (doTeach)
-                        {
-                            Say(501539); // Let me show thee something of how this is done.
-                            m.SendLocalizedMessage(501540); // Your skill level increases.
+                        Say(501539); // Let me show thee something of how this is done.
+                        m.SendLocalizedMessage(501540); // Your skill level increases.
 
-                            m_Teaching = (SkillName)(-1);
+                        m_Teaching = (SkillName)(-1);
 
-                            if (m is PlayerMobile)
-                                ((PlayerMobile)m).Learning = (SkillName)(-1);
-                        }
-                        else
-                        {
-                            // I will teach thee all I know, if paid the amount in full.  The price is:
-                            Say(1019077, AffixType.Append, String.Format(" {0}", pointsToLearn), "");
-                            Say(1043108); // For less I shall teach thee less.
-
-                            m_Teaching = skill;
-
-                            if (m is PlayerMobile)
-                                ((PlayerMobile)m).Learning = skill;
-                        }
-
-                        Server.Gumps.SkillListingGump.RefreshSkillList(m);
-
-                        return true;
+                        if (m is PlayerMobile)
+                            ((PlayerMobile)m).Learning = (SkillName)(-1);
                     }
+                    else
+                    {
+                        // I will teach thee all I know, if paid the amount in full.  The price is:
+                        Say(1019077, AffixType.Append, String.Format(" {0}", pointsToLearn), "");
+                        Say(1043108); // For less I shall teach thee less.
+
+                        m_Teaching = skill;
+
+                        if (m is PlayerMobile)
+                            ((PlayerMobile)m).Learning = skill;
+                    }
+
+                    Server.Gumps.SkillListingGump.RefreshSkillList(m);
+
+                    return true;
+                }
             }
 
             return false;
@@ -9982,8 +9983,10 @@ namespace Server.Mobiles
                 silverItem = this.Backpack.FindItemByType(typeof(DDSilver));
                 dtcoins = this.Backpack.FindItemByType(typeof(Gold));
 
-                if (copperItem != null) totalCopper = copperItem.Amount;
-                if (silverItem != null) totalSilver = silverItem.Amount;
+                if (copperItem != null)
+                    totalCopper = copperItem.Amount;
+                if (silverItem != null)
+                    totalSilver = silverItem.Amount;
 
                 totalEquivalentGold += (int)Math.Ceiling(totalCopper / 10.0); // 10 copper = 1 gold, round up
                 totalEquivalentGold += (int)Math.Ceiling(totalSilver / 5.0); // 5 silver = 1 gold, round up
@@ -10003,7 +10006,8 @@ namespace Server.Mobiles
                         SoulLantern souls = (SoulLantern)lantern;
                         souls.TrappedSouls += totalEquivalentGold;
 
-                        if (souls.TrappedSouls > 100000) souls.TrappedSouls = 100000;
+                        if (souls.TrappedSouls > 100000)
+                            souls.TrappedSouls = 100000;
 
                         souls.InvalidateProperties();
 
@@ -10077,14 +10081,20 @@ namespace Server.Mobiles
                 silverItem = this.Backpack.FindItemByType(typeof(DDSilver));
                 dtcoins = this.Backpack.FindItemByType(typeof(Gold));
 
-                if (copperItem != null) totalCopper = copperItem.Amount;
-                if (silverItem != null) totalSilver = silverItem.Amount;
+                if (copperItem != null)
+                    totalCopper = copperItem.Amount;
+                if (silverItem != null)
+                    totalSilver = silverItem.Amount;
 
                 totalEquivalentGold += (int)Math.Ceiling(totalCopper / 10.0); // 10 copper = 1 gold, round up
                 totalEquivalentGold += (int)Math.Ceiling(totalSilver / 5.0); // 5 silver = 1 gold, round up
             }
 
-            if ((holyundead.Slays(this) || holydemons.Slays(this)) && holyman != null && totalEquivalentGold > 0) // TURNS THE MONEY TO BANISH COUNT
+            if (
+                (holyundead.Slays(this) || holydemons.Slays(this))
+                && holyman != null
+                && totalEquivalentGold > 0
+            ) // TURNS THE MONEY TO BANISH COUNT
             {
                 if (holyman is BaseCreature)
                     holyman = ((BaseCreature)holyman).GetMaster();
@@ -10495,7 +10505,8 @@ namespace Server.Mobiles
                 StandardQuestFunctions.CheckTarget(killer, this, null);
                 FishingQuestFunctions.CheckTarget(killer, this, null);
                 if (
-                    killer.Backpack.FindItemByType(typeof(MuseumBook)) != null && this.Fame >= 18000
+                    killer.Backpack.FindItemByType(typeof(MuseumBook)) != null
+                    && this.Fame >= 18000
                 )
                 {
                     MuseumBook.FoundItem(killer, 1);
@@ -11440,13 +11451,15 @@ namespace Server.Mobiles
                         Server.Misc.HenchmanFunctions.DismountHenchman(leader);
                     }
                     else if (
-                        Server.Mobiles.AnimalTrainer.IsBeingFast(leader) && this.ActiveSpeed >= 0.2
+                        Server.Mobiles.AnimalTrainer.IsBeingFast(leader)
+                        && this.ActiveSpeed >= 0.2
                     )
                     {
                         Server.Misc.HenchmanFunctions.MountHenchman(leader);
                     }
                     else if (
-                        !Server.Mobiles.AnimalTrainer.IsBeingFast(leader) && this.ActiveSpeed <= 0.1
+                        !Server.Mobiles.AnimalTrainer.IsBeingFast(leader)
+                        && this.ActiveSpeed <= 0.1
                     )
                     {
                         Server.Misc.HenchmanFunctions.DismountHenchman(leader);

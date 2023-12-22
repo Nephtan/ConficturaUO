@@ -1,9 +1,9 @@
 using System;
-using Server.Targeting;
-using Server.Network;
-using Server.Regions;
 using Server.Items;
 using Server.Mobiles;
+using Server.Network;
+using Server.Regions;
+using Server.Targeting;
 
 namespace Server.Spells.Undead
 {

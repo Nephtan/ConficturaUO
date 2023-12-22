@@ -1,11 +1,11 @@
 using System;
-using Server.Network;
-using Server.Items;
 using Server;
-using Server.Mobiles;
-using Server.Targeting;
 using Server.Gumps;
+using Server.Items;
 using Server.Misc;
+using Server.Mobiles;
+using Server.Network;
+using Server.Targeting;
 
 namespace Server.Items
 {
@@ -1833,7 +1833,9 @@ namespace Server.Items
                             }
                         }
                         else if (
-                            m_Pot.MyRecipe02 != "" && m_Pot.MyRecipe02 != null && sMk1 == false
+                            m_Pot.MyRecipe02 != ""
+                            && m_Pot.MyRecipe02 != null
+                            && sMk1 == false
                         )
                         {
                             int cycle = 0;
@@ -1869,7 +1871,9 @@ namespace Server.Items
                             }
                         }
                         else if (
-                            m_Pot.MyRecipe03 != "" && m_Pot.MyRecipe03 != null && sMk2 == false
+                            m_Pot.MyRecipe03 != ""
+                            && m_Pot.MyRecipe03 != null
+                            && sMk2 == false
                         )
                         {
                             int cycle = 0;
@@ -1905,7 +1909,9 @@ namespace Server.Items
                             }
                         }
                         else if (
-                            m_Pot.MyRecipe04 != "" && m_Pot.MyRecipe04 != null && sMk3 == false
+                            m_Pot.MyRecipe04 != ""
+                            && m_Pot.MyRecipe04 != null
+                            && sMk3 == false
                         )
                         {
                             int cycle = 0;
@@ -1941,7 +1947,9 @@ namespace Server.Items
                             }
                         }
                         else if (
-                            m_Pot.MyRecipe05 != "" && m_Pot.MyRecipe05 != null && sMk4 == false
+                            m_Pot.MyRecipe05 != ""
+                            && m_Pot.MyRecipe05 != null
+                            && sMk4 == false
                         )
                         {
                             int cycle = 0;
@@ -1977,7 +1985,9 @@ namespace Server.Items
                             }
                         }
                         else if (
-                            m_Pot.MyRecipe06 != "" && m_Pot.MyRecipe06 != null && sMk5 == false
+                            m_Pot.MyRecipe06 != ""
+                            && m_Pot.MyRecipe06 != null
+                            && sMk5 == false
                         )
                         {
                             int cycle = 0;
@@ -2013,7 +2023,9 @@ namespace Server.Items
                             }
                         }
                         else if (
-                            m_Pot.MyRecipe07 != "" && m_Pot.MyRecipe07 != null && sMk6 == false
+                            m_Pot.MyRecipe07 != ""
+                            && m_Pot.MyRecipe07 != null
+                            && sMk6 == false
                         )
                         {
                             int cycle = 0;
@@ -2049,7 +2061,9 @@ namespace Server.Items
                             }
                         }
                         else if (
-                            m_Pot.MyRecipe08 != "" && m_Pot.MyRecipe08 != null && sMk7 == false
+                            m_Pot.MyRecipe08 != ""
+                            && m_Pot.MyRecipe08 != null
+                            && sMk7 == false
                         )
                         {
                             int cycle = 0;
@@ -2085,7 +2099,9 @@ namespace Server.Items
                             }
                         }
                         else if (
-                            m_Pot.MyRecipe09 != "" && m_Pot.MyRecipe09 != null && sMk8 == false
+                            m_Pot.MyRecipe09 != ""
+                            && m_Pot.MyRecipe09 != null
+                            && sMk8 == false
                         )
                         {
                             int cycle = 0;
@@ -2121,7 +2137,9 @@ namespace Server.Items
                             }
                         }
                         else if (
-                            m_Pot.MyRecipe10 != "" && m_Pot.MyRecipe10 != null && sMk9 == false
+                            m_Pot.MyRecipe10 != ""
+                            && m_Pot.MyRecipe10 != null
+                            && sMk9 == false
                         )
                         {
                             int cycle = 0;
@@ -2157,7 +2175,9 @@ namespace Server.Items
                             }
                         }
                         else if (
-                            m_Pot.MyRecipe11 != "" && m_Pot.MyRecipe11 != null && sMk10 == false
+                            m_Pot.MyRecipe11 != ""
+                            && m_Pot.MyRecipe11 != null
+                            && sMk10 == false
                         )
                         {
                             int cycle = 0;
@@ -2193,7 +2213,9 @@ namespace Server.Items
                             }
                         }
                         else if (
-                            m_Pot.MyRecipe12 != "" && m_Pot.MyRecipe12 != null && sMk11 == false
+                            m_Pot.MyRecipe12 != ""
+                            && m_Pot.MyRecipe12 != null
+                            && sMk11 == false
                         )
                         {
                             int cycle = 0;
@@ -2229,7 +2251,9 @@ namespace Server.Items
                             }
                         }
                         else if (
-                            m_Pot.MyRecipe13 != "" && m_Pot.MyRecipe13 != null && sMk12 == false
+                            m_Pot.MyRecipe13 != ""
+                            && m_Pot.MyRecipe13 != null
+                            && sMk12 == false
                         )
                         {
                             int cycle = 0;
@@ -2265,7 +2289,9 @@ namespace Server.Items
                             }
                         }
                         else if (
-                            m_Pot.MyRecipe14 != "" && m_Pot.MyRecipe14 != null && sMk13 == false
+                            m_Pot.MyRecipe14 != ""
+                            && m_Pot.MyRecipe14 != null
+                            && sMk13 == false
                         )
                         {
                             int cycle = 0;
@@ -2301,7 +2327,9 @@ namespace Server.Items
                             }
                         }
                         else if (
-                            m_Pot.MyRecipe15 != "" && m_Pot.MyRecipe15 != null && sMk14 == false
+                            m_Pot.MyRecipe15 != ""
+                            && m_Pot.MyRecipe15 != null
+                            && sMk14 == false
                         )
                         {
                             int cycle = 0;
@@ -2337,7 +2365,9 @@ namespace Server.Items
                             }
                         }
                         else if (
-                            m_Pot.MyRecipe16 != "" && m_Pot.MyRecipe16 != null && sMk15 == false
+                            m_Pot.MyRecipe16 != ""
+                            && m_Pot.MyRecipe16 != null
+                            && sMk15 == false
                         )
                         {
                             int cycle = 0;

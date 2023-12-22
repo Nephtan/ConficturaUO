@@ -1,9 +1,9 @@
 using System;
 using System.Collections;
 using Server;
-using Server.Multis;
 using Server.Items;
 using Server.Mobiles;
+using Server.Multis;
 
 namespace Knives.TownHouses
 {
@@ -512,12 +512,12 @@ namespace Knives.TownHouses
 
             foreach (Rectangle2D rect in c_Blocks)
                 for (int x = rect.Start.X; x < rect.End.X; ++x)
-                    for (int y = rect.Start.Y; y < rect.End.Y; ++y)
-                    {
-                        point = new Point2D(x, y);
-                        if (!blocks.Contains(point))
-                            blocks.Add(point);
-                    }
+                for (int y = rect.Start.Y; y < rect.End.Y; ++y)
+                {
+                    point = new Point2D(x, y);
+                    if (!blocks.Contains(point))
+                        blocks.Add(point);
+                }
 
             if (blocks.Count > 500)
             {
@@ -659,7 +659,8 @@ namespace Knives.TownHouses
                     price = 0;
 
                 if (
-                    m.AccessLevel == AccessLevel.Player && !Server.Mobiles.Banker.Withdraw(m, price)
+                    m.AccessLevel == AccessLevel.Player
+                    && !Server.Mobiles.Banker.Withdraw(m, price)
                 )
                 {
                     m.SendMessage("You cannot afford this house.");
@@ -762,13 +763,13 @@ namespace Knives.TownHouses
 
             ArrayList items = new ArrayList();
             foreach (Rectangle2D rect in c_Blocks)
-                foreach (Item item in Map.GetItemsInBounds(rect))
-                    if (
-                        c_House.Region.Contains(item.Location)
-                        && item.RootParent == null
-                        && !items.Contains(item)
-                    )
-                        items.Add(item);
+            foreach (Item item in Map.GetItemsInBounds(rect))
+                if (
+                    c_House.Region.Contains(item.Location)
+                    && item.RootParent == null
+                    && !items.Contains(item)
+                )
+                    items.Add(item);
 
             foreach (Item item in new ArrayList(items))
             {
@@ -968,13 +969,13 @@ namespace Knives.TownHouses
 
             foreach (Rectangle2D rect in c_Blocks)
                 for (int x = rect.Start.X; x < rect.End.X; ++x)
-                    for (int y = rect.Start.Y; y < rect.End.Y; ++y)
-                        for (int z = 0; z < floors; z++)
-                        {
-                            point = new Point3D(x, y, z);
-                            if (!blocks.Contains(point))
-                                blocks.Add(point);
-                        }
+                for (int y = rect.Start.Y; y < rect.End.Y; ++y)
+                for (int z = 0; z < floors; z++)
+                {
+                    point = new Point3D(x, y, z);
+                    if (!blocks.Contains(point))
+                        blocks.Add(point);
+                }
             return blocks.Count;
         }
 

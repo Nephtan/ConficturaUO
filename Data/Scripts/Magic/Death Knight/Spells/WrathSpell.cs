@@ -1,10 +1,10 @@
 using System;
 using System.Collections;
-using Server.Network;
 using Server.Items;
-using Server.Targeting;
-using Server.Regions;
 using Server.Mobiles;
+using Server.Network;
+using Server.Regions;
+using Server.Targeting;
 
 namespace Server.Spells.DeathKnight
 {

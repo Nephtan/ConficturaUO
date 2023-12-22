@@ -1,7 +1,7 @@
 using System;
-using Server.Network;
-using Server.Items;
 using System.Collections.Generic;
+using Server.Items;
+using Server.Network;
 
 namespace Server.Items
 {

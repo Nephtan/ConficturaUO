@@ -1,10 +1,10 @@
 ﻿using System;
 using Server;
-using Server.Targeting;
 using Server.Commands;
 using Server.Commands.Generic;
-using Server.Regions;
 using Server.Mobiles;
+using Server.Regions;
+using Server.Targeting;
 
 namespace Server.Targets
 {
@@ -42,7 +42,6 @@ namespace Server.Targets
                 Region reg = Region.Find(pt, from.Map);
 
                 if (reg is CityMarketRegion)
-
                     if (((CityMarketRegion)reg).Stone == pm.City)
                         market = true;
 

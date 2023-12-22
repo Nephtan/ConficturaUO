@@ -1,13 +1,13 @@
 using System;
-using Server;
 using System.Collections;
-using Server.Items;
-using Server.Targeting;
-using Server.Misc;
-using Server.Network;
 using System.Text;
-using Server.Mobiles;
+using Server;
 using Server.Engines.PartySystem;
+using Server.Items;
+using Server.Misc;
+using Server.Mobiles;
+using Server.Network;
+using Server.Targeting;
 
 namespace Server.Mobiles
 {

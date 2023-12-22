@@ -1,8 +1,8 @@
 using System;
 using System.Collections;
 using Server;
-using Server.Items;
 using Server.Gumps;
+using Server.Items;
 using Server.Spells;
 
 namespace Server.Spells.Mystic

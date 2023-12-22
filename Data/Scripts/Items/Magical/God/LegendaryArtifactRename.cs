@@ -1,9 +1,9 @@
 using System;
-using Server.Network;
 using Server;
-using Server.Targeting;
 using Server.Items;
+using Server.Network;
 using Server.Prompts;
+using Server.Targeting;
 
 namespace Server.Items
 {

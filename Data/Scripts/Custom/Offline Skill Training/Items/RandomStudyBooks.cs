@@ -5,7 +5,7 @@ namespace Server.Items
 {
     public class AdvancedRandomStudyBook : StudyBook
     {
-		private static readonly SkillName[] m_Skills = new SkillName[]
+        private static readonly SkillName[] m_Skills = new SkillName[]
         {
             SkillName.Blacksmith,
             SkillName.Tailoring,
@@ -38,30 +38,30 @@ namespace Server.Items
             SkillName.Ninjitsu,
             SkillName.Bushido,
             SkillName.Elementalism,
-			SkillName.Alchemy,
-			SkillName.Cooking,
-			SkillName.Seafaring,
-			SkillName.Lumberjacking,
-			SkillName.Mining,
-			SkillName.Tinkering,
-			SkillName.Begging,
-			SkillName.Forensics,
-			SkillName.Mercantile,
-			SkillName.Tasting,
-			SkillName.Camping,
-			SkillName.Hiding,
-			SkillName.Inscribe,
-			SkillName.Searching,
-			SkillName.RemoveTrap,
-			SkillName.Lockpicking,
-			SkillName.Poisoning,
-			SkillName.Snooping,
-			SkillName.Cartography,
-			SkillName.Herding,
-			SkillName.Tracking
+            SkillName.Alchemy,
+            SkillName.Cooking,
+            SkillName.Seafaring,
+            SkillName.Lumberjacking,
+            SkillName.Mining,
+            SkillName.Tinkering,
+            SkillName.Begging,
+            SkillName.Forensics,
+            SkillName.Mercantile,
+            SkillName.Tasting,
+            SkillName.Camping,
+            SkillName.Hiding,
+            SkillName.Inscribe,
+            SkillName.Searching,
+            SkillName.RemoveTrap,
+            SkillName.Lockpicking,
+            SkillName.Poisoning,
+            SkillName.Snooping,
+            SkillName.Cartography,
+            SkillName.Herding,
+            SkillName.Tracking
         };
-		private static readonly List<SkillName> _Skills = new List<SkillName>();
-		public static List<SkillName> Skills
+        private static readonly List<SkillName> _Skills = new List<SkillName>();
+        public static List<SkillName> Skills
         {
             get
             {
@@ -72,18 +72,14 @@ namespace Server.Items
                 return _Skills;
             }
         }
-		
+
         [Constructable]
         public AdvancedRandomStudyBook()
-            : base(Skills[Utility.Random(Skills.Count)], 1000)
-        {
-        }
+            : base(Skills[Utility.Random(Skills.Count)], 1000) { }
 
         public AdvancedRandomStudyBook(Serial serial)
-            : base(serial)
-        {
-        }
-		
+            : base(serial) { }
+
         public override void Serialize(GenericWriter writer)
         {
             base.Serialize(writer);
@@ -98,10 +94,10 @@ namespace Server.Items
             int version = reader.ReadInt();
         }
     }
-	
-	public class LegendaryRandomStudyBook : StudyBook
+
+    public class LegendaryRandomStudyBook : StudyBook
     {
-		private static readonly SkillName[] m_Skills = new SkillName[]
+        private static readonly SkillName[] m_Skills = new SkillName[]
         {
             SkillName.Blacksmith,
             SkillName.Tailoring,
@@ -134,30 +130,30 @@ namespace Server.Items
             SkillName.Ninjitsu,
             SkillName.Bushido,
             SkillName.Elementalism,
-			SkillName.Alchemy,
-			SkillName.Cooking,
-			SkillName.Seafaring,
-			SkillName.Lumberjacking,
-			SkillName.Mining,
-			SkillName.Tinkering,
-			SkillName.Begging,
-			SkillName.Forensics,
-			SkillName.Mercantile,
-			SkillName.Tasting,
-			SkillName.Camping,
-			SkillName.Hiding,
-			SkillName.Inscribe,
-			SkillName.Searching,
-			SkillName.RemoveTrap,
-			SkillName.Lockpicking,
-			SkillName.Poisoning,
-			SkillName.Snooping,
-			SkillName.Cartography,
-			SkillName.Herding,
-			SkillName.Tracking
+            SkillName.Alchemy,
+            SkillName.Cooking,
+            SkillName.Seafaring,
+            SkillName.Lumberjacking,
+            SkillName.Mining,
+            SkillName.Tinkering,
+            SkillName.Begging,
+            SkillName.Forensics,
+            SkillName.Mercantile,
+            SkillName.Tasting,
+            SkillName.Camping,
+            SkillName.Hiding,
+            SkillName.Inscribe,
+            SkillName.Searching,
+            SkillName.RemoveTrap,
+            SkillName.Lockpicking,
+            SkillName.Poisoning,
+            SkillName.Snooping,
+            SkillName.Cartography,
+            SkillName.Herding,
+            SkillName.Tracking
         };
-		private static readonly List<SkillName> _Skills = new List<SkillName>();
-		public static List<SkillName> Skills
+        private static readonly List<SkillName> _Skills = new List<SkillName>();
+        public static List<SkillName> Skills
         {
             get
             {
@@ -168,17 +164,14 @@ namespace Server.Items
                 return _Skills;
             }
         }
+
         [Constructable]
         public LegendaryRandomStudyBook()
-            : base(Skills[Utility.Random(Skills.Count)], 1200)
-        {
-        }
+            : base(Skills[Utility.Random(Skills.Count)], 1200) { }
 
         public LegendaryRandomStudyBook(Serial serial)
-            : base(serial)
-        {
-        }
-		
+            : base(serial) { }
+
         public override void Serialize(GenericWriter writer)
         {
             base.Serialize(writer);
@@ -193,10 +186,10 @@ namespace Server.Items
             int version = reader.ReadInt();
         }
     }
-	
-	public class StandardRandomStudyBook : StudyBook
+
+    public class StandardRandomStudyBook : StudyBook
     {
-		private static readonly SkillName[] m_Skills = new SkillName[]
+        private static readonly SkillName[] m_Skills = new SkillName[]
         {
             SkillName.Blacksmith,
             SkillName.Tailoring,
@@ -229,30 +222,30 @@ namespace Server.Items
             SkillName.Ninjitsu,
             SkillName.Bushido,
             SkillName.Elementalism,
-			SkillName.Alchemy,
-			SkillName.Cooking,
-			SkillName.Seafaring,
-			SkillName.Lumberjacking,
-			SkillName.Mining,
-			SkillName.Tinkering,
-			SkillName.Begging,
-			SkillName.Forensics,
-			SkillName.Mercantile,
-			SkillName.Tasting,
-			SkillName.Camping,
-			SkillName.Hiding,
-			SkillName.Inscribe,
-			SkillName.Searching,
-			SkillName.RemoveTrap,
-			SkillName.Lockpicking,
-			SkillName.Poisoning,
-			SkillName.Snooping,
-			SkillName.Cartography,
-			SkillName.Herding,
-			SkillName.Tracking
+            SkillName.Alchemy,
+            SkillName.Cooking,
+            SkillName.Seafaring,
+            SkillName.Lumberjacking,
+            SkillName.Mining,
+            SkillName.Tinkering,
+            SkillName.Begging,
+            SkillName.Forensics,
+            SkillName.Mercantile,
+            SkillName.Tasting,
+            SkillName.Camping,
+            SkillName.Hiding,
+            SkillName.Inscribe,
+            SkillName.Searching,
+            SkillName.RemoveTrap,
+            SkillName.Lockpicking,
+            SkillName.Poisoning,
+            SkillName.Snooping,
+            SkillName.Cartography,
+            SkillName.Herding,
+            SkillName.Tracking
         };
-		private static readonly List<SkillName> _Skills = new List<SkillName>();
-		public static List<SkillName> Skills
+        private static readonly List<SkillName> _Skills = new List<SkillName>();
+        public static List<SkillName> Skills
         {
             get
             {
@@ -263,17 +256,14 @@ namespace Server.Items
                 return _Skills;
             }
         }
+
         [Constructable]
         public StandardRandomStudyBook()
-            : base(Skills[Utility.Random(Skills.Count)], 700)
-        {
-        }
+            : base(Skills[Utility.Random(Skills.Count)], 700) { }
 
         public StandardRandomStudyBook(Serial serial)
-            : base(serial)
-        {
-        }
-		
+            : base(serial) { }
+
         public override void Serialize(GenericWriter writer)
         {
             base.Serialize(writer);

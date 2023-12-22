@@ -70,45 +70,18 @@ namespace Server.Misc
                 AccessLevel.Administrator,
                 AutoRestartLoad_OnCommand
             );
-            CommandSystem.Register(
-                "AR-On",
-                AccessLevel.Administrator,
-                AutoRestartOn_OnCommand
-            );
-            CommandSystem.Register(
-                "AR-Off",
-                AccessLevel.Administrator,
-                AutoRestartOff_OnCommand
-            );
-            CommandSystem.Register(
-                "AR-When",
-                AccessLevel.Administrator,
-                AutoRestartWhen_OnCommand
-            );
-            CommandSystem.Register(
-                "AR-Time",
-                AccessLevel.Administrator,
-                AutoRestartTime_OnCommand
-            );
+            CommandSystem.Register("AR-On", AccessLevel.Administrator, AutoRestartOn_OnCommand);
+            CommandSystem.Register("AR-Off", AccessLevel.Administrator, AutoRestartOff_OnCommand);
+            CommandSystem.Register("AR-When", AccessLevel.Administrator, AutoRestartWhen_OnCommand);
+            CommandSystem.Register("AR-Time", AccessLevel.Administrator, AutoRestartTime_OnCommand);
             CommandSystem.Register(
                 "AR-Color",
                 AccessLevel.Administrator,
                 AutoRestartColor_OnCommand
             );
-            CommandSystem.Register(
-                "AR-Text",
-                AccessLevel.Administrator,
-                AutoRestartText_OnCommand
-            );
-            CommandSystem.Register("AR-Save",
-                AccessLevel.Administrator,
-                AutoRestartSave_OnCommand
-            );
-            CommandSystem.Register(
-                "AR-Load",
-                AccessLevel.Administrator,
-                AutoRestartLoad_OnCommand
-            );
+            CommandSystem.Register("AR-Text", AccessLevel.Administrator, AutoRestartText_OnCommand);
+            CommandSystem.Register("AR-Save", AccessLevel.Administrator, AutoRestartSave_OnCommand);
+            CommandSystem.Register("AR-Load", AccessLevel.Administrator, AutoRestartLoad_OnCommand);
 
             // -------------------- START HERE ----------------------
             // At what time interval(s) (in minutes) should the restart warning be displayed prior to restart?
@@ -143,7 +116,8 @@ namespace Server.Misc
 
         private static TimeSpan RestartTimeOfDay = TimeSpan.FromHours(9); // The time of day at which to restart (in Server time.)
         private static List<double> WarningDelays;
-        private static string RestartMessage = "The server will be restarting for routine maintenance";
+        private static string RestartMessage =
+            "The server will be restarting for routine maintenance";
         private static bool m_Restarting;
 
         public static bool Restarting
@@ -420,9 +394,7 @@ namespace Server.Misc
             int loopCounter = 0;
             foreach (double delay in WarningDelays)
             {
-                if (
-                    WarningDelaysNOTSent[loopCounter] && DateTime.Now > getNextWarningTime(delay)
-                )
+                if (WarningDelaysNOTSent[loopCounter] && DateTime.Now > getNextWarningTime(delay))
                 {
                     WarningDelaysNOTSent[loopCounter] = false;
                     Warning_Callback((int)delay);
@@ -585,8 +557,7 @@ namespace Server.Misc
                 0x22,
                 TimeSpan.Zero,
                 new List<double>() { 1.0, 2.0, 5.0, 10.0 }
-            )
-        { }
+            ) { }
 
         [Constructable]
         public AutoRestarter(

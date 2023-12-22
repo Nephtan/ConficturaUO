@@ -2,8 +2,8 @@ using System;
 using System.Collections;
 using Server.Items;
 using Server.Misc;
-using Server.Network;
 using Server.Multis;
+using Server.Network;
 
 namespace Server.Items
 {

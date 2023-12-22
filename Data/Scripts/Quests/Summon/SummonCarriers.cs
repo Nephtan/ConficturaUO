@@ -1,13 +1,13 @@
 using System;
-using Server;
 using System.Collections;
 using System.Collections.Generic;
-using Server.Misc;
-using Server.Items;
-using Server.Mobiles;
-using Server.Targeting;
-using Server.Network;
+using Server;
 using Server.Engines.PartySystem;
+using Server.Items;
+using Server.Misc;
+using Server.Mobiles;
+using Server.Network;
+using Server.Targeting;
 
 namespace Server.Misc
 {
@@ -1505,7 +1505,8 @@ namespace Server.Misc
                             foreach (PartyMemberInfo pmi in p.Members)
                             {
                                 if (
-                                    pmi.Mobile is PlayerMobile && pmi.Mobile.InRange(m.Location, 20)
+                                    pmi.Mobile is PlayerMobile
+                                    && pmi.Mobile.InRange(m.Location, 20)
                                 )
                                 {
                                     LoggingFunctions.LogSlayingLord(

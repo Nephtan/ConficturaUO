@@ -1,14 +1,14 @@
 using System;
+using System.Collections.Generic;
 using Server;
-using Server.Targeting;
-using Server.Network;
-using Server.Regions;
 using Server.Items;
 using Server.Mobiles;
-using System.Collections.Generic;
+using Server.Network;
+using Server.Regions;
 using Server.Spells;
 using Server.Spells.Necromancy;
 using Server.Spells.Ninjitsu;
+using Server.Targeting;
 
 namespace Server.Spells.Jester
 {

@@ -6,6 +6,8 @@
 using System;
 using System.Collections;
 using Server;
+using Server.Commands;
+using Server.Commands.Generic;
 using Server.Gumps;
 using Server.Items;
 using Server.Items.Crops;
@@ -13,8 +15,6 @@ using Server.Misc;
 using Server.Mobiles;
 using Server.Multis;
 using Server.Network;
-using Server.Commands;
-using Server.Commands.Generic;
 using Server.Targeting;
 
 namespace Server.Gumps
@@ -302,9 +302,9 @@ namespace Server.Gumps
 
                         Point3D loc = new Point3D(p);
                         if (p is StaticTarget)
-                            loc.Z -= TileData.ItemTable[
-                                ((StaticTarget)p).ItemID & 0x3FFF
-                            ].CalcHeight;
+                            loc.Z -= TileData
+                                .ItemTable[((StaticTarget)p).ItemID & 0x3FFF]
+                                .CalcHeight;
 
                         if (VinePlacement.ValidatePlacement(loc, from, o))
                         {
@@ -431,9 +431,9 @@ namespace Server.Gumps
 
                         Point3D loc = new Point3D(p);
                         if (p is StaticTarget)
-                            loc.Z -= TileData.ItemTable[
-                                ((StaticTarget)p).ItemID & 0x3FFF
-                            ].CalcHeight;
+                            loc.Z -= TileData
+                                .ItemTable[((StaticTarget)p).ItemID & 0x3FFF]
+                                .CalcHeight;
 
                         if (VinePlacement.ValidatePlacement(loc, from, m_Object))
                             item.MoveToWorld(loc, from.Map);
@@ -541,7 +541,9 @@ namespace Server.Gumps
                         );
                     }
                     else if (
-                        m_Page == GumpPage.PickResource2 && index >= 0 && index < m_Grapes.Length
+                        m_Page == GumpPage.PickResource2
+                        && index >= 0
+                        && index < m_Grapes.Length
                     )
                     {
                         m_VarietyIndex = index;

@@ -1,14 +1,14 @@
 using System;
-using Server;
-using Server.Items;
-using System.Text;
-using Server.Mobiles;
-using Server.Gumps;
-using System.IO;
 using System.Collections;
 using System.Collections.Generic;
-using Server.Network;
+using System.IO;
+using System.Text;
+using Server;
 using Server.Engines.Craft;
+using Server.Gumps;
+using Server.Items;
+using Server.Mobiles;
+using Server.Network;
 
 namespace Server.Items
 {
@@ -95,7 +95,11 @@ namespace Server.Items
             else if (map == Map.Sosaria && from.X < 5121 && from.Y < 3128)
                 WorldMap = 1; // SOSARIA
             else if (
-                map == Map.Lodor && from.X > 6442 && from.Y > 3051 && from.X < 7007 && from.Y < 3478
+                map == Map.Lodor
+                && from.X > 6442
+                && from.Y > 3051
+                && from.X < 7007
+                && from.Y < 3478
             )
                 WorldMap = 2; // LODORIA
             else if (map == Map.Lodor && from.X < 5420 && from.Y < 4096)

@@ -2,13 +2,13 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Server;
-using Server.Mobiles;
-using Server.Targeting;
 using Server.ContextMenus;
+using Server.Mobiles;
 using Server.Network;
 using Server.Regions;
 using Server.Spells;
 using Server.Spells.Ninjitsu;
+using Server.Targeting;
 
 namespace Server.Items
 {
@@ -469,7 +469,8 @@ namespace Server.Items
             public override bool CheckDisturb(DisturbType type, bool checkFirst, bool resistable)
             {
                 if (
-                    type == DisturbType.EquipRequest || type == DisturbType.UseRequest /* || type == DisturbType.Hurt*/
+                    type == DisturbType.EquipRequest
+                    || type == DisturbType.UseRequest /* || type == DisturbType.Hurt*/
                 )
                     return false;
 

@@ -91,7 +91,9 @@ namespace Knives.Chat3
                         String.Format("(Global) <{0}> {1}: {2}", NameFor(m), m.RawName, msg)
                     );
                 else if (
-                    IsIn(data.Mobile) && !data.Ignores.Contains(m) && data.Mobile.Guild == m.Guild
+                    IsIn(data.Mobile)
+                    && !data.Ignores.Contains(m)
+                    && data.Mobile.Guild == m.Guild
                 )
                     data.Mobile.SendMessage(
                         m.AccessLevel == AccessLevel.Player

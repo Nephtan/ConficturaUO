@@ -1,18 +1,18 @@
 #define CLIENT6017
 
 using System;
-using Server;
-using Server.Gumps;
-using Server.Network;
-using Server.Mobiles;
-using System.IO;
 using System.Collections;
 using System.Collections.Generic;
-using Server.Targeting;
-using Server.Engines.PartySystem;
 using System.Data;
+using System.IO;
 using System.Xml;
+using Server;
+using Server.Engines.PartySystem;
 using Server.Engines.XmlSpawner2;
+using Server.Gumps;
+using Server.Mobiles;
+using Server.Network;
+using Server.Targeting;
 
 /*
 ** XmlQuestHolder class
@@ -574,7 +574,9 @@ namespace Server.Items
                     }
                     // allow placement into containers in the world, npcs or drop on their corpses when owner is null
                     else if (
-                        !(parentOfTarget is Mobile) && !(target is Corpse) && parentOfTarget != null
+                        !(parentOfTarget is Mobile)
+                        && !(target is Corpse)
+                        && parentOfTarget != null
                     )
                     {
                         // invalidate the token

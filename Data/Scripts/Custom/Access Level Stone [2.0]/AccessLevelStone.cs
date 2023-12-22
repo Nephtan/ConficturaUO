@@ -1,9 +1,9 @@
 using System;
 using Server;
-using Server.Misc;
-using Server.Items;
-using Server.Targeting;
 using Server.Commands;
+using Server.Items;
+using Server.Misc;
+using Server.Targeting;
 
 namespace Server.Items
 {

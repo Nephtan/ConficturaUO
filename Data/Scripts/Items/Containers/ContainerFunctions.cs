@@ -1,12 +1,12 @@
 using System;
-using Server;
 using System.Collections;
-using Server.Items;
-using Server.Multis;
-using Server.Mobiles;
-using Server.Network;
 using System.Reflection;
 using System.Text;
+using Server;
+using Server.Items;
+using Server.Mobiles;
+using Server.Multis;
+using Server.Network;
 using Server.Regions;
 
 namespace Server.Misc
@@ -407,7 +407,9 @@ namespace Server.Misc
                         idropped = new MithrilIngot();
                     }
                     else if (
-                        (idropped is Cloth) || (idropped is UncutCloth) || (idropped is BoltOfCloth)
+                        (idropped is Cloth)
+                        || (idropped is UncutCloth)
+                        || (idropped is BoltOfCloth)
                     )
                     {
                         idropped.Hue = Utility.RandomColor(0);

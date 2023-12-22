@@ -1,12 +1,12 @@
 using System;
-using Server;
-using Server.Spells;
-using Server.Network;
-using Server.Mobiles;
-using Server.Items;
-using System.Collections.Generic;
 using System.Collections;
+using System.Collections.Generic;
+using Server;
 using Server.Gumps;
+using Server.Items;
+using Server.Mobiles;
+using Server.Network;
+using Server.Spells;
 
 namespace Server.Spells.Research
 {

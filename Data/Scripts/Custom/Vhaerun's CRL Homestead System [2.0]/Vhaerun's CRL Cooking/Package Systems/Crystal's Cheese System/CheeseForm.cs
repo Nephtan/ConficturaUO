@@ -7,12 +7,12 @@
 
 using System;
 using Server;
+using Server.Gumps;
 using Server.Items;
+using Server.Mobiles;
+using Server.Network;
 using Server.Prompts;
 using Server.Targeting;
-using Server.Network;
-using Server.Mobiles;
-using Server.Gumps;
 
 namespace Server.Items
 {
@@ -88,14 +88,18 @@ namespace Server.Items
             else
             {
                 if (
-                    (Fermentation == false) && (MoulePlein == false) && (ContientUnFromton == false)
+                    (Fermentation == false)
+                    && (MoulePlein == false)
+                    && (ContientUnFromton == false)
                 )
                 {
                     from.Target = new OnRempliMouleFromton(this);
                     from.SendMessage(0x84C, "Choose the milk bucket for filling the cheese form.");
                 }
                 else if (
-                    (MoulePlein == true) && (Fermentation == false) && (ContientUnFromton == false)
+                    (MoulePlein == true)
+                    && (Fermentation == false)
+                    && (ContientUnFromton == false)
                 )
                 {
                     new FromQuiFermente(this).Start();
@@ -107,7 +111,9 @@ namespace Server.Items
                         m_StadeFermentation = 0;
                 }
                 else if (
-                    (Fermentation == true) && (ContientUnFromton == false) && (MoulePlein == true)
+                    (Fermentation == true)
+                    && (ContientUnFromton == false)
+                    && (MoulePlein == true)
                 )
                 {
                     this.PublicOverheadMessage(
@@ -120,7 +126,9 @@ namespace Server.Items
                     );
                 }
                 else if (
-                    (Fermentation == false) && (ContientUnFromton == true) && (MoulePlein == true)
+                    (Fermentation == false)
+                    && (ContientUnFromton == true)
+                    && (MoulePlein == true)
                 )
                 {
                     if (m_FromBonusSkill < 10)

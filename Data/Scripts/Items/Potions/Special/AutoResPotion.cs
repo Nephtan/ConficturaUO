@@ -1,11 +1,11 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using Server;
 using Server.Items;
 using Server.Mobiles;
-using Server.Prompts;
 using Server.Network;
-using System.Collections;
-using System.Collections.Generic;
+using Server.Prompts;
 
 namespace Server.Items
 {

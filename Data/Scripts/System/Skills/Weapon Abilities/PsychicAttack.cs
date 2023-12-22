@@ -1,8 +1,8 @@
 // $Id: //depot/c%23/RunUO Core Scripts/RunUO Core Scripts/Items/Weapons/Abilities/PsychicAttack.cs#2 $
 
 using System;
-using Server;
 using System.Collections;
+using Server;
 using Server.Spells;
 
 namespace Server.Items

@@ -1,24 +1,24 @@
 using System;
+using System.Collections;
 using System.Data;
 using System.IO;
-using System.Collections;
+using System.Reflection;
+using System.Text;
+using System.Threading;
+using System.Xml;
 using Server;
+using Server.Accounting;
+using Server.Commands;
+using Server.Commands.Generic;
+using Server.Engines.XmlSpawner2;
+using Server.Gumps;
 using Server.Items;
 using Server.Multis;
 using Server.Network;
-using Server.Gumps;
-using Server.Targeting;
-using System.Reflection;
-using Server.Commands;
-using Server.Commands.Generic;
-using CPA = Server.CommandPropertyAttribute;
-using System.Xml;
-using Server.Spells;
 using Server.Regions;
-using System.Text;
-using Server.Accounting;
-using System.Threading;
-using Server.Engines.XmlSpawner2;
+using Server.Spells;
+using Server.Targeting;
+using CPA = Server.CommandPropertyAttribute;
 
 /*
 ** XmlFind
@@ -731,8 +731,7 @@ namespace Server.Mobiles
                                             // search by entry string
                                             if (
                                                 so.TypeName != null
-                                                && so.TypeName
-                                                    .ToLower()
+                                                && so.TypeName.ToLower()
                                                     .IndexOf(criteria.Searchspawnentry.ToLower())
                                                     >= 0
                                             )
@@ -1865,7 +1864,10 @@ namespace Server.Mobiles
                         itemloc = item.Location;
                     }
                     if (
-                        item == null || item.Deleted || item.Map == null || item.Map == Map.Internal
+                        item == null
+                        || item.Deleted
+                        || item.Map == null
+                        || item.Map == Map.Internal
                     )
                         return;
                     m_From.Location = itemloc;
@@ -1888,7 +1890,10 @@ namespace Server.Mobiles
                     {
                         Mobile mob = (Mobile)a.AttachedTo;
                         if (
-                            mob == null || mob.Deleted || mob.Map == null || mob.Map == Map.Internal
+                            mob == null
+                            || mob.Deleted
+                            || mob.Map == null
+                            || mob.Map == Map.Internal
                         )
                             return;
                         m_From.Location = mob.Location;
@@ -1969,7 +1974,8 @@ namespace Server.Mobiles
                 {
                     Item x = (Item)o;
                     if (
-                        x == null || x.Deleted /*|| x.Map == null*/
+                        x == null
+                        || x.Deleted /*|| x.Map == null*/
                     )
                         return;
                     m_From.SendGump(new PropertiesGump(m_From, o));
@@ -1978,7 +1984,8 @@ namespace Server.Mobiles
                 {
                     Mobile x = (Mobile)o;
                     if (
-                        x == null || x.Deleted /*|| x.Map == null*/
+                        x == null
+                        || x.Deleted /*|| x.Map == null*/
                     )
                         return;
                     m_From.SendGump(new PropertiesGump(m_From, o));
@@ -1987,7 +1994,8 @@ namespace Server.Mobiles
                 {
                     XmlAttachment x = (XmlAttachment)o;
                     if (
-                        x == null || x.Deleted /*|| x.Map == null*/
+                        x == null
+                        || x.Deleted /*|| x.Map == null*/
                     )
                         return;
                     m_From.SendGump(new PropertiesGump(m_From, o));

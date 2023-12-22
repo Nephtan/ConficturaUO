@@ -1,15 +1,15 @@
 using System;
-using Server;
 using System.Collections;
-using Server.ContextMenus;
 using System.Collections.Generic;
-using Server.Misc;
-using Server.Network;
-using Server.Items;
-using Server.Gumps;
-using Server.Mobiles;
-using Server.Commands;
 using System.Globalization;
+using Server;
+using Server.Commands;
+using Server.ContextMenus;
+using Server.Gumps;
+using Server.Items;
+using Server.Misc;
+using Server.Mobiles;
+using Server.Network;
 using Server.Regions;
 using Server.Targeting;
 
@@ -61,7 +61,8 @@ namespace Server.Items
             if (Weight < 1.5)
             {
                 if (
-                    ((HaveShardB + HaveShardC + HaveShardD + HaveShardA) > 3) && HaveGold < NeedGold
+                    ((HaveShardB + HaveShardC + HaveShardD + HaveShardA) > 3)
+                    && HaveGold < NeedGold
                 )
                 {
                     int need = NeedGold - HaveGold;

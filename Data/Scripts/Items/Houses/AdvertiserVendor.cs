@@ -1,16 +1,16 @@
 using System;
 using System.Collections;
+using System.Net;
 using Server;
+using Server.Accounting;
+using Server.Commands;
+using Server.Gumps;
 using Server.Items;
+using Server.Mobiles;
 using Server.Network;
 using Server.Prompts;
-using System.Net;
-using Server.Accounting;
-using Server.Mobiles;
-using Server.Commands;
 using Server.Regions;
 using Server.Spells;
-using Server.Gumps;
 using Server.Targeting;
 
 namespace Server.Items
@@ -254,7 +254,10 @@ namespace Server.Items
                                 mSet = Map.Sosaria;
                             }
                             else if (
-                                (pv.X > 2150) && (pv.Y > 1401) && (pv.X < 2270) && (pv.Y < 1513)
+                                (pv.X > 2150)
+                                && (pv.Y > 1401)
+                                && (pv.X < 2270)
+                                && (pv.Y < 1513)
                             )
                             {
                                 xSet = 1861;
@@ -263,7 +266,10 @@ namespace Server.Items
                                 mSet = Map.Lodor;
                             }
                             else if (
-                                (pv.X > 2375) && (pv.Y > 1398) && (pv.X < 2442) && (pv.Y < 1467)
+                                (pv.X > 2375)
+                                && (pv.Y > 1398)
+                                && (pv.X < 2442)
+                                && (pv.Y < 1467)
                             )
                             {
                                 xSet = 466;
@@ -272,7 +278,10 @@ namespace Server.Items
                                 mSet = Map.Lodor;
                             }
                             else if (
-                                (pv.X > 2401) && (pv.Y > 1635) && (pv.X < 2468) && (pv.Y < 1703)
+                                (pv.X > 2401)
+                                && (pv.Y > 1635)
+                                && (pv.X < 2468)
+                                && (pv.Y < 1703)
                             )
                             {
                                 xSet = 254;
@@ -281,7 +290,10 @@ namespace Server.Items
                                 mSet = Map.SerpentIsland;
                             }
                             else if (
-                                (pv.X > 2408) && (pv.Y > 1896) && (pv.X < 2517) && (pv.Y < 2005)
+                                (pv.X > 2408)
+                                && (pv.Y > 1896)
+                                && (pv.X < 2517)
+                                && (pv.Y < 2005)
                             )
                             {
                                 xSet = 422;
@@ -290,7 +302,10 @@ namespace Server.Items
                                 mSet = Map.SavagedEmpire;
                             }
                             else if (
-                                (pv.X > 2181) && (pv.Y > 1889) && (pv.X < 2275) && (pv.Y < 2003)
+                                (pv.X > 2181)
+                                && (pv.Y > 1889)
+                                && (pv.X < 2275)
+                                && (pv.Y < 2003)
                             )
                             {
                                 xSet = 251;
@@ -299,7 +314,10 @@ namespace Server.Items
                                 mSet = Map.IslesDread;
                             }
                             else if (
-                                (pv.X > 1930) && (pv.Y > 1890) && (pv.X < 2022) && (pv.Y < 1997)
+                                (pv.X > 1930)
+                                && (pv.Y > 1890)
+                                && (pv.X < 2022)
+                                && (pv.Y < 1997)
                             )
                             {
                                 xSet = 3884;
@@ -444,7 +462,10 @@ namespace Server.Items
                                 mSet = Map.IslesDread;
                             }
                             else if (
-                                (pv.X > 1659) && (pv.Y > 953) && (pv.X < 1809) && (pv.Y < 1059)
+                                (pv.X > 1659)
+                                && (pv.Y > 953)
+                                && (pv.X < 1809)
+                                && (pv.Y < 1059)
                             )
                             {
                                 xSet = 5390;
@@ -453,7 +474,10 @@ namespace Server.Items
                                 mSet = Map.Sosaria;
                             }
                             else if (
-                                (pv.X > 1881) && (pv.Y > 954) && (pv.X < 2034) && (pv.Y < 1059)
+                                (pv.X > 1881)
+                                && (pv.Y > 954)
+                                && (pv.X < 2034)
+                                && (pv.Y < 1059)
                             )
                             {
                                 xSet = 922;
@@ -462,7 +486,10 @@ namespace Server.Items
                                 mSet = Map.SavagedEmpire;
                             }
                             else if (
-                                (pv.X > 2113) && (pv.Y > 952) && (pv.X < 2268) && (pv.Y < 1056)
+                                (pv.X > 2113)
+                                && (pv.Y > 952)
+                                && (pv.X < 2268)
+                                && (pv.Y < 1056)
                             )
                             {
                                 xSet = 1036;

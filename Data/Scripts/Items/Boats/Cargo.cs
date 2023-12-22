@@ -1,15 +1,15 @@
 using System;
-using Server;
 using System.Collections;
-using Server.ContextMenus;
 using System.Collections.Generic;
-using Server.Misc;
-using Server.Network;
-using Server.Items;
-using Server.Gumps;
-using Server.Mobiles;
-using Server.Commands;
 using System.Globalization;
+using Server;
+using Server.Commands;
+using Server.ContextMenus;
+using Server.Gumps;
+using Server.Items;
+using Server.Misc;
+using Server.Mobiles;
+using Server.Network;
 using Server.Regions;
 
 namespace Server.Items
@@ -2717,7 +2717,8 @@ namespace Server.Items
                 return true;
             }
             else if (
-                cargo.CargoVendor == "Banker or Minter" && (vendor is Banker || vendor is Minter)
+                cargo.CargoVendor == "Banker or Minter"
+                && (vendor is Banker || vendor is Minter)
             )
             {
                 return true;
@@ -2765,7 +2766,8 @@ namespace Server.Items
                 return true;
             }
             else if (
-                cargo.CargoVendor == "Healer" && (vendor is HealerGuildmaster || vendor is Healer)
+                cargo.CargoVendor == "Healer"
+                && (vendor is HealerGuildmaster || vendor is Healer)
             )
             {
                 return true;
@@ -2834,7 +2836,8 @@ namespace Server.Items
                 return true;
             }
             else if (
-                cargo.CargoVendor == "Tailor" && (vendor is TailorGuildmaster || vendor is Tailor)
+                cargo.CargoVendor == "Tailor"
+                && (vendor is TailorGuildmaster || vendor is Tailor)
             )
             {
                 return true;
@@ -2854,7 +2857,8 @@ namespace Server.Items
                 return true;
             }
             else if (
-                cargo.CargoVendor == "Tinker" && (vendor is TinkerGuildmaster || vendor is Tinker)
+                cargo.CargoVendor == "Tinker"
+                && (vendor is TinkerGuildmaster || vendor is Tinker)
             )
             {
                 return true;

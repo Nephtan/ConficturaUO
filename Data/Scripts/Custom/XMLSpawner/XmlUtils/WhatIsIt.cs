@@ -2,8 +2,8 @@ using System;
 using System.Text;
 using Server;
 using Server.Items;
-using Server.Targeting;
 using Server.Mobiles;
+using Server.Targeting;
 
 namespace Server.Commands
 {

@@ -23,47 +23,51 @@ using System.IO;
 
 namespace Server
 {
-	public static class ItemBounds
-	{
-		private static Rectangle2D[] m_Bounds;
+    public static class ItemBounds
+    {
+        private static Rectangle2D[] m_Bounds;
 
-		public static Rectangle2D[] Table
-		{
-			get
-			{
-				return m_Bounds;
-			}
-		}
+        public static Rectangle2D[] Table
+        {
+            get { return m_Bounds; }
+        }
 
-		static ItemBounds()
-		{
-			if ( File.Exists( "Data/Bounds.bin" ) )
-			{
-				using ( FileStream fs = new FileStream( "Data/Bounds.bin", FileMode.Open, FileAccess.Read, FileShare.Read ) )
-				{
-					BinaryReader bin = new BinaryReader( fs );
+        static ItemBounds()
+        {
+            if (File.Exists("Data/Bounds.bin"))
+            {
+                using (
+                    FileStream fs = new FileStream(
+                        "Data/Bounds.bin",
+                        FileMode.Open,
+                        FileAccess.Read,
+                        FileShare.Read
+                    )
+                )
+                {
+                    BinaryReader bin = new BinaryReader(fs);
 
-					m_Bounds = new Rectangle2D[0x4000];
+                    m_Bounds = new Rectangle2D[0x4000];
 
-					for ( int i = 0; i < 0x4000; ++i )
-					{
-						int xMin = bin.ReadInt16();
-						int yMin = bin.ReadInt16();
-						int xMax = bin.ReadInt16();
-						int yMax = bin.ReadInt16();
+                    for (int i = 0; i < 0x4000; ++i)
+                    {
+                        int xMin = bin.ReadInt16();
+                        int yMin = bin.ReadInt16();
+                        int xMax = bin.ReadInt16();
+                        int yMax = bin.ReadInt16();
 
-						m_Bounds[i].Set( xMin, yMin, (xMax - xMin) + 1, (yMax - yMin) + 1 );
-					}
+                        m_Bounds[i].Set(xMin, yMin, (xMax - xMin) + 1, (yMax - yMin) + 1);
+                    }
 
-					bin.Close();
-				}
-			}
-			else
-			{
-				Console.WriteLine( "Warning: Wrong Game Version!" );
+                    bin.Close();
+                }
+            }
+            else
+            {
+                Console.WriteLine("Warning: Wrong Game Version!");
 
-				m_Bounds = new Rectangle2D[0x4000];
-			}
-		}
-	}
+                m_Bounds = new Rectangle2D[0x4000];
+            }
+        }
+    }
 }

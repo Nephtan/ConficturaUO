@@ -1,13 +1,13 @@
 using System;
-using Server;
 using System.Collections;
-using Server.ContextMenus;
 using System.Collections.Generic;
-using Server.Misc;
-using Server.Network;
-using Server.Items;
+using Server;
+using Server.ContextMenus;
 using Server.Gumps;
+using Server.Items;
+using Server.Misc;
 using Server.Mobiles;
+using Server.Network;
 
 namespace Server.Items
 {
@@ -2853,14 +2853,16 @@ namespace Server.Items
                 warn = false;
             }
             else if (
-                potion == 2 && from.Backpack.FindItemByType(typeof(GreaterAgilityPotion)) != null
+                potion == 2
+                && from.Backpack.FindItemByType(typeof(GreaterAgilityPotion)) != null
             )
             {
                 (from.Backpack.FindItemByType(typeof(GreaterAgilityPotion))).OnDoubleClick(from);
                 warn = false;
             }
             else if (
-                potion == 3 && from.Backpack.FindItemByType(typeof(ConflagrationPotion)) != null
+                potion == 3
+                && from.Backpack.FindItemByType(typeof(ConflagrationPotion)) != null
             )
             {
                 (from.Backpack.FindItemByType(typeof(ConflagrationPotion))).OnDoubleClick(from);
@@ -2877,7 +2879,8 @@ namespace Server.Items
                 warn = false;
             }
             else if (
-                potion == 5 && from.Backpack.FindItemByType(typeof(ConfusionBlastPotion)) != null
+                potion == 5
+                && from.Backpack.FindItemByType(typeof(ConfusionBlastPotion)) != null
             )
             {
                 (from.Backpack.FindItemByType(typeof(ConfusionBlastPotion))).OnDoubleClick(from);
@@ -2909,7 +2912,8 @@ namespace Server.Items
                 warn = false;
             }
             else if (
-                potion == 10 && from.Backpack.FindItemByType(typeof(LesserExplosionPotion)) != null
+                potion == 10
+                && from.Backpack.FindItemByType(typeof(LesserExplosionPotion)) != null
             )
             {
                 (from.Backpack.FindItemByType(typeof(LesserExplosionPotion))).OnDoubleClick(from);
@@ -2921,7 +2925,8 @@ namespace Server.Items
                 warn = false;
             }
             else if (
-                potion == 12 && from.Backpack.FindItemByType(typeof(GreaterExplosionPotion)) != null
+                potion == 12
+                && from.Backpack.FindItemByType(typeof(GreaterExplosionPotion)) != null
             )
             {
                 (from.Backpack.FindItemByType(typeof(GreaterExplosionPotion))).OnDoubleClick(from);
@@ -2933,7 +2938,8 @@ namespace Server.Items
                 warn = false;
             }
             else if (
-                potion == 14 && from.Backpack.FindItemByType(typeof(GreaterFrostbitePotion)) != null
+                potion == 14
+                && from.Backpack.FindItemByType(typeof(GreaterFrostbitePotion)) != null
             )
             {
                 (from.Backpack.FindItemByType(typeof(GreaterFrostbitePotion))).OnDoubleClick(from);
@@ -2950,7 +2956,8 @@ namespace Server.Items
                 warn = false;
             }
             else if (
-                potion == 17 && from.Backpack.FindItemByType(typeof(GreaterHealPotion)) != null
+                potion == 17
+                && from.Backpack.FindItemByType(typeof(GreaterHealPotion)) != null
             )
             {
                 (from.Backpack.FindItemByType(typeof(GreaterHealPotion))).OnDoubleClick(from);
@@ -2967,7 +2974,8 @@ namespace Server.Items
                 warn = false;
             }
             else if (
-                potion == 19 && from.Backpack.FindItemByType(typeof(InvisibilityPotion)) != null
+                potion == 19
+                && from.Backpack.FindItemByType(typeof(InvisibilityPotion)) != null
             )
             {
                 (from.Backpack.FindItemByType(typeof(InvisibilityPotion))).OnDoubleClick(from);
@@ -2984,7 +2992,8 @@ namespace Server.Items
                 warn = false;
             }
             else if (
-                potion == 21 && from.Backpack.FindItemByType(typeof(InvulnerabilityPotion)) != null
+                potion == 21
+                && from.Backpack.FindItemByType(typeof(InvulnerabilityPotion)) != null
             )
             {
                 (from.Backpack.FindItemByType(typeof(InvulnerabilityPotion))).OnDoubleClick(from);
@@ -3001,7 +3010,8 @@ namespace Server.Items
                 warn = false;
             }
             else if (
-                potion == 24 && from.Backpack.FindItemByType(typeof(GreaterManaPotion)) != null
+                potion == 24
+                && from.Backpack.FindItemByType(typeof(GreaterManaPotion)) != null
             )
             {
                 (from.Backpack.FindItemByType(typeof(GreaterManaPotion))).OnDoubleClick(from);
@@ -3018,14 +3028,16 @@ namespace Server.Items
                 warn = false;
             }
             else if (
-                potion == 27 && from.Backpack.FindItemByType(typeof(TotalRefreshPotion)) != null
+                potion == 27
+                && from.Backpack.FindItemByType(typeof(TotalRefreshPotion)) != null
             )
             {
                 (from.Backpack.FindItemByType(typeof(TotalRefreshPotion))).OnDoubleClick(from);
                 warn = false;
             }
             else if (
-                potion == 28 && from.Backpack.FindItemByType(typeof(LesserRejuvenatePotion)) != null
+                potion == 28
+                && from.Backpack.FindItemByType(typeof(LesserRejuvenatePotion)) != null
             )
             {
                 (from.Backpack.FindItemByType(typeof(LesserRejuvenatePotion))).OnDoubleClick(from);
@@ -3050,7 +3062,8 @@ namespace Server.Items
                 warn = false;
             }
             else if (
-                potion == 32 && from.Backpack.FindItemByType(typeof(GreaterStrengthPotion)) != null
+                potion == 32
+                && from.Backpack.FindItemByType(typeof(GreaterStrengthPotion)) != null
             )
             {
                 (from.Backpack.FindItemByType(typeof(GreaterStrengthPotion))).OnDoubleClick(from);

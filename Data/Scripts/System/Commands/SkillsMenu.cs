@@ -1,7 +1,7 @@
 using System;
 using Server;
-using Server.Targeting;
 using Server.Gumps;
+using Server.Targeting;
 
 namespace Server.Commands
 {

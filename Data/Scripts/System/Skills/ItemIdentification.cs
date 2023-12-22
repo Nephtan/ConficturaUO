@@ -1,13 +1,13 @@
 using System;
-using Server;
-using Server.Network;
-using Server.Mobiles;
-using Server.Items;
-using System.Collections.Generic;
-using Server.Misc;
 using System.Collections;
-using Server.Targeting;
+using System.Collections.Generic;
+using Server;
+using Server.Items;
+using Server.Misc;
+using Server.Mobiles;
+using Server.Network;
 using Server.Spells.Elementalism;
+using Server.Targeting;
 
 namespace Server.Items
 {
@@ -890,7 +890,9 @@ namespace Server.Items
                 from.SendMessage("This must be in your backpack to identify.");
             }
             else if (
-                (examine is UnknownLiquid) || (examine is UnknownReagent) || (examine is UnknownKeg)
+                (examine is UnknownLiquid)
+                || (examine is UnknownReagent)
+                || (examine is UnknownKeg)
             )
             {
                 from.SendMessage("You need to use Tasting to identify that.");

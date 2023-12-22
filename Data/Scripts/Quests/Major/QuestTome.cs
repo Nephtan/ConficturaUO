@@ -1,15 +1,15 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Globalization;
 using Server;
-using Server.Network;
-using Server.Multis;
+using Server.Accounting;
 using Server.Gumps;
 using Server.Misc;
 using Server.Mobiles;
-using Server.Accounting;
-using System.Collections.Generic;
-using System.Collections;
+using Server.Multis;
+using Server.Network;
 using Server.Regions;
-using System.Globalization;
 
 namespace Server.Items
 {
@@ -345,7 +345,9 @@ namespace Server.Items
                 }
             }
             else if (
-                QuestTomeGoals > 2 && from.Region.Name == QuestTomeDungeon && QuestTomeCitizen != ""
+                QuestTomeGoals > 2
+                && from.Region.Name == QuestTomeDungeon
+                && QuestTomeCitizen != ""
             )
             {
                 QuestTomeCitizen = "";
@@ -1022,15 +1024,22 @@ namespace Server.Items
 
         public static void BossEscaped(Mobile from, string region)
         {
-            if (from.Backpack == null) return;
+            if (from.Backpack == null)
+                return;
 
             Item item = from.Backpack.FindItemByType(typeof(QuestTome));
-            if (item == null) return;
+            if (item == null)
+                return;
 
             QuestTome book = item as QuestTome;
-            if (book == null) return;
+            if (book == null)
+                return;
 
-            if (book.QuestTomeGoals > 2 && book.QuestTomeDungeon == region && book.QuestTomeOwner == from)
+            if (
+                book.QuestTomeGoals > 2
+                && book.QuestTomeDungeon == region
+                && book.QuestTomeOwner == from
+            )
             {
                 ArrayList targets = new ArrayList();
                 foreach (Mobile creature in World.Mobiles.Values)
@@ -1042,7 +1051,17 @@ namespace Server.Items
                 }
                 foreach (Mobile creature in targets)
                 {
-                    Effects.SendLocationParticles(EffectItem.Create(creature.Location, creature.Map, EffectItem.DefaultDuration), 0x3728, 10, 10, 2023);
+                    Effects.SendLocationParticles(
+                        EffectItem.Create(
+                            creature.Location,
+                            creature.Map,
+                            EffectItem.DefaultDuration
+                        ),
+                        0x3728,
+                        10,
+                        10,
+                        2023
+                    );
                     creature.PlaySound(0x1FE);
                     creature.Delete();
                 }

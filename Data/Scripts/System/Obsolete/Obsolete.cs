@@ -1,14 +1,27 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.Odbc;
+using System.Globalization;
+using System.IO;
+using System.Net;
+using System.Reflection;
+using System.Text;
+using System.Threading;
+using System.Xml;
+using Server;
 using Server.Accounting;
-using Server.Commands.Generic;
 using Server.Commands;
+using Server.Commands.Generic;
 using Server.ContextMenus;
 using Server.Engines.CannedEvil;
 using Server.Engines.Craft;
 using Server.Engines.Plants;
 using Server.Engines.VeteranRewards;
 using Server.Ethics;
-using Server.Factions.AI;
 using Server.Factions;
+using Server.Factions.AI;
 using Server.Guilds;
 using Server.Gumps;
 using Server.Items;
@@ -18,6 +31,7 @@ using Server.Multis;
 using Server.Network;
 using Server.Prompts;
 using Server.Regions;
+using Server.Spells;
 using Server.Spells.Fifth;
 using Server.Spells.First;
 using Server.Spells.Fourth;
@@ -25,22 +39,8 @@ using Server.Spells.Second;
 using Server.Spells.Seventh;
 using Server.Spells.Sixth;
 using Server.Spells.Third;
-using Server.Spells;
 using Server.Targeting;
 using Server.Targets;
-using Server;
-using System.Collections.Generic;
-using System.Collections;
-using System.Data.Odbc;
-using System.Data;
-using System.Globalization;
-using System.IO;
-using System.Net;
-using System.Reflection;
-using System.Text;
-using System.Threading;
-using System.Xml;
-using System;
 
 namespace Server.Items
 {
@@ -3512,7 +3512,9 @@ namespace Server.Engines.Quests
             Mobile from = Owner.From;
 
             if (
-                from.CheckAlive() && from is PlayerMobile && m_Quester.CanTalkTo((PlayerMobile)from)
+                from.CheckAlive()
+                && from is PlayerMobile
+                && m_Quester.CanTalkTo((PlayerMobile)from)
             )
                 m_Quester.OnTalk((PlayerMobile)from, true);
         }
@@ -4560,12 +4562,12 @@ namespace Server.Engines.CannedEvil
             m_Spawn = spawn;
 
             for (int x = -2; x <= 2; ++x)
-                for (int y = -2; y <= 2; ++y)
-                    AddComponent(0x750, x, y, -5);
+            for (int y = -2; y <= 2; ++y)
+                AddComponent(0x750, x, y, -5);
 
             for (int x = -1; x <= 1; ++x)
-                for (int y = -1; y <= 1; ++y)
-                    AddComponent(0x750, x, y, 0);
+            for (int y = -1; y <= 1; ++y)
+                AddComponent(0x750, x, y, 0);
 
             for (int i = -1; i <= 1; ++i)
             {
@@ -20319,7 +20321,8 @@ namespace Server.Factions
                     EquipWeapon();
             }
             else if (
-                m_Mobile.Spell is Spell && ((Spell)m_Mobile.Spell).State == SpellState.Sequencing
+                m_Mobile.Spell is Spell
+                && ((Spell)m_Mobile.Spell).State == SpellState.Sequencing
             )
             {
                 EquipWeapon();
@@ -37994,9 +37997,9 @@ namespace Server.Factions
                 int index = info.ButtonID - 1;
 
                 if (index >= 0 && index < m_Election.Candidates.Count)
-                    m_Election.Candidates[index].Voters.Add(
-                        new Voter(m_From, m_Election.Candidates[index].Mobile)
-                    );
+                    m_Election
+                        .Candidates[index]
+                        .Voters.Add(new Voter(m_From, m_Election.Candidates[index].Mobile));
 
                 m_From.SendGump(new VoteGump(m_From, m_Election));
             }

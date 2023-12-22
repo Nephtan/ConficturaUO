@@ -1,10 +1,10 @@
-using Server;
 using System;
 using System.Collections;
-using Server.Network;
-using Server.Targeting;
-using Server.Prompts;
+using Server;
 using Server.Misc;
+using Server.Network;
+using Server.Prompts;
+using Server.Targeting;
 
 namespace Server.Items
 {
@@ -175,7 +175,8 @@ namespace Server.Items
                         weapon.Delete();
                     }
                     else if (
-                        iWear is BaseArmor && Server.Misc.MaterialInfo.IsAnyKindOfMetalItem(iWear)
+                        iWear is BaseArmor
+                        && Server.Misc.MaterialInfo.IsAnyKindOfMetalItem(iWear)
                     )
                     {
                         if (iWear.ItemID == 0x2778 || iWear.ItemID == 0x27C3)

@@ -1,9 +1,9 @@
 using System;
 using Server;
-using Server.Mobiles;
-using Server.Gumps;
-using Server.Network;
 using Server.Factions;
+using Server.Gumps;
+using Server.Mobiles;
+using Server.Network;
 using Server.Prompts;
 
 namespace Server.Guilds
@@ -563,7 +563,9 @@ namespace Server.Guilds
                         ); // ~1_val~ is not the leader of the ~2_val~ alliance.
                     }
                     else if (
-                        alliance != null && alliance.IsMember(guild) && alliance.IsMember(m_Other)
+                        alliance != null
+                        && alliance.IsMember(guild)
+                        && alliance.IsMember(m_Other)
                     )
                     {
                         m_Other.Alliance = null;
@@ -588,7 +590,9 @@ namespace Server.Guilds
                         ); // ~1_val~ is not the leader of the ~2_val~ alliance.
                     }
                     else if (
-                        alliance != null && alliance.IsMember(guild) && alliance.IsMember(m_Other)
+                        alliance != null
+                        && alliance.IsMember(guild)
+                        && alliance.IsMember(m_Other)
                     )
                     {
                         pm.SendLocalizedMessage(

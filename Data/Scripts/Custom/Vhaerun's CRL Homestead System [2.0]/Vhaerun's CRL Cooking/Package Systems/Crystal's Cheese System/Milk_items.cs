@@ -65,7 +65,7 @@ namespace Server.Items
             }
         }
 
-        static public bool soif(Mobile from, int fillFactor)
+        public static bool soif(Mobile from, int fillFactor)
         {
             if (from.Thirst >= 20)
             {

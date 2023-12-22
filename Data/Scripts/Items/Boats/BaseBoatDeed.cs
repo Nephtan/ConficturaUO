@@ -1,10 +1,10 @@
 using System;
 using Server;
+using Server.Engines.CannedEvil;
+using Server.Misc;
+using Server.Network;
 using Server.Regions;
 using Server.Targeting;
-using Server.Engines.CannedEvil;
-using Server.Network;
-using Server.Misc;
 
 namespace Server.Multis
 {

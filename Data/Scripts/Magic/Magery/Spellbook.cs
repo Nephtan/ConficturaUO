@@ -5,8 +5,8 @@ using Server.Commands;
 using Server.Engines.Craft;
 using Server.Network;
 using Server.Spells;
-using Server.Targeting;
 using Server.Spells.Elementalism;
+using Server.Targeting;
 
 namespace Server.Items
 {

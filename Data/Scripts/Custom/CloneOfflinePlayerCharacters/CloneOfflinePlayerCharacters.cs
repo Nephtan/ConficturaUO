@@ -6,6 +6,11 @@
  * Description: A class for cloning player characters on logout
  * Special Thanks: Felladrin and Quick_silver for their ideas, methods, and logic included within.
  *************************************************************/
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Reflection;
 using Server;
 using Server.Commands;
 using Server.ContextMenus;
@@ -15,11 +20,6 @@ using Server.Mobiles;
 using Server.Multis;
 using Server.Network;
 using Server.Regions;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Reflection;
 
 namespace Confictura.Custom
 {

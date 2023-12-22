@@ -1,16 +1,16 @@
 using System;
-using Server;
 using System.Collections;
 using System.Collections.Generic;
-using Server.Misc;
-using Server.Items;
-using Server.Network;
+using System.Globalization;
+using Server;
+using Server.Accounting;
 using Server.Commands;
 using Server.Commands.Generic;
+using Server.Items;
+using Server.Misc;
 using Server.Mobiles;
-using Server.Accounting;
+using Server.Network;
 using Server.Regions;
-using System.Globalization;
 
 namespace Server.Misc
 {
@@ -3269,7 +3269,8 @@ namespace Server.Misc
                             pack.ConsumeTotal(typeof(DaemonBlood), qty);
                         }
                         else if (
-                            reg == "Garlic" && from.Backpack.FindItemByType(typeof(Garlic)) != null
+                            reg == "Garlic"
+                            && from.Backpack.FindItemByType(typeof(Garlic)) != null
                         )
                         {
                             pack.ConsumeTotal(typeof(Garlic), qty);
@@ -3530,7 +3531,8 @@ namespace Server.Misc
                             HaveReagents = false;
                         }
                         else if (
-                            reg == "Mandrake Root" && RegCount(from, typeof(MandrakeRoot)) < qty
+                            reg == "Mandrake Root"
+                            && RegCount(from, typeof(MandrakeRoot)) < qty
                         )
                         {
                             HaveReagents = false;
@@ -3552,7 +3554,8 @@ namespace Server.Misc
                             HaveReagents = false;
                         }
                         else if (
-                            reg == "Sulfurous Ash" && RegCount(from, typeof(SulfurousAsh)) < qty
+                            reg == "Sulfurous Ash"
+                            && RegCount(from, typeof(SulfurousAsh)) < qty
                         )
                         {
                             HaveReagents = false;
@@ -3599,7 +3602,8 @@ namespace Server.Misc
                             HaveReagents = false;
                         }
                         else if (
-                            reg == "Demigod Blood" && RegCount(from, typeof(DemigodBlood)) < qty
+                            reg == "Demigod Blood"
+                            && RegCount(from, typeof(DemigodBlood)) < qty
                         )
                         {
                             HaveReagents = false;
@@ -3645,7 +3649,8 @@ namespace Server.Misc
                             HaveReagents = false;
                         }
                         else if (
-                            reg == "Swamp Berries" && RegCount(from, typeof(SwampBerries)) < qty
+                            reg == "Swamp Berries"
+                            && RegCount(from, typeof(SwampBerries)) < qty
                         )
                         {
                             HaveReagents = false;
@@ -3655,7 +3660,8 @@ namespace Server.Misc
                             HaveReagents = false;
                         }
                         else if (
-                            reg == "Butterfly Wings" && RegCount(from, typeof(ButterflyWings)) < qty
+                            reg == "Butterfly Wings"
+                            && RegCount(from, typeof(ButterflyWings)) < qty
                         )
                         {
                             HaveReagents = false;

@@ -2,9 +2,9 @@ using System;
 using System.Collections;
 using System.Reflection;
 using Server;
-using Server.Targeting;
 using Server.Engines.XmlSpawner2;
 using Server.Mobiles;
+using Server.Targeting;
 
 /*
 ** Modified from RunUO 1.0.0 AddGump.cs
@@ -161,7 +161,8 @@ namespace Server.Gumps
                     for (int j = 0; j < ctors.Length; ++j)
                     {
                         if ( /*ctors[j].GetParameters().Length == 0 && */
-                            ctors[j].IsDefined(typeof(ConstructableAttribute), false))
+                            ctors[j].IsDefined(typeof(ConstructableAttribute), false)
+                        )
                         {
                             SearchEntry s = new SearchEntry();
                             s.EntryType = t;

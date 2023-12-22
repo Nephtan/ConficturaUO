@@ -1,9 +1,9 @@
 using System;
-using Server.Targeting;
-using Server.Network;
-using Server.Items;
-using System.Collections.Generic;
 using System.Collections;
+using System.Collections.Generic;
+using Server.Items;
+using Server.Network;
+using Server.Targeting;
 
 namespace Server.Spells.Second
 {

@@ -21,14 +21,14 @@
  */
 using System;
 using System.Collections;
+using System.ComponentModel;
 using Server.Accounting;
-using Server.Network;
+using Server.Commands;
 using Server.Gumps;
 using Server.Items;
 using Server.Mobiles;
+using Server.Network;
 using Server.Targeting;
-using Server.Commands;
-using System.ComponentModel;
 
 namespace Server
 {
@@ -91,8 +91,13 @@ namespace Server
                             )
                         );
 
-                        m.SendMessage( String.Format( "You receive a reward for your loyalty to {0}.", TAFShardName ) );
-                        m.AddToBackpack( new ReferrerReward() );
+                        m.SendMessage(
+                            String.Format(
+                                "You receive a reward for your loyalty to {0}.",
+                                TAFShardName
+                            )
+                        );
+                        m.AddToBackpack(new ReferrerReward());
 
                         if (Convert.ToBoolean(ac.GetTag("GotAFriend")))
                         {
@@ -374,7 +379,10 @@ namespace Server
         public ReferrerReward()
             : base()
         {
-            Name = String.Format("{0} Referral Reward Stat Increase Ball", TellAFriend.TAFShardName);
+            Name = String.Format(
+                "{0} Referral Reward Stat Increase Ball",
+                TellAFriend.TAFShardName
+            );
         }
 
         public ReferrerReward(Serial serial)

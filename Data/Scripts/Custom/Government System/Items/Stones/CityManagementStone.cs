@@ -1,19 +1,18 @@
 #define ChatEnabled
 
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using Server;
+using Server.Accounting;
+using Server.Commands;
 using Server.Gumps;
 using Server.Items;
+using Server.Misc;
 using Server.Mobiles;
+using Server.Multis;
 using Server.Regions;
 using Server.Targeting;
-using System.Collections;
-using Server.Misc;
-using Server.Commands;
-using System.Collections.Generic;
-using Server.Accounting;
-using Server.Multis;
-
 #if (ChatEnabled )
 using Knives.Chat3;
 #endif
@@ -1646,7 +1645,6 @@ namespace Server.Items
                         foreach (Mobile m in m_Members)
                         {
                             if (m_HousingTax > 0)
-
                                 if (Banker.Withdraw(m, m_HousingTax))
                                 {
                                     m.SendMessage(
@@ -1728,7 +1726,6 @@ namespace Server.Items
             CheckVendors(true); //Set Vendors to delete after 2 days.
 
             if (m_Region != null) // Remove Region
-
                 m_Region.Unregister();
 
             if (toDelete != null) // Delete all items needed

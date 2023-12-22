@@ -1,8 +1,8 @@
 using System;
 using Server;
+using Server.Misc;
 using Server.Network;
 using Server.Spells;
-using Server.Misc;
 
 namespace Server.Items
 {

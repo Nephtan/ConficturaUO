@@ -1,8 +1,8 @@
 using System;
 using Server;
+using Server.Factions;
 using Server.Guilds;
 using Server.Targeting;
-using Server.Factions;
 
 namespace Server.Gumps
 {
@@ -76,7 +76,8 @@ namespace Server.Gumps
                 }
                 #endregion
                 else if (
-                    m_Mobile.AccessLevel >= AccessLevel.GameMaster || m_Guild.Leader == m_Mobile
+                    m_Mobile.AccessLevel >= AccessLevel.GameMaster
+                    || m_Guild.Leader == m_Mobile
                 )
                 {
                     m_Guild.Accepted.Add(m);

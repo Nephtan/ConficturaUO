@@ -1,12 +1,11 @@
+using System;
+using System.ComponentModel;
+using System.Text;
 using Server;
 using Server.Commands;
 using Server.Gumps;
 using Server.Multis;
 using Server.Network;
-
-using System;
-using System.ComponentModel;
-using System.Text;
 
 namespace Server.Gumps
 {

@@ -1,13 +1,13 @@
 using System;
-using Server;
 using System.Collections;
-using Server.ContextMenus;
 using System.Collections.Generic;
-using Server.Misc;
-using Server.Network;
-using Server.Items;
+using Server;
+using Server.ContextMenus;
 using Server.Gumps;
+using Server.Items;
+using Server.Misc;
 using Server.Mobiles;
+using Server.Network;
 
 namespace Server.Items
 {
@@ -1017,14 +1017,16 @@ namespace Server.Items
                 warn = false;
             }
             else if (
-                potion == 7 && from.Backpack.FindItemByType(typeof(WallOfSpikesScroll)) != null
+                potion == 7
+                && from.Backpack.FindItemByType(typeof(WallOfSpikesScroll)) != null
             )
             {
                 (from.Backpack.FindItemByType(typeof(WallOfSpikesScroll))).OnDoubleClick(from);
                 warn = false;
             }
             else if (
-                potion == 8 && from.Backpack.FindItemByType(typeof(NecroCurePoisonScroll)) != null
+                potion == 8
+                && from.Backpack.FindItemByType(typeof(NecroCurePoisonScroll)) != null
             )
             {
                 (from.Backpack.FindItemByType(typeof(NecroCurePoisonScroll))).OnDoubleClick(from);
@@ -1036,7 +1038,8 @@ namespace Server.Items
                 warn = false;
             }
             else if (
-                potion == 10 && from.Backpack.FindItemByType(typeof(SpectreShadowScroll)) != null
+                potion == 10
+                && from.Backpack.FindItemByType(typeof(SpectreShadowScroll)) != null
             )
             {
                 (from.Backpack.FindItemByType(typeof(SpectreShadowScroll))).OnDoubleClick(from);
@@ -1053,7 +1056,8 @@ namespace Server.Items
                 warn = false;
             }
             else if (
-                potion == 13 && from.Backpack.FindItemByType(typeof(GhostlyImagesScroll)) != null
+                potion == 13
+                && from.Backpack.FindItemByType(typeof(GhostlyImagesScroll)) != null
             )
             {
                 (from.Backpack.FindItemByType(typeof(GhostlyImagesScroll))).OnDoubleClick(from);
@@ -1065,14 +1069,16 @@ namespace Server.Items
                 warn = false;
             }
             else if (
-                potion == 15 && from.Backpack.FindItemByType(typeof(GraveyardGatewayScroll)) != null
+                potion == 15
+                && from.Backpack.FindItemByType(typeof(GraveyardGatewayScroll)) != null
             )
             {
                 (from.Backpack.FindItemByType(typeof(GraveyardGatewayScroll))).OnDoubleClick(from);
                 warn = false;
             }
             else if (
-                potion == 16 && from.Backpack.FindItemByType(typeof(VampireGiftScroll)) != null
+                potion == 16
+                && from.Backpack.FindItemByType(typeof(VampireGiftScroll)) != null
             )
             {
                 (from.Backpack.FindItemByType(typeof(VampireGiftScroll))).OnDoubleClick(from);

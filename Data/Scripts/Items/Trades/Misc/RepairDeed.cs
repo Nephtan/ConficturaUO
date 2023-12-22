@@ -1,9 +1,9 @@
 using System;
 using Server;
-using Server.Targeting;
 using Server.Engines.Craft;
 using Server.Mobiles;
 using Server.Regions;
+using Server.Targeting;
 
 namespace Server.Items
 {

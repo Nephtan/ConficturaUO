@@ -1,9 +1,9 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using Server;
 using Server.Guilds;
 using Server.Prompts;
-using System.Collections.Generic;
 
 namespace Server.Gumps
 {

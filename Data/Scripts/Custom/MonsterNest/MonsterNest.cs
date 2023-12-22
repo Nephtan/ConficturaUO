@@ -168,7 +168,9 @@ namespace Server.Items
             if (this.m_Entity != null)
                 this.m_Entity.MoveToWorld(this.Location, this.Map);
             if (
-                this.NestSpawnType != null && this.m_Spawn != null && this.Count() < this.m_MaxCount
+                this.NestSpawnType != null
+                && this.m_Spawn != null
+                && this.Count() < this.m_MaxCount
             )
             {
                 try

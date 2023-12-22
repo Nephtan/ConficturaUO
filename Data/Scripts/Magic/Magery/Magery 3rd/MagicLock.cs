@@ -1,11 +1,11 @@
 using System;
-using Server;
-using Server.Misc;
-using Server.Targeting;
-using Server.Network;
-using Server.Items;
-using Server.Mobiles;
 using System.Collections;
+using Server;
+using Server.Items;
+using Server.Misc;
+using Server.Mobiles;
+using Server.Network;
+using Server.Targeting;
 
 namespace Server.Spells.Third
 {
@@ -242,7 +242,10 @@ namespace Server.Spells.Third
 
                             // TURN HUMANOIDS TO GHOSTS SO I DON'T NEED TO WORRY ABOUT CLOTHES AND GEAR
                             if (
-                                bc.Body == 400 || bc.Body == 401 || bc.Body == 605 || bc.Body == 606
+                                bc.Body == 400
+                                || bc.Body == 401
+                                || bc.Body == 605
+                                || bc.Body == 606
                             )
                             {
                                 bottle.TrappedBody = 0x3CA;

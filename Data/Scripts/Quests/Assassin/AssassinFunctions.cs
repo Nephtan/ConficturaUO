@@ -1,14 +1,14 @@
 using System;
-using Server;
 using System.Collections;
 using System.Collections.Generic;
-using Server.Misc;
-using Server.Items;
-using Server.Network;
+using Server;
+using Server.Accounting;
 using Server.Commands;
 using Server.Commands.Generic;
+using Server.Items;
+using Server.Misc;
 using Server.Mobiles;
-using Server.Accounting;
+using Server.Network;
 using Server.Regions;
 
 namespace Server.Misc
@@ -262,7 +262,8 @@ namespace Server.Misc
                             aCount++;
                         }
                         else if (
-                            searchLocation == "the Land of Lodoria" && tWorld == searchLocation
+                            searchLocation == "the Land of Lodoria"
+                            && tWorld == searchLocation
                         )
                         {
                             targets.Add(target);
@@ -284,7 +285,8 @@ namespace Server.Misc
                             aCount++;
                         }
                         else if (
-                            searchLocation == "the Island of Umber Veil" && tWorld == searchLocation
+                            searchLocation == "the Island of Umber Veil"
+                            && tWorld == searchLocation
                         )
                         {
                             targets.Add(target);
@@ -513,7 +515,8 @@ namespace Server.Misc
                             aCount++;
                         }
                         else if (
-                            searchLocation == "the Land of Lodoria" && tWorld == searchLocation
+                            searchLocation == "the Land of Lodoria"
+                            && tWorld == searchLocation
                         )
                         {
                             targets.Add(target);
@@ -535,7 +538,8 @@ namespace Server.Misc
                             aCount++;
                         }
                         else if (
-                            searchLocation == "the Island of Umber Veil" && tWorld == searchLocation
+                            searchLocation == "the Island of Umber Veil"
+                            && tWorld == searchLocation
                         )
                         {
                             targets.Add(target);

@@ -1,8 +1,8 @@
 using System;
 using System.Collections;
 using Server;
-using Server.Multis;
 using Server.Items;
+using Server.Multis;
 
 namespace Knives.TownHouses
 {
@@ -63,13 +63,13 @@ namespace Knives.TownHouses
                 )
                     foreach (Rectangle2D rect2 in ((RentalContract)item).Blocks)
                         for (int x = rect.Start.X; x < rect.End.X; ++x)
-                            for (int y = rect.Start.Y; y < rect.End.Y; ++y)
-                                if (rect2.Contains(new Point2D(x, y)))
-                                    if (
-                                        ((RentalContract)item).MinZ <= z
-                                        && ((RentalContract)item).MaxZ >= z
-                                    )
-                                        return true;
+                        for (int y = rect.Start.Y; y < rect.End.Y; ++y)
+                            if (rect2.Contains(new Point2D(x, y)))
+                                if (
+                                    ((RentalContract)item).MinZ <= z
+                                    && ((RentalContract)item).MaxZ >= z
+                                )
+                                    return true;
 
             return false;
         }
