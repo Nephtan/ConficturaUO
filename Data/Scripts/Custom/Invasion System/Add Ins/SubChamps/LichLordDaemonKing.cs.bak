@@ -1,0 +1,85 @@
+using System;
+using Server;
+using System.Collections;
+using Server.Items;
+using Server.Targeting;
+using Server.Engines.CannedEvil;
+
+namespace Server.Mobiles
+{
+	public class LichLordDaemonKing : BaseSubChampion
+	{
+		public override ChampionSkullType SkullType{ get{ return ChampionSkullType.Power; } }
+
+		[Constructable]
+		public LichLordDaemonKing() : base( AIType.AI_Necro )
+		{
+			Body = 4;
+			Hue = 2472;
+			Name = "Ancient Evil Elder Chaotic Lich Lord Daemon King";
+
+			BaseSoundID = 412;
+
+			SetStr( 750, 1250 );
+			SetDex( 300, 500 );
+			SetInt( 900, 1600 );
+            
+			SetHits( 9000 );
+			SetStam( 300, 600 );
+			SetMana( 300, 450 );
+
+			SetDamage( 30, 45 );
+
+			SetDamageType( ResistanceType.Physical, 20 );
+			SetDamageType( ResistanceType.Fire, 50 );
+			SetDamageType( ResistanceType.Energy, 30 );
+
+			SetResistance( ResistanceType.Physical, 60, 65 );
+			SetResistance( ResistanceType.Fire, 30, 45 );
+			SetResistance( ResistanceType.Cold, 60, 70 );
+			SetResistance( ResistanceType.Poison, 60 );
+			SetResistance( ResistanceType.Energy, 60, 70 );
+
+			SetSkill( SkillName.MagicResist, 70.7, 140.0 );
+			SetSkill( SkillName.Tactics, 97.6, 120.0 );
+			SetSkill( SkillName.FistFighting, 97.6, 120.0 );
+			SetSkill( SkillName.Magery, 97.6, 120.0 );
+			SetSkill( SkillName.Psychology, 97.6, 120.0 );
+
+			Fame = 40500;
+			Karma = -40500;
+
+			VirtualArmor = 55;
+		}
+
+		public override void GenerateLoot()
+		{
+			AddLoot( LootPack.UltraRich, 3 );
+		}
+
+		public override void OnGotMeleeAttack( Mobile attacker )
+		{
+			base.OnGotMeleeAttack( attacker );
+
+			// TODO: Web ability
+		}
+
+		public LichLordDaemonKing( Serial serial ) : base( serial )
+		{
+		}
+
+		public override void Serialize( GenericWriter writer )
+		{
+			base.Serialize( writer );
+
+			writer.Write( (int) 0 ); // version
+		}
+
+		public override void Deserialize( GenericReader reader )
+		{
+			base.Deserialize( reader );
+
+			int version = reader.ReadInt();
+		}
+	}
+}
