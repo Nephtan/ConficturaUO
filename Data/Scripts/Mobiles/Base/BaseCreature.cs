@@ -977,6 +977,9 @@ namespace Server.Mobiles
         {
             Mobile target = (Mobile)state;
 
+            if (target == ControlMaster)
+                return;
+
             if (target is BaseCreature && ((BaseCreature)target).BreathImmune)
                 return;
 
