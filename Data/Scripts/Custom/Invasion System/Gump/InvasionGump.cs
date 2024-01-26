@@ -312,7 +312,7 @@ namespace Server.Gumps
                 case 14:
                 {
                     from.Map = Map.Sosaria;
-                    from.Location = new Point3D(1430, 1688, 0);
+                    from.Location = new Point3D(2999, 1053, 0);
                     from.PlaySound(0x1FA);
                     Effects.SendLocationEffect(from, from.Map, 14201, 16);
                     from.SendAsciiMessage(
