@@ -9,6 +9,7 @@ using Server.Misc;
 using Server.Mobiles;
 using Server.Network;
 using Server.Targeting;
+using Server.Regions;
 
 namespace Server.Mobiles
 {
@@ -20,20 +21,20 @@ namespace Server.Mobiles
         {
             Title = "the guard";
             NameHue = 1154;
-            SetStr(3000, 3000);
-            SetDex(3000, 3000);
-            SetInt(3000, 3000);
-            SetHits(6000, 6000);
-            SetDamage(500, 900);
-            VirtualArmor = 3000;
+            SetStr(100, 300);
+            SetDex(100, 300);
+            SetInt(100, 300);
+            SetHits(1500, 2000);
+            SetDamage(40, 85);
+            VirtualArmor = 200;
 
-            SetSkill(SkillName.Anatomy, 200.0);
-            SetSkill(SkillName.MagicResist, 200.0);
-            SetSkill(SkillName.Bludgeoning, 200.0);
-            SetSkill(SkillName.Fencing, 200.0);
-            SetSkill(SkillName.FistFighting, 200.0);
-            SetSkill(SkillName.Swords, 200.0);
-            SetSkill(SkillName.Tactics, 200.0);
+            SetSkill(SkillName.Anatomy, 125.0);
+            SetSkill(SkillName.MagicResist, 125.0);
+            SetSkill(SkillName.Bludgeoning, 125.0);
+            SetSkill(SkillName.Fencing, 125.0);
+            SetSkill(SkillName.FistFighting, 125.0);
+            SetSkill(SkillName.Swords, 125.0);
+            SetSkill(SkillName.Tactics, 125.0);
 
             AddItem(new LightCitizen(true));
 
@@ -745,8 +746,8 @@ namespace Server.Mobiles
             weapon.Movable = false;
             ((BaseWeapon)weapon).MaxHitPoints = 1000;
             ((BaseWeapon)weapon).HitPoints = 1000;
-            ((BaseWeapon)weapon).MinDamage = 500;
-            ((BaseWeapon)weapon).MaxDamage = 900;
+            ((BaseWeapon)weapon).MinDamage = 40;
+            ((BaseWeapon)weapon).MaxDamage = 85;
             AddItem(weapon);
 
             Item arms = new RingmailArms();
@@ -960,7 +961,7 @@ namespace Server.Mobiles
                 || (m is BaseCreature && ((BaseCreature)m).ControlMaster == null)
             )
             {
-                this.Location = m.Location;
+                // this.Location = m.Location;
                 this.Combatant = m;
                 this.Warmode = true;
             }
