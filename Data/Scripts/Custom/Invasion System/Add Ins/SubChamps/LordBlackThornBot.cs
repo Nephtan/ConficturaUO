@@ -5,7 +5,7 @@ using Server.Items;
 
 namespace Server.Mobiles
 {
-    public class LordBlackThorn : BaseSubChampion
+    public class LordBlackThornBot : BaseSubChampion
     {
         public override ChampionSkullType SkullType
         {
@@ -13,10 +13,10 @@ namespace Server.Mobiles
         }
 
         [Constructable]
-        public LordBlackThorn()
+        public LordBlackThornBot()
             : base(AIType.AI_Melee)
         {
-            Name = "BlackThorn";
+            Name = "BlackThorn Bot";
             Body = 752;
             Hue = 1786;
             //BaseSoundID = 0x45A;
@@ -167,7 +167,7 @@ namespace Server.Mobiles
             }
         }
 
-        public LordBlackThorn(Serial serial)
+        public LordBlackThornBot(Serial serial)
             : base(serial) { }
 
         public override void Serialize(GenericWriter writer)

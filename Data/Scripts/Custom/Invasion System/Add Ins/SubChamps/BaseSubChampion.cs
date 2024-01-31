@@ -209,7 +209,7 @@ namespace Server.Mobiles
                     "Minoc's invasion was successfully beaten back. No more invaders are left in the city."
                 );
             }
-            if (this is LordBlackThorn)
+            if (this is LordBlackThornBot)
             {
                 BritInvasionStone brittram = new BritInvasionStone();
                 brittram.StopBritSosaria();
