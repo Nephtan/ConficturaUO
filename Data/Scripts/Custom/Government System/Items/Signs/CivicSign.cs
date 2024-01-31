@@ -65,40 +65,46 @@ namespace Server.Items
                 }
             }
 
-            if (Type == CivicSignType.Bank)
+            if (m_Stone != null) // Add a null check for m_Stone
             {
-                m_Stone.HasBank = false;
-            }
-            else if (Type == CivicSignType.Stable)
-            {
-                m_Stone.HasStable = false;
-            }
-            else if (Type == CivicSignType.Tavern)
-            {
-                m_Stone.HasTavern = false;
-            }
-            else if (Type == CivicSignType.Healer)
-            {
-                m_Stone.HasHealer = false;
-            }
-            else if (Type == CivicSignType.Moongate)
-            {
-                m_Stone.HasMoongate = false;
-            }
-            else if (Type == CivicSignType.Garden)
-            {
-                if (m_Stone.Gardens.Contains(this))
-                    m_Stone.Gardens.Remove(this);
-            }
-            else if (Type == CivicSignType.Park)
-            {
-                if (m_Stone.Parks.Contains(this))
-                    m_Stone.Parks.Remove(this);
-            }
-            else if (Type == CivicSignType.Market)
-            {
-                m_Stone.HasMarket = false;
-                m_LandlordRemove.Delete();
+                if (Type == CivicSignType.Bank)
+                {
+                    m_Stone.HasBank = false;
+                }
+                else if (Type == CivicSignType.Stable)
+                {
+                    m_Stone.HasStable = false;
+                }
+                else if (Type == CivicSignType.Tavern)
+                {
+                    m_Stone.HasTavern = false;
+                }
+                else if (Type == CivicSignType.Healer)
+                {
+                    m_Stone.HasHealer = false;
+                }
+                else if (Type == CivicSignType.Moongate)
+                {
+                    m_Stone.HasMoongate = false;
+                }
+                else if (Type == CivicSignType.Garden)
+                {
+                    if (m_Stone.Gardens.Contains(this))
+                        m_Stone.Gardens.Remove(this);
+                }
+                else if (Type == CivicSignType.Park)
+                {
+                    if (m_Stone.Parks.Contains(this))
+                        m_Stone.Parks.Remove(this);
+                }
+                else if (Type == CivicSignType.Market)
+                {
+                    m_Stone.HasMarket = false;
+                    if (m_LandlordRemove != null) // Also check if m_LandlordRemove is not null before attempting to delete
+                    {
+                        m_LandlordRemove.Delete();
+                    }
+                }
             }
 
             base.OnDelete();
@@ -126,19 +132,19 @@ namespace Server.Items
             switch (version)
             {
                 case 1:
-                {
-                    m_LandlordRemove = reader.ReadMobile();
-                    goto case 0;
-                }
+                    {
+                        m_LandlordRemove = reader.ReadMobile();
+                        goto case 0;
+                    }
 
                 case 0:
-                {
-                    m_toDelete = reader.ReadItemList();
-                    m_Stone = (CityManagementStone)reader.ReadItem();
-                    m_Type = (CivicSignType)reader.ReadInt();
+                    {
+                        m_toDelete = reader.ReadItemList();
+                        m_Stone = (CityManagementStone)reader.ReadItem();
+                        m_Type = (CivicSignType)reader.ReadInt();
 
-                    break;
-                }
+                        break;
+                    }
             }
         }
     }
