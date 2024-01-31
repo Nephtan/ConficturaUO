@@ -21,6 +21,27 @@ using Server.Multis;
 using Server.Network;
 using Server.Regions;
 
+
+namespace Server.Commands
+{
+    public static class CheckClonesCommand
+    {
+        public static void Initialize()
+        {
+            CommandSystem.Register("CheckClones", AccessLevel.Administrator, new CommandEventHandler(CheckClones_OnCommand));
+        }
+
+        [Usage("CheckClones")]
+        [Description("Creates clones of all offline players who don't currently have one.")]
+        public static void CheckClones_OnCommand(CommandEventArgs e)
+        {
+            Confictura.Custom.CloneOfflinePlayerCharacters.CheckFirstRun();
+            e.Mobile.SendMessage("Clone check initiated.");
+        }
+    }
+}
+
+
 namespace Confictura.Custom
 {
     #region Cloning Players and Their Things
@@ -119,7 +140,7 @@ namespace Confictura.Custom
             }
         }
 
-        static void CheckFirstRun()
+        public static void CheckFirstRun()
         {
             // Initialize counters for total clones and processed clones.
             int totalClones = 0;
