@@ -3689,14 +3689,14 @@ namespace Server.Mobiles
 
         ///////////////////////////////////////////////////////////////////////////
 
-        public override bool OnBeforeDeath()
-        {
-            Say("In Vas Mani");
-            this.Hits = this.HitsMax;
-            this.FixedParticles(0x376A, 9, 32, 5030, EffectLayer.Waist);
-            this.PlaySound(0x202);
-            return false;
-        }
+        //public override bool OnBeforeDeath()
+        //{
+        //    Say("In Vas Mani");
+        //    this.Hits = this.HitsMax;
+        //    this.FixedParticles(0x376A, 9, 32, 5030, EffectLayer.Waist);
+        //    this.PlaySound(0x202);
+        //    return false;
+        //}
 
         public override bool IsEnemy(Mobile m)
         {
