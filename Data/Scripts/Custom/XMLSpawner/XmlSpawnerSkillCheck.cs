@@ -137,6 +137,7 @@ namespace Server.Mobiles
             private static ArrayList[] m_SerpentIslandSkillList = new ArrayList[MaxSkills + 1];
             private static ArrayList[] m_UnderworldSkillList = new ArrayList[MaxSkills + 1];
             private static ArrayList[] m_IslesDreadSkillList = new ArrayList[MaxSkills + 1];
+            private static ArrayList[] m_SavagedEmpireSkillList = new ArrayList[MaxSkills + 1];
 
             // primary function that returns the list of objects (spawners) that are associated with a given skillname by map
             public static ArrayList TriggerList(SkillName index, Map map)
@@ -158,6 +159,8 @@ namespace Server.Mobiles
                     maplist = m_SosariaSkillList;
                 else if (map == Map.IslesDread)
                     maplist = m_IslesDreadSkillList;
+                else if (map == Map.SavagedEmpire)
+                    maplist = m_SavagedEmpireSkillList;
                 else
                     return null;
 
