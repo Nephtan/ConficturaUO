@@ -211,8 +211,8 @@ namespace Server.Mobiles
             }
             if (this is LordBlackThorn)
             {
-                BritInvasionStone britfel = new BritInvasionStone();
-                britfel.StopBritLodor();
+                BritInvasionStone brittram = new BritInvasionStone();
+                brittram.StopBritSosaria();
                 World.Broadcast(
                     33,
                     true,

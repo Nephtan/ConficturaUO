@@ -30,7 +30,7 @@ namespace Server.Gumps
 		}
 
 		// CreateEntry method is responsible for creating waypoints and a spawner for invasions
-		public void CreateEntry(List<Point3D> waypointCoordinates, string waypointName, int minDelay, int maxDelay, int team, int homeRange, string creatureToSpawn)
+		public void CreateEntry(List<Point3D> waypointCoordinates, string waypointName, int amount, int minDelay, int maxDelay, int team, int homeRange, string creatureToSpawn)
 		{
 			// Validate the waypointCoordinates list before proceeding
 			if (waypointCoordinates == null || waypointCoordinates.Count == 0)
@@ -53,7 +53,7 @@ namespace Server.Gumps
 			}
 
 			// Creating a spawner at the first waypoint
-			Spawner spawner = new Spawner(minDelay, maxDelay, team, homeRange, 1, creatureToSpawn);
+			Spawner spawner = new Spawner(amount, minDelay, maxDelay, team, homeRange, creatureToSpawn);
 			spawner.MoveToWorld(waypointCoordinates[0], Map.Sosaria);
 			spawner.WayPoint = waypoints[0];
 			spawner.Name = waypointName;
@@ -93,7 +93,7 @@ namespace Server.Gumps
 						};
 
 						// Creating the invasion entry
-						CreateEntry(entry1Coordinates, "BritInvasionSosaria", 2, 5, 0, 30, "Overseer");
+						CreateEntry(entry1Coordinates, "BritInvasionSosaria", 2, 5, 10, 30, 20, "Overseer");
 						#endregion
 
 						#region Entry 2
@@ -112,7 +112,7 @@ namespace Server.Gumps
 						};
 
 						// Creating the invasion entry
-						CreateEntry(entry2Coordinates, "BritInvasionSosaria", 2, 5, 0, 30, "Overseer");
+						CreateEntry(entry2Coordinates, "BritInvasionSosaria", 2, 5, 10, 30, 20, "Overseer");
 						#endregion
 
 						World.Broadcast(33, true, "Britian Sosaria is under invasion.");

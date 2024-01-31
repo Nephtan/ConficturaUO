@@ -17,8 +17,8 @@ namespace Server.Mobiles
             : base(AIType.AI_Melee)
         {
             Name = "BlackThorn";
-            Body = 0x190;
-            //Hue = 1404;
+            Body = 752;
+            Hue = 1786;
             //BaseSoundID = 0x45A;
 
             SetStr(959, 1182);
@@ -28,9 +28,11 @@ namespace Server.Mobiles
             SetHits(2000, 2500);
 
             SetDamage(50, 65);
+
             MF_RobotRevealer = true;
             MF_Displacer = true;
             MF_MassProvoke = true;
+            MF_AntiEscape = true;
 
             SetDamageType(ResistanceType.Physical, 94);
             SetDamageType(ResistanceType.Cold, 32);
@@ -114,7 +116,7 @@ namespace Server.Mobiles
                 {
                     "{0}!!  You will not survive this encounter!",
                     "{0}!!  I cannot be beaten!",
-                    "{0}!!  I rule all the lands of Britainia!",
+                    "{0}!!  I rule all the lands of Sosaria!",
                     "{0}!!  Kneel before me and I may allow you to live!"
                 };
 
