@@ -29,35 +29,63 @@ namespace Server.Gumps
 			AddLabel(218, 208, 0, "Stop an Invasion");
 		}
 
-		// CreateEntry method is responsible for creating waypoints and a spawner for invasions
+		// CreateEntry method is responsible for creating waypoints and spawners for invasions
 		public void CreateEntry(List<Point3D> waypointCoordinates, string waypointName, int amount, int minDelay, int maxDelay, int team, int homeRange, string creatureToSpawn)
 		{
+			// Debugging
+			Console.WriteLine("[CreateEntry] Called for: " + waypointName); // Debugging
+
+			if (waypointCoordinates == null || waypointCoordinates.Count == 0)
+			{
+				Console.WriteLine("[CreateEntry] No coordinates provided for: " + waypointName); // Debugging
+				return;
+			}
+
+			foreach (var coord in waypointCoordinates) // Debugging
+			{
+				Console.WriteLine("[CreateEntry] Coordinate: " + coord.ToString());
+			}
+
 			// Validate the waypointCoordinates list before proceeding
 			if (waypointCoordinates == null || waypointCoordinates.Count == 0)
 				return;
 
-			// Creating waypoints and setting their location and name
 			List<WayPoint> waypoints = new List<WayPoint>();
-			foreach (var coord in waypointCoordinates)
+
+			// Check if there are additional waypoints beyond the spawner location
+			if (waypointCoordinates.Count > 1)
 			{
-				WayPoint wp = new WayPoint();
-				wp.Name = waypointName;
-				wp.MoveToWorld(coord, Map.Sosaria);
-				waypoints.Add(wp);
+				// Start from the second coordinate for WayPoints
+				for (int i = 1; i < waypointCoordinates.Count; i++)
+				{
+					WayPoint wp = new WayPoint();
+					wp.Name = waypointName;
+					wp.MoveToWorld(waypointCoordinates[i], Map.Sosaria);
+					waypoints.Add(wp);
+				}
+
+				// Linking each waypoint to the next to create a path
+				for (int i = 0; i < waypoints.Count; i++)
+				{
+					waypoints[i].NextPoint = waypoints[(i + 1) % waypoints.Count];
+				}
 			}
 
-			// Linking each waypoint to the next to create a path
-			for (int i = 0; i < waypoints.Count; i++)
-			{
-				waypoints[i].NextPoint = waypoints[(i + 1) % waypoints.Count];
-			}
-
-			// Creating a spawner at the first waypoint
+			// Creating a spawner at the first coordinate
 			Spawner spawner = new Spawner(amount, minDelay, maxDelay, team, homeRange, creatureToSpawn);
 			spawner.MoveToWorld(waypointCoordinates[0], Map.Sosaria);
-			spawner.WayPoint = waypoints[0];
+    
+			// Link the spawner to the first waypoint if waypoints are available
+			if (waypoints.Count > 0)
+			{
+				spawner.WayPoint = waypoints[0];
+			}
+    
 			spawner.Name = waypointName;
 			spawner.Respawn();
+
+			// Debugging
+			Console.WriteLine("[CreateEntry] Spawner created at " + waypointCoordinates[0].ToString() + " for " + creatureToSpawn);
 		}
 
 		// Handling responses from the Gump's buttons
@@ -73,18 +101,18 @@ namespace Server.Gumps
 						from.SendGump(new CityInvasion(from));
 						break;
 					}
-				// Handling the 'Start Invasion' button
+				// Handling the 'Start an Invasion' button
 				case 1:
 					{
 						// Define the central location for the invasion
 						Point3D loc = new Point3D(2999, 1053, 0);
 
-						#region Entry 1
+						#region Entry 1 - West Gate Overseers
 						// Coordinates for this entry's invasion path
 						List<Point3D> entry1Coordinates = new List<Point3D>
 						{
 							new Point3D(2914, 1068, 0), // Spawner Location
-							new Point3D(2928, 1066, 0),
+							new Point3D(2929, 1063, 0),
 							new Point3D(2941, 1064, 0),
 							new Point3D(2956, 1068, 0),
 							new Point3D(2970, 1072, 0),
@@ -96,7 +124,7 @@ namespace Server.Gumps
 						CreateEntry(entry1Coordinates, "BritInvasionSosaria", 2, 5, 10, 30, 20, "Overseer");
 						#endregion
 
-						#region Entry 2
+						#region Entry 2 - South Gate Overseers
 						// Coordinates for this entry's invasion path
 						List<Point3D> entry2Coordinates = new List<Point3D>
 						{
@@ -115,10 +143,126 @@ namespace Server.Gumps
 						CreateEntry(entry2Coordinates, "BritInvasionSosaria", 2, 5, 10, 30, 20, "Overseer");
 						#endregion
 
+						#region Entry 3 - East Gate Overseers
+						// Coordinates for this entry's invasion path
+						List<Point3D> entry3Coordinates = new List<Point3D>
+						{
+							new Point3D(3068, 1059, 0), // Spawner Location
+							new Point3D(3052, 1060, 0),
+							new Point3D(3035, 1061, 0),
+							new Point3D(3018, 1062, 0),
+							new Point3D(3003, 1061, 0)
+						};
+
+						// Creating the invasion entry
+						CreateEntry(entry3Coordinates, "BritInvasionSosaria", 2, 5, 10, 30, 20, "Overseer");
+						#endregion
+
+						#region Entry 4 - Central Well Iron Dragons
+						// Coordinates for this entry's spawner point
+						List<Point3D> entry4Coordinates = new List<Point3D>
+						{
+							new Point3D(2999, 1062, 0) // Spawner Location
+						};
+
+						// Creating the invasion entry
+						CreateEntry(entry4Coordinates, "BritInvasionSosaria", 2, 5, 10, 30, 10, "IronDragon");
+						#endregion
+
+
+						#region Entry 5 - North Central IronDragon
+						// Coordinates for this entry's spawner point
+						List<Point3D> entry5Coordinates = new List<Point3D>
+						{
+							new Point3D(2996, 1002, 0) // Spawner Location
+						};
+
+						// Creating the invasion entry
+						CreateEntry(entry5Coordinates, "BritInvasionSosaria", 1, 5, 10, 30, 10, "IronDragon");
+						#endregion
+
+						#region Entry 6 - West Central IronDragon
+						// Coordinates for this entry's spawner point
+						List<Point3D> entry6Coordinates = new List<Point3D>
+						{
+							new Point3D(2947, 1075, 0) // Spawner Location
+						};
+
+						// Creating the invasion entry
+						CreateEntry(entry6Coordinates, "BritInvasionSosaria", 1, 5, 10, 30, 10, "IronDragon");
+						#endregion
+
+						#region Entry 7 - East Central IronDragon
+						// Coordinates for this entry's spawner point
+						List<Point3D> entry7Coordinates = new List<Point3D>
+						{
+							new Point3D(3041, 1068, 0) // Spawner Location
+						};
+
+						// Creating the invasion entry
+						CreateEntry(entry7Coordinates, "BritInvasionSosaria", 1, 5, 10, 30, 10, "IronDragon");
+						#endregion
+
+						#region Entry 8 - Inside the Walls Overseers
+						// Coordinates for this entry's spawner point
+						List<Point3D> entry8Coordinates = new List<Point3D>
+						{
+							new Point3D(2999, 1062, 0) // Spawner Location
+						};
+
+						// Creating the invasion entry
+						CreateEntry(entry8Coordinates, "BritInvasionSosaria", 30, 5, 10, 30, 60, "Overseer");
+						#endregion
+
+						#region Entry 9 - Inside the Walls RunicGolems
+						// Coordinates for this entry's spawner point
+						List<Point3D> entry9Coordinates = new List<Point3D>
+						{
+							new Point3D(2999, 1062, 0) // Spawner Location
+						};
+
+						// Creating the invasion entry
+						CreateEntry(entry9Coordinates, "BritInvasionSosaria", 6, 5, 10, 30, 60, "RunicGolemInvader");
+						#endregion
+
+						#region Entry 10 - Inside the Walls MetalDaemons
+						// Coordinates for this entry's spawner point
+						List<Point3D> entry10Coordinates = new List<Point3D>
+						{
+							new Point3D(2999, 1062, 0) // Spawner Location
+						};
+
+						// Creating the invasion entry
+						CreateEntry(entry10Coordinates, "BritInvasionSosaria", 6, 5, 10, 30, 60, "MetalDaemon");
+						#endregion
+
+						#region Entry 11 - Inside the Walls MechGargoyles
+						// Coordinates for this entry's spawner point
+						List<Point3D> entry11Coordinates = new List<Point3D>
+						{
+							new Point3D(2999, 1062, 0) // Spawner Location
+						};
+
+						// Creating the invasion entry
+						CreateEntry(entry11Coordinates, "BritInvasionSosaria", 15, 5, 10, 30, 60, "MechGargoyle");
+						#endregion
+
+						#region Entry 12 - Boss Central Well
+						// Coordinates for this entry's spawner point
+						List<Point3D> entry12Coordinates = new List<Point3D>
+						{
+							new Point3D(2999, 1062, 0) // Spawner Location
+						};
+
+						// Creating the invasion entry
+						CreateEntry(entry12Coordinates, "BritInvasionSosaria", 1, 1, 1, 30, 12, "LordBlackThornBot");
+						#endregion
+
 						World.Broadcast(33, true, "Britian Sosaria is under invasion.");
 						from.SendGump(new CityInvasion(from));
 						break;
 					}
+				// Handling the 'Stop an Invasion' button
 				case 2:
 					{
 						BritInvasionStone brittram = new BritInvasionStone();
