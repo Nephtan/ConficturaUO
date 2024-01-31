@@ -11577,7 +11577,9 @@ namespace Server.Mobiles
                     || Math.Abs(this.Z - this.Home.Z) > 8
                 )
                 && Combatant == null
-                && this.Title != "the wandering healer"
+                && this.Title != "the wandering healer" 
+                && this.Title != "the marketkeeper"
+                && this.Title != "the innkeeper"
             )
             {
                 this.Location = this.Home;

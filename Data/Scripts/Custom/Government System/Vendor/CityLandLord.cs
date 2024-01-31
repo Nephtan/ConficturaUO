@@ -172,7 +172,10 @@ namespace Server.Mobiles
                 m_vendorlist.Clear();
             }
 
-            this.Stone.CheckVendors(false);
+            if (this.Stone != null)
+            {
+                this.Stone.CheckVendors(false);
+            }
         }
 
         public void CreateRandomVendors(Point3D p, Map map)
