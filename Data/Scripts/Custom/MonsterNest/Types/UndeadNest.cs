@@ -19,8 +19,8 @@ namespace Server.Items
 			this.m_NestSpawnType = "Undead";
 			this.m_MaxCount = 30;
 			this.m_RespawnTime = TimeSpan.FromSeconds(3.0);
-			this.HitsMax = 1000;
-			this.Hits = 1000;
+			this.HitsMax = 5000;
+			this.Hits = 5000;
 			this.RangeHome = 20;
 			this.m_LootLevel = 1;
 

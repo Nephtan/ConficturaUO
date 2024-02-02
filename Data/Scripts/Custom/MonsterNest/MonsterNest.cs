@@ -99,7 +99,6 @@ namespace Server.Items
 			Movable = false; // Ensure the nest cannot be moved.
 		}
 
-		// In MonsterNest class
 		public void UpdateEntityHealth()
 		{
 			if (m_Entity != null)
@@ -108,7 +107,6 @@ namespace Server.Items
 			}
 		}
 
-		// Add this method to MonsterNest class
 		protected void InitializeMonsterNestEntity()
 		{
 			if (m_Entity == null)
