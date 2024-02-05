@@ -146,8 +146,8 @@ namespace Server.Engines.XmlSpawner2
 
 		public static DuelLocationEntry[] DuelLocations = new DuelLocationEntry[]
 			{
-				new DuelLocationEntry("Jhelom Fighting Pit", 1398, 3742, -21, Map.Lodor, 14),
-				new DuelLocationEntry("Luna Grand Arena", 940, 637, -90, Map.SerpentIsland, 4),
+				//new DuelLocationEntry("Jhelom Fighting Pit", 1398, 3742, -21, Map.Lodor, 14),
+				//new DuelLocationEntry("Luna Grand Arena", 940, 637, -90, Map.SerpentIsland, 4),
 		};
 
 		public class DuelLocationEntry
