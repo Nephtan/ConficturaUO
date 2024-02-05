@@ -59,101 +59,85 @@ namespace Server.Misc
         }
 
         // This method determines if one mobile can perform a beneficial action towards another mobile.
-        public static bool Mobile_AllowBeneficial(Mobile from, Mobile target)
+        public static bool Mobile_AllowBeneficial(Mobile from, Mobile target) // Line 62
         {
-            // If either the from or target mobile is null or has higher access level than a player,
-            // then they cannot perform beneficial actions towards each other.
-            if (
-                from == null
-                || target == null
-                || from.AccessLevel > AccessLevel.Player
-                || target.AccessLevel > AccessLevel.Player
-            )
-                return true;
+            // Validate null references
+            if (from == null || target == null)
+                return false;
 
-            // Get the map where the from mobile is located.
+            // Validate AccessLevels
+            if (from.AccessLevel > AccessLevel.Player)
+                return true; // Staff can always perform beneficial actions
+
+            if (target.AccessLevel > AccessLevel.Player)
+                return false; // Beneficial actions cannot be performed on staff
+
+            // Ensure both mobiles are on a valid map
             Map map = from.Map;
+            if (map == null)
+                return false;
 
-            #region Factions
-            // Check if the target mobile belongs to a faction.
-            Faction targetFaction = Faction.Find(target, true);
+            // Check for NPCs first as they have fewer restrictions
+            if (!from.Player)
+                return true; // NPCs can perform beneficial actions towards any target
 
-            // If the server is not running on the Mondain's Legacy expansion, and the from mobile is in the same
-            // facet as the target mobile's faction, then they can perform beneficial actions towards each other
-            if ((!Core.ML || map == Faction.Facet) && targetFaction != null)
-            {
-                if (Faction.Find(from, true) != targetFaction)
-                    return false;
-            }
-            #endregion
+            // Prevent beneficial actions towards uncontrolled creatures by players
+            BaseCreature creature = target as BaseCreature;
+            if (creature != null && !creature.Controlled)
+                return false;
 
-            // NONPK players should be able to perform beneficial actions towards all NONPK or neutral players.
+            // XmlPoints and NONPK checks follow, specific to player interactions
             PlayerMobile fromPlayer = from as PlayerMobile;
             PlayerMobile targetPlayer = target as PlayerMobile;
-
-            // XmlPoints challenge mod
-            if (XmlPoints.AreInAnyGame(target))
-                return XmlPoints.AreTeamMembers(from, target);
-
-            if (fromPlayer != null && fromPlayer.NONPK == NONPK.NONPK)
+            if (fromPlayer != null && targetPlayer != null)
             {
-                if (targetPlayer != null && targetPlayer.NONPK == NONPK.PK)
+                if (XmlPoints.AreInAnyGame(target))
+                {
+                    return XmlPoints.AreTeamMembers(from, target); // Directly return the team member status
+                }
+
+                if (fromPlayer.NONPK == NONPK.NONPK && targetPlayer.NONPK == NONPK.PK)
                     return false;
             }
 
-            // If the map is not null and there are no beneficial restrictions on the map,
-            // then the from mobile can perform beneficial actions towards the target mobile.
-            if (map != null && (map.Rules & MapRules.BeneficialRestrictions) == 0)
-                return true; // In felucca, anything goes
-
-            // If the from mobile is not a player, then it can perform beneficial actions towards the target mobile.
-            if (!from.Player)
-                return true; // NPCs have no restrictions
-
-            // If the target mobile is an uncontrolled creature, then the from player cannot heal it.
-            if (target is BaseCreature && !((BaseCreature)target).Controlled)
-                return false; // Players cannot heal uncontrolled mobiles
-
-            // If the from mobile is a young player and the target mobile is an older player,
-            // then the from player cannot perform beneficial actions towards the target player.
-            if (
-                from is PlayerMobile
-                && ((PlayerMobile)from).Young
-                && (!(target is PlayerMobile) || !((PlayerMobile)target).Young)
-            )
-                return false; // Young players cannot perform beneficial actions towards older players
-
-            // If the from mobile and the target mobile are guild members or allies, then they can perform beneficial actions towards each other.
-            Guild fromGuild = from.Guild as Guild;
-            Guild targetGuild = target.Guild as Guild;
-
-            if (
-                fromGuild != null
-                && targetGuild != null
-                && (targetGuild == fromGuild || fromGuild.IsAlly(targetGuild))
-            )
-                return true; // Guild members can be beneficial
-
-            if (PlayerGovernmentSystem.CheckIfBanned(from, target))
+            // Player Government System checks for social dynamics
+            if (PlayerGovernmentSystem.CheckIfBanned(from, target) || PlayerGovernmentSystem.CheckAtWarWith(from, target))
                 return false;
-
-            if (PlayerGovernmentSystem.CheckAtWarWith(from, target))
-                return false;
-
             if (PlayerGovernmentSystem.CheckCityAlly(from, target))
                 return true;
 
-            // Otherwise, check the beneficial status between the from mobile and the target mobile.
-            return CheckBeneficialStatus(GetGuildStatus(from), GetGuildStatus(target));
+            // Guild and allies check
+            Guild fromGuild = from.Guild as Guild;
+            Guild targetGuild = target.Guild as Guild;
+            if (fromGuild != null && targetGuild != null && (fromGuild == targetGuild || fromGuild.IsAlly(targetGuild)))
+                return true;
+
+            // Use the GetGuildStatus and CheckBeneficialStatus methods to evaluate guild status
+            GuildStatus fromGuildStatus = GetGuildStatus(from);
+            GuildStatus targetGuildStatus = GetGuildStatus(target);
+            if (!CheckBeneficialStatus(fromGuildStatus, targetGuildStatus))
+                return false;
+
+            // Map rules check to allow beneficial actions where no restrictions exist
+            if ((map.Rules & MapRules.BeneficialRestrictions) == 0)
+                return true;
+
+            return true;
         }
 
         public static bool Mobile_AllowHarmful(Mobile attacker, Mobile target)
         {
-            // If either the attacker or the target is null, harm is not allowed.
+            // Validate null references
             if (attacker == null || target == null)
                 return false;
 
+            // Casts are moved up and done once to avoid redundancy.
             BaseCreature bcAttacker = attacker as BaseCreature;
+            BaseCreature bcTarget = target as BaseCreature;
+            PlayerMobile pmAttacker = attacker as PlayerMobile;
+            PlayerMobile pmTarget = target as PlayerMobile;
+
+            // Check for bard provoked creatures first.
             if (bcAttacker != null && bcAttacker.BardProvoked && bcAttacker.BardTarget == target)
                 return true;
 
@@ -161,76 +145,40 @@ namespace Server.Misc
             if (XmlPoints.AreChallengers(attacker, target))
                 return true;
 
-            // Check if the attacker is a controlled creature and if so, set the controller.
-            BaseCreature attackerCreature = attacker as BaseCreature;
-            Mobile attackerController =
-                attackerCreature != null
-                && (attackerCreature.Controlled || attackerCreature.Summoned)
-                    ? (attackerCreature.ControlMaster ?? attackerCreature.SummonMaster)
-                    : null;
+            // Simplify controlled creature and master checks.
+            Mobile attackerController = bcAttacker != null && (bcAttacker.Controlled || bcAttacker.Summoned)
+                ? bcAttacker.ControlMaster ?? bcAttacker.SummonMaster
+                : null;
 
-            // Check if the attacker or target is NONPK player.
-            bool attackerIsNonPk =
-                (
-                    attackerController is PlayerMobile
-                    && ((PlayerMobile)attackerController).NONPK == NONPK.NONPK
-                ) || (attacker is PlayerMobile && ((PlayerMobile)attacker).NONPK == NONPK.NONPK);
-            bool targetIsNonPk =
-                target is PlayerMobile && ((PlayerMobile)target).NONPK == NONPK.NONPK;
-            bool targetIsNeutral =
-                target is PlayerMobile && ((PlayerMobile)target).NONPK == NONPK.Null;
-            bool targetIsPk = target is PlayerMobile && ((PlayerMobile)target).NONPK == NONPK.PK;
+            // Consolidate NONPK checks by using the previously cast PlayerMobile instances.
+            bool attackerIsNonPk = (pmAttacker != null && pmAttacker.NONPK == NONPK.NONPK) || (attackerController != null && (attackerController as PlayerMobile) != null && (attackerController as PlayerMobile).NONPK == NONPK.NONPK);
+            bool targetIsNonPk = pmTarget != null && pmTarget.NONPK == NONPK.NONPK;
 
-            // If a NONPK player is trying to attack another player, display a message and disallow harm.
-            if (attackerIsNonPk && (target is PlayerMobile && (targetIsPk || targetIsNeutral)))
+            // Message sending logic is consolidated to reduce redundancy.
+            if (attackerIsNonPk && pmTarget != null && pmTarget.NONPK != NONPK.NONPK)
             {
-                (attackerController ?? attacker).SendMessage(
-                    33,
-                    "You have chosen the path of [PvE] and cannot attack players."
-                );
+                (attackerController ?? attacker).SendMessage(33, "You have chosen the path of [PvE] and cannot attack players.");
                 return false;
             }
 
-            // If a NONPK player is being attacked by a player, display a message and disallow harm.
-            if (targetIsNonPk && attacker is PlayerMobile)
+            if (targetIsNonPk && pmAttacker != null)
             {
-                (attackerController ?? attacker).SendMessage(
-                    33,
-                    "You cannot attack [PvE] players."
-                );
+                attacker.SendMessage(33, "You cannot attack [PvE] players.");
                 return false;
             }
 
-            // If a controlled creature is trying to harm its master or another creature controlled by the same master, disallow harm.
-            if (attackerCreature != null)
-            {
-                if (
-                    attackerCreature.ControlMaster == target
-                    || attackerCreature.SummonMaster == target
-                )
-                    return false;
+            // Simplify checks for controlled creatures trying to harm their master or others controlled by the same master.
+            if (bcAttacker != null && (bcAttacker.ControlMaster == target || bcAttacker.SummonMaster == target))
+                return false;
 
-                BaseCreature targetCreature = target as BaseCreature;
-                if (targetCreature != null)
-                {
-                    Mobile targetController = targetCreature.Controlled
-                        ? targetCreature.ControlMaster
-                        : targetCreature.SummonMaster;
-                    if (attackerController == targetController)
-                        return false;
-                }
-            }
+            if (bcAttacker != null && bcTarget != null && attackerController == (bcTarget.ControlMaster ?? bcTarget.SummonMaster))
+                return false;
 
-            if (PlayerGovernmentSystem.CheckIfBanned(attacker, target))
+            // Player government system checks remain unchanged as their logic is specific and likely requires no optimization without more context.
+            if (PlayerGovernmentSystem.CheckIfBanned(attacker, target) || PlayerGovernmentSystem.CheckAtWarWith(attacker, target) || PlayerGovernmentSystem.CheckCityAlly(attacker, target))
                 return true;
 
-            if (PlayerGovernmentSystem.CheckAtWarWith(attacker, target))
-                return true;
-
-            if (PlayerGovernmentSystem.CheckCityAlly(attacker, target))
-                return true;
-
-            // If none of the above conditions are met, allow harm.
+            // Default to allow harm if none of the above conditions are met.
             return true;
         }
 
