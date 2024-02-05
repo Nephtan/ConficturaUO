@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Server;
 using Server.Engines.PartySystem;
+using Server.Engines.XmlSpawner2;
 using Server.Factions;
 using Server.Guilds;
 using Server.Items;
@@ -90,6 +91,10 @@ namespace Server.Misc
             PlayerMobile fromPlayer = from as PlayerMobile;
             PlayerMobile targetPlayer = target as PlayerMobile;
 
+            // XmlPoints challenge mod
+            if (XmlPoints.AreInAnyGame(target))
+                return XmlPoints.AreTeamMembers(from, target);
+
             if (fromPlayer != null && fromPlayer.NONPK == NONPK.NONPK)
             {
                 if (targetPlayer != null && targetPlayer.NONPK == NONPK.PK)
@@ -150,6 +155,10 @@ namespace Server.Misc
 
             BaseCreature bcAttacker = attacker as BaseCreature;
             if (bcAttacker != null && bcAttacker.BardProvoked && bcAttacker.BardTarget == target)
+                return true;
+
+            // XmlPoints challenge mod
+            if (XmlPoints.AreChallengers(attacker, target))
                 return true;
 
             // Check if the attacker is a controlled creature and if so, set the controller.
@@ -502,6 +511,12 @@ namespace Server.Misc
 
             if (target.Criminal)
                 return Notoriety.Criminal;
+
+            // XmlPoints challenge mod
+            if (XmlPoints.AreTeamMembers(source, target))
+                return Notoriety.Ally;
+            else if (XmlPoints.AreChallengers(source, target))
+                return Notoriety.Enemy;
 
             Guild sourceGuild = GetGuildFor(source.Guild as Guild, source);
             Guild targetGuild = GetGuildFor(target.Guild as Guild, target);

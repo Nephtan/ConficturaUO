@@ -9,6 +9,7 @@ using Server.Engines.Craft;
 using Server.Engines.Help;
 using Server.Engines.PartySystem;
 using Server.Engines.Quests;
+using Server.Engines.XmlSpawner2;
 using Server.Factions;
 using Server.Gumps;
 using Server.Items;
@@ -3076,6 +3077,13 @@ namespace Server.Mobiles
         {
             if (InsuranceEnabled && item.Insured)
             {
+                // XmlPoints mod to support overriding insurance fees/awards during challenge games
+                if (XmlPoints.InsuranceIsFree(this, m_InsuranceAward))
+                {
+                    item.PayedInsurance = true;
+                    return true;
+                }
+
                 if (AutoRenewInsurance)
                 {
                     int cost = 900;
@@ -3197,7 +3205,9 @@ namespace Server.Mobiles
                     );
             }
 
-            Faction.HandleDeath(this, killer);
+            // block faction skill loss during challenge games
+            if (!XmlPoints.AreChallengers(this, killer))
+                Faction.HandleDeath(this, killer);
 
             Server.Guilds.Guild.HandleDeath(this, killer);
 
@@ -5058,6 +5068,14 @@ namespace Server.Mobiles
             if (m_ShowCityTitle == true && m_City != null)
             {
                 list.Add(1060659, "{0}\t{1}", m_City.CityName, m_CityTitle);
+            }
+
+            //Xnl Points Challenge Mod
+            XmlPoints a = (XmlPoints)XmlAttach.FindAttachment(this, typeof(XmlPoints));
+
+            if (a != null)
+            {
+                list.Add(1070722, "Kills {0} / Deaths {1} : Rank={2}", a.Kills, a.Deaths, a.Rank);
             }
         }
 
