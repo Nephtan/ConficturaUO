@@ -4,12 +4,18 @@
     <Name>ArachnidChamp#1</Name>
     <UniqueId>ccf1787d-a526-4376-9b91-31a523a10520</UniqueId>
     <Map>Felucca</Map>
+    <!--Spawner NW Corner of Spawn Boundary X Location-->
     <X>5139</X>
+    <!--Spawner NW Corner of Spawn Boundary Y Location-->
     <Y>2990</Y>
+    <!--Define Width and Height of Spawn Boundary below. Uses Above Coordinates for Starting Point and Moves SE-->
     <Width>10</Width>
     <Height>10</Height>
+    <!--Spawnner X Location-->
     <CentreX>5144</CentreX>
+    <!--Spawner Y Location-->
     <CentreY>2997</CentreY>
+    <!--Spawner Z Location-->
     <CentreZ>0</CentreZ>
     <Range>5</Range>
     <MaxCount>11</MaxCount>
