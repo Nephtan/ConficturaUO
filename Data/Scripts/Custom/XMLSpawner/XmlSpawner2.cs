@@ -4147,19 +4147,19 @@ namespace Server.Mobiles
                     XmlQuestHolder.JournalEchoColor = ConvertToInt(value);
                     break;
                 case "BlockKeyword":
-                    {
-                        // parse the keyword list and remove them from the keyword hashtables
-                        string[] keywordlist = value.Split(',');
+                {
+                    // parse the keyword list and remove them from the keyword hashtables
+                    string[] keywordlist = value.Split(',');
 
-                        if (keywordlist != null && keywordlist.Length > 0)
+                    if (keywordlist != null && keywordlist.Length > 0)
+                    {
+                        for (int i = 0; i < keywordlist.Length; i++)
                         {
-                            for (int i = 0; i < keywordlist.Length; i++)
-                            {
-                                BaseXmlSpawner.RemoveKeyword(keywordlist[i]);
-                            }
+                            BaseXmlSpawner.RemoveKeyword(keywordlist[i]);
                         }
-                        break;
                     }
+                    break;
+                }
                 case "BlockCommand":
                 case "ChangeCommand":
                     // delay processing of these settings until after all commands have been registered in their Initialize methods
@@ -4184,143 +4184,143 @@ namespace Server.Mobiles
             switch (argname)
             {
                 case "BlockCommand":
-                    {
-                        // delay processing of this until after all commands have been registered in their Initialize methods
-                        // parse the command list and remove them from the command hashtables
-                        // the syntax is "commandname, commandname, etc."
-                        string[] keywordlist = value.Split(',');
+                {
+                    // delay processing of this until after all commands have been registered in their Initialize methods
+                    // parse the command list and remove them from the command hashtables
+                    // the syntax is "commandname, commandname, etc."
+                    string[] keywordlist = value.Split(',');
 
-                        if (keywordlist != null && keywordlist.Length > 0)
+                    if (keywordlist != null && keywordlist.Length > 0)
+                    {
+                        for (int i = 0; i < keywordlist.Length; i++)
                         {
-                            for (int i = 0; i < keywordlist.Length; i++)
+                            string commandname = keywordlist[i].Trim().ToLower();
+                            try
                             {
-                                string commandname = keywordlist[i].Trim().ToLower();
-                                try
-                                {
-                                    CommandSystem.Entries.Remove(commandname);
-                                }
-                                catch
-                                {
-                                    Console.WriteLine("{0}: invalid command {1}", argname, commandname);
-                                }
+                                CommandSystem.Entries.Remove(commandname);
+                            }
+                            catch
+                            {
+                                Console.WriteLine("{0}: invalid command {1}", argname, commandname);
                             }
                         }
-                        break;
                     }
+                    break;
+                }
                 case "ChangeCommand":
+                {
+                    // delay processing of this until after all commands have been registered in their Initialize methods
+                    // parse the command list and rehash them into the command hashtables
+                    // the syntax is "oldname:newname[:accesslevel], oldname:newname[:accesslevel], etc."
+                    string[] keywordlist = value.Split(',');
+
+                    if (keywordlist != null && keywordlist.Length > 0)
                     {
-                        // delay processing of this until after all commands have been registered in their Initialize methods
-                        // parse the command list and rehash them into the command hashtables
-                        // the syntax is "oldname:newname[:accesslevel], oldname:newname[:accesslevel], etc."
-                        string[] keywordlist = value.Split(',');
-
-                        if (keywordlist != null && keywordlist.Length > 0)
+                        for (int i = 0; i < keywordlist.Length; i++)
                         {
-                            for (int i = 0; i < keywordlist.Length; i++)
+                            string[] namelist = keywordlist[i].Split(':');
+                            if (namelist != null && namelist.Length > 1)
                             {
-                                string[] namelist = keywordlist[i].Split(':');
-                                if (namelist != null && namelist.Length > 1)
+                                string oldname = namelist[0].Trim().ToLower();
+                                string newname = namelist[1].Trim();
+
+                                if (newname.Length == 0)
+                                    newname = oldname;
+
+                                AccessLevel access = AccessLevel.Player;
+                                bool validaccess = false;
+                                if (namelist.Length > 2)
                                 {
-                                    string oldname = namelist[0].Trim().ToLower();
-                                    string newname = namelist[1].Trim();
-
-                                    if (newname.Length == 0)
-                                        newname = oldname;
-
-                                    AccessLevel access = AccessLevel.Player;
-                                    bool validaccess = false;
-                                    if (namelist.Length > 2)
-                                    {
-                                        // get the new accesslevel
-                                        try
-                                        {
-                                            access = (AccessLevel)
-                                                Enum.Parse(
-                                                    typeof(AccessLevel),
-                                                    namelist[2].Trim(),
-                                                    true
-                                                );
-                                            validaccess = true;
-                                        }
-                                        catch
-                                        {
-                                            Console.WriteLine(
-                                                "{0}: invalid accesslevel {1} for {2}",
-                                                argname,
-                                                namelist[2],
-                                                newname
-                                            );
-                                        }
-                                    }
-                                    // find the command entry for the old name
-                                    CommandEntry e = null;
+                                    // get the new accesslevel
                                     try
                                     {
-                                        e = CommandSystem.Entries[oldname];
+                                        access = (AccessLevel)
+                                            Enum.Parse(
+                                                typeof(AccessLevel),
+                                                namelist[2].Trim(),
+                                                true
+                                            );
+                                        validaccess = true;
                                     }
                                     catch
                                     {
-                                        Console.WriteLine("{0}: invalid command {1}", argname, oldname);
+                                        Console.WriteLine(
+                                            "{0}: invalid accesslevel {1} for {2}",
+                                            argname,
+                                            namelist[2],
+                                            newname
+                                        );
                                     }
-                                    if (e != null)
+                                }
+                                // find the command entry for the old name
+                                CommandEntry e = null;
+                                try
+                                {
+                                    e = CommandSystem.Entries[oldname];
+                                }
+                                catch
+                                {
+                                    Console.WriteLine("{0}: invalid command {1}", argname, oldname);
+                                }
+                                if (e != null)
+                                {
+                                    if (!validaccess)
                                     {
-                                        if (!validaccess)
-                                        {
-                                            // use the old accesslevel
-                                            access = e.AccessLevel;
-                                        }
-                                        // remove the old command entry
-                                        CommandSystem.Entries.Remove(oldname);
-                                        // register the new command using the old handler
-                                        CommandSystem.Register(newname, access, e.Handler);
+                                        // use the old accesslevel
+                                        access = e.AccessLevel;
                                     }
+                                    // remove the old command entry
+                                    CommandSystem.Entries.Remove(oldname);
+                                    // register the new command using the old handler
+                                    CommandSystem.Register(newname, access, e.Handler);
+                                }
 
-                                    // also look in the targetcommands list and adjust name and accesslevel there
-                                    foreach (BaseCommand b in TargetCommands.AllCommands)
+                                // also look in the targetcommands list and adjust name and accesslevel there
+                                foreach (BaseCommand b in TargetCommands.AllCommands)
+                                {
+                                    if (b.Commands != null)
                                     {
-                                        if (b.Commands != null)
+                                        for (int j = 0; j < b.Commands.Length; j++)
                                         {
-                                            for (int j = 0; j < b.Commands.Length; j++)
+                                            string commandname = b.Commands[j];
+                                            if (commandname.ToLower() == oldname)
                                             {
-                                                string commandname = b.Commands[j];
-                                                if (commandname.ToLower() == oldname)
+                                                // modify the basecommand with the new name and access
+                                                b.Commands[j] = newname;
+                                                if (validaccess)
                                                 {
-                                                    // modify the basecommand with the new name and access
-                                                    b.Commands[j] = newname;
-                                                    if (validaccess)
-                                                    {
-                                                        b.AccessLevel = access;
-                                                    }
-
-                                                    // re-register it in the implementors hashtable
-                                                    List<BaseCommandImplementor> impls =
-                                                        BaseCommandImplementor.Implementors;
-
-                                                    for (int k = 0; k < impls.Count; ++k)
-                                                    {
-                                                        BaseCommandImplementor impl = impls[k];
-
-                                                        if ((b.Supports & impl.SupportRequirement) != 0)
-                                                        {
-                                                            try
-                                                            {
-                                                                impl.Commands.Remove(commandname);
-                                                            }
-                                                            catch { }
-                                                            impl.Register(b);
-                                                        }
-                                                    }
-
-                                                    break;
+                                                    b.AccessLevel = access;
                                                 }
+
+                                                // re-register it in the implementors hashtable
+                                                List<BaseCommandImplementor> impls =
+                                                    BaseCommandImplementor.Implementors;
+
+                                                for (int k = 0; k < impls.Count; ++k)
+                                                {
+                                                    BaseCommandImplementor impl = impls[k];
+
+                                                    if ((b.Supports & impl.SupportRequirement) != 0)
+                                                    {
+                                                        try
+                                                        {
+                                                            impl.Commands.Remove(commandname);
+                                                        }
+                                                        catch { }
+                                                        impl.Register(b);
+                                                    }
+                                                }
+
+                                                break;
                                             }
                                         }
                                     }
                                 }
                             }
                         }
-                        break;
                     }
+                    break;
+                }
             }
         }
 
@@ -6006,7 +6006,7 @@ namespace Server.Mobiles
                             else if (
                                 string.Compare(XmlMapName, Map.SavagedEmpire.Name, true) == 0
                                 || XmlMapName == "SavagedEmpire"
-)
+                            )
                             {
                                 SpawnMap = Map.SavagedEmpire;
                                 SavagedEmpireCount++;
@@ -13547,89 +13547,89 @@ namespace Server.Mobiles
                             requiresurface = false;
                             break;
                         case SpawnPositionType.Tiles:
+                        {
+                            // syntax Tiles,start[,end]
+                            // get the tiles in the range
+                            requiresurface = false;
+                            int start = -1;
+                            int end = -1;
+                            if (positionargs != null && positionargs.Length > 1)
                             {
-                                // syntax Tiles,start[,end]
-                                // get the tiles in the range
-                                requiresurface = false;
-                                int start = -1;
-                                int end = -1;
-                                if (positionargs != null && positionargs.Length > 1)
+                                try
                                 {
-                                    try
-                                    {
-                                        start = int.Parse(positionargs[1]);
-                                    }
-                                    catch { }
+                                    start = int.Parse(positionargs[1]);
                                 }
-                                if (positionargs != null && positionargs.Length > 2)
-                                {
-                                    try
-                                    {
-                                        end = int.Parse(positionargs[2]);
-                                    }
-                                    catch { }
-                                }
-                                if (includetilelist == null)
-                                {
-                                    includetilelist = new List<int>();
-                                }
-
-                                // add the tiles to the list
-                                if (start > -1 && end < 0)
-                                {
-                                    includetilelist.Add(start);
-                                }
-                                else if (start > -1 && end > -1)
-                                {
-                                    for (int j = start; j <= end; j++)
-                                    {
-                                        includetilelist.Add(j);
-                                    }
-                                }
-                                break;
+                                catch { }
                             }
+                            if (positionargs != null && positionargs.Length > 2)
+                            {
+                                try
+                                {
+                                    end = int.Parse(positionargs[2]);
+                                }
+                                catch { }
+                            }
+                            if (includetilelist == null)
+                            {
+                                includetilelist = new List<int>();
+                            }
+
+                            // add the tiles to the list
+                            if (start > -1 && end < 0)
+                            {
+                                includetilelist.Add(start);
+                            }
+                            else if (start > -1 && end > -1)
+                            {
+                                for (int j = start; j <= end; j++)
+                                {
+                                    includetilelist.Add(j);
+                                }
+                            }
+                            break;
+                        }
                         case SpawnPositionType.NoTiles:
+                        {
+                            // syntax Tiles,start[,end]
+                            // get the tiles in the range
+                            requiresurface = false;
+                            int start = -1;
+                            int end = -1;
+                            if (positionargs != null && positionargs.Length > 1)
                             {
-                                // syntax Tiles,start[,end]
-                                // get the tiles in the range
-                                requiresurface = false;
-                                int start = -1;
-                                int end = -1;
-                                if (positionargs != null && positionargs.Length > 1)
+                                try
                                 {
-                                    try
-                                    {
-                                        start = int.Parse(positionargs[1]);
-                                    }
-                                    catch { }
+                                    start = int.Parse(positionargs[1]);
                                 }
-                                if (positionargs != null && positionargs.Length > 2)
-                                {
-                                    try
-                                    {
-                                        end = int.Parse(positionargs[2]);
-                                    }
-                                    catch { }
-                                }
-                                if (excludetilelist == null)
-                                {
-                                    excludetilelist = new List<int>();
-                                }
-
-                                // add the tiles to the list
-                                if (start > -1 && end < 0)
-                                {
-                                    excludetilelist.Add(start);
-                                }
-                                else if (start > -1 && end > -1)
-                                {
-                                    for (int j = start; j <= end; j++)
-                                    {
-                                        excludetilelist.Add(j);
-                                    }
-                                }
-                                break;
+                                catch { }
                             }
+                            if (positionargs != null && positionargs.Length > 2)
+                            {
+                                try
+                                {
+                                    end = int.Parse(positionargs[2]);
+                                }
+                                catch { }
+                            }
+                            if (excludetilelist == null)
+                            {
+                                excludetilelist = new List<int>();
+                            }
+
+                            // add the tiles to the list
+                            if (start > -1 && end < 0)
+                            {
+                                excludetilelist.Add(start);
+                            }
+                            else if (start > -1 && end > -1)
+                            {
+                                for (int j = start; j <= end; j++)
+                                {
+                                    excludetilelist.Add(j);
+                                }
+                            }
+                            break;
+                        }
                         case SpawnPositionType.RowFill:
                         case SpawnPositionType.ColFill:
                         case SpawnPositionType.Perimeter:
@@ -15059,456 +15059,456 @@ namespace Server.Mobiles
             switch (version)
             {
                 case 30:
-                    {
-                        m_AllowNPCTriggering = reader.ReadBool();
-                        goto case 29;
-                    }
+                {
+                    m_AllowNPCTriggering = reader.ReadBool();
+                    goto case 29;
+                }
                 case 29:
+                {
+                    tmpSpawnListSize = reader.ReadInt();
+                    tmpSpawnsPer = new ArrayList(tmpSpawnListSize);
+                    for (int i = 0; i < tmpSpawnListSize; ++i)
+                    {
+                        int spawnsper = reader.ReadInt();
+
+                        tmpSpawnsPer.Add(spawnsper);
+                    }
+                    goto case 28;
+                }
+                case 28:
+                {
+                    if (version < 29)
+                        tmpSpawnListSize = reader.ReadInt();
+
+                    tmpPackRange = new ArrayList(tmpSpawnListSize);
+                    for (int i = 0; i < tmpSpawnListSize; ++i)
+                    {
+                        int packrange = reader.ReadInt();
+
+                        tmpPackRange.Add(packrange);
+                    }
+                    goto case 27;
+                }
+                case 27:
+                {
+                    if (version < 28)
+                        tmpSpawnListSize = reader.ReadInt();
+
+                    tmpDisableSpawn = new ArrayList(tmpSpawnListSize);
+                    for (int i = 0; i < tmpSpawnListSize; ++i)
+                    {
+                        bool disablespawn = reader.ReadBool();
+
+                        tmpDisableSpawn.Add(disablespawn);
+                    }
+                    goto case 26;
+                }
+                case 26:
+                {
+                    m_SpawnOnTrigger = reader.ReadBool();
+                    m_FirstModified = reader.ReadDateTime();
+                    m_LastModified = reader.ReadDateTime();
+                    goto case 25;
+                }
+                case 25:
+                {
+                    goto case 24;
+                }
+                case 24:
+                {
+                    if (version < 27)
+                        tmpSpawnListSize = reader.ReadInt();
+                    tmpRestrictKillsToSubgroup = new ArrayList(tmpSpawnListSize);
+                    tmpClearOnAdvance = new ArrayList(tmpSpawnListSize);
+                    tmpMinDelay = new ArrayList(tmpSpawnListSize);
+                    tmpMaxDelay = new ArrayList(tmpSpawnListSize);
+                    tmpNextSpawn = new ArrayList(tmpSpawnListSize);
+                    for (int i = 0; i < tmpSpawnListSize; ++i)
+                    {
+                        bool restrictkills = reader.ReadBool();
+                        bool clearadvance = reader.ReadBool();
+                        double mind = reader.ReadDouble();
+                        double maxd = reader.ReadDouble();
+                        DateTime nextspawn = reader.ReadDeltaTime();
+
+                        tmpRestrictKillsToSubgroup.Add(restrictkills);
+                        tmpClearOnAdvance.Add(clearadvance);
+                        tmpMinDelay.Add(mind);
+                        tmpMaxDelay.Add(maxd);
+                        tmpNextSpawn.Add(nextspawn);
+                    }
+
+                    bool hasitems = reader.ReadBool();
+
+                    if (hasitems)
+                    {
+                        m_ShowBoundsItems = reader.ReadItemList();
+                    }
+                    goto case 23;
+                }
+                case 23:
+                {
+                    IsInactivated = reader.ReadBool();
+                    SmartSpawning = reader.ReadBool();
+
+                    goto case 22;
+                }
+                case 22:
+                {
+                    SkillTrigger = reader.ReadString(); // note this will also register the skill
+                    m_skill_that_triggered = (SkillName)reader.ReadInt();
+                    m_FreeRun = reader.ReadBool();
+                    m_mob_who_triggered = reader.ReadMobile();
+                    goto case 21;
+                }
+                case 21:
+                {
+                    m_DespawnTime = reader.ReadTimeSpan();
+                    goto case 20;
+                }
+                case 20:
+                {
+                    if (version < 24)
+                        tmpSpawnListSize = reader.ReadInt();
+                    tmpRequireSurface = new ArrayList(tmpSpawnListSize);
+                    for (int i = 0; i < tmpSpawnListSize; ++i)
+                    {
+                        bool requiresurface = reader.ReadBool();
+                        tmpRequireSurface.Add(requiresurface);
+                    }
+                    goto case 19;
+                }
+                case 19:
+                {
+                    m_ConfigFile = reader.ReadString();
+                    m_OnHold = reader.ReadBool();
+                    m_HoldSequence = reader.ReadBool();
+                    m_FirstModifiedBy = reader.ReadString();
+                    m_LastModifiedBy = reader.ReadString();
+                    // deserialize the keyword tag list
+                    int tagcount = reader.ReadInt();
+                    m_KeywordTagList = new ArrayList(tagcount);
+                    for (int i = 0; i < tagcount; i++)
+                    {
+                        BaseXmlSpawner.KeywordTag tag = new BaseXmlSpawner.KeywordTag(null, this);
+                        tag.Deserialize(reader);
+                    }
+                    goto case 18;
+                }
+                case 18:
+                {
+                    m_AllowGhostTriggering = reader.ReadBool();
+                    goto case 17;
+                }
+                case 17:
+                {
+                    if (version < 25)
+                    {
+                        // the textentrybooks are deleted on deserialization so no need to track them
+                        reader.ReadItem();
+                    }
+                    goto case 16;
+                }
+                case 16:
+                {
+                    hasnewobjectinfo = true;
+                    m_SequentialSpawning = reader.ReadInt();
+                    TimeSpan seqdelay = reader.ReadTimeSpan();
+                    m_SeqEnd = DateTime.Now + seqdelay;
+                    if (version < 20)
                     {
                         tmpSpawnListSize = reader.ReadInt();
-                        tmpSpawnsPer = new ArrayList(tmpSpawnListSize);
-                        for (int i = 0; i < tmpSpawnListSize; ++i)
-                        {
-                            int spawnsper = reader.ReadInt();
-
-                            tmpSpawnsPer.Add(spawnsper);
-                        }
-                        goto case 28;
                     }
-                case 28:
+                    tmpSubGroup = new ArrayList(tmpSpawnListSize);
+                    tmpSequentialResetTime = new ArrayList(tmpSpawnListSize);
+                    tmpSequentialResetTo = new ArrayList(tmpSpawnListSize);
+                    tmpKillsNeeded = new ArrayList(tmpSpawnListSize);
+                    for (int i = 0; i < tmpSpawnListSize; ++i)
                     {
-                        if (version < 29)
-                            tmpSpawnListSize = reader.ReadInt();
-
-                        tmpPackRange = new ArrayList(tmpSpawnListSize);
-                        for (int i = 0; i < tmpSpawnListSize; ++i)
-                        {
-                            int packrange = reader.ReadInt();
-
-                            tmpPackRange.Add(packrange);
-                        }
-                        goto case 27;
+                        int subgroup = reader.ReadInt();
+                        double resettime = reader.ReadDouble();
+                        int resetto = reader.ReadInt();
+                        int killsneeded = reader.ReadInt();
+                        tmpSubGroup.Add(subgroup);
+                        tmpSequentialResetTime.Add(resettime);
+                        tmpSequentialResetTo.Add(resetto);
+                        tmpKillsNeeded.Add(killsneeded);
                     }
-                case 27:
-                    {
-                        if (version < 28)
-                            tmpSpawnListSize = reader.ReadInt();
-
-                        tmpDisableSpawn = new ArrayList(tmpSpawnListSize);
-                        for (int i = 0; i < tmpSpawnListSize; ++i)
-                        {
-                            bool disablespawn = reader.ReadBool();
-
-                            tmpDisableSpawn.Add(disablespawn);
-                        }
-                        goto case 26;
-                    }
-                case 26:
-                    {
-                        m_SpawnOnTrigger = reader.ReadBool();
-                        m_FirstModified = reader.ReadDateTime();
-                        m_LastModified = reader.ReadDateTime();
-                        goto case 25;
-                    }
-                case 25:
-                    {
-                        goto case 24;
-                    }
-                case 24:
-                    {
-                        if (version < 27)
-                            tmpSpawnListSize = reader.ReadInt();
-                        tmpRestrictKillsToSubgroup = new ArrayList(tmpSpawnListSize);
-                        tmpClearOnAdvance = new ArrayList(tmpSpawnListSize);
-                        tmpMinDelay = new ArrayList(tmpSpawnListSize);
-                        tmpMaxDelay = new ArrayList(tmpSpawnListSize);
-                        tmpNextSpawn = new ArrayList(tmpSpawnListSize);
-                        for (int i = 0; i < tmpSpawnListSize; ++i)
-                        {
-                            bool restrictkills = reader.ReadBool();
-                            bool clearadvance = reader.ReadBool();
-                            double mind = reader.ReadDouble();
-                            double maxd = reader.ReadDouble();
-                            DateTime nextspawn = reader.ReadDeltaTime();
-
-                            tmpRestrictKillsToSubgroup.Add(restrictkills);
-                            tmpClearOnAdvance.Add(clearadvance);
-                            tmpMinDelay.Add(mind);
-                            tmpMaxDelay.Add(maxd);
-                            tmpNextSpawn.Add(nextspawn);
-                        }
-
-                        bool hasitems = reader.ReadBool();
-
-                        if (hasitems)
-                        {
-                            m_ShowBoundsItems = reader.ReadItemList();
-                        }
-                        goto case 23;
-                    }
-                case 23:
-                    {
-                        IsInactivated = reader.ReadBool();
-                        SmartSpawning = reader.ReadBool();
-
-                        goto case 22;
-                    }
-                case 22:
-                    {
-                        SkillTrigger = reader.ReadString(); // note this will also register the skill
-                        m_skill_that_triggered = (SkillName)reader.ReadInt();
-                        m_FreeRun = reader.ReadBool();
-                        m_mob_who_triggered = reader.ReadMobile();
-                        goto case 21;
-                    }
-                case 21:
-                    {
-                        m_DespawnTime = reader.ReadTimeSpan();
-                        goto case 20;
-                    }
-                case 20:
-                    {
-                        if (version < 24)
-                            tmpSpawnListSize = reader.ReadInt();
-                        tmpRequireSurface = new ArrayList(tmpSpawnListSize);
-                        for (int i = 0; i < tmpSpawnListSize; ++i)
-                        {
-                            bool requiresurface = reader.ReadBool();
-                            tmpRequireSurface.Add(requiresurface);
-                        }
-                        goto case 19;
-                    }
-                case 19:
-                    {
-                        m_ConfigFile = reader.ReadString();
-                        m_OnHold = reader.ReadBool();
-                        m_HoldSequence = reader.ReadBool();
-                        m_FirstModifiedBy = reader.ReadString();
-                        m_LastModifiedBy = reader.ReadString();
-                        // deserialize the keyword tag list
-                        int tagcount = reader.ReadInt();
-                        m_KeywordTagList = new ArrayList(tagcount);
-                        for (int i = 0; i < tagcount; i++)
-                        {
-                            BaseXmlSpawner.KeywordTag tag = new BaseXmlSpawner.KeywordTag(null, this);
-                            tag.Deserialize(reader);
-                        }
-                        goto case 18;
-                    }
-                case 18:
-                    {
-                        m_AllowGhostTriggering = reader.ReadBool();
-                        goto case 17;
-                    }
-                case 17:
-                    {
-                        if (version < 25)
-                        {
-                            // the textentrybooks are deleted on deserialization so no need to track them
-                            reader.ReadItem();
-                        }
-                        goto case 16;
-                    }
-                case 16:
-                    {
-                        hasnewobjectinfo = true;
-                        m_SequentialSpawning = reader.ReadInt();
-                        TimeSpan seqdelay = reader.ReadTimeSpan();
-                        m_SeqEnd = DateTime.Now + seqdelay;
-                        if (version < 20)
-                        {
-                            tmpSpawnListSize = reader.ReadInt();
-                        }
-                        tmpSubGroup = new ArrayList(tmpSpawnListSize);
-                        tmpSequentialResetTime = new ArrayList(tmpSpawnListSize);
-                        tmpSequentialResetTo = new ArrayList(tmpSpawnListSize);
-                        tmpKillsNeeded = new ArrayList(tmpSpawnListSize);
-                        for (int i = 0; i < tmpSpawnListSize; ++i)
-                        {
-                            int subgroup = reader.ReadInt();
-                            double resettime = reader.ReadDouble();
-                            int resetto = reader.ReadInt();
-                            int killsneeded = reader.ReadInt();
-                            tmpSubGroup.Add(subgroup);
-                            tmpSequentialResetTime.Add(resettime);
-                            tmpSequentialResetTo.Add(resetto);
-                            tmpKillsNeeded.Add(killsneeded);
-                        }
-                        m_RegionName = reader.ReadString(); // 2004.02.08 :: Omega Red
-                        goto case 15;
-                    }
+                    m_RegionName = reader.ReadString(); // 2004.02.08 :: Omega Red
+                    goto case 15;
+                }
                 case 15:
-                    {
-                        m_ExternalTriggering = reader.ReadBool();
-                        m_ExternalTrigger = reader.ReadBool();
-                        goto case 14;
-                    }
+                {
+                    m_ExternalTriggering = reader.ReadBool();
+                    m_ExternalTrigger = reader.ReadBool();
+                    goto case 14;
+                }
                 case 14:
-                    {
-                        m_NoItemTriggerName = reader.ReadString();
-                        goto case 13;
-                    }
+                {
+                    m_NoItemTriggerName = reader.ReadString();
+                    goto case 13;
+                }
                 case 13:
-                    {
-                        m_GumpState = reader.ReadString();
-                        goto case 12;
-                    }
+                {
+                    m_GumpState = reader.ReadString();
+                    goto case 12;
+                }
                 case 12:
+                {
+                    int todtype = reader.ReadInt();
+                    switch (todtype)
                     {
-                        int todtype = reader.ReadInt();
-                        switch (todtype)
-                        {
-                            case (int)TODModeType.Gametime:
-                                m_TODMode = TODModeType.Gametime;
-                                break;
-                            case (int)TODModeType.Realtime:
-                                m_TODMode = TODModeType.Realtime;
-                                break;
-                        }
-                        goto case 11;
+                        case (int)TODModeType.Gametime:
+                            m_TODMode = TODModeType.Gametime;
+                            break;
+                        case (int)TODModeType.Realtime:
+                            m_TODMode = TODModeType.Realtime;
+                            break;
                     }
+                    goto case 11;
+                }
                 case 11:
-                    {
-                        m_KillReset = reader.ReadInt();
-                        m_skipped = reader.ReadBool();
-                        m_spawncheck = reader.ReadInt();
-                        goto case 10;
-                    }
+                {
+                    m_KillReset = reader.ReadInt();
+                    m_skipped = reader.ReadBool();
+                    m_spawncheck = reader.ReadInt();
+                    goto case 10;
+                }
                 case 10:
-                    {
-                        m_SetPropertyItem = reader.ReadItem();
-                        goto case 9;
-                    }
+                {
+                    m_SetPropertyItem = reader.ReadItem();
+                    goto case 9;
+                }
                 case 9:
-                    {
-                        m_TriggerProbability = reader.ReadDouble();
-                        goto case 8;
-                    }
+                {
+                    m_TriggerProbability = reader.ReadDouble();
+                    goto case 8;
+                }
                 case 8:
-                    {
-                        m_MobPropertyName = reader.ReadString();
-                        m_MobTriggerName = reader.ReadString();
-                        m_PlayerPropertyName = reader.ReadString();
-                        goto case 7;
-                    }
+                {
+                    m_MobPropertyName = reader.ReadString();
+                    m_MobTriggerName = reader.ReadString();
+                    m_PlayerPropertyName = reader.ReadString();
+                    goto case 7;
+                }
                 case 7:
-                    {
-                        m_SpeechTrigger = reader.ReadString();
-                        goto case 6;
-                    }
+                {
+                    m_SpeechTrigger = reader.ReadString();
+                    goto case 6;
+                }
                 case 6:
-                    {
-                        m_ItemTriggerName = reader.ReadString();
-                        goto case 5;
-                    }
+                {
+                    m_ItemTriggerName = reader.ReadString();
+                    goto case 5;
+                }
                 case 5:
-                    {
-                        m_ProximityTriggerMessage = reader.ReadString();
-                        m_ObjectPropertyItem = reader.ReadItem();
-                        m_ObjectPropertyName = reader.ReadString();
-                        m_killcount = reader.ReadInt();
-                        goto case 4;
-                    }
+                {
+                    m_ProximityTriggerMessage = reader.ReadString();
+                    m_ObjectPropertyItem = reader.ReadItem();
+                    m_ObjectPropertyName = reader.ReadString();
+                    m_killcount = reader.ReadInt();
+                    goto case 4;
+                }
                 case 4:
+                {
+                    haveproximityrange = true;
+                    m_ProximityRange = reader.ReadInt();
+                    m_ProximityTriggerSound = reader.ReadInt();
+                    m_proximityActivated = reader.ReadBool();
+                    m_durActivated = reader.ReadBool();
+                    m_refractActivated = reader.ReadBool();
+                    m_StackAmount = reader.ReadInt();
+                    m_TODStart = reader.ReadTimeSpan();
+                    m_TODEnd = reader.ReadTimeSpan();
+                    m_MinRefractory = reader.ReadTimeSpan();
+                    m_MaxRefractory = reader.ReadTimeSpan();
+                    if (m_refractActivated == true)
                     {
-                        haveproximityrange = true;
-                        m_ProximityRange = reader.ReadInt();
-                        m_ProximityTriggerSound = reader.ReadInt();
-                        m_proximityActivated = reader.ReadBool();
-                        m_durActivated = reader.ReadBool();
-                        m_refractActivated = reader.ReadBool();
-                        m_StackAmount = reader.ReadInt();
-                        m_TODStart = reader.ReadTimeSpan();
-                        m_TODEnd = reader.ReadTimeSpan();
-                        m_MinRefractory = reader.ReadTimeSpan();
-                        m_MaxRefractory = reader.ReadTimeSpan();
-                        if (m_refractActivated == true)
-                        {
-                            TimeSpan delay = reader.ReadTimeSpan();
-                            DoTimer3(delay);
-                        }
-                        if (m_durActivated == true)
-                        {
-                            TimeSpan delay = reader.ReadTimeSpan();
-                            DoTimer2(delay);
-                        }
-                        goto case 3;
+                        TimeSpan delay = reader.ReadTimeSpan();
+                        DoTimer3(delay);
                     }
+                    if (m_durActivated == true)
+                    {
+                        TimeSpan delay = reader.ReadTimeSpan();
+                        DoTimer2(delay);
+                    }
+                    goto case 3;
+                }
                 case 3:
-                    {
-                        m_ShowContainerStatic = reader.ReadItem() as Static;
-                        goto case 2;
-                    }
+                {
+                    m_ShowContainerStatic = reader.ReadItem() as Static;
+                    goto case 2;
+                }
                 case 2:
-                    {
-                        m_Duration = reader.ReadTimeSpan();
-                        goto case 1;
-                    }
+                {
+                    m_Duration = reader.ReadTimeSpan();
+                    goto case 1;
+                }
                 case 1:
-                    {
-                        m_UniqueId = reader.ReadString();
-                        m_HomeRangeIsRelative = reader.ReadBool();
-                        goto case 0;
-                    }
+                {
+                    m_UniqueId = reader.ReadString();
+                    m_HomeRangeIsRelative = reader.ReadBool();
+                    goto case 0;
+                }
                 case 0:
+                {
+                    m_Name = reader.ReadString();
+                    // backward compatibility with old name storage
+                    if (m_Name != null && m_Name != String.Empty)
+                        Name = m_Name;
+                    m_X = reader.ReadInt();
+                    m_Y = reader.ReadInt();
+                    m_Width = reader.ReadInt();
+                    m_Height = reader.ReadInt();
+                    if (m_Width == m_Height)
+                        m_SpawnRange = m_Width / 2;
+                    else
+                        m_SpawnRange = -1;
+                    if (!haveproximityrange)
                     {
-                        m_Name = reader.ReadString();
-                        // backward compatibility with old name storage
-                        if (m_Name != null && m_Name != String.Empty)
-                            Name = m_Name;
-                        m_X = reader.ReadInt();
-                        m_Y = reader.ReadInt();
-                        m_Width = reader.ReadInt();
-                        m_Height = reader.ReadInt();
-                        if (m_Width == m_Height)
-                            m_SpawnRange = m_Width / 2;
-                        else
-                            m_SpawnRange = -1;
-                        if (!haveproximityrange)
-                        {
-                            m_ProximityRange = -1;
-                        }
-                        m_WayPoint = reader.ReadItem() as WayPoint;
-                        m_Group = reader.ReadBool();
-                        m_MinDelay = reader.ReadTimeSpan();
-                        m_MaxDelay = reader.ReadTimeSpan();
-                        m_Count = reader.ReadInt();
-                        m_Team = reader.ReadInt();
-                        m_HomeRange = reader.ReadInt();
-                        m_Running = reader.ReadBool();
+                        m_ProximityRange = -1;
+                    }
+                    m_WayPoint = reader.ReadItem() as WayPoint;
+                    m_Group = reader.ReadBool();
+                    m_MinDelay = reader.ReadTimeSpan();
+                    m_MaxDelay = reader.ReadTimeSpan();
+                    m_Count = reader.ReadInt();
+                    m_Team = reader.ReadInt();
+                    m_HomeRange = reader.ReadInt();
+                    m_Running = reader.ReadBool();
 
-                        if (m_Running == true)
-                        {
-                            TimeSpan delay = reader.ReadTimeSpan();
-                            DoTimer(delay);
-                        }
+                    if (m_Running == true)
+                    {
+                        TimeSpan delay = reader.ReadTimeSpan();
+                        DoTimer(delay);
+                    }
 
-                        // Read in the size of the spawn object list
-                        int SpawnListSize = reader.ReadInt();
-                        m_SpawnObjects = new ArrayList(SpawnListSize);
-                        for (int i = 0; i < SpawnListSize; ++i)
-                        {
-                            string TypeName = reader.ReadString();
-                            int TypeMaxCount = reader.ReadInt();
+                    // Read in the size of the spawn object list
+                    int SpawnListSize = reader.ReadInt();
+                    m_SpawnObjects = new ArrayList(SpawnListSize);
+                    for (int i = 0; i < SpawnListSize; ++i)
+                    {
+                        string TypeName = reader.ReadString();
+                        int TypeMaxCount = reader.ReadInt();
 
-                            SpawnObject TheSpawnObject = new SpawnObject(TypeName, TypeMaxCount);
+                        SpawnObject TheSpawnObject = new SpawnObject(TypeName, TypeMaxCount);
 
-                            m_SpawnObjects.Add(TheSpawnObject);
+                        m_SpawnObjects.Add(TheSpawnObject);
 
-                            string typeName = BaseXmlSpawner.ParseObjectType(TypeName);
-                            // does it have a substitution that might change its validity?
-                            // if so then let it go
+                        string typeName = BaseXmlSpawner.ParseObjectType(TypeName);
+                        // does it have a substitution that might change its validity?
+                        // if so then let it go
 
-                            if (
-                                typeName == null
-                                || (
-                                    (SpawnerType.GetType(typeName) == null)
-                                    && (
-                                        !BaseXmlSpawner.IsTypeOrItemKeyword(typeName)
-                                        && typeName.IndexOf('{') == -1
-                                        && !typeName.StartsWith("*")
-                                        && !typeName.StartsWith("#")
-                                    )
+                        if (
+                            typeName == null
+                            || (
+                                (SpawnerType.GetType(typeName) == null)
+                                && (
+                                    !BaseXmlSpawner.IsTypeOrItemKeyword(typeName)
+                                    && typeName.IndexOf('{') == -1
+                                    && !typeName.StartsWith("*")
+                                    && !typeName.StartsWith("#")
                                 )
                             )
-                            {
-                                if (m_WarnTimer == null)
-                                    m_WarnTimer = new WarnTimer2();
-
-                                m_WarnTimer.Add(Location, Map, TypeName);
-
-                                this.status_str = "invalid type: " + typeName;
-                            }
-
-                            // Read in the number of spawns already
-                            int SpawnedCount = reader.ReadInt();
-
-                            TheSpawnObject.SpawnedObjects = new ArrayList(SpawnedCount);
-
-                            for (int x = 0; x < SpawnedCount; ++x)
-                            {
-                                int serial = reader.ReadInt();
-                                if (serial < -1)
-                                {
-                                    // minusone is reserved for unknown types by default
-                                    //  minustwo on is used for referencing keyword tags
-                                    int tagserial = -1 * (serial + 2);
-                                    // get the tag with that serial and add it
-                                    BaseXmlSpawner.KeywordTag t = BaseXmlSpawner.GetFromTagList(
-                                        this,
-                                        tagserial
-                                    );
-                                    if (t != null)
-                                    {
-                                        TheSpawnObject.SpawnedObjects.Add(t);
-                                    }
-                                }
-                                else
-                                {
-                                    IEntity e = World.FindEntity(serial);
-
-                                    if (e != null)
-                                        TheSpawnObject.SpawnedObjects.Add(e);
-                                }
-                            }
-                        }
-                        // now have to reintegrate the later version spawnobject information into the earlier version desered objects
-                        if (hasnewobjectinfo && tmpSpawnListSize == SpawnListSize)
+                        )
                         {
-                            for (int i = 0; i < SpawnListSize; ++i)
-                            {
-                                SpawnObject so = (SpawnObject)m_SpawnObjects[i];
+                            if (m_WarnTimer == null)
+                                m_WarnTimer = new WarnTimer2();
 
-                                so.SubGroup = (int)tmpSubGroup[i];
-                                so.SequentialResetTime = (double)tmpSequentialResetTime[i];
-                                so.SequentialResetTo = (int)tmpSequentialResetTo[i];
-                                so.KillsNeeded = (int)tmpKillsNeeded[i];
-                                if (version > 19)
-                                    so.RequireSurface = (bool)tmpRequireSurface[i];
-                                bool restrictkills = false;
-                                bool clearadvance = true;
-                                double mind = -1;
-                                double maxd = -1;
-                                DateTime nextspawn = DateTime.MinValue;
-                                if (version > 23)
-                                {
-                                    restrictkills = (bool)tmpRestrictKillsToSubgroup[i];
-                                    clearadvance = (bool)tmpClearOnAdvance[i];
-                                    mind = (double)tmpMinDelay[i];
-                                    maxd = (double)tmpMaxDelay[i];
-                                    nextspawn = (DateTime)tmpNextSpawn[i];
-                                }
-                                so.RestrictKillsToSubgroup = restrictkills;
-                                so.ClearOnAdvance = clearadvance;
-                                so.MinDelay = mind;
-                                so.MaxDelay = maxd;
-                                so.NextSpawn = nextspawn;
+                            m_WarnTimer.Add(Location, Map, TypeName);
 
-                                bool disablespawn = false;
-                                if (version > 26)
-                                {
-                                    disablespawn = (bool)tmpDisableSpawn[i];
-                                }
-                                so.Disabled = disablespawn;
-
-                                int packrange = -1;
-                                if (version > 27)
-                                {
-                                    packrange = (int)tmpPackRange[i];
-                                }
-                                so.PackRange = packrange;
-
-                                int spawnsper = 1;
-                                if (version > 28)
-                                {
-                                    spawnsper = (int)tmpSpawnsPer[i];
-                                }
-                                so.SpawnsPerTick = spawnsper;
-                            }
+                            this.status_str = "invalid type: " + typeName;
                         }
 
-                        break;
+                        // Read in the number of spawns already
+                        int SpawnedCount = reader.ReadInt();
+
+                        TheSpawnObject.SpawnedObjects = new ArrayList(SpawnedCount);
+
+                        for (int x = 0; x < SpawnedCount; ++x)
+                        {
+                            int serial = reader.ReadInt();
+                            if (serial < -1)
+                            {
+                                // minusone is reserved for unknown types by default
+                                //  minustwo on is used for referencing keyword tags
+                                int tagserial = -1 * (serial + 2);
+                                // get the tag with that serial and add it
+                                BaseXmlSpawner.KeywordTag t = BaseXmlSpawner.GetFromTagList(
+                                    this,
+                                    tagserial
+                                );
+                                if (t != null)
+                                {
+                                    TheSpawnObject.SpawnedObjects.Add(t);
+                                }
+                            }
+                            else
+                            {
+                                IEntity e = World.FindEntity(serial);
+
+                                if (e != null)
+                                    TheSpawnObject.SpawnedObjects.Add(e);
+                            }
+                        }
                     }
+                    // now have to reintegrate the later version spawnobject information into the earlier version desered objects
+                    if (hasnewobjectinfo && tmpSpawnListSize == SpawnListSize)
+                    {
+                        for (int i = 0; i < SpawnListSize; ++i)
+                        {
+                            SpawnObject so = (SpawnObject)m_SpawnObjects[i];
+
+                            so.SubGroup = (int)tmpSubGroup[i];
+                            so.SequentialResetTime = (double)tmpSequentialResetTime[i];
+                            so.SequentialResetTo = (int)tmpSequentialResetTo[i];
+                            so.KillsNeeded = (int)tmpKillsNeeded[i];
+                            if (version > 19)
+                                so.RequireSurface = (bool)tmpRequireSurface[i];
+                            bool restrictkills = false;
+                            bool clearadvance = true;
+                            double mind = -1;
+                            double maxd = -1;
+                            DateTime nextspawn = DateTime.MinValue;
+                            if (version > 23)
+                            {
+                                restrictkills = (bool)tmpRestrictKillsToSubgroup[i];
+                                clearadvance = (bool)tmpClearOnAdvance[i];
+                                mind = (double)tmpMinDelay[i];
+                                maxd = (double)tmpMaxDelay[i];
+                                nextspawn = (DateTime)tmpNextSpawn[i];
+                            }
+                            so.RestrictKillsToSubgroup = restrictkills;
+                            so.ClearOnAdvance = clearadvance;
+                            so.MinDelay = mind;
+                            so.MaxDelay = maxd;
+                            so.NextSpawn = nextspawn;
+
+                            bool disablespawn = false;
+                            if (version > 26)
+                            {
+                                disablespawn = (bool)tmpDisableSpawn[i];
+                            }
+                            so.Disabled = disablespawn;
+
+                            int packrange = -1;
+                            if (version > 27)
+                            {
+                                packrange = (int)tmpPackRange[i];
+                            }
+                            so.PackRange = packrange;
+
+                            int spawnsper = 1;
+                            if (version > 28)
+                            {
+                                spawnsper = (int)tmpSpawnsPer[i];
+                            }
+                            so.SpawnsPerTick = spawnsper;
+                        }
+                    }
+
+                    break;
+                }
             }
         }
 
