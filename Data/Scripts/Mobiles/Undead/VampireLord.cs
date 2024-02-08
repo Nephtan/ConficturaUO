@@ -9,7 +9,7 @@ namespace Server.Mobiles
     [CorpseName("a vampire corpse")]
     public class VampireLord : BaseCreature
     {
-        private bool m_TrueForm;
+        public bool m_TrueForm;
 
         public override WeaponAbility GetWeaponAbility()
         {
