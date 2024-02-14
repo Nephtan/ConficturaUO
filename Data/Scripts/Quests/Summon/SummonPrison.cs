@@ -1321,7 +1321,7 @@ namespace Server.Items
             else if (pick == 11)
             {
                 item.Prisoner = "Merlin the Wizard";
-                item.PrisonerBase = "EvilMage";
+                item.PrisonerBase = "EvilMageLord";
                 item.PrisonerBody = 0x190;
                 item.PrisonerHue = Utility.RandomSkinColor();
                 item.RewardID = 0x1718;
@@ -1333,7 +1333,7 @@ namespace Server.Items
             else if (pick == 12)
             {
                 item.Prisoner = "Saruman the White";
-                item.PrisonerBase = "EvilMage";
+                item.PrisonerBase = "EvilMageLord";
                 item.PrisonerBody = 0x190;
                 item.PrisonerHue = Utility.RandomSkinColor();
                 item.RewardID = Utility.RandomList(0xE89, 0xE8A);

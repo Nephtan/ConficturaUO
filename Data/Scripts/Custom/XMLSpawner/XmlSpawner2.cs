@@ -2123,8 +2123,19 @@ namespace Server.Mobiles
                 {
                     if (so.SpawnedObjects[i] == spawn)
                     {
-                        so.SpawnedObjects.Remove(spawn);
-                        m_killcount++;
+                        so.SpawnedObjects.RemoveAt(i);
+
+                        // Only increment the kill count if the spawn is not restricted to a subgroup, or if it is, it matches the active sequential spawn.
+                        if (
+                            !so.RestrictKillsToSubgroup
+                            || (so.RestrictKillsToSubgroup && so.SubGroup == SequentialSpawn)
+                        )
+                        {
+                            m_killcount++;
+                        }
+
+                        // If you need to handle any subgroup-specific logic, such as advancing the sequential spawn or updating other properties, do it here.
+
                         return;
                     }
                 }

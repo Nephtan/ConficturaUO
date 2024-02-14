@@ -11561,30 +11561,31 @@ namespace Server.Mobiles
                 }
             }
 
+            //if (
+            //    (
+            //        this is TownGuards
+            //        || (
+            //            this is BaseVendor
+            //            && this.WhisperHue != 999
+            //            && !((this.GetType()).IsAssignableFrom(typeof(PlayerVendor)))
+            //            && !(this is PlayerBarkeeper)
+            //        )
+            //    ) // GUARDS/MERCHANTS SHOULD MOVE BACK TO THEIR POST
+            //    && (
+            //        Math.Abs(this.X - this.Home.X) > 8
+            //        || Math.Abs(this.Y - this.Home.Y) > 8
+            //        || Math.Abs(this.Z - this.Home.Z) > 8
+            //    )
+            //    && Combatant == null
+            //    && this.Title != "the wandering healer"
+            //    && this.Title != "the marketkeeper"
+            //    && this.Title != "the innkeeper"
+            //)
+            //{
+            //    this.Location = this.Home;
+            //}
+            //else
             if (
-                (
-                    this is TownGuards
-                    || (
-                        this is BaseVendor
-                        && this.WhisperHue != 999
-                        && !((this.GetType()).IsAssignableFrom(typeof(PlayerVendor)))
-                        && !(this is PlayerBarkeeper)
-                    )
-                ) // GUARDS/MERCHANTS SHOULD MOVE BACK TO THEIR POST
-                && (
-                    Math.Abs(this.X - this.Home.X) > 8
-                    || Math.Abs(this.Y - this.Home.Y) > 8
-                    || Math.Abs(this.Z - this.Home.Z) > 8
-                )
-                && Combatant == null
-                && this.Title != "the wandering healer" 
-                && this.Title != "the marketkeeper"
-                && this.Title != "the innkeeper"
-            )
-            {
-                this.Location = this.Home;
-            }
-            else if (
                 WhisperHue == 999
                 && CanSwim
                 && !(CanOnlyMoveOnSea())
