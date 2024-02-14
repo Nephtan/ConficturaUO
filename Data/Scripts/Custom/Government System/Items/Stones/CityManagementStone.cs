@@ -1556,8 +1556,16 @@ namespace Server.Items
                         CivicSign sign = (CivicSign)item;
                         if (sign.Type == CivicSignType.Market)
                         {
-                            CityLandLord lord = (CityLandLord)sign.LandlordRemove;
-                            lord.CreateRandomVendors(lord.Location, lord.Map);
+                            CityLandLord lord = (CityLandLord)sign.LandlordRemove; // Line 1560
+                            // Add a null check for lord before attempting to access its members
+                            if (lord != null)
+                            {
+                                lord.CreateRandomVendors(lord.Location, lord.Map);
+                            }
+                            else
+                            {
+                                // Handle the case where lord is null, e.g., logging or taking corrective action
+                            }
                         }
                     }
                 }
