@@ -150,16 +150,16 @@ namespace Server.Misc
             if (XmlPoints.AreChallengers(attacker, target))
                 return true;
 
-            // Handle NONPK logic for attacking pets
+            // Handle NONPK logic for attacking pets, ensuring PvE players can still attack non-player Mobiles
             if (bcTarget != null)
             {
                 PlayerMobile petOwner = bcTarget.ControlMaster as PlayerMobile;
                 if (petOwner != null && pmAttacker != null)
                 {
-                    // Prevent NONPK.NONPK players from attacking pets of any player
-                    if (pmAttacker.NONPK == NONPK.NONPK)
+                	// Prevent NONPK.NONPK players from attacking pets of any player
+                    if (pmAttacker.NONPK == NONPK.NONPK && petOwner.NONPK != NONPK.Null)
                     {
-                        (attackerController ?? attacker).SendMessage(33, "You have chosen the path of [PvE] and cannot attack players or their pets."); // Line 157
+                        (attackerController ?? attacker).SendMessage(33, "You have chosen the path of [PvE] and cannot attack players or their pets.");
                         return false;
                     }
 
@@ -179,22 +179,25 @@ namespace Server.Misc
                 }
             }
 
-            // Consolidate NONPK checks by using the previously cast PlayerMobile instances.
-            bool attackerIsNonPk = (pmAttacker != null && pmAttacker.NONPK == NONPK.NONPK) || (attackerController != null && (attackerController as PlayerMobile) != null && (attackerController as PlayerMobile).NONPK == NONPK.NONPK);
-            bool targetIsNonPk = pmTarget != null && pmTarget.NONPK == NONPK.NONPK;
-
-            // Prevent NONPK.NONPK players from attacking any players or their pets
-            if (attackerIsNonPk)
+            // Only apply NONPK logic if both attacker and target are players or pets of players
+            if (pmAttacker != null && pmTarget != null || (bcTarget != null && bcTarget.ControlMaster is PlayerMobile))
             {
-                (attackerController ?? attacker).SendMessage(33, "You have chosen the path of [PvE] and cannot attack players or their pets.");
-                return false;
-            }
+                bool attackerIsNonPk = pmAttacker.NONPK == NONPK.NONPK;
+                bool targetIsNonPk = pmTarget != null && pmTarget.NONPK == NONPK.NONPK;
 
-            // Prevent attacks on NONPK.NONPK players or their pets by any player
-            if (targetIsNonPk)
-            {
-                attacker.SendMessage(33, "You cannot attack [PvE] players or their pets.");
-                return false;
+				// Prevent NONPK.NONPK players from attacking any players or their pets
+                if (attackerIsNonPk)
+                {
+                    (attackerController ?? attacker).SendMessage(33, "You have chosen the path of [PvE] and cannot attack players or their pets.");
+                    return false;
+                }
+
+           		// Prevent attacks on NONPK.NONPK players or their pets by any player
+                if (targetIsNonPk)
+                {
+                    attacker.SendMessage(33, "You cannot attack [PvE] players or their pets.");
+                    return false;
+                }
             }
 
             // Checks for controlled creatures trying to harm their master or others controlled by the same master.
