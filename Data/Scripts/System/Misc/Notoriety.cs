@@ -137,6 +137,11 @@ namespace Server.Misc
             PlayerMobile pmAttacker = attacker as PlayerMobile;
             PlayerMobile pmTarget = target as PlayerMobile;
 
+            // Determine the attacker's controller for pets or summoned creatures early.
+            Mobile attackerController = bcAttacker != null && (bcAttacker.Controlled || bcAttacker.Summoned)
+                ? bcAttacker.ControlMaster ?? bcAttacker.SummonMaster
+                : null;
+
             // Check for bard provoked creatures first.
             if (bcAttacker != null && bcAttacker.BardProvoked && bcAttacker.BardTarget == target)
                 return true;
@@ -145,29 +150,54 @@ namespace Server.Misc
             if (XmlPoints.AreChallengers(attacker, target))
                 return true;
 
-            // Simplify controlled creature and master checks.
-            Mobile attackerController = bcAttacker != null && (bcAttacker.Controlled || bcAttacker.Summoned)
-                ? bcAttacker.ControlMaster ?? bcAttacker.SummonMaster
-                : null;
+            // Handle NONPK logic for attacking pets
+            if (bcTarget != null)
+            {
+                PlayerMobile petOwner = bcTarget.ControlMaster as PlayerMobile;
+                if (petOwner != null && pmAttacker != null)
+                {
+                    // Prevent NONPK.NONPK players from attacking pets of any player
+                    if (pmAttacker.NONPK == NONPK.NONPK)
+                    {
+                        (attackerController ?? attacker).SendMessage(33, "You have chosen the path of [PvE] and cannot attack players or their pets."); // Line 157
+                        return false;
+                    }
+
+                    // Prevent NONPK.PK players from attacking pets of NONPK.NONPK players
+                    if (pmAttacker.NONPK == NONPK.PK && petOwner.NONPK == NONPK.NONPK)
+                    {
+                        attacker.SendMessage(33, "You cannot attack [PvE] players or their pets.");
+                        return false;
+                    }
+
+                    // Prevent NONPK.Null players from attacking pets of NONPK.NONPK players
+                    if (pmAttacker.NONPK == NONPK.Null && petOwner.NONPK == NONPK.NONPK)
+                    {
+                        attacker.SendMessage(33, "You cannot attack [PvE] players or their pets.");
+                        return false;
+                    }
+                }
+            }
 
             // Consolidate NONPK checks by using the previously cast PlayerMobile instances.
             bool attackerIsNonPk = (pmAttacker != null && pmAttacker.NONPK == NONPK.NONPK) || (attackerController != null && (attackerController as PlayerMobile) != null && (attackerController as PlayerMobile).NONPK == NONPK.NONPK);
             bool targetIsNonPk = pmTarget != null && pmTarget.NONPK == NONPK.NONPK;
 
-            // Message sending logic is consolidated to reduce redundancy.
-            if (attackerIsNonPk && pmTarget != null && pmTarget.NONPK != NONPK.NONPK)
+            // Prevent NONPK.NONPK players from attacking any players or their pets
+            if (attackerIsNonPk)
             {
-                (attackerController ?? attacker).SendMessage(33, "You have chosen the path of [PvE] and cannot attack players.");
+                (attackerController ?? attacker).SendMessage(33, "You have chosen the path of [PvE] and cannot attack players or their pets.");
                 return false;
             }
 
-            if (targetIsNonPk && pmAttacker != null)
+            // Prevent attacks on NONPK.NONPK players or their pets by any player
+            if (targetIsNonPk)
             {
-                attacker.SendMessage(33, "You cannot attack [PvE] players.");
+                attacker.SendMessage(33, "You cannot attack [PvE] players or their pets.");
                 return false;
             }
 
-            // Simplify checks for controlled creatures trying to harm their master or others controlled by the same master.
+            // Checks for controlled creatures trying to harm their master or others controlled by the same master.
             if (bcAttacker != null && (bcAttacker.ControlMaster == target || bcAttacker.SummonMaster == target))
                 return false;
 
