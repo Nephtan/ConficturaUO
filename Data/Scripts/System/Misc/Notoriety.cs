@@ -156,7 +156,7 @@ namespace Server.Misc
                 PlayerMobile petOwner = bcTarget.ControlMaster as PlayerMobile;
                 if (petOwner != null && pmAttacker != null)
                 {
-                	// Prevent NONPK.NONPK players from attacking pets of any player
+                    // Prevent NONPK.NONPK players from attacking pets of any player
                     if (pmAttacker.NONPK == NONPK.NONPK && petOwner.NONPK != NONPK.Null)
                     {
                         (attackerController ?? attacker).SendMessage(33, "You have chosen the path of [PvE] and cannot attack players or their pets.");
@@ -182,17 +182,20 @@ namespace Server.Misc
             // Only apply NONPK logic if both attacker and target are players or pets of players
             if (pmAttacker != null && pmTarget != null || (bcTarget != null && bcTarget.ControlMaster is PlayerMobile))
             {
-                bool attackerIsNonPk = pmAttacker.NONPK == NONPK.NONPK;
+                // Check if pmAttacker is not null before accessing NONPK
+                bool attackerIsNonPk = pmAttacker != null && pmAttacker.NONPK == NONPK.NONPK;
+
+                // Ensure pmTarget is not null before accessing NONPK
                 bool targetIsNonPk = pmTarget != null && pmTarget.NONPK == NONPK.NONPK;
 
-				// Prevent NONPK.NONPK players from attacking any players or their pets
+                // Prevent NONPK.NONPK players from attacking any players or their pets
                 if (attackerIsNonPk)
                 {
                     (attackerController ?? attacker).SendMessage(33, "You have chosen the path of [PvE] and cannot attack players or their pets.");
                     return false;
                 }
 
-           		// Prevent attacks on NONPK.NONPK players or their pets by any player
+                // Prevent attacks on NONPK.NONPK players or their pets by any player
                 if (targetIsNonPk)
                 {
                     attacker.SendMessage(33, "You cannot attack [PvE] players or their pets.");
