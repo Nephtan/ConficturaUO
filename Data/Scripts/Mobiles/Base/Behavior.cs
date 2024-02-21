@@ -13263,6 +13263,7 @@ namespace Server.Mobiles
     {
         private DateTime m_NextCastTime;
         private DateTime m_NextHealTime;
+        private DateTime m_NextPoisonTime;
         private DateTime m_NextAnimateTime = DateTime.Now;
         private double m_AnimateDelay = 5.0;
         private double m_AnimateFinish = 2.0;
@@ -13731,8 +13732,24 @@ namespace Server.Mobiles
                     {
                         //m_Mobile.DebugSay( "Attempting to poison" );
 
-                        if (!c.Poisoned)
-                            spell = new PoisonSpell(m_Mobile, null);
+                        if (!c.Poisoned && DateTime.Now > m_NextPoisonTime)
+                        {
+                            // Calculate time since last poison spell was cast
+                            TimeSpan timeSinceLastPoison = DateTime.Now - m_NextPoisonTime;
+                            // Adjust probability based on elapsed time, e.g., less time passed = lower chance
+                            double probabilityToCastPoison = Math.Min(
+                                1.0,
+                                0.2 + 0.8 * (timeSinceLastPoison.TotalSeconds / 30)
+                            );
+                            // Example: If 15 seconds have passed since cooldown started, there's a 50% chance to cast
+
+                            if (Utility.RandomDouble() < probabilityToCastPoison)
+                            {
+                                spell = new PoisonSpell(m_Mobile, null);
+                                // Reset the cooldown timer, adding 30 seconds to now
+                                m_NextPoisonTime = DateTime.Now + TimeSpan.FromSeconds(30);
+                            }
+                        }
 
                         break;
                     }
@@ -13801,8 +13818,24 @@ namespace Server.Mobiles
                 default:
                 case 0: // Poison them
                 {
-                    if (!c.Poisoned)
-                        spell = new PoisonSpell(m_Mobile, null);
+                    if (!c.Poisoned && DateTime.Now > m_NextPoisonTime)
+                    {
+                        // Calculate time since last poison spell was cast
+                        TimeSpan timeSinceLastPoison = DateTime.Now - m_NextPoisonTime;
+                        // Adjust probability based on elapsed time, e.g., less time passed = lower chance
+                        double probabilityToCastPoison = Math.Min(
+                            1.0,
+                            0.2 + 0.8 * (timeSinceLastPoison.TotalSeconds / 30)
+                        );
+                        // Example: If 15 seconds have passed since cooldown started, there's a 50% chance to cast
+
+                        if (Utility.RandomDouble() < probabilityToCastPoison)
+                        {
+                            spell = new PoisonSpell(m_Mobile, null);
+                            // Reset the cooldown timer, adding 30 seconds to now
+                            m_NextPoisonTime = DateTime.Now + TimeSpan.FromSeconds(30);
+                        }
+                    }
 
                     break;
                 }
