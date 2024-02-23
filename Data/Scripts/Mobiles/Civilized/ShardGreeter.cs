@@ -159,12 +159,9 @@ namespace Server.Gumps
 
     public class WelcomeGump : Gump
     {
-        private string lang = "EN"; // default language
-
-        public WelcomeGump(Mobile from, string language = "EN")
+        public WelcomeGump(Mobile from)
             : base(400, 50)
         {
-            this.lang = language;
             this.Closable = true;
             this.Disposable = true;
             this.Dragable = true;
@@ -181,77 +178,23 @@ namespace Server.Gumps
             }
             AddImage(13, 12, header, 2126);
 
-            string text = GetTextByLanguage(this.lang);
-
-            // Main body text
-            AddHtml(13, 58, 482, 312, text, (bool)false, (bool)false);
-
-            // Close button
-            AddButton(468, 10, 4017, 4019, 0, GumpButtonType.Reply, 0);
-
-            // Language switch button
-            AddButton(420, 10, 4011, 4013, 1, GumpButtonType.Reply, 0);
-
-            // Switch Language label
             AddHtml(
-                360,
-                10,
-                100,
-                20,
-                @"<BODY><BASEFONT Color=#94C541>Switch</BASEFONT></BODY>",
+                13,
+                58,
+                482,
+                312,
+                @"<BODY><BASEFONT Color=#94C541>For you, the day was ordinary compared to any other. However, when the evening sun finally disappeared below the landscape, you retired to bed where sleep felt restless, and the dreams were more vivid. You cannot recall the details of the dream, but you remember being drawn from this world through a swirling portal. When you woke up, you found yourself in this forest. Your night clothes have disappeared, and you are now dressed in medieval garb, holding a light in your hand.<BR><BR>Through the darkness of the night, you see a campfire just ahead. A colorful tent is next to it with the welcoming glow of lanterns about. The sounds of the nearby stream provides a tranquility, and you can see a grizzly bear soundly sleeping next to the warmth of the fire. If you were to shrug off the worries of your current life, you feel like this would be the place to start anew. You decide to see who is camping here and to perhaps find out where you are.</BASEFONT></BODY>",
                 (bool)false,
                 (bool)false
             );
-            AddHtml(
-                360,
-                20,
-                100,
-                20,
-                @"<BODY><BASEFONT Color=#94C541>Language:</BASEFONT></BODY>",
-                (bool)false,
-                (bool)false
-            );
-        }
 
-        public string GetTextByLanguage(string lang)
-        {
-            if (lang == "IT") // Italian
-            {
-                return @"<BODY><BASEFONT Color=#94C541>Per te, il giorno era come qualsiasi altro, ordinario. Tuttavia, quando il sole serale � finalmente scomparso dietro l'orizzonte, ti sei ritirato a letto dove il sonno sembrava inquieto e i sogni erano pi� vividi. Non riesci a ricordare i dettagli del sogno, ma ricordi di essere stato trascinato da questo mondo attraverso un portale vorticoso. Quando ti sei svegliato, ti sei trovato in questa foresta. I tuoi vestiti notturni sono scomparsi e ora sei vestito con abiti medievali, con una luce in mano.<BR><BR>Nell'oscurit� della notte, vedi un fuoco da campo proprio davanti a te. Una tenda colorata � accanto ad esso, con il calore accogliente di lanterne circostanti. Il suono del ruscello nelle vicinanze offre una tranquillit�, e puoi vedere un orso grizzly che dorme sonoramente accanto al calore del fuoco. Se fossi disposto a mettere da parte le preoccupazioni della tua vita attuale, senti che questo sarebbe il posto per ricominciare da capo. Decidi di vedere chi � accampato qui e forse scoprire dove ti trovi.</BASEFONT></BODY>";
-            }
-            else if (lang == "ES") // Spanish
-            {
-                return @"<BODY><BASEFONT Color=#94C541>Para ti, el d�a fue ordinario en comparaci�n con cualquier otro. Sin embargo, cuando el sol de la tarde finalmente desapareci� bajo el paisaje, te retiraste a la cama donde el sue�o se sent�a inquieto y los sue�os eran m�s v�vidos. No puedes recordar los detalles del sue�o, pero recuerdas haber sido arrastrado de este mundo a trav�s de un portal giratorio. Cuando te despertaste, te encontraste en este bosque. Tu ropa de noche ha desaparecido, y ahora est�s vestido con atuendos medievales, sosteniendo una luz en tu mano.<BR><BR>A trav�s de la oscuridad de la noche, ves una fogata justo adelante. Una tienda colorida est� junto a ella con el resplandor acogedor de las linternas alrededor. Los sonidos del arroyo cercano proporcionan una tranquilidad, y puedes ver a un oso grizzly durmiendo pl�cidamente junto al calor del fuego. Si fueras a dejar de lado las preocupaciones de tu vida actual, sientes que este ser�a el lugar para empezar de nuevo. Decides ver qui�n est� acampando aqu� y tal vez descubrir d�nde te encuentras.</BASEFONT></BODY>";
-            }
-            else // English
-            {
-                return @"<BODY><BASEFONT Color=#94C541>For you, the day was ordinary compared to any other. However, when the evening sun finally disappeared below the landscape, you retired to bed where sleep felt restless, and the dreams were more vivid. You cannot recall the details of the dream, but you remember being drawn from this world through a swirling portal. When you woke up, you found yourself in this forest. Your night clothes have disappeared, and you are now dressed in medieval garb, holding a light in your hand.<BR><BR>Through the darkness of the night, you see a campfire just ahead. A colorful tent is next to it with the welcoming glow of lanterns about. The sounds of the nearby stream provides a tranquility, and you can see a grizzly bear soundly sleeping next to the warmth of the fire. If you were to shrug off the worries of your current life, you feel like this would be the place to start anew. You decide to see who is camping here and to perhaps find out where you are.</BASEFONT></BODY>";
-            }
+            AddButton(468, 10, 4017, 4017, 0, GumpButtonType.Reply, 0);
         }
 
         public override void OnResponse(NetState state, RelayInfo info)
         {
             Mobile from = state.Mobile;
             from.SendSound(0x4A);
-
-            if (info.ButtonID == 1) // Language switch button
-            {
-                string newLang;
-                if (this.lang == "EN") // Change to Italian
-                {
-                    newLang = "IT";
-                }
-                else if (this.lang == "IT") // Change to Spanish
-                {
-                    newLang = "ES";
-                }
-                else // Reset to English as default
-                {
-                    newLang = "EN";
-                }
-
-                from.SendGump(new WelcomeGump(from, newLang));
-            }
         }
     }
 
