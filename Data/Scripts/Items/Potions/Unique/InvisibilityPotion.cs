@@ -127,6 +127,18 @@ namespace Server.Items
 
                 m.Hidden = true;
 
+                BuffInfo.RemoveBuff(m, BuffIcon.PotionInvisible);
+                BuffInfo.AddBuff(
+                    m,
+                    new BuffInfo(
+                        BuffIcon.PotionInvisible,
+                        1063595,
+                        1063602,
+                        TimeSpan.FromMinutes(2),
+                        m
+                    )
+                );
+
                 m.BeginAction(typeof(InvisibilityPotion));
 
                 this.Amount--;

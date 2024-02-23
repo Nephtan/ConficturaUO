@@ -66,6 +66,9 @@ namespace Server.Spells.Necromancy
         {
             m.PlaySound(0x19C);
             m.FixedParticles(0x3709, 1, 30, 9904, 1108, 6, EffectLayer.RightFoot);
+
+            BuffInfo.RemoveBuff(m, BuffIcon.LichForm);
+            BuffInfo.AddBuff(m, new BuffInfo(BuffIcon.LichForm, 1063611));
         }
 
         public override void OnTick(Mobile m)

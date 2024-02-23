@@ -6,6 +6,11 @@ namespace Server.Items
 {
     public class DolphinEastLargeAddon : BaseAddon
     {
+        public override string AddonName
+        {
+            get { return "dolphin carpet"; }
+        }
+
         private static int[,] m_AddOnSimpleComponents = new int[,]
         {
             { 14556, -3, -1, 0 },

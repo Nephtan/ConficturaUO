@@ -127,6 +127,9 @@ namespace Server.Spells.Research
 
                         m.Paralyze(duration);
 
+                        BuffInfo.RemoveBuff(m, BuffIcon.MassSleep);
+                        BuffInfo.AddBuff(m, new BuffInfo(BuffIcon.MassSleep, 1063650, duration, m));
+
                         new SleepyTimer(m, duration, Caster).Start();
 
                         HarmfulSpell(m);

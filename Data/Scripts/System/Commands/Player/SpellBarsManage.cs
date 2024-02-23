@@ -81,7 +81,7 @@ namespace Server.Gumps
             );
 
             ToolBarUpdates.InitializeToolBar(from, "SetupBarsMage1");
-            string MySettings = ((PlayerMobile)from).SpellBarsMage1;
+            string MyServerSettings = ((PlayerMobile)from).SpellBarsMage1;
 
             int button1 = 3609;
             int button2 = 3609;
@@ -151,7 +151,7 @@ namespace Server.Gumps
             int button66 = 3609;
             int button67 = 3609;
 
-            string[] eachSpell = MySettings.Split('#');
+            string[] eachSpell = MyServerSettings.Split('#');
             int nLine = 1;
             foreach (string eachSpells in eachSpell)
             {
@@ -1262,7 +1262,7 @@ namespace Server.Gumps
             );
 
             ToolBarUpdates.InitializeToolBar(from, "SetupBarsMage2");
-            string MySettings = ((PlayerMobile)from).SpellBarsMage2;
+            string MyServerSettings = ((PlayerMobile)from).SpellBarsMage2;
 
             int button1 = 3609;
             int button2 = 3609;
@@ -1332,7 +1332,7 @@ namespace Server.Gumps
             int button66 = 3609;
             int button67 = 3609;
 
-            string[] eachSpell = MySettings.Split('#');
+            string[] eachSpell = MyServerSettings.Split('#');
             int nLine = 1;
             foreach (string eachSpells in eachSpell)
             {
@@ -2443,7 +2443,7 @@ namespace Server.Gumps
             );
 
             ToolBarUpdates.InitializeToolBar(from, "SetupBarsMage3");
-            string MySettings = ((PlayerMobile)from).SpellBarsMage3;
+            string MyServerSettings = ((PlayerMobile)from).SpellBarsMage3;
 
             int button1 = 3609;
             int button2 = 3609;
@@ -2513,7 +2513,7 @@ namespace Server.Gumps
             int button66 = 3609;
             int button67 = 3609;
 
-            string[] eachSpell = MySettings.Split('#');
+            string[] eachSpell = MyServerSettings.Split('#');
             int nLine = 1;
             foreach (string eachSpells in eachSpell)
             {
@@ -3624,7 +3624,7 @@ namespace Server.Gumps
             );
 
             ToolBarUpdates.InitializeToolBar(from, "SetupBarsMage4");
-            string MySettings = ((PlayerMobile)from).SpellBarsMage4;
+            string MyServerSettings = ((PlayerMobile)from).SpellBarsMage4;
 
             int button1 = 3609;
             int button2 = 3609;
@@ -3694,7 +3694,7 @@ namespace Server.Gumps
             int button66 = 3609;
             int button67 = 3609;
 
-            string[] eachSpell = MySettings.Split('#');
+            string[] eachSpell = MyServerSettings.Split('#');
             int nLine = 1;
             foreach (string eachSpells in eachSpell)
             {
@@ -4807,7 +4807,7 @@ namespace Server.Gumps
             );
 
             ToolBarUpdates.InitializeToolBar(from, "SetupBarsElly1");
-            string MySettings = ((PlayerMobile)from).SpellBarsElly1;
+            string MyServerSettings = ((PlayerMobile)from).SpellBarsElly1;
 
             int button1 = 3609;
             int button2 = 3609;
@@ -4845,7 +4845,7 @@ namespace Server.Gumps
             int button66 = 3609;
             int button67 = 3609;
 
-            string[] eachSpell = MySettings.Split('#');
+            string[] eachSpell = MyServerSettings.Split('#');
             int nLine = 1;
             foreach (string eachSpells in eachSpell)
             {
@@ -5528,7 +5528,7 @@ namespace Server.Gumps
             );
 
             ToolBarUpdates.InitializeToolBar(from, "SetupBarsElly2");
-            string MySettings = ((PlayerMobile)from).SpellBarsElly2;
+            string MyServerSettings = ((PlayerMobile)from).SpellBarsElly2;
 
             int button1 = 3609;
             int button2 = 3609;
@@ -5566,7 +5566,7 @@ namespace Server.Gumps
             int button66 = 3609;
             int button67 = 3609;
 
-            string[] eachSpell = MySettings.Split('#');
+            string[] eachSpell = MyServerSettings.Split('#');
             int nLine = 1;
             foreach (string eachSpells in eachSpell)
             {
@@ -6249,7 +6249,7 @@ namespace Server.Gumps
             );
 
             ToolBarUpdates.InitializeToolBar(from, "SetupBarsNecro1");
-            string MySettings = ((PlayerMobile)from).SpellBarsNecro1;
+            string MyServerSettings = ((PlayerMobile)from).SpellBarsNecro1;
 
             int button1 = 3609;
             int button2 = 3609;
@@ -6272,7 +6272,7 @@ namespace Server.Gumps
             int button19 = 3609;
             int button20 = 3609;
 
-            string[] eachSpell = MySettings.Split('#');
+            string[] eachSpell = MyServerSettings.Split('#');
             int nLine = 1;
             foreach (string eachSpells in eachSpell)
             {
@@ -6693,7 +6693,7 @@ namespace Server.Gumps
             );
 
             ToolBarUpdates.InitializeToolBar(from, "SetupBarsNecro2");
-            string MySettings = ((PlayerMobile)from).SpellBarsNecro2;
+            string MyServerSettings = ((PlayerMobile)from).SpellBarsNecro2;
 
             int button1 = 3609;
             int button2 = 3609;
@@ -6716,7 +6716,7 @@ namespace Server.Gumps
             int button19 = 3609;
             int button20 = 3609;
 
-            string[] eachSpell = MySettings.Split('#');
+            string[] eachSpell = MyServerSettings.Split('#');
             int nLine = 1;
             foreach (string eachSpells in eachSpell)
             {
@@ -7135,7 +7135,7 @@ namespace Server.Gumps
             );
 
             ToolBarUpdates.InitializeToolBar(from, "SetupBarsKnight1");
-            string MySettings = ((PlayerMobile)from).SpellBarsKnight1;
+            string MyServerSettings = ((PlayerMobile)from).SpellBarsKnight1;
 
             int button1 = 3609;
             int button2 = 3609;
@@ -7151,7 +7151,7 @@ namespace Server.Gumps
             int button12 = 3609;
             int button13 = 3609;
 
-            string[] eachSpell = MySettings.Split('#');
+            string[] eachSpell = MyServerSettings.Split('#');
             int nLine = 1;
             foreach (string eachSpells in eachSpell)
             {
@@ -7464,7 +7464,7 @@ namespace Server.Gumps
             );
 
             ToolBarUpdates.InitializeToolBar(from, "SetupBarsKnight2");
-            string MySettings = ((PlayerMobile)from).SpellBarsKnight2;
+            string MyServerSettings = ((PlayerMobile)from).SpellBarsKnight2;
 
             int button1 = 3609;
             int button2 = 3609;
@@ -7480,7 +7480,7 @@ namespace Server.Gumps
             int button12 = 3609;
             int button13 = 3609;
 
-            string[] eachSpell = MySettings.Split('#');
+            string[] eachSpell = MyServerSettings.Split('#');
             int nLine = 1;
             foreach (string eachSpells in eachSpell)
             {
@@ -7793,7 +7793,7 @@ namespace Server.Gumps
             );
 
             ToolBarUpdates.InitializeToolBar(from, "SetupBarsBard1");
-            string MySettings = ((PlayerMobile)from).SpellBarsBard1;
+            string MyServerSettings = ((PlayerMobile)from).SpellBarsBard1;
 
             int button1 = 3609;
             int button2 = 3609;
@@ -7815,7 +7815,7 @@ namespace Server.Gumps
             int button18 = 3609;
             int button19 = 3609;
 
-            string[] eachSpell = MySettings.Split('#');
+            string[] eachSpell = MyServerSettings.Split('#');
             int nLine = 1;
             foreach (string eachSpells in eachSpell)
             {
@@ -8221,7 +8221,7 @@ namespace Server.Gumps
             );
 
             ToolBarUpdates.InitializeToolBar(from, "SetupBarsBard2");
-            string MySettings = ((PlayerMobile)from).SpellBarsBard2;
+            string MyServerSettings = ((PlayerMobile)from).SpellBarsBard2;
 
             int button1 = 3609;
             int button2 = 3609;
@@ -8243,7 +8243,7 @@ namespace Server.Gumps
             int button18 = 3609;
             int button19 = 3609;
 
-            string[] eachSpell = MySettings.Split('#');
+            string[] eachSpell = MyServerSettings.Split('#');
             int nLine = 1;
             foreach (string eachSpells in eachSpell)
             {
@@ -8651,7 +8651,7 @@ namespace Server.Gumps
             );
 
             ToolBarUpdates.InitializeToolBar(from, "SetupBarsDeath1");
-            string MySettings = ((PlayerMobile)from).SpellBarsDeath1;
+            string MyServerSettings = ((PlayerMobile)from).SpellBarsDeath1;
 
             int button1 = 3609;
             int button2 = 3609;
@@ -8671,7 +8671,7 @@ namespace Server.Gumps
             int button16 = 3609;
             int button17 = 3609;
 
-            string[] eachSpell = MySettings.Split('#');
+            string[] eachSpell = MyServerSettings.Split('#');
             int nLine = 1;
             foreach (string eachSpells in eachSpell)
             {
@@ -9048,7 +9048,7 @@ namespace Server.Gumps
             );
 
             ToolBarUpdates.InitializeToolBar(from, "SetupBarsDeath2");
-            string MySettings = ((PlayerMobile)from).SpellBarsDeath2;
+            string MyServerSettings = ((PlayerMobile)from).SpellBarsDeath2;
 
             int button1 = 3609;
             int button2 = 3609;
@@ -9068,7 +9068,7 @@ namespace Server.Gumps
             int button16 = 3609;
             int button17 = 3609;
 
-            string[] eachSpell = MySettings.Split('#');
+            string[] eachSpell = MyServerSettings.Split('#');
             int nLine = 1;
             foreach (string eachSpells in eachSpell)
             {
@@ -9443,7 +9443,7 @@ namespace Server.Gumps
             );
 
             ToolBarUpdates.InitializeToolBar(from, "SetupBarsPriest1");
-            string MySettings = ((PlayerMobile)from).SpellBarsPriest1;
+            string MyServerSettings = ((PlayerMobile)from).SpellBarsPriest1;
 
             int button1 = 3609;
             int button2 = 3609;
@@ -9463,7 +9463,7 @@ namespace Server.Gumps
             int button16 = 3609;
             int button17 = 3609;
 
-            string[] eachSpell = MySettings.Split('#');
+            string[] eachSpell = MyServerSettings.Split('#');
             int nLine = 1;
             foreach (string eachSpells in eachSpell)
             {
@@ -9838,7 +9838,7 @@ namespace Server.Gumps
             );
 
             ToolBarUpdates.InitializeToolBar(from, "SetupBarsPriest2");
-            string MySettings = ((PlayerMobile)from).SpellBarsPriest2;
+            string MyServerSettings = ((PlayerMobile)from).SpellBarsPriest2;
 
             int button1 = 3609;
             int button2 = 3609;
@@ -9858,7 +9858,7 @@ namespace Server.Gumps
             int button16 = 3609;
             int button17 = 3609;
 
-            string[] eachSpell = MySettings.Split('#');
+            string[] eachSpell = MyServerSettings.Split('#');
             int nLine = 1;
             foreach (string eachSpells in eachSpell)
             {
@@ -10233,7 +10233,7 @@ namespace Server.Gumps
             );
 
             ToolBarUpdates.InitializeToolBar(from, "SetupBarsMonk1");
-            string MySettings = ((PlayerMobile)from).SpellBarsMonk1;
+            string MyServerSettings = ((PlayerMobile)from).SpellBarsMonk1;
 
             int button1 = 3609;
             int button2 = 3609;
@@ -10249,7 +10249,7 @@ namespace Server.Gumps
             int button12 = 3609;
             int button13 = 3609;
 
-            string[] eachSpell = MySettings.Split('#');
+            string[] eachSpell = MyServerSettings.Split('#');
             int nLine = 1;
             foreach (string eachSpells in eachSpell)
             {
@@ -10562,7 +10562,7 @@ namespace Server.Gumps
             );
 
             ToolBarUpdates.InitializeToolBar(from, "SetupBarsMonk2");
-            string MySettings = ((PlayerMobile)from).SpellBarsMonk2;
+            string MyServerSettings = ((PlayerMobile)from).SpellBarsMonk2;
 
             int button1 = 3609;
             int button2 = 3609;
@@ -10578,7 +10578,7 @@ namespace Server.Gumps
             int button12 = 3609;
             int button13 = 3609;
 
-            string[] eachSpell = MySettings.Split('#');
+            string[] eachSpell = MyServerSettings.Split('#');
             int nLine = 1;
             foreach (string eachSpells in eachSpell)
             {

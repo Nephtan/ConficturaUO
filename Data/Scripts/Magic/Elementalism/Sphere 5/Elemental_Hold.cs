@@ -65,6 +65,12 @@ namespace Server.Spells.Elementalism
 
                 m.Paralyze(TimeSpan.FromSeconds(duration));
 
+                BuffInfo.RemoveBuff(m, BuffIcon.ElementalHold);
+                BuffInfo.AddBuff(
+                    m,
+                    new BuffInfo(BuffIcon.ElementalHold, 1063628, TimeSpan.FromSeconds(duration), m)
+                );
+
                 string elm = ElementalSpell.GetElement(Caster);
                 Point3D loc = new Point3D(0, 0, 0);
 

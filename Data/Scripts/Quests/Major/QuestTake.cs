@@ -26,6 +26,8 @@ namespace Server.Items
             }
 
             ItemID = Utility.RandomList(
+                0x65CC,
+                0x65CD,
                 0x1A97,
                 0x1A98,
                 0x1AA3,
@@ -772,7 +774,7 @@ namespace Server.Items
                 book.VillainCategory = "a giant";
                 book.VillainName = NameList.RandomName("giant");
 
-                switch (Utility.RandomMinMax(0, 17))
+                switch (Utility.RandomMinMax(0, 18))
                 {
                     case 0:
                         book.VillainType = "AbyssGiant";
@@ -831,6 +833,9 @@ namespace Server.Items
                     case 17:
                         book.VillainType = "OgreLord";
                         book.VillainCategory = "an ogre";
+                        break;
+                    case 18:
+                        book.VillainType = "Giant";
                         break;
                 }
             }

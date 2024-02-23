@@ -34,7 +34,13 @@ namespace Server.Mobiles
             SummonPrison.DressUpMonsters(this, "Adimarchus the Daemon Prince of Madness");
 
             // Visual and sound effects to signal the summoning.
-            Effects.SendLocationParticles(EffectItem.Create(this.Location, this.Map, EffectItem.DefaultDuration), 0x3728, 10, 10, 2023);
+            Effects.SendLocationParticles(
+                EffectItem.Create(this.Location, this.Map, EffectItem.DefaultDuration),
+                0x3728,
+                10,
+                10,
+                2023
+            );
             this.PlaySound(0x1FE);
         }
 

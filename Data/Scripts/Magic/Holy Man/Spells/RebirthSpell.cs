@@ -71,6 +71,10 @@ namespace Server.Spells.HolyMan
                 Server.Items.SoulOrb.OnSummoned(m, iOrb);
                 DrainSoulsInSymbol(Caster, RequiredTithing);
             }
+            else if (m == Caster)
+            {
+                Caster.SendMessage("You failed to summon an orb.");
+            }
             else if (!Caster.Alive)
             {
                 Caster.SendLocalizedMessage(501040); // The resurrecter must be alive.

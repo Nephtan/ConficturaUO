@@ -103,6 +103,17 @@ namespace Server.Spells.Herbalist
                 m_Timer = new InternalTimer(this, TimeSpan.FromSeconds(20.0), m_Owner, squeltched);
                 m_Timer.Start();
 
+                BuffInfo.RemoveBuff(caster, BuffIcon.BlendWithForest);
+                BuffInfo.AddBuff(
+                    caster,
+                    new BuffInfo(
+                        BuffIcon.BlendWithForest,
+                        1063544,
+                        TimeSpan.FromSeconds(20.0),
+                        caster
+                    )
+                );
+
                 m_End = DateTime.Now + TimeSpan.FromSeconds(30.0);
             }
 

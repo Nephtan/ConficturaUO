@@ -113,6 +113,21 @@ namespace Server.Spells.Song
 
                 ExpireTimer timer1 = new ExpireTimer(m, mod1, duration);
                 timer1.Start();
+
+                string args = String.Format("{0}", amount);
+                BuffInfo.RemoveBuff(m, BuffIcon.PoisonThrenody);
+                BuffInfo.AddBuff(
+                    m,
+                    new BuffInfo(
+                        BuffIcon.PoisonThrenody,
+                        1063583,
+                        1063584,
+                        duration,
+                        m,
+                        args.ToString(),
+                        true
+                    )
+                );
             }
 
             BardFunctions.UseBardInstrument(m_Book.Instrument, sings, Caster);

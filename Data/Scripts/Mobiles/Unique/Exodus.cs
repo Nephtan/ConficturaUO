@@ -262,6 +262,8 @@ namespace Server.Mobiles
 
                 if (killer is PlayerMobile)
                 {
+                    Server.Items.QuestSouvenir.GiveReward(killer, "Exodus", 0, 0x65B9);
+
                     if (Server.Misc.PlayerSettings.GetSpecialsKilled(killer, "Exodus"))
                     {
                         chance = 9;

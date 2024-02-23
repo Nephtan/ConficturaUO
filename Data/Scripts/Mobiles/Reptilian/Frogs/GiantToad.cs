@@ -48,7 +48,7 @@ namespace Server.Mobiles
             ControlSlots = 1;
             MinTameSkill = 77.1;
 
-            m_Timer = new TeleportTimer(this);
+            m_Timer = new GiantToad.TeleportTimer(this, 0x1CC);
             m_Timer.Start();
         }
 
@@ -72,7 +72,6 @@ namespace Server.Mobiles
         public override void Serialize(GenericWriter writer)
         {
             base.Serialize(writer);
-
             writer.Write((int)1);
         }
 
@@ -80,21 +79,14 @@ namespace Server.Mobiles
         {
             base.Deserialize(reader);
             int version = reader.ReadInt();
-            switch (version)
-            {
-                case 0:
-                {
-                    m_Timer = new TeleportTimer(this);
-                    m_Timer.Start();
-
-                    break;
-                }
-            }
+            m_Timer = new GiantToad.TeleportTimer(this, 0x1CC);
+            m_Timer.Start();
         }
 
-        private class TeleportTimer : Timer
+        public class TeleportTimer : Timer
         {
             private Mobile m_Owner;
+            private int m_Sound;
 
             private static int[] m_Offsets = new int[]
             {
@@ -116,12 +108,13 @@ namespace Server.Mobiles
                 1
             };
 
-            public TeleportTimer(Mobile owner)
+            public TeleportTimer(Mobile owner, int sound)
                 : base(TimeSpan.FromSeconds(5.0), TimeSpan.FromSeconds(5.0))
             {
                 Priority = TimerPriority.TwoFiftyMS;
 
                 m_Owner = owner;
+                m_Sound = sound;
             }
 
             protected override void OnTick()
@@ -145,8 +138,10 @@ namespace Server.Mobiles
                 foreach (Mobile m in m_Owner.GetMobilesInRange(10))
                 {
                     if (
-                        m != m_Owner
+                        !((BaseCreature)m_Owner).Controlled
+                        && m != m_Owner
                         && m.Player
+                        && m_Owner.InLOS(m)
                         && m_Owner.CanBeHarmful(m)
                         && m_Owner.CanSee(m)
                         && m.AccessLevel == AccessLevel.Player
@@ -197,7 +192,7 @@ namespace Server.Mobiles
 
                     m.ProcessDelta();
 
-                    m.PlaySound(0x58D);
+                    m.PlaySound(m_Sound);
 
                     m_Owner.Combatant = toTeleport;
 

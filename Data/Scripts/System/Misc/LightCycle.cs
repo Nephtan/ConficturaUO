@@ -164,6 +164,8 @@ namespace Server
                 m_Owner.EndAction(typeof(LightCycle));
                 m_Owner.LightLevel = 0;
                 BuffInfo.RemoveBuff(m_Owner, BuffIcon.NightSight);
+                BuffInfo.RemoveBuff(m_Owner, BuffIcon.EyesOfTheDead);
+                BuffInfo.RemoveBuff(m_Owner, BuffIcon.PotionNightSight);
             }
         }
     }

@@ -235,6 +235,8 @@ namespace Server.Regions
         {
             if (m is PlayerMobile)
             {
+                BuffInfo.CleanupIcons(m, false);
+
                 Server.Mobiles.BaseAI.MarchingOrder(m);
                 Server.Items.RuneOfVirtue.MoralityCheck(m.FindItemOnLayer(Layer.Talisman), m);
                 if (!m.Alive && m.QuestArrow == null)
@@ -258,6 +260,8 @@ namespace Server.Regions
         {
             if (m is PlayerMobile)
             {
+                BuffInfo.CleanupIcons(m, false);
+
                 QuestTome.BossEscaped(m, this.Name);
 
                 Server.Mobiles.BaseAI.MarchingOrder(m);

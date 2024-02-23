@@ -60,7 +60,7 @@ namespace Server.Items
                 List<Item> belongings = new List<Item>();
                 foreach (Item i in from.Backpack.Items)
                 {
-                    if (i is IronOre)
+                    if (i is CopperOre)
                     {
                         carry = carry + i.Amount;
                     }
@@ -72,7 +72,7 @@ namespace Server.Items
                     Container pack = from.Backpack;
                     if (remove == true)
                     {
-                        pack.ConsumeTotal(typeof(IronOre), qty);
+                        pack.ConsumeTotal(typeof(CopperOre), qty);
                     }
                 }
             }

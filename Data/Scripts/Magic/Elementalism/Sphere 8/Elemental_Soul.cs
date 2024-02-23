@@ -90,6 +90,10 @@ namespace Server.Spells.Elementalism
                 m.AddToBackpack(iOrb);
                 Server.Items.SoulOrb.OnSummoned(m, iOrb);
             }
+            else if (m == Caster)
+            {
+                Caster.SendMessage("You failed to summon an orb.");
+            }
             else if (!Caster.Alive)
             {
                 Caster.SendLocalizedMessage(501040); // The resurrecter must be alive.

@@ -67,9 +67,9 @@ namespace Server.Gumps
             AddButton(737, 11, 4017, 4017, 0, GumpButtonType.Reply, 0);
 
             MusicPlaylistFunctions.InitializePlaylist(from);
-            string MySettings = ((PlayerMobile)from).MusicPlaylist;
+            string MyServerSettings = ((PlayerMobile)from).MusicPlaylist;
 
-            int btn = button(59, MySettings);
+            int btn = button(59, MyServerSettings);
 
             AddButton(422, 15, btn, btn, 59, GumpButtonType.Reply, 0);
             AddHtml(
@@ -87,7 +87,7 @@ namespace Server.Gumps
                 display--;
                 line++;
 
-                GetLine(line, MySettings);
+                GetLine(line, MyServerSettings);
             }
         }
 
@@ -116,9 +116,9 @@ namespace Server.Gumps
             }
         }
 
-        public int button(int line, string MySettings)
+        public int button(int line, string MyServerSettings)
         {
-            string[] eachSong = MySettings.Split('#');
+            string[] eachSong = MyServerSettings.Split('#');
             int nLine = 1;
             int button = 3609;
             foreach (string eachSongs in eachSong)
@@ -135,7 +135,7 @@ namespace Server.Gumps
             return button;
         }
 
-        public void GetLine(int val, string MySettings)
+        public void GetLine(int val, string MyServerSettings)
         {
             string color = "#90add7";
             string txt = "";
@@ -464,7 +464,7 @@ namespace Server.Gumps
                     y = 20 + ((val - 40) * 28);
                 }
 
-                btn = button(num, MySettings);
+                btn = button(num, MyServerSettings);
 
                 AddButton(x - 61, y, btn, btn, num, GumpButtonType.Reply, 0);
                 AddButton(x - 24, y + 4, 2117, 2117, num + 100, GumpButtonType.Reply, 0);

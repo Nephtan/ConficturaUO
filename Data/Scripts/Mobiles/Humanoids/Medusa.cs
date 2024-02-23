@@ -148,7 +148,7 @@ namespace Server.Mobiles
                         m.CheckSkill(SkillName.MagicResist, 0, 125)
                         || Server.Items.HiddenTrap.IAmAWeaponSlayer(m, this)
                     ) { }
-                    else if (Server.Items.HiddenTrap.CheckInsuranceOnTrap(iStone, m) == true)
+                    else if (Server.Items.HiddenTrap.CheckInsuranceOnTrap(iStone, m))
                     {
                         m.LocalOverheadMessage(
                             MessageType.Emote,

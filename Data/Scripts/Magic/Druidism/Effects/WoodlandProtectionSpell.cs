@@ -91,6 +91,26 @@ namespace Server.Spells.Herbalist
                 Caster.PlaySound(0x19);
                 Effects.SendLocationParticles(Caster, 0xC87, 9, 10, 5025);
                 Caster.BeginAction(typeof(WoodlandProtectionSpell));
+
+                string args = String.Format(
+                    "{0}\t{1}\t{2}\t{3}\t{4}",
+                    MyResist,
+                    MyResist,
+                    MyResist,
+                    MyResist,
+                    MyResist
+                );
+
+                BuffInfo.AddBuff(
+                    Caster,
+                    new BuffInfo(
+                        BuffIcon.WoodlandProtection,
+                        1063550,
+                        1075818,
+                        args.ToString(),
+                        true
+                    )
+                );
             }
             FinishSequence();
         }
@@ -119,6 +139,7 @@ namespace Server.Spells.Herbalist
                         m_Owner.NetState
                     );
                     WoodlandProtectionSpell.RemoveEffect(m_Owner);
+                    BuffInfo.RemoveBuff(m_Owner, BuffIcon.WoodlandProtection);
                     Stop();
                 }
             }

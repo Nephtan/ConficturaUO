@@ -64,16 +64,21 @@ namespace Server.Spells.Undead
 
                 m.Hidden = true;
 
-                BuffInfo.RemoveBuff(m, BuffIcon.HidingAndOrStealth);
-                BuffInfo.AddBuff(m, new BuffInfo(BuffIcon.Invisibility, 1075825)); //Invisibility/Invisible
-
                 RemoveTimer(m);
 
                 TimeSpan duration = TimeSpan.FromSeconds(
-                    ((6 * Caster.Skills.Spiritualism.Fixed) / 50) + 1
+                    ((6 * Caster.Skills.Forensics.Fixed) / 50) + 1
                 );
 
                 Timer t = new InternalTimer(m, duration);
+
+                BuffInfo.RemoveBuff(m, BuffIcon.HidingAndOrStealth);
+                BuffInfo.RemoveBuff(m, BuffIcon.Invisibility);
+                BuffInfo.RemoveBuff(m, BuffIcon.SpectralShadow);
+                BuffInfo.AddBuff(
+                    Caster,
+                    new BuffInfo(BuffIcon.SpectralShadow, 1063498, duration, Caster)
+                );
 
                 m_Table[m] = t;
 
@@ -96,6 +101,7 @@ namespace Server.Spells.Undead
 
             if (t != null)
             {
+                BuffInfo.RemoveBuff(m, BuffIcon.SpectralShadow);
                 t.Stop();
                 m_Table.Remove(m);
             }

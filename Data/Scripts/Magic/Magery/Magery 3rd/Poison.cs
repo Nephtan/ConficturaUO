@@ -44,6 +44,7 @@ namespace Server.Spells.Third
                     m.Spell.OnCasterHurt();
 
                 m.Paralyzed = false;
+                BuffInfo.CleanupIcons(m, true);
 
                 if (CheckResisted(m))
                 {

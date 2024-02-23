@@ -136,6 +136,7 @@ namespace Server
                     typeof(ArcticOgreLord),
                     typeof(BlackPudding),
                     typeof(GreenSlime),
+                    typeof(Jellyfish),
                     typeof(BloodSpawn),
                     typeof(Bogling),
                     typeof(BogThing),
@@ -396,6 +397,7 @@ namespace Server
                     typeof(WhiteTigerRiding),
                     typeof(WhiteWyrm),
                     typeof(Wyrms),
+                    typeof(Wyrm),
                     typeof(Wisp),
                     typeof(SummonedCorpse),
                     typeof(Xurtzar)
@@ -407,6 +409,7 @@ namespace Server
                 0.350,
                 new Type[]
                 {
+                    typeof(Cheetah),
                     typeof(EnergyVortex),
                     typeof(Pixie),
                     typeof(Sprite),
@@ -417,6 +420,7 @@ namespace Server
                     typeof(FireBeetle),
                     typeof(EvilEnergyVortex),
                     typeof(GoldenSerpent),
+                    typeof(Ostrich),
                     typeof(AxeBeak),
                     typeof(AxeBeakRiding),
                     typeof(Raptor),
@@ -546,6 +550,7 @@ namespace Server
                     typeof(DeepSeaGiant),
                     typeof(TitanLich),
                     typeof(MummyGiant),
+                    typeof(Giant),
                     typeof(HillGiant),
                     typeof(HillGiantShaman),
                     typeof(DeepSeaSerpent),
@@ -571,6 +576,7 @@ namespace Server
                     typeof(SkeletonDragon),
                     typeof(Dragon),
                     typeof(Dragons),
+                    typeof(YoungDragon),
                     typeof(Dragoon),
                     typeof(RidingDragon),
                     typeof(DragonGolem),
@@ -586,6 +592,7 @@ namespace Server
                     typeof(DrakkulMage),
                     typeof(DullCopperElemental),
                     typeof(Eagle),
+                    typeof(Penguin),
                     typeof(ElderBlackBear),
                     typeof(ElderBrownBear),
                     typeof(ElderBlackBearRiding),
@@ -693,10 +700,12 @@ namespace Server
                     typeof(Gorgon),
                     typeof(GorgonRiding),
                     typeof(Gorilla),
+                    typeof(Monkey),
                     typeof(Gorakong),
                     typeof(Infected),
                     typeof(Grathek),
                     typeof(GreatHart),
+                    typeof(Gazelle),
                     typeof(Moose),
                     typeof(Antelope),
                     typeof(GreenDragon),
@@ -742,6 +751,7 @@ namespace Server
                     typeof(IronBeetle),
                     typeof(IronCobra),
                     typeof(Jackal),
+                    typeof(Hyena),
                     typeof(JackRabbit),
                     typeof(Weasel),
                     typeof(JadeSerpent),
@@ -776,6 +786,7 @@ namespace Server
                     typeof(Reptaur),
                     typeof(LizardmanArcher),
                     typeof(Llama),
+                    typeof(Giraffe),
                     typeof(Locathah),
                     typeof(LostKnight),
                     typeof(LowerDemon),
@@ -2377,7 +2388,7 @@ namespace Server.Misc
 
             if (CanHaveShield == 1 && Utility.RandomMinMax(1, 3) == 1)
             {
-                switch (Utility.Random(12))
+                switch (Utility.Random(16))
                 {
                     case 0:
                         armor = new BronzeShield();
@@ -2414,6 +2425,18 @@ namespace Server.Misc
                         break;
                     case 11:
                         armor = new JeweledShield();
+                        break;
+                    case 12:
+                        armor = new ChaosShield();
+                        break;
+                    case 13:
+                        armor = new OrderShield();
+                        break;
+                    case 14:
+                        armor = new SunShield();
+                        break;
+                    case 15:
+                        armor = new VirtueShield();
                         break;
                 }
             }
@@ -3908,31 +3931,55 @@ namespace Server.Misc
 
             if (CanHaveShield == 1 && Utility.RandomMinMax(1, 3) == 1)
             {
-                switch (Utility.Random(6))
+                switch (Utility.Random(16))
                 {
                     case 0:
-                        Item shield1 = new BronzeShield();
-                        m.AddItem(shield1);
+                        m.AddItem(new BronzeShield());
                         break;
                     case 1:
-                        Item shield2 = new Buckler();
-                        m.AddItem(shield2);
+                        m.AddItem(new Buckler());
                         break;
                     case 2:
-                        Item shield3 = new MetalKiteShield();
-                        m.AddItem(shield3);
+                        m.AddItem(new MetalKiteShield());
                         break;
                     case 3:
-                        Item shield4 = new HeaterShield();
-                        m.AddItem(shield4);
+                        m.AddItem(new HeaterShield());
                         break;
                     case 4:
-                        Item shield5 = new WoodenKiteShield();
-                        m.AddItem(shield5);
+                        m.AddItem(new WoodenKiteShield());
                         break;
                     case 5:
-                        Item shield6 = new MetalShield();
-                        m.AddItem(shield6);
+                        m.AddItem(new MetalShield());
+                        break;
+                    case 6:
+                        m.AddItem(new ChaosShield());
+                        break;
+                    case 7:
+                        m.AddItem(new OrderShield());
+                        break;
+                    case 8:
+                        m.AddItem(new SunShield());
+                        break;
+                    case 9:
+                        m.AddItem(new VirtueShield());
+                        break;
+                    case 10:
+                        m.AddItem(new GuardsmanShield());
+                        break;
+                    case 11:
+                        m.AddItem(new ElvenShield());
+                        break;
+                    case 12:
+                        m.AddItem(new DarkShield());
+                        break;
+                    case 13:
+                        m.AddItem(new CrestedShield());
+                        break;
+                    case 14:
+                        m.AddItem(new ChampionShield());
+                        break;
+                    case 15:
+                        m.AddItem(new JeweledShield());
                         break;
                 }
             }
@@ -8053,6 +8100,7 @@ namespace Server.Misc
                     }
                     else if (
                         from is MountainGiant
+                        || from is Giant
                         || from is AbyssGiant
                         || from is JungleGiant
                         || from is SandGiant
@@ -8954,6 +9002,7 @@ namespace Server.Misc
                     }
                     else if (
                         from is MountainGiant
+                        || from is Giant
                         || from is AbyssGiant
                         || from is JungleGiant
                         || from is SandGiant
@@ -12675,6 +12724,7 @@ namespace Server.Mobiles
 
                 // New Code Below for random freeze fix while sailing on a boat
                 IPooledEnumerable eable = map.GetMobilesInRange(m_Mobile.Location, iRange);
+
                 List<Mobile> mobiles = new List<Mobile>();
                 foreach (Mobile m in eable)
                 {

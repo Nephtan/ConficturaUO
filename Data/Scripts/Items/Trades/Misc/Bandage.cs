@@ -671,6 +671,16 @@ namespace Server.Items
                 healer.SendLocalizedMessage(500956); // You begin applying the bandages.
                 healer.LocalOverheadMessage(MessageType.Regular, 1150, 500956);
 
+                BuffInfo.AddBuff(
+                    healer,
+                    new BuffInfo(
+                        BuffIcon.Bandage,
+                        1063670,
+                        TimeSpan.FromMilliseconds(seconds),
+                        healer
+                    )
+                );
+
                 return context;
             }
 

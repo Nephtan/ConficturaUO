@@ -46,6 +46,7 @@ namespace Server.Spells.First
                     m.Spell.OnCasterHurt();
 
                 m.Paralyzed = false;
+                BuffInfo.CleanupIcons(m, true);
 
                 m.FixedParticles(
                     0x3779,

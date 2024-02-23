@@ -30,7 +30,13 @@ namespace Server.Mobiles
 
             SummonPrison.DressUpMonsters(this, "Elric of Melnibone");
 
-            Effects.SendLocationParticles(EffectItem.Create(Location, Map, EffectItem.DefaultDuration), 0x3728, 10, 10, 2023);
+            Effects.SendLocationParticles(
+                EffectItem.Create(Location, Map, EffectItem.DefaultDuration),
+                0x3728,
+                10,
+                10,
+                2023
+            );
             PlaySound(0x1FE);
         }
 

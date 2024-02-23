@@ -141,7 +141,7 @@ namespace Server.Gumps
             string color = "#efd290";
 
             LootChoiceUpdates.InitializeLootChoice(from);
-            string MySettings = ((PlayerMobile)from).CharacterLoot;
+            string MyServerSettings = ((PlayerMobile)from).CharacterLoot;
 
             this.Closable = true;
             this.Disposable = false;
@@ -176,7 +176,7 @@ namespace Server.Gumps
             AddButton(384, 10, 4017, 4017, 0, GumpButtonType.Reply, 0);
 
             int g = 266;
-            string[] eachLoot = MySettings.Split('#');
+            string[] eachLoot = MyServerSettings.Split('#');
             int b1 = 0;
             int b2 = 0;
             int b3 = 0;

@@ -24,7 +24,8 @@ namespace Server.Items
         HolyMan,
         Mystic,
         Syth,
-        Jedi
+        Jedi,
+        Archmage
     }
 
     public class Spellbook : Item, ICraftable, ISlayer
@@ -60,7 +61,7 @@ namespace Server.Items
 
         private static void AllSpells_OnTarget(Mobile from, object obj)
         {
-            if (obj is Spellbook)
+            if (obj is Spellbook || obj is ArchmageSpellbook)
             {
                 Spellbook book = (Spellbook)obj;
 
@@ -78,6 +79,23 @@ namespace Server.Items
                     CommandLogging.Format(from),
                     CommandLogging.Format(book)
                 );
+            }
+            else if (obj is ResearchBag)
+            {
+                ResearchBag bag = (ResearchBag)obj;
+
+                bag.ResearchSpells =
+                    "1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#";
+                //bag.ResearchSpells = "1#0#1#0#1#0#1#0#0#0#1#0#1#0#1#1#1#0#0#0#0#1#0#1#0#1#0#0#0#1#1#1#0#1#0#1#1#0#0#0#1#1#1#0#1#0#0#0#1#0#0#0#1#1#1#0#0#1#1#1#0#0#1#1#";
+                bag.ResearchPrep1 =
+                    "1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#";
+                bag.ResearchPrep2 =
+                    "1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#";
+
+                bag.SpellsMagery =
+                    "1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#";
+                bag.SpellsNecromancy = "1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#";
+                bag.RuneFound = "1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#";
             }
             else
             {
@@ -138,6 +156,9 @@ namespace Server.Items
                     break;
                 case 12:
                     type = SpellbookType.Jedi;
+                    break;
+                case 13:
+                    type = SpellbookType.Archmage;
                     break;
             }
 
@@ -213,6 +234,8 @@ namespace Server.Items
                 return SpellbookType.Syth;
             else if (spellID >= 280 && spellID < 290)
                 return SpellbookType.Jedi;
+            else if (spellID >= 600 && spellID < 664)
+                return SpellbookType.Archmage;
 
             return SpellbookType.Invalid;
         }
@@ -275,6 +298,11 @@ namespace Server.Items
         public static Spellbook FindJedi(Mobile from)
         {
             return Find(from, -1, SpellbookType.Jedi);
+        }
+
+        public static Spellbook FindArchmage(Mobile from)
+        {
+            return Find(from, -1, SpellbookType.Archmage);
         }
 
         public static Spellbook Find(Mobile from, int spellID)
@@ -727,6 +755,21 @@ namespace Server.Items
             else if (this is JediSpellbook)
             {
                 return false;
+            }
+            else if (this is ArchmageSpellbook)
+            {
+                if (((ArchmageSpellbook)this).Owner != from)
+                    return false;
+                if (
+                    from.Skills[SkillName.Magery].Base < 30
+                    && from.Skills[SkillName.Necromancy].Base < 30
+                )
+                {
+                    from.SendMessage(
+                        "Your need at least a natural neophyte skill in magery or necromancy to equip that!"
+                    );
+                    return false;
+                }
             }
             else if (from.Skills[SkillName.Magery].Base < 30)
             {

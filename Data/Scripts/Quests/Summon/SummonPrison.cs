@@ -33,6 +33,7 @@ namespace Server.Items
 
         // Fields for keys and their corresponding properties. These keys are part of the mechanism to unlock the prison.
         public string KeyA;
+
         [CommandProperty(AccessLevel.GameMaster)]
         public string p_KeyA
         {
@@ -41,6 +42,7 @@ namespace Server.Items
         }
 
         public string KeyB;
+
         [CommandProperty(AccessLevel.GameMaster)]
         public string p_KeyB
         {
@@ -49,6 +51,7 @@ namespace Server.Items
         }
 
         public string KeyC;
+
         [CommandProperty(AccessLevel.GameMaster)]
         public string p_KeyC
         {
@@ -58,6 +61,7 @@ namespace Server.Items
 
         // Fields for reagents including their names and quantities, required to initiate the summoning or opening of the prison.
         public string ReagentNameA;
+
         [CommandProperty(AccessLevel.GameMaster)]
         public string p_ReagentNameA
         {
@@ -66,6 +70,7 @@ namespace Server.Items
         }
 
         public int ReagentQtyA;
+
         [CommandProperty(AccessLevel.GameMaster)]
         public int p_ReagentQtyA
         {
@@ -74,6 +79,7 @@ namespace Server.Items
         }
 
         public string ReagentNameB;
+
         [CommandProperty(AccessLevel.GameMaster)]
         public string p_ReagentNameB
         {
@@ -82,6 +88,7 @@ namespace Server.Items
         }
 
         public int ReagentQtyB;
+
         [CommandProperty(AccessLevel.GameMaster)]
         public int p_ReagentQtyB
         {
@@ -91,6 +98,7 @@ namespace Server.Items
 
         // Fields and properties for defining the prisoner, including their name, appearance, and serial number.
         public string Prisoner;
+
         [CommandProperty(AccessLevel.GameMaster)]
         public string p_Prisoner
         {
@@ -99,6 +107,7 @@ namespace Server.Items
         }
 
         public string PrisonerBase;
+
         [CommandProperty(AccessLevel.GameMaster)]
         public string p_PrisonerBase
         {
@@ -107,6 +116,7 @@ namespace Server.Items
         }
 
         public int PrisonerBody;
+
         [CommandProperty(AccessLevel.GameMaster)]
         public int p_PrisonerBody
         {
@@ -115,6 +125,7 @@ namespace Server.Items
         }
 
         public int PrisonerHue;
+
         [CommandProperty(AccessLevel.GameMaster)]
         public int p_PrisonerHue
         {
@@ -123,6 +134,7 @@ namespace Server.Items
         }
 
         public Mobile PrisonerSerial;
+
         [CommandProperty(AccessLevel.GameMaster)]
         public Mobile p_PrisonerSerial
         {
@@ -132,6 +144,7 @@ namespace Server.Items
 
         // Fields and properties for customization and metadata, such as cloth color and whether the full name is used.
         public int PrisonerFullNameUsed;
+
         [CommandProperty(AccessLevel.GameMaster)]
         public int p_PrisonerFullNameUsed
         {
@@ -140,6 +153,7 @@ namespace Server.Items
         }
 
         public int PrisonerClothColorUsed;
+
         [CommandProperty(AccessLevel.GameMaster)]
         public int p_PrisonerClothColorUsed
         {
@@ -149,6 +163,7 @@ namespace Server.Items
 
         // Fields and properties for defining the jailor and the dungeon context of the prison.
         public string Jailor;
+
         [CommandProperty(AccessLevel.GameMaster)]
         public string p_Jailor
         {
@@ -157,6 +172,7 @@ namespace Server.Items
         }
 
         public string Dungeon;
+
         [CommandProperty(AccessLevel.GameMaster)]
         public string p_Dungeon
         {
@@ -166,6 +182,7 @@ namespace Server.Items
 
         // Fields and properties for defining the reward, including its ID, hue, and name.
         public int RewardID;
+
         [CommandProperty(AccessLevel.GameMaster)]
         public int p_RewardID
         {
@@ -174,6 +191,7 @@ namespace Server.Items
         }
 
         public int RewardHue;
+
         [CommandProperty(AccessLevel.GameMaster)]
         public int p_RewardHue
         {
@@ -182,6 +200,7 @@ namespace Server.Items
         }
 
         public string RewardName;
+
         [CommandProperty(AccessLevel.GameMaster)]
         public string p_RewardName
         {
@@ -246,7 +265,10 @@ namespace Server.Items
                 // Searches the world for potential dungeon locations for the prison.
                 ArrayList targets = new ArrayList();
                 foreach (Item target in World.Items.Values)
-                    if (target is SearchBase && Region.Find(target.Location, target.Map) is DungeonRegion)
+                    if (
+                        target is SearchBase
+                        && Region.Find(target.Location, target.Map) is DungeonRegion
+                    )
                     {
                         targets.Add(target);
                     }
@@ -342,7 +364,20 @@ namespace Server.Items
         public override void OnDoubleClick(Mobile from)
         {
             // Checks if the player has the necessary items in their pack to summon the prisoner.
-            if (TestMyPack(from, Dungeon, KeyA, KeyB, KeyC, ReagentQtyA, ReagentNameA, ReagentQtyB, ReagentNameB, false))
+            if (
+                TestMyPack(
+                    from,
+                    Dungeon,
+                    KeyA,
+                    KeyB,
+                    KeyC,
+                    ReagentQtyA,
+                    ReagentNameA,
+                    ReagentQtyB,
+                    ReagentNameB,
+                    false
+                )
+            )
             {
                 // Finds the type of the prisoner to be summoned using the name stored in PrisonerBase.
                 Type mobType = ScriptCompiler.FindTypeByName(PrisonerBase);
@@ -398,7 +433,13 @@ namespace Server.Items
                 monster.Combatant = from;
 
                 // Visual and sound effects to signal the summoning.
-                Effects.SendLocationParticles(EffectItem.Create(monster.Location, monster.Map, EffectItem.DefaultDuration), 0x3728, 10, 10, 2023);
+                Effects.SendLocationParticles(
+                    EffectItem.Create(monster.Location, monster.Map, EffectItem.DefaultDuration),
+                    0x3728,
+                    10,
+                    10,
+                    2023
+                );
                 monster.PlaySound(0x1FE);
 
                 monster.EmoteHue = 505; // Sets the emote color.
@@ -409,7 +450,18 @@ namespace Server.Items
                 // Removes the necessary items from the player's pack if they are a regular player.
                 if (from.AccessLevel == AccessLevel.Player)
                 {
-                    TestMyPack(from, Dungeon, KeyA, KeyB, KeyC, ReagentQtyA, ReagentNameA, ReagentQtyB, ReagentNameB, true);
+                    TestMyPack(
+                        from,
+                        Dungeon,
+                        KeyA,
+                        KeyB,
+                        KeyC,
+                        ReagentQtyA,
+                        ReagentNameA,
+                        ReagentQtyB,
+                        ReagentNameB,
+                        true
+                    );
                 }
 
                 // Starts a timer related to the summoning process.
@@ -1112,7 +1164,7 @@ namespace Server.Items
                 case 9:
                     sGem = "diamonds";
                     break;
-                    // Cases for other gems are omitted for brevity but follow the same assignment logic.
+                // Cases for other gems are omitted for brevity but follow the same assignment logic.
             }
 
             return sGem; // Returns the name of the randomly selected gem.
@@ -1539,7 +1591,6 @@ namespace Server.Items
                 // If the skill is already developed (base > 0), set it to a random number between 105 and 125.
                 if (skill.Base > 0.0)
                     skill.Base = rnd.Next(105, 125);
-
                 // Check if the skill base is 0.0, then increase these skills by a random number from 35 to 85.
                 else if (skill.Base == 0.0)
                 {

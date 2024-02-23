@@ -50,10 +50,14 @@ namespace Server.Spells.Necromancy
 
             m.Delta(MobileDelta.WeaponDamage);
             m.CheckStatTimers();
+
+            BuffInfo.RemoveBuff(m, BuffIcon.HorrificBeast);
+            BuffInfo.AddBuff(m, new BuffInfo(BuffIcon.HorrificBeast, 1063613));
         }
 
         public override void RemoveEffect(Mobile m)
         {
+            BuffInfo.RemoveBuff(m, BuffIcon.HorrificBeast);
             m.Delta(MobileDelta.WeaponDamage);
         }
     }

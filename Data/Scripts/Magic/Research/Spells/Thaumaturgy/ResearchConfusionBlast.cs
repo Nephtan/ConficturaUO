@@ -126,11 +126,21 @@ namespace Server.Spells.Research
                         }
                         else
                         {
-                            m.Frozen = true;
+                            m.Paralyze(TimeSpan.FromSeconds(duration));
                             Timer.DelayCall(
                                 TimeSpan.FromSeconds(duration),
                                 new TimerStateCallback(Recover_Callback),
                                 m
+                            );
+                            BuffInfo.RemoveBuff(m, BuffIcon.Confusion);
+                            BuffInfo.AddBuff(
+                                m,
+                                new BuffInfo(
+                                    BuffIcon.Confusion,
+                                    1063684,
+                                    TimeSpan.FromSeconds(duration),
+                                    m
+                                )
                             );
                         }
 
@@ -157,8 +167,9 @@ namespace Server.Spells.Research
 
             if (defender != null)
             {
-                defender.Frozen = false;
+                defender.Paralyzed = false;
                 defender.Combatant = null;
+                BuffInfo.RemoveBuff(defender, BuffIcon.Confusion);
                 defender.LocalOverheadMessage(
                     MessageType.Regular,
                     0x3B2,

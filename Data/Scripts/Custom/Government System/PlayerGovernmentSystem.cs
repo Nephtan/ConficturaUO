@@ -222,7 +222,10 @@ namespace Server
                     foreach (RegionRect rect in s.RegionRects)
                     {
                         Region r = rect.Region;
-                        if (from.AccessLevel <= AccessLevel.GameMaster && (r is GuardedRegion || r is PlayerCityRegion))
+                        if (
+                            from.AccessLevel <= AccessLevel.GameMaster
+                            && (r is GuardedRegion || r is PlayerCityRegion)
+                        )
                         {
                             return true; // Return as soon as a matching region is found
                         }

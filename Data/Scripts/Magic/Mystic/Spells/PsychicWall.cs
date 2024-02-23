@@ -67,6 +67,8 @@ namespace Server.Spells.Mystic
                 Caster.MagicDamageAbsorb = value;
                 Caster.FixedParticles(0x3039, 10, 15, 5038, 0, 2, EffectLayer.Head);
                 Caster.PlaySound(0x5BC);
+                BuffInfo.RemoveBuff(Caster, BuffIcon.PsychicWall);
+                BuffInfo.AddBuff(Caster, new BuffInfo(BuffIcon.PsychicWall, 1063514));
             }
 
             FinishSequence();

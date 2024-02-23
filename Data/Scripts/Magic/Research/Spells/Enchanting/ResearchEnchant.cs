@@ -119,6 +119,17 @@ namespace Server.Spells.Research
 
                     int val = (int)(DamagingSkill(Caster) / 2);
 
+                    BuffInfo.RemoveBuff(Caster, BuffIcon.EnchantWeapon);
+                    BuffInfo.AddBuff(
+                        Caster,
+                        new BuffInfo(
+                            BuffIcon.EnchantWeapon,
+                            1063636,
+                            TimeSpan.FromMinutes(val),
+                            Caster
+                        )
+                    );
+
                     if (val > 120)
                         val = 120;
 
@@ -231,6 +242,7 @@ namespace Server.Spells.Research
             if (m != null)
             {
                 m.PlaySound(0x1F8);
+                BuffInfo.RemoveBuff(m, BuffIcon.EnchantWeapon);
             }
         }
     }

@@ -3,30 +3,28 @@
  * Translated To Spanish By: Darkness_PR(Paul)
  * Date: 2/5/2005
  * Time: 8:24 AM
- * 
+ *
  * Feel Free To Mod This How Ever You See Fit.
  */
 using System;
-using Server;
 using System.Text;
+using Server;
 
 namespace Server.Engines.XmlSpawner2
 {
-
     public class SpanishPointsText
     {
-
         private static void Add(int index, string text)
         {
             XmlPoints.AddText(XmlPoints.LanguageType.SPANISH, index, text);
         }
 
-    	public static void Initialize()
-    	{
+        public static void Initialize()
+        {
             // add in all of the text phrases that will be used
             // indices that begin with 100 refer to messages displayed in the game window, so no real length limit
             // indices that begin with 200 refer to gump labels and so should be translated to text of similar length for proper appearance
-            
+
             // basechallengegame.cs
             Add(100000, "La cantidad de {0} oro a sido devolvida a ti.");
             Add(100001, "La Cantidad De {0} oro a sido devolvida a tu banco.");
@@ -34,11 +32,11 @@ namespace Server.Engines.XmlSpawner2
             Add(100003, "{0} cancelados");
 
             // challengeregion.cs
-            Add(100104, "No sera permitido hacer daño antes o despues de un desafio.");
+            Add(100104, "No sera permitido hacer daï¿½o antes o despues de un desafio.");
             Add(100105, "No es permitido abrir eso aqui.");
             Add(100106, "Has entrado la area de un juego '{0}'");
             Add(100107, "Has salido de la area del juego '{0}'");
-            
+
             // xmlpoints.cs
             Add(100207, "Ellos no son expertos para ser desafiados");
             Add(100208, "{0} minuto(s) quedan para que el desafio sea cancelado");
@@ -61,7 +59,7 @@ namespace Server.Engines.XmlSpawner2
             // xmlpoints gump
             Add(200224, "Points Standing for {0}");
             Add(200225, "Actualmente en un desafio {0}");
-            Add(200226, "Ver matanzas" );
+            Add(200226, "Ver matanzas");
             Add(200227, "Decir las matanzas");
             Add(200228, "Jugadores superiores");
             Add(200229, "Challenge");
@@ -85,33 +83,39 @@ namespace Server.Engines.XmlSpawner2
             Add(200246, "Muertes");
             Add(200247, "Rango");
             Add(200248, "Cambiar");
-            Add(200249, "Tiempo en el Rango" );
-            Add(200250, "{0} dias " );
-            Add(200251, "{0} horas " );
-            Add(200252, "{0} minutos" );
-            Add(200253, "actualmente cambiado" );
+            Add(200249, "Tiempo en el Rango");
+            Add(200250, "{0} dias ");
+            Add(200251, "{0} horas ");
+            Add(200252, "{0} minutos");
+            Add(200253, "actualmente cambiado");
             // challenge gump
-            Add(200254, "Estas desafiando" );
-            Add(200255, "{0}. Continuar?" );
-            Add(200256, "Tu no vas a ganar puntos!" );
-            Add(100257, "Tu has hecho un challenge a {0}." );
-            Add(100258, "Tu has decido contra el desafio {0}." );
-            Add(200259, "Tu has sido desafiado por" );
-            Add(200260, "{0}. Aceptar?" );
-            Add(100261, "{0} ha sido ya desafiado." );
-            Add(100262, "Tu estas en un desafio ya." );
-            Add(100263, "{0} acepto tu desafio!" );
-            Add(100264, "Tu has aceptado el desafio de {0}!" );
-            Add(100265, "Tu desafio para {0} a sido cancelado." );
-            Add(100266, "Has negado el desafio por {0}." );
-			Add(100267, "Usted no puede publicar un desafío aquí.");
+            Add(200254, "Estas desafiando");
+            Add(200255, "{0}. Continuar?");
+            Add(200256, "Tu no vas a ganar puntos!");
+            Add(100257, "Tu has hecho un challenge a {0}.");
+            Add(100258, "Tu has decido contra el desafio {0}.");
+            Add(200259, "Tu has sido desafiado por");
+            Add(200260, "{0}. Aceptar?");
+            Add(100261, "{0} ha sido ya desafiado.");
+            Add(100262, "Tu estas en un desafio ya.");
+            Add(100263, "{0} acepto tu desafio!");
+            Add(100264, "Tu has aceptado el desafio de {0}!");
+            Add(100265, "Tu desafio para {0} a sido cancelado.");
+            Add(100266, "Has negado el desafio por {0}.");
+            Add(100267, "Usted no puede publicar un desafï¿½o aquï¿½.");
 
             // gauntlet scripts
-            Add(100300, "Premio de {0}" );
-            Add(100301, "Has recivido un cheque por {0}" );
-            Add(100302, "Last Man Standing" );
-            Add(100303, "Incapaz de instalar {0} Challenge: Otro juego ya esta en proceso en esta area.");
-            Add(100304, "Incapaz de instalar el {0} Challenge: Tiene que estar en la area de Juego.");
+            Add(100300, "Premio de {0}");
+            Add(100301, "Has recivido un cheque por {0}");
+            Add(100302, "Last Man Standing");
+            Add(
+                100303,
+                "Incapaz de instalar {0} Challenge: Otro juego ya esta en proceso en esta area."
+            );
+            Add(
+                100304,
+                "Incapaz de instalar el {0} Challenge: Tiene que estar en la area de Juego."
+            );
             Add(100305, "Incapaz de instalar el {0} Challenge.");
             Add(100306, "Setting-up un {0} Challenge.");
             Add(100307, "{0} Challenge ha sido preparado '{1}' by {2}");
@@ -137,7 +141,7 @@ namespace Server.Engines.XmlSpawner2
             Add(100419, "Grupo {0} su bandera ha regresado a su base");
             Add(100420, "Gurpo {0} tiene la bandera del grupo {1} ");
             Add(100421, "Grupo {0} a anotado");
-            
+
             // game gump scripts
             Add(200500, "Last Man Standing Challenge");
             Add(200501, "Organizado por: {0}");
@@ -159,7 +163,7 @@ namespace Server.Engines.XmlSpawner2
             Add(200525, "Activo");
             Add(200526, "Muerto");
             Add(200527, "Descalificado");
-            Add(200528, "Añadir");
+            Add(200528, "Aï¿½adir");
             Add(200529, "Empezar");
             Add(200530, "Setiar Costo de Entrada: ");
             Add(200531, "Setiar el Size del Arena: ");
@@ -179,8 +183,8 @@ namespace Server.Engines.XmlSpawner2
             Add(100545, "Tu has sido sacado por {0}");
             Add(100546, "{0} no cualifica. No hay puntos.");
             Add(100547, "{0} ya esta en un Challenge.");
-            Add(100548, "{0} ya ha sido añadido al juego.");
-            Add(100549, "Tu añadistes a {0} para el challenge.");
+            Add(100548, "{0} ya ha sido aï¿½adido al juego.");
+            Add(100549, "Tu aï¿½adistes a {0} para el challenge.");
             Add(100550, "Tu has sido invitado para participar en {0}.");
             Add(200560, "Deathmatch Challenge");
             Add(200561, "Puntajes del Blanco: {0}");
@@ -214,7 +218,7 @@ namespace Server.Engines.XmlSpawner2
             Add(200623, "CTF Team Status");
             Add(200630, "Team Deathball Challenge");
             Add(200631, "Deathball Team Status");
-            
+
             Add(200640, "Faction");
             Add(200649, "Location: {0}");
             Add(200650, "{0} is occupied");
@@ -222,8 +226,6 @@ namespace Server.Engines.XmlSpawner2
             Add(200660, "Cancel");
             Add(200661, "Duel here");
             Add(100670, "{0} is in combat.");
-
-    	}
+        }
     }
 }
-

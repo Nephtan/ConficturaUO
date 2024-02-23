@@ -68,9 +68,20 @@ namespace Server.Spells.Research
             {
                 Caster.SendLocalizedMessage(500237); // Target can not be seen.
             }
-            else if (!(m is BaseCreature))
+            else if (m is PlayerMobile)
             {
-                Caster.SendMessage("This spell cannot affect those type of creatures.");
+                m.Paralyze(TimeSpan.FromSeconds((DamagingSkill(Caster) / 4)));
+                m.SendMessage("You are charmed.");
+                BuffInfo.RemoveBuff(m, BuffIcon.Charm);
+                BuffInfo.AddBuff(
+                    m,
+                    new BuffInfo(
+                        BuffIcon.Charm,
+                        1063686,
+                        TimeSpan.FromSeconds((DamagingSkill(Caster) / 4)),
+                        m
+                    )
+                );
             }
             else if (!CanAffect)
             {
@@ -125,6 +136,10 @@ namespace Server.Spells.Research
                 }
 
                 FinishSequence();
+            }
+            else
+            {
+                Caster.SendMessage("This spell cannot affect that.");
             }
         }
 

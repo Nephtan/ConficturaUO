@@ -6968,6 +6968,185 @@ namespace Server
                     action = 18;
                 }
             }
+            else if (body == 899) // NEW WYRM
+            {
+                if (action == 3)
+                {
+                    action = 2;
+                }
+                else if (action == 6)
+                {
+                    action = 4;
+                }
+                else if (action == 7)
+                {
+                    action = 4;
+                }
+                else if (action == 8)
+                {
+                    action = 4;
+                }
+                else if (action == 9)
+                {
+                    action = 4;
+                }
+                else if (action == 12)
+                {
+                    action = 4;
+                }
+                else if (action == 13)
+                {
+                    action = 4;
+                }
+                else if (action == 14)
+                {
+                    action = 4;
+                }
+                else if (action == 16)
+                {
+                    action = 4;
+                }
+                else if (action == 17)
+                {
+                    action = 1;
+                }
+                else if (action == 19)
+                {
+                    action = 1;
+                }
+                else if (action == 20)
+                {
+                    action = 1;
+                }
+                else if (action == 21)
+                {
+                    action = 10;
+                }
+            }
+            else if (body == 337) // ELEPHANT
+            {
+                if (action == 3)
+                {
+                    action = 2;
+                }
+                else if (action == 6)
+                {
+                    action = 4;
+                }
+                else if (action == 7)
+                {
+                    action = 4;
+                }
+                else if (action == 8)
+                {
+                    action = 4;
+                }
+                else if (action == 9)
+                {
+                    action = 4;
+                }
+                else if (action == 12)
+                {
+                    action = 4;
+                }
+                else if (action == 13)
+                {
+                    action = 4;
+                }
+                else if (action == 14)
+                {
+                    action = 4;
+                }
+                else if (action == 15)
+                {
+                    action = 4;
+                }
+                else if (action == 16)
+                {
+                    action = 4;
+                }
+                else if (action == 17)
+                {
+                    action = 1;
+                }
+                else if (action == 19)
+                {
+                    action = 1;
+                }
+                else if (action == 20)
+                {
+                    action = 1;
+                }
+                else if (action == 21)
+                {
+                    action = 10;
+                }
+            }
+            else if (body == 989) // NEW CYCLOPS
+            {
+                if (action == 3)
+                {
+                    action = 2;
+                }
+            }
+            else if (body == 997) // MAMMOTH
+            {
+                if (action == 3)
+                {
+                    action = 2;
+                }
+                else if (action == 17)
+                {
+                    action = 5;
+                }
+                else if (action == 4)
+                {
+                    action = 4;
+                }
+                else if (action == 1)
+                {
+                    action = 1;
+                }
+                else if (action == 2)
+                {
+                    action = 2;
+                }
+                else if (action == 5)
+                {
+                    action = 5;
+                }
+                else if (action == 10)
+                {
+                    action = 10;
+                }
+                else
+                {
+                    action = 5;
+                }
+            }
+            else if (body == 894) // GIRAFFE
+            {
+                if (action == 3)
+                {
+                    action = 2;
+                }
+                else if (action == 4)
+                {
+                    action = 2;
+                }
+                else if (action == 6)
+                {
+                    action = 5;
+                }
+                else if (action == 11)
+                {
+                    action = 8;
+                }
+                else if (action == 12)
+                {
+                    action = 8;
+                }
+            }
             else if (raceID > 0)
             {
                 if (action == 12 || action == 13)
@@ -7040,6 +7219,12 @@ namespace Server
                 || body == 652
                 || body == 738
                 || body == 739
+                || body == 907
+                || body == 908
+                || body == 890
+                || body == 891
+                || body == 892
+                || body == 893
                 || body == 769
             )
             {

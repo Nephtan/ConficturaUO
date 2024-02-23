@@ -8,7 +8,6 @@ using Server.Targeting;
 namespace Server.Items
 {
     [Furniture]
-    [Flipable(0x127D, 0x12B4)]
     public class StuffedBear : Item
     {
         public string AnimalKiller;

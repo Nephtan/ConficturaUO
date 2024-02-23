@@ -74,6 +74,7 @@ namespace Server.Spells.Research
             m_Table.Remove(m);
             m.EndAction(typeof(ResearchSneak));
             m.Hidden = false;
+            BuffInfo.RemoveBuff(m, BuffIcon.Sneak);
         }
 
         public void Target(Mobile m)
@@ -136,6 +137,9 @@ namespace Server.Spells.Research
                 new InternalTimer(m, TimeSpan.FromSeconds(time)).Start();
 
                 m.Hidden = true;
+
+                BuffInfo.RemoveBuff(m, BuffIcon.Sneak);
+                BuffInfo.AddBuff(m, new BuffInfo(BuffIcon.Sneak, 1063654, 1063655, length, m));
 
                 m.BeginAction(typeof(ResearchSneak));
                 Server.Misc.Research.ConsumeScroll(Caster, true, spellIndex, false);

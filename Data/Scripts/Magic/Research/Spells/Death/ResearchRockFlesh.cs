@@ -61,6 +61,8 @@ namespace Server.Spells.Research
             m.RaceBody();
             m.SendMessage("Your flesh turns back to normal.");
 
+            BuffInfo.RemoveBuff(m, BuffIcon.RockFlesh);
+
             ResistanceMod[] mods = (ResistanceMod[])TableStoneFlesh[m];
             TableStoneFlesh.Remove(m);
             for (int i = 0; i < mods.Length; ++i)
@@ -103,6 +105,18 @@ namespace Server.Spells.Research
 
             Caster.BodyMod = 14;
             Caster.HueMod = 0xB31;
+
+            BuffInfo.RemoveBuff(Caster, BuffIcon.RockFlesh);
+            BuffInfo.AddBuff(
+                Caster,
+                new BuffInfo(
+                    BuffIcon.RockFlesh,
+                    1063652,
+                    1063653,
+                    TimeSpan.FromSeconds(TotalTime),
+                    Caster
+                )
+            );
 
             Mobiles.IMount mt = Caster.Mount;
             if (mt != null)

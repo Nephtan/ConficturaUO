@@ -131,6 +131,21 @@ namespace Server.Spells.Second
                         TrapWand xWand = (TrapWand)iWand;
                         xWand.WandPower = nPower;
                         from.AddToBackpack(xWand);
+
+                        string args = String.Format("{0}", nPower);
+                        BuffInfo.RemoveBuff(from, BuffIcon.RemoveTrap);
+                        BuffInfo.AddBuff(
+                            from,
+                            new BuffInfo(
+                                BuffIcon.RemoveTrap,
+                                1063623,
+                                1063624,
+                                TimeSpan.FromMinutes(30.0),
+                                from,
+                                args.ToString(),
+                                true
+                            )
+                        );
                     }
                     m_Owner.FinishSequence();
                 }

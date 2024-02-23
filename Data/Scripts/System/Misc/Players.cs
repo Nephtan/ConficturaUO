@@ -106,7 +106,7 @@ namespace Server.Misc
 
         public static bool isFromSpace(Mobile m)
         {
-            if (m.Skills.Cap >= 40000)
+            if (((PlayerMobile)m).SkillStart == 40000)
                 return true;
 
             return false;

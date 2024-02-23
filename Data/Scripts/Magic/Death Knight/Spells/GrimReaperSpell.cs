@@ -73,9 +73,9 @@ namespace Server.Spells.DeathKnight
                     BuffInfo.AddBuff(
                         Caster,
                         new BuffInfo(
-                            BuffIcon.EnemyOfOne,
-                            1044119,
-                            1044118,
+                            BuffIcon.GrimReaper,
+                            1063546,
+                            1063547,
                             TimeSpan.FromMinutes(delay),
                             Caster
                         )

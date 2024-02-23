@@ -25,7 +25,6 @@ namespace Server.SkillHandlers
         public static void OnPickedInstrument(Mobile from, BaseInstrument instrument)
         {
             from.RevealingAction();
-            //from.SendLocalizedMessage( 1049525 ); // Whom do you wish to calm?
             from.SendMessage(
                 "Choose someone to calm or choose yourself to calm everyone in the nearby area."
             );
@@ -172,6 +171,13 @@ namespace Server.SkillHandlers
                             if (music > 100.0)
                                 diff -= (music - 100.0) * 0.5;
 
+                            double seconds = 100 - (diff / 1.5);
+
+                            if (seconds > 120)
+                                seconds = 120;
+                            else if (seconds < 10)
+                                seconds = 10;
+
                             if (
                                 !from.CheckTargetSkill(
                                     SkillName.Peacemaking,
@@ -200,22 +206,36 @@ namespace Server.SkillHandlers
                                     targ.Combatant = null;
                                     targ.Warmode = false;
 
-                                    double seconds = 100 - (diff / 1.5);
-
-                                    if (seconds > 120)
-                                        seconds = 120;
-                                    else if (seconds < 10)
-                                        seconds = 10;
-
                                     bc.Pacify(from, DateTime.Now + TimeSpan.FromSeconds(seconds));
                                 }
-                                else
+                                else if (
+                                    targ.Skills[SkillName.MagicResist].Value
+                                    > Utility.RandomMinMax(0, 125)
+                                )
                                 {
                                     from.SendLocalizedMessage(1049532); // You play hypnotic music, calming your target.
 
                                     targ.SendLocalizedMessage(500616); // You hear lovely music, and forget to continue battling!
                                     targ.Combatant = null;
                                     targ.Warmode = false;
+
+                                    targ.Paralyze(TimeSpan.FromSeconds(seconds));
+                                    BuffInfo.RemoveBuff(targ, BuffIcon.PeaceMaking);
+                                    BuffInfo.AddBuff(
+                                        targ,
+                                        new BuffInfo(
+                                            BuffIcon.PeaceMaking,
+                                            1063664,
+                                            TimeSpan.FromSeconds(seconds),
+                                            targ
+                                        )
+                                    );
+                                }
+                                else
+                                {
+                                    from.SendLocalizedMessage(1049531); // You attempt to calm your target, but fail.
+                                    m_Instrument.PlayInstrumentBadly(from);
+                                    m_Instrument.ConsumeUse(from);
                                 }
                             }
                         }

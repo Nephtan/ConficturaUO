@@ -114,6 +114,12 @@ namespace Server.Spells.Chivalry
 
                 TimeSpan duration = TimeSpan.FromSeconds(seconds);
 
+                BuffInfo.RemoveBuff(Caster, BuffIcon.ConsecrateWeapon);
+                BuffInfo.AddBuff(
+                    Caster,
+                    new BuffInfo(BuffIcon.ConsecrateWeapon, 1063605, duration, Caster)
+                );
+
                 Timer t = (Timer)m_Table[weapon];
 
                 if (t != null)

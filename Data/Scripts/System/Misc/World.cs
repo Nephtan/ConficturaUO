@@ -24,6 +24,7 @@ using Server.Spells.Undead;
 using Server.Spells.Mystic;
 using Server.Spells.Research;
 using Server.Spells.Elementalism;
+using Server.Spells.Enchantments;
 
 namespace Server.Misc
 {

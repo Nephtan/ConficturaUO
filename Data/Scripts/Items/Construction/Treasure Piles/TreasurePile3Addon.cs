@@ -12,6 +12,11 @@ namespace Server.Items
 {
     public class TreasurePile3Addon : BaseAddon
     {
+        public override string AddonName
+        {
+            get { return "treasure pile"; }
+        }
+
         private static int[,] m_AddOnSimpleComponents = new int[,]
         {
             { 6981, 3, -1, 1 },

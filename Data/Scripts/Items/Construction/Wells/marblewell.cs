@@ -10,6 +10,11 @@ namespace Server.Items
 {
     public class MarbleWellAddon : BaseAddon, IWaterSource
     {
+        public override string AddonName
+        {
+            get { return "well"; }
+        }
+
         public int Quantity
         {
             get { return 500; }

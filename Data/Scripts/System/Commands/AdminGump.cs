@@ -492,78 +492,8 @@ namespace Server.Gumps
                         false
                     );
 
-                    /*AddButtonLabeled(20, 150, GetButtonID(3, 100), "Documentation");
-                    AddButtonLabeled(220, 150, GetButtonID(3, 107), "Rebuild Categorization");*/
-
                     #region Sender
-                    AddButtonLabeled(20, 150, GetButtonID(3, 137), "Decorate Mondain's Legacy");
-                    AddButtonLabeled(220, 150, GetButtonID(3, 138), "Remove Mondain's Legacy");
-                    #endregion
-
-                    AddButtonLabeled(20, 175, GetButtonID(3, 101), "Teleporters");
-                    AddButtonLabeled(220, 175, GetButtonID(3, 102), "Moongates");
-
-                    AddButtonLabeled(20, 200, GetButtonID(3, 103), "Vendors");
-                    AddButtonLabeled(220, 200, GetButtonID(3, 106), "Decoration");
-
-                    AddButtonLabeled(20, 225, GetButtonID(3, 104), "Doors");
-                    AddButtonLabeled(220, 225, GetButtonID(3, 105), "Signs");
-
-                    #region Sender
-                    AddButton(
-                        10,
-                        175 - 1 + 5,
-                        10006,
-                        10006,
-                        GetButtonID(3, 131),
-                        GumpButtonType.Reply,
-                        0
-                    ); // TelGenDelete
-                    AddButton(
-                        210,
-                        175 - 1 + 5,
-                        10006,
-                        10006,
-                        GetButtonID(3, 132),
-                        GumpButtonType.Reply,
-                        0
-                    ); // MoonGenDelete
-                    AddButton(
-                        10,
-                        200 - 1 + 5,
-                        10006,
-                        10006,
-                        GetButtonID(3, 133),
-                        GumpButtonType.Reply,
-                        0
-                    ); // UOAMVendorsDelete
-                    AddButton(
-                        10,
-                        225 - 1 + 5,
-                        10006,
-                        10006,
-                        GetButtonID(3, 134),
-                        GumpButtonType.Reply,
-                        0
-                    ); // DoorGenDelete
-                    AddButton(
-                        210,
-                        225 - 1 + 5,
-                        10006,
-                        10006,
-                        GetButtonID(3, 135),
-                        GumpButtonType.Reply,
-                        0
-                    ); // SignGenDelete
-                    AddButton(
-                        210,
-                        200 - 1 + 5,
-                        10006,
-                        10006,
-                        GetButtonID(3, 136),
-                        GumpButtonType.Reply,
-                        0
-                    ); // DecorateDelete
+                    AddButtonLabeled(20, 150, GetButtonID(3, 137), "Build World");
                     #endregion
 
                     AddHtml(20, 275, 400, 30, Color(Center("Statics"), LabelColor32), false, false);
@@ -2600,40 +2530,6 @@ namespace Server.Gumps
                             page = AdminGumpPage.Administer_Commands;
                             break;
 
-                        case 100:
-                            InvokeCommand("DocGen");
-                            notice = "Documentation has been generated.";
-                            break;
-                        case 101:
-                            InvokeCommand("TelGen");
-                            notice = "Teleporters have been generated.";
-                            break;
-                        case 102:
-                            InvokeCommand("MoonGen");
-                            notice = "Moongates have been generated.";
-                            break;
-                        case 103:
-                            InvokeCommand("UOAMVendors");
-                            notice = "Vendor spawners have been generated.";
-                            break;
-                        case 104:
-                            InvokeCommand("DoorGen");
-                            notice = "Doors have been generated.";
-                            break;
-                        case 105:
-                            InvokeCommand("SignGen");
-                            notice = "Signs have been generated.";
-                            break;
-                        case 106:
-                            InvokeCommand("Decorate");
-                            notice = "Decoration has been generated.";
-                            break;
-                        case 107:
-                            InvokeCommand("RebuildCategorization");
-                            notice =
-                                "Categorization menu has been regenerated. The server should be restarted.";
-                            break;
-
                         case 110:
                             InvokeCommand("Freeze");
                             notice = "Target bounding points.";
@@ -2644,37 +2540,9 @@ namespace Server.Gumps
                             break;
 
                         // + Sender
-                        case 131:
-                            InvokeCommand("TelGenDelete");
-                            notice = "Teleporters have been deleted.";
-                            break;
-                        case 132:
-                            InvokeCommand("MoonGenDelete");
-                            notice = "Moongates have been deleted.";
-                            break;
-                        case 133:
-                            InvokeCommand("UOAMVendorsDelete");
-                            notice = "Vendor spawners have been deleted.";
-                            break;
-                        case 134:
-                            InvokeCommand("DoorGenDelete");
-                            notice = "Doors have been deleted.";
-                            break;
-                        case 135:
-                            InvokeCommand("SignGenDelete");
-                            notice = "Signs have been deleted.";
-                            break;
-                        case 136:
-                            InvokeCommand("DecorateDelete");
-                            notice = "Decoration has been deleted.";
-                            break;
                         case 137:
-                            InvokeCommand("DecorateML");
-                            notice = "Mondain's Legacy has been Generated.";
-                            break;
-                        case 138:
-                            InvokeCommand("DecorateMLDelete");
-                            notice = "Mondain's Legacy has been removed.";
+                            InvokeCommand("Buildworld");
+                            notice = "The world has been rebuilt.";
                             break;
                         // - Sender
 

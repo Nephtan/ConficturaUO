@@ -600,6 +600,8 @@ namespace Server.Items
             else if (item is BrocadeSquareGozaMatSouthDeed) { gold = 35 * amount; }
             else if (item is BronzeIngot) { gold = 8 * amount; }
             else if (item is BronzeShield) { gold = 33 * amount; }
+            else if (item is SunShield) { gold = 115 * amount; }
+            else if (item is VirtueShield) { gold = 115 * amount; }
             else if (item is Buckler) { gold = 25 * amount; }
             else if (item is Engines.BulkOrders.BulkOrderBook) { gold = 25 * amount; }
             else if (item is ButcherKnife) { gold = 7 * amount; }

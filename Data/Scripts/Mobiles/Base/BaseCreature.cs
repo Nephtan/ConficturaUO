@@ -394,7 +394,7 @@ namespace Server.Mobiles
         }
         public virtual TimeSpan BondingDelay
         {
-            get { return TimeSpan.FromDays(7.0); }
+            get { return TimeSpan.FromDays(Server.Misc.MyServerSettings.BondDays()); }
         }
         public virtual TimeSpan BondingAbandonDelay
         {
@@ -3102,6 +3102,9 @@ namespace Server.Mobiles
                     || this is WhiteWolf
                     || this is SnowLeopard
                     || this is Mammoth
+                    || this is Jaguar
+                    || this is Cougar
+                    || this is Hyena
                     || this is Boar
                     || this is Panda
                     || this is PandaRiding
@@ -6377,6 +6380,7 @@ namespace Server.Mobiles
                 || (corpse.m_Owner is RubyWyrm)
                 || (corpse.m_Owner is SpinelWyrm)
                 || (corpse.m_Owner is Wyrms)
+                || (corpse.m_Owner is Wyrm)
                 || (corpse.m_Owner is QuartzWyrm)
                 || (corpse.m_Owner is WhiteWyrm)
             )
@@ -11321,6 +11325,9 @@ namespace Server.Mobiles
                 this.Map == Map.IslesDread
                 && (
                     this is WhiteTigerRiding
+                    || this is Hyena
+                    || this is Jaguar
+                    || this is Cougar
                     || this is WhiteTiger
                     || this is PolarBear
                     || this is WhiteWolf

@@ -5,6 +5,11 @@ namespace Server.Items
 {
     public class BloodPentagramAddon : BaseAddon
     {
+        public override string AddonName
+        {
+            get { return "blood pentagram"; }
+        }
+
         public override BaseAddonDeed Deed
         {
             get { return new BloodPentagramDeed(); }

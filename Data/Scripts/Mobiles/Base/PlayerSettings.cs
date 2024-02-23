@@ -50,7 +50,7 @@ namespace Server.Misc
         public static void SetSavage(Mobile m) // -------------------------------------------------------------------------------------------------
         {
             PlayerSettings.SetDiscovered(m, "the Savaged Empire", true);
-            m.Skills.Cap = 11000;
+            Server.Misc.MyServerSettings.SkillBegin("savage", (PlayerMobile)m);
             Server.Misc.MorphingTime.RemoveMyClothes(m);
 
             if (m.Female)
@@ -138,7 +138,7 @@ namespace Server.Misc
             Point3D loc = new Point3D(7000, 4000, 0);
             m.MoveToWorld(loc, Map.Lodor);
 
-            m.Skills.Cap = 40000;
+            Server.Misc.MyServerSettings.SkillBegin("alien", (PlayerMobile)m);
             Server.Misc.MorphingTime.RemoveMyClothes(m);
 
             List<Item> contents = new List<Item>();
@@ -194,23 +194,18 @@ namespace Server.Misc
                 case 0:
                     wTitle = "Emperor";
                     break;
-
                 case 1:
                     wTitle = "Duke";
                     break;
-
                 case 2:
                     wTitle = "Earl";
                     break;
-
                 case 3:
                     wTitle = "Baron";
                     break;
-
                 case 4:
                     wTitle = "King";
                     break;
-
                 case 5:
                     wTitle = "Prince";
                     break;
@@ -226,23 +221,18 @@ namespace Server.Misc
                     case 0:
                         wTitle = "Empress";
                         break;
-
                     case 1:
                         wTitle = "Duchess";
                         break;
-
                     case 2:
                         wTitle = "Countess";
                         break;
-
                     case 3:
                         wTitle = "Baroness";
                         break;
-
                     case 4:
                         wTitle = "Queen";
                         break;
-
                     case 5:
                         wTitle = "Princess";
                         break;
@@ -320,7 +310,7 @@ namespace Server.Misc
 
             m.Profile = ((PlayerMobile)m).CharacterWanted;
             SetBardsTaleQuest(m, "BardsTaleWin", true);
-            m.Skills.Cap = 13000;
+            Server.Misc.MyServerSettings.SkillBegin("fugitive", (PlayerMobile)m);
             m.Kills = 1;
             ((PlayerMobile)m).Profession = 1;
 

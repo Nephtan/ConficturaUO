@@ -95,6 +95,21 @@ namespace Server.Spells.Song
                     m.AddStatMod(mod);
 
                     m.FixedParticles(0x375A, 10, 15, 5017, 0x224, 3, EffectLayer.Waist);
+
+                    string args = String.Format("{0}", amount);
+                    BuffInfo.RemoveBuff(m, BuffIcon.SinewyEtude);
+                    BuffInfo.AddBuff(
+                        m,
+                        new BuffInfo(
+                            BuffIcon.SinewyEtude,
+                            1063587,
+                            1063588,
+                            TimeSpan.FromSeconds(duration),
+                            m,
+                            args.ToString(),
+                            true
+                        )
+                    );
                 }
             }
 

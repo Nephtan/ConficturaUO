@@ -13,7 +13,7 @@ namespace Server.Mobiles
             Name = "a water strider";
             Body = 140;
             BaseSoundID = 0x388;
-            Hue = 488;
+            Hue = 0xB3D;
             CanSwim = true;
 
             SetStr(176, 200);

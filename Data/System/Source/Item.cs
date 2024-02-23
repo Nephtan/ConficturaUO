@@ -755,6 +755,45 @@ namespace Server
             }
         }
 
+        public int m_Enchanted;
+
+        [CommandProperty(AccessLevel.Owner)]
+        public int Enchanted
+        {
+            get { return m_Enchanted; }
+            set
+            {
+                m_Enchanted = value;
+                InvalidateProperties();
+            }
+        }
+
+        public string m_Enchantment;
+
+        [CommandProperty(AccessLevel.Owner)]
+        public string Enchantment
+        {
+            get { return m_Enchantment; }
+            set
+            {
+                m_Enchantment = value;
+                InvalidateProperties();
+            }
+        }
+
+        public int m_EnchantUses;
+
+        [CommandProperty(AccessLevel.Owner)]
+        public int EnchantUses
+        {
+            get { return m_EnchantUses; }
+            set
+            {
+                m_EnchantUses = value;
+                InvalidateProperties();
+            }
+        }
+
         public int TempFlags
         {
             get
@@ -1187,6 +1226,14 @@ namespace Server
         {
             AddNameProperty(list);
 
+            if (!String.IsNullOrEmpty(m_Enchantment))
+            {
+                list.Add(1062613, m_Enchantment);
+
+                if (m_EnchantUses > 0)
+                    list.Add(1060741, m_EnchantUses.ToString());
+            }
+
             if (IsSecure)
                 AddSecureProperty(list);
             else if (IsLockedDown)
@@ -1375,7 +1422,59 @@ namespace Server
                 ((Item)m_Parent).GetChildContextMenuEntries(from, list, this);
             else if (m_Parent is Mobile)
                 ((Mobile)m_Parent).GetChildContextMenuEntries(from, list, this);
+
+            if (m_Enchanted > 0 && m_EnchantUses > 0)
+            {
+                list.Add(new EnchantInfo(from, this));
+                list.Add(new EnchantGump(from, this));
+            }
         }
+
+        public class EnchantInfo : ContextMenuEntry
+        {
+            private Mobile e_Mobile;
+            private Item e_Item;
+
+            public EnchantInfo(Mobile from, Item item)
+                : base(6096, 3)
+            {
+                e_Mobile = from;
+                e_Item = item;
+            }
+
+            public override void OnClick()
+            {
+                e_Item.InfoEnchantment(e_Mobile);
+            }
+        }
+
+        public class EnchantGump : ContextMenuEntry
+        {
+            private Mobile e_Mobile;
+            private Item e_Item;
+
+            public EnchantGump(Mobile from, Item item)
+                : base(6097, 3)
+            {
+                e_Mobile = from;
+                e_Item = item;
+            }
+
+            public override void OnClick()
+            {
+                e_Item.CastEnchantment(e_Mobile);
+            }
+        }
+
+        //public virtual void InfoEnchantment(Mobile from)
+        //{
+        //    from.SendMessage("This item appears magical.");
+        //}
+
+        //public virtual void CastEnchantment(Mobile from)
+        //{
+        //    from.SendMessage("The item seems to do nothing.");
+        //}
 
         public virtual bool VerifyMove(Mobile from)
         {
@@ -2196,7 +2295,11 @@ namespace Server
 
         public virtual void Serialize(GenericWriter writer)
         {
-            writer.Write(10); // version
+            writer.Write(11); // version
+
+            writer.Write(Enchanted);
+            writer.Write(Enchantment);
+            writer.Write(EnchantUses);
 
             writer.Write(GraphicID);
             writer.Write(GraphicHue);
@@ -2565,6 +2668,13 @@ namespace Server
 
             switch (version)
             {
+                case 11:
+                {
+                    Enchanted = reader.ReadInt();
+                    Enchantment = reader.ReadString();
+                    EnchantUses = reader.ReadInt();
+                    goto case 10;
+                }
                 case 10:
                 {
                     GraphicID = reader.ReadInt();
@@ -2943,9 +3053,18 @@ namespace Server
 
         public void SyncItem()
         {
-            if (Name == "" || Name == null)
+            // if ( Name == "" || Name == null ){ Name = Utility.AddSpacesToSentence( (this.GetType()).Name ); }
+
+            if (Name != "")
+            { /* DO NOTHING */
+            }
+            else if (Name == null && LabelNumber == MainLabelNumber())
             {
-                Name = Utility.AddSpacesToSentence((this.GetType()).Name);
+                Name = TileData.ItemTable[ItemID].Name;
+            }
+            else
+            {
+                Name = null;
             }
 
             if (!isModded(this))
@@ -3046,6 +3165,14 @@ namespace Server
                 else
                     return 1078872 + m_ItemID;
             }
+        }
+
+        public int MainLabelNumber()
+        {
+            if (m_ItemID < 0x4000)
+                return 1020000 + m_ItemID;
+
+            return 1078872 + m_ItemID;
         }
 
         [CommandProperty(AccessLevel.GameMaster)]

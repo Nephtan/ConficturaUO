@@ -61,6 +61,7 @@ namespace Server.Spells.Shinobi
             m.Send(SpeedControl.Disable);
             TableCheetahPaws.Remove(m);
             m.EndAction(typeof(CheetahPaws));
+            BuffInfo.RemoveBuff(m, BuffIcon.CheetahPaws);
         }
 
         public override void OnCast()
@@ -96,6 +97,16 @@ namespace Server.Spells.Shinobi
                 TableCheetahPaws[Caster] = SpeedControl.MountSpeed;
                 Caster.Send(SpeedControl.MountSpeed);
                 new InternalTimer(Caster, TimeSpan.FromSeconds(TotalTime)).Start();
+                BuffInfo.RemoveBuff(Caster, BuffIcon.CheetahPaws);
+                BuffInfo.AddBuff(
+                    Caster,
+                    new BuffInfo(
+                        BuffIcon.CheetahPaws,
+                        1063490,
+                        TimeSpan.FromSeconds(TotalTime),
+                        Caster
+                    )
+                );
                 Caster.BeginAction(typeof(CheetahPaws));
                 Caster.PlaySound(0x077);
             }

@@ -71,6 +71,21 @@ namespace Server.Spells.Research
 
                     m.AddResistanceMod(mod1);
 
+                    string args = String.Format("{0}", amount);
+                    BuffInfo.RemoveBuff(m, BuffIcon.EndureCold);
+                    BuffInfo.AddBuff(
+                        m,
+                        new BuffInfo(
+                            BuffIcon.EndureCold,
+                            1063638,
+                            1063639,
+                            duration,
+                            m,
+                            args.ToString(),
+                            true
+                        )
+                    );
+
                     m.PlaySound(0x1E9);
                     m.FixedParticles(
                         0x375A,

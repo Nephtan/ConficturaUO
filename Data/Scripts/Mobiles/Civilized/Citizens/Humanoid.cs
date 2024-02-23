@@ -599,7 +599,7 @@ namespace Server.Mobiles
                         switch (pick)
                         {
                             case 1:
-                                m.Body = Utility.RandomList(212, 213, 34, 177, 190, 179);
+                                m.Body = Utility.RandomList(212, 213, 177, 190, 179);
                                 m.Name = "a bear";
                                 m.BaseSoundID = 0xA3;
                                 break;

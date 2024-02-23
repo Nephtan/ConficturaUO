@@ -90,6 +90,12 @@ namespace Server.Spells.Fifth
 
                 m.Paralyze(TimeSpan.FromSeconds(duration));
 
+                BuffInfo.RemoveBuff(m, BuffIcon.Paralyze);
+                BuffInfo.AddBuff(
+                    m,
+                    new BuffInfo(BuffIcon.Paralyze, 1063621, TimeSpan.FromSeconds(duration), m)
+                );
+
                 m.PlaySound(0x204);
                 m.FixedEffect(
                     0x376A,

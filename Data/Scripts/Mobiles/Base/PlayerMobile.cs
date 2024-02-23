@@ -99,6 +99,25 @@ namespace Server.Mobiles
 
     public class PlayerMobile : Mobile, IHonorTarget
     {
+        public override bool CurePoison(Mobile from)
+        {
+            if (CheckCure(from))
+            {
+                Poison oldPoison = this.Poison;
+                this.Poison = null;
+
+                OnCured(from, oldPoison);
+
+                BuffInfo.RemoveBuff(this, BuffIcon.Poisoned);
+
+                return true;
+            }
+
+            OnFailedCure(from);
+
+            return false;
+        }
+
         /* Begin Captcha Mod */
         ////////////////////////////////////////
         private DateTime _NextCaptchaTime;
@@ -1394,9 +1413,12 @@ namespace Server.Mobiles
                 {
                     RemoveBuff(BuffIcon.HidingAndOrStealth);
                 }
-                else // if( !InvisibilitySpell.HasTimer( this ) )
+                else if (
+                    !Server.Spells.Sixth.InvisibilitySpell.HasTimer(this)
+                    && !Server.Spells.Undead.SpectreShadowSpell.HasTimer(this)
+                )
                 {
-                    BuffInfo.AddBuff(this, new BuffInfo(BuffIcon.HidingAndOrStealth, 1075655)); //Hidden/Stealthing & You Are Hidden
+                    BuffInfo.AddBuff(this, new BuffInfo(BuffIcon.HidingAndOrStealth, 1075655));
                 }
             }
         }
@@ -1701,47 +1723,14 @@ namespace Server.Mobiles
         {
             if (m is PlayerMobile && ((PlayerMobile)m).AccessLevel < AccessLevel.Counselor)
             {
-                bool adjust = true;
+                int record =
+                    ((PlayerMobile)m).SkillStart
+                    + ((PlayerMobile)m).SkillBoost
+                    + ((PlayerMobile)m).SkillEther;
 
-                if (m.Skills.Cap == 13000 || m.Skills.Cap == 18000)
+                if (m.Skills.Cap != record)
                 {
-                    if (((PlayerMobile)m).Profession == 1)
-                    {
-                        adjust = false;
-                    }
-                    else if (Server.Misc.PlayerSettings.GetKeys(m, "Virtue"))
-                    {
-                        adjust = false;
-                    }
-                }
-                else if (
-                    (m.Skills.Cap == 40000 || m.Skills.Cap == 45000)
-                    && m.SkillsTotal <= m.Skills.Cap
-                )
-                {
-                    ((PlayerMobile)m).Profession = 0;
-                    adjust = false;
-                }
-                else if (
-                    (m.Skills.Cap == 10000 || m.Skills.Cap == 15000)
-                    && m.SkillsTotal <= m.Skills.Cap
-                )
-                {
-                    ((PlayerMobile)m).Profession = 0;
-                    adjust = false;
-                }
-                else if (
-                    (m.Skills.Cap == 11000 || m.Skills.Cap == 16000)
-                    && m.SkillsTotal <= m.Skills.Cap
-                )
-                {
-                    ((PlayerMobile)m).Profession = 0;
-                    adjust = false;
-                }
-
-                if (adjust)
-                {
-                    m.Skills.Cap = 10000;
+                    Server.Misc.MyServerSettings.SkillBegin("default", (PlayerMobile)m);
                     ((PlayerMobile)m).Profession = 0;
                     for (int i = 0; i < m.Skills.Length; i++)
                     {
@@ -1750,30 +1739,14 @@ namespace Server.Mobiles
                     }
                 }
 
-                if (
-                    (
-                        m.Skills.Cap == 10000
-                        || m.Skills.Cap == 11000
-                        || m.Skills.Cap == 13000
-                        || m.Skills.Cap == 40000
-                    )
-                    && m.StatCap != 250
-                )
+                if (((PlayerMobile)m).SkillEther != 5000 && m.StatCap != 250)
                 {
                     m.StatCap = 250;
                     m.RawStr = 20;
                     m.RawInt = 20;
                     m.RawDex = 20;
                 }
-                else if (
-                    (
-                        m.Skills.Cap == 15000
-                        || m.Skills.Cap == 16000
-                        || m.Skills.Cap == 18000
-                        || m.Skills.Cap == 45000
-                    )
-                    && m.StatCap != 300
-                )
+                else if (((PlayerMobile)m).SkillEther == 5000 && m.StatCap != 300)
                 {
                     m.StatCap = 300;
                     m.RawStr = 20;
@@ -3549,7 +3522,7 @@ namespace Server.Mobiles
         {
             get
             {
-                if (Skills.Cap >= 400000)
+                if (SkillStart == 40000)
                 {
                     return 0;
                 }
@@ -4378,6 +4351,47 @@ namespace Server.Mobiles
 
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+        public int SkillStart;
+
+        [CommandProperty(AccessLevel.GameMaster)]
+        public int Skill_Start
+        {
+            get { return SkillStart; }
+            set
+            {
+                SkillStart = value;
+                InvalidateProperties();
+            }
+        }
+
+        public int SkillBoost;
+
+        [CommandProperty(AccessLevel.GameMaster)]
+        public int Skill_Boost
+        {
+            get { return SkillBoost; }
+            set
+            {
+                SkillBoost = value;
+                InvalidateProperties();
+            }
+        }
+
+        public int SkillEther;
+
+        [CommandProperty(AccessLevel.GameMaster)]
+        public int Skill_Ether
+        {
+            get { return SkillEther; }
+            set
+            {
+                SkillEther = value;
+                InvalidateProperties();
+            }
+        }
+
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
         public override void Deserialize(GenericReader reader)
         {
             base.Deserialize(reader);
@@ -4385,6 +4399,66 @@ namespace Server.Mobiles
 
             switch (version)
             {
+                case 35:
+                {
+                    SkillStart = reader.ReadInt();
+                    SkillBoost = reader.ReadInt();
+                    SkillEther = reader.ReadInt();
+
+                    if (SkillStart < 1)
+                    {
+                        SkillBoost = Server.Misc.MyServerSettings.SkillBoost();
+
+                        if (Skills.Cap == 11000)
+                        {
+                            SkillStart = 11000;
+                        }
+                        else if (Skills.Cap == 16000)
+                        {
+                            SkillStart = 11000;
+                            SkillEther = 5000;
+                        }
+                        else if (Skills.Cap == 10000)
+                        {
+                            SkillStart = 10000;
+                        }
+                        else if (Skills.Cap == 15000)
+                        {
+                            SkillStart = 10000;
+                            SkillEther = 5000;
+                        }
+                        else if (Skills.Cap == 13000)
+                        {
+                            SkillStart = 13000;
+                        }
+                        else if (Skills.Cap == 18000)
+                        {
+                            SkillStart = 13000;
+                            SkillEther = 5000;
+                        }
+                        else if (Skills.Cap == 40000)
+                        {
+                            SkillStart = 40000;
+                        }
+                        else if (Skills.Cap == 45000)
+                        {
+                            SkillStart = 40000;
+                            SkillEther = 5000;
+                        }
+                        else
+                        {
+                            SkillStart = 10000;
+                            SkillEther = 0;
+                        }
+                    }
+
+                    if (SkillBoost < Server.Misc.MyServerSettings.SkillBoost())
+                        SkillBoost = Server.Misc.MyServerSettings.SkillBoost();
+
+                    Skills.Cap = SkillStart + SkillBoost + SkillEther;
+                    
+                    goto case 34;
+                }
                 case 34:
                 {
                     m_City = (CityManagementStone)reader.ReadItem();
@@ -4786,7 +4860,11 @@ namespace Server.Mobiles
 
             base.Serialize(writer);
 
-            writer.Write((int)34); // version
+            writer.Write((int)35); // version
+
+            writer.Write(SkillStart);
+            writer.Write(SkillBoost);
+            writer.Write(SkillEther);
 
             writer.Write(m_City);
             writer.Write(m_CityTitle);
@@ -5266,7 +5344,7 @@ namespace Server.Mobiles
                 if (value)
                     AddBuff(new BuffInfo(BuffIcon.Paralyze, 1075827)); //Paralyze/You are frozen and can not move
                 else
-                    RemoveBuff(BuffIcon.Paralyze);
+                    BuffInfo.CleanupIcons(this, true);
             }
         }
 

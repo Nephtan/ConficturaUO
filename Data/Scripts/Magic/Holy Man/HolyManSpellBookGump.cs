@@ -16,7 +16,10 @@ namespace Server.Gumps
 
         public bool HasSpell(Mobile from, int spellID)
         {
-            return (m_Book.HasSpell(spellID));
+            if (m_Book.RootParentEntity == from)
+                return (m_Book.HasSpell(spellID));
+            else
+                return false;
         }
 
         public HolyManSpellbookGump(Mobile from, HolyManSpellbook book, int page)
@@ -622,7 +625,7 @@ namespace Server.Gumps
                 }
                 from.SendGump(new HolyManSpellbookGump(from, m_Book, page));
             }
-            else if (info.ButtonID > 700)
+            else if (info.ButtonID > 700 && HasSpell(from, info.ButtonID))
             {
                 if (info.ButtonID == 770)
                 {

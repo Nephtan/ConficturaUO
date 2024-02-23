@@ -107,6 +107,11 @@ namespace Server.Spells.Jester
                     Mobile v = targets[i];
                     duration = Timed(v, Caster);
                     v.Paralyze(TimeSpan.FromSeconds(duration));
+                    BuffInfo.RemoveBuff(v, BuffIcon.Hilarity);
+                    BuffInfo.AddBuff(
+                        v,
+                        new BuffInfo(BuffIcon.Hilarity, 1063520, TimeSpan.FromSeconds(duration), v)
+                    );
                     DoReaction(v);
                     HarmfulSpell(v);
                 }

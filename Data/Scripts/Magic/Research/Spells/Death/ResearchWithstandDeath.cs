@@ -94,6 +94,9 @@ namespace Server.Spells.Research
                     sapphire.Consume();
                 }
                 Server.Misc.Research.ConsumeScroll(Caster, true, spellIndex, true);
+
+                BuffInfo.RemoveBuff(m, BuffIcon.WithstandDeath);
+                BuffInfo.AddBuff(m, new BuffInfo(BuffIcon.WithstandDeath, 1063656));
             }
 
             FinishSequence();
@@ -192,6 +195,8 @@ namespace Server.Misc
                 m.CurePoison(m);
                 m.PlaySound(0x202);
                 rock.Delete();
+
+                BuffInfo.RemoveBuff(m, BuffIcon.WithstandDeath);
 
                 return true;
             }

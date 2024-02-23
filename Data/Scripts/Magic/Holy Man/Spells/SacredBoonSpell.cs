@@ -125,6 +125,11 @@ namespace Server.Spells.HolyMan
                 source = from;
                 Priority = TimerPriority.FiftyMS;
                 Expire = DateTime.Now + TimeSpan.FromSeconds(30.0);
+                BuffInfo.RemoveBuff(m, BuffIcon.SacredBoon);
+                BuffInfo.AddBuff(
+                    m,
+                    new BuffInfo(BuffIcon.SacredBoon, 1063534, TimeSpan.FromSeconds(30.0), m)
+                );
             }
 
             protected override void OnTick()

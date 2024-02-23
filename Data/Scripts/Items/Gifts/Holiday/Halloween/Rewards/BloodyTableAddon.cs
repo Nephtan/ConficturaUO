@@ -6,6 +6,11 @@ namespace Server.Items
 {
     public class BloodyTableAddon : BaseAddon
     {
+        public override string AddonName
+        {
+            get { return "bloody table"; }
+        }
+
         private static int[,] m_AddOnSimpleComponents = new int[,]
         {
             { 7379, 1, 2, 0 },

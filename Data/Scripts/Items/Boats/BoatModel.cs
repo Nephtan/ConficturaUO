@@ -6,6 +6,11 @@ namespace Server.Items
 {
     public class BoatModel : BaseAddon
     {
+        public override string AddonName
+        {
+            get { return "boat model"; }
+        }
+
         public override BaseAddonDeed Deed
         {
             get { return new BoatModelDeed(); }

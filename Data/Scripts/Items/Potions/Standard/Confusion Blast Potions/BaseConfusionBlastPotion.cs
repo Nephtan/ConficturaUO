@@ -133,6 +133,15 @@ namespace Server.Items
 
                     mon.Pacify(from, DateTime.Now + TimeSpan.FromSeconds(5.0)); // TODO check
                 }
+                else if (
+                    mobile.Alive
+                    && from != mobile
+                    && mobile.Blessed == false
+                    && from.CanBeHarmful(mobile, true)
+                )
+                {
+                    mobile.Paralyze(TimeSpan.FromSeconds(5.0));
+                }
             }
         }
 

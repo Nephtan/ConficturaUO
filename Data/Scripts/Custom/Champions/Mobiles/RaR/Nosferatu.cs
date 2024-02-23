@@ -30,7 +30,13 @@ namespace Server.Mobiles
 
             SummonPrison.DressUpMonsters(this, "Nosferatu the Vampire");
 
-            Effects.SendLocationParticles(EffectItem.Create(Location, Map, EffectItem.DefaultDuration), 0x3728, 10, 10, 2023);
+            Effects.SendLocationParticles(
+                EffectItem.Create(Location, Map, EffectItem.DefaultDuration),
+                0x3728,
+                10,
+                10,
+                2023
+            );
             PlaySound(0x1FE);
         }
 
@@ -51,10 +57,10 @@ namespace Server.Mobiles
             switch (version)
             {
                 case 0:
-                    {
-                        m_TrueForm = reader.ReadBool();
-                        break;
-                    }
+                {
+                    m_TrueForm = reader.ReadBool();
+                    break;
+                }
             }
         }
     }

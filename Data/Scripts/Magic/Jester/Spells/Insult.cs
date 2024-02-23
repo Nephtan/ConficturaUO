@@ -463,6 +463,12 @@ namespace Server.Spells.Jester
                 m_Loss = loss;
                 m_Owner = owner;
                 m_Expire = DateTime.Now + TimeSpan.FromSeconds(m_Time);
+
+                BuffInfo.RemoveBuff(owner, BuffIcon.Insult);
+                BuffInfo.AddBuff(
+                    owner,
+                    new BuffInfo(BuffIcon.Insult, 1063518, TimeSpan.FromSeconds(m_Time), owner)
+                );
             }
 
             protected override void OnTick()

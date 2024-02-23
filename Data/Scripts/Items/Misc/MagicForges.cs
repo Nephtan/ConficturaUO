@@ -1633,7 +1633,7 @@ namespace Server.Items
                                                 else
                                                 {
                                                     newItem = (Item)
-                                                        Activator.CreateInstance(itemType); // Line 1631
+                                                        Activator.CreateInstance(itemType);
                                                 }
 
                                                 string nameItem = newItem.Name;

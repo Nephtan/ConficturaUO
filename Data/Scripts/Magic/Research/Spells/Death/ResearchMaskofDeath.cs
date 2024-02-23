@@ -87,6 +87,18 @@ namespace Server.Spells.Research
                 Caster.AddToBackpack(iMask);
                 Server.Misc.Research.ConsumeScroll(Caster, true, spellIndex, false);
 
+                BuffInfo.RemoveBuff(Caster, BuffIcon.MaskDeath);
+                BuffInfo.AddBuff(
+                    Caster,
+                    new BuffInfo(
+                        BuffIcon.MaskDeath,
+                        1063642,
+                        1063643,
+                        TimeSpan.FromSeconds(time),
+                        Caster
+                    )
+                );
+
                 KarmaMod(Caster, ((int)RequiredSkill + RequiredMana));
             }
             FinishSequence();

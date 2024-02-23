@@ -1576,7 +1576,7 @@ namespace Server.Engines.Harvest
 
                         if (sos.Level < 2)
                         {
-                            monster = Utility.RandomMinMax(1, 4);
+                            monster = Utility.RandomMinMax(0, 4);
                         }
                         else if (sos.Level == 2)
                         {
@@ -1593,6 +1593,10 @@ namespace Server.Engines.Harvest
 
                         switch (monster)
                         {
+                            case 0:
+                                creature = new Jellyfish();
+                                Screature = "Shipwreck Jellyfish";
+                                break; // 1
                             case 1:
                                 creature = new WaterNaga();
                                 Screature = "Shipwreck Naga";

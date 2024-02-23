@@ -15312,7 +15312,7 @@ namespace Server.Gumps
                 ResearchBag bag = (ResearchBag)(
                     Server.Misc.ResearchBarSettings.ResearchMaterials(from)
                 );
-                string MySettings = bag.BarsCast1;
+                string MyServerSettings = bag.BarsCast1;
 
                 int button1 = 3609;
                 int button2 = 3609;
@@ -15382,7 +15382,7 @@ namespace Server.Gumps
                 int button66 = 3609;
                 int button67 = 3609;
 
-                string[] eachSpell = MySettings.Split('#');
+                string[] eachSpell = MyServerSettings.Split('#');
                 int nLine = 1;
                 foreach (string eachSpells in eachSpell)
                 {
@@ -16511,7 +16511,7 @@ namespace Server.Gumps
                 ResearchBag bag = (ResearchBag)(
                     Server.Misc.ResearchBarSettings.ResearchMaterials(from)
                 );
-                string MySettings = bag.BarsCast2;
+                string MyServerSettings = bag.BarsCast2;
 
                 int button1 = 3609;
                 int button2 = 3609;
@@ -16581,7 +16581,7 @@ namespace Server.Gumps
                 int button66 = 3609;
                 int button67 = 3609;
 
-                string[] eachSpell = MySettings.Split('#');
+                string[] eachSpell = MyServerSettings.Split('#');
                 int nLine = 1;
                 foreach (string eachSpells in eachSpell)
                 {
@@ -17710,7 +17710,7 @@ namespace Server.Gumps
                 ResearchBag bag = (ResearchBag)(
                     Server.Misc.ResearchBarSettings.ResearchMaterials(from)
                 );
-                string MySettings = bag.BarsCast3;
+                string MyServerSettings = bag.BarsCast3;
 
                 int button1 = 3609;
                 int button2 = 3609;
@@ -17780,7 +17780,7 @@ namespace Server.Gumps
                 int button66 = 3609;
                 int button67 = 3609;
 
-                string[] eachSpell = MySettings.Split('#');
+                string[] eachSpell = MyServerSettings.Split('#');
                 int nLine = 1;
                 foreach (string eachSpells in eachSpell)
                 {
@@ -18909,7 +18909,7 @@ namespace Server.Gumps
                 ResearchBag bag = (ResearchBag)(
                     Server.Misc.ResearchBarSettings.ResearchMaterials(from)
                 );
-                string MySettings = bag.BarsCast4;
+                string MyServerSettings = bag.BarsCast4;
 
                 int button1 = 3609;
                 int button2 = 3609;
@@ -18979,7 +18979,7 @@ namespace Server.Gumps
                 int button66 = 3609;
                 int button67 = 3609;
 
-                string[] eachSpell = MySettings.Split('#');
+                string[] eachSpell = MyServerSettings.Split('#');
                 int nLine = 1;
                 foreach (string eachSpells in eachSpell)
                 {

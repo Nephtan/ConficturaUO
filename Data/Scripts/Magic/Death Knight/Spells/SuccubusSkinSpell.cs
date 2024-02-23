@@ -87,15 +87,10 @@ namespace Server.Spells.DeathKnight
 
                 double timer = GetKarmaPower(Caster);
 
+                BuffInfo.RemoveBuff(m, BuffIcon.SuccubusSkin);
                 BuffInfo.AddBuff(
                     m,
-                    new BuffInfo(
-                        BuffIcon.CorpseSkin,
-                        1044123,
-                        1044118,
-                        TimeSpan.FromSeconds(timer),
-                        m
-                    )
+                    new BuffInfo(BuffIcon.SuccubusSkin, 1063559, TimeSpan.FromSeconds(timer), m)
                 );
             }
 
@@ -148,6 +143,7 @@ namespace Server.Spells.DeathKnight
                 if (!dest.CheckAlive())
                 {
                     Stop();
+                    BuffInfo.RemoveBuff(dest, BuffIcon.SuccubusSkin);
                     m_Table.Remove(dest);
                 }
 
@@ -168,6 +164,7 @@ namespace Server.Spells.DeathKnight
                 if (DateTime.Now >= Expire)
                 {
                     Stop();
+                    BuffInfo.RemoveBuff(dest, BuffIcon.SuccubusSkin);
                     if (m_Table.Contains(dest))
                         m_Table.Remove(dest);
                 }

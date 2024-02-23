@@ -57,7 +57,11 @@ namespace Server.Regions
             {
                 m.SendMessage("You find yourself in a primitive hut.");
             }
-            if (m is PlayerMobile && m.AccessLevel < AccessLevel.GameMaster && m.Skills.Cap < 11000)
+            if (
+                m is PlayerMobile
+                && m.AccessLevel < AccessLevel.GameMaster
+                && ((PlayerMobile)m).SkillStart != 11000
+            )
             {
                 Server.Misc.PlayerSettings.SetSavage(m);
             }

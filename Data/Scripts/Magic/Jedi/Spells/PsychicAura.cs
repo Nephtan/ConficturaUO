@@ -84,6 +84,13 @@ namespace Server.Spells.Jedi
 
                     for (int i = 0; i < mods.Length; ++i)
                         targ.AddResistanceMod(mods[i]);
+
+                    string args = String.Format("{0}\t{1}\t{2}\t{3}\t{4}", phys, -5, -5, -5, engy);
+
+                    BuffInfo.AddBuff(
+                        Caster,
+                        new BuffInfo(BuffIcon.PsychicAura, 1063526, 1075818, args.ToString(), true)
+                    );
                 }
                 else
                 {
@@ -94,6 +101,8 @@ namespace Server.Spells.Jedi
 
                     for (int i = 0; i < mods.Length; ++i)
                         targ.RemoveResistanceMod(mods[i]);
+
+                    BuffInfo.RemoveBuff(Caster, BuffIcon.PsychicAura);
                 }
             }
 

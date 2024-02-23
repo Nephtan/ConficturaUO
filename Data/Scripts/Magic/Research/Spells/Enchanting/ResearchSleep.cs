@@ -88,6 +88,9 @@ namespace Server.Spells.Research
 
                 m.Paralyze(duration);
 
+                BuffInfo.RemoveBuff(m, BuffIcon.Sleep);
+                BuffInfo.AddBuff(m, new BuffInfo(BuffIcon.Sleep, 1063646, duration, m));
+
                 m.PlaySound(0x657);
 
                 m.FixedParticles(

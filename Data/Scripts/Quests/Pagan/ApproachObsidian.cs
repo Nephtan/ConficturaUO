@@ -54,6 +54,7 @@ namespace Server.Items
                             TitanRiches(m);
 
                             m.Skills.Cap = m.Skills.Cap + 5000;
+                            ((PlayerMobile)m).SkillEther = 5000;
                             m.StatCap = 300;
 
                             Server.Items.QuestSouvenir.GiveReward(m, "Obelisk Tip", 0, 0x185F);

@@ -40,6 +40,11 @@ namespace Server.Items
 
     public class BloodyPentagramAddon : BaseAddon, IRewardItem
     {
+        public override string AddonName
+        {
+            get { return "bloody pentagram"; }
+        }
+
         public override BaseAddonDeed Deed
         {
             get

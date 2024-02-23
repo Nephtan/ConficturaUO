@@ -225,6 +225,9 @@ namespace Server.Spells.Research
 
                     m.Paralyze(duration);
 
+                    BuffInfo.RemoveBuff(m, BuffIcon.SleepField);
+                    BuffInfo.AddBuff(m, new BuffInfo(BuffIcon.SleepField, 1063648, duration, m));
+
                     m.PlaySound(0x657);
 
                     m.FixedParticles(

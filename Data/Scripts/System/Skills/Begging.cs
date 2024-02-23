@@ -275,6 +275,124 @@ namespace Server.SkillHandlers
                             Titles.AwardFame(from, -40, true);
                         }
                     }
+                    else if (
+                        targ.Player
+                        && from != targ
+                        && targ.Combatant == from
+                        && targ.Warmode == true
+                    ) // BEG PLAYERS TO STOP ATTACKING YOU ////////////////////////////////////////
+                    {
+                        if (
+                            targ.Int
+                            > Utility.RandomMinMax(0, (int)(from.Skills[SkillName.Begging].Value))
+                        )
+                        {
+                            from.CheckSkill(SkillName.Begging, 0, 125);
+                            switch (Utility.RandomMinMax(0, 8))
+                            {
+                                case 0:
+                                    from.Say("Leave me alone!");
+                                    break;
+                                case 1:
+                                    from.Say("Have mercy!");
+                                    break;
+                                case 2:
+                                    from.Say("Please, I am but a puny worm!");
+                                    break;
+                                case 3:
+                                    from.Say("Go away!");
+                                    break;
+                                case 4:
+                                    from.Say("I submit to your might!");
+                                    break;
+                                case 5:
+                                    from.Say("Your power has me scared!");
+                                    break;
+                                case 6:
+                                    from.Say("Leave me be!");
+                                    break;
+                                case 7:
+                                    from.Say("I didn't want to hurt you!");
+                                    break;
+                                case 8:
+                                    from.Say("Don't hurt me!");
+                                    break;
+                            }
+
+                            double diff = GetBaseDifficulty(targ) - 10.0;
+                            double beggar = from.Skills[SkillName.Begging].Value;
+
+                            if (beggar > 100.0)
+                                diff -= (beggar - 100.0) * 0.5;
+
+                            if (
+                                !from.CheckTargetSkill(
+                                    SkillName.Begging,
+                                    targ,
+                                    diff - 25.0,
+                                    diff + 25.0
+                                )
+                            )
+                            {
+                                from.SendMessage("You fail to convince them to leave you alone.");
+                            }
+                            else
+                            {
+                                from.NextSkillTime = DateTime.Now + TimeSpan.FromSeconds(5.0);
+                                if (targ is BaseCreature)
+                                {
+                                    BaseCreature bc = (BaseCreature)targ;
+
+                                    from.SendMessage(
+                                        "You beg and plead enough for them to leave you alone."
+                                    );
+
+                                    targ.Combatant = null;
+                                    targ.Warmode = false;
+
+                                    double seconds = 100 - (diff / 1.5);
+
+                                    if (seconds > 120)
+                                        seconds = 120;
+                                    else if (seconds < 10)
+                                        seconds = 10;
+
+                                    targ.Paralyze(TimeSpan.FromSeconds(seconds));
+                                    BuffInfo.RemoveBuff(targ, BuffIcon.Begging);
+                                    BuffInfo.AddBuff(
+                                        targ,
+                                        new BuffInfo(
+                                            BuffIcon.Begging,
+                                            1063666,
+                                            TimeSpan.FromSeconds(seconds),
+                                            targ
+                                        )
+                                    );
+                                }
+                                else
+                                {
+                                    from.SendMessage(
+                                        "You beg and plead enough for them to leave you alone."
+                                    );
+                                    targ.SendMessage(
+                                        "They somehow begged and pleaded, convincing you to leave them alone."
+                                    );
+                                    targ.Combatant = null;
+                                    targ.Warmode = false;
+                                }
+                            }
+                        }
+                        from.NextSkillTime = DateTime.Now + TimeSpan.FromSeconds(10.0);
+                        m_SetSkillTime = false;
+                        if (from.Karma > -2459)
+                        {
+                            Titles.AwardKarma(from, -40, true);
+                        }
+                        if (from.Fame > -2459)
+                        {
+                            Titles.AwardFame(from, -40, true);
+                        }
+                    }
                     else if (targ.Player) // We can't beg from players
                     {
                         number = 500398; // Perhaps just asking would work better.

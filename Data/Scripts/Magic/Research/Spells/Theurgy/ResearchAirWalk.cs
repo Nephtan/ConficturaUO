@@ -79,6 +79,18 @@ namespace Server.Spells.Research
             Caster.PlaySound(0x014);
             Server.Misc.Research.ConsumeScroll(Caster, true, spellID, false);
 
+            BuffInfo.RemoveBuff(Caster, BuffIcon.AirWalk);
+            BuffInfo.AddBuff(
+                Caster,
+                new BuffInfo(
+                    BuffIcon.AirWalk,
+                    1063632,
+                    1063633,
+                    TimeSpan.FromSeconds(TotalTime),
+                    Caster
+                )
+            );
+
             FinishSequence();
         }
 
@@ -99,6 +111,7 @@ namespace Server.Spells.Research
                 if (DateTime.Now >= m_Expire)
                 {
                     ResearchAirWalk.RemoveEffect(m_m);
+                    BuffInfo.RemoveBuff(m_m, BuffIcon.AirWalk);
                     Stop();
                 }
             }

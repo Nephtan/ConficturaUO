@@ -72,7 +72,7 @@ namespace Server.Items
 
             Item item = null;
 
-            switch (Utility.RandomMinMax(1, 84))
+            switch (Utility.RandomMinMax(1, 86))
             {
                 case 1:
                     item = new AssassinSpike();
@@ -325,6 +325,12 @@ namespace Server.Items
                     break;
                 case 84:
                     item = new ShortSword();
+                    break;
+                case 85:
+                    item = new SunShield();
+                    break;
+                case 86:
+                    item = new VirtueShield();
                     break;
             }
 

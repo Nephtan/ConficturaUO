@@ -6,6 +6,11 @@ namespace Server.Items
 {
     public class EvilFireplaceSouthFaceAddon : BaseAddon
     {
+        public override string AddonName
+        {
+            get { return "evil fireplace"; }
+        }
+
         private static int[,] m_AddOnSimpleComponents = new int[,]
         {
             { 7134, 0, 0, 0 },
@@ -130,6 +135,11 @@ namespace Server.Items
 
     public class EvilFireplaceEastFaceAddon : BaseAddon
     {
+        public override string AddonName
+        {
+            get { return "evil fireplace"; }
+        }
+
         private static int[,] m_AddOnSimpleComponents = new int[,]
         {
             { 7137, 0, 0, 0 },

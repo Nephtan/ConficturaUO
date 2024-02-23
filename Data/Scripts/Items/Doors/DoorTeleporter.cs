@@ -128,6 +128,8 @@ namespace Server.Items
         public DoorTeleporter(Point3D pointDest, Map mapDest, bool creatures)
             : base(0x6C5)
         {
+            Name = "door";
+
             Movable = false;
             Visible = true;
 

@@ -187,6 +187,13 @@ namespace Server.Mobiles
                             killer.Name + " the " + Server.Misc.GetPlayerInfo.GetSkillTitle(killer);
                         trophy.AnimalKiller = "Killed by " + trophyKiller;
                         c.DropItem(trophy);
+
+                        object obj = c;
+                        if (obj is Corpse)
+                        {
+                            Corpse corpse = (Corpse)obj;
+                            corpse.VisitedByTaxidermist = true;
+                        }
                     }
                     if (
                         GetPlayerInfo.LuckyKiller(killer.Luck)

@@ -7,7 +7,10 @@ namespace Server.Items
     {
         [Constructable]
         public NightSightPotion()
-            : base(0xF06, PotionEffect.Nightsight) { }
+            : base(0xF06, PotionEffect.Nightsight)
+        {
+            Name = "nightsight potion";
+        }
 
         public NightSightPotion(Serial serial)
             : base(serial) { }
@@ -15,15 +18,14 @@ namespace Server.Items
         public override void Serialize(GenericWriter writer)
         {
             base.Serialize(writer);
-
             writer.Write((int)0); // version
         }
 
         public override void Deserialize(GenericReader reader)
         {
             base.Deserialize(reader);
-
             int version = reader.ReadInt();
+            Name = "nightsight potion";
         }
 
         public override void Drink(Mobile from)
@@ -37,6 +39,8 @@ namespace Server.Items
                 from.PlaySound(0x1E3);
 
                 BasePotion.PlayDrinkEffect(from);
+
+                BuffInfo.AddBuff(from, new BuffInfo(BuffIcon.PotionNightSight, 1063593, 1063598));
 
                 this.Consume();
             }

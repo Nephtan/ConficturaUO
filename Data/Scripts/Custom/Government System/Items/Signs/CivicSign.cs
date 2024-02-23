@@ -132,19 +132,19 @@ namespace Server.Items
             switch (version)
             {
                 case 1:
-                    {
-                        m_LandlordRemove = reader.ReadMobile();
-                        goto case 0;
-                    }
+                {
+                    m_LandlordRemove = reader.ReadMobile();
+                    goto case 0;
+                }
 
                 case 0:
-                    {
-                        m_toDelete = reader.ReadItemList();
-                        m_Stone = (CityManagementStone)reader.ReadItem();
-                        m_Type = (CivicSignType)reader.ReadInt();
+                {
+                    m_toDelete = reader.ReadItemList();
+                    m_Stone = (CityManagementStone)reader.ReadItem();
+                    m_Type = (CivicSignType)reader.ReadInt();
 
-                        break;
-                    }
+                    break;
+                }
             }
         }
     }

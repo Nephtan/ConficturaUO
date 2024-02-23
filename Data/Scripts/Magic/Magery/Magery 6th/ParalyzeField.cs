@@ -220,6 +220,17 @@ namespace Server.Spells.Sixth
 
                     m.Paralyze(TimeSpan.FromSeconds(duration));
 
+                    BuffInfo.RemoveBuff(m, BuffIcon.ParalyzeField);
+                    BuffInfo.AddBuff(
+                        m,
+                        new BuffInfo(
+                            BuffIcon.ParalyzeField,
+                            1063621,
+                            TimeSpan.FromSeconds(duration),
+                            m
+                        )
+                    );
+
                     m.PlaySound(0x204);
                     m.FixedEffect(
                         0x376A,

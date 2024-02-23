@@ -15,8 +15,8 @@ namespace Server.Mobiles
         {
             Name = NameList.RandomName("goddess");
             Title = "the demigoddess";
-            Body = 427;
-            Hue = Utility.RandomList(0xB01, 0x870);
+            Body = 436;
+            Hue = 0x845;
             BaseSoundID = 0x4B0;
 
             SetStr(986, 1185);

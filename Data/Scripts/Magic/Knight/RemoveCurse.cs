@@ -45,6 +45,42 @@ namespace Server.Spells.Chivalry
             Caster.Target = new InternalTarget(this);
         }
 
+        public static void RemoveBadThings(Mobile m)
+        {
+            StatMod mod;
+
+            mod = m.GetStatMod("[Magic] Str Offset");
+            if (mod != null && mod.Offset < 0)
+                m.RemoveStatMod("[Magic] Str Offset");
+
+            mod = m.GetStatMod("[Magic] Dex Offset");
+            if (mod != null && mod.Offset < 0)
+                m.RemoveStatMod("[Magic] Dex Offset");
+
+            mod = m.GetStatMod("[Magic] Int Offset");
+            if (mod != null && mod.Offset < 0)
+                m.RemoveStatMod("[Magic] Int Offset");
+
+            m.Paralyzed = false;
+            BuffInfo.CleanupIcons(m, false);
+
+            EvilOmenSpell.TryEndEffect(m);
+            StrangleSpell.RemoveCurse(m);
+            CorpseSkinSpell.RemoveCurse(m);
+            CurseSpell.RemoveEffect(m);
+            MortalStrike.EndWound(m);
+            BloodOathSpell.RemoveCurse(m);
+            MindRotSpell.ClearMindRotScalar(m);
+
+            BuffInfo.RemoveBuff(m, BuffIcon.Clumsy);
+            BuffInfo.RemoveBuff(m, BuffIcon.FeebleMind);
+            BuffInfo.RemoveBuff(m, BuffIcon.Weaken);
+            BuffInfo.RemoveBuff(m, BuffIcon.Curse);
+            BuffInfo.RemoveBuff(m, BuffIcon.MassCurse);
+            BuffInfo.RemoveBuff(m, BuffIcon.Mindrot);
+            BuffInfo.RemoveBuff(m, BuffIcon.Discordance);
+        }
+
         public void Target(Mobile m)
         {
             if (CheckBSequence(m))
@@ -101,42 +137,7 @@ namespace Server.Spells.Chivalry
                         0x100
                     );
 
-                    StatMod mod;
-
-                    mod = m.GetStatMod("[Magic] Str Offset");
-                    if (mod != null && mod.Offset < 0)
-                        m.RemoveStatMod("[Magic] Str Offset");
-
-                    mod = m.GetStatMod("[Magic] Dex Offset");
-                    if (mod != null && mod.Offset < 0)
-                        m.RemoveStatMod("[Magic] Dex Offset");
-
-                    mod = m.GetStatMod("[Magic] Int Offset");
-                    if (mod != null && mod.Offset < 0)
-                        m.RemoveStatMod("[Magic] Int Offset");
-
-                    m.Paralyzed = false;
-
-                    EvilOmenSpell.TryEndEffect(m);
-                    StrangleSpell.RemoveCurse(m);
-                    CorpseSkinSpell.RemoveCurse(m);
-                    CurseSpell.RemoveEffect(m);
-                    MortalStrike.EndWound(m);
-                    if (Core.ML)
-                    {
-                        BloodOathSpell.RemoveCurse(m);
-                    }
-                    MindRotSpell.ClearMindRotScalar(m);
-
-                    BuffInfo.RemoveBuff(m, BuffIcon.Clumsy);
-                    BuffInfo.RemoveBuff(m, BuffIcon.FeebleMind);
-                    BuffInfo.RemoveBuff(m, BuffIcon.Weaken);
-                    BuffInfo.RemoveBuff(m, BuffIcon.Curse);
-                    BuffInfo.RemoveBuff(m, BuffIcon.MassCurse);
-                    BuffInfo.RemoveBuff(m, BuffIcon.MortalStrike);
-                    BuffInfo.RemoveBuff(m, BuffIcon.Mindrot);
-
-                    // TODO: Should this remove blood oath? Pain spike?
+                    Server.Spells.Chivalry.RemoveCurseSpell.RemoveBadThings(m);
                 }
                 else
                 {

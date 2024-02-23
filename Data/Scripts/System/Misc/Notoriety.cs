@@ -101,7 +101,10 @@ namespace Server.Misc
             }
 
             // Player Government System checks for social dynamics
-            if (PlayerGovernmentSystem.CheckIfBanned(from, target) || PlayerGovernmentSystem.CheckAtWarWith(from, target))
+            if (
+                PlayerGovernmentSystem.CheckIfBanned(from, target)
+                || PlayerGovernmentSystem.CheckAtWarWith(from, target)
+            )
                 return false;
             if (PlayerGovernmentSystem.CheckCityAlly(from, target))
                 return true;
@@ -109,7 +112,11 @@ namespace Server.Misc
             // Guild and allies check
             Guild fromGuild = from.Guild as Guild;
             Guild targetGuild = target.Guild as Guild;
-            if (fromGuild != null && targetGuild != null && (fromGuild == targetGuild || fromGuild.IsAlly(targetGuild)))
+            if (
+                fromGuild != null
+                && targetGuild != null
+                && (fromGuild == targetGuild || fromGuild.IsAlly(targetGuild))
+            )
                 return true;
 
             // Use the GetGuildStatus and CheckBeneficialStatus methods to evaluate guild status
@@ -138,9 +145,10 @@ namespace Server.Misc
             PlayerMobile pmTarget = target as PlayerMobile;
 
             // Determine the attacker's controller for pets or summoned creatures early.
-            Mobile attackerController = bcAttacker != null && (bcAttacker.Controlled || bcAttacker.Summoned)
-                ? bcAttacker.ControlMaster ?? bcAttacker.SummonMaster
-                : null;
+            Mobile attackerController =
+                bcAttacker != null && (bcAttacker.Controlled || bcAttacker.Summoned)
+                    ? bcAttacker.ControlMaster ?? bcAttacker.SummonMaster
+                    : null;
 
             // Check for bard provoked creatures first.
             if (bcAttacker != null && bcAttacker.BardProvoked && bcAttacker.BardTarget == target)
@@ -159,7 +167,10 @@ namespace Server.Misc
                     // Prevent NONPK.NONPK players from attacking pets of any player
                     if (pmAttacker.NONPK == NONPK.NONPK && petOwner.NONPK != NONPK.Null)
                     {
-                        (attackerController ?? attacker).SendMessage(33, "You have chosen the path of [PvE] and cannot attack players or their pets.");
+                        (attackerController ?? attacker).SendMessage(
+                            33,
+                            "You have chosen the path of [PvE] and cannot attack players or their pets."
+                        );
                         return false;
                     }
 
@@ -180,7 +191,10 @@ namespace Server.Misc
             }
 
             // Only apply NONPK logic if both attacker and target are players or pets of players
-            if (pmAttacker != null && pmTarget != null || (bcTarget != null && bcTarget.ControlMaster is PlayerMobile))
+            if (
+                pmAttacker != null && pmTarget != null
+                || (bcTarget != null && bcTarget.ControlMaster is PlayerMobile)
+            )
             {
                 // Check if pmAttacker is not null before accessing NONPK
                 bool attackerIsNonPk = pmAttacker != null && pmAttacker.NONPK == NONPK.NONPK;
@@ -191,7 +205,10 @@ namespace Server.Misc
                 // Prevent NONPK.NONPK players from attacking any players or their pets
                 if (attackerIsNonPk)
                 {
-                    (attackerController ?? attacker).SendMessage(33, "You have chosen the path of [PvE] and cannot attack players or their pets.");
+                    (attackerController ?? attacker).SendMessage(
+                        33,
+                        "You have chosen the path of [PvE] and cannot attack players or their pets."
+                    );
                     return false;
                 }
 
@@ -204,14 +221,25 @@ namespace Server.Misc
             }
 
             // Checks for controlled creatures trying to harm their master or others controlled by the same master.
-            if (bcAttacker != null && (bcAttacker.ControlMaster == target || bcAttacker.SummonMaster == target))
+            if (
+                bcAttacker != null
+                && (bcAttacker.ControlMaster == target || bcAttacker.SummonMaster == target)
+            )
                 return false;
 
-            if (bcAttacker != null && bcTarget != null && attackerController == (bcTarget.ControlMaster ?? bcTarget.SummonMaster))
+            if (
+                bcAttacker != null
+                && bcTarget != null
+                && attackerController == (bcTarget.ControlMaster ?? bcTarget.SummonMaster)
+            )
                 return false;
 
             // Player government system checks remain unchanged as their logic is specific and likely requires no optimization without more context.
-            if (PlayerGovernmentSystem.CheckIfBanned(attacker, target) || PlayerGovernmentSystem.CheckAtWarWith(attacker, target) || PlayerGovernmentSystem.CheckCityAlly(attacker, target))
+            if (
+                PlayerGovernmentSystem.CheckIfBanned(attacker, target)
+                || PlayerGovernmentSystem.CheckAtWarWith(attacker, target)
+                || PlayerGovernmentSystem.CheckCityAlly(attacker, target)
+            )
                 return true;
 
             // Default to allow harm if none of the above conditions are met.

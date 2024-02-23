@@ -93,6 +93,8 @@ namespace Server.Spells.Research
                 {
                     m.Paralyze(duration);
                     m.SendMessage("You are frozen in fear.");
+                    BuffInfo.RemoveBuff(m, BuffIcon.Fear);
+                    BuffInfo.AddBuff(m, new BuffInfo(BuffIcon.Fear, 1063688, duration, m));
                 }
                 else if (m is BaseCreature)
                 {

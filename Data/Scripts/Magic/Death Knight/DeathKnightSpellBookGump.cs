@@ -16,7 +16,10 @@ namespace Server.Gumps
 
         public bool HasSpell(Mobile from, int spellID)
         {
-            return (m_Book.HasSpell(spellID));
+            if (m_Book.RootParentEntity == from)
+                return (m_Book.HasSpell(spellID));
+            else
+                return false;
         }
 
         public DeathKnightSpellbookGump(Mobile from, DeathKnightSpellbook book, int page)
@@ -387,7 +390,7 @@ namespace Server.Gumps
                     }
                     text2 =
                         text2
-                        + "The forces of Orcus surround the knight and refelec a certain amount of magical effects back at the caster.";
+                        + "The forces of Orcus surround the knight and refelect a certain amount of magical effects back at the caster.";
                     icon2 = 0x1B;
                 }
                 else if (page == 6)
@@ -679,7 +682,7 @@ namespace Server.Gumps
                 }
                 from.SendGump(new DeathKnightSpellbookGump(from, m_Book, page));
             }
-            else if (info.ButtonID > 700)
+            else if (info.ButtonID > 700 && HasSpell(from, info.ButtonID))
             {
                 if (info.ButtonID == 750)
                 {

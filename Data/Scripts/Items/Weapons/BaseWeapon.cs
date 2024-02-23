@@ -4302,6 +4302,16 @@ namespace Server.Items
         public BaseWeapon(Serial serial)
             : base(serial) { }
 
+        public override void InfoEnchantment(Mobile from)
+        {
+            from.SendMessage("You learn more about the weapon!");
+        }
+
+        public override void CastEnchantment(Mobile from)
+        {
+            from.SendMessage("You unleash the magic from the weapon!");
+        }
+
         private string GetNameString()
         {
             string name = this.Name;

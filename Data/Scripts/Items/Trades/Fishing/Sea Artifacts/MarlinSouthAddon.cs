@@ -6,6 +6,11 @@ namespace Server.Items
 {
     public class MarlinSouthAddon : BaseAddon
     {
+        public override string AddonName
+        {
+            get { return "marlin"; }
+        }
+
         private static int[,] m_AddOnSimpleComponents = new int[,]
         {
             { 17641, 0, 0, 0 },

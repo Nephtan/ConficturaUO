@@ -116,6 +116,10 @@ namespace Server.Misc
             {
                 bone = 3;
             }
+            else if (m is Giant)
+            {
+                bone = 3;
+            }
             else if (m is HillGiant)
             {
                 bone = 3;
@@ -519,6 +523,34 @@ namespace Server.Misc
             {
                 bone = 6;
             }
+            else if (m is Tyranasaur)
+            {
+                bone = 7;
+            }
+            else if (m is Stegosaurus)
+            {
+                bone = 7;
+            }
+            else if (m is PackStegosaurus)
+            {
+                bone = 7;
+            }
+            else if (m is Brontosaur)
+            {
+                bone = 7;
+            }
+            else if (m is VampirePrince)
+            {
+                bone = 8;
+            }
+            else if (m is VampireLord)
+            {
+                bone = 8;
+            }
+            else if (m is Dracula)
+            {
+                bone = 8;
+            }
 
             if (bone == 1)
             {
@@ -537,18 +569,71 @@ namespace Server.Misc
             }
             else if (bone == 2)
             {
-                SkullDemon head = new SkullDemon();
-                head.Name = "skull of " + m.Name;
-                if (m.Title != "")
+                if (Utility.RandomMinMax(1, 10) == 1)
                 {
-                    head.Name = head.Name + " " + m.Title;
-                }
+                    int headz = Utility.RandomMinMax(1, 3);
 
-                head.Hue = color;
-                head.SkullWhere = where;
-                head.SkullKiller =
-                    killer.Name + " the " + Server.Misc.GetPlayerInfo.GetSkillTitle(killer);
-                c.DropItem(head);
+                    if (headz == 1)
+                    {
+                        DeamonHeadA head = new DeamonHeadA();
+                        head.Name = "head of " + m.Name;
+                        if (m.Title != "")
+                        {
+                            head.Name = head.Name + " " + m.Title;
+                        }
+
+                        head.Hue = color;
+                        head.SkullWhere = where;
+                        head.SkullKiller =
+                            killer.Name + " the " + Server.Misc.GetPlayerInfo.GetSkillTitle(killer);
+                        c.DropItem(head);
+                    }
+                    else if (headz == 2)
+                    {
+                        DeamonHeadB head = new DeamonHeadB();
+                        head.Name = "head of " + m.Name;
+                        if (m.Title != "")
+                        {
+                            head.Name = head.Name + " " + m.Title;
+                        }
+
+                        head.Hue = color;
+                        head.SkullWhere = where;
+                        head.SkullKiller =
+                            killer.Name + " the " + Server.Misc.GetPlayerInfo.GetSkillTitle(killer);
+                        c.DropItem(head);
+                    }
+                    else
+                    {
+                        DeamonHeadC head = new DeamonHeadC();
+                        head.Name = "head of " + m.Name;
+                        if (m.Title != "")
+                        {
+                            head.Name = head.Name + " " + m.Title;
+                        }
+
+                        head.Hue = color;
+                        head.SkullWhere = where;
+                        head.SkullKiller =
+                            killer.Name + " the " + Server.Misc.GetPlayerInfo.GetSkillTitle(killer);
+                        c.DropItem(head);
+                    }
+                }
+                else
+                {
+                    SkullDemon head = new SkullDemon();
+                    head.Name = "skull of " + m.Name;
+                    if (m.Title != "")
+                    {
+                        head.Name = head.Name + " " + m.Title;
+                    }
+
+                    head.Hue = color;
+                    head.SkullWhere = where;
+                    head.SkullKiller =
+                        killer.Name + " the " + Server.Misc.GetPlayerInfo.GetSkillTitle(killer);
+                    c.DropItem(head);
+                }
             }
             else if (bone == 3)
             {
@@ -605,6 +690,34 @@ namespace Server.Misc
                 }
 
                 head.Hue = color;
+                head.SkullWhere = where;
+                head.SkullKiller =
+                    killer.Name + " the " + Server.Misc.GetPlayerInfo.GetSkillTitle(killer);
+                c.DropItem(head);
+            }
+            else if (bone == 7)
+            {
+                SkullDinosaur head = new SkullDinosaur();
+                head.Name = "skull of " + m.Name;
+                if (m.Title != "")
+                {
+                    head.Name = head.Name + " " + m.Title;
+                }
+
+                head.SkullWhere = where;
+                head.SkullKiller =
+                    killer.Name + " the " + Server.Misc.GetPlayerInfo.GetSkillTitle(killer);
+                c.DropItem(head);
+            }
+            else if (bone == 8)
+            {
+                VampireHead head = new VampireHead();
+                head.Name = "head of " + m.Name;
+                if (m.Title != "")
+                {
+                    head.Name = head.Name + " " + m.Title;
+                }
+
                 head.SkullWhere = where;
                 head.SkullKiller =
                     killer.Name + " the " + Server.Misc.GetPlayerInfo.GetSkillTitle(killer);
@@ -819,6 +932,70 @@ namespace Server.Items
         }
 
         public SkullMinotaur(Serial serial)
+            : base(serial) { }
+
+        public override void Serialize(GenericWriter writer)
+        {
+            base.Serialize(writer);
+            writer.Write((int)0);
+            writer.Write(SkullKiller);
+            writer.Write(SkullWhere);
+        }
+
+        public override void Deserialize(GenericReader reader)
+        {
+            base.Deserialize(reader);
+            int version = reader.ReadInt();
+            SkullKiller = reader.ReadString();
+            SkullWhere = reader.ReadString();
+        }
+    }
+
+    [Furniture]
+    [Flipable(0x65CA, 0x65CB)]
+    public class SkullDinosaur : Item
+    {
+        public string SkullKiller;
+        public string SkullWhere;
+
+        [CommandProperty(AccessLevel.Owner)]
+        public string Skull_Killer
+        {
+            get { return SkullKiller; }
+            set
+            {
+                SkullKiller = value;
+                InvalidateProperties();
+            }
+        }
+
+        [CommandProperty(AccessLevel.Owner)]
+        public string Skull_Where
+        {
+            get { return SkullWhere; }
+            set
+            {
+                SkullWhere = value;
+                InvalidateProperties();
+            }
+        }
+
+        [Constructable]
+        public SkullDinosaur()
+            : base(0x65CA)
+        {
+            Weight = 10.0;
+            Name = "dinosaur skull";
+        }
+
+        public override void AddNameProperties(ObjectPropertyList list)
+        {
+            base.AddNameProperties(list);
+            list.Add(1070722, "From " + SkullWhere);
+            list.Add(1049644, "Slain by " + SkullKiller);
+        }
+
+        public SkullDinosaur(Serial serial)
             : base(serial) { }
 
         public override void Serialize(GenericWriter writer)
@@ -1139,6 +1316,262 @@ namespace Server.Items
         }
 
         public SkullGiant(Serial serial)
+            : base(serial) { }
+
+        public override void Serialize(GenericWriter writer)
+        {
+            base.Serialize(writer);
+            writer.Write((int)0);
+            writer.Write(SkullKiller);
+            writer.Write(SkullWhere);
+        }
+
+        public override void Deserialize(GenericReader reader)
+        {
+            base.Deserialize(reader);
+            int version = reader.ReadInt();
+            SkullKiller = reader.ReadString();
+            SkullWhere = reader.ReadString();
+        }
+    }
+
+    [Furniture]
+    [Flipable(0x65C2, 0x65C3)]
+    public class DeamonHeadA : Item
+    {
+        public string SkullKiller;
+        public string SkullWhere;
+
+        [CommandProperty(AccessLevel.Owner)]
+        public string Skull_Killer
+        {
+            get { return SkullKiller; }
+            set
+            {
+                SkullKiller = value;
+                InvalidateProperties();
+            }
+        }
+
+        [CommandProperty(AccessLevel.Owner)]
+        public string Skull_Where
+        {
+            get { return SkullWhere; }
+            set
+            {
+                SkullWhere = value;
+                InvalidateProperties();
+            }
+        }
+
+        [Constructable]
+        public DeamonHeadA()
+            : base(0x65C2)
+        {
+            Weight = 10.0;
+            Name = "demon head";
+        }
+
+        public override void AddNameProperties(ObjectPropertyList list)
+        {
+            base.AddNameProperties(list);
+            list.Add(1070722, "From " + SkullWhere);
+            list.Add(1049644, "Slain by " + SkullKiller);
+        }
+
+        public DeamonHeadA(Serial serial)
+            : base(serial) { }
+
+        public override void Serialize(GenericWriter writer)
+        {
+            base.Serialize(writer);
+            writer.Write((int)0);
+            writer.Write(SkullKiller);
+            writer.Write(SkullWhere);
+        }
+
+        public override void Deserialize(GenericReader reader)
+        {
+            base.Deserialize(reader);
+            int version = reader.ReadInt();
+            SkullKiller = reader.ReadString();
+            SkullWhere = reader.ReadString();
+        }
+    }
+
+    [Furniture]
+    [Flipable(0x65C4, 0x65C5)]
+    public class DeamonHeadB : Item
+    {
+        public string SkullKiller;
+        public string SkullWhere;
+
+        [CommandProperty(AccessLevel.Owner)]
+        public string Skull_Killer
+        {
+            get { return SkullKiller; }
+            set
+            {
+                SkullKiller = value;
+                InvalidateProperties();
+            }
+        }
+
+        [CommandProperty(AccessLevel.Owner)]
+        public string Skull_Where
+        {
+            get { return SkullWhere; }
+            set
+            {
+                SkullWhere = value;
+                InvalidateProperties();
+            }
+        }
+
+        [Constructable]
+        public DeamonHeadB()
+            : base(0x65C4)
+        {
+            Weight = 10.0;
+            Name = "demon head";
+        }
+
+        public override void AddNameProperties(ObjectPropertyList list)
+        {
+            base.AddNameProperties(list);
+            list.Add(1070722, "From " + SkullWhere);
+            list.Add(1049644, "Slain by " + SkullKiller);
+        }
+
+        public DeamonHeadB(Serial serial)
+            : base(serial) { }
+
+        public override void Serialize(GenericWriter writer)
+        {
+            base.Serialize(writer);
+            writer.Write((int)0);
+            writer.Write(SkullKiller);
+            writer.Write(SkullWhere);
+        }
+
+        public override void Deserialize(GenericReader reader)
+        {
+            base.Deserialize(reader);
+            int version = reader.ReadInt();
+            SkullKiller = reader.ReadString();
+            SkullWhere = reader.ReadString();
+        }
+    }
+
+    [Furniture]
+    [Flipable(0x65C6, 0x65C7)]
+    public class DeamonHeadC : Item
+    {
+        public string SkullKiller;
+        public string SkullWhere;
+
+        [CommandProperty(AccessLevel.Owner)]
+        public string Skull_Killer
+        {
+            get { return SkullKiller; }
+            set
+            {
+                SkullKiller = value;
+                InvalidateProperties();
+            }
+        }
+
+        [CommandProperty(AccessLevel.Owner)]
+        public string Skull_Where
+        {
+            get { return SkullWhere; }
+            set
+            {
+                SkullWhere = value;
+                InvalidateProperties();
+            }
+        }
+
+        [Constructable]
+        public DeamonHeadC()
+            : base(0x65C6)
+        {
+            Weight = 10.0;
+            Name = "demon head";
+        }
+
+        public override void AddNameProperties(ObjectPropertyList list)
+        {
+            base.AddNameProperties(list);
+            list.Add(1070722, "From " + SkullWhere);
+            list.Add(1049644, "Slain by " + SkullKiller);
+        }
+
+        public DeamonHeadC(Serial serial)
+            : base(serial) { }
+
+        public override void Serialize(GenericWriter writer)
+        {
+            base.Serialize(writer);
+            writer.Write((int)0);
+            writer.Write(SkullKiller);
+            writer.Write(SkullWhere);
+        }
+
+        public override void Deserialize(GenericReader reader)
+        {
+            base.Deserialize(reader);
+            int version = reader.ReadInt();
+            SkullKiller = reader.ReadString();
+            SkullWhere = reader.ReadString();
+        }
+    }
+
+    [Furniture]
+    [Flipable(0x65C8, 0x65C9)]
+    public class VampireHead : Item
+    {
+        public string SkullKiller;
+        public string SkullWhere;
+
+        [CommandProperty(AccessLevel.Owner)]
+        public string Skull_Killer
+        {
+            get { return SkullKiller; }
+            set
+            {
+                SkullKiller = value;
+                InvalidateProperties();
+            }
+        }
+
+        [CommandProperty(AccessLevel.Owner)]
+        public string Skull_Where
+        {
+            get { return SkullWhere; }
+            set
+            {
+                SkullWhere = value;
+                InvalidateProperties();
+            }
+        }
+
+        [Constructable]
+        public VampireHead()
+            : base(0x65C8)
+        {
+            Weight = 10.0;
+            Name = "vampire head";
+        }
+
+        public override void AddNameProperties(ObjectPropertyList list)
+        {
+            base.AddNameProperties(list);
+            list.Add(1070722, "From " + SkullWhere);
+            list.Add(1049644, "Slain by " + SkullKiller);
+        }
+
+        public VampireHead(Serial serial)
             : base(serial) { }
 
         public override void Serialize(GenericWriter writer)
