@@ -1466,15 +1466,15 @@ namespace Server
             }
         }
 
-        //public virtual void InfoEnchantment(Mobile from)
-        //{
-        //    from.SendMessage("This item appears magical.");
-        //}
+        public virtual void InfoEnchantment(Mobile from)
+        {
+            from.SendMessage("This item appears magical.");
+        }
 
-        //public virtual void CastEnchantment(Mobile from)
-        //{
-        //    from.SendMessage("The item seems to do nothing.");
-        //}
+        public virtual void CastEnchantment(Mobile from)
+        {
+            from.SendMessage("The item seems to do nothing.");
+        }
 
         public virtual bool VerifyMove(Mobile from)
         {

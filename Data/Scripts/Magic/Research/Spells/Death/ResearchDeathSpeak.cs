@@ -36,7 +36,9 @@ namespace Server.Spells.Research
             Server.Misc.Research.SpellInformation(spellID, 2),
             Server.Misc.Research.CapsCast(Server.Misc.Research.SpellInformation(spellID, 4)),
             233,
-            9042
+            9042,
+            Reagent.GraveDust,
+            Reagent.PixieSkull
         );
 
         public ResearchDeathSpeak(Mobile caster, Item scroll)
@@ -44,121 +46,129 @@ namespace Server.Spells.Research
 
         public override void OnCast()
         {
-            Corpse toChannel = null;
-            int regenerate = 0;
+            if (CheckSequence())
+            {
+                Corpse toChannel = null;
+                int regenerate = 0;
 
-            int bonus = (int)(DamagingSkill(Caster) / 4);
-            if (bonus > 60)
-            {
-                bonus = 60;
-            }
-            if (bonus < 2)
-            {
-                bonus = 2;
-            }
-
-            foreach (Item item in Caster.GetItemsInRange(3))
-            {
-                if (item is Corpse && !((Corpse)item).Channeled && !((Corpse)item).Animated)
+                int bonus = (int)(DamagingSkill(Caster) / 4);
+                if (bonus > 60)
                 {
-                    Corpse body = (Corpse)item;
+                    bonus = 60;
+                }
+                if (bonus < 2)
+                {
+                    bonus = 2;
+                }
 
-                    if (!(body.m_Owner is PlayerMobile))
+                foreach (Item item in Caster.GetItemsInRange(3))
+                {
+                    if (item is Corpse && !((Corpse)item).Channeled && !((Corpse)item).Animated)
                     {
-                        if (body.m_Owner is BaseCreature)
+                        Corpse body = (Corpse)item;
+
+                        if (!(body.m_Owner is PlayerMobile))
                         {
-                            SlayerEntry undead = SlayerGroup.GetEntryByName(SlayerName.Silver);
-                            if (undead.Slays(body.m_Owner))
+                            if (body.m_Owner is BaseCreature)
                             {
-                                toChannel = (Corpse)item;
-                                regenerate = (int)(((body.m_Owner).Fame) / 50) + bonus;
-                                break;
+                                SlayerEntry undead = SlayerGroup.GetEntryByName(SlayerName.Silver);
+                                if (undead.Slays(body.m_Owner))
+                                {
+                                    toChannel = (Corpse)item;
+                                    regenerate = (int)(((body.m_Owner).Fame) / 50) + bonus;
+                                    break;
+                                }
                             }
                         }
                     }
                 }
+
+                if (regenerate > 0)
+                {
+                    if (toChannel != null)
+                    {
+                        toChannel.Channeled = true;
+                        toChannel.Hue = 0x835;
+                    }
+
+                    int mana = Caster.ManaMax - Caster.Mana;
+                    if (mana > regenerate)
+                    {
+                        Caster.Mana = Caster.Mana + regenerate;
+                        regenerate = 0;
+                    }
+                    else
+                    {
+                        Caster.Mana = Caster.ManaMax;
+                        regenerate = regenerate - mana;
+                    }
+
+                    int stam = Caster.ManaMax - Caster.Stam;
+                    if (stam > regenerate)
+                    {
+                        Caster.Stam = Caster.Stam + regenerate;
+                        regenerate = 0;
+                    }
+                    else
+                    {
+                        Caster.Stam = Caster.StamMax;
+                        regenerate = regenerate - stam;
+                    }
+
+                    int hits = Caster.ManaMax - Caster.Hits;
+                    if (hits > regenerate)
+                    {
+                        Caster.Hits = Caster.Hits + regenerate;
+                        regenerate = 0;
+                    }
+                    else
+                    {
+                        Caster.Hits = Caster.HitsMax;
+                        regenerate = regenerate - hits;
+                    }
+
+                    if (Caster.Karma < 0)
+                    {
+                        Caster.FixedParticles(0x3400, 1, 15, 9501, 2100, 4, EffectLayer.Waist);
+                    }
+                    else
+                    {
+                        Caster.FixedParticles(0x375A, 1, 15, 9501, 2100, 4, EffectLayer.Waist);
+                    }
+
+                    if (Caster.Karma < 0)
+                    {
+                        Caster.Say("Xtee Mee Glau");
+                        Caster.PlaySound(0x481);
+                    }
+                    else
+                    {
+                        Caster.Say("Anh Mi Sah Ko");
+                        Caster.PlaySound(0x24A);
+                    }
+
+                    Server.Misc.Research.ConsumeScroll(
+                        Caster,
+                        true,
+                        spellIndex,
+                        alwaysConsume,
+                        Scroll
+                    );
+
+                    KarmaMod(Caster, ((int)RequiredSkill + RequiredMana));
+
+                    Caster.SendMessage(
+                        "You speak in strange tongues to the soul of the dead supernatural creature."
+                    );
+                }
+                else
+                {
+                    Caster.SendMessage(
+                        "You fail to speak to any dead supernatural creatures in the area."
+                    );
+                    Caster.PlaySound(0x1D6);
+                }
             }
-
-            if (regenerate > 0)
-            {
-                if (toChannel != null)
-                {
-                    toChannel.Channeled = true;
-                    toChannel.Hue = 0x835;
-                }
-
-                int mana = Caster.ManaMax - Caster.Mana;
-                if (mana > regenerate)
-                {
-                    Caster.Mana = Caster.Mana + regenerate;
-                    regenerate = 0;
-                }
-                else
-                {
-                    Caster.Mana = Caster.ManaMax;
-                    regenerate = regenerate - mana;
-                }
-
-                int stam = Caster.ManaMax - Caster.Stam;
-                if (stam > regenerate)
-                {
-                    Caster.Stam = Caster.Stam + regenerate;
-                    regenerate = 0;
-                }
-                else
-                {
-                    Caster.Stam = Caster.StamMax;
-                    regenerate = regenerate - stam;
-                }
-
-                int hits = Caster.ManaMax - Caster.Hits;
-                if (hits > regenerate)
-                {
-                    Caster.Hits = Caster.Hits + regenerate;
-                    regenerate = 0;
-                }
-                else
-                {
-                    Caster.Hits = Caster.HitsMax;
-                    regenerate = regenerate - hits;
-                }
-
-                if (Caster.Karma < 0)
-                {
-                    Caster.FixedParticles(0x3400, 1, 15, 9501, 2100, 4, EffectLayer.Waist);
-                }
-                else
-                {
-                    Caster.FixedParticles(0x375A, 1, 15, 9501, 2100, 4, EffectLayer.Waist);
-                }
-
-                if (Caster.Karma < 0)
-                {
-                    Caster.Say("Xtee Mee Glau");
-                    Caster.PlaySound(0x481);
-                }
-                else
-                {
-                    Caster.Say("Anh Mi Sah Ko");
-                    Caster.PlaySound(0x24A);
-                }
-
-                Server.Misc.Research.ConsumeScroll(Caster, true, spellIndex, false);
-
-                KarmaMod(Caster, ((int)RequiredSkill + RequiredMana));
-
-                Caster.SendMessage(
-                    "You speak in strange tongues to the soul of the dead supernatural creature."
-                );
-            }
-            else
-            {
-                Caster.SendMessage(
-                    "You fail to speak to any dead supernatural creatures in the area."
-                );
-                Caster.PlaySound(0x1D6);
-            }
-
             FinishSequence();
         }
     }

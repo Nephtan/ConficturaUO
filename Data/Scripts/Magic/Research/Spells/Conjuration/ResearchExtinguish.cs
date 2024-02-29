@@ -35,7 +35,10 @@ namespace Server.Spells.Research
             Server.Misc.Research.SpellInformation(spellID, 2),
             Server.Misc.Research.CapsCast(Server.Misc.Research.SpellInformation(spellID, 4)),
             233,
-            9042
+            9042,
+            Reagent.Nightshade,
+            Reagent.SeaSalt,
+            Reagent.BlackPearl
         );
 
         public ResearchExtinguish(Mobile caster, Item scroll)
@@ -197,7 +200,13 @@ namespace Server.Spells.Research
                         }
                         Effects.PlaySound(m.Location, m.Map, 0x026);
                     }
-                    Server.Misc.Research.ConsumeScroll(Caster, true, spellIndex, false);
+                    Server.Misc.Research.ConsumeScroll(
+                        Caster,
+                        true,
+                        spellIndex,
+                        alwaysConsume,
+                        Scroll
+                    );
                 }
             }
 

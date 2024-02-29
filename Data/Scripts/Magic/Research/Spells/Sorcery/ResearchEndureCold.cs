@@ -39,7 +39,9 @@ namespace Server.Spells.Research
             Server.Misc.Research.SpellInformation(spellID, 2),
             Server.Misc.Research.CapsCast(Server.Misc.Research.SpellInformation(spellID, 4)),
             236,
-            9011
+            9011,
+            Reagent.SpidersSilk,
+            Reagent.MoonCrystal
         );
 
         public ResearchEndureCold(Mobile caster, Item scroll)
@@ -103,7 +105,13 @@ namespace Server.Spells.Research
 
                 if (success)
                 {
-                    Server.Misc.Research.ConsumeScroll(Caster, true, spellIndex, false);
+                    Server.Misc.Research.ConsumeScroll(
+                        Caster,
+                        true,
+                        spellIndex,
+                        alwaysConsume,
+                        Scroll
+                    );
                 }
             }
             FinishSequence();

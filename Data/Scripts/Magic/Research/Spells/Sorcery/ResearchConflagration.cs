@@ -37,7 +37,10 @@ namespace Server.Spells.Research
             Server.Misc.Research.SpellInformation(spellID, 2),
             Server.Misc.Research.CapsCast(Server.Misc.Research.SpellInformation(spellID, 4)),
             215,
-            9041
+            9041,
+            Reagent.SulfurousAsh,
+            Reagent.Brimstone,
+            Reagent.GargoyleEar
         );
 
         public ResearchConflagration(Mobile caster, Item scroll)
@@ -141,7 +144,7 @@ namespace Server.Spells.Research
 
                     fires--;
                 }
-                Server.Misc.Research.ConsumeScroll(Caster, true, spellIndex, false);
+                Server.Misc.Research.ConsumeScroll(Caster, true, spellIndex, alwaysConsume, Scroll);
             }
 
             FinishSequence();

@@ -36,7 +36,10 @@ namespace Server.Spells.Research
             Server.Misc.Research.SpellInformation(spellID, 2),
             Server.Misc.Research.CapsCast(Server.Misc.Research.SpellInformation(spellID, 4)),
             203,
-            9031
+            9031,
+            Reagent.SpidersSilk,
+            Reagent.PixieSkull,
+            Reagent.ButterflyWings
         );
 
         public ResearchAirWalk(Mobile caster, Item scroll)
@@ -57,40 +60,42 @@ namespace Server.Spells.Research
 
         public override void OnCast()
         {
-            if (!Caster.CanBeginAction(typeof(ResearchAirWalk)))
+            if (CheckSequence())
             {
-                ResearchAirWalk.RemoveEffect(Caster);
+                if (!Caster.CanBeginAction(typeof(ResearchAirWalk)))
+                {
+                    ResearchAirWalk.RemoveEffect(Caster);
+                }
+
+                int TotalTime = (int)((DamagingSkill(Caster) * 20) / 60);
+                new InternalTimer(Caster, TimeSpan.FromSeconds(TotalTime)).Start();
+                Caster.BeginAction(typeof(ResearchAirWalk));
+                Point3D air = new Point3D((Caster.X + 1), (Caster.Y + 1), (Caster.Z + 5));
+                Effects.SendLocationParticles(
+                    EffectItem.Create(air, Caster.Map, EffectItem.DefaultDuration),
+                    0x5590,
+                    9,
+                    32,
+                    Server.Misc.PlayerSettings.GetMySpellHue(true, Caster, 0),
+                    0,
+                    5022,
+                    0
+                );
+                Caster.PlaySound(0x014);
+                Server.Misc.Research.ConsumeScroll(Caster, true, spellID, alwaysConsume, Scroll);
+
+                BuffInfo.RemoveBuff(Caster, BuffIcon.AirWalk);
+                BuffInfo.AddBuff(
+                    Caster,
+                    new BuffInfo(
+                        BuffIcon.AirWalk,
+                        1063632,
+                        1063633,
+                        TimeSpan.FromSeconds(TotalTime),
+                        Caster
+                    )
+                );
             }
-
-            int TotalTime = (int)((DamagingSkill(Caster) * 20) / 60);
-            new InternalTimer(Caster, TimeSpan.FromSeconds(TotalTime)).Start();
-            Caster.BeginAction(typeof(ResearchAirWalk));
-            Point3D air = new Point3D((Caster.X + 1), (Caster.Y + 1), (Caster.Z + 5));
-            Effects.SendLocationParticles(
-                EffectItem.Create(air, Caster.Map, EffectItem.DefaultDuration),
-                0x5590,
-                9,
-                32,
-                Server.Misc.PlayerSettings.GetMySpellHue(true, Caster, 0),
-                0,
-                5022,
-                0
-            );
-            Caster.PlaySound(0x014);
-            Server.Misc.Research.ConsumeScroll(Caster, true, spellID, false);
-
-            BuffInfo.RemoveBuff(Caster, BuffIcon.AirWalk);
-            BuffInfo.AddBuff(
-                Caster,
-                new BuffInfo(
-                    BuffIcon.AirWalk,
-                    1063632,
-                    1063633,
-                    TimeSpan.FromSeconds(TotalTime),
-                    Caster
-                )
-            );
-
             FinishSequence();
         }
 

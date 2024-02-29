@@ -361,7 +361,7 @@ namespace Server.Misc
                         }
                         else if (setting == 56)
                         {
-                            S_Bribery = Int32.Parse(node.InnerText); // Line 364
+                            S_Bribery = Int32.Parse(node.InnerText);
                         }
                         else if (setting == 57)
                         {
@@ -1411,6 +1411,11 @@ namespace Server.Misc
             pm.Skills.Cap = pm.SkillStart + pm.SkillBoost + pm.SkillEther;
         }
 
+        public static int SkillBase()
+        {
+            return (10000 + SkillBoost());
+        }
+
         public static double SkillGain()
         {
             int skill = 0;
@@ -1476,13 +1481,34 @@ namespace Server.Misc
 
         public static string Version()
         {
-            return "Version: Beggar (19 February 2024)";
+            return "Version: Archmage (25 February 2024)";
         }
 
         public static string Versions()
         {
             string versionTEXT =
                 ""
+                ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+                + "Archmage - 25 February 2024<br>"
+                + "<br>"
+                + "* Both client and server update.<br>"
+                + "* Strange portals now have an entrance and exit.<br>"
+                + "* Ancient Spellbooks are now in the game.<br>"
+                + "   - Part of the spell research system.<br>"
+                + "   - All text and help menus updated.<br>"
+                + "   - Book graphics added.<br>"
+                + "   - Can be equipped like other spellbooks.<br>"
+                + "   - Provides traditional casting gameplay.<br>"
+                + "   - Original research system remains intact.<br>"
+                + "   - Learn about these books from the research bag.<br>"
+                + "* Research bags now hold 50,000 of need items<br>"
+                + "   like scrolls, quills, and ink.<br>"
+                + "* Character level now calculates with the game<br>"
+                + "   skill setttings for any set extra skill points.<br>"
+                + "* Client `music` folder renamed to `Music` to<br>"
+                + "   reduce confusion for Linux clients.<br>"
+                + "<br>"
                 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
                 + "BEGGAR - 23 February 2024<br>"

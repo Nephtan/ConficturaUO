@@ -38,7 +38,10 @@ namespace Server.Spells.Research
             Server.Misc.Research.SpellInformation(spellID, 2),
             Server.Misc.Research.CapsCast(Server.Misc.Research.SpellInformation(spellID, 4)),
             269,
-            9050
+            9050,
+            Reagent.ButterflyWings,
+            Reagent.GargoyleEar,
+            Reagent.PegasusFeather
         );
 
         public ResearchAerialServant(Mobile caster, Item scroll)
@@ -85,7 +88,7 @@ namespace Server.Spells.Research
                     0,
                     EffectLayer.Head
                 );
-                Server.Misc.Research.ConsumeScroll(Caster, true, spellIndex, false);
+                Server.Misc.Research.ConsumeScroll(Caster, true, spellIndex, alwaysConsume, Scroll);
             }
 
             FinishSequence();

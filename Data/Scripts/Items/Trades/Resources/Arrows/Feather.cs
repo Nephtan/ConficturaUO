@@ -46,6 +46,7 @@ namespace Server.Items
             base.Deserialize(reader);
             int version = reader.ReadInt();
             ItemID = 0x4CCD;
+            Name = "feather";
         }
     }
 }

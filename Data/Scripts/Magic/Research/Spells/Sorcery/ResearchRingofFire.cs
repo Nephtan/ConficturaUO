@@ -36,7 +36,10 @@ namespace Server.Spells.Research
             Server.Misc.Research.SpellInformation(spellID, 2),
             Server.Misc.Research.CapsCast(Server.Misc.Research.SpellInformation(spellID, 4)),
             236,
-            9031
+            9031,
+            Reagent.Brimstone,
+            Reagent.PigIron,
+            Reagent.DaemonBlood
         );
 
         public ResearchRingofFire(Mobile caster, Item scroll)
@@ -124,7 +127,7 @@ namespace Server.Spells.Research
                 ring = new RingOfFire(duration);
                 ring.MoveToWorld(new Point3D(p.X + 2, p.Y + 2, p.Z), Caster.Map);
 
-                Server.Misc.Research.ConsumeScroll(Caster, true, spellIndex, false);
+                Server.Misc.Research.ConsumeScroll(Caster, true, spellIndex, alwaysConsume, Scroll);
             }
 
             FinishSequence();

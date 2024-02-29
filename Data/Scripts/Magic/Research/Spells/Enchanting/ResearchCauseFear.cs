@@ -37,7 +37,10 @@ namespace Server.Spells.Research
             Server.Misc.Research.SpellInformation(spellID, 2),
             Server.Misc.Research.CapsCast(Server.Misc.Research.SpellInformation(spellID, 4)),
             203,
-            9031
+            9031,
+            Reagent.Bloodmoss,
+            Reagent.DaemonBlood,
+            Reagent.RedLotus
         );
 
         public ResearchCauseFear(Mobile caster, Item scroll)
@@ -45,8 +48,13 @@ namespace Server.Spells.Research
 
         public override void OnCast()
         {
-            Caster.SendMessage("Who do you want to invoke terror at?");
-            Caster.Target = new InternalTarget(this);
+            if (CheckSequence())
+            {
+                Caster.SendMessage("Who do you want to invoke terror at?");
+                Caster.Target = new InternalTarget(this);
+            }
+
+            FinishSequence();
         }
 
         public void Target(Mobile m)
@@ -102,7 +110,7 @@ namespace Server.Spells.Research
                     bc.BeginFlee(duration);
                 }
 
-                Server.Misc.Research.ConsumeScroll(Caster, true, spellIndex, false);
+                Server.Misc.Research.ConsumeScroll(Caster, true, spellIndex, alwaysConsume, Scroll);
 
                 HarmfulSpell(m);
             }

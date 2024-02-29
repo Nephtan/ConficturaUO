@@ -16,6 +16,10 @@ namespace Server.Spells.Research
         {
             get { return 50; }
         }
+        public override bool alwaysConsume
+        {
+            get { return bool.Parse(Server.Misc.Research.SpellInformation(spellIndex, 14)); }
+        }
         public int CirclePower = 7;
         public static int spellID = 50;
         public override TimeSpan CastDelayBase
@@ -38,7 +42,11 @@ namespace Server.Spells.Research
             Server.Misc.Research.SpellInformation(spellID, 2),
             Server.Misc.Research.CapsCast(Server.Misc.Research.SpellInformation(spellID, 4)),
             212,
-            9001
+            9001,
+            Reagent.Brimstone,
+            Reagent.GraveDust,
+            Reagent.PigIron,
+            Reagent.MandrakeRoot
         );
 
         public ResearchOpenGround(Mobile caster, Item scroll)
@@ -246,7 +254,13 @@ namespace Server.Spells.Research
                     Effects.SendLocationEffect(dirt3, Caster.Map, 0x23B2, 30, 10, 0xABF, 0);
 
                     Caster.PlaySound(0x029);
-                    Server.Misc.Research.ConsumeScroll(Caster, true, spellIndex, true);
+                    Server.Misc.Research.ConsumeScroll(
+                        Caster,
+                        true,
+                        spellIndex,
+                        alwaysConsume,
+                        Scroll
+                    );
 
                     KarmaMod(Caster, ((int)RequiredSkill + RequiredMana));
                 }

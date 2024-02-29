@@ -114,9 +114,6 @@ namespace Server
                         z.SpellBarsNecro2 = database.SpellBarsNecro2;
                         z.SpellBarsPriest1 = database.SpellBarsPriest1;
                         z.SpellBarsPriest2 = database.SpellBarsPriest2;
-                        z.SpellBarsWizard1 = database.SpellBarsWizard1;
-                        z.SpellBarsWizard2 = database.SpellBarsWizard2;
-                        z.SpellBarsWizard3 = database.SpellBarsWizard3;
                         z.StandardQuest = database.StandardQuest;
                         z.ThiefQuest = database.ThiefQuest;
                         z.WeaponBarOpen = database.WeaponBarOpen;

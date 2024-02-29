@@ -41,7 +41,11 @@ namespace Server.Spells.Research
             Server.Misc.Research.SpellInformation(spellID, 2),
             Server.Misc.Research.CapsCast(Server.Misc.Research.SpellInformation(spellID, 4)),
             266,
-            9040
+            9040,
+            Reagent.PixieSkull,
+            Reagent.FairyEgg,
+            Reagent.DragonTooth,
+            Reagent.MoonCrystal
         );
 
         public ResearchEnchant(Mobile caster, Item scroll)
@@ -84,7 +88,13 @@ namespace Server.Spells.Research
                 {
                     ResearchEnchantStone orb = new ResearchEnchantStone();
                     Caster.AddToBackpack(orb);
-                    Server.Misc.Research.ConsumeScroll(Caster, true, spellID, false);
+                    Server.Misc.Research.ConsumeScroll(
+                        Caster,
+                        true,
+                        spellID,
+                        alwaysConsume,
+                        Scroll
+                    );
 
                     string name = weapon.Name;
                     if (weapon.Name != null && weapon.Name != "")

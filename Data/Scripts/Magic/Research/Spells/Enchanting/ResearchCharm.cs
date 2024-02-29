@@ -37,7 +37,10 @@ namespace Server.Spells.Research
             Server.Misc.Research.SpellInformation(spellID, 2),
             Server.Misc.Research.CapsCast(Server.Misc.Research.SpellInformation(spellID, 4)),
             236,
-            9031
+            9031,
+            Reagent.EnchantedSeaweed,
+            Reagent.FairyEgg,
+            Reagent.PixieSkull
         );
 
         public ResearchCharm(Mobile caster, Item scroll)
@@ -45,8 +48,13 @@ namespace Server.Spells.Research
 
         public override void OnCast()
         {
-            Caster.SendMessage("Who do you want to charm?");
-            Caster.Target = new InternalTarget(this);
+            if (CheckSequence())
+            {
+                Caster.SendMessage("Who do you want to charm?");
+                Caster.Target = new InternalTarget(this);
+            }
+
+            FinishSequence();
         }
 
         public void Target(Mobile m)
@@ -130,7 +138,13 @@ namespace Server.Spells.Research
                     m.FixedParticles(0x3039, 9, 32, 5008, 0x48F, 0, EffectLayer.Waist);
 
                     new CharmTimer(m, duration).Start();
-                    Server.Misc.Research.ConsumeScroll(Caster, true, spellIndex, false);
+                    Server.Misc.Research.ConsumeScroll(
+                        Caster,
+                        true,
+                        spellIndex,
+                        alwaysConsume,
+                        Scroll
+                    );
 
                     HarmfulSpell(m);
                 }

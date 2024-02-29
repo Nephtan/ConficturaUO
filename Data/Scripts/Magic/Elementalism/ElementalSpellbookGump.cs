@@ -750,7 +750,7 @@ namespace Server.Gumps
                     60,
                     @"<BODY><BASEFONT Color="
                         + fnt
-                        + ">Below are the [ commands you can either type to quickly cast a particular spell, or set a hot key issue this command and cast the spell.</BASEFONT></BODY>",
+                        + ">Below are the [ commands you can either type to quickly cast a particular spell, or set a hot key to issue this command and cast the spell.</BASEFONT></BODY>",
                     (bool)false,
                     (bool)false
                 );

@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using Server.Items;
 using Server.Network;
 using Server.Targeting;
 
@@ -33,7 +34,11 @@ namespace Server.Spells.Research
             Server.Misc.Research.SpellInformation(spellID, 2),
             Server.Misc.Research.CapsCast(Server.Misc.Research.SpellInformation(spellID, 4)),
             242,
-            9012
+            9012,
+            Reagent.MoonCrystal,
+            Reagent.Brimstone,
+            Reagent.Nightshade,
+            Reagent.FairyEgg
         );
 
         public ResearchIntervention(Mobile caster, Item scroll)
@@ -76,7 +81,13 @@ namespace Server.Spells.Research
 
                     int TotalTime = (int)(DamagingSkill(Caster) / 12);
                     new InternalTimer(Caster, TimeSpan.FromMinutes(TotalTime)).Start();
-                    Server.Misc.Research.ConsumeScroll(Caster, true, spellID, false);
+                    Server.Misc.Research.ConsumeScroll(
+                        Caster,
+                        true,
+                        spellID,
+                        alwaysConsume,
+                        Scroll
+                    );
 
                     string args = String.Format(
                         "{0}\t{1}\t{2}\t{3}\t{4}",

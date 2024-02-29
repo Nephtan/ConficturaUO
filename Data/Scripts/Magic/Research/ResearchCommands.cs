@@ -326,10 +326,10 @@ namespace Server.Scripts.Commands
 
         public static bool CanCast(Mobile from, int spell)
         {
-            if (ResearchBarSettings.ResearchMaterials(from) == null)
+            if (ResearchSettings.ResearchMaterials(from) == null)
                 return false;
 
-            if (!ResearchBarSettings.HasSpell(from, spell))
+            if (!ResearchSettings.HasSpell(from, spell))
                 return false;
 
             if (!Multis.DesignContext.Check(from))

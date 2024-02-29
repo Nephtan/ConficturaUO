@@ -29,6 +29,7 @@ namespace Server.Items
         {
             Stackable = true;
             Amount = amount;
+            Name = "bolt";
         }
 
         public Bolt(Serial serial)
@@ -46,15 +47,14 @@ namespace Server.Items
         public override void Serialize(GenericWriter writer)
         {
             base.Serialize(writer);
-
             writer.Write((int)0); // version
         }
 
         public override void Deserialize(GenericReader reader)
         {
             base.Deserialize(reader);
-
             int version = reader.ReadInt();
+            Name = "bolt";
         }
     }
 }

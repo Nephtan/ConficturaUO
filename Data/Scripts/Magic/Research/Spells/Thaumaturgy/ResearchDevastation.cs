@@ -35,7 +35,11 @@ namespace Server.Spells.Research
             Server.Misc.Research.SpellInformation(spellID, 2),
             Server.Misc.Research.CapsCast(Server.Misc.Research.SpellInformation(spellID, 4)),
             233,
-            9042
+            9042,
+            Reagent.ButterflyWings,
+            Reagent.BlackPearl,
+            Reagent.DemigodBlood,
+            Reagent.DemonClaw
         );
 
         public ResearchDevastation(Mobile caster, Item scroll)
@@ -231,7 +235,13 @@ namespace Server.Spells.Research
 
                     TimeSpan duration = TimeSpan.FromSeconds(3.0);
                     new DeathTimer(Caster, duration).Start();
-                    Server.Misc.Research.ConsumeScroll(Caster, true, spellIndex, true);
+                    Server.Misc.Research.ConsumeScroll(
+                        Caster,
+                        true,
+                        spellIndex,
+                        alwaysConsume,
+                        Scroll
+                    );
                     KarmaMod(Caster, ((int)RequiredSkill + RequiredMana));
                 }
             }

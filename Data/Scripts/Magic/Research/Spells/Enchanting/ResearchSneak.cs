@@ -37,7 +37,9 @@ namespace Server.Spells.Research
             Server.Misc.Research.SpellInformation(spellID, 2),
             Server.Misc.Research.CapsCast(Server.Misc.Research.SpellInformation(spellID, 4)),
             212,
-            9061
+            9061,
+            Reagent.FairyEgg,
+            Reagent.PixieSkull
         );
 
         public ResearchSneak(Mobile caster, Item scroll)
@@ -45,8 +47,13 @@ namespace Server.Spells.Research
 
         public override void OnCast()
         {
-            Caster.Target = new InternalTarget(this);
-            EventSink.Logout += OnLogout;
+            if (CheckSequence())
+            {
+                Caster.Target = new InternalTarget(this);
+                EventSink.Logout += OnLogout;
+            }
+
+            FinishSequence();
         }
 
         private void OnLogout(LogoutEventArgs e)
@@ -142,7 +149,7 @@ namespace Server.Spells.Research
                 BuffInfo.AddBuff(m, new BuffInfo(BuffIcon.Sneak, 1063654, 1063655, length, m));
 
                 m.BeginAction(typeof(ResearchSneak));
-                Server.Misc.Research.ConsumeScroll(Caster, true, spellIndex, false);
+                Server.Misc.Research.ConsumeScroll(Caster, true, spellIndex, alwaysConsume, Scroll);
             }
 
             FinishSequence();

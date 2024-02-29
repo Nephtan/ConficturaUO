@@ -38,7 +38,10 @@ namespace Server.Spells.Research
             Server.Misc.Research.SpellInformation(spellID, 2),
             Server.Misc.Research.CapsCast(Server.Misc.Research.SpellInformation(spellID, 4)),
             236,
-            9031
+            9031,
+            Reagent.BlackPearl,
+            Reagent.GargoyleEar,
+            Reagent.RedLotus
         );
 
         private RunebookEntry m_Entry;
@@ -137,7 +140,7 @@ namespace Server.Spells.Research
                 Caster.MoveToWorld(loc, map);
 
                 Caster.Hidden = true;
-                Server.Misc.Research.ConsumeScroll(Caster, true, spellIndex, false);
+                Server.Misc.Research.ConsumeScroll(Caster, true, spellIndex, alwaysConsume, Scroll);
             }
 
             FinishSequence();

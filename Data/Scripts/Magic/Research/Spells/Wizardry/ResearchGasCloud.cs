@@ -1,4 +1,5 @@
 using System;
+using Server.Items;
 using Server.Mobiles;
 using Server.Network;
 using Server.Targeting;
@@ -33,7 +34,11 @@ namespace Server.Spells.Research
             Server.Misc.Research.SpellInformation(spellID, 2),
             Server.Misc.Research.CapsCast(Server.Misc.Research.SpellInformation(spellID, 4)),
             260,
-            9032
+            9032,
+            Reagent.Nightshade,
+            Reagent.SilverWidow,
+            Reagent.SwampBerries,
+            Reagent.SilverSerpentVenom
         );
 
         public ResearchGasCloud(Mobile caster, Item scroll)
@@ -84,7 +89,7 @@ namespace Server.Spells.Research
                 TimeSpan duration = TimeSpan.FromSeconds(time);
 
                 BaseCreature.Summon(new GasCloud(), false, Caster, new Point3D(p), 0x231, duration);
-                Server.Misc.Research.ConsumeScroll(Caster, true, spellIndex, false);
+                Server.Misc.Research.ConsumeScroll(Caster, true, spellIndex, alwaysConsume, Scroll);
 
                 Caster.SendMessage("You can double click the summoned to dispel them.");
             }

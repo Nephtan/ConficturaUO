@@ -37,7 +37,10 @@ namespace Server.Spells.Research
             Server.Misc.Research.SpellInformation(spellID, 2),
             Server.Misc.Research.CapsCast(Server.Misc.Research.SpellInformation(spellID, 4)),
             236,
-            9031
+            9031,
+            Reagent.MoonCrystal,
+            Reagent.EyeOfToad,
+            Reagent.SpidersSilk
         );
 
         public ResearchFrostField(Mobile caster, Item scroll)
@@ -111,7 +114,7 @@ namespace Server.Spells.Research
 
                     new FrostFieldItem(itemID, loc, Caster, Caster.Map, duration, i, damage);
                 }
-                Server.Misc.Research.ConsumeScroll(Caster, true, spellIndex, false);
+                Server.Misc.Research.ConsumeScroll(Caster, true, spellIndex, alwaysConsume, Scroll);
             }
 
             FinishSequence();

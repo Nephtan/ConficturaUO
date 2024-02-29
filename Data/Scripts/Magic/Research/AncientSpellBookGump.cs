@@ -10,9 +10,9 @@ using Server.Spells.Research;
 
 namespace Server.Gumps
 {
-    public class ArchmageSpellbookGump : Gump
+    public class AncientSpellbookGump : Gump
     {
-        private ArchmageSpellbook m_Book;
+        private AncientSpellbook m_Book;
         private int m_Page;
 
         public bool HasSpell(Mobile from, int spellID)
@@ -23,7 +23,7 @@ namespace Server.Gumps
                 return false;
         }
 
-        public ArchmageSpellbookGump(Mobile from, ArchmageSpellbook book, int page)
+        public AncientSpellbookGump(Mobile from, AncientSpellbook book, int page)
             : base(100, 100)
         {
             if (book.Owner != from)
@@ -32,7 +32,7 @@ namespace Server.Gumps
             from.PlaySound(0x55);
             m_Book = book;
             m_Page = page;
-            string color = "#dddddd";
+            string color = "#ffff00";
 
             this.Closable = true;
             this.Disposable = true;
@@ -41,11 +41,49 @@ namespace Server.Gumps
 
             AddPage(0);
 
-            AddImage(0, 0, 7005, 2990);
+            AddImage(0, 0, 7066, m_Book.Hue - 1);
             AddImage(0, 0, 7006, 2988);
             AddImage(0, 0, 7024, 2736);
             AddImage(83, 110, 11279, 2381);
             AddImage(380, 110, 11279, 2381);
+
+            if (book.paper > 10)
+                AddImage(652, 42, 11192);
+            else
+                AddImage(652, 42, 11190);
+
+            if (book.quill > 10)
+                AddImage(652, 108, 11192);
+            else
+                AddImage(652, 108, 11190);
+
+            if (book.paper > 9999)
+                AddImage(665, 42, 11191);
+
+            if (book.quill > 9999)
+                AddImage(665, 108, 11191);
+
+            AddItem(654, 66, 3636);
+            AddItem(666, 124, 8273);
+
+            AddHtml(
+                690,
+                67,
+                200,
+                20,
+                @"<BODY><BASEFONT Color=" + color + ">" + book.paper + "</BASEFONT></BODY>",
+                (bool)false,
+                (bool)false
+            );
+            AddHtml(
+                690,
+                132,
+                200,
+                20,
+                @"<BODY><BASEFONT Color=" + color + ">" + book.quill + "</BASEFONT></BODY>",
+                (bool)false,
+                (bool)false
+            );
 
             int PriorPage = page - 1;
             if (PriorPage < 1)
@@ -166,7 +204,9 @@ namespace Server.Gumps
             else if (page == 37)
             {
                 info =
-                    "In order to learn the ways of the light, you must pursue proficiency in healing and spiritualism. One must seek out the graves of 14 priests, which are spread throughout the lands. Find their resting places, speak their mantra, and claim theirholy symbols which contains the power granted from the gods. Placing the symbols onto this book will add the prayer, but be quick about it. Anyone that calls forth their symbols will cause it to appear no matter where it is in the land, taking it from another that may possess it. You will need to banish evil to use such prayers. Find creatures like demons and the undead...those that carry gold, and slay them while holding the symbol where trinkets go. Although their gold will vanish, your symbol will increase in piety that will deplete as you use these prayers. You do not need to hold the symbol while praying, but only when dispatching such evil. The symbol does not need to be in your possession either, as prayers will use the piety wherever it is. Magic from lower reagent properties can affect the amount of piety needed to invoke the prayer. Although most prayers rely on your Spiritualism skill alone, there are also some elements that will have greater effect based on your Healing skill. Go forth Priest, and rid the world of evil.";
+                    "This book will be yours alone to use and you can only have one book at any given time. Creating a new book will cause this book to crumple to dust. Using ancient spellbooks requires the caster to carry reagents with them. The book pages may also turn to dust when spells are cast, so the wizard will need to keep extra pages (blank scrolls) within the book. They will also need to keep quills (scribe pens) set aside as well. Simply place these items on this book in order to maintain a supply of each. If you run out, you will not be able to cast any spells until you acquire more. You might find that you don't consume any scrolls or quills when reagent lowering attributes exist. These books can be equipped like other spellbooks.<BR><BR>"
+                    + Server.Misc.ResearchSettings.BagOrBook()
+                    + "<BR><BR>Spells are cast with those skilled in either magery or necromancy, whichever is higher. The effectiveness of the spells is dependent on the combination of magery, necromancy, spiritualism, and psychology. If you are simply skilled in only a couple of these skills, then the spells will have only an average effect. It is those that pursue all four of the skills of wizardry, that will gain the most benefit. When ancient spells are performed, it helps a researcher practice inscription, magery, necromancy, spiritualism, and psychology at the same time. This is why ancient spell research interests archmages, as they have achieved the level of grandmaster in both areas of magic. Some ancient magic has similarities to spells used today, as is to be expected that some of the knowledge survived the ages. So very few spells will be similar to current magery spells, and even fewer spells that are similar to modern necromancer spells. Although they are similar, the ancient spell usually proves to be much more powerful.";
 
                 AddHtml(
                     78,
@@ -179,7 +219,9 @@ namespace Server.Gumps
                 );
 
                 info =
-                    "Magic Toolbars: Here are the commands you can use (include the bracket) to manage magic toolbars that might help you play better.<br><br>[holyspell1 - Opens the 1st priest spell bar editor.<BR><BR>[holyspell2 - Opens the 2nd priest spell bar editor.<BR><BR>[holytool1 - Opens the 1st priest spell bar.<BR><BR>[holytool2 - Opens the 2nd priest spell bar.<BR><BR>[holyclose1 - Closes the 1st priest spell bar.<BR><BR>[holyclose2 - Closes the 2nd priest spell bar.<BR><BR>Below are the [ commands you can either type to quickly cast a particular spell, or set a hot key issue this command and cast the spell.<BR><BR>[HMBanish<BR>    Cast Banish<BR><BR>[HMDampenSpirit<BR>    Cast Dampen Spirit<BR><BR>[HMEnchant<BR>    Cast Enchant<BR><BR>[HMHammerFaith<BR>    Cast Hammer of Faith<BR><BR>[HMHeavenlyLight<BR>    Cast Heavenly Light<BR><BR>[HMNourish<BR>    Cast Nourish<BR><BR>[HMPurge<BR>    Cast Purge<BR><BR>[HMRebirth<BR>    Cast Rebirth<BR><BR>[HMSacredBoon<BR>    Cast Sacred Boon<BR><BR>[HMSanctify<BR>    Cast Sanctify<BR><BR>[HMSeance<BR>    Cast Seance<BR><BR>[HMSmite<BR>    Cast Smite<BR><BR>[HMTouchLife<BR>    Cast Touch of Life<BR><BR>[HMTrialFire<BR>    Cast Trial by Fire<BR><BR>";
+                    "Magic Toolbars: Here are the commands you can use (include the bracket) to manage magic toolbars that might help you play better.<BR><BR>[ancient - Switches between using the book or bag.<BR><BR>[archspell1 - Opens the 1st ancient spell bar editor.<BR><BR>[archspell2 - Opens the 2nd ancient spell bar editor.<BR><BR>[archspell3 - Opens the 3rd ancient spell bar editor.<BR><BR>[archspell4 - Opens the 4th ancient spell bar editor.<BR><BR>[archtool1 - Opens the 1st ancient spell bar.<BR><BR>[archtool2 - Opens the 2nd ancient spell bar.<BR><BR>[archtool3 - Opens the 3rd ancient spell bar.<BR><BR>[archtool4 - Opens the 4th ancient spell bar.<BR><BR>[archclose1 - Closes the 1st ancient spell bar.<BR><BR>[archclose2 - Closes the 2nd ancient spell bar.<BR><BR>[archclose3 - Closes the 3rd ancient spell bar.<BR><BR>[archclose4 - Closes the 4th ancient spell bar.<BR><BR>Below are the [ commands you can either type to quickly cast a particular spell, or set a hot key to issue this command and cast the spell."
+                    + Server.Misc.ResearchSettings.AncientKeywords()
+                    + "";
 
                 AddHtml(
                     366,
@@ -477,7 +519,7 @@ namespace Server.Gumps
             else if ((page == 4 && entry == 2) || (page >= 33 && page <= 36))
                 return "WIZARDRY MAGIC";
 
-            return "WIZARDRY MAGIC";
+            return "ANCIENT MAGIC";
         }
 
         public int spellImage(int page, int entry)
@@ -1072,7 +1114,8 @@ namespace Server.Gumps
                 {
                     page = 1;
                 }
-                from.SendGump(new ArchmageSpellbookGump(from, m_Book, page));
+                from.CloseGump(typeof(AncientSpellbookGump));
+                from.SendGump(new AncientSpellbookGump(from, m_Book, page));
             }
             else if (info.ButtonID >= 600 && HasSpell(from, info.ButtonID))
             {
@@ -1083,7 +1126,8 @@ namespace Server.Gumps
                 else
                     from.SendLocalizedMessage(502345); // This spell has been temporarily disabled.
 
-                from.SendGump(new ArchmageSpellbookGump(from, m_Book, m_Page));
+                from.CloseGump(typeof(AncientSpellbookGump));
+                from.SendGump(new AncientSpellbookGump(from, m_Book, m_Page));
             }
             else
                 from.PlaySound(0x55);

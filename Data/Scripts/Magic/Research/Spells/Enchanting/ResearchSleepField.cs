@@ -35,7 +35,11 @@ namespace Server.Spells.Research
             Server.Misc.Research.SpellInformation(spellID, 2),
             Server.Misc.Research.CapsCast(Server.Misc.Research.SpellInformation(spellID, 4)),
             230,
-            9012
+            9012,
+            Reagent.FairyEgg,
+            Reagent.MandrakeRoot,
+            Reagent.SeaSalt,
+            Reagent.GraveDust
         );
 
         public ResearchSleepField(Mobile caster, Item scroll)
@@ -76,7 +80,7 @@ namespace Server.Spells.Research
                     eastToWest = false;
 
                 Effects.PlaySound(p, Caster.Map, 0x651);
-                Server.Misc.Research.ConsumeScroll(Caster, true, spellIndex, false);
+                Server.Misc.Research.ConsumeScroll(Caster, true, spellIndex, alwaysConsume, Scroll);
 
                 int itemID = eastToWest ? 0x376A : 0x376A;
 

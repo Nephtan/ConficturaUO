@@ -38,7 +38,10 @@ namespace Server.Spells.Research
             Server.Misc.Research.SpellInformation(spellID, 2),
             Server.Misc.Research.CapsCast(Server.Misc.Research.SpellInformation(spellID, 4)),
             212,
-            9001
+            9001,
+            Reagent.MandrakeRoot,
+            Reagent.PixieSkull,
+            Reagent.FairyEgg
         );
 
         public ResearchConfusionBlast(Mobile caster, Item scroll)
@@ -71,7 +74,7 @@ namespace Server.Spells.Research
                 List<Mobile> targets = new List<Mobile>();
 
                 Map map = Caster.Map;
-                Server.Misc.Research.ConsumeScroll(Caster, true, spellIndex, false);
+                Server.Misc.Research.ConsumeScroll(Caster, true, spellIndex, alwaysConsume, Scroll);
 
                 if (map != null)
                 {
