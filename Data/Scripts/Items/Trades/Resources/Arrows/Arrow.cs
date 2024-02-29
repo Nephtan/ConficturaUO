@@ -47,14 +47,40 @@ namespace Server.Items
         public override void Serialize(GenericWriter writer)
         {
             base.Serialize(writer);
-            writer.Write((int)0); // version
+            writer.Write((int)1); // Update version to 1 for new serialization format
+            if (Name != "arrow") // Only serialize Name if it's different from default
+            {
+                writer.Write(true);
+                writer.Write(Name);
+            }
+            else
+            {
+                writer.Write(false);
+            }
         }
 
         public override void Deserialize(GenericReader reader)
         {
             base.Deserialize(reader);
             int version = reader.ReadInt();
-            Name = "arrow";
+            Light = LightType.Circle150;
+            if (version >= 1)
+            {
+                bool hasCustomName = reader.ReadBool();
+                if (hasCustomName)
+                {
+                    Name = reader.ReadString();
+                }
+                else
+                {
+                    Name = "arrow"; // Set default name if not serialized
+                }
+            }
+            else
+            {
+                // For items saved with the old version, set the default name here if desired
+                Name = "arrow";
+            }
         }
     }
 }

@@ -21,6 +21,7 @@ namespace Server.Items
         public Gold(int amount)
             : base(0xEED)
         {
+            Name = "gold";
             Stackable = true;
             Amount = amount;
             Light = LightType.Circle150;
@@ -59,7 +60,16 @@ namespace Server.Items
         public override void Serialize(GenericWriter writer)
         {
             base.Serialize(writer);
-            writer.Write((int)0); // version
+            writer.Write((int)1); // Update version to 1 for new serialization format
+            if (Name != "gold") // Only serialize Name if it's different from default
+            {
+                writer.Write(true);
+                writer.Write(Name);
+            }
+            else
+            {
+                writer.Write(false);
+            }
         }
 
         public override void Deserialize(GenericReader reader)
@@ -67,6 +77,23 @@ namespace Server.Items
             base.Deserialize(reader);
             int version = reader.ReadInt();
             Light = LightType.Circle150;
+            if (version >= 1)
+            {
+                bool hasCustomName = reader.ReadBool();
+                if (hasCustomName)
+                {
+                    Name = reader.ReadString();
+                }
+                else
+                {
+                    Name = "gold"; // Set default name if not serialized
+                }
+            }
+            else
+            {
+                // For items saved with the old version, set the default name here if desired
+                Name = "gold";
+            }
         }
     }
 }
