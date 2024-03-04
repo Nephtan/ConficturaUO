@@ -133,7 +133,6 @@ namespace Server.Items
             if (toGain > 0)
             {
                 Skill skill = from.Skills[this._TrainingSkill];
-
                 if (skill == null)
                     return;
 
@@ -146,9 +145,12 @@ namespace Server.Items
                 {
                     valueskill = skill.Value;
 
-                    chance =
-                        ((this._MaxSkillTrained - valueskill) / this._MaxSkillTrained)
-                        * ((cap - valueskill) / cap);
+                    // Calculate chance based solely on the skill's cap
+                    double skillProgressRatio = valueskill / cap;
+                    chance = 0.9 - (skillProgressRatio * 0.8); // Linearly diminishes from 90% to 10% as skill approaches the cap
+
+                    // Ensure chance is bounded between 10% and 90%
+                    chance = Math.Max(0.1, Math.Min(chance, 0.9));
 
                     if (from.Skills.Cap == 0)
                         return;
@@ -158,9 +160,6 @@ namespace Server.Items
                         return;
                     if (valueskill >= skill.Cap)
                         return;
-
-                    if (chance <= 0.01)
-                        chance = 0.01;
 
                     bool success = (chance >= Utility.RandomDouble());
 
@@ -235,7 +234,7 @@ namespace Server.Items
                 BuffInfo.AddBuff(
                     pm,
                     new BuffInfo(
-                        BuffIcon.ArcaneEmpowerment,
+                        BuffIcon.EnchantingEtude,
                         1078511,
                         1078512,
                         AcceleratedSkillGainTime,
