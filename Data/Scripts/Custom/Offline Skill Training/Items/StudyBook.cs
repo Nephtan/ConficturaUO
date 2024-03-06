@@ -231,18 +231,18 @@ namespace Server.Items
 
                 pm.AcceleratedSkill = _TrainingSkill;
 
-                BuffInfo.AddBuff(
-                    pm,
-                    new BuffInfo(
-                        BuffIcon.EnchantingEtude,
-                        1078511,
-                        1078512,
-                        AcceleratedSkillGainTime,
-                        pm,
-                        GetName(),
-                        true
-                    )
-                );
+                //BuffInfo.AddBuff(
+                //    pm,
+                //    new BuffInfo(
+                //        BuffIcon.EnchantingEtude,
+                //        1078511,
+                //        1078512,
+                //        AcceleratedSkillGainTime,
+                //        pm,
+                //        GetName(),
+                //        true
+                //    )
+                //);
             }
         }
 
@@ -375,7 +375,7 @@ namespace Server.Items
 
             m.PlaySound(0x1F8);
 
-            BuffInfo.RemoveBuff(m, BuffIcon.EnchantingEtude);
+            // BuffInfo.RemoveBuff(m, BuffIcon.EnchantingEtude);
 
             m.SendMessage(0, "You are no longer gaining skills at an accelerated rate.");
 
