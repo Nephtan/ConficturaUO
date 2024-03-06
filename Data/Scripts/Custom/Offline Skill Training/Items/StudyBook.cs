@@ -375,7 +375,7 @@ namespace Server.Items
 
             m.PlaySound(0x1F8);
 
-            BuffInfo.RemoveBuff(m, BuffIcon.ArcaneEmpowerment);
+            BuffInfo.RemoveBuff(m, BuffIcon.EnchantingEtude);
 
             m.SendMessage(0, "You are no longer gaining skills at an accelerated rate.");
 
