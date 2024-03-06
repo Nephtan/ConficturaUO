@@ -1721,37 +1721,129 @@ namespace Server.Mobiles
 
         public static void SkillVerification(Mobile m)
         {
-            if (m is PlayerMobile && ((PlayerMobile)m).AccessLevel < AccessLevel.Counselor)
+            PlayerMobile pm = m as PlayerMobile;
+            if (pm != null && pm.AccessLevel < AccessLevel.Counselor)
             {
-                int record =
-                    ((PlayerMobile)m).SkillStart
-                    + ((PlayerMobile)m).SkillBoost
-                    + ((PlayerMobile)m).SkillEther;
+                bool adjust = true;
 
-                if (m.Skills.Cap != record)
+                int record = pm.Skill_Start + pm.Skill_Boost + pm.Skill_Ether;
+
+                if (
+                    (m.Skills.Cap == 13000 || m.Skills.Cap == 18000)
+                    && m.SkillsTotal <= m.Skills.Cap
+                )
                 {
-                    Server.Misc.MyServerSettings.SkillBegin("default", (PlayerMobile)m);
-                    ((PlayerMobile)m).Profession = 0;
-                    for (int i = 0; i < m.Skills.Length; i++)
+                    if (((PlayerMobile)m).Profession == 1)
                     {
-                        Skill skill = (Skill)m.Skills[i];
-                        skill.Base = 0;
+                        if (record != m.Skills.Cap)
+                        {
+                            pm.Skill_Start = 13000;
+
+                            if (m.Skills.Cap == 18000)
+                            {
+                                pm.Skill_Ether = 5000;
+                            }
+                        }
+
+                        adjust = false;
+                    }
+                    else if (Server.Misc.PlayerSettings.GetKeys(m, "Virtue"))
+                    {
+                        if (record != m.Skills.Cap)
+                        {
+                            pm.Skill_Start = 13000;
+
+                            if (m.Skills.Cap == 18000)
+                            {
+                                pm.Skill_Ether = 5000;
+                            }
+                        }
+
+                        adjust = false;
                     }
                 }
+                else if (
+                    (m.Skills.Cap == 40000 || m.Skills.Cap == 45000)
+                    && m.SkillsTotal <= m.Skills.Cap
+                )
+                {
+                    ((PlayerMobile)m).Profession = 0;
 
-                if (((PlayerMobile)m).SkillEther != 5000 && m.StatCap != 250)
-                {
-                    m.StatCap = 250;
-                    m.RawStr = 20;
-                    m.RawInt = 20;
-                    m.RawDex = 20;
+                    if (record != m.Skills.Cap)
+                    {
+                        pm.Skill_Start = 40000;
+
+                        if (m.Skills.Cap == 45000)
+                        {
+                            pm.Skill_Ether = 5000;
+                        }
+                    }
+
+                    adjust = false;
                 }
-                else if (((PlayerMobile)m).SkillEther == 5000 && m.StatCap != 300)
+                else if (
+                    (m.Skills.Cap == 10000 || m.Skills.Cap == 15000)
+                    && m.SkillsTotal <= m.Skills.Cap
+                )
                 {
-                    m.StatCap = 300;
-                    m.RawStr = 20;
-                    m.RawInt = 20;
-                    m.RawDex = 20;
+                    ((PlayerMobile)m).Profession = 0;
+
+                    if (record != m.Skills.Cap)
+                    {
+                        pm.Skill_Start = 10000;
+
+                        if (m.Skills.Cap == 15000)
+                        {
+                            pm.Skill_Ether = 5000;
+                        }
+                    }
+
+                    adjust = false;
+                }
+                else if (
+                    (m.Skills.Cap == 11000 || m.Skills.Cap == 16000)
+                    && m.SkillsTotal <= m.Skills.Cap
+                )
+                {
+                    ((PlayerMobile)m).Profession = 0;
+
+                    if (record != m.Skills.Cap)
+                    {
+                        pm.Skill_Start = 11000;
+
+                        if (m.Skills.Cap == 16000)
+                        {
+                            pm.Skill_Ether = 5000;
+                        }
+                    }
+
+                    adjust = false;
+                }
+
+                if (adjust)
+                {
+                    Server.Misc.MyServerSettings.SkillBegin("default", pm);
+                    pm.Profession = 0;
+                    for (int i = 0; i < pm.Skills.Length; i++)
+                    {
+                        Skill skill = pm.Skills[i];
+                        skill.Base = 0;
+                    }
+
+                    if (pm.Skill_Ether != 5000 && m.StatCap != 250)
+                    {
+                        m.StatCap = 250;
+                        m.RawStr = 20;
+                        m.RawInt = 20;
+                        m.RawDex = 20;
+                    }
+                    else if (pm.Skill_Ether == 5000 && m.StatCap != 300)
+                    {
+                        m.StatCap = 300;
+                        m.RawStr = 20;
+                        m.RawInt = 20;
+                        m.RawDex = 20;
+                    }
                 }
             }
         }
