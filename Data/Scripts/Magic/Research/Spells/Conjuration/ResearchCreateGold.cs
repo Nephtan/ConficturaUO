@@ -54,8 +54,6 @@ namespace Server.Spells.Research
                 Caster.SendMessage("What item do you want to transmute into gold?");
                 Caster.Target = new InternalTarget(this, spellID, Scroll, alwaysConsume);
             }
-
-            FinishSequence();
         }
 
         private class InternalTarget : Target

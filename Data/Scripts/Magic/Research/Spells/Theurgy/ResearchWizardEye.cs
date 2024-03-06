@@ -49,8 +49,6 @@ namespace Server.Spells.Research
             {
                 Caster.Target = new InternalTarget(this, spellID, Scroll, alwaysConsume);
             }
-
-            FinishSequence();
         }
 
         private class InternalTarget : Target

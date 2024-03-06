@@ -48,8 +48,6 @@ namespace Server.Spells.Research
             {
                 Caster.Target = new InternalTarget(this);
             }
-
-            FinishSequence();
         }
 
         public void Target(Mobile m)

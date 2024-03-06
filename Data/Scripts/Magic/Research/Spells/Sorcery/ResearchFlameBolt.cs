@@ -53,8 +53,6 @@ namespace Server.Spells.Research
             {
                 Caster.Target = new InternalTarget(this);
             }
-
-            FinishSequence();
         }
 
         public override bool DelayedDamage

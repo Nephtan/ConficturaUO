@@ -53,8 +53,6 @@ namespace Server.Spells.Research
                 Caster.SendMessage("Who do you want to invoke terror at?");
                 Caster.Target = new InternalTarget(this);
             }
-
-            FinishSequence();
         }
 
         public void Target(Mobile m)

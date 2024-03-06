@@ -53,8 +53,6 @@ namespace Server.Spells.Research
                 Caster.SendMessage("Who do you want to charm?");
                 Caster.Target = new InternalTarget(this);
             }
-
-            FinishSequence();
         }
 
         public void Target(Mobile m)

@@ -51,8 +51,6 @@ namespace Server.Spells.Research
                 Caster.Target = new InternalTarget(this);
                 Caster.SendMessage("Which undead creature do you wish to banish?");
             }
-
-            FinishSequence();
         }
 
         public void Target(Mobile m)

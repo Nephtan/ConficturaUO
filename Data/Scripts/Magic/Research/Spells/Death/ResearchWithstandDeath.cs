@@ -74,8 +74,6 @@ namespace Server.Spells.Research
                 Caster.SendMessage("Choose who you are going to summon a jewel for.");
                 Caster.Target = new InternalTarget(this);
             }
-
-            FinishSequence();
         }
 
         public void Target(Mobile m)

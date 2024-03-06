@@ -52,8 +52,6 @@ namespace Server.Spells.Research
                 Caster.Target = new InternalTarget(this);
                 EventSink.Logout += OnLogout;
             }
-
-            FinishSequence();
         }
 
         private void OnLogout(LogoutEventArgs e)
