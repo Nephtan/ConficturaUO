@@ -13339,7 +13339,7 @@ namespace Server.Mobiles
 
         private const double HealChance = 0.10; // 10% chance to heal at gm magery
         private const double TeleportChance = 0.05; // 5% chance to teleport at gm magery
-        private const double DispelChance = 0.75; // 75% chance to dispel at gm magery
+        private const double DispelChance = 0.50; // 75% chance to dispel at gm magery
 
         public virtual double ScaleByMagery(double v)
         {
@@ -13404,8 +13404,8 @@ namespace Server.Mobiles
                 return new CureSpell(m_Mobile, null);
 
             // Summoned creatures never heal themselves.
-            if (m_Mobile.Summoned)
-                return null;
+            //if (m_Mobile.Summoned)
+            //	return null;
 
             if (
                 m_Mobile.Controlled
