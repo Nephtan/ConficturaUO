@@ -104,12 +104,12 @@ namespace Server.Items
             this._Reader = from;
             this.Movable = false; //The book cannot be moved while it is being used.
             this._WillStartStudyNextLogout = false;
-            this._StartStudy = DateTime.UtcNow;
+            this._StartStudy = DateTime.Now;
         }
 
         public void EndStudy(Mobile from)
         {
-            TimeSpan difference = DateTime.UtcNow - this._StartStudy;
+            TimeSpan difference = DateTime.Now - this._StartStudy;
             int toGain = (int)((difference.TotalMinutes / SkillGainInterval) * SkillGainedPerTick);
 
             if (from.Skills[this._TrainingSkill].BaseFixedPoint + toGain > this._MaxSkillTrained)
@@ -219,7 +219,7 @@ namespace Server.Items
                     (EffectLayer)255,
                     0x100
                 );
-                pm.AcceleratedStart = DateTime.UtcNow + AcceleratedSkillGainTime;
+                pm.AcceleratedStart = DateTime.Now + AcceleratedSkillGainTime;
 
                 Timer t = (Timer)_Table[from];
 
