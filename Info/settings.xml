@@ -320,7 +320,7 @@
 
 // If true, then characters will not get hungry or thirsty when inside places like banks, inns, or houses...allowing you to step away from the game without your character starving eventually.
 
-<setting>false</setting>
+<setting>true</setting>
 
 // These 5 settings control whether that particular land has safari animals spawn like elephants, giraffes, cheetahs, or zebras.
 // These are values between 0 and 100, where 0 never occurs and 100 always does. Setting it to '50' would be 50% of the time.
