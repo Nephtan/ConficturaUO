@@ -267,20 +267,23 @@ namespace Server.Spells.Research
 
             public override bool OnMoveOver(Mobile m)
             {
-                if (Visible && !Server.Spells.SpellHelper.isFriend(m_Caster, m))
+                if (NotorietyHandlers.Mobile_AllowHarmful(m_Caster, m))
                 {
-                    if (SpellHelper.CanRevealCaster(m))
-                        m_Caster.RevealingAction();
+                    if (Visible && !Server.Spells.SpellHelper.isFriend(m_Caster, m))
+                    {
+                        if (SpellHelper.CanRevealCaster(m))
+                            m_Caster.RevealingAction();
 
-                    m_Caster.DoHarmful(m);
+                        m_Caster.DoHarmful(m);
 
-                    int damage = m_Damage;
+                        int damage = m_Damage;
 
-                    AOS.Damage(m, m_Caster, damage, 0, 100, 0, 0, 0);
-                    m.PlaySound(0x5CF);
+                        AOS.Damage(m, m_Caster, damage, 0, 100, 0, 0, 0);
+                        m.PlaySound(0x5CF);
 
-                    if (m is BaseCreature)
-                        ((BaseCreature)m).OnHarmfulSpell(m_Caster);
+                        if (m is BaseCreature)
+                            ((BaseCreature)m).OnHarmfulSpell(m_Caster);
+                    }
                 }
 
                 return true;
