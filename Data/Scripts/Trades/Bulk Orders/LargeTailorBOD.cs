@@ -39,50 +39,50 @@ namespace Server.Engines.BulkOrders
                 case 0:
                     entries = LargeBulkEntry.ConvertEntries(this, LargeBulkEntry.Farmer);
                     break;
-                case 2:
+                case 1:
                     entries = LargeBulkEntry.ConvertEntries(this, LargeBulkEntry.FisherGirl);
                     break;
-                case 3:
+                case 2:
                     entries = LargeBulkEntry.ConvertEntries(this, LargeBulkEntry.Gypsy);
                     break;
-                case 4:
+                case 3:
                     entries = LargeBulkEntry.ConvertEntries(this, LargeBulkEntry.HatSet);
                     break;
-                case 5:
+                case 4:
                     entries = LargeBulkEntry.ConvertEntries(this, LargeBulkEntry.Jester);
                     break;
-                case 6:
+                case 5:
                     entries = LargeBulkEntry.ConvertEntries(this, LargeBulkEntry.Lady);
                     break;
-                case 8:
+                case 6:
                     entries = LargeBulkEntry.ConvertEntries(this, LargeBulkEntry.Pirate);
                     break;
-                case 11:
+                case 7:
                     entries = LargeBulkEntry.ConvertEntries(this, LargeBulkEntry.TownCrier);
                     break;
-                case 12:
+                case 8:
                     entries = LargeBulkEntry.ConvertEntries(this, LargeBulkEntry.Wizard);
                     break;
                 case 9:
                     entries = LargeBulkEntry.ConvertEntries(this, LargeBulkEntry.ShoeSet);
                     useMaterials = Core.ML;
                     break;
-                case 1:
+                case 10:
                     entries = LargeBulkEntry.ConvertEntries(this, LargeBulkEntry.FemaleLeatherSet);
                     useMaterials = true;
                     break;
-                case 7:
+                case 11:
                     entries = LargeBulkEntry.ConvertEntries(this, LargeBulkEntry.MaleLeatherSet);
                     useMaterials = true;
                     break;
-                case 10:
+                case 12:
                     entries = LargeBulkEntry.ConvertEntries(this, LargeBulkEntry.StuddedSet);
                     useMaterials = true;
                     break;
-                case 13:
-                    entries = LargeBulkEntry.ConvertEntries(this, LargeBulkEntry.BoneSet);
-                    useMaterials = true;
-                    break;
+                //case 13:
+                //    entries = LargeBulkEntry.ConvertEntries(this, LargeBulkEntry.BoneSet);
+                //    useMaterials = true;
+                //    break;
             }
 
             int hue = 0x483;
