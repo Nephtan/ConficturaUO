@@ -28,7 +28,7 @@ namespace Server.Engines.BulkOrders
         }
 
         [Constructable]
-        public LargeTailorBOD()
+        public LargeTailorBOD(Mobile m)
         {
             LargeBulkEntry[] entries;
             bool useMaterials = false;
