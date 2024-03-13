@@ -437,8 +437,12 @@ namespace Server.Mobiles
                 else
                     pm.NextTailorBulkOrder = TimeSpan.FromMinutes(0.01);
 
-                if (theirSkill >= 70.1 && ((theirSkill - 40.0) / 300.0) > Utility.RandomDouble())
-                    return new LargeTailorBOD();
+                double calculateLBODChance = Utility.RandomDouble();
+
+                if (theirSkill >= 120.0 && ((theirSkill - 1.0) / 120.0) > calculateLBODChance)
+                    return new LargeTailorBOD(from);
+                else if (theirSkill >= 70.1 && ((theirSkill - 40.0) / 300.0) > calculateLBODChance)
+                    return new LargeTailorBOD(from);
 
                 return SmallTailorBOD.CreateRandomFor(from);
             }

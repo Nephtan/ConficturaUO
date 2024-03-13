@@ -902,7 +902,7 @@ namespace Server.Commands
         {
             WriteTailorBODHeader(html, name);
 
-            LargeBOD lbod = new LargeTailorBOD();
+            LargeBOD lbod = new LargeTailorBOD(null);
 
             lbod.Entries = LargeBulkEntry.ConvertEntries(lbod, entries);
 
