@@ -39,10 +39,6 @@ namespace Server.Engines.BulkOrders
                 case 0:
                     entries = LargeBulkEntry.ConvertEntries(this, LargeBulkEntry.Farmer);
                     break;
-                case 1:
-                    entries = LargeBulkEntry.ConvertEntries(this, LargeBulkEntry.FemaleLeatherSet);
-                    useMaterials = true;
-                    break;
                 case 2:
                     entries = LargeBulkEntry.ConvertEntries(this, LargeBulkEntry.FisherGirl);
                     break;
@@ -58,26 +54,30 @@ namespace Server.Engines.BulkOrders
                 case 6:
                     entries = LargeBulkEntry.ConvertEntries(this, LargeBulkEntry.Lady);
                     break;
-                case 7:
-                    entries = LargeBulkEntry.ConvertEntries(this, LargeBulkEntry.MaleLeatherSet);
-                    useMaterials = true;
-                    break;
                 case 8:
                     entries = LargeBulkEntry.ConvertEntries(this, LargeBulkEntry.Pirate);
-                    break;
-                case 9:
-                    entries = LargeBulkEntry.ConvertEntries(this, LargeBulkEntry.ShoeSet);
-                    useMaterials = Core.ML;
-                    break;
-                case 10:
-                    entries = LargeBulkEntry.ConvertEntries(this, LargeBulkEntry.StuddedSet);
-                    useMaterials = true;
                     break;
                 case 11:
                     entries = LargeBulkEntry.ConvertEntries(this, LargeBulkEntry.TownCrier);
                     break;
                 case 12:
                     entries = LargeBulkEntry.ConvertEntries(this, LargeBulkEntry.Wizard);
+                    break;
+                case 9:
+                    entries = LargeBulkEntry.ConvertEntries(this, LargeBulkEntry.ShoeSet);
+                    useMaterials = Core.ML;
+                    break;
+                case 1:
+                    entries = LargeBulkEntry.ConvertEntries(this, LargeBulkEntry.FemaleLeatherSet);
+                    useMaterials = true;
+                    break;
+                case 7:
+                    entries = LargeBulkEntry.ConvertEntries(this, LargeBulkEntry.MaleLeatherSet);
+                    useMaterials = true;
+                    break;
+                case 10:
+                    entries = LargeBulkEntry.ConvertEntries(this, LargeBulkEntry.StuddedSet);
+                    useMaterials = true;
                     break;
                 case 13:
                     entries = LargeBulkEntry.ConvertEntries(this, LargeBulkEntry.BoneSet);
