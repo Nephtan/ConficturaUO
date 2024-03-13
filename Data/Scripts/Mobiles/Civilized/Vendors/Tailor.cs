@@ -435,7 +435,7 @@ namespace Server.Mobiles
                 else if (theirSkill >= 50.1)
                     pm.NextTailorBulkOrder = TimeSpan.FromMinutes(0.01);
                 else
-                    pm.NextTailorBulkOrder = TimeSpan.FromMinutes(0.01);
+                    pm.NextTailorBulkOrder = TimeSpan.FromMinutes(60.0);
 
                 double calculateLBODChance = Utility.RandomDouble();
 

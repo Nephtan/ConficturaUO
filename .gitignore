@@ -1,0 +1,7 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/.vs
+/Backups/Automatic/Most Recent (13-3-2024 18-13-14)
+/Data/Logs/Commands
