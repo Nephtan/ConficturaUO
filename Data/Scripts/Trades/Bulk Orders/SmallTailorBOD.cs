@@ -78,12 +78,18 @@ namespace Server.Engines.BulkOrders
             {
                 int amountMax;
 
-                if (theirSkill >= 70.1)
-                    amountMax = Utility.RandomList(10, 15, 20, 20);
-                else if (theirSkill >= 50.1)
-                    amountMax = Utility.RandomList(10, 15, 15, 20);
+                if (theirSkill >= 90.1)
+                {
+                    amountMax = 20
+                }
+                else if (theirSkill >= 80.1)
+                {
+                    amountMax = Utility.RandomList(10, 15, 15, 15, 15, 15, 20, 20, 20, 20)
+                }
                 else
-                    amountMax = Utility.RandomList(10, 10, 15, 20);
+                {
+                    amountMax = Utility.RandomList(10, 10, 10, 10, 10, 15, 15, 15, 20, 20)
+                }
 
                 BulkMaterialType material = BulkMaterialType.None;
 
@@ -138,8 +144,10 @@ namespace Server.Engines.BulkOrders
 
                 double excChance = 0.0;
 
-                if (theirSkill >= 70.1)
-                    excChance = (theirSkill + 80.0) / 200.0;
+                if (theirSkill >= 90.1)
+                    excChance = (theirSkill + 90.0) / 200.0;
+                else (theirSkill >= 70.1)
+                    excChance = (theirSkill + 70.0) / 200.0;
 
                 bool reqExceptional = (excChance > Utility.RandomDouble());
 
