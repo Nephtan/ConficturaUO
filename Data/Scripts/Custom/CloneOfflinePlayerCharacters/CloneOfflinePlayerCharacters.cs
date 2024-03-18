@@ -356,7 +356,8 @@ namespace Confictura.Custom
             Server.Items.Container targetContainer
         )
         {
-            foreach (Item item in sourceContainer.Items)
+            Item[] itemsCopy = sourceContainer.Items.ToArray();
+            foreach (Item item in itemsCopy)
             {
                 Item clonedItem = CloneItem(item);
                 if (clonedItem != null)
