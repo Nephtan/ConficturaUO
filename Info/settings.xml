@@ -194,22 +194,6 @@
 
 <setting>true</setting>
 
-// If true, then some of the great forest cats will use the larger model. If false, then they will use the classic smaller model. If you change this, then run the [buildworld command when the server restarts.
-
-<setting>true</setting>
-
-// If true, then elephants will be in your game world. If you change this, then run the [buildworld command when the server restarts.
-
-<setting>true</setting>
-
-// If true, then zebras will be in your game world. If you change this, then run the [buildworld command when the server restarts.
-
-<setting>true</setting>
-
-// If true, then foxes will be in your game world. If you change this, then run the [buildworld command when the server restarts.
-
-<setting>true</setting>
-
 // If true, the public basement system is active. This lets players buy basement doors for their homes and basement doors will appear in some trade shops. These lead to the same basement public area and is usually used for multiplayer game environments.
 
 <setting>true</setting>
@@ -335,6 +319,39 @@
 <setting>true</setting>
 
 // If true, then characters will not get hungry or thirsty when inside places like banks, inns, or houses...allowing you to step away from the game without your character starving eventually.
+
+<setting>true</setting>
+
+// These 5 settings control whether that particular land has safari animals spawn like elephants, giraffes, cheetahs, or zebras.
+// These are values between 0 and 100, where 0 never occurs and 100 always does. Setting it to '50' would be 50% of the time.
+// Sosaria
+<setting>0</setting>
+// Lodoria
+<setting>0</setting>
+// Serpent Island
+<setting>100</setting>
+// Kuldar
+<setting>0</setting>
+// Savaged Empire - only applies to mammoths and mastadons
+<setting>100</setting>
+
+// This value is between 0 and 10, where you can set the amount of extra GM skill points characters get. So if you set it to '2' then characters get 200 (2 x 100) more skills points available.
+
+<setting>0</setting>
+
+// This number can be set from zero to 10, where 10 will give characters faster skill gain and zero leaves it normal (default).
+
+<setting>0</setting>
+
+// This number can be set from 5 to 60, which determines the number of minutes that hunger and thirst are checked for reduction (default is 5).
+
+<setting>5</setting>
+
+// This number can be set from 0 to 30, which determines the number of days before you can bond a pet one tamed (default is 7).
+
+<setting>7</setting>
+
+// If false, then vendors will NOT buy some tailor materials (cloth, cotton, flax, wool, thread, and yarn).
 
 <setting>true</setting>
 

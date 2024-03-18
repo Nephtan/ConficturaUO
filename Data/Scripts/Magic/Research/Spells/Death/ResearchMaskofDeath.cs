@@ -36,7 +36,10 @@ namespace Server.Spells.Research
             Server.Misc.Research.SpellInformation(spellID, 2),
             Server.Misc.Research.CapsCast(Server.Misc.Research.SpellInformation(spellID, 4)),
             212,
-            9001
+            9001,
+            Reagent.LichDust,
+            Reagent.GraveDust,
+            Reagent.PixieSkull
         );
 
         public ResearchMaskofDeath(Mobile caster, Item scroll)
@@ -85,7 +88,19 @@ namespace Server.Spells.Research
                 Caster.SendMessage("You summon the mask of death into your pack.");
                 Item iMask = new DeathlyMask(Caster, time);
                 Caster.AddToBackpack(iMask);
-                Server.Misc.Research.ConsumeScroll(Caster, true, spellIndex, false);
+                Server.Misc.Research.ConsumeScroll(Caster, true, spellIndex, alwaysConsume, Scroll);
+
+                BuffInfo.RemoveBuff(Caster, BuffIcon.MaskDeath);
+                BuffInfo.AddBuff(
+                    Caster,
+                    new BuffInfo(
+                        BuffIcon.MaskDeath,
+                        1063642,
+                        1063643,
+                        TimeSpan.FromSeconds(time),
+                        Caster
+                    )
+                );
 
                 KarmaMod(Caster, ((int)RequiredSkill + RequiredMana));
             }

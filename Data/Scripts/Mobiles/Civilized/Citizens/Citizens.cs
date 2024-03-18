@@ -4275,13 +4275,6 @@ namespace Server.Mobiles
             } // the Cimmeran Hold
             if (Utility.RandomBool())
             {
-                loc = new Point3D(734, 367, 40);
-                map = Map.Underworld;
-                direction = Direction.South;
-                CreateDragonRider(loc, map, direction);
-            } // the Fort of Tenebrae
-            if (Utility.RandomBool())
-            {
                 loc = new Point3D(1441, 3779, 30);
                 map = Map.Sosaria;
                 direction = Direction.East;
@@ -4948,7 +4941,7 @@ namespace Server.Mobiles
                         break;
                     case 9:
                         roll = 0;
-                        if (!Server.Misc.MyServerSettings.AllowZebras())
+                        if (!Server.Misc.MyServerSettings.SafariStore())
                         {
                             roll = 1;
                         }

@@ -107,6 +107,57 @@ namespace Server.Mobiles
 
         ///////////////////////////////////////////////////////////////////////////
 
+        public static int BeggingPose(Mobile from) // LET US SEE IF THEY ARE BEGGING
+        {
+            int beggar = 0;
+            if (from is PlayerMobile)
+            {
+                if (((PlayerMobile)from).CharacterBegging > 0)
+                {
+                    beggar = (int)from.Skills[SkillName.Begging].Value;
+                }
+            }
+            return beggar;
+        }
+
+        public static int BeggingKarma(Mobile from) // LET US SEE IF THEY ARE BEGGING
+        {
+            int charisma = 0;
+            if (from.Karma > -2459)
+            {
+                charisma = 40;
+            }
+            from.CheckSkill(SkillName.Begging, 0, 125);
+            return charisma;
+        }
+
+        public static string BeggingWords() // LET US SEE IF THEY ARE BEGGING
+        {
+            string sSpeak = "Please give me a good price as I am so poor.";
+            switch (Utility.RandomMinMax(0, 5))
+            {
+                case 0:
+                    sSpeak = "Please give me a good price as I am so poor.";
+                    break;
+                case 1:
+                    sSpeak = "I have very little gold so whatever you can give...";
+                    break;
+                case 2:
+                    sSpeak = "I have not eaten in days so your gold will surely help.";
+                    break;
+                case 3:
+                    sSpeak = "Will thou give a poor soul more for these?";
+                    break;
+                case 4:
+                    sSpeak = "I have fallen on hard times, will thou be kind?";
+                    break;
+                case 5:
+                    sSpeak = "Whatever you can give for these will surely help.";
+                    break;
+            }
+            return sSpeak;
+        }
+
         public override bool OnDragDrop(Mobile from, Item dropped)
         {
             if (dropped is PaintCanvas)
@@ -223,6 +274,105 @@ namespace Server.Mobiles
                 }
 
                 from.AddToBackpack(dropped);
+            }
+            else
+            {
+                PlayerMobile pm = (PlayerMobile)from;
+
+                int RelicValue = 0;
+
+                if (Server.Misc.RelicItems.RelicValue(dropped, this) > 0)
+                    RelicValue = Server.Misc.RelicItems.RelicValue(dropped, this);
+
+                if (RelicValue > 0)
+                {
+                    int gBonus = 0;
+
+                    if (BeggingPose(from) > 0) // LET US SEE IF THEY ARE BEGGING
+                    {
+                        Titles.AwardKarma(from, -BeggingKarma(from), true);
+                        from.Say(BeggingWords());
+                        gBonus = (int)
+                            Math.Round(
+                                ((from.Skills[SkillName.Begging].Value * RelicValue) / 100),
+                                0
+                            );
+                    }
+                    gBonus = gBonus + RelicValue;
+                    from.SendSound(0x3D);
+                    from.AddToBackpack(new Gold(gBonus));
+                    string sMessage = "";
+                    switch (Utility.RandomMinMax(0, 9))
+                    {
+                        case 0:
+                            sMessage =
+                                "I have been looking for something like this. Here is "
+                                + gBonus.ToString()
+                                + " gold for you.";
+                            break;
+                        case 1:
+                            sMessage =
+                                "I have heard of this item before. Here is "
+                                + gBonus.ToString()
+                                + " gold for you.";
+                            break;
+                        case 2:
+                            sMessage =
+                                "I never thought I would see one of these. Here is "
+                                + gBonus.ToString()
+                                + " gold for you.";
+                            break;
+                        case 3:
+                            sMessage =
+                                "I have never seen one of these. Here is "
+                                + gBonus.ToString()
+                                + " gold for you.";
+                            break;
+                        case 4:
+                            sMessage =
+                                "What a rare item. Here is " + gBonus.ToString() + " gold for you.";
+                            break;
+                        case 5:
+                            sMessage =
+                                "This is quite rare. Here is "
+                                + gBonus.ToString()
+                                + " gold for you.";
+                            break;
+                        case 6:
+                            sMessage =
+                                "This will go nicely in my collection. Here is "
+                                + gBonus.ToString()
+                                + " gold for you.";
+                            break;
+                        case 7:
+                            sMessage =
+                                "I have only heard tales about such items. Here is "
+                                + gBonus.ToString()
+                                + " gold for you.";
+                            break;
+                        case 8:
+                            sMessage =
+                                "How did you come across this? Here is "
+                                + gBonus.ToString()
+                                + " gold for you.";
+                            break;
+                        case 9:
+                            sMessage =
+                                "Where did you find this? Here is "
+                                + gBonus.ToString()
+                                + " gold for you.";
+                            break;
+                    }
+                    this.PrivateOverheadMessage(
+                        MessageType.Regular,
+                        1153,
+                        false,
+                        sMessage,
+                        from.NetState
+                    );
+                    dropped.Delete();
+                    return true;
+                }
             }
             return base.OnDragDrop(from, dropped);
         }

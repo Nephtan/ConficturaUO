@@ -6,6 +6,11 @@ namespace Server.Items
 {
     public class WagonAddon : BaseAddon
     {
+        public override string AddonName
+        {
+            get { return "wagon"; }
+        }
+
         private static int[,] m_AddOnSimpleComponents = new int[,]
         {
             { 9, -5, -7, 5 },

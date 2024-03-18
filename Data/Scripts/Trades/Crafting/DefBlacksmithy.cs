@@ -1127,6 +1127,28 @@ namespace Server.Engines.Craft
                 25,
                 1044037
             );
+            AddCraft(
+                typeof(SunShield),
+                "Shields",
+                "sun shield",
+                85.0,
+                135.0,
+                typeof(IronIngot),
+                1044036,
+                25,
+                1044037
+            );
+            AddCraft(
+                typeof(VirtueShield),
+                "Shields",
+                "virtue shield",
+                85.0,
+                135.0,
+                typeof(IronIngot),
+                1044036,
+                25,
+                1044037
+            );
             #endregion
 
             #region Bladed

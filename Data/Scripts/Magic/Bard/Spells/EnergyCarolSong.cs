@@ -92,6 +92,21 @@ namespace Server.Spells.Song
                     m.AddResistanceMod(mod1);
 
                     new ExpireTimer(m, mod1, duration).Start();
+
+                    string args = String.Format("{0}", amount);
+                    BuffInfo.RemoveBuff(m, BuffIcon.EnergyCarol);
+                    BuffInfo.AddBuff(
+                        m,
+                        new BuffInfo(
+                            BuffIcon.EnergyCarol,
+                            1063565,
+                            1063566,
+                            duration,
+                            m,
+                            args.ToString(),
+                            true
+                        )
+                    );
                 }
             }
 

@@ -24,7 +24,8 @@ namespace Server.Items
         HolyMan,
         Mystic,
         Syth,
-        Jedi
+        Jedi,
+        Archmage
     }
 
     public class Spellbook : Item, ICraftable, ISlayer
@@ -60,7 +61,7 @@ namespace Server.Items
 
         private static void AllSpells_OnTarget(Mobile from, object obj)
         {
-            if (obj is Spellbook)
+            if (obj is Spellbook || obj is AncientSpellbook)
             {
                 Spellbook book = (Spellbook)obj;
 
@@ -78,6 +79,31 @@ namespace Server.Items
                     CommandLogging.Format(from),
                     CommandLogging.Format(book)
                 );
+            }
+            else if (obj is ResearchBag)
+            {
+                ResearchBag bag = (ResearchBag)obj;
+
+                bag.ResearchSpells =
+                    "1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#";
+                bag.ResearchPrep1 =
+                    "99#99#99#99#99#99#99#99#99#99#99#99#99#99#99#99#99#99#99#99#99#99#99#99#99#99#99#99#99#99#99#99#";
+                bag.ResearchPrep2 =
+                    "99#99#99#99#99#99#99#99#99#99#99#99#99#99#99#99#99#99#99#99#99#99#99#99#99#99#99#99#99#99#99#99#";
+
+                bag.SpellsMagery =
+                    "1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#";
+                bag.SpellsNecromancy = "1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#";
+                bag.RuneFound = "1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#1#";
+
+                bag.BarsCast1 =
+                    "0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#";
+                bag.BarsCast2 =
+                    "0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#";
+                bag.BarsCast3 =
+                    "0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#";
+                bag.BarsCast4 =
+                    "0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#";
             }
             else
             {
@@ -138,6 +164,9 @@ namespace Server.Items
                     break;
                 case 12:
                     type = SpellbookType.Jedi;
+                    break;
+                case 13:
+                    type = SpellbookType.Archmage;
                     break;
             }
 
@@ -213,6 +242,8 @@ namespace Server.Items
                 return SpellbookType.Syth;
             else if (spellID >= 280 && spellID < 290)
                 return SpellbookType.Jedi;
+            else if (spellID >= 600 && spellID < 664)
+                return SpellbookType.Archmage;
 
             return SpellbookType.Invalid;
         }
@@ -275,6 +306,11 @@ namespace Server.Items
         public static Spellbook FindJedi(Mobile from)
         {
             return Find(from, -1, SpellbookType.Jedi);
+        }
+
+        public static Spellbook FindArchmage(Mobile from)
+        {
+            return Find(from, -1, SpellbookType.Archmage);
         }
 
         public static Spellbook Find(Mobile from, int spellID)
@@ -461,6 +497,39 @@ namespace Server.Items
 
         public override bool OnDragDrop(Mobile from, Item dropped)
         {
+            if ((dropped is BlankScroll || dropped is ScribesPen) && this is AncientSpellbook)
+            {
+                AncientSpellbook book = (AncientSpellbook)this;
+
+                if (dropped is BlankScroll && book.paper > 50000)
+                {
+                    from.SendMessage("This book has too many pages already.");
+                }
+                else if (dropped is BlankScroll)
+                {
+                    from.PlaySound(0x48);
+                    book.paper = book.paper + dropped.Amount;
+                    dropped.Delete();
+                    from.SendMessage("The blank scrolls are now extra pages in your book.");
+                }
+                else if (dropped is ScribesPen && this is AncientSpellbook)
+                {
+                    BaseTool tool = (BaseTool)dropped;
+
+                    if (book.quill > 50000)
+                    {
+                        from.SendMessage("This book has too many quills set aside for it.");
+                    }
+                    else
+                    {
+                        from.PlaySound(0x48);
+                        book.quill = book.quill + tool.UsesRemaining;
+                        dropped.Delete();
+                        from.SendMessage("The quills have been set aside for your book.");
+                    }
+                }
+            }
+
             if (dropped is SpellScroll && dropped.Amount == 1)
             {
                 SpellScroll scroll = (SpellScroll)dropped;
@@ -521,6 +590,19 @@ namespace Server.Items
             else
             {
                 return false;
+            }
+        }
+
+        public void AddAncient(int id)
+        {
+            int val = id - BookOffset;
+
+            if (val >= 0 && val < BookCount)
+            {
+                m_Content |= (ulong)1 << val;
+                ++m_Count;
+
+                InvalidateProperties();
             }
         }
 
@@ -727,6 +809,21 @@ namespace Server.Items
             else if (this is JediSpellbook)
             {
                 return false;
+            }
+            else if (this is AncientSpellbook)
+            {
+                if (((AncientSpellbook)this).Owner != from)
+                    return false;
+                if (
+                    from.Skills[SkillName.Magery].Base < 30
+                    && from.Skills[SkillName.Necromancy].Base < 30
+                )
+                {
+                    from.SendMessage(
+                        "Your need at least a natural neophyte skill in magery or necromancy to equip that!"
+                    );
+                    return false;
+                }
             }
             else if (from.Skills[SkillName.Magery].Base < 30)
             {

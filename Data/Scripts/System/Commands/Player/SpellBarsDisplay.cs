@@ -20,11 +20,13689 @@ using Server.Spells.Fourth;
 using Server.Spells.HolyMan;
 using Server.Spells.Mystic;
 using Server.Spells.Necromancy;
+using Server.Spells.Research;
 using Server.Spells.Second;
 using Server.Spells.Seventh;
 using Server.Spells.Sixth;
 using Server.Spells.Song;
 using Server.Spells.Third;
+
+namespace Server.Gumps
+{
+    public class SpellBarsArch1 : Gump
+    {
+        public static bool HasSpell(Mobile from, int spellID)
+        {
+            Spellbook book = Spellbook.Find(from, spellID);
+            return (book != null && book.HasSpell(spellID));
+        }
+
+        public static void Initialize()
+        {
+            CommandSystem.Register(
+                "archtool1",
+                AccessLevel.Player,
+                new CommandEventHandler(ToolBars_OnCommand)
+            );
+        }
+
+        public static void Register(string command, AccessLevel access, CommandEventHandler handler)
+        {
+            CommandSystem.Register(command, access, handler);
+        }
+
+        [Usage("archtool1")]
+        [Description("Opens Spell Bar For Archmages - 1.")]
+        public static void ToolBars_OnCommand(CommandEventArgs e)
+        {
+            Mobile from = e.Mobile;
+            from.CloseGump(typeof(SpellBarsArch1));
+            from.SendGump(new SpellBarsArch1(from));
+        }
+
+        public SpellBarsArch1(Mobile from)
+            : base(50, 50)
+        {
+            this.Closable = false;
+            this.Disposable = true;
+            this.Dragable = true;
+            this.Resizable = false;
+            this.AddPage(0);
+
+            if (ToolBarUpdates.GetToolBarSetting(from, 66, "SetupBarsArch1") > 0)
+            {
+                int iconn = 11194;
+                if (ResearchSettings.BookCaster(from))
+                {
+                    iconn = 11193;
+                }
+                this.AddImage(7, 0, iconn, 0);
+                int dby = 53;
+                int index = 0;
+
+                index = 1;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch1") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        99,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch1") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 2;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch1") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        1,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch1") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 3;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch1") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        2,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch1") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 4;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch1") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        3,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch1") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 5;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch1") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        4,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch1") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 6;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch1") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        5,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch1") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 7;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch1") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        6,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch1") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 8;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch1") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        7,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch1") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 9;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch1") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        8,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch1") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 10;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch1") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        9,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch1") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 11;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch1") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        10,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch1") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 12;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch1") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        11,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch1") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 13;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch1") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        12,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch1") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 14;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch1") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        13,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch1") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 15;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch1") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        14,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch1") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 16;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch1") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        15,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch1") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 17;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch1") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        16,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch1") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 18;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch1") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        17,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch1") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 19;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch1") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        18,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch1") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 20;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch1") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        19,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch1") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 21;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch1") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        20,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch1") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 22;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch1") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        21,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch1") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 23;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch1") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        22,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch1") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 24;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch1") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        23,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch1") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 25;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch1") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        24,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch1") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 26;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch1") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        25,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch1") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 27;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch1") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        26,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch1") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 28;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch1") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        27,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch1") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 29;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch1") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        28,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch1") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 30;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch1") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        29,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch1") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 31;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch1") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        30,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch1") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 32;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch1") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        31,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch1") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 33;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch1") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        32,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch1") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 34;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch1") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        33,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch1") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 35;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch1") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        34,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch1") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 36;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch1") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        35,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch1") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 37;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch1") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        36,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch1") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 38;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch1") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        37,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch1") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 39;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch1") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        38,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch1") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 40;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch1") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        39,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch1") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 41;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch1") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        40,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch1") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 42;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch1") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        41,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch1") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 43;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch1") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        42,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch1") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 44;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch1") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        43,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch1") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 45;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch1") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        44,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch1") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 46;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch1") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        45,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch1") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 47;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch1") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        46,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch1") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 48;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch1") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        47,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch1") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 49;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch1") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        48,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch1") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 50;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch1") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        49,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch1") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 51;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch1") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        50,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch1") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 52;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch1") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        51,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch1") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 53;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch1") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        52,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch1") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 54;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch1") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        53,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch1") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 55;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch1") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        54,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch1") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 56;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch1") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        55,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch1") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 57;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch1") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        56,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch1") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 58;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch1") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        57,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch1") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 59;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch1") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        58,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch1") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 60;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch1") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        59,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch1") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 61;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch1") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        60,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch1") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 62;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch1") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        61,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch1") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 63;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch1") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        62,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch1") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 64;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch1") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        63,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch1") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+            }
+            else
+            {
+                int iconn = 11194;
+                if (ResearchSettings.BookCaster(from))
+                {
+                    iconn = 11193;
+                }
+                this.AddImage(7, 0, iconn, 0);
+                int dby = 50;
+                int index = 0;
+                index = 1;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch1") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        99,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 2;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch1") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        1,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 3;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch1") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        2,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 4;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch1") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        3,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 5;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch1") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        4,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 6;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch1") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        5,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 7;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch1") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        6,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 8;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch1") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        7,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 9;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch1") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        8,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 10;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch1") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        9,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 11;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch1") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        10,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 12;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch1") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        11,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 13;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch1") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        12,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 14;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch1") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        13,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 15;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch1") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        14,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 16;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch1") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        15,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 17;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch1") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        16,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 18;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch1") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        17,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 19;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch1") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        18,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 20;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch1") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        19,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 21;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch1") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        20,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 22;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch1") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        21,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 23;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch1") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        22,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 24;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch1") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        23,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 25;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch1") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        24,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 26;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch1") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        25,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 27;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch1") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        26,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 28;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch1") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        27,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 29;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch1") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        28,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 30;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch1") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        29,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 31;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch1") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        30,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 32;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch1") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        31,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 33;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch1") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        32,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 34;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch1") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        33,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 35;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch1") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        34,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 36;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch1") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        35,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 37;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch1") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        36,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 38;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch1") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        37,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 39;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch1") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        38,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 40;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch1") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        39,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 41;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch1") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        40,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 42;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch1") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        41,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 43;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch1") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        42,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 44;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch1") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        43,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 45;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch1") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        44,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 46;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch1") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        45,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 47;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch1") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        46,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 48;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch1") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        47,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 49;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch1") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        48,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 50;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch1") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        49,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 51;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch1") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        50,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 52;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch1") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        51,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 53;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch1") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        52,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 54;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch1") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        53,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 55;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch1") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        54,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 56;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch1") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        55,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 57;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch1") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        56,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 58;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch1") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        57,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 59;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch1") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        58,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 60;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch1") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        59,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 61;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch1") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        60,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 62;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch1") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        61,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 63;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch1") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        62,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 64;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch1") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        63,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+            }
+        }
+
+        public override void OnResponse(NetState sender, RelayInfo info)
+        {
+            Mobile from = sender.Mobile;
+
+            from.CloseGump(typeof(SpellBarsArch1));
+
+            switch (info.ButtonID)
+            {
+                case 0:
+                {
+                    break;
+                }
+                case 99:
+                {
+                    if (ResearchSettings.HasSpell(from, 1))
+                    {
+                        new ResearchConjure(from, null).Cast();
+                        from.SendGump(new SpellBarsArch1(from));
+                    }
+                    break;
+                }
+                case 1:
+                {
+                    if (ResearchSettings.HasSpell(from, 2))
+                    {
+                        new ResearchDeathSpeak(from, null).Cast();
+                        from.SendGump(new SpellBarsArch1(from));
+                    }
+                    break;
+                }
+                case 2:
+                {
+                    if (ResearchSettings.HasSpell(from, 3))
+                    {
+                        new ResearchSneak(from, null).Cast();
+                        from.SendGump(new SpellBarsArch1(from));
+                    }
+                    break;
+                }
+                case 3:
+                {
+                    if (ResearchSettings.HasSpell(from, 4))
+                    {
+                        new ResearchCreateFire(from, null).Cast();
+                        from.SendGump(new SpellBarsArch1(from));
+                    }
+                    break;
+                }
+                case 4:
+                {
+                    if (ResearchSettings.HasSpell(from, 5))
+                    {
+                        new ResearchSummonElectricalElemental(from, null).Cast();
+                        from.SendGump(new SpellBarsArch1(from));
+                    }
+                    break;
+                }
+                case 5:
+                {
+                    if (ResearchSettings.HasSpell(from, 6))
+                    {
+                        new ResearchConfusionBlast(from, null).Cast();
+                        from.SendGump(new SpellBarsArch1(from));
+                    }
+                    break;
+                }
+                case 6:
+                {
+                    if (ResearchSettings.HasSpell(from, 7))
+                    {
+                        new ResearchSeeTruth(from, null).Cast();
+                        from.SendGump(new SpellBarsArch1(from));
+                    }
+                    break;
+                }
+                case 7:
+                {
+                    if (ResearchSettings.HasSpell(from, 8))
+                    {
+                        new ResearchIcicle(from, null).Cast();
+                        from.SendGump(new SpellBarsArch1(from));
+                    }
+                    break;
+                }
+                case 8:
+                {
+                    if (ResearchSettings.HasSpell(from, 9))
+                    {
+                        new ResearchExtinguish(from, null).Cast();
+                        from.SendGump(new SpellBarsArch1(from));
+                    }
+                    break;
+                }
+                case 9:
+                {
+                    if (ResearchSettings.HasSpell(from, 10))
+                    {
+                        new ResearchRockFlesh(from, null).Cast();
+                        from.SendGump(new SpellBarsArch1(from));
+                    }
+                    break;
+                }
+                case 10:
+                {
+                    if (ResearchSettings.HasSpell(from, 11))
+                    {
+                        new ResearchMassMight(from, null).Cast();
+                        from.SendGump(new SpellBarsArch1(from));
+                    }
+                    break;
+                }
+                case 11:
+                {
+                    if (ResearchSettings.HasSpell(from, 12))
+                    {
+                        new ResearchEndureCold(from, null).Cast();
+                        from.SendGump(new SpellBarsArch1(from));
+                    }
+                    break;
+                }
+                case 12:
+                {
+                    if (ResearchSettings.HasSpell(from, 13))
+                    {
+                        new ResearchSummonWeedElemental(from, null).Cast();
+                        from.SendGump(new SpellBarsArch1(from));
+                    }
+                    break;
+                }
+                case 13:
+                {
+                    if (ResearchSettings.HasSpell(from, 14))
+                    {
+                        new ResearchSummonCreature(from, null).Cast();
+                        from.SendGump(new SpellBarsArch1(from));
+                    }
+                    break;
+                }
+                case 14:
+                {
+                    if (ResearchSettings.HasSpell(from, 15))
+                    {
+                        new ResearchHealingTouch(from, null).Cast();
+                        from.SendGump(new SpellBarsArch1(from));
+                    }
+                    break;
+                }
+                case 15:
+                {
+                    if (ResearchSettings.HasSpell(from, 16))
+                    {
+                        new ResearchSnowBall(from, null).Cast();
+                        from.SendGump(new SpellBarsArch1(from));
+                    }
+                    break;
+                }
+                case 16:
+                {
+                    if (ResearchSettings.HasSpell(from, 17))
+                    {
+                        new ResearchClone(from, null).Cast();
+                        from.SendGump(new SpellBarsArch1(from));
+                    }
+                    break;
+                }
+                case 17:
+                {
+                    if (ResearchSettings.HasSpell(from, 18))
+                    {
+                        new ResearchGrantPeace(from, null).Cast();
+                        from.SendGump(new SpellBarsArch1(from));
+                    }
+                    break;
+                }
+                case 18:
+                {
+                    if (ResearchSettings.HasSpell(from, 19))
+                    {
+                        new ResearchSleep(from, null).Cast();
+                        from.SendGump(new SpellBarsArch1(from));
+                    }
+                    break;
+                }
+                case 19:
+                {
+                    if (ResearchSettings.HasSpell(from, 20))
+                    {
+                        new ResearchEndureHeat(from, null).Cast();
+                        from.SendGump(new SpellBarsArch1(from));
+                    }
+                    break;
+                }
+                case 20:
+                {
+                    if (ResearchSettings.HasSpell(from, 21))
+                    {
+                        new ResearchSummonIceElemental(from, null).Cast();
+                        from.SendGump(new SpellBarsArch1(from));
+                    }
+                    break;
+                }
+                case 21:
+                {
+                    if (ResearchSettings.HasSpell(from, 22))
+                    {
+                        new ResearchEtherealTravel(from, null).Cast();
+                        from.SendGump(new SpellBarsArch1(from));
+                    }
+                    break;
+                }
+                case 22:
+                {
+                    if (ResearchSettings.HasSpell(from, 23))
+                    {
+                        new ResearchWizardEye(from, null).Cast();
+                        from.SendGump(new SpellBarsArch1(from));
+                    }
+                    break;
+                }
+                case 23:
+                {
+                    if (ResearchSettings.HasSpell(from, 24))
+                    {
+                        new ResearchFrostField(from, null).Cast();
+                        from.SendGump(new SpellBarsArch1(from));
+                    }
+                    break;
+                }
+                case 24:
+                {
+                    if (ResearchSettings.HasSpell(from, 25))
+                    {
+                        new ResearchCreateGold(from, null).Cast();
+                        from.SendGump(new SpellBarsArch1(from));
+                    }
+                    break;
+                }
+                case 25:
+                {
+                    if (ResearchSettings.HasSpell(from, 26))
+                    {
+                        new ResearchSummonDead(from, null).Cast();
+                        from.SendGump(new SpellBarsArch1(from));
+                    }
+                    break;
+                }
+                case 26:
+                {
+                    if (ResearchSettings.HasSpell(from, 27))
+                    {
+                        new ResearchCauseFear(from, null).Cast();
+                        from.SendGump(new SpellBarsArch1(from));
+                    }
+                    break;
+                }
+                case 27:
+                {
+                    if (ResearchSettings.HasSpell(from, 28))
+                    {
+                        new ResearchIgnite(from, null).Cast();
+                        from.SendGump(new SpellBarsArch1(from));
+                    }
+                    break;
+                }
+                case 28:
+                {
+                    if (ResearchSettings.HasSpell(from, 29))
+                    {
+                        new ResearchSummonMudElemental(from, null).Cast();
+                        from.SendGump(new SpellBarsArch1(from));
+                    }
+                    break;
+                }
+                case 29:
+                {
+                    if (ResearchSettings.HasSpell(from, 30))
+                    {
+                        new ResearchBanishDaemon(from, null).Cast();
+                        from.SendGump(new SpellBarsArch1(from));
+                    }
+                    break;
+                }
+                case 30:
+                {
+                    if (ResearchSettings.HasSpell(from, 31))
+                    {
+                        new ResearchFadefromSight(from, null).Cast();
+                        from.SendGump(new SpellBarsArch1(from));
+                    }
+                    break;
+                }
+                case 31:
+                {
+                    if (ResearchSettings.HasSpell(from, 32))
+                    {
+                        new ResearchGasCloud(from, null).Cast();
+                        from.SendGump(new SpellBarsArch1(from));
+                    }
+                    break;
+                }
+                case 32:
+                {
+                    if (ResearchSettings.HasSpell(from, 33))
+                    {
+                        new ResearchSwarm(from, null).Cast();
+                        from.SendGump(new SpellBarsArch1(from));
+                    }
+                    break;
+                }
+                case 33:
+                {
+                    if (ResearchSettings.HasSpell(from, 34))
+                    {
+                        new ResearchMaskofDeath(from, null).Cast();
+                        from.SendGump(new SpellBarsArch1(from));
+                    }
+                    break;
+                }
+                case 34:
+                {
+                    if (ResearchSettings.HasSpell(from, 35))
+                    {
+                        new ResearchEnchant(from, null).Cast();
+                        from.SendGump(new SpellBarsArch1(from));
+                    }
+                    break;
+                }
+                case 35:
+                {
+                    if (ResearchSettings.HasSpell(from, 36))
+                    {
+                        new ResearchFlameBolt(from, null).Cast();
+                        from.SendGump(new SpellBarsArch1(from));
+                    }
+                    break;
+                }
+                case 36:
+                {
+                    if (ResearchSettings.HasSpell(from, 37))
+                    {
+                        new ResearchSummonGemElemental(from, null).Cast();
+                        from.SendGump(new SpellBarsArch1(from));
+                    }
+                    break;
+                }
+                case 37:
+                {
+                    if (ResearchSettings.HasSpell(from, 38))
+                    {
+                        new ResearchCallDestruction(from, null).Cast();
+                        from.SendGump(new SpellBarsArch1(from));
+                    }
+                    break;
+                }
+                case 38:
+                {
+                    if (ResearchSettings.HasSpell(from, 39))
+                    {
+                        new ResearchDivination(from, null).Cast();
+                        from.SendGump(new SpellBarsArch1(from));
+                    }
+                    break;
+                }
+                case 39:
+                {
+                    if (ResearchSettings.HasSpell(from, 40))
+                    {
+                        new ResearchFrostStrike(from, null).Cast();
+                        from.SendGump(new SpellBarsArch1(from));
+                    }
+                    break;
+                }
+                case 40:
+                {
+                    if (ResearchSettings.HasSpell(from, 41))
+                    {
+                        new ResearchMagicSteed(from, null).Cast();
+                        from.SendGump(new SpellBarsArch1(from));
+                    }
+                    break;
+                }
+                case 41:
+                {
+                    if (ResearchSettings.HasSpell(from, 42))
+                    {
+                        new ResearchCreateGolem(from, null).Cast();
+                        from.SendGump(new SpellBarsArch1(from));
+                    }
+                    break;
+                }
+                case 42:
+                {
+                    if (ResearchSettings.HasSpell(from, 43))
+                    {
+                        new ResearchSleepField(from, null).Cast();
+                        from.SendGump(new SpellBarsArch1(from));
+                    }
+                    break;
+                }
+                case 43:
+                {
+                    if (ResearchSettings.HasSpell(from, 44))
+                    {
+                        new ResearchConflagration(from, null).Cast();
+                        from.SendGump(new SpellBarsArch1(from));
+                    }
+                    break;
+                }
+                case 44:
+                {
+                    if (ResearchSettings.HasSpell(from, 45))
+                    {
+                        new ResearchSummonAcidElemental(from, null).Cast();
+                        from.SendGump(new SpellBarsArch1(from));
+                    }
+                    break;
+                }
+                case 45:
+                {
+                    if (ResearchSettings.HasSpell(from, 46))
+                    {
+                        new ResearchMeteorShower(from, null).Cast();
+                        from.SendGump(new SpellBarsArch1(from));
+                    }
+                    break;
+                }
+                case 46:
+                {
+                    if (ResearchSettings.HasSpell(from, 47))
+                    {
+                        new ResearchIntervention(from, null).Cast();
+                        from.SendGump(new SpellBarsArch1(from));
+                    }
+                    break;
+                }
+                case 47:
+                {
+                    if (ResearchSettings.HasSpell(from, 48))
+                    {
+                        new ResearchHailStorm(from, null).Cast();
+                        from.SendGump(new SpellBarsArch1(from));
+                    }
+                    break;
+                }
+                case 48:
+                {
+                    if (ResearchSettings.HasSpell(from, 49))
+                    {
+                        new ResearchAerialServant(from, null).Cast();
+                        from.SendGump(new SpellBarsArch1(from));
+                    }
+                    break;
+                }
+                case 49:
+                {
+                    if (ResearchSettings.HasSpell(from, 50))
+                    {
+                        new ResearchOpenGround(from, null).Cast();
+                        from.SendGump(new SpellBarsArch1(from));
+                    }
+                    break;
+                }
+                case 50:
+                {
+                    if (ResearchSettings.HasSpell(from, 51))
+                    {
+                        new ResearchCharm(from, null).Cast();
+                        from.SendGump(new SpellBarsArch1(from));
+                    }
+                    break;
+                }
+                case 51:
+                {
+                    if (ResearchSettings.HasSpell(from, 52))
+                    {
+                        new ResearchExplosion(from, null).Cast();
+                        from.SendGump(new SpellBarsArch1(from));
+                    }
+                    break;
+                }
+                case 52:
+                {
+                    if (ResearchSettings.HasSpell(from, 53))
+                    {
+                        new ResearchSummonPoisonElemental(from, null).Cast();
+                        from.SendGump(new SpellBarsArch1(from));
+                    }
+                    break;
+                }
+                case 53:
+                {
+                    if (ResearchSettings.HasSpell(from, 54))
+                    {
+                        new ResearchSummonDevil(from, null).Cast();
+                        from.SendGump(new SpellBarsArch1(from));
+                    }
+                    break;
+                }
+                case 54:
+                {
+                    if (ResearchSettings.HasSpell(from, 55))
+                    {
+                        new ResearchAirWalk(from, null).Cast();
+                        from.SendGump(new SpellBarsArch1(from));
+                    }
+                    break;
+                }
+                case 55:
+                {
+                    if (ResearchSettings.HasSpell(from, 56))
+                    {
+                        new ResearchAvalanche(from, null).Cast();
+                        from.SendGump(new SpellBarsArch1(from));
+                    }
+                    break;
+                }
+                case 56:
+                {
+                    if (ResearchSettings.HasSpell(from, 57))
+                    {
+                        new ResearchDeathVortex(from, null).Cast();
+                        from.SendGump(new SpellBarsArch1(from));
+                    }
+                    break;
+                }
+                case 57:
+                {
+                    if (ResearchSettings.HasSpell(from, 58))
+                    {
+                        new ResearchWithstandDeath(from, null).Cast();
+                        from.SendGump(new SpellBarsArch1(from));
+                    }
+                    break;
+                }
+                case 58:
+                {
+                    if (ResearchSettings.HasSpell(from, 59))
+                    {
+                        new ResearchMassSleep(from, null).Cast();
+                        from.SendGump(new SpellBarsArch1(from));
+                    }
+                    break;
+                }
+                case 59:
+                {
+                    if (ResearchSettings.HasSpell(from, 60))
+                    {
+                        new ResearchRingofFire(from, null).Cast();
+                        from.SendGump(new SpellBarsArch1(from));
+                    }
+                    break;
+                }
+                case 60:
+                {
+                    if (ResearchSettings.HasSpell(from, 61))
+                    {
+                        new ResearchSummonBloodElemental(from, null).Cast();
+                        from.SendGump(new SpellBarsArch1(from));
+                    }
+                    break;
+                }
+                case 61:
+                {
+                    if (ResearchSettings.HasSpell(from, 62))
+                    {
+                        new ResearchDevastation(from, null).Cast();
+                        from.SendGump(new SpellBarsArch1(from));
+                    }
+                    break;
+                }
+                case 62:
+                {
+                    if (ResearchSettings.HasSpell(from, 63))
+                    {
+                        new ResearchRestoration(from, null).Cast();
+                        from.SendGump(new SpellBarsArch1(from));
+                    }
+                    break;
+                }
+                case 63:
+                {
+                    if (ResearchSettings.HasSpell(from, 64))
+                    {
+                        new ResearchMassDeath(from, null).Cast();
+                        from.SendGump(new SpellBarsArch1(from));
+                    }
+                    break;
+                }
+            }
+        }
+    }
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+namespace Server.Gumps
+{
+    public class SpellBarsArch2 : Gump
+    {
+        public static bool HasSpell(Mobile from, int spellID)
+        {
+            Spellbook book = Spellbook.Find(from, spellID);
+            return (book != null && book.HasSpell(spellID));
+        }
+
+        public static void Initialize()
+        {
+            CommandSystem.Register(
+                "archtool2",
+                AccessLevel.Player,
+                new CommandEventHandler(ToolBars_OnCommand)
+            );
+        }
+
+        public static void Register(string command, AccessLevel access, CommandEventHandler handler)
+        {
+            CommandSystem.Register(command, access, handler);
+        }
+
+        [Usage("archtool2")]
+        [Description("Opens Spell Bar For Archmages - 2.")]
+        public static void ToolBars_OnCommand(CommandEventArgs e)
+        {
+            Mobile from = e.Mobile;
+            from.CloseGump(typeof(SpellBarsArch2));
+            from.SendGump(new SpellBarsArch2(from));
+        }
+
+        public SpellBarsArch2(Mobile from)
+            : base(50, 50)
+        {
+            this.Closable = false;
+            this.Disposable = true;
+            this.Dragable = true;
+            this.Resizable = false;
+            this.AddPage(0);
+
+            if (ToolBarUpdates.GetToolBarSetting(from, 66, "SetupBarsArch2") > 0)
+            {
+                int iconn = 11194;
+                if (ResearchSettings.BookCaster(from))
+                {
+                    iconn = 11193;
+                }
+                this.AddImage(7, 0, iconn, 0);
+                int dby = 53;
+                int index = 0;
+                index = 1;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch2") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        99,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch2") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 2;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch2") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        1,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch2") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 3;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch2") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        2,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch2") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 4;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch2") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        3,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch2") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 5;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch2") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        4,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch2") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 6;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch2") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        5,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch2") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 7;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch2") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        6,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch2") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 8;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch2") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        7,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch2") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 9;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch2") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        8,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch2") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 10;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch2") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        9,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch2") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 11;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch2") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        10,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch2") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 12;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch2") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        11,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch2") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 13;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch2") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        12,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch2") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 14;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch2") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        13,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch2") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 15;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch2") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        14,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch2") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 16;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch2") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        15,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch2") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 17;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch2") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        16,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch2") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 18;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch2") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        17,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch2") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 19;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch2") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        18,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch2") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 20;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch2") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        19,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch2") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 21;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch2") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        20,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch2") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 22;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch2") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        21,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch2") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 23;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch2") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        22,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch2") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 24;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch2") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        23,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch2") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 25;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch2") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        24,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch2") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 26;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch2") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        25,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch2") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 27;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch2") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        26,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch2") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 28;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch2") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        27,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch2") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 29;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch2") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        28,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch2") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 30;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch2") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        29,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch2") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 31;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch2") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        30,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch2") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 32;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch2") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        31,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch2") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 33;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch2") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        32,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch2") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 34;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch2") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        33,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch2") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 35;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch2") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        34,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch2") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 36;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch2") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        35,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch2") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 37;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch2") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        36,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch2") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 38;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch2") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        37,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch2") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 39;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch2") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        38,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch2") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 40;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch2") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        39,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch2") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 41;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch2") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        40,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch2") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 42;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch2") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        41,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch2") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 43;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch2") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        42,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch2") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 44;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch2") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        43,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch2") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 45;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch2") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        44,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch2") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 46;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch2") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        45,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch2") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 47;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch2") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        46,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch2") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 48;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch2") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        47,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch2") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 49;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch2") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        48,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch2") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 50;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch2") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        49,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch2") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 51;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch2") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        50,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch2") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 52;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch2") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        51,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch2") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 53;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch2") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        52,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch2") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 54;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch2") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        53,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch2") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 55;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch2") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        54,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch2") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 56;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch2") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        55,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch2") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 57;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch2") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        56,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch2") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 58;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch2") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        57,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch2") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 59;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch2") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        58,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch2") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 60;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch2") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        59,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch2") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 61;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch2") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        60,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch2") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 62;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch2") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        61,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch2") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 63;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch2") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        62,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch2") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 64;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch2") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        63,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch2") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+            }
+            else
+            {
+                int iconn = 11194;
+                if (ResearchSettings.BookCaster(from))
+                {
+                    iconn = 11193;
+                }
+                this.AddImage(7, 0, iconn, 0);
+                int dby = 50;
+                int index = 0;
+                index = 1;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch2") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        99,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 2;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch2") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        1,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 3;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch2") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        2,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 4;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch2") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        3,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 5;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch2") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        4,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 6;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch2") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        5,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 7;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch2") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        6,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 8;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch2") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        7,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 9;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch2") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        8,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 10;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch2") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        9,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 11;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch2") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        10,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 12;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch2") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        11,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 13;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch2") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        12,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 14;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch2") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        13,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 15;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch2") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        14,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 16;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch2") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        15,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 17;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch2") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        16,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 18;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch2") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        17,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 19;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch2") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        18,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 20;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch2") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        19,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 21;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch2") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        20,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 22;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch2") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        21,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 23;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch2") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        22,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 24;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch2") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        23,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 25;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch2") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        24,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 26;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch2") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        25,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 27;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch2") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        26,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 28;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch2") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        27,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 29;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch2") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        28,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 30;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch2") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        29,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 31;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch2") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        30,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 32;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch2") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        31,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 33;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch2") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        32,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 34;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch2") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        33,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 35;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch2") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        34,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 36;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch2") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        35,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 37;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch2") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        36,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 38;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch2") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        37,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 39;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch2") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        38,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 40;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch2") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        39,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 41;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch2") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        40,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 42;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch2") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        41,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 43;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch2") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        42,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 44;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch2") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        43,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 45;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch2") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        44,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 46;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch2") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        45,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 47;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch2") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        46,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 48;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch2") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        47,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 49;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch2") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        48,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 50;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch2") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        49,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 51;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch2") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        50,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 52;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch2") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        51,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 53;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch2") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        52,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 54;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch2") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        53,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 55;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch2") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        54,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 56;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch2") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        55,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 57;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch2") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        56,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 58;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch2") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        57,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 59;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch2") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        58,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 60;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch2") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        59,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 61;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch2") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        60,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 62;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch2") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        61,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 63;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch2") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        62,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 64;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch2") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        63,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+            }
+        }
+
+        public override void OnResponse(NetState sender, RelayInfo info)
+        {
+            Mobile from = sender.Mobile;
+
+            from.CloseGump(typeof(SpellBarsArch2));
+
+            switch (info.ButtonID)
+            {
+                case 0:
+                {
+                    break;
+                }
+                case 99:
+                {
+                    if (ResearchSettings.HasSpell(from, 1))
+                    {
+                        new ResearchConjure(from, null).Cast();
+                        from.SendGump(new SpellBarsArch2(from));
+                    }
+                    break;
+                }
+                case 1:
+                {
+                    if (ResearchSettings.HasSpell(from, 2))
+                    {
+                        new ResearchDeathSpeak(from, null).Cast();
+                        from.SendGump(new SpellBarsArch2(from));
+                    }
+                    break;
+                }
+                case 2:
+                {
+                    if (ResearchSettings.HasSpell(from, 3))
+                    {
+                        new ResearchSneak(from, null).Cast();
+                        from.SendGump(new SpellBarsArch2(from));
+                    }
+                    break;
+                }
+                case 3:
+                {
+                    if (ResearchSettings.HasSpell(from, 4))
+                    {
+                        new ResearchCreateFire(from, null).Cast();
+                        from.SendGump(new SpellBarsArch2(from));
+                    }
+                    break;
+                }
+                case 4:
+                {
+                    if (ResearchSettings.HasSpell(from, 5))
+                    {
+                        new ResearchSummonElectricalElemental(from, null).Cast();
+                        from.SendGump(new SpellBarsArch2(from));
+                    }
+                    break;
+                }
+                case 5:
+                {
+                    if (ResearchSettings.HasSpell(from, 6))
+                    {
+                        new ResearchConfusionBlast(from, null).Cast();
+                        from.SendGump(new SpellBarsArch2(from));
+                    }
+                    break;
+                }
+                case 6:
+                {
+                    if (ResearchSettings.HasSpell(from, 7))
+                    {
+                        new ResearchSeeTruth(from, null).Cast();
+                        from.SendGump(new SpellBarsArch2(from));
+                    }
+                    break;
+                }
+                case 7:
+                {
+                    if (ResearchSettings.HasSpell(from, 8))
+                    {
+                        new ResearchIcicle(from, null).Cast();
+                        from.SendGump(new SpellBarsArch2(from));
+                    }
+                    break;
+                }
+                case 8:
+                {
+                    if (ResearchSettings.HasSpell(from, 9))
+                    {
+                        new ResearchExtinguish(from, null).Cast();
+                        from.SendGump(new SpellBarsArch2(from));
+                    }
+                    break;
+                }
+                case 9:
+                {
+                    if (ResearchSettings.HasSpell(from, 10))
+                    {
+                        new ResearchRockFlesh(from, null).Cast();
+                        from.SendGump(new SpellBarsArch2(from));
+                    }
+                    break;
+                }
+                case 10:
+                {
+                    if (ResearchSettings.HasSpell(from, 11))
+                    {
+                        new ResearchMassMight(from, null).Cast();
+                        from.SendGump(new SpellBarsArch2(from));
+                    }
+                    break;
+                }
+                case 11:
+                {
+                    if (ResearchSettings.HasSpell(from, 12))
+                    {
+                        new ResearchEndureCold(from, null).Cast();
+                        from.SendGump(new SpellBarsArch2(from));
+                    }
+                    break;
+                }
+                case 12:
+                {
+                    if (ResearchSettings.HasSpell(from, 13))
+                    {
+                        new ResearchSummonWeedElemental(from, null).Cast();
+                        from.SendGump(new SpellBarsArch2(from));
+                    }
+                    break;
+                }
+                case 13:
+                {
+                    if (ResearchSettings.HasSpell(from, 14))
+                    {
+                        new ResearchSummonCreature(from, null).Cast();
+                        from.SendGump(new SpellBarsArch2(from));
+                    }
+                    break;
+                }
+                case 14:
+                {
+                    if (ResearchSettings.HasSpell(from, 15))
+                    {
+                        new ResearchHealingTouch(from, null).Cast();
+                        from.SendGump(new SpellBarsArch2(from));
+                    }
+                    break;
+                }
+                case 15:
+                {
+                    if (ResearchSettings.HasSpell(from, 16))
+                    {
+                        new ResearchSnowBall(from, null).Cast();
+                        from.SendGump(new SpellBarsArch2(from));
+                    }
+                    break;
+                }
+                case 16:
+                {
+                    if (ResearchSettings.HasSpell(from, 17))
+                    {
+                        new ResearchClone(from, null).Cast();
+                        from.SendGump(new SpellBarsArch2(from));
+                    }
+                    break;
+                }
+                case 17:
+                {
+                    if (ResearchSettings.HasSpell(from, 18))
+                    {
+                        new ResearchGrantPeace(from, null).Cast();
+                        from.SendGump(new SpellBarsArch2(from));
+                    }
+                    break;
+                }
+                case 18:
+                {
+                    if (ResearchSettings.HasSpell(from, 19))
+                    {
+                        new ResearchSleep(from, null).Cast();
+                        from.SendGump(new SpellBarsArch2(from));
+                    }
+                    break;
+                }
+                case 19:
+                {
+                    if (ResearchSettings.HasSpell(from, 20))
+                    {
+                        new ResearchEndureHeat(from, null).Cast();
+                        from.SendGump(new SpellBarsArch2(from));
+                    }
+                    break;
+                }
+                case 20:
+                {
+                    if (ResearchSettings.HasSpell(from, 21))
+                    {
+                        new ResearchSummonIceElemental(from, null).Cast();
+                        from.SendGump(new SpellBarsArch2(from));
+                    }
+                    break;
+                }
+                case 21:
+                {
+                    if (ResearchSettings.HasSpell(from, 22))
+                    {
+                        new ResearchEtherealTravel(from, null).Cast();
+                        from.SendGump(new SpellBarsArch2(from));
+                    }
+                    break;
+                }
+                case 22:
+                {
+                    if (ResearchSettings.HasSpell(from, 23))
+                    {
+                        new ResearchWizardEye(from, null).Cast();
+                        from.SendGump(new SpellBarsArch2(from));
+                    }
+                    break;
+                }
+                case 23:
+                {
+                    if (ResearchSettings.HasSpell(from, 24))
+                    {
+                        new ResearchFrostField(from, null).Cast();
+                        from.SendGump(new SpellBarsArch2(from));
+                    }
+                    break;
+                }
+                case 24:
+                {
+                    if (ResearchSettings.HasSpell(from, 25))
+                    {
+                        new ResearchCreateGold(from, null).Cast();
+                        from.SendGump(new SpellBarsArch2(from));
+                    }
+                    break;
+                }
+                case 25:
+                {
+                    if (ResearchSettings.HasSpell(from, 26))
+                    {
+                        new ResearchSummonDead(from, null).Cast();
+                        from.SendGump(new SpellBarsArch2(from));
+                    }
+                    break;
+                }
+                case 26:
+                {
+                    if (ResearchSettings.HasSpell(from, 27))
+                    {
+                        new ResearchCauseFear(from, null).Cast();
+                        from.SendGump(new SpellBarsArch2(from));
+                    }
+                    break;
+                }
+                case 27:
+                {
+                    if (ResearchSettings.HasSpell(from, 28))
+                    {
+                        new ResearchIgnite(from, null).Cast();
+                        from.SendGump(new SpellBarsArch2(from));
+                    }
+                    break;
+                }
+                case 28:
+                {
+                    if (ResearchSettings.HasSpell(from, 29))
+                    {
+                        new ResearchSummonMudElemental(from, null).Cast();
+                        from.SendGump(new SpellBarsArch2(from));
+                    }
+                    break;
+                }
+                case 29:
+                {
+                    if (ResearchSettings.HasSpell(from, 30))
+                    {
+                        new ResearchBanishDaemon(from, null).Cast();
+                        from.SendGump(new SpellBarsArch2(from));
+                    }
+                    break;
+                }
+                case 30:
+                {
+                    if (ResearchSettings.HasSpell(from, 31))
+                    {
+                        new ResearchFadefromSight(from, null).Cast();
+                        from.SendGump(new SpellBarsArch2(from));
+                    }
+                    break;
+                }
+                case 31:
+                {
+                    if (ResearchSettings.HasSpell(from, 32))
+                    {
+                        new ResearchGasCloud(from, null).Cast();
+                        from.SendGump(new SpellBarsArch2(from));
+                    }
+                    break;
+                }
+                case 32:
+                {
+                    if (ResearchSettings.HasSpell(from, 33))
+                    {
+                        new ResearchSwarm(from, null).Cast();
+                        from.SendGump(new SpellBarsArch2(from));
+                    }
+                    break;
+                }
+                case 33:
+                {
+                    if (ResearchSettings.HasSpell(from, 34))
+                    {
+                        new ResearchMaskofDeath(from, null).Cast();
+                        from.SendGump(new SpellBarsArch2(from));
+                    }
+                    break;
+                }
+                case 34:
+                {
+                    if (ResearchSettings.HasSpell(from, 35))
+                    {
+                        new ResearchEnchant(from, null).Cast();
+                        from.SendGump(new SpellBarsArch2(from));
+                    }
+                    break;
+                }
+                case 35:
+                {
+                    if (ResearchSettings.HasSpell(from, 36))
+                    {
+                        new ResearchFlameBolt(from, null).Cast();
+                        from.SendGump(new SpellBarsArch2(from));
+                    }
+                    break;
+                }
+                case 36:
+                {
+                    if (ResearchSettings.HasSpell(from, 37))
+                    {
+                        new ResearchSummonGemElemental(from, null).Cast();
+                        from.SendGump(new SpellBarsArch2(from));
+                    }
+                    break;
+                }
+                case 37:
+                {
+                    if (ResearchSettings.HasSpell(from, 38))
+                    {
+                        new ResearchCallDestruction(from, null).Cast();
+                        from.SendGump(new SpellBarsArch2(from));
+                    }
+                    break;
+                }
+                case 38:
+                {
+                    if (ResearchSettings.HasSpell(from, 39))
+                    {
+                        new ResearchDivination(from, null).Cast();
+                        from.SendGump(new SpellBarsArch2(from));
+                    }
+                    break;
+                }
+                case 39:
+                {
+                    if (ResearchSettings.HasSpell(from, 40))
+                    {
+                        new ResearchFrostStrike(from, null).Cast();
+                        from.SendGump(new SpellBarsArch2(from));
+                    }
+                    break;
+                }
+                case 40:
+                {
+                    if (ResearchSettings.HasSpell(from, 41))
+                    {
+                        new ResearchMagicSteed(from, null).Cast();
+                        from.SendGump(new SpellBarsArch2(from));
+                    }
+                    break;
+                }
+                case 41:
+                {
+                    if (ResearchSettings.HasSpell(from, 42))
+                    {
+                        new ResearchCreateGolem(from, null).Cast();
+                        from.SendGump(new SpellBarsArch2(from));
+                    }
+                    break;
+                }
+                case 42:
+                {
+                    if (ResearchSettings.HasSpell(from, 43))
+                    {
+                        new ResearchSleepField(from, null).Cast();
+                        from.SendGump(new SpellBarsArch2(from));
+                    }
+                    break;
+                }
+                case 43:
+                {
+                    if (ResearchSettings.HasSpell(from, 44))
+                    {
+                        new ResearchConflagration(from, null).Cast();
+                        from.SendGump(new SpellBarsArch2(from));
+                    }
+                    break;
+                }
+                case 44:
+                {
+                    if (ResearchSettings.HasSpell(from, 45))
+                    {
+                        new ResearchSummonAcidElemental(from, null).Cast();
+                        from.SendGump(new SpellBarsArch2(from));
+                    }
+                    break;
+                }
+                case 45:
+                {
+                    if (ResearchSettings.HasSpell(from, 46))
+                    {
+                        new ResearchMeteorShower(from, null).Cast();
+                        from.SendGump(new SpellBarsArch2(from));
+                    }
+                    break;
+                }
+                case 46:
+                {
+                    if (ResearchSettings.HasSpell(from, 47))
+                    {
+                        new ResearchIntervention(from, null).Cast();
+                        from.SendGump(new SpellBarsArch2(from));
+                    }
+                    break;
+                }
+                case 47:
+                {
+                    if (ResearchSettings.HasSpell(from, 48))
+                    {
+                        new ResearchHailStorm(from, null).Cast();
+                        from.SendGump(new SpellBarsArch2(from));
+                    }
+                    break;
+                }
+                case 48:
+                {
+                    if (ResearchSettings.HasSpell(from, 49))
+                    {
+                        new ResearchAerialServant(from, null).Cast();
+                        from.SendGump(new SpellBarsArch2(from));
+                    }
+                    break;
+                }
+                case 49:
+                {
+                    if (ResearchSettings.HasSpell(from, 50))
+                    {
+                        new ResearchOpenGround(from, null).Cast();
+                        from.SendGump(new SpellBarsArch2(from));
+                    }
+                    break;
+                }
+                case 50:
+                {
+                    if (ResearchSettings.HasSpell(from, 51))
+                    {
+                        new ResearchCharm(from, null).Cast();
+                        from.SendGump(new SpellBarsArch2(from));
+                    }
+                    break;
+                }
+                case 51:
+                {
+                    if (ResearchSettings.HasSpell(from, 52))
+                    {
+                        new ResearchExplosion(from, null).Cast();
+                        from.SendGump(new SpellBarsArch2(from));
+                    }
+                    break;
+                }
+                case 52:
+                {
+                    if (ResearchSettings.HasSpell(from, 53))
+                    {
+                        new ResearchSummonPoisonElemental(from, null).Cast();
+                        from.SendGump(new SpellBarsArch2(from));
+                    }
+                    break;
+                }
+                case 53:
+                {
+                    if (ResearchSettings.HasSpell(from, 54))
+                    {
+                        new ResearchSummonDevil(from, null).Cast();
+                        from.SendGump(new SpellBarsArch2(from));
+                    }
+                    break;
+                }
+                case 54:
+                {
+                    if (ResearchSettings.HasSpell(from, 55))
+                    {
+                        new ResearchAirWalk(from, null).Cast();
+                        from.SendGump(new SpellBarsArch2(from));
+                    }
+                    break;
+                }
+                case 55:
+                {
+                    if (ResearchSettings.HasSpell(from, 56))
+                    {
+                        new ResearchAvalanche(from, null).Cast();
+                        from.SendGump(new SpellBarsArch2(from));
+                    }
+                    break;
+                }
+                case 56:
+                {
+                    if (ResearchSettings.HasSpell(from, 57))
+                    {
+                        new ResearchDeathVortex(from, null).Cast();
+                        from.SendGump(new SpellBarsArch2(from));
+                    }
+                    break;
+                }
+                case 57:
+                {
+                    if (ResearchSettings.HasSpell(from, 58))
+                    {
+                        new ResearchWithstandDeath(from, null).Cast();
+                        from.SendGump(new SpellBarsArch2(from));
+                    }
+                    break;
+                }
+                case 58:
+                {
+                    if (ResearchSettings.HasSpell(from, 59))
+                    {
+                        new ResearchMassSleep(from, null).Cast();
+                        from.SendGump(new SpellBarsArch2(from));
+                    }
+                    break;
+                }
+                case 59:
+                {
+                    if (ResearchSettings.HasSpell(from, 60))
+                    {
+                        new ResearchRingofFire(from, null).Cast();
+                        from.SendGump(new SpellBarsArch2(from));
+                    }
+                    break;
+                }
+                case 60:
+                {
+                    if (ResearchSettings.HasSpell(from, 61))
+                    {
+                        new ResearchSummonBloodElemental(from, null).Cast();
+                        from.SendGump(new SpellBarsArch2(from));
+                    }
+                    break;
+                }
+                case 61:
+                {
+                    if (ResearchSettings.HasSpell(from, 62))
+                    {
+                        new ResearchDevastation(from, null).Cast();
+                        from.SendGump(new SpellBarsArch2(from));
+                    }
+                    break;
+                }
+                case 62:
+                {
+                    if (ResearchSettings.HasSpell(from, 63))
+                    {
+                        new ResearchRestoration(from, null).Cast();
+                        from.SendGump(new SpellBarsArch2(from));
+                    }
+                    break;
+                }
+                case 63:
+                {
+                    if (ResearchSettings.HasSpell(from, 64))
+                    {
+                        new ResearchMassDeath(from, null).Cast();
+                        from.SendGump(new SpellBarsArch2(from));
+                    }
+                    break;
+                }
+            }
+        }
+    }
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+namespace Server.Gumps
+{
+    public class SpellBarsArch3 : Gump
+    {
+        public static bool HasSpell(Mobile from, int spellID)
+        {
+            Spellbook book = Spellbook.Find(from, spellID);
+            return (book != null && book.HasSpell(spellID));
+        }
+
+        public static void Initialize()
+        {
+            CommandSystem.Register(
+                "archtool3",
+                AccessLevel.Player,
+                new CommandEventHandler(ToolBars_OnCommand)
+            );
+        }
+
+        public static void Register(string command, AccessLevel access, CommandEventHandler handler)
+        {
+            CommandSystem.Register(command, access, handler);
+        }
+
+        [Usage("archtool3")]
+        [Description("Opens Spell Bar For Archmages - 3.")]
+        public static void ToolBars_OnCommand(CommandEventArgs e)
+        {
+            Mobile from = e.Mobile;
+            from.CloseGump(typeof(SpellBarsArch3));
+            from.SendGump(new SpellBarsArch3(from));
+        }
+
+        public SpellBarsArch3(Mobile from)
+            : base(50, 50)
+        {
+            this.Closable = false;
+            this.Disposable = true;
+            this.Dragable = true;
+            this.Resizable = false;
+            this.AddPage(0);
+
+            if (ToolBarUpdates.GetToolBarSetting(from, 66, "SetupBarsArch3") > 0)
+            {
+                int iconn = 11194;
+                if (ResearchSettings.BookCaster(from))
+                {
+                    iconn = 11193;
+                }
+                this.AddImage(7, 0, iconn, 0);
+                int dby = 53;
+                int index = 0;
+                index = 1;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch3") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        99,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch3") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 2;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch3") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        1,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch3") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 3;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch3") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        2,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch3") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 4;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch3") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        3,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch3") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 5;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch3") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        4,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch3") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 6;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch3") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        5,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch3") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 7;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch3") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        6,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch3") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 8;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch3") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        7,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch3") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 9;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch3") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        8,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch3") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 10;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch3") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        9,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch3") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 11;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch3") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        10,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch3") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 12;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch3") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        11,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch3") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 13;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch3") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        12,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch3") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 14;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch3") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        13,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch3") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 15;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch3") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        14,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch3") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 16;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch3") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        15,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch3") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 17;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch3") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        16,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch3") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 18;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch3") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        17,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch3") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 19;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch3") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        18,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch3") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 20;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch3") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        19,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch3") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 21;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch3") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        20,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch3") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 22;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch3") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        21,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch3") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 23;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch3") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        22,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch3") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 24;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch3") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        23,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch3") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 25;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch3") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        24,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch3") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 26;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch3") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        25,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch3") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 27;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch3") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        26,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch3") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 28;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch3") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        27,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch3") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 29;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch3") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        28,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch3") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 30;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch3") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        29,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch3") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 31;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch3") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        30,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch3") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 32;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch3") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        31,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch3") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 33;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch3") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        32,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch3") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 34;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch3") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        33,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch3") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 35;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch3") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        34,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch3") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 36;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch3") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        35,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch3") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 37;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch3") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        36,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch3") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 38;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch3") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        37,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch3") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 39;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch3") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        38,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch3") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 40;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch3") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        39,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch3") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 41;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch3") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        40,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch3") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 42;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch3") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        41,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch3") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 43;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch3") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        42,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch3") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 44;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch3") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        43,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch3") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 45;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch3") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        44,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch3") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 46;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch3") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        45,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch3") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 47;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch3") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        46,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch3") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 48;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch3") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        47,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch3") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 49;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch3") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        48,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch3") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 50;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch3") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        49,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch3") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 51;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch3") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        50,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch3") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 52;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch3") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        51,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch3") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 53;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch3") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        52,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch3") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 54;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch3") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        53,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch3") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 55;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch3") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        54,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch3") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 56;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch3") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        55,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch3") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 57;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch3") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        56,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch3") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 58;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch3") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        57,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch3") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 59;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch3") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        58,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch3") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 60;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch3") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        59,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch3") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 61;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch3") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        60,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch3") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 62;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch3") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        61,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch3") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 63;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch3") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        62,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch3") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 64;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch3") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        63,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch3") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+            }
+            else
+            {
+                int iconn = 11194;
+                if (ResearchSettings.BookCaster(from))
+                {
+                    iconn = 11193;
+                }
+                this.AddImage(7, 0, iconn, 0);
+                int dby = 50;
+                int index = 0;
+                index = 1;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch3") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        99,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 2;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch3") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        1,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 3;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch3") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        2,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 4;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch3") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        3,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 5;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch3") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        4,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 6;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch3") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        5,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 7;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch3") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        6,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 8;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch3") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        7,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 9;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch3") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        8,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 10;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch3") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        9,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 11;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch3") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        10,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 12;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch3") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        11,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 13;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch3") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        12,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 14;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch3") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        13,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 15;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch3") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        14,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 16;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch3") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        15,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 17;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch3") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        16,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 18;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch3") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        17,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 19;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch3") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        18,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 20;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch3") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        19,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 21;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch3") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        20,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 22;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch3") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        21,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 23;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch3") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        22,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 24;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch3") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        23,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 25;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch3") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        24,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 26;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch3") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        25,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 27;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch3") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        26,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 28;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch3") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        27,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 29;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch3") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        28,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 30;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch3") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        29,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 31;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch3") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        30,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 32;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch3") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        31,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 33;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch3") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        32,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 34;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch3") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        33,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 35;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch3") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        34,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 36;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch3") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        35,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 37;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch3") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        36,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 38;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch3") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        37,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 39;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch3") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        38,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 40;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch3") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        39,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 41;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch3") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        40,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 42;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch3") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        41,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 43;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch3") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        42,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 44;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch3") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        43,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 45;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch3") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        44,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 46;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch3") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        45,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 47;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch3") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        46,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 48;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch3") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        47,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 49;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch3") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        48,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 50;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch3") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        49,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 51;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch3") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        50,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 52;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch3") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        51,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 53;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch3") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        52,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 54;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch3") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        53,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 55;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch3") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        54,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 56;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch3") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        55,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 57;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch3") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        56,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 58;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch3") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        57,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 59;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch3") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        58,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 60;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch3") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        59,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 61;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch3") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        60,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 62;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch3") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        61,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 63;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch3") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        62,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 64;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch3") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        63,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+            }
+        }
+
+        public override void OnResponse(NetState sender, RelayInfo info)
+        {
+            Mobile from = sender.Mobile;
+
+            from.CloseGump(typeof(SpellBarsArch3));
+
+            switch (info.ButtonID)
+            {
+                case 0:
+                {
+                    break;
+                }
+                case 99:
+                {
+                    if (ResearchSettings.HasSpell(from, 1))
+                    {
+                        new ResearchConjure(from, null).Cast();
+                        from.SendGump(new SpellBarsArch3(from));
+                    }
+                    break;
+                }
+                case 1:
+                {
+                    if (ResearchSettings.HasSpell(from, 2))
+                    {
+                        new ResearchDeathSpeak(from, null).Cast();
+                        from.SendGump(new SpellBarsArch3(from));
+                    }
+                    break;
+                }
+                case 2:
+                {
+                    if (ResearchSettings.HasSpell(from, 3))
+                    {
+                        new ResearchSneak(from, null).Cast();
+                        from.SendGump(new SpellBarsArch3(from));
+                    }
+                    break;
+                }
+                case 3:
+                {
+                    if (ResearchSettings.HasSpell(from, 4))
+                    {
+                        new ResearchCreateFire(from, null).Cast();
+                        from.SendGump(new SpellBarsArch3(from));
+                    }
+                    break;
+                }
+                case 4:
+                {
+                    if (ResearchSettings.HasSpell(from, 5))
+                    {
+                        new ResearchSummonElectricalElemental(from, null).Cast();
+                        from.SendGump(new SpellBarsArch3(from));
+                    }
+                    break;
+                }
+                case 5:
+                {
+                    if (ResearchSettings.HasSpell(from, 6))
+                    {
+                        new ResearchConfusionBlast(from, null).Cast();
+                        from.SendGump(new SpellBarsArch3(from));
+                    }
+                    break;
+                }
+                case 6:
+                {
+                    if (ResearchSettings.HasSpell(from, 7))
+                    {
+                        new ResearchSeeTruth(from, null).Cast();
+                        from.SendGump(new SpellBarsArch3(from));
+                    }
+                    break;
+                }
+                case 7:
+                {
+                    if (ResearchSettings.HasSpell(from, 8))
+                    {
+                        new ResearchIcicle(from, null).Cast();
+                        from.SendGump(new SpellBarsArch3(from));
+                    }
+                    break;
+                }
+                case 8:
+                {
+                    if (ResearchSettings.HasSpell(from, 9))
+                    {
+                        new ResearchExtinguish(from, null).Cast();
+                        from.SendGump(new SpellBarsArch3(from));
+                    }
+                    break;
+                }
+                case 9:
+                {
+                    if (ResearchSettings.HasSpell(from, 10))
+                    {
+                        new ResearchRockFlesh(from, null).Cast();
+                        from.SendGump(new SpellBarsArch3(from));
+                    }
+                    break;
+                }
+                case 10:
+                {
+                    if (ResearchSettings.HasSpell(from, 11))
+                    {
+                        new ResearchMassMight(from, null).Cast();
+                        from.SendGump(new SpellBarsArch3(from));
+                    }
+                    break;
+                }
+                case 11:
+                {
+                    if (ResearchSettings.HasSpell(from, 12))
+                    {
+                        new ResearchEndureCold(from, null).Cast();
+                        from.SendGump(new SpellBarsArch3(from));
+                    }
+                    break;
+                }
+                case 12:
+                {
+                    if (ResearchSettings.HasSpell(from, 13))
+                    {
+                        new ResearchSummonWeedElemental(from, null).Cast();
+                        from.SendGump(new SpellBarsArch3(from));
+                    }
+                    break;
+                }
+                case 13:
+                {
+                    if (ResearchSettings.HasSpell(from, 14))
+                    {
+                        new ResearchSummonCreature(from, null).Cast();
+                        from.SendGump(new SpellBarsArch3(from));
+                    }
+                    break;
+                }
+                case 14:
+                {
+                    if (ResearchSettings.HasSpell(from, 15))
+                    {
+                        new ResearchHealingTouch(from, null).Cast();
+                        from.SendGump(new SpellBarsArch3(from));
+                    }
+                    break;
+                }
+                case 15:
+                {
+                    if (ResearchSettings.HasSpell(from, 16))
+                    {
+                        new ResearchSnowBall(from, null).Cast();
+                        from.SendGump(new SpellBarsArch3(from));
+                    }
+                    break;
+                }
+                case 16:
+                {
+                    if (ResearchSettings.HasSpell(from, 17))
+                    {
+                        new ResearchClone(from, null).Cast();
+                        from.SendGump(new SpellBarsArch3(from));
+                    }
+                    break;
+                }
+                case 17:
+                {
+                    if (ResearchSettings.HasSpell(from, 18))
+                    {
+                        new ResearchGrantPeace(from, null).Cast();
+                        from.SendGump(new SpellBarsArch3(from));
+                    }
+                    break;
+                }
+                case 18:
+                {
+                    if (ResearchSettings.HasSpell(from, 19))
+                    {
+                        new ResearchSleep(from, null).Cast();
+                        from.SendGump(new SpellBarsArch3(from));
+                    }
+                    break;
+                }
+                case 19:
+                {
+                    if (ResearchSettings.HasSpell(from, 20))
+                    {
+                        new ResearchEndureHeat(from, null).Cast();
+                        from.SendGump(new SpellBarsArch3(from));
+                    }
+                    break;
+                }
+                case 20:
+                {
+                    if (ResearchSettings.HasSpell(from, 21))
+                    {
+                        new ResearchSummonIceElemental(from, null).Cast();
+                        from.SendGump(new SpellBarsArch3(from));
+                    }
+                    break;
+                }
+                case 21:
+                {
+                    if (ResearchSettings.HasSpell(from, 22))
+                    {
+                        new ResearchEtherealTravel(from, null).Cast();
+                        from.SendGump(new SpellBarsArch3(from));
+                    }
+                    break;
+                }
+                case 22:
+                {
+                    if (ResearchSettings.HasSpell(from, 23))
+                    {
+                        new ResearchWizardEye(from, null).Cast();
+                        from.SendGump(new SpellBarsArch3(from));
+                    }
+                    break;
+                }
+                case 23:
+                {
+                    if (ResearchSettings.HasSpell(from, 24))
+                    {
+                        new ResearchFrostField(from, null).Cast();
+                        from.SendGump(new SpellBarsArch3(from));
+                    }
+                    break;
+                }
+                case 24:
+                {
+                    if (ResearchSettings.HasSpell(from, 25))
+                    {
+                        new ResearchCreateGold(from, null).Cast();
+                        from.SendGump(new SpellBarsArch3(from));
+                    }
+                    break;
+                }
+                case 25:
+                {
+                    if (ResearchSettings.HasSpell(from, 26))
+                    {
+                        new ResearchSummonDead(from, null).Cast();
+                        from.SendGump(new SpellBarsArch3(from));
+                    }
+                    break;
+                }
+                case 26:
+                {
+                    if (ResearchSettings.HasSpell(from, 27))
+                    {
+                        new ResearchCauseFear(from, null).Cast();
+                        from.SendGump(new SpellBarsArch3(from));
+                    }
+                    break;
+                }
+                case 27:
+                {
+                    if (ResearchSettings.HasSpell(from, 28))
+                    {
+                        new ResearchIgnite(from, null).Cast();
+                        from.SendGump(new SpellBarsArch3(from));
+                    }
+                    break;
+                }
+                case 28:
+                {
+                    if (ResearchSettings.HasSpell(from, 29))
+                    {
+                        new ResearchSummonMudElemental(from, null).Cast();
+                        from.SendGump(new SpellBarsArch3(from));
+                    }
+                    break;
+                }
+                case 29:
+                {
+                    if (ResearchSettings.HasSpell(from, 30))
+                    {
+                        new ResearchBanishDaemon(from, null).Cast();
+                        from.SendGump(new SpellBarsArch3(from));
+                    }
+                    break;
+                }
+                case 30:
+                {
+                    if (ResearchSettings.HasSpell(from, 31))
+                    {
+                        new ResearchFadefromSight(from, null).Cast();
+                        from.SendGump(new SpellBarsArch3(from));
+                    }
+                    break;
+                }
+                case 31:
+                {
+                    if (ResearchSettings.HasSpell(from, 32))
+                    {
+                        new ResearchGasCloud(from, null).Cast();
+                        from.SendGump(new SpellBarsArch3(from));
+                    }
+                    break;
+                }
+                case 32:
+                {
+                    if (ResearchSettings.HasSpell(from, 33))
+                    {
+                        new ResearchSwarm(from, null).Cast();
+                        from.SendGump(new SpellBarsArch3(from));
+                    }
+                    break;
+                }
+                case 33:
+                {
+                    if (ResearchSettings.HasSpell(from, 34))
+                    {
+                        new ResearchMaskofDeath(from, null).Cast();
+                        from.SendGump(new SpellBarsArch3(from));
+                    }
+                    break;
+                }
+                case 34:
+                {
+                    if (ResearchSettings.HasSpell(from, 35))
+                    {
+                        new ResearchEnchant(from, null).Cast();
+                        from.SendGump(new SpellBarsArch3(from));
+                    }
+                    break;
+                }
+                case 35:
+                {
+                    if (ResearchSettings.HasSpell(from, 36))
+                    {
+                        new ResearchFlameBolt(from, null).Cast();
+                        from.SendGump(new SpellBarsArch3(from));
+                    }
+                    break;
+                }
+                case 36:
+                {
+                    if (ResearchSettings.HasSpell(from, 37))
+                    {
+                        new ResearchSummonGemElemental(from, null).Cast();
+                        from.SendGump(new SpellBarsArch3(from));
+                    }
+                    break;
+                }
+                case 37:
+                {
+                    if (ResearchSettings.HasSpell(from, 38))
+                    {
+                        new ResearchCallDestruction(from, null).Cast();
+                        from.SendGump(new SpellBarsArch3(from));
+                    }
+                    break;
+                }
+                case 38:
+                {
+                    if (ResearchSettings.HasSpell(from, 39))
+                    {
+                        new ResearchDivination(from, null).Cast();
+                        from.SendGump(new SpellBarsArch3(from));
+                    }
+                    break;
+                }
+                case 39:
+                {
+                    if (ResearchSettings.HasSpell(from, 40))
+                    {
+                        new ResearchFrostStrike(from, null).Cast();
+                        from.SendGump(new SpellBarsArch3(from));
+                    }
+                    break;
+                }
+                case 40:
+                {
+                    if (ResearchSettings.HasSpell(from, 41))
+                    {
+                        new ResearchMagicSteed(from, null).Cast();
+                        from.SendGump(new SpellBarsArch3(from));
+                    }
+                    break;
+                }
+                case 41:
+                {
+                    if (ResearchSettings.HasSpell(from, 42))
+                    {
+                        new ResearchCreateGolem(from, null).Cast();
+                        from.SendGump(new SpellBarsArch3(from));
+                    }
+                    break;
+                }
+                case 42:
+                {
+                    if (ResearchSettings.HasSpell(from, 43))
+                    {
+                        new ResearchSleepField(from, null).Cast();
+                        from.SendGump(new SpellBarsArch3(from));
+                    }
+                    break;
+                }
+                case 43:
+                {
+                    if (ResearchSettings.HasSpell(from, 44))
+                    {
+                        new ResearchConflagration(from, null).Cast();
+                        from.SendGump(new SpellBarsArch3(from));
+                    }
+                    break;
+                }
+                case 44:
+                {
+                    if (ResearchSettings.HasSpell(from, 45))
+                    {
+                        new ResearchSummonAcidElemental(from, null).Cast();
+                        from.SendGump(new SpellBarsArch3(from));
+                    }
+                    break;
+                }
+                case 45:
+                {
+                    if (ResearchSettings.HasSpell(from, 46))
+                    {
+                        new ResearchMeteorShower(from, null).Cast();
+                        from.SendGump(new SpellBarsArch3(from));
+                    }
+                    break;
+                }
+                case 46:
+                {
+                    if (ResearchSettings.HasSpell(from, 47))
+                    {
+                        new ResearchIntervention(from, null).Cast();
+                        from.SendGump(new SpellBarsArch3(from));
+                    }
+                    break;
+                }
+                case 47:
+                {
+                    if (ResearchSettings.HasSpell(from, 48))
+                    {
+                        new ResearchHailStorm(from, null).Cast();
+                        from.SendGump(new SpellBarsArch3(from));
+                    }
+                    break;
+                }
+                case 48:
+                {
+                    if (ResearchSettings.HasSpell(from, 49))
+                    {
+                        new ResearchAerialServant(from, null).Cast();
+                        from.SendGump(new SpellBarsArch3(from));
+                    }
+                    break;
+                }
+                case 49:
+                {
+                    if (ResearchSettings.HasSpell(from, 50))
+                    {
+                        new ResearchOpenGround(from, null).Cast();
+                        from.SendGump(new SpellBarsArch3(from));
+                    }
+                    break;
+                }
+                case 50:
+                {
+                    if (ResearchSettings.HasSpell(from, 51))
+                    {
+                        new ResearchCharm(from, null).Cast();
+                        from.SendGump(new SpellBarsArch3(from));
+                    }
+                    break;
+                }
+                case 51:
+                {
+                    if (ResearchSettings.HasSpell(from, 52))
+                    {
+                        new ResearchExplosion(from, null).Cast();
+                        from.SendGump(new SpellBarsArch3(from));
+                    }
+                    break;
+                }
+                case 52:
+                {
+                    if (ResearchSettings.HasSpell(from, 53))
+                    {
+                        new ResearchSummonPoisonElemental(from, null).Cast();
+                        from.SendGump(new SpellBarsArch3(from));
+                    }
+                    break;
+                }
+                case 53:
+                {
+                    if (ResearchSettings.HasSpell(from, 54))
+                    {
+                        new ResearchSummonDevil(from, null).Cast();
+                        from.SendGump(new SpellBarsArch3(from));
+                    }
+                    break;
+                }
+                case 54:
+                {
+                    if (ResearchSettings.HasSpell(from, 55))
+                    {
+                        new ResearchAirWalk(from, null).Cast();
+                        from.SendGump(new SpellBarsArch3(from));
+                    }
+                    break;
+                }
+                case 55:
+                {
+                    if (ResearchSettings.HasSpell(from, 56))
+                    {
+                        new ResearchAvalanche(from, null).Cast();
+                        from.SendGump(new SpellBarsArch3(from));
+                    }
+                    break;
+                }
+                case 56:
+                {
+                    if (ResearchSettings.HasSpell(from, 57))
+                    {
+                        new ResearchDeathVortex(from, null).Cast();
+                        from.SendGump(new SpellBarsArch3(from));
+                    }
+                    break;
+                }
+                case 57:
+                {
+                    if (ResearchSettings.HasSpell(from, 58))
+                    {
+                        new ResearchWithstandDeath(from, null).Cast();
+                        from.SendGump(new SpellBarsArch3(from));
+                    }
+                    break;
+                }
+                case 58:
+                {
+                    if (ResearchSettings.HasSpell(from, 59))
+                    {
+                        new ResearchMassSleep(from, null).Cast();
+                        from.SendGump(new SpellBarsArch3(from));
+                    }
+                    break;
+                }
+                case 59:
+                {
+                    if (ResearchSettings.HasSpell(from, 60))
+                    {
+                        new ResearchRingofFire(from, null).Cast();
+                        from.SendGump(new SpellBarsArch3(from));
+                    }
+                    break;
+                }
+                case 60:
+                {
+                    if (ResearchSettings.HasSpell(from, 61))
+                    {
+                        new ResearchSummonBloodElemental(from, null).Cast();
+                        from.SendGump(new SpellBarsArch3(from));
+                    }
+                    break;
+                }
+                case 61:
+                {
+                    if (ResearchSettings.HasSpell(from, 62))
+                    {
+                        new ResearchDevastation(from, null).Cast();
+                        from.SendGump(new SpellBarsArch3(from));
+                    }
+                    break;
+                }
+                case 62:
+                {
+                    if (ResearchSettings.HasSpell(from, 63))
+                    {
+                        new ResearchRestoration(from, null).Cast();
+                        from.SendGump(new SpellBarsArch3(from));
+                    }
+                    break;
+                }
+                case 63:
+                {
+                    if (ResearchSettings.HasSpell(from, 64))
+                    {
+                        new ResearchMassDeath(from, null).Cast();
+                        from.SendGump(new SpellBarsArch3(from));
+                    }
+                    break;
+                }
+            }
+        }
+    }
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+namespace Server.Gumps
+{
+    public class SpellBarsArch4 : Gump
+    {
+        public static bool HasSpell(Mobile from, int spellID)
+        {
+            Spellbook book = Spellbook.Find(from, spellID);
+            return (book != null && book.HasSpell(spellID));
+        }
+
+        public static void Initialize()
+        {
+            CommandSystem.Register(
+                "archtool4",
+                AccessLevel.Player,
+                new CommandEventHandler(ToolBars_OnCommand)
+            );
+        }
+
+        public static void Register(string command, AccessLevel access, CommandEventHandler handler)
+        {
+            CommandSystem.Register(command, access, handler);
+        }
+
+        [Usage("archtool4")]
+        [Description("Opens Spell Bar For Archmages - 4.")]
+        public static void ToolBars_OnCommand(CommandEventArgs e)
+        {
+            Mobile from = e.Mobile;
+            from.CloseGump(typeof(SpellBarsArch4));
+            from.SendGump(new SpellBarsArch4(from));
+        }
+
+        public SpellBarsArch4(Mobile from)
+            : base(50, 50)
+        {
+            this.Closable = false;
+            this.Disposable = true;
+            this.Dragable = true;
+            this.Resizable = false;
+            this.AddPage(0);
+
+            if (ToolBarUpdates.GetToolBarSetting(from, 66, "SetupBarsArch4") > 0)
+            {
+                int iconn = 11194;
+                if (ResearchSettings.BookCaster(from))
+                {
+                    iconn = 11193;
+                }
+                this.AddImage(7, 0, iconn, 0);
+                int dby = 53;
+                int index = 0;
+                index = 1;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch4") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        99,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch4") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 2;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch4") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        1,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch4") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 3;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch4") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        2,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch4") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 4;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch4") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        3,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch4") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 5;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch4") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        4,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch4") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 6;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch4") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        5,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch4") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 7;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch4") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        6,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch4") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 8;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch4") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        7,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch4") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 9;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch4") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        8,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch4") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 10;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch4") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        9,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch4") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 11;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch4") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        10,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch4") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 12;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch4") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        11,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch4") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 13;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch4") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        12,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch4") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 14;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch4") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        13,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch4") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 15;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch4") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        14,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch4") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 16;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch4") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        15,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch4") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 17;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch4") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        16,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch4") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 18;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch4") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        17,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch4") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 19;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch4") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        18,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch4") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 20;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch4") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        19,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch4") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 21;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch4") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        20,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch4") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 22;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch4") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        21,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch4") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 23;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch4") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        22,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch4") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 24;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch4") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        23,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch4") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 25;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch4") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        24,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch4") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 26;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch4") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        25,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch4") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 27;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch4") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        26,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch4") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 28;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch4") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        27,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch4") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 29;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch4") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        28,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch4") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 30;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch4") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        29,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch4") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 31;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch4") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        30,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch4") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 32;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch4") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        31,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch4") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 33;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch4") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        32,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch4") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 34;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch4") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        33,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch4") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 35;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch4") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        34,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch4") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 36;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch4") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        35,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch4") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 37;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch4") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        36,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch4") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 38;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch4") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        37,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch4") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 39;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch4") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        38,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch4") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 40;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch4") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        39,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch4") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 41;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch4") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        40,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch4") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 42;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch4") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        41,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch4") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 43;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch4") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        42,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch4") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 44;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch4") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        43,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch4") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 45;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch4") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        44,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch4") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 46;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch4") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        45,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch4") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 47;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch4") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        46,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch4") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 48;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch4") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        47,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch4") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 49;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch4") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        48,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch4") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 50;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch4") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        49,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch4") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 51;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch4") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        50,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch4") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 52;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch4") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        51,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch4") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 53;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch4") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        52,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch4") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 54;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch4") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        53,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch4") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 55;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch4") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        54,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch4") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 56;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch4") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        55,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch4") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 57;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch4") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        56,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch4") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 58;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch4") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        57,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch4") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 59;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch4") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        58,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch4") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 60;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch4") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        59,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch4") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 61;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch4") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        60,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch4") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 62;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch4") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        61,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch4") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 63;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch4") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        62,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch4") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+                index = 64;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch4") == 1
+                )
+                {
+                    this.AddButton(
+                        5,
+                        dby,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        63,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                    if (ToolBarUpdates.GetToolBarSetting(from, 65, "SetupBarsArch4") > 0)
+                    {
+                        AddLabel(
+                            59,
+                            (dby - 34),
+                            0x481,
+                            @"" + Server.Misc.Research.SpellInformation(index, 2) + ""
+                        );
+                    }
+                }
+            }
+            else
+            {
+                int iconn = 11194;
+                if (ResearchSettings.BookCaster(from))
+                {
+                    iconn = 11193;
+                }
+                this.AddImage(7, 0, iconn, 0);
+                int dby = 50;
+                int index = 0;
+                index = 1;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch4") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        99,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 2;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch4") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        1,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 3;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch4") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        2,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 4;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch4") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        3,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 5;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch4") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        4,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 6;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch4") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        5,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 7;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch4") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        6,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 8;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch4") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        7,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 9;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch4") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        8,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 10;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch4") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        9,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 11;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch4") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        10,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 12;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch4") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        11,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 13;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch4") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        12,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 14;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch4") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        13,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 15;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch4") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        14,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 16;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch4") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        15,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 17;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch4") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        16,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 18;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch4") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        17,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 19;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch4") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        18,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 20;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch4") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        19,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 21;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch4") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        20,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 22;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch4") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        21,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 23;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch4") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        22,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 24;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch4") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        23,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 25;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch4") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        24,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 26;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch4") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        25,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 27;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch4") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        26,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 28;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch4") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        27,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 29;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch4") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        28,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 30;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch4") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        29,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 31;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch4") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        30,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 32;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch4") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        31,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 33;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch4") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        32,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 34;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch4") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        33,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 35;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch4") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        34,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 36;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch4") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        35,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 37;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch4") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        36,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 38;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch4") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        37,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 39;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch4") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        38,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 40;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch4") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        39,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 41;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch4") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        40,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 42;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch4") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        41,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 43;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch4") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        42,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 44;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch4") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        43,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 45;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch4") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        44,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 46;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch4") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        45,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 47;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch4") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        46,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 48;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch4") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        47,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 49;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch4") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        48,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 50;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch4") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        49,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 51;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch4") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        50,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 52;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch4") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        51,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 53;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch4") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        52,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 54;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch4") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        53,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 55;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch4") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        54,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 56;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch4") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        55,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 57;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch4") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        56,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 58;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch4") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        57,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 59;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch4") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        58,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 60;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch4") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        59,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 61;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch4") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        60,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 62;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch4") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        61,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 63;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch4") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        62,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+                index = 64;
+                if (
+                    ResearchSettings.HasSpell(from, index)
+                    && ToolBarUpdates.GetToolBarSetting(from, index, "SetupBarsArch4") == 1
+                )
+                {
+                    this.AddButton(
+                        dby,
+                        5,
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        Int32.Parse(Server.Misc.Research.SpellInformation(index, 11)),
+                        63,
+                        GumpButtonType.Reply,
+                        1
+                    );
+                    dby = dby + 45;
+                }
+            }
+        }
+
+        public override void OnResponse(NetState sender, RelayInfo info)
+        {
+            Mobile from = sender.Mobile;
+
+            from.CloseGump(typeof(SpellBarsArch4));
+
+            switch (info.ButtonID)
+            {
+                case 0:
+                {
+                    break;
+                }
+                case 99:
+                {
+                    if (ResearchSettings.HasSpell(from, 1))
+                    {
+                        new ResearchConjure(from, null).Cast();
+                        from.SendGump(new SpellBarsArch4(from));
+                    }
+                    break;
+                }
+                case 1:
+                {
+                    if (ResearchSettings.HasSpell(from, 2))
+                    {
+                        new ResearchDeathSpeak(from, null).Cast();
+                        from.SendGump(new SpellBarsArch4(from));
+                    }
+                    break;
+                }
+                case 2:
+                {
+                    if (ResearchSettings.HasSpell(from, 3))
+                    {
+                        new ResearchSneak(from, null).Cast();
+                        from.SendGump(new SpellBarsArch4(from));
+                    }
+                    break;
+                }
+                case 3:
+                {
+                    if (ResearchSettings.HasSpell(from, 4))
+                    {
+                        new ResearchCreateFire(from, null).Cast();
+                        from.SendGump(new SpellBarsArch4(from));
+                    }
+                    break;
+                }
+                case 4:
+                {
+                    if (ResearchSettings.HasSpell(from, 5))
+                    {
+                        new ResearchSummonElectricalElemental(from, null).Cast();
+                        from.SendGump(new SpellBarsArch4(from));
+                    }
+                    break;
+                }
+                case 5:
+                {
+                    if (ResearchSettings.HasSpell(from, 6))
+                    {
+                        new ResearchConfusionBlast(from, null).Cast();
+                        from.SendGump(new SpellBarsArch4(from));
+                    }
+                    break;
+                }
+                case 6:
+                {
+                    if (ResearchSettings.HasSpell(from, 7))
+                    {
+                        new ResearchSeeTruth(from, null).Cast();
+                        from.SendGump(new SpellBarsArch4(from));
+                    }
+                    break;
+                }
+                case 7:
+                {
+                    if (ResearchSettings.HasSpell(from, 8))
+                    {
+                        new ResearchIcicle(from, null).Cast();
+                        from.SendGump(new SpellBarsArch4(from));
+                    }
+                    break;
+                }
+                case 8:
+                {
+                    if (ResearchSettings.HasSpell(from, 9))
+                    {
+                        new ResearchExtinguish(from, null).Cast();
+                        from.SendGump(new SpellBarsArch4(from));
+                    }
+                    break;
+                }
+                case 9:
+                {
+                    if (ResearchSettings.HasSpell(from, 10))
+                    {
+                        new ResearchRockFlesh(from, null).Cast();
+                        from.SendGump(new SpellBarsArch4(from));
+                    }
+                    break;
+                }
+                case 10:
+                {
+                    if (ResearchSettings.HasSpell(from, 11))
+                    {
+                        new ResearchMassMight(from, null).Cast();
+                        from.SendGump(new SpellBarsArch4(from));
+                    }
+                    break;
+                }
+                case 11:
+                {
+                    if (ResearchSettings.HasSpell(from, 12))
+                    {
+                        new ResearchEndureCold(from, null).Cast();
+                        from.SendGump(new SpellBarsArch4(from));
+                    }
+                    break;
+                }
+                case 12:
+                {
+                    if (ResearchSettings.HasSpell(from, 13))
+                    {
+                        new ResearchSummonWeedElemental(from, null).Cast();
+                        from.SendGump(new SpellBarsArch4(from));
+                    }
+                    break;
+                }
+                case 13:
+                {
+                    if (ResearchSettings.HasSpell(from, 14))
+                    {
+                        new ResearchSummonCreature(from, null).Cast();
+                        from.SendGump(new SpellBarsArch4(from));
+                    }
+                    break;
+                }
+                case 14:
+                {
+                    if (ResearchSettings.HasSpell(from, 15))
+                    {
+                        new ResearchHealingTouch(from, null).Cast();
+                        from.SendGump(new SpellBarsArch4(from));
+                    }
+                    break;
+                }
+                case 15:
+                {
+                    if (ResearchSettings.HasSpell(from, 16))
+                    {
+                        new ResearchSnowBall(from, null).Cast();
+                        from.SendGump(new SpellBarsArch4(from));
+                    }
+                    break;
+                }
+                case 16:
+                {
+                    if (ResearchSettings.HasSpell(from, 17))
+                    {
+                        new ResearchClone(from, null).Cast();
+                        from.SendGump(new SpellBarsArch4(from));
+                    }
+                    break;
+                }
+                case 17:
+                {
+                    if (ResearchSettings.HasSpell(from, 18))
+                    {
+                        new ResearchGrantPeace(from, null).Cast();
+                        from.SendGump(new SpellBarsArch4(from));
+                    }
+                    break;
+                }
+                case 18:
+                {
+                    if (ResearchSettings.HasSpell(from, 19))
+                    {
+                        new ResearchSleep(from, null).Cast();
+                        from.SendGump(new SpellBarsArch4(from));
+                    }
+                    break;
+                }
+                case 19:
+                {
+                    if (ResearchSettings.HasSpell(from, 20))
+                    {
+                        new ResearchEndureHeat(from, null).Cast();
+                        from.SendGump(new SpellBarsArch4(from));
+                    }
+                    break;
+                }
+                case 20:
+                {
+                    if (ResearchSettings.HasSpell(from, 21))
+                    {
+                        new ResearchSummonIceElemental(from, null).Cast();
+                        from.SendGump(new SpellBarsArch4(from));
+                    }
+                    break;
+                }
+                case 21:
+                {
+                    if (ResearchSettings.HasSpell(from, 22))
+                    {
+                        new ResearchEtherealTravel(from, null).Cast();
+                        from.SendGump(new SpellBarsArch4(from));
+                    }
+                    break;
+                }
+                case 22:
+                {
+                    if (ResearchSettings.HasSpell(from, 23))
+                    {
+                        new ResearchWizardEye(from, null).Cast();
+                        from.SendGump(new SpellBarsArch4(from));
+                    }
+                    break;
+                }
+                case 23:
+                {
+                    if (ResearchSettings.HasSpell(from, 24))
+                    {
+                        new ResearchFrostField(from, null).Cast();
+                        from.SendGump(new SpellBarsArch4(from));
+                    }
+                    break;
+                }
+                case 24:
+                {
+                    if (ResearchSettings.HasSpell(from, 25))
+                    {
+                        new ResearchCreateGold(from, null).Cast();
+                        from.SendGump(new SpellBarsArch4(from));
+                    }
+                    break;
+                }
+                case 25:
+                {
+                    if (ResearchSettings.HasSpell(from, 26))
+                    {
+                        new ResearchSummonDead(from, null).Cast();
+                        from.SendGump(new SpellBarsArch4(from));
+                    }
+                    break;
+                }
+                case 26:
+                {
+                    if (ResearchSettings.HasSpell(from, 27))
+                    {
+                        new ResearchCauseFear(from, null).Cast();
+                        from.SendGump(new SpellBarsArch4(from));
+                    }
+                    break;
+                }
+                case 27:
+                {
+                    if (ResearchSettings.HasSpell(from, 28))
+                    {
+                        new ResearchIgnite(from, null).Cast();
+                        from.SendGump(new SpellBarsArch4(from));
+                    }
+                    break;
+                }
+                case 28:
+                {
+                    if (ResearchSettings.HasSpell(from, 29))
+                    {
+                        new ResearchSummonMudElemental(from, null).Cast();
+                        from.SendGump(new SpellBarsArch4(from));
+                    }
+                    break;
+                }
+                case 29:
+                {
+                    if (ResearchSettings.HasSpell(from, 30))
+                    {
+                        new ResearchBanishDaemon(from, null).Cast();
+                        from.SendGump(new SpellBarsArch4(from));
+                    }
+                    break;
+                }
+                case 30:
+                {
+                    if (ResearchSettings.HasSpell(from, 31))
+                    {
+                        new ResearchFadefromSight(from, null).Cast();
+                        from.SendGump(new SpellBarsArch4(from));
+                    }
+                    break;
+                }
+                case 31:
+                {
+                    if (ResearchSettings.HasSpell(from, 32))
+                    {
+                        new ResearchGasCloud(from, null).Cast();
+                        from.SendGump(new SpellBarsArch4(from));
+                    }
+                    break;
+                }
+                case 32:
+                {
+                    if (ResearchSettings.HasSpell(from, 33))
+                    {
+                        new ResearchSwarm(from, null).Cast();
+                        from.SendGump(new SpellBarsArch4(from));
+                    }
+                    break;
+                }
+                case 33:
+                {
+                    if (ResearchSettings.HasSpell(from, 34))
+                    {
+                        new ResearchMaskofDeath(from, null).Cast();
+                        from.SendGump(new SpellBarsArch4(from));
+                    }
+                    break;
+                }
+                case 34:
+                {
+                    if (ResearchSettings.HasSpell(from, 35))
+                    {
+                        new ResearchEnchant(from, null).Cast();
+                        from.SendGump(new SpellBarsArch4(from));
+                    }
+                    break;
+                }
+                case 35:
+                {
+                    if (ResearchSettings.HasSpell(from, 36))
+                    {
+                        new ResearchFlameBolt(from, null).Cast();
+                        from.SendGump(new SpellBarsArch4(from));
+                    }
+                    break;
+                }
+                case 36:
+                {
+                    if (ResearchSettings.HasSpell(from, 37))
+                    {
+                        new ResearchSummonGemElemental(from, null).Cast();
+                        from.SendGump(new SpellBarsArch4(from));
+                    }
+                    break;
+                }
+                case 37:
+                {
+                    if (ResearchSettings.HasSpell(from, 38))
+                    {
+                        new ResearchCallDestruction(from, null).Cast();
+                        from.SendGump(new SpellBarsArch4(from));
+                    }
+                    break;
+                }
+                case 38:
+                {
+                    if (ResearchSettings.HasSpell(from, 39))
+                    {
+                        new ResearchDivination(from, null).Cast();
+                        from.SendGump(new SpellBarsArch4(from));
+                    }
+                    break;
+                }
+                case 39:
+                {
+                    if (ResearchSettings.HasSpell(from, 40))
+                    {
+                        new ResearchFrostStrike(from, null).Cast();
+                        from.SendGump(new SpellBarsArch4(from));
+                    }
+                    break;
+                }
+                case 40:
+                {
+                    if (ResearchSettings.HasSpell(from, 41))
+                    {
+                        new ResearchMagicSteed(from, null).Cast();
+                        from.SendGump(new SpellBarsArch4(from));
+                    }
+                    break;
+                }
+                case 41:
+                {
+                    if (ResearchSettings.HasSpell(from, 42))
+                    {
+                        new ResearchCreateGolem(from, null).Cast();
+                        from.SendGump(new SpellBarsArch4(from));
+                    }
+                    break;
+                }
+                case 42:
+                {
+                    if (ResearchSettings.HasSpell(from, 43))
+                    {
+                        new ResearchSleepField(from, null).Cast();
+                        from.SendGump(new SpellBarsArch4(from));
+                    }
+                    break;
+                }
+                case 43:
+                {
+                    if (ResearchSettings.HasSpell(from, 44))
+                    {
+                        new ResearchConflagration(from, null).Cast();
+                        from.SendGump(new SpellBarsArch4(from));
+                    }
+                    break;
+                }
+                case 44:
+                {
+                    if (ResearchSettings.HasSpell(from, 45))
+                    {
+                        new ResearchSummonAcidElemental(from, null).Cast();
+                        from.SendGump(new SpellBarsArch4(from));
+                    }
+                    break;
+                }
+                case 45:
+                {
+                    if (ResearchSettings.HasSpell(from, 46))
+                    {
+                        new ResearchMeteorShower(from, null).Cast();
+                        from.SendGump(new SpellBarsArch4(from));
+                    }
+                    break;
+                }
+                case 46:
+                {
+                    if (ResearchSettings.HasSpell(from, 47))
+                    {
+                        new ResearchIntervention(from, null).Cast();
+                        from.SendGump(new SpellBarsArch4(from));
+                    }
+                    break;
+                }
+                case 47:
+                {
+                    if (ResearchSettings.HasSpell(from, 48))
+                    {
+                        new ResearchHailStorm(from, null).Cast();
+                        from.SendGump(new SpellBarsArch4(from));
+                    }
+                    break;
+                }
+                case 48:
+                {
+                    if (ResearchSettings.HasSpell(from, 49))
+                    {
+                        new ResearchAerialServant(from, null).Cast();
+                        from.SendGump(new SpellBarsArch4(from));
+                    }
+                    break;
+                }
+                case 49:
+                {
+                    if (ResearchSettings.HasSpell(from, 50))
+                    {
+                        new ResearchOpenGround(from, null).Cast();
+                        from.SendGump(new SpellBarsArch4(from));
+                    }
+                    break;
+                }
+                case 50:
+                {
+                    if (ResearchSettings.HasSpell(from, 51))
+                    {
+                        new ResearchCharm(from, null).Cast();
+                        from.SendGump(new SpellBarsArch4(from));
+                    }
+                    break;
+                }
+                case 51:
+                {
+                    if (ResearchSettings.HasSpell(from, 52))
+                    {
+                        new ResearchExplosion(from, null).Cast();
+                        from.SendGump(new SpellBarsArch4(from));
+                    }
+                    break;
+                }
+                case 52:
+                {
+                    if (ResearchSettings.HasSpell(from, 53))
+                    {
+                        new ResearchSummonPoisonElemental(from, null).Cast();
+                        from.SendGump(new SpellBarsArch4(from));
+                    }
+                    break;
+                }
+                case 53:
+                {
+                    if (ResearchSettings.HasSpell(from, 54))
+                    {
+                        new ResearchSummonDevil(from, null).Cast();
+                        from.SendGump(new SpellBarsArch4(from));
+                    }
+                    break;
+                }
+                case 54:
+                {
+                    if (ResearchSettings.HasSpell(from, 55))
+                    {
+                        new ResearchAirWalk(from, null).Cast();
+                        from.SendGump(new SpellBarsArch4(from));
+                    }
+                    break;
+                }
+                case 55:
+                {
+                    if (ResearchSettings.HasSpell(from, 56))
+                    {
+                        new ResearchAvalanche(from, null).Cast();
+                        from.SendGump(new SpellBarsArch4(from));
+                    }
+                    break;
+                }
+                case 56:
+                {
+                    if (ResearchSettings.HasSpell(from, 57))
+                    {
+                        new ResearchDeathVortex(from, null).Cast();
+                        from.SendGump(new SpellBarsArch4(from));
+                    }
+                    break;
+                }
+                case 57:
+                {
+                    if (ResearchSettings.HasSpell(from, 58))
+                    {
+                        new ResearchWithstandDeath(from, null).Cast();
+                        from.SendGump(new SpellBarsArch4(from));
+                    }
+                    break;
+                }
+                case 58:
+                {
+                    if (ResearchSettings.HasSpell(from, 59))
+                    {
+                        new ResearchMassSleep(from, null).Cast();
+                        from.SendGump(new SpellBarsArch4(from));
+                    }
+                    break;
+                }
+                case 59:
+                {
+                    if (ResearchSettings.HasSpell(from, 60))
+                    {
+                        new ResearchRingofFire(from, null).Cast();
+                        from.SendGump(new SpellBarsArch4(from));
+                    }
+                    break;
+                }
+                case 60:
+                {
+                    if (ResearchSettings.HasSpell(from, 61))
+                    {
+                        new ResearchSummonBloodElemental(from, null).Cast();
+                        from.SendGump(new SpellBarsArch4(from));
+                    }
+                    break;
+                }
+                case 61:
+                {
+                    if (ResearchSettings.HasSpell(from, 62))
+                    {
+                        new ResearchDevastation(from, null).Cast();
+                        from.SendGump(new SpellBarsArch4(from));
+                    }
+                    break;
+                }
+                case 62:
+                {
+                    if (ResearchSettings.HasSpell(from, 63))
+                    {
+                        new ResearchRestoration(from, null).Cast();
+                        from.SendGump(new SpellBarsArch4(from));
+                    }
+                    break;
+                }
+                case 63:
+                {
+                    if (ResearchSettings.HasSpell(from, 64))
+                    {
+                        new ResearchMassDeath(from, null).Cast();
+                        from.SendGump(new SpellBarsArch4(from));
+                    }
+                    break;
+                }
+            }
+        }
+    }
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 namespace Server.Gumps
 {

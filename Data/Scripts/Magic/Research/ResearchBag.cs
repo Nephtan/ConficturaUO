@@ -96,66 +96,210 @@ namespace Server.Items
 
         public override bool OnDragDrop(Mobile from, Item dropped)
         {
-            if (dropped is BlankScroll)
+            if (BagOwner == from)
             {
-                if (BagScrolls > 500)
+                if (dropped is BlankScroll)
                 {
-                    from.SendMessage("This pack can only hold 500 blank scrolls.");
-                }
-                else
-                {
-                    from.PlaySound(0x48);
-                    int need = 500 - BagScrolls;
-                    int have = dropped.Amount;
-
-                    if (need >= have)
+                    if (BagScrolls > 50000)
                     {
-                        BagScrolls = BagScrolls + have;
-                        dropped.Delete();
+                        from.SendMessage("This pack can only hold 50000 blank scrolls.");
                     }
                     else
                     {
-                        BagScrolls = 500;
-                        dropped.Amount = dropped.Amount - need;
+                        from.PlaySound(0x48);
+                        int need = 50000 - BagScrolls;
+                        int have = dropped.Amount;
+
+                        if (need >= have)
+                        {
+                            BagScrolls = BagScrolls + have;
+                            dropped.Delete();
+                        }
+                        else
+                        {
+                            BagScrolls = 50000;
+                            dropped.Amount = dropped.Amount - need;
+                        }
+
+                        from.SendMessage("The blank scrolls have been added to your pack.");
+
+                        if (from.HasGump(typeof(ResearchGump)))
+                        {
+                            from.CloseGump(typeof(ResearchGump));
+                            from.SendGump(new ResearchGump(this, from));
+                        }
                     }
+                }
+                else if (dropped is ScribesPen)
+                {
+                    BaseTool tool = (BaseTool)dropped;
 
-                    from.SendMessage("The blank scrolls have been added to your pack.");
-
-                    if (from.HasGump(typeof(ResearchGump)))
+                    if (BagQuills > 50000)
                     {
-                        from.CloseGump(typeof(ResearchGump));
-                        from.SendGump(new ResearchGump(this, from));
+                        from.SendMessage("This pack can only hold 50000 quills.");
                     }
+                    else
+                    {
+                        from.PlaySound(0x48);
+                        BagQuills = BagQuills + tool.UsesRemaining;
+                        dropped.Delete();
+                        if (BagQuills > 50000)
+                        {
+                            BagQuills = 50000;
+                        }
+
+                        from.SendMessage("The quills have been added to your pack.");
+
+                        if (from.HasGump(typeof(ResearchGump)))
+                        {
+                            from.CloseGump(typeof(ResearchGump));
+                            from.SendGump(new ResearchGump(this, from));
+                        }
+                    }
+                }
+                else if (dropped is Spellbook)
+                {
+                    if (!(dropped is AncientSpellbook))
+                        Server.Misc.Research.GetRidOfBook(from);
+                    Spellbook book = (Spellbook)dropped;
+                    Spellbook rune = new AncientSpellbook();
+                    book.OnAfterDuped(rune);
+                    ((AncientSpellbook)rune).Owner = from;
+                    ((AncientSpellbook)rune).names = from.Name;
+                    rune.Crafter = book.Crafter;
+                    rune.Slayer = book.Slayer;
+                    rune.Slayer2 = book.Slayer2;
+                    rune.Hue = dropped.Hue;
+                    if (rune.Hue < 1)
+                    {
+                        rune.Hue = 0xB01;
+                    }
+                    rune.Name = "ancient spells of " + from.Name;
+
+                    if (dropped is AncientSpellbook)
+                    {
+                        ((AncientSpellbook)rune).Paper = ((AncientSpellbook)dropped).Paper;
+                        ((AncientSpellbook)rune).Quill = ((AncientSpellbook)dropped).Quill;
+                    }
+
+                    bool hasMagery = false;
+                    bool hasNecros = false;
+
+                    if (
+                        rune.SkillBonuses.Skill_1_Name == SkillName.Magery
+                        || rune.SkillBonuses.Skill_2_Name == SkillName.Magery
+                        || rune.SkillBonuses.Skill_3_Name == SkillName.Magery
+                        || rune.SkillBonuses.Skill_4_Name == SkillName.Magery
+                        || rune.SkillBonuses.Skill_5_Name == SkillName.Magery
+                    )
+                        hasMagery = true;
+                    if (
+                        rune.SkillBonuses.Skill_1_Name == SkillName.Necromancy
+                        || rune.SkillBonuses.Skill_2_Name == SkillName.Necromancy
+                        || rune.SkillBonuses.Skill_3_Name == SkillName.Necromancy
+                        || rune.SkillBonuses.Skill_4_Name == SkillName.Necromancy
+                        || rune.SkillBonuses.Skill_5_Name == SkillName.Necromancy
+                    )
+                        hasNecros = true;
+
+                    if (rune.SkillBonuses.Skill_1_Name == SkillName.Elementalism)
+                    {
+                        if (!hasMagery && (Utility.RandomBool() && !hasNecros))
+                            rune.SkillBonuses.Skill_1_Name = SkillName.Magery;
+                        else if (!hasNecros)
+                            rune.SkillBonuses.Skill_1_Name = SkillName.Necromancy;
+                        else
+                        {
+                            rune.SkillBonuses.Skill_1_Name = SkillName.Alchemy;
+                            rune.SkillBonuses.Skill_1_Value = 0;
+                        }
+                    }
+
+                    if (rune.SkillBonuses.Skill_1_Name == SkillName.Elementalism)
+                    {
+                        if (!hasMagery && (Utility.RandomBool() && !hasNecros))
+                            rune.SkillBonuses.Skill_1_Name = SkillName.Magery;
+                        else if (!hasNecros)
+                            rune.SkillBonuses.Skill_1_Name = SkillName.Necromancy;
+                        else
+                        {
+                            rune.SkillBonuses.Skill_1_Name = SkillName.Alchemy;
+                            rune.SkillBonuses.Skill_1_Value = 0;
+                        }
+                    }
+
+                    if (rune.SkillBonuses.Skill_2_Name == SkillName.Elementalism)
+                    {
+                        if (!hasMagery && (Utility.RandomBool() && !hasNecros))
+                            rune.SkillBonuses.Skill_2_Name = SkillName.Magery;
+                        else if (!hasNecros)
+                            rune.SkillBonuses.Skill_2_Name = SkillName.Necromancy;
+                        else
+                        {
+                            rune.SkillBonuses.Skill_2_Name = SkillName.Alchemy;
+                            rune.SkillBonuses.Skill_2_Value = 0;
+                        }
+                    }
+
+                    if (rune.SkillBonuses.Skill_3_Name == SkillName.Elementalism)
+                    {
+                        if (!hasMagery && (Utility.RandomBool() && !hasNecros))
+                            rune.SkillBonuses.Skill_3_Name = SkillName.Magery;
+                        else if (!hasNecros)
+                            rune.SkillBonuses.Skill_3_Name = SkillName.Necromancy;
+                        else
+                        {
+                            rune.SkillBonuses.Skill_3_Name = SkillName.Alchemy;
+                            rune.SkillBonuses.Skill_3_Value = 0;
+                        }
+                    }
+
+                    if (rune.SkillBonuses.Skill_4_Name == SkillName.Elementalism)
+                    {
+                        if (!hasMagery && (Utility.RandomBool() && !hasNecros))
+                            rune.SkillBonuses.Skill_4_Name = SkillName.Magery;
+                        else if (!hasNecros)
+                            rune.SkillBonuses.Skill_4_Name = SkillName.Necromancy;
+                        else
+                        {
+                            rune.SkillBonuses.Skill_4_Name = SkillName.Alchemy;
+                            rune.SkillBonuses.Skill_4_Value = 0;
+                        }
+                    }
+
+                    if (rune.SkillBonuses.Skill_5_Name == SkillName.Elementalism)
+                    {
+                        if (!hasMagery && (Utility.RandomBool() && !hasNecros))
+                            rune.SkillBonuses.Skill_5_Name = SkillName.Magery;
+                        else if (!hasNecros)
+                            rune.SkillBonuses.Skill_5_Name = SkillName.Necromancy;
+                        else
+                        {
+                            rune.SkillBonuses.Skill_5_Name = SkillName.Alchemy;
+                            rune.SkillBonuses.Skill_5_Value = 0;
+                        }
+                    }
+
+                    if (Server.Misc.ResearchSettings.ResearchMaterials(from) != null)
+                    {
+                        int spells = 0;
+
+                        while (spells < 65)
+                        {
+                            spells++;
+
+                            if (Server.Misc.Research.GetResearch(this, spells))
+                                rune.AddAncient(Int32.Parse(Research.SpellInformation(spells, 12)));
+                        }
+                    }
+
+                    book.Delete();
+                    from.SendMessage("Using your research, you make a new spellbook.");
+
+                    from.AddToBackpack(rune);
+                    from.PlaySound(0x55);
                 }
             }
-            else if (dropped is ScribesPen)
-            {
-                BaseTool tool = (BaseTool)dropped;
-
-                if (BagQuills > 500)
-                {
-                    from.SendMessage("This pack can only hold 500 quills.");
-                }
-                else
-                {
-                    from.PlaySound(0x48);
-                    BagQuills = BagQuills + tool.UsesRemaining;
-                    dropped.Delete();
-                    if (BagQuills > 500)
-                    {
-                        BagQuills = 500;
-                    }
-
-                    from.SendMessage("The quills have been added to your pack.");
-
-                    if (from.HasGump(typeof(ResearchGump)))
-                    {
-                        from.CloseGump(typeof(ResearchGump));
-                        from.SendGump(new ResearchGump(this, from));
-                    }
-                }
-            }
-
             return false;
         }
 
@@ -420,7 +564,7 @@ namespace Server.Items
                     );
 
                     string msg = "Your pack is fully stocked with octopus ink.";
-                    if (bag.BagInk < 500)
+                    if (bag.BagInk < 50000)
                     {
                         msg =
                             "More octopus ink is rumored to be at "
@@ -450,7 +594,7 @@ namespace Server.Items
                             20,
                             @"<BODY><BASEFONT Color="
                                 + color
-                                + ">Research Spell Bar I</BASEFONT></BODY>",
+                                + ">Ancient Spell Bar I</BASEFONT></BODY>",
                             (bool)false,
                             (bool)false
                         );
@@ -483,7 +627,7 @@ namespace Server.Items
                             20,
                             @"<BODY><BASEFONT Color="
                                 + color
-                                + ">Research Spell Bar II</BASEFONT></BODY>",
+                                + ">Ancient Spell Bar II</BASEFONT></BODY>",
                             (bool)false,
                             (bool)false
                         );
@@ -516,7 +660,7 @@ namespace Server.Items
                             20,
                             @"<BODY><BASEFONT Color="
                                 + color
-                                + ">Research Spell Bar III</BASEFONT></BODY>",
+                                + ">Ancient Spell Bar III</BASEFONT></BODY>",
                             (bool)false,
                             (bool)false
                         );
@@ -549,7 +693,7 @@ namespace Server.Items
                             20,
                             @"<BODY><BASEFONT Color="
                                 + color
-                                + ">Research Spell Bar IV</BASEFONT></BODY>",
+                                + ">Ancient Spell Bar IV</BASEFONT></BODY>",
                             (bool)false,
                             (bool)false
                         );
@@ -3638,7 +3782,11 @@ namespace Server.Items
                         639,
                         @"<BODY><BASEFONT Color="
                             + color
-                            + ">Spell research is something that the most dedicated of wizards pursue. It requires the accumulation of knowledge of those that came before. Mages and Necromancers once practiced this strange magic, that was thought to be lost through the passage of time. No matter the research goal, one would need to find the cubes of power in order to scribe spells. These cubes are also required to cast any spell that was used in ancient times. Once all of the cubes of power are found, the true research can begin.<br><br>Some perform research to write commonly used spells, but cannot find the original scroll that contains the vital information needed to cast it. This research has a scribe searching for the pages of tomes that contain the information to write the spell to parchment. Creating scrolls in this manner require the use of octopus ink, which is scarce since the last octopus was seen centuries ago as the kraken were said to have wiped them out. The more difficult the spell, the more ink that is required to scribe the scroll. Your research will indicate where more octopus ink can be obtained. The better your skills in alchemy, cooking, and tasting the more use you will find from the collected ink. Modern spells can be learned in the areas of magery and necromancy. You can research each area simultaneously if you choose, but each area will require you to learn the magic in a specific order as the learned spell will help the researcher learn more of the next spell until all are discovered.<br><br>The main goal of spell research is for a spell caster to learn the ancient magic that has been long forgotten. This ancient magic consists of 64 different spells in 8 different schools of magic. These spells were once used by mages and necromancers alike, where those that reached the status of archmage benefited the most from the power these spells unleash. The magic cannot be written in books, but can only be scribed to individual scrolls that the caster can then read from. When read, the scroll crumples to dust. If one has attributes of lower reagent use, the scroll may not crumble and can be used again but that is not guaranteed especially for very powerful spells. Spells are cast with those skilled in either magery or necromancy, whichever is higher. The effectiveness of the spells is dependent on the combination of magery, necromancy, spiritualism, and psychology. If you are simply skilled in only a couple of these skills, then the spells will have only an average effect. It is those that pursue all four categories of wizardry that will gain the most benefit. When ancient spells are performed, it helps a researcher practice inscription, magery, necromancy, spiritualism, and psychology at the same time. This is why ancient spell research interests archmages, as they have achieved the level of grandmaster in both areas of magic. Some ancient magic has similarities to spells used today, as is to be expected that some of the knowledge survived the ages. So very few spells will be similar to current magery spells, and even fewer spells that are similar to modern necromancer spells. Although they are similar, the ancient spell usually proves to be much more powerful.<br><br>This bag will hold all of your research, as well as blank scrolls, quills, and octopus ink for a maximum quantity of 500 each. You can drop scribe pens and blank scrolls onto the bag to replenish those materials. Discovered ink will be placed in your bag when found. It will also hold all of the cubes of power as well as any ancient magic you put to parchment. This bag will hold 500 scrolls of each ancient magic spell. The bag is yours and no one else can look inside it or use the magic you researched within it. If you lose the bag, you should find a scribe immediately and give them another 500 gold where maybe you will have your research returned. If not, you will have to begin your research all over again with an empty bag.<br><br>There are a few different ways to cast the ancient magic. The first is within the bag from the prepared spell section. There is an arrow icon next to each spell that can cast it for you. The other is spell bars for much easier convenience, and they can be configured in the main section of this bag and only if you learned at least 1 of the ancient spells. You are able to have 4 different spell bars for ancient magic, and you can customize each in a variety of ways. The last way to cast these spells is by a typed command, which allows you to make macros for spell casting if you want. Each of these commands are listed below:<br><br>[CastAcidElemental<br><br>[CastAerialServant<br><br>[CastAirWalk<br><br>[CastAnimateBones<br><br>[CastAvalanche<br><br>[CastBanishDaemon<br><br>[CastBloodElemental<br><br>[CastCallDestruction<br><br>[CastCauseFear<br><br>[CastCharm<br><br>[CastClone<br><br>[CastConflagration<br><br>[CastConfusionBlast<br><br>[CastConjure<br><br>[CastCreateFire<br><br>[CastCreateGold<br><br>[CastCreateGolem<br><br>[CastDeathSpeak<br><br>[CastDeathVortex<br><br>[CastDevastation<br><br>[CastDivination<br><br>[CastElectricalElemental<br><br>[CastEnchant<br><br>[CastEndureCold<br><br>[CastEndureHeat<br><br>[CastEtherealTravel<br><br>[CastExplosion<br><br>[CastExtinguish<br><br>[CastFadefromSight<br><br>[CastFlameBolt<br><br>[CastFrostField<br><br>[CastFrostStrike<br><br>[CastGasCloud<br><br>[CastGemElemental<br><br>[CastGrantPeace<br><br>[CastHailStorm<br><br>[CastHealingTouch<br><br>[CastIceElemental<br><br>[CastIcicle<br><br>[CastIgnite<br><br>[CastIntervention<br><br>[CastInvokeDevil<br><br>[CastMagicSteed<br><br>[CastMaskofDeath<br><br>[CastMassDeath<br><br>[CastMassMight<br><br>[CastMassSleep<br><br>[CastMeteorShower<br><br>[CastMudElemental<br><br>[CastOpenGround<br><br>[CastPoisonElemental<br><br>[CastRestoration<br><br>[CastRingofFire<br><br>[CastRockFlesh<br><br>[CastSeeTruth<br><br>[CastSleep<br><br>[CastSleepField<br><br>[CastSneak<br><br>[CastSnowBall<br><br>[CastSpawnCreature<br><br>[CastSwarm<br><br>[CastWeedElemental<br><br>[CastWithstandDeath<br><br>[CastWizardEye<br><br><br><br><br><br></BASEFONT></BODY>",
+                            + ">Spell research is something that the most dedicated of wizards pursue. It requires the accumulation of knowledge of those that came before. Mages and Necromancers once practiced this strange magic, that was thought to be lost through the passage of time. No matter the research goal, one would need to find the cubes of power in order to scribe spells. Once all of the cubes of power are found, the true research can begin.<BR><BR>Some perform research to write commonly used spells, but cannot find the original scroll that contains the vital information needed to cast it. This research has a scribe searching for the pages of tomes that contain the information to write the spell to parchment. Creating scrolls in this manner require the use of octopus ink, which is scarce since the last octopus was seen centuries ago as the kraken were said to have wiped them out. The more difficult the spell, the more ink that is required to scribe the scroll. Your research will indicate where more octopus ink can be obtained. The better your skills in alchemy, cooking, and tasting the more use you will find from the collected ink. Modern spells can be learned in the areas of magery and necromancy. You can research each area simultaneously if you choose, but each area will require you to learn the magic in a specific order as the learned spell will help the researcher learn more of the next spell until all are discovered.<BR><BR>The main goal of spell research is for a spell caster to learn the ancient magic that has been long forgotten. This ancient magic consists of 64 different spells in 8 different schools of magic. These spells were once used by mages and necromancers alike, where those that reached the status of archmage benefited the most from the power these spells unleash.<BR><BR>The magic can be scribed to individual scrolls that the caster can then store in their research bag and later read from. When read, the scroll crumples to dust. If one has attributes of lower reagent use, the scroll may not crumble and can be used again but that is not guaranteed especially for very powerful spells. You can also create an ancient spellbook, for a more traditional way to travel and use your newly discovered spells.<BR><BR>This bag will hold all of your research, as well as blank scrolls, quills, and octopus ink for a maximum quantity of 50,000 each. You can drop scribe pens and blank scrolls onto the bag to replenish those materials. Discovered ink will be placed in your bag when found. It will also hold all of the cubes of power as well as any ancient magic you put to parchment. This bag will hold 500 scrolls of each ancient magic spell. The bag is yours and no one else can look inside it or use the magic you researched within it. If you lose the bag, you should find a scribe immediately and give them another 500 gold where maybe you will have your research returned. If not, you will have to begin your research all over again with an empty bag.<BR><BR>You can also create an ancient spellbook for easier travels. To create an ancient spellbook, you need to find any spellbook you wish to begin with. It can be books like a magery spellbook, a necromancy spellbook, or even a book of ninjitsu. Drop the book onto your research bag. The attributes of the book you start with, will also give your ancient spellbook those same characteristics. The book will automatically be scribed with all of the ancient magic you learned thus far. Whenever you learn new ancient spells, you can drop the book back onto the research bag to update its pages. Like the research bag, this book will be yours alone to use and you can only have one book at any given time. Creating a new book will cause any current books to crumple to dust. Using ancient spellbooks requires the caster to carry reagents with them. The book pages may also turn to dust when spells are cast, so the wizard will need to keep extra pages (blank scrolls) within the book. They will also need to keep quills (scribe pens) set aside as well. Simply place these items on the book in order to maintain a supply of each. If you run out, you will not be able to cast any spells until you acquire more. You might find that you don't consume any scrolls or quills when reagent lowering attributes exist. These books can be equipped like other spellbooks.<BR><BR>"
+                            + Server.Misc.ResearchSettings.BagOrBook()
+                            + "<BR><BR>Spells are cast with those skilled in either magery or necromancy, whichever is higher. The effectiveness of the spells is dependent on the combination of magery, necromancy, spiritualism, and psychology. If you are simply skilled in only a couple of these skills, then the spells will have only an average effect. It is those that pursue all four of the skills of wizardry, that will gain the most benefit. When ancient spells are performed, it helps a researcher practice inscription, magery, necromancy, spiritualism, and psychology at the same time. This is why ancient spell research interests archmages, as they have achieved the level of grandmaster in both areas of magic. Some ancient magic has similarities to spells used today, as is to be expected that some of the knowledge survived the ages. So very few spells will be similar to current magery spells, and even fewer spells that are similar to modern necromancer spells. Although they are similar, the ancient spell usually proves to be much more powerful.<BR><BR>There are a few different ways to cast the ancient magic. The first is within the bag from the prepared spell section. There is an arrow icon next to each spell that can cast it for you. If you chose to create an ancient spellbook, you can cast spells from within that tome. Spell bars are also available for casting convenience, and they can be configured in the main section of this bag and only if you learned at least 1 of the ancient spells. You can also configure them in the HELP section. You are able to have 4 different spell bars for ancient magic, and you can customize each in a variety of ways. The last way to cast these spells is by a typed command, which allows you to make macros for spell casting if you want. Each of these commands are listed below:"
+                            + Server.Misc.ResearchSettings.AncientKeywords()
+                            + "</BASEFONT></BODY>",
                         (bool)false,
                         (bool)true
                     );
@@ -3795,55 +3943,55 @@ namespace Server.Items
                 {
                     if (info.ButtonID == 1201)
                     {
-                        from.CloseGump(typeof(SetupBarsResearch1));
-                        from.SendGump(new SetupBarsResearch1(from, 1));
+                        from.CloseGump(typeof(SetupBarsArch1));
+                        from.SendGump(new SetupBarsArch1(from, 2));
                     }
                     else if (info.ButtonID == 1202)
                     {
-                        from.CloseGump(typeof(SetupBarsResearch2));
-                        from.SendGump(new SetupBarsResearch2(from, 1));
+                        from.CloseGump(typeof(SetupBarsArch2));
+                        from.SendGump(new SetupBarsArch2(from, 2));
                     }
                     else if (info.ButtonID == 1203)
                     {
-                        from.CloseGump(typeof(SetupBarsResearch3));
-                        from.SendGump(new SetupBarsResearch3(from, 1));
+                        from.CloseGump(typeof(SetupBarsArch3));
+                        from.SendGump(new SetupBarsArch3(from, 2));
                     }
                     else if (info.ButtonID == 1204)
                     {
-                        from.CloseGump(typeof(SetupBarsResearch4));
-                        from.SendGump(new SetupBarsResearch4(from, 1));
+                        from.CloseGump(typeof(SetupBarsArch4));
+                        from.SendGump(new SetupBarsArch4(from, 2));
                     }
                     else if (info.ButtonID == 1211)
                     {
-                        InvokeCommand("researchtool1", from);
+                        InvokeCommand("archtool1", from);
                     }
                     else if (info.ButtonID == 1212)
                     {
-                        InvokeCommand("researchtool2", from);
+                        InvokeCommand("archtool2", from);
                     }
                     else if (info.ButtonID == 1213)
                     {
-                        InvokeCommand("researchtool3", from);
+                        InvokeCommand("archtool3", from);
                     }
                     else if (info.ButtonID == 1214)
                     {
-                        InvokeCommand("researchtool4", from);
+                        InvokeCommand("archtool4", from);
                     }
                     else if (info.ButtonID == 1221)
                     {
-                        InvokeCommand("researchclose1", from);
+                        InvokeCommand("archclose1", from);
                     }
                     else if (info.ButtonID == 1222)
                     {
-                        InvokeCommand("researchclose2", from);
+                        InvokeCommand("archclose2", from);
                     }
                     else if (info.ButtonID == 1223)
                     {
-                        InvokeCommand("researchclose3", from);
+                        InvokeCommand("archclose3", from);
                     }
                     else if (info.ButtonID == 1224)
                     {
-                        InvokeCommand("researchclose4", from);
+                        InvokeCommand("archclose4", from);
                     }
 
                     if (info.ButtonID > 1204)
@@ -4661,9 +4809,9 @@ namespace Server.Items
 
                     AddHtml(
                         486,
-                        446,
+                        430,
                         166,
-                        80,
+                        100,
                         @"<BODY><BASEFONT Color="
                             + color
                             + ">REAGENTS:<BR>"

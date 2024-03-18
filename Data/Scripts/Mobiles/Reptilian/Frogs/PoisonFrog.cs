@@ -50,7 +50,7 @@ namespace Server.Mobiles
             Venom.Name = "deadly venom sack";
             AddItem(Venom);
 
-            m_Timer = new TeleportTimer(this);
+            m_Timer = new GiantToad.TeleportTimer(this, 0x1CC);
             m_Timer.Start();
         }
 
@@ -89,130 +89,8 @@ namespace Server.Mobiles
         {
             base.Deserialize(reader);
             int version = reader.ReadInt();
-            switch (version)
-            {
-                case 0:
-                {
-                    m_Timer = new TeleportTimer(this);
-                    m_Timer.Start();
-
-                    break;
-                }
-            }
-        }
-
-        private class TeleportTimer : Timer
-        {
-            private Mobile m_Owner;
-
-            private static int[] m_Offsets = new int[]
-            {
-                -1,
-                -1,
-                -1,
-                0,
-                -1,
-                1,
-                0,
-                -1,
-                0,
-                1,
-                1,
-                -1,
-                1,
-                0,
-                1,
-                1
-            };
-
-            public TeleportTimer(Mobile owner)
-                : base(TimeSpan.FromSeconds(5.0), TimeSpan.FromSeconds(5.0))
-            {
-                Priority = TimerPriority.TwoFiftyMS;
-
-                m_Owner = owner;
-            }
-
-            protected override void OnTick()
-            {
-                if (m_Owner.Deleted)
-                {
-                    Stop();
-                    return;
-                }
-
-                Map map = m_Owner.Map;
-
-                if (map == null)
-                    return;
-
-                if (0.25 < Utility.RandomDouble())
-                    return;
-
-                Mobile toTeleport = null;
-
-                foreach (Mobile m in m_Owner.GetMobilesInRange(10))
-                {
-                    if (
-                        m != m_Owner
-                        && m.Player
-                        && m_Owner.CanBeHarmful(m)
-                        && m_Owner.CanSee(m)
-                        && m.AccessLevel == AccessLevel.Player
-                        && ((BaseCreature)m_Owner).IsEnemy(m)
-                    )
-                    {
-                        toTeleport = m;
-                        break;
-                    }
-                }
-
-                if (toTeleport != null)
-                {
-                    int offset = Utility.Random(8) * 2;
-
-                    Point3D to = m_Owner.Location;
-
-                    for (int i = 0; i < m_Offsets.Length; i += 2)
-                    {
-                        int x = m_Owner.X + m_Offsets[(offset + i) % m_Offsets.Length];
-                        int y = m_Owner.Y + m_Offsets[(offset + i + 1) % m_Offsets.Length];
-
-                        if (map.CanSpawnMobile(x, y, m_Owner.Z))
-                        {
-                            to = new Point3D(x, y, m_Owner.Z);
-                            break;
-                        }
-                        else
-                        {
-                            int z = map.GetAverageZ(x, y);
-
-                            if (map.CanSpawnMobile(x, y, z))
-                            {
-                                to = new Point3D(x, y, z);
-                                break;
-                            }
-                        }
-                    }
-
-                    Mobile m = toTeleport;
-
-                    Point3D from = m.Location;
-
-                    m.Location = to;
-
-                    Server.Spells.SpellHelper.Turn(m_Owner, toTeleport);
-                    Server.Spells.SpellHelper.Turn(toTeleport, m_Owner);
-
-                    m.ProcessDelta();
-
-                    m.PlaySound(0x58D);
-
-                    m_Owner.Combatant = toTeleport;
-
-                    BaseCreature.TeleportPets(m, m.Location, m.Map, false);
-                }
-            }
+            m_Timer = new GiantToad.TeleportTimer(this, 0x1CC);
+            m_Timer.Start();
         }
     }
 }

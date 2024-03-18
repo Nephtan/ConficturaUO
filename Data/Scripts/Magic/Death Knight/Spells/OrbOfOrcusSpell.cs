@@ -70,6 +70,10 @@ namespace Server.Spells.DeathKnight
 
                     Caster.FixedParticles(0x375A, 10, 15, 5037, EffectLayer.Waist);
                     Caster.PlaySound(0x1E9);
+
+                    BuffInfo.RemoveBuff(Caster, BuffIcon.OrbOfOrcus);
+                    BuffInfo.AddBuff(Caster, new BuffInfo(BuffIcon.OrbOfOrcus, 1063551));
+
                     DrainSoulsInLantern(Caster, RequiredTithing);
                 }
             }

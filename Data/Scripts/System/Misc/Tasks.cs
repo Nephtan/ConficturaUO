@@ -810,6 +810,7 @@ namespace Server.Items
                 if (
                     item is MushroomTrap
                     || item is LandChest
+                    || item is Strange_Portal
                     || item is StrangePortal
                     || item is WaterChest
                     || item is RavendarkStorm

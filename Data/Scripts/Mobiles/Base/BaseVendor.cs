@@ -781,7 +781,7 @@ namespace Server.Mobiles
                         {
                             this.AddItem(new Bandana());
                         }
-                        MorphingTime.ColorOnlyClothes(this, Utility.RandomColor(0), 0);
+                        MorphingTime.ColorMixClothes(this);
                     }
                 }
             }
@@ -1607,8 +1607,7 @@ namespace Server.Mobiles
 
                     if (!(Server.Items.DugUpCoal.CheckForDugUpCoal(from, dropped.Amount, false)))
                     {
-                        sMessage =
-                            "You don't have enought iron ore for me to make steel from this.";
+                        sMessage = "You don't have enough iron ore for me to make steel from this.";
                         this.PrivateOverheadMessage(
                             MessageType.Regular,
                             1153,
@@ -1648,7 +1647,7 @@ namespace Server.Mobiles
                     if (!(Server.Items.DugUpZinc.CheckForDugUpZinc(from, dropped.Amount, false)))
                     {
                         sMessage =
-                            "You don't have enought iron ore for me to make brass from this.";
+                            "You don't have enough copper ore for me to make brass from this.";
                         this.PrivateOverheadMessage(
                             MessageType.Regular,
                             1153,

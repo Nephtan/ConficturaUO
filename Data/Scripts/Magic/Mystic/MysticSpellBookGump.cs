@@ -14,9 +14,12 @@ namespace Server.Gumps
     {
         private MysticSpellbook m_Book;
 
-        public bool HasSpell(int spellID)
+        public bool HasSpell(Mobile from, int spellID)
         {
-            return (m_Book.HasSpell(spellID));
+            if (m_Book.RootParentEntity == from)
+                return (m_Book.HasSpell(spellID));
+            else
+                return false;
         }
 
         public MysticSpellbookGump(Mobile from, MysticSpellbook book, int page)
@@ -242,7 +245,7 @@ namespace Server.Gumps
                     SpellsListed++;
                     SafetyCatch++;
 
-                    if (this.HasSpell(SpellsListed))
+                    if (this.HasSpell(from, SpellsListed))
                     {
                         SpellsInBook--;
 
@@ -368,7 +371,7 @@ namespace Server.Gumps
                 );
 
                 string know = "<BODY><BASEFONT Color=#f58a8a>Not Learned</BASEFONT></BODY>";
-                if (this.HasSpell(abil_spid))
+                if (this.HasSpell(from, abil_spid))
                 {
                     know = "<BODY><BASEFONT Color=#8af599>Learned</BASEFONT></BODY>";
                 }
@@ -390,7 +393,7 @@ namespace Server.Gumps
                     (bool)false,
                     (bool)false
                 );
-                if (this.HasSpell(abil_spid))
+                if (this.HasSpell(from, abil_spid))
                 {
                     abil_info = "";
                     showScrollBar = false;
@@ -542,7 +545,7 @@ namespace Server.Gumps
                 }
                 from.SendGump(new MysticSpellbookGump(from, m_Book, page));
             }
-            else if (info.ButtonID > 200)
+            else if (info.ButtonID > 200 && HasSpell(from, info.ButtonID))
             {
                 if (info.ButtonID == 250)
                 {

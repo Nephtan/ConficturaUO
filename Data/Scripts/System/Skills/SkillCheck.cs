@@ -200,6 +200,8 @@ namespace Server.Misc
                 }
             }
 
+            gainer = gainer - Server.Misc.MyServerSettings.SkillGain();
+
             bool success = (chance >= Utility.RandomDouble());
             double gc = (double)(from.Skills.Cap - from.Skills.Total) / from.Skills.Cap;
             gc += (skill.Cap - skill.Base) / skill.Cap;
@@ -660,7 +662,7 @@ namespace Server.Misc
 
                 Skills skills = from.Skills;
 
-                if (from.Player && (skills.Total / skills.Cap) >= Utility.RandomDouble()) //( skills.Total >= skills.Cap )
+                if (from.Player && (skills.Total / skills.Cap) >= Utility.RandomDouble())
                 {
                     for (int i = 0; i < skills.Length; ++i)
                     {

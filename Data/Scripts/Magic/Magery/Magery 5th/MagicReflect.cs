@@ -78,6 +78,10 @@ namespace Server.Spells.Fifth
                     {
                         diamond.Consume();
                     }
+
+                    BuffInfo.RemoveBuff(Caster, BuffIcon.MagicReflection);
+                    BuffInfo.AddBuff(Caster, new BuffInfo(BuffIcon.MagicReflection, 1063617));
+
                     Caster.PlaySound(0x1ED);
                     Caster.FixedParticles(
                         0x375A,

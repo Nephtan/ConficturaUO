@@ -35,7 +35,11 @@ namespace Server.Spells.Research
             Server.Misc.Research.SpellInformation(spellID, 2),
             Server.Misc.Research.CapsCast(Server.Misc.Research.SpellInformation(spellID, 4)),
             233,
-            9042
+            9042,
+            Reagent.Bloodmoss,
+            Reagent.Brimstone,
+            Reagent.MandrakeRoot,
+            Reagent.BlackPearl
         );
 
         public ResearchMeteorShower(Mobile caster, Item scroll)
@@ -176,7 +180,13 @@ namespace Server.Spells.Research
                         );
                         Effects.PlaySound(m.Location, m.Map, 0x65A);
                     }
-                    Server.Misc.Research.ConsumeScroll(Caster, true, spellIndex, false);
+                    Server.Misc.Research.ConsumeScroll(
+                        Caster,
+                        true,
+                        spellIndex,
+                        alwaysConsume,
+                        Scroll
+                    );
                 }
             }
 

@@ -103,12 +103,12 @@ namespace Server.Items
                 }
             }
 
-            if (this.ItemID == 0xE41)
-                this.ItemID = 0xE7C;
+            if (this.ItemID != 0x6540)
+                this.ItemID = 0x6540;
 
-            if (GumpID != 0x4A)
+            if (GumpID != 0xA39)
             {
-                GumpID = 0x4A;
+                GumpID = 0xA39;
             }
         }
 
@@ -138,7 +138,7 @@ namespace Server.Items
         }
 
         public BankBox(Mobile owner)
-            : base(0xE7C)
+            : base(0x6540)
         {
             Layer = Layer.Bank;
             Movable = false;

@@ -42,6 +42,41 @@ namespace Server.Items
             {
                 from.FixedEffect(0x375A, 10, 15);
                 from.PlaySound(0x1E7);
+
+                string args = String.Format(
+                    "{0}",
+                    Scale(from, Server.Misc.MyServerSettings.PlayerLevelMod(StrOffset, from))
+                );
+
+                BuffInfo.RemoveBuff(from, BuffIcon.PotionStrength);
+
+                if (ItemID == 0x25F7)
+                    BuffInfo.AddBuff(
+                        from,
+                        new BuffInfo(
+                            BuffIcon.PotionStrength,
+                            1063592,
+                            1063604,
+                            Duration,
+                            from,
+                            args.ToString(),
+                            true
+                        )
+                    );
+                else
+                    BuffInfo.AddBuff(
+                        from,
+                        new BuffInfo(
+                            BuffIcon.PotionStrength,
+                            1063591,
+                            1063604,
+                            Duration,
+                            from,
+                            args.ToString(),
+                            true
+                        )
+                    );
+
                 return true;
             }
 

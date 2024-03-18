@@ -77,6 +77,10 @@ namespace Server.Spells.Herbalist
                 m.AddToBackpack(iOrb);
                 Server.Items.SoulOrb.OnSummoned(m, iOrb);
             }
+            else if (m == Caster)
+            {
+                Caster.SendMessage("You failed to conjure some mystical mud.");
+            }
             else if (!Caster.Alive)
             {
                 Caster.SendLocalizedMessage(501040); // The resurrecter must be alive.

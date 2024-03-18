@@ -100,6 +100,13 @@ namespace Server.Spells.HolyMan
                         val = 100;
 
                     new InternalTimer(Caster, TimeSpan.FromMinutes(val)).Start();
+
+                    BuffInfo.RemoveBuff(Caster, BuffIcon.Enchant);
+                    BuffInfo.AddBuff(
+                        Caster,
+                        new BuffInfo(BuffIcon.Enchant, 1063542, TimeSpan.FromMinutes(val), Caster)
+                    );
+
                     DrainSoulsInSymbol(Caster, RequiredTithing);
                 }
             }
@@ -213,6 +220,7 @@ namespace Server.Spells.HolyMan
             if (m != null)
             {
                 m.PlaySound(0x1F8);
+                BuffInfo.RemoveBuff(m, BuffIcon.Enchant);
             }
         }
     }

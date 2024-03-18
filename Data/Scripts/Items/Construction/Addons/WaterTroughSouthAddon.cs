@@ -5,6 +5,11 @@ namespace Server.Items
 {
     public class WaterTroughSouthAddon : BaseAddon, IWaterSource
     {
+        public override string AddonName
+        {
+            get { return "water trough"; }
+        }
+
         public override BaseAddonDeed Deed
         {
             get { return new WaterTroughSouthDeed(); }

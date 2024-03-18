@@ -59,7 +59,7 @@ namespace Server.Mobiles
         {
             Name = NameList.RandomName("giant");
             Title = "the fire giant";
-            Body = 774;
+            Body = Utility.RandomList(774, 996);
             BaseSoundID = 609;
 
             SetStr(536, 585);
@@ -135,6 +135,30 @@ namespace Server.Mobiles
                     if (GetPlayerInfo.LuckyKiller(killer.Luck) && Utility.RandomMinMax(1, 10) == 1)
                     {
                         c.DropItem(new FireGiantForge());
+                    }
+                    if (
+                        GetPlayerInfo.LuckyKiller(killer.Luck)
+                        && Utility.RandomMinMax(1, 5) == 1
+                        && Body == 996
+                    )
+                    {
+                        BaseWeapon hammer = new WarHammer();
+                        hammer.Name = "fire giant hammer";
+                        hammer.ItemID = 0x267C;
+                        hammer.Hue = 0xB73;
+                        hammer.SkillBonuses.SetValues(0, SkillName.Bludgeoning, 10);
+                        hammer.SkillBonuses.SetValues(1, SkillName.Tactics, 10);
+                        hammer.WeaponAttributes.ResistFireBonus = 15;
+                        hammer.Attributes.WeaponDamage = 50;
+                        hammer.Attributes.AttackChance = 10;
+                        hammer.Slayer = SlayerName.WaterDissipation;
+                        hammer.AccuracyLevel = WeaponAccuracyLevel.Supremely;
+                        hammer.MinDamage = hammer.MinDamage + 6;
+                        hammer.MaxDamage = hammer.MaxDamage + 10;
+                        hammer.DurabilityLevel = WeaponDurabilityLevel.Indestructible;
+                        hammer.AosElementDamages.Fire = 50;
+                        hammer.AosElementDamages.Physical = 50;
+                        c.DropItem(hammer);
                     }
                 }
             }

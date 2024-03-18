@@ -37,7 +37,10 @@ namespace Server.Spells.Research
             Server.Misc.Research.SpellInformation(spellID, 2),
             Server.Misc.Research.CapsCast(Server.Misc.Research.SpellInformation(spellID, 4)),
             212,
-            9001
+            9001,
+            Reagent.Brimstone,
+            Reagent.MandrakeRoot,
+            Reagent.Ginseng
         );
 
         public ResearchCreateFire(Mobile caster, Item scroll)
@@ -92,7 +95,7 @@ namespace Server.Spells.Research
                 Caster.SendMessage("You summon a magical fire at your feet.");
                 Item iFire = new MagicalFire(Caster, time, dmg);
                 iFire.MoveToWorld(Caster.Location, Caster.Map);
-                Server.Misc.Research.ConsumeScroll(Caster, true, spellIndex, false);
+                Server.Misc.Research.ConsumeScroll(Caster, true, spellIndex, alwaysConsume, Scroll);
             }
             FinishSequence();
         }

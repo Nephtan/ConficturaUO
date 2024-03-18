@@ -6,6 +6,11 @@ namespace Server.Items
 {
     public class SawMillEastAddon : BaseAddon
     {
+        public override string AddonName
+        {
+            get { return "saw mill"; }
+        }
+
         public override BaseAddonDeed Deed
         {
             get { return new SawMillEastAddonDeed(); }

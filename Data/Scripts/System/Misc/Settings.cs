@@ -19,19 +19,9 @@ namespace Server.Misc
 {
     class MyServerSettings
     {
-        public static string ServerName()
-        {
-            return "Confictura: Legend & Adventure";
-        }
-
-        public static string Version()
-        {
-            return "Version: Lizard (24 May 2023)";
-        }
-
         public static void UpdateWarning()
         {
-            if (Utility.DateUpdated() != 2021220)
+            if (Utility.DateUpdated() != 20240226)
                 Console.WriteLine("Warning: Your World.exe requires an update!");
         }
 
@@ -90,10 +80,6 @@ namespace Server.Misc
         private static int S_BuyRareChance = 70;
         private static bool S_ShinyArmor = true;
         private static bool S_NewLeather = true;
-        private static bool S_Leopards = true;
-        private static bool S_Elephants = true;
-        private static bool S_Zebras = true;
-        private static bool S_Fox = true;
         private static bool S_Basements = false;
         private static bool S_NoMountBuilding = true;
         private static bool S_NoMountsInHouses = true;
@@ -126,6 +112,16 @@ namespace Server.Misc
         private static int S_TrainMulti = 1;
         private static bool S_Scary = true;
         private static bool S_Belly = false;
+        private static int S_Safari_Sosaria = 0;
+        private static int S_Safari_Lodoria = 0;
+        private static int S_Safari_Serpent = 0;
+        private static int S_Safari_Kuldar = 0;
+        private static int S_Safari_Savaged = 0;
+        private static int S_SkillBoost = 0;
+        private static int S_SkillGain = 0;
+        private static int S_FoodCheck = 5;
+        private static int S_BondDays = 7;
+        private static bool S_BuyCloth = true;
 
         public static void Configure()
         {
@@ -337,147 +333,171 @@ namespace Server.Misc
                         }
                         else if (setting == 49)
                         {
-                            S_Leopards = bool.Parse(node.InnerText);
+                            S_Basements = bool.Parse(node.InnerText);
                         }
                         else if (setting == 50)
                         {
-                            S_Elephants = bool.Parse(node.InnerText);
+                            S_NoMountBuilding = bool.Parse(node.InnerText);
                         }
                         else if (setting == 51)
                         {
-                            S_Zebras = bool.Parse(node.InnerText);
+                            S_NoMountsInHouses = bool.Parse(node.InnerText);
                         }
                         else if (setting == 52)
                         {
-                            S_Fox = bool.Parse(node.InnerText);
+                            S_AllowCustomTitles = bool.Parse(node.InnerText);
                         }
                         else if (setting == 53)
                         {
-                            S_Basements = bool.Parse(node.InnerText);
+                            S_AllowHouseDyes = bool.Parse(node.InnerText);
                         }
                         else if (setting == 54)
                         {
-                            S_NoMountBuilding = bool.Parse(node.InnerText);
+                            S_AllowCustomHomes = bool.Parse(node.InnerText);
                         }
                         else if (setting == 55)
                         {
-                            S_NoMountsInHouses = bool.Parse(node.InnerText);
+                            S_AllowCraftMagic = bool.Parse(node.InnerText);
                         }
                         else if (setting == 56)
                         {
-                            S_AllowCustomTitles = bool.Parse(node.InnerText);
+                            S_Bribery = Int32.Parse(node.InnerText);
                         }
                         else if (setting == 57)
                         {
-                            S_AllowHouseDyes = bool.Parse(node.InnerText);
+                            S_LineOfSight = bool.Parse(node.InnerText);
                         }
                         else if (setting == 58)
                         {
-                            S_AllowCustomHomes = bool.Parse(node.InnerText);
+                            S_ChangeArtyLook = bool.Parse(node.InnerText);
                         }
                         else if (setting == 59)
                         {
-                            S_AllowCraftMagic = bool.Parse(node.InnerText);
+                            S_Resources = Int32.Parse(node.InnerText);
                         }
                         else if (setting == 60)
                         {
-                            S_Bribery = Int32.Parse(node.InnerText);
+                            S_SoldResource = bool.Parse(node.InnerText);
                         }
                         else if (setting == 61)
                         {
-                            S_LineOfSight = bool.Parse(node.InnerText);
+                            S_Humanoids = bool.Parse(node.InnerText);
                         }
                         else if (setting == 62)
                         {
-                            S_ChangeArtyLook = bool.Parse(node.InnerText);
+                            S_MerchantBooks = bool.Parse(node.InnerText);
                         }
                         else if (setting == 63)
                         {
-                            S_Resources = Int32.Parse(node.InnerText);
+                            S_HouseStorage = bool.Parse(node.InnerText);
                         }
                         else if (setting == 64)
                         {
-                            S_SoldResource = bool.Parse(node.InnerText);
+                            S_CorpseDecay = Int32.Parse(node.InnerText);
                         }
                         else if (setting == 65)
                         {
-                            S_Humanoids = bool.Parse(node.InnerText);
+                            S_BoneDecay = Int32.Parse(node.InnerText);
                         }
                         else if (setting == 66)
                         {
-                            S_MerchantBooks = bool.Parse(node.InnerText);
+                            S_HouseOwners = bool.Parse(node.InnerText);
                         }
                         else if (setting == 67)
                         {
-                            S_HouseStorage = bool.Parse(node.InnerText);
+                            S_LawnsAllowed = bool.Parse(node.InnerText);
                         }
                         else if (setting == 68)
                         {
-                            S_CorpseDecay = Int32.Parse(node.InnerText);
+                            S_ShantysAllowed = bool.Parse(node.InnerText);
                         }
                         else if (setting == 69)
                         {
-                            S_BoneDecay = Int32.Parse(node.InnerText);
+                            S_MonsterCharacters = Int32.Parse(node.InnerText);
                         }
                         else if (setting == 70)
                         {
-                            S_HouseOwners = bool.Parse(node.InnerText);
+                            S_DeleteDays = XmlConvert.ToDouble(node.InnerText);
                         }
                         else if (setting == 71)
                         {
-                            S_LawnsAllowed = bool.Parse(node.InnerText);
+                            S_AutoAccounts = bool.Parse(node.InnerText);
                         }
                         else if (setting == 72)
                         {
-                            S_ShantysAllowed = bool.Parse(node.InnerText);
+                            S_Port = Int32.Parse(node.InnerText);
                         }
                         else if (setting == 73)
                         {
-                            S_MonsterCharacters = Int32.Parse(node.InnerText);
+                            S_SpecialWeaponAbilSkill = XmlConvert.ToDouble(node.InnerText);
                         }
                         else if (setting == 74)
                         {
-                            S_DeleteDays = XmlConvert.ToDouble(node.InnerText);
+                            S_Stables = Int32.Parse(node.InnerText);
                         }
                         else if (setting == 75)
                         {
-                            S_AutoAccounts = bool.Parse(node.InnerText);
+                            S_HPModifier = XmlConvert.ToDouble(node.InnerText);
                         }
                         else if (setting == 76)
                         {
-                            S_Port = Int32.Parse(node.InnerText);
+                            S_TrainDummies = XmlConvert.ToDouble(node.InnerText);
                         }
                         else if (setting == 77)
                         {
-                            S_SpecialWeaponAbilSkill = XmlConvert.ToDouble(node.InnerText);
+                            S_PickDips = XmlConvert.ToDouble(node.InnerText);
                         }
                         else if (setting == 78)
                         {
-                            S_Stables = Int32.Parse(node.InnerText);
+                            S_TrainMulti = Int32.Parse(node.InnerText);
                         }
                         else if (setting == 79)
                         {
-                            S_HPModifier = XmlConvert.ToDouble(node.InnerText);
+                            S_Scary = bool.Parse(node.InnerText);
                         }
                         else if (setting == 80)
                         {
-                            S_TrainDummies = XmlConvert.ToDouble(node.InnerText);
+                            S_Belly = bool.Parse(node.InnerText);
                         }
                         else if (setting == 81)
                         {
-                            S_PickDips = XmlConvert.ToDouble(node.InnerText);
+                            S_Safari_Sosaria = Int32.Parse(node.InnerText);
                         }
                         else if (setting == 82)
                         {
-                            S_TrainMulti = Int32.Parse(node.InnerText);
+                            S_Safari_Lodoria = Int32.Parse(node.InnerText);
                         }
                         else if (setting == 83)
                         {
-                            S_Scary = bool.Parse(node.InnerText);
+                            S_Safari_Serpent = Int32.Parse(node.InnerText);
                         }
                         else if (setting == 84)
                         {
-                            S_Belly = bool.Parse(node.InnerText);
+                            S_Safari_Kuldar = Int32.Parse(node.InnerText);
+                        }
+                        else if (setting == 85)
+                        {
+                            S_Safari_Savaged = Int32.Parse(node.InnerText);
+                        }
+                        else if (setting == 86)
+                        {
+                            S_SkillBoost = Int32.Parse(node.InnerText);
+                        }
+                        else if (setting == 87)
+                        {
+                            S_SkillGain = Int32.Parse(node.InnerText);
+                        }
+                        else if (setting == 88)
+                        {
+                            S_FoodCheck = Int32.Parse(node.InnerText);
+                        }
+                        else if (setting == 89)
+                        {
+                            S_BondDays = Int32.Parse(node.InnerText);
+                        }
+                        else if (setting == 90)
+                        {
+                            S_BuyCloth = bool.Parse(node.InnerText);
                         }
 
                         setting++;
@@ -1024,31 +1044,6 @@ namespace Server.Misc
             return S_NewLeather; // IF YOU CHANGE THIS, DELETE THE INFO/colors.set FILE AND RESTART THE SERVER, IT WILL TAKE A BIT TO LOAD WHILE IT UPDATES COLORS
         }
 
-        public static int LeopardBodies()
-        {
-            int body = 214;
-            if (S_Leopards)
-            {
-                body = 336;
-            }
-            return body;
-        }
-
-        public static bool AllowElephants()
-        {
-            return S_Elephants;
-        }
-
-        public static bool AllowZebras()
-        {
-            return S_Zebras;
-        }
-
-        public static bool AllowFox()
-        {
-            return S_Fox;
-        }
-
         public static bool OpenBasements()
         {
             return S_Basements;
@@ -1300,10 +1295,324 @@ namespace Server.Misc
             return S_Belly;
         }
 
+        public static bool Safari(Map map, Point3D loc)
+        {
+            bool safari = false;
+
+            if (
+                (Server.Misc.Worlds.GetMyWorld(map, loc, loc.X, loc.Y) == "the Land of Sosaria")
+                && (Utility.RandomMinMax(1, 100) <= S_Safari_Sosaria)
+            )
+                safari = true;
+
+            if (
+                (Server.Misc.Worlds.GetMyWorld(map, loc, loc.X, loc.Y) == "the Land of Lodoria")
+                && (Utility.RandomMinMax(1, 100) <= S_Safari_Lodoria)
+            )
+                safari = true;
+
+            if (
+                (Server.Misc.Worlds.GetMyWorld(map, loc, loc.X, loc.Y) == "the Serpent Island")
+                && (Utility.RandomMinMax(1, 100) <= S_Safari_Serpent)
+            )
+                safari = true;
+
+            if (
+                (
+                    Server.Misc.Worlds.GetMyWorld(map, loc, loc.X, loc.Y)
+                    == "the Bottle World of Kuldar"
+                ) && (Utility.RandomMinMax(1, 100) <= S_Safari_Kuldar)
+            )
+                safari = true;
+
+            if (
+                (Server.Misc.Worlds.GetMyWorld(map, loc, loc.X, loc.Y) == "the Savaged Empire")
+                && (Utility.RandomMinMax(1, 100) <= S_Safari_Savaged)
+            )
+                safari = true;
+
+            return safari;
+        }
+
+        public static bool SafariStore()
+        {
+            bool safari = false;
+
+            if (Utility.RandomMinMax(1, 100) <= S_Safari_Sosaria)
+                safari = true;
+
+            if (Utility.RandomMinMax(1, 100) <= S_Safari_Lodoria)
+                safari = true;
+
+            if (Utility.RandomMinMax(1, 100) <= S_Safari_Serpent)
+                safari = true;
+
+            if (Utility.RandomMinMax(1, 100) <= S_Safari_Kuldar)
+                safari = true;
+
+            if (Utility.RandomMinMax(1, 100) <= S_Safari_Savaged)
+                safari = true;
+
+            return safari;
+        }
+
+        public static int SkillBoost()
+        {
+            int skill = 0;
+
+            if (S_SkillBoost > 10)
+                S_SkillBoost = 10;
+
+            if (S_SkillBoost < 1)
+                S_SkillBoost = 0;
+
+            skill = S_SkillBoost * 1000;
+
+            return skill;
+        }
+
+        public static string SkillGypsy(string area)
+        {
+            int skills = 10;
+
+            if (area == "savage")
+                skills = 11;
+            else if (area == "alien")
+                skills = 40;
+            else if (area == "fugitive")
+                skills = 13;
+            else
+                skills = 10;
+
+            if (S_SkillBoost > 10)
+                S_SkillBoost = 10;
+
+            if (S_SkillBoost < 1)
+                S_SkillBoost = 0;
+
+            skills = skills + S_SkillBoost;
+
+            return skills.ToString();
+        }
+
+        public static void SkillBegin(string area, PlayerMobile pm)
+        {
+            pm.SkillBoost = SkillBoost();
+
+            if (area == "savage")
+                pm.SkillStart = 11000;
+            else if (area == "alien")
+                pm.SkillStart = 40000;
+            else if (area == "fugitive")
+                pm.SkillStart = 13000;
+            else
+                pm.SkillStart = 10000;
+
+            pm.Skills.Cap = pm.SkillStart + pm.SkillBoost + pm.SkillEther;
+        }
+
+        public static int SkillBase()
+        {
+            return (10000 + SkillBoost());
+        }
+
+        public static double SkillGain()
+        {
+            int skill = 0;
+
+            if (S_SkillGain > 10)
+                skill = 10;
+
+            if (S_SkillGain < 1)
+                skill = 0;
+
+            return skill * 0.1;
+        }
+
+        public static int FoodCheck()
+        {
+            int time = 5;
+
+            if (S_FoodCheck > 60)
+                time = 60;
+
+            if (S_FoodCheck < 5)
+                time = 5;
+
+            return time;
+        }
+
+        public static double BondDays()
+        {
+            int days = 7;
+
+            if (S_BondDays > 30)
+                days = 30;
+
+            if (S_BondDays < 0)
+                days = 0;
+
+            return (double)days;
+        }
+
+        public static string BondingDays()
+        {
+            string text =
+                "To bond a creature, simply give them some food that they prefer. Once you do that, give them another. They should then be bonded to you from that moment onward.";
+
+            if (S_BondDays > 0)
+                text =
+                    "To bond a creature, simply give them some food that they prefer. Once you do that, give them another "
+                    + S_BondDays.ToString()
+                    + " days later. They should then be bonded to you from that moment onward.";
+
+            return text;
+        }
+
+        public static bool BuyCloth()
+        {
+            return S_BuyCloth;
+        }
+
+        public static string ServerName()
+        {
+            return "Confictura: Legend & Adventure";
+        }
+
+        public static string Version()
+        {
+            return "Version: Archmage (25 February 2024)";
+        }
+
         public static string Versions()
         {
             string versionTEXT =
                 ""
+                ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+                + "Archmage - 25 February 2024<br>"
+                + "<br>"
+                + "* Both client and server update.<br>"
+                + "* Strange portals now have an entrance and exit.<br>"
+                + "* Ancient Spellbooks are now in the game.<br>"
+                + "   - Part of the spell research system.<br>"
+                + "   - All text and help menus updated.<br>"
+                + "   - Book graphics added.<br>"
+                + "   - Can be equipped like other spellbooks.<br>"
+                + "   - Provides traditional casting gameplay.<br>"
+                + "   - Original research system remains intact.<br>"
+                + "   - Learn about these books from the research bag.<br>"
+                + "* Research bags now hold 50,000 of need items<br>"
+                + "   like scrolls, quills, and ink.<br>"
+                + "* Character level now calculates with the game<br>"
+                + "   skill setttings for any set extra skill points.<br>"
+                + "* Client `music` folder renamed to `Music` to<br>"
+                + "   reduce confusion for Linux clients.<br>"
+                + "<br>"
+                ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+                + "BEGGAR - 23 February 2024<br>"
+                + "<br>"
+                + "* More item naming fixes, requiring a World.exe update.<br>"
+                + "* Added some new monsters.<br>"
+                + "* Fixed some spell references to incorrect skills.<br>"
+                + "<br>"
+                + "<br>"
+                + "* Fixed map decoration issues in Dungeon Clues.<br>"
+                + "* Did a source change to fix naming issues of items added to the game.<br>"
+                + "* Fixed the Artist to give money for paintings you give them.<br>"
+                + "   Both client and server update<br>"
+                + "   Replace your World.exe<br>"
+                + "   Do a [buildworld<br>"
+                + "<br>"
+                + "<br>"
+                + "* This is both a client and server update.<br>"
+                + "* Added a settings.xml option for time between hunger and thirst reduction.<br>"
+                + "* Added a settings.xml option for the number of days you can bond a tamed creature.<br>"
+                + "   The screen about the taming skill has been updated about bonding<br>"
+                + "   and it will reflect the number of days you set it at.<br>"
+                + "* Added a settings.xml option to disable the selling of tailor items.<br>"
+                + "   (cloth, cotton, flax, wool, thread, and yarn)<br>"
+                + "   For those who want to eliminate gold acquisition<br>"
+                + "   from harvesting farms and profiting from cloth.<br>"
+                + "* Fix a bug caused by Razor allowing the casting of unavailable spells.<br>"
+                + "* Updated the client to the latest version of Razor (1.9.77.0).<br>"
+                + "* Updated the client to the latest version of ClassicUO (1.0.0.0).<br>"
+                + "   If upgrading, look at the new settings.xml<br>"
+                + "   where the new settings at the bottom need<br>"
+                + "   to be added to your settings.xml file.<br>"
+                + "<br>"
+                + "<br>"
+                + "* Fixed grabbing to use line of sight (toads, ropers, etc).<br>"
+                + "* Fixed the strength potion buff icon.<br>"
+                + "* Added more buff icons for eating magic fish, bandage timers, charm and fear spells.<br>"
+                + "* Standardized curse removal magic. Added other spells that caused curse-type effects.<br>"
+                + "<br>"
+                + "<br>"
+                + "* This is just a world-server update.<br>"
+                + "* Fixed saw mills placed in shops.<br>"
+                + "* Fixed other naming for addons as well.<br>"
+                + "* Like other updates, do a [buildworld.<br>"
+                + "<br>"
+                + "<br>"
+                + "* Buff icons have been added to the game.<br>"
+                + "   Basic testing was done so there may be<br>"
+                + "   slight issues with things like timing,<br>"
+                + "   but the base is all done so tweaking<br>"
+                + "   will be a very simple matter if needed.<br>"
+                + "    - every skill, spell, or potion with a duration effect.<br>"
+                + "    - icons all redone to have the same visual theme.<br>"
+                + "    - information provided when hovering over them.<br>"
+                + "    - about 120 buff icons in the game now.<br>"
+                + "    - added additional icons that the base game did not.<br>"
+                + "         for magics such as necromancy, magery, and.<br>"
+                + "         knight-paladin magic.<br>"
+                + "<br>"
+                + "<br>"
+                + "* This is both a client and server update.<br>"
+                + "* Update your World.exe file as well.<br>"
+                + "* The [admin window has been cleaned up of old functions.<br>"
+                + "* Ninja animal form lists at least 1 animal to remove confusion.<br>"
+                + "* 4 server settings have been removed:<br>"
+                + "   IF UPGRADING YOU MUST remove these<br>"
+                + "   from you settings.xml file:<br>"
+                + "    - forest cats will use the larger model.<br>"
+                + "    - elephants will be in your game world.<br>"
+                + "    - zebras will be in your game world.<br>"
+                + "    - foxes will be in your game world.<br>"
+                + "* Some new animals added to the game.<br>"
+                + "* Occasional invisible elephant corpses should be fixed.<br>"
+                + "* Added server settings to adjust safari animals in some lands.<br>"
+                + "* New setting to adjust more skill points for characters.<br>"
+                + "    - set in amounts of 100 from 0 to 1,000 extra points.<br>"
+                + "    - still provides benefits for aliens, fugitives, etc.<br>"
+                + "    - in game text about skill points adapt to your settings.<br>"
+                + "* New setting to adjust skill gain for characters.<br>"
+                + "   If upgrading, look at the new settings.xml<br>"
+                + "   where the new settings at the bottom need<br>"
+                + "   to be added to your settings.xml file.<br>"
+                + "<br>"
+                + "* This is both a client and server update.<br>"
+                + "* Fixed a saw mill bug found by Nephtan.<br>"
+                + "* Changed the graphic for some player character demon paperdolls.<br>"
+                + "* Fixed a bug when using the barbaric satchel to change equipment.<br>"
+                + "<br>"
+                + "<br>"
+                + "* Fixed a wood oil issue found by Nephtan.<br>"
+                + "<br>"
+                + "<br>"
+                + "* Changed the bank box to the larger format.<br>"
+                + "    - Special Update Instructions:<br>"
+                + "    - Download a new client and copy the<br>"
+                + "    - Game/Data/Client/containers.txt<br>"
+                + "    - files and replace yours.<br>"
+                + "* Brass is now based on science where you need copper instead of iron ore.<br>"
+                + "* Fixed some spelling errors.<br>"
+                + "* Added a bit more of the various bags of holding to the treasure tables.<br>"
+                + "* Created mounting bases where you can mount certain slain monsters for the home.<br>"
+                + "* Created stuffing baskets where you can stuff certain slain monsters for the home.<br>"
+                + "<br>"
+
                 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
                 + "LIZARD - 24 May 2023<br>"

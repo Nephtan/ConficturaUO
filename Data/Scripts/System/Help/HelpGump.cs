@@ -346,136 +346,271 @@ namespace Server.Engines.Help
             r = r + e;
             if (page == 7)
             {
+                int barS = 40;
+                int barM = 30;
+
                 AddButton(904, 10, 3610, 3610, 95, GumpButtonType.Reply, 0);
 
-                AddButton(245, 95, 4005, 4005, 66, GumpButtonType.Reply, 0);
+                AddButton(245, barS, 4005, 4005, 1081, GumpButtonType.Reply, 0);
                 AddHtml(
                     280,
-                    95,
+                    barS,
+                    316,
+                    20,
+                    @"<BODY><BASEFONT Color=" + color + ">Ancient Spell Bar I</BASEFONT></BODY>",
+                    (bool)false,
+                    (bool)false
+                );
+                AddButton(605, barS, 4005, 4005, 384, GumpButtonType.Reply, 0);
+                AddHtml(
+                    640,
+                    barS,
+                    148,
+                    20,
+                    @"<BODY><BASEFONT Color=" + color + ">Open Toolbar</BASEFONT></BODY>",
+                    (bool)false,
+                    (bool)false
+                );
+                AddButton(800, barS, 4020, 4020, 385, GumpButtonType.Reply, 0);
+                AddHtml(
+                    835,
+                    barS,
+                    148,
+                    20,
+                    @"<BODY><BASEFONT Color=" + color + ">Close Toolbar</BASEFONT></BODY>",
+                    (bool)false,
+                    (bool)false
+                );
+                barS = barS + barM;
+
+                AddButton(245, barS, 4005, 4005, 1082, GumpButtonType.Reply, 0);
+                AddHtml(
+                    280,
+                    barS,
+                    316,
+                    20,
+                    @"<BODY><BASEFONT Color=" + color + ">Ancient Spell Bar II</BASEFONT></BODY>",
+                    (bool)false,
+                    (bool)false
+                );
+                AddButton(605, barS, 4005, 4005, 386, GumpButtonType.Reply, 0);
+                AddHtml(
+                    640,
+                    barS,
+                    148,
+                    20,
+                    @"<BODY><BASEFONT Color=" + color + ">Open Toolbar</BASEFONT></BODY>",
+                    (bool)false,
+                    (bool)false
+                );
+                AddButton(800, barS, 4020, 4020, 387, GumpButtonType.Reply, 0);
+                AddHtml(
+                    835,
+                    barS,
+                    148,
+                    20,
+                    @"<BODY><BASEFONT Color=" + color + ">Close Toolbar</BASEFONT></BODY>",
+                    (bool)false,
+                    (bool)false
+                );
+                barS = barS + barM;
+
+                AddButton(245, barS, 4005, 4005, 1083, GumpButtonType.Reply, 0);
+                AddHtml(
+                    280,
+                    barS,
+                    316,
+                    20,
+                    @"<BODY><BASEFONT Color=" + color + ">Ancient Spell Bar III</BASEFONT></BODY>",
+                    (bool)false,
+                    (bool)false
+                );
+                AddButton(605, barS, 4005, 4005, 388, GumpButtonType.Reply, 0);
+                AddHtml(
+                    640,
+                    barS,
+                    148,
+                    20,
+                    @"<BODY><BASEFONT Color=" + color + ">Open Toolbar</BASEFONT></BODY>",
+                    (bool)false,
+                    (bool)false
+                );
+                AddButton(800, barS, 4020, 4020, 389, GumpButtonType.Reply, 0);
+                AddHtml(
+                    835,
+                    barS,
+                    148,
+                    20,
+                    @"<BODY><BASEFONT Color=" + color + ">Close Toolbar</BASEFONT></BODY>",
+                    (bool)false,
+                    (bool)false
+                );
+                barS = barS + barM;
+
+                AddButton(245, barS, 4005, 4005, 1084, GumpButtonType.Reply, 0);
+                AddHtml(
+                    280,
+                    barS,
+                    316,
+                    20,
+                    @"<BODY><BASEFONT Color=" + color + ">Ancient Spell Bar IV</BASEFONT></BODY>",
+                    (bool)false,
+                    (bool)false
+                );
+                AddButton(605, barS, 4005, 4005, 390, GumpButtonType.Reply, 0);
+                AddHtml(
+                    640,
+                    barS,
+                    148,
+                    20,
+                    @"<BODY><BASEFONT Color=" + color + ">Open Toolbar</BASEFONT></BODY>",
+                    (bool)false,
+                    (bool)false
+                );
+                AddButton(800, barS, 4020, 4020, 391, GumpButtonType.Reply, 0);
+                AddHtml(
+                    835,
+                    barS,
+                    148,
+                    20,
+                    @"<BODY><BASEFONT Color=" + color + ">Close Toolbar</BASEFONT></BODY>",
+                    (bool)false,
+                    (bool)false
+                );
+                barS = barS + barM;
+
+                AddButton(245, barS, 4005, 4005, 66, GumpButtonType.Reply, 0);
+                AddHtml(
+                    280,
+                    barS,
                     316,
                     20,
                     @"<BODY><BASEFONT Color=" + color + ">Bard Songs Bar I</BASEFONT></BODY>",
                     (bool)false,
                     (bool)false
                 );
-                AddButton(605, 95, 4005, 4005, 266, GumpButtonType.Reply, 0);
+                AddButton(605, barS, 4005, 4005, 266, GumpButtonType.Reply, 0);
                 AddHtml(
                     640,
-                    95,
+                    barS,
                     148,
                     20,
                     @"<BODY><BASEFONT Color=" + color + ">Open Toolbar</BASEFONT></BODY>",
                     (bool)false,
                     (bool)false
                 );
-                AddButton(800, 95, 4020, 4020, 366, GumpButtonType.Reply, 0);
+                AddButton(800, barS, 4020, 4020, 366, GumpButtonType.Reply, 0);
                 AddHtml(
                     835,
-                    95,
+                    barS,
                     148,
                     20,
                     @"<BODY><BASEFONT Color=" + color + ">Close Toolbar</BASEFONT></BODY>",
                     (bool)false,
                     (bool)false
                 );
+                barS = barS + barM;
 
-                AddButton(245, 125, 4005, 4005, 67, GumpButtonType.Reply, 0);
+                AddButton(245, barS, 4005, 4005, 67, GumpButtonType.Reply, 0);
                 AddHtml(
                     280,
-                    125,
+                    barS,
                     316,
                     20,
                     @"<BODY><BASEFONT Color=" + color + ">Bard Songs Bar II</BASEFONT></BODY>",
                     (bool)false,
                     (bool)false
                 );
-                AddButton(605, 125, 4005, 4005, 267, GumpButtonType.Reply, 0);
+                AddButton(605, barS, 4005, 4005, 267, GumpButtonType.Reply, 0);
                 AddHtml(
                     640,
-                    125,
+                    barS,
                     148,
                     20,
                     @"<BODY><BASEFONT Color=" + color + ">Open Toolbar</BASEFONT></BODY>",
                     (bool)false,
                     (bool)false
                 );
-                AddButton(800, 125, 4020, 4020, 367, GumpButtonType.Reply, 0);
+                AddButton(800, barS, 4020, 4020, 367, GumpButtonType.Reply, 0);
                 AddHtml(
                     835,
-                    125,
+                    barS,
                     148,
                     20,
                     @"<BODY><BASEFONT Color=" + color + ">Close Toolbar</BASEFONT></BODY>",
                     (bool)false,
                     (bool)false
                 );
+                barS = barS + barM;
 
-                AddButton(245, 155, 4005, 4005, 68, GumpButtonType.Reply, 0);
+                AddButton(245, barS, 4005, 4005, 68, GumpButtonType.Reply, 0);
                 AddHtml(
                     280,
-                    155,
+                    barS,
                     316,
                     20,
                     @"<BODY><BASEFONT Color=" + color + ">Knight Spell Bar I</BASEFONT></BODY>",
                     (bool)false,
                     (bool)false
                 );
-                AddButton(605, 155, 4005, 4005, 268, GumpButtonType.Reply, 0);
+                AddButton(605, barS, 4005, 4005, 268, GumpButtonType.Reply, 0);
                 AddHtml(
                     640,
-                    155,
+                    barS,
                     148,
                     20,
                     @"<BODY><BASEFONT Color=" + color + ">Open Toolbar</BASEFONT></BODY>",
                     (bool)false,
                     (bool)false
                 );
-                AddButton(800, 155, 4020, 4020, 368, GumpButtonType.Reply, 0);
+                AddButton(800, barS, 4020, 4020, 368, GumpButtonType.Reply, 0);
                 AddHtml(
                     835,
-                    155,
+                    barS,
                     148,
                     20,
                     @"<BODY><BASEFONT Color=" + color + ">Close Toolbar</BASEFONT></BODY>",
                     (bool)false,
                     (bool)false
                 );
+                barS = barS + barM;
 
-                AddButton(245, 185, 4005, 4005, 69, GumpButtonType.Reply, 0);
+                AddButton(245, barS, 4005, 4005, 69, GumpButtonType.Reply, 0);
                 AddHtml(
                     280,
-                    185,
+                    barS,
                     316,
                     20,
                     @"<BODY><BASEFONT Color=" + color + ">Knight Spell Bar II</BASEFONT></BODY>",
                     (bool)false,
                     (bool)false
                 );
-                AddButton(605, 185, 4005, 4005, 269, GumpButtonType.Reply, 0);
+                AddButton(605, barS, 4005, 4005, 269, GumpButtonType.Reply, 0);
                 AddHtml(
                     640,
-                    185,
+                    barS,
                     148,
                     20,
                     @"<BODY><BASEFONT Color=" + color + ">Open Toolbar</BASEFONT></BODY>",
                     (bool)false,
                     (bool)false
                 );
-                AddButton(800, 185, 4020, 4020, 369, GumpButtonType.Reply, 0);
+                AddButton(800, barS, 4020, 4020, 369, GumpButtonType.Reply, 0);
                 AddHtml(
                     835,
-                    185,
+                    barS,
                     148,
                     20,
                     @"<BODY><BASEFONT Color=" + color + ">Close Toolbar</BASEFONT></BODY>",
                     (bool)false,
                     (bool)false
                 );
+                barS = barS + barM;
 
-                AddButton(245, 215, 4005, 4005, 70, GumpButtonType.Reply, 0);
+                AddButton(245, barS, 4005, 4005, 70, GumpButtonType.Reply, 0);
                 AddHtml(
                     280,
-                    215,
+                    barS,
                     316,
                     20,
                     @"<BODY><BASEFONT Color="
@@ -484,31 +619,32 @@ namespace Server.Engines.Help
                     (bool)false,
                     (bool)false
                 );
-                AddButton(605, 215, 4005, 4005, 270, GumpButtonType.Reply, 0);
+                AddButton(605, barS, 4005, 4005, 270, GumpButtonType.Reply, 0);
                 AddHtml(
                     640,
-                    215,
+                    barS,
                     148,
                     20,
                     @"<BODY><BASEFONT Color=" + color + ">Open Toolbar</BASEFONT></BODY>",
                     (bool)false,
                     (bool)false
                 );
-                AddButton(800, 215, 4020, 4020, 370, GumpButtonType.Reply, 0);
+                AddButton(800, barS, 4020, 4020, 370, GumpButtonType.Reply, 0);
                 AddHtml(
                     835,
-                    215,
+                    barS,
                     148,
                     20,
                     @"<BODY><BASEFONT Color=" + color + ">Close Toolbar</BASEFONT></BODY>",
                     (bool)false,
                     (bool)false
                 );
+                barS = barS + barM;
 
-                AddButton(245, 245, 4005, 4005, 71, GumpButtonType.Reply, 0);
+                AddButton(245, barS, 4005, 4005, 71, GumpButtonType.Reply, 0);
                 AddHtml(
                     280,
-                    245,
+                    barS,
                     316,
                     20,
                     @"<BODY><BASEFONT Color="
@@ -517,279 +653,288 @@ namespace Server.Engines.Help
                     (bool)false,
                     (bool)false
                 );
-                AddButton(605, 245, 4005, 4005, 271, GumpButtonType.Reply, 0);
+                AddButton(605, barS, 4005, 4005, 271, GumpButtonType.Reply, 0);
                 AddHtml(
                     640,
-                    245,
+                    barS,
                     148,
                     20,
                     @"<BODY><BASEFONT Color=" + color + ">Open Toolbar</BASEFONT></BODY>",
                     (bool)false,
                     (bool)false
                 );
-                AddButton(800, 245, 4020, 4020, 371, GumpButtonType.Reply, 0);
+                AddButton(800, barS, 4020, 4020, 371, GumpButtonType.Reply, 0);
                 AddHtml(
                     835,
-                    245,
+                    barS,
                     148,
                     20,
                     @"<BODY><BASEFONT Color=" + color + ">Close Toolbar</BASEFONT></BODY>",
                     (bool)false,
                     (bool)false
                 );
+                barS = barS + barM;
 
-                AddButton(245, 275, 4005, 4005, 978, GumpButtonType.Reply, 0);
+                AddButton(245, barS, 4005, 4005, 978, GumpButtonType.Reply, 0);
                 AddHtml(
                     280,
-                    275,
+                    barS,
                     316,
                     20,
                     @"<BODY><BASEFONT Color=" + color + ">Elemental Spell Bar I</BASEFONT></BODY>",
                     (bool)false,
                     (bool)false
                 );
-                AddButton(605, 275, 4005, 4005, 282, GumpButtonType.Reply, 0);
+                AddButton(605, barS, 4005, 4005, 282, GumpButtonType.Reply, 0);
                 AddHtml(
                     640,
-                    275,
+                    barS,
                     148,
                     20,
                     @"<BODY><BASEFONT Color=" + color + ">Open Toolbar</BASEFONT></BODY>",
                     (bool)false,
                     (bool)false
                 );
-                AddButton(800, 275, 4020, 4020, 382, GumpButtonType.Reply, 0);
+                AddButton(800, barS, 4020, 4020, 382, GumpButtonType.Reply, 0);
                 AddHtml(
                     835,
-                    275,
+                    barS,
                     148,
                     20,
                     @"<BODY><BASEFONT Color=" + color + ">Close Toolbar</BASEFONT></BODY>",
                     (bool)false,
                     (bool)false
                 );
+                barS = barS + barM;
 
-                AddButton(245, 305, 4005, 4005, 979, GumpButtonType.Reply, 0);
+                AddButton(245, barS, 4005, 4005, 979, GumpButtonType.Reply, 0);
                 AddHtml(
                     280,
-                    305,
+                    barS,
                     316,
                     20,
                     @"<BODY><BASEFONT Color=" + color + ">Elemental Spell Bar II</BASEFONT></BODY>",
                     (bool)false,
                     (bool)false
                 );
-                AddButton(605, 305, 4005, 4005, 283, GumpButtonType.Reply, 0);
+                AddButton(605, barS, 4005, 4005, 283, GumpButtonType.Reply, 0);
                 AddHtml(
                     640,
-                    305,
+                    barS,
                     148,
                     20,
                     @"<BODY><BASEFONT Color=" + color + ">Open Toolbar</BASEFONT></BODY>",
                     (bool)false,
                     (bool)false
                 );
-                AddButton(800, 305, 4020, 4020, 383, GumpButtonType.Reply, 0);
+                AddButton(800, barS, 4020, 4020, 383, GumpButtonType.Reply, 0);
                 AddHtml(
                     835,
-                    305,
+                    barS,
                     148,
                     20,
                     @"<BODY><BASEFONT Color=" + color + ">Close Toolbar</BASEFONT></BODY>",
                     (bool)false,
                     (bool)false
                 );
+                barS = barS + barM;
 
-                AddButton(245, 335, 4005, 4005, 72, GumpButtonType.Reply, 0);
+                AddButton(245, barS, 4005, 4005, 72, GumpButtonType.Reply, 0);
                 AddHtml(
                     280,
-                    335,
+                    barS,
                     316,
                     20,
                     @"<BODY><BASEFONT Color=" + color + ">Magery Spell Bar I</BASEFONT></BODY>",
                     (bool)false,
                     (bool)false
                 );
-                AddButton(605, 335, 4005, 4005, 272, GumpButtonType.Reply, 0);
+                AddButton(605, barS, 4005, 4005, 272, GumpButtonType.Reply, 0);
                 AddHtml(
                     640,
-                    335,
+                    barS,
                     148,
                     20,
                     @"<BODY><BASEFONT Color=" + color + ">Open Toolbar</BASEFONT></BODY>",
                     (bool)false,
                     (bool)false
                 );
-                AddButton(800, 335, 4020, 4020, 372, GumpButtonType.Reply, 0);
+                AddButton(800, barS, 4020, 4020, 372, GumpButtonType.Reply, 0);
                 AddHtml(
                     835,
-                    335,
+                    barS,
                     148,
                     20,
                     @"<BODY><BASEFONT Color=" + color + ">Close Toolbar</BASEFONT></BODY>",
                     (bool)false,
                     (bool)false
                 );
+                barS = barS + barM;
 
-                AddButton(245, 365, 4005, 4005, 73, GumpButtonType.Reply, 0);
+                AddButton(245, barS, 4005, 4005, 73, GumpButtonType.Reply, 0);
                 AddHtml(
                     280,
-                    365,
+                    barS,
                     316,
                     20,
                     @"<BODY><BASEFONT Color=" + color + ">Magery Spell Bar II</BASEFONT></BODY>",
                     (bool)false,
                     (bool)false
                 );
-                AddButton(605, 365, 4005, 4005, 273, GumpButtonType.Reply, 0);
+                AddButton(605, barS, 4005, 4005, 273, GumpButtonType.Reply, 0);
                 AddHtml(
                     640,
-                    365,
+                    barS,
                     148,
                     20,
                     @"<BODY><BASEFONT Color=" + color + ">Open Toolbar</BASEFONT></BODY>",
                     (bool)false,
                     (bool)false
                 );
-                AddButton(800, 365, 4020, 4020, 373, GumpButtonType.Reply, 0);
+                AddButton(800, barS, 4020, 4020, 373, GumpButtonType.Reply, 0);
                 AddHtml(
                     835,
-                    365,
+                    barS,
                     148,
                     20,
                     @"<BODY><BASEFONT Color=" + color + ">Close Toolbar</BASEFONT></BODY>",
                     (bool)false,
                     (bool)false
                 );
+                barS = barS + barM;
 
-                AddButton(245, 395, 4005, 4005, 74, GumpButtonType.Reply, 0);
+                AddButton(245, barS, 4005, 4005, 74, GumpButtonType.Reply, 0);
                 AddHtml(
                     280,
-                    395,
+                    barS,
                     316,
                     20,
                     @"<BODY><BASEFONT Color=" + color + ">Magery Spell Bar III</BASEFONT></BODY>",
                     (bool)false,
                     (bool)false
                 );
-                AddButton(605, 395, 4005, 4005, 274, GumpButtonType.Reply, 0);
+                AddButton(605, barS, 4005, 4005, 274, GumpButtonType.Reply, 0);
                 AddHtml(
                     640,
-                    395,
+                    barS,
                     148,
                     20,
                     @"<BODY><BASEFONT Color=" + color + ">Open Toolbar</BASEFONT></BODY>",
                     (bool)false,
                     (bool)false
                 );
-                AddButton(800, 395, 4020, 4020, 374, GumpButtonType.Reply, 0);
+                AddButton(800, barS, 4020, 4020, 374, GumpButtonType.Reply, 0);
                 AddHtml(
                     835,
-                    395,
+                    barS,
                     148,
                     20,
                     @"<BODY><BASEFONT Color=" + color + ">Close Toolbar</BASEFONT></BODY>",
                     (bool)false,
                     (bool)false
                 );
+                barS = barS + barM;
 
-                AddButton(245, 425, 4005, 4005, 75, GumpButtonType.Reply, 0);
+                AddButton(245, barS, 4005, 4005, 75, GumpButtonType.Reply, 0);
                 AddHtml(
                     280,
-                    425,
+                    barS,
                     316,
                     20,
                     @"<BODY><BASEFONT Color=" + color + ">Magery Spell Bar IV</BASEFONT></BODY>",
                     (bool)false,
                     (bool)false
                 );
-                AddButton(605, 425, 4005, 4005, 275, GumpButtonType.Reply, 0);
+                AddButton(605, barS, 4005, 4005, 275, GumpButtonType.Reply, 0);
                 AddHtml(
                     640,
-                    425,
+                    barS,
                     148,
                     20,
                     @"<BODY><BASEFONT Color=" + color + ">Open Toolbar</BASEFONT></BODY>",
                     (bool)false,
                     (bool)false
                 );
-                AddButton(800, 425, 4020, 4020, 375, GumpButtonType.Reply, 0);
+                AddButton(800, barS, 4020, 4020, 375, GumpButtonType.Reply, 0);
                 AddHtml(
                     835,
-                    425,
+                    barS,
                     148,
                     20,
                     @"<BODY><BASEFONT Color=" + color + ">Close Toolbar</BASEFONT></BODY>",
                     (bool)false,
                     (bool)false
                 );
+                barS = barS + barM;
 
-                AddButton(245, 455, 4005, 4005, 980, GumpButtonType.Reply, 0);
+                AddButton(245, barS, 4005, 4005, 980, GumpButtonType.Reply, 0);
                 AddHtml(
                     280,
-                    455,
+                    barS,
                     316,
                     20,
                     @"<BODY><BASEFONT Color=" + color + ">Monk Ability Bar I</BASEFONT></BODY>",
                     (bool)false,
                     (bool)false
                 );
-                AddButton(605, 455, 4005, 4005, 280, GumpButtonType.Reply, 0);
+                AddButton(605, barS, 4005, 4005, 280, GumpButtonType.Reply, 0);
                 AddHtml(
                     640,
-                    455,
+                    barS,
                     148,
                     20,
                     @"<BODY><BASEFONT Color=" + color + ">Open Toolbar</BASEFONT></BODY>",
                     (bool)false,
                     (bool)false
                 );
-                AddButton(800, 455, 4020, 4020, 380, GumpButtonType.Reply, 0);
+                AddButton(800, barS, 4020, 4020, 380, GumpButtonType.Reply, 0);
                 AddHtml(
                     835,
-                    455,
+                    barS,
                     148,
                     20,
                     @"<BODY><BASEFONT Color=" + color + ">Close Toolbar</BASEFONT></BODY>",
                     (bool)false,
                     (bool)false
                 );
+                barS = barS + barM;
 
-                AddButton(245, 485, 4005, 4005, 981, GumpButtonType.Reply, 0);
+                AddButton(245, barS, 4005, 4005, 981, GumpButtonType.Reply, 0);
                 AddHtml(
                     280,
-                    485,
+                    barS,
                     316,
                     20,
                     @"<BODY><BASEFONT Color=" + color + ">Monk Ability Bar II</BASEFONT></BODY>",
                     (bool)false,
                     (bool)false
                 );
-                AddButton(605, 485, 4005, 4005, 281, GumpButtonType.Reply, 0);
+                AddButton(605, barS, 4005, 4005, 281, GumpButtonType.Reply, 0);
                 AddHtml(
                     640,
-                    485,
+                    barS,
                     148,
                     20,
                     @"<BODY><BASEFONT Color=" + color + ">Open Toolbar</BASEFONT></BODY>",
                     (bool)false,
                     (bool)false
                 );
-                AddButton(800, 485, 4020, 4020, 381, GumpButtonType.Reply, 0);
+                AddButton(800, barS, 4020, 4020, 381, GumpButtonType.Reply, 0);
                 AddHtml(
                     835,
-                    485,
+                    barS,
                     148,
                     20,
                     @"<BODY><BASEFONT Color=" + color + ">Close Toolbar</BASEFONT></BODY>",
                     (bool)false,
                     (bool)false
                 );
+                barS = barS + barM;
 
-                AddButton(245, 515, 4005, 4005, 76, GumpButtonType.Reply, 0);
+                AddButton(245, barS, 4005, 4005, 76, GumpButtonType.Reply, 0);
                 AddHtml(
                     280,
-                    515,
+                    barS,
                     316,
                     20,
                     @"<BODY><BASEFONT Color="
@@ -798,31 +943,32 @@ namespace Server.Engines.Help
                     (bool)false,
                     (bool)false
                 );
-                AddButton(605, 515, 4005, 4005, 276, GumpButtonType.Reply, 0);
+                AddButton(605, barS, 4005, 4005, 276, GumpButtonType.Reply, 0);
                 AddHtml(
                     640,
-                    515,
+                    barS,
                     148,
                     20,
                     @"<BODY><BASEFONT Color=" + color + ">Open Toolbar</BASEFONT></BODY>",
                     (bool)false,
                     (bool)false
                 );
-                AddButton(800, 515, 4020, 4020, 376, GumpButtonType.Reply, 0);
+                AddButton(800, barS, 4020, 4020, 376, GumpButtonType.Reply, 0);
                 AddHtml(
                     835,
-                    515,
+                    barS,
                     148,
                     20,
                     @"<BODY><BASEFONT Color=" + color + ">Close Toolbar</BASEFONT></BODY>",
                     (bool)false,
                     (bool)false
                 );
+                barS = barS + barM;
 
-                AddButton(245, 545, 4005, 4005, 77, GumpButtonType.Reply, 0);
+                AddButton(245, barS, 4005, 4005, 77, GumpButtonType.Reply, 0);
                 AddHtml(
                     280,
-                    545,
+                    barS,
                     316,
                     20,
                     @"<BODY><BASEFONT Color="
@@ -831,88 +977,91 @@ namespace Server.Engines.Help
                     (bool)false,
                     (bool)false
                 );
-                AddButton(605, 545, 4005, 4005, 277, GumpButtonType.Reply, 0);
+                AddButton(605, barS, 4005, 4005, 277, GumpButtonType.Reply, 0);
                 AddHtml(
                     640,
-                    545,
+                    barS,
                     148,
                     20,
                     @"<BODY><BASEFONT Color=" + color + ">Open Toolbar</BASEFONT></BODY>",
                     (bool)false,
                     (bool)false
                 );
-                AddButton(800, 545, 4020, 4020, 377, GumpButtonType.Reply, 0);
+                AddButton(800, barS, 4020, 4020, 377, GumpButtonType.Reply, 0);
                 AddHtml(
                     835,
-                    545,
+                    barS,
                     148,
                     20,
                     @"<BODY><BASEFONT Color=" + color + ">Close Toolbar</BASEFONT></BODY>",
                     (bool)false,
                     (bool)false
                 );
+                barS = barS + barM;
 
-                AddButton(245, 575, 4005, 4005, 78, GumpButtonType.Reply, 0);
+                AddButton(245, barS, 4005, 4005, 78, GumpButtonType.Reply, 0);
                 AddHtml(
                     280,
-                    575,
+                    barS,
                     316,
                     20,
                     @"<BODY><BASEFONT Color=" + color + ">Priest Prayer Bar I</BASEFONT></BODY>",
                     (bool)false,
                     (bool)false
                 );
-                AddButton(605, 575, 4005, 4005, 278, GumpButtonType.Reply, 0);
+                AddButton(605, barS, 4005, 4005, 278, GumpButtonType.Reply, 0);
                 AddHtml(
                     640,
-                    575,
+                    barS,
                     148,
                     20,
                     @"<BODY><BASEFONT Color=" + color + ">Open Toolbar</BASEFONT></BODY>",
                     (bool)false,
                     (bool)false
                 );
-                AddButton(800, 575, 4020, 4020, 378, GumpButtonType.Reply, 0);
+                AddButton(800, barS, 4020, 4020, 378, GumpButtonType.Reply, 0);
                 AddHtml(
                     835,
-                    575,
+                    barS,
                     148,
                     20,
                     @"<BODY><BASEFONT Color=" + color + ">Close Toolbar</BASEFONT></BODY>",
                     (bool)false,
                     (bool)false
                 );
+                barS = barS + barM;
 
-                AddButton(245, 605, 4005, 4005, 79, GumpButtonType.Reply, 0);
+                AddButton(245, barS, 4005, 4005, 79, GumpButtonType.Reply, 0);
                 AddHtml(
                     280,
-                    605,
+                    barS,
                     316,
                     20,
                     @"<BODY><BASEFONT Color=" + color + ">Priest Prayer Bar II</BASEFONT></BODY>",
                     (bool)false,
                     (bool)false
                 );
-                AddButton(605, 605, 4005, 4005, 279, GumpButtonType.Reply, 0);
+                AddButton(605, barS, 4005, 4005, 279, GumpButtonType.Reply, 0);
                 AddHtml(
                     640,
-                    605,
+                    barS,
                     148,
                     20,
                     @"<BODY><BASEFONT Color=" + color + ">Open Toolbar</BASEFONT></BODY>",
                     (bool)false,
                     (bool)false
                 );
-                AddButton(800, 605, 4020, 4020, 379, GumpButtonType.Reply, 0);
+                AddButton(800, barS, 4020, 4020, 379, GumpButtonType.Reply, 0);
                 AddHtml(
                     835,
-                    605,
+                    barS,
                     148,
                     20,
                     @"<BODY><BASEFONT Color=" + color + ">Close Toolbar</BASEFONT></BODY>",
                     (bool)false,
                     (bool)false
                 );
+                barS = barS + barM;
             }
 
             /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1835,6 +1984,28 @@ namespace Server.Engines.Help
                     (bool)false
                 );
                 g = g + j;
+
+                g = g + j;
+                if (ResearchSettings.BookCaster(from))
+                {
+                    setB = 4018;
+                }
+                else
+                {
+                    setB = 3609;
+                }
+                AddButton(245, g, setB, setB, 63, GumpButtonType.Reply, 0);
+                AddButton(285, g, 4011, 4011, 106, GumpButtonType.Reply, 0);
+                AddHtml(
+                    325,
+                    g,
+                    316,
+                    20,
+                    @"<BODY><BASEFONT Color=" + color + ">Ancient Spellbook</BASEFONT></BODY>",
+                    (bool)false,
+                    (bool)false
+                );
+                g = g + j;
             }
 
             /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2141,6 +2312,38 @@ namespace Server.Engines.Help
                 {
                     InvokeCommand("elementclose2", from);
                 }
+                else if (info.ButtonID == 384)
+                {
+                    InvokeCommand("archtool1", from);
+                }
+                else if (info.ButtonID == 385)
+                {
+                    InvokeCommand("archclose1", from);
+                }
+                else if (info.ButtonID == 386)
+                {
+                    InvokeCommand("archtool2", from);
+                }
+                else if (info.ButtonID == 387)
+                {
+                    InvokeCommand("archclose2", from);
+                }
+                else if (info.ButtonID == 388)
+                {
+                    InvokeCommand("archtool3", from);
+                }
+                else if (info.ButtonID == 389)
+                {
+                    InvokeCommand("archclose3", from);
+                }
+                else if (info.ButtonID == 390)
+                {
+                    InvokeCommand("archtool4", from);
+                }
+                else if (info.ButtonID == 391)
+                {
+                    InvokeCommand("archclose4", from);
+                }
             }
             else
             {
@@ -2353,6 +2556,19 @@ namespace Server.Engines.Help
                     {
                         from.CloseGump(typeof(SkillTitleGump));
                         from.SendGump(new SkillTitleGump(from));
+                        break;
+                    }
+                    case 63: // Ancient Spellbook
+                    {
+                        if (!ResearchSettings.BookCaster(from))
+                        {
+                            ((PlayerMobile)from).UsingAncientBook = true;
+                        }
+                        else
+                        {
+                            ((PlayerMobile)from).UsingAncientBook = false;
+                        }
+                        from.SendGump(new Server.Engines.Help.HelpGump(from, 12));
                         break;
                     }
                     case 982: // Skill List
@@ -2623,6 +2839,30 @@ namespace Server.Engines.Help
                     case 80:
                     {
                         from.SendGump(new CustomTitleGump(from));
+                        break;
+                    }
+                    case 1081:
+                    {
+                        from.CloseGump(typeof(SetupBarsArch1));
+                        from.SendGump(new SetupBarsArch1(from, 1));
+                        break;
+                    }
+                    case 1082:
+                    {
+                        from.CloseGump(typeof(SetupBarsArch2));
+                        from.SendGump(new SetupBarsArch2(from, 1));
+                        break;
+                    }
+                    case 1083:
+                    {
+                        from.CloseGump(typeof(SetupBarsArch3));
+                        from.SendGump(new SetupBarsArch3(from, 1));
+                        break;
+                    }
+                    case 1084:
+                    {
+                        from.CloseGump(typeof(SetupBarsArch4));
+                        from.SendGump(new SetupBarsArch4(from, 1));
                         break;
                     }
                     case 980:
@@ -3285,13 +3525,13 @@ namespace Server.Engines.Help
                 + "Common Commands: Below are the commands you can use for various things in the game.<br><br>"
                 + "[abilitynames - Turns on/off the special weapon ability names next to the appropriate icons.<BR><BR>"
                 + "[afk - Turns on/off the notification to others that you are away from keyboard.<BR><BR>"
+                + "[ancient - Turns on/off whether you are using magic from the research bag or the ancient spellbook.<br><br>"
                 + "[autoattack - Turns on/off whether you auto attack when attacked.<BR><BR>"
                 + "[bandother - Bandage other command.<BR><BR>"
                 + "[bandself - Bandage self command.<BR><BR>"
                 + "[barbaric - Turns on/off the barbaric flavor the game provides (see end).<BR><BR>"
                 + "[c - Initiates the chat system.<BR><BR>"
                 + "[corpse - Helps one find their remains.<BR><BR>"
-                + "[corpseclear - Removes your corpse from a ship's deck.<BR><BR>"
                 + "[cleardeck - Removes npc corpses and empty player corpses from your boat deck.<BR><BR>"
                 + "[e - Opens the emote mini window.<BR><BR>"
                 + "[emote - Opens the emote window.<BR><BR>"
@@ -3304,7 +3544,7 @@ namespace Server.Engines.Help
                 + "[poisons - This changes how poisoned weapons work, which can be for either precise control with special weapon infectious strikes (default) or with hits of a one-handed slashing or piercing weapon.<BR><BR>"
                 + "[private - Turns on/off detailed messages of your journey for the town crier and local citizen chatter.<BR><BR>"
                 + "[quests - Opens a scroll to show certain quest events.<BR><BR>"
-                + "[bar - Opens a small, vertical bar with common game functions for easier use.<BR><BR>"
+                + "[quickbar - Opens a small, vertical bar with common game functions for easier use.<br><br>"
                 + "[sad - Opens the weapon's special abilities.<BR><BR>"
                 + "[set1 - Sets your weapon's first ability to active.<BR><BR>"
                 + "[set2 - Sets your weapon's second ability to active.<BR><BR>"
@@ -3329,8 +3569,8 @@ namespace Server.Engines.Help
                 + " - Deadly (I dare you)<br><br>"
                 + " - Epic (For Titans of Ether)<br><br>"
                 + "<br><br>"
-                + "Skill Titles: You can choose your default character title. Even if you are a Grandmaster Driven, you may prefer to display your Apprentice Wizard title instead. Here's how you can set it...<br><br>"
-                + "Type the '[SkillName]' command followed by the name of the skill you want to set as your default. Make sure you surround the skill name in quotes and use all lowercase. For example...<br>"
+                + "Skill Titles: You can set your default title for your character. Although you may be a Grandmaster Driven, you may want your title to reflect your Apprentice Wizard title instead. This is how you set it...<br><br>"
+                + "Type the '[SkillName' command followed by the name of the skill you want to set as your default. Make sure you surround the skill name in quotes and all lowercase. Example...<br>"
                 + "  [SkillName \"taming\"<br><br>"
                 + "If you want the game to manage your character's title, simply use the same command with a skill name of \"clear\".<br><br>"
                 + "<br><br>"
@@ -3339,6 +3579,10 @@ namespace Server.Engines.Help
                 + "[regclose - Closes the reagent bar.<br><br>"
                 + "<br><br>"
                 + "Magic Toolbars: Here are the commands you can utilize to manage magic toolbars, which can enhance your gameplay experience.<br><br>"
+                + "[archspell1 - Opens the 1st ancient spell bar editor.<br><br>"
+                + "[archspell2 - Opens the 2nd ancient spell bar editor.<br><br>"
+                + "[archspell3 - Opens the 3rd ancient spell bar editor.<br><br>"
+                + "[archspell4 - Opens the 4th ancient spell bar editor.<br><br>"
                 + "[bardsong1 - Opens the 1st bard song bar editor.<br><br>"
                 + "[bardsong2 - Opens the 2nd bard song bar editor.<br><br>"
                 + "<br><br>"
@@ -3365,6 +3609,10 @@ namespace Server.Engines.Help
                 + "[necrospell1 - Opens the 1st necromancer spell bar editor.<br><br>"
                 + "[necrospell2 - Opens the 2nd necromancer spell bar editor.<br><br>"
                 + "<br><br>"
+                + "[archtool1 - Opens the 1st ancient spell bar.<br><br>"
+                + "[archtool2 - Opens the 2nd ancient spell bar.<br><br>"
+                + "[archtool3 - Opens the 3rd ancient spell bar.<br><br>"
+                + "[archtool4 - Opens the 4th ancient spell bar.<br><br>"
                 + "<br><br>"
                 + "[bardtool1 - Opens the 1st bard song bar.<br><br>"
                 + "[bardtool2 - Opens the 2nd bard song bar.<br><br>"
@@ -3392,6 +3640,10 @@ namespace Server.Engines.Help
                 + "[necrotool1 - Opens the 1st necromancer spell bar.<br><br>"
                 + "[necrotool2 - Opens the 2nd necromancer spell bar.<br><br>"
                 + "<br><br>"
+                + "[archclose1 - Closes the 1st ancient spell bar.<br><br>"
+                + "[archclose2 - Closes the 2nd ancient spell bar.<br><br>"
+                + "[archclose3 - Closes the 3rd ancient spell bar.<br><br>"
+                + "[archclose4 - Closes the 4th ancient spell bar.<br><br>"
                 + "<br><br>"
                 + "[bardclose1 - Closes the 1st bard song bar.<br><br>"
                 + "[bardclose2 - Closes the 2nd bard song bar.<br><br>"

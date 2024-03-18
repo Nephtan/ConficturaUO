@@ -98,6 +98,9 @@ namespace Server.Spells.Necromancy
                 0
             );
             Effects.PlaySound(m.Location, m.Map, 0x4B1);
+
+            BuffInfo.RemoveBuff(m, BuffIcon.VampiricEmbrace);
+            BuffInfo.AddBuff(m, new BuffInfo(BuffIcon.VampiricEmbrace, 1063609));
         }
     }
 }

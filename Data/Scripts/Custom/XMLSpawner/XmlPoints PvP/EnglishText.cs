@@ -1,24 +1,22 @@
 using System;
-using Server;
 using System.Text;
+using Server;
 
 namespace Server.Engines.XmlSpawner2
 {
-
     public class EnglishPointsText
     {
-
         private static void Add(int index, string text)
         {
             XmlPoints.AddText(XmlPoints.LanguageType.ENGLISH, index, text);
         }
 
-    	public static void Initialize()
-    	{
+        public static void Initialize()
+        {
             // add in all of the text phrases that will be used
             // indices that begin with 100 refer to messages displayed in the game window, so no real length limit
             // indices that begin with 200 refer to gump labels and so should be translated to text of similar length for proper appearance
-            
+
             // basechallengegame.cs
             Add(100000, "Entry fee of {0} gold has been returned to you.");
             Add(100001, "Entry fee of {0} gold has been returned to your bank account.");
@@ -30,7 +28,7 @@ namespace Server.Engines.XmlSpawner2
             Add(100105, "You are not allowed to open that here.");
             Add(100106, "You have entered the Challenge Game region '{0}'");
             Add(100107, "You have left the Challenge Game region '{0}'");
-            
+
             // xmlpoints.cs
             Add(100207, "They are too inexperienced to be challenged");
             Add(100208, "{0} mins remaining until current challenge is cancelled.");
@@ -53,7 +51,7 @@ namespace Server.Engines.XmlSpawner2
             // xmlpoints gump
             Add(200224, "Points Standing for {0}");
             Add(200225, "Currently challenging {0}");
-            Add(200226, "See kills" );
+            Add(200226, "See kills");
             Add(200227, "Broadcast kills");
             Add(200228, "Top players");
             Add(200229, "Challenge");
@@ -77,32 +75,35 @@ namespace Server.Engines.XmlSpawner2
             Add(200246, "Deaths");
             Add(200247, "Rank");
             Add(200248, "Change");
-            Add(200249, "Time at Rank" );
-            Add(200250, "{0} days " );
-            Add(200251, "{0} hours " );
-            Add(200252, "{0} mins" );
-            Add(200253, "just changed" );
+            Add(200249, "Time at Rank");
+            Add(200250, "{0} days ");
+            Add(200251, "{0} hours ");
+            Add(200252, "{0} mins");
+            Add(200253, "just changed");
             // challenge gump
-            Add(200254, "You are challenging" );
-            Add(200255, "{0}. Continue?" );
-            Add(200256, "You will NOT gain points!" );
-            Add(100257, "You have issued a challenge to {0}." );
-            Add(100258, "You decided against challenging {0}." );
-            Add(200259, "You have been challenged by" );
-            Add(200260, "{0}. Accept?" );
-            Add(100261, "{0} has already been challenged." );
-            Add(100262, "You are already being challenged." );
-            Add(100263, "{0} accepted your challenge!" );
-            Add(100264, "You have accepted the challenge from {0}!" );
-            Add(100265, "Your challenge to {0} was declined." );
-            Add(100266, "You declined the challenge by {0}." );
-			Add(100267, "You cannot issue a challenge here.");
+            Add(200254, "You are challenging");
+            Add(200255, "{0}. Continue?");
+            Add(200256, "You will NOT gain points!");
+            Add(100257, "You have issued a challenge to {0}.");
+            Add(100258, "You decided against challenging {0}.");
+            Add(200259, "You have been challenged by");
+            Add(200260, "{0}. Accept?");
+            Add(100261, "{0} has already been challenged.");
+            Add(100262, "You are already being challenged.");
+            Add(100263, "{0} accepted your challenge!");
+            Add(100264, "You have accepted the challenge from {0}!");
+            Add(100265, "Your challenge to {0} was declined.");
+            Add(100266, "You declined the challenge by {0}.");
+            Add(100267, "You cannot issue a challenge here.");
 
             // gauntlet scripts
-            Add(100300, "Prize from {0}" );
-            Add(100301, "You have received a bank check for {0}" );
-            Add(100302, "Last Man Standing" );
-            Add(100303, "Unable to set up a {0} Challenge: Another Challenge Game is already in progress in this Challenge Game region.");
+            Add(100300, "Prize from {0}");
+            Add(100301, "You have received a bank check for {0}");
+            Add(100302, "Last Man Standing");
+            Add(
+                100303,
+                "Unable to set up a {0} Challenge: Another Challenge Game is already in progress in this Challenge Game region."
+            );
             Add(100304, "Unable to set up a {0} Challenge: Must be in a Challenge Game region.");
             Add(100305, "Unable to set up a {0} Challenge.");
             Add(100306, "Setting up a {0} Challenge.");
@@ -129,7 +130,7 @@ namespace Server.Engines.XmlSpawner2
             Add(100419, "Team {0} flag has been returned to base");
             Add(100420, "Team {0} has the Team {1} flag");
             Add(100421, "Team {0} has scored");
-            
+
             // game gump scripts
             Add(200500, "Last Man Standing Challenge");
             Add(200501, "Organized by: {0}");
@@ -206,7 +207,7 @@ namespace Server.Engines.XmlSpawner2
             Add(200623, "CTF Team Status");
             Add(200630, "Team Deathball Challenge");
             Add(200631, "Deathball Team Status");
-            
+
             Add(200640, "Faction");
             Add(200649, "Location: {0}");
             Add(200650, "{0} is occupied");
@@ -214,7 +215,6 @@ namespace Server.Engines.XmlSpawner2
             Add(200660, "Cancel");
             Add(200661, "Duel here");
             Add(100670, "{0} is in combat.");
-
-    	}
+        }
     }
 }

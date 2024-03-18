@@ -136,6 +136,7 @@ namespace Server
                     typeof(ArcticOgreLord),
                     typeof(BlackPudding),
                     typeof(GreenSlime),
+                    typeof(Jellyfish),
                     typeof(BloodSpawn),
                     typeof(Bogling),
                     typeof(BogThing),
@@ -396,6 +397,7 @@ namespace Server
                     typeof(WhiteTigerRiding),
                     typeof(WhiteWyrm),
                     typeof(Wyrms),
+                    typeof(Wyrm),
                     typeof(Wisp),
                     typeof(SummonedCorpse),
                     typeof(Xurtzar)
@@ -407,6 +409,7 @@ namespace Server
                 0.350,
                 new Type[]
                 {
+                    typeof(Cheetah),
                     typeof(EnergyVortex),
                     typeof(Pixie),
                     typeof(Sprite),
@@ -417,6 +420,7 @@ namespace Server
                     typeof(FireBeetle),
                     typeof(EvilEnergyVortex),
                     typeof(GoldenSerpent),
+                    typeof(Ostrich),
                     typeof(AxeBeak),
                     typeof(AxeBeakRiding),
                     typeof(Raptor),
@@ -546,6 +550,7 @@ namespace Server
                     typeof(DeepSeaGiant),
                     typeof(TitanLich),
                     typeof(MummyGiant),
+                    typeof(Giant),
                     typeof(HillGiant),
                     typeof(HillGiantShaman),
                     typeof(DeepSeaSerpent),
@@ -571,6 +576,7 @@ namespace Server
                     typeof(SkeletonDragon),
                     typeof(Dragon),
                     typeof(Dragons),
+                    typeof(YoungDragon),
                     typeof(Dragoon),
                     typeof(RidingDragon),
                     typeof(DragonGolem),
@@ -586,6 +592,7 @@ namespace Server
                     typeof(DrakkulMage),
                     typeof(DullCopperElemental),
                     typeof(Eagle),
+                    typeof(Penguin),
                     typeof(ElderBlackBear),
                     typeof(ElderBrownBear),
                     typeof(ElderBlackBearRiding),
@@ -693,10 +700,12 @@ namespace Server
                     typeof(Gorgon),
                     typeof(GorgonRiding),
                     typeof(Gorilla),
+                    typeof(Monkey),
                     typeof(Gorakong),
                     typeof(Infected),
                     typeof(Grathek),
                     typeof(GreatHart),
+                    typeof(Gazelle),
                     typeof(Moose),
                     typeof(Antelope),
                     typeof(GreenDragon),
@@ -742,6 +751,7 @@ namespace Server
                     typeof(IronBeetle),
                     typeof(IronCobra),
                     typeof(Jackal),
+                    typeof(Hyena),
                     typeof(JackRabbit),
                     typeof(Weasel),
                     typeof(JadeSerpent),
@@ -776,6 +786,7 @@ namespace Server
                     typeof(Reptaur),
                     typeof(LizardmanArcher),
                     typeof(Llama),
+                    typeof(Giraffe),
                     typeof(Locathah),
                     typeof(LostKnight),
                     typeof(LowerDemon),
@@ -2377,7 +2388,7 @@ namespace Server.Misc
 
             if (CanHaveShield == 1 && Utility.RandomMinMax(1, 3) == 1)
             {
-                switch (Utility.Random(12))
+                switch (Utility.Random(16))
                 {
                     case 0:
                         armor = new BronzeShield();
@@ -2414,6 +2425,18 @@ namespace Server.Misc
                         break;
                     case 11:
                         armor = new JeweledShield();
+                        break;
+                    case 12:
+                        armor = new ChaosShield();
+                        break;
+                    case 13:
+                        armor = new OrderShield();
+                        break;
+                    case 14:
+                        armor = new SunShield();
+                        break;
+                    case 15:
+                        armor = new VirtueShield();
                         break;
                 }
             }
@@ -3908,31 +3931,55 @@ namespace Server.Misc
 
             if (CanHaveShield == 1 && Utility.RandomMinMax(1, 3) == 1)
             {
-                switch (Utility.Random(6))
+                switch (Utility.Random(16))
                 {
                     case 0:
-                        Item shield1 = new BronzeShield();
-                        m.AddItem(shield1);
+                        m.AddItem(new BronzeShield());
                         break;
                     case 1:
-                        Item shield2 = new Buckler();
-                        m.AddItem(shield2);
+                        m.AddItem(new Buckler());
                         break;
                     case 2:
-                        Item shield3 = new MetalKiteShield();
-                        m.AddItem(shield3);
+                        m.AddItem(new MetalKiteShield());
                         break;
                     case 3:
-                        Item shield4 = new HeaterShield();
-                        m.AddItem(shield4);
+                        m.AddItem(new HeaterShield());
                         break;
                     case 4:
-                        Item shield5 = new WoodenKiteShield();
-                        m.AddItem(shield5);
+                        m.AddItem(new WoodenKiteShield());
                         break;
                     case 5:
-                        Item shield6 = new MetalShield();
-                        m.AddItem(shield6);
+                        m.AddItem(new MetalShield());
+                        break;
+                    case 6:
+                        m.AddItem(new ChaosShield());
+                        break;
+                    case 7:
+                        m.AddItem(new OrderShield());
+                        break;
+                    case 8:
+                        m.AddItem(new SunShield());
+                        break;
+                    case 9:
+                        m.AddItem(new VirtueShield());
+                        break;
+                    case 10:
+                        m.AddItem(new GuardsmanShield());
+                        break;
+                    case 11:
+                        m.AddItem(new ElvenShield());
+                        break;
+                    case 12:
+                        m.AddItem(new DarkShield());
+                        break;
+                    case 13:
+                        m.AddItem(new CrestedShield());
+                        break;
+                    case 14:
+                        m.AddItem(new ChampionShield());
+                        break;
+                    case 15:
+                        m.AddItem(new JeweledShield());
                         break;
                 }
             }
@@ -8053,6 +8100,7 @@ namespace Server.Misc
                     }
                     else if (
                         from is MountainGiant
+                        || from is Giant
                         || from is AbyssGiant
                         || from is JungleGiant
                         || from is SandGiant
@@ -8954,6 +9002,7 @@ namespace Server.Misc
                     }
                     else if (
                         from is MountainGiant
+                        || from is Giant
                         || from is AbyssGiant
                         || from is JungleGiant
                         || from is SandGiant
@@ -9660,32 +9709,32 @@ namespace Server.Mobiles
                         case OrderType.Transfer:
                         case OrderType.Friend:
                         case OrderType.Unfriend:
-                        {
-                            if (m_Order == OrderType.Transfer && m_From.HasTrade)
-                                m_From.SendLocalizedMessage(1010507); // You cannot transfer a pet with a trade pending
-                            else if (m_Order == OrderType.Friend && m_From.HasTrade)
-                                m_From.SendLocalizedMessage(1070947); // You cannot friend a pet with a trade pending
-                            else
-                                m_AI.BeginPickTarget(m_From, m_Order);
+                            {
+                                if (m_Order == OrderType.Transfer && m_From.HasTrade)
+                                    m_From.SendLocalizedMessage(1010507); // You cannot transfer a pet with a trade pending
+                                else if (m_Order == OrderType.Friend && m_From.HasTrade)
+                                    m_From.SendLocalizedMessage(1070947); // You cannot friend a pet with a trade pending
+                                else
+                                    m_AI.BeginPickTarget(m_From, m_Order);
 
-                            break;
-                        }
+                                break;
+                            }
                         case OrderType.Release:
-                        {
-                            if (m_Mobile.Summoned)
-                                goto default;
-                            else
-                                m_From.SendGump(new Gumps.ConfirmReleaseGump(m_From, m_Mobile));
+                            {
+                                if (m_Mobile.Summoned)
+                                    goto default;
+                                else
+                                    m_From.SendGump(new Gumps.ConfirmReleaseGump(m_From, m_Mobile));
 
-                            break;
-                        }
+                                break;
+                            }
                         default:
-                        {
-                            if (m_Mobile.CheckControlChance(m_From))
-                                m_Mobile.ControlOrder = m_Order;
+                            {
+                                if (m_Mobile.CheckControlChance(m_From))
+                                    m_Mobile.ControlOrder = m_Order;
 
-                            break;
-                        }
+                                break;
+                            }
                     }
                 }
             }
@@ -10088,72 +10137,72 @@ namespace Server.Mobiles
                         switch (keyword)
                         {
                             case 0x164: // all come
-                            {
-                                if (!isOwner)
-                                    break;
-
-                                if (m_Mobile.CheckControlChance(e.Mobile))
                                 {
-                                    m_Mobile.ControlTarget = null;
-                                    m_Mobile.ControlOrder = OrderType.Come;
-                                }
+                                    if (!isOwner)
+                                        break;
 
-                                return;
-                            }
+                                    if (m_Mobile.CheckControlChance(e.Mobile))
+                                    {
+                                        m_Mobile.ControlTarget = null;
+                                        m_Mobile.ControlOrder = OrderType.Come;
+                                    }
+
+                                    return;
+                                }
                             case 0x165: // all follow
-                            {
-                                BeginPickTarget(e.Mobile, OrderType.Follow);
-                                return;
-                            }
+                                {
+                                    BeginPickTarget(e.Mobile, OrderType.Follow);
+                                    return;
+                                }
                             case 0x166: // all guard
                             case 0x16B: // all guard me
-                            {
-                                if (!isOwner)
-                                    break;
+                                {
+                                    if (!isOwner)
+                                        break;
 
-                                if (m_Mobile.CheckControlChance(e.Mobile))
-                                {
-                                    m_Mobile.ControlTarget = null;
-                                    m_Mobile.ControlOrder = OrderType.Guard;
+                                    if (m_Mobile.CheckControlChance(e.Mobile))
+                                    {
+                                        m_Mobile.ControlTarget = null;
+                                        m_Mobile.ControlOrder = OrderType.Guard;
+                                    }
+                                    return;
                                 }
-                                return;
-                            }
                             case 0x167: // all stop
-                            {
-                                if (m_Mobile.CheckControlChance(e.Mobile))
                                 {
-                                    m_Mobile.ControlTarget = null;
-                                    m_Mobile.ControlOrder = OrderType.Stop;
+                                    if (m_Mobile.CheckControlChance(e.Mobile))
+                                    {
+                                        m_Mobile.ControlTarget = null;
+                                        m_Mobile.ControlOrder = OrderType.Stop;
+                                    }
+                                    return;
                                 }
-                                return;
-                            }
                             case 0x168: // all kill
                             case 0x169: // all attack
-                            {
-                                if (!isOwner)
-                                    break;
+                                {
+                                    if (!isOwner)
+                                        break;
 
-                                BeginPickTarget(e.Mobile, OrderType.Attack);
-                                return;
-                            }
+                                    BeginPickTarget(e.Mobile, OrderType.Attack);
+                                    return;
+                                }
                             case 0x16C: // all follow me
-                            {
-                                if (m_Mobile.CheckControlChance(e.Mobile))
                                 {
-                                    m_Mobile.ControlTarget = e.Mobile;
-                                    m_Mobile.ControlOrder = OrderType.Follow;
+                                    if (m_Mobile.CheckControlChance(e.Mobile))
+                                    {
+                                        m_Mobile.ControlTarget = e.Mobile;
+                                        m_Mobile.ControlOrder = OrderType.Follow;
+                                    }
+                                    return;
                                 }
-                                return;
-                            }
                             case 0x170: // all stay
-                            {
-                                if (m_Mobile.CheckControlChance(e.Mobile))
                                 {
-                                    m_Mobile.ControlTarget = null;
-                                    m_Mobile.ControlOrder = OrderType.Stay;
+                                    if (m_Mobile.CheckControlChance(e.Mobile))
+                                    {
+                                        m_Mobile.ControlTarget = null;
+                                        m_Mobile.ControlOrder = OrderType.Stay;
+                                    }
+                                    return;
                                 }
-                                return;
-                            }
                         }
                     }
 
@@ -10165,178 +10214,178 @@ namespace Server.Mobiles
                         switch (keyword)
                         {
                             case 0x155: // *come
-                            {
-                                if (!isOwner)
-                                    break;
-
-                                if (WasNamed(speech) && m_Mobile.CheckControlChance(e.Mobile))
                                 {
-                                    m_Mobile.ControlTarget = null;
-                                    m_Mobile.ControlOrder = OrderType.Come;
-                                }
+                                    if (!isOwner)
+                                        break;
 
-                                return;
-                            }
-                            case 0x156: // *drop
-                            {
-                                if (!isOwner)
-                                    break;
-
-                                if (
-                                    !m_Mobile.IsDeadPet
-                                    && !m_Mobile.Summoned
-                                    && WasNamed(speech)
-                                    && m_Mobile.CheckControlChance(e.Mobile)
-                                )
-                                {
-                                    m_Mobile.ControlTarget = null;
-                                    m_Mobile.ControlOrder = OrderType.Drop;
-                                }
-
-                                return;
-                            }
-                            case 0x15A: // *follow
-                            {
-                                if (WasNamed(speech) && m_Mobile.CheckControlChance(e.Mobile))
-                                    BeginPickTarget(e.Mobile, OrderType.Follow);
-
-                                return;
-                            }
-                            case 0x15B: // *friend
-                            {
-                                if (!isOwner)
-                                    break;
-
-                                if (WasNamed(speech) && m_Mobile.CheckControlChance(e.Mobile))
-                                {
-                                    if (m_Mobile.Summoned || (m_Mobile is GrizzledMare))
-                                        e.Mobile.SendLocalizedMessage(1005481); // Summoned creatures are loyal only to their summoners.
-                                    else if (e.Mobile.HasTrade)
-                                        e.Mobile.SendLocalizedMessage(1070947); // You cannot friend a pet with a trade pending
-                                    else
-                                        BeginPickTarget(e.Mobile, OrderType.Friend);
-                                }
-
-                                return;
-                            }
-                            case 0x15C: // *guard
-                            {
-                                if (!isOwner)
-                                    break;
-
-                                if (
-                                    !m_Mobile.IsDeadPet
-                                    && WasNamed(speech)
-                                    && m_Mobile.CheckControlChance(e.Mobile)
-                                )
-                                {
-                                    m_Mobile.ControlTarget = null;
-                                    m_Mobile.ControlOrder = OrderType.Guard;
-                                }
-
-                                return;
-                            }
-                            case 0x15D: // *kill
-                            case 0x15E: // *attack
-                            {
-                                if (!isOwner)
-                                    break;
-
-                                if (
-                                    !m_Mobile.IsDeadPet
-                                    && WasNamed(speech)
-                                    && m_Mobile.CheckControlChance(e.Mobile)
-                                )
-                                    BeginPickTarget(e.Mobile, OrderType.Attack);
-
-                                return;
-                            }
-                            case 0x15F: // *patrol
-                            {
-                                if (!isOwner)
-                                    break;
-
-                                if (WasNamed(speech) && m_Mobile.CheckControlChance(e.Mobile))
-                                {
-                                    m_Mobile.ControlTarget = null;
-                                    m_Mobile.ControlOrder = OrderType.Patrol;
-                                }
-
-                                return;
-                            }
-                            case 0x161: // *stop
-                            {
-                                if (WasNamed(speech) && m_Mobile.CheckControlChance(e.Mobile))
-                                {
-                                    m_Mobile.ControlTarget = null;
-                                    m_Mobile.ControlOrder = OrderType.Stop;
-                                }
-
-                                return;
-                            }
-                            case 0x163: // *follow me
-                            {
-                                if (WasNamed(speech) && m_Mobile.CheckControlChance(e.Mobile))
-                                {
-                                    m_Mobile.ControlTarget = e.Mobile;
-                                    m_Mobile.ControlOrder = OrderType.Follow;
-                                }
-
-                                return;
-                            }
-                            case 0x16D: // *release
-                            {
-                                if (!isOwner)
-                                    break;
-
-                                if (WasNamed(speech) && m_Mobile.CheckControlChance(e.Mobile))
-                                {
-                                    if (!m_Mobile.Summoned)
-                                    {
-                                        e.Mobile.SendGump(
-                                            new Gumps.ConfirmReleaseGump(e.Mobile, m_Mobile)
-                                        );
-                                    }
-                                    else
+                                    if (WasNamed(speech) && m_Mobile.CheckControlChance(e.Mobile))
                                     {
                                         m_Mobile.ControlTarget = null;
-                                        m_Mobile.ControlOrder = OrderType.Release;
+                                        m_Mobile.ControlOrder = OrderType.Come;
                                     }
-                                }
 
-                                return;
-                            }
+                                    return;
+                                }
+                            case 0x156: // *drop
+                                {
+                                    if (!isOwner)
+                                        break;
+
+                                    if (
+                                        !m_Mobile.IsDeadPet
+                                        && !m_Mobile.Summoned
+                                        && WasNamed(speech)
+                                        && m_Mobile.CheckControlChance(e.Mobile)
+                                    )
+                                    {
+                                        m_Mobile.ControlTarget = null;
+                                        m_Mobile.ControlOrder = OrderType.Drop;
+                                    }
+
+                                    return;
+                                }
+                            case 0x15A: // *follow
+                                {
+                                    if (WasNamed(speech) && m_Mobile.CheckControlChance(e.Mobile))
+                                        BeginPickTarget(e.Mobile, OrderType.Follow);
+
+                                    return;
+                                }
+                            case 0x15B: // *friend
+                                {
+                                    if (!isOwner)
+                                        break;
+
+                                    if (WasNamed(speech) && m_Mobile.CheckControlChance(e.Mobile))
+                                    {
+                                        if (m_Mobile.Summoned || (m_Mobile is GrizzledMare))
+                                            e.Mobile.SendLocalizedMessage(1005481); // Summoned creatures are loyal only to their summoners.
+                                        else if (e.Mobile.HasTrade)
+                                            e.Mobile.SendLocalizedMessage(1070947); // You cannot friend a pet with a trade pending
+                                        else
+                                            BeginPickTarget(e.Mobile, OrderType.Friend);
+                                    }
+
+                                    return;
+                                }
+                            case 0x15C: // *guard
+                                {
+                                    if (!isOwner)
+                                        break;
+
+                                    if (
+                                        !m_Mobile.IsDeadPet
+                                        && WasNamed(speech)
+                                        && m_Mobile.CheckControlChance(e.Mobile)
+                                    )
+                                    {
+                                        m_Mobile.ControlTarget = null;
+                                        m_Mobile.ControlOrder = OrderType.Guard;
+                                    }
+
+                                    return;
+                                }
+                            case 0x15D: // *kill
+                            case 0x15E: // *attack
+                                {
+                                    if (!isOwner)
+                                        break;
+
+                                    if (
+                                        !m_Mobile.IsDeadPet
+                                        && WasNamed(speech)
+                                        && m_Mobile.CheckControlChance(e.Mobile)
+                                    )
+                                        BeginPickTarget(e.Mobile, OrderType.Attack);
+
+                                    return;
+                                }
+                            case 0x15F: // *patrol
+                                {
+                                    if (!isOwner)
+                                        break;
+
+                                    if (WasNamed(speech) && m_Mobile.CheckControlChance(e.Mobile))
+                                    {
+                                        m_Mobile.ControlTarget = null;
+                                        m_Mobile.ControlOrder = OrderType.Patrol;
+                                    }
+
+                                    return;
+                                }
+                            case 0x161: // *stop
+                                {
+                                    if (WasNamed(speech) && m_Mobile.CheckControlChance(e.Mobile))
+                                    {
+                                        m_Mobile.ControlTarget = null;
+                                        m_Mobile.ControlOrder = OrderType.Stop;
+                                    }
+
+                                    return;
+                                }
+                            case 0x163: // *follow me
+                                {
+                                    if (WasNamed(speech) && m_Mobile.CheckControlChance(e.Mobile))
+                                    {
+                                        m_Mobile.ControlTarget = e.Mobile;
+                                        m_Mobile.ControlOrder = OrderType.Follow;
+                                    }
+
+                                    return;
+                                }
+                            case 0x16D: // *release
+                                {
+                                    if (!isOwner)
+                                        break;
+
+                                    if (WasNamed(speech) && m_Mobile.CheckControlChance(e.Mobile))
+                                    {
+                                        if (!m_Mobile.Summoned)
+                                        {
+                                            e.Mobile.SendGump(
+                                                new Gumps.ConfirmReleaseGump(e.Mobile, m_Mobile)
+                                            );
+                                        }
+                                        else
+                                        {
+                                            m_Mobile.ControlTarget = null;
+                                            m_Mobile.ControlOrder = OrderType.Release;
+                                        }
+                                    }
+
+                                    return;
+                                }
                             case 0x16E: // *transfer
-                            {
-                                if (!isOwner)
-                                    break;
-
-                                if (
-                                    !m_Mobile.IsDeadPet
-                                    && WasNamed(speech)
-                                    && m_Mobile.CheckControlChance(e.Mobile)
-                                )
                                 {
-                                    if (m_Mobile.Summoned || (m_Mobile is GrizzledMare))
-                                        e.Mobile.SendLocalizedMessage(1005487); // You cannot transfer ownership of a summoned creature.
-                                    else if (e.Mobile.HasTrade)
-                                        e.Mobile.SendLocalizedMessage(1010507); // You cannot transfer a pet with a trade pending
-                                    else
-                                        BeginPickTarget(e.Mobile, OrderType.Transfer);
-                                }
+                                    if (!isOwner)
+                                        break;
 
-                                return;
-                            }
+                                    if (
+                                        !m_Mobile.IsDeadPet
+                                        && WasNamed(speech)
+                                        && m_Mobile.CheckControlChance(e.Mobile)
+                                    )
+                                    {
+                                        if (m_Mobile.Summoned || (m_Mobile is GrizzledMare))
+                                            e.Mobile.SendLocalizedMessage(1005487); // You cannot transfer ownership of a summoned creature.
+                                        else if (e.Mobile.HasTrade)
+                                            e.Mobile.SendLocalizedMessage(1010507); // You cannot transfer a pet with a trade pending
+                                        else
+                                            BeginPickTarget(e.Mobile, OrderType.Transfer);
+                                    }
+
+                                    return;
+                                }
                             case 0x16F: // *stay
-                            {
-                                if (WasNamed(speech) && m_Mobile.CheckControlChance(e.Mobile))
                                 {
-                                    m_Mobile.ControlTarget = null;
-                                    m_Mobile.ControlOrder = OrderType.Stay;
-                                }
+                                    if (WasNamed(speech) && m_Mobile.CheckControlChance(e.Mobile))
+                                    {
+                                        m_Mobile.ControlTarget = null;
+                                        m_Mobile.ControlOrder = OrderType.Stay;
+                                    }
 
-                                return;
-                            }
+                                    return;
+                                }
                         }
                     }
                 }
@@ -12675,6 +12724,7 @@ namespace Server.Mobiles
 
                 // New Code Below for random freeze fix while sailing on a boat
                 IPooledEnumerable eable = map.GetMobilesInRange(m_Mobile.Location, iRange);
+
                 List<Mobile> mobiles = new List<Mobile>();
                 foreach (Mobile m in eable)
                 {
@@ -12864,26 +12914,24 @@ namespace Server.Mobiles
 
             foreach (Mobile trg in m_Mobile.GetMobilesInRange(m_Mobile.RangePerception))
             {
-                if (
-                    trg != m_Mobile
-                    && trg.Player
-                    && trg.Alive
-                    && trg.Hidden
-                    && trg.AccessLevel == AccessLevel.Player
-                    && m_Mobile.InLOS(trg)
-                )
+                if (trg != m_Mobile && trg.Player && trg.Alive && trg.Hidden && trg.AccessLevel == AccessLevel.Player && m_Mobile.InLOS(trg))
                 {
                     m_Mobile.DebugSay("Trying to detect {0}", trg.Name);
 
-                    double trgHiding = trg.Skills[SkillName.Hiding].Value / 2.9;
-                    double trgStealth = trg.Skills[SkillName.Stealth].Value / 1.8;
+                    double trgHiding = trg.Skills[SkillName.Hiding].Value;
+                    double trgStealth = trg.Skills[SkillName.Stealth].Value;
 
-                    double chance = srcSkill / 1.2 - Math.Min(trgHiding, trgStealth);
+                    double effectiveHiding = trgHiding / 4.0; // Slightly reduce the divisor for more impact
+                    double effectiveStealth = trgStealth / 2.5; // Adjusting back for more balance
 
-                    if (chance < srcSkill / 10)
-                        chance = srcSkill / 10;
+                    double stealthBonus = trg.Skills[SkillName.Stealth].Base > 100 ? (trg.Skills[SkillName.Stealth].Base - 100) / 5.0 : 0;
 
-                    chance /= 100;
+                    // Revise the formula to incorporate feedback and achieve the 30% detection chance goal
+                    double baseChance = srcSkill - Math.Min(effectiveHiding, effectiveStealth) - stealthBonus;
+                    double chance = baseChance / 250.0; // Adjusting divisor for overall chance calculation
+
+                    // Introduce a normalization factor to ensure chance does not exceed expected bounds
+                    chance = Math.Max(0.05, Math.Min(chance, 0.95)); // Ensures chance remains within 5% to 95%
 
                     if (chance > Utility.RandomDouble())
                     {
@@ -13267,9 +13315,9 @@ namespace Server.Mobiles
         private DateTime m_NextAnimateTime = DateTime.Now;
         private double m_AnimateDelay = 5.0;
         private double m_AnimateFinish = 2.0;
+        private DateTime m_NextDispelTime = DateTime.Now + TimeSpan.FromSeconds(20);
 
-        public MageAI(BaseCreature m)
-            : base(m) { }
+        public MageAI(BaseCreature m) : base(m) { }
 
         public override bool Think()
         {
@@ -13288,8 +13336,8 @@ namespace Server.Mobiles
         }
 
         private const double HealChance = 0.10; // 10% chance to heal at gm magery
-        private const double TeleportChance = 0.05; // 5% chance to teleport at gm magery
-        private const double DispelChance = 0.50; // 75% chance to dispel at gm magery
+        private const double TeleportChance = 0.15; // 15% chance to teleport at gm magery
+        private const double DispelChance = 0.30; // 30% chance to dispel at gm magery
 
         public virtual double ScaleByMagery(double v)
         {
@@ -13669,8 +13717,12 @@ namespace Server.Mobiles
         {
             if (!SmartAI)
             {
-                if (ScaleByMagery(DispelChance) > Utility.RandomDouble())
+                // Check if we're past the cooldown and if the dispel chance passes
+                if (DateTime.Now > m_NextDispelTime && ScaleByMagery(DispelChance) > Utility.RandomDouble())
+                {
+                    m_NextDispelTime = DateTime.Now + TimeSpan.FromSeconds(20); // Set a 20-second cooldown
                     return new DispelSpell(m_Mobile, null);
+                }
 
                 return ChooseSpell(toDispel);
             }
@@ -13692,8 +13744,14 @@ namespace Server.Mobiles
                     && !toDispel.Frozen
                 )
                     spell = new ParalyzeSpell(m_Mobile, null);
+                // Check if we're past the cooldown and if the dispel chance passes
+                else if (DateTime.Now > m_NextDispelTime && ScaleByMagery(DispelChance) > Utility.RandomDouble())
+                {
+                    m_NextDispelTime = DateTime.Now + TimeSpan.FromSeconds(20); // Set a 20-second cooldown
+                    return new DispelSpell(m_Mobile, null);
+                }
                 else
-                    spell = new DispelSpell(m_Mobile, null);
+                    return ChooseSpell(toDispel);
             }
 
             return spell;
@@ -13729,9 +13787,95 @@ namespace Server.Mobiles
                 {
                     case 0:
                     case 1: // Poison them
-                    {
-                        //m_Mobile.DebugSay( "Attempting to poison" );
+                        {
+                            //m_Mobile.DebugSay( "Attempting to poison" );
 
+                            if (!c.Poisoned && DateTime.Now > m_NextPoisonTime)
+                            {
+                                // Calculate time since last poison spell was cast
+                                TimeSpan timeSinceLastPoison = DateTime.Now - m_NextPoisonTime;
+                                // Adjust probability based on elapsed time, e.g., less time passed = lower chance
+                                double probabilityToCastPoison = Math.Min(
+                                    1.0,
+                                    0.2 + 0.8 * (timeSinceLastPoison.TotalSeconds / 30)
+                                );
+                                // Example: If 15 seconds have passed since cooldown started, there's a 50% chance to cast
+
+                                if (Utility.RandomDouble() < probabilityToCastPoison)
+                                {
+                                    spell = new PoisonSpell(m_Mobile, null);
+                                    // Reset the cooldown timer, adding 30 seconds to now
+                                    m_NextPoisonTime = DateTime.Now + TimeSpan.FromSeconds(30);
+                                }
+                            }
+
+                            break;
+                        }
+                    case 2: // Bless ourselves.
+                        {
+                            //m_Mobile.DebugSay( "Blessing myself" );
+
+                            spell = new BlessSpell(m_Mobile, null);
+                            break;
+                        }
+                    case 3:
+                    case 4: // Curse them.
+                        {
+                            //m_Mobile.DebugSay( "Attempting to curse" );
+
+                            spell = GetRandomCurse();
+                            break;
+                        }
+                    case 5: // Paralyze them.
+                        {
+                            //m_Mobile.DebugSay( "Attempting to paralyze" );
+
+                            if (m_Mobile.Skills[SkillName.Magery].Value > 50.0)
+                                spell = new ParalyzeSpell(m_Mobile, null);
+
+                            break;
+                        }
+                    case 6: // Drain mana
+                        {
+                            //m_Mobile.DebugSay( "Attempting to drain mana" );
+
+                            spell = GetRandomManaDrainSpell();
+                            break;
+                        }
+                    case 7:
+                        {
+                            //m_Mobile.DebugSay( "Attempting to Invis" );
+
+                            if (spell == null)
+                            {
+                                spell = new InvisibilitySpell(m_Mobile, null);
+                            }
+
+                            break;
+                        }
+
+                    default: // Damage them.
+                        {
+                            //m_Mobile.DebugSay( "Just doing damage" );
+
+                            spell = GetRandomDamage();
+                            break;
+                        }
+                }
+
+                return spell;
+            }
+
+            spell = CheckCastHealingSpell();
+
+            if (spell != null)
+                return spell;
+
+            switch (Utility.Random(3))
+            {
+                default:
+                case 0: // Poison them
+                    {
                         if (!c.Poisoned && DateTime.Now > m_NextPoisonTime)
                         {
                             // Calculate time since last poison spell was cast
@@ -13753,129 +13897,43 @@ namespace Server.Mobiles
 
                         break;
                     }
-                    case 2: // Bless ourselves.
-                    {
-                        //m_Mobile.DebugSay( "Blessing myself" );
-
-                        spell = new BlessSpell(m_Mobile, null);
-                        break;
-                    }
-                    case 3:
-                    case 4: // Curse them.
-                    {
-                        //m_Mobile.DebugSay( "Attempting to curse" );
-
-                        spell = GetRandomCurse();
-                        break;
-                    }
-                    case 5: // Paralyze them.
-                    {
-                        //m_Mobile.DebugSay( "Attempting to paralyze" );
-
-                        if (m_Mobile.Skills[SkillName.Magery].Value > 50.0)
-                            spell = new ParalyzeSpell(m_Mobile, null);
-
-                        break;
-                    }
-                    case 6: // Drain mana
-                    {
-                        //m_Mobile.DebugSay( "Attempting to drain mana" );
-
-                        spell = GetRandomManaDrainSpell();
-                        break;
-                    }
-                    case 7:
-                    {
-                        //m_Mobile.DebugSay( "Attempting to Invis" );
-
-                        if (spell == null)
-                        {
-                            spell = new InvisibilitySpell(m_Mobile, null);
-                        }
-
-                        break;
-                    }
-
-                    default: // Damage them.
-                    {
-                        //m_Mobile.DebugSay( "Just doing damage" );
-
-                        spell = GetRandomDamage();
-                        break;
-                    }
-                }
-
-                return spell;
-            }
-
-            spell = CheckCastHealingSpell();
-
-            if (spell != null)
-                return spell;
-
-            switch (Utility.Random(3))
-            {
-                default:
-                case 0: // Poison them
-                {
-                    if (!c.Poisoned && DateTime.Now > m_NextPoisonTime)
-                    {
-                        // Calculate time since last poison spell was cast
-                        TimeSpan timeSinceLastPoison = DateTime.Now - m_NextPoisonTime;
-                        // Adjust probability based on elapsed time, e.g., less time passed = lower chance
-                        double probabilityToCastPoison = Math.Min(
-                            1.0,
-                            0.2 + 0.8 * (timeSinceLastPoison.TotalSeconds / 30)
-                        );
-                        // Example: If 15 seconds have passed since cooldown started, there's a 50% chance to cast
-
-                        if (Utility.RandomDouble() < probabilityToCastPoison)
-                        {
-                            spell = new PoisonSpell(m_Mobile, null);
-                            // Reset the cooldown timer, adding 30 seconds to now
-                            m_NextPoisonTime = DateTime.Now + TimeSpan.FromSeconds(30);
-                        }
-                    }
-
-                    break;
-                }
                 case 1: // Deal some damage
-                {
-                    spell = GetRandomDamageSpell();
+                    {
+                        spell = GetRandomDamageSpell();
 
-                    break;
-                }
+                        break;
+                    }
                 case 2: // Set up a combo
-                {
-                    if (m_Mobile.Mana < 40 && m_Mobile.Mana > 15)
                     {
-                        if (c.Paralyzed && !c.Poisoned)
+                        if (m_Mobile.Mana < 40 && m_Mobile.Mana > 15)
                         {
-                            m_Mobile.DebugSay("I am going to meditate");
+                            if (c.Paralyzed && !c.Poisoned)
+                            {
+                                m_Mobile.DebugSay("I am going to meditate");
 
-                            m_Mobile.UseSkill(SkillName.Meditation);
+                                m_Mobile.UseSkill(SkillName.Meditation);
+                            }
+                            else if (!c.Poisoned)
+                            {
+                                spell = new ParalyzeSpell(m_Mobile, null);
+                            }
                         }
-                        else if (!c.Poisoned)
+                        else if (m_Mobile.Mana > 60)
                         {
-                            spell = new ParalyzeSpell(m_Mobile, null);
+                            if (Utility.Random(2) == 0 && !c.Paralyzed && !c.Frozen && !c.Poisoned)
+                            {
+                                m_Combo = 0;
+                                spell = new ParalyzeSpell(m_Mobile, null);
+                            }
+                            else
+                            {
+                                m_Combo = 1;
+                                spell = new ExplosionSpell(m_Mobile, null);
+                            }
                         }
-                    }
-                    else if (m_Mobile.Mana > 60)
-                    {
-                        if (Utility.Random(2) == 0 && !c.Paralyzed && !c.Frozen && !c.Poisoned)
-                        {
-                            m_Combo = 0;
-                            spell = new ParalyzeSpell(m_Mobile, null);
-                        }
-                        else
-                        {
-                            m_Combo = 1;
-                            spell = new ExplosionSpell(m_Mobile, null);
-                        }
-                    }
 
-                    break;
-                }
+                        break;
+                    }
             }
 
             return spell;
@@ -13911,28 +13969,28 @@ namespace Server.Mobiles
                 {
                     default:
                     case 0:
-                    {
-                        if (c.Int < c.Dex)
-                            spell = new FeeblemindSpell(m_Mobile, null);
-                        else
-                            spell = new ClumsySpell(m_Mobile, null);
+                        {
+                            if (c.Int < c.Dex)
+                                spell = new FeeblemindSpell(m_Mobile, null);
+                            else
+                                spell = new ClumsySpell(m_Mobile, null);
 
-                        ++m_Combo; // Move to next spell
+                            ++m_Combo; // Move to next spell
 
-                        break;
-                    }
+                            break;
+                        }
                     case 1:
-                    {
-                        spell = new EnergyBoltSpell(m_Mobile, null);
-                        m_Combo = -1; // Reset combo state
-                        break;
-                    }
+                        {
+                            spell = new EnergyBoltSpell(m_Mobile, null);
+                            m_Combo = -1; // Reset combo state
+                            break;
+                        }
                     case 2:
-                    {
-                        spell = new FlameStrikeSpell(m_Mobile, null);
-                        m_Combo = -1; // Reset combo state
-                        break;
-                    }
+                        {
+                            spell = new FlameStrikeSpell(m_Mobile, null);
+                            m_Combo = -1; // Reset combo state
+                            break;
+                        }
                 }
             }
             else if (m_Combo == 4 && spell == null)
@@ -14115,14 +14173,21 @@ namespace Server.Mobiles
                 if (m_Mobile.Poisoned) // Top cast priority is cure
                 {
                     m_Mobile.DebugSay("I am going to cure myself");
-
                     spell = new CureSpell(m_Mobile, null);
                 }
-                else if (toDispel != null) // Something dispellable is attacking us
+                else if (toDispel != null && DateTime.Now > m_NextDispelTime) // Something dispellable is attacking us
                 {
                     m_Mobile.DebugSay("I am going to dispel {0}", toDispel);
 
                     spell = DoDispel(toDispel);
+                }
+                else if (toDispel == null && DateTime.Now > m_NextDispelTime) // Alternative if we can't dispel yet
+                {
+                    // Decide on an alternative action or spell
+                    // For example, choose another spell or perform a non-dispel action
+                    // This is a placeholder for your logic
+                    m_Mobile.DebugSay("Choosing an alternative action since dispel is on cooldown.");
+                    spell = ChooseSpell(c); // Or any other logic you deem appropriate
                 }
                 else if (SmartAI && m_Combo != -1) // We are doing a spell combo
                 {
@@ -14180,7 +14245,7 @@ namespace Server.Mobiles
                 else
                     delay = GetDelay();
 
-                m_NextCastTime = DateTime.Now;
+                m_NextCastTime = DateTime.Now + delay;
             }
             else if (m_Mobile.Spell == null || !m_Mobile.Spell.IsCasting)
             {

@@ -16,7 +16,11 @@ namespace Server.Regions
         private Type m_GuardType;
         private bool m_Disabled;
 
-        public bool Disabled { get { return m_Disabled; } set { m_Disabled = value; } }
+        public bool Disabled
+        {
+            get { return m_Disabled; }
+            set { m_Disabled = value; }
+        }
 
         public virtual bool IsDisabled()
         {
@@ -25,9 +29,21 @@ namespace Server.Regions
 
         public static void Initialize()
         {
-            CommandSystem.Register("CheckGuarded", AccessLevel.GameMaster, new CommandEventHandler(CheckGuarded_OnCommand));
-            CommandSystem.Register("SetGuarded", AccessLevel.Administrator, new CommandEventHandler(SetGuarded_OnCommand));
-            CommandSystem.Register("ToggleGuarded", AccessLevel.Administrator, new CommandEventHandler(ToggleGuarded_OnCommand));
+            CommandSystem.Register(
+                "CheckGuarded",
+                AccessLevel.GameMaster,
+                new CommandEventHandler(CheckGuarded_OnCommand)
+            );
+            CommandSystem.Register(
+                "SetGuarded",
+                AccessLevel.Administrator,
+                new CommandEventHandler(SetGuarded_OnCommand)
+            );
+            CommandSystem.Register(
+                "ToggleGuarded",
+                AccessLevel.Administrator,
+                new CommandEventHandler(ToggleGuarded_OnCommand)
+            );
         }
 
         [Usage("CheckGuarded")]
@@ -103,7 +119,10 @@ namespace Server.Regions
             return reg;
         }
 
-        public virtual bool AllowReds { get { return Core.AOS; } }
+        public virtual bool AllowReds
+        {
+            get { return Core.AOS; }
+        }
 
         public virtual bool CheckVendorAccess(BaseVendor vendor, Mobile from)
         {
@@ -202,7 +221,11 @@ namespace Server.Regions
             {
                 m_GuardParams[0] = focus;
 
-                try { Activator.CreateInstance(m_GuardType, m_GuardParams); } catch { }
+                try
+                {
+                    Activator.CreateInstance(m_GuardType, m_GuardParams);
+                }
+                catch { }
             }
             else
                 useGuard.FocusMob = focus;
@@ -263,7 +286,8 @@ namespace Server.Regions
                 CheckGuardCandidate(m);
         }
 
-        private Dictionary<Mobile, GuardTimer> m_GuardCandidates = new Dictionary<Mobile, GuardTimer>();
+        private Dictionary<Mobile, GuardTimer> m_GuardCandidates =
+            new Dictionary<Mobile, GuardTimer>();
 
         public void CheckGuardCandidate(Mobile m)
         {
@@ -292,7 +316,16 @@ namespace Server.Regions
 
                         foreach (Mobile v in m.GetMobilesInRange(8))
                         {
-                            if (!v.Player && v != m && !IsGuardCandidate(v) && ((v is BaseCreature) ? ((BaseCreature)v).IsHumanInTown() : (v.Body.IsHuman && v.Region.IsPartOf(this))))
+                            if (
+                                !v.Player
+                                && v != m
+                                && !IsGuardCandidate(v)
+                                && (
+                                    (v is BaseCreature)
+                                        ? ((BaseCreature)v).IsHumanInTown()
+                                        : (v.Body.IsHuman && v.Region.IsPartOf(this))
+                                )
+                            )
                             {
                                 double dist = m.GetDistanceToSqrt(v);
 
@@ -306,7 +339,19 @@ namespace Server.Regions
 
                         if (fakeCall != null)
                         {
-                            fakeCall.Say(Utility.RandomList(1007037, 501603, 1013037, 1013038, 1013039, 1013041, 1013042, 1013043, 1013052));
+                            fakeCall.Say(
+                                Utility.RandomList(
+                                    1007037,
+                                    501603,
+                                    1013037,
+                                    1013038,
+                                    1013039,
+                                    1013041,
+                                    1013042,
+                                    1013043,
+                                    1013052
+                                )
+                            );
                             MakeGuard(m);
                             timer.Stop();
                             m_GuardCandidates.Remove(m);
@@ -331,7 +376,13 @@ namespace Server.Regions
 
             foreach (Mobile m in eable)
             {
-                if (IsGuardCandidate(m) && ((!AllowReds && m.Kills >= 5 && m.Region.IsPartOf(this)) || m_GuardCandidates.ContainsKey(m)))
+                if (
+                    IsGuardCandidate(m)
+                    && (
+                        (!AllowReds && m.Kills >= 5 && m.Region.IsPartOf(this))
+                        || m_GuardCandidates.ContainsKey(m)
+                    )
+                )
                 {
                     GuardTimer timer = null;
                     m_GuardCandidates.TryGetValue(m, out timer);
@@ -353,7 +404,14 @@ namespace Server.Regions
 
         public bool IsGuardCandidate(Mobile m)
         {
-            if (m is TownGuards || !m.Alive || m.AccessLevel > AccessLevel.Player || m.Blessed || (m is BaseCreature && ((BaseCreature)m).Blessed) || IsDisabled())
+            if (
+                m is TownGuards
+                || !m.Alive
+                || m.AccessLevel > AccessLevel.Player
+                || m.Blessed
+                || (m is BaseCreature && ((BaseCreature)m).Blessed)
+                || IsDisabled()
+            )
                 return false;
 
             return (!AllowReds && m.Kills >= 5) || m.Criminal;
@@ -364,7 +422,8 @@ namespace Server.Regions
             private Mobile m_Mobile;
             private Dictionary<Mobile, GuardTimer> m_Table;
 
-            public GuardTimer(Mobile m, Dictionary<Mobile, GuardTimer> table) : base(TimeSpan.FromSeconds(15.0))
+            public GuardTimer(Mobile m, Dictionary<Mobile, GuardTimer> table)
+                : base(TimeSpan.FromSeconds(15.0))
             {
                 Priority = TimerPriority.TwoFiftyMS;
 

@@ -2730,7 +2730,7 @@ namespace Server.Mobiles
         {
             public InternalBuyInfo()
             {
-                if (MyServerSettings.SoldResource())
+                if (MyServerSettings.BuyCloth())
                 {
                     Add(
                         new GenericBuyInfo(
@@ -2779,20 +2779,23 @@ namespace Server.Mobiles
         {
             public InternalSellInfo()
             {
-                if (MyServerSettings.SoldResource())
+                if (MyServerSettings.BuyCloth())
                 {
-                    Add(typeof(BoltOfCloth), 50);
-                    Add(typeof(UncutCloth), 1);
-                }
-                else
-                {
-                    if (MyServerSettings.BuyChance())
-                    {
-                        Add(typeof(UncutCloth), 1);
-                    }
-                    if (MyServerSettings.BuyChance())
+                    if (MyServerSettings.SoldResource())
                     {
                         Add(typeof(BoltOfCloth), 50);
+                        Add(typeof(UncutCloth), 1);
+                    }
+                    else
+                    {
+                        if (MyServerSettings.BuyChance())
+                        {
+                            Add(typeof(UncutCloth), 1);
+                        }
+                        if (MyServerSettings.BuyChance())
+                        {
+                            Add(typeof(BoltOfCloth), 50);
+                        }
                     }
                 }
             }
@@ -5037,6 +5040,24 @@ namespace Server.Mobiles
                         )
                     );
                 }
+                if (MyServerSettings.SellChance())
+                {
+                    Add(
+                        new GenericBuyInfo(typeof(SunShield), 256, Utility.Random(1, 15), 0x65ED, 0)
+                    );
+                }
+                if (MyServerSettings.SellChance())
+                {
+                    Add(
+                        new GenericBuyInfo(
+                            typeof(VirtueShield),
+                            256,
+                            Utility.Random(1, 15),
+                            0x65EE,
+                            0
+                        )
+                    );
+                }
             }
         }
 
@@ -5103,6 +5124,14 @@ namespace Server.Mobiles
                 if (MyServerSettings.BuyChance())
                 {
                     Add(typeof(OrderShield), 115);
+                } // DO NOT WANT?
+                if (MyServerSettings.BuyChance())
+                {
+                    Add(typeof(SunShield), 115);
+                } // DO NOT WANT?
+                if (MyServerSettings.BuyChance())
+                {
+                    Add(typeof(VirtueShield), 115);
                 } // DO NOT WANT?
             }
         }
@@ -7881,32 +7910,6 @@ namespace Server.Mobiles
                         )
                     );
                 }
-
-                if (MyServerSettings.SellChance())
-                {
-                    Add(
-                        new GenericBuyInfo(typeof(StandardAlchemyStudyBook), 7500, 1, 0x225A, 0x1BA)
-                    );
-                }
-                if (MyServerSettings.SellChance())
-                {
-                    Add(
-                        new GenericBuyInfo(
-                            typeof(StandardPoisoningStudyBook),
-                            7500,
-                            1,
-                            0x225A,
-                            0x1BA
-                        )
-                    );
-                }
-                if (MyServerSettings.SellChance())
-                {
-                    Add(
-                        new GenericBuyInfo(typeof(StandardTastingStudyBook), 7500, 1, 0x225A, 0x1BA)
-                    );
-                }
-
                 if (MyServerSettings.SellChance())
                 {
                     Add(
@@ -8526,6 +8529,10 @@ namespace Server.Mobiles
                 } // DO NOT WANT?
                 if (MyServerSettings.BuyChance())
                 {
+                    Add(typeof(SkullDinosaur), Utility.Random(75, 175));
+                } // DO NOT WANT?
+                if (MyServerSettings.BuyChance())
+                {
                     Add(typeof(SkullWyrm), Utility.Random(200, 400));
                 } // DO NOT WANT?
                 if (MyServerSettings.BuyChance())
@@ -8539,6 +8546,22 @@ namespace Server.Mobiles
                 if (MyServerSettings.BuyChance())
                 {
                     Add(typeof(SkullDemon), Utility.Random(100, 300));
+                } // DO NOT WANT?
+                if (MyServerSettings.BuyChance())
+                {
+                    Add(typeof(DeamonHeadA), Utility.Random(100, 300));
+                } // DO NOT WANT?
+                if (MyServerSettings.BuyChance())
+                {
+                    Add(typeof(DeamonHeadB), Utility.Random(100, 300));
+                } // DO NOT WANT?
+                if (MyServerSettings.BuyChance())
+                {
+                    Add(typeof(DeamonHeadC), Utility.Random(100, 300));
+                } // DO NOT WANT?
+                if (MyServerSettings.BuyChance())
+                {
+                    Add(typeof(VampireHead), Utility.Random(100, 300));
                 } // DO NOT WANT?
                 if (MyServerSettings.BuyChance())
                 {
@@ -9115,7 +9138,7 @@ namespace Server.Mobiles
                         )
                     );
                 }
-                if (MyServerSettings.SellVeryRareChance() && MyServerSettings.AllowElephants())
+                if (MyServerSettings.SellVeryRareChance() && MyServerSettings.SafariStore())
                 {
                     Add(
                         new GenericBuyInfo(
@@ -9139,7 +9162,7 @@ namespace Server.Mobiles
                         )
                     );
                 }
-                if (MyServerSettings.SellRareChance() && MyServerSettings.AllowFox())
+                if (MyServerSettings.SellRareChance())
                 {
                     Add(
                         new GenericBuyInfo(
@@ -10022,7 +10045,7 @@ namespace Server.Mobiles
                         )
                     );
                 }
-                if (MyServerSettings.SellRareChance() && MyServerSettings.AllowZebras())
+                if (MyServerSettings.SellRareChance() && MyServerSettings.SafariStore())
                 {
                     Add(
                         new GenericBuyInfo(
@@ -10301,7 +10324,7 @@ namespace Server.Mobiles
                         )
                     );
                 }
-                if (MyServerSettings.SellRareChance() && MyServerSettings.AllowZebras())
+                if (MyServerSettings.SellRareChance() && MyServerSettings.SafariStore())
                 {
                     Add(
                         new GenericBuyInfo(
@@ -25663,6 +25686,25 @@ namespace Server.Mobiles
         {
             public InternalSellInfo()
             {
+                if (MyServerSettings.SoldResource())
+                {
+                    if (MyServerSettings.BuyChance())
+                    {
+                        Add(typeof(SpoolOfThread), 9);
+                    } // DO NOT WANT?
+                    if (MyServerSettings.BuyChance())
+                    {
+                        Add(typeof(Flax), 51);
+                    } // DO NOT WANT?
+                    if (MyServerSettings.BuyChance())
+                    {
+                        Add(typeof(Cotton), 51);
+                    } // DO NOT WANT?
+                    if (MyServerSettings.BuyChance())
+                    {
+                        Add(typeof(Wool), 31);
+                    } // DO NOT WANT?
+                }
                 if (MyServerSettings.BuyChance())
                 {
                     Add(typeof(JokerRobe), 19);
@@ -25967,22 +26009,6 @@ namespace Server.Mobiles
                 {
                     Add(typeof(PirateHat), 4);
                 } // DO NOT WANT?
-                if (MyServerSettings.BuyChance())
-                {
-                    Add(typeof(SpoolOfThread), 9);
-                } // DO NOT WANT?
-                if (MyServerSettings.BuyChance())
-                {
-                    Add(typeof(Flax), 51);
-                } // DO NOT WANT?
-                if (MyServerSettings.BuyChance())
-                {
-                    Add(typeof(Cotton), 51);
-                } // DO NOT WANT?
-                if (MyServerSettings.BuyChance())
-                {
-                    Add(typeof(Wool), 31);
-                } // DO NOT WANT?
                 if (MyServerSettings.BuyRareChance())
                 {
                     Add(typeof(MagicRobe), 30);
@@ -26049,6 +26075,18 @@ namespace Server.Mobiles
                         0
                     )
                 );
+                if (MyServerSettings.SellChance())
+                {
+                    Add(
+                        new GenericBuyInfo(
+                            typeof(StandardBeggingStudyBook),
+                            7500,
+                            1,
+                            0x225A,
+                            0x1BA
+                        )
+                    );
+                }
                 if (MyServerSettings.SellChance())
                 {
                     Add(
@@ -29126,6 +29164,21 @@ namespace Server.Mobiles
         {
             public InternalSellInfo()
             {
+                if (MyServerSettings.BuyCloth())
+                {
+                    if (MyServerSettings.BuyChance())
+                    {
+                        Add(typeof(LightYarnUnraveled), 9);
+                    } // DO NOT WANT?
+                    if (MyServerSettings.BuyChance())
+                    {
+                        Add(typeof(LightYarn), 9);
+                    } // DO NOT WANT?
+                    if (MyServerSettings.BuyChance())
+                    {
+                        Add(typeof(DarkYarn), 9);
+                    } // DO NOT WANT?
+                }
                 if (MyServerSettings.BuyChance())
                 {
                     Add(typeof(Scissors), 6);
@@ -29137,18 +29190,6 @@ namespace Server.Mobiles
                 if (MyServerSettings.BuyChance())
                 {
                     Add(typeof(DyeTub), 4);
-                } // DO NOT WANT?
-                if (MyServerSettings.BuyChance())
-                {
-                    Add(typeof(LightYarnUnraveled), 9);
-                } // DO NOT WANT?
-                if (MyServerSettings.BuyChance())
-                {
-                    Add(typeof(LightYarn), 9);
-                } // DO NOT WANT?
-                if (MyServerSettings.BuyChance())
-                {
-                    Add(typeof(DarkYarn), 9);
                 } // DO NOT WANT?
                 if (MyServerSettings.BuyChance())
                 {
@@ -29438,6 +29479,10 @@ namespace Server.Mobiles
                 } // DO NOT WANT?
                 if (MyServerSettings.BuyChance())
                 {
+                    Add(typeof(SkullDinosaur), Utility.Random(75, 175));
+                } // DO NOT WANT?
+                if (MyServerSettings.BuyChance())
+                {
                     Add(typeof(SkullWyrm), Utility.Random(200, 400));
                 } // DO NOT WANT?
                 if (MyServerSettings.BuyChance())
@@ -29451,6 +29496,22 @@ namespace Server.Mobiles
                 if (MyServerSettings.BuyChance())
                 {
                     Add(typeof(SkullDemon), Utility.Random(100, 300));
+                } // DO NOT WANT?
+                if (MyServerSettings.BuyChance())
+                {
+                    Add(typeof(DeamonHeadA), Utility.Random(100, 300));
+                } // DO NOT WANT?
+                if (MyServerSettings.BuyChance())
+                {
+                    Add(typeof(DeamonHeadB), Utility.Random(100, 300));
+                } // DO NOT WANT?
+                if (MyServerSettings.BuyChance())
+                {
+                    Add(typeof(DeamonHeadC), Utility.Random(100, 300));
+                } // DO NOT WANT?
+                if (MyServerSettings.BuyChance())
+                {
+                    Add(typeof(VampireHead), Utility.Random(100, 300));
                 } // DO NOT WANT?
                 if (MyServerSettings.BuyChance())
                 {
@@ -29805,6 +29866,22 @@ namespace Server.Mobiles
                 if (MyServerSettings.BuyChance())
                 {
                     Add(typeof(SkullDemon), Utility.Random(100, 300));
+                } // DO NOT WANT?
+                if (MyServerSettings.BuyChance())
+                {
+                    Add(typeof(DeamonHeadA), Utility.Random(100, 300));
+                } // DO NOT WANT?
+                if (MyServerSettings.BuyChance())
+                {
+                    Add(typeof(DeamonHeadB), Utility.Random(100, 300));
+                } // DO NOT WANT?
+                if (MyServerSettings.BuyChance())
+                {
+                    Add(typeof(DeamonHeadC), Utility.Random(100, 300));
+                } // DO NOT WANT?
+                if (MyServerSettings.BuyChance())
+                {
+                    Add(typeof(VampireHead), Utility.Random(100, 300));
                 } // DO NOT WANT?
                 if (MyServerSettings.BuyChance())
                 {
@@ -30656,6 +30733,10 @@ namespace Server.Mobiles
                 } // DO NOT WANT?
                 if (MyServerSettings.BuyChance())
                 {
+                    Add(typeof(SkullDinosaur), Utility.Random(75, 175));
+                } // DO NOT WANT?
+                if (MyServerSettings.BuyChance())
+                {
                     Add(typeof(SkullWyrm), Utility.Random(200, 400));
                 } // DO NOT WANT?
                 if (MyServerSettings.BuyChance())
@@ -30669,6 +30750,22 @@ namespace Server.Mobiles
                 if (MyServerSettings.BuyChance())
                 {
                     Add(typeof(SkullDemon), Utility.Random(100, 300));
+                } // DO NOT WANT?
+                if (MyServerSettings.BuyChance())
+                {
+                    Add(typeof(DeamonHeadA), Utility.Random(100, 300));
+                } // DO NOT WANT?
+                if (MyServerSettings.BuyChance())
+                {
+                    Add(typeof(DeamonHeadB), Utility.Random(100, 300));
+                } // DO NOT WANT?
+                if (MyServerSettings.BuyChance())
+                {
+                    Add(typeof(DeamonHeadC), Utility.Random(100, 300));
+                } // DO NOT WANT?
+                if (MyServerSettings.BuyChance())
+                {
+                    Add(typeof(VampireHead), Utility.Random(100, 300));
                 } // DO NOT WANT?
                 if (MyServerSettings.BuyChance())
                 {
@@ -31067,6 +31164,10 @@ namespace Server.Mobiles
                 } // DO NOT WANT?
                 if (MyServerSettings.BuyChance())
                 {
+                    Add(typeof(SkullDinosaur), Utility.Random(75, 175));
+                } // DO NOT WANT?
+                if (MyServerSettings.BuyChance())
+                {
                     Add(typeof(SkullWyrm), Utility.Random(200, 400));
                 } // DO NOT WANT?
                 if (MyServerSettings.BuyChance())
@@ -31080,6 +31181,22 @@ namespace Server.Mobiles
                 if (MyServerSettings.BuyChance())
                 {
                     Add(typeof(SkullDemon), Utility.Random(100, 300));
+                } // DO NOT WANT?
+                if (MyServerSettings.BuyChance())
+                {
+                    Add(typeof(DeamonHeadA), Utility.Random(100, 300));
+                } // DO NOT WANT?
+                if (MyServerSettings.BuyChance())
+                {
+                    Add(typeof(DeamonHeadB), Utility.Random(100, 300));
+                } // DO NOT WANT?
+                if (MyServerSettings.BuyChance())
+                {
+                    Add(typeof(DeamonHeadC), Utility.Random(100, 300));
+                } // DO NOT WANT?
+                if (MyServerSettings.BuyChance())
+                {
+                    Add(typeof(VampireHead), Utility.Random(100, 300));
                 } // DO NOT WANT?
                 if (MyServerSettings.BuyChance())
                 {
@@ -32160,7 +32277,7 @@ namespace Server.Mobiles
                     Add(
                         new GenericBuyInfo(
                             typeof(ManaPotion),
-                            890,
+                            90,
                             Utility.Random(1, 15),
                             0x180F,
                             0x48D
@@ -32172,7 +32289,7 @@ namespace Server.Mobiles
                     Add(
                         new GenericBuyInfo(
                             typeof(GreaterManaPotion),
-                            8120,
+                            120,
                             Utility.Random(1, 5),
                             0x2406,
                             0x48D
@@ -37778,6 +37895,13 @@ namespace Server.Mobiles
         {
             public InternalSellInfo()
             {
+                if (MyServerSettings.BuyCloth())
+                {
+                    Add(typeof(SpoolOfThread), 9);
+                    Add(typeof(Flax), 51);
+                    Add(typeof(Cotton), 51);
+                    Add(typeof(Wool), 31);
+                }
                 Add(typeof(Scissors), 6);
                 Add(typeof(SewingKit), 1);
                 Add(typeof(Dyes), 4);
@@ -37817,10 +37941,6 @@ namespace Server.Mobiles
                 Add(typeof(FeatheredHat), 5);
                 Add(typeof(TricorneHat), 4);
                 Add(typeof(PirateHat), 4);
-                Add(typeof(SpoolOfThread), 9);
-                Add(typeof(Flax), 51);
-                Add(typeof(Cotton), 51);
-                Add(typeof(Wool), 31);
                 Add(typeof(MagicRobe), 30);
                 Add(typeof(MagicHat), 20);
                 Add(typeof(MagicCloak), 30);
@@ -42195,10 +42315,15 @@ namespace Server.Mobiles
                 Add(typeof(Bones), Utility.RandomMinMax(5, 10));
                 Add(typeof(GraveChest), Utility.RandomMinMax(100, 500));
                 Add(typeof(SkullMinotaur), Utility.Random(50, 150));
+                Add(typeof(SkullDinosaur), Utility.Random(75, 175));
                 Add(typeof(SkullWyrm), Utility.Random(200, 400));
                 Add(typeof(SkullGreatDragon), Utility.Random(300, 600));
                 Add(typeof(SkullDragon), Utility.Random(100, 300));
                 Add(typeof(SkullDemon), Utility.Random(100, 300));
+                Add(typeof(DeamonHeadA), Utility.Random(100, 300));
+                Add(typeof(DeamonHeadB), Utility.Random(100, 300));
+                Add(typeof(DeamonHeadC), Utility.Random(100, 300));
+                Add(typeof(VampireHead), Utility.Random(100, 300));
                 Add(typeof(SkullGiant), Utility.Random(100, 300));
                 Add(typeof(AlchemyTub), Utility.Random(200, 500));
                 Add(typeof(WoodenCoffin), 25);
@@ -43199,11 +43324,16 @@ namespace Server.Mobiles
             public InternalSellInfo()
             {
                 Add(typeof(SkullMinotaur), Utility.Random(50, 150));
+                Add(typeof(SkullDinosaur), Utility.Random(75, 175));
                 Add(typeof(SkullWyrm), Utility.Random(200, 400));
                 Add(typeof(SkullGreatDragon), Utility.Random(300, 600));
                 Add(typeof(SkullDragon), Utility.Random(100, 300));
                 Add(typeof(SkullDemon), Utility.Random(100, 300));
                 Add(typeof(SkullGiant), Utility.Random(100, 300));
+                Add(typeof(DeamonHeadA), Utility.Random(100, 300));
+                Add(typeof(DeamonHeadB), Utility.Random(100, 300));
+                Add(typeof(DeamonHeadC), Utility.Random(100, 300));
+                Add(typeof(VampireHead), Utility.Random(100, 300));
                 Add(typeof(CanopicJar), Utility.Random(50, 300));
                 Add(typeof(WitchCauldron), 8);
                 Add(typeof(DragonTooth), 120);

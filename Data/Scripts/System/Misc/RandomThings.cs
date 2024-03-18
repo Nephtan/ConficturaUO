@@ -209,6 +209,8 @@ namespace Server.Misc
         public static int GetRandomBookItemID()
         {
             return Utility.RandomList(
+                0x65CC,
+                0x65CD,
                 0x5688,
                 0x5689,
                 0x4FDD,

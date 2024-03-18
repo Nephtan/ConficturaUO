@@ -19,6 +19,7 @@ namespace Server.Items
             : base(PotionEffect.ExplosionLesser)
         {
             ItemID = 0x2407;
+            Name = "lesser explosion potion";
         }
 
         public LesserExplosionPotion(Serial serial)
@@ -27,15 +28,14 @@ namespace Server.Items
         public override void Serialize(GenericWriter writer)
         {
             base.Serialize(writer);
-
             writer.Write((int)0); // version
         }
 
         public override void Deserialize(GenericReader reader)
         {
             base.Deserialize(reader);
-
             int version = reader.ReadInt();
+            Name = "lesser explosion potion";
         }
     }
 }

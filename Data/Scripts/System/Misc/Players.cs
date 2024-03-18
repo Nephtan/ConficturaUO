@@ -106,7 +106,7 @@ namespace Server.Misc
 
         public static bool isFromSpace(Mobile m)
         {
-            if (m.Skills.Cap >= 40000)
+            if (((PlayerMobile)m).SkillStart == 40000)
                 return true;
 
             return false;
@@ -908,10 +908,34 @@ namespace Server.Misc
             }
 
             int skills = m.Skills.Total;
-            if (skills > 10000)
+            int based = MyServerSettings.SkillBase();
+
+            if (skills > based)
             {
-                skills = 10000;
+                skills = based;
             }
+
+            if (based >= 20000)
+                skills = (int)(skills / 2);
+            else if (based >= 19000)
+                skills = (int)(skills / 1.9);
+            else if (based >= 18000)
+                skills = (int)(skills / 1.8);
+            else if (based >= 17000)
+                skills = (int)(skills / 1.7);
+            else if (based >= 16000)
+                skills = (int)(skills / 1.6);
+            else if (based >= 15000)
+                skills = (int)(skills / 1.5);
+            else if (based >= 14000)
+                skills = (int)(skills / 1.4);
+            else if (based >= 13000)
+                skills = (int)(skills / 1.3);
+            else if (based >= 12000)
+                skills = (int)(skills / 1.2);
+            else if (based >= 11000)
+                skills = (int)(skills / 1.1);
+
             skills = (int)(1.5 * skills); // UP TO 15,000
 
             int stats = m.RawStr + m.RawDex + m.RawInt;

@@ -99,7 +99,7 @@ namespace Server.Mobiles
                         Server.Items.HiddenTrap.IAmShielding(m, 120)
                         || Server.Items.HiddenTrap.IAmAWeaponSlayer(m, this)
                     ) { }
-                    else if (Server.Items.HiddenTrap.CheckInsuranceOnTrap(iWrapped, m) == true)
+                    else if (Server.Items.HiddenTrap.CheckInsuranceOnTrap(iWrapped, m))
                     {
                         m.LocalOverheadMessage(
                             MessageType.Emote,

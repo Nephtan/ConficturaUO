@@ -1,5 +1,6 @@
 using System;
 using Server;
+using Server.Items;
 using Server.Mobiles;
 using Server.Network;
 using Server.Targeting;
@@ -34,7 +35,11 @@ namespace Server.Spells.Research
             Server.Misc.Research.SpellInformation(spellID, 2),
             Server.Misc.Research.CapsCast(Server.Misc.Research.SpellInformation(spellID, 4)),
             204,
-            9061
+            9061,
+            Reagent.Garlic,
+            Reagent.Ginseng,
+            Reagent.FairyEgg,
+            Reagent.PixieSkull
         );
 
         public ResearchHealingTouch(Mobile caster, Item scroll)
@@ -42,7 +47,10 @@ namespace Server.Spells.Research
 
         public override void OnCast()
         {
-            Caster.Target = new InternalTarget(this);
+            if (CheckSequence())
+            {
+                Caster.Target = new InternalTarget(this);
+            }
         }
 
         public void Target(Mobile m)
@@ -101,7 +109,7 @@ namespace Server.Spells.Research
                     EffectLayer.Waist
                 );
                 m.PlaySound(0x202);
-                Server.Misc.Research.ConsumeScroll(Caster, true, spellIndex, false);
+                Server.Misc.Research.ConsumeScroll(Caster, true, spellIndex, alwaysConsume, Scroll);
             }
 
             FinishSequence();

@@ -39,7 +39,9 @@ namespace Server.Spells.Research
             Server.Misc.Research.SpellInformation(spellID, 2),
             Server.Misc.Research.CapsCast(Server.Misc.Research.SpellInformation(spellID, 4)),
             236,
-            9011
+            9011,
+            Reagent.FairyEgg,
+            Reagent.ButterflyWings
         );
 
         public ResearchMassMight(Mobile caster, Item scroll)
@@ -79,11 +81,31 @@ namespace Server.Spells.Research
 
                     m.FixedParticles(0x375A, 10, 15, 5017, 0x224, 3, EffectLayer.Waist);
                     success = true;
+
+                    string args = String.Format("{0}", amount);
+                    BuffInfo.AddBuff(
+                        m,
+                        new BuffInfo(
+                            BuffIcon.MassMight,
+                            1063644,
+                            1063645,
+                            TimeSpan.FromMinutes(duration),
+                            m,
+                            args.ToString(),
+                            true
+                        )
+                    );
                 }
 
                 if (success)
                 {
-                    Server.Misc.Research.ConsumeScroll(Caster, true, spellIndex, false);
+                    Server.Misc.Research.ConsumeScroll(
+                        Caster,
+                        true,
+                        spellIndex,
+                        alwaysConsume,
+                        Scroll
+                    );
                 }
             }
             FinishSequence();

@@ -39,7 +39,9 @@ namespace Server.Spells.Research
             Server.Misc.Research.SpellInformation(spellID, 2),
             Server.Misc.Research.CapsCast(Server.Misc.Research.SpellInformation(spellID, 4)),
             236,
-            9011
+            9011,
+            Reagent.SpidersSilk,
+            Reagent.MoonCrystal
         );
 
         public ResearchEndureCold(Mobile caster, Item scroll)
@@ -71,6 +73,21 @@ namespace Server.Spells.Research
 
                     m.AddResistanceMod(mod1);
 
+                    string args = String.Format("{0}", amount);
+                    BuffInfo.RemoveBuff(m, BuffIcon.EndureCold);
+                    BuffInfo.AddBuff(
+                        m,
+                        new BuffInfo(
+                            BuffIcon.EndureCold,
+                            1063638,
+                            1063639,
+                            duration,
+                            m,
+                            args.ToString(),
+                            true
+                        )
+                    );
+
                     m.PlaySound(0x1E9);
                     m.FixedParticles(
                         0x375A,
@@ -88,7 +105,13 @@ namespace Server.Spells.Research
 
                 if (success)
                 {
-                    Server.Misc.Research.ConsumeScroll(Caster, true, spellIndex, false);
+                    Server.Misc.Research.ConsumeScroll(
+                        Caster,
+                        true,
+                        spellIndex,
+                        alwaysConsume,
+                        Scroll
+                    );
                 }
             }
             FinishSequence();

@@ -14,40 +14,40 @@ namespace Server.Items
     public class PointsRewardStone : Item
     {
         [Constructable]
-        public PointsRewardStone() : base( 0xED4 )
+        public PointsRewardStone()
+            : base(0xED4)
         {
             Movable = false;
             Name = "a Points Reward Stone";
         }
 
-        public PointsRewardStone( Serial serial ) : base( serial )
-        { 
+        public PointsRewardStone(Serial serial)
+            : base(serial) { }
+
+        public override void Serialize(GenericWriter writer)
+        {
+            base.Serialize(writer);
+
+            writer.Write((int)0); // version
         }
 
-        public override void Serialize( GenericWriter writer )
+        public override void Deserialize(GenericReader reader)
         {
-            base.Serialize( writer );
-
-            writer.Write( (int) 0 ); // version
-        }
-
-        public override void Deserialize( GenericReader reader )
-        {
-            base.Deserialize( reader );
+            base.Deserialize(reader);
 
             int version = reader.ReadInt();
         }
-        
-        public override void OnDoubleClick( Mobile from )
+
+        public override void OnDoubleClick(Mobile from)
         {
-            if ( from.InRange( GetWorldLocation(), 2 ) )
+            if (from.InRange(GetWorldLocation(), 2))
             {
-                from.SendGump( new PointsRewardGump( from, 0 ) );
+                from.SendGump(new PointsRewardGump(from, 0));
             }
             else
             {
-                from.SendLocalizedMessage( 500446 ); // That is too far away.
+                from.SendLocalizedMessage(500446); // That is too far away.
             }
         }
     }
-} 
+}

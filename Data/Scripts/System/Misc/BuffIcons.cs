@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
 using Server;
+using Server.Items;
 using Server.Mobiles;
 using Server.Network;
+using Server.Spells;
 
 namespace Server
 {
@@ -239,59 +241,214 @@ namespace Server
             if (pm != null)
                 pm.RemoveBuff(b);
         }
+
+        public static void CleanupIcons(Mobile m, bool onlyParalyzed)
+        {
+            if (!onlyParalyzed)
+            {
+                Item orb = m.Backpack.FindItemByType(typeof(SoulOrb));
+                if (orb == null)
+                    BuffInfo.RemoveBuff(m, BuffIcon.Resurrection);
+                else
+                    BuffInfo.AddBuff(m, new BuffInfo(BuffIcon.Resurrection, 1063626, true));
+
+                Item gem = m.Backpack.FindItemByType(typeof(GemImmortality));
+                if (gem == null)
+                    BuffInfo.RemoveBuff(m, BuffIcon.GemImmortality);
+                else
+                    BuffInfo.AddBuff(m, new BuffInfo(BuffIcon.GemImmortality, 1063658, true));
+
+                Item shard = m.Backpack.FindItemByType(typeof(JewelImmortality));
+                if (shard == null)
+                    BuffInfo.RemoveBuff(m, BuffIcon.WithstandDeath);
+                else
+                    BuffInfo.AddBuff(m, new BuffInfo(BuffIcon.WithstandDeath, 1063656, true));
+
+                Item enchant = m.Backpack.FindItemByType(typeof(EnchantSpellStone));
+                if (enchant == null)
+                    BuffInfo.RemoveBuff(m, BuffIcon.Enchant);
+
+                Item enchanted = m.Backpack.FindItemByType(typeof(ResearchEnchantStone));
+                if (enchanted == null)
+                    BuffInfo.RemoveBuff(m, BuffIcon.EnchantWeapon);
+
+                if (!TransformationSpellHelper.UnderTransformation(m))
+                {
+                    BuffInfo.RemoveBuff(m, BuffIcon.WraithForm);
+                    BuffInfo.RemoveBuff(m, BuffIcon.HorrificBeast);
+                    BuffInfo.RemoveBuff(m, BuffIcon.LichForm);
+                    BuffInfo.RemoveBuff(m, BuffIcon.VampiricEmbrace);
+                }
+
+                if (m.MagicDamageAbsorb < 1)
+                {
+                    BuffInfo.RemoveBuff(m, BuffIcon.Absorption);
+                    BuffInfo.RemoveBuff(m, BuffIcon.PsychicWall);
+                    BuffInfo.RemoveBuff(m, BuffIcon.Deflection);
+                    BuffInfo.RemoveBuff(m, BuffIcon.TrialByFire);
+                    BuffInfo.RemoveBuff(m, BuffIcon.OrbOfOrcus);
+                    BuffInfo.RemoveBuff(m, BuffIcon.MagicReflection);
+                    BuffInfo.RemoveBuff(m, BuffIcon.ElementalEcho);
+                }
+                if (!m.Poisoned)
+                {
+                    BuffInfo.RemoveBuff(m, BuffIcon.Poisoned);
+                }
+            }
+
+            if (!m.Paralyzed)
+            {
+                BuffInfo.RemoveBuff(m, BuffIcon.ElementalHold);
+                BuffInfo.RemoveBuff(m, BuffIcon.StasisField);
+                BuffInfo.RemoveBuff(m, BuffIcon.Hilarity);
+                BuffInfo.RemoveBuff(m, BuffIcon.Paralyze);
+                BuffInfo.RemoveBuff(m, BuffIcon.SleepField);
+                BuffInfo.RemoveBuff(m, BuffIcon.Sleep);
+                BuffInfo.RemoveBuff(m, BuffIcon.MassSleep);
+                BuffInfo.RemoveBuff(m, BuffIcon.ParalyzeField);
+                BuffInfo.RemoveBuff(m, BuffIcon.GraspingRoots);
+                BuffInfo.RemoveBuff(m, BuffIcon.PeaceMaking);
+                BuffInfo.RemoveBuff(m, BuffIcon.Firefly);
+                BuffInfo.RemoveBuff(m, BuffIcon.Begging);
+                BuffInfo.RemoveBuff(m, BuffIcon.Confusion);
+                BuffInfo.RemoveBuff(m, BuffIcon.Charm);
+                BuffInfo.RemoveBuff(m, BuffIcon.Fear);
+            }
+        }
         #endregion
     }
 
     public enum BuffIcon : short
     {
-        DismountPrevention = 0x3E9,
-        NoRearm = 0x3EA,
-
-        //Currently, no 0x3EB or 0x3EC
-        NightSight = 0x3ED, //*
+        CheetahPaws = 0x3E9,
+        Deception = 0x3EA,
+        NightSight = 0x3ED,
         DeathStrike,
         EvilOmen,
-        UnknownStandingSwirl, //Which is healing throttle & Stamina throttle?
-        UnknownKneelingSword,
-        DivineFury, //*
-        EnemyOfOne, //*
-        HidingAndOrStealth, //*
-        ActiveMeditation, //*
-        BloodOathCaster, //*
-        BloodOathCurse, //*
-        CorpseSkin, //*
-        Mindrot, //*
-        PainSpike, //*
+        Poisoned,
+        EyesOfTheDead,
+        DivineFury,
+        EnemyOfOne,
+        HidingAndOrStealth,
+        ActiveMeditation,
+        BloodOathCaster,
+        BloodOathCurse,
+        CorpseSkin,
+        Mindrot,
+        PainSpike,
         Strangle,
-        GiftOfRenewal, //*
-        AttuneWeapon, //*
-        Thunderstorm, //*
-        EssenceOfWind, //*
-        EtherealVoyage, //*
-        GiftOfLife, //*
-        ArcaneEmpowerment, //*
-        MortalStrike,
-        ReactiveArmor, //*
-        Protection, //*
-        ArchProtection,
-        MagicReflection, //*
-        Incognito, //*
-        Disguised,
-        AnimalForm,
+        GhostlyImages,
+        SpectralShadow,
+        DrainLifeGood,
+        DrainLifeBad,
+        Projection,
+        Absorption,
+        Speed,
+        ShieldOfHate,
+        ReactiveArmor,
+        Protection,
+        ParalyzeField,
+        MagicReflection,
+        Incognito,
+        ElementalArmor,
+        AstralProjection,
         Polymorph,
-        Invisibility, //*
-        Paralyze, //*
-        Poison,
-        Bleed,
-        Clumsy, //*
-        FeebleMind, //*
-        Weaken, //*
-        Curse, //*
+        Invisibility,
+        Paralyze,
         MassCurse,
-        Agility, //*
-        Cunning, //*
-        Strength, //*
-        Bless //*
+        RemoveTrap,
+        Clumsy,
+        FeebleMind,
+        Weaken,
+        Curse,
+        Resurrection,
+        Agility,
+        Cunning,
+        Strength,
+        Bless,
+        CheetahPawss,
+        Deceptions,
+        PsychicWall,
+        WindRunner,
+        NotUsed1,
+        Insult,
+        Hilarity,
+        Deflection,
+        Celerity,
+        Mirage,
+        PsychicAura,
+        StasisField,
+        NotUsed2,
+        HammerOfFaith,
+        SacredBoon,
+        Sanctify,
+        Seance,
+        TrialByFire,
+        Enchant,
+        BlendWithForest,
+        GrimReaper,
+        GraspingRoots,
+        WoodlandProtection,
+        OrbOfOrcus,
+        ArmysPaeon,
+        SoulReaper,
+        StrengthOfSteel,
+        SuccubusSkin,
+        EnchantingEtude,
+        EnergyCarol,
+        EnergyThrenody,
+        FireCarol,
+        FireThrenody,
+        IceCarol,
+        IceThrenody,
+        KnightsMinne,
+        MagesBallad,
+        PoisonCarol,
+        PoisonThrenody,
+        ShephardsDance,
+        SinewyEtude,
+        PotionAgility,
+        WraithForm,
+        ConsecrateWeapon,
+        PotionInvisible,
+        HorrificBeast,
+        LichForm,
+        PotionInvulnerable,
+        PotionNightSight,
+        PotionStrength,
+        VampiricEmbrace,
+        PotionSuperior,
+        CurseWeapon,
+        ElementalEcho,
+        ElementalHold,
+        ElementalProtect,
+        AirWalk,
+        ConfusionBlast,
+        EnchantWeapon,
+        EndureCold,
+        EndureHeat,
+        MaskDeath,
+        MassMight,
+        MassSleep,
+        RockFlesh,
+        Sleep,
+        SleepField,
+        Sneak,
+        WithstandDeath,
+        GemImmortality,
+        Intervention,
+        PeaceMaking,
+        Discordance,
+        Begging,
+        Firefly,
+        FishStr,
+        Skip,
+        Bandage,
+        Confusion,
+        Charm,
+        Fear,
+        FishDex,
+        FishInt
     }
 
     public sealed class AddBuffPacket : Packet
@@ -323,13 +480,13 @@ namespace Server
             this.EnsureCapacity((hasArgs ? (48 + args.ToString().Length * 2) : 44));
             m_Stream.Write((int)mob.Serial);
 
-            m_Stream.Write((short)iconID); //ID
-            m_Stream.Write((short)0x1); //Type 0 for removal. 1 for add 2 for Data
+            m_Stream.Write((short)iconID); // ID
+            m_Stream.Write((short)0x1); // Type 0 for removal. 1 for add 2 for Data
 
             m_Stream.Fill(4);
 
-            m_Stream.Write((short)iconID); //ID
-            m_Stream.Write((short)0x01); //Type 0 for removal. 1 for add 2 for Data
+            m_Stream.Write((short)iconID); // ID
+            m_Stream.Write((short)0x01); // Type 0 for removal. 1 for add 2 for Data
 
             m_Stream.Fill(4);
 
@@ -344,7 +501,6 @@ namespace Server
 
             if (!hasArgs)
             {
-                //m_Stream.Fill( 2 );
                 m_Stream.Fill(10);
             }
             else
@@ -353,7 +509,6 @@ namespace Server
                 m_Stream.Write((short)0x1); //Unknown -> Possibly something saying 'hey, I have more data!'?
                 m_Stream.Fill(2);
 
-                //m_Stream.WriteLittleUniNull( "\t#1018280" );
                 m_Stream.WriteLittleUniNull(String.Format("\t{0}", args.ToString()));
 
                 m_Stream.Write((short)0x1); //Even more Unknown -> Possibly something saying 'hey, I have more data!'?
@@ -373,10 +528,14 @@ namespace Server
             this.EnsureCapacity(13);
             m_Stream.Write((int)mob.Serial);
 
-            m_Stream.Write((short)iconID); //ID
-            m_Stream.Write((short)0x0); //Type 0 for removal. 1 for add 2 for Data
+            m_Stream.Write((short)iconID); // ID
+            m_Stream.Write((short)0x0); // Type 0 for removal. 1 for add 2 for Data
 
             m_Stream.Fill(4);
+
+            mob.Str = mob.Str;
+            mob.Int = mob.Int;
+            mob.Dex = mob.Dex;
         }
     }
 }

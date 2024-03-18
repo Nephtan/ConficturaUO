@@ -81,7 +81,7 @@ namespace Confictura.Custom
                 var characterClone = CloneThings.CreateClone(e.Mobile);
                 CloneThings.CloneMobileProperties(e.Mobile, characterClone);
                 CloneThings.CloneMobileItems(e.Mobile, characterClone);
-                CloneThings.CloneMobileBackpack(e.Mobile, characterClone);
+                CloneThings.CloneMobileBackpack(e.Mobile, characterClone);  // Line 84
                 CloneThings.CloneMobileMount(e.Mobile, characterClone);
             }
         }
@@ -347,7 +347,7 @@ namespace Confictura.Custom
             {
                 BackpackClone clonedBackpack = new BackpackClone();
                 target.AddItem(clonedBackpack);
-                CloneContainerContents(originalBackpack, clonedBackpack);
+                CloneContainerContents(originalBackpack, clonedBackpack);  // Line 350
             }
         }
 
@@ -356,7 +356,8 @@ namespace Confictura.Custom
             Server.Items.Container targetContainer
         )
         {
-            foreach (Item item in sourceContainer.Items)
+            Item[] itemsCopy = sourceContainer.Items.ToArray();
+            foreach (Item item in itemsCopy)  // Line 359
             {
                 Item clonedItem = CloneItem(item);
                 if (clonedItem != null)

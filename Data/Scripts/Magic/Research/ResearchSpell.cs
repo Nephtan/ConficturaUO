@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Server;
 using Server.Gumps;
 using Server.Items;
+using Server.Misc;
 using Server.Mobiles;
 using Server.Network;
 using Server.Spells;
@@ -15,6 +16,10 @@ namespace Server.Spells.Research
         public virtual int spellIndex
         {
             get { return 1; }
+        }
+        public virtual bool alwaysConsume
+        {
+            get { return false; }
         }
         public abstract double RequiredSkill { get; }
         public abstract int RequiredMana { get; }
@@ -33,6 +38,42 @@ namespace Server.Spells.Research
         public override int CastRecoveryBase
         {
             get { return 1; }
+        }
+
+        public override bool ConsumeReagents()
+        {
+            if (!Caster.Player)
+                return true;
+
+            if (!ResearchSettings.BookCaster(Caster))
+                return true;
+
+            if (
+                !alwaysConsume
+                && AosAttributes.GetValue(Caster, AosAttribute.LowerRegCost) > Utility.Random(100)
+            )
+                return true;
+
+            Container pack = Caster.Backpack;
+
+            if (pack == null)
+                return false;
+
+            if (pack.ConsumeTotal(Info.Reagents, Info.Amounts) == -1)
+            {
+                if (ResearchSettings.BookCaster(Caster))
+                {
+                    AncientSpellbook book = ResearchSettings.GetAncientTome(Caster);
+                    if (book != null)
+                    {
+                        book.paper--;
+                        book.quill--;
+                    }
+                }
+                return true;
+            }
+
+            return false;
         }
 
         public static double CastingSkill(Mobile from)
@@ -67,15 +108,13 @@ namespace Server.Spells.Research
 
         public static bool SpellPrepared(Mobile from, int spellIndex)
         {
-            if (Server.Misc.ResearchBarSettings.ResearchMaterials(from) != null)
+            if (Server.Misc.ResearchSettings.ResearchMaterials(from) != null)
             {
                 ResearchBag bag = (ResearchBag)(
-                    Server.Misc.ResearchBarSettings.ResearchMaterials(from)
+                    Server.Misc.ResearchSettings.ResearchMaterials(from)
                 );
                 if (Server.Misc.Research.GetPrepared(bag, spellIndex) > 0)
-                {
                     return true;
-                }
             }
             return false;
         }
@@ -87,6 +126,23 @@ namespace Server.Spells.Research
         {
             if (!base.CheckCast())
                 return false;
+
+            AncientSpellbook book = null;
+            if (ResearchSettings.BookCaster(Caster))
+                book = ResearchSettings.GetAncientTome(Caster);
+
+            if (book != null && book.paper < 1)
+            {
+                Caster.SendMessage("You do not have enough pages in your book to cast this spell.");
+                return false;
+            }
+            else if (book != null && book.quill < 1)
+            {
+                Caster.SendMessage(
+                    "You do not have enough quills for your book to cast this spell."
+                );
+                return false;
+            }
 
             if (CastingSkill(Caster) < RequiredSkill)
             {
@@ -104,7 +160,7 @@ namespace Server.Spells.Research
                 );
                 return false;
             }
-            else if (!SpellPrepared(Caster, spellIndex))
+            else if (!SpellPrepared(Caster, spellIndex) && !ResearchSettings.BookCaster(Caster))
             {
                 Caster.SendMessage("You do not have that spell prepared.");
                 return false;
@@ -131,7 +187,7 @@ namespace Server.Spells.Research
                 );
                 return false;
             }
-            else if (!SpellPrepared(Caster, spellIndex))
+            else if (!SpellPrepared(Caster, spellIndex) && !ResearchSettings.BookCaster(Caster))
             {
                 Caster.SendMessage("You do not have that spell prepared.");
                 return false;

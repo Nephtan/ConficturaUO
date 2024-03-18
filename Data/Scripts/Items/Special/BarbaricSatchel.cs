@@ -959,6 +959,7 @@ namespace Server.Items
             item.ItemID = itemID;
 
             from.SendSound(0x55);
+            from.AddToBackpack(item);
             from.SendMessage("The item has been changed.");
         }
 

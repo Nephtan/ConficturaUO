@@ -17,6 +17,10 @@ namespace Server.Spells.Research
         {
             get { return 58; }
         }
+        public override bool alwaysConsume
+        {
+            get { return bool.Parse(Server.Misc.Research.SpellInformation(spellIndex, 14)); }
+        }
         public int CirclePower = 8;
         public static int spellID = 58;
         public override TimeSpan CastDelayBase
@@ -39,7 +43,11 @@ namespace Server.Spells.Research
             Server.Misc.Research.SpellInformation(spellID, 2),
             Server.Misc.Research.CapsCast(Server.Misc.Research.SpellInformation(spellID, 4)),
             245,
-            9062
+            9062,
+            Reagent.PhoenixFeather,
+            Reagent.DemigodBlood,
+            Reagent.EnchantedSeaweed,
+            Reagent.GhostlyDust
         );
 
         public ResearchWithstandDeath(Mobile caster, Item scroll)
@@ -61,8 +69,11 @@ namespace Server.Spells.Research
 
         public override void OnCast()
         {
-            Caster.SendMessage("Choose who you are going to summon a jewel for.");
-            Caster.Target = new InternalTarget(this);
+            if (CheckSequence())
+            {
+                Caster.SendMessage("Choose who you are going to summon a jewel for.");
+                Caster.Target = new InternalTarget(this);
+            }
         }
 
         public void Target(Mobile m)
@@ -93,7 +104,10 @@ namespace Server.Spells.Research
                 {
                     sapphire.Consume();
                 }
-                Server.Misc.Research.ConsumeScroll(Caster, true, spellIndex, true);
+                Server.Misc.Research.ConsumeScroll(Caster, true, spellIndex, alwaysConsume, Scroll);
+
+                BuffInfo.RemoveBuff(m, BuffIcon.WithstandDeath);
+                BuffInfo.AddBuff(m, new BuffInfo(BuffIcon.WithstandDeath, 1063656));
             }
 
             FinishSequence();
@@ -192,6 +206,8 @@ namespace Server.Misc
                 m.CurePoison(m);
                 m.PlaySound(0x202);
                 rock.Delete();
+
+                BuffInfo.RemoveBuff(m, BuffIcon.WithstandDeath);
 
                 return true;
             }

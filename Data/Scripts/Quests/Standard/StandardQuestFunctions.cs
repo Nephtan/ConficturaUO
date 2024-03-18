@@ -297,7 +297,7 @@ namespace Server.Misc
                 && searchLocation == "the Land of Sosaria"
             )
             {
-                if (m.Skills.Cap == 11000)
+                if (((PlayerMobile)m).SkillStart == 11000)
                 {
                     searchLocation = "the Savaged Empire";
                 }

@@ -172,7 +172,7 @@ namespace Server.Gumps
             AddImage(0, 0, 2610, Server.Misc.PlayerSettings.GetGumpHue(from));
 
             int header = 11474;
-            if (MyServerSettings.ServerName() == "Ruins & Riches")
+            if (MyServerSettings.ServerName() == "Confictura - Test")
             {
                 header = 11377;
             }
@@ -444,7 +444,7 @@ namespace Server.Gumps
             else
             {
                 int header = 11473;
-                if (MyServerSettings.ServerName() == "Ruins & Riches")
+                if (MyServerSettings.ServerName() == "Confictura - Test")
                 {
                     header = 11376;
                 }
@@ -544,13 +544,13 @@ namespace Server.Gumps
                 switch (page)
                 {
                     case 1:
-                        scroll = true;
+                        scroll = false;
                         break;
                     case 2:
                         scroll = true;
                         break;
                     case 3:
-                        scroll = true;
+                        scroll = false;
                         break;
                     case 4:
                         scroll = true;
@@ -564,28 +564,28 @@ namespace Server.Gumps
                 switch (page)
                 {
                     case 1:
-                        scroll = true;
+                        scroll = false;
                         break;
                     case 2:
-                        scroll = true;
+                        scroll = false;
                         break;
                     case 3:
-                        scroll = true;
+                        scroll = false;
                         break;
                     case 4:
-                        scroll = true;
+                        scroll = false;
                         break;
                     case 5:
-                        scroll = true;
+                        scroll = false;
                         break;
                     case 6:
-                        scroll = true;
+                        scroll = false;
                         break;
                     case 7:
-                        scroll = true;
+                        scroll = false;
                         break;
                     case 8:
-                        scroll = true;
+                        scroll = false;
                         break;
                     case 9:
                         scroll = true;
@@ -713,7 +713,11 @@ namespace Server.Gumps
                             + Server.Items.BaseRace.StartSentence(town)
                             + " of Sosaria."
                             + undead
-                            + " This fate in Sosaria offers a more challenging life, where you have chosen to embrace your monstrous ways and seek power for yourself, leaving others of your kind behind. You will have the opportunity to become a grandmaster in 13 different skills, instead of the usual 10. Resurrecting with tributes will cost double the amount, potentially forcing you to face penalties. You will not be permitted to enter any civilized areas, unless you find a way to disguise yourself. However, there are exceptions for certain public areas like inns, taverns, and banks. Guards will attack you immediately upon sight, merchants will try to chase you away, and you will be unable to join any local guilds except for the Assassin, Thief, and Black Magic guilds. This is due to the fact that you are seen as a murderous beast. Nevertheless, everything you need can be found throughout the world, allowing you to embark on your journey.";
+                            + " This fate in Sosaria offers a more challenging life, where you have chosen to embrace your monstrous ways and seek power for yourself, leaving others of your kind behind. You will have the opportunity to become a grandmaster in "
+                            + Server.Misc.MyServerSettings.SkillGypsy("fugitive")
+                            + " different skills, instead of the usual "
+                            + Server.Misc.MyServerSettings.SkillGypsy("default")
+                            + ". Resurrecting with tributes will cost double the amount, potentially forcing you to face penalties. You will not be permitted to enter any civilized areas, unless you find a way to disguise yourself. However, there are exceptions for certain public areas like inns, taverns, and banks. Guards will attack you immediately upon sight, merchants will try to chase you away, and you will be unable to join any local guilds except for the Assassin, Thief, and Black Magic guilds. This is due to the fact that you are seen as a murderous beast. Nevertheless, everything you need can be found throughout the world, allowing you to embark on your journey.";
                         break;
 
                     case 3:
@@ -735,7 +739,11 @@ namespace Server.Gumps
                             + Server.Items.BaseRace.StartSentence(town)
                             + " of Lodoria."
                             + undead
-                            + " In Lodoria, your fate is to lead a more challenging life. Here, you may have left others of your kind behind, but you have made the choice to embrace your monstrous ways and seek power for yourself. As a result, you will have the ability to become a grandmaster in 13 different skills, exceeding the usual 10. However, there are consequences to consider. The cost of tributes for resurrection will be doubled, potentially forcing you to resurrect with penalties. Additionally, you will be prohibited from entering any civilized areas unless you can find a way to disguise yourself. There are a few exceptions, such as public areas like inns, taverns, and banks. It is important to note that guards will attack you on sight, merchants will try to chase you away, and you will not be able to join any local guilds, with the exception of the Assassin, Thief, and Black Magic guilds. This is due to the fact that you are perceived as a murderous beast. However, everything you need can still be found throughout the world, allowing you to embark on your journey.";
+                            + " In Lodoria, your fate is to lead a more challenging life. Here, you may have left others of your kind behind, but you have made the choice to embrace your monstrous ways and seek power for yourself. As a result, you will have the ability to become a grandmaster in "
+                            + Server.Misc.MyServerSettings.SkillGypsy("fugitive")
+                            + " different skills, exceeding the usual "
+                            + Server.Misc.MyServerSettings.SkillGypsy("default")
+                            + ". However, there are consequences to consider. The cost of tributes for resurrection will be doubled, potentially forcing you to resurrect with penalties. Additionally, you will be prohibited from entering any civilized areas unless you can find a way to disguise yourself. There are a few exceptions, such as public areas like inns, taverns, and banks. It is important to note that guards will attack you on sight, merchants will try to chase you away, and you will not be able to join any local guilds, with the exception of the Assassin, Thief, and Black Magic guilds. This is due to the fact that you are perceived as a murderous beast. However, everything you need can still be found throughout the world, allowing you to embark on your journey.";
                         break;
                 }
             }
@@ -811,7 +819,11 @@ namespace Server.Gumps
                         card = "THE HANGED MAN";
                         town = "The Britain Dungeons";
                         text =
-                            "You may choose a fate in this world that has a more challenging life, where you become a fugitive from justice. If you choose this path, you will be able to become a grandmaster in 13 different skills instead of the normal 10. This is because you will rely on yourself to survive. Tributes for resurrection will cost double the amount, potentially forcing you to resurrect with penalties. You will not be allowed to enter any civilized areas unless you find a way to disguise yourself. The exceptions are certain public areas such as inns, taverns, and banks. Guards will attack you on sight, merchants will try to chase you away, and you will be unable to join any local guilds except for the Assassin, Thief, and Black Magic guilds. The reason for this is that you are wanted for murder. You may have actually committed the act, or you could have been framed. The murder was against a powerful figure, so the lands will never forgive the deed. Whether it's truth or falsehood, that is up to you to tell. Do what you will with your life. You can live a life of criminal pursuits, or you can eradicate the evil that lurks in the darkest places of the land. If you choose such a life, you will be on your own, and you must first escape from your prison cell. From there, it's best to head for Stonewall to the northwest, but you may go wherever you like. Everything you need can be found throughout the world.";
+                            "You may choose a fate in this world that has a more challenging life, where you become a fugitive from justice. If you choose this path, you will be able to become a grandmaster in "
+                            + Server.Misc.MyServerSettings.SkillGypsy("fugitive")
+                            + " different skills instead of the normal "
+                            + Server.Misc.MyServerSettings.SkillGypsy("default")
+                            + ". This is because you will rely on yourself to survive. Tributes for resurrection will cost double the amount, potentially forcing you to resurrect with penalties. You will not be allowed to enter any civilized areas unless you find a way to disguise yourself. The exceptions are certain public areas such as inns, taverns, and banks. Guards will attack you on sight, merchants will try to chase you away, and you will be unable to join any local guilds except for the Assassin, Thief, and Black Magic guilds. The reason for this is that you are wanted for murder. You may have actually committed the act, or you could have been framed. The murder was against a powerful figure, so the lands will never forgive the deed. Whether it's truth or falsehood, that is up to you to tell. Do what you will with your life. You can live a life of criminal pursuits, or you can eradicate the evil that lurks in the darkest places of the land. If you choose such a life, you will be on your own, and you must first escape from your prison cell. From there, it's best to head for Stonewall to the northwest, but you may go wherever you like. Everything you need can be found throughout the world.";
                         break;
 
                     case 10:
@@ -834,14 +846,20 @@ namespace Server.Gumps
                         card = "STRNGTH";
                         town = "The Savaged Empire";
                         text =
-                            "You may choose a barbaric way of life to begin your journey, and it is not for the weak but those bestowed with strength. If you choose this path, you will be able to become a grandmaster in 11 different skills instead of the usual 10. This is because you rely on yourself to survive in an untamed land. Your adventure will begin as a barbarian in the Savaged Empire, one of the most difficult lands in the realms. It is filled with dangerous animals and colossal dinosaurs. There are no safe places to hunt for food, making it equally perilous to practice your combat skills. However, you will start with some leather armor that will help you survive the dangers away from the settlements. You will also have a talisman to aid you in camping and cooking, enabling you to live off the land more effectively. Additional gold, food, bandages, a steel dagger, and a durable camping tent will be provided. Keep in mind that any dungeons you enter will be more deadly than those in Sosaria, so choose this path with great consideration. Your journey will begin in the Village of Kurak, where the outskirts offer plentiful hunting opportunities but also pose many dangers you may need to flee from. To the north, there is a cave where you can mine for precious ores.";
+                            "You may choose a barbaric way of life to begin your journey, and it is not for the weak but those bestowed with strength. If you choose this path, you will be able to become a grandmaster in "
+                            + Server.Misc.MyServerSettings.SkillGypsy("savage")
+                            + " different skills instead of the usual "
+                            + Server.Misc.MyServerSettings.SkillGypsy("default")
+                            + ". This is because you rely on yourself to survive in an untamed land. Your adventure will begin as a barbarian in the Savaged Empire, one of the most difficult lands in the realms. It is filled with dangerous animals and colossal dinosaurs. There are no safe places to hunt for food, making it equally perilous to practice your combat skills. However, you will start with some leather armor that will help you survive the dangers away from the settlements. You will also have a talisman to aid you in camping and cooking, enabling you to live off the land more effectively. Additional gold, food, bandages, a steel dagger, and a durable camping tent will be provided. Keep in mind that any dungeons you enter will be more deadly than those in Sosaria, so choose this path with great consideration. Your journey will begin in the Village of Kurak, where the outskirts offer plentiful hunting opportunities but also pose many dangers you may need to flee from. To the north, there is a cave where you can mine for precious ores.";
                         break;
 
                     case 13:
                         card = "THE STAR";
                         town = "The Shuttle Crash Site";
                         text =
-                            "All the information that the doctor knew about you as a patient has been entered into your medical record. You were on the brink of death, but being placed in the stasis chamber seemed to have facilitated the healing process. Your scans revealed a severe head trauma, which means that when you wake up from your coma, you will have no recollection of your past or your identity (and you will start with no skills). Unfortunately, the space station is plummeting towards Sosaria because the Stranger has drained the fuel reserves. In a desperate move, the doctor decided to put your stasis chamber onto their last medical shuttle craft and set it on auto-pilot, hoping for the best. Fortunately, the craft landed safely on Sosaria, giving you a chance to continue your life on this primitive world. Your advantage lies in the fact that you come from a more advanced race of beings, allowing you to retain and learn more information (you can become a grandmaster in 40 different skills).\n\nHowever, due to your advanced knowledge of logic and science, you struggle to fully understand certain elements of Sosaria. Concepts such as magical resurrection and deities are beyond your comprehension (resurrecting at a shrine or healer will cost three times as much gold). The system shock from such a resurrection would undoubtedly take its toll (paying full tribute would result in a 10% loss in fame and karma, and a 5% loss in skills and attributes), which could prove to be devastating (not paying any tribute at all would result in a 20% loss in fame and karma, and a 10% loss in skills and attributes).\n\nWhile you can learn some skills classified as magic or divine, you always rationalize them through the lens of science. Unlike the inhabitants of this world, you don't believe in the concept of luck (you will never benefit from luck). At the beginning, you don't possess any of Sosaria's currency for bartering (you start with no gold), and you don't anticipate getting along with the guildmasters who practice crude trades (guild membership costs four times as much as normal).\n\nIf you choose this path, you will find yourself at your crashed shuttle craft, which marks the start of your adventure. A nearby computer terminal allows you to change your appearance slightly, altering your skin and hair tones to reflect your alien heritage.\n\nUpon awakening, you will have no recollection of your past identity. You will discover yourself near the crashed shuttle on top of a mountain. The computer system has provided instructions on setting up a power source using the remaining fuel. Interestingly, an alien creature attached itself to the shuttle and perished in the crash. You have been using it as a source of food and managed to survive for a few days. However, your supplies are now running out, your canteen is empty, and all you have is a knife. To ensure your survival, you must venture out into the unknown.";
+                            "All the information that the doctor knew about you as a patient has been entered into your medical record. You were on the brink of death, but being placed in the stasis chamber seemed to have facilitated the healing process. Your scans revealed a severe head trauma, which means that when you wake up from your coma, you will have no recollection of your past or your identity (and you will start with no skills). Unfortunately, the space station is plummeting towards Sosaria because the Stranger has drained the fuel reserves. In a desperate move, the doctor decided to put your stasis chamber onto their last medical shuttle craft and set it on auto-pilot, hoping for the best. Fortunately, the craft landed safely on Sosaria, giving you a chance to continue your life on this primitive world. Your advantage lies in the fact that you come from a more advanced race of beings, allowing you to retain and learn more information (you can become a grandmaster in "
+                            + Server.Misc.MyServerSettings.SkillGypsy("alien")
+                            + " different skills).\n\nHowever, due to your advanced knowledge of logic and science, you struggle to fully understand certain elements of Sosaria. Concepts such as magical resurrection and deities are beyond your comprehension (resurrecting at a shrine or healer will cost three times as much gold). The system shock from such a resurrection would undoubtedly take its toll (paying full tribute would result in a 10% loss in fame and karma, and a 5% loss in skills and attributes), which could prove to be devastating (not paying any tribute at all would result in a 20% loss in fame and karma, and a 10% loss in skills and attributes).\n\nWhile you can learn some skills classified as magic or divine, you always rationalize them through the lens of science. Unlike the inhabitants of this world, you don't believe in the concept of luck (you will never benefit from luck). At the beginning, you don't possess any of Sosaria's currency for bartering (you start with no gold), and you don't anticipate getting along with the guildmasters who practice crude trades (guild membership costs four times as much as normal).\n\nIf you choose this path, you will find yourself at your crashed shuttle craft, which marks the start of your adventure. A nearby computer terminal allows you to change your appearance slightly, altering your skin and hair tones to reflect your alien heritage.\n\nUpon awakening, you will have no recollection of your past identity. You will discover yourself near the crashed shuttle on top of a mountain. The computer system has provided instructions on setting up a power source using the remaining fuel. Interestingly, an alien creature attached itself to the shuttle and perished in the crash. You have been using it as a source of food and managed to survive for a few days. However, your supplies are now running out, your canteen is empty, and all you have is a knife. To ensure your survival, you must venture out into the unknown.";
                         break;
                 }
             }
@@ -993,7 +1011,7 @@ namespace Server.Gumps
                 {
                     PlayerSettings.SetDiscovered(m, "the Land of Sosaria", true);
                     PlayerSettings.SetBardsTaleQuest(m, "BardsTaleWin", true);
-                    m.Skills.Cap = 13000;
+                    Server.Misc.MyServerSettings.SkillBegin("fugitive", (PlayerMobile)m);
                     m.Kills = 1;
                     ((PlayerMobile)m).Profession = 1;
                 }
@@ -1006,7 +1024,7 @@ namespace Server.Gumps
                 {
                     PlayerSettings.SetDiscovered(m, "the Land of Lodoria", true);
                     PlayerSettings.SetBardsTaleQuest(m, "BardsTaleWin", true);
-                    m.Skills.Cap = 13000;
+                    Server.Misc.MyServerSettings.SkillBegin("fugitive", (PlayerMobile)m);
                     m.Kills = 1;
                     ((PlayerMobile)m).Profession = 1;
                     world = "the Land of Lodoria";

@@ -141,6 +141,9 @@ namespace Server.Spells.Seventh
                         BaseArmor.ValidateMobile(Caster);
                         BaseClothing.ValidateMobile(Caster);
 
+                        BuffInfo.RemoveBuff(Caster, BuffIcon.Polymorph);
+                        BuffInfo.AddBuff(Caster, new BuffInfo(BuffIcon.Polymorph, 1063619));
+
                         StopTimer(Caster);
 
                         Timer t = new InternalTimer(Caster);
@@ -182,6 +185,8 @@ namespace Server.Spells.Seventh
                 m.HueMod = -1;
                 m.RaceBody();
                 m.EndAction(typeof(PolymorphSpell));
+
+                BuffInfo.RemoveBuff(m, BuffIcon.Polymorph);
 
                 Effects.SendLocationParticles(
                     EffectItem.Create(m.Location, m.Map, EffectItem.DefaultDuration),

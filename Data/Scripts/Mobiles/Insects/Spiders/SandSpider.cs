@@ -61,7 +61,7 @@ namespace Server.Mobiles
             Name = "a sand spider";
             Body = 140;
             BaseSoundID = 0x388;
-            Hue = 553;
+            Hue = 0xB4E;
 
             SetStr(76, 100);
             SetDex(96, 115);

@@ -166,7 +166,8 @@ namespace Server.Spells
             "Research",
             "Syth",
             "Jedi",
-            "Shinobi"
+            "Shinobi",
+            "Enchantments"
         };
 
         public static Spell NewSpell(string name, Mobile caster, Item scroll)

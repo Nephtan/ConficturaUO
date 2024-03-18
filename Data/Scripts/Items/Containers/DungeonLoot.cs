@@ -719,8 +719,12 @@ namespace Server.Items
             typeof(BrokenBookcaseDeed),
             typeof(BrokenBedDeed),
             typeof(StandingBrokenChairDeed),
+            typeof(SackOfHolding),
             typeof(EnormousBag),
             typeof(GiantBag),
+            typeof(BagOfHolding),
+            typeof(MountingBase),
+            typeof(StuffingBasket)
         };
 
         public static Type[] DungeonRareTypes

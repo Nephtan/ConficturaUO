@@ -37,6 +37,14 @@ namespace Server.Items
             m_Components.Add(c);
 
             c.Addon = this;
+
+            if (AddonName != null)
+                c.Name = AddonName;
+            else if (LabelNumber != MainLabelNumber())
+                c.Name = null;
+            else
+                c.Name = TileData.ItemTable[c.ItemID].Name;
+
             c.Offset = new Point3D(x, y, z);
             c.MoveToWorld(new Point3D(X + x, Y + y, Z + z), Map);
         }
@@ -48,6 +56,11 @@ namespace Server.Items
             Visible = false;
 
             m_Components = new List<AddonComponent>();
+        }
+
+        public virtual string AddonName
+        {
+            get { return null; }
         }
 
         public virtual bool RetainDeedHue
@@ -270,12 +283,6 @@ namespace Server.Items
 
             foreach (AddonComponent c in m_Components)
                 c.Location = new Point3D(X + c.Offset.X, Y + c.Offset.Y, Z + c.Offset.Z);
-        }
-
-        public override void OnAfterSpawn()
-        {
-            foreach (AddonComponent c in m_Components)
-                c.Name = null;
         }
 
         public override void OnMapChange()

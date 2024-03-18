@@ -54,6 +54,8 @@ namespace Server.Spells.HolyMan
 
             m_Table.Remove(m);
 
+            BuffInfo.RemoveBuff(m, BuffIcon.Sanctify);
+
             m.EndAction(typeof(SanctifySpell));
         }
 
@@ -105,6 +107,30 @@ namespace Server.Spells.HolyMan
                 );
                 new InternalTimer(Caster, TimeSpan.FromSeconds((int)span)).Start();
 
+                string args = String.Format(
+                    "{0}\t{1}\t{2}\t{3}\t{4}\t{5}",
+                    modify,
+                    modify,
+                    modify,
+                    modify,
+                    modify,
+                    modify
+                );
+
+                BuffInfo.RemoveBuff(Caster, BuffIcon.Sanctify);
+                BuffInfo.AddBuff(
+                    Caster,
+                    new BuffInfo(
+                        BuffIcon.Sanctify,
+                        1063536,
+                        1063537,
+                        TimeSpan.FromMinutes((int)span),
+                        Caster,
+                        args.ToString(),
+                        true
+                    )
+                );
+
                 Caster.BeginAction(typeof(SanctifySpell));
                 Caster.PlaySound(0x5C9);
                 Point3D wings = new Point3D(Caster.X + 1, Caster.Y + 1, Caster.Z + 18);
@@ -131,6 +157,7 @@ namespace Server.Spells.HolyMan
             {
                 if (DateTime.Now >= m_Expire)
                 {
+                    BuffInfo.RemoveBuff(m_Owner, BuffIcon.Sanctify);
                     SanctifySpell.RemoveEffect(m_Owner);
                     Stop();
                 }

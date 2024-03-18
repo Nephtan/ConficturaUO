@@ -64,7 +64,7 @@ namespace Server.Spells.DeathKnight
                     {
                         SpellHelper.Turn(from, m);
 
-                        if (from.Skills.Magery.Value > Utility.RandomMinMax(1, 100))
+                        if (from.Skills.Knightship.Value > Utility.RandomMinMax(1, 100))
                         {
                             Effects.SendLocationParticles(
                                 EffectItem.Create(m.Location, m.Map, EffectItem.DefaultDuration),

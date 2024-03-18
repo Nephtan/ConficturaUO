@@ -86,6 +86,12 @@ namespace Server.Spells.Jedi
 
                 m.Paralyze(TimeSpan.FromSeconds(duration));
 
+                BuffInfo.RemoveBuff(m, BuffIcon.StasisField);
+                BuffInfo.AddBuff(
+                    m,
+                    new BuffInfo(BuffIcon.StasisField, 1063528, TimeSpan.FromSeconds(duration), m)
+                );
+
                 m.PlaySound(0x204);
                 m.FixedEffect(0x376A, 6, 1, 0xB41, 0);
 

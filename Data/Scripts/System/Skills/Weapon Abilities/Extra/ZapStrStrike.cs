@@ -60,6 +60,16 @@ namespace Server.Items
                     TimeSpan.FromSeconds((Utility.RandomDouble() * todam) + 10)
                 )
             );
+            BuffInfo.AddBuff(
+                defender,
+                new BuffInfo(
+                    BuffIcon.Weaken,
+                    1063678,
+                    TimeSpan.FromSeconds((Utility.RandomDouble() * todam) + 10),
+                    defender,
+                    ((Utility.RandomMinMax(40, 70) + (todam * 2)) * (-1)).ToString()
+                )
+            );
             base.OnHit(attacker, defender, damage);
         }
     }

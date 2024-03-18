@@ -23,7 +23,7 @@ namespace Server.Items
 
         [Constructable]
         public StrangePortal()
-            : base(0xF6C)
+            : base(0x3D5E)
         {
             Movable = false;
             Light = LightType.Circle300;
@@ -55,8 +55,39 @@ namespace Server.Items
             }
 
             Name = sCalled + " portal";
-            Hue = Utility.RandomColor(0);
-            GateLocation = 0;
+            Hue = Utility.RandomList(
+                0xB96,
+                0xB80,
+                0xB7F,
+                0xB79,
+                0xB77,
+                0xB71,
+                0xB70,
+                0xB64,
+                0xB63,
+                0,
+                0xB61,
+                0xB50,
+                0xB51,
+                0xB52,
+                0xB53,
+                0xB3D,
+                0xB17,
+                0xB09,
+                0xB0A,
+                0xB0B,
+                0xB0C,
+                0xB0F,
+                0xAFE,
+                0xAFF,
+                0xB00,
+                0xB01,
+                0xB02,
+                0xB03,
+                0xAF8,
+                0xABB,
+                0xABC
+            );
         }
 
         public StrangePortal(Serial serial)
@@ -64,35 +95,9 @@ namespace Server.Items
 
         public override bool OnMoveOver(Mobile m)
         {
-            if (GateLocation == 0)
-            {
-                GateLocation = Utility.RandomMinMax(15, 26);
-                string world = Worlds.GetMyWorld(m.Map, m.Location, m.X, m.Y);
-                if (world == "the Land of Lodoria")
-                {
-                    GateLocation = Utility.RandomMinMax(0, 14);
-                }
-                else if (world == "the Serpent Island")
-                {
-                    GateLocation = Utility.RandomMinMax(27, 41);
-                }
-                else if (world == "the Isles of Dread")
-                {
-                    GateLocation = Utility.RandomMinMax(42, 47);
-                }
-                else if (world == "the Savaged Empire")
-                {
-                    GateLocation = Utility.RandomMinMax(48, 56);
-                }
-                else if (world == "the Underworld")
-                {
-                    GateLocation = Utility.RandomMinMax(57, 64);
-                }
-            }
-
             if (m is PlayerMobile)
             {
-                UseGate(m, GateLocation);
+                UseGate(m, GateLocation, null);
                 Effects.PlaySound(m.Location, m.Map, 0x1FC);
             }
 
@@ -101,11 +106,42 @@ namespace Server.Items
 
         public override void OnAfterSpawn()
         {
-            Server.Mobiles.PremiumSpawner.SpreadItems(this);
             base.OnAfterSpawn();
+
+            GateLocation = Utility.RandomMinMax(15, 26);
+            string world = Worlds.GetMyWorld(this.Map, this.Location, this.X, this.Y);
+            if (world == "the Land of Lodoria")
+            {
+                GateLocation = Utility.RandomMinMax(0, 14);
+            }
+            else if (world == "the Serpent Island")
+            {
+                GateLocation = Utility.RandomMinMax(27, 41);
+            }
+            else if (world == "the Isles of Dread")
+            {
+                GateLocation = Utility.RandomMinMax(42, 47);
+            }
+            else if (world == "the Savaged Empire")
+            {
+                GateLocation = Utility.RandomMinMax(48, 56);
+            }
+            else if (world == "the Underworld")
+            {
+                GateLocation = Utility.RandomMinMax(57, 64);
+            }
+
+            Strange_Portal gate = new Strange_Portal();
+            gate.Gate_Location_X = this.X;
+            gate.Gate_Location_Y = this.Y;
+            gate.Gate_Location_Z = this.Z;
+            gate.Gate_Location_M = this.Map;
+            gate.Hue = this.Hue;
+            gate.Name = this.Name;
+            UseGate(null, GateLocation, gate);
         }
 
-        public static void UseGate(Mobile m, int portal)
+        public static void UseGate(Mobile m, int portal, Item gate)
         {
             Point3D loc = new Point3D(0, 0, 0);
             Map map = Map.Sosaria;
@@ -388,6 +424,10 @@ namespace Server.Items
             {
                 m.MoveToWorld(loc, map);
             }
+            else if (gate is Strange_Portal)
+            {
+                gate.MoveToWorld(loc, map);
+            }
         }
 
         public override void Serialize(GenericWriter writer)
@@ -402,6 +442,117 @@ namespace Server.Items
             base.Deserialize(reader);
             int version = reader.ReadInt();
             GateLocation = reader.ReadInt();
+        }
+    }
+
+    public class Strange_Portal : Item
+    {
+        public int GateLocation_X;
+        public int GateLocation_Y;
+        public int GateLocation_Z;
+        public Map GateLocation_M;
+
+        [CommandProperty(AccessLevel.Owner)]
+        public int Gate_Location_X
+        {
+            get { return GateLocation_X; }
+            set
+            {
+                GateLocation_X = value;
+                InvalidateProperties();
+            }
+        }
+
+        [CommandProperty(AccessLevel.Owner)]
+        public int Gate_Location_Y
+        {
+            get { return GateLocation_Y; }
+            set
+            {
+                GateLocation_Y = value;
+                InvalidateProperties();
+            }
+        }
+
+        [CommandProperty(AccessLevel.Owner)]
+        public int Gate_Location_Z
+        {
+            get { return GateLocation_Z; }
+            set
+            {
+                GateLocation_Z = value;
+                InvalidateProperties();
+            }
+        }
+
+        [CommandProperty(AccessLevel.Owner)]
+        public Map Gate_Location_M
+        {
+            get { return GateLocation_M; }
+            set
+            {
+                GateLocation_M = value;
+                InvalidateProperties();
+            }
+        }
+
+        [Constructable]
+        public Strange_Portal()
+            : base(0x3D5E)
+        {
+            Movable = false;
+            Light = LightType.Circle300;
+            Name = "portal";
+        }
+
+        public Strange_Portal(Serial serial)
+            : base(serial) { }
+
+        public override bool OnMoveOver(Mobile m)
+        {
+            if (m is PlayerMobile)
+            {
+                UseGate(m);
+                Effects.PlaySound(m.Location, m.Map, 0x1FC);
+            }
+
+            return false;
+        }
+
+        public void UseGate(Mobile m)
+        {
+            Point3D loc = new Point3D(GateLocation_X, GateLocation_Y, GateLocation_Z);
+            Map map = GateLocation_M;
+
+            if (m is PlayerMobile)
+            {
+                Server.Mobiles.BaseCreature.TeleportPets(m, loc, map);
+                m.MoveToWorld(loc, map);
+            }
+            else if (m is BaseCreature)
+            {
+                m.MoveToWorld(loc, map);
+            }
+        }
+
+        public override void Serialize(GenericWriter writer)
+        {
+            base.Serialize(writer);
+            writer.Write((int)0); // version
+            writer.Write(GateLocation_X);
+            writer.Write(GateLocation_Y);
+            writer.Write(GateLocation_Z);
+            writer.Write(GateLocation_M);
+        }
+
+        public override void Deserialize(GenericReader reader)
+        {
+            base.Deserialize(reader);
+            int version = reader.ReadInt();
+            GateLocation_X = reader.ReadInt();
+            GateLocation_Y = reader.ReadInt();
+            GateLocation_Z = reader.ReadInt();
+            GateLocation_M = reader.ReadMap();
         }
     }
 }

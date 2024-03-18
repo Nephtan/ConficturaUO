@@ -11,7 +11,7 @@ namespace Server.Mobiles
             : base(AIType.AI_Animal, FightMode.Aggressor, 10, 1, 0.2, 0.4)
         {
             Name = "a jaguar";
-            Body = Server.Misc.MyServerSettings.LeopardBodies();
+            Body = 214;
             BaseSoundID = 0x3EE;
 
             SetStr(112, 160);

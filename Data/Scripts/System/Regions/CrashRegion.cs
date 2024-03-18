@@ -52,7 +52,11 @@ namespace Server.Regions
             {
                 m.SendMessage("You find yourself near a crashed shuttle.");
             }
-            if (m is PlayerMobile && m.AccessLevel < AccessLevel.GameMaster && m.Skills.Cap < 40000)
+            if (
+                m is PlayerMobile
+                && m.AccessLevel < AccessLevel.GameMaster
+                && ((PlayerMobile)m).SkillStart != 40000
+            )
             {
                 Server.Misc.PlayerSettings.SetSpaceMan(m);
             }

@@ -92,6 +92,21 @@ namespace Server.Spells.Song
                     m.FixedParticles(0x373A, 10, 15, 5012, 0x450, 3, EffectLayer.Waist);
 
                     new ExpireTimer(m, mod1, duration).Start();
+
+                    string args = String.Format("{0}", amount);
+                    BuffInfo.RemoveBuff(m, BuffIcon.KnightsMinne);
+                    BuffInfo.AddBuff(
+                        m,
+                        new BuffInfo(
+                            BuffIcon.KnightsMinne,
+                            1063577,
+                            1063578,
+                            duration,
+                            m,
+                            args.ToString(),
+                            true
+                        )
+                    );
                 }
             }
 

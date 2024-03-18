@@ -156,6 +156,11 @@ namespace Server.Items
 
     public class AnkhOfSacrificeAddon : BaseAddon, IRewardItem
     {
+        public override string AddonName
+        {
+            get { return "ankh of sacrifice"; }
+        }
+
         public override bool HandlesOnMovement
         {
             get { return true; }

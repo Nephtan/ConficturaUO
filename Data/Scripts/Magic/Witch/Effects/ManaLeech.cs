@@ -48,6 +48,7 @@ namespace Server.Spells.Undead
                     m.Spell.OnCasterHurt();
 
                 m.Paralyzed = false;
+                BuffInfo.CleanupIcons(m, true);
 
                 int toDrain = 0;
 

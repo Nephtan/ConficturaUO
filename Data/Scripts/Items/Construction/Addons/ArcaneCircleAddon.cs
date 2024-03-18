@@ -5,6 +5,11 @@ namespace Server.Items
 {
     public class ArcaneCircleAddon : BaseAddon
     {
+        public override string AddonName
+        {
+            get { return "arcane circle"; }
+        }
+
         public override BaseAddonDeed Deed
         {
             get { return new ArcaneCircleDeed(); }

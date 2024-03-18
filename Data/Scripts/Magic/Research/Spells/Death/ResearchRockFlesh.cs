@@ -36,7 +36,11 @@ namespace Server.Spells.Research
             Server.Misc.Research.SpellInformation(spellID, 2),
             Server.Misc.Research.CapsCast(Server.Misc.Research.SpellInformation(spellID, 4)),
             236,
-            9011
+            9011,
+            Reagent.MoonCrystal,
+            Reagent.Garlic,
+            Reagent.PigIron,
+            Reagent.BlackPearl
         );
 
         public ResearchRockFlesh(Mobile caster, Item scroll)
@@ -61,6 +65,8 @@ namespace Server.Spells.Research
             m.RaceBody();
             m.SendMessage("Your flesh turns back to normal.");
 
+            BuffInfo.RemoveBuff(m, BuffIcon.RockFlesh);
+
             ResistanceMod[] mods = (ResistanceMod[])TableStoneFlesh[m];
             TableStoneFlesh.Remove(m);
             for (int i = 0; i < mods.Length; ++i)
@@ -84,51 +90,66 @@ namespace Server.Spells.Research
 
         public override void OnCast()
         {
-            if (!Caster.CanBeginAction(typeof(ResearchRockFlesh)))
+            if (CheckSequence())
             {
-                ResearchRockFlesh.RemoveEffect(Caster);
+                if (!Caster.CanBeginAction(typeof(ResearchRockFlesh)))
+                {
+                    ResearchRockFlesh.RemoveEffect(Caster);
+                }
+
+                ResistanceMod[] mods = (ResistanceMod[])TableStoneFlesh[Caster];
+
+                mods = new ResistanceMod[1] { new ResistanceMod(ResistanceType.Physical, 90) };
+
+                TableStoneFlesh[Caster] = mods;
+
+                for (int i = 0; i < mods.Length; ++i)
+                    Caster.AddResistanceMod(mods[i]);
+
+                double TotalTime = DamagingSkill(Caster) * 4;
+                new InternalTimer(Caster, TimeSpan.FromSeconds(TotalTime)).Start();
+
+                Caster.BodyMod = 14;
+                Caster.HueMod = 0xB31;
+
+                BuffInfo.RemoveBuff(Caster, BuffIcon.RockFlesh);
+                BuffInfo.AddBuff(
+                    Caster,
+                    new BuffInfo(
+                        BuffIcon.RockFlesh,
+                        1063652,
+                        1063653,
+                        TimeSpan.FromSeconds(TotalTime),
+                        Caster
+                    )
+                );
+
+                Mobiles.IMount mt = Caster.Mount;
+                if (mt != null)
+                {
+                    Server.Mobiles.EtherealMount.EthyDismount(Caster);
+                    mt.Rider = null;
+                }
+
+                Caster.SendMessage("Your flesh turns to stone.");
+
+                Server.Misc.Research.ConsumeScroll(Caster, true, spellID, alwaysConsume, Scroll);
+
+                KarmaMod(Caster, ((int)RequiredSkill + RequiredMana));
+
+                Point3D hands = new Point3D((Caster.X + 1), (Caster.Y + 1), (Caster.Z + 8));
+                Effects.SendLocationParticles(
+                    EffectItem.Create(hands, Caster.Map, EffectItem.DefaultDuration),
+                    0x3837,
+                    9,
+                    32,
+                    Server.Misc.PlayerSettings.GetMySpellHue(true, Caster, 0xB7F),
+                    0,
+                    5022,
+                    0
+                );
+                Caster.PlaySound(0x65A);
             }
-
-            ResistanceMod[] mods = (ResistanceMod[])TableStoneFlesh[Caster];
-
-            mods = new ResistanceMod[1] { new ResistanceMod(ResistanceType.Physical, 90) };
-
-            TableStoneFlesh[Caster] = mods;
-
-            for (int i = 0; i < mods.Length; ++i)
-                Caster.AddResistanceMod(mods[i]);
-
-            double TotalTime = DamagingSkill(Caster) * 4;
-            new InternalTimer(Caster, TimeSpan.FromSeconds(TotalTime)).Start();
-
-            Caster.BodyMod = 14;
-            Caster.HueMod = 0xB31;
-
-            Mobiles.IMount mt = Caster.Mount;
-            if (mt != null)
-            {
-                Server.Mobiles.EtherealMount.EthyDismount(Caster);
-                mt.Rider = null;
-            }
-
-            Caster.SendMessage("Your flesh turns to stone.");
-
-            Server.Misc.Research.ConsumeScroll(Caster, true, spellID, false);
-
-            KarmaMod(Caster, ((int)RequiredSkill + RequiredMana));
-
-            Point3D hands = new Point3D((Caster.X + 1), (Caster.Y + 1), (Caster.Z + 8));
-            Effects.SendLocationParticles(
-                EffectItem.Create(hands, Caster.Map, EffectItem.DefaultDuration),
-                0x3837,
-                9,
-                32,
-                Server.Misc.PlayerSettings.GetMySpellHue(true, Caster, 0xB7F),
-                0,
-                5022,
-                0
-            );
-            Caster.PlaySound(0x65A);
 
             FinishSequence();
         }

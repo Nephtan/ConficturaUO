@@ -129,6 +129,9 @@ namespace Server.Spells.Elementalism
                 Effects.SendLocationEffect(loc4, Caster.Map, 0x5469, 30, 10, hue, 0);
 
                 Caster.PlaySound(0x5C9);
+
+                BuffInfo.RemoveBuff(Caster, BuffIcon.ElementalEcho);
+                BuffInfo.AddBuff(Caster, new BuffInfo(BuffIcon.ElementalEcho, 1063630));
             }
 
             FinishSequence();

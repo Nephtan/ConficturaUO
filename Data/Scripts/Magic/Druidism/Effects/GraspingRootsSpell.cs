@@ -65,6 +65,12 @@ namespace Server.Spells.Herbalist
 
                 duration = duration + (double)(Server.Items.BasePotion.EnhancePotions(Caster) / 10);
 
+                BuffInfo.RemoveBuff(m, BuffIcon.GraspingRoots);
+                BuffInfo.AddBuff(
+                    m,
+                    new BuffInfo(BuffIcon.GraspingRoots, 1063548, TimeSpan.FromSeconds(duration), m)
+                );
+
                 m.PlaySound(0x2A1);
 
                 m.Paralyze(TimeSpan.FromSeconds(duration));

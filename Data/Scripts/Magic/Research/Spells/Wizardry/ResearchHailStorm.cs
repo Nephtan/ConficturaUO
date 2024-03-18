@@ -1,4 +1,5 @@
 using System;
+using Server.Items;
 using Server.Mobiles;
 using Server.Network;
 using Server.Targeting;
@@ -33,7 +34,9 @@ namespace Server.Spells.Research
             Server.Misc.Research.SpellInformation(spellID, 2),
             Server.Misc.Research.CapsCast(Server.Misc.Research.SpellInformation(spellID, 4)),
             230,
-            9041
+            9041,
+            Reagent.FairyEgg,
+            Reagent.MoonCrystal
         );
 
         public ResearchHailStorm(Mobile caster, Item scroll)
@@ -72,7 +75,7 @@ namespace Server.Spells.Research
 
                 InternalTimer t = new InternalTimer(this, attacker, defender, m);
                 t.Start();
-                Server.Misc.Research.ConsumeScroll(Caster, true, spellIndex, false);
+                Server.Misc.Research.ConsumeScroll(Caster, true, spellIndex, alwaysConsume, Scroll);
             }
 
             FinishSequence();

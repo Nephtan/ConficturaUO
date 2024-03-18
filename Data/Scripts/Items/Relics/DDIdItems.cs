@@ -325,7 +325,7 @@ namespace Server.Misc
                 DDRelicGrave relic = (DDRelicGrave)relics;
                 RelicValue = relic.RelicGoldValue;
             } // NECROMANCERS
-            else if (relics is DDRelicPainting && (IsHenchman || m is Artist))
+            else if (relics is DDRelicPainting && m is Artist)
             {
                 DDRelicPainting relic = (DDRelicPainting)relics;
                 RelicValue = relic.RelicGoldValue * 2;

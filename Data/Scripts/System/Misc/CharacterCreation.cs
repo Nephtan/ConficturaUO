@@ -175,7 +175,7 @@ namespace Server.Misc
 
             newChar.Player = true;
             newChar.StatCap = 250;
-            newChar.Skills.Cap = 10000;
+            Server.Misc.MyServerSettings.SkillBegin("default", (PlayerMobile)newChar);
             newChar.AccessLevel = args.Account.AccessLevel;
             newChar.Female = args.Female;
             newChar.Race = Race.Human;

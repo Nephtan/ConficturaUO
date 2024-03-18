@@ -274,7 +274,7 @@ namespace Server.Items
 
                         if (iRuined != null)
                         {
-                            if (Mobile.InsuranceEnabled && CheckInsuranceOnTrap(iRuined, m) == true)
+                            if (Mobile.InsuranceEnabled && CheckInsuranceOnTrap(iRuined, m))
                             {
                                 m.LocalOverheadMessage(MessageType.Emote, 1150, true, textSay);
                             }
@@ -699,7 +699,7 @@ namespace Server.Items
                             {
                                 if (i.LootType != LootType.Blessed)
                                 {
-                                    if (CheckInsuranceOnTrap(i, m) == true)
+                                    if (CheckInsuranceOnTrap(i, m))
                                     {
                                         m.LocalOverheadMessage(
                                             MessageType.Emote,
@@ -804,7 +804,7 @@ namespace Server.Items
 
                         if (iCursed != null)
                         {
-                            if (Mobile.InsuranceEnabled && CheckInsuranceOnTrap(iCursed, m) == true)
+                            if (Mobile.InsuranceEnabled && CheckInsuranceOnTrap(iCursed, m))
                             {
                                 m.LocalOverheadMessage(
                                     MessageType.Emote,

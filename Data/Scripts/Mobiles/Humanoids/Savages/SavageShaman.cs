@@ -278,6 +278,7 @@ namespace Server.Mobiles
                                 m.Spell.OnCasterHurt();
 
                             m.Paralyzed = false;
+                            BuffInfo.CleanupIcons(m, true);
 
                             double total =
                                 Skills[SkillName.Magery].Value + Skills[SkillName.Poisoning].Value;

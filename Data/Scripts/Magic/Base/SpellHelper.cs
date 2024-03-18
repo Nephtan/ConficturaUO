@@ -1088,6 +1088,17 @@ namespace Server.Spells
                     caster = target;
                     target = temp;
                 }
+
+                if (target.MagicDamageAbsorb < 1)
+                {
+                    BuffInfo.RemoveBuff(target, BuffIcon.Absorption);
+                    BuffInfo.RemoveBuff(target, BuffIcon.PsychicWall);
+                    BuffInfo.RemoveBuff(target, BuffIcon.Deflection);
+                    BuffInfo.RemoveBuff(target, BuffIcon.TrialByFire);
+                    BuffInfo.RemoveBuff(target, BuffIcon.OrbOfOrcus);
+                    BuffInfo.RemoveBuff(target, BuffIcon.MagicReflection);
+                    BuffInfo.RemoveBuff(target, BuffIcon.ElementalEcho);
+                }
             }
             else if (target is BaseCreature)
             {
@@ -1505,6 +1516,11 @@ namespace Server.Spells
 
                 context.Timer.Stop();
                 context.Spell.RemoveEffect(m);
+
+                BuffInfo.RemoveBuff(m, BuffIcon.WraithForm);
+                BuffInfo.RemoveBuff(m, BuffIcon.HorrificBeast);
+                BuffInfo.RemoveBuff(m, BuffIcon.LichForm);
+                BuffInfo.RemoveBuff(m, BuffIcon.VampiricEmbrace);
             }
         }
 

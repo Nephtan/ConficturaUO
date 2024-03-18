@@ -387,6 +387,22 @@ namespace Server.Spells
             Register(364, typeof(Song.PoisonThrenodySong));
             Register(365, typeof(Song.SheepfoeMamboSong));
             Register(366, typeof(Song.SinewyEtudeSong));
+
+            // Enchantment Magic
+            Register(800, typeof(Enchantments.BanishMagic));
+            Register(801, typeof(Enchantments.DemonicTouchMagic));
+            Register(802, typeof(Enchantments.DevilPactMagic));
+            Register(803, typeof(Enchantments.GrimReaperMagic));
+            Register(804, typeof(Enchantments.HagHandMagic));
+            Register(805, typeof(Enchantments.HellfireMagic));
+            Register(806, typeof(Enchantments.LucifersBoltMagic));
+            Register(807, typeof(Enchantments.OrbOfOrcusMagic));
+            Register(808, typeof(Enchantments.ShieldOfHateMagic));
+            Register(809, typeof(Enchantments.SoulReaperMagic));
+            Register(810, typeof(Enchantments.StrengthOfSteelMagic));
+            Register(811, typeof(Enchantments.StrikeMagic));
+            Register(812, typeof(Enchantments.SuccubusSkinMagic));
+            Register(813, typeof(Enchantments.WrathMagic));
         }
 
         public static void Register(int spellID, Type type)

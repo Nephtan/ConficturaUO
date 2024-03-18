@@ -557,6 +557,7 @@ namespace Server
             Item orb = m.Backpack.FindItemByType(typeof(SoulOrb));
             if (orb == null)
             {
+                BuffInfo.RemoveBuff(m, BuffIcon.Resurrection);
                 m.SendGump(new ResurrectNowGump(m));
             }
         }

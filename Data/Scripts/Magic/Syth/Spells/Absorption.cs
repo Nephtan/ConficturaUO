@@ -90,6 +90,8 @@ namespace Server.Spells.Syth
                         0
                     );
                     Caster.PlaySound(0x64C);
+                    BuffInfo.RemoveBuff(Caster, BuffIcon.Absorption);
+                    BuffInfo.AddBuff(Caster, new BuffInfo(BuffIcon.Absorption, 1063510));
                     DrainCrystals(Caster, RequiredTithing);
                 }
             }

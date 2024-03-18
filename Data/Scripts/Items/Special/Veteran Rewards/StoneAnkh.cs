@@ -48,6 +48,11 @@ namespace Server.Items
 
     public class StoneAnkh : BaseAddon, IRewardItem
     {
+        public override string AddonName
+        {
+            get { return "ankh"; }
+        }
+
         public override BaseAddonDeed Deed
         {
             get

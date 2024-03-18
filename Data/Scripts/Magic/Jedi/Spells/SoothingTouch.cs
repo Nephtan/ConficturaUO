@@ -73,7 +73,6 @@ namespace Server.Spells.Jedi
                 if (GetJediDamage(Caster) > Utility.RandomMinMax(185, 750))
                 {
                     MortalStrike.EndWound(m);
-                    BuffInfo.RemoveBuff(m, BuffIcon.MortalStrike);
                 }
                 else
                 {

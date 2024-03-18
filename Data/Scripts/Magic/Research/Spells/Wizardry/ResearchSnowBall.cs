@@ -1,5 +1,6 @@
 using System;
 using Server;
+using Server.Items;
 using Server.Network;
 using Server.Targeting;
 
@@ -33,7 +34,9 @@ namespace Server.Spells.Research
             Server.Misc.Research.SpellInformation(spellID, 2),
             Server.Misc.Research.CapsCast(Server.Misc.Research.SpellInformation(spellID, 4)),
             236,
-            9031
+            9031,
+            Reagent.BlackPearl,
+            Reagent.MoonCrystal
         );
 
         public ResearchSnowBall(Mobile caster, Item scroll)
@@ -41,7 +44,10 @@ namespace Server.Spells.Research
 
         public override void OnCast()
         {
-            Caster.Target = new InternalTarget(this);
+            if (CheckSequence())
+            {
+                Caster.Target = new InternalTarget(this);
+            }
         }
 
         public override bool DelayedDamage
@@ -91,7 +97,7 @@ namespace Server.Spells.Research
                 source.PlaySound(0x650);
 
                 SpellHelper.Damage(this, m, damage, 0, 0, 100, 0, 0);
-                Server.Misc.Research.ConsumeScroll(Caster, true, spellIndex, false);
+                Server.Misc.Research.ConsumeScroll(Caster, true, spellIndex, alwaysConsume, Scroll);
             }
 
             FinishSequence();

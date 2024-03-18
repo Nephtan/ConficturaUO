@@ -13,6 +13,10 @@ namespace Server.Spells.Research
         {
             get { return 64; }
         }
+        public override bool alwaysConsume
+        {
+            get { return bool.Parse(Server.Misc.Research.SpellInformation(spellIndex, 14)); }
+        }
         public int CirclePower = 8;
         public static int spellID = 64;
         public override TimeSpan CastDelayBase
@@ -35,7 +39,10 @@ namespace Server.Spells.Research
             Server.Misc.Research.SpellInformation(spellID, 2),
             Server.Misc.Research.CapsCast(Server.Misc.Research.SpellInformation(spellID, 4)),
             233,
-            9042
+            9042,
+            Reagent.PixieSkull,
+            Reagent.BatWing,
+            Reagent.DragonTooth
         );
 
         public ResearchMassDeath(Mobile caster, Item scroll)
@@ -176,7 +183,13 @@ namespace Server.Spells.Research
                         );
                         Effects.PlaySound(m.Location, m.Map, 0x108);
                     }
-                    Server.Misc.Research.ConsumeScroll(Caster, true, spellIndex, true);
+                    Server.Misc.Research.ConsumeScroll(
+                        Caster,
+                        true,
+                        spellIndex,
+                        alwaysConsume,
+                        Scroll
+                    );
                     Effects.SendLocationEffect(
                         Caster.Location,
                         Caster.Map,

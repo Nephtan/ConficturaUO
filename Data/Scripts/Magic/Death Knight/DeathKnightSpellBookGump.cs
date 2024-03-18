@@ -16,7 +16,10 @@ namespace Server.Gumps
 
         public bool HasSpell(Mobile from, int spellID)
         {
-            return (m_Book.HasSpell(spellID));
+            if (m_Book.RootParentEntity == from)
+                return (m_Book.HasSpell(spellID));
+            else
+                return false;
         }
 
         public DeathKnightSpellbookGump(Mobile from, DeathKnightSpellbook book, int page)
@@ -202,7 +205,7 @@ namespace Server.Gumps
                 );
 
                 info =
-                    "Magic Toolbars: Here are the commands you can use (include the bracket) to manage magic toolbars that might help you play better.<BR><BR>[deathspell1 - Opens the 1st death knight spell bar editor.<BR><BR>[deathspell2 - Opens the 2nd death knight spell bar editor.<BR><BR>[deathtool1 - Opens the 1st death knight spell bar.<BR><BR>[deathtool2 - Opens the 2nd death knight spell bar.<BR><BR>[deathclose1 - Closes the 1st death knight spell bar.<BR><BR>[deathclose2 - Closes the 2nd death knight spell bar.<BR><BR>Below are the [ commands you can either type to quickly cast a particular spell, or set a hot key issue this command and cast the spell.<BR><BR>[DKBanish<BR>    Cast Banish<BR><BR>[DKDemonicTouch<BR>    Cast Demonic Touch<BR><BR>[DKDevilPact<BR>    Cast Devil Pact<BR><BR>[DKGrimReaper<BR>    Cast Grim Reaper<BR><BR>[DKHagHand<BR>    Cast Hag Hand<BR><BR>[DKHellfire<BR>    Cast Hellfire<BR><BR>[DKLucifersBolt<BR>    Cast Lucifer's Bolt<BR><BR>[DKOrbOrcus<BR>    Cast Orb of Orcus<BR><BR>[DKShieldHate<BR>    Cast Shield of Hate<BR><BR>[DKSoulReaper<BR>    Cast Soul Reaper<BR><BR>[DKStrengthSteel<BR>    Cast Strength of Steel<BR><BR>[DKStrike<BR>    Cast Strike<BR><BR>[DKSuccubusSkin<BR>    Cast Succubus Skin<BR><BR>[DKWrath<BR>    Cast Wrath<BR><BR>";
+                    "Magic Toolbars: Here are the commands you can use (include the bracket) to manage magic toolbars that might help you play better.<BR><BR>[deathspell1 - Opens the 1st death knight spell bar editor.<BR><BR>[deathspell2 - Opens the 2nd death knight spell bar editor.<BR><BR>[deathtool1 - Opens the 1st death knight spell bar.<BR><BR>[deathtool2 - Opens the 2nd death knight spell bar.<BR><BR>[deathclose1 - Closes the 1st death knight spell bar.<BR><BR>[deathclose2 - Closes the 2nd death knight spell bar.<BR><BR>Below are the [ commands you can either type to quickly cast a particular spell, or set a hot key to issue this command and cast the spell.<BR><BR>[DKBanish<BR>    Cast Banish<BR><BR>[DKDemonicTouch<BR>    Cast Demonic Touch<BR><BR>[DKDevilPact<BR>    Cast Devil Pact<BR><BR>[DKGrimReaper<BR>    Cast Grim Reaper<BR><BR>[DKHagHand<BR>    Cast Hag Hand<BR><BR>[DKHellfire<BR>    Cast Hellfire<BR><BR>[DKLucifersBolt<BR>    Cast Lucifer's Bolt<BR><BR>[DKOrbOrcus<BR>    Cast Orb of Orcus<BR><BR>[DKShieldHate<BR>    Cast Shield of Hate<BR><BR>[DKSoulReaper<BR>    Cast Soul Reaper<BR><BR>[DKStrengthSteel<BR>    Cast Strength of Steel<BR><BR>[DKStrike<BR>    Cast Strike<BR><BR>[DKSuccubusSkin<BR>    Cast Succubus Skin<BR><BR>[DKWrath<BR>    Cast Wrath<BR><BR>";
 
                 AddHtml(
                     366,
@@ -387,7 +390,7 @@ namespace Server.Gumps
                     }
                     text2 =
                         text2
-                        + "The forces of Orcus surround the knight and refelec a certain amount of magical effects back at the caster.";
+                        + "The forces of Orcus surround the knight and refelect a certain amount of magical effects back at the caster.";
                     icon2 = 0x1B;
                 }
                 else if (page == 6)
@@ -679,7 +682,7 @@ namespace Server.Gumps
                 }
                 from.SendGump(new DeathKnightSpellbookGump(from, m_Book, page));
             }
-            else if (info.ButtonID > 700)
+            else if (info.ButtonID > 700 && HasSpell(from, info.ButtonID))
             {
                 if (info.ButtonID == 750)
                 {

@@ -37,6 +37,40 @@ namespace Server.Items
                 TimeSpan.FromMinutes(1.0)
             );
 
+            if (Type == StatType.Str)
+                BuffInfo.AddBuff(
+                    from,
+                    new BuffInfo(
+                        BuffIcon.FishStr,
+                        1063672,
+                        TimeSpan.FromMinutes(1.0),
+                        from,
+                        Bonus.ToString()
+                    )
+                );
+            if (Type == StatType.Dex)
+                BuffInfo.AddBuff(
+                    from,
+                    new BuffInfo(
+                        BuffIcon.FishDex,
+                        1063674,
+                        TimeSpan.FromMinutes(1.0),
+                        from,
+                        Bonus.ToString()
+                    )
+                );
+            if (Type == StatType.Int)
+                BuffInfo.AddBuff(
+                    from,
+                    new BuffInfo(
+                        BuffIcon.FishInt,
+                        1063676,
+                        TimeSpan.FromMinutes(1.0),
+                        from,
+                        Bonus.ToString()
+                    )
+                );
+
             if (!applied)
                 from.SendLocalizedMessage(502173); // You are already under a similar effect.
 

@@ -198,7 +198,9 @@ namespace Server.Gumps
                 + "Tailoring - using a sewing kit, one may make clothes and leather armor. You may also need cloth or leather to make things from.<BR><BR>";
             text =
                 text
-                + "Taming - This allows you to tame most creatures. The more you tame, the better you get at it. Along with druidism, herding, and veterinary allows you to potentially control more creatures.<BR><BR>";
+                + "Taming - This allows you to tame most creatures. The more you tame, the better you get at it. Along with druidism, herding, and veterinary you can potentially control more creatures. Some creatures can be bonded to you. Bonded creatures can be potentially resurrected if slain, where a ghostly visage of them will follow you until brought back from the dead. "
+                + Server.Misc.MyServerSettings.BondingDays()
+                + "<BR><BR>";
             text =
                 text
                 + "Tasting - Used once by royalty to determine if food was poisoned, many adventurers use this skill to identify potions they may find. There are also many reagents that will be unidentified unless you taste them first. Old dirty water, stale bread, and dried beef found in dungeons may be hazardous to your health, but this skill will avoid such illnesses while still nourishing you. You may even get a better benefit from food and drink as well. Elixirs and mixtures have a greater effect when one is good at this skill.<BR><BR>";

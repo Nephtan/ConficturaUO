@@ -35,7 +35,10 @@ namespace Server.Spells.Research
             Server.Misc.Research.SpellInformation(spellID, 2),
             Server.Misc.Research.CapsCast(Server.Misc.Research.SpellInformation(spellID, 4)),
             269,
-            9050
+            9050,
+            Reagent.PixieSkull,
+            Reagent.GraveDust,
+            Reagent.DaemonBlood
         );
 
         public ResearchCreateGolem(Mobile caster, Item scroll)
@@ -101,7 +104,7 @@ namespace Server.Spells.Research
                         EffectLayer.Head
                     );
                 }
-                Server.Misc.Research.ConsumeScroll(Caster, true, spellIndex, false);
+                Server.Misc.Research.ConsumeScroll(Caster, true, spellIndex, alwaysConsume, Scroll);
 
                 KarmaMod(Caster, ((int)RequiredSkill + RequiredMana));
             }

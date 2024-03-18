@@ -9,6 +9,11 @@ namespace Server.Items
 {
     public class BlackWellAddon : BaseAddon, IWaterSource
     {
+        public override string AddonName
+        {
+            get { return "well"; }
+        }
+
         public int Quantity
         {
             get { return 500; }

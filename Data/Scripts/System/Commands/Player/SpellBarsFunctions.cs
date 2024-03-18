@@ -18,6 +18,7 @@ using Server.Spells.First;
 using Server.Spells.Fourth;
 using Server.Spells.HolyMan;
 using Server.Spells.Necromancy;
+using Server.Spells.Research;
 using Server.Spells.Second;
 using Server.Spells.Seventh;
 using Server.Spells.Sixth;
@@ -34,7 +35,23 @@ namespace Server.Misc
 
             string ToolBarSetting = "";
 
-            if (ToolBar == "SetupBarsMage1")
+            if (ToolBar == "SetupBarsArch1")
+            {
+                ToolBarSetting = ((PlayerMobile)m).SpellBarsArch1;
+            }
+            else if (ToolBar == "SetupBarsArch2")
+            {
+                ToolBarSetting = ((PlayerMobile)m).SpellBarsArch2;
+            }
+            else if (ToolBar == "SetupBarsArch3")
+            {
+                ToolBarSetting = ((PlayerMobile)m).SpellBarsArch3;
+            }
+            else if (ToolBar == "SetupBarsArch4")
+            {
+                ToolBarSetting = ((PlayerMobile)m).SpellBarsArch4;
+            }
+            else if (ToolBar == "SetupBarsMage1")
             {
                 ToolBarSetting = ((PlayerMobile)m).SpellBarsMage1;
             }
@@ -130,7 +147,23 @@ namespace Server.Misc
                 nLine++;
             }
 
-            if (ToolBar == "SetupBarsMage1")
+            if (ToolBar == "SetupBarsArch1")
+            {
+                ((PlayerMobile)m).SpellBarsArch1 = newSettings;
+            }
+            else if (ToolBar == "SetupBarsArch2")
+            {
+                ((PlayerMobile)m).SpellBarsArch2 = newSettings;
+            }
+            else if (ToolBar == "SetupBarsArch3")
+            {
+                ((PlayerMobile)m).SpellBarsArch3 = newSettings;
+            }
+            else if (ToolBar == "SetupBarsArch4")
+            {
+                ((PlayerMobile)m).SpellBarsArch4 = newSettings;
+            }
+            else if (ToolBar == "SetupBarsMage1")
             {
                 ((PlayerMobile)m).SpellBarsMage1 = newSettings;
             }
@@ -206,7 +239,23 @@ namespace Server.Misc
 
         public static void InitializeToolBar(Mobile m, string ToolBar)
         {
-            if (ToolBar == "SetupBarsMage1" && ((PlayerMobile)m).SpellBarsMage1 == null)
+            if (ToolBar == "SetupBarsArch1" && ((PlayerMobile)m).SpellBarsArch1 == null)
+            {
+                Server.Misc.ResearchSettings.ResearchTransfer(m, 1);
+            }
+            else if (ToolBar == "SetupBarsArch2" && ((PlayerMobile)m).SpellBarsArch2 == null)
+            {
+                Server.Misc.ResearchSettings.ResearchTransfer(m, 2);
+            }
+            else if (ToolBar == "SetupBarsArch3" && ((PlayerMobile)m).SpellBarsArch3 == null)
+            {
+                Server.Misc.ResearchSettings.ResearchTransfer(m, 3);
+            }
+            else if (ToolBar == "SetupBarsArch4" && ((PlayerMobile)m).SpellBarsArch4 == null)
+            {
+                Server.Misc.ResearchSettings.ResearchTransfer(m, 4);
+            }
+            else if (ToolBar == "SetupBarsMage1" && ((PlayerMobile)m).SpellBarsMage1 == null)
             {
                 ((PlayerMobile)m).SpellBarsMage1 =
                     "0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#";
@@ -295,7 +344,23 @@ namespace Server.Misc
 
             string ToolBarSetting = "";
 
-            if (ToolBar == "SetupBarsMage1")
+            if (ToolBar == "SetupBarsArch1")
+            {
+                ToolBarSetting = ((PlayerMobile)m).SpellBarsArch1;
+            }
+            else if (ToolBar == "SetupBarsArch2")
+            {
+                ToolBarSetting = ((PlayerMobile)m).SpellBarsArch2;
+            }
+            else if (ToolBar == "SetupBarsArch3")
+            {
+                ToolBarSetting = ((PlayerMobile)m).SpellBarsArch3;
+            }
+            else if (ToolBar == "SetupBarsArch4")
+            {
+                ToolBarSetting = ((PlayerMobile)m).SpellBarsArch4;
+            }
+            else if (ToolBar == "SetupBarsMage1")
             {
                 ToolBarSetting = ((PlayerMobile)m).SpellBarsMage1;
             }

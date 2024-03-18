@@ -62,6 +62,7 @@ namespace Server.Spells.Shinobi
                     Caster.PlaySound(Caster.Female ? 779 : 1050);
                     Caster.Paralyzed = false;
                     Caster.Frozen = false;
+                    BuffInfo.CleanupIcons(Caster, true);
                     Caster.SendMessage("You freed yourself!");
                 }
                 else

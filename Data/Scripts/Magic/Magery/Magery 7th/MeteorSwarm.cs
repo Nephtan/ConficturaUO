@@ -74,7 +74,6 @@ namespace Server.Spells.Seventh
                             && Caster != pet
                             && Caster.InLOS(m)
                             && m.Blessed == false
-                            && Caster.CanBeHarmful(m, true)
                         )
                         {
                             targets.Add(m);
@@ -114,70 +113,73 @@ namespace Server.Spells.Seventh
                     {
                         Mobile m = targets[i];
 
-                        toDeal = damage;
-
-                        if (!Core.AOS && CheckResisted(m))
+                        if (Caster.CanBeHarmful(m, true))
                         {
-                            damage *= 0.5;
+                            toDeal = damage;
 
-                            m.SendLocalizedMessage(501783); // You feel yourself resisting magical energy.
+                            if (!Core.AOS && CheckResisted(m))
+                            {
+                                damage *= 0.5;
+
+                                m.SendLocalizedMessage(501783); // You feel yourself resisting magical energy.
+                            }
+                            toDeal *= GetDamageScalar(m);
+                            Caster.DoHarmful(m);
+                            SpellHelper.Damage(this, m, toDeal, 0, 100, 0, 0, 0);
+
+                            Point3D blast1 = new Point3D((m.X), (m.Y), m.Z);
+                            Point3D blast2 = new Point3D((m.X - 1), (m.Y), m.Z);
+                            Point3D blast3 = new Point3D((m.X + 1), (m.Y), m.Z);
+                            Point3D blast4 = new Point3D((m.X), (m.Y - 1), m.Z);
+                            Point3D blast5 = new Point3D((m.X), (m.Y + 1), m.Z);
+
+                            Effects.SendLocationEffect(
+                                blast1,
+                                m.Map,
+                                Utility.RandomList(0x33E5, 0x33F5),
+                                85,
+                                10,
+                                Server.Misc.PlayerSettings.GetMySpellHue(true, Caster, 0),
+                                0
+                            );
+                            Effects.SendLocationEffect(
+                                blast2,
+                                m.Map,
+                                Utility.RandomList(0x33E5, 0x33F5),
+                                85,
+                                10,
+                                Server.Misc.PlayerSettings.GetMySpellHue(true, Caster, 0),
+                                0
+                            );
+                            Effects.SendLocationEffect(
+                                blast3,
+                                m.Map,
+                                Utility.RandomList(0x33E5, 0x33F5),
+                                85,
+                                10,
+                                Server.Misc.PlayerSettings.GetMySpellHue(true, Caster, 0),
+                                0
+                            );
+                            Effects.SendLocationEffect(
+                                blast4,
+                                m.Map,
+                                Utility.RandomList(0x33E5, 0x33F5),
+                                85,
+                                10,
+                                Server.Misc.PlayerSettings.GetMySpellHue(true, Caster, 0),
+                                0
+                            );
+                            Effects.SendLocationEffect(
+                                blast5,
+                                m.Map,
+                                Utility.RandomList(0x33E5, 0x33F5),
+                                85,
+                                10,
+                                Server.Misc.PlayerSettings.GetMySpellHue(true, Caster, 0),
+                                0
+                            );
+                            Effects.PlaySound(m.Location, m.Map, 0x15F);
                         }
-                        toDeal *= GetDamageScalar(m);
-                        Caster.DoHarmful(m);
-                        SpellHelper.Damage(this, m, toDeal, 0, 100, 0, 0, 0);
-
-                        Point3D blast1 = new Point3D((m.X), (m.Y), m.Z);
-                        Point3D blast2 = new Point3D((m.X - 1), (m.Y), m.Z);
-                        Point3D blast3 = new Point3D((m.X + 1), (m.Y), m.Z);
-                        Point3D blast4 = new Point3D((m.X), (m.Y - 1), m.Z);
-                        Point3D blast5 = new Point3D((m.X), (m.Y + 1), m.Z);
-
-                        Effects.SendLocationEffect(
-                            blast1,
-                            m.Map,
-                            Utility.RandomList(0x33E5, 0x33F5),
-                            85,
-                            10,
-                            Server.Misc.PlayerSettings.GetMySpellHue(true, Caster, 0),
-                            0
-                        );
-                        Effects.SendLocationEffect(
-                            blast2,
-                            m.Map,
-                            Utility.RandomList(0x33E5, 0x33F5),
-                            85,
-                            10,
-                            Server.Misc.PlayerSettings.GetMySpellHue(true, Caster, 0),
-                            0
-                        );
-                        Effects.SendLocationEffect(
-                            blast3,
-                            m.Map,
-                            Utility.RandomList(0x33E5, 0x33F5),
-                            85,
-                            10,
-                            Server.Misc.PlayerSettings.GetMySpellHue(true, Caster, 0),
-                            0
-                        );
-                        Effects.SendLocationEffect(
-                            blast4,
-                            m.Map,
-                            Utility.RandomList(0x33E5, 0x33F5),
-                            85,
-                            10,
-                            Server.Misc.PlayerSettings.GetMySpellHue(true, Caster, 0),
-                            0
-                        );
-                        Effects.SendLocationEffect(
-                            blast5,
-                            m.Map,
-                            Utility.RandomList(0x33E5, 0x33F5),
-                            85,
-                            10,
-                            Server.Misc.PlayerSettings.GetMySpellHue(true, Caster, 0),
-                            0
-                        );
-                        Effects.PlaySound(m.Location, m.Map, 0x15F);
                     }
                 }
             }

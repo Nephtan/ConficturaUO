@@ -14,6 +14,118 @@ using Server.Regions;
 
 namespace Server.Misc
 {
+    class ResearchSettings
+    {
+        public static bool BookCaster(Mobile m)
+        {
+            if (m is PlayerMobile)
+                return ((PlayerMobile)m).UsingAncientBook;
+
+            return false;
+        }
+
+        public static AncientSpellbook GetAncientTome(Mobile m)
+        {
+            Item item = m.FindItemOnLayer(Layer.Talisman);
+            if (item is AncientSpellbook && ((AncientSpellbook)item).Owner == m)
+                return (item as AncientSpellbook);
+
+            if (m.Backpack.FindItemByType(typeof(AncientSpellbook)) != null)
+            {
+                Item book = m.Backpack.FindItemByType(typeof(AncientSpellbook));
+                if (((AncientSpellbook)book).Owner == m)
+                    return (book as AncientSpellbook);
+            }
+
+            return null;
+        }
+
+        public static Item ResearchMaterials(Mobile m)
+        {
+            Item bag = null;
+
+            if (m.Backpack.FindItemByType(typeof(ResearchBag)) != null)
+            {
+                Item sack = m.Backpack.FindItemByType(typeof(ResearchBag));
+                ResearchBag pouch = (ResearchBag)sack;
+                if (pouch.BagOwner == m)
+                {
+                    bag = sack;
+                }
+            }
+
+            return bag;
+        }
+
+        public static void ResearchTransfer(Mobile m, int bar)
+        {
+            if (bar == 1)
+                ((PlayerMobile)m).SpellBarsArch1 =
+                    "0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#";
+            else if (bar == 2)
+                ((PlayerMobile)m).SpellBarsArch2 =
+                    "0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#";
+            else if (bar == 3)
+                ((PlayerMobile)m).SpellBarsArch3 =
+                    "0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#";
+            else if (bar == 4)
+                ((PlayerMobile)m).SpellBarsArch4 =
+                    "0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#";
+
+            if (m.Backpack.FindItemByType(typeof(ResearchBag)) != null)
+            {
+                Item sack = m.Backpack.FindItemByType(typeof(ResearchBag));
+                ResearchBag pouch = (ResearchBag)sack;
+
+                if (bar == 1)
+                    ((PlayerMobile)m).SpellBarsArch1 = pouch.BarsCast1;
+                else if (bar == 2)
+                    ((PlayerMobile)m).SpellBarsArch2 = pouch.BarsCast1;
+                else if (bar == 3)
+                    ((PlayerMobile)m).SpellBarsArch3 = pouch.BarsCast1;
+                else if (bar == 4)
+                    ((PlayerMobile)m).SpellBarsArch4 = pouch.BarsCast1;
+            }
+        }
+
+        public static bool HasSpell(Mobile from, int spellID)
+        {
+            bool fromBook = ResearchSettings.BookCaster(from);
+
+            if (fromBook)
+            {
+                int spell = Int32.Parse(Research.SpellInformation(spellID, 12));
+                Spellbook book = Spellbook.Find(from, spell);
+                if (book is AncientSpellbook)
+                {
+                    AncientSpellbook ancient = (AncientSpellbook)book;
+                    if (ancient.owner != from)
+                        return false;
+                }
+                return (book != null && book.HasSpell(spell));
+            }
+            else if (Server.Misc.ResearchSettings.ResearchMaterials(from) != null)
+            {
+                ResearchBag bag = (ResearchBag)(
+                    Server.Misc.ResearchSettings.ResearchMaterials(from)
+                );
+                return Server.Misc.Research.GetResearch(bag, spellID);
+            }
+
+            return false;
+        }
+
+        public static string AncientKeywords()
+        {
+            return "<br><br>[CastAcidElemental<br><br>[CastAerialServant<br><br>[CastAirWalk<br><br>[CastAnimateBones<br><br>[CastAvalanche<br><br>[CastBanishDaemon<br><br>[CastBloodElemental<br><br>[CastCallDestruction<br><br>[CastCauseFear<br><br>[CastCharm<br><br>[CastClone<br><br>[CastConflagration<br><br>[CastConfusionBlast<br><br>[CastConjure<br><br>[CastCreateFire<br><br>[CastCreateGold<br><br>[CastCreateGolem<br><br>[CastDeathSpeak<br><br>[CastDeathVortex<br><br>[CastDevastation<br><br>[CastDivination<br><br>[CastElectricalElemental<br><br>[CastEnchant<br><br>[CastEndureCold<br><br>[CastEndureHeat<br><br>[CastEtherealTravel<br><br>[CastExplosion<br><br>[CastExtinguish<br><br>[CastFadefromSight<br><br>[CastFlameBolt<br><br>[CastFrostField<br><br>[CastFrostStrike<br><br>[CastGasCloud<br><br>[CastGemElemental<br><br>[CastGrantPeace<br><br>[CastHailStorm<br><br>[CastHealingTouch<br><br>[CastIceElemental<br><br>[CastIcicle<br><br>[CastIgnite<br><br>[CastIntervention<br><br>[CastInvokeDevil<br><br>[CastMagicSteed<br><br>[CastMaskofDeath<br><br>[CastMassDeath<br><br>[CastMassMight<br><br>[CastMassSleep<br><br>[CastMeteorShower<br><br>[CastMudElemental<br><br>[CastOpenGround<br><br>[CastPoisonElemental<br><br>[CastRestoration<br><br>[CastRingofFire<br><br>[CastRockFlesh<br><br>[CastSeeTruth<br><br>[CastSleep<br><br>[CastSleepField<br><br>[CastSneak<br><br>[CastSnowBall<br><br>[CastSpawnCreature<br><br>[CastSwarm<br><br>[CastWeedElemental<br><br>[CastWithstandDeath<br><br>[CastWizardEye<br><br><br><br><br><br>";
+        }
+
+        public static string BagOrBook()
+        {
+            return "Since you can cast these ancient spells with the contents of your research bag, or an ancient spellbook, you need to make a decision which option you are going to use. By default, magic is assumed to be unleashed by using the research bag. If you want to use an ancient spellbook instead, go into the HELP section of your PAPERDOLL. Choose the SETTINGS section where you can check the box for the ANCIENT SPELLBOOK. Uncheck the box if you wish to use the contents of your research bag instead.";
+        }
+    }
+
     class Research
     {
         public static void InvokeCommand(string c, Mobile from)
@@ -43,6 +155,25 @@ namespace Server.Misc
             }
 
             return HasBag;
+        }
+
+        public static void GetRidOfBook(Mobile from) /////////////////////////////////////////////////////////////////////////////////////////////
+        {
+            ArrayList targets = new ArrayList();
+            foreach (Item item in World.Items.Values)
+            {
+                if (item is AncientSpellbook)
+                {
+                    AncientSpellbook book = (AncientSpellbook)item;
+                    if (book.owner == from)
+                        targets.Add(item);
+                }
+            }
+            for (int i = 0; i < targets.Count; ++i)
+            {
+                Item item = (Item)targets[i];
+                item.Delete();
+            }
         }
 
         public static void SetupBag(Mobile from, ResearchBag bag) /////////////////////////////////////////////////////////////////////////////////
@@ -346,10 +477,14 @@ namespace Server.Misc
             Mobile from,
             bool skillCheck,
             int spellIndex,
-            bool automaticConsume
+            bool automaticConsume,
+            Item scroll
         )
         {
-            if (Server.Misc.ResearchBarSettings.ResearchMaterials(from) != null)
+            if (
+                Server.Misc.ResearchSettings.ResearchMaterials(from) != null
+                && !ResearchSettings.BookCaster(from)
+            )
             {
                 if (skillCheck)
                 {
@@ -365,7 +500,7 @@ namespace Server.Misc
                 }
 
                 ResearchBag bag = (ResearchBag)(
-                    Server.Misc.ResearchBarSettings.ResearchMaterials(from)
+                    Server.Misc.ResearchSettings.ResearchMaterials(from)
                 );
 
                 int high = 125;
@@ -1113,7 +1248,7 @@ namespace Server.Misc
                     SetNecromancy(bag, from);
                     success = true;
                 }
-                if (from.Region.Name == bag.BagInkLocation && bag.BagInk < 500)
+                if (from.Region.Name == bag.BagInkLocation && bag.BagInk < 50000)
                 {
                     SetInk(bag, from);
                     success = true;
@@ -1129,10 +1264,10 @@ namespace Server.Misc
 
         public static void SetInk(ResearchBag bag, Mobile from) //////////////////////////////////////////////////////////////////////////////
         {
-            if (bag.BagInk >= 500)
+            if (bag.BagInk >= 50000)
             {
                 from.SendMessage(
-                    "This pack can only hold 500 bottles of octupus ink so you dump out what you found."
+                    "This pack can only hold 50000 bottles of octupus ink so you dump out what you found."
                 );
             }
             else
@@ -1157,9 +1292,9 @@ namespace Server.Misc
                 }
 
                 bag.BagInk = bag.BagInk + qty;
-                if (bag.BagInk > 500)
+                if (bag.BagInk > 50000)
                 {
-                    bag.BagInk = 500;
+                    bag.BagInk = 50000;
                 }
 
                 from.LocalOverheadMessage(
@@ -1183,15 +1318,17 @@ namespace Server.Misc
         public static string SpellInformation(int index, int slice) ///////////////////////////////////////////////////////////////////////////////
         {
             string value = "";
-            string circle = "";
-            string mana = "";
-            string skill = "";
+            string circle = "0";
+            string mana = "0";
+            string skill = "0";
             string name = "";
             string school = "";
             string words = "";
             string reagents = "";
             string description = "";
-            string init = "";
+            string init = "0";
+            string much = "false";
+            string regs = "false";
 
             if (index == 1)
             {
@@ -1203,6 +1340,7 @@ namespace Server.Misc
                 mana = "10";
                 skill = "15";
                 init = "610";
+                regs = "true";
                 description =
                     "The magic of this spell will conjure a random item of minor significance, but it may be significant dependent on the caster's current motivations. Due to the creative nature of the spell, something needs to be destroyed in turn. That means that the spell scroll will always crumble to dust when cast.";
             }
@@ -1264,7 +1402,7 @@ namespace Server.Misc
                 name = "Confusion Blast";
                 school = "Thaumaturgy";
                 words = "in quas wis";
-                reagents = "	Mandrake Root, Pixie Skull, Fairy Egg";
+                reagents = "Mandrake Root, Pixie Skull, Fairy Egg";
                 mana = "15";
                 skill = "40";
                 init = "609";
@@ -1511,10 +1649,12 @@ namespace Server.Misc
                 name = "Create Gold";
                 school = "Conjuration";
                 words = "rel ylem";
+                much = "true";
                 reagents = "Unicorn Horn, Sea Salt, Ginseng, Golden Serpent Venom";
                 mana = "35";
                 skill = "55";
                 init = "612";
+                regs = "true";
                 description =
                     "Originally created by the fiendish imp Rumpelstiltskin, this spell allows the caster to turn armor or weapons into gold. They can also transmute varying ingots into golden ingots, as well as turn coins into golden coins. Coins will often be destroyed during the transmutation process, but the better the skill of the archmage the less that is lost. This spell is powerful enough that the scroll will always crumble to dust when cast.";
             }
@@ -1679,10 +1819,12 @@ namespace Server.Misc
                 name = "Call Destruction";
                 school = "Thaumaturgy";
                 words = "kal vas grav por";
+                much = "true";
                 reagents = "Bat Wing, Black Pearl, Brimstone, Pig Iron";
                 mana = "25";
                 skill = "40";
                 init = "604";
+                regs = "true";
                 description =
                     "Damages nearby enemies with an destructive force that causes mostly physical harm and some damage from energy. If you hit more than one enemy, the damage amount is doubled and divided amongst each enemy evenly. The damage dealt is between 8-50 points, with the addition of half the available hit points of the caster. After the destruction is unleashed, the caster will lose half of their remaining hit points.";
             }
@@ -1801,7 +1943,7 @@ namespace Server.Misc
                 skill = "50";
                 init = "634";
                 description =
-                    "This is one of those rare spells that call upon the favor of the gods. When the spell is invoked, the caster is empowered with 10-50 additional points in their resistances. They are also protected from magery spell attack damage for 25-125 points. The effects last between 10-50 minutes but the magic protection will wear off when all points are exhausted.";
+                    "This is one of those rare spells that call upon the favor of the gods. When the spell is invoked, the caster is empowered with 10-50 additional points in their resistances. They are also protected from magery spell attack damage for 25-125 points. The effects last between 10-50 minutes.";
             }
             else if (index == 48)
             {
@@ -1835,10 +1977,12 @@ namespace Server.Misc
                 name = "Open Ground";
                 school = "Death";
                 words = "des por ylem";
+                much = "true";
                 reagents = "Brimstone, Grave Dust, Pig Iron, Mandrake Root";
                 mana = "65";
                 skill = "85";
                 init = "641";
+                regs = "true";
                 description =
                     "Opens a huge hole in the ground that can cause anyone that goes near it to fall in. Creatures may fall to their deaths and never be seen again, while advenuterers will fall into the huge chasm below. If an adventurer has comrades, familiars, summons, or tamed beasts that stumble into the chasm, then the adventurer will fall in after them. This spell is powerful enough that the scroll will always crumble to dust when cast. The caster may lose some karma if they attempt this.";
             }
@@ -1939,12 +2083,14 @@ namespace Server.Misc
                 name = "Withstand Death";
                 school = "Death";
                 words = "vas an corp";
+                much = "true";
                 reagents = "Phoenix Feather, Demigod Blood, Enchanted Seaweed, Ghostly Dust";
                 mana = "70";
                 skill = "90";
                 init = "662";
+                regs = "true";
                 description =
-                    "This spell has been was lost to the ages, but legends tell of King Wolfgang learning the secrets of this spell and creating the gem of immortality. The caster, if they can find all of the reagents needed, should be able to create a gem almost similar to that. If one is holding the jewel that is created, and they meet an untimely end, they will be restored to full health instead as the jewel vanishes from this plane of existence. You will need a sapphire to imbue the magic in for this spell to work. This spell is powerful enough that the scroll will always crumble to dust when cast.";
+                    "This spell was lost to the ages, but legends tell of King Wolfgang learning the secrets of this spell and creating the gem of immortality. The caster, if they can find all of the reagents needed, should be able to create a gem almost similar to that. If one is holding the jewel that is created, and they meet an untimely end, they will be restored to full health instead as the jewel vanishes from this plane of existence. You will need a sapphire to imbue the magic in for this spell to work. This spell is powerful enough that the scroll will always crumble to dust when cast.";
             }
             else if (index == 59)
             {
@@ -1956,6 +2102,7 @@ namespace Server.Misc
                 mana = "50";
                 skill = "85";
                 init = "639";
+                regs = "true";
                 description =
                     "This spell will cause nearby foes to sleep for 10-60 seconds, but taking actions against them will likely wake them up from their slumber. This spell cannot affect supernatural creatures, constructs, golems, or elementals. This spell is powerful enough that the scroll will always crumble to dust when cast.";
             }
@@ -1991,6 +2138,7 @@ namespace Server.Misc
                 name = "Armageddon";
                 school = "Thaumaturgy";
                 words = "in vas ort corp";
+                much = "true";
                 reagents = "Butterfly Wings, Black Pearl, Demigod Blood, Demon Claw";
                 mana = "80";
                 skill = "100";
@@ -2016,10 +2164,12 @@ namespace Server.Misc
                 name = "Mass Death";
                 school = "Wizardry";
                 words = "vas corp";
+                much = "true";
                 reagents = "Pixie Skull, Bat Wing, Dragon Tooth";
                 mana = "55";
                 skill = "90";
                 init = "637";
+                regs = "true";
                 description =
                     "Damages nearby enemies with deathly magics summoned from the void. If you hit more than one enemy, the damage amount is doubled and divided amongst each enemy evenly. The damage dealt is between 45-125 points, with the addition of the available hit points of the caster. After the mass death is unleashed, the caster will have a single hit point remaining. The caster may lose some karma if they attempt this. This spell is powerful enough that the scroll will always crumble to dust when cast.";
             }
@@ -2055,6 +2205,14 @@ namespace Server.Misc
             else if (slice == 8)
             {
                 value = skill;
+            }
+            else if (slice == 13)
+            {
+                value = much;
+            }
+            else if (slice == 14)
+            {
+                value = regs;
             }
             else if (slice == 9)
             {
@@ -4603,9 +4761,9 @@ namespace Server.Misc
 
         public static void CastSpell(Mobile from, int spell) //////////////////////////////////////////////////////////////////////////////////////
         {
-            if (Server.Misc.ResearchBarSettings.ResearchMaterials(from) != null)
+            if (Server.Misc.ResearchSettings.ResearchMaterials(from) != null)
             {
-                if (ResearchBarSettings.HasSpell(from, spell))
+                if (ResearchSettings.HasSpell(from, spell))
                 {
                     if (spell == 1)
                     {

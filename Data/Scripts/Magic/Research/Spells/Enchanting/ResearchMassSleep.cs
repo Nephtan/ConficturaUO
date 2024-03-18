@@ -13,6 +13,10 @@ namespace Server.Spells.Research
         {
             get { return 59; }
         }
+        public override bool alwaysConsume
+        {
+            get { return bool.Parse(Server.Misc.Research.SpellInformation(spellIndex, 14)); }
+        }
         public int CirclePower = 8;
         public static int spellID = 59;
         public override TimeSpan CastDelayBase
@@ -35,7 +39,11 @@ namespace Server.Spells.Research
             Server.Misc.Research.SpellInformation(spellID, 2),
             Server.Misc.Research.CapsCast(Server.Misc.Research.SpellInformation(spellID, 4)),
             233,
-            9042
+            9042,
+            Reagent.FairyEgg,
+            Reagent.MandrakeRoot,
+            Reagent.EnchantedSeaweed,
+            Reagent.LichDust
         );
 
         public ResearchMassSleep(Mobile caster, Item scroll)
@@ -127,11 +135,20 @@ namespace Server.Spells.Research
 
                         m.Paralyze(duration);
 
+                        BuffInfo.RemoveBuff(m, BuffIcon.MassSleep);
+                        BuffInfo.AddBuff(m, new BuffInfo(BuffIcon.MassSleep, 1063650, duration, m));
+
                         new SleepyTimer(m, duration, Caster).Start();
 
                         HarmfulSpell(m);
                     }
-                    Server.Misc.Research.ConsumeScroll(Caster, true, spellIndex, true);
+                    Server.Misc.Research.ConsumeScroll(
+                        Caster,
+                        true,
+                        spellIndex,
+                        alwaysConsume,
+                        Scroll
+                    );
                 }
             }
 

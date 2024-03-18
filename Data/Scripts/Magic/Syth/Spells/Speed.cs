@@ -63,6 +63,7 @@ namespace Server.Spells.Syth
             m.Send(SpeedControl.Disable);
             TableSythRunning.Remove(m);
             m.EndAction(typeof(SythSpeed));
+            BuffInfo.RemoveBuff(m, BuffIcon.Speed);
         }
 
         public override void OnCast()
@@ -100,6 +101,11 @@ namespace Server.Spells.Syth
                 TableSythRunning[Caster] = SpeedControl.MountSpeed;
                 Caster.Send(SpeedControl.MountSpeed);
                 new InternalTimer(Caster, TimeSpan.FromSeconds(TotalTime)).Start();
+                BuffInfo.RemoveBuff(Caster, BuffIcon.Speed);
+                BuffInfo.AddBuff(
+                    Caster,
+                    new BuffInfo(BuffIcon.Speed, 1063508, TimeSpan.FromSeconds(TotalTime), Caster)
+                );
                 Caster.BeginAction(typeof(SythSpeed));
                 Point3D air = new Point3D((Caster.X + 1), (Caster.Y + 1), (Caster.Z + 5));
                 Effects.SendLocationParticles(

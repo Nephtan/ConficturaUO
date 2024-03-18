@@ -1522,7 +1522,7 @@ namespace Server.Mobiles
 
                         if (Server.Misc.MaterialInfo.IsAnyKindOfMetalItem(iRuined))
                         {
-                            if (Server.Items.HiddenTrap.CheckInsuranceOnTrap(iRuined, m) == true)
+                            if (Server.Items.HiddenTrap.CheckInsuranceOnTrap(iRuined, m))
                             {
                                 m.LocalOverheadMessage(
                                     MessageType.Emote,
@@ -1554,7 +1554,7 @@ namespace Server.Mobiles
 
                         if (Server.Misc.MaterialInfo.IsAnyKindOfMetalItem(iRuined))
                         {
-                            if (Server.Items.HiddenTrap.CheckInsuranceOnTrap(iRuined, m) == true)
+                            if (Server.Items.HiddenTrap.CheckInsuranceOnTrap(iRuined, m))
                             {
                                 m.LocalOverheadMessage(
                                     MessageType.Emote,

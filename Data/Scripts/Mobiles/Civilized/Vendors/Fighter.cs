@@ -350,7 +350,7 @@ namespace Server.Mobiles
 
             if (shield && Utility.RandomBool())
             {
-                switch (Utility.Random(8))
+                switch (Utility.Random(10))
                 {
                     case 0:
                         m.AddItem(new BronzeShield());
@@ -375,6 +375,12 @@ namespace Server.Mobiles
                         break;
                     case 7:
                         m.AddItem(new WoodenShield());
+                        break;
+                    case 8:
+                        m.AddItem(new SunShield());
+                        break;
+                    case 9:
+                        m.AddItem(new VirtueShield());
                         break;
                 }
             }

@@ -98,7 +98,7 @@ namespace Server.Items
                 m_Book = relicBox;
                 ManualOfItems pedia = (ManualOfItems)relicBox;
 
-                int NumberOfArtifacts = 289; // SEE LISTING BELOW AND MAKE SURE IT MATCHES THE AMOUNT
+                int NumberOfArtifacts = 291; // SEE LISTING BELOW AND MAKE SURE IT MATCHES THE AMOUNT
                 // DO THIS NUMBER+1 IN THE OnResponse SECTION BELOW
 
                 decimal PageCount = NumberOfArtifacts / 16;
@@ -1405,6 +1405,18 @@ namespace Server.Items
             {
                 name = "GiftStuddedSuneate";
                 item = "Studded Suneate";
+            }
+            arty++;
+            if (artifact == arty)
+            {
+                name = "GiftSunShield";
+                item = "Sun Shield";
+            }
+            arty++;
+            if (artifact == arty)
+            {
+                name = "GiftVirtueShield";
+                item = "Virtue Shield";
             }
             arty++;
             if (artifact == arty)

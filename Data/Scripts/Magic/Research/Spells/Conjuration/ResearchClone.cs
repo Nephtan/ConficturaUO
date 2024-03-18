@@ -37,7 +37,9 @@ namespace Server.Spells.Research
             Server.Misc.Research.SpellInformation(spellID, 2),
             Server.Misc.Research.CapsCast(Server.Misc.Research.SpellInformation(spellID, 4)),
             230,
-            9041
+            9041,
+            Reagent.GargoyleEar,
+            Reagent.FairyEgg
         );
 
         private static Dictionary<Mobile, int> m_CloneCount = new Dictionary<Mobile, int>();
@@ -136,7 +138,7 @@ namespace Server.Spells.Research
                 Effects.PlaySound(Caster, Caster.Map, 0x201);
                 Caster.Hidden = true;
                 new Clone(Caster).MoveToWorld(Caster.Location, Caster.Map);
-                Server.Misc.Research.ConsumeScroll(Caster, true, spellIndex, false);
+                Server.Misc.Research.ConsumeScroll(Caster, true, spellIndex, alwaysConsume, Scroll);
             }
 
             FinishSequence();

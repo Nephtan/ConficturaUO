@@ -12,13 +12,9 @@ namespace Server.Mobiles
             : base(AIType.AI_Animal, FightMode.Aggressor, 10, 1, 0.2, 0.4)
         {
             Name = "a snow leopard";
-            Body = Server.Misc.MyServerSettings.LeopardBodies();
+            Body = 214;
             BaseSoundID = 0x73;
-            Hue = 0x9C4;
-            if (Body == 214)
-            {
-                Hue = 2996;
-            }
+            Hue = 2996;
 
             SetStr(56, 80);
             SetDex(66, 85);

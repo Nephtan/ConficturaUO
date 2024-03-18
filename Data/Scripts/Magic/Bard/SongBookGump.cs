@@ -753,7 +753,7 @@ namespace Server.Gumps
             }
             else if (info.ButtonID > 300)
             {
-                if (m_Book.Instrument == null)
+                if (m_Book.Instrument == null && HasSpell(from, info.ButtonID))
                 {
                     from.SendMessage("You need an instrument to play that song!");
                     from.SendMessage("Select your instrument of bardic choice.");

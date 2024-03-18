@@ -14,7 +14,8 @@ namespace Server.Mobiles
         public Mammoth()
         {
             Name = "a mammoth";
-            Hue = 0xB5B;
+            Body = 997;
+            Hue = 0xB3A;
 
             SetStr(326, 355);
             SetDex(81, 105);
@@ -77,6 +78,8 @@ namespace Server.Mobiles
         {
             base.Deserialize(reader);
             int version = reader.ReadInt();
+            Body = 997;
+            Hue = 0xB3A;
         }
     }
 }

@@ -11,6 +11,10 @@ namespace Server.Spells.Research
         {
             get { return 25; }
         }
+        public override bool alwaysConsume
+        {
+            get { return bool.Parse(Server.Misc.Research.SpellInformation(spellIndex, 14)); }
+        }
         public int CirclePower = 4;
         public static int spellID = 25;
         public override TimeSpan CastDelayBase
@@ -33,7 +37,11 @@ namespace Server.Spells.Research
             Server.Misc.Research.SpellInformation(spellID, 2),
             Server.Misc.Research.CapsCast(Server.Misc.Research.SpellInformation(spellID, 4)),
             266,
-            9040
+            9040,
+            Reagent.UnicornHorn,
+            Reagent.SeaSalt,
+            Reagent.Ginseng,
+            Reagent.GoldenSerpentVenom
         );
 
         public ResearchCreateGold(Mobile caster, Item scroll)
@@ -41,20 +49,32 @@ namespace Server.Spells.Research
 
         public override void OnCast()
         {
-            Caster.SendMessage("What item do you want to transmute into gold?");
-            Caster.Target = new InternalTarget(this, spellID);
+            if (CheckSequence())
+            {
+                Caster.SendMessage("What item do you want to transmute into gold?");
+                Caster.Target = new InternalTarget(this, spellID, Scroll, alwaysConsume);
+            }
         }
 
         private class InternalTarget : Target
         {
             private ResearchCreateGold m_Owner;
             private int m_SpellIndex;
+            private Item m_fromBook;
+            private bool m_alwaysConsume;
 
-            public InternalTarget(ResearchCreateGold owner, int spellIndex)
+            public InternalTarget(
+                ResearchCreateGold owner,
+                int spellIndex,
+                Item fromBook,
+                bool alwaysConsume
+            )
                 : base(Core.ML ? 10 : 12, false, TargetFlags.None)
             {
                 m_Owner = owner;
+                m_fromBook = fromBook;
                 m_SpellIndex = spellIndex;
+                m_alwaysConsume = alwaysConsume;
             }
 
             protected override void OnTarget(Mobile from, object targeted)
@@ -94,7 +114,13 @@ namespace Server.Spells.Research
 
                 if (TurnToGold)
                 {
-                    Server.Misc.Research.ConsumeScroll(from, true, m_SpellIndex, true);
+                    Server.Misc.Research.ConsumeScroll(
+                        from,
+                        true,
+                        m_SpellIndex,
+                        m_alwaysConsume,
+                        m_fromBook
+                    );
                     GoldenTouch(from, targeted);
                     from.PlaySound(0x64E);
                     from.FixedParticles(

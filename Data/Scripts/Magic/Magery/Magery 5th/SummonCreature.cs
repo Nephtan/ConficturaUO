@@ -44,6 +44,7 @@ namespace Server.Spells.Fifth
             typeof(Eagle),
             typeof(Gorilla),
             typeof(SnowLeopard),
+            typeof(Cheetah),
             typeof(Pig),
             typeof(Hind),
             typeof(Rabbit)

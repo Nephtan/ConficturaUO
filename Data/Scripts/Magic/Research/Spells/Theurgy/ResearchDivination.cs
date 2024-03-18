@@ -39,7 +39,10 @@ namespace Server.Spells.Research
             Server.Misc.Research.SpellInformation(spellID, 2),
             Server.Misc.Research.CapsCast(Server.Misc.Research.SpellInformation(spellID, 4)),
             215,
-            9001
+            9001,
+            Reagent.Ginseng,
+            Reagent.DaemonBlood,
+            Reagent.EyeOfToad
         );
 
         public ResearchDivination(Mobile caster, Item scroll)
@@ -47,18 +50,23 @@ namespace Server.Spells.Research
 
         public override void OnCast()
         {
-            Caster.Target = new InternalTarget(this, spellID);
+            if (CheckSequence())
+            {
+                Caster.Target = new InternalTarget(this, spellID, Scroll);
+            }
         }
 
         private class InternalTarget : Target
         {
             private ResearchDivination m_Owner;
             private int m_SpellIndex;
+            private Item m_fromBook;
 
-            public InternalTarget(ResearchDivination owner, int spellIndex)
+            public InternalTarget(ResearchDivination owner, int spellIndex, Item fromBook)
                 : base(Core.ML ? 10 : 12, false, TargetFlags.None)
             {
                 m_Owner = owner;
+                m_fromBook = fromBook;
                 m_SpellIndex = spellIndex;
             }
 
@@ -138,7 +146,7 @@ namespace Server.Spells.Research
 
                 if (success)
                 {
-                    Server.Misc.Research.ConsumeScroll(from, true, m_SpellIndex, false);
+                    Server.Misc.Research.ConsumeScroll(from, true, m_SpellIndex, false, m_fromBook);
                     from.PlaySound(0xF7);
                 }
 

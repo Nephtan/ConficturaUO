@@ -8,7 +8,6 @@ using Server.Network;
 
 namespace Server.Items
 {
-    [Flipable(0x1C10, 0x1CC6)]
     public class SackOfHolding : LargeSack
     {
         public Mobile SackOwner;
@@ -41,7 +40,7 @@ namespace Server.Items
         {
             Weight = 1.0;
             MaxItems = 10;
-            Name = "bag of holding";
+            Name = "pack of holding";
             Hue = Utility.RandomColor(0);
 
             switch (Utility.RandomMinMax(0, 5))
@@ -49,26 +48,32 @@ namespace Server.Items
                 case 0:
                     Weight = 1.0;
                     MaxItems = 10;
+                    ItemID = Utility.RandomList(0x658D, 0x658E);
                     break;
                 case 1:
                     Weight = 1.0;
                     MaxItems = 10;
+                    ItemID = Utility.RandomList(0x658D, 0x658E);
                     break;
                 case 2:
                     Weight = 1.0;
                     MaxItems = 10;
+                    ItemID = Utility.RandomList(0x658D, 0x658E);
                     break;
                 case 3:
                     Weight = 2.0;
                     MaxItems = 20;
+                    ItemID = Utility.RandomList(0x6568, 0x6569);
                     break;
                 case 4:
                     Weight = 2.0;
                     MaxItems = 20;
+                    ItemID = Utility.RandomList(0x6568, 0x6569);
                     break;
                 case 5:
                     Weight = 3.0;
                     MaxItems = 30;
+                    ItemID = Utility.RandomList(0x6568, 0x6569);
                     break;
             }
         }
@@ -238,17 +243,30 @@ namespace Server.Items
             base.Deserialize(reader);
             int version = reader.ReadInt();
             SackOwner = reader.ReadMobile();
+            Name = "pack of holding";
             if (Weight == 3.0)
             {
                 MaxItems = 30;
+                if (ItemID != 0x6568 || ItemID != 0x6569)
+                {
+                    ItemID = Utility.RandomList(0x6568, 0x6569);
+                }
             }
             else if (Weight == 2.0)
             {
                 MaxItems = 20;
+                if (ItemID != 0x6568 || ItemID != 0x6569)
+                {
+                    ItemID = Utility.RandomList(0x6568, 0x6569);
+                }
             }
             else
             {
                 MaxItems = 10;
+                if (ItemID != 0x658D || ItemID != 0x658E)
+                {
+                    ItemID = Utility.RandomList(0x658D, 0x658E);
+                }
             }
             m_MaxWeightDefault = 100000;
         }
