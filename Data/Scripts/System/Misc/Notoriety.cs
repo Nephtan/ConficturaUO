@@ -221,6 +221,12 @@ namespace Server.Misc
                 return true;
             }
 
+            // Allow non-player mobiles (NPCs) or mobiles not owned by a PlayerMobile to attack all PlayerMobiles or their pets
+            if (bcAttacker != null && (pmTarget != null || bcTarget != null) && !(attackerOwner is PlayerMobile))
+            {
+                return true;
+            }
+
             // Prevent NONPK.NONPK players or their pets from initiating attacks on other players or their pets
             if (isAttackerNonPk && pmAttacker != null)
             {
