@@ -32265,7 +32265,7 @@ namespace Server.Mobiles
                     Add(
                         new GenericBuyInfo(
                             typeof(LesserManaPotion),
-                            860,
+                            60,
                             Utility.Random(1, 25),
                             0x23BD,
                             0x48D
