@@ -295,7 +295,7 @@ namespace Server.Items
                 else
                 {
                     from.SendMessage(
-                        "This tent is too worn from over use, and is no longer of any good."
+                        "This tent is too worn and is no longer of any use."
                     );
                     this.Delete();
                     return;
@@ -312,7 +312,7 @@ namespace Server.Items
                 if (Charges < 1)
                 {
                     from.SendMessage(
-                        "This tent is too worn from over use, and is no longer of any good."
+                        "This tent is too worn and is no longer of any use."
                     );
                     this.Delete();
                     return;
