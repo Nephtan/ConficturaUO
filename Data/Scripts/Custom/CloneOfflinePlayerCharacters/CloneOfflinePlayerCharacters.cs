@@ -1109,7 +1109,7 @@ namespace Confictura.Custom
         private CharacterClone m_Hire;
 
         public HireEntry(Mobile from, CharacterClone hire)
-            : base(6120, 3)
+            : base(6120, 12)
         {
             m_Hire = hire;
             m_Mobile = from;
