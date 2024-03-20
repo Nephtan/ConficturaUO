@@ -5121,18 +5121,18 @@ namespace Server.Mobiles
                 Server.Items.EssenceBase.ColorCitizen(this);
                 Server.Misc.MorphingTime.CheckNecromancer(this);
 
-                if (
-                    this.Home.X > 0
-                    && this.Home.Y > 0
-                    && (
-                        Math.Abs(this.X - this.Home.X) > 2
-                        || Math.Abs(this.Y - this.Home.Y) > 2
-                        || Math.Abs(this.Z - this.Home.Z) > 2
-                    )
-                )
-                {
-                    this.Location = this.Home;
-                }
+                //if (
+                //    this.Home.X > 0
+                //    && this.Home.Y > 0
+                //    && (
+                //        Math.Abs(this.X - this.Home.X) > 2
+                //        || Math.Abs(this.Y - this.Home.Y) > 2
+                //        || Math.Abs(this.Z - this.Home.Z) > 2
+                //    )
+                //)
+                //{
+                //    this.Location = this.Home;
+                //}
                 if (Server.Misc.Worlds.isOrientalRegion(this))
                 {
                     Server.Misc.MorphingTime.RemoveMyClothes(this);
