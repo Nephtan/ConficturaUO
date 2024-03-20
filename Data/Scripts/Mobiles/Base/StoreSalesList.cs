@@ -27016,6 +27016,18 @@ namespace Server.Mobiles
                 }
                 if (MyServerSettings.SellChance())
                 {
+                    Add(
+                        new GenericBuyInfo(
+                            typeof(StandardBeggingStudyBook),
+                            7500,
+                            1,
+                            0x225A,
+                            0x1BA
+                        )
+                    );
+                }
+                if (MyServerSettings.SellChance())
+                {
                     Add(new GenericBuyInfo(typeof(Backpack), 15, Utility.Random(1, 15), 0x53D5, 0));
                 }
                 if (MyServerSettings.SellChance())
