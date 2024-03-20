@@ -759,6 +759,13 @@ namespace Confictura.Custom
                     // Is the item the payment in gold
                     if (item is Gold)
                     {
+                        // Ensure the original player is valid and has a bank
+                        BankBox originalPlayerBank = Original.BankBox;
+                        if (originalPlayerBank == null)
+                        {
+                            return false;
+                        }
+
                         // Is the payment in gold sufficient
                         if (item.Amount >= m_Pay)
                         {
@@ -783,6 +790,7 @@ namespace Confictura.Custom
                                 );
                                 m_HireTable[from] = this;
                                 m_HoldGold += item.Amount;
+                                originalPlayerBank.DropItem(item);
                                 m_PayTimer = new PayTimer(this);
                                 m_PayTimer.Start();
                                 return true;
