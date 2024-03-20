@@ -95,16 +95,6 @@ namespace Server.Items
 
         public bool CanDealDamageTo(Mobile from, Mobile target)
         {
-            // If either from or target are null return false
-            if (from == null || target == null)
-                return false;
-
-            // Ensure both mobiles are on a valid map or on the same map
-            Map attMap = from.Map;
-            Map targMap = target.Map;
-            if (attMap == null || targMap == null || attMap != targMap)
-                return false;
-
             // Casts for player and creature checks
             BaseCreature bcAttacker = from as BaseCreature;
             BaseCreature bcTarget = target as BaseCreature;
@@ -116,9 +106,7 @@ namespace Server.Items
             GuildStatus targetGuildStatus = GetGuildStatus(target);
 
             // Pet ownership and control checks
-            bool attackerIsPet = bcAttacker != null && (bcAttacker.Controlled || bcAttacker.Summoned);
             bool targetIsPet = bcTarget != null && (bcTarget.Controlled || bcTarget.Summoned);
-            Mobile attackerOwner = attackerIsPet ? bcAttacker.ControlMaster ?? bcAttacker.SummonMaster ?? bcAttacker.BardMaster : null;
             Mobile targetOwner = targetIsPet ? bcTarget.ControlMaster ?? bcTarget.SummonMaster : null;
 
             // Consensual PlayerMobile PvP System bools
@@ -129,13 +117,6 @@ namespace Server.Items
                 isAttackerNonPk = pmAttacker.NONPK == NONPK.NONPK;
                 isAttackerPk = pmAttacker.NONPK == NONPK.PK;
                 isAttackerNull = pmAttacker.NONPK == NONPK.Null;
-            }
-            else if (attackerOwner != null && attackerOwner is PlayerMobile)
-            {
-                PlayerMobile ownerAttacker = (PlayerMobile)attackerOwner;
-                isAttackerNonPk = ownerAttacker.NONPK == NONPK.NONPK;
-                isAttackerPk = ownerAttacker.NONPK == NONPK.PK;
-                isAttackerNull = ownerAttacker.NONPK == NONPK.Null;
             }
 
             if (pmTarget != null)
@@ -152,27 +133,12 @@ namespace Server.Items
                 isTargetNull = ownerTarget.NONPK == NONPK.Null;
             }
 
-            // Staff can always perform harmful actions
-            if (from.AccessLevel > AccessLevel.Player)
+            if (pmAttacker == pmTarget || pmAttacker == targetOwner)
                 return true;
-
-            // Harmful actions cannot be performed on staff
-            if (target.AccessLevel > AccessLevel.Player)
-                return false;
 
             // Ensure that if from and target are opponents in an Xml Event they may harm each other
             if (XmlPoints.AreChallengers(from, target))
                 return true;
-
-            // Ensure bard provoked creatures can harm their targets but not if a player is provoking them onto a NONPK target
-            if (bcAttacker != null && bcAttacker.BardProvoked && bcAttacker.BardTarget == target)
-            {
-                if (attackerOwner != null && isTargetNonPk)
-                {
-                    return false;
-                }
-                return true;
-            }
 
             // Allow NONPK players to attack non-player mobiles (NPCs) or mobiles not owned by a PlayerMobile,
             // but not pets or summons owned by PlayerMobiles
@@ -181,17 +147,23 @@ namespace Server.Items
                 return true;
             }
 
+            // Allow non-player mobiles (NPCs) or mobiles not owned by a PlayerMobile to attack all PlayerMobiles or their pets
+            if (bcAttacker != null && (pmTarget != null || bcTarget != null))
+            {
+                return true;
+            }
+
             // Prevent NONPK.NONPK players or their pets from initiating attacks on other players or their pets
             if (isAttackerNonPk && pmAttacker != null)
             {
-                (attackerOwner ?? from).SendMessage(33, "You have chosen the path of [PvE] and cannot attack players or their pets.");
+                from.SendMessage(33, "You have chosen the path of [PvE] and cannot attack players or their pets.");
                 return false;
             }
 
             // Prevent attacks on NONPK players or their pets from other players
             if (isTargetNonPk && pmAttacker != null)
             {
-                (attackerOwner ?? from).SendMessage(33, "You cannot attack players or pets who have chosen the path of [PvE].");
+                from.SendMessage(33, "You cannot attack players or pets who have chosen the path of [PvE].");
                 return false;
             }
 
@@ -200,17 +172,6 @@ namespace Server.Items
             {
                 return false;
             }
-
-            // Prevents pets of any status from attacking NONPK.NONPK players
-            if (!targetIsPet && isTargetNonPk && attackerIsPet)
-            {
-                return false;
-            }
-
-
-            // Prevent controlled or summoned creatures from harming their master or others controlled by the same master
-            if (bcAttacker != null && (bcAttacker.ControlMaster == target || bcAttacker.SummonMaster == target || attackerOwner == target || (bcTarget != null && attackerOwner == (bcTarget.ControlMaster ?? bcTarget.SummonMaster))))
-                return false;
 
             // Ensure city citizens and banned players can perform harmful actions on each other
             if (PlayerGovernmentSystem.CheckIfBanned(from, target))
