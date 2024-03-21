@@ -1,8 +1,8 @@
 using System;
+using System.Collections;
+using System.IO;
 using System.Net.Sockets;
 using System.Threading;
-using System.IO;
-using System.Collections;
 using Server;
 using Server.Guilds;
 using Server.Network;

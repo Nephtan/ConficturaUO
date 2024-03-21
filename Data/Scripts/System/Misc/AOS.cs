@@ -8,8 +8,8 @@ using Server.Mobiles;
 using Server.Network;
 using Server.Spells;
 using Server.Spells.Fifth;
-using Server.Spells.Seventh;
 using Server.Spells.Ninjitsu;
+using Server.Spells.Seventh;
 using Server.Spells.Shinobi;
 
 namespace Server
@@ -1159,7 +1159,8 @@ namespace Server
                     AnimalForm.RemoveContext(m, true);
             }
             if (
-                !m.CanBeginAction(typeof(PolymorphSpell)) && m.Skills[SkillName.Magery].Value < 66.1
+                !m.CanBeginAction(typeof(PolymorphSpell))
+                && m.Skills[SkillName.Magery].Value < 66.1
             )
             {
                 m.BodyMod = 0;
@@ -1171,7 +1172,8 @@ namespace Server
                 BaseClothing.ValidateMobile(m);
             }
             if (
-                !m.CanBeginAction(typeof(IncognitoSpell)) && m.Skills[SkillName.Magery].Value < 38.1
+                !m.CanBeginAction(typeof(IncognitoSpell))
+                && m.Skills[SkillName.Magery].Value < 38.1
             )
             {
                 if (m is PlayerMobile)

@@ -1,12 +1,12 @@
 using System;
-using Server;
-using Server.Misc;
-using System.Collections.Generic;
 using System.Collections;
-using Server.Network;
-using Server.Mobiles;
-using Server.Items;
+using System.Collections.Generic;
+using Server;
 using Server.ContextMenus;
+using Server.Items;
+using Server.Misc;
+using Server.Mobiles;
+using Server.Network;
 
 namespace Server.Mobiles
 {
@@ -366,6 +366,10 @@ namespace Server.Mobiles
                     else if (this.NpcGuild == NpcGuild.ElementalGuild)
                     {
                         GuildType = 22;
+                    }
+                    else if (this.NpcGuild == NpcGuild.JestersGuild)
+                    {
+                        GuildType = 23;
                     }
 
                     from.AddToBackpack(new GuildRings(from, GuildType));

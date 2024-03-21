@@ -1,9 +1,9 @@
 using System;
-using Server;
-using Server.Items;
 using System.Text;
-using Server.Mobiles;
+using Server;
 using Server.Gumps;
+using Server.Items;
+using Server.Mobiles;
 using Server.Network;
 
 namespace Server.Items
@@ -135,7 +135,7 @@ namespace Server.Items
                     364,
                     @"<BODY><BASEFONT Color="
                         + color
-                        + ">Use a bladed item, like a dagger or knife, on a corpse by double-clicking the bladed item and then selecting the corpse. If there is something to be skinned from it, it will appear in their pack. If they have scales, then those will also appear in their pack.<br><br>Different types of scales can be found on many creatures like dragons and dinosaurs. You can use these scales to make different types of items by using a blacksmith hammer and making scalemail armor.<BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR>There are 7 different types of scales:</BASEFONT></BODY>",
+                        + ">Use a bladed item such as a dagger or knife on a corpse by double-clicking the bladed item and then selecting the corpse. If there are any items to be skinned from the corpse, they will be added to your inventory. Additionally, if the corpse possesses scales, they too will be added to your inventory.<BR><BR>Various creatures, such as dragons and dinosaurs, yield different types of scales. These scales can be utilized in the creation of diverse items by employing a blacksmith hammer and crafting scalemail armor.<BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR>There are 7 different types of scales:</BASEFONT></BODY>",
                     (bool)false,
                     (bool)false
                 );

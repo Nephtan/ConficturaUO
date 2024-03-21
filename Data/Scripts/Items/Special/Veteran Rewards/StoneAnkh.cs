@@ -1,9 +1,9 @@
 using System;
 using Server;
-using Server.Multis;
-using Server.Gumps;
-using Server.Network;
 using Server.Engines.VeteranRewards;
+using Server.Gumps;
+using Server.Multis;
+using Server.Network;
 
 namespace Server.Items
 {
@@ -48,6 +48,11 @@ namespace Server.Items
 
     public class StoneAnkh : BaseAddon, IRewardItem
     {
+        public override string AddonName
+        {
+            get { return "ankh"; }
+        }
+
         public override BaseAddonDeed Deed
         {
             get

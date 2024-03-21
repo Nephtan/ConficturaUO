@@ -1,10 +1,10 @@
 using System;
-using Server.Targeting;
-using Server.Network;
-using Server.Regions;
+using System.Collections;
 using Server.Items;
 using Server.Mobiles;
-using System.Collections;
+using Server.Network;
+using Server.Regions;
+using Server.Targeting;
 
 namespace Server.Spells.Jester
 {
@@ -18,7 +18,7 @@ namespace Server.Spells.Jester
         }
         public override int RequiredTithing
         {
-            get { return 120; }
+            get { return 20; }
         }
         public override int RequiredMana
         {
@@ -463,6 +463,12 @@ namespace Server.Spells.Jester
                 m_Loss = loss;
                 m_Owner = owner;
                 m_Expire = DateTime.Now + TimeSpan.FromSeconds(m_Time);
+
+                BuffInfo.RemoveBuff(owner, BuffIcon.Insult);
+                BuffInfo.AddBuff(
+                    owner,
+                    new BuffInfo(BuffIcon.Insult, 1063518, TimeSpan.FromSeconds(m_Time), owner)
+                );
             }
 
             protected override void OnTick()

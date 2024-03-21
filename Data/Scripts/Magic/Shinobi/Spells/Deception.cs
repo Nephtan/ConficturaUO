@@ -1,10 +1,10 @@
 using System;
 using System.Collections;
 using Server;
-using Server.Mobiles;
-using Server.Misc;
-using Server.Items;
 using Server.Gumps;
+using Server.Items;
+using Server.Misc;
+using Server.Mobiles;
 using Server.Spells;
 using Server.Spells.Fifth;
 using Server.Spells.Seventh;
@@ -145,16 +145,17 @@ namespace Server.Spells.Shinobi
 
                     TimeSpan length = TimeSpan.FromSeconds(timeVal);
 
+                    BuffInfo.RemoveBuff(Caster, BuffIcon.Deception);
+                    BuffInfo.AddBuff(
+                        Caster,
+                        new BuffInfo(BuffIcon.Deception, 1063492, length, Caster)
+                    );
+
                     Timer t = new InternalTimer(Caster, length);
 
                     m_Timers[Caster] = t;
 
                     t.Start();
-
-                    BuffInfo.AddBuff(
-                        Caster,
-                        new BuffInfo(BuffIcon.Incognito, 1075819, length, Caster)
-                    );
                 }
                 else
                 {
@@ -175,7 +176,7 @@ namespace Server.Spells.Shinobi
             {
                 t.Stop();
                 m_Timers.Remove(m);
-                BuffInfo.RemoveBuff(m, BuffIcon.Incognito);
+                BuffInfo.RemoveBuff(m, BuffIcon.Deception);
             }
 
             return (t != null);

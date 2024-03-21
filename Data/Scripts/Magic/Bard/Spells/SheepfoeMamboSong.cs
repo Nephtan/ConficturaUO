@@ -1,13 +1,13 @@
 using System;
 using System.Collections;
 using Server;
+using Server.Gumps;
+using Server.Items;
+using Server.Misc;
 using Server.Mobiles;
 using Server.Network;
-using Server.Items;
-using Server.Targeting;
-using Server.Gumps;
 using Server.Spells;
-using Server.Misc;
+using Server.Targeting;
 
 namespace Server.Spells.Song
 {
@@ -94,6 +94,21 @@ namespace Server.Spells.Song
                     m.AddStatMod(mod);
 
                     m.FixedParticles(0x375A, 10, 15, 5017, 0x224, 3, EffectLayer.Waist);
+
+                    string args = String.Format("{0}", amount);
+                    BuffInfo.RemoveBuff(m, BuffIcon.ShephardsDance);
+                    BuffInfo.AddBuff(
+                        m,
+                        new BuffInfo(
+                            BuffIcon.ShephardsDance,
+                            1063585,
+                            1063586,
+                            TimeSpan.FromSeconds(duration),
+                            m,
+                            args.ToString(),
+                            true
+                        )
+                    );
                 }
             }
 

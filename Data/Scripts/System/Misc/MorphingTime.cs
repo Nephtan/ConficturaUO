@@ -1,16 +1,16 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.IO;
+using Server;
 using Server.Accounting;
-using Server.Commands.Generic;
 using Server.Commands;
+using Server.Commands.Generic;
 using Server.Items;
 using Server.Misc;
 using Server.Mobiles;
 using Server.Network;
 using Server.Regions;
-using Server;
-using System.Collections.Generic;
-using System.Collections;
-using System.IO;
-using System;
 
 namespace Server.Misc
 {
@@ -473,6 +473,197 @@ namespace Server.Misc
             }
 
             return hue;
+        }
+
+        public static void ColorMixClothes(Mobile m)
+        {
+            if (
+                m.FindItemOnLayer(Layer.OuterTorso) != null
+                && MyServerSettings.AlterArtifact(m.FindItemOnLayer(Layer.OuterTorso))
+            )
+            {
+                if (!(m.FindItemOnLayer(Layer.OuterTorso) is WornHumanDeco))
+                {
+                    m.FindItemOnLayer(Layer.OuterTorso).Hue = Utility.RandomColor(0);
+                }
+                Server.Misc.Arty.setArtifact(m.FindItemOnLayer(Layer.OuterTorso));
+            }
+            if (
+                m.FindItemOnLayer(Layer.MiddleTorso) != null
+                && MyServerSettings.AlterArtifact(m.FindItemOnLayer(Layer.MiddleTorso))
+            )
+            {
+                if (!(m.FindItemOnLayer(Layer.MiddleTorso) is WornHumanDeco))
+                {
+                    m.FindItemOnLayer(Layer.MiddleTorso).Hue = Utility.RandomColor(0);
+                }
+                Server.Misc.Arty.setArtifact(m.FindItemOnLayer(Layer.MiddleTorso));
+            }
+            if (
+                m.FindItemOnLayer(Layer.Bracelet) != null
+                && MyServerSettings.AlterArtifact(m.FindItemOnLayer(Layer.Bracelet))
+            )
+            {
+                if (!(m.FindItemOnLayer(Layer.Bracelet) is WornHumanDeco))
+                {
+                    m.FindItemOnLayer(Layer.Bracelet).Hue = Utility.RandomColor(0);
+                }
+                Server.Misc.Arty.setArtifact(m.FindItemOnLayer(Layer.Bracelet));
+            }
+            if (
+                m.FindItemOnLayer(Layer.Ring) != null
+                && MyServerSettings.AlterArtifact(m.FindItemOnLayer(Layer.Ring))
+            )
+            {
+                if (!(m.FindItemOnLayer(Layer.Ring) is WornHumanDeco))
+                {
+                    m.FindItemOnLayer(Layer.Ring).Hue = Utility.RandomColor(0);
+                }
+                Server.Misc.Arty.setArtifact(m.FindItemOnLayer(Layer.Ring));
+            }
+            if (
+                m.FindItemOnLayer(Layer.Helm) != null
+                && MyServerSettings.AlterArtifact(m.FindItemOnLayer(Layer.Helm))
+            )
+            {
+                if (!(m.FindItemOnLayer(Layer.Helm) is WornHumanDeco))
+                {
+                    m.FindItemOnLayer(Layer.Helm).Hue = Utility.RandomColor(0);
+                }
+                Server.Misc.Arty.setArtifact(m.FindItemOnLayer(Layer.Helm));
+            }
+            if (
+                m.FindItemOnLayer(Layer.Arms) != null
+                && MyServerSettings.AlterArtifact(m.FindItemOnLayer(Layer.Arms))
+            )
+            {
+                if (!(m.FindItemOnLayer(Layer.Arms) is WornHumanDeco))
+                {
+                    m.FindItemOnLayer(Layer.Arms).Hue = Utility.RandomColor(0);
+                }
+                Server.Misc.Arty.setArtifact(m.FindItemOnLayer(Layer.Arms));
+            }
+            if (
+                m.FindItemOnLayer(Layer.OuterLegs) != null
+                && MyServerSettings.AlterArtifact(m.FindItemOnLayer(Layer.OuterLegs))
+            )
+            {
+                if (!(m.FindItemOnLayer(Layer.OuterLegs) is WornHumanDeco))
+                {
+                    m.FindItemOnLayer(Layer.OuterLegs).Hue = Utility.RandomColor(0);
+                }
+                Server.Misc.Arty.setArtifact(m.FindItemOnLayer(Layer.OuterLegs));
+            }
+            if (
+                m.FindItemOnLayer(Layer.Neck) != null
+                && MyServerSettings.AlterArtifact(m.FindItemOnLayer(Layer.Neck))
+            )
+            {
+                if (!(m.FindItemOnLayer(Layer.Neck) is WornHumanDeco))
+                {
+                    m.FindItemOnLayer(Layer.Neck).Hue = Utility.RandomColor(0);
+                }
+                Server.Misc.Arty.setArtifact(m.FindItemOnLayer(Layer.Neck));
+            }
+            if (
+                m.FindItemOnLayer(Layer.Gloves) != null
+                && MyServerSettings.AlterArtifact(m.FindItemOnLayer(Layer.Gloves))
+            )
+            {
+                if (!(m.FindItemOnLayer(Layer.Gloves) is WornHumanDeco))
+                {
+                    m.FindItemOnLayer(Layer.Gloves).Hue = Utility.RandomColor(0);
+                }
+                Server.Misc.Arty.setArtifact(m.FindItemOnLayer(Layer.Gloves));
+            }
+            if (
+                m.FindItemOnLayer(Layer.Talisman) != null
+                && MyServerSettings.AlterArtifact(m.FindItemOnLayer(Layer.Talisman))
+            )
+            {
+                if (!(m.FindItemOnLayer(Layer.Talisman) is WornHumanDeco))
+                {
+                    m.FindItemOnLayer(Layer.Talisman).Hue = Utility.RandomColor(0);
+                }
+                Server.Misc.Arty.setArtifact(m.FindItemOnLayer(Layer.Talisman));
+            }
+            if (
+                m.FindItemOnLayer(Layer.Shoes) != null
+                && MyServerSettings.AlterArtifact(m.FindItemOnLayer(Layer.Shoes))
+            )
+            {
+                if (!(m.FindItemOnLayer(Layer.Shoes) is WornHumanDeco))
+                {
+                    m.FindItemOnLayer(Layer.Shoes).Hue = Utility.RandomColor(0);
+                }
+                Server.Misc.Arty.setArtifact(m.FindItemOnLayer(Layer.Shoes));
+            }
+            if (
+                m.FindItemOnLayer(Layer.Cloak) != null
+                && MyServerSettings.AlterArtifact(m.FindItemOnLayer(Layer.Cloak))
+            )
+            {
+                if (!(m.FindItemOnLayer(Layer.Cloak) is WornHumanDeco))
+                {
+                    m.FindItemOnLayer(Layer.Cloak).Hue = Utility.RandomColor(0);
+                }
+                Server.Misc.Arty.setArtifact(m.FindItemOnLayer(Layer.Cloak));
+            }
+            if (
+                m.FindItemOnLayer(Layer.Waist) != null
+                && MyServerSettings.AlterArtifact(m.FindItemOnLayer(Layer.Waist))
+            )
+            {
+                if (!(m.FindItemOnLayer(Layer.Waist) is WornHumanDeco))
+                {
+                    m.FindItemOnLayer(Layer.Waist).Hue = Utility.RandomColor(0);
+                }
+                Server.Misc.Arty.setArtifact(m.FindItemOnLayer(Layer.Waist));
+            }
+            if (
+                m.FindItemOnLayer(Layer.InnerLegs) != null
+                && MyServerSettings.AlterArtifact(m.FindItemOnLayer(Layer.InnerLegs))
+            )
+            {
+                if (!(m.FindItemOnLayer(Layer.InnerLegs) is WornHumanDeco))
+                {
+                    m.FindItemOnLayer(Layer.InnerLegs).Hue = Utility.RandomColor(0);
+                }
+                Server.Misc.Arty.setArtifact(m.FindItemOnLayer(Layer.InnerLegs));
+            }
+            if (
+                m.FindItemOnLayer(Layer.InnerTorso) != null
+                && MyServerSettings.AlterArtifact(m.FindItemOnLayer(Layer.InnerTorso))
+            )
+            {
+                if (!(m.FindItemOnLayer(Layer.InnerTorso) is WornHumanDeco))
+                {
+                    m.FindItemOnLayer(Layer.InnerTorso).Hue = Utility.RandomColor(0);
+                }
+                Server.Misc.Arty.setArtifact(m.FindItemOnLayer(Layer.InnerTorso));
+            }
+            if (
+                m.FindItemOnLayer(Layer.Pants) != null
+                && MyServerSettings.AlterArtifact(m.FindItemOnLayer(Layer.Pants))
+            )
+            {
+                if (!(m.FindItemOnLayer(Layer.Pants) is WornHumanDeco))
+                {
+                    m.FindItemOnLayer(Layer.Pants).Hue = Utility.RandomColor(0);
+                }
+                Server.Misc.Arty.setArtifact(m.FindItemOnLayer(Layer.Pants));
+            }
+            if (
+                m.FindItemOnLayer(Layer.Shirt) != null
+                && MyServerSettings.AlterArtifact(m.FindItemOnLayer(Layer.Shirt))
+            )
+            {
+                if (!(m.FindItemOnLayer(Layer.Shirt) is WornHumanDeco))
+                {
+                    m.FindItemOnLayer(Layer.Shirt).Hue = Utility.RandomColor(0);
+                }
+                Server.Misc.Arty.setArtifact(m.FindItemOnLayer(Layer.Shirt));
+            }
         }
 
         public static void ColorOnlyClothes(Mobile m, int hue, int rndm)
@@ -2630,6 +2821,24 @@ namespace Server.Misc
                     {
                         item.ItemID = 0x1B7B;
                         item.Name = "medium shirudo";
+                        if (item.Hue == 0)
+                        {
+                            item.Hue = 0x539;
+                        }
+                    }
+                    else if (item is SunShield)
+                    {
+                        item.ItemID = 0x1B72;
+                        item.Name = "large shirudo";
+                        if (item.Hue == 0)
+                        {
+                            item.Hue = 0x539;
+                        }
+                    }
+                    else if (item is VirtueShield)
+                    {
+                        item.ItemID = 0x1B72;
+                        item.Name = "large shirudo";
                         if (item.Hue == 0)
                         {
                             item.Hue = 0x539;

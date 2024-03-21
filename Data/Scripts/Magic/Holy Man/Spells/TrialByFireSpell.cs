@@ -1,10 +1,10 @@
 using System;
 using System.Collections;
-using Server.Targeting;
-using Server.Network;
-using Server.Mobiles;
 using Server.Items;
+using Server.Mobiles;
+using Server.Network;
 using Server.Spells;
+using Server.Targeting;
 
 namespace Server.Spells.HolyMan
 {
@@ -18,7 +18,7 @@ namespace Server.Spells.HolyMan
         }
         public override int RequiredTithing
         {
-            get { return 500; }
+            get { return 50; }
         }
         public override double RequiredSkill
         {

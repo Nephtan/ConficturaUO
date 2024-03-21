@@ -1,16 +1,16 @@
 using System;
-using System.Text;
 using System.Collections;
-using Server.Network;
-using Server.Targeting;
-using Server.Mobiles;
-using Server.Spells;
-using Server.Spells.Necromancy;
-using Server.Spells.Bushido;
-using Server.Spells.Ninjitsu;
-using Server.Factions;
-using Server.Engines.Craft;
 using System.Collections.Generic;
+using System.Text;
+using Server.Engines.Craft;
+using Server.Factions;
+using Server.Mobiles;
+using Server.Network;
+using Server.Spells;
+using Server.Spells.Bushido;
+using Server.Spells.Necromancy;
+using Server.Spells.Ninjitsu;
+using Server.Targeting;
 
 namespace Server.Items
 {
@@ -1321,6 +1321,11 @@ namespace Server.Items
             {
                 return false;
             }
+            // XmlAttachment check for CanEquip
+            else if (!Server.Engines.XmlSpawner2.XmlAttach.CheckCanEquip(this, from))
+            {
+                return false;
+            }
             else
             {
                 return base.CanEquip(from);
@@ -1453,6 +1458,8 @@ namespace Server.Items
 
                 CustomWeaponAbilities.Check(m);
             }
+            // XmlAttachment check for OnRemoved
+            Server.Engines.XmlSpawner2.XmlAttach.CheckOnRemoved(this, parent);
         }
 
         public virtual SkillName GetUsedSkill(Mobile m, bool checkSkillAttrs)
@@ -1919,6 +1926,8 @@ namespace Server.Items
         {
             bool blocked = false;
 
+            int originaldamage = damage;
+
             if (defender.Player || defender.Body.IsHuman)
             {
                 blocked = CheckParry(defender);
@@ -1968,6 +1977,14 @@ namespace Server.Items
                     {
                         shield.OnHit(this, damage); // call OnHit to lose durability
                         LevelItemManager.RepairItems(defender);
+                        // XmlAttachment check for OnArmorHit
+                        Server.Engines.XmlSpawner2.XmlAttach.OnArmorHit(
+                            attacker,
+                            defender,
+                            shield,
+                            this,
+                            originaldamage
+                        );
                     }
                 }
             }
@@ -1989,15 +2006,18 @@ namespace Server.Items
                 else if (positionChance < 0.49)
                     armorItem = defender.LegsArmor;
                 else if (
-                    positionChance < 0.56 && defender.FindItemOnLayer(Layer.Shoes) is BaseArmor
+                    positionChance < 0.56
+                    && defender.FindItemOnLayer(Layer.Shoes) is BaseArmor
                 )
                     armorItem = (BaseArmor)(defender.FindItemOnLayer(Layer.Shoes));
                 else if (
-                    positionChance < 0.63 && defender.FindItemOnLayer(Layer.Cloak) is BaseArmor
+                    positionChance < 0.63
+                    && defender.FindItemOnLayer(Layer.Cloak) is BaseArmor
                 )
                     armorItem = (BaseArmor)(defender.FindItemOnLayer(Layer.Cloak));
                 else if (
-                    positionChance < 0.70 && defender.FindItemOnLayer(Layer.OuterTorso) is BaseArmor
+                    positionChance < 0.70
+                    && defender.FindItemOnLayer(Layer.OuterTorso) is BaseArmor
                 )
                     armorItem = (BaseArmor)(defender.FindItemOnLayer(Layer.OuterTorso));
                 else
@@ -2009,6 +2029,15 @@ namespace Server.Items
                 {
                     armor.OnHit(this, damage); // call OnHit to lose durability
                     LevelItemManager.RepairItems(defender);
+
+                    // XmlAttachment check for OnArmorHit
+                    damage -= Server.Engines.XmlSpawner2.XmlAttach.OnArmorHit(
+                        attacker,
+                        defender,
+                        armorItem,
+                        this,
+                        originaldamage
+                    );
                 }
             }
 
@@ -2051,7 +2080,8 @@ namespace Server.Items
                     BaseCreature tc = (BaseCreature)m;
 
                     if (
-                        (tc.PackInstinct & bc.PackInstinct) == 0 || (!tc.Controlled && !tc.Summoned)
+                        (tc.PackInstinct & bc.PackInstinct) == 0
+                        || (!tc.Controlled && !tc.Summoned)
                     )
                         continue;
 
@@ -2303,7 +2333,8 @@ namespace Server.Items
             if (Core.AOS && damage == 0) // parried
             {
                 if (
-                    a != null && a.Validate(attacker) /*&& a.CheckMana( attacker, true )*/
+                    a != null
+                    && a.Validate(attacker) /*&& a.CheckMana( attacker, true )*/
                 ) // Parried special moves have no mana cost
                 {
                     a = null;
@@ -2661,6 +2692,14 @@ namespace Server.Items
 
                 if (AnimalForm.UnderTransformation(defender, typeof(BullFrog)))
                     attacker.ApplyPoison(defender, Poison.Regular);
+
+                // hook for attachment OnWeaponHit method
+                Server.Engines.XmlSpawner2.XmlAttach.OnWeaponHit(
+                    this,
+                    attacker,
+                    defender,
+                    damageGiven
+                );
             }
 
             BaseWeapon poisonWeapon = attacker.Weapon as BaseWeapon; // ------- POISON SECTION ------- //
@@ -4263,6 +4302,16 @@ namespace Server.Items
         public BaseWeapon(Serial serial)
             : base(serial) { }
 
+        public override void InfoEnchantment(Mobile from)
+        {
+            from.SendMessage("You learn more about the weapon!");
+        }
+
+        public override void CastEnchantment(Mobile from)
+        {
+            from.SendMessage("You unleash the magic from the weapon!");
+        }
+
         private string GetNameString()
         {
             string name = this.Name;
@@ -4688,7 +4737,6 @@ namespace Server.Items
                 list.Add(1060440, prop.ToString()); // mana regeneration ~1_val~
 
             if ((prop = m_AosAttributes.NightSight) != 0)
-
                 if (
                     (prop = m_AosAttributes.NightSight) != 0
                     && !(this is LightSword)
@@ -4815,6 +4863,9 @@ namespace Server.Items
 
             if (m_Hits >= 0 && m_MaxHits > 0)
                 list.Add(1060639, "{0}\t{1}", m_Hits, m_MaxHits); // durability ~1_val~ / ~2_val~
+
+            // mod to display attachment properties
+            Server.Engines.XmlSpawner2.XmlAttach.AddAttachmentProperties(this, list);
         }
 
         public override void OnSingleClick(Mobile from)

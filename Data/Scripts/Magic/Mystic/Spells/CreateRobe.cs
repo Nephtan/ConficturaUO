@@ -1,8 +1,8 @@
 using System;
-using Server.Items;
-using System.Collections.Generic;
-using Server.Misc;
 using System.Collections;
+using System.Collections.Generic;
+using Server.Items;
+using Server.Misc;
 
 namespace Server.Spells.Mystic
 {
@@ -16,7 +16,7 @@ namespace Server.Spells.Mystic
         }
         public override int RequiredTithing
         {
-            get { return 150; }
+            get { return 40; }
         }
         public override double RequiredSkill
         {

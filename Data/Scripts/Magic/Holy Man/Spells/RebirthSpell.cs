@@ -1,11 +1,11 @@
 using System;
-using Server.Targeting;
-using Server.Network;
-using Server.Gumps;
-using Server.Mobiles;
-using Server.Items;
 using System.Collections;
 using System.Collections.Generic;
+using Server.Gumps;
+using Server.Items;
+using Server.Mobiles;
+using Server.Network;
+using Server.Targeting;
 
 namespace Server.Spells.HolyMan
 {
@@ -19,7 +19,7 @@ namespace Server.Spells.HolyMan
         }
         public override int RequiredTithing
         {
-            get { return 400; }
+            get { return 40; }
         }
         public override double RequiredSkill
         {
@@ -70,6 +70,10 @@ namespace Server.Spells.HolyMan
                 m.AddToBackpack(iOrb);
                 Server.Items.SoulOrb.OnSummoned(m, iOrb);
                 DrainSoulsInSymbol(Caster, RequiredTithing);
+            }
+            else if (m == Caster)
+            {
+                Caster.SendMessage("You failed to summon an orb.");
             }
             else if (!Caster.Alive)
             {

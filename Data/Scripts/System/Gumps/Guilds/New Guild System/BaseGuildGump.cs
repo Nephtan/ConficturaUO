@@ -1,10 +1,10 @@
 using System;
 using Server;
-using Server.Mobiles;
-using Server.Gumps;
-using Server.Network;
 using Server.Factions;
+using Server.Gumps;
 using Server.Misc;
+using Server.Mobiles;
+using Server.Network;
 
 namespace Server.Guilds
 {

@@ -28,6 +28,7 @@ namespace Server.Items
         public LesserCurePotion()
             : base(PotionEffect.CureLesser)
         {
+            Name = "lesser cure potion";
             ItemID = 0x233B;
         }
 
@@ -37,15 +38,14 @@ namespace Server.Items
         public override void Serialize(GenericWriter writer)
         {
             base.Serialize(writer);
-
             writer.Write((int)0); // version
         }
 
         public override void Deserialize(GenericReader reader)
         {
             base.Deserialize(reader);
-
             int version = reader.ReadInt();
+            Name = "lesser cure potion";
         }
     }
 }

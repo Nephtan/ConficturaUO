@@ -1,17 +1,17 @@
 using System;
-using Server;
 using System.Collections;
-using Server.ContextMenus;
 using System.Collections.Generic;
-using Server.Misc;
-using Server.Network;
-using Server.Items;
-using Server.Gumps;
-using Server.Mobiles;
-using Server.Commands;
 using System.Globalization;
-using Server.Regions;
+using Server;
 using Server.Accounting;
+using Server.Commands;
+using Server.ContextMenus;
+using Server.Gumps;
+using Server.Items;
+using Server.Misc;
+using Server.Mobiles;
+using Server.Network;
+using Server.Regions;
 
 namespace Server.Items
 {
@@ -484,7 +484,7 @@ namespace Server.Items
                     && searchLocation == "the Land of Sosaria"
                 )
                 {
-                    if (m.Skills.Cap == 11000)
+                    if (((PlayerMobile)m).SkillStart == 11000)
                     {
                         searchLocation = "the Savaged Empire";
                     }
@@ -645,7 +645,7 @@ namespace Server.Items
                     && searchLocation == "the Land of Sosaria"
                 )
                 {
-                    if (m.Skills.Cap == 11000)
+                    if (((PlayerMobile)m).SkillStart == 11000)
                     {
                         searchLocation = "the Savaged Empire";
                     }
@@ -790,7 +790,7 @@ namespace Server.Items
                 && dropLocation == "the Land of Sosaria"
             )
             {
-                if (m.Skills.Cap == 11000)
+                if (((PlayerMobile)m).SkillStart == 11000)
                 {
                     dropLocation = "the Savaged Empire";
                 }

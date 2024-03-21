@@ -1,6 +1,6 @@
 using System;
-using Server.Targeting;
 using Server.HuePickers;
+using Server.Targeting;
 
 namespace Server.Items
 {

@@ -1,13 +1,13 @@
 using System;
-using System.Reflection;
 using System.Collections;
 using System.Collections.Generic;
-using Server.Network;
-using Server.Prompts;
+using System.Reflection;
+using Server.Items;
 using Server.Mobiles;
 using Server.Multis;
 using Server.Multis.Deeds;
-using Server.Items;
+using Server.Network;
+using Server.Prompts;
 
 namespace Server.Gumps
 {
@@ -1620,7 +1620,8 @@ namespace Server.Gumps
                             )
                             {
                                 if (
-                                    !Guilds.Guild.NewGuildSystem && m_House.FindGuildstone() != null
+                                    !Guilds.Guild.NewGuildSystem
+                                    && m_House.FindGuildstone() != null
                                 )
                                 {
                                     from.SendLocalizedMessage(501389); // You cannot redeed a house with a guildstone inside.

@@ -1,9 +1,10 @@
 using System;
 using System.Collections.Generic;
-using Server.Network;
 using Server.Items;
-using Server.Targeting;
 using Server.Mobiles;
+using Server.Network;
+using Server.Regions;
+using Server.Targeting;
 
 namespace Server.Spells.Research
 {
@@ -35,7 +36,11 @@ namespace Server.Spells.Research
             Server.Misc.Research.SpellInformation(spellID, 2),
             Server.Misc.Research.CapsCast(Server.Misc.Research.SpellInformation(spellID, 4)),
             233,
-            9042
+            9042,
+            Reagent.ButterflyWings,
+            Reagent.BlackPearl,
+            Reagent.DemigodBlood,
+            Reagent.DemonClaw
         );
 
         public ResearchDevastation(Mobile caster, Item scroll)
@@ -85,7 +90,6 @@ namespace Server.Spells.Research
                             && Caster != m
                             && Caster.InLOS(m)
                             && m.Blessed == false
-                            && Caster.CanBeHarmful(m, true)
                         )
                         {
                             targets.Add(m);
@@ -121,117 +125,126 @@ namespace Server.Spells.Research
                     {
                         Mobile m = targets[i];
 
-                        Point3D blast = new Point3D((m.X), (m.Y), m.Z + 10);
-                        Effects.SendLocationEffect(
-                            blast,
-                            m.Map,
-                            0x2A4E,
-                            30,
-                            10,
-                            Server.Misc.PlayerSettings.GetMySpellHue(true, Caster, 0),
-                            0
-                        );
-                        m.PlaySound(0x029);
-
-                        Point3D blast1 = new Point3D((m.X), (m.Y), m.Z + 5);
-                        Point3D blast2 = new Point3D((m.X - 1), (m.Y), m.Z + 5);
-                        Point3D blast3 = new Point3D((m.X + 1), (m.Y), m.Z + 5);
-                        Point3D blast4 = new Point3D((m.X), (m.Y - 1), m.Z + 5);
-                        Point3D blast5 = new Point3D((m.X), (m.Y + 1), m.Z + 5);
-
-                        if (Utility.RandomBool())
+                        if (Caster.CanBeHarmful(m, true))
                         {
+                            Point3D blast = new Point3D((m.X), (m.Y), m.Z + 10);
                             Effects.SendLocationEffect(
-                                blast1,
+                                blast,
                                 m.Map,
-                                Utility.RandomList(0x36BD, 0x3822),
-                                85,
+                                0x2A4E,
+                                30,
                                 10,
                                 Server.Misc.PlayerSettings.GetMySpellHue(true, Caster, 0),
                                 0
                             );
-                        }
-                        if (Utility.RandomBool())
-                        {
-                            Effects.SendLocationEffect(
-                                blast2,
-                                m.Map,
-                                Utility.RandomList(0x36BD, 0x3822),
-                                85,
-                                10,
-                                Server.Misc.PlayerSettings.GetMySpellHue(true, Caster, 0),
-                                0
-                            );
-                        }
-                        if (Utility.RandomBool())
-                        {
-                            Effects.SendLocationEffect(
-                                blast3,
-                                m.Map,
-                                Utility.RandomList(0x36BD, 0x3822),
-                                85,
-                                10,
-                                Server.Misc.PlayerSettings.GetMySpellHue(true, Caster, 0),
-                                0
-                            );
-                        }
-                        if (Utility.RandomBool())
-                        {
-                            Effects.SendLocationEffect(
-                                blast4,
-                                m.Map,
-                                Utility.RandomList(0x36BD, 0x3822),
-                                85,
-                                10,
-                                Server.Misc.PlayerSettings.GetMySpellHue(true, Caster, 0),
-                                0
-                            );
-                        }
-                        if (Utility.RandomBool())
-                        {
-                            Effects.SendLocationEffect(
-                                blast5,
-                                m.Map,
-                                Utility.RandomList(0x36BD, 0x3822),
-                                85,
-                                10,
-                                Server.Misc.PlayerSettings.GetMySpellHue(true, Caster, 0),
-                                0
-                            );
-                        }
+                            m.PlaySound(0x029);
 
-                        Effects.PlaySound(m.Location, m.Map, 0x307);
+                            Point3D blast1 = new Point3D((m.X), (m.Y), m.Z + 5);
+                            Point3D blast2 = new Point3D((m.X - 1), (m.Y), m.Z + 5);
+                            Point3D blast3 = new Point3D((m.X + 1), (m.Y), m.Z + 5);
+                            Point3D blast4 = new Point3D((m.X), (m.Y - 1), m.Z + 5);
+                            Point3D blast5 = new Point3D((m.X), (m.Y + 1), m.Z + 5);
 
-                        Caster.DoHarmful(m);
-
-                        if (m is PlayerMobile)
-                        {
-                            m.Damage(10000, Caster);
-                            Caster.Criminal = true;
-                        }
-                        else if (m is BaseCreature)
-                        {
-                            if (m is BaseVendor || m is BasePerson)
+                            if (Utility.RandomBool())
                             {
-                                Caster.Criminal = true;
-                                Caster.Kills = Caster.Kills + 1;
+                                Effects.SendLocationEffect(
+                                    blast1,
+                                    m.Map,
+                                    Utility.RandomList(0x36BD, 0x3822),
+                                    85,
+                                    10,
+                                    Server.Misc.PlayerSettings.GetMySpellHue(true, Caster, 0),
+                                    0
+                                );
+                            }
+                            if (Utility.RandomBool())
+                            {
+                                Effects.SendLocationEffect(
+                                    blast2,
+                                    m.Map,
+                                    Utility.RandomList(0x36BD, 0x3822),
+                                    85,
+                                    10,
+                                    Server.Misc.PlayerSettings.GetMySpellHue(true, Caster, 0),
+                                    0
+                                );
+                            }
+                            if (Utility.RandomBool())
+                            {
+                                Effects.SendLocationEffect(
+                                    blast3,
+                                    m.Map,
+                                    Utility.RandomList(0x36BD, 0x3822),
+                                    85,
+                                    10,
+                                    Server.Misc.PlayerSettings.GetMySpellHue(true, Caster, 0),
+                                    0
+                                );
+                            }
+                            if (Utility.RandomBool())
+                            {
+                                Effects.SendLocationEffect(
+                                    blast4,
+                                    m.Map,
+                                    Utility.RandomList(0x36BD, 0x3822),
+                                    85,
+                                    10,
+                                    Server.Misc.PlayerSettings.GetMySpellHue(true, Caster, 0),
+                                    0
+                                );
+                            }
+                            if (Utility.RandomBool())
+                            {
+                                Effects.SendLocationEffect(
+                                    blast5,
+                                    m.Map,
+                                    Utility.RandomList(0x36BD, 0x3822),
+                                    85,
+                                    10,
+                                    Server.Misc.PlayerSettings.GetMySpellHue(true, Caster, 0),
+                                    0
+                                );
                             }
 
-                            BaseCreature bc = (BaseCreature)m;
-                            if (bc.Controlled)
+                            Effects.PlaySound(m.Location, m.Map, 0x307);
+
+                            Caster.DoHarmful(m);
+
+                            if (m is PlayerMobile)
                             {
                                 m.Damage(10000, Caster);
+                                Caster.Criminal = true;
                             }
-                            else
+                            else if (m is BaseCreature)
                             {
-                                m.Delete();
+                                if (m is BaseVendor || m is BasePerson)
+                                {
+                                    Caster.Criminal = true;
+                                    Caster.Kills = Caster.Kills + 1;
+                                }
+
+                                BaseCreature bc = (BaseCreature)m;
+                                if (bc.Controlled)
+                                {
+                                    m.Damage(10000, Caster);
+                                }
+                                else
+                                {
+                                    m.Delete();
+                                }
                             }
                         }
                     }
 
                     TimeSpan duration = TimeSpan.FromSeconds(3.0);
                     new DeathTimer(Caster, duration).Start();
-                    Server.Misc.Research.ConsumeScroll(Caster, true, spellIndex, true);
+                    Server.Misc.Research.ConsumeScroll(
+                        Caster,
+                        true,
+                        spellIndex,
+                        alwaysConsume,
+                        Scroll
+                    );
                     KarmaMod(Caster, ((int)RequiredSkill + RequiredMana));
                 }
             }

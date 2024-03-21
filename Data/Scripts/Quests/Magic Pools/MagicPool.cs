@@ -1,13 +1,14 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.ComponentModel;
 using Server;
+using Server.ContextMenus;
 using Server.Items;
+using Server.Misc;
+using Server.Mobiles;
 using Server.Network;
 using Server.Spells;
-using Server.Mobiles;
-using System.Collections.Generic;
-using Server.Misc;
-using System.Collections;
-using Server.ContextMenus;
 
 namespace Server.Items
 {
@@ -157,11 +158,8 @@ namespace Server.Items
             AddComplexComponent((BaseAddon)this, 6039, 0, 1, 2, 0, -1, "magic pool", 1);
             AddComplexComponent((BaseAddon)this, 6039, 1, 1, 2, 0, -1, "magic pool", 1);
 
-            m_Pool = Utility.Random(10);
-            if (Utility.Random(100) > 90)
-            {
-                m_Pool = 100;
-            } // TREASURE CHEST
+            m_Pool = Utility.Random(1, 10);
+
             m_Uses = Utility.RandomMinMax(1, 10);
             m_Bonus = Utility.RandomMinMax(3, 10);
 
@@ -252,444 +250,486 @@ namespace Server.Items
             }
             else if (m_Uses > 0)
             {
-                if (m_Pool == 1) // GAIN STATS
+                int luck = from.Luck;
+                if (luck > 2000)
                 {
-                    if (from.StatCap > (from.RawStatTotal))
+                    luck = 2000;
+                }
+                double positiveChance = 50 + Math.Round(luck / 66.6); // Scaling from 50% to 80%
+                positiveChance = Math.Min(80, Math.Max(50, positiveChance)); // Clamp between 50% and 100%
+
+                bool isPositiveEffect = Utility.RandomDouble() * 100 < positiveChance;
+
+                if (isPositiveEffect) // Positive effects
+                {
+                    int effectRoll = Utility.Random(100);
+                    if (effectRoll <= 5) // Mystical Chest
+                    {
+                        from.PlaySound(0x364);
+                        from.SendMessage("You pull a mystical chest out from the pool!");
+                        this.m_Uses = 0;
+                        LootChest MyChest = new LootChest(6);
+                        MyChest.ItemID = Utility.RandomList(
+                            0x2823,
+                            0x2824,
+                            0x4FE6,
+                            0x4FE7,
+                            0x281F,
+                            0x2820
+                        );
+                        MyChest.Hue = Utility.RandomList(
+                            0x961,
+                            0x962,
+                            0x963,
+                            0x964,
+                            0x965,
+                            0x966,
+                            0x967,
+                            0x968,
+                            0x969,
+                            0x96A,
+                            0x96B,
+                            0x96C,
+                            0x96D,
+                            0x96E,
+                            0x96F,
+                            0x970,
+                            0x971,
+                            0x972,
+                            0x973,
+                            0x974,
+                            0x975,
+                            0x976,
+                            0x977,
+                            0x978,
+                            0x979,
+                            0x97A,
+                            0x97B,
+                            0x97C,
+                            0x97D,
+                            0x97E,
+                            0x4AA
+                        );
+                        Region reg = Region.Find(from.Location, from.Map);
+                        MyChest.Name =
+                            "mystical chest from "
+                            + Server.Misc.Worlds.GetRegionName(from.Map, from.Location);
+                        int xTraCash = Utility.RandomMinMax(5000, 8000);
+                        ContainerFunctions.AddGoldToContainer(xTraCash, MyChest, 0, from);
+                        int artychance = GetPlayerInfo.LuckyPlayerArtifacts(from.Luck) + 10;
+                        if (Utility.RandomMinMax(0, 100) < artychance)
+                        {
+                            Item arty = ArtifactBuilder.CreateArtifact("random");
+                            MyChest.DropItem(arty);
+                        }
+                        from.AddToBackpack(MyChest);
+
+                        LoggingFunctions.LogGenericQuest(
+                            from,
+                            "found a chest full of treasure in some strange pool"
+                        );
+                    } // Mystical Chest
+                    else if (effectRoll <= 20) // Gold Conversion
                     {
                         from.PlaySound(Utility.RandomList(0x30, 0x2D6));
-                        int water = Utility.RandomMinMax(1, 3);
-                        int up = 1;
+                        Container cont = from.Backpack;
+                        int nShine = 0;
 
-                        int chance = Utility.RandomMinMax(1, 100);
+                        int m_cAmount = from.Backpack.GetAmount(typeof(DDCopper));
+                        int m_sAmount = from.Backpack.GetAmount(typeof(DDSilver));
+                        int m_dAmount = from.Backpack.GetAmount(typeof(LeadCoin));
 
-                        if (chance >= 98)
+                        if (cont.ConsumeTotal(typeof(DDCopper), m_cAmount))
                         {
-                            up = AvailPoints(from, 5);
+                            from.AddToBackpack(new Gold(m_cAmount));
+                            nShine = 1;
                         }
-                        else if (chance >= 87)
+                        if (cont.ConsumeTotal(typeof(DDSilver), m_sAmount))
                         {
-                            up = AvailPoints(from, 4);
+                            from.AddToBackpack(new Gold(m_sAmount));
+                            nShine = 1;
                         }
-                        else if (chance >= 75)
+                        if (cont.ConsumeTotal(typeof(LeadCoin), m_dAmount))
                         {
-                            up = AvailPoints(from, 3);
+                            from.AddToBackpack(new Gold(m_dAmount));
+                            nShine = 1;
                         }
-                        else if (chance >= 50)
+                        if (nShine > 0)
                         {
-                            up = AvailPoints(from, 2);
-                        }
+                            from.SendMessage(
+                                "After drinking from the pool, you notice your meager coins turn to gold!"
+                            );
+                            Effects.SendLocationParticles(
+                                EffectItem.Create(
+                                    from.Location,
+                                    from.Map,
+                                    EffectItem.DefaultDuration
+                                ),
+                                0x3728,
+                                10,
+                                10,
+                                5023
+                            );
 
-                        if (water == 1)
-                        {
-                            from.RawInt = from.RawInt + up;
-                            from.SendMessage("You drink from the pool and you feel much smarter!");
-                        }
-                        else if (water == 2)
-                        {
-                            from.RawStr = from.RawStr + up;
-                            from.SendMessage("You drink from the pool and you feel much stronger!");
+                            LoggingFunctions.LogGenericQuest(
+                                from,
+                                "had all of their meager coins turn to gold after drinking from a strange pool"
+                            );
                         }
                         else
                         {
-                            from.RawDex = from.RawDex + up;
-                            from.SendMessage("You drink from the pool and you feel much quicker!");
+                            from.SendMessage("You drink from the pool and nothing happens!");
                         }
-
                         this.m_Uses = 0;
-                    }
-                    else
+                    } // Gold Conversion
+                    else if (effectRoll <= 40) // Gain Stats
                     {
-                        from.PlaySound(Utility.RandomList(0x30, 0x2D6));
-                        from.SendMessage("You drink from the pool and nothing happens!");
-                        this.m_Uses = this.m_Uses - 1;
-                    }
-                }
-                else if (m_Pool == 2) // CURE
-                {
-                    from.PlaySound(Utility.RandomList(0x30, 0x2D6));
-                    if (from.Poisoned)
-                    {
-                        from.FixedParticles(0x373A, 10, 15, 5012, EffectLayer.Waist);
-                        from.CurePoison(from);
-                        from.SendMessage("You feel much better after drinking from the pool!");
-                        this.m_Uses = this.m_Uses - 1;
-                    }
-                    else
-                    {
-                        from.PlaySound(Utility.RandomList(0x30, 0x2D6));
-                        from.SendMessage("You drink from the pool and nothing happens!");
-                        this.m_Uses = this.m_Uses - 1;
-                    }
-                }
-                else if (m_Pool == 3) // HEAL
-                {
-                    from.PlaySound(Utility.RandomList(0x30, 0x2D6));
-                    if (from.Hits < from.HitsMax)
-                    {
-                        if (from.Poisoned || MortalStrike.IsWounded(from))
+                        if (from.StatCap > (from.RawStatTotal))
                         {
+                            from.PlaySound(Utility.RandomList(0x30, 0x2D6));
+                            int water = Utility.RandomMinMax(1, 3);
+                            int up = 1;
+
+                            int chance = Utility.RandomMinMax(1, 100);
+
+                            if (chance >= 98)
+                            {
+                                up = AvailPoints(from, 5);
+                            }
+                            else if (chance >= 87)
+                            {
+                                up = AvailPoints(from, 4);
+                            }
+                            else if (chance >= 75)
+                            {
+                                up = AvailPoints(from, 3);
+                            }
+                            else if (chance >= 50)
+                            {
+                                up = AvailPoints(from, 2);
+                            }
+
+                            if (water == 1)
+                            {
+                                from.RawInt = from.RawInt + up;
+                                from.SendMessage(
+                                    "You drink from the pool and you feel much smarter!"
+                                );
+                            }
+                            else if (water == 2)
+                            {
+                                from.RawStr = from.RawStr + up;
+                                from.SendMessage(
+                                    "You drink from the pool and you feel much stronger!"
+                                );
+                            }
+                            else
+                            {
+                                from.RawDex = from.RawDex + up;
+                                from.SendMessage(
+                                    "You drink from the pool and you feel much quicker!"
+                                );
+                            }
+
+                            this.m_Uses = 0;
+                        }
+                        else
+                        {
+                            from.PlaySound(Utility.RandomList(0x30, 0x2D6));
                             from.SendMessage("You drink from the pool and nothing happens!");
                             this.m_Uses = this.m_Uses - 1;
                         }
-                        else
+                    } // Gain Stats
+                    else if (effectRoll <= 60) // Cure
+                    {
+                        from.PlaySound(Utility.RandomList(0x30, 0x2D6));
+                        if (from.Poisoned)
                         {
                             from.FixedParticles(0x373A, 10, 15, 5012, EffectLayer.Waist);
-                            int min = 50;
-                            int max = 75;
-                            if (m_Bonus > 8)
-                            {
-                                min = 125;
-                                max = 175;
-                            }
-                            else if (m_Bonus > 5)
-                            {
-                                min = 75;
-                                max = 125;
-                            }
-                            from.Heal(Utility.RandomMinMax(min, max));
-                            from.SendMessage(
-                                "You drink from the pool and your wounds magically heal!"
-                            );
+                            from.CurePoison(from);
+                            from.SendMessage("You feel much better after drinking from the pool!");
                             this.m_Uses = this.m_Uses - 1;
                         }
-                    }
-                    else
+                        else
+                        {
+                            from.PlaySound(Utility.RandomList(0x30, 0x2D6));
+                            from.SendMessage("You drink from the pool and nothing happens!");
+                            this.m_Uses = this.m_Uses - 1;
+                        }
+                    } // Cure
+                    else if (effectRoll <= 80) // Heal
                     {
                         from.PlaySound(Utility.RandomList(0x30, 0x2D6));
-                        from.SendMessage("You drink from the pool and nothing happens!");
-                        this.m_Uses = this.m_Uses - 1;
-                    }
-                }
-                else if (m_Pool == 4) // WATER ELEMENTAL
-                {
-                    from.PlaySound(Utility.RandomList(0x30, 0x2D6));
-                    try
-                    {
-                        Map map = this.Map;
-                        BaseCreature bc = (BaseCreature)
-                            Activator.CreateInstance(typeof(WaterElemental));
-
-                        Point3D spawnLoc = this.Location;
-
-                        for (int i = 0; i < 10; i++)
+                        if (from.Hits < from.HitsMax)
                         {
-                            int x = Location.X + Utility.Random(4);
-                            int y = Location.Y + Utility.Random(4);
-                            int z = Map.GetAverageZ(x, y);
-
-                            if (Map.CanSpawnMobile(new Point2D(x, y), this.Z))
-                                spawnLoc = new Point3D(x, y, this.Z);
-                            else if (Map.CanSpawnMobile(new Point2D(x, y), z))
-                                spawnLoc = new Point3D(x, y, z);
-                        }
-
-                        Timer.DelayCall(
-                            TimeSpan.FromSeconds(1),
-                            delegate()
+                            if (from.Poisoned || MortalStrike.IsWounded(from))
                             {
-                                bc.Home = Location;
-                                bc.RangeHome = 5;
-                                bc.FightMode = FightMode.Closest;
-                                bc.MoveToWorld(spawnLoc, map);
-                                bc.ForceReacquire();
+                                from.SendMessage("You drink from the pool and nothing happens!");
+                                this.m_Uses = this.m_Uses - 1;
                             }
-                        );
-                    }
-                    catch { }
-                    from.SendMessage("A water elemental emerges from the pool!");
-                    this.m_Uses = this.m_Uses - 1;
+                            else
+                            {
+                                from.FixedParticles(0x373A, 10, 15, 5012, EffectLayer.Waist);
+                                int min = 50;
+                                int max = 75;
+                                if (m_Bonus > 8)
+                                {
+                                    min = 125;
+                                    max = 175;
+                                }
+                                else if (m_Bonus > 5)
+                                {
+                                    min = 75;
+                                    max = 125;
+                                }
+                                from.Heal(Utility.RandomMinMax(min, max));
+                                from.SendMessage(
+                                    "You drink from the pool and your wounds magically heal!"
+                                );
+                                this.m_Uses = this.m_Uses - 1;
+                            }
+                        }
+                        else
+                        {
+                            from.PlaySound(Utility.RandomList(0x30, 0x2D6));
+                            from.SendMessage("You drink from the pool and nothing happens!");
+                            this.m_Uses = this.m_Uses - 1;
+                        }
+                    } // Heal
                 }
-                else if (m_Pool == 5) // GOLD TO LEAD
+                else // Negative effects
                 {
-                    from.PlaySound(Utility.RandomList(0x30, 0x2D6));
-                    Container cont = from.Backpack;
-                    int nDull = 0;
-
-                    int m_gAmount = from.Backpack.GetAmount(typeof(Gold));
-                    int m_cAmount = from.Backpack.GetAmount(typeof(DDCopper));
-                    int m_sAmount = from.Backpack.GetAmount(typeof(DDSilver));
-                    int m_xAmount = from.Backpack.GetAmount(typeof(DDXormite));
-
-                    if (cont.ConsumeTotal(typeof(Gold), m_gAmount))
-                    {
-                        from.AddToBackpack(new LeadCoin(m_gAmount));
-                        nDull = 1;
-                    }
-                    if (cont.ConsumeTotal(typeof(DDCopper), m_cAmount))
-                    {
-                        from.AddToBackpack(new LeadCoin(m_cAmount));
-                        nDull = 1;
-                    }
-                    if (cont.ConsumeTotal(typeof(DDSilver), m_sAmount))
-                    {
-                        from.AddToBackpack(new LeadCoin(m_sAmount));
-                        nDull = 1;
-                    }
-                    if (cont.ConsumeTotal(typeof(DDXormite), m_xAmount))
-                    {
-                        from.AddToBackpack(new LeadCoin(m_xAmount));
-                        nDull = 1;
-                    }
-                    if (nDull > 0)
-                    {
-                        from.SendMessage(
-                            "After drinking from the pool, you notice all of your coins has turned to lead!"
-                        );
-                        Effects.SendLocationParticles(
-                            EffectItem.Create(from.Location, from.Map, EffectItem.DefaultDuration),
-                            0x3728,
-                            10,
-                            10,
-                            5023
-                        );
-
-                        LoggingFunctions.LogGenericQuest(
-                            from,
-                            "had all of their coins turn to lead after drinking from a strange pool"
-                        );
-                    }
-                    else
+                    int effectRoll = Utility.Random(100);
+                    if (effectRoll <= 5) // Equipped Item Disappears
                     {
                         from.PlaySound(Utility.RandomList(0x30, 0x2D6));
-                        from.SendMessage("You drink from the pool and nothing happens!");
-                    }
-                    this.m_Uses = this.m_Uses - 1;
-                }
-                else if (m_Pool == 6) // EQUIPPED ITEM DISAPPEARS
-                {
-                    from.PlaySound(Utility.RandomList(0x30, 0x2D6));
-                    this.m_Uses = this.m_Uses - 1;
-                    int mReturn = 0;
-                    Item ILost = HiddenTrap.GetMyItem(from);
-                    if (ILost != null)
-                    {
-                        ILost.Delete();
-                        mReturn = 1;
-                    }
-                    if (mReturn != 1)
-                    {
-                        from.SendMessage(
-                            "After drinking from the pool, you notice one of your equipped items disappears!"
-                        );
-                        Effects.SendLocationParticles(
-                            EffectItem.Create(from.Location, from.Map, EffectItem.DefaultDuration),
-                            0x3728,
-                            10,
-                            10,
-                            5023
-                        );
-
-                        LoggingFunctions.LogGenericQuest(
-                            from,
-                            "had an item vanish after drinking from a strange pool"
-                        );
-                    }
-                }
-                else if (m_Pool == 7) // LOSE A STAT POINT
-                {
-                    from.PlaySound(Utility.RandomList(0x30, 0x2D6));
-                    this.m_Uses = this.m_Uses - 1;
-                    int mCurse = 1;
-
-                    if (m_Bonus > 8)
-                    {
-                        if (from.RawStr > 10)
-                        {
-                            from.RawStr = from.RawStr - 1;
-                            from.SendMessage("You feel weaker after drinking from the pool!");
-                        }
-                        else
-                        {
-                            from.SendMessage("You drink from the pool and nothing happens!");
-                            mCurse = 0;
-                        }
-                    }
-                    else if (m_Bonus > 5)
-                    {
-                        if (from.RawDex > 10)
-                        {
-                            from.RawDex = from.RawDex - 1;
-                            from.SendMessage("You feel sluggish after drinking from the pool!");
-                        }
-                        else
-                        {
-                            from.SendMessage("You drink from the pool and nothing happens!");
-                            mCurse = 0;
-                        }
-                    }
-                    else
-                    {
-                        if (from.RawInt > 10)
-                        {
-                            from.RawInt = from.RawInt - 1;
-                            from.SendMessage("Your mind is foggy after drinking from the pool!");
-                        }
-                        else
-                        {
-                            from.SendMessage("You drink from the pool and nothing happens!");
-                            mCurse = 0;
-                        }
-                    }
-
-                    if (mCurse == 1)
-                    {
-                        from.FixedParticles(0x3779, 1, 15, 9905, 32, 2, EffectLayer.Head);
-                        from.FixedParticles(0x37B9, 1, 14, 9502, 32, 5, (EffectLayer)255);
-                    }
-                }
-                else if (m_Pool == 8) // TREASURE CHEST
-                {
-                    from.PlaySound(0x364);
-                    from.SendMessage("You pull a mystical chest out from the pool!");
-                    this.m_Uses = 0;
-                    LootChest MyChest = new LootChest(6);
-                    MyChest.ItemID = Utility.RandomList(
-                        0x2823,
-                        0x2824,
-                        0x4FE6,
-                        0x4FE7,
-                        0x281F,
-                        0x2820
-                    );
-                    MyChest.Hue = Utility.RandomList(
-                        0x961,
-                        0x962,
-                        0x963,
-                        0x964,
-                        0x965,
-                        0x966,
-                        0x967,
-                        0x968,
-                        0x969,
-                        0x96A,
-                        0x96B,
-                        0x96C,
-                        0x96D,
-                        0x96E,
-                        0x96F,
-                        0x970,
-                        0x971,
-                        0x972,
-                        0x973,
-                        0x974,
-                        0x975,
-                        0x976,
-                        0x977,
-                        0x978,
-                        0x979,
-                        0x97A,
-                        0x97B,
-                        0x97C,
-                        0x97D,
-                        0x97E,
-                        0x4AA
-                    );
-                    Region reg = Region.Find(from.Location, from.Map);
-                    MyChest.Name =
-                        "mystical chest from "
-                        + Server.Misc.Worlds.GetRegionName(from.Map, from.Location);
-                    int xTraCash = Utility.RandomMinMax(5000, 8000);
-                    ContainerFunctions.AddGoldToContainer(xTraCash, MyChest, 0, from);
-                    int artychance = GetPlayerInfo.LuckyPlayerArtifacts(from.Luck) + 10;
-                    if (Utility.RandomMinMax(0, 100) < artychance)
-                    {
-                        Item arty = ArtifactBuilder.CreateArtifact("random");
-                        MyChest.DropItem(arty);
-                    }
-                    from.AddToBackpack(MyChest);
-
-                    LoggingFunctions.LogGenericQuest(
-                        from,
-                        "found a chest full of treasure in some strange pool"
-                    );
-                }
-                else if (m_Pool == 9) // COPPER SILVER TO GOLD
-                {
-                    from.PlaySound(Utility.RandomList(0x30, 0x2D6));
-                    Container cont = from.Backpack;
-                    int nShine = 0;
-
-                    int m_cAmount = from.Backpack.GetAmount(typeof(DDCopper));
-                    int m_sAmount = from.Backpack.GetAmount(typeof(DDSilver));
-                    int m_dAmount = from.Backpack.GetAmount(typeof(LeadCoin));
-
-                    if (cont.ConsumeTotal(typeof(DDCopper), m_cAmount))
-                    {
-                        from.AddToBackpack(new Gold(m_cAmount));
-                        nShine = 1;
-                    }
-                    if (cont.ConsumeTotal(typeof(DDSilver), m_sAmount))
-                    {
-                        from.AddToBackpack(new Gold(m_sAmount));
-                        nShine = 1;
-                    }
-                    if (cont.ConsumeTotal(typeof(LeadCoin), m_dAmount))
-                    {
-                        from.AddToBackpack(new Gold(m_dAmount));
-                        nShine = 1;
-                    }
-                    if (nShine > 0)
-                    {
-                        from.SendMessage(
-                            "After drinking from the pool, you notice your meager coins turn to gold!"
-                        );
-                        Effects.SendLocationParticles(
-                            EffectItem.Create(from.Location, from.Map, EffectItem.DefaultDuration),
-                            0x3728,
-                            10,
-                            10,
-                            5023
-                        );
-
-                        LoggingFunctions.LogGenericQuest(
-                            from,
-                            "had all of their meager coins turn to gold after drinking from a strange pool"
-                        );
-                    }
-                    else
-                    {
-                        from.SendMessage("You drink from the pool and nothing happens!");
-                    }
-                    this.m_Uses = 0;
-                }
-                else // POISON
-                {
-                    if (from.Poisoned)
-                    {
-                        from.SendMessage("You are too sick to drink from this pool!");
-                    }
-                    else
-                    {
-                        Effects.SendLocationParticles(
-                            EffectItem.Create(from.Location, from.Map, EffectItem.DefaultDuration),
-                            0x36B0,
-                            1,
-                            14,
-                            63,
-                            7,
-                            9915,
-                            0
-                        );
-                        from.PlaySound(Utility.RandomList(0x30, 0x2D6));
-                        if (m_Bonus > 9)
-                        {
-                            from.ApplyPoison(from, Poison.Deadly);
-                        }
-                        else if (m_Bonus > 7)
-                        {
-                            from.ApplyPoison(from, Poison.Greater);
-                        }
-                        else if (m_Bonus > 4)
-                        {
-                            from.ApplyPoison(from, Poison.Regular);
-                        }
-                        else
-                        {
-                            from.ApplyPoison(from, Poison.Lesser);
-                        }
-                        from.SendMessage("You feel more sick after drinking from the pool!");
                         this.m_Uses = this.m_Uses - 1;
-                    }
+                        int mReturn = 0;
+                        Item ILost = HiddenTrap.GetMyItem(from);
+                        if (ILost != null)
+                        {
+                            ILost.Delete();
+                            mReturn = 1;
+                        }
+                        if (mReturn != 1)
+                        {
+                            from.SendMessage(
+                                "After drinking from the pool, you notice one of your equipped items disappears!"
+                            );
+                            Effects.SendLocationParticles(
+                                EffectItem.Create(
+                                    from.Location,
+                                    from.Map,
+                                    EffectItem.DefaultDuration
+                                ),
+                                0x3728,
+                                10,
+                                10,
+                                5023
+                            );
+
+                            LoggingFunctions.LogGenericQuest(
+                                from,
+                                "had an item vanish after drinking from a strange pool"
+                            );
+                        }
+                    } // Equipped Item Disappears
+                    else if (effectRoll <= 20) // Gold to Lead
+                    {
+                        from.PlaySound(Utility.RandomList(0x30, 0x2D6));
+                        Container cont = from.Backpack;
+                        int nDull = 0;
+
+                        int m_gAmount = from.Backpack.GetAmount(typeof(Gold));
+                        int m_cAmount = from.Backpack.GetAmount(typeof(DDCopper));
+                        int m_sAmount = from.Backpack.GetAmount(typeof(DDSilver));
+                        int m_xAmount = from.Backpack.GetAmount(typeof(DDXormite));
+
+                        if (cont.ConsumeTotal(typeof(Gold), m_gAmount))
+                        {
+                            from.AddToBackpack(new LeadCoin(m_gAmount));
+                            nDull = 1;
+                        }
+                        if (cont.ConsumeTotal(typeof(DDCopper), m_cAmount))
+                        {
+                            from.AddToBackpack(new LeadCoin(m_cAmount));
+                            nDull = 1;
+                        }
+                        if (cont.ConsumeTotal(typeof(DDSilver), m_sAmount))
+                        {
+                            from.AddToBackpack(new LeadCoin(m_sAmount));
+                            nDull = 1;
+                        }
+                        if (cont.ConsumeTotal(typeof(DDXormite), m_xAmount))
+                        {
+                            from.AddToBackpack(new LeadCoin(m_xAmount));
+                            nDull = 1;
+                        }
+                        if (nDull > 0)
+                        {
+                            from.SendMessage(
+                                "After drinking from the pool, you notice all of your coins has turned to lead!"
+                            );
+                            Effects.SendLocationParticles(
+                                EffectItem.Create(
+                                    from.Location,
+                                    from.Map,
+                                    EffectItem.DefaultDuration
+                                ),
+                                0x3728,
+                                10,
+                                10,
+                                5023
+                            );
+
+                            LoggingFunctions.LogGenericQuest(
+                                from,
+                                "had all of their coins turn to lead after drinking from a strange pool"
+                            );
+                        }
+                        else
+                        {
+                            from.PlaySound(Utility.RandomList(0x30, 0x2D6));
+                            from.SendMessage("You drink from the pool and nothing happens!");
+                        }
+                        this.m_Uses = this.m_Uses - 1;
+                    } // Gold to Lead
+                    else if (effectRoll <= 40) // Lose a Stat Point
+                    {
+                        from.PlaySound(Utility.RandomList(0x30, 0x2D6));
+                        this.m_Uses = this.m_Uses - 1;
+                        int mCurse = 1;
+
+                        if (m_Bonus > 8)
+                        {
+                            if (from.RawStr > 10)
+                            {
+                                from.RawStr = from.RawStr - 1;
+                                from.SendMessage("You feel weaker after drinking from the pool!");
+                            }
+                            else
+                            {
+                                from.SendMessage("You drink from the pool and nothing happens!");
+                                mCurse = 0;
+                            }
+                        }
+                        else if (m_Bonus > 5)
+                        {
+                            if (from.RawDex > 10)
+                            {
+                                from.RawDex = from.RawDex - 1;
+                                from.SendMessage("You feel sluggish after drinking from the pool!");
+                            }
+                            else
+                            {
+                                from.SendMessage("You drink from the pool and nothing happens!");
+                                mCurse = 0;
+                            }
+                        }
+                        else
+                        {
+                            if (from.RawInt > 10)
+                            {
+                                from.RawInt = from.RawInt - 1;
+                                from.SendMessage(
+                                    "Your mind is foggy after drinking from the pool!"
+                                );
+                            }
+                            else
+                            {
+                                from.SendMessage("You drink from the pool and nothing happens!");
+                                mCurse = 0;
+                            }
+                        }
+
+                        if (mCurse == 1)
+                        {
+                            from.FixedParticles(0x3779, 1, 15, 9905, 32, 2, EffectLayer.Head);
+                            from.FixedParticles(0x37B9, 1, 14, 9502, 32, 5, (EffectLayer)255);
+                        }
+                    } // Lose a Stat Point
+                    else if (effectRoll <= 60) // Water Elemental
+                    {
+                        from.PlaySound(Utility.RandomList(0x30, 0x2D6));
+                        try
+                        {
+                            Map map = this.Map;
+                            BaseCreature bc = (BaseCreature)
+                                Activator.CreateInstance(typeof(WaterElemental));
+
+                            Point3D spawnLoc = this.Location;
+
+                            for (int i = 0; i < 10; i++)
+                            {
+                                int x = Location.X + Utility.Random(4);
+                                int y = Location.Y + Utility.Random(4);
+                                int z = Map.GetAverageZ(x, y);
+
+                                if (Map.CanSpawnMobile(new Point2D(x, y), this.Z))
+                                    spawnLoc = new Point3D(x, y, this.Z);
+                                else if (Map.CanSpawnMobile(new Point2D(x, y), z))
+                                    spawnLoc = new Point3D(x, y, z);
+                            }
+
+                            Timer.DelayCall(
+                                TimeSpan.FromSeconds(1),
+                                delegate()
+                                {
+                                    bc.Home = Location;
+                                    bc.RangeHome = 5;
+                                    bc.FightMode = FightMode.Closest;
+                                    bc.MoveToWorld(spawnLoc, map);
+                                    bc.ForceReacquire();
+                                }
+                            );
+                        }
+                        catch { }
+                        from.SendMessage("A water elemental emerges from the pool!");
+                        this.m_Uses = this.m_Uses - 1;
+                    } // Water Elemental
+                    else if (effectRoll <= 80) // Poison
+                    {
+                        if (from.Poisoned)
+                        {
+                            from.SendMessage("You are too sick to drink from this pool!");
+                        }
+                        else
+                        {
+                            Effects.SendLocationParticles(
+                                EffectItem.Create(
+                                    from.Location,
+                                    from.Map,
+                                    EffectItem.DefaultDuration
+                                ),
+                                0x36B0,
+                                1,
+                                14,
+                                63,
+                                7,
+                                9915,
+                                0
+                            );
+                            from.PlaySound(Utility.RandomList(0x30, 0x2D6));
+                            if (m_Bonus > 9)
+                            {
+                                from.ApplyPoison(from, Poison.Deadly);
+                            }
+                            else if (m_Bonus > 7)
+                            {
+                                from.ApplyPoison(from, Poison.Greater);
+                            }
+                            else if (m_Bonus > 4)
+                            {
+                                from.ApplyPoison(from, Poison.Regular);
+                            }
+                            else
+                            {
+                                from.ApplyPoison(from, Poison.Lesser);
+                            }
+                            from.SendMessage("You feel sick after drinking from the pool!");
+                            this.m_Uses = this.m_Uses - 1;
+                        }
+                    } // Poison
                 }
             }
             else

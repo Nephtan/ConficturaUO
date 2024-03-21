@@ -1,9 +1,9 @@
 using System;
-using Server;
 using System.Collections;
+using Server;
 using Server.Items;
-using Server.Targeting;
 using Server.Misc;
+using Server.Targeting;
 
 namespace Server.Mobiles
 {
@@ -14,7 +14,8 @@ namespace Server.Mobiles
         public Mammoth()
         {
             Name = "a mammoth";
-            Hue = 0xB5B;
+            Body = 997;
+            Hue = 0xB3A;
 
             SetStr(326, 355);
             SetDex(81, 105);
@@ -77,6 +78,8 @@ namespace Server.Mobiles
         {
             base.Deserialize(reader);
             int version = reader.ReadInt();
+            Body = 997;
+            Hue = 0xB3A;
         }
     }
 }

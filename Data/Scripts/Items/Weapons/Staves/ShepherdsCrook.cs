@@ -1,8 +1,8 @@
 using System;
-using Server.Network;
 using Server.Items;
-using Server.Targeting;
 using Server.Mobiles;
+using Server.Network;
+using Server.Targeting;
 
 namespace Server.Items
 {

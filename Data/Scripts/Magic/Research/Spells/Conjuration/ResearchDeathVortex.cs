@@ -1,4 +1,5 @@
 using System;
+using Server.Items;
 using Server.Mobiles;
 using Server.Network;
 using Server.Targeting;
@@ -33,7 +34,10 @@ namespace Server.Spells.Research
             Server.Misc.Research.SpellInformation(spellID, 2),
             Server.Misc.Research.CapsCast(Server.Misc.Research.SpellInformation(spellID, 4)),
             260,
-            9032
+            9032,
+            Reagent.DaemonBlood,
+            Reagent.EyeOfToad,
+            Reagent.UnicornHorn
         );
 
         public ResearchDeathVortex(Mobile caster, Item scroll)
@@ -91,7 +95,7 @@ namespace Server.Spells.Research
                     0x212,
                     duration
                 );
-                Server.Misc.Research.ConsumeScroll(Caster, true, spellIndex, false);
+                Server.Misc.Research.ConsumeScroll(Caster, true, spellIndex, alwaysConsume, Scroll);
 
                 Caster.SendMessage("You can double click the summoned to dispel them.");
             }

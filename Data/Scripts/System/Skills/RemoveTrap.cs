@@ -1,9 +1,9 @@
 using System;
 using Server;
-using Server.Targeting;
+using Server.Factions;
 using Server.Items;
 using Server.Network;
-using Server.Factions;
+using Server.Targeting;
 
 namespace Server.SkillHandlers
 {

@@ -1,9 +1,9 @@
 using System;
 using System.Collections;
 using Server;
-using Server.Targeting;
-using Server.Network;
 using Server.Items;
+using Server.Network;
+using Server.Targeting;
 
 namespace Server.Spells.Mystic
 {
@@ -17,7 +17,7 @@ namespace Server.Spells.Mystic
         }
         public override int RequiredTithing
         {
-            get { return 500; }
+            get { return 80; }
         }
         public override double RequiredSkill
         {
@@ -67,6 +67,8 @@ namespace Server.Spells.Mystic
                 Caster.MagicDamageAbsorb = value;
                 Caster.FixedParticles(0x3039, 10, 15, 5038, 0, 2, EffectLayer.Head);
                 Caster.PlaySound(0x5BC);
+                BuffInfo.RemoveBuff(Caster, BuffIcon.PsychicWall);
+                BuffInfo.AddBuff(Caster, new BuffInfo(BuffIcon.PsychicWall, 1063514));
             }
 
             FinishSequence();

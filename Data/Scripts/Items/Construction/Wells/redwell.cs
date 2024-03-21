@@ -1,15 +1,20 @@
 using System;
-using Server;
-using Server.Items;
-using Server.ContextMenus;
 using System.Collections;
-using Server.Prompts;
+using Server;
+using Server.ContextMenus;
+using Server.Items;
 using Server.Mobiles;
+using Server.Prompts;
 
 namespace Server.Items
 {
     public class RedWellAddon : BaseAddon, IWaterSource
     {
+        public override string AddonName
+        {
+            get { return "well"; }
+        }
+
         public int Quantity
         {
             get { return 500; }

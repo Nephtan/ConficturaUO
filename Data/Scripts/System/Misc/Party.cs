@@ -1,3 +1,7 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using Server;
 using Server.Commands;
 using Server.Engines.PartySystem;
 using Server.Factions;
@@ -5,10 +9,6 @@ using Server.Gumps;
 using Server.Mobiles;
 using Server.Network;
 using Server.Targeting;
-using Server;
-using System.Collections.Generic;
-using System.Collections;
-using System;
 
 namespace Server.Engines.PartySystem
 {

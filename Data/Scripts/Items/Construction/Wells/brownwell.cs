@@ -1,14 +1,19 @@
 using System;
+using System.Collections;
 using Server;
 using Server.Items;
-using System.Collections;
-using Server.Prompts;
 using Server.Mobiles;
+using Server.Prompts;
 
 namespace Server.Items
 {
     public class BrownWellAddon : BaseAddon, IWaterSource
     {
+        public override string AddonName
+        {
+            get { return "well"; }
+        }
+
         public int Quantity
         {
             get { return 500; }

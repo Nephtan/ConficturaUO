@@ -6,6 +6,11 @@ namespace Server.Items
 {
     public class SkullSouthSmallAddon : BaseAddon
     {
+        public override string AddonName
+        {
+            get { return "skull carpet"; }
+        }
+
         private static int[,] m_AddOnSimpleComponents = new int[,]
         {
             { 18244, -1, -2, 0 },

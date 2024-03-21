@@ -1,12 +1,12 @@
 using System;
-using Server;
-using Server.Network;
 using System.Collections;
+using Server;
+using Server.Gumps;
 using Server.Items;
 using Server.Misc;
-using Server.Gumps;
-using Server.Targeting;
+using Server.Network;
 using Server.Prompts;
+using Server.Targeting;
 
 namespace Server.Items
 {

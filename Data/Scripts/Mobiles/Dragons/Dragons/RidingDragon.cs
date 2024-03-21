@@ -1,13 +1,13 @@
 using System;
-using Server;
 using System.Collections;
-using Server.Items;
-using Server.Targeting;
-using Server.Network;
-using Server.Mobiles;
 using System.Collections.Generic;
+using Server;
+using Server.Items;
 using Server.Misc;
+using Server.Mobiles;
+using Server.Network;
 using Server.Regions;
+using Server.Targeting;
 
 namespace Server.Mobiles
 {
@@ -585,7 +585,7 @@ namespace Server.Mobiles
 
                         if (Server.Misc.MaterialInfo.IsAnyKindOfMetalItem(iRuined))
                         {
-                            if (Server.Items.HiddenTrap.CheckInsuranceOnTrap(iRuined, m) == true)
+                            if (Server.Items.HiddenTrap.CheckInsuranceOnTrap(iRuined, m))
                             {
                                 m.LocalOverheadMessage(
                                     MessageType.Emote,
@@ -617,7 +617,7 @@ namespace Server.Mobiles
 
                         if (Server.Misc.MaterialInfo.IsAnyKindOfMetalItem(iRuined))
                         {
-                            if (Server.Items.HiddenTrap.CheckInsuranceOnTrap(iRuined, m) == true)
+                            if (Server.Items.HiddenTrap.CheckInsuranceOnTrap(iRuined, m))
                             {
                                 m.LocalOverheadMessage(
                                     MessageType.Emote,

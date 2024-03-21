@@ -1,7 +1,7 @@
 using System;
-using Server.Targeting;
-using Server.Network;
 using Server.Items;
+using Server.Network;
+using Server.Targeting;
 
 namespace Server.Spells.Research
 {
@@ -33,7 +33,11 @@ namespace Server.Spells.Research
             Server.Misc.Research.SpellInformation(spellID, 2),
             Server.Misc.Research.CapsCast(Server.Misc.Research.SpellInformation(spellID, 4)),
             215,
-            9001
+            9001,
+            Reagent.EyeOfToad,
+            Reagent.SilverWidow,
+            Reagent.GargoyleEar,
+            Reagent.BlackPearl
         );
 
         public ResearchWizardEye(Mobile caster, Item scroll)
@@ -41,26 +45,44 @@ namespace Server.Spells.Research
 
         public override void OnCast()
         {
-            Caster.Target = new InternalTarget(this, spellID);
+            if (CheckSequence())
+            {
+                Caster.Target = new InternalTarget(this, spellID, Scroll, alwaysConsume);
+            }
         }
 
         private class InternalTarget : Target
         {
             private ResearchWizardEye m_Owner;
             private int m_SpellIndex;
+            private Item m_fromBook;
+            private bool m_alwaysConsume;
 
-            public InternalTarget(ResearchWizardEye owner, int spellIndex)
+            public InternalTarget(
+                ResearchWizardEye owner,
+                int spellIndex,
+                Item fromBook,
+                bool alwaysConsume
+            )
                 : base(Core.ML ? 10 : 12, false, TargetFlags.None)
             {
                 m_Owner = owner;
+                m_fromBook = fromBook;
                 m_SpellIndex = spellIndex;
+                m_alwaysConsume = alwaysConsume;
             }
 
             protected override void OnTarget(Mobile from, object targeted)
             {
                 if (Server.Items.ArtifactManual.LookupTheItem(from, targeted))
                 {
-                    Server.Misc.Research.ConsumeScroll(from, true, m_SpellIndex, false);
+                    Server.Misc.Research.ConsumeScroll(
+                        from,
+                        true,
+                        m_SpellIndex,
+                        m_alwaysConsume,
+                        m_fromBook
+                    );
                     from.PlaySound(0xF7);
                 }
                 m_Owner.FinishSequence();

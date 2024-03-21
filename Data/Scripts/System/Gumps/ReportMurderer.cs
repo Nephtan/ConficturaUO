@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
 using Server.Misc;
-using Server.Network;
 using Server.Mobiles;
+using Server.Network;
 
 namespace Server.Gumps
 {
@@ -72,6 +72,9 @@ namespace Server.Gumps
 
                 Titles.AwardFame(g, fameAward, false);
                 Titles.AwardKarma(g, karmaAward, true);
+
+                // modification to support XmlQuest Killtasks of players
+                Server.Items.XmlQuest.RegisterKill(m, g);
             }
 
             if (m is PlayerMobile && ((PlayerMobile)m).NpcGuild == NpcGuild.ThievesGuild)

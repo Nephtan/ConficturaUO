@@ -1,12 +1,12 @@
 using System;
-using Server;
-using Server.Targeting;
-using Server.Network;
-using Server.Items;
 using System.Collections;
 using System.Collections.Generic;
-using Server.Mobiles;
+using Server;
+using Server.Items;
 using Server.Misc;
+using Server.Mobiles;
+using Server.Network;
+using Server.Targeting;
 
 namespace Server.Spells.Research
 {
@@ -15,6 +15,10 @@ namespace Server.Spells.Research
         public override int spellIndex
         {
             get { return 50; }
+        }
+        public override bool alwaysConsume
+        {
+            get { return bool.Parse(Server.Misc.Research.SpellInformation(spellIndex, 14)); }
         }
         public int CirclePower = 7;
         public static int spellID = 50;
@@ -38,7 +42,11 @@ namespace Server.Spells.Research
             Server.Misc.Research.SpellInformation(spellID, 2),
             Server.Misc.Research.CapsCast(Server.Misc.Research.SpellInformation(spellID, 4)),
             212,
-            9001
+            9001,
+            Reagent.Brimstone,
+            Reagent.GraveDust,
+            Reagent.PigIron,
+            Reagent.MandrakeRoot
         );
 
         public ResearchOpenGround(Mobile caster, Item scroll)
@@ -246,7 +254,13 @@ namespace Server.Spells.Research
                     Effects.SendLocationEffect(dirt3, Caster.Map, 0x23B2, 30, 10, 0xABF, 0);
 
                     Caster.PlaySound(0x029);
-                    Server.Misc.Research.ConsumeScroll(Caster, true, spellIndex, true);
+                    Server.Misc.Research.ConsumeScroll(
+                        Caster,
+                        true,
+                        spellIndex,
+                        alwaysConsume,
+                        Scroll
+                    );
 
                     KarmaMod(Caster, ((int)RequiredSkill + RequiredMana));
                 }

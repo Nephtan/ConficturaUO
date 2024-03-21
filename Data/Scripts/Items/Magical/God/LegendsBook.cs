@@ -1,11 +1,11 @@
 using System;
-using Server;
-using Server.Network;
 using System.Collections;
 using System.Globalization;
+using Server;
+using Server.Gumps;
 using Server.Items;
 using Server.Misc;
-using Server.Gumps;
+using Server.Network;
 
 namespace Server.Items
 {
@@ -40,7 +40,7 @@ namespace Server.Items
                 m_Book = wikipedia;
                 LegendsBook pedia = (LegendsBook)wikipedia;
 
-                int NumberOfArtifacts = 289; // SEE LISTING BELOW AND MAKE SURE IT MATCHES THE AMOUNT
+                int NumberOfArtifacts = 291; // SEE LISTING BELOW AND MAKE SURE IT MATCHES THE AMOUNT
                 // DO THIS NUMBER+1 IN THE OnResponse SECTION BELOW
 
                 decimal PageCount = NumberOfArtifacts / 16;
@@ -1158,6 +1158,18 @@ namespace Server.Items
             {
                 name = "LevelStuddedSuneate";
                 item = "Studded Suneate";
+            }
+            arty++;
+            if (artifact == arty)
+            {
+                name = "LevelSunShield";
+                item = "Sun Shield";
+            }
+            arty++;
+            if (artifact == arty)
+            {
+                name = "LevelVirtueShield";
+                item = "Virtue Shield";
             }
             arty++;
             if (artifact == arty)

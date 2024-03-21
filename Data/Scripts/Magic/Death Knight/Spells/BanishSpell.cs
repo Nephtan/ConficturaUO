@@ -1,9 +1,9 @@
 using System;
-using Server.Misc;
 using Server.Items;
-using Server.Targeting;
-using Server.Network;
+using Server.Misc;
 using Server.Mobiles;
+using Server.Network;
+using Server.Targeting;
 
 namespace Server.Spells.DeathKnight
 {
@@ -64,7 +64,7 @@ namespace Server.Spells.DeathKnight
                     {
                         SpellHelper.Turn(from, m);
 
-                        if (from.Skills.Magery.Value > Utility.RandomMinMax(1, 100))
+                        if (from.Skills.Knightship.Value > Utility.RandomMinMax(1, 100))
                         {
                             Effects.SendLocationParticles(
                                 EffectItem.Create(m.Location, m.Map, EffectItem.DefaultDuration),

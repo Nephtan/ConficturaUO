@@ -1,6 +1,6 @@
 using System;
-using Server.Targeting;
 using Server.Network;
+using Server.Targeting;
 
 namespace Server.Spells.Seventh
 {
@@ -46,6 +46,7 @@ namespace Server.Spells.Seventh
                     m.Spell.OnCasterHurt();
 
                 m.Paralyzed = false;
+                BuffInfo.CleanupIcons(m, true);
 
                 int toDrain = 0;
 

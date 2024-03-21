@@ -1,12 +1,12 @@
 using System;
-using System.Collections.Generic;
 using System.Collections;
+using System.Collections.Generic;
 using Server.Engines.Apiculture;
+using Server.Engines.Mahjong;
+using Server.Guilds;
 using Server.Items;
 using Server.Misc;
 using Server.Multis;
-using Server.Guilds;
-using Server.Engines.Mahjong;
 using Server.Spells.Elementalism;
 
 namespace Server.Mobiles
@@ -2730,7 +2730,7 @@ namespace Server.Mobiles
         {
             public InternalBuyInfo()
             {
-                if (MyServerSettings.SoldResource())
+                if (MyServerSettings.BuyCloth())
                 {
                     Add(
                         new GenericBuyInfo(
@@ -2779,20 +2779,23 @@ namespace Server.Mobiles
         {
             public InternalSellInfo()
             {
-                if (MyServerSettings.SoldResource())
+                if (MyServerSettings.BuyCloth())
                 {
-                    Add(typeof(BoltOfCloth), 50);
-                    Add(typeof(UncutCloth), 1);
-                }
-                else
-                {
-                    if (MyServerSettings.BuyChance())
-                    {
-                        Add(typeof(UncutCloth), 1);
-                    }
-                    if (MyServerSettings.BuyChance())
+                    if (MyServerSettings.SoldResource())
                     {
                         Add(typeof(BoltOfCloth), 50);
+                        Add(typeof(UncutCloth), 1);
+                    }
+                    else
+                    {
+                        if (MyServerSettings.BuyChance())
+                        {
+                            Add(typeof(UncutCloth), 1);
+                        }
+                        if (MyServerSettings.BuyChance())
+                        {
+                            Add(typeof(BoltOfCloth), 50);
+                        }
                     }
                 }
             }
@@ -5037,6 +5040,24 @@ namespace Server.Mobiles
                         )
                     );
                 }
+                if (MyServerSettings.SellChance())
+                {
+                    Add(
+                        new GenericBuyInfo(typeof(SunShield), 256, Utility.Random(1, 15), 0x65ED, 0)
+                    );
+                }
+                if (MyServerSettings.SellChance())
+                {
+                    Add(
+                        new GenericBuyInfo(
+                            typeof(VirtueShield),
+                            256,
+                            Utility.Random(1, 15),
+                            0x65EE,
+                            0
+                        )
+                    );
+                }
             }
         }
 
@@ -5103,6 +5124,14 @@ namespace Server.Mobiles
                 if (MyServerSettings.BuyChance())
                 {
                     Add(typeof(OrderShield), 115);
+                } // DO NOT WANT?
+                if (MyServerSettings.BuyChance())
+                {
+                    Add(typeof(SunShield), 115);
+                } // DO NOT WANT?
+                if (MyServerSettings.BuyChance())
+                {
+                    Add(typeof(VirtueShield), 115);
                 } // DO NOT WANT?
             }
         }
@@ -8500,6 +8529,10 @@ namespace Server.Mobiles
                 } // DO NOT WANT?
                 if (MyServerSettings.BuyChance())
                 {
+                    Add(typeof(SkullDinosaur), Utility.Random(75, 175));
+                } // DO NOT WANT?
+                if (MyServerSettings.BuyChance())
+                {
                     Add(typeof(SkullWyrm), Utility.Random(200, 400));
                 } // DO NOT WANT?
                 if (MyServerSettings.BuyChance())
@@ -8513,6 +8546,22 @@ namespace Server.Mobiles
                 if (MyServerSettings.BuyChance())
                 {
                     Add(typeof(SkullDemon), Utility.Random(100, 300));
+                } // DO NOT WANT?
+                if (MyServerSettings.BuyChance())
+                {
+                    Add(typeof(DeamonHeadA), Utility.Random(100, 300));
+                } // DO NOT WANT?
+                if (MyServerSettings.BuyChance())
+                {
+                    Add(typeof(DeamonHeadB), Utility.Random(100, 300));
+                } // DO NOT WANT?
+                if (MyServerSettings.BuyChance())
+                {
+                    Add(typeof(DeamonHeadC), Utility.Random(100, 300));
+                } // DO NOT WANT?
+                if (MyServerSettings.BuyChance())
+                {
+                    Add(typeof(VampireHead), Utility.Random(100, 300));
                 } // DO NOT WANT?
                 if (MyServerSettings.BuyChance())
                 {
@@ -9089,7 +9138,7 @@ namespace Server.Mobiles
                         )
                     );
                 }
-                if (MyServerSettings.SellVeryRareChance() && MyServerSettings.AllowElephants())
+                if (MyServerSettings.SellVeryRareChance() && MyServerSettings.SafariStore())
                 {
                     Add(
                         new GenericBuyInfo(
@@ -9113,7 +9162,7 @@ namespace Server.Mobiles
                         )
                     );
                 }
-                if (MyServerSettings.SellRareChance() && MyServerSettings.AllowFox())
+                if (MyServerSettings.SellRareChance())
                 {
                     Add(
                         new GenericBuyInfo(
@@ -9861,6 +9910,36 @@ namespace Server.Mobiles
                 if (MyServerSettings.SellChance())
                 {
                     Add(
+                        new GenericBuyInfo(typeof(StandardTamingStudyBook), 7500, 1, 0x225A, 0x1BA)
+                    );
+                }
+                if (MyServerSettings.SellChance())
+                {
+                    Add(
+                        new GenericBuyInfo(
+                            typeof(StandardDruidismStudyBook),
+                            7500,
+                            1,
+                            0x225A,
+                            0x1BA
+                        )
+                    );
+                }
+                if (MyServerSettings.SellChance())
+                {
+                    Add(
+                        new GenericBuyInfo(
+                            typeof(StandardVeterinaryStudyBook),
+                            7500,
+                            1,
+                            0x225A,
+                            0x1BA
+                        )
+                    );
+                }
+                if (MyServerSettings.SellChance())
+                {
+                    Add(
                         new GenericBuyInfo(
                             typeof(CagedBull),
                             BaseCaged.Price("Bull"),
@@ -9966,7 +10045,7 @@ namespace Server.Mobiles
                         )
                     );
                 }
-                if (MyServerSettings.SellRareChance() && MyServerSettings.AllowZebras())
+                if (MyServerSettings.SellRareChance() && MyServerSettings.SafariStore())
                 {
                     Add(
                         new GenericBuyInfo(
@@ -10245,7 +10324,7 @@ namespace Server.Mobiles
                         )
                     );
                 }
-                if (MyServerSettings.SellRareChance() && MyServerSettings.AllowZebras())
+                if (MyServerSettings.SellRareChance() && MyServerSettings.SafariStore())
                 {
                     Add(
                         new GenericBuyInfo(
@@ -10986,6 +11065,18 @@ namespace Server.Mobiles
                 if (MyServerSettings.SellChance())
                 {
                     Add(
+                        new GenericBuyInfo(
+                            typeof(StandardSeafaringStudyBook),
+                            7500,
+                            1,
+                            0x225A,
+                            0x1BA
+                        )
+                    );
+                }
+                if (MyServerSettings.SellChance())
+                {
+                    Add(
                         new GenericBuyInfo(typeof(BoatStain), 26, Utility.Random(1, 15), 0x14E0, 0)
                     );
                 }
@@ -11297,6 +11388,24 @@ namespace Server.Mobiles
                 {
                     Add(
                         new GenericBuyInfo(
+                            typeof(StandardNinjitsuStudyBook),
+                            7500,
+                            1,
+                            0x225A,
+                            0x1BA
+                        )
+                    );
+                }
+                if (MyServerSettings.SellChance())
+                {
+                    Add(
+                        new GenericBuyInfo(typeof(StandardBushidoStudyBook), 7500, 1, 0x225A, 0x1BA)
+                    );
+                }
+                if (MyServerSettings.SellChance())
+                {
+                    Add(
+                        new GenericBuyInfo(
                             typeof(ShinobiScroll),
                             280,
                             Utility.RandomMinMax(1, 5),
@@ -11367,6 +11476,18 @@ namespace Server.Mobiles
         {
             public InternalBuyInfo()
             {
+                if (MyServerSettings.SellChance())
+                {
+                    Add(
+                        new GenericBuyInfo(typeof(StandardCookingStudyBook), 7500, 1, 0x225A, 0x1BA)
+                    );
+                }
+                if (MyServerSettings.SellChance())
+                {
+                    Add(
+                        new GenericBuyInfo(typeof(StandardTastingStudyBook), 7500, 1, 0x225A, 0x1BA)
+                    );
+                }
                 if (1 > 0)
                 {
                     Add(new GenericBuyInfo(typeof(BreadLoaf), 6, Utility.Random(1, 15), 0x103B, 0));
@@ -11575,6 +11696,54 @@ namespace Server.Mobiles
         {
             public InternalBuyInfo()
             {
+                if (MyServerSettings.SellChance())
+                {
+                    Add(
+                        new GenericBuyInfo(
+                            typeof(StandardDiscordanceStudyBook),
+                            7500,
+                            1,
+                            0x225A,
+                            0x1BA
+                        )
+                    );
+                }
+                if (MyServerSettings.SellChance())
+                {
+                    Add(
+                        new GenericBuyInfo(
+                            typeof(StandardMusicianshipStudyBook),
+                            7500,
+                            1,
+                            0x225A,
+                            0x1BA
+                        )
+                    );
+                }
+                if (MyServerSettings.SellChance())
+                {
+                    Add(
+                        new GenericBuyInfo(
+                            typeof(StandardPeacemakingStudyBook),
+                            7500,
+                            1,
+                            0x225A,
+                            0x1BA
+                        )
+                    );
+                }
+                if (MyServerSettings.SellChance())
+                {
+                    Add(
+                        new GenericBuyInfo(
+                            typeof(StandardProvocationStudyBook),
+                            7500,
+                            1,
+                            0x225A,
+                            0x1BA
+                        )
+                    );
+                }
                 if (MyServerSettings.SellChance())
                 {
                     Add(new GenericBuyInfo(typeof(Drums), 21, Utility.Random(1, 15), 0x0E9C, 0));
@@ -12547,6 +12716,18 @@ namespace Server.Mobiles
             {
                 if (MyServerSettings.SellChance())
                 {
+                    Add(
+                        new GenericBuyInfo(
+                            typeof(StandardBlacksmithStudyBook),
+                            7500,
+                            1,
+                            0x225A,
+                            0x1BA
+                        )
+                    );
+                }
+                if (MyServerSettings.SellChance())
+                {
                     Add(new GenericBuyInfo(typeof(Tongs), 13, Utility.Random(1, 15), 0xFBB, 0));
                 }
                 if (1 > 0)
@@ -12602,6 +12783,30 @@ namespace Server.Mobiles
         {
             public InternalBuyInfo()
             {
+                if (MyServerSettings.SellChance())
+                {
+                    Add(
+                        new GenericBuyInfo(
+                            typeof(StandardBowcraftStudyBook),
+                            7500,
+                            1,
+                            0x225A,
+                            0x1BA
+                        )
+                    );
+                }
+                if (MyServerSettings.SellChance())
+                {
+                    Add(
+                        new GenericBuyInfo(
+                            typeof(StandardMarksmanshipStudyBook),
+                            7500,
+                            1,
+                            0x225A,
+                            0x1BA
+                        )
+                    );
+                }
                 Add(
                     new GenericBuyInfo(
                         typeof(FletcherTools),
@@ -12660,6 +12865,12 @@ namespace Server.Mobiles
         {
             public InternalBuyInfo()
             {
+                if (MyServerSettings.SellChance())
+                {
+                    Add(
+                        new GenericBuyInfo(typeof(StandardAnatomyStudyBook), 7500, 1, 0x225A, 0x1BA)
+                    );
+                }
                 if (MyServerSettings.SellChance())
                 {
                     Add(new GenericBuyInfo(typeof(Bacon), 7, Utility.Random(1, 15), 0x979, 0));
@@ -12808,6 +13019,30 @@ namespace Server.Mobiles
         {
             public InternalBuyInfo()
             {
+                if (MyServerSettings.SellChance())
+                {
+                    Add(
+                        new GenericBuyInfo(
+                            typeof(StandardCarpentryStudyBook),
+                            7500,
+                            1,
+                            0x225A,
+                            0x1BA
+                        )
+                    );
+                }
+                if (MyServerSettings.SellChance())
+                {
+                    Add(
+                        new GenericBuyInfo(
+                            typeof(StandardLumberjackingStudyBook),
+                            7500,
+                            1,
+                            0x225A,
+                            0x1BA
+                        )
+                    );
+                }
                 if (MyServerSettings.SellChance())
                 {
                     Add(new GenericBuyInfo(typeof(Hatchet), 25, Utility.Random(1, 15), 0xF44, 0));
@@ -14954,6 +15189,18 @@ namespace Server.Mobiles
                 {
                     Add(
                         new GenericBuyInfo(
+                            typeof(StandardTailoringStudyBook),
+                            7500,
+                            1,
+                            0x225A,
+                            0x1BA
+                        )
+                    );
+                }
+                if (MyServerSettings.SellChance())
+                {
+                    Add(
+                        new GenericBuyInfo(
                             typeof(ThighBoots),
                             15,
                             Utility.Random(1, 15),
@@ -15150,6 +15397,18 @@ namespace Server.Mobiles
         {
             public InternalBuyInfo()
             {
+                if (MyServerSettings.SellChance())
+                {
+                    Add(
+                        new GenericBuyInfo(typeof(StandardCookingStudyBook), 7500, 1, 0x225A, 0x1BA)
+                    );
+                }
+                if (MyServerSettings.SellChance())
+                {
+                    Add(
+                        new GenericBuyInfo(typeof(StandardTastingStudyBook), 7500, 1, 0x225A, 0x1BA)
+                    );
+                }
                 if (MyServerSettings.SellChance())
                 {
                     Add(new GenericBuyInfo(typeof(BreadLoaf), 5, Utility.Random(1, 15), 0x103B, 0));
@@ -15890,6 +16149,24 @@ namespace Server.Mobiles
             {
                 if (MyServerSettings.SellChance())
                 {
+                    Add(
+                        new GenericBuyInfo(typeof(StandardCampingStudyBook), 7500, 1, 0x225A, 0x1BA)
+                    );
+                }
+                if (MyServerSettings.SellChance())
+                {
+                    Add(
+                        new GenericBuyInfo(
+                            typeof(StandardDruidismStudyBook),
+                            7500,
+                            1,
+                            0x225A,
+                            0x1BA
+                        )
+                    );
+                }
+                if (MyServerSettings.SellChance())
+                {
                     Add(new GenericBuyInfo(typeof(Furs), 5, Utility.Random(1, 25), 0x11F4, 0));
                 }
                 if (MyServerSettings.SellChance())
@@ -16290,6 +16567,18 @@ namespace Server.Mobiles
         {
             public InternalBuyInfo()
             {
+                if (MyServerSettings.SellChance())
+                {
+                    Add(
+                        new GenericBuyInfo(typeof(StandardAlchemyStudyBook), 7500, 1, 0x225A, 0x1BA)
+                    );
+                }
+                if (MyServerSettings.SellChance())
+                {
+                    Add(
+                        new GenericBuyInfo(typeof(StandardTastingStudyBook), 7500, 1, 0x225A, 0x1BA)
+                    );
+                }
                 if (1 > 0)
                 {
                     Add(
@@ -16463,6 +16752,42 @@ namespace Server.Mobiles
         {
             public InternalBuyInfo()
             {
+                if (MyServerSettings.SellChance())
+                {
+                    Add(
+                        new GenericBuyInfo(typeof(StandardAnatomyStudyBook), 7500, 1, 0x225A, 0x1BA)
+                    );
+                }
+                if (MyServerSettings.SellChance())
+                {
+                    Add(
+                        new GenericBuyInfo(typeof(StandardHealingStudyBook), 7500, 1, 0x225A, 0x1BA)
+                    );
+                }
+                if (MyServerSettings.SellChance())
+                {
+                    Add(
+                        new GenericBuyInfo(
+                            typeof(StandardForensicsStudyBook),
+                            7500,
+                            1,
+                            0x225A,
+                            0x1BA
+                        )
+                    );
+                }
+                if (MyServerSettings.SellChance())
+                {
+                    Add(
+                        new GenericBuyInfo(
+                            typeof(StandardSpiritualismStudyBook),
+                            7500,
+                            1,
+                            0x225A,
+                            0x1BA
+                        )
+                    );
+                }
                 if (1 > 0)
                 {
                     Add(new GenericBuyInfo(typeof(Bandage), 2, Utility.Random(10, 150), 0xE21, 0));
@@ -16563,6 +16888,48 @@ namespace Server.Mobiles
         {
             public InternalBuyInfo()
             {
+                if (MyServerSettings.SellChance())
+                {
+                    Add(
+                        new GenericBuyInfo(typeof(StandardCampingStudyBook), 7500, 1, 0x225A, 0x1BA)
+                    );
+                }
+                if (MyServerSettings.SellChance())
+                {
+                    Add(
+                        new GenericBuyInfo(
+                            typeof(StandardDruidismStudyBook),
+                            7500,
+                            1,
+                            0x225A,
+                            0x1BA
+                        )
+                    );
+                }
+                if (MyServerSettings.SellChance())
+                {
+                    Add(
+                        new GenericBuyInfo(typeof(StandardTamingStudyBook), 7500, 1, 0x225A, 0x1BA)
+                    );
+                }
+                if (MyServerSettings.SellChance())
+                {
+                    Add(
+                        new GenericBuyInfo(typeof(StandardHerdingStudyBook), 7500, 1, 0x225A, 0x1BA)
+                    );
+                }
+                if (MyServerSettings.SellChance())
+                {
+                    Add(
+                        new GenericBuyInfo(
+                            typeof(StandardVeterinaryStudyBook),
+                            7500,
+                            1,
+                            0x225A,
+                            0x1BA
+                        )
+                    );
+                }
                 if (1 > 0)
                 {
                     Add(new GenericBuyInfo(typeof(Bandage), 2, Utility.Random(10, 150), 0xE21, 0));
@@ -17251,6 +17618,31 @@ namespace Server.Mobiles
         {
             public InternalBuyInfo()
             {
+                if (MyServerSettings.SellChance())
+                {
+                    Add(
+                        new GenericBuyInfo(typeof(StandardAlchemyStudyBook), 7500, 1, 0x225A, 0x1BA)
+                    );
+                }
+                if (MyServerSettings.SellChance())
+                {
+                    Add(
+                        new GenericBuyInfo(
+                            typeof(StandardPoisoningStudyBook),
+                            7500,
+                            1,
+                            0x225A,
+                            0x1BA
+                        )
+                    );
+                }
+                if (MyServerSettings.SellChance())
+                {
+                    Add(
+                        new GenericBuyInfo(typeof(StandardTastingStudyBook), 7500, 1, 0x225A, 0x1BA)
+                    );
+                }
+
                 Add(new GenericBuyInfo(typeof(BlackPearl), 5, Utility.Random(10, 100), 0x266F, 0));
                 Add(new GenericBuyInfo(typeof(Bloodmoss), 5, Utility.Random(10, 100), 0xF7B, 0));
                 Add(new GenericBuyInfo(typeof(Garlic), 3, Utility.Random(10, 100), 0xF84, 0));
@@ -17527,6 +17919,60 @@ namespace Server.Mobiles
         {
             public InternalBuyInfo()
             {
+                if (MyServerSettings.SellChance())
+                {
+                    Add(
+                        new GenericBuyInfo(
+                            typeof(StandardInscribeStudyBook),
+                            7500,
+                            1,
+                            0x225A,
+                            0x1BA
+                        )
+                    );
+                }
+                if (MyServerSettings.SellChance())
+                {
+                    Add(
+                        new GenericBuyInfo(
+                            typeof(StandardPsychologyStudyBook),
+                            7500,
+                            1,
+                            0x225A,
+                            0x1BA
+                        )
+                    );
+                }
+                if (MyServerSettings.SellChance())
+                {
+                    Add(
+                        new GenericBuyInfo(typeof(StandardMageryStudyBook), 7500, 1, 0x225A, 0x1BA)
+                    );
+                }
+                if (MyServerSettings.SellChance())
+                {
+                    Add(
+                        new GenericBuyInfo(
+                            typeof(StandardMeditationStudyBook),
+                            7500,
+                            1,
+                            0x225A,
+                            0x1BA
+                        )
+                    );
+                }
+                if (MyServerSettings.SellChance())
+                {
+                    Add(
+                        new GenericBuyInfo(
+                            typeof(StandardMagicResistStudyBook),
+                            7500,
+                            1,
+                            0x225A,
+                            0x1BA
+                        )
+                    );
+                }
                 if (1 > 0)
                 {
                     Add(new GenericBuyInfo(typeof(Spellbook), 18, Utility.Random(1, 15), 0xEFA, 0));
@@ -18109,6 +18555,72 @@ namespace Server.Mobiles
         {
             public InternalBuyInfo()
             {
+                if (MyServerSettings.SellChance())
+                {
+                    Add(
+                        new GenericBuyInfo(
+                            typeof(StandardInscribeStudyBook),
+                            7500,
+                            1,
+                            0x225A,
+                            0x1BA
+                        )
+                    );
+                }
+                if (MyServerSettings.SellChance())
+                {
+                    Add(
+                        new GenericBuyInfo(
+                            typeof(StandardPsychologyStudyBook),
+                            7500,
+                            1,
+                            0x225A,
+                            0x1BA
+                        )
+                    );
+                }
+                if (MyServerSettings.SellChance())
+                {
+                    Add(
+                        new GenericBuyInfo(typeof(StandardMageryStudyBook), 7500, 1, 0x225A, 0x1BA)
+                    );
+                }
+                if (MyServerSettings.SellChance())
+                {
+                    Add(
+                        new GenericBuyInfo(
+                            typeof(StandardMeditationStudyBook),
+                            7500,
+                            1,
+                            0x225A,
+                            0x1BA
+                        )
+                    );
+                }
+                if (MyServerSettings.SellChance())
+                {
+                    Add(
+                        new GenericBuyInfo(
+                            typeof(StandardMagicResistStudyBook),
+                            7500,
+                            1,
+                            0x225A,
+                            0x1BA
+                        )
+                    );
+                }
+                if (MyServerSettings.SellChance())
+                {
+                    Add(
+                        new GenericBuyInfo(
+                            typeof(StandardNecromancyStudyBook),
+                            7500,
+                            1,
+                            0x225A,
+                            0x1BA
+                        )
+                    );
+                }
                 if (SetStock.SellChance())
                 {
                     Add(
@@ -19560,6 +20072,18 @@ namespace Server.Mobiles
             {
                 if (MyServerSettings.SellChance())
                 {
+                    Add(
+                        new GenericBuyInfo(
+                            typeof(StandardMercantileStudyBook),
+                            7500,
+                            1,
+                            0x225A,
+                            0x1BA
+                        )
+                    );
+                }
+                if (MyServerSettings.SellChance())
+                {
                     Add(new GenericBuyInfo(typeof(GoldRing), 27, Utility.Random(1, 15), 0x4CFA, 0));
                 }
                 if (MyServerSettings.SellChance())
@@ -20367,6 +20891,53 @@ namespace Server.Mobiles
         {
             public InternalBuyInfo()
             {
+                if (MyServerSettings.SellChance())
+                {
+                    Add(
+                        new GenericBuyInfo(
+                            typeof(StandardArmsLoreStudyBook),
+                            7500,
+                            1,
+                            0x225A,
+                            0x1BA
+                        )
+                    );
+                }
+                if (MyServerSettings.SellChance())
+                {
+                    Add(
+                        new GenericBuyInfo(
+                            typeof(StandardBludgeoningStudyBook),
+                            7500,
+                            1,
+                            0x225A,
+                            0x1BA
+                        )
+                    );
+                }
+                if (MyServerSettings.SellChance())
+                {
+                    Add(new GenericBuyInfo(typeof(StandardParryStudyBook), 7500, 1, 0x225A, 0x1BA));
+                }
+                if (MyServerSettings.SellChance())
+                {
+                    Add(
+                        new GenericBuyInfo(typeof(StandardSwordsStudyBook), 7500, 1, 0x225A, 0x1BA)
+                    );
+                }
+                if (MyServerSettings.SellChance())
+                {
+                    Add(
+                        new GenericBuyInfo(typeof(StandardTacticsStudyBook), 7500, 1, 0x225A, 0x1BA)
+                    );
+                }
+                if (MyServerSettings.SellChance())
+                {
+                    Add(
+                        new GenericBuyInfo(typeof(StandardFencingStudyBook), 7500, 1, 0x225A, 0x1BA)
+                    );
+                }
+
                 Add(
                     new GenericBuyInfo(
                         "warhorse",
@@ -20407,6 +20978,42 @@ namespace Server.Mobiles
         {
             public InternalBuyInfo()
             {
+                if (MyServerSettings.SellChance())
+                {
+                    Add(
+                        new GenericBuyInfo(
+                            typeof(StandardBludgeoningStudyBook),
+                            7500,
+                            1,
+                            0x225A,
+                            0x1BA
+                        )
+                    );
+                }
+                if (MyServerSettings.SellChance())
+                {
+                    Add(
+                        new GenericBuyInfo(typeof(StandardSwordsStudyBook), 7500, 1, 0x225A, 0x1BA)
+                    );
+                }
+                if (MyServerSettings.SellChance())
+                {
+                    Add(
+                        new GenericBuyInfo(typeof(StandardFencingStudyBook), 7500, 1, 0x225A, 0x1BA)
+                    );
+                }
+                if (MyServerSettings.SellChance())
+                {
+                    Add(
+                        new GenericBuyInfo(
+                            typeof(StandardKnightshipStudyBook),
+                            7500,
+                            1,
+                            0x225A,
+                            0x1BA
+                        )
+                    );
+                }
                 Add(
                     new GenericBuyInfo(
                         typeof(BookOfChivalry),
@@ -20618,6 +21225,18 @@ namespace Server.Mobiles
             {
                 if (MyServerSettings.SellChance())
                 {
+                    Add(
+                        new GenericBuyInfo(
+                            typeof(StandardCartographyStudyBook),
+                            7500,
+                            1,
+                            0x225A,
+                            0x1BA
+                        )
+                    );
+                }
+                if (MyServerSettings.SellChance())
+                {
                     Add(new GenericBuyInfo(typeof(BlankMap), 5, Utility.Random(1, 15), 0x14EC, 0));
                 }
                 if (1 > 0)
@@ -20790,6 +21409,12 @@ namespace Server.Mobiles
         {
             public InternalBuyInfo()
             {
+                if (MyServerSettings.SellChance())
+                {
+                    Add(
+                        new GenericBuyInfo(typeof(StandardMiningStudyBook), 7500, 1, 0x225A, 0x1BA)
+                    );
+                }
                 if (MyServerSettings.SellChance())
                 {
                     Add(new GenericBuyInfo(typeof(Bag), 6, Utility.Random(1, 15), 0xE76, 0xABE));
@@ -21131,6 +21756,24 @@ namespace Server.Mobiles
         {
             public InternalBuyInfo()
             {
+                if (MyServerSettings.SellChance())
+                {
+                    Add(
+                        new GenericBuyInfo(
+                            typeof(StandardMercantileStudyBook),
+                            7500,
+                            1,
+                            0x225A,
+                            0x1BA
+                        )
+                    );
+                }
+                if (MyServerSettings.SellChance())
+                {
+                    Add(
+                        new GenericBuyInfo(typeof(StandardCampingStudyBook), 7500, 1, 0x225A, 0x1BA)
+                    );
+                }
                 if (MyServerSettings.SellChance())
                 {
                     Add(
@@ -22007,6 +22650,42 @@ namespace Server.Mobiles
         {
             public InternalBuyInfo()
             {
+                if (MyServerSettings.SellChance())
+                {
+                    Add(
+                        new GenericBuyInfo(
+                            typeof(StandardDruidismStudyBook),
+                            7500,
+                            1,
+                            0x225A,
+                            0x1BA
+                        )
+                    );
+                }
+                if (MyServerSettings.SellChance())
+                {
+                    Add(
+                        new GenericBuyInfo(typeof(StandardHerdingStudyBook), 7500, 1, 0x225A, 0x1BA)
+                    );
+                }
+                if (MyServerSettings.SellChance())
+                {
+                    Add(
+                        new GenericBuyInfo(typeof(StandardTamingStudyBook), 7500, 1, 0x225A, 0x1BA)
+                    );
+                }
+                if (MyServerSettings.SellChance())
+                {
+                    Add(
+                        new GenericBuyInfo(
+                            typeof(StandardVeterinaryStudyBook),
+                            7500,
+                            1,
+                            0x225A,
+                            0x1BA
+                        )
+                    );
+                }
                 Add(new AnimalBuyInfo(1, typeof(PackHorse), 631, Utility.Random(1, 15), 291, 0));
             }
         }
@@ -22038,6 +22717,72 @@ namespace Server.Mobiles
         {
             public InternalBuyInfo()
             {
+                if (MyServerSettings.SellChance())
+                {
+                    Add(
+                        new GenericBuyInfo(
+                            typeof(StandardTrackingStudyBook),
+                            7500,
+                            1,
+                            0x225A,
+                            0x1BA
+                        )
+                    );
+                }
+                if (MyServerSettings.SellChance())
+                {
+                    Add(
+                        new GenericBuyInfo(typeof(StandardCampingStudyBook), 7500, 1, 0x225A, 0x1BA)
+                    );
+                }
+                if (MyServerSettings.SellChance())
+                {
+                    Add(
+                        new GenericBuyInfo(
+                            typeof(StandardVeterinaryStudyBook),
+                            7500,
+                            1,
+                            0x225A,
+                            0x1BA
+                        )
+                    );
+                }
+                if (MyServerSettings.SellChance())
+                {
+                    Add(
+                        new GenericBuyInfo(
+                            typeof(StandardMarksmanshipStudyBook),
+                            7500,
+                            1,
+                            0x225A,
+                            0x1BA
+                        )
+                    );
+                }
+                if (MyServerSettings.SellChance())
+                {
+                    Add(
+                        new GenericBuyInfo(
+                            typeof(StandardSearchingStudyBook),
+                            7500,
+                            1,
+                            0x225A,
+                            0x1BA
+                        )
+                    );
+                }
+                if (MyServerSettings.SellChance())
+                {
+                    Add(
+                        new GenericBuyInfo(
+                            typeof(StandardVeterinaryStudyBook),
+                            7500,
+                            1,
+                            0x225A,
+                            0x1BA
+                        )
+                    );
+                }
                 if (MyServerSettings.SellChance())
                 {
                     Add(new AnimalBuyInfo(1, typeof(Cat), 138, Utility.Random(1, 15), 201, 0));
@@ -22852,6 +23597,30 @@ namespace Server.Mobiles
         {
             public InternalBuyInfo()
             {
+                if (MyServerSettings.SellChance())
+                {
+                    Add(
+                        new GenericBuyInfo(
+                            typeof(StandardInscribeStudyBook),
+                            7500,
+                            1,
+                            0x225A,
+                            0x1BA
+                        )
+                    );
+                }
+                if (MyServerSettings.SellChance())
+                {
+                    Add(
+                        new GenericBuyInfo(
+                            typeof(StandardPsychologyStudyBook),
+                            7500,
+                            1,
+                            0x225A,
+                            0x1BA
+                        )
+                    );
+                }
                 if (MyServerSettings.SellChance())
                 {
                     Add(
@@ -24008,6 +24777,18 @@ namespace Server.Mobiles
                 {
                     Add(
                         new GenericBuyInfo(
+                            typeof(StandardTailoringStudyBook),
+                            7500,
+                            1,
+                            0x225A,
+                            0x1BA
+                        )
+                    );
+                }
+                if (MyServerSettings.SellChance())
+                {
+                    Add(
+                        new GenericBuyInfo(
                             typeof(SewingKit),
                             3,
                             Utility.Random(1, 15),
@@ -24905,6 +25686,25 @@ namespace Server.Mobiles
         {
             public InternalSellInfo()
             {
+                if (MyServerSettings.SoldResource())
+                {
+                    if (MyServerSettings.BuyChance())
+                    {
+                        Add(typeof(SpoolOfThread), 9);
+                    } // DO NOT WANT?
+                    if (MyServerSettings.BuyChance())
+                    {
+                        Add(typeof(Flax), 51);
+                    } // DO NOT WANT?
+                    if (MyServerSettings.BuyChance())
+                    {
+                        Add(typeof(Cotton), 51);
+                    } // DO NOT WANT?
+                    if (MyServerSettings.BuyChance())
+                    {
+                        Add(typeof(Wool), 31);
+                    } // DO NOT WANT?
+                }
                 if (MyServerSettings.BuyChance())
                 {
                     Add(typeof(JokerRobe), 19);
@@ -25209,22 +26009,6 @@ namespace Server.Mobiles
                 {
                     Add(typeof(PirateHat), 4);
                 } // DO NOT WANT?
-                if (MyServerSettings.BuyChance())
-                {
-                    Add(typeof(SpoolOfThread), 9);
-                } // DO NOT WANT?
-                if (MyServerSettings.BuyChance())
-                {
-                    Add(typeof(Flax), 51);
-                } // DO NOT WANT?
-                if (MyServerSettings.BuyChance())
-                {
-                    Add(typeof(Cotton), 51);
-                } // DO NOT WANT?
-                if (MyServerSettings.BuyChance())
-                {
-                    Add(typeof(Wool), 31);
-                } // DO NOT WANT?
                 if (MyServerSettings.BuyRareChance())
                 {
                     Add(typeof(MagicRobe), 30);
@@ -25291,6 +26075,18 @@ namespace Server.Mobiles
                         0
                     )
                 );
+                if (MyServerSettings.SellChance())
+                {
+                    Add(
+                        new GenericBuyInfo(
+                            typeof(StandardBeggingStudyBook),
+                            7500,
+                            1,
+                            0x225A,
+                            0x1BA
+                        )
+                    );
+                }
                 if (MyServerSettings.SellChance())
                 {
                     Add(
@@ -26148,6 +26944,90 @@ namespace Server.Mobiles
             {
                 if (MyServerSettings.SellChance())
                 {
+                    Add(
+                        new GenericBuyInfo(
+                            typeof(StandardSearchingStudyBook),
+                            7500,
+                            1,
+                            0x225A,
+                            0x1BA
+                        )
+                    );
+                }
+                if (MyServerSettings.SellChance())
+                {
+                    Add(
+                        new GenericBuyInfo(
+                            typeof(StandardLockpickingStudyBook),
+                            7500,
+                            1,
+                            0x225A,
+                            0x1BA
+                        )
+                    );
+                }
+                if (MyServerSettings.SellChance())
+                {
+                    Add(
+                        new GenericBuyInfo(
+                            typeof(StandardSnoopingStudyBook),
+                            7500,
+                            1,
+                            0x225A,
+                            0x1BA
+                        )
+                    );
+                }
+                if (MyServerSettings.SellChance())
+                {
+                    Add(
+                        new GenericBuyInfo(
+                            typeof(StandardStealingStudyBook),
+                            7500,
+                            1,
+                            0x225A,
+                            0x1BA
+                        )
+                    );
+                }
+                if (MyServerSettings.SellChance())
+                {
+                    Add(
+                        new GenericBuyInfo(typeof(StandardStealthStudyBook), 7500, 1, 0x225A, 0x1BA)
+                    );
+                }
+                if (MyServerSettings.SellChance())
+                {
+                    Add(
+                        new GenericBuyInfo(
+                            typeof(StandardRemoveTrapStudyBook),
+                            7500,
+                            1,
+                            0x225A,
+                            0x1BA
+                        )
+                    );
+                }
+                if (MyServerSettings.SellChance())
+                {
+                    Add(
+                        new GenericBuyInfo(typeof(StandardHidingStudyBook), 7500, 1, 0x225A, 0x1BA)
+                    );
+                }
+                if (MyServerSettings.SellChance())
+                {
+                    Add(
+                        new GenericBuyInfo(
+                            typeof(StandardBeggingStudyBook),
+                            7500,
+                            1,
+                            0x225A,
+                            0x1BA
+                        )
+                    );
+                }
+                if (MyServerSettings.SellChance())
+                {
                     Add(new GenericBuyInfo(typeof(Backpack), 15, Utility.Random(1, 15), 0x53D5, 0));
                 }
                 if (MyServerSettings.SellChance())
@@ -26302,6 +27182,42 @@ namespace Server.Mobiles
         {
             public InternalBuyInfo()
             {
+                if (MyServerSettings.SellChance())
+                {
+                    Add(
+                        new GenericBuyInfo(
+                            typeof(StandardTinkeringStudyBook),
+                            7500,
+                            1,
+                            0x225A,
+                            0x1BA
+                        )
+                    );
+                }
+                if (MyServerSettings.SellChance())
+                {
+                    Add(
+                        new GenericBuyInfo(
+                            typeof(StandardLockpickingStudyBook),
+                            7500,
+                            1,
+                            0x225A,
+                            0x1BA
+                        )
+                    );
+                }
+                if (MyServerSettings.SellChance())
+                {
+                    Add(
+                        new GenericBuyInfo(
+                            typeof(StandardRemoveTrapStudyBook),
+                            7500,
+                            1,
+                            0x225A,
+                            0x1BA
+                        )
+                    );
+                }
                 if (MyServerSettings.SellChance())
                 {
                     Add(new GenericBuyInfo(typeof(Clock), 22, Utility.Random(1, 15), 0x104B, 0));
@@ -28129,6 +29045,30 @@ namespace Server.Mobiles
                 {
                     Add(
                         new GenericBuyInfo(
+                            typeof(StandardArmsLoreStudyBook),
+                            7500,
+                            1,
+                            0x225A,
+                            0x1BA
+                        )
+                    );
+                }
+                if (MyServerSettings.SellChance())
+                {
+                    Add(
+                        new GenericBuyInfo(
+                            typeof(StandardBlacksmithStudyBook),
+                            7500,
+                            1,
+                            0x225A,
+                            0x1BA
+                        )
+                    );
+                }
+                if (MyServerSettings.SellChance())
+                {
+                    Add(
+                        new GenericBuyInfo(
                             typeof(WeaponAbilityBook),
                             5,
                             Utility.Random(1, 15),
@@ -28173,6 +29113,18 @@ namespace Server.Mobiles
         {
             public InternalBuyInfo()
             {
+                if (MyServerSettings.SellChance())
+                {
+                    Add(
+                        new GenericBuyInfo(
+                            typeof(StandardTailoringStudyBook),
+                            7500,
+                            1,
+                            0x225A,
+                            0x1BA
+                        )
+                    );
+                }
                 if (MyServerSettings.SellChance())
                 {
                     Add(new GenericBuyInfo(typeof(Dyes), 8, Utility.Random(1, 15), 0xFA9, 0));
@@ -28224,6 +29176,21 @@ namespace Server.Mobiles
         {
             public InternalSellInfo()
             {
+                if (MyServerSettings.BuyCloth())
+                {
+                    if (MyServerSettings.BuyChance())
+                    {
+                        Add(typeof(LightYarnUnraveled), 9);
+                    } // DO NOT WANT?
+                    if (MyServerSettings.BuyChance())
+                    {
+                        Add(typeof(LightYarn), 9);
+                    } // DO NOT WANT?
+                    if (MyServerSettings.BuyChance())
+                    {
+                        Add(typeof(DarkYarn), 9);
+                    } // DO NOT WANT?
+                }
                 if (MyServerSettings.BuyChance())
                 {
                     Add(typeof(Scissors), 6);
@@ -28235,18 +29202,6 @@ namespace Server.Mobiles
                 if (MyServerSettings.BuyChance())
                 {
                     Add(typeof(DyeTub), 4);
-                } // DO NOT WANT?
-                if (MyServerSettings.BuyChance())
-                {
-                    Add(typeof(LightYarnUnraveled), 9);
-                } // DO NOT WANT?
-                if (MyServerSettings.BuyChance())
-                {
-                    Add(typeof(LightYarn), 9);
-                } // DO NOT WANT?
-                if (MyServerSettings.BuyChance())
-                {
-                    Add(typeof(DarkYarn), 9);
                 } // DO NOT WANT?
                 if (MyServerSettings.BuyChance())
                 {
@@ -28277,6 +29232,90 @@ namespace Server.Mobiles
         {
             public InternalBuyInfo()
             {
+                if (MyServerSettings.SellChance())
+                {
+                    Add(
+                        new GenericBuyInfo(
+                            typeof(StandardForensicsStudyBook),
+                            7500,
+                            1,
+                            0x225A,
+                            0x1BA
+                        )
+                    );
+                }
+                if (MyServerSettings.SellChance())
+                {
+                    Add(
+                        new GenericBuyInfo(
+                            typeof(StandardInscribeStudyBook),
+                            7500,
+                            1,
+                            0x225A,
+                            0x1BA
+                        )
+                    );
+                }
+                if (MyServerSettings.SellChance())
+                {
+                    Add(
+                        new GenericBuyInfo(
+                            typeof(StandardMagicResistStudyBook),
+                            7500,
+                            1,
+                            0x225A,
+                            0x1BA
+                        )
+                    );
+                }
+                if (MyServerSettings.SellChance())
+                {
+                    Add(
+                        new GenericBuyInfo(
+                            typeof(StandardSpiritualismStudyBook),
+                            7500,
+                            1,
+                            0x225A,
+                            0x1BA
+                        )
+                    );
+                }
+                if (MyServerSettings.SellChance())
+                {
+                    Add(
+                        new GenericBuyInfo(
+                            typeof(StandardFistFightingStudyBook),
+                            7500,
+                            1,
+                            0x225A,
+                            0x1BA
+                        )
+                    );
+                }
+                if (MyServerSettings.SellChance())
+                {
+                    Add(
+                        new GenericBuyInfo(
+                            typeof(StandardMeditationStudyBook),
+                            7500,
+                            1,
+                            0x225A,
+                            0x1BA
+                        )
+                    );
+                }
+                if (MyServerSettings.SellChance())
+                {
+                    Add(
+                        new GenericBuyInfo(
+                            typeof(StandardNecromancyStudyBook),
+                            7500,
+                            1,
+                            0x225A,
+                            0x1BA
+                        )
+                    );
+                }
                 Add(new GenericBuyInfo(typeof(BatWing), 3, 20, 0xF78, 0));
                 Add(new GenericBuyInfo(typeof(DaemonBlood), 6, 20, 0xF7D, 0));
                 Add(new GenericBuyInfo(typeof(PigIron), 5, 20, 0xF8A, 0));
@@ -28452,6 +29491,10 @@ namespace Server.Mobiles
                 } // DO NOT WANT?
                 if (MyServerSettings.BuyChance())
                 {
+                    Add(typeof(SkullDinosaur), Utility.Random(75, 175));
+                } // DO NOT WANT?
+                if (MyServerSettings.BuyChance())
+                {
                     Add(typeof(SkullWyrm), Utility.Random(200, 400));
                 } // DO NOT WANT?
                 if (MyServerSettings.BuyChance())
@@ -28465,6 +29508,22 @@ namespace Server.Mobiles
                 if (MyServerSettings.BuyChance())
                 {
                     Add(typeof(SkullDemon), Utility.Random(100, 300));
+                } // DO NOT WANT?
+                if (MyServerSettings.BuyChance())
+                {
+                    Add(typeof(DeamonHeadA), Utility.Random(100, 300));
+                } // DO NOT WANT?
+                if (MyServerSettings.BuyChance())
+                {
+                    Add(typeof(DeamonHeadB), Utility.Random(100, 300));
+                } // DO NOT WANT?
+                if (MyServerSettings.BuyChance())
+                {
+                    Add(typeof(DeamonHeadC), Utility.Random(100, 300));
+                } // DO NOT WANT?
+                if (MyServerSettings.BuyChance())
+                {
+                    Add(typeof(VampireHead), Utility.Random(100, 300));
                 } // DO NOT WANT?
                 if (MyServerSettings.BuyChance())
                 {
@@ -28545,6 +29604,79 @@ namespace Server.Mobiles
         {
             public InternalBuyInfo()
             {
+                if (MyServerSettings.SellChance())
+                {
+                    Add(
+                        new GenericBuyInfo(
+                            typeof(StandardForensicsStudyBook),
+                            7500,
+                            1,
+                            0x225A,
+                            0x1BA
+                        )
+                    );
+                }
+                if (MyServerSettings.SellChance())
+                {
+                    Add(
+                        new GenericBuyInfo(
+                            typeof(StandardInscribeStudyBook),
+                            7500,
+                            1,
+                            0x225A,
+                            0x1BA
+                        )
+                    );
+                }
+                if (MyServerSettings.SellChance())
+                {
+                    Add(
+                        new GenericBuyInfo(
+                            typeof(StandardMagicResistStudyBook),
+                            7500,
+                            1,
+                            0x225A,
+                            0x1BA
+                        )
+                    );
+                }
+                if (MyServerSettings.SellChance())
+                {
+                    Add(
+                        new GenericBuyInfo(
+                            typeof(StandardSpiritualismStudyBook),
+                            7500,
+                            1,
+                            0x225A,
+                            0x1BA
+                        )
+                    );
+                }
+                if (MyServerSettings.SellChance())
+                {
+                    Add(
+                        new GenericBuyInfo(
+                            typeof(StandardMeditationStudyBook),
+                            7500,
+                            1,
+                            0x225A,
+                            0x1BA
+                        )
+                    );
+                }
+                if (MyServerSettings.SellChance())
+                {
+                    Add(
+                        new GenericBuyInfo(
+                            typeof(StandardNecromancyStudyBook),
+                            7500,
+                            1,
+                            0x225A,
+                            0x1BA
+                        )
+                    );
+                }
+
                 Add(new GenericBuyInfo(typeof(NecromancerSpellbook), 115, 1, 0x2253, 0));
                 Add(new GenericBuyInfo(typeof(NecroSkinPotion), 1000, 1, 0x1006, 0));
                 Add(new GenericBuyInfo(typeof(BookofDead), 25000, 1, 0x1C11, 2500));
@@ -28746,6 +29878,22 @@ namespace Server.Mobiles
                 if (MyServerSettings.BuyChance())
                 {
                     Add(typeof(SkullDemon), Utility.Random(100, 300));
+                } // DO NOT WANT?
+                if (MyServerSettings.BuyChance())
+                {
+                    Add(typeof(DeamonHeadA), Utility.Random(100, 300));
+                } // DO NOT WANT?
+                if (MyServerSettings.BuyChance())
+                {
+                    Add(typeof(DeamonHeadB), Utility.Random(100, 300));
+                } // DO NOT WANT?
+                if (MyServerSettings.BuyChance())
+                {
+                    Add(typeof(DeamonHeadC), Utility.Random(100, 300));
+                } // DO NOT WANT?
+                if (MyServerSettings.BuyChance())
+                {
+                    Add(typeof(VampireHead), Utility.Random(100, 300));
                 } // DO NOT WANT?
                 if (MyServerSettings.BuyChance())
                 {
@@ -29098,6 +30246,79 @@ namespace Server.Mobiles
         {
             public InternalBuyInfo()
             {
+                if (MyServerSettings.SellChance())
+                {
+                    Add(
+                        new GenericBuyInfo(
+                            typeof(StandardForensicsStudyBook),
+                            7500,
+                            1,
+                            0x225A,
+                            0x1BA
+                        )
+                    );
+                }
+                if (MyServerSettings.SellChance())
+                {
+                    Add(
+                        new GenericBuyInfo(
+                            typeof(StandardInscribeStudyBook),
+                            7500,
+                            1,
+                            0x225A,
+                            0x1BA
+                        )
+                    );
+                }
+                if (MyServerSettings.SellChance())
+                {
+                    Add(
+                        new GenericBuyInfo(
+                            typeof(StandardMagicResistStudyBook),
+                            7500,
+                            1,
+                            0x225A,
+                            0x1BA
+                        )
+                    );
+                }
+                if (MyServerSettings.SellChance())
+                {
+                    Add(
+                        new GenericBuyInfo(
+                            typeof(StandardSpiritualismStudyBook),
+                            7500,
+                            1,
+                            0x225A,
+                            0x1BA
+                        )
+                    );
+                }
+                if (MyServerSettings.SellChance())
+                {
+                    Add(
+                        new GenericBuyInfo(
+                            typeof(StandardMeditationStudyBook),
+                            7500,
+                            1,
+                            0x225A,
+                            0x1BA
+                        )
+                    );
+                }
+                if (MyServerSettings.SellChance())
+                {
+                    Add(
+                        new GenericBuyInfo(
+                            typeof(StandardNecromancyStudyBook),
+                            7500,
+                            1,
+                            0x225A,
+                            0x1BA
+                        )
+                    );
+                }
+
                 if (MyServerSettings.SellChance())
                 {
                     Add(new GenericBuyInfo(typeof(NecromancerSpellbook), 115, 1, 0x2253, 0));
@@ -29524,6 +30745,10 @@ namespace Server.Mobiles
                 } // DO NOT WANT?
                 if (MyServerSettings.BuyChance())
                 {
+                    Add(typeof(SkullDinosaur), Utility.Random(75, 175));
+                } // DO NOT WANT?
+                if (MyServerSettings.BuyChance())
+                {
                     Add(typeof(SkullWyrm), Utility.Random(200, 400));
                 } // DO NOT WANT?
                 if (MyServerSettings.BuyChance())
@@ -29537,6 +30762,22 @@ namespace Server.Mobiles
                 if (MyServerSettings.BuyChance())
                 {
                     Add(typeof(SkullDemon), Utility.Random(100, 300));
+                } // DO NOT WANT?
+                if (MyServerSettings.BuyChance())
+                {
+                    Add(typeof(DeamonHeadA), Utility.Random(100, 300));
+                } // DO NOT WANT?
+                if (MyServerSettings.BuyChance())
+                {
+                    Add(typeof(DeamonHeadB), Utility.Random(100, 300));
+                } // DO NOT WANT?
+                if (MyServerSettings.BuyChance())
+                {
+                    Add(typeof(DeamonHeadC), Utility.Random(100, 300));
+                } // DO NOT WANT?
+                if (MyServerSettings.BuyChance())
+                {
+                    Add(typeof(VampireHead), Utility.Random(100, 300));
                 } // DO NOT WANT?
                 if (MyServerSettings.BuyChance())
                 {
@@ -29617,6 +30858,42 @@ namespace Server.Mobiles
         {
             public InternalBuyInfo()
             {
+                if (MyServerSettings.SellChance())
+                {
+                    Add(
+                        new GenericBuyInfo(typeof(StandardHealingStudyBook), 7500, 1, 0x225A, 0x1BA)
+                    );
+                }
+                if (MyServerSettings.SellChance())
+                {
+                    Add(
+                        new GenericBuyInfo(typeof(StandardAnatomyStudyBook), 7500, 1, 0x225A, 0x1BA)
+                    );
+                }
+                if (MyServerSettings.SellChance())
+                {
+                    Add(
+                        new GenericBuyInfo(
+                            typeof(StandardForensicsStudyBook),
+                            7500,
+                            1,
+                            0x225A,
+                            0x1BA
+                        )
+                    );
+                }
+                if (MyServerSettings.SellChance())
+                {
+                    Add(
+                        new GenericBuyInfo(
+                            typeof(StandardSpiritualismStudyBook),
+                            7500,
+                            1,
+                            0x225A,
+                            0x1BA
+                        )
+                    );
+                }
                 if (MyServerSettings.SellRareChance())
                 {
                     Add(
@@ -29899,6 +31176,10 @@ namespace Server.Mobiles
                 } // DO NOT WANT?
                 if (MyServerSettings.BuyChance())
                 {
+                    Add(typeof(SkullDinosaur), Utility.Random(75, 175));
+                } // DO NOT WANT?
+                if (MyServerSettings.BuyChance())
+                {
                     Add(typeof(SkullWyrm), Utility.Random(200, 400));
                 } // DO NOT WANT?
                 if (MyServerSettings.BuyChance())
@@ -29912,6 +31193,22 @@ namespace Server.Mobiles
                 if (MyServerSettings.BuyChance())
                 {
                     Add(typeof(SkullDemon), Utility.Random(100, 300));
+                } // DO NOT WANT?
+                if (MyServerSettings.BuyChance())
+                {
+                    Add(typeof(DeamonHeadA), Utility.Random(100, 300));
+                } // DO NOT WANT?
+                if (MyServerSettings.BuyChance())
+                {
+                    Add(typeof(DeamonHeadB), Utility.Random(100, 300));
+                } // DO NOT WANT?
+                if (MyServerSettings.BuyChance())
+                {
+                    Add(typeof(DeamonHeadC), Utility.Random(100, 300));
+                } // DO NOT WANT?
+                if (MyServerSettings.BuyChance())
+                {
+                    Add(typeof(VampireHead), Utility.Random(100, 300));
                 } // DO NOT WANT?
                 if (MyServerSettings.BuyChance())
                 {
@@ -29991,6 +31288,61 @@ namespace Server.Mobiles
         {
             public InternalBuyInfo()
             {
+                if (MyServerSettings.SellChance())
+                {
+                    Add(
+                        new GenericBuyInfo(
+                            typeof(StandardInscribeStudyBook),
+                            7500,
+                            1,
+                            0x225A,
+                            0x1BA
+                        )
+                    );
+                }
+                if (MyServerSettings.SellChance())
+                {
+                    Add(
+                        new GenericBuyInfo(
+                            typeof(StandardPsychologyStudyBook),
+                            7500,
+                            1,
+                            0x225A,
+                            0x1BA
+                        )
+                    );
+                }
+                if (MyServerSettings.SellChance())
+                {
+                    Add(
+                        new GenericBuyInfo(typeof(StandardMageryStudyBook), 7500, 1, 0x225A, 0x1BA)
+                    );
+                }
+                if (MyServerSettings.SellChance())
+                {
+                    Add(
+                        new GenericBuyInfo(
+                            typeof(StandardMeditationStudyBook),
+                            7500,
+                            1,
+                            0x225A,
+                            0x1BA
+                        )
+                    );
+                }
+                if (MyServerSettings.SellChance())
+                {
+                    Add(
+                        new GenericBuyInfo(
+                            typeof(StandardMagicResistStudyBook),
+                            7500,
+                            1,
+                            0x225A,
+                            0x1BA
+                        )
+                    );
+                }
+
                 if (MyServerSettings.SellChance())
                 {
                     Add(new GenericBuyInfo(typeof(Spellbook), 18, Utility.Random(1, 15), 0xEFA, 0));
@@ -30781,6 +32133,70 @@ namespace Server.Mobiles
         {
             public InternalBuyInfo()
             {
+                if (MyServerSettings.SellChance())
+                {
+                    Add(
+                        new GenericBuyInfo(
+                            typeof(StandardInscribeStudyBook),
+                            7500,
+                            1,
+                            0x225A,
+                            0x1BA
+                        )
+                    );
+                }
+                if (MyServerSettings.SellChance())
+                {
+                    Add(
+                        new GenericBuyInfo(
+                            typeof(StandardMagicResistStudyBook),
+                            7500,
+                            1,
+                            0x225A,
+                            0x1BA
+                        )
+                    );
+                }
+                if (MyServerSettings.SellChance())
+                {
+                    Add(
+                        new GenericBuyInfo(
+                            typeof(StandardFistFightingStudyBook),
+                            7500,
+                            1,
+                            0x225A,
+                            0x1BA
+                        )
+                    );
+                }
+                if (MyServerSettings.SellChance())
+                {
+                    Add(
+                        new GenericBuyInfo(
+                            typeof(StandardMeditationStudyBook),
+                            7500,
+                            1,
+                            0x225A,
+                            0x1BA
+                        )
+                    );
+                }
+                if (MyServerSettings.SellChance())
+                {
+                    Add(new GenericBuyInfo(typeof(StandardFocusStudyBook), 7500, 1, 0x225A, 0x1BA));
+                }
+                if (MyServerSettings.SellChance())
+                {
+                    Add(
+                        new GenericBuyInfo(
+                            typeof(StandardElementalismStudyBook),
+                            7500,
+                            1,
+                            0x225A,
+                            0x1BA
+                        )
+                    );
+                }
                 Add(
                     new GenericBuyInfo(
                         typeof(ElementalSpellbook),
@@ -30861,7 +32277,7 @@ namespace Server.Mobiles
                     Add(
                         new GenericBuyInfo(
                             typeof(LesserManaPotion),
-                            860,
+                            60,
                             Utility.Random(1, 25),
                             0x23BD,
                             0x48D
@@ -30873,7 +32289,7 @@ namespace Server.Mobiles
                     Add(
                         new GenericBuyInfo(
                             typeof(ManaPotion),
-                            890,
+                            90,
                             Utility.Random(1, 15),
                             0x180F,
                             0x48D
@@ -30885,7 +32301,7 @@ namespace Server.Mobiles
                     Add(
                         new GenericBuyInfo(
                             typeof(GreaterManaPotion),
-                            8120,
+                            120,
                             Utility.Random(1, 5),
                             0x2406,
                             0x48D
@@ -36491,6 +37907,13 @@ namespace Server.Mobiles
         {
             public InternalSellInfo()
             {
+                if (MyServerSettings.BuyCloth())
+                {
+                    Add(typeof(SpoolOfThread), 9);
+                    Add(typeof(Flax), 51);
+                    Add(typeof(Cotton), 51);
+                    Add(typeof(Wool), 31);
+                }
                 Add(typeof(Scissors), 6);
                 Add(typeof(SewingKit), 1);
                 Add(typeof(Dyes), 4);
@@ -36530,10 +37953,6 @@ namespace Server.Mobiles
                 Add(typeof(FeatheredHat), 5);
                 Add(typeof(TricorneHat), 4);
                 Add(typeof(PirateHat), 4);
-                Add(typeof(SpoolOfThread), 9);
-                Add(typeof(Flax), 51);
-                Add(typeof(Cotton), 51);
-                Add(typeof(Wool), 31);
                 Add(typeof(MagicRobe), 30);
                 Add(typeof(MagicHat), 20);
                 Add(typeof(MagicCloak), 30);
@@ -40908,10 +42327,15 @@ namespace Server.Mobiles
                 Add(typeof(Bones), Utility.RandomMinMax(5, 10));
                 Add(typeof(GraveChest), Utility.RandomMinMax(100, 500));
                 Add(typeof(SkullMinotaur), Utility.Random(50, 150));
+                Add(typeof(SkullDinosaur), Utility.Random(75, 175));
                 Add(typeof(SkullWyrm), Utility.Random(200, 400));
                 Add(typeof(SkullGreatDragon), Utility.Random(300, 600));
                 Add(typeof(SkullDragon), Utility.Random(100, 300));
                 Add(typeof(SkullDemon), Utility.Random(100, 300));
+                Add(typeof(DeamonHeadA), Utility.Random(100, 300));
+                Add(typeof(DeamonHeadB), Utility.Random(100, 300));
+                Add(typeof(DeamonHeadC), Utility.Random(100, 300));
+                Add(typeof(VampireHead), Utility.Random(100, 300));
                 Add(typeof(SkullGiant), Utility.Random(100, 300));
                 Add(typeof(AlchemyTub), Utility.Random(200, 500));
                 Add(typeof(WoodenCoffin), 25);
@@ -41912,11 +43336,16 @@ namespace Server.Mobiles
             public InternalSellInfo()
             {
                 Add(typeof(SkullMinotaur), Utility.Random(50, 150));
+                Add(typeof(SkullDinosaur), Utility.Random(75, 175));
                 Add(typeof(SkullWyrm), Utility.Random(200, 400));
                 Add(typeof(SkullGreatDragon), Utility.Random(300, 600));
                 Add(typeof(SkullDragon), Utility.Random(100, 300));
                 Add(typeof(SkullDemon), Utility.Random(100, 300));
                 Add(typeof(SkullGiant), Utility.Random(100, 300));
+                Add(typeof(DeamonHeadA), Utility.Random(100, 300));
+                Add(typeof(DeamonHeadB), Utility.Random(100, 300));
+                Add(typeof(DeamonHeadC), Utility.Random(100, 300));
+                Add(typeof(VampireHead), Utility.Random(100, 300));
                 Add(typeof(CanopicJar), Utility.Random(50, 300));
                 Add(typeof(WitchCauldron), 8);
                 Add(typeof(DragonTooth), 120);

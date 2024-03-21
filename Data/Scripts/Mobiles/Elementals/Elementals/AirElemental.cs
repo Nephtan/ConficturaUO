@@ -1,6 +1,6 @@
 using System;
-using Server;
 using System.Collections;
+using Server;
 using Server.Items;
 using Server.Network;
 
@@ -139,7 +139,7 @@ namespace Server.Mobiles
                         Server.Items.HiddenTrap.IAmShielding(m, 100)
                         || Server.Items.HiddenTrap.IAmAWeaponSlayer(m, this)
                     ) { }
-                    else if (Server.Items.HiddenTrap.CheckInsuranceOnTrap(iSucked, m) == true)
+                    else if (Server.Items.HiddenTrap.CheckInsuranceOnTrap(iSucked, m))
                     {
                         m.LocalOverheadMessage(
                             MessageType.Emote,

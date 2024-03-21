@@ -1,12 +1,12 @@
 using System;
-using Server;
-using Server.Targeting;
-using Server.Network;
-using Server.Items;
 using System.Collections;
 using System.Collections.Generic;
-using Server.Mobiles;
+using Server;
+using Server.Items;
 using Server.Misc;
+using Server.Mobiles;
+using Server.Network;
+using Server.Targeting;
 
 namespace Server.Spells.Research
 {
@@ -38,7 +38,10 @@ namespace Server.Spells.Research
             Server.Misc.Research.SpellInformation(spellID, 2),
             Server.Misc.Research.CapsCast(Server.Misc.Research.SpellInformation(spellID, 4)),
             212,
-            9001
+            9001,
+            Reagent.MandrakeRoot,
+            Reagent.PixieSkull,
+            Reagent.FairyEgg
         );
 
         public ResearchConfusionBlast(Mobile caster, Item scroll)
@@ -71,7 +74,7 @@ namespace Server.Spells.Research
                 List<Mobile> targets = new List<Mobile>();
 
                 Map map = Caster.Map;
-                Server.Misc.Research.ConsumeScroll(Caster, true, spellIndex, false);
+                Server.Misc.Research.ConsumeScroll(Caster, true, spellIndex, alwaysConsume, Scroll);
 
                 if (map != null)
                 {
@@ -126,11 +129,21 @@ namespace Server.Spells.Research
                         }
                         else
                         {
-                            m.Frozen = true;
+                            m.Paralyze(TimeSpan.FromSeconds(duration));
                             Timer.DelayCall(
                                 TimeSpan.FromSeconds(duration),
                                 new TimerStateCallback(Recover_Callback),
                                 m
+                            );
+                            BuffInfo.RemoveBuff(m, BuffIcon.Confusion);
+                            BuffInfo.AddBuff(
+                                m,
+                                new BuffInfo(
+                                    BuffIcon.Confusion,
+                                    1063684,
+                                    TimeSpan.FromSeconds(duration),
+                                    m
+                                )
                             );
                         }
 
@@ -157,8 +170,9 @@ namespace Server.Spells.Research
 
             if (defender != null)
             {
-                defender.Frozen = false;
+                defender.Paralyzed = false;
                 defender.Combatant = null;
+                BuffInfo.RemoveBuff(defender, BuffIcon.Confusion);
                 defender.LocalOverheadMessage(
                     MessageType.Regular,
                     0x3B2,

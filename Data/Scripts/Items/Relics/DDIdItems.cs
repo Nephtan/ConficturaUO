@@ -1,9 +1,9 @@
 using System;
-using Server;
 using System.Collections;
 using System.Collections.Generic;
-using Server.Misc;
+using Server;
 using Server.Items;
+using Server.Misc;
 using Server.Mobiles;
 
 namespace Server.Misc
@@ -325,7 +325,7 @@ namespace Server.Misc
                 DDRelicGrave relic = (DDRelicGrave)relics;
                 RelicValue = relic.RelicGoldValue;
             } // NECROMANCERS
-            else if (relics is DDRelicPainting && (IsHenchman || m is Artist))
+            else if (relics is DDRelicPainting && m is Artist)
             {
                 DDRelicPainting relic = (DDRelicPainting)relics;
                 RelicValue = relic.RelicGoldValue * 2;

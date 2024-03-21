@@ -1,8 +1,8 @@
 using System;
 using Server.Mobiles;
-using Server.Targeting;
 using Server.Network;
 using Server.Spells.Chivalry;
+using Server.Targeting;
 
 namespace Server.Spells.Fifth
 {
@@ -89,6 +89,12 @@ namespace Server.Spells.Fifth
                 }
 
                 m.Paralyze(TimeSpan.FromSeconds(duration));
+
+                BuffInfo.RemoveBuff(m, BuffIcon.Paralyze);
+                BuffInfo.AddBuff(
+                    m,
+                    new BuffInfo(BuffIcon.Paralyze, 1063621, TimeSpan.FromSeconds(duration), m)
+                );
 
                 m.PlaySound(0x204);
                 m.FixedEffect(

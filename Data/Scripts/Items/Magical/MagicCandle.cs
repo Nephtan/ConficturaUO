@@ -70,7 +70,9 @@ namespace Server.Items
                 OnEquip(from);
             }
             else if (
-                torch != null && torch == this && (torch.ItemID == 0xA0F || torch.ItemID == 0x6476)
+                torch != null
+                && torch == this
+                && (torch.ItemID == 0xA0F || torch.ItemID == 0x6476)
             )
             {
                 from.AddToBackpack(this);

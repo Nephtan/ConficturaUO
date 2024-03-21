@@ -1,8 +1,8 @@
 using System;
 using System.Collections;
 using Server;
-using Server.Items;
 using Server.Gumps;
+using Server.Items;
 using Server.Spells;
 
 namespace Server.Spells.HolyMan
@@ -17,7 +17,7 @@ namespace Server.Spells.HolyMan
         }
         public override int RequiredTithing
         {
-            get { return 120; }
+            get { return 40; }
         }
         public override double RequiredSkill
         {
@@ -166,6 +166,9 @@ namespace Server.Spells.HolyMan
 
                 Delay = TimeSpan.FromSeconds(val);
                 Priority = TimerPriority.TwoFiftyMS;
+
+                BuffInfo.RemoveBuff(owner, BuffIcon.Seance);
+                BuffInfo.AddBuff(owner, new BuffInfo(BuffIcon.Seance, 1063538, Delay, owner));
             }
 
             protected override void OnTick()
@@ -177,6 +180,7 @@ namespace Server.Spells.HolyMan
                     m_Owner.RaceBody();
                     m_Owner.Blessed = false;
                     m_Owner.EndAction(typeof(SeanceSpell));
+                    BuffInfo.RemoveBuff(m_Owner, BuffIcon.Seance);
                 }
             }
         }

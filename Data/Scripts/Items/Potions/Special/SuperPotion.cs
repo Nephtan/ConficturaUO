@@ -1,6 +1,6 @@
 using System;
-using Server.Network;
 using Server;
+using Server.Network;
 
 namespace Server.Items
 {
@@ -58,6 +58,22 @@ namespace Server.Items
                     BasePotion.PlayDrinkEffect(m);
                     this.Consume();
                     m.SendMessage("You feel much more superior!");
+
+                    string args = String.Format("{0}\t{1}\t{2}", 10, 10, 10);
+
+                    BuffInfo.RemoveBuff(m, BuffIcon.PotionSuperior);
+                    BuffInfo.AddBuff(
+                        m,
+                        new BuffInfo(
+                            BuffIcon.PotionSuperior,
+                            1063597,
+                            1063601,
+                            TimeSpan.FromMinutes(5),
+                            m,
+                            args.ToString(),
+                            true
+                        )
+                    );
                 }
             }
             else

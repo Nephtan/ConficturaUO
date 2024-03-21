@@ -1,10 +1,10 @@
-using Server;
 using System;
 using System.Collections;
-using Server.Network;
-using Server.Targeting;
-using Server.Prompts;
+using Server;
 using Server.Misc;
+using Server.Network;
+using Server.Prompts;
+using Server.Targeting;
 
 namespace Server.Items
 {
@@ -96,7 +96,7 @@ namespace Server.Items
             }
             else
             {
-                from.SendMessage("Only a master carpenter or bowcrafting can use this oil.");
+                from.SendMessage("Only a master carpenter or bowcrafter can use this oil.");
             }
         }
 
@@ -134,47 +134,47 @@ namespace Server.Items
                         }
                         else if (iOil.IsChildOf(from.Backpack) && MaterialInfo.IsWoodenItem(iOil))
                         {
-                            if (m_Oil.Name == "wood polish ( oak )")
+                            if (m_Oil.Name == "oil of wood polish ( oak )")
                             {
                                 xOil.Resource = CraftResource.OakTree;
                             }
-                            else if (m_Oil.Name == "wood polish ( ash )")
+                            else if (m_Oil.Name == "oil of wood polish ( ash )")
                             {
                                 xOil.Resource = CraftResource.AshTree;
                             }
-                            else if (m_Oil.Name == "wood polish ( cherry )")
+                            else if (m_Oil.Name == "oil of wood polish ( cherry )")
                             {
                                 xOil.Resource = CraftResource.CherryTree;
                             }
-                            else if (m_Oil.Name == "wood polish ( walnut )")
+                            else if (m_Oil.Name == "oil of wood polish ( walnut )")
                             {
                                 xOil.Resource = CraftResource.WalnutTree;
                             }
-                            else if (m_Oil.Name == "wood polish ( golden oak )")
+                            else if (m_Oil.Name == "oil of wood polish ( golden oak )")
                             {
                                 xOil.Resource = CraftResource.GoldenOakTree;
                             }
-                            else if (m_Oil.Name == "wood polish ( ebony )")
+                            else if (m_Oil.Name == "oil of wood polish ( ebony )")
                             {
                                 xOil.Resource = CraftResource.EbonyTree;
                             }
-                            else if (m_Oil.Name == "wood polish ( hickory )")
+                            else if (m_Oil.Name == "oil of wood polish ( hickory )")
                             {
                                 xOil.Resource = CraftResource.HickoryTree;
                             }
-                            else if (m_Oil.Name == "wood polish ( pine )")
+                            else if (m_Oil.Name == "oil of wood polish ( pine )")
                             {
                                 xOil.Resource = CraftResource.PineTree;
                             }
-                            else if (m_Oil.Name == "wood polish ( rosewood )")
+                            else if (m_Oil.Name == "oil of wood polish ( rosewood )")
                             {
                                 xOil.Resource = CraftResource.RosewoodTree;
                             }
-                            else if (m_Oil.Name == "wood polish ( mahogany )")
+                            else if (m_Oil.Name == "oil of wood polish ( mahogany )")
                             {
                                 xOil.Resource = CraftResource.MahoganyTree;
                             }
-                            else if (m_Oil.Name == "wood polish ( driftwood )")
+                            else if (m_Oil.Name == "oil of wood polish ( driftwood )")
                             {
                                 xOil.Resource = CraftResource.DriftwoodTree;
                             }
@@ -200,47 +200,47 @@ namespace Server.Items
                         }
                         else if (iOil.IsChildOf(from.Backpack) && MaterialInfo.IsWoodenItem(iOil))
                         {
-                            if (m_Oil.Name == "wood polish ( oak )")
+                            if (m_Oil.Name == "oil of wood polish ( oak )")
                             {
                                 xOil.Resource = CraftResource.OakTree;
                             }
-                            else if (m_Oil.Name == "wood polish ( ash )")
+                            else if (m_Oil.Name == "oil of wood polish ( ash )")
                             {
                                 xOil.Resource = CraftResource.AshTree;
                             }
-                            else if (m_Oil.Name == "wood polish ( cherry )")
+                            else if (m_Oil.Name == "oil of wood polish ( cherry )")
                             {
                                 xOil.Resource = CraftResource.CherryTree;
                             }
-                            else if (m_Oil.Name == "wood polish ( walnut )")
+                            else if (m_Oil.Name == "oil of wood polish ( walnut )")
                             {
                                 xOil.Resource = CraftResource.WalnutTree;
                             }
-                            else if (m_Oil.Name == "wood polish ( golden oak )")
+                            else if (m_Oil.Name == "oil of wood polish ( golden oak )")
                             {
                                 xOil.Resource = CraftResource.GoldenOakTree;
                             }
-                            else if (m_Oil.Name == "wood polish ( ebony )")
+                            else if (m_Oil.Name == "oil of wood polish ( ebony )")
                             {
                                 xOil.Resource = CraftResource.EbonyTree;
                             }
-                            else if (m_Oil.Name == "wood polish ( hickory )")
+                            else if (m_Oil.Name == "oil of wood polish ( hickory )")
                             {
                                 xOil.Resource = CraftResource.HickoryTree;
                             }
-                            else if (m_Oil.Name == "wood polish ( pine )")
+                            else if (m_Oil.Name == "oil of wood polish ( pine )")
                             {
                                 xOil.Resource = CraftResource.PineTree;
                             }
-                            else if (m_Oil.Name == "wood polish ( rosewood )")
+                            else if (m_Oil.Name == "oil of wood polish ( rosewood )")
                             {
                                 xOil.Resource = CraftResource.RosewoodTree;
                             }
-                            else if (m_Oil.Name == "wood polish ( mahogany )")
+                            else if (m_Oil.Name == "oil of wood polish ( mahogany )")
                             {
                                 xOil.Resource = CraftResource.MahoganyTree;
                             }
-                            else if (m_Oil.Name == "wood polish ( driftwood )")
+                            else if (m_Oil.Name == "oil of wood polish ( driftwood )")
                             {
                                 xOil.Resource = CraftResource.DriftwoodTree;
                             }

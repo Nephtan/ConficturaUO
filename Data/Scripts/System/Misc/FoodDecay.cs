@@ -35,11 +35,11 @@
 
 
 using System;
-using Server.Network;
 using Server;
-using Server.Mobiles;
-using Server.Regions;
 using Server.Gumps;
+using Server.Mobiles;
+using Server.Network;
+using Server.Regions;
 
 namespace Server.Misc
 {
@@ -122,7 +122,7 @@ namespace Server.Misc
                         {
                             m.Hunger -= 1;
 
-                            if (m.Hunger < 6)
+                            if ((m.Hunger < 6) || (m.HasGump(typeof(gumpfaim))))
                             {
                                 try
                                 {
@@ -284,7 +284,7 @@ namespace Server.Misc
                         {
                             m.Thirst -= 1;
 
-                            if (m.Thirst < 6)
+                            if ((m.Thirst < 6) || (m.HasGump(typeof(gumpfaim))))
                             {
                                 try
                                 {

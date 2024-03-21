@@ -1,21 +1,21 @@
 using System;
+using System.Collections.Generic;
 using Server;
-using Server.Items;
+using Server.Engines.PartySystem;
 using Server.Guilds;
+using Server.Items;
+using Server.Misc;
+using Server.Mobiles;
 using Server.Multis;
 using Server.Regions;
-using Server.Mobiles;
-using Server.Targeting;
-using Server.Engines.PartySystem;
-using Server.Misc;
 using Server.Spells.Bushido;
+using Server.Spells.Elementalism;
+using Server.Spells.Fifth;
 using Server.Spells.Necromancy;
 using Server.Spells.Ninjitsu;
-using System.Collections.Generic;
 using Server.Spells.Seventh;
-using Server.Spells.Fifth;
 using Server.Spells.Shinobi;
-using Server.Spells.Elementalism;
+using Server.Targeting;
 
 namespace Server
 {
@@ -1088,6 +1088,17 @@ namespace Server.Spells
                     caster = target;
                     target = temp;
                 }
+
+                if (target.MagicDamageAbsorb < 1)
+                {
+                    BuffInfo.RemoveBuff(target, BuffIcon.Absorption);
+                    BuffInfo.RemoveBuff(target, BuffIcon.PsychicWall);
+                    BuffInfo.RemoveBuff(target, BuffIcon.Deflection);
+                    BuffInfo.RemoveBuff(target, BuffIcon.TrialByFire);
+                    BuffInfo.RemoveBuff(target, BuffIcon.OrbOfOrcus);
+                    BuffInfo.RemoveBuff(target, BuffIcon.MagicReflection);
+                    BuffInfo.RemoveBuff(target, BuffIcon.ElementalEcho);
+                }
             }
             else if (target is BaseCreature)
             {
@@ -1505,6 +1516,11 @@ namespace Server.Spells
 
                 context.Timer.Stop();
                 context.Spell.RemoveEffect(m);
+
+                BuffInfo.RemoveBuff(m, BuffIcon.WraithForm);
+                BuffInfo.RemoveBuff(m, BuffIcon.HorrificBeast);
+                BuffInfo.RemoveBuff(m, BuffIcon.LichForm);
+                BuffInfo.RemoveBuff(m, BuffIcon.VampiricEmbrace);
             }
         }
 

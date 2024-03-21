@@ -1,7 +1,7 @@
 using System;
 using Server;
-using Server.Misc;
 using Server.Items;
+using Server.Misc;
 
 namespace Server.Items
 {

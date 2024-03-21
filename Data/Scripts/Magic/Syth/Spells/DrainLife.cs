@@ -1,10 +1,10 @@
 using System;
-using Server;
 using System.Collections;
-using Server.Network;
 using System.Text;
+using Server;
 using Server.Items;
 using Server.Mobiles;
+using Server.Network;
 using Server.Targeting;
 
 namespace Server.Spells.Syth
@@ -104,6 +104,15 @@ namespace Server.Spells.Syth
                 AOS.Damage(m, Caster, drain, true, 100, 0, 0, 0, 0);
                 new DrainTimer(Caster, m, duration, min, max).Start();
                 DrainCrystals(Caster, RequiredTithing);
+
+                BuffInfo.RemoveBuff(Caster, BuffIcon.DrainLifeGood);
+                BuffInfo.AddBuff(
+                    Caster,
+                    new BuffInfo(BuffIcon.DrainLifeGood, 1063502, duration, Caster)
+                );
+
+                BuffInfo.RemoveBuff(m, BuffIcon.DrainLifeBad);
+                BuffInfo.AddBuff(m, new BuffInfo(BuffIcon.DrainLifeBad, 1063504, duration, m));
             }
 
             FinishSequence();
@@ -181,6 +190,8 @@ namespace Server.Spells.Syth
 
                 if (DateTime.Now >= m_Expire || !m_Caster.Alive || m_Caster == null)
                 {
+                    BuffInfo.RemoveBuff(m_Caster, BuffIcon.DrainLifeGood);
+                    BuffInfo.RemoveBuff(m_m, BuffIcon.DrainLifeBad);
                     Stop();
                 }
             }

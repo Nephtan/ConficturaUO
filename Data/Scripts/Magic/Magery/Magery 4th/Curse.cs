@@ -1,7 +1,7 @@
 using System;
 using System.Collections;
-using Server.Targeting;
 using Server.Network;
+using Server.Targeting;
 
 namespace Server.Spells.Fourth
 {
@@ -85,6 +85,7 @@ namespace Server.Spells.Fourth
                     m.Spell.OnCasterHurt();
 
                 m.Paralyzed = false;
+                BuffInfo.CleanupIcons(m, true);
 
                 m.FixedParticles(
                     0x374A,

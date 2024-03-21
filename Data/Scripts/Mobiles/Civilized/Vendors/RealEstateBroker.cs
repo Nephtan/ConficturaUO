@@ -4,8 +4,8 @@ using Server;
 using Server.Items;
 using Server.Multis;
 using Server.Multis.Deeds;
-using Server.Targeting;
 using Server.Network;
+using Server.Targeting;
 
 namespace Server.Mobiles
 {

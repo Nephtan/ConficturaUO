@@ -1,9 +1,9 @@
 using System;
-using Server;
-using Server.Items;
 using System.Text;
-using Server.Mobiles;
+using Server;
 using Server.Gumps;
+using Server.Items;
+using Server.Mobiles;
 using Server.Network;
 
 namespace Server.Items
@@ -449,7 +449,7 @@ namespace Server.Items
                     707,
                     @"<BODY><BASEFONT Color="
                         + color
-                        + ">Mages, necromancers, witches, alchemists, and druids all use reagents of some type. This is a listing of the kinds of reagents you may find while traveling the world. This is not a complete list, as legends and rumors tell of other types that may exist. Reagents can be purchased from merchants, picked from some gardens, found on some creatures, or discovered with other treasure. One will commonly find reagents that may be used in their current trade, but if they have no such trade, then they may find any type that they can leave behind or sell.<br><br>Mages use the common reagents in the casting of spells, where necromancers use the necromancy reagents for their magic. Witches and druids use some of these reagents listed here as well.<br><br>You may find many reagents you need to identify. If you have practiced your tasting, you will able to discover what these are. Mages and necromancers simply carry the reagents with them to use as the cast spells. Alchemists use a mortar and pestle to create potions, while witches and druids use cauldrons.</BASEFONT></BODY>",
+                        + ">Mages, necromancers, witches, alchemists, and druids all use reagents of some type. This is a list of the kinds of reagents you may encounter while traveling the world. It is not exhaustive, as legends and rumors speak of other types that may exist. Reagents can be purchased from merchants, harvested from gardens, obtained from creatures, or uncovered as part of other treasures. One will typically find reagents that are relevant to their current profession, but if they have no specific trade, they may come across any type that they can either leave behind or sell.<br><br>Mages employ common reagents in the casting of spells, while necromancers rely on necromancy reagents for their magic. Witches and druids also utilize some of the reagents mentioned here.<br><br>You may come across many reagents that you need to identify. If you have honed your tasting skills, you will be able to discern what these are. Mages and necromancers carry their reagents with them for spellcasting purposes. Alchemists use a mortar and pestle to create potions, while witches and druids utilize cauldrons.</BASEFONT></BODY>",
                     (bool)false,
                     (bool)false
                 );

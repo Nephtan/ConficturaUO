@@ -1,11 +1,11 @@
 using System;
-using Server;
-using Server.Mobiles;
-using Server.Network;
 using System.Collections;
+using Server;
+using Server.Gumps;
 using Server.Items;
 using Server.Misc;
-using Server.Gumps;
+using Server.Mobiles;
+using Server.Network;
 
 namespace Server.Items
 {
@@ -430,7 +430,8 @@ namespace Server.Items
                             map = Map.Sosaria;
                         }
                         else if (
-                            Server.Items.BaseRace.IsEvilSeaCreature(from) && from.RaceHomeLand == 2
+                            Server.Items.BaseRace.IsEvilSeaCreature(from)
+                            && from.RaceHomeLand == 2
                         )
                         {
                             gX = 5445;
@@ -439,7 +440,8 @@ namespace Server.Items
                             map = Map.Lodor;
                         }
                         else if (
-                            Server.Items.BaseRace.IsEvilSeaCreature(from) && from.RaceHomeLand == 1
+                            Server.Items.BaseRace.IsEvilSeaCreature(from)
+                            && from.RaceHomeLand == 1
                         )
                         {
                             gX = 7061;
@@ -448,7 +450,8 @@ namespace Server.Items
                             map = Map.Sosaria;
                         }
                         else if (
-                            Server.Items.BaseRace.IsEvilDeadCreature(from) && from.RaceHomeLand == 2
+                            Server.Items.BaseRace.IsEvilDeadCreature(from)
+                            && from.RaceHomeLand == 2
                         )
                         {
                             gX = 5242;
@@ -457,7 +460,8 @@ namespace Server.Items
                             map = Map.Lodor;
                         }
                         else if (
-                            Server.Items.BaseRace.IsEvilDeadCreature(from) && from.RaceHomeLand == 1
+                            Server.Items.BaseRace.IsEvilDeadCreature(from)
+                            && from.RaceHomeLand == 1
                         )
                         {
                             gX = 5254;

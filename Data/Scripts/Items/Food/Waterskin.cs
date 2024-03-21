@@ -1,9 +1,9 @@
 using System;
 using System.Collections;
+using Server.Gumps;
 using Server.Network;
 using Server.Prompts;
 using Server.Targeting;
-using Server.Gumps;
 
 namespace Server.Items
 {
@@ -342,6 +342,8 @@ namespace Server.Items
                 || id == 0x21F2
                 || id == 0x1519
                 || id == 0x1534
+                || id == 0x65CE
+                || id == 0x65CF
                 || id == 0x22A1
                 || id == 0x22A2
                 || id == 0x22A3

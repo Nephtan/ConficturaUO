@@ -1,10 +1,10 @@
 using System;
 using System.Collections;
-using Server.Targeting;
-using Server.Network;
-using Server.Mobiles;
-using Server.Items;
 using Server.Gumps;
+using Server.Items;
+using Server.Mobiles;
+using Server.Network;
+using Server.Targeting;
 
 namespace Server.Spells.Research
 {
@@ -36,7 +36,9 @@ namespace Server.Spells.Research
             Server.Misc.Research.SpellInformation(spellID, 2),
             Server.Misc.Research.CapsCast(Server.Misc.Research.SpellInformation(spellID, 4)),
             203,
-            9031
+            9031,
+            Reagent.GargoyleEar,
+            Reagent.DemonClaw
         );
 
         public ResearchBanishDaemon(Mobile caster, Item scroll)
@@ -44,8 +46,11 @@ namespace Server.Spells.Research
 
         public override void OnCast()
         {
-            Caster.Target = new InternalTarget(this);
-            Caster.SendMessage("Which demonic creature do you wish to banish?");
+            if (CheckSequence())
+            {
+                Caster.Target = new InternalTarget(this);
+                Caster.SendMessage("Which demonic creature do you wish to banish?");
+            }
         }
 
         public void Target(Mobile m)
@@ -147,7 +152,7 @@ namespace Server.Spells.Research
                         SpellHelper.Damage(this, Caster, damage, 0, 0, 0, 0, 100);
                     }
                 }
-                Server.Misc.Research.ConsumeScroll(Caster, true, spellIndex, false);
+                Server.Misc.Research.ConsumeScroll(Caster, true, spellIndex, alwaysConsume, Scroll);
             }
             FinishSequence();
         }

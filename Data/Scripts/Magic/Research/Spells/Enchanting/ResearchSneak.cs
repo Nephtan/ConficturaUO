@@ -1,10 +1,10 @@
 using System;
-using Server;
 using System.Collections;
-using Server.Network;
 using System.Text;
+using Server;
 using Server.Items;
 using Server.Mobiles;
+using Server.Network;
 using Server.Targeting;
 
 namespace Server.Spells.Research
@@ -37,7 +37,9 @@ namespace Server.Spells.Research
             Server.Misc.Research.SpellInformation(spellID, 2),
             Server.Misc.Research.CapsCast(Server.Misc.Research.SpellInformation(spellID, 4)),
             212,
-            9061
+            9061,
+            Reagent.FairyEgg,
+            Reagent.PixieSkull
         );
 
         public ResearchSneak(Mobile caster, Item scroll)
@@ -45,8 +47,11 @@ namespace Server.Spells.Research
 
         public override void OnCast()
         {
-            Caster.Target = new InternalTarget(this);
-            EventSink.Logout += OnLogout;
+            if (CheckSequence())
+            {
+                Caster.Target = new InternalTarget(this);
+                EventSink.Logout += OnLogout;
+            }
         }
 
         private void OnLogout(LogoutEventArgs e)
@@ -74,6 +79,7 @@ namespace Server.Spells.Research
             m_Table.Remove(m);
             m.EndAction(typeof(ResearchSneak));
             m.Hidden = false;
+            BuffInfo.RemoveBuff(m, BuffIcon.Sneak);
         }
 
         public void Target(Mobile m)
@@ -137,8 +143,11 @@ namespace Server.Spells.Research
 
                 m.Hidden = true;
 
+                BuffInfo.RemoveBuff(m, BuffIcon.Sneak);
+                BuffInfo.AddBuff(m, new BuffInfo(BuffIcon.Sneak, 1063654, 1063655, length, m));
+
                 m.BeginAction(typeof(ResearchSneak));
-                Server.Misc.Research.ConsumeScroll(Caster, true, spellIndex, false);
+                Server.Misc.Research.ConsumeScroll(Caster, true, spellIndex, alwaysConsume, Scroll);
             }
 
             FinishSequence();

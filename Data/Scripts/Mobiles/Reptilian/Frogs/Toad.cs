@@ -1,12 +1,14 @@
 using System;
-using Server.Mobiles;
 using Server.Items;
+using Server.Mobiles;
 
 namespace Server.Mobiles
 {
     [CorpseName("a toad corpse")]
     public class Toad : BaseCreature
     {
+        private Timer m_Timer;
+
         [Constructable]
         public Toad()
             : base(AIType.AI_Animal, FightMode.Aggressor, 10, 1, 0.2, 0.4)
@@ -41,6 +43,9 @@ namespace Server.Mobiles
             Tamable = true;
             ControlSlots = 1;
             MinTameSkill = 23.1;
+
+            m_Timer = new GiantToad.TeleportTimer(this, 0x1CC);
+            m_Timer.Start();
         }
 
         public override int Meat
@@ -69,6 +74,8 @@ namespace Server.Mobiles
         {
             base.Deserialize(reader);
             int version = reader.ReadInt();
+            m_Timer = new GiantToad.TeleportTimer(this, 0x1CC);
+            m_Timer.Start();
         }
     }
 }

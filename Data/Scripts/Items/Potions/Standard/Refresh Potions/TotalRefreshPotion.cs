@@ -15,6 +15,7 @@ namespace Server.Items
             : base(PotionEffect.RefreshTotal)
         {
             ItemID = 0x25FF;
+            Name = "total refresh potion";
         }
 
         public TotalRefreshPotion(Serial serial)
@@ -30,8 +31,8 @@ namespace Server.Items
         public override void Deserialize(GenericReader reader)
         {
             base.Deserialize(reader);
-
             int version = reader.ReadInt();
+            Name = "total refresh potion";
         }
     }
 }

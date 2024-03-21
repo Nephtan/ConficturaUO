@@ -1,7 +1,7 @@
 using System;
-using Server.Targeting;
-using Server.Network;
 using Server;
+using Server.Network;
+using Server.Targeting;
 
 namespace Server.Spells.Undead
 {
@@ -33,10 +33,15 @@ namespace Server.Spells.Undead
         {
             private Mobile m_Owner;
 
-            public DarkTimer(Mobile owner, int enhance)
-                : base(TimeSpan.FromMinutes(Utility.Random(15 + enhance, 25 + enhance)))
+            public DarkTimer(Mobile owner, TimeSpan duration)
+                : base(duration)
             {
                 m_Owner = owner;
+                BuffInfo.RemoveBuff(owner, BuffIcon.EyesOfTheDead);
+                BuffInfo.AddBuff(
+                    owner,
+                    new BuffInfo(BuffIcon.EyesOfTheDead, 1063496, duration, owner)
+                );
                 Priority = TimerPriority.OneMinute;
             }
 
@@ -44,7 +49,7 @@ namespace Server.Spells.Undead
             {
                 m_Owner.EndAction(typeof(LightCycle));
                 m_Owner.LightLevel = 0;
-                BuffInfo.RemoveBuff(m_Owner, BuffIcon.NightSight);
+                BuffInfo.RemoveBuff(m_Owner, BuffIcon.EyesOfTheDead);
             }
         }
 
@@ -68,10 +73,11 @@ namespace Server.Spells.Undead
 
                     if (targ.BeginAction(typeof(LightCycle)))
                     {
-                        new DarkTimer(
-                            targ,
-                            Server.Items.BasePotion.EnhancePotions(m_Spell.Caster)
-                        ).Start();
+                        int enhance = Server.Items.BasePotion.EnhancePotions(m_Spell.Caster);
+                        TimeSpan duration = TimeSpan.FromMinutes(
+                            Utility.Random(15 + enhance, 25 + enhance)
+                        );
+                        new DarkTimer(targ, duration).Start();
                         int level = (int)
                             Math.Abs(
                                 LightCycle.DungeonLevel
@@ -87,7 +93,6 @@ namespace Server.Spells.Undead
 
                         targ.FixedParticles(0x376A, 9, 32, 5007, EffectLayer.Waist);
                         targ.PlaySound(0x37A);
-                        BuffInfo.AddBuff(targ, new BuffInfo(BuffIcon.NightSight, 1075643)); //Night Sight/You ignore lighting effects
                     }
                     else
                     {

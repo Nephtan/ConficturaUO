@@ -1,20 +1,20 @@
 using System;
-using Server;
-using Server.Network;
+using System.Collections;
+using System.Collections.Generic;
 using System.Text;
+using Server;
+using Server.Commands;
+using Server.ContextMenus;
+using Server.Gumps;
 using Server.Items;
 using Server.Misc;
 using Server.Mobiles;
-using Server.Regions;
-using System.Collections.Generic;
-using System.Collections;
-using Server.Commands;
-using Server.Prompts;
-using Server.ContextMenus;
-using Server.Gumps;
-using Server.Targeting;
 using Server.Multis;
+using Server.Network;
+using Server.Prompts;
+using Server.Regions;
 using Server.Spells;
+using Server.Targeting;
 
 namespace Server.Items
 {
@@ -46,7 +46,9 @@ namespace Server.Items
                 from.SendMessage("This must be secured down in a home to use.");
             }
             else if (
-                !from.InRange(GetWorldLocation(), 2) || !from.CanSee(this) || !from.InLOS(this)
+                !from.InRange(GetWorldLocation(), 2)
+                || !from.CanSee(this)
+                || !from.InLOS(this)
             )
             {
                 from.SendMessage("You will have to get closer to use that.");

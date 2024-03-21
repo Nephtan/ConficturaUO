@@ -1,10 +1,10 @@
 using System;
-using Server;
 using System.Collections;
-using Server.Network;
 using System.Text;
+using Server;
 using Server.Items;
 using Server.Mobiles;
+using Server.Network;
 using Server.Targeting;
 
 namespace Server.Spells.Research
@@ -37,7 +37,10 @@ namespace Server.Spells.Research
             Server.Misc.Research.SpellInformation(spellID, 2),
             Server.Misc.Research.CapsCast(Server.Misc.Research.SpellInformation(spellID, 4)),
             203,
-            9031
+            9031,
+            Reagent.Bloodmoss,
+            Reagent.DaemonBlood,
+            Reagent.RedLotus
         );
 
         public ResearchCauseFear(Mobile caster, Item scroll)
@@ -45,8 +48,11 @@ namespace Server.Spells.Research
 
         public override void OnCast()
         {
-            Caster.SendMessage("Who do you want to invoke terror at?");
-            Caster.Target = new InternalTarget(this);
+            if (CheckSequence())
+            {
+                Caster.SendMessage("Who do you want to invoke terror at?");
+                Caster.Target = new InternalTarget(this);
+            }
         }
 
         public void Target(Mobile m)
@@ -93,6 +99,8 @@ namespace Server.Spells.Research
                 {
                     m.Paralyze(duration);
                     m.SendMessage("You are frozen in fear.");
+                    BuffInfo.RemoveBuff(m, BuffIcon.Fear);
+                    BuffInfo.AddBuff(m, new BuffInfo(BuffIcon.Fear, 1063688, duration, m));
                 }
                 else if (m is BaseCreature)
                 {
@@ -100,7 +108,7 @@ namespace Server.Spells.Research
                     bc.BeginFlee(duration);
                 }
 
-                Server.Misc.Research.ConsumeScroll(Caster, true, spellIndex, false);
+                Server.Misc.Research.ConsumeScroll(Caster, true, spellIndex, alwaysConsume, Scroll);
 
                 HarmfulSpell(m);
             }

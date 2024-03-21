@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
-using Server.Network;
 using Server.Items;
-using Server.Targeting;
 using Server.Mobiles;
+using Server.Network;
+using Server.Targeting;
 
 namespace Server.Spells.Research
 {
@@ -12,6 +12,10 @@ namespace Server.Spells.Research
         public override int spellIndex
         {
             get { return 38; }
+        }
+        public override bool alwaysConsume
+        {
+            get { return bool.Parse(Server.Misc.Research.SpellInformation(spellIndex, 14)); }
         }
         public int CirclePower = 5;
         public static int spellID = 38;
@@ -35,7 +39,11 @@ namespace Server.Spells.Research
             Server.Misc.Research.SpellInformation(spellID, 2),
             Server.Misc.Research.CapsCast(Server.Misc.Research.SpellInformation(spellID, 4)),
             233,
-            9042
+            9042,
+            Reagent.BatWing,
+            Reagent.BlackPearl,
+            Reagent.Brimstone,
+            Reagent.PigIron
         );
 
         public ResearchCallDestruction(Mobile caster, Item scroll)
@@ -141,7 +149,13 @@ namespace Server.Spells.Research
                         );
                         m.PlaySound(0x345);
                     }
-                    Server.Misc.Research.ConsumeScroll(Caster, true, spellIndex, true);
+                    Server.Misc.Research.ConsumeScroll(
+                        Caster,
+                        true,
+                        spellIndex,
+                        alwaysConsume,
+                        Scroll
+                    );
                     Effects.SendLocationEffect(Caster.Location, Caster.Map, 0x36B0, 60, 0xAB3, 0);
                     Caster.Hits = (int)(Caster.Hits / 2);
                 }

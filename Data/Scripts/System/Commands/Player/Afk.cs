@@ -1,7 +1,7 @@
-using Server.Commands;
 using System;
 using System.Collections;
 using Server;
+using Server.Commands;
 
 namespace Server.Commands
 {
@@ -14,6 +14,7 @@ namespace Server.Commands
         private Mobile who;
         private Point3D where;
         private DateTime when;
+        private DateTime lastZzzTime;
         public string what = "";
 
         public static void Initialize()
@@ -107,6 +108,7 @@ namespace Server.Commands
             who = afker;
             when = DateTime.Now;
             where = who.Location;
+            lastZzzTime = DateTime.Now;
             this.Start();
         }
 
@@ -117,10 +119,16 @@ namespace Server.Commands
                 this.wakeUp();
                 return;
             }
-            who.Say("zZz");
+
+            if ((DateTime.Now - lastZzzTime).TotalSeconds >= 30)
+            {
+                who.Say("zZz");
+                who.PlaySound(who.Female ? 819 : 1093);
+                lastZzzTime = DateTime.Now;
+            }
+
             TimeSpan ts = DateTime.Now.Subtract(when);
             who.Emote("*{0} ({1}:{2}:{3})*", what, ts.Hours, ts.Minutes, ts.Seconds);
-            who.PlaySound(who.Female ? 819 : 1093);
         }
     }
 }

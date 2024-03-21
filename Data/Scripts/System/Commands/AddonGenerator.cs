@@ -12,13 +12,13 @@ Purpose:  Generates AddOns from statics, items, and tiles. Oh my!
 #undef DEBUG
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.IO;
 using Server;
-using Server.Items;
-using Server.Gumps;
 using Server.Commands;
-using System.Collections.Generic;
 using Server.ContextMenus;
+using Server.Gumps;
+using Server.Items;
 using Server.Network;
 using Server.Targeting;
 

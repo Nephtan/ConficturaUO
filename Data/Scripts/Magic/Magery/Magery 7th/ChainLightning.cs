@@ -1,10 +1,10 @@
 using System;
 using System.Collections;
-using Server.Network;
 using Server.Items;
-using Server.Targeting;
-using Server.Regions;
 using Server.Mobiles;
+using Server.Network;
+using Server.Regions;
+using Server.Targeting;
 
 namespace Server.Spells.Seventh
 {
@@ -65,14 +65,20 @@ namespace Server.Spells.Seventh
 
                     foreach (Mobile m in eable)
                     {
-                        Mobile pet = m;
-
                         if (Caster.Region == m.Region && Caster != m)
                         {
+                            Mobile pet = m;
+
                             if (m is BaseCreature)
                                 pet = ((BaseCreature)m).GetMaster();
 
-                            if (Caster != pet)
+                            if (
+                                Caster.Region == m.Region
+                                && Caster != m
+                                && Caster != pet
+                                && Caster.InLOS(m)
+                                && m.Blessed == false
+                            )
                             {
                                 targets.Add(m);
 
@@ -109,38 +115,41 @@ namespace Server.Spells.Seventh
                     {
                         Mobile m = (Mobile)targets[i];
 
-                        Region house = m.Region;
-
-                        double toDeal = damage;
-
-                        if (!Core.AOS && CheckResisted(m))
+                        if (Caster.CanBeHarmful(m, true))
                         {
-                            toDeal *= 0.5;
+                            Region house = m.Region;
 
-                            m.SendLocalizedMessage(501783); // You feel yourself resisting magical energy.
-                        }
-                        if (!(house is Regions.HouseRegion))
-                        {
-                            Caster.DoHarmful(m);
-                            SpellHelper.Damage(this, m, toDeal, 0, 0, 0, 0, 100);
+                            double toDeal = damage;
 
-                            if (Server.Misc.PlayerSettings.GetMySpellHue(true, Caster, 0) > 0)
+                            if (!Core.AOS && CheckResisted(m))
                             {
-                                Point3D blast = new Point3D((m.X), (m.Y), m.Z + 10);
-                                Effects.SendLocationEffect(
-                                    blast,
-                                    m.Map,
-                                    0x2A4E,
-                                    30,
-                                    10,
-                                    Server.Misc.PlayerSettings.GetMySpellHue(true, Caster, 0),
-                                    0
-                                );
-                                m.PlaySound(0x029);
+                                toDeal *= 0.5;
+
+                                m.SendLocalizedMessage(501783); // You feel yourself resisting magical energy.
                             }
-                            else
+                            if (!(house is Regions.HouseRegion))
                             {
-                                m.BoltEffect(0);
+                                Caster.DoHarmful(m);
+                                SpellHelper.Damage(this, m, toDeal, 0, 0, 0, 0, 100);
+
+                                if (Server.Misc.PlayerSettings.GetMySpellHue(true, Caster, 0) > 0)
+                                {
+                                    Point3D blast = new Point3D((m.X), (m.Y), m.Z + 10);
+                                    Effects.SendLocationEffect(
+                                        blast,
+                                        m.Map,
+                                        0x2A4E,
+                                        30,
+                                        10,
+                                        Server.Misc.PlayerSettings.GetMySpellHue(true, Caster, 0),
+                                        0
+                                    );
+                                    m.PlaySound(0x029);
+                                }
+                                else
+                                {
+                                    m.BoltEffect(0);
+                                }
                             }
                         }
                     }

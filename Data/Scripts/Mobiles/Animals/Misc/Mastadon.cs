@@ -1,9 +1,9 @@
 using System;
-using Server;
 using System.Collections;
+using Server;
 using Server.Items;
-using Server.Targeting;
 using Server.Misc;
+using Server.Targeting;
 
 namespace Server.Mobiles
 {
@@ -14,7 +14,7 @@ namespace Server.Mobiles
         public Mastadon()
         {
             Name = "a mastadon";
-            Hue = 0xABF;
+            Body = 997;
 
             SetStr(326, 355);
             SetDex(81, 105);
@@ -58,6 +58,8 @@ namespace Server.Mobiles
         {
             base.Deserialize(reader);
             int version = reader.ReadInt();
+            Body = 997;
+            Hue = 0;
         }
     }
 }

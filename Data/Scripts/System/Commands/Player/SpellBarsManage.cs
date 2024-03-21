@@ -1,41 +1,42 @@
 using System;
-using Server;
 using System.Collections;
-using Server.Network;
-using Server.Mobiles;
-using Server.Items;
-using Server.Misc;
+using Server;
 using Server.Commands;
 using Server.Commands.Generic;
+using Server.Gumps;
+using Server.Items;
+using Server.Misc;
+using Server.Mobiles;
+using Server.Network;
+using Server.Prompts;
 using Server.Spells;
-using Server.Spells.First;
-using Server.Spells.Second;
-using Server.Spells.Third;
-using Server.Spells.Fourth;
-using Server.Spells.Fifth;
-using Server.Spells.Sixth;
-using Server.Spells.Seventh;
-using Server.Spells.Eighth;
-using Server.Spells.Necromancy;
 using Server.Spells.Chivalry;
 using Server.Spells.DeathKnight;
-using Server.Spells.Song;
+using Server.Spells.Eighth;
+using Server.Spells.Elementalism;
+using Server.Spells.Fifth;
+using Server.Spells.First;
+using Server.Spells.Fourth;
 using Server.Spells.HolyMan;
 using Server.Spells.Mystic;
-using Server.Spells.Elementalism;
-using Server.Prompts;
-using Server.Gumps;
+using Server.Spells.Necromancy;
+using Server.Spells.Research;
+using Server.Spells.Second;
+using Server.Spells.Seventh;
+using Server.Spells.Sixth;
+using Server.Spells.Song;
+using Server.Spells.Third;
 
 namespace Server.Gumps
 {
-    public class SetupBarsMage1 : Gump
+    public class SetupBarsArch1 : Gump
     {
         public int m_Origin;
 
         public static void Initialize()
         {
             CommandSystem.Register(
-                "magespell1",
+                "archspell1",
                 AccessLevel.Player,
                 new CommandEventHandler(ToolBar_OnCommand)
             );
@@ -46,16 +47,16 @@ namespace Server.Gumps
             CommandSystem.Register(command, access, handler);
         }
 
-        [Usage("magespell1")]
-        [Description("Opens Spell Bar Editor For Mages - 1.")]
+        [Usage("archspell1")]
+        [Description("Opens Spell Bar Editor For Archmages - 1.")]
         public static void ToolBar_OnCommand(CommandEventArgs e)
         {
             Mobile from = e.Mobile;
-            from.CloseGump(typeof(SetupBarsMage1));
-            from.SendGump(new SetupBarsMage1(from, 0));
+            from.CloseGump(typeof(SetupBarsArch1));
+            from.SendGump(new SetupBarsArch1(from, 0));
         }
 
-        public SetupBarsMage1(Mobile from, int origin)
+        public SetupBarsArch1(Mobile from, int origin)
             : base(12, 50)
         {
             m_Origin = origin;
@@ -75,13 +76,13 @@ namespace Server.Gumps
                 14,
                 400,
                 20,
-                @"<BODY><BASEFONT Color=" + color + ">SPELL BAR - MAGERY - I</BASEFONT></BODY>",
+                @"<BODY><BASEFONT Color=" + color + ">SPELL BAR - ANCIENT - I</BASEFONT></BODY>",
                 (bool)false,
                 (bool)false
             );
 
-            ToolBarUpdates.InitializeToolBar(from, "SetupBarsMage1");
-            string MySettings = ((PlayerMobile)from).SpellBarsMage1;
+            ToolBarUpdates.InitializeToolBar(from, "SetupBarsArch1");
+            string MyServerSettings = ((PlayerMobile)from).SpellBarsArch1;
 
             int button1 = 3609;
             int button2 = 3609;
@@ -151,7 +152,4775 @@ namespace Server.Gumps
             int button66 = 3609;
             int button67 = 3609;
 
-            string[] eachSpell = MySettings.Split('#');
+            string[] eachSpell = MyServerSettings.Split('#');
+            int nLine = 1;
+            foreach (string eachSpells in eachSpell)
+            {
+                if (nLine == 1 && eachSpells == "1")
+                {
+                    button1 = 4018;
+                }
+                if (nLine == 2 && eachSpells == "1")
+                {
+                    button2 = 4018;
+                }
+                if (nLine == 3 && eachSpells == "1")
+                {
+                    button3 = 4018;
+                }
+                if (nLine == 4 && eachSpells == "1")
+                {
+                    button4 = 4018;
+                }
+                if (nLine == 5 && eachSpells == "1")
+                {
+                    button5 = 4018;
+                }
+                if (nLine == 6 && eachSpells == "1")
+                {
+                    button6 = 4018;
+                }
+                if (nLine == 7 && eachSpells == "1")
+                {
+                    button7 = 4018;
+                }
+                if (nLine == 8 && eachSpells == "1")
+                {
+                    button8 = 4018;
+                }
+                if (nLine == 9 && eachSpells == "1")
+                {
+                    button9 = 4018;
+                }
+                if (nLine == 10 && eachSpells == "1")
+                {
+                    button10 = 4018;
+                }
+                if (nLine == 11 && eachSpells == "1")
+                {
+                    button11 = 4018;
+                }
+                if (nLine == 12 && eachSpells == "1")
+                {
+                    button12 = 4018;
+                }
+                if (nLine == 13 && eachSpells == "1")
+                {
+                    button13 = 4018;
+                }
+                if (nLine == 14 && eachSpells == "1")
+                {
+                    button14 = 4018;
+                }
+                if (nLine == 15 && eachSpells == "1")
+                {
+                    button15 = 4018;
+                }
+                if (nLine == 16 && eachSpells == "1")
+                {
+                    button16 = 4018;
+                }
+                if (nLine == 17 && eachSpells == "1")
+                {
+                    button17 = 4018;
+                }
+                if (nLine == 18 && eachSpells == "1")
+                {
+                    button18 = 4018;
+                }
+                if (nLine == 19 && eachSpells == "1")
+                {
+                    button19 = 4018;
+                }
+                if (nLine == 20 && eachSpells == "1")
+                {
+                    button20 = 4018;
+                }
+                if (nLine == 21 && eachSpells == "1")
+                {
+                    button21 = 4018;
+                }
+                if (nLine == 22 && eachSpells == "1")
+                {
+                    button22 = 4018;
+                }
+                if (nLine == 23 && eachSpells == "1")
+                {
+                    button23 = 4018;
+                }
+                if (nLine == 24 && eachSpells == "1")
+                {
+                    button24 = 4018;
+                }
+                if (nLine == 25 && eachSpells == "1")
+                {
+                    button25 = 4018;
+                }
+                if (nLine == 26 && eachSpells == "1")
+                {
+                    button26 = 4018;
+                }
+                if (nLine == 27 && eachSpells == "1")
+                {
+                    button27 = 4018;
+                }
+                if (nLine == 28 && eachSpells == "1")
+                {
+                    button28 = 4018;
+                }
+                if (nLine == 29 && eachSpells == "1")
+                {
+                    button29 = 4018;
+                }
+                if (nLine == 30 && eachSpells == "1")
+                {
+                    button30 = 4018;
+                }
+                if (nLine == 31 && eachSpells == "1")
+                {
+                    button31 = 4018;
+                }
+                if (nLine == 32 && eachSpells == "1")
+                {
+                    button32 = 4018;
+                }
+                if (nLine == 33 && eachSpells == "1")
+                {
+                    button33 = 4018;
+                }
+                if (nLine == 34 && eachSpells == "1")
+                {
+                    button34 = 4018;
+                }
+                if (nLine == 35 && eachSpells == "1")
+                {
+                    button35 = 4018;
+                }
+                if (nLine == 36 && eachSpells == "1")
+                {
+                    button36 = 4018;
+                }
+                if (nLine == 37 && eachSpells == "1")
+                {
+                    button37 = 4018;
+                }
+                if (nLine == 38 && eachSpells == "1")
+                {
+                    button38 = 4018;
+                }
+                if (nLine == 39 && eachSpells == "1")
+                {
+                    button39 = 4018;
+                }
+                if (nLine == 40 && eachSpells == "1")
+                {
+                    button40 = 4018;
+                }
+                if (nLine == 41 && eachSpells == "1")
+                {
+                    button41 = 4018;
+                }
+                if (nLine == 42 && eachSpells == "1")
+                {
+                    button42 = 4018;
+                }
+                if (nLine == 43 && eachSpells == "1")
+                {
+                    button43 = 4018;
+                }
+                if (nLine == 44 && eachSpells == "1")
+                {
+                    button44 = 4018;
+                }
+                if (nLine == 45 && eachSpells == "1")
+                {
+                    button45 = 4018;
+                }
+                if (nLine == 46 && eachSpells == "1")
+                {
+                    button46 = 4018;
+                }
+                if (nLine == 47 && eachSpells == "1")
+                {
+                    button47 = 4018;
+                }
+                if (nLine == 48 && eachSpells == "1")
+                {
+                    button48 = 4018;
+                }
+                if (nLine == 49 && eachSpells == "1")
+                {
+                    button49 = 4018;
+                }
+                if (nLine == 50 && eachSpells == "1")
+                {
+                    button50 = 4018;
+                }
+                if (nLine == 51 && eachSpells == "1")
+                {
+                    button51 = 4018;
+                }
+                if (nLine == 52 && eachSpells == "1")
+                {
+                    button52 = 4018;
+                }
+                if (nLine == 53 && eachSpells == "1")
+                {
+                    button53 = 4018;
+                }
+                if (nLine == 54 && eachSpells == "1")
+                {
+                    button54 = 4018;
+                }
+                if (nLine == 55 && eachSpells == "1")
+                {
+                    button55 = 4018;
+                }
+                if (nLine == 56 && eachSpells == "1")
+                {
+                    button56 = 4018;
+                }
+                if (nLine == 57 && eachSpells == "1")
+                {
+                    button57 = 4018;
+                }
+                if (nLine == 58 && eachSpells == "1")
+                {
+                    button58 = 4018;
+                }
+                if (nLine == 59 && eachSpells == "1")
+                {
+                    button59 = 4018;
+                }
+                if (nLine == 60 && eachSpells == "1")
+                {
+                    button60 = 4018;
+                }
+                if (nLine == 61 && eachSpells == "1")
+                {
+                    button61 = 4018;
+                }
+                if (nLine == 62 && eachSpells == "1")
+                {
+                    button62 = 4018;
+                }
+                if (nLine == 63 && eachSpells == "1")
+                {
+                    button63 = 4018;
+                }
+                if (nLine == 64 && eachSpells == "1")
+                {
+                    button64 = 4018;
+                }
+
+                if (nLine == 65 && eachSpells == "1")
+                {
+                    button65 = 4018;
+                }
+
+                if (nLine == 66 && eachSpells == "0")
+                {
+                    button66 = 3609;
+                }
+                else if (nLine == 66 && eachSpells == "1")
+                {
+                    button66 = 4018;
+                }
+
+                if (nLine == 66 && eachSpells == "1")
+                {
+                    button67 = 3609;
+                }
+                else if (nLine == 66 && eachSpells == "0")
+                {
+                    button67 = 4018;
+                }
+
+                nLine++;
+            }
+
+            AddButton(582, 82, button65, button65, 90, GumpButtonType.Reply, 0);
+            AddHtml(
+                624,
+                81,
+                261,
+                21,
+                @"<BODY><BASEFONT Color="
+                    + color
+                    + ">Show Spell Names When Vertical</BASEFONT></BODY>",
+                (bool)false,
+                (bool)false
+            );
+
+            AddButton(377, 540, button66, button66, 91, GumpButtonType.Reply, 0);
+            AddHtml(
+                417,
+                539,
+                125,
+                21,
+                @"<BODY><BASEFONT Color=" + color + ">Vertical Bar</BASEFONT></BODY>",
+                (bool)false,
+                (bool)false
+            );
+
+            AddButton(681, 537, button67, button67, 91, GumpButtonType.Reply, 0);
+            AddHtml(
+                721,
+                536,
+                125,
+                21,
+                @"<BODY><BASEFONT Color=" + color + ">Horizontal Bar</BASEFONT></BODY>",
+                (bool)false,
+                (bool)false
+            );
+
+            // ------------------------------------------------------------------------------------ 1
+
+            int x1 = 135;
+            int x2 = 95;
+            int y1 = 120;
+            int y2 = 130;
+            int rp = 0;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button1, button1, 99, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button2, button2, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button3, button3, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button4, button4, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button5, button5, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button6, button6, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button7, button7, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button8, button8, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            // ------------------------------------------------------------------------------------ 2
+
+            x1 = x1 + 100;
+            x2 = x2 + 100;
+            y1 = 120;
+            y2 = 130;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button9, button9, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button10, button10, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button11, button11, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button12, button12, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button13, button13, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button14, button14, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button15, button15, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button16, button16, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            // ------------------------------------------------------------------------------------ 3
+
+            x1 = x1 + 100;
+            x2 = x2 + 100;
+            y1 = 120;
+            y2 = 130;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button17, button17, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button18, button18, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button19, button19, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button20, button20, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button21, button21, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button22, button22, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button23, button23, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button24, button24, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            // ------------------------------------------------------------------------------------ 4
+
+            x1 = x1 + 100;
+            x2 = x2 + 100;
+            y1 = 120;
+            y2 = 130;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button25, button25, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button26, button26, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button27, button27, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button28, button28, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button29, button29, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button30, button30, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button31, button31, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button32, button32, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            // ------------------------------------------------------------------------------------ 5
+
+            x1 = x1 + 100;
+            x2 = x2 + 100;
+            y1 = 120;
+            y2 = 130;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button33, button33, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button34, button34, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button35, button35, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button36, button36, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button37, button37, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button38, button38, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button39, button39, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button40, button40, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            // ------------------------------------------------------------------------------------ 6
+
+            x1 = x1 + 100;
+            x2 = x2 + 100;
+            y1 = 120;
+            y2 = 130;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button41, button41, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button42, button42, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button43, button43, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button44, button44, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button45, button45, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button46, button46, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button47, button47, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button48, button48, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            // ------------------------------------------------------------------------------------ 7
+
+            x1 = x1 + 100;
+            x2 = x2 + 100;
+            y1 = 120;
+            y2 = 130;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button49, button49, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button50, button50, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button51, button51, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button52, button52, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button53, button53, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button54, button54, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button55, button55, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button56, button56, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            // ------------------------------------------------------------------------------------ 8
+
+            x1 = x1 + 100;
+            x2 = x2 + 100;
+            y1 = 120;
+            y2 = 130;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button57, button57, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button58, button58, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button59, button59, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button60, button60, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button61, button61, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button62, button62, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button63, button63, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button64, button64, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+        }
+
+        public override void OnResponse(NetState sender, RelayInfo info)
+        {
+            Mobile from = sender.Mobile;
+
+            if (info.ButtonID == 99)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 1, "SetupBarsArch1", 66);
+            }
+            else if (info.ButtonID == 1)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 2, "SetupBarsArch1", 66);
+            }
+            else if (info.ButtonID == 2)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 3, "SetupBarsArch1", 66);
+            }
+            else if (info.ButtonID == 3)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 4, "SetupBarsArch1", 66);
+            }
+            else if (info.ButtonID == 4)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 5, "SetupBarsArch1", 66);
+            }
+            else if (info.ButtonID == 5)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 6, "SetupBarsArch1", 66);
+            }
+            else if (info.ButtonID == 6)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 7, "SetupBarsArch1", 66);
+            }
+            else if (info.ButtonID == 7)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 8, "SetupBarsArch1", 66);
+            }
+            else if (info.ButtonID == 8)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 9, "SetupBarsArch1", 66);
+            }
+            else if (info.ButtonID == 9)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 10, "SetupBarsArch1", 66);
+            }
+            else if (info.ButtonID == 10)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 11, "SetupBarsArch1", 66);
+            }
+            else if (info.ButtonID == 11)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 12, "SetupBarsArch1", 66);
+            }
+            else if (info.ButtonID == 12)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 13, "SetupBarsArch1", 66);
+            }
+            else if (info.ButtonID == 13)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 14, "SetupBarsArch1", 66);
+            }
+            else if (info.ButtonID == 14)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 15, "SetupBarsArch1", 66);
+            }
+            else if (info.ButtonID == 15)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 16, "SetupBarsArch1", 66);
+            }
+            else if (info.ButtonID == 16)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 17, "SetupBarsArch1", 66);
+            }
+            else if (info.ButtonID == 17)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 18, "SetupBarsArch1", 66);
+            }
+            else if (info.ButtonID == 18)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 19, "SetupBarsArch1", 66);
+            }
+            else if (info.ButtonID == 19)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 20, "SetupBarsArch1", 66);
+            }
+            else if (info.ButtonID == 20)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 21, "SetupBarsArch1", 66);
+            }
+            else if (info.ButtonID == 21)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 22, "SetupBarsArch1", 66);
+            }
+            else if (info.ButtonID == 22)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 23, "SetupBarsArch1", 66);
+            }
+            else if (info.ButtonID == 23)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 24, "SetupBarsArch1", 66);
+            }
+            else if (info.ButtonID == 24)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 25, "SetupBarsArch1", 66);
+            }
+            else if (info.ButtonID == 25)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 26, "SetupBarsArch1", 66);
+            }
+            else if (info.ButtonID == 26)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 27, "SetupBarsArch1", 66);
+            }
+            else if (info.ButtonID == 27)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 28, "SetupBarsArch1", 66);
+            }
+            else if (info.ButtonID == 28)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 29, "SetupBarsArch1", 66);
+            }
+            else if (info.ButtonID == 29)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 30, "SetupBarsArch1", 66);
+            }
+            else if (info.ButtonID == 30)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 31, "SetupBarsArch1", 66);
+            }
+            else if (info.ButtonID == 31)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 32, "SetupBarsArch1", 66);
+            }
+            else if (info.ButtonID == 32)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 33, "SetupBarsArch1", 66);
+            }
+            else if (info.ButtonID == 33)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 34, "SetupBarsArch1", 66);
+            }
+            else if (info.ButtonID == 34)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 35, "SetupBarsArch1", 66);
+            }
+            else if (info.ButtonID == 35)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 36, "SetupBarsArch1", 66);
+            }
+            else if (info.ButtonID == 36)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 37, "SetupBarsArch1", 66);
+            }
+            else if (info.ButtonID == 37)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 38, "SetupBarsArch1", 66);
+            }
+            else if (info.ButtonID == 38)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 39, "SetupBarsArch1", 66);
+            }
+            else if (info.ButtonID == 39)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 40, "SetupBarsArch1", 66);
+            }
+            else if (info.ButtonID == 40)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 41, "SetupBarsArch1", 66);
+            }
+            else if (info.ButtonID == 41)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 42, "SetupBarsArch1", 66);
+            }
+            else if (info.ButtonID == 42)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 43, "SetupBarsArch1", 66);
+            }
+            else if (info.ButtonID == 43)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 44, "SetupBarsArch1", 66);
+            }
+            else if (info.ButtonID == 44)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 45, "SetupBarsArch1", 66);
+            }
+            else if (info.ButtonID == 45)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 46, "SetupBarsArch1", 66);
+            }
+            else if (info.ButtonID == 46)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 47, "SetupBarsArch1", 66);
+            }
+            else if (info.ButtonID == 47)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 48, "SetupBarsArch1", 66);
+            }
+            else if (info.ButtonID == 48)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 49, "SetupBarsArch1", 66);
+            }
+            else if (info.ButtonID == 49)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 50, "SetupBarsArch1", 66);
+            }
+            else if (info.ButtonID == 50)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 51, "SetupBarsArch1", 66);
+            }
+            else if (info.ButtonID == 51)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 52, "SetupBarsArch1", 66);
+            }
+            else if (info.ButtonID == 52)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 53, "SetupBarsArch1", 66);
+            }
+            else if (info.ButtonID == 53)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 54, "SetupBarsArch1", 66);
+            }
+            else if (info.ButtonID == 54)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 55, "SetupBarsArch1", 66);
+            }
+            else if (info.ButtonID == 55)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 56, "SetupBarsArch1", 66);
+            }
+            else if (info.ButtonID == 56)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 57, "SetupBarsArch1", 66);
+            }
+            else if (info.ButtonID == 57)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 58, "SetupBarsArch1", 66);
+            }
+            else if (info.ButtonID == 58)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 59, "SetupBarsArch1", 66);
+            }
+            else if (info.ButtonID == 59)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 60, "SetupBarsArch1", 66);
+            }
+            else if (info.ButtonID == 60)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 61, "SetupBarsArch1", 66);
+            }
+            else if (info.ButtonID == 61)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 62, "SetupBarsArch1", 66);
+            }
+            else if (info.ButtonID == 62)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 63, "SetupBarsArch1", 66);
+            }
+            else if (info.ButtonID == 63)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 64, "SetupBarsArch1", 66);
+            }
+            else if (info.ButtonID == 90)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 65, "SetupBarsArch1", 66);
+            }
+            else if (info.ButtonID == 91)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 66, "SetupBarsArch1", 66);
+            }
+
+            if (info.ButtonID < 1 && m_Origin > 1)
+            {
+                if (Server.Misc.ResearchSettings.ResearchMaterials(from) != null)
+                {
+                    ResearchBag bag = (ResearchBag)(
+                        Server.Misc.ResearchSettings.ResearchMaterials(from)
+                    );
+                    from.SendGump(new Server.Items.ResearchBag.ResearchGump(bag, from));
+                    from.SendSound(0x55);
+                }
+            }
+            else if (info.ButtonID < 1 && m_Origin > 0)
+            {
+                from.SendGump(new Server.Engines.Help.HelpGump(from, 7));
+                from.SendSound(0x4A);
+            }
+            else if (info.ButtonID < 1) { }
+            else
+            {
+                from.SendGump(new SetupBarsArch1(from, m_Origin));
+                from.SendSound(0x4A);
+            }
+        }
+    }
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+namespace Server.Gumps
+{
+    public class SetupBarsArch2 : Gump
+    {
+        public int m_Origin;
+
+        public static void Initialize()
+        {
+            CommandSystem.Register(
+                "archspell2",
+                AccessLevel.Player,
+                new CommandEventHandler(ToolBar_OnCommand)
+            );
+        }
+
+        public static void Register(string command, AccessLevel access, CommandEventHandler handler)
+        {
+            CommandSystem.Register(command, access, handler);
+        }
+
+        [Usage("archspell2")]
+        [Description("Opens Spell Bar Editor For Archmages - 2.")]
+        public static void ToolBar_OnCommand(CommandEventArgs e)
+        {
+            Mobile from = e.Mobile;
+            from.CloseGump(typeof(SetupBarsArch2));
+            from.SendGump(new SetupBarsArch2(from, 0));
+        }
+
+        public SetupBarsArch2(Mobile from, int origin)
+            : base(12, 50)
+        {
+            m_Origin = origin;
+            string color = "#d05f5a";
+
+            Closable = true;
+            Disposable = true;
+            Dragable = true;
+            Resizable = false;
+
+            AddPage(0);
+
+            AddImage(38, 0, 9578, Server.Misc.PlayerSettings.GetGumpHue(from));
+            AddButton(897, 10, 4017, 4017, 0, GumpButtonType.Reply, 0);
+            AddHtml(
+                52,
+                14,
+                400,
+                20,
+                @"<BODY><BASEFONT Color=" + color + ">SPELL BAR - ANCIENT - II</BASEFONT></BODY>",
+                (bool)false,
+                (bool)false
+            );
+
+            ToolBarUpdates.InitializeToolBar(from, "SetupBarsArch2");
+            string MyServerSettings = ((PlayerMobile)from).SpellBarsArch2;
+
+            int button1 = 3609;
+            int button2 = 3609;
+            int button3 = 3609;
+            int button4 = 3609;
+            int button5 = 3609;
+            int button6 = 3609;
+            int button7 = 3609;
+            int button8 = 3609;
+            int button9 = 3609;
+            int button10 = 3609;
+            int button11 = 3609;
+            int button12 = 3609;
+            int button13 = 3609;
+            int button14 = 3609;
+            int button15 = 3609;
+            int button16 = 3609;
+            int button17 = 3609;
+            int button18 = 3609;
+            int button19 = 3609;
+            int button20 = 3609;
+            int button21 = 3609;
+            int button22 = 3609;
+            int button23 = 3609;
+            int button24 = 3609;
+            int button25 = 3609;
+            int button26 = 3609;
+            int button27 = 3609;
+            int button28 = 3609;
+            int button29 = 3609;
+            int button30 = 3609;
+            int button31 = 3609;
+            int button32 = 3609;
+            int button33 = 3609;
+            int button34 = 3609;
+            int button35 = 3609;
+            int button36 = 3609;
+            int button37 = 3609;
+            int button38 = 3609;
+            int button39 = 3609;
+            int button40 = 3609;
+            int button41 = 3609;
+            int button42 = 3609;
+            int button43 = 3609;
+            int button44 = 3609;
+            int button45 = 3609;
+            int button46 = 3609;
+            int button47 = 3609;
+            int button48 = 3609;
+            int button49 = 3609;
+            int button50 = 3609;
+            int button51 = 3609;
+            int button52 = 3609;
+            int button53 = 3609;
+            int button54 = 3609;
+            int button55 = 3609;
+            int button56 = 3609;
+            int button57 = 3609;
+            int button58 = 3609;
+            int button59 = 3609;
+            int button60 = 3609;
+            int button61 = 3609;
+            int button62 = 3609;
+            int button63 = 3609;
+            int button64 = 3609;
+            int button65 = 3609;
+            int button66 = 3609;
+            int button67 = 3609;
+
+            string[] eachSpell = MyServerSettings.Split('#');
+            int nLine = 1;
+            foreach (string eachSpells in eachSpell)
+            {
+                if (nLine == 1 && eachSpells == "1")
+                {
+                    button1 = 4018;
+                }
+                if (nLine == 2 && eachSpells == "1")
+                {
+                    button2 = 4018;
+                }
+                if (nLine == 3 && eachSpells == "1")
+                {
+                    button3 = 4018;
+                }
+                if (nLine == 4 && eachSpells == "1")
+                {
+                    button4 = 4018;
+                }
+                if (nLine == 5 && eachSpells == "1")
+                {
+                    button5 = 4018;
+                }
+                if (nLine == 6 && eachSpells == "1")
+                {
+                    button6 = 4018;
+                }
+                if (nLine == 7 && eachSpells == "1")
+                {
+                    button7 = 4018;
+                }
+                if (nLine == 8 && eachSpells == "1")
+                {
+                    button8 = 4018;
+                }
+                if (nLine == 9 && eachSpells == "1")
+                {
+                    button9 = 4018;
+                }
+                if (nLine == 10 && eachSpells == "1")
+                {
+                    button10 = 4018;
+                }
+                if (nLine == 11 && eachSpells == "1")
+                {
+                    button11 = 4018;
+                }
+                if (nLine == 12 && eachSpells == "1")
+                {
+                    button12 = 4018;
+                }
+                if (nLine == 13 && eachSpells == "1")
+                {
+                    button13 = 4018;
+                }
+                if (nLine == 14 && eachSpells == "1")
+                {
+                    button14 = 4018;
+                }
+                if (nLine == 15 && eachSpells == "1")
+                {
+                    button15 = 4018;
+                }
+                if (nLine == 16 && eachSpells == "1")
+                {
+                    button16 = 4018;
+                }
+                if (nLine == 17 && eachSpells == "1")
+                {
+                    button17 = 4018;
+                }
+                if (nLine == 18 && eachSpells == "1")
+                {
+                    button18 = 4018;
+                }
+                if (nLine == 19 && eachSpells == "1")
+                {
+                    button19 = 4018;
+                }
+                if (nLine == 20 && eachSpells == "1")
+                {
+                    button20 = 4018;
+                }
+                if (nLine == 21 && eachSpells == "1")
+                {
+                    button21 = 4018;
+                }
+                if (nLine == 22 && eachSpells == "1")
+                {
+                    button22 = 4018;
+                }
+                if (nLine == 23 && eachSpells == "1")
+                {
+                    button23 = 4018;
+                }
+                if (nLine == 24 && eachSpells == "1")
+                {
+                    button24 = 4018;
+                }
+                if (nLine == 25 && eachSpells == "1")
+                {
+                    button25 = 4018;
+                }
+                if (nLine == 26 && eachSpells == "1")
+                {
+                    button26 = 4018;
+                }
+                if (nLine == 27 && eachSpells == "1")
+                {
+                    button27 = 4018;
+                }
+                if (nLine == 28 && eachSpells == "1")
+                {
+                    button28 = 4018;
+                }
+                if (nLine == 29 && eachSpells == "1")
+                {
+                    button29 = 4018;
+                }
+                if (nLine == 30 && eachSpells == "1")
+                {
+                    button30 = 4018;
+                }
+                if (nLine == 31 && eachSpells == "1")
+                {
+                    button31 = 4018;
+                }
+                if (nLine == 32 && eachSpells == "1")
+                {
+                    button32 = 4018;
+                }
+                if (nLine == 33 && eachSpells == "1")
+                {
+                    button33 = 4018;
+                }
+                if (nLine == 34 && eachSpells == "1")
+                {
+                    button34 = 4018;
+                }
+                if (nLine == 35 && eachSpells == "1")
+                {
+                    button35 = 4018;
+                }
+                if (nLine == 36 && eachSpells == "1")
+                {
+                    button36 = 4018;
+                }
+                if (nLine == 37 && eachSpells == "1")
+                {
+                    button37 = 4018;
+                }
+                if (nLine == 38 && eachSpells == "1")
+                {
+                    button38 = 4018;
+                }
+                if (nLine == 39 && eachSpells == "1")
+                {
+                    button39 = 4018;
+                }
+                if (nLine == 40 && eachSpells == "1")
+                {
+                    button40 = 4018;
+                }
+                if (nLine == 41 && eachSpells == "1")
+                {
+                    button41 = 4018;
+                }
+                if (nLine == 42 && eachSpells == "1")
+                {
+                    button42 = 4018;
+                }
+                if (nLine == 43 && eachSpells == "1")
+                {
+                    button43 = 4018;
+                }
+                if (nLine == 44 && eachSpells == "1")
+                {
+                    button44 = 4018;
+                }
+                if (nLine == 45 && eachSpells == "1")
+                {
+                    button45 = 4018;
+                }
+                if (nLine == 46 && eachSpells == "1")
+                {
+                    button46 = 4018;
+                }
+                if (nLine == 47 && eachSpells == "1")
+                {
+                    button47 = 4018;
+                }
+                if (nLine == 48 && eachSpells == "1")
+                {
+                    button48 = 4018;
+                }
+                if (nLine == 49 && eachSpells == "1")
+                {
+                    button49 = 4018;
+                }
+                if (nLine == 50 && eachSpells == "1")
+                {
+                    button50 = 4018;
+                }
+                if (nLine == 51 && eachSpells == "1")
+                {
+                    button51 = 4018;
+                }
+                if (nLine == 52 && eachSpells == "1")
+                {
+                    button52 = 4018;
+                }
+                if (nLine == 53 && eachSpells == "1")
+                {
+                    button53 = 4018;
+                }
+                if (nLine == 54 && eachSpells == "1")
+                {
+                    button54 = 4018;
+                }
+                if (nLine == 55 && eachSpells == "1")
+                {
+                    button55 = 4018;
+                }
+                if (nLine == 56 && eachSpells == "1")
+                {
+                    button56 = 4018;
+                }
+                if (nLine == 57 && eachSpells == "1")
+                {
+                    button57 = 4018;
+                }
+                if (nLine == 58 && eachSpells == "1")
+                {
+                    button58 = 4018;
+                }
+                if (nLine == 59 && eachSpells == "1")
+                {
+                    button59 = 4018;
+                }
+                if (nLine == 60 && eachSpells == "1")
+                {
+                    button60 = 4018;
+                }
+                if (nLine == 61 && eachSpells == "1")
+                {
+                    button61 = 4018;
+                }
+                if (nLine == 62 && eachSpells == "1")
+                {
+                    button62 = 4018;
+                }
+                if (nLine == 63 && eachSpells == "1")
+                {
+                    button63 = 4018;
+                }
+                if (nLine == 64 && eachSpells == "1")
+                {
+                    button64 = 4018;
+                }
+
+                if (nLine == 65 && eachSpells == "1")
+                {
+                    button65 = 4018;
+                }
+
+                if (nLine == 66 && eachSpells == "0")
+                {
+                    button66 = 3609;
+                }
+                else if (nLine == 66 && eachSpells == "1")
+                {
+                    button66 = 4018;
+                }
+
+                if (nLine == 66 && eachSpells == "1")
+                {
+                    button67 = 3609;
+                }
+                else if (nLine == 66 && eachSpells == "0")
+                {
+                    button67 = 4018;
+                }
+
+                nLine++;
+            }
+
+            AddButton(582, 82, button65, button65, 90, GumpButtonType.Reply, 0);
+            AddHtml(
+                624,
+                81,
+                261,
+                21,
+                @"<BODY><BASEFONT Color="
+                    + color
+                    + ">Show Spell Names When Vertical</BASEFONT></BODY>",
+                (bool)false,
+                (bool)false
+            );
+
+            AddButton(377, 540, button66, button66, 91, GumpButtonType.Reply, 0);
+            AddHtml(
+                417,
+                539,
+                125,
+                21,
+                @"<BODY><BASEFONT Color=" + color + ">Vertical Bar</BASEFONT></BODY>",
+                (bool)false,
+                (bool)false
+            );
+
+            AddButton(681, 537, button67, button67, 91, GumpButtonType.Reply, 0);
+            AddHtml(
+                721,
+                536,
+                125,
+                21,
+                @"<BODY><BASEFONT Color=" + color + ">Horizontal Bar</BASEFONT></BODY>",
+                (bool)false,
+                (bool)false
+            );
+
+            // ------------------------------------------------------------------------------------ 1
+
+            int x1 = 135;
+            int x2 = 95;
+            int y1 = 120;
+            int y2 = 130;
+            int rp = 0;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button1, button1, 99, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button2, button2, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button3, button3, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button4, button4, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button5, button5, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button6, button6, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button7, button7, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button8, button8, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            // ------------------------------------------------------------------------------------ 2
+
+            x1 = x1 + 100;
+            x2 = x2 + 100;
+            y1 = 120;
+            y2 = 130;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button9, button9, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button10, button10, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button11, button11, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button12, button12, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button13, button13, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button14, button14, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button15, button15, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button16, button16, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            // ------------------------------------------------------------------------------------ 3
+
+            x1 = x1 + 100;
+            x2 = x2 + 100;
+            y1 = 120;
+            y2 = 130;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button17, button17, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button18, button18, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button19, button19, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button20, button20, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button21, button21, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button22, button22, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button23, button23, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button24, button24, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            // ------------------------------------------------------------------------------------ 4
+
+            x1 = x1 + 100;
+            x2 = x2 + 100;
+            y1 = 120;
+            y2 = 130;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button25, button25, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button26, button26, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button27, button27, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button28, button28, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button29, button29, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button30, button30, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button31, button31, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button32, button32, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            // ------------------------------------------------------------------------------------ 5
+
+            x1 = x1 + 100;
+            x2 = x2 + 100;
+            y1 = 120;
+            y2 = 130;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button33, button33, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button34, button34, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button35, button35, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button36, button36, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button37, button37, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button38, button38, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button39, button39, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button40, button40, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            // ------------------------------------------------------------------------------------ 6
+
+            x1 = x1 + 100;
+            x2 = x2 + 100;
+            y1 = 120;
+            y2 = 130;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button41, button41, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button42, button42, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button43, button43, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button44, button44, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button45, button45, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button46, button46, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button47, button47, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button48, button48, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            // ------------------------------------------------------------------------------------ 7
+
+            x1 = x1 + 100;
+            x2 = x2 + 100;
+            y1 = 120;
+            y2 = 130;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button49, button49, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button50, button50, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button51, button51, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button52, button52, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button53, button53, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button54, button54, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button55, button55, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button56, button56, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            // ------------------------------------------------------------------------------------ 8
+
+            x1 = x1 + 100;
+            x2 = x2 + 100;
+            y1 = 120;
+            y2 = 130;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button57, button57, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button58, button58, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button59, button59, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button60, button60, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button61, button61, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button62, button62, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button63, button63, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button64, button64, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+        }
+
+        public override void OnResponse(NetState sender, RelayInfo info)
+        {
+            Mobile from = sender.Mobile;
+
+            if (info.ButtonID == 99)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 1, "SetupBarsArch2", 66);
+            }
+            else if (info.ButtonID == 1)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 2, "SetupBarsArch2", 66);
+            }
+            else if (info.ButtonID == 2)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 3, "SetupBarsArch2", 66);
+            }
+            else if (info.ButtonID == 3)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 4, "SetupBarsArch2", 66);
+            }
+            else if (info.ButtonID == 4)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 5, "SetupBarsArch2", 66);
+            }
+            else if (info.ButtonID == 5)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 6, "SetupBarsArch2", 66);
+            }
+            else if (info.ButtonID == 6)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 7, "SetupBarsArch2", 66);
+            }
+            else if (info.ButtonID == 7)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 8, "SetupBarsArch2", 66);
+            }
+            else if (info.ButtonID == 8)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 9, "SetupBarsArch2", 66);
+            }
+            else if (info.ButtonID == 9)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 10, "SetupBarsArch2", 66);
+            }
+            else if (info.ButtonID == 10)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 11, "SetupBarsArch2", 66);
+            }
+            else if (info.ButtonID == 11)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 12, "SetupBarsArch2", 66);
+            }
+            else if (info.ButtonID == 12)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 13, "SetupBarsArch2", 66);
+            }
+            else if (info.ButtonID == 13)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 14, "SetupBarsArch2", 66);
+            }
+            else if (info.ButtonID == 14)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 15, "SetupBarsArch2", 66);
+            }
+            else if (info.ButtonID == 15)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 16, "SetupBarsArch2", 66);
+            }
+            else if (info.ButtonID == 16)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 17, "SetupBarsArch2", 66);
+            }
+            else if (info.ButtonID == 17)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 18, "SetupBarsArch2", 66);
+            }
+            else if (info.ButtonID == 18)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 19, "SetupBarsArch2", 66);
+            }
+            else if (info.ButtonID == 19)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 20, "SetupBarsArch2", 66);
+            }
+            else if (info.ButtonID == 20)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 21, "SetupBarsArch2", 66);
+            }
+            else if (info.ButtonID == 21)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 22, "SetupBarsArch2", 66);
+            }
+            else if (info.ButtonID == 22)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 23, "SetupBarsArch2", 66);
+            }
+            else if (info.ButtonID == 23)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 24, "SetupBarsArch2", 66);
+            }
+            else if (info.ButtonID == 24)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 25, "SetupBarsArch2", 66);
+            }
+            else if (info.ButtonID == 25)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 26, "SetupBarsArch2", 66);
+            }
+            else if (info.ButtonID == 26)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 27, "SetupBarsArch2", 66);
+            }
+            else if (info.ButtonID == 27)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 28, "SetupBarsArch2", 66);
+            }
+            else if (info.ButtonID == 28)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 29, "SetupBarsArch2", 66);
+            }
+            else if (info.ButtonID == 29)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 30, "SetupBarsArch2", 66);
+            }
+            else if (info.ButtonID == 30)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 31, "SetupBarsArch2", 66);
+            }
+            else if (info.ButtonID == 31)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 32, "SetupBarsArch2", 66);
+            }
+            else if (info.ButtonID == 32)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 33, "SetupBarsArch2", 66);
+            }
+            else if (info.ButtonID == 33)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 34, "SetupBarsArch2", 66);
+            }
+            else if (info.ButtonID == 34)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 35, "SetupBarsArch2", 66);
+            }
+            else if (info.ButtonID == 35)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 36, "SetupBarsArch2", 66);
+            }
+            else if (info.ButtonID == 36)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 37, "SetupBarsArch2", 66);
+            }
+            else if (info.ButtonID == 37)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 38, "SetupBarsArch2", 66);
+            }
+            else if (info.ButtonID == 38)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 39, "SetupBarsArch2", 66);
+            }
+            else if (info.ButtonID == 39)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 40, "SetupBarsArch2", 66);
+            }
+            else if (info.ButtonID == 40)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 41, "SetupBarsArch2", 66);
+            }
+            else if (info.ButtonID == 41)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 42, "SetupBarsArch2", 66);
+            }
+            else if (info.ButtonID == 42)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 43, "SetupBarsArch2", 66);
+            }
+            else if (info.ButtonID == 43)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 44, "SetupBarsArch2", 66);
+            }
+            else if (info.ButtonID == 44)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 45, "SetupBarsArch2", 66);
+            }
+            else if (info.ButtonID == 45)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 46, "SetupBarsArch2", 66);
+            }
+            else if (info.ButtonID == 46)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 47, "SetupBarsArch2", 66);
+            }
+            else if (info.ButtonID == 47)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 48, "SetupBarsArch2", 66);
+            }
+            else if (info.ButtonID == 48)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 49, "SetupBarsArch2", 66);
+            }
+            else if (info.ButtonID == 49)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 50, "SetupBarsArch2", 66);
+            }
+            else if (info.ButtonID == 50)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 51, "SetupBarsArch2", 66);
+            }
+            else if (info.ButtonID == 51)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 52, "SetupBarsArch2", 66);
+            }
+            else if (info.ButtonID == 52)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 53, "SetupBarsArch2", 66);
+            }
+            else if (info.ButtonID == 53)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 54, "SetupBarsArch2", 66);
+            }
+            else if (info.ButtonID == 54)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 55, "SetupBarsArch2", 66);
+            }
+            else if (info.ButtonID == 55)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 56, "SetupBarsArch2", 66);
+            }
+            else if (info.ButtonID == 56)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 57, "SetupBarsArch2", 66);
+            }
+            else if (info.ButtonID == 57)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 58, "SetupBarsArch2", 66);
+            }
+            else if (info.ButtonID == 58)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 59, "SetupBarsArch2", 66);
+            }
+            else if (info.ButtonID == 59)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 60, "SetupBarsArch2", 66);
+            }
+            else if (info.ButtonID == 60)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 61, "SetupBarsArch2", 66);
+            }
+            else if (info.ButtonID == 61)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 62, "SetupBarsArch2", 66);
+            }
+            else if (info.ButtonID == 62)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 63, "SetupBarsArch2", 66);
+            }
+            else if (info.ButtonID == 63)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 64, "SetupBarsArch2", 66);
+            }
+            else if (info.ButtonID == 90)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 65, "SetupBarsArch2", 66);
+            }
+            else if (info.ButtonID == 91)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 66, "SetupBarsArch2", 66);
+            }
+
+            if (info.ButtonID < 1 && m_Origin > 1)
+            {
+                if (Server.Misc.ResearchSettings.ResearchMaterials(from) != null)
+                {
+                    ResearchBag bag = (ResearchBag)(
+                        Server.Misc.ResearchSettings.ResearchMaterials(from)
+                    );
+                    from.SendGump(new Server.Items.ResearchBag.ResearchGump(bag, from));
+                    from.SendSound(0x55);
+                }
+            }
+            else if (info.ButtonID < 1 && m_Origin > 0)
+            {
+                from.SendGump(new Server.Engines.Help.HelpGump(from, 7));
+                from.SendSound(0x4A);
+            }
+            else if (info.ButtonID < 1) { }
+            else
+            {
+                from.SendGump(new SetupBarsArch2(from, m_Origin));
+                from.SendSound(0x4A);
+            }
+        }
+    }
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+namespace Server.Gumps
+{
+    public class SetupBarsArch3 : Gump
+    {
+        public int m_Origin;
+
+        public static void Initialize()
+        {
+            CommandSystem.Register(
+                "archspell3",
+                AccessLevel.Player,
+                new CommandEventHandler(ToolBar_OnCommand)
+            );
+        }
+
+        public static void Register(string command, AccessLevel access, CommandEventHandler handler)
+        {
+            CommandSystem.Register(command, access, handler);
+        }
+
+        [Usage("archspell3")]
+        [Description("Opens Spell Bar Editor For Archmages - 3.")]
+        public static void ToolBar_OnCommand(CommandEventArgs e)
+        {
+            Mobile from = e.Mobile;
+            from.CloseGump(typeof(SetupBarsArch3));
+            from.SendGump(new SetupBarsArch3(from, 0));
+        }
+
+        public SetupBarsArch3(Mobile from, int origin)
+            : base(12, 50)
+        {
+            m_Origin = origin;
+            string color = "#d05f5a";
+
+            Closable = true;
+            Disposable = true;
+            Dragable = true;
+            Resizable = false;
+
+            AddPage(0);
+
+            AddImage(38, 0, 9578, Server.Misc.PlayerSettings.GetGumpHue(from));
+            AddButton(897, 10, 4017, 4017, 0, GumpButtonType.Reply, 0);
+            AddHtml(
+                52,
+                14,
+                400,
+                20,
+                @"<BODY><BASEFONT Color=" + color + ">SPELL BAR - ANCIENT - III</BASEFONT></BODY>",
+                (bool)false,
+                (bool)false
+            );
+
+            ToolBarUpdates.InitializeToolBar(from, "SetupBarsArch3");
+            string MyServerSettings = ((PlayerMobile)from).SpellBarsArch3;
+
+            int button1 = 3609;
+            int button2 = 3609;
+            int button3 = 3609;
+            int button4 = 3609;
+            int button5 = 3609;
+            int button6 = 3609;
+            int button7 = 3609;
+            int button8 = 3609;
+            int button9 = 3609;
+            int button10 = 3609;
+            int button11 = 3609;
+            int button12 = 3609;
+            int button13 = 3609;
+            int button14 = 3609;
+            int button15 = 3609;
+            int button16 = 3609;
+            int button17 = 3609;
+            int button18 = 3609;
+            int button19 = 3609;
+            int button20 = 3609;
+            int button21 = 3609;
+            int button22 = 3609;
+            int button23 = 3609;
+            int button24 = 3609;
+            int button25 = 3609;
+            int button26 = 3609;
+            int button27 = 3609;
+            int button28 = 3609;
+            int button29 = 3609;
+            int button30 = 3609;
+            int button31 = 3609;
+            int button32 = 3609;
+            int button33 = 3609;
+            int button34 = 3609;
+            int button35 = 3609;
+            int button36 = 3609;
+            int button37 = 3609;
+            int button38 = 3609;
+            int button39 = 3609;
+            int button40 = 3609;
+            int button41 = 3609;
+            int button42 = 3609;
+            int button43 = 3609;
+            int button44 = 3609;
+            int button45 = 3609;
+            int button46 = 3609;
+            int button47 = 3609;
+            int button48 = 3609;
+            int button49 = 3609;
+            int button50 = 3609;
+            int button51 = 3609;
+            int button52 = 3609;
+            int button53 = 3609;
+            int button54 = 3609;
+            int button55 = 3609;
+            int button56 = 3609;
+            int button57 = 3609;
+            int button58 = 3609;
+            int button59 = 3609;
+            int button60 = 3609;
+            int button61 = 3609;
+            int button62 = 3609;
+            int button63 = 3609;
+            int button64 = 3609;
+            int button65 = 3609;
+            int button66 = 3609;
+            int button67 = 3609;
+
+            string[] eachSpell = MyServerSettings.Split('#');
+            int nLine = 1;
+            foreach (string eachSpells in eachSpell)
+            {
+                if (nLine == 1 && eachSpells == "1")
+                {
+                    button1 = 4018;
+                }
+                if (nLine == 2 && eachSpells == "1")
+                {
+                    button2 = 4018;
+                }
+                if (nLine == 3 && eachSpells == "1")
+                {
+                    button3 = 4018;
+                }
+                if (nLine == 4 && eachSpells == "1")
+                {
+                    button4 = 4018;
+                }
+                if (nLine == 5 && eachSpells == "1")
+                {
+                    button5 = 4018;
+                }
+                if (nLine == 6 && eachSpells == "1")
+                {
+                    button6 = 4018;
+                }
+                if (nLine == 7 && eachSpells == "1")
+                {
+                    button7 = 4018;
+                }
+                if (nLine == 8 && eachSpells == "1")
+                {
+                    button8 = 4018;
+                }
+                if (nLine == 9 && eachSpells == "1")
+                {
+                    button9 = 4018;
+                }
+                if (nLine == 10 && eachSpells == "1")
+                {
+                    button10 = 4018;
+                }
+                if (nLine == 11 && eachSpells == "1")
+                {
+                    button11 = 4018;
+                }
+                if (nLine == 12 && eachSpells == "1")
+                {
+                    button12 = 4018;
+                }
+                if (nLine == 13 && eachSpells == "1")
+                {
+                    button13 = 4018;
+                }
+                if (nLine == 14 && eachSpells == "1")
+                {
+                    button14 = 4018;
+                }
+                if (nLine == 15 && eachSpells == "1")
+                {
+                    button15 = 4018;
+                }
+                if (nLine == 16 && eachSpells == "1")
+                {
+                    button16 = 4018;
+                }
+                if (nLine == 17 && eachSpells == "1")
+                {
+                    button17 = 4018;
+                }
+                if (nLine == 18 && eachSpells == "1")
+                {
+                    button18 = 4018;
+                }
+                if (nLine == 19 && eachSpells == "1")
+                {
+                    button19 = 4018;
+                }
+                if (nLine == 20 && eachSpells == "1")
+                {
+                    button20 = 4018;
+                }
+                if (nLine == 21 && eachSpells == "1")
+                {
+                    button21 = 4018;
+                }
+                if (nLine == 22 && eachSpells == "1")
+                {
+                    button22 = 4018;
+                }
+                if (nLine == 23 && eachSpells == "1")
+                {
+                    button23 = 4018;
+                }
+                if (nLine == 24 && eachSpells == "1")
+                {
+                    button24 = 4018;
+                }
+                if (nLine == 25 && eachSpells == "1")
+                {
+                    button25 = 4018;
+                }
+                if (nLine == 26 && eachSpells == "1")
+                {
+                    button26 = 4018;
+                }
+                if (nLine == 27 && eachSpells == "1")
+                {
+                    button27 = 4018;
+                }
+                if (nLine == 28 && eachSpells == "1")
+                {
+                    button28 = 4018;
+                }
+                if (nLine == 29 && eachSpells == "1")
+                {
+                    button29 = 4018;
+                }
+                if (nLine == 30 && eachSpells == "1")
+                {
+                    button30 = 4018;
+                }
+                if (nLine == 31 && eachSpells == "1")
+                {
+                    button31 = 4018;
+                }
+                if (nLine == 32 && eachSpells == "1")
+                {
+                    button32 = 4018;
+                }
+                if (nLine == 33 && eachSpells == "1")
+                {
+                    button33 = 4018;
+                }
+                if (nLine == 34 && eachSpells == "1")
+                {
+                    button34 = 4018;
+                }
+                if (nLine == 35 && eachSpells == "1")
+                {
+                    button35 = 4018;
+                }
+                if (nLine == 36 && eachSpells == "1")
+                {
+                    button36 = 4018;
+                }
+                if (nLine == 37 && eachSpells == "1")
+                {
+                    button37 = 4018;
+                }
+                if (nLine == 38 && eachSpells == "1")
+                {
+                    button38 = 4018;
+                }
+                if (nLine == 39 && eachSpells == "1")
+                {
+                    button39 = 4018;
+                }
+                if (nLine == 40 && eachSpells == "1")
+                {
+                    button40 = 4018;
+                }
+                if (nLine == 41 && eachSpells == "1")
+                {
+                    button41 = 4018;
+                }
+                if (nLine == 42 && eachSpells == "1")
+                {
+                    button42 = 4018;
+                }
+                if (nLine == 43 && eachSpells == "1")
+                {
+                    button43 = 4018;
+                }
+                if (nLine == 44 && eachSpells == "1")
+                {
+                    button44 = 4018;
+                }
+                if (nLine == 45 && eachSpells == "1")
+                {
+                    button45 = 4018;
+                }
+                if (nLine == 46 && eachSpells == "1")
+                {
+                    button46 = 4018;
+                }
+                if (nLine == 47 && eachSpells == "1")
+                {
+                    button47 = 4018;
+                }
+                if (nLine == 48 && eachSpells == "1")
+                {
+                    button48 = 4018;
+                }
+                if (nLine == 49 && eachSpells == "1")
+                {
+                    button49 = 4018;
+                }
+                if (nLine == 50 && eachSpells == "1")
+                {
+                    button50 = 4018;
+                }
+                if (nLine == 51 && eachSpells == "1")
+                {
+                    button51 = 4018;
+                }
+                if (nLine == 52 && eachSpells == "1")
+                {
+                    button52 = 4018;
+                }
+                if (nLine == 53 && eachSpells == "1")
+                {
+                    button53 = 4018;
+                }
+                if (nLine == 54 && eachSpells == "1")
+                {
+                    button54 = 4018;
+                }
+                if (nLine == 55 && eachSpells == "1")
+                {
+                    button55 = 4018;
+                }
+                if (nLine == 56 && eachSpells == "1")
+                {
+                    button56 = 4018;
+                }
+                if (nLine == 57 && eachSpells == "1")
+                {
+                    button57 = 4018;
+                }
+                if (nLine == 58 && eachSpells == "1")
+                {
+                    button58 = 4018;
+                }
+                if (nLine == 59 && eachSpells == "1")
+                {
+                    button59 = 4018;
+                }
+                if (nLine == 60 && eachSpells == "1")
+                {
+                    button60 = 4018;
+                }
+                if (nLine == 61 && eachSpells == "1")
+                {
+                    button61 = 4018;
+                }
+                if (nLine == 62 && eachSpells == "1")
+                {
+                    button62 = 4018;
+                }
+                if (nLine == 63 && eachSpells == "1")
+                {
+                    button63 = 4018;
+                }
+                if (nLine == 64 && eachSpells == "1")
+                {
+                    button64 = 4018;
+                }
+
+                if (nLine == 65 && eachSpells == "1")
+                {
+                    button65 = 4018;
+                }
+
+                if (nLine == 66 && eachSpells == "0")
+                {
+                    button66 = 3609;
+                }
+                else if (nLine == 66 && eachSpells == "1")
+                {
+                    button66 = 4018;
+                }
+
+                if (nLine == 66 && eachSpells == "1")
+                {
+                    button67 = 3609;
+                }
+                else if (nLine == 66 && eachSpells == "0")
+                {
+                    button67 = 4018;
+                }
+
+                nLine++;
+            }
+
+            AddButton(582, 82, button65, button65, 90, GumpButtonType.Reply, 0);
+            AddHtml(
+                624,
+                81,
+                261,
+                21,
+                @"<BODY><BASEFONT Color="
+                    + color
+                    + ">Show Spell Names When Vertical</BASEFONT></BODY>",
+                (bool)false,
+                (bool)false
+            );
+
+            AddButton(377, 540, button66, button66, 91, GumpButtonType.Reply, 0);
+            AddHtml(
+                417,
+                539,
+                125,
+                21,
+                @"<BODY><BASEFONT Color=" + color + ">Vertical Bar</BASEFONT></BODY>",
+                (bool)false,
+                (bool)false
+            );
+
+            AddButton(681, 537, button67, button67, 91, GumpButtonType.Reply, 0);
+            AddHtml(
+                721,
+                536,
+                125,
+                21,
+                @"<BODY><BASEFONT Color=" + color + ">Horizontal Bar</BASEFONT></BODY>",
+                (bool)false,
+                (bool)false
+            );
+
+            // ------------------------------------------------------------------------------------ 1
+
+            int x1 = 135;
+            int x2 = 95;
+            int y1 = 120;
+            int y2 = 130;
+            int rp = 0;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button1, button1, 99, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button2, button2, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button3, button3, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button4, button4, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button5, button5, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button6, button6, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button7, button7, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button8, button8, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            // ------------------------------------------------------------------------------------ 2
+
+            x1 = x1 + 100;
+            x2 = x2 + 100;
+            y1 = 120;
+            y2 = 130;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button9, button9, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button10, button10, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button11, button11, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button12, button12, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button13, button13, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button14, button14, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button15, button15, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button16, button16, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            // ------------------------------------------------------------------------------------ 3
+
+            x1 = x1 + 100;
+            x2 = x2 + 100;
+            y1 = 120;
+            y2 = 130;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button17, button17, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button18, button18, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button19, button19, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button20, button20, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button21, button21, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button22, button22, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button23, button23, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button24, button24, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            // ------------------------------------------------------------------------------------ 4
+
+            x1 = x1 + 100;
+            x2 = x2 + 100;
+            y1 = 120;
+            y2 = 130;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button25, button25, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button26, button26, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button27, button27, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button28, button28, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button29, button29, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button30, button30, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button31, button31, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button32, button32, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            // ------------------------------------------------------------------------------------ 5
+
+            x1 = x1 + 100;
+            x2 = x2 + 100;
+            y1 = 120;
+            y2 = 130;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button33, button33, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button34, button34, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button35, button35, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button36, button36, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button37, button37, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button38, button38, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button39, button39, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button40, button40, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            // ------------------------------------------------------------------------------------ 6
+
+            x1 = x1 + 100;
+            x2 = x2 + 100;
+            y1 = 120;
+            y2 = 130;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button41, button41, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button42, button42, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button43, button43, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button44, button44, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button45, button45, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button46, button46, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button47, button47, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button48, button48, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            // ------------------------------------------------------------------------------------ 7
+
+            x1 = x1 + 100;
+            x2 = x2 + 100;
+            y1 = 120;
+            y2 = 130;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button49, button49, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button50, button50, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button51, button51, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button52, button52, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button53, button53, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button54, button54, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button55, button55, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button56, button56, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            // ------------------------------------------------------------------------------------ 8
+
+            x1 = x1 + 100;
+            x2 = x2 + 100;
+            y1 = 120;
+            y2 = 130;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button57, button57, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button58, button58, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button59, button59, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button60, button60, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button61, button61, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button62, button62, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button63, button63, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button64, button64, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+        }
+
+        public override void OnResponse(NetState sender, RelayInfo info)
+        {
+            Mobile from = sender.Mobile;
+
+            if (info.ButtonID == 99)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 1, "SetupBarsArch3", 66);
+            }
+            else if (info.ButtonID == 1)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 2, "SetupBarsArch3", 66);
+            }
+            else if (info.ButtonID == 2)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 3, "SetupBarsArch3", 66);
+            }
+            else if (info.ButtonID == 3)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 4, "SetupBarsArch3", 66);
+            }
+            else if (info.ButtonID == 4)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 5, "SetupBarsArch3", 66);
+            }
+            else if (info.ButtonID == 5)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 6, "SetupBarsArch3", 66);
+            }
+            else if (info.ButtonID == 6)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 7, "SetupBarsArch3", 66);
+            }
+            else if (info.ButtonID == 7)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 8, "SetupBarsArch3", 66);
+            }
+            else if (info.ButtonID == 8)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 9, "SetupBarsArch3", 66);
+            }
+            else if (info.ButtonID == 9)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 10, "SetupBarsArch3", 66);
+            }
+            else if (info.ButtonID == 10)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 11, "SetupBarsArch3", 66);
+            }
+            else if (info.ButtonID == 11)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 12, "SetupBarsArch3", 66);
+            }
+            else if (info.ButtonID == 12)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 13, "SetupBarsArch3", 66);
+            }
+            else if (info.ButtonID == 13)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 14, "SetupBarsArch3", 66);
+            }
+            else if (info.ButtonID == 14)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 15, "SetupBarsArch3", 66);
+            }
+            else if (info.ButtonID == 15)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 16, "SetupBarsArch3", 66);
+            }
+            else if (info.ButtonID == 16)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 17, "SetupBarsArch3", 66);
+            }
+            else if (info.ButtonID == 17)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 18, "SetupBarsArch3", 66);
+            }
+            else if (info.ButtonID == 18)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 19, "SetupBarsArch3", 66);
+            }
+            else if (info.ButtonID == 19)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 20, "SetupBarsArch3", 66);
+            }
+            else if (info.ButtonID == 20)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 21, "SetupBarsArch3", 66);
+            }
+            else if (info.ButtonID == 21)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 22, "SetupBarsArch3", 66);
+            }
+            else if (info.ButtonID == 22)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 23, "SetupBarsArch3", 66);
+            }
+            else if (info.ButtonID == 23)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 24, "SetupBarsArch3", 66);
+            }
+            else if (info.ButtonID == 24)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 25, "SetupBarsArch3", 66);
+            }
+            else if (info.ButtonID == 25)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 26, "SetupBarsArch3", 66);
+            }
+            else if (info.ButtonID == 26)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 27, "SetupBarsArch3", 66);
+            }
+            else if (info.ButtonID == 27)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 28, "SetupBarsArch3", 66);
+            }
+            else if (info.ButtonID == 28)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 29, "SetupBarsArch3", 66);
+            }
+            else if (info.ButtonID == 29)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 30, "SetupBarsArch3", 66);
+            }
+            else if (info.ButtonID == 30)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 31, "SetupBarsArch3", 66);
+            }
+            else if (info.ButtonID == 31)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 32, "SetupBarsArch3", 66);
+            }
+            else if (info.ButtonID == 32)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 33, "SetupBarsArch3", 66);
+            }
+            else if (info.ButtonID == 33)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 34, "SetupBarsArch3", 66);
+            }
+            else if (info.ButtonID == 34)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 35, "SetupBarsArch3", 66);
+            }
+            else if (info.ButtonID == 35)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 36, "SetupBarsArch3", 66);
+            }
+            else if (info.ButtonID == 36)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 37, "SetupBarsArch3", 66);
+            }
+            else if (info.ButtonID == 37)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 38, "SetupBarsArch3", 66);
+            }
+            else if (info.ButtonID == 38)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 39, "SetupBarsArch3", 66);
+            }
+            else if (info.ButtonID == 39)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 40, "SetupBarsArch3", 66);
+            }
+            else if (info.ButtonID == 40)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 41, "SetupBarsArch3", 66);
+            }
+            else if (info.ButtonID == 41)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 42, "SetupBarsArch3", 66);
+            }
+            else if (info.ButtonID == 42)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 43, "SetupBarsArch3", 66);
+            }
+            else if (info.ButtonID == 43)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 44, "SetupBarsArch3", 66);
+            }
+            else if (info.ButtonID == 44)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 45, "SetupBarsArch3", 66);
+            }
+            else if (info.ButtonID == 45)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 46, "SetupBarsArch3", 66);
+            }
+            else if (info.ButtonID == 46)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 47, "SetupBarsArch3", 66);
+            }
+            else if (info.ButtonID == 47)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 48, "SetupBarsArch3", 66);
+            }
+            else if (info.ButtonID == 48)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 49, "SetupBarsArch3", 66);
+            }
+            else if (info.ButtonID == 49)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 50, "SetupBarsArch3", 66);
+            }
+            else if (info.ButtonID == 50)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 51, "SetupBarsArch3", 66);
+            }
+            else if (info.ButtonID == 51)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 52, "SetupBarsArch3", 66);
+            }
+            else if (info.ButtonID == 52)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 53, "SetupBarsArch3", 66);
+            }
+            else if (info.ButtonID == 53)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 54, "SetupBarsArch3", 66);
+            }
+            else if (info.ButtonID == 54)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 55, "SetupBarsArch3", 66);
+            }
+            else if (info.ButtonID == 55)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 56, "SetupBarsArch3", 66);
+            }
+            else if (info.ButtonID == 56)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 57, "SetupBarsArch3", 66);
+            }
+            else if (info.ButtonID == 57)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 58, "SetupBarsArch3", 66);
+            }
+            else if (info.ButtonID == 58)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 59, "SetupBarsArch3", 66);
+            }
+            else if (info.ButtonID == 59)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 60, "SetupBarsArch3", 66);
+            }
+            else if (info.ButtonID == 60)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 61, "SetupBarsArch3", 66);
+            }
+            else if (info.ButtonID == 61)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 62, "SetupBarsArch3", 66);
+            }
+            else if (info.ButtonID == 62)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 63, "SetupBarsArch3", 66);
+            }
+            else if (info.ButtonID == 63)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 64, "SetupBarsArch3", 66);
+            }
+            else if (info.ButtonID == 90)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 65, "SetupBarsArch3", 66);
+            }
+            else if (info.ButtonID == 91)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 66, "SetupBarsArch3", 66);
+            }
+
+            if (info.ButtonID < 1 && m_Origin > 1)
+            {
+                if (Server.Misc.ResearchSettings.ResearchMaterials(from) != null)
+                {
+                    ResearchBag bag = (ResearchBag)(
+                        Server.Misc.ResearchSettings.ResearchMaterials(from)
+                    );
+                    from.SendGump(new Server.Items.ResearchBag.ResearchGump(bag, from));
+                    from.SendSound(0x55);
+                }
+            }
+            else if (info.ButtonID < 1 && m_Origin > 0)
+            {
+                from.SendGump(new Server.Engines.Help.HelpGump(from, 7));
+                from.SendSound(0x4A);
+            }
+            else if (info.ButtonID < 1) { }
+            else
+            {
+                from.SendGump(new SetupBarsArch3(from, m_Origin));
+                from.SendSound(0x4A);
+            }
+        }
+    }
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+namespace Server.Gumps
+{
+    public class SetupBarsArch4 : Gump
+    {
+        public int m_Origin;
+
+        public static void Initialize()
+        {
+            CommandSystem.Register(
+                "archspell4",
+                AccessLevel.Player,
+                new CommandEventHandler(ToolBar_OnCommand)
+            );
+        }
+
+        public static void Register(string command, AccessLevel access, CommandEventHandler handler)
+        {
+            CommandSystem.Register(command, access, handler);
+        }
+
+        [Usage("archspell4")]
+        [Description("Opens Spell Bar Editor For Archmages - 4.")]
+        public static void ToolBar_OnCommand(CommandEventArgs e)
+        {
+            Mobile from = e.Mobile;
+            from.CloseGump(typeof(SetupBarsArch4));
+            from.SendGump(new SetupBarsArch4(from, 0));
+        }
+
+        public SetupBarsArch4(Mobile from, int origin)
+            : base(12, 50)
+        {
+            m_Origin = origin;
+            string color = "#d05f5a";
+
+            Closable = true;
+            Disposable = true;
+            Dragable = true;
+            Resizable = false;
+
+            AddPage(0);
+
+            AddImage(38, 0, 9578, Server.Misc.PlayerSettings.GetGumpHue(from));
+            AddButton(897, 10, 4017, 4017, 0, GumpButtonType.Reply, 0);
+            AddHtml(
+                52,
+                14,
+                400,
+                20,
+                @"<BODY><BASEFONT Color=" + color + ">SPELL BAR - ANCIENT - IV</BASEFONT></BODY>",
+                (bool)false,
+                (bool)false
+            );
+
+            ToolBarUpdates.InitializeToolBar(from, "SetupBarsArch4");
+            string MyServerSettings = ((PlayerMobile)from).SpellBarsArch4;
+
+            int button1 = 3609;
+            int button2 = 3609;
+            int button3 = 3609;
+            int button4 = 3609;
+            int button5 = 3609;
+            int button6 = 3609;
+            int button7 = 3609;
+            int button8 = 3609;
+            int button9 = 3609;
+            int button10 = 3609;
+            int button11 = 3609;
+            int button12 = 3609;
+            int button13 = 3609;
+            int button14 = 3609;
+            int button15 = 3609;
+            int button16 = 3609;
+            int button17 = 3609;
+            int button18 = 3609;
+            int button19 = 3609;
+            int button20 = 3609;
+            int button21 = 3609;
+            int button22 = 3609;
+            int button23 = 3609;
+            int button24 = 3609;
+            int button25 = 3609;
+            int button26 = 3609;
+            int button27 = 3609;
+            int button28 = 3609;
+            int button29 = 3609;
+            int button30 = 3609;
+            int button31 = 3609;
+            int button32 = 3609;
+            int button33 = 3609;
+            int button34 = 3609;
+            int button35 = 3609;
+            int button36 = 3609;
+            int button37 = 3609;
+            int button38 = 3609;
+            int button39 = 3609;
+            int button40 = 3609;
+            int button41 = 3609;
+            int button42 = 3609;
+            int button43 = 3609;
+            int button44 = 3609;
+            int button45 = 3609;
+            int button46 = 3609;
+            int button47 = 3609;
+            int button48 = 3609;
+            int button49 = 3609;
+            int button50 = 3609;
+            int button51 = 3609;
+            int button52 = 3609;
+            int button53 = 3609;
+            int button54 = 3609;
+            int button55 = 3609;
+            int button56 = 3609;
+            int button57 = 3609;
+            int button58 = 3609;
+            int button59 = 3609;
+            int button60 = 3609;
+            int button61 = 3609;
+            int button62 = 3609;
+            int button63 = 3609;
+            int button64 = 3609;
+            int button65 = 3609;
+            int button66 = 3609;
+            int button67 = 3609;
+
+            string[] eachSpell = MyServerSettings.Split('#');
+            int nLine = 1;
+            foreach (string eachSpells in eachSpell)
+            {
+                if (nLine == 1 && eachSpells == "1")
+                {
+                    button1 = 4018;
+                }
+                if (nLine == 2 && eachSpells == "1")
+                {
+                    button2 = 4018;
+                }
+                if (nLine == 3 && eachSpells == "1")
+                {
+                    button3 = 4018;
+                }
+                if (nLine == 4 && eachSpells == "1")
+                {
+                    button4 = 4018;
+                }
+                if (nLine == 5 && eachSpells == "1")
+                {
+                    button5 = 4018;
+                }
+                if (nLine == 6 && eachSpells == "1")
+                {
+                    button6 = 4018;
+                }
+                if (nLine == 7 && eachSpells == "1")
+                {
+                    button7 = 4018;
+                }
+                if (nLine == 8 && eachSpells == "1")
+                {
+                    button8 = 4018;
+                }
+                if (nLine == 9 && eachSpells == "1")
+                {
+                    button9 = 4018;
+                }
+                if (nLine == 10 && eachSpells == "1")
+                {
+                    button10 = 4018;
+                }
+                if (nLine == 11 && eachSpells == "1")
+                {
+                    button11 = 4018;
+                }
+                if (nLine == 12 && eachSpells == "1")
+                {
+                    button12 = 4018;
+                }
+                if (nLine == 13 && eachSpells == "1")
+                {
+                    button13 = 4018;
+                }
+                if (nLine == 14 && eachSpells == "1")
+                {
+                    button14 = 4018;
+                }
+                if (nLine == 15 && eachSpells == "1")
+                {
+                    button15 = 4018;
+                }
+                if (nLine == 16 && eachSpells == "1")
+                {
+                    button16 = 4018;
+                }
+                if (nLine == 17 && eachSpells == "1")
+                {
+                    button17 = 4018;
+                }
+                if (nLine == 18 && eachSpells == "1")
+                {
+                    button18 = 4018;
+                }
+                if (nLine == 19 && eachSpells == "1")
+                {
+                    button19 = 4018;
+                }
+                if (nLine == 20 && eachSpells == "1")
+                {
+                    button20 = 4018;
+                }
+                if (nLine == 21 && eachSpells == "1")
+                {
+                    button21 = 4018;
+                }
+                if (nLine == 22 && eachSpells == "1")
+                {
+                    button22 = 4018;
+                }
+                if (nLine == 23 && eachSpells == "1")
+                {
+                    button23 = 4018;
+                }
+                if (nLine == 24 && eachSpells == "1")
+                {
+                    button24 = 4018;
+                }
+                if (nLine == 25 && eachSpells == "1")
+                {
+                    button25 = 4018;
+                }
+                if (nLine == 26 && eachSpells == "1")
+                {
+                    button26 = 4018;
+                }
+                if (nLine == 27 && eachSpells == "1")
+                {
+                    button27 = 4018;
+                }
+                if (nLine == 28 && eachSpells == "1")
+                {
+                    button28 = 4018;
+                }
+                if (nLine == 29 && eachSpells == "1")
+                {
+                    button29 = 4018;
+                }
+                if (nLine == 30 && eachSpells == "1")
+                {
+                    button30 = 4018;
+                }
+                if (nLine == 31 && eachSpells == "1")
+                {
+                    button31 = 4018;
+                }
+                if (nLine == 32 && eachSpells == "1")
+                {
+                    button32 = 4018;
+                }
+                if (nLine == 33 && eachSpells == "1")
+                {
+                    button33 = 4018;
+                }
+                if (nLine == 34 && eachSpells == "1")
+                {
+                    button34 = 4018;
+                }
+                if (nLine == 35 && eachSpells == "1")
+                {
+                    button35 = 4018;
+                }
+                if (nLine == 36 && eachSpells == "1")
+                {
+                    button36 = 4018;
+                }
+                if (nLine == 37 && eachSpells == "1")
+                {
+                    button37 = 4018;
+                }
+                if (nLine == 38 && eachSpells == "1")
+                {
+                    button38 = 4018;
+                }
+                if (nLine == 39 && eachSpells == "1")
+                {
+                    button39 = 4018;
+                }
+                if (nLine == 40 && eachSpells == "1")
+                {
+                    button40 = 4018;
+                }
+                if (nLine == 41 && eachSpells == "1")
+                {
+                    button41 = 4018;
+                }
+                if (nLine == 42 && eachSpells == "1")
+                {
+                    button42 = 4018;
+                }
+                if (nLine == 43 && eachSpells == "1")
+                {
+                    button43 = 4018;
+                }
+                if (nLine == 44 && eachSpells == "1")
+                {
+                    button44 = 4018;
+                }
+                if (nLine == 45 && eachSpells == "1")
+                {
+                    button45 = 4018;
+                }
+                if (nLine == 46 && eachSpells == "1")
+                {
+                    button46 = 4018;
+                }
+                if (nLine == 47 && eachSpells == "1")
+                {
+                    button47 = 4018;
+                }
+                if (nLine == 48 && eachSpells == "1")
+                {
+                    button48 = 4018;
+                }
+                if (nLine == 49 && eachSpells == "1")
+                {
+                    button49 = 4018;
+                }
+                if (nLine == 50 && eachSpells == "1")
+                {
+                    button50 = 4018;
+                }
+                if (nLine == 51 && eachSpells == "1")
+                {
+                    button51 = 4018;
+                }
+                if (nLine == 52 && eachSpells == "1")
+                {
+                    button52 = 4018;
+                }
+                if (nLine == 53 && eachSpells == "1")
+                {
+                    button53 = 4018;
+                }
+                if (nLine == 54 && eachSpells == "1")
+                {
+                    button54 = 4018;
+                }
+                if (nLine == 55 && eachSpells == "1")
+                {
+                    button55 = 4018;
+                }
+                if (nLine == 56 && eachSpells == "1")
+                {
+                    button56 = 4018;
+                }
+                if (nLine == 57 && eachSpells == "1")
+                {
+                    button57 = 4018;
+                }
+                if (nLine == 58 && eachSpells == "1")
+                {
+                    button58 = 4018;
+                }
+                if (nLine == 59 && eachSpells == "1")
+                {
+                    button59 = 4018;
+                }
+                if (nLine == 60 && eachSpells == "1")
+                {
+                    button60 = 4018;
+                }
+                if (nLine == 61 && eachSpells == "1")
+                {
+                    button61 = 4018;
+                }
+                if (nLine == 62 && eachSpells == "1")
+                {
+                    button62 = 4018;
+                }
+                if (nLine == 63 && eachSpells == "1")
+                {
+                    button63 = 4018;
+                }
+                if (nLine == 64 && eachSpells == "1")
+                {
+                    button64 = 4018;
+                }
+
+                if (nLine == 65 && eachSpells == "1")
+                {
+                    button65 = 4018;
+                }
+
+                if (nLine == 66 && eachSpells == "0")
+                {
+                    button66 = 3609;
+                }
+                else if (nLine == 66 && eachSpells == "1")
+                {
+                    button66 = 4018;
+                }
+
+                if (nLine == 66 && eachSpells == "1")
+                {
+                    button67 = 3609;
+                }
+                else if (nLine == 66 && eachSpells == "0")
+                {
+                    button67 = 4018;
+                }
+
+                nLine++;
+            }
+
+            AddButton(582, 82, button65, button65, 90, GumpButtonType.Reply, 0);
+            AddHtml(
+                624,
+                81,
+                261,
+                21,
+                @"<BODY><BASEFONT Color="
+                    + color
+                    + ">Show Spell Names When Vertical</BASEFONT></BODY>",
+                (bool)false,
+                (bool)false
+            );
+
+            AddButton(377, 540, button66, button66, 91, GumpButtonType.Reply, 0);
+            AddHtml(
+                417,
+                539,
+                125,
+                21,
+                @"<BODY><BASEFONT Color=" + color + ">Vertical Bar</BASEFONT></BODY>",
+                (bool)false,
+                (bool)false
+            );
+
+            AddButton(681, 537, button67, button67, 91, GumpButtonType.Reply, 0);
+            AddHtml(
+                721,
+                536,
+                125,
+                21,
+                @"<BODY><BASEFONT Color=" + color + ">Horizontal Bar</BASEFONT></BODY>",
+                (bool)false,
+                (bool)false
+            );
+
+            // ------------------------------------------------------------------------------------ 1
+
+            int x1 = 135;
+            int x2 = 95;
+            int y1 = 120;
+            int y2 = 130;
+            int rp = 0;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button1, button1, 99, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button2, button2, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button3, button3, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button4, button4, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button5, button5, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button6, button6, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button7, button7, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button8, button8, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            // ------------------------------------------------------------------------------------ 2
+
+            x1 = x1 + 100;
+            x2 = x2 + 100;
+            y1 = 120;
+            y2 = 130;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button9, button9, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button10, button10, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button11, button11, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button12, button12, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button13, button13, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button14, button14, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button15, button15, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button16, button16, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            // ------------------------------------------------------------------------------------ 3
+
+            x1 = x1 + 100;
+            x2 = x2 + 100;
+            y1 = 120;
+            y2 = 130;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button17, button17, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button18, button18, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button19, button19, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button20, button20, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button21, button21, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button22, button22, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button23, button23, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button24, button24, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            // ------------------------------------------------------------------------------------ 4
+
+            x1 = x1 + 100;
+            x2 = x2 + 100;
+            y1 = 120;
+            y2 = 130;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button25, button25, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button26, button26, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button27, button27, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button28, button28, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button29, button29, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button30, button30, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button31, button31, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button32, button32, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            // ------------------------------------------------------------------------------------ 5
+
+            x1 = x1 + 100;
+            x2 = x2 + 100;
+            y1 = 120;
+            y2 = 130;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button33, button33, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button34, button34, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button35, button35, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button36, button36, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button37, button37, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button38, button38, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button39, button39, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button40, button40, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            // ------------------------------------------------------------------------------------ 6
+
+            x1 = x1 + 100;
+            x2 = x2 + 100;
+            y1 = 120;
+            y2 = 130;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button41, button41, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button42, button42, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button43, button43, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button44, button44, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button45, button45, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button46, button46, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button47, button47, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button48, button48, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            // ------------------------------------------------------------------------------------ 7
+
+            x1 = x1 + 100;
+            x2 = x2 + 100;
+            y1 = 120;
+            y2 = 130;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button49, button49, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button50, button50, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button51, button51, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button52, button52, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button53, button53, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button54, button54, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button55, button55, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button56, button56, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            // ------------------------------------------------------------------------------------ 8
+
+            x1 = x1 + 100;
+            x2 = x2 + 100;
+            y1 = 120;
+            y2 = 130;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button57, button57, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button58, button58, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button59, button59, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button60, button60, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button61, button61, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button62, button62, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button63, button63, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+
+            AddImage(x1, y1, Int32.Parse(Server.Misc.Research.SpellInformation(rp + 1, 11)));
+            AddButton(x2, y2, button64, button64, rp, GumpButtonType.Reply, 0);
+            y1 = y1 + 45;
+            y2 = y2 + 45;
+            rp++;
+        }
+
+        public override void OnResponse(NetState sender, RelayInfo info)
+        {
+            Mobile from = sender.Mobile;
+
+            if (info.ButtonID == 99)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 1, "SetupBarsArch4", 66);
+            }
+            else if (info.ButtonID == 1)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 2, "SetupBarsArch4", 66);
+            }
+            else if (info.ButtonID == 2)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 3, "SetupBarsArch4", 66);
+            }
+            else if (info.ButtonID == 3)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 4, "SetupBarsArch4", 66);
+            }
+            else if (info.ButtonID == 4)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 5, "SetupBarsArch4", 66);
+            }
+            else if (info.ButtonID == 5)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 6, "SetupBarsArch4", 66);
+            }
+            else if (info.ButtonID == 6)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 7, "SetupBarsArch4", 66);
+            }
+            else if (info.ButtonID == 7)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 8, "SetupBarsArch4", 66);
+            }
+            else if (info.ButtonID == 8)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 9, "SetupBarsArch4", 66);
+            }
+            else if (info.ButtonID == 9)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 10, "SetupBarsArch4", 66);
+            }
+            else if (info.ButtonID == 10)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 11, "SetupBarsArch4", 66);
+            }
+            else if (info.ButtonID == 11)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 12, "SetupBarsArch4", 66);
+            }
+            else if (info.ButtonID == 12)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 13, "SetupBarsArch4", 66);
+            }
+            else if (info.ButtonID == 13)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 14, "SetupBarsArch4", 66);
+            }
+            else if (info.ButtonID == 14)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 15, "SetupBarsArch4", 66);
+            }
+            else if (info.ButtonID == 15)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 16, "SetupBarsArch4", 66);
+            }
+            else if (info.ButtonID == 16)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 17, "SetupBarsArch4", 66);
+            }
+            else if (info.ButtonID == 17)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 18, "SetupBarsArch4", 66);
+            }
+            else if (info.ButtonID == 18)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 19, "SetupBarsArch4", 66);
+            }
+            else if (info.ButtonID == 19)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 20, "SetupBarsArch4", 66);
+            }
+            else if (info.ButtonID == 20)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 21, "SetupBarsArch4", 66);
+            }
+            else if (info.ButtonID == 21)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 22, "SetupBarsArch4", 66);
+            }
+            else if (info.ButtonID == 22)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 23, "SetupBarsArch4", 66);
+            }
+            else if (info.ButtonID == 23)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 24, "SetupBarsArch4", 66);
+            }
+            else if (info.ButtonID == 24)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 25, "SetupBarsArch4", 66);
+            }
+            else if (info.ButtonID == 25)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 26, "SetupBarsArch4", 66);
+            }
+            else if (info.ButtonID == 26)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 27, "SetupBarsArch4", 66);
+            }
+            else if (info.ButtonID == 27)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 28, "SetupBarsArch4", 66);
+            }
+            else if (info.ButtonID == 28)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 29, "SetupBarsArch4", 66);
+            }
+            else if (info.ButtonID == 29)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 30, "SetupBarsArch4", 66);
+            }
+            else if (info.ButtonID == 30)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 31, "SetupBarsArch4", 66);
+            }
+            else if (info.ButtonID == 31)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 32, "SetupBarsArch4", 66);
+            }
+            else if (info.ButtonID == 32)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 33, "SetupBarsArch4", 66);
+            }
+            else if (info.ButtonID == 33)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 34, "SetupBarsArch4", 66);
+            }
+            else if (info.ButtonID == 34)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 35, "SetupBarsArch4", 66);
+            }
+            else if (info.ButtonID == 35)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 36, "SetupBarsArch4", 66);
+            }
+            else if (info.ButtonID == 36)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 37, "SetupBarsArch4", 66);
+            }
+            else if (info.ButtonID == 37)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 38, "SetupBarsArch4", 66);
+            }
+            else if (info.ButtonID == 38)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 39, "SetupBarsArch4", 66);
+            }
+            else if (info.ButtonID == 39)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 40, "SetupBarsArch4", 66);
+            }
+            else if (info.ButtonID == 40)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 41, "SetupBarsArch4", 66);
+            }
+            else if (info.ButtonID == 41)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 42, "SetupBarsArch4", 66);
+            }
+            else if (info.ButtonID == 42)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 43, "SetupBarsArch4", 66);
+            }
+            else if (info.ButtonID == 43)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 44, "SetupBarsArch4", 66);
+            }
+            else if (info.ButtonID == 44)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 45, "SetupBarsArch4", 66);
+            }
+            else if (info.ButtonID == 45)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 46, "SetupBarsArch4", 66);
+            }
+            else if (info.ButtonID == 46)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 47, "SetupBarsArch4", 66);
+            }
+            else if (info.ButtonID == 47)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 48, "SetupBarsArch4", 66);
+            }
+            else if (info.ButtonID == 48)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 49, "SetupBarsArch4", 66);
+            }
+            else if (info.ButtonID == 49)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 50, "SetupBarsArch4", 66);
+            }
+            else if (info.ButtonID == 50)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 51, "SetupBarsArch4", 66);
+            }
+            else if (info.ButtonID == 51)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 52, "SetupBarsArch4", 66);
+            }
+            else if (info.ButtonID == 52)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 53, "SetupBarsArch4", 66);
+            }
+            else if (info.ButtonID == 53)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 54, "SetupBarsArch4", 66);
+            }
+            else if (info.ButtonID == 54)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 55, "SetupBarsArch4", 66);
+            }
+            else if (info.ButtonID == 55)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 56, "SetupBarsArch4", 66);
+            }
+            else if (info.ButtonID == 56)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 57, "SetupBarsArch4", 66);
+            }
+            else if (info.ButtonID == 57)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 58, "SetupBarsArch4", 66);
+            }
+            else if (info.ButtonID == 58)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 59, "SetupBarsArch4", 66);
+            }
+            else if (info.ButtonID == 59)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 60, "SetupBarsArch4", 66);
+            }
+            else if (info.ButtonID == 60)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 61, "SetupBarsArch4", 66);
+            }
+            else if (info.ButtonID == 61)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 62, "SetupBarsArch4", 66);
+            }
+            else if (info.ButtonID == 62)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 63, "SetupBarsArch4", 66);
+            }
+            else if (info.ButtonID == 63)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 64, "SetupBarsArch4", 66);
+            }
+            else if (info.ButtonID == 90)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 65, "SetupBarsArch4", 66);
+            }
+            else if (info.ButtonID == 91)
+            {
+                ToolBarUpdates.UpdateToolBar(from, 66, "SetupBarsArch4", 66);
+            }
+
+            if (info.ButtonID < 1 && m_Origin > 1)
+            {
+                if (Server.Misc.ResearchSettings.ResearchMaterials(from) != null)
+                {
+                    ResearchBag bag = (ResearchBag)(
+                        Server.Misc.ResearchSettings.ResearchMaterials(from)
+                    );
+                    from.SendGump(new Server.Items.ResearchBag.ResearchGump(bag, from));
+                    from.SendSound(0x55);
+                }
+            }
+            else if (info.ButtonID < 1 && m_Origin > 0)
+            {
+                from.SendGump(new Server.Engines.Help.HelpGump(from, 7));
+                from.SendSound(0x4A);
+            }
+            else if (info.ButtonID < 1) { }
+            else
+            {
+                from.SendGump(new SetupBarsArch4(from, m_Origin));
+                from.SendSound(0x4A);
+            }
+        }
+    }
+}
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+namespace Server.Gumps
+{
+    public class SetupBarsMage1 : Gump
+    {
+        public int m_Origin;
+
+        public static void Initialize()
+        {
+            CommandSystem.Register(
+                "magespell1",
+                AccessLevel.Player,
+                new CommandEventHandler(ToolBar_OnCommand)
+            );
+        }
+
+        public static void Register(string command, AccessLevel access, CommandEventHandler handler)
+        {
+            CommandSystem.Register(command, access, handler);
+        }
+
+        [Usage("magespell1")]
+        [Description("Opens Spell Bar Editor For Mages - 1.")]
+        public static void ToolBar_OnCommand(CommandEventArgs e)
+        {
+            Mobile from = e.Mobile;
+            from.CloseGump(typeof(SetupBarsMage1));
+            from.SendGump(new SetupBarsMage1(from, 0));
+        }
+
+        public SetupBarsMage1(Mobile from, int origin)
+            : base(12, 50)
+        {
+            m_Origin = origin;
+            string color = "#d05f5a";
+
+            Closable = true;
+            Disposable = true;
+            Dragable = true;
+            Resizable = false;
+
+            AddPage(0);
+
+            AddImage(38, 0, 9578, Server.Misc.PlayerSettings.GetGumpHue(from));
+            AddButton(897, 10, 4017, 4017, 0, GumpButtonType.Reply, 0);
+            AddHtml(
+                52,
+                14,
+                400,
+                20,
+                @"<BODY><BASEFONT Color=" + color + ">SPELL BAR - MAGERY - I</BASEFONT></BODY>",
+                (bool)false,
+                (bool)false
+            );
+
+            ToolBarUpdates.InitializeToolBar(from, "SetupBarsMage1");
+            string MyServerSettings = ((PlayerMobile)from).SpellBarsMage1;
+
+            int button1 = 3609;
+            int button2 = 3609;
+            int button3 = 3609;
+            int button4 = 3609;
+            int button5 = 3609;
+            int button6 = 3609;
+            int button7 = 3609;
+            int button8 = 3609;
+            int button9 = 3609;
+            int button10 = 3609;
+            int button11 = 3609;
+            int button12 = 3609;
+            int button13 = 3609;
+            int button14 = 3609;
+            int button15 = 3609;
+            int button16 = 3609;
+            int button17 = 3609;
+            int button18 = 3609;
+            int button19 = 3609;
+            int button20 = 3609;
+            int button21 = 3609;
+            int button22 = 3609;
+            int button23 = 3609;
+            int button24 = 3609;
+            int button25 = 3609;
+            int button26 = 3609;
+            int button27 = 3609;
+            int button28 = 3609;
+            int button29 = 3609;
+            int button30 = 3609;
+            int button31 = 3609;
+            int button32 = 3609;
+            int button33 = 3609;
+            int button34 = 3609;
+            int button35 = 3609;
+            int button36 = 3609;
+            int button37 = 3609;
+            int button38 = 3609;
+            int button39 = 3609;
+            int button40 = 3609;
+            int button41 = 3609;
+            int button42 = 3609;
+            int button43 = 3609;
+            int button44 = 3609;
+            int button45 = 3609;
+            int button46 = 3609;
+            int button47 = 3609;
+            int button48 = 3609;
+            int button49 = 3609;
+            int button50 = 3609;
+            int button51 = 3609;
+            int button52 = 3609;
+            int button53 = 3609;
+            int button54 = 3609;
+            int button55 = 3609;
+            int button56 = 3609;
+            int button57 = 3609;
+            int button58 = 3609;
+            int button59 = 3609;
+            int button60 = 3609;
+            int button61 = 3609;
+            int button62 = 3609;
+            int button63 = 3609;
+            int button64 = 3609;
+            int button65 = 3609;
+            int button66 = 3609;
+            int button67 = 3609;
+
+            string[] eachSpell = MyServerSettings.Split('#');
             int nLine = 1;
             foreach (string eachSpells in eachSpell)
             {
@@ -1262,7 +6031,7 @@ namespace Server.Gumps
             );
 
             ToolBarUpdates.InitializeToolBar(from, "SetupBarsMage2");
-            string MySettings = ((PlayerMobile)from).SpellBarsMage2;
+            string MyServerSettings = ((PlayerMobile)from).SpellBarsMage2;
 
             int button1 = 3609;
             int button2 = 3609;
@@ -1332,7 +6101,7 @@ namespace Server.Gumps
             int button66 = 3609;
             int button67 = 3609;
 
-            string[] eachSpell = MySettings.Split('#');
+            string[] eachSpell = MyServerSettings.Split('#');
             int nLine = 1;
             foreach (string eachSpells in eachSpell)
             {
@@ -2443,7 +7212,7 @@ namespace Server.Gumps
             );
 
             ToolBarUpdates.InitializeToolBar(from, "SetupBarsMage3");
-            string MySettings = ((PlayerMobile)from).SpellBarsMage3;
+            string MyServerSettings = ((PlayerMobile)from).SpellBarsMage3;
 
             int button1 = 3609;
             int button2 = 3609;
@@ -2513,7 +7282,7 @@ namespace Server.Gumps
             int button66 = 3609;
             int button67 = 3609;
 
-            string[] eachSpell = MySettings.Split('#');
+            string[] eachSpell = MyServerSettings.Split('#');
             int nLine = 1;
             foreach (string eachSpells in eachSpell)
             {
@@ -3624,7 +8393,7 @@ namespace Server.Gumps
             );
 
             ToolBarUpdates.InitializeToolBar(from, "SetupBarsMage4");
-            string MySettings = ((PlayerMobile)from).SpellBarsMage4;
+            string MyServerSettings = ((PlayerMobile)from).SpellBarsMage4;
 
             int button1 = 3609;
             int button2 = 3609;
@@ -3694,7 +8463,7 @@ namespace Server.Gumps
             int button66 = 3609;
             int button67 = 3609;
 
-            string[] eachSpell = MySettings.Split('#');
+            string[] eachSpell = MyServerSettings.Split('#');
             int nLine = 1;
             foreach (string eachSpells in eachSpell)
             {
@@ -4807,7 +9576,7 @@ namespace Server.Gumps
             );
 
             ToolBarUpdates.InitializeToolBar(from, "SetupBarsElly1");
-            string MySettings = ((PlayerMobile)from).SpellBarsElly1;
+            string MyServerSettings = ((PlayerMobile)from).SpellBarsElly1;
 
             int button1 = 3609;
             int button2 = 3609;
@@ -4845,7 +9614,7 @@ namespace Server.Gumps
             int button66 = 3609;
             int button67 = 3609;
 
-            string[] eachSpell = MySettings.Split('#');
+            string[] eachSpell = MyServerSettings.Split('#');
             int nLine = 1;
             foreach (string eachSpells in eachSpell)
             {
@@ -5528,7 +10297,7 @@ namespace Server.Gumps
             );
 
             ToolBarUpdates.InitializeToolBar(from, "SetupBarsElly2");
-            string MySettings = ((PlayerMobile)from).SpellBarsElly2;
+            string MyServerSettings = ((PlayerMobile)from).SpellBarsElly2;
 
             int button1 = 3609;
             int button2 = 3609;
@@ -5566,7 +10335,7 @@ namespace Server.Gumps
             int button66 = 3609;
             int button67 = 3609;
 
-            string[] eachSpell = MySettings.Split('#');
+            string[] eachSpell = MyServerSettings.Split('#');
             int nLine = 1;
             foreach (string eachSpells in eachSpell)
             {
@@ -6249,7 +11018,7 @@ namespace Server.Gumps
             );
 
             ToolBarUpdates.InitializeToolBar(from, "SetupBarsNecro1");
-            string MySettings = ((PlayerMobile)from).SpellBarsNecro1;
+            string MyServerSettings = ((PlayerMobile)from).SpellBarsNecro1;
 
             int button1 = 3609;
             int button2 = 3609;
@@ -6272,7 +11041,7 @@ namespace Server.Gumps
             int button19 = 3609;
             int button20 = 3609;
 
-            string[] eachSpell = MySettings.Split('#');
+            string[] eachSpell = MyServerSettings.Split('#');
             int nLine = 1;
             foreach (string eachSpells in eachSpell)
             {
@@ -6693,7 +11462,7 @@ namespace Server.Gumps
             );
 
             ToolBarUpdates.InitializeToolBar(from, "SetupBarsNecro2");
-            string MySettings = ((PlayerMobile)from).SpellBarsNecro2;
+            string MyServerSettings = ((PlayerMobile)from).SpellBarsNecro2;
 
             int button1 = 3609;
             int button2 = 3609;
@@ -6716,7 +11485,7 @@ namespace Server.Gumps
             int button19 = 3609;
             int button20 = 3609;
 
-            string[] eachSpell = MySettings.Split('#');
+            string[] eachSpell = MyServerSettings.Split('#');
             int nLine = 1;
             foreach (string eachSpells in eachSpell)
             {
@@ -7135,7 +11904,7 @@ namespace Server.Gumps
             );
 
             ToolBarUpdates.InitializeToolBar(from, "SetupBarsKnight1");
-            string MySettings = ((PlayerMobile)from).SpellBarsKnight1;
+            string MyServerSettings = ((PlayerMobile)from).SpellBarsKnight1;
 
             int button1 = 3609;
             int button2 = 3609;
@@ -7151,7 +11920,7 @@ namespace Server.Gumps
             int button12 = 3609;
             int button13 = 3609;
 
-            string[] eachSpell = MySettings.Split('#');
+            string[] eachSpell = MyServerSettings.Split('#');
             int nLine = 1;
             foreach (string eachSpells in eachSpell)
             {
@@ -7464,7 +12233,7 @@ namespace Server.Gumps
             );
 
             ToolBarUpdates.InitializeToolBar(from, "SetupBarsKnight2");
-            string MySettings = ((PlayerMobile)from).SpellBarsKnight2;
+            string MyServerSettings = ((PlayerMobile)from).SpellBarsKnight2;
 
             int button1 = 3609;
             int button2 = 3609;
@@ -7480,7 +12249,7 @@ namespace Server.Gumps
             int button12 = 3609;
             int button13 = 3609;
 
-            string[] eachSpell = MySettings.Split('#');
+            string[] eachSpell = MyServerSettings.Split('#');
             int nLine = 1;
             foreach (string eachSpells in eachSpell)
             {
@@ -7793,7 +12562,7 @@ namespace Server.Gumps
             );
 
             ToolBarUpdates.InitializeToolBar(from, "SetupBarsBard1");
-            string MySettings = ((PlayerMobile)from).SpellBarsBard1;
+            string MyServerSettings = ((PlayerMobile)from).SpellBarsBard1;
 
             int button1 = 3609;
             int button2 = 3609;
@@ -7815,7 +12584,7 @@ namespace Server.Gumps
             int button18 = 3609;
             int button19 = 3609;
 
-            string[] eachSpell = MySettings.Split('#');
+            string[] eachSpell = MyServerSettings.Split('#');
             int nLine = 1;
             foreach (string eachSpells in eachSpell)
             {
@@ -8221,7 +12990,7 @@ namespace Server.Gumps
             );
 
             ToolBarUpdates.InitializeToolBar(from, "SetupBarsBard2");
-            string MySettings = ((PlayerMobile)from).SpellBarsBard2;
+            string MyServerSettings = ((PlayerMobile)from).SpellBarsBard2;
 
             int button1 = 3609;
             int button2 = 3609;
@@ -8243,7 +13012,7 @@ namespace Server.Gumps
             int button18 = 3609;
             int button19 = 3609;
 
-            string[] eachSpell = MySettings.Split('#');
+            string[] eachSpell = MyServerSettings.Split('#');
             int nLine = 1;
             foreach (string eachSpells in eachSpell)
             {
@@ -8651,7 +13420,7 @@ namespace Server.Gumps
             );
 
             ToolBarUpdates.InitializeToolBar(from, "SetupBarsDeath1");
-            string MySettings = ((PlayerMobile)from).SpellBarsDeath1;
+            string MyServerSettings = ((PlayerMobile)from).SpellBarsDeath1;
 
             int button1 = 3609;
             int button2 = 3609;
@@ -8671,7 +13440,7 @@ namespace Server.Gumps
             int button16 = 3609;
             int button17 = 3609;
 
-            string[] eachSpell = MySettings.Split('#');
+            string[] eachSpell = MyServerSettings.Split('#');
             int nLine = 1;
             foreach (string eachSpells in eachSpell)
             {
@@ -9048,7 +13817,7 @@ namespace Server.Gumps
             );
 
             ToolBarUpdates.InitializeToolBar(from, "SetupBarsDeath2");
-            string MySettings = ((PlayerMobile)from).SpellBarsDeath2;
+            string MyServerSettings = ((PlayerMobile)from).SpellBarsDeath2;
 
             int button1 = 3609;
             int button2 = 3609;
@@ -9068,7 +13837,7 @@ namespace Server.Gumps
             int button16 = 3609;
             int button17 = 3609;
 
-            string[] eachSpell = MySettings.Split('#');
+            string[] eachSpell = MyServerSettings.Split('#');
             int nLine = 1;
             foreach (string eachSpells in eachSpell)
             {
@@ -9443,7 +14212,7 @@ namespace Server.Gumps
             );
 
             ToolBarUpdates.InitializeToolBar(from, "SetupBarsPriest1");
-            string MySettings = ((PlayerMobile)from).SpellBarsPriest1;
+            string MyServerSettings = ((PlayerMobile)from).SpellBarsPriest1;
 
             int button1 = 3609;
             int button2 = 3609;
@@ -9463,7 +14232,7 @@ namespace Server.Gumps
             int button16 = 3609;
             int button17 = 3609;
 
-            string[] eachSpell = MySettings.Split('#');
+            string[] eachSpell = MyServerSettings.Split('#');
             int nLine = 1;
             foreach (string eachSpells in eachSpell)
             {
@@ -9838,7 +14607,7 @@ namespace Server.Gumps
             );
 
             ToolBarUpdates.InitializeToolBar(from, "SetupBarsPriest2");
-            string MySettings = ((PlayerMobile)from).SpellBarsPriest2;
+            string MyServerSettings = ((PlayerMobile)from).SpellBarsPriest2;
 
             int button1 = 3609;
             int button2 = 3609;
@@ -9858,7 +14627,7 @@ namespace Server.Gumps
             int button16 = 3609;
             int button17 = 3609;
 
-            string[] eachSpell = MySettings.Split('#');
+            string[] eachSpell = MyServerSettings.Split('#');
             int nLine = 1;
             foreach (string eachSpells in eachSpell)
             {
@@ -10233,7 +15002,7 @@ namespace Server.Gumps
             );
 
             ToolBarUpdates.InitializeToolBar(from, "SetupBarsMonk1");
-            string MySettings = ((PlayerMobile)from).SpellBarsMonk1;
+            string MyServerSettings = ((PlayerMobile)from).SpellBarsMonk1;
 
             int button1 = 3609;
             int button2 = 3609;
@@ -10249,7 +15018,7 @@ namespace Server.Gumps
             int button12 = 3609;
             int button13 = 3609;
 
-            string[] eachSpell = MySettings.Split('#');
+            string[] eachSpell = MyServerSettings.Split('#');
             int nLine = 1;
             foreach (string eachSpells in eachSpell)
             {
@@ -10562,7 +15331,7 @@ namespace Server.Gumps
             );
 
             ToolBarUpdates.InitializeToolBar(from, "SetupBarsMonk2");
-            string MySettings = ((PlayerMobile)from).SpellBarsMonk2;
+            string MyServerSettings = ((PlayerMobile)from).SpellBarsMonk2;
 
             int button1 = 3609;
             int button2 = 3609;
@@ -10578,7 +15347,7 @@ namespace Server.Gumps
             int button12 = 3609;
             int button13 = 3609;
 
-            string[] eachSpell = MySettings.Split('#');
+            string[] eachSpell = MyServerSettings.Split('#');
             int nLine = 1;
             foreach (string eachSpells in eachSpell)
             {

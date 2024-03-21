@@ -1,11 +1,11 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using Server;
 using Server.Items;
 using Server.Mobiles;
-using Server.Prompts;
 using Server.Network;
-using System.Collections;
-using System.Collections.Generic;
+using Server.Prompts;
 
 namespace Server.Items
 {
@@ -66,6 +66,9 @@ namespace Server.Items
             {
                 m_ResList.Add(from, orb);
             }
+
+            BuffInfo.RemoveBuff(from, BuffIcon.Resurrection);
+            BuffInfo.AddBuff(from, new BuffInfo(BuffIcon.Resurrection, 1063626, true));
         }
 
         private static void EventSink_Death(PlayerDeathEventArgs e)
@@ -85,17 +88,6 @@ namespace Server.Items
                         m_ResList.Remove(owner);
                         return;
                     }
-                    BuffInfo.AddBuff(
-                        owner,
-                        new BuffInfo(
-                            BuffIcon.GiftOfLife,
-                            1015222,
-                            TimeSpan.FromSeconds(30),
-                            owner,
-                            String.Format("You will resurrect within 30 seconds of your death"),
-                            true
-                        )
-                    );
                     arp.m_Timer = Timer.DelayCall(
                         m_Delay,
                         new TimerStateCallback(Resurrect_OnTick),
@@ -139,7 +131,7 @@ namespace Server.Items
                     0
                 );
                 Server.Misc.Death.Penalty(owner, false);
-                BuffInfo.RemoveBuff(owner, BuffIcon.GiftOfLife);
+                BuffInfo.RemoveBuff(owner, BuffIcon.Resurrection);
                 arp.Delete();
             }
         }

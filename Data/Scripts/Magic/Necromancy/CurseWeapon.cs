@@ -1,9 +1,9 @@
 using System;
 using System.Collections;
-using Server.Network;
 using Server.Items;
-using Server.Targeting;
 using Server.Mobiles;
+using Server.Network;
+using Server.Targeting;
 
 namespace Server.Spells.Necromancy
 {
@@ -77,6 +77,12 @@ namespace Server.Spells.Necromancy
                 weapon.Cursed = true;
 
                 m_Table[weapon] = t = new ExpireTimer(weapon, duration);
+
+                BuffInfo.RemoveBuff(Caster, BuffIcon.CurseWeapon);
+                BuffInfo.AddBuff(
+                    Caster,
+                    new BuffInfo(BuffIcon.CurseWeapon, 1063615, duration, Caster)
+                );
 
                 t.Start();
             }

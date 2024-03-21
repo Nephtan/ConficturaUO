@@ -1,9 +1,9 @@
 using System;
 using System.Collections;
 using Server;
-using Server.Targeting;
-using Server.Network;
 using Server.Items;
+using Server.Network;
+using Server.Targeting;
 
 namespace Server.Spells.Jedi
 {
@@ -91,6 +91,8 @@ namespace Server.Spells.Jedi
                     );
                     Effects.PlaySound(Caster.Location, Caster.Map, 0x0F9);
                     DrainCrystals(Caster, RequiredTithing);
+                    BuffInfo.RemoveBuff(Caster, BuffIcon.Deflection);
+                    BuffInfo.AddBuff(Caster, new BuffInfo(BuffIcon.Deflection, 1063524));
                 }
             }
 

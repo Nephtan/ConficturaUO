@@ -1,9 +1,9 @@
 using System;
 using Server;
-using Server.Targeting;
-using Server.Network;
-using Server.Mobiles;
 using Server.Items;
+using Server.Mobiles;
+using Server.Network;
+using Server.Targeting;
 
 namespace Server.Spells.Jedi
 {
@@ -73,7 +73,6 @@ namespace Server.Spells.Jedi
                 if (GetJediDamage(Caster) > Utility.RandomMinMax(185, 750))
                 {
                     MortalStrike.EndWound(m);
-                    BuffInfo.RemoveBuff(m, BuffIcon.MortalStrike);
                 }
                 else
                 {

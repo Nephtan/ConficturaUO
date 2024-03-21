@@ -1,12 +1,12 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using Server.Items;
 using Server.Spells.Bushido;
 using Server.Spells.Chivalry;
-using Server.Items;
+using Server.Spells.Elementalism;
 using Server.Spells.Necromancy;
 using Server.Spells.Ninjitsu;
-using Server.Spells.Elementalism;
 
 namespace Server.Spells
 {
@@ -166,7 +166,8 @@ namespace Server.Spells
             "Research",
             "Syth",
             "Jedi",
-            "Shinobi"
+            "Shinobi",
+            "Enchantments"
         };
 
         public static Spell NewSpell(string name, Mobile caster, Item scroll)

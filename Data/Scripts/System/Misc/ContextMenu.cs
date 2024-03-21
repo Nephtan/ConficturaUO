@@ -1,10 +1,10 @@
 using System;
+using Server.Engines.PartySystem;
 using Server.Items;
+using Server.Mobiles;
+using Server.Multis;
 using Server.Network;
 using Server.Targeting;
-using Server.Mobiles;
-using Server.Engines.PartySystem;
-using Server.Multis;
 
 namespace Server.ContextMenus
 {

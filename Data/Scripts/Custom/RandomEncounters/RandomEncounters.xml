@@ -56,7 +56,7 @@ picker="sqrt"
 language="en-US"
 skiphidden="true"
 delay="120"
-interval="1800:1800:1800"
+interval="600:600:600"
 cleanup="300"
 cleanupGrace="6"
 debug="false"
@@ -147,6 +147,12 @@ debugEffect="false">
     </Region>
 
     <Region type="DungeonRegion" name="default">
+      <Encounter p="0.01" distance="7" water="false" landType="AnyLand" time="AnyTime" level="1" scaleUp="false">
+        <Mobile p="1.0" pick="Mongbat" n="1" effect="None" forceAttack="false"/>
+      </Encounter>
+    </Region>
+
+    <Region type="DungeonRegion" name="the Chamber of Bane">
       <Encounter p="0.01" distance="7" water="false" landType="AnyLand" time="AnyTime" level="1" scaleUp="false">
         <Mobile p="1.0" pick="Mongbat" n="1" effect="None" forceAttack="false"/>
       </Encounter>

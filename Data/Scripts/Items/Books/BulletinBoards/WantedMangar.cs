@@ -1,9 +1,9 @@
 using System;
-using Server;
-using Server.Items;
 using System.Text;
-using Server.Mobiles;
+using Server;
 using Server.Gumps;
+using Server.Items;
+using Server.Mobiles;
 using Server.Network;
 
 namespace Server.Items
@@ -88,7 +88,7 @@ namespace Server.Items
                     160,
                     @"<BODY><BASEFONT Color="
                         + color
-                        + ">You are trapped in Skara Brae, regardless of the rumors that it was destroyed in Sosaria. It seems that Mangar has moved this village into the void for his own nefarious purposes. You can only assume that if you can find Mangar and defeat him, then you may find a way to escape this void. To do that, you will need to explore and talk to any unusual citizens. Searching the dungeons for clues, secret doors, or magic mouths may prove helpful in your quest. You may slay powerful creatures that will drop chests on the floor you can use to acquire more clues or treasure. Keep an eye on your quest log, as it will show you the steps you accomplished. You feel a bit thirsty now, however, so you may want to get some wine in the cellar behind the tavern of the Scarlet Bard.</BASEFONT></BODY>",
+                        + ">You are trapped in Skara Brae, despite the rumors of its destruction in Sosaria. It appears that Mangar has relocated this village to the void for his own sinister purposes. You can assume that finding and defeating Mangar is the key to escaping this void. To achieve that, you must explore and interact with any peculiar residents. Searching the dungeons for clues, secret doors, or enchanted mouths may aid you in your quest. Defeating formidable creatures may yield chests containing additional clues or treasures. Keep a close eye on your quest log, as it will track your progress. Currently, you are feeling thirsty, so you might consider obtaining some wine from the cellar behind the tavern of the Scarlet Bard.</BASEFONT></BODY>",
                     (bool)false,
                     (bool)false
                 );

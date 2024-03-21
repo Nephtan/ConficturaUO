@@ -1,16 +1,16 @@
 using System;
-using Server;
-using System.Collections.Generic;
 using System.Collections;
-using Server.Mobiles;
-using Server.Items;
-using Server.Regions;
-using Server.Network;
-using Server.Multis;
-using Server.Misc;
+using System.Collections.Generic;
+using Server;
+using Server.Commands;
 using Server.ContextMenus;
 using Server.Gumps;
-using Server.Commands;
+using Server.Items;
+using Server.Misc;
+using Server.Mobiles;
+using Server.Multis;
+using Server.Network;
+using Server.Regions;
 
 namespace Server.Items
 {
@@ -295,7 +295,7 @@ namespace Server.Items
                 else
                 {
                     from.SendMessage(
-                        "This tent is too worn from over use, and is no longer of any good."
+                        "This tent is too worn and is no longer of any use."
                     );
                     this.Delete();
                     return;
@@ -312,7 +312,7 @@ namespace Server.Items
                 if (Charges < 1)
                 {
                     from.SendMessage(
-                        "This tent is too worn from over use, and is no longer of any good."
+                        "This tent is too worn and is no longer of any use."
                     );
                     this.Delete();
                     return;

@@ -1,12 +1,12 @@
 using System;
 using System.Collections;
 using Server;
-using Server.Targeting;
-using Server.Network;
-using Server.Spells;
+using Server.Items;
 using Server.Misc;
 using Server.Mobiles;
-using Server.Items;
+using Server.Network;
+using Server.Spells;
+using Server.Targeting;
 
 namespace Server.Spells.DeathKnight
 {
@@ -20,7 +20,7 @@ namespace Server.Spells.DeathKnight
         }
         public override int RequiredTithing
         {
-            get { return 200; }
+            get { return 80; }
         }
         public override double RequiredSkill
         {
@@ -70,6 +70,10 @@ namespace Server.Spells.DeathKnight
 
                     Caster.FixedParticles(0x375A, 10, 15, 5037, EffectLayer.Waist);
                     Caster.PlaySound(0x1E9);
+
+                    BuffInfo.RemoveBuff(Caster, BuffIcon.OrbOfOrcus);
+                    BuffInfo.AddBuff(Caster, new BuffInfo(BuffIcon.OrbOfOrcus, 1063551));
+
                     DrainSoulsInLantern(Caster, RequiredTithing);
                 }
             }

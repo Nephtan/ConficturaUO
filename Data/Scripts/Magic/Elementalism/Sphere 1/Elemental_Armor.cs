@@ -1,7 +1,7 @@
 using System;
 using System.Collections;
-using Server.Targeting;
 using Server.Network;
+using Server.Targeting;
 
 namespace Server.Spells.Elementalism
 {
@@ -65,7 +65,7 @@ namespace Server.Spells.Elementalism
                         for (int i = 0; i < mods.Length; ++i)
                             targ.AddResistanceMod(mods[i]);
 
-                        args = String.Format("{0}\t{1}\t{2}\t{3}\t{4}", 5, 5, 5, 5, resist);
+                        args = String.Format("{0}\t{1}\t{2}\t{3}\t{4}", -5, -5, -5, -5, resist);
                     }
                     else if (elm == "earth")
                     {
@@ -87,7 +87,7 @@ namespace Server.Spells.Elementalism
                         for (int i = 0; i < mods.Length; ++i)
                             targ.AddResistanceMod(mods[i]);
 
-                        args = String.Format("{0}\t{1}\t{2}\t{3}\t{4}", resist, 5, 5, 5, 5);
+                        args = String.Format("{0}\t{1}\t{2}\t{3}\t{4}", resist, -5, -5, -5, -5);
                     }
                     else if (elm == "fire")
                     {
@@ -109,7 +109,7 @@ namespace Server.Spells.Elementalism
                             targ.AddResistanceMod(mods[i]);
 
                         int physresist = 15 + (int)(targ.Skills[CastSkill].Value / 20);
-                        args = String.Format("{0}\t{1}\t{2}\t{3}\t{4}", 5, resist, 5, 5, 5);
+                        args = String.Format("{0}\t{1}\t{2}\t{3}\t{4}", -5, resist, -5, -5, -5);
                     }
                     else if (elm == "water")
                     {
@@ -138,15 +138,15 @@ namespace Server.Spells.Elementalism
                         for (int i = 0; i < mods.Length; ++i)
                             targ.AddResistanceMod(mods[i]);
 
-                        args = String.Format("{0}\t{1}\t{2}\t{3}\t{4}", 5, 5, resist, 5, 5);
+                        args = String.Format("{0}\t{1}\t{2}\t{3}\t{4}", -5, -5, resist, -5, -5);
                     }
 
                     BuffInfo.AddBuff(
                         Caster,
                         new BuffInfo(
-                            BuffIcon.ReactiveArmor,
-                            1075812,
-                            1075813,
+                            BuffIcon.ElementalArmor,
+                            1063527,
+                            1075818,
                             args.ToString(),
                             true
                         )
@@ -162,7 +162,7 @@ namespace Server.Spells.Elementalism
                     for (int i = 0; i < mods.Length; ++i)
                         targ.RemoveResistanceMod(mods[i]);
 
-                    BuffInfo.RemoveBuff(Caster, BuffIcon.ReactiveArmor);
+                    BuffInfo.RemoveBuff(Caster, BuffIcon.ElementalArmor);
                 }
             }
 

@@ -1,9 +1,9 @@
 using System;
-using Server.Targeting;
-using Server.Network;
-using Server.Mobiles;
 using Server.Items;
 using Server.Misc;
+using Server.Mobiles;
+using Server.Network;
+using Server.Targeting;
 
 namespace Server.Spells.Song
 {
@@ -114,6 +114,21 @@ namespace Server.Spells.Song
 
                 ExpireTimer timer1 = new ExpireTimer(m, mod1, duration);
                 timer1.Start();
+
+                string args = String.Format("{0}", amount);
+                BuffInfo.RemoveBuff(m, BuffIcon.EnergyThrenody);
+                BuffInfo.AddBuff(
+                    m,
+                    new BuffInfo(
+                        BuffIcon.EnergyThrenody,
+                        1063567,
+                        1063568,
+                        duration,
+                        m,
+                        args.ToString(),
+                        true
+                    )
+                );
             }
 
             BardFunctions.UseBardInstrument(m_Book.Instrument, sings, Caster);

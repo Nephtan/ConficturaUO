@@ -1,14 +1,14 @@
 using System;
+using System.Collections.Generic;
 using Server;
-using Server.Targeting;
-using Server.Network;
-using Server.Regions;
 using Server.Items;
 using Server.Mobiles;
-using System.Collections.Generic;
+using Server.Network;
+using Server.Regions;
 using Server.Spells;
 using Server.Spells.Necromancy;
 using Server.Spells.Ninjitsu;
+using Server.Targeting;
 
 namespace Server.Spells.Syth
 {
@@ -166,6 +166,12 @@ namespace Server.Mobiles
                 Server.Spells.Syth.SythSpell.GetSythDamage(m_Caster) / 2
             );
 
+            BuffInfo.RemoveBuff(m_Caster, BuffIcon.Projection);
+            BuffInfo.AddBuff(
+                m_Caster,
+                new BuffInfo(BuffIcon.Projection, 1063506, duration, m_Caster)
+            );
+
             new UnsummonTimer(caster, this, duration).Start();
             SummonEnd = DateTime.Now + duration;
 
@@ -204,6 +210,7 @@ namespace Server.Mobiles
         {
             PlaySound(0x3EA);
             this.FixedParticles(0x3709, 10, 30, 5052, 0xB00, 0, EffectLayer.LeftFoot);
+            BuffInfo.RemoveBuff(m_Caster, BuffIcon.Projection);
             base.OnDelete();
         }
 

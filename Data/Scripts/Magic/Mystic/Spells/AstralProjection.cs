@@ -1,8 +1,8 @@
 using System;
 using System.Collections;
 using Server;
-using Server.Items;
 using Server.Gumps;
+using Server.Items;
 using Server.Spells;
 
 namespace Server.Spells.Mystic
@@ -22,7 +22,7 @@ namespace Server.Spells.Mystic
         }
         public override int RequiredTithing
         {
-            get { return 300; }
+            get { return 50; }
         }
         public override double RequiredSkill
         {
@@ -171,6 +171,12 @@ namespace Server.Spells.Mystic
 
                 Delay = TimeSpan.FromSeconds(val);
                 Priority = TimerPriority.TwoFiftyMS;
+
+                BuffInfo.RemoveBuff(owner, BuffIcon.AstralProjection);
+                BuffInfo.AddBuff(
+                    owner,
+                    new BuffInfo(BuffIcon.AstralProjection, 1063512, Delay, owner)
+                );
             }
 
             protected override void OnTick()
@@ -181,6 +187,7 @@ namespace Server.Spells.Mystic
                     m_Owner.Hue = m_OldHue;
                     m_Owner.Blessed = false;
                     m_Owner.EndAction(typeof(AstralProjection));
+                    BuffInfo.RemoveBuff(m_Owner, BuffIcon.AstralProjection);
                 }
             }
         }

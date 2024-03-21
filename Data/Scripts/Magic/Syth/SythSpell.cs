@@ -1,13 +1,13 @@
 using System;
-using Server;
-using Server.Spells;
-using Server.Network;
-using Server.Mobiles;
-using Server.Items;
-using System.Collections.Generic;
 using System.Collections;
+using System.Collections.Generic;
+using Server;
 using Server.Commands;
 using Server.Commands.Generic;
+using Server.Items;
+using Server.Mobiles;
+using Server.Network;
+using Server.Spells;
 
 namespace Server.Spells.Syth
 {
@@ -156,7 +156,7 @@ namespace Server.Spells.Syth
             {
                 name = "Absorption";
                 icon = "23015";
-                crystal = "500";
+                crystal = "100";
                 skill = "70";
                 mana = "28";
                 mantra = "Taral Wai";
@@ -204,7 +204,7 @@ namespace Server.Spells.Syth
             {
                 name = "Clone";
                 icon = "2261";
-                crystal = "250";
+                crystal = "75";
                 skill = "100";
                 mana = "40";
                 mantra = "Itsu Sutta";
@@ -294,7 +294,9 @@ namespace Server.Spells.Syth
                     HoldingSword = true;
                 }
                 else if (
-                    twoHand is BaseShield && twoHand.Name != null && (twoHand.Name).Contains("Syth")
+                    twoHand is BaseShield
+                    && twoHand.Name != null
+                    && (twoHand.Name).Contains("Syth")
                 )
                 {
                     WearingCloth = true;

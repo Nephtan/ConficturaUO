@@ -1,8 +1,8 @@
 using System;
-using Server.Targeting;
-using Server.Network;
-using Server.Mobiles;
 using Server.Items;
+using Server.Mobiles;
+using Server.Network;
+using Server.Targeting;
 
 namespace Server.SkillHandlers
 {
@@ -60,7 +60,8 @@ namespace Server.SkillHandlers
                         from.SendLocalizedMessage(501590); // They are too loyal to their master to be provoked.
                     }
                     else if (
-                        creature.IsParagon && BaseInstrument.GetBaseDifficulty(creature) >= 160.0
+                        creature.IsParagon
+                        && BaseInstrument.GetBaseDifficulty(creature) >= 160.0
                     )
                     {
                         from.SendLocalizedMessage(1049446); // You have no chance of provoking those creatures.

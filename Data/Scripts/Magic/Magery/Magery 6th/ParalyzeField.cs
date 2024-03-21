@@ -1,9 +1,9 @@
 using System;
-using Server.Targeting;
 using Server.Items;
-using Server.Network;
 using Server.Misc;
 using Server.Mobiles;
+using Server.Network;
+using Server.Targeting;
 
 namespace Server.Spells.Sixth
 {
@@ -219,6 +219,17 @@ namespace Server.Spells.Sixth
                     }
 
                     m.Paralyze(TimeSpan.FromSeconds(duration));
+
+                    BuffInfo.RemoveBuff(m, BuffIcon.ParalyzeField);
+                    BuffInfo.AddBuff(
+                        m,
+                        new BuffInfo(
+                            BuffIcon.ParalyzeField,
+                            1063621,
+                            TimeSpan.FromSeconds(duration),
+                            m
+                        )
+                    );
 
                     m.PlaySound(0x204);
                     m.FixedEffect(

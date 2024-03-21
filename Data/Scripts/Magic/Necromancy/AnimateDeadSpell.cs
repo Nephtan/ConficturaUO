@@ -1,10 +1,10 @@
 using System;
 using System.Collections.Generic;
-using Server.Network;
-using Server.Mobiles;
-using Server.Targeting;
 using Server.Items;
 using Server.Misc;
+using Server.Mobiles;
+using Server.Network;
+using Server.Targeting;
 
 namespace Server.Spells.Necromancy
 {
@@ -322,7 +322,10 @@ namespace Server.Spells.Necromancy
                             creature.Hue = Utility.RandomList(0x4001, 0x4001, 1150, 0x9C2);
                             creature.BaseSoundID = 0x482;
                             if (
-                                bc.Body == 400 || bc.Body == 401 || bc.Body == 605 || bc.Body == 606
+                                bc.Body == 400
+                                || bc.Body == 401
+                                || bc.Body == 605
+                                || bc.Body == 606
                             )
                             {
                                 creature.Body = Utility.RandomList(0x3CA, 310, 26, 84);
@@ -541,7 +544,9 @@ namespace Server.Spells.Necromancy
                             }
                         }
                         else if (
-                            exorcism.Slays(bc) && Utility.RandomMinMax(0, 5) == 1 && ghost != ""
+                            exorcism.Slays(bc)
+                            && Utility.RandomMinMax(0, 5) == 1
+                            && ghost != ""
                         )
                         {
                             creature.Body = 339;

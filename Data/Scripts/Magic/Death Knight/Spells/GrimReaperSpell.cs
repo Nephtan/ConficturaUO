@@ -1,11 +1,11 @@
 using System;
 using System.Collections;
 using Server;
+using Server.Items;
 using Server.Mobiles;
 using Server.Network;
-using Server.Items;
-using Server.Targeting;
 using Server.Spells.Chivalry;
+using Server.Targeting;
 
 namespace Server.Spells.DeathKnight
 {
@@ -73,9 +73,9 @@ namespace Server.Spells.DeathKnight
                     BuffInfo.AddBuff(
                         Caster,
                         new BuffInfo(
-                            BuffIcon.EnemyOfOne,
-                            1044119,
-                            1044118,
+                            BuffIcon.GrimReaper,
+                            1063546,
+                            1063547,
                             TimeSpan.FromMinutes(delay),
                             Caster
                         )

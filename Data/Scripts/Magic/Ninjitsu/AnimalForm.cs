@@ -38,7 +38,7 @@ namespace Server.Spells.Ninjitsu
         }
         public override int RequiredMana
         {
-            get { return (Core.ML ? 10 : 0); }
+            get { return 0; }
         }
         public override int CastRecoveryBase
         {
@@ -196,13 +196,6 @@ namespace Server.Spells.Ninjitsu
                 return MorphResult.NoSkill;
             }
 
-            /*
-            if( !m.CheckSkill( SkillName.Ninjitsu, entry.ReqSkill, entry.ReqSkill + 37.5 ) )
-                return MorphResult.Fail;
-             *
-             * On OSI,it seems you can only gain starting at '0' using Animal form.
-            */
-
             double ninjitsu = m.Skills.Ninjitsu.Value;
 
             if (ninjitsu < entry.ReqSkill + 37.5)
@@ -317,11 +310,6 @@ namespace Server.Spells.Ninjitsu
             return (context != null && context.Type == type);
         }
 
-        /*
-                private delegate void AnimalFormCallback( Mobile from );
-                private delegate bool AnimalFormRequirementCallback( Mobile from );
-        */
-
         public class AnimalFormEntry
         {
             private Type m_Type;
@@ -380,12 +368,6 @@ namespace Server.Spells.Ninjitsu
             {
                 get { return m_StealingBonus; }
             }
-
-            /*
-            private AnimalFormCallback m_TransformCallback;
-            private AnimalFormCallback m_UntransformCallback;
-            private AnimalFormRequirementCallback m_RequirementCallback;
-            */
 
             public AnimalFormEntry(
                 Type type,
@@ -569,7 +551,7 @@ namespace Server.Spells.Ninjitsu
                 8483,
                 0,
                 1070805,
-                20.0,
+                0.0,
                 238,
                 true,
                 false,
@@ -644,7 +626,6 @@ namespace Server.Spells.Ninjitsu
 
         public class AnimalFormGump : Gump
         {
-            //TODO: Convert this for ML to the BaseImageTileButtonsgump
             private Mobile m_Caster;
             private AnimalForm m_Spell;
             private Item m_Talisman;

@@ -1,15 +1,15 @@
 using System;
-using Server;
 using System.Collections;
-using Server.ContextMenus;
 using System.Collections.Generic;
-using Server.Misc;
-using Server.Network;
-using Server.Items;
-using Server.Gumps;
-using Server.Mobiles;
-using Server.Commands;
 using System.Globalization;
+using Server;
+using Server.Commands;
+using Server.ContextMenus;
+using Server.Gumps;
+using Server.Items;
+using Server.Misc;
+using Server.Mobiles;
+using Server.Network;
 using Server.Regions;
 
 namespace Server.Items
@@ -91,260 +91,264 @@ namespace Server.Items
 
             string material = "";
 
-            if ((item.Name).Contains("Beskar"))
+            if (item.Name != null)
             {
-                material = "Beskar";
-            }
-            else if ((item.Name).Contains("Carbonite"))
-            {
-                material = "Carbonite";
-            }
-            else if ((item.Name).Contains("Phrik"))
-            {
-                material = "Phrik";
-            }
-            else if ((item.Name).Contains("Cortosis"))
-            {
-                material = "Cortosis";
-            }
-            else if ((item.Name).Contains("Songsteel"))
-            {
-                material = "Songsteel";
-            }
-            else if ((item.Name).Contains("Agrinium"))
-            {
-                material = "Agrinium";
-            }
-            else if ((item.Name).Contains("Durasteel"))
-            {
-                material = "Durasteel";
-            }
-            else if ((item.Name).Contains("Titanium"))
-            {
-                material = "Titanium";
-            }
-            else if ((item.Name).Contains("Laminasteel"))
-            {
-                material = "Laminasteel";
-            }
-            else if ((item.Name).Contains("Neuranium"))
-            {
-                material = "Neuranium";
-            }
-            else if ((item.Name).Contains("Promethium"))
-            {
-                material = "Promethium";
-            }
-            else if ((item.Name).Contains("Quadranium"))
-            {
-                material = "Quadranium";
-            }
-            else if ((item.Name).Contains("Durite"))
-            {
-                material = "Durite";
-            }
-            else if ((item.Name).Contains("Farium"))
-            {
-                material = "Farium";
-            }
-            else if ((item.Name).Contains("Trimantium"))
-            {
-                material = "Trimantium";
-            }
-            else if ((item.Name).Contains("Xonolite"))
-            {
-                material = "Xonolite";
-            }
-            else if ((item.Name).Contains("Veshok"))
-            {
-                material = "Veshok";
-            }
-            else if ((item.Name).Contains("Cosian"))
-            {
-                material = "Cosian";
-            }
-            else if ((item.Name).Contains("Greel"))
-            {
-                material = "Greel";
-            }
-            else if ((item.Name).Contains("Teej"))
-            {
-                material = "Teej";
-            }
-            else if ((item.Name).Contains("Kyshyyyk"))
-            {
-                material = "Kyshyyyk";
-            }
-            else if ((item.Name).Contains("Laroon"))
-            {
-                material = "Laroon";
-            }
-            else if ((item.Name).Contains("Borl"))
-            {
-                material = "Borl";
-            }
-            else if ((item.Name).Contains("Japor"))
-            {
-                material = "Japor";
-            }
-            else if ((item.Name).Contains("Adesote"))
-            {
-                material = "Adesote";
-            }
-            else if ((item.Name).Contains("Nylonite"))
-            {
-                material = "Nylonite";
-            }
-            else if ((item.Name).Contains("Biomesh"))
-            {
-                material = "Biomesh";
-            }
-            else if ((item.Name).Contains("Cerlin"))
-            {
-                material = "Cerlin";
-            }
-            else if ((item.Name).Contains("Polyfiber"))
-            {
-                material = "Polyfiber";
-            }
-            else if ((item.Name).Contains("Durafiber"))
-            {
-                material = "Durafiber";
-            }
-            else if ((item.Name).Contains("Syncloth"))
-            {
-                material = "Syncloth";
-            }
-            else if ((item.Name).Contains("Hypercloth"))
-            {
-                material = "Hypercloth";
-            }
-            else if ((item.Name).Contains("Flexicris"))
-            {
-                material = "Flexicris";
-            }
-            else if ((item.Name).Contains("Thermoweave"))
-            {
-                material = "Thermoweave";
-            }
-            else if ((item.Name).Contains("Nylar"))
-            {
-                material = "Nylar";
-            }
-            else if ((item.Name).Contains("Twi'lek"))
-            {
-                material = "Twi'lek";
-            }
-            else if ((item.Name).Contains("Rodian"))
-            {
-                material = "Rodian";
-            }
-            else if ((item.Name).Contains("Martian"))
-            {
-                material = "Martian";
-            }
-            else if ((item.Name).Contains("Cardassian"))
-            {
-                material = "Cardassian";
-            }
-            else if ((item.Name).Contains("Xindi"))
-            {
-                material = "Xindi";
-            }
-            else if ((item.Name).Contains("Tusken"))
-            {
-                material = "Tusken";
-            }
-            else if ((item.Name).Contains("Andorian"))
-            {
-                material = "Andorian";
-            }
-            else if ((item.Name).Contains("Zabrak"))
-            {
-                material = "Zabrak";
-            }
+                if ((item.Name).Contains("Beskar"))  // Line 94 (error occurs, null reference)
+                {
+                    material = "Beskar";
+                }
+                else if ((item.Name).Contains("Carbonite"))
+                {
+                    material = "Carbonite";
+                }
+                else if ((item.Name).Contains("Phrik"))
+                {
+                    material = "Phrik";
+                }
+                else if ((item.Name).Contains("Cortosis"))
+                {
+                    material = "Cortosis";
+                }
+                else if ((item.Name).Contains("Songsteel"))
+                {
+                    material = "Songsteel";
+                }
+                else if ((item.Name).Contains("Agrinium"))
+                {
+                    material = "Agrinium";
+                }
+                else if ((item.Name).Contains("Durasteel"))
+                {
+                    material = "Durasteel";
+                }
+                else if ((item.Name).Contains("Titanium"))
+                {
+                    material = "Titanium";
+                }
+                else if ((item.Name).Contains("Laminasteel"))
+                {
+                    material = "Laminasteel";
+                }
+                else if ((item.Name).Contains("Neuranium"))
+                {
+                    material = "Neuranium";
+                }
+                else if ((item.Name).Contains("Promethium"))
+                {
+                    material = "Promethium";
+                }
+                else if ((item.Name).Contains("Quadranium"))
+                {
+                    material = "Quadranium";
+                }
+                else if ((item.Name).Contains("Durite"))
+                {
+                    material = "Durite";
+                }
+                else if ((item.Name).Contains("Farium"))
+                {
+                    material = "Farium";
+                }
+                else if ((item.Name).Contains("Trimantium"))
+                {
+                    material = "Trimantium";
+                }
+                else if ((item.Name).Contains("Xonolite"))
+                {
+                    material = "Xonolite";
+                }
+                else if ((item.Name).Contains("Veshok"))
+                {
+                    material = "Veshok";
+                }
+                else if ((item.Name).Contains("Cosian"))
+                {
+                    material = "Cosian";
+                }
+                else if ((item.Name).Contains("Greel"))
+                {
+                    material = "Greel";
+                }
+                else if ((item.Name).Contains("Teej"))
+                {
+                    material = "Teej";
+                }
+                else if ((item.Name).Contains("Kyshyyyk"))
+                {
+                    material = "Kyshyyyk";
+                }
+                else if ((item.Name).Contains("Laroon"))
+                {
+                    material = "Laroon";
+                }
+                else if ((item.Name).Contains("Borl"))
+                {
+                    material = "Borl";
+                }
+                else if ((item.Name).Contains("Japor"))
+                {
+                    material = "Japor";
+                }
+                else if ((item.Name).Contains("Adesote"))
+                {
+                    material = "Adesote";
+                }
+                else if ((item.Name).Contains("Nylonite"))
+                {
+                    material = "Nylonite";
+                }
+                else if ((item.Name).Contains("Biomesh"))
+                {
+                    material = "Biomesh";
+                }
+                else if ((item.Name).Contains("Cerlin"))
+                {
+                    material = "Cerlin";
+                }
+                else if ((item.Name).Contains("Polyfiber"))
+                {
+                    material = "Polyfiber";
+                }
+                else if ((item.Name).Contains("Durafiber"))
+                {
+                    material = "Durafiber";
+                }
+                else if ((item.Name).Contains("Syncloth"))
+                {
+                    material = "Syncloth";
+                }
+                else if ((item.Name).Contains("Hypercloth"))
+                {
+                    material = "Hypercloth";
+                }
+                else if ((item.Name).Contains("Flexicris"))
+                {
+                    material = "Flexicris";
+                }
+                else if ((item.Name).Contains("Thermoweave"))
+                {
+                    material = "Thermoweave";
+                }
+                else if ((item.Name).Contains("Nylar"))
+                {
+                    material = "Nylar";
+                }
+                else if ((item.Name).Contains("Twi'lek"))
+                {
+                    material = "Twi'lek";
+                }
+                else if ((item.Name).Contains("Rodian"))
+                {
+                    material = "Rodian";
+                }
+                else if ((item.Name).Contains("Martian"))
+                {
+                    material = "Martian";
+                }
+                else if ((item.Name).Contains("Cardassian"))
+                {
+                    material = "Cardassian";
+                }
+                else if ((item.Name).Contains("Xindi"))
+                {
+                    material = "Xindi";
+                }
+                else if ((item.Name).Contains("Tusken"))
+                {
+                    material = "Tusken";
+                }
+                else if ((item.Name).Contains("Andorian"))
+                {
+                    material = "Andorian";
+                }
+                else if ((item.Name).Contains("Zabrak"))
+                {
+                    material = "Zabrak";
+                }
 
-            color = Server.Misc.MaterialInfo.GetSpaceAceColors(material);
 
-            if (color == 0x6F6)
-            {
-                name = "Rodian Green Dye";
-                machineWorked = true;
-            }
-            else if (color == 0x6F8)
-            {
-                name = "Veshok Gray Dye";
-                machineWorked = true;
-            }
-            else if (color == 0x701)
-            {
-                name = "Zabrak Red Dye";
-                machineWorked = true;
-            }
-            else if (color == 0x705)
-            {
-                name = "Kyshyyyk Gold Dye";
-                machineWorked = true;
-            }
-            else if (color == 0x775)
-            {
-                name = "Tusken Yellow Dye";
-                machineWorked = true;
-            }
-            else if (color == 0x77F)
-            {
-                name = "Martian Green Dye";
-                machineWorked = true;
-            }
-            else if (color == 0x7A9)
-            {
-                name = "Durasteel Gray Dye";
-                machineWorked = true;
-            }
-            else if (color == 0x825)
-            {
-                name = "Andorian Blue Dye";
-                machineWorked = true;
-            }
-            else if (color == 0x829)
-            {
-                name = "Carbonite Gray Dye";
-                machineWorked = true;
-            }
-            else if (color == 0x82C)
-            {
-                name = "Cortosis Purple Dye";
-                machineWorked = true;
-            }
-            else if (color == 0x870)
-            {
-                name = "Neuranium Red Dye";
-                machineWorked = true;
-            }
-            else if (color == 0x877)
-            {
-                name = "Xindi Gray Dye";
-                machineWorked = true;
-            }
-            else if (color == 0x8C1)
-            {
-                name = "Agrinium Gray Dye";
-                machineWorked = true;
-            }
-            else if (color == 0x8D7)
-            {
-                name = "Titanium Blue Dye";
-                machineWorked = true;
-            }
-            else if (color == 0xAF8)
-            {
-                name = "Twi'lek Purple Dye";
-                machineWorked = true;
-            }
-            else if (color == 0xB42)
-            {
-                name = "Songsteel White Dye";
-                machineWorked = true;
+                color = Server.Misc.MaterialInfo.GetSpaceAceColors(material);
+
+                if (color == 0x6F6)
+                {
+                    name = "Rodian Green Dye";
+                    machineWorked = true;
+                }
+                else if (color == 0x6F8)
+                {
+                    name = "Veshok Gray Dye";
+                    machineWorked = true;
+                }
+                else if (color == 0x701)
+                {
+                    name = "Zabrak Red Dye";
+                    machineWorked = true;
+                }
+                else if (color == 0x705)
+                {
+                    name = "Kyshyyyk Gold Dye";
+                    machineWorked = true;
+                }
+                else if (color == 0x775)
+                {
+                    name = "Tusken Yellow Dye";
+                    machineWorked = true;
+                }
+                else if (color == 0x77F)
+                {
+                    name = "Martian Green Dye";
+                    machineWorked = true;
+                }
+                else if (color == 0x7A9)
+                {
+                    name = "Durasteel Gray Dye";
+                    machineWorked = true;
+                }
+                else if (color == 0x825)
+                {
+                    name = "Andorian Blue Dye";
+                    machineWorked = true;
+                }
+                else if (color == 0x829)
+                {
+                    name = "Carbonite Gray Dye";
+                    machineWorked = true;
+                }
+                else if (color == 0x82C)
+                {
+                    name = "Cortosis Purple Dye";
+                    machineWorked = true;
+                }
+                else if (color == 0x870)
+                {
+                    name = "Neuranium Red Dye";
+                    machineWorked = true;
+                }
+                else if (color == 0x877)
+                {
+                    name = "Xindi Gray Dye";
+                    machineWorked = true;
+                }
+                else if (color == 0x8C1)
+                {
+                    name = "Agrinium Gray Dye";
+                    machineWorked = true;
+                }
+                else if (color == 0x8D7)
+                {
+                    name = "Titanium Blue Dye";
+                    machineWorked = true;
+                }
+                else if (color == 0xAF8)
+                {
+                    name = "Twi'lek Purple Dye";
+                    machineWorked = true;
+                }
+                else if (color == 0xB42)
+                {
+                    name = "Songsteel White Dye";
+                    machineWorked = true;
+                }
             }
 
             if (machineWorked)

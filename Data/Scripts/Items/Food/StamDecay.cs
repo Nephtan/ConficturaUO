@@ -1,7 +1,7 @@
 using System;
-using Server.Network;
-using Server.Mobiles;
 using Server;
+using Server.Mobiles;
+using Server.Network;
 
 namespace Server.Misc
 {

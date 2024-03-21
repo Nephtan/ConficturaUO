@@ -1,15 +1,15 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using Server;
 using Server.Items;
-using Server.Targeting;
-using Server.Network;
-using System.Collections.Generic;
-using System.Collections;
-using Server.Regions;
-using Server.Multis;
 using Server.Misc;
 using Server.Mobiles;
+using Server.Multis;
+using Server.Network;
+using Server.Regions;
 using Server.Spells.Chivalry;
+using Server.Targeting;
 
 namespace Server.Spells.Jester
 {
@@ -28,7 +28,7 @@ namespace Server.Spells.Jester
         }
         public override int RequiredTithing
         {
-            get { return 40; }
+            get { return 20; }
         }
         public override int RequiredMana
         {
@@ -107,6 +107,11 @@ namespace Server.Spells.Jester
                     Mobile v = targets[i];
                     duration = Timed(v, Caster);
                     v.Paralyze(TimeSpan.FromSeconds(duration));
+                    BuffInfo.RemoveBuff(v, BuffIcon.Hilarity);
+                    BuffInfo.AddBuff(
+                        v,
+                        new BuffInfo(BuffIcon.Hilarity, 1063520, TimeSpan.FromSeconds(duration), v)
+                    );
                     DoReaction(v);
                     HarmfulSpell(v);
                 }

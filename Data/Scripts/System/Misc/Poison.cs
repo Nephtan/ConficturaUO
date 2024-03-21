@@ -1,8 +1,8 @@
 using System;
 using Server;
 using Server.Items;
-using Server.Network;
 using Server.Mobiles;
+using Server.Network;
 using Server.Spells;
 using Server.Spells.Necromancy;
 using Server.Spells.Ninjitsu;
@@ -106,6 +106,8 @@ namespace Server
                 m_From = m;
                 m_Mobile = m;
                 m_Poison = p;
+                BuffInfo.RemoveBuff(m, BuffIcon.Poisoned);
+                BuffInfo.AddBuff(m, new BuffInfo(BuffIcon.Poisoned, 1063494));
             }
 
             protected override void OnTick()
@@ -148,6 +150,7 @@ namespace Server
                 {
                     m_Mobile.SendLocalizedMessage(502136); // The poison seems to have worn off.
                     m_Mobile.Poison = null;
+                    BuffInfo.RemoveBuff(m_Mobile, BuffIcon.Poisoned);
 
                     Stop();
                     return;

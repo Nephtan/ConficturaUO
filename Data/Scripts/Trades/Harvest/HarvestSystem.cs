@@ -2,12 +2,12 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Server;
-using Server.Items;
-using Server.Targeting;
 using Server.Gumps;
-using Server.Mobiles;
+using Server.Items;
 using Server.Misc;
+using Server.Mobiles;
 using Server.Regions;
+using Server.Targeting;
 
 namespace Server.Engines.Harvest
 {
@@ -987,7 +987,8 @@ namespace Server.Engines.Harvest
             }
 
             if (
-                fallback != null && (skillValue < primary.ReqSkill || skillValue < primary.MinSkill)
+                fallback != null
+                && (skillValue < primary.ReqSkill || skillValue < primary.MinSkill)
             )
                 return fallback;
 

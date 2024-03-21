@@ -2,9 +2,9 @@ using System;
 using System.Collections;
 using System.Text;
 using Server;
+using Server.Items;
 using Server.Mobiles;
 using Server.Targeting;
-using Server.Items;
 
 namespace Server.SkillHandlers
 {

@@ -84,12 +84,12 @@ namespace Knives.Chat3
         private static void ChannelCommand(CommandInfo e)
         {
             foreach (Channel c in s_Channels)
-                foreach (string str in c.Commands)
-                    if (str == e.Command)
-                    {
-                        c.OnChat(e.Mobile, e.ArgString);
-                        return;
-                    }
+            foreach (string str in c.Commands)
+                if (str == e.Command)
+                {
+                    c.OnChat(e.Mobile, e.ArgString);
+                    return;
+                }
         }
 
         public static void AddCommand(string str)

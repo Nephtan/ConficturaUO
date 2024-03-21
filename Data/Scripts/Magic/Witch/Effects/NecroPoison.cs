@@ -1,6 +1,6 @@
 using System;
-using Server.Targeting;
 using Server.Network;
+using Server.Targeting;
 
 namespace Server.Spells.Undead
 {
@@ -44,6 +44,7 @@ namespace Server.Spells.Undead
                     m.Spell.OnCasterHurt();
 
                 m.Paralyzed = false;
+                BuffInfo.CleanupIcons(m, true);
 
                 if (CheckResisted(m))
                 {

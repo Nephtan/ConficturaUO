@@ -1,9 +1,9 @@
 using System;
 using System.Collections;
-using Server.Targeting;
-using Server.Network;
-using Server.Mobiles;
 using Server.Items;
+using Server.Mobiles;
+using Server.Network;
+using Server.Targeting;
 
 namespace Server.Spells.DeathKnight
 {
@@ -78,6 +78,7 @@ namespace Server.Spells.DeathKnight
                 m.FixedParticles(0x374A, 10, 15, 5032, EffectLayer.Head);
                 m.PlaySound(0x1F8);
                 m.SendMessage("You feel your soul weakening.");
+
                 DrainSoulsInLantern(Caster, RequiredTithing);
             }
 
@@ -94,6 +95,12 @@ namespace Server.Spells.DeathKnight
             {
                 m_Owner = owner;
                 m_Expire = DateTime.Now + TimeSpan.FromSeconds(30.0);
+
+                BuffInfo.RemoveBuff(m_Owner, BuffIcon.SoulReaper);
+                BuffInfo.AddBuff(
+                    m_Owner,
+                    new BuffInfo(BuffIcon.SoulReaper, 1063555, TimeSpan.FromSeconds(30.0), m_Owner)
+                );
             }
 
             protected override void OnTick()

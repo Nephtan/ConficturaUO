@@ -1,21 +1,21 @@
 using System;
-using Server;
 using System.Collections;
 using System.Collections.Generic;
-using Server.Items;
-using Server.ContextMenus;
-using Server.Misc;
-using Server.Network;
+using System.Globalization;
+using System.IO;
 using System.Text;
+using System.Threading;
+using Server;
+using Server.Accounting;
 using Server.Commands;
 using Server.Commands.Generic;
-using System.IO;
-using Server.Mobiles;
-using System.Threading;
+using Server.ContextMenus;
 using Server.Gumps;
-using Server.Accounting;
+using Server.Items;
+using Server.Misc;
+using Server.Mobiles;
+using Server.Network;
 using Server.Regions;
-using System.Globalization;
 
 namespace Server.Mobiles
 {
@@ -3689,14 +3689,14 @@ namespace Server.Mobiles
 
         ///////////////////////////////////////////////////////////////////////////
 
-        public override bool OnBeforeDeath()
-        {
-            Say("In Vas Mani");
-            this.Hits = this.HitsMax;
-            this.FixedParticles(0x376A, 9, 32, 5030, EffectLayer.Waist);
-            this.PlaySound(0x202);
-            return false;
-        }
+        //public override bool OnBeforeDeath()
+        //{
+        //    Say("In Vas Mani");
+        //    this.Hits = this.HitsMax;
+        //    this.FixedParticles(0x376A, 9, 32, 5030, EffectLayer.Waist);
+        //    this.PlaySound(0x202);
+        //    return false;
+        //}
 
         public override bool IsEnemy(Mobile m)
         {
@@ -4275,13 +4275,6 @@ namespace Server.Mobiles
             } // the Cimmeran Hold
             if (Utility.RandomBool())
             {
-                loc = new Point3D(734, 367, 40);
-                map = Map.Underworld;
-                direction = Direction.South;
-                CreateDragonRider(loc, map, direction);
-            } // the Fort of Tenebrae
-            if (Utility.RandomBool())
-            {
                 loc = new Point3D(1441, 3779, 30);
                 map = Map.Sosaria;
                 direction = Direction.East;
@@ -4663,27 +4656,47 @@ namespace Server.Mobiles
             { /* DO NOTHING IN CASTLE OF KNOWLEDGE */
             }
             else if (
-                m.Map == Map.SavagedEmpire && m.X >= 309 && m.Y >= 1738 && m.X <= 323 && m.Y <= 1751
+                m.Map == Map.SavagedEmpire
+                && m.X >= 309
+                && m.Y >= 1738
+                && m.X <= 323
+                && m.Y <= 1751
             )
             { /* DO NOTHING IN THIS SAVAGED EMPIRE SPOT */
             }
             else if (
-                m.Map == Map.SavagedEmpire && m.X >= 284 && m.Y >= 1642 && m.X <= 298 && m.Y <= 1655
+                m.Map == Map.SavagedEmpire
+                && m.X >= 284
+                && m.Y >= 1642
+                && m.X <= 298
+                && m.Y <= 1655
             )
             { /* DO NOTHING IN THIS SAVAGED EMPIRE SPOT */
             }
             else if (
-                m.Map == Map.SavagedEmpire && m.X >= 785 && m.Y >= 896 && m.X <= 805 && m.Y <= 879
+                m.Map == Map.SavagedEmpire
+                && m.X >= 785
+                && m.Y >= 896
+                && m.X <= 805
+                && m.Y <= 879
             )
             { /* DO NOTHING IN THIS SAVAGED EMPIRE SPOT */
             }
             else if (
-                m.Map == Map.SavagedEmpire && m.X >= 706 && m.Y >= 953 && m.X <= 726 && m.Y <= 963
+                m.Map == Map.SavagedEmpire
+                && m.X >= 706
+                && m.Y >= 953
+                && m.X <= 726
+                && m.Y <= 963
             )
             { /* DO NOTHING IN THIS SAVAGED EMPIRE SPOT */
             }
             else if (
-                m.Map == Map.IslesDread && m.X >= 364 && m.Y >= 1027 && m.X <= 415 && m.Y <= 1057
+                m.Map == Map.IslesDread
+                && m.X >= 364
+                && m.Y >= 1027
+                && m.X <= 415
+                && m.Y <= 1057
             )
             { /* DO NOTHING IN THE CIMMERIAN CASTLE */
             }
@@ -4928,7 +4941,7 @@ namespace Server.Mobiles
                         break;
                     case 9:
                         roll = 0;
-                        if (!Server.Misc.MyServerSettings.AllowZebras())
+                        if (!Server.Misc.MyServerSettings.SafariStore())
                         {
                             roll = 1;
                         }
@@ -5108,18 +5121,18 @@ namespace Server.Mobiles
                 Server.Items.EssenceBase.ColorCitizen(this);
                 Server.Misc.MorphingTime.CheckNecromancer(this);
 
-                if (
-                    this.Home.X > 0
-                    && this.Home.Y > 0
-                    && (
-                        Math.Abs(this.X - this.Home.X) > 2
-                        || Math.Abs(this.Y - this.Home.Y) > 2
-                        || Math.Abs(this.Z - this.Home.Z) > 2
-                    )
-                )
-                {
-                    this.Location = this.Home;
-                }
+                //if (
+                //    this.Home.X > 0
+                //    && this.Home.Y > 0
+                //    && (
+                //        Math.Abs(this.X - this.Home.X) > 2
+                //        || Math.Abs(this.Y - this.Home.Y) > 2
+                //        || Math.Abs(this.Z - this.Home.Z) > 2
+                //    )
+                //)
+                //{
+                //    this.Location = this.Home;
+                //}
                 if (Server.Misc.Worlds.isOrientalRegion(this))
                 {
                     Server.Misc.MorphingTime.RemoveMyClothes(this);

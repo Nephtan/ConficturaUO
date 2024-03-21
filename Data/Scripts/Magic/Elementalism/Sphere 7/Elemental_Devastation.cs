@@ -1,10 +1,10 @@
 using System;
 using System.Collections;
-using Server.Network;
 using Server.Items;
-using Server.Targeting;
-using Server.Regions;
 using Server.Mobiles;
+using Server.Network;
+using Server.Regions;
+using Server.Targeting;
 
 namespace Server.Spells.Elementalism
 {
@@ -95,51 +95,54 @@ namespace Server.Spells.Elementalism
                     {
                         Mobile m = (Mobile)targets[i];
 
-                        Region house = m.Region;
-
-                        double toDeal = damage;
-
-                        if (!(house is Regions.HouseRegion))
+                        if (Caster.CanBeHarmful(m, true))
                         {
-                            Caster.DoHarmful(m);
+                            Region house = m.Region;
 
-                            string elm = ElementalSpell.GetElement(Caster);
+                            double toDeal = damage;
 
-                            if (elm == "air")
+                            if (!(house is Regions.HouseRegion))
                             {
-                                Point3D ert = new Point3D((m.X + 1), (m.Y + 1), m.Z + 5);
-                                Effects.SendLocationEffect(ert, m.Map, 0x55A6, 30, 10, 0, 0);
-                                m.PlaySound(0x028);
-                                SpellHelper.Damage(this, m, toDeal, 0, 0, 0, 0, 100);
-                            }
-                            else if (elm == "earth")
-                            {
-                                Point3D ert = new Point3D((m.X + 2), (m.Y), m.Z);
-                                Effects.SendLocationEffect(
-                                    ert,
-                                    m.Map,
-                                    0x55BB,
-                                    30,
-                                    10,
-                                    0xAC0 - 1,
-                                    0
-                                );
-                                m.PlaySound(0x207);
-                                SpellHelper.Damage(this, m, toDeal, 100, 0, 0, 0, 0);
-                            }
-                            else if (elm == "fire")
-                            {
-                                Point3D ert = new Point3D((m.X + 2), (m.Y + 2), m.Z + 15);
-                                Effects.SendLocationEffect(ert, m.Map, 0x551A, 30, 10, 0, 0);
-                                m.PlaySound(0x345);
-                                SpellHelper.Damage(this, m, toDeal, 0, 100, 0, 0, 0);
-                            }
-                            else if (elm == "water")
-                            {
-                                Point3D ert = new Point3D((m.X + 2), (m.Y), m.Z);
-                                Effects.SendLocationEffect(ert, m.Map, 0x55BB, 30, 10, 0, 0);
-                                m.PlaySound(0x64F);
-                                SpellHelper.Damage(this, m, toDeal, 0, 0, 100, 0, 0);
+                                Caster.DoHarmful(m);
+
+                                string elm = ElementalSpell.GetElement(Caster);
+
+                                if (elm == "air")
+                                {
+                                    Point3D ert = new Point3D((m.X + 1), (m.Y + 1), m.Z + 5);
+                                    Effects.SendLocationEffect(ert, m.Map, 0x55A6, 30, 10, 0, 0);
+                                    m.PlaySound(0x028);
+                                    SpellHelper.Damage(this, m, toDeal, 0, 0, 0, 0, 100);
+                                }
+                                else if (elm == "earth")
+                                {
+                                    Point3D ert = new Point3D((m.X + 2), (m.Y), m.Z);
+                                    Effects.SendLocationEffect(
+                                        ert,
+                                        m.Map,
+                                        0x55BB,
+                                        30,
+                                        10,
+                                        0xAC0 - 1,
+                                        0
+                                    );
+                                    m.PlaySound(0x207);
+                                    SpellHelper.Damage(this, m, toDeal, 100, 0, 0, 0, 0);
+                                }
+                                else if (elm == "fire")
+                                {
+                                    Point3D ert = new Point3D((m.X + 2), (m.Y + 2), m.Z + 15);
+                                    Effects.SendLocationEffect(ert, m.Map, 0x551A, 30, 10, 0, 0);
+                                    m.PlaySound(0x345);
+                                    SpellHelper.Damage(this, m, toDeal, 0, 100, 0, 0, 0);
+                                }
+                                else if (elm == "water")
+                                {
+                                    Point3D ert = new Point3D((m.X + 2), (m.Y), m.Z);
+                                    Effects.SendLocationEffect(ert, m.Map, 0x55BB, 30, 10, 0, 0);
+                                    m.PlaySound(0x64F);
+                                    SpellHelper.Damage(this, m, toDeal, 0, 0, 100, 0, 0);
+                                }
                             }
                         }
                     }

@@ -1,8 +1,8 @@
 using System;
 using System.Collections;
 using Server.Items;
-using Server.Targeting;
 using Server.Mobiles;
+using Server.Targeting;
 
 namespace Server.SkillHandlers
 {
@@ -79,6 +79,8 @@ namespace Server.SkillHandlers
                         m_Creature.RemoveStatMod(((StatMod)mod).Name);
                     else if (mod is SkillMod)
                         m_Creature.RemoveSkillMod((SkillMod)mod);
+
+                    BuffInfo.RemoveBuff(m_Creature, BuffIcon.Discordance);
                 }
             }
         }
@@ -182,7 +184,7 @@ namespace Server.SkillHandlers
                     {
                         from.SendLocalizedMessage(1049537); // Your target is already in discord.
                     }
-                    else if (!targ.Player)
+                    else if (targ is Mobile)
                     {
                         double diff = m_Instrument.GetDifficultyFor(targ) - 10.0;
                         double music = from.Skills[SkillName.Musicianship].Value;
@@ -205,78 +207,110 @@ namespace Server.SkillHandlers
                             )
                         )
                         {
-                            from.SendLocalizedMessage(1049539); // You play the song surpressing your targets strength
-                            m_Instrument.PlayInstrumentWell(from);
-                            m_Instrument.ConsumeUse(from);
+                            bool discordMe = true;
 
-                            ArrayList mods = new ArrayList();
-                            int effect;
-                            double scalar;
+                            if (
+                                targ.Skills[SkillName.MagicResist].Value
+                                    > Utility.RandomMinMax(0, 125)
+                                && targ.Player
+                            )
+                                discordMe = false;
 
-                            effect = (int)(from.Skills[SkillName.Discordance].Value / -5.0);
-
-                            if (Core.SE && BaseInstrument.GetBaseDifficulty(targ) >= 160.0)
-                                effect /= 2;
-
-                            scalar = effect * 0.01;
-
-                            mods.Add(new ResistanceMod(ResistanceType.Physical, effect));
-                            mods.Add(new ResistanceMod(ResistanceType.Fire, effect));
-                            mods.Add(new ResistanceMod(ResistanceType.Cold, effect));
-                            mods.Add(new ResistanceMod(ResistanceType.Poison, effect));
-                            mods.Add(new ResistanceMod(ResistanceType.Energy, effect));
-
-                            mods.Add(
-                                new StatMod(
-                                    StatType.Str,
-                                    "DiscordanceStr",
-                                    (int)(targ.RawStr * scalar),
-                                    TimeSpan.Zero
-                                )
-                            );
-                            mods.Add(
-                                new StatMod(
-                                    StatType.Int,
-                                    "DiscordanceInt",
-                                    (int)(targ.RawInt * scalar),
-                                    TimeSpan.Zero
-                                )
-                            );
-                            mods.Add(
-                                new StatMod(
-                                    StatType.Dex,
-                                    "DiscordanceDex",
-                                    (int)(targ.RawDex * scalar),
-                                    TimeSpan.Zero
-                                )
-                            );
-
-                            for (int i = 0; i < targ.Skills.Length; ++i)
+                            if (discordMe)
                             {
-                                if (targ.Skills[i].Value > 0)
-                                    mods.Add(
-                                        new DefaultSkillMod(
-                                            (SkillName)i,
-                                            true,
-                                            targ.Skills[i].Value * scalar
-                                        )
-                                    );
+                                from.SendLocalizedMessage(1049539); // You play the song surpressing your targets strength
+                                m_Instrument.PlayInstrumentWell(from);
+                                m_Instrument.ConsumeUse(from);
+
+                                ArrayList mods = new ArrayList();
+                                int effect;
+                                double scalar;
+
+                                effect = (int)(from.Skills[SkillName.Discordance].Value / -5.0);
+
+                                if (Core.SE && BaseInstrument.GetBaseDifficulty(targ) >= 160.0)
+                                    effect /= 2;
+
+                                scalar = effect * 0.01;
+
+                                mods.Add(new ResistanceMod(ResistanceType.Physical, effect));
+                                mods.Add(new ResistanceMod(ResistanceType.Fire, effect));
+                                mods.Add(new ResistanceMod(ResistanceType.Cold, effect));
+                                mods.Add(new ResistanceMod(ResistanceType.Poison, effect));
+                                mods.Add(new ResistanceMod(ResistanceType.Energy, effect));
+
+                                mods.Add(
+                                    new StatMod(
+                                        StatType.Str,
+                                        "DiscordanceStr",
+                                        (int)(targ.RawStr * scalar),
+                                        TimeSpan.Zero
+                                    )
+                                );
+                                mods.Add(
+                                    new StatMod(
+                                        StatType.Int,
+                                        "DiscordanceInt",
+                                        (int)(targ.RawInt * scalar),
+                                        TimeSpan.Zero
+                                    )
+                                );
+                                mods.Add(
+                                    new StatMod(
+                                        StatType.Dex,
+                                        "DiscordanceDex",
+                                        (int)(targ.RawDex * scalar),
+                                        TimeSpan.Zero
+                                    )
+                                );
+
+                                for (int i = 0; i < targ.Skills.Length; ++i)
+                                {
+                                    if (targ.Skills[i].Value > 0)
+                                        mods.Add(
+                                            new DefaultSkillMod(
+                                                (SkillName)i,
+                                                true,
+                                                targ.Skills[i].Value * scalar
+                                            )
+                                        );
+                                }
+
+                                DiscordanceInfo info = new DiscordanceInfo(
+                                    from,
+                                    targ,
+                                    Math.Abs(effect),
+                                    mods
+                                );
+                                info.m_Timer = Timer.DelayCall<DiscordanceInfo>(
+                                    TimeSpan.Zero,
+                                    TimeSpan.FromSeconds(1.25),
+                                    new TimerStateCallback<DiscordanceInfo>(ProcessDiscordance),
+                                    info
+                                );
+
+                                m_Table[targ] = info;
+
+                                BuffInfo.RemoveBuff(targ, BuffIcon.Discordance);
+                                string args = String.Format(
+                                    "{0}\t{1}\t{2}\t{3}\t{4}",
+                                    effect,
+                                    (int)(targ.RawStr * scalar),
+                                    (int)(targ.RawInt * scalar),
+                                    (int)(targ.RawDex * scalar),
+                                    scalar
+                                );
+                                BuffInfo.AddBuff(
+                                    targ,
+                                    new BuffInfo(BuffIcon.Discordance, 1063662, args.ToString())
+                                );
                             }
-
-                            DiscordanceInfo info = new DiscordanceInfo(
-                                from,
-                                targ,
-                                Math.Abs(effect),
-                                mods
-                            );
-                            info.m_Timer = Timer.DelayCall<DiscordanceInfo>(
-                                TimeSpan.Zero,
-                                TimeSpan.FromSeconds(1.25),
-                                new TimerStateCallback<DiscordanceInfo>(ProcessDiscordance),
-                                info
-                            );
-
-                            m_Table[targ] = info;
+                            else
+                            {
+                                from.SendLocalizedMessage(1049540); // You fail to disrupt your target
+                                m_Instrument.PlayInstrumentBadly(from);
+                                m_Instrument.ConsumeUse(from);
+                            }
                         }
                         else
                         {

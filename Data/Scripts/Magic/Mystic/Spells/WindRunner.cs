@@ -1,10 +1,10 @@
 using System;
-using Server;
 using System.Collections;
-using Server.Network;
 using System.Text;
+using Server;
 using Server.Items;
 using Server.Mobiles;
+using Server.Network;
 
 namespace Server.Spells.Mystic
 {
@@ -18,7 +18,7 @@ namespace Server.Spells.Mystic
         }
         public override int RequiredTithing
         {
-            get { return 250; }
+            get { return 75; }
         }
         public override double RequiredSkill
         {
@@ -53,6 +53,7 @@ namespace Server.Spells.Mystic
             m.Send(SpeedControl.Disable);
             TableWindRunning.Remove(m);
             m.EndAction(typeof(WindRunner));
+            BuffInfo.RemoveBuff(m, BuffIcon.WindRunner);
         }
 
         public override void OnCast()
@@ -88,6 +89,16 @@ namespace Server.Spells.Mystic
                 TableWindRunning[Caster] = SpeedControl.MountSpeed;
                 Caster.Send(SpeedControl.MountSpeed);
                 new InternalTimer(Caster, TimeSpan.FromSeconds(TotalTime)).Start();
+                BuffInfo.RemoveBuff(Caster, BuffIcon.WindRunner);
+                BuffInfo.AddBuff(
+                    Caster,
+                    new BuffInfo(
+                        BuffIcon.WindRunner,
+                        1063516,
+                        TimeSpan.FromSeconds(TotalTime),
+                        Caster
+                    )
+                );
                 Caster.BeginAction(typeof(WindRunner));
                 Point3D air = new Point3D((Caster.X + 1), (Caster.Y + 1), (Caster.Z + 5));
                 Effects.SendLocationParticles(

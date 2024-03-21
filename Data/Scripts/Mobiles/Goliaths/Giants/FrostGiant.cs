@@ -1,9 +1,9 @@
 using System;
-using Server;
 using System.Collections;
+using Server;
 using Server.Items;
-using Server.Targeting;
 using Server.Misc;
+using Server.Targeting;
 
 namespace Server.Mobiles
 {
@@ -63,7 +63,7 @@ namespace Server.Mobiles
         {
             Name = NameList.RandomName("giant");
             Title = "the frost giant";
-            Body = 777;
+            Body = Utility.RandomList(777, 325);
             BaseSoundID = 609;
 
             SetStr(536, 585);
@@ -139,6 +139,30 @@ namespace Server.Mobiles
                         MyChest.Name = "frost giant sack";
                         MyChest.Hue = 0x9C2;
                         c.DropItem(MyChest);
+                    }
+                    if (
+                        GetPlayerInfo.LuckyKiller(killer.Luck)
+                        && Utility.RandomMinMax(1, 5) == 1
+                        && Body == 325
+                    )
+                    {
+                        BaseWeapon axe = new TwoHandedAxe();
+                        axe.Name = "frost giant axe";
+                        axe.ItemID = 0x265E;
+                        axe.Hue = 0xB78;
+                        axe.SkillBonuses.SetValues(0, SkillName.Swords, 10);
+                        axe.SkillBonuses.SetValues(1, SkillName.Tactics, 10);
+                        axe.WeaponAttributes.ResistColdBonus = 15;
+                        axe.Attributes.WeaponDamage = 50;
+                        axe.Attributes.AttackChance = 10;
+                        axe.Slayer = SlayerName.FlameDousing;
+                        axe.AccuracyLevel = WeaponAccuracyLevel.Supremely;
+                        axe.MinDamage = axe.MinDamage + 6;
+                        axe.MaxDamage = axe.MaxDamage + 10;
+                        axe.DurabilityLevel = WeaponDurabilityLevel.Indestructible;
+                        axe.AosElementDamages.Cold = 50;
+                        axe.AosElementDamages.Physical = 50;
+                        c.DropItem(axe);
                     }
                 }
             }

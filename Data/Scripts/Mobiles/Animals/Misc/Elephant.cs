@@ -1,12 +1,12 @@
 using System;
-using Server;
 using System.Collections;
-using Server.Items;
-using Server.Targeting;
-using Server.Misc;
 using System.Collections.Generic;
-using Server.Mobiles;
+using Server;
 using Server.ContextMenus;
+using Server.Items;
+using Server.Misc;
+using Server.Mobiles;
+using Server.Targeting;
 
 namespace Server.Mobiles
 {
@@ -77,7 +77,6 @@ namespace Server.Mobiles
         public override void OnDeath(Container c)
         {
             base.OnDeath(c);
-            c.Z = c.Z + 5;
 
             Mobile killer = this.LastKiller;
             if (killer != null)
@@ -97,6 +96,16 @@ namespace Server.Mobiles
                     }
                 }
             }
+
+            if (this.Body == 337)
+                Timer.DelayCall(TimeSpan.FromSeconds(1.5), new TimerStateCallback(SetLook), c);
+        }
+
+        private void SetLook(object state)
+        {
+            Item c = state as Item;
+
+            c.ItemID = Utility.RandomList(0x65EA, 0x65EB);
         }
 
         #region Pack Animal Methods

@@ -2,10 +2,10 @@ using System;
 using System.Net;
 using Server;
 using Server.Accounting;
-using Server.Network;
-using Server.Targets;
 using Server.Commands;
 using Server.Commands.Generic;
+using Server.Network;
+using Server.Targets;
 
 namespace Server.Gumps
 {

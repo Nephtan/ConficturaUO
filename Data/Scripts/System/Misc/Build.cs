@@ -1,16 +1,16 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.IO;
+using Server;
 using Server.Accounting;
-using Server.Commands.Generic;
 using Server.Commands;
+using Server.Commands.Generic;
 using Server.Items;
 using Server.Misc;
 using Server.Mobiles;
 using Server.Network;
 using Server.Regions;
-using Server;
-using System.Collections.Generic;
-using System.Collections;
-using System.IO;
-using System;
 
 namespace Server.Misc
 {
@@ -86771,6 +86771,76 @@ namespace Server.Misc
 
 namespace Server.Scripts.Commands
 {
+    public class Testing
+    {
+        public static void Initialize()
+        {
+            CommandSystem.Register(
+                "Testing",
+                AccessLevel.Counselor,
+                new CommandEventHandler(Testings)
+            );
+        }
+
+        [Usage("Testings")]
+        [Description("Test specific things in the scripts.")]
+        public static void Testings(CommandEventArgs e)
+        {
+            TimeSpan duration = TimeSpan.FromSeconds(40.0);
+            int Bonus = 12;
+
+            //string args = String.Format("{0}\t{1}\t{2}\t{3}\t{4}", 22, 13, 33, 32, 77);
+
+            BuffInfo.AddBuff(
+                e.Mobile,
+                new BuffInfo(
+                    BuffIcon.FishStr,
+                    1063672,
+                    TimeSpan.FromMinutes(1.0),
+                    e.Mobile,
+                    Bonus.ToString()
+                )
+            );
+            BuffInfo.AddBuff(
+                e.Mobile,
+                new BuffInfo(
+                    BuffIcon.FishDex,
+                    1063674,
+                    TimeSpan.FromMinutes(1.0),
+                    e.Mobile,
+                    Bonus.ToString()
+                )
+            );
+            BuffInfo.AddBuff(
+                e.Mobile,
+                new BuffInfo(
+                    BuffIcon.FishInt,
+                    1063676,
+                    TimeSpan.FromMinutes(1.0),
+                    e.Mobile,
+                    Bonus.ToString()
+                )
+            );
+            BuffInfo.AddBuff(
+                e.Mobile,
+                new BuffInfo(
+                    BuffIcon.Weaken,
+                    1063678,
+                    TimeSpan.FromSeconds((Utility.RandomDouble() * 12) + 10),
+                    e.Mobile,
+                    ((Utility.RandomMinMax(40, 70) + (12 * 2)) * (-1)).ToString()
+                )
+            );
+            BuffInfo.AddBuff(e.Mobile, new BuffInfo(BuffIcon.Bandage, 1063670, duration, e.Mobile));
+            BuffInfo.AddBuff(e.Mobile, new BuffInfo(BuffIcon.Fear, 1063688, duration, e.Mobile));
+            BuffInfo.AddBuff(
+                e.Mobile,
+                new BuffInfo(BuffIcon.Confusion, 1063684, duration, e.Mobile)
+            );
+            BuffInfo.AddBuff(e.Mobile, new BuffInfo(BuffIcon.Charm, 1063686, duration, e.Mobile));
+        }
+    }
+
     public class BuildWorld
     {
         public static void Initialize()
@@ -86818,7 +86888,10 @@ namespace Server.Scripts.Commands
                     BaseCreature bc = (BaseCreature)being;
 
                     if (
-                        bc.Home.X > 0 && !bc.IsStabled && !bc.Controlled && bc.ControlMaster == null
+                        bc.Home.X > 0
+                        && !bc.IsStabled
+                        && !bc.Controlled
+                        && bc.ControlMaster == null
                     )
                         beings.Add(being);
 

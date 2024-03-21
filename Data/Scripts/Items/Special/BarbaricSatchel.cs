@@ -1,15 +1,15 @@
 using System;
-using Server;
 using System.Collections;
-using Server.ContextMenus;
 using System.Collections.Generic;
-using Server.Misc;
-using Server.Network;
-using Server.Items;
-using Server.Gumps;
-using Server.Mobiles;
-using Server.Commands;
 using System.Globalization;
+using Server;
+using Server.Commands;
+using Server.ContextMenus;
+using Server.Gumps;
+using Server.Items;
+using Server.Misc;
+using Server.Mobiles;
+using Server.Network;
 using Server.Regions;
 
 namespace Server.Items
@@ -936,7 +936,8 @@ namespace Server.Items
                     item.Hue = 0xB70;
                 }
                 else if (
-                    ((BaseArmor)item).Resource == CraftResource.RegularLeather && item.Hue == 0
+                    ((BaseArmor)item).Resource == CraftResource.RegularLeather
+                    && item.Hue == 0
                 )
                 {
                     item.Hue = 0xABE;
@@ -958,6 +959,7 @@ namespace Server.Items
             item.ItemID = itemID;
 
             from.SendSound(0x55);
+            from.AddToBackpack(item);
             from.SendMessage("The item has been changed.");
         }
 

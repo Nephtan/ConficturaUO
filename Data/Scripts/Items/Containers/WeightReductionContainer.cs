@@ -52,7 +52,14 @@ namespace Server.Items
         [Constructable]
         public SmallBagofHolding()
         {
-            Name = "Small Bag of Holding";
+            Name = "bag of holding";
+            ItemID = Utility.RandomList(0x658D, 0x658E);
+        }
+
+        public override void AddNameProperties(ObjectPropertyList list)
+        {
+            base.AddNameProperties(list);
+            list.Add(1049644, "small");
         }
 
         public SmallBagofHolding(Serial serial)
@@ -61,15 +68,17 @@ namespace Server.Items
         public override void Serialize(GenericWriter writer)
         {
             base.Serialize(writer);
-
             writer.Write((int)1); // version
         }
 
         public override void Deserialize(GenericReader reader)
         {
             base.Deserialize(reader);
-
             int version = reader.ReadInt();
+            if (ItemID != 0x658D || ItemID != 0x658E)
+            {
+                ItemID = Utility.RandomList(0x658D, 0x658E);
+            }
         }
     }
 
@@ -119,7 +128,14 @@ namespace Server.Items
         [Constructable]
         public MediumBagofHolding()
         {
-            Name = "Medium Bag of Holding";
+            Name = "bag of holding";
+            ItemID = Utility.RandomList(0x658D, 0x658E);
+        }
+
+        public override void AddNameProperties(ObjectPropertyList list)
+        {
+            base.AddNameProperties(list);
+            list.Add(1049644, "medium");
         }
 
         public MediumBagofHolding(Serial serial)
@@ -128,15 +144,17 @@ namespace Server.Items
         public override void Serialize(GenericWriter writer)
         {
             base.Serialize(writer);
-
             writer.Write((int)1); // version
         }
 
         public override void Deserialize(GenericReader reader)
         {
             base.Deserialize(reader);
-
             int version = reader.ReadInt();
+            if (ItemID != 0x658D || ItemID != 0x658E)
+            {
+                ItemID = Utility.RandomList(0x658D, 0x658E);
+            }
         }
     }
 
@@ -186,7 +204,14 @@ namespace Server.Items
         [Constructable]
         public LargeBagofHolding()
         {
-            Name = "Large Bag of Holding";
+            Name = "bag of holding";
+            ItemID = Utility.RandomList(0x6568, 0x6569);
+        }
+
+        public override void AddNameProperties(ObjectPropertyList list)
+        {
+            base.AddNameProperties(list);
+            list.Add(1049644, "large");
         }
 
         public LargeBagofHolding(Serial serial)
@@ -195,132 +220,17 @@ namespace Server.Items
         public override void Serialize(GenericWriter writer)
         {
             base.Serialize(writer);
-
             writer.Write((int)1); // version
         }
 
         public override void Deserialize(GenericReader reader)
         {
             base.Deserialize(reader);
-
             int version = reader.ReadInt();
-        }
-    }
-
-    // This is an example of a container that reduces total weight by 75%
-    public class BagofWonder : WeightReductionContainer
-    {
-        public override double WeightReductionAmount
-        {
-            get { return 0.75; }
-        }
-        public override int ContainerMaxItems
-        {
-            get { return 125; }
-        }
-
-        public override string AccessDelayMessage
-        {
-            get
+            if (ItemID != 0x6568 || ItemID != 0x6569)
             {
-                return "The rift in the nether that separates the dimensions has that stabilized yet.";
+                ItemID = Utility.RandomList(0x6568, 0x6569);
             }
-        }
-        public override string AddAccessMessage
-        {
-            get
-            {
-                return "You slip your hand through the nether to place an item into another dimension.";
-            }
-        }
-        public override string RemoveAccessMessage
-        {
-            get
-            {
-                return "You slip your hand through the nether to retrieve an item from another dimension.";
-            }
-        }
-
-        [Constructable]
-        public BagofWonder(double weightReductionAmount)
-        {
-            Name = "Bag of Wonder";
-        }
-
-        public BagofWonder(Serial serial)
-            : base(serial) { }
-
-        public override void Serialize(GenericWriter writer)
-        {
-            base.Serialize(writer);
-
-            writer.Write((int)1); // version
-        }
-
-        public override void Deserialize(GenericReader reader)
-        {
-            base.Deserialize(reader);
-
-            int version = reader.ReadInt();
-        }
-    }
-
-    // This is an example of a container assigning random weight reduction from 10% to 90% (increments of 10%)
-    // This example also uses different ItemIDs, removes the access delay and custom messages
-    [DynamicFliping]
-    [Flipable(0x9A8, 0xE80)]
-    public class MysticBox : WeightReductionContainer
-    {
-        private double m_WeightReductionAmount = 0.0;
-
-        public override double WeightReductionAmount
-        {
-            get { return m_WeightReductionAmount; }
-        }
-        public override int ContainerMaxItems
-        {
-            get { return 125; }
-        }
-        public override int ContainerHue
-        {
-            get { return Utility.RandomNeutralHue(); }
-        }
-        public override TimeSpan AccessDelay
-        {
-            get { return TimeSpan.Zero; }
-        }
-
-        [Constructable]
-        public MysticBox()
-            : this(((double)Utility.Random(1, 9)) / 10) { }
-
-        [Constructable]
-        public MysticBox(double weightReductionAmount)
-            : base(0x9A8)
-        {
-            Name = "Mystic Box";
-            m_WeightReductionAmount = weightReductionAmount;
-        }
-
-        public MysticBox(Serial serial)
-            : base(serial) { }
-
-        public override void Serialize(GenericWriter writer)
-        {
-            base.Serialize(writer);
-
-            writer.Write((int)1); // version
-
-            writer.Write((double)m_WeightReductionAmount);
-        }
-
-        public override void Deserialize(GenericReader reader)
-        {
-            base.Deserialize(reader);
-
-            int version = reader.ReadInt();
-
-            m_WeightReductionAmount = reader.ReadDouble();
         }
     }
 

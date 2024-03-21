@@ -8,8 +8,8 @@ Purpose: A stone that allows for multiple hide/appear effects for counselors and
 */
 using System;
 using Server;
-using Server.Misc;
 using Server.Items;
+using Server.Misc;
 using Server.Targeting;
 
 namespace Server.Items

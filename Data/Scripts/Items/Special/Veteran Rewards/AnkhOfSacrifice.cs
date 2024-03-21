@@ -1,11 +1,11 @@
 using System;
 using System.Collections.Generic;
 using Server;
+using Server.ContextMenus;
+using Server.Engines.VeteranRewards;
 using Server.Gumps;
 using Server.Mobiles;
 using Server.Network;
-using Server.ContextMenus;
-using Server.Engines.VeteranRewards;
 
 namespace Server.Items
 {
@@ -156,6 +156,11 @@ namespace Server.Items
 
     public class AnkhOfSacrificeAddon : BaseAddon, IRewardItem
     {
+        public override string AddonName
+        {
+            get { return "ankh of sacrifice"; }
+        }
+
         public override bool HandlesOnMovement
         {
             get { return true; }

@@ -1,7 +1,7 @@
 using System;
-using Server;
 using System.Collections;
 using System.Collections.Generic;
+using Server;
 using Server.Items;
 using Server.Network;
 
@@ -670,7 +670,7 @@ namespace Server.Misc
         {
             Item item = null;
 
-            switch (Utility.RandomMinMax(0, 7))
+            switch (Utility.RandomMinMax(0, 9))
             {
                 case 0:
                     item = new BronzeShield();
@@ -703,6 +703,14 @@ namespace Server.Misc
                 case 7:
                     item = new RoyalShield();
                     item.Name = "royal shield";
+                    break;
+                case 8:
+                    item = new SunShield();
+                    item.Name = "sun shield";
+                    break;
+                case 9:
+                    item = new VirtueShield();
+                    item.Name = "virtue shield";
                     break;
             }
 

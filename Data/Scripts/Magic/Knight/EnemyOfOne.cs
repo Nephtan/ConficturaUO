@@ -1,9 +1,9 @@
 using System;
 using System.Collections;
 using Server;
+using Server.Items;
 using Server.Mobiles;
 using Server.Network;
-using Server.Items;
 using Server.Targeting;
 
 namespace Server.Spells.Chivalry

@@ -1,7 +1,7 @@
 using System;
 using System.Collections;
-using Server.Network;
 using Server.Engines.Craft;
+using Server.Network;
 
 namespace Server.Items
 {
@@ -245,7 +245,7 @@ namespace Server.Items
             }
         }
 
-        static public bool Thirsty(Mobile from, int fillFactor)
+        public static bool Thirsty(Mobile from, int fillFactor)
         {
             if (from.Thirst >= 20)
             {

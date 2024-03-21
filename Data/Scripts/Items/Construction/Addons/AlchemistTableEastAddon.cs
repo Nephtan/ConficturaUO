@@ -5,6 +5,11 @@ namespace Server.Items
 {
     public class AlchemistTableEastAddon : BaseAddon
     {
+        public override string AddonName
+        {
+            get { return "alchemy table"; }
+        }
+
         public override BaseAddonDeed Deed
         {
             get { return new AlchemistTableEastDeed(); }

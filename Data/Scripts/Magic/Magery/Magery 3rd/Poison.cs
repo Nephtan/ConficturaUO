@@ -1,7 +1,7 @@
 using System;
-using Server.Targeting;
-using Server.Network;
 using Server.Mobiles;
+using Server.Network;
+using Server.Targeting;
 
 namespace Server.Spells.Third
 {
@@ -44,6 +44,7 @@ namespace Server.Spells.Third
                     m.Spell.OnCasterHurt();
 
                 m.Paralyzed = false;
+                BuffInfo.CleanupIcons(m, true);
 
                 if (CheckResisted(m))
                 {

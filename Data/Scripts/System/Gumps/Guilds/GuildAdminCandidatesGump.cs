@@ -1,8 +1,8 @@
 using System;
 using Server;
+using Server.Factions;
 using Server.Guilds;
 using Server.Network;
-using Server.Factions;
 
 namespace Server.Gumps
 {

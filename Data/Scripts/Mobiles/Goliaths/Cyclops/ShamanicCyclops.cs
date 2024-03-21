@@ -1,9 +1,9 @@
 using System;
-using Server;
 using System.Collections;
+using Server;
 using Server.Items;
-using Server.Targeting;
 using Server.Misc;
+using Server.Targeting;
 
 namespace Server.Mobiles
 {
@@ -65,14 +65,9 @@ namespace Server.Mobiles
             : base(AIType.AI_Mage, FightMode.Closest, 10, 1, 0.2, 0.4)
         {
             Name = NameList.RandomName("greek");
-            Title = "the shamanic cyclops";
-            Body = 75;
+            Title = "the cyclops shaman";
+            Body = 989;
             BaseSoundID = 604;
-            Hue = 0xA1F;
-            if (Utility.RandomMinMax(1, 2) == 1)
-            {
-                Hue = 0xA4B;
-            }
 
             SetStr(336, 385);
             SetDex(96, 115);
@@ -98,39 +93,6 @@ namespace Server.Mobiles
             Karma = -6500;
 
             VirtualArmor = 48;
-        }
-
-        public override void OnDeath(Container c)
-        {
-            base.OnDeath(c);
-
-            Mobile killer = this.LastKiller;
-            if (killer != null)
-            {
-                if (killer is BaseCreature)
-                    killer = ((BaseCreature)killer).GetMaster();
-
-                if (killer is PlayerMobile)
-                {
-                    if (
-                        GetPlayerInfo.LuckyKiller(killer.Luck)
-                        && this.Body == 757
-                        && Utility.RandomMinMax(1, 4) == 1
-                    )
-                    {
-                        BaseWeapon hammer = new WarHammer();
-                        hammer.AccuracyLevel = WeaponAccuracyLevel.Supremely;
-                        hammer.MinDamage = hammer.MinDamage + 6;
-                        hammer.MaxDamage = hammer.MaxDamage + 10;
-                        hammer.DurabilityLevel = WeaponDurabilityLevel.Indestructible;
-                        hammer.Name = "magical cyclops hammer";
-                        hammer.AosElementDamages.Energy = 25;
-                        hammer.AosElementDamages.Physical = 75;
-                        hammer.WeaponAttributes.HitLightning = 10;
-                        c.DropItem(hammer);
-                    }
-                }
-            }
         }
 
         public override void GenerateLoot()

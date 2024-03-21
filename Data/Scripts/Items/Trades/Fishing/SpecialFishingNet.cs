@@ -293,7 +293,7 @@ namespace Server.Items
             int onBoat = 0;
             string monster = "";
             Point3D SpawnAt = p;
-            switch (Utility.Random(17))
+            switch (Utility.Random(18))
             {
                 case 0:
                     monster = "SeaHag";
@@ -351,6 +351,9 @@ namespace Server.Items
                     break;
                 case 16:
                     monster = "Calamari";
+                    break;
+                case 17:
+                    monster = "Jellyfish";
                     break;
             }
 
@@ -421,6 +424,10 @@ namespace Server.Items
                 else if (monster == "Calamari")
                 {
                     spawn = new Calamari();
+                }
+                else if (monster == "Jellyfish")
+                {
+                    spawn = new Jellyfish();
                 }
                 else if (monster == "Trituns")
                 {

@@ -1,9 +1,9 @@
 using System;
 using Server;
+using Server.Items;
 using Server.Mobiles;
 using Server.Network;
 using Server.Regions;
-using Server.Items;
 
 namespace Server.Misc
 {

@@ -1,8 +1,8 @@
 using System;
 using Server;
+using Server.Engines.VeteranRewards;
 using Server.Gumps;
 using Server.Network;
-using Server.Engines.VeteranRewards;
 
 namespace Server.Items
 {
@@ -40,6 +40,11 @@ namespace Server.Items
 
     public class BloodyPentagramAddon : BaseAddon, IRewardItem
     {
+        public override string AddonName
+        {
+            get { return "bloody pentagram"; }
+        }
+
         public override BaseAddonDeed Deed
         {
             get

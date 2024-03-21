@@ -1,8 +1,8 @@
 using System;
 using System.Collections;
-using Server.Network;
 using Server.Items;
 using Server.Mobiles;
+using Server.Network;
 using Server.Targeting;
 
 namespace Server.Spells.Research
@@ -35,7 +35,9 @@ namespace Server.Spells.Research
             Server.Misc.Research.SpellInformation(spellID, 2),
             Server.Misc.Research.CapsCast(Server.Misc.Research.SpellInformation(spellID, 4)),
             215,
-            9031
+            9031,
+            Reagent.RedLotus,
+            Reagent.NoxCrystal
         );
 
         public ResearchFadefromSight(Mobile caster, Item scroll)
@@ -95,7 +97,7 @@ namespace Server.Spells.Research
                 m.Hidden = true;
                 m.Location = to;
                 m.ProcessDelta();
-                Server.Misc.Research.ConsumeScroll(Caster, true, spellIndex, false);
+                Server.Misc.Research.ConsumeScroll(Caster, true, spellIndex, alwaysConsume, Scroll);
             }
 
             FinishSequence();

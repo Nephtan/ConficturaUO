@@ -1,17 +1,17 @@
 using System;
 using System.Collections;
-using Server.ContextMenus;
 using System.Collections.Generic;
-using Server.Misc;
-using Server.Network;
-using Server;
-using Server.Items;
-using Server.Gumps;
-using Server.Mobiles;
-using Server.Commands;
-using System.Net;
 using System.Diagnostics;
+using System.Net;
+using Server;
 using Server.Accounting;
+using Server.Commands;
+using Server.ContextMenus;
+using Server.Gumps;
+using Server.Items;
+using Server.Misc;
+using Server.Mobiles;
+using Server.Network;
 
 namespace Server.Mobiles
 {
@@ -172,7 +172,7 @@ namespace Server.Gumps
             AddImage(0, 0, 2610, Server.Misc.PlayerSettings.GetGumpHue(from));
 
             int header = 11474;
-            if (MyServerSettings.ServerName() == "Ruins & Riches")
+            if (MyServerSettings.ServerName() == "Confictura - Test")
             {
                 header = 11377;
             }
@@ -183,7 +183,7 @@ namespace Server.Gumps
                 58,
                 482,
                 312,
-                @"<BODY><BASEFONT Color=#94C541>For you, the day was normal compared to any other. However, when the evening sun finally disappeared below the landscape, you retired to bed where the sleep felt restless and the dreams more vivid. You cannot remember the details of the dream, but you can recall being drawn from this world through a swirling portal. When you awoke, you found yourself here in this forest. Your night clothes are gone and you are now dressed in some medieval garb, wielding a light in your hand.<BR><BR>Through the darkness of the night, you see a campfire just ahead. A colorful tent is next to it with the welcoming glow of lanterns about. The sounds of the nearby stream provides a tranquility, and you can see a grizzly bear soundly sleeping next to the warmth of the fire. If you were to shrug off the worries of your current life, you feel like this would be the place to start anew. You decide to see who is camping here and to perhaps find out where you are.</BASEFONT></BODY>",
+                @"<BODY><BASEFONT Color=#94C541>For you, the day was ordinary compared to any other. However, when the evening sun finally disappeared below the landscape, you retired to bed where sleep felt restless, and the dreams were more vivid. You cannot recall the details of the dream, but you remember being drawn from this world through a swirling portal. When you woke up, you found yourself in this forest. Your night clothes have disappeared, and you are now dressed in medieval garb, holding a light in your hand.<BR><BR>Through the darkness of the night, you see a campfire just ahead. A colorful tent is next to it with the welcoming glow of lanterns about. The sounds of the nearby stream provides a tranquility, and you can see a grizzly bear soundly sleeping next to the warmth of the fire. If you were to shrug off the worries of your current life, you feel like this would be the place to start anew. You decide to see who is camping here and to perhaps find out where you are.</BASEFONT></BODY>",
                 (bool)false,
                 (bool)false
             );
@@ -360,24 +360,29 @@ namespace Server.Gumps
         public static string GypsySpeech(Mobile from)
         {
             string monst = "";
-            string races = "Lastly, this realm ";
+            string races = "\n\nLastly, this realm ";
             if (MyServerSettings.MonstersAllowed())
             {
                 monst =
                     " There is a shelf over there with interesting potions you may want. So if you want one, drink it now and return here for your tarot card reading.";
                 races =
-                    "You may not actually be of human descent. You might actually be an ogre, troll, or satyr. There are many creatures you that you can actually be. If you want to explore these ideas, look through my potion shelf behind me. There you will find various potions of alteration, that can change your life. If you choose one of these creatures to be, consider changing your name to better represent the creature you chose to play. This leads me to my final words of advice. This realm ";
+                    "You may not actually be of human descent. You might actually be an ogre, troll, or satyr. There are many creatures you can actually be. If you want to explore these ideas, look through my potion shelf behind you, to the left of the entryway of my tent. There you will find various potions of alteration that can change your life. If you choose one of these creatures to be, consider changing your name to better represent the creature you chose to play. This leads me to my final words of advice... \n\nThis realm ";
             }
 
             return "Greetings, "
                 + from.Name
                 + "...you are about to enter one of the lands of "
                 + MyServerSettings.ServerName()
-                + ". Not too long ago the Stranger arrived in Sosaria and foiled the evil plans of Exodus. Castle Exodus lies in ruins and Sosaria is once again trying to rebuild in peace. Many vile monsters still roam the land, however, but hardy adventurers have bravely sought to rid us of these terrors. To begin your journey, simply choose your fate from my deck of tarot cards (begin by pressing the top-right button). Once you look through the deck (pressing the arrow buttons) you can draw a card of your choice (by pressing the OK button on the top-right)."
+                + ". Not too long ago, the Stranger arrived in Sosaria and foiled the evil plans of Exodus. Castle Exodus lies in ruins, and Sosaria is once again trying to rebuild in peace. Many vile monsters still roam the land, however, but hardy adventurers have bravely sought to rid us of these terrors. To begin your journey, simply choose your fate from my deck of tarot cards (begin by pressing the top-right button). Once you look through the deck (pressing the arrow buttons), you can draw a card of your choice (by pressing the OK button on the top-right)."
                 + monst
-                + "<br><br>Now let me tell you some things of the world that fate has brought you to. Traveling the lands can be dangerous as other adventurers may decide to kill you for your gold or property. The taverns, inns, and banks are safe from such threats, but there are also many guards in the settlements to keep the peace. They have been known to quickly dispatch with murderers and criminals. There are many merchants throughout the settlements. They are not able to sell or buy everything they normally deal in, as their choices of what they buy and sell change from day to day.<br><br>There are secrets to be learned and magic items to be found in the many dungeons. Each settlement in Sosaria is somewhat safe in the surrounding land so hunting for food or skins should be relatively safe. I cannot say such things of other lands. There is also a minor dungeon near each settlement of Sosaria, if you wish to begin traversing the dangers below before you are fully prepared. Be warned that the vile creatures are not all that you must face. There are many deadly traps in the rooms and halls of these places that could kill you quicker than the monster you may be fleeing from.<br><br>Prepare to go forth and make your life your own. Become the finest craftsman in the land, a wealthy owner of lands and castles, the mightiest warrior, or even the most powerful wizard. The choice is yours.<br><br>This world can be travelled alone or with friends, where one could have great adventures. Like I stated already, your chosen course in life is whatever you want to do. You may be a mighty warrior or powerful wizard. You may simply start a potion shop near a large city. You may be a master of beasts or a mystical bard. This is a world where great wealth and artefacts can be obtained from the many dungeons throughout the land. You may be slain by a creature, die from hunger, get lost in the dark, or stumble onto a deadly trap. You may find powerful relics and enough gold to build your own castle.<br><br>"
+                + "\n\nNow let me tell you some things about the world that fate has brought you to. Traveling the lands can be dangerous, as other adventurers may decide to kill you for your gold or property. The taverns, inns, and banks are safe from such threats, but there are also many guards in the settlements to keep the peace. They have been known to quickly dispatch murderers and criminals. You can choose to protect yourself from causing harm or being harmed by other adventurers by speaking to Thuvia, who is located just outside of this tent."
+                + "\n\nThere are many merchants throughout the settlements. They are not able to sell or buy everything they normally deal in, as their choices of what they buy and sell change from day to day."
+                + "\n\nThere are secrets to be learned and magic items to be found in the many dungeons. Each settlement in Sosaria is somewhat safe in the surrounding land, so hunting for food or skins should be relatively safe. I cannot say the same for other lands. There is also a minor dungeon near each settlement of Sosaria if you wish to begin traversing the dangers below before you are fully prepared. Be warned that the vile creatures are not all that you must face. There are many deadly traps in the rooms and halls of these places that could kill you quicker than the monster you may be fleeing from."
+                + "\n\nPrepare to go forth and make your life your own. Become the finest craftsman in the land, a wealthy owner of lands and castles, the mightiest warrior, or even the most powerful wizard. The choice is yours."
+                + "\n\nThis world can be traveled alone or with friends, where one could have great adventures. Like I stated already, your chosen course in life is whatever you want to do. You may be a mighty warrior or powerful wizard. You may simply start a potion shop near a large city. You may be a master of beasts or a mystical bard. This is a world where great wealth and artifacts can be obtained from the many dungeons throughout the land. You may be slain by a creature, die from hunger, get lost in the dark, or stumble onto a deadly trap. You may find powerful relics and enough gold to build your own castle."
+                + "\n\n"
                 + races
-                + "is best served if you have a name that is commensurate with a this rich fantasy world. You have one final chance to change you name if you need to, by simply using my journal on the table behind me. You cannot have a name that someone else already has, so it must be unique. If you want to change your name, proceed to the table where I keep my journal. Once your name is changed, return here for your tarot card reading.";
+                + "is best served if you have a name that is commensurate with this rich fantasy world. You have one final chance to change your name if you need to, by simply using my journal on the table behind me. You cannot have a name that someone else already has, so it must be unique. If you want to change your name, proceed to the table where I keep my journal. Once your name is changed, return here for your tarot card reading.";
         }
 
         public GypsyTarotGump(Mobile from, int page)
@@ -439,7 +444,7 @@ namespace Server.Gumps
             else
             {
                 int header = 11473;
-                if (MyServerSettings.ServerName() == "Ruins & Riches")
+                if (MyServerSettings.ServerName() == "Confictura - Test")
                 {
                     header = 11376;
                 }
@@ -608,7 +613,7 @@ namespace Server.Gumps
             string town = "";
             string text = "";
             string lodor =
-                "Most adventurers are born within the Land of Sosaria, only hearing tales and legends of other lands far away. One of these lands is the elven world of Lodoria. This world is a bit larger than Sosaria and the dungeons are somewhat more difficult. What Lodoria does have is familiar locations that veteran adventurers fondly remember. Dungeons such as Shame, Destard, and Wrong can be found throughout. There are many villages and cities and they are all inhabited by the good elven people. The much more vile elven folk, the drow, seek to destroy those that embrace the light and attempt to supress their rule beneath the surface of the world. If you wish to begin your journey in Lodoria, then you will then be a human that grew up in this strange land with no ties of those from Sosaria.";
+                "Most adventurers are born in the Land of Sosaria and only hear tales and legends of faraway lands. One of these lands is the elven world of Lodoria, which is slightly larger than Sosaria and has more challenging dungeons. However, Lodoria does offer familiar locations that veteran adventurers hold dear, such as Shame, Destard, and Wrong dungeons. The land is dotted with villages and cities, all inhabited by the benevolent elven people. The drow, a more malevolent faction of elves, seek to destroy those who embrace the light and impose their rule underground. If you choose to embark on your journey in Lodoria, you will be a human who grew up in this unfamiliar land, with no connection to Sosaria.";
 
             string fate = "If you choose this fate, ";
             switch (Utility.RandomMinMax(0, 8))
@@ -677,14 +682,14 @@ namespace Server.Gumps
                 if (Server.Items.BaseRace.GetUndead(creature))
                 {
                     undead =
-                        " Although you do not remember your past life, you feel different from the other undead. You seem to have retained your soul, which will surely be noticed by other undead. This means they will likely attack you as they do the living.";
+                        " Although you do not remember your past life, you feel different from the other undead. It seems that you have retained your soul, and this is bound to catch the attention of other undead. Consequently, they are likely to attack you, just as they do with the living.";
                 }
 
                 if (Server.Items.BaseRace.BloodDrinker(creature))
                 {
                     undead =
                         undead
-                        + " Having a soul, however, means you can safely walk the land during the daylight.";
+                        + " Having a soul, however, means that you can safely walk the land during daylight hours.";
                 }
 
                 switch (page)
@@ -697,7 +702,7 @@ namespace Server.Gumps
                             + Server.Items.BaseRace.StartSentence(town)
                             + " of Sosaria."
                             + undead
-                            + " This world has suffered three ages of darkness, where a stranger came from a far off land to bring light to each of these events. After Mondain, Minax, and Exodus were thwarted in their evil plans, Sosaria has reached a level of peace and prosperity. Although most want to lead humble lives as simple villagers, there are some that seek to explore the old dungeons, tombs, ruins, and crypts of the world. This path will lead you toward joining the ways of civilized man, but doing so will surely have your kindred banish you from their presence. It matters little to you, as you prefer to seek fame and fortune in this world rid of the most powerful evils it has ever seen.";
+                            + " This world has experienced three ages of darkness, during which a stranger emerged from a distant land to bring light to each of these events. Following the defeats of Mondain, Minax, and Exodus in their wicked schemes, Sosaria has attained a state of peace and prosperity. While most individuals desire to live humble lives as simple villagers, there are those who yearn to explore the ancient dungeons, tombs, ruins, and crypts scattered throughout the world. Embarking on this path will lead you to embrace the ways of civilized society, but in doing so, your own kindred will likely banish you from their presence. This matters little to you, as your preference lies in seeking fame and fortune in a world freed from the grip of the most formidable evils it has ever witnessed.";
                         break;
 
                     case 2:
@@ -708,7 +713,11 @@ namespace Server.Gumps
                             + Server.Items.BaseRace.StartSentence(town)
                             + " of Sosaria."
                             + undead
-                            + " This fate in Sosaria has a more challenging life, where you perhaps left others of your kind, but have decided to embrace your monstrous ways and seek power for yourself. You will be able to become grandmaster in 13 different skills instead of the 10 normally accomplished. Tributes for resurrection will cost double the amount, perhaps forcing you to resurrect with penalties. You will not be allowed to enter any civilized areas, unless you perhaps find a way to disguise yourself. The exceptions are some public areas like inns, taverns, and banks. Guards will attack you on sight, merchants will attempt to chase you away, and you will not be able to join any local guilds except for the Assassin, Thief, and Black Magic guilds. The reason for this is that you are viewed as a murderous beast. Everything you need can be found throughout the world, however, so you can set forth on your journey.";
+                            + " This fate in Sosaria offers a more challenging life, where you have chosen to embrace your monstrous ways and seek power for yourself, leaving others of your kind behind. You will have the opportunity to become a grandmaster in "
+                            + Server.Misc.MyServerSettings.SkillGypsy("fugitive")
+                            + " different skills, instead of the usual "
+                            + Server.Misc.MyServerSettings.SkillGypsy("default")
+                            + ". Resurrecting with tributes will cost double the amount, potentially forcing you to face penalties. You will not be permitted to enter any civilized areas, unless you find a way to disguise yourself. However, there are exceptions for certain public areas like inns, taverns, and banks. Guards will attack you immediately upon sight, merchants will try to chase you away, and you will be unable to join any local guilds except for the Assassin, Thief, and Black Magic guilds. This is due to the fact that you are seen as a murderous beast. Nevertheless, everything you need can be found throughout the world, allowing you to embark on your journey.";
                         break;
 
                     case 3:
@@ -719,7 +728,7 @@ namespace Server.Gumps
                             + Server.Items.BaseRace.StartSentence(town)
                             + " of Lodoria."
                             + undead
-                            + " This world was once ruled by dwarves, but now their cities lie in ruins and the elves have risen toward being the major civilized race of the land. Driving the drow back to their deep underdark lairs, many seeks to explore this world. Although most want to lead humble lives as simple villagers, there are some that seek to explore the old dungeons, tombs, ruins, and crypts of the world. This path will lead you toward joining the ways of civilization within the land of elves. Where you may seek glory and riches beyond your wildest dreams.";
+                            + " This world was once ruled by dwarves, but now their cities lie in ruins, and the elves have become the dominant civilized race. They have pushed the drow back into their deep underdark lairs. Many individuals now seek to explore this world. While most prefer to lead humble lives as simple villagers, there are those who yearn to delve into the ancient dungeons, tombs, ruins, and crypts scattered across the land. Embarking on this path will guide you towards assimilating into the elven society, where you can pursue glory and wealth that exceeds your wildest dreams.";
                         break;
 
                     case 4:
@@ -730,7 +739,11 @@ namespace Server.Gumps
                             + Server.Items.BaseRace.StartSentence(town)
                             + " of Lodoria."
                             + undead
-                            + " This fate in Lodoria has a more challenging life, where you perhaps left others of your kind, but have decided to embrace your monstrous ways and seek power for yourself. You will be able to become grandmaster in 13 different skills instead of the 10 normally accomplished. Tributes for resurrection will cost double the amount, perhaps forcing you to resurrect with penalties. You will not be allowed to enter any civilized areas, unless you perhaps find a way to disguise yourself. The exceptions are some public areas like inns, taverns, and banks. Guards will attack you on sight, merchants will attempt to chase you away, and you will not be able to join any local guilds except for the Assassin, Thief, and Black Magic guilds. The reason for this is that you are viewed as a murderous beast. Everything you need can be found throughout the world, however, so you can set forth on your journey.";
+                            + " In Lodoria, your fate is to lead a more challenging life. Here, you may have left others of your kind behind, but you have made the choice to embrace your monstrous ways and seek power for yourself. As a result, you will have the ability to become a grandmaster in "
+                            + Server.Misc.MyServerSettings.SkillGypsy("fugitive")
+                            + " different skills, exceeding the usual "
+                            + Server.Misc.MyServerSettings.SkillGypsy("default")
+                            + ". However, there are consequences to consider. The cost of tributes for resurrection will be doubled, potentially forcing you to resurrect with penalties. Additionally, you will be prohibited from entering any civilized areas unless you can find a way to disguise yourself. There are a few exceptions, such as public areas like inns, taverns, and banks. It is important to note that guards will attack you on sight, merchants will try to chase you away, and you will not be able to join any local guilds, with the exception of the Assassin, Thief, and Black Magic guilds. This is due to the fact that you are perceived as a murderous beast. However, everything you need can still be found throughout the world, allowing you to embark on your journey.";
                         break;
                 }
             }
@@ -743,7 +756,7 @@ namespace Server.Gumps
                         town = "The City of Britain";
                         text =
                             fate
-                            + " in the capital city of Sosaria and the home of Lord British. Lord British's magnificent castle is situated at the northern part of the city, overlooking Britanny Bay. This tall building is the greatest architectural structure of the new age. Loyal subjects pay homage to His Majesty, and renew fealty whenever they are in the vicinity of his castle. Rumors in taverns speak of a dark secret below the castle, so dark that not even the citizens can see it. There are farms all around, as well as cemeteries for the citizens and another for the British Royal Family. Some have been seen going into the British tomb, late at night.";
+                            + " in the capital city of Sosaria and home of Lord British, the ruler of the land. His magnificent castle graces the northern part of the city, commanding a view of Britanny Bay. This towering structure stands as a testament to the finest architectural achievements of the modern era. Loyal subjects pay homage to His Majesty and reaffirm their allegiance whenever they find themselves in the vicinity of his castle. Whispers and rumors circulate in taverns, hinting at a concealed secret hidden beneath the castle's depths, so enigmatic that even the city's residents remain oblivious to its existence. Surrounding the city are sprawling farms, as well as cemeteries dedicated to the citizens and another reserved exclusively for the British Royal Family. Some have been witnessed entering the British tomb under the cover of darkness.";
                         break;
 
                     case 2:
@@ -751,7 +764,7 @@ namespace Server.Gumps
                         town = "The Town of Devil Guard";
                         text =
                             fate
-                            + " in a town totally enclosed by the Great Mountains during the Third Age of Darkness, and was only reachable by the magical gate. After the destruction of Exodus, a cavernous tunnel had torn through the mountain, providing an alternate route. Ancient legends tell of a castle that fell from the sky, crashing into the mountains and creating the valley in which Devil Guard was eventually built. Tales are told that the town was created and settled by those from the sky castle, and they named it because they were protecting others from the daemons long ago.";
+                            + " in a town completely enclosed by the Great Mountains during the Third Age of Darkness, it could only be accessed through a magical gate. However, after the destruction of Exodus, a cavernous tunnel was formed, offering an alternative path. According to ancient legends, a castle descended from the sky, colliding with the mountains and forming the valley where Devil Guard was eventually established. The tales narrate that the town was founded and populated by the inhabitants of the sky castle, who named it as they sought to safeguard others from the ancient daemons.";
                         break;
 
                     case 3:
@@ -759,7 +772,7 @@ namespace Server.Gumps
                         town = "The Village of Grey";
                         text =
                             fate
-                            + " in this village where the inhabitants, during the Third Age of Darkness, gave several clues to the Stranger that defeated Exodus. It was even rumored that they sold ships that could fly to the stars, but none who remain know how to create such things. Legends say the Stranger flew to the sky and altered time and reality, causing a castle to fall backwards in time and crash into the land of ancient Sosaria. Now the village is often the home of those that enjoy solitude. There are no mountains to mine, but some have dug beneath the forest floor to obtain ore. The cemetery is rumored to have a secret that necromancers whisper in hush tones.";
+                            + " in this village where the inhabitants, during the Third Age of Darkness, provided several clues to the Stranger who defeated Exodus. It was even rumored that they sold ships capable of flying to the stars, but none remaining possess the knowledge to create such marvels. According to legends, the Stranger soared through the sky and manipulated time and reality, causing a castle to regress in time and crash into the ancient land of Sosaria. Now, the village often serves as a sanctuary for those who seek solitude. Although there are no mountains for mining, some individuals have excavated beneath the forest floor to extract ore. Whispers among necromancers suggest that the cemetery holds a secret, spoken only in hushed tones.";
                         break;
 
                     case 4:
@@ -767,7 +780,7 @@ namespace Server.Gumps
                         town = "The City of Montor";
                         text =
                             fate
-                            + " in a vast city, where courage is especially upheld, having all the shops needed for everyone. The inhabitants of the Montors knew a lot about the mystical Four Cards that the Stranger needed to defeat Exodus, as well as tales of the lost shrines of Ambrosia. Montor is the most visited city, and also the largest in Sosaria due the trade from ships. There is a small mine to the east, as well as a tower to the northeast. This tower is said to be home of a vile lich with a magic mirror that traverses dimensions, but those rumors are often told with a tankard of ale.";
+                            + " in a vast city where courage is particularly upheld and there are all the necessary shops for everyone. The inhabitants of Montors are knowledgeable about the mystical Four Cards that the Stranger needs to defeat Exodus, as well as the tales of the lost shrines of Ambrosia. Montor is the most visited and largest city in Sosaria, thanks to the trade brought by ships. To the east, there is a small mine, and to the northeast, there is a tower. This tower is rumored to be the home of a vile lich with a magic mirror that can traverse dimensions, although these rumors are often told over a tankard of ale.";
                         break;
 
                     case 5:
@@ -775,7 +788,7 @@ namespace Server.Gumps
                         town = "The Town of Moon";
                         text =
                             fate
-                            + " in the town where, during the Third Age of Darkness, was a city full of mages. They were, however, the corrupt and dishonest sort. Erstam also lived in the city, conducting his experiments for immortality. When Lord British chased the corrupt mages out of town after the destruction of Exodus, Erstam and the others decided to go to the Serpent Island, where no one could control them. Now a tranquil place, many come here to farm and sail the coastline for fish markets. It is a popular town as it isn't too large, but manages to provide many markets to visit. Adventurers often ride in from the nearby desert, bragging of wealth obtained from the Ancient Pyramid.";
+                            + " in the town where, during the Third Age of Darkness, there existed a city brimming with mages. Alas, these mages were of the corrupt and deceitful variety. Among them resided Erstam, who dedicated his days to conducting experiments in pursuit of immortality. However, when Lord British banished the wicked mages from the town following the devastation caused by Exodus, Erstam and his cohorts resolved to seek refuge on Serpent Island, where no authority could rein them in. Presently, this once tumultuous place has transformed into a serene haven, attracting visitors who engage in farming and coastal fishing. It enjoys popularity due to its moderate size, which allows for numerous bustling markets to explore. Adventurers frequently arrive from the neighboring desert, regaling tales of riches acquired from the Ancient Pyramid.";
                         break;
 
                     case 6:
@@ -783,7 +796,7 @@ namespace Server.Gumps
                         town = "The Town of Mountain Crest";
                         text =
                             fate
-                            + " on some small islands in Sosaria, that has a harsh wintery landscape that others believe is foolish to inhabit. Along with this town, there are also settlements to the west and east. There are various caverns and dungeons within the mountains, and an unusual tower built by a wizard long ago. This place is one of the more difficult areas to live, but a snowy region may be your fate if you choose it.";
+                            + " on some small islands in Sosaria that have a harsh wintery landscape, and which others believe is foolish to inhabit. Along with this town, there are also settlements to the west and east. There are various caverns and dungeons within the mountains, as well as an unusual tower built by a wizard long ago. This place is one of the more difficult areas to live in, but a snowy region may be your fate if you choose it.";
                         break;
 
                     case 7:
@@ -791,7 +804,7 @@ namespace Server.Gumps
                         town = "The Undercity of Umbra";
                         text =
                             fate
-                            + " in a place many people do not know of, as it was built as a haven for those that practice the necrotic arts. Deep within the mountains, just southeast of Britain, the dark halls and caverns have a spooky feel but the necromancers do provide themselves with a shoppes to provided much needed items. The cavern outside the city is one of the highest ever seen. Some say high enough to even build a castle away from the light of the sun. A death knight's tomb was also built nearby, and the Fires of Hell is but a hike away.";
+                            + " in a place that remains unknown to many, as it was constructed as a sanctuary for practitioners of the necrotic arts. Nestled deep within the mountains, specifically to the southeast of Britain, the eerie corridors and caverns exude a haunting atmosphere. However, the necromancers have established shops to cater to their essential needs. The cavern surrounding the city stands as one of the tallest ever witnessed, with some suggesting that its height is even suitable for constructing a castle, away from the sun's rays. Additionally, a tomb for a death knight has been erected in close proximity, while the Fires of Hell are merely a hike away.";
                         break;
 
                     case 8:
@@ -799,14 +812,18 @@ namespace Server.Gumps
                         town = "The Village of Yew";
                         text =
                             fate
-                            + " in a valley of thick forest, just west of Britain and east of Moon, where the sun grows the largest trees in Sosaria. Yew is one of the land's major trading of wood. During the Third Age of Darkness, the Stranger visited Yew and learned the secrets of the Great Earth Serpent. This allowed the Stranger to free the serpent that was blocking their ship from reaching the Castle of Exodus on the Isle of Fire. Some say that freeing the serpent has caused an imbalance in the cosmos, but that could be drunken wizards telling tales. You can mine in a nearby cave, but miners discovered something on the southern side of the mountain range that they dare not enter.";
+                            + " in a valley of thick forest, just west of Britain and east of the Moon, where the sun nurtures the largest trees in Sosaria. Yew is one of the major trading hubs for wood in the land. During the Third Age of Darkness, the Stranger visited Yew and learned the secrets of the Great Earth Serpent. This knowledge allowed the Stranger to free the serpent that had been blocking their ship from reaching the Castle of Exodus on the Isle of Fire. Some speculate that freeing the serpent caused an imbalance in the cosmos, but such claims may just be drunken wizards spinning tales. There is a nearby cave where you can mine, but miners have discovered something on the southern side of the mountain range that they dare not enter.";
                         break;
 
                     case 9:
                         card = "THE HANGED MAN";
                         town = "The Britain Dungeons";
                         text =
-                            "You may choose a fate in this world that has a more challenging life, where you are a fugitive from justice. If you choose this path, you will be able to become grandmaster in 13 different skills instead of the 10 normally accomplished. This is due to you relying on yourself to survive. Tributes for resurrection will cost double the amount, perhaps forcing you to resurrect with penalties. You will not be allowed to enter any civilized areas, unless you perhaps find a way to disguise yourself. The exceptions are some public areas like inns, taverns, and banks. Guards will attack you on sight, merchants will attempt to chase you away, and you will not be able to join any local guilds except for the Assassin, Thief, and Black Magic guilds. The reason for this is that you are wanted for murder. You may have actually committed the act, or you could have simply been framed. The murder was against a very powerful figure, so the many lands will never forgive the deed. Whether truth or falsehood, that is up to you to tell. Do with your life what you will. You can live a life of criminal pursuits, or you can destroy the evil that lurks in the darkest places of the land. If you wish to choose such a life, you will be on your own, and you must first escape from your prison cell. From there you are best to head for Stonewall to the northwest, but you may go where you like. Everything you need can be found throughout the world.";
+                            "You may choose a fate in this world that has a more challenging life, where you become a fugitive from justice. If you choose this path, you will be able to become a grandmaster in "
+                            + Server.Misc.MyServerSettings.SkillGypsy("fugitive")
+                            + " different skills instead of the normal "
+                            + Server.Misc.MyServerSettings.SkillGypsy("default")
+                            + ". This is because you will rely on yourself to survive. Tributes for resurrection will cost double the amount, potentially forcing you to resurrect with penalties. You will not be allowed to enter any civilized areas unless you find a way to disguise yourself. The exceptions are certain public areas such as inns, taverns, and banks. Guards will attack you on sight, merchants will try to chase you away, and you will be unable to join any local guilds except for the Assassin, Thief, and Black Magic guilds. The reason for this is that you are wanted for murder. You may have actually committed the act, or you could have been framed. The murder was against a powerful figure, so the lands will never forgive the deed. Whether it's truth or falsehood, that is up to you to tell. Do what you will with your life. You can live a life of criminal pursuits, or you can eradicate the evil that lurks in the darkest places of the land. If you choose such a life, you will be on your own, and you must first escape from your prison cell. From there, it's best to head for Stonewall to the northwest, but you may go wherever you like. Everything you need can be found throughout the world.";
                         break;
 
                     case 10:
@@ -814,7 +831,7 @@ namespace Server.Gumps
                         town = "The City of Lodoria";
                         text =
                             lodor
-                            + " The city is the capital of Lodor, and it has every merchant you may need. The Castle of Knowledge lies on the high mountain on the western side, where scholars learn the ways of the world. It has a mine to the north and a cemetery in the south valley. The continent is large and adventurers tell tales of dungeons like Shame, Despise, and a cavern of lizardmen. Another small settlement lies to the northwest. Do you choose this fate?";
+                            + " This city is the capital of Lodor and it has every merchant you may need. The Castle of Knowledge lies on the high mountain on the western side where scholars learn the ways of the world. It has a mine to the north and a cemetery in the south valley. The continent is large and adventurers tell tales of dungeons like Shame, Despise, and a cavern of lizardmen. Another small settlement lies to the northwest. Do you choose this fate?";
                         break;
 
                     case 11:
@@ -822,21 +839,27 @@ namespace Server.Gumps
                         town = "The City of Elidor";
                         text =
                             lodor
-                            + " The city is located on the second largest continent, diverse with both a forest covered south and a wintery north. The High Priestess of Elidor built the famous Hall of Illusions, where many of her subject practice prismatic magic. There are other settlements such as Springvale to the east and Glacial Hills to the north. Drunken adventurers often speak of riches from Wrong, Deceit, and the Frozen Hells. Do you wish to draw this card?";
+                            + " This city is located on the second-largest continent, diverse with both a forest-covered south and a wintry north. The High Priestess of Elidor built the famous Hall of Illusions, where many of her subjects practice prismatic magic. There are other settlements, such as Springvale to the east and Glacial Hills to the north. Drunken adventurers often speak of riches from Wrong, Deceit, and the Frozen Hells. Do you wish to draw this card?";
                         break;
 
                     case 12:
                         card = "STRNGTH";
                         town = "The Savaged Empire";
                         text =
-                            "You may choose a barbaric way of life to begin your journey, and it is not for the weak but those bestowed with strength. If you choose this path, you will be able to become grandmaster in 11 different skills instead of the 10 normally accomplished. This is due to you relying on yourself to survive in an untamed land. Your adventure will begin as a barbarian in the Savaged Empire, which is one of the most difficult lands in the realms. It is filled with many dangerous animals and colossal dinosaurs. There are no safe places to hunt for food, which also means practicing your combat skills is equally dangerous. You will, however, begin with some leather armor that will help you surive the dangers away from the settlements. You will also begin with a talisman that will aid you in camping and cooking, so you can live off of the land better. Additional gold, food, and bandages will be provided as well as a steel dagger and a durable camping tent. Any dungeons you dare enter will be more deadly than those in Sosaria, so take some great consideration before deciding this path. Your journey will then begin in the Village of Kurak, where the outskirts have many things to hunt but also many dangers you may need to flee from. There is a cave to the north where you can mine for precious ores as well.";
+                            "You may choose a barbaric way of life to begin your journey, and it is not for the weak but those bestowed with strength. If you choose this path, you will be able to become a grandmaster in "
+                            + Server.Misc.MyServerSettings.SkillGypsy("savage")
+                            + " different skills instead of the usual "
+                            + Server.Misc.MyServerSettings.SkillGypsy("default")
+                            + ". This is because you rely on yourself to survive in an untamed land. Your adventure will begin as a barbarian in the Savaged Empire, one of the most difficult lands in the realms. It is filled with dangerous animals and colossal dinosaurs. There are no safe places to hunt for food, making it equally perilous to practice your combat skills. However, you will start with some leather armor that will help you survive the dangers away from the settlements. You will also have a talisman to aid you in camping and cooking, enabling you to live off the land more effectively. Additional gold, food, bandages, a steel dagger, and a durable camping tent will be provided. Keep in mind that any dungeons you enter will be more deadly than those in Sosaria, so choose this path with great consideration. Your journey will begin in the Village of Kurak, where the outskirts offer plentiful hunting opportunities but also pose many dangers you may need to flee from. To the north, there is a cave where you can mine for precious ores.";
                         break;
 
                     case 13:
                         card = "THE STAR";
                         town = "The Shuttle Crash Site";
                         text =
-                            "All the doctor knew of you as a patient is entered into your medical record. You were near death, but placing you in the stasis chamber seemed to have performed the healing process. Your scans showed an incredible head trauma, so you will awake from your coma with no memories of what or who you were (you begin with no skills). With the space station plummeting to Sosaria, due to the Stranger draining the fuel reserves, the doctor decided to place your stasis chamber onto their last medical shuttle craft. They set it on auto-pilot and hoped for the best. It landed safely on Sosaria where you could continue your life on this primitive world. You may have an advantage as you are from a more advanced race of beings, so you have the ability to remember and learn more things (can grandmaster 40 different skills).<br><br>Because of your advanced knowledge of logic and science, however, some things learned about Sosaria is that they have elements you cannot fully understand. Magical resurrection, and the concept of deities, are things you cannot comprehend (costs 3 times as much gold to resurrect at a shrine or healer). The system shock from any such resurrection would surely take its toll (paying full tribute still causes a 10% loss in fame and karma, and a 5% loss in skills and attributes) which could prove to be devastating (paying no tribute at all would cause a 20% loss in fame and karma, and a 10% loss in skills and attributes).<br><br>Although you will be able to learn some of the skills that are classified as magic or divine, you will surely justify it with science. Because of your lack of superstition, unlike the inhabitants of this world, you don’t believe in the concept of luck (you will never benefit from luck). You do not have any of Sosaria's currency to barter with (you begin with no gold), and because you feel you are more advanced, you will probably not get along with the guildmasters of the crude trades they practice (guild membership costs 4 times as much as normal).<br><br>If you choose this fate, then you will appear at your crashed shuttle craft where your adventure begins. You can use the nearby computer terminal to change your skin and hair tones if you want an appearance that is slightly different than human, due to your alien heritage.<br><br>When you awake, you will have no memory of who you were. You will find yourself near the shuttle that crashed on top of the mountain. The computer system instructed you on how to setup a power source from the remaining fuel, and it appeared that an alien creature latched onto the shuttle and died in the crash. You have been using this as a source of food and have survived a few days from it. Now your supplies are running out, your canteen is empty, and all you have is a knife. You will have to venture out if you plan to survive.";
+                            "All the information that the doctor knew about you as a patient has been entered into your medical record. You were on the brink of death, but being placed in the stasis chamber seemed to have facilitated the healing process. Your scans revealed a severe head trauma, which means that when you wake up from your coma, you will have no recollection of your past or your identity (and you will start with no skills). Unfortunately, the space station is plummeting towards Sosaria because the Stranger has drained the fuel reserves. In a desperate move, the doctor decided to put your stasis chamber onto their last medical shuttle craft and set it on auto-pilot, hoping for the best. Fortunately, the craft landed safely on Sosaria, giving you a chance to continue your life on this primitive world. Your advantage lies in the fact that you come from a more advanced race of beings, allowing you to retain and learn more information (you can become a grandmaster in "
+                            + Server.Misc.MyServerSettings.SkillGypsy("alien")
+                            + " different skills).\n\nHowever, due to your advanced knowledge of logic and science, you struggle to fully understand certain elements of Sosaria. Concepts such as magical resurrection and deities are beyond your comprehension (resurrecting at a shrine or healer will cost three times as much gold). The system shock from such a resurrection would undoubtedly take its toll (paying full tribute would result in a 10% loss in fame and karma, and a 5% loss in skills and attributes), which could prove to be devastating (not paying any tribute at all would result in a 20% loss in fame and karma, and a 10% loss in skills and attributes).\n\nWhile you can learn some skills classified as magic or divine, you always rationalize them through the lens of science. Unlike the inhabitants of this world, you don't believe in the concept of luck (you will never benefit from luck). At the beginning, you don't possess any of Sosaria's currency for bartering (you start with no gold), and you don't anticipate getting along with the guildmasters who practice crude trades (guild membership costs four times as much as normal).\n\nIf you choose this path, you will find yourself at your crashed shuttle craft, which marks the start of your adventure. A nearby computer terminal allows you to change your appearance slightly, altering your skin and hair tones to reflect your alien heritage.\n\nUpon awakening, you will have no recollection of your past identity. You will discover yourself near the crashed shuttle on top of a mountain. The computer system has provided instructions on setting up a power source using the remaining fuel. Interestingly, an alien creature attached itself to the shuttle and perished in the crash. You have been using it as a source of food and managed to survive for a few days. However, your supplies are now running out, your canteen is empty, and all you have is a knife. To ensure your survival, you must venture out into the unknown.";
                         break;
                 }
             }
@@ -988,7 +1011,7 @@ namespace Server.Gumps
                 {
                     PlayerSettings.SetDiscovered(m, "the Land of Sosaria", true);
                     PlayerSettings.SetBardsTaleQuest(m, "BardsTaleWin", true);
-                    m.Skills.Cap = 13000;
+                    Server.Misc.MyServerSettings.SkillBegin("fugitive", (PlayerMobile)m);
                     m.Kills = 1;
                     ((PlayerMobile)m).Profession = 1;
                 }
@@ -1001,7 +1024,7 @@ namespace Server.Gumps
                 {
                     PlayerSettings.SetDiscovered(m, "the Land of Lodoria", true);
                     PlayerSettings.SetBardsTaleQuest(m, "BardsTaleWin", true);
-                    m.Skills.Cap = 13000;
+                    Server.Misc.MyServerSettings.SkillBegin("fugitive", (PlayerMobile)m);
                     m.Kills = 1;
                     ((PlayerMobile)m).Profession = 1;
                     world = "the Land of Lodoria";

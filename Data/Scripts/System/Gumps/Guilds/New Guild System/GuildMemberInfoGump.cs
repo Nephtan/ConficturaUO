@@ -1,10 +1,10 @@
 using System;
 using Server;
 using Server.Gumps;
-using Server.Network;
 using Server.Mobiles;
-using Server.Targeting;
+using Server.Network;
 using Server.Prompts;
+using Server.Targeting;
 
 namespace Server.Guilds
 {

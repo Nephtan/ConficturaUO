@@ -1,8 +1,8 @@
 using System;
 using Server;
-using Server.Misc;
-using Server.Items;
 using Server.Gumps;
+using Server.Items;
+using Server.Misc;
 using Server.Network;
 
 namespace Server.Items

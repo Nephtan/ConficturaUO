@@ -6,6 +6,11 @@ namespace Server.Items
 {
     public class GwennoGraveAddon : BaseAddon
     {
+        public override string AddonName
+        {
+            get { return "monument of gwenno"; }
+        }
+
         private static int[,] m_AddOnSimpleComponents = new int[,]
         {
             { 4487, 1, 1, 0 },

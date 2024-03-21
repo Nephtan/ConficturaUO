@@ -5,6 +5,11 @@ namespace Server.Items
 {
     public class ArcaneBookshelfEastAddon : BaseAddon
     {
+        public override string AddonName
+        {
+            get { return "arcane bookshelf"; }
+        }
+
         public override BaseAddonDeed Deed
         {
             get { return new ArcaneBookshelfEastDeed(); }

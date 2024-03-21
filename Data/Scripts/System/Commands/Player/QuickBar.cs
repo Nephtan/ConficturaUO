@@ -1,19 +1,19 @@
 using System;
-using Server;
-using Server.Gumps;
-using Server.Network;
-using Server.Menus;
-using Server.Menus.Questions;
-using Server.Accounting;
-using Server.Multis;
-using Server.Mobiles;
-using Server.Regions;
 using System.Collections;
 using System.Collections.Generic;
-using Server.Commands;
-using Server.Misc;
-using Server.Items;
 using System.Globalization;
+using Server;
+using Server.Accounting;
+using Server.Commands;
+using Server.Gumps;
+using Server.Items;
+using Server.Menus;
+using Server.Menus.Questions;
+using Server.Misc;
+using Server.Mobiles;
+using Server.Multis;
+using Server.Network;
+using Server.Regions;
 
 namespace Server.Gumps
 {
@@ -1006,46 +1006,46 @@ namespace Server.Gumps
             }
             else if (info.ButtonID == 36)
             {
-                if (from.HasGump(typeof(SpellBarsResearch1)))
+                if (from.HasGump(typeof(SetupBarsArch1)))
                 {
-                    InvokeCommand("researchclose1", from);
+                    InvokeCommand("archclose1", from);
                 }
                 else
                 {
-                    InvokeCommand("researchtool1", from);
+                    InvokeCommand("archtool1", from);
                 }
             }
             else if (info.ButtonID == 360)
             {
-                if (from.HasGump(typeof(SpellBarsResearch2)))
+                if (from.HasGump(typeof(SetupBarsArch2)))
                 {
-                    InvokeCommand("researchclose2", from);
+                    InvokeCommand("archclose2", from);
                 }
                 else
                 {
-                    InvokeCommand("researchtool2", from);
+                    InvokeCommand("archtool2", from);
                 }
             }
             else if (info.ButtonID == 396)
             {
-                if (from.HasGump(typeof(SpellBarsResearch3)))
+                if (from.HasGump(typeof(SetupBarsArch3)))
                 {
-                    InvokeCommand("researchclose3", from);
+                    InvokeCommand("archclose3", from);
                 }
                 else
                 {
-                    InvokeCommand("researchtool3", from);
+                    InvokeCommand("archtool3", from);
                 }
             }
             else if (info.ButtonID == 432)
             {
-                if (from.HasGump(typeof(SpellBarsResearch4)))
+                if (from.HasGump(typeof(SetupBarsArch4)))
                 {
-                    InvokeCommand("researchclose4", from);
+                    InvokeCommand("archclose4", from);
                 }
                 else
                 {
-                    InvokeCommand("researchtool4", from);
+                    InvokeCommand("archtool4", from);
                 }
             }
             else if (info.ButtonID == 37)
@@ -1763,7 +1763,7 @@ namespace Server.Gumps
             }
             else if (set == 36)
             {
-                row = "Research Spells";
+                row = "Ancient Spells";
             }
             else if (set == 37)
             {

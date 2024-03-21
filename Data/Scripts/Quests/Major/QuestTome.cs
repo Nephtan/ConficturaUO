@@ -1,15 +1,15 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Globalization;
 using Server;
-using Server.Network;
-using Server.Multis;
+using Server.Accounting;
 using Server.Gumps;
 using Server.Misc;
 using Server.Mobiles;
-using Server.Accounting;
-using System.Collections.Generic;
-using System.Collections;
+using Server.Multis;
+using Server.Network;
 using Server.Regions;
-using System.Globalization;
 
 namespace Server.Items
 {
@@ -345,7 +345,9 @@ namespace Server.Items
                 }
             }
             else if (
-                QuestTomeGoals > 2 && from.Region.Name == QuestTomeDungeon && QuestTomeCitizen != ""
+                QuestTomeGoals > 2
+                && from.Region.Name == QuestTomeDungeon
+                && QuestTomeCitizen != ""
             )
             {
                 QuestTomeCitizen = "";
@@ -1037,7 +1039,8 @@ namespace Server.Items
                     foreach (Mobile creature in World.Mobiles.Values)
                     {
                         if (
-                            creature.Name == book.VillainName && creature.Title == book.VillainTitle
+                            creature.Name == book.VillainName
+                            && creature.Title == book.VillainTitle
                         )
                         {
                             targets.Add(creature);

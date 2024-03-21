@@ -1,10 +1,10 @@
 using System;
 using System.Collections;
-using Server.Targeting;
-using Server.Network;
-using Server.Mobiles;
 using Server.Items;
+using Server.Mobiles;
+using Server.Network;
 using Server.Spells;
+using Server.Targeting;
 
 namespace Server.Spells.HolyMan
 {
@@ -23,7 +23,7 @@ namespace Server.Spells.HolyMan
         }
         public override int RequiredTithing
         {
-            get { return 140; }
+            get { return 30; }
         }
         public override double RequiredSkill
         {
@@ -58,6 +58,7 @@ namespace Server.Spells.HolyMan
                     m.Spell.OnCasterHurt();
 
                 m.Paralyzed = false;
+                BuffInfo.CleanupIcons(m, true);
 
                 int toDrain = 0;
 

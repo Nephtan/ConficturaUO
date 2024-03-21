@@ -1,9 +1,9 @@
 using System;
 using System.Collections;
 using Server;
-using Server.Targeting;
-using Server.Network;
 using Server.Items;
+using Server.Network;
+using Server.Targeting;
 
 namespace Server.Spells.Fifth
 {
@@ -78,6 +78,10 @@ namespace Server.Spells.Fifth
                     {
                         diamond.Consume();
                     }
+
+                    BuffInfo.RemoveBuff(Caster, BuffIcon.MagicReflection);
+                    BuffInfo.AddBuff(Caster, new BuffInfo(BuffIcon.MagicReflection, 1063617));
+
                     Caster.PlaySound(0x1ED);
                     Caster.FixedParticles(
                         0x375A,

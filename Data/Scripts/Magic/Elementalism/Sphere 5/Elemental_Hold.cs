@@ -1,9 +1,9 @@
 using System;
+using Server.Items;
 using Server.Mobiles;
-using Server.Targeting;
 using Server.Network;
 using Server.Spells.Chivalry;
-using Server.Items;
+using Server.Targeting;
 
 namespace Server.Spells.Elementalism
 {
@@ -64,6 +64,12 @@ namespace Server.Spells.Elementalism
                 double duration = secs;
 
                 m.Paralyze(TimeSpan.FromSeconds(duration));
+
+                BuffInfo.RemoveBuff(m, BuffIcon.ElementalHold);
+                BuffInfo.AddBuff(
+                    m,
+                    new BuffInfo(BuffIcon.ElementalHold, 1063628, TimeSpan.FromSeconds(duration), m)
+                );
 
                 string elm = ElementalSpell.GetElement(Caster);
                 Point3D loc = new Point3D(0, 0, 0);

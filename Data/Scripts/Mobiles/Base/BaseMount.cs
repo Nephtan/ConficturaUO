@@ -1,11 +1,11 @@
 using System;
 using System.Collections;
 using Server;
-using Server.Targeting;
-using Server.Network;
-using Server.Misc;
 using Server.Items;
+using Server.Misc;
+using Server.Network;
 using Server.Regions;
+using Server.Targeting;
 
 namespace Server.Mobiles
 {

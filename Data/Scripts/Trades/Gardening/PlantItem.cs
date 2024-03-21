@@ -2,10 +2,10 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Server;
+using Server.ContextMenus;
 using Server.Gumps;
 using Server.Items;
 using Server.Multis;
-using Server.ContextMenus;
 using Server.Network;
 
 namespace Server.Engines.Plants
@@ -470,7 +470,9 @@ namespace Server.Engines.Plants
                 BaseBeverage beverage = (BaseBeverage)item;
 
                 if (
-                    beverage.IsEmpty || !beverage.Pourable || beverage.Content != BeverageType.Water
+                    beverage.IsEmpty
+                    || !beverage.Pourable
+                    || beverage.Content != BeverageType.Water
                 )
                 {
                     LabelTo(from, 1053069); // You can't use that on a plant!

@@ -1,10 +1,10 @@
 using System;
-using Server;
 using System.Collections;
-using Server.Network;
 using System.Text;
+using Server;
 using Server.Items;
 using Server.Mobiles;
+using Server.Network;
 
 namespace Server.Items
 {
@@ -127,6 +127,18 @@ namespace Server.Items
                 BasePotion.PlayDrinkEffect(m);
 
                 m.Hidden = true;
+
+                BuffInfo.RemoveBuff(m, BuffIcon.PotionInvisible);
+                BuffInfo.AddBuff(
+                    m,
+                    new BuffInfo(
+                        BuffIcon.PotionInvisible,
+                        1063596,
+                        1063602,
+                        TimeSpan.FromMinutes(3),
+                        m
+                    )
+                );
 
                 m.BeginAction(typeof(GreaterInvisibilityPotion));
 

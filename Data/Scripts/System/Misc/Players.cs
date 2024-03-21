@@ -1,18 +1,18 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using Server;
 using Server.Accounting;
-using Server.Commands.Generic;
 using Server.Commands;
+using Server.Commands.Generic;
 using Server.ContextMenus;
 using Server.Gumps;
 using Server.Items;
 using Server.Misc;
 using Server.Mobiles;
 using Server.Network;
-using Server.Targeting;
-using Server;
-using System.Collections.Generic;
-using System.Collections;
-using System;
 using Server.Spells.Seventh;
+using Server.Targeting;
 
 namespace Server.Misc
 {
@@ -106,7 +106,7 @@ namespace Server.Misc
 
         public static bool isFromSpace(Mobile m)
         {
-            if (m.Skills.Cap >= 40000)
+            if (((PlayerMobile)m).SkillStart == 40000)
                 return true;
 
             return false;
@@ -676,6 +676,10 @@ namespace Server.Misc
                 {
                     GuildTitle = " of the Elemental Guild";
                 }
+                else if (pm.NpcGuild == NpcGuild.JestersGuild)
+                {
+                    GuildTitle = " of the Jesters Guild";
+                }
             }
             else if (m is BaseVendor)
             {
@@ -768,6 +772,10 @@ namespace Server.Misc
                 else if (pm.NpcGuild == NpcGuild.ElementalGuild)
                 {
                     GuildTitle = "Elemental Guild";
+                }
+                else if (pm.NpcGuild == NpcGuild.JestersGuild)
+                {
+                    GuildTitle = " of the Jesters Guild";
                 }
             }
             return GuildTitle;
@@ -873,6 +881,10 @@ namespace Server.Misc
                 {
                     GuildTitle = "The Elemental Guild";
                 }
+                else if (pm.NpcGuild == NpcGuild.JestersGuild)
+                {
+                    GuildTitle = " of the Jesters Guild";
+                }
             }
             return GuildTitle;
         }
@@ -896,10 +908,34 @@ namespace Server.Misc
             }
 
             int skills = m.Skills.Total;
-            if (skills > 10000)
+            int based = MyServerSettings.SkillBase();
+
+            if (skills > based)
             {
-                skills = 10000;
+                skills = based;
             }
+
+            if (based >= 20000)
+                skills = (int)(skills / 2);
+            else if (based >= 19000)
+                skills = (int)(skills / 1.9);
+            else if (based >= 18000)
+                skills = (int)(skills / 1.8);
+            else if (based >= 17000)
+                skills = (int)(skills / 1.7);
+            else if (based >= 16000)
+                skills = (int)(skills / 1.6);
+            else if (based >= 15000)
+                skills = (int)(skills / 1.5);
+            else if (based >= 14000)
+                skills = (int)(skills / 1.4);
+            else if (based >= 13000)
+                skills = (int)(skills / 1.3);
+            else if (based >= 12000)
+                skills = (int)(skills / 1.2);
+            else if (based >= 11000)
+                skills = (int)(skills / 1.1);
+
             skills = (int)(1.5 * skills); // UP TO 15,000
 
             int stats = m.RawStr + m.RawDex + m.RawInt;

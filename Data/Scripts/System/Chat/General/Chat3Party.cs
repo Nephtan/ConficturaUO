@@ -1,7 +1,7 @@
 using System;
+using Knives.Chat3;
 using Server;
 using Server.Network;
-using Knives.Chat3;
 
 namespace Server.Engines.PartySystem
 {

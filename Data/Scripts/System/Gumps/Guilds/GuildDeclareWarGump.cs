@@ -1,10 +1,10 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using Server;
+using Server.Factions;
 using Server.Guilds;
 using Server.Network;
-using Server.Factions;
-using System.Collections.Generic;
 
 namespace Server.Gumps
 {

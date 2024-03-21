@@ -1,9 +1,9 @@
 using System;
-using Server.Targeting;
-using Server.Network;
-using Server.Regions;
 using Server.Items;
 using Server.Mobiles;
+using Server.Network;
+using Server.Regions;
+using Server.Targeting;
 
 namespace Server.Spells.Jester
 {
@@ -22,7 +22,7 @@ namespace Server.Spells.Jester
         }
         public override int RequiredTithing
         {
-            get { return 80; }
+            get { return 30; }
         }
         public override int RequiredMana
         {

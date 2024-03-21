@@ -1,17 +1,17 @@
 using System;
-using Server;
 using System.Collections;
-using Server.ContextMenus;
 using System.Collections.Generic;
-using Server.Misc;
-using Server.Network;
-using Server.Items;
-using Server.Gumps;
-using Server.Mobiles;
-using Server.Commands;
 using System.Globalization;
-using Server.Regions;
+using Server;
+using Server.Commands;
+using Server.ContextMenus;
+using Server.Gumps;
+using Server.Items;
+using Server.Misc;
+using Server.Mobiles;
 using Server.Multis;
+using Server.Network;
+using Server.Regions;
 
 namespace Server.Items
 {
@@ -193,7 +193,7 @@ namespace Server.Items
                 }
                 else if (type == "points")
                 {
-                    str = "200";
+                    str = "20";
                 }
                 else if (type == "mana")
                 {
@@ -213,7 +213,7 @@ namespace Server.Items
                 }
                 else if (type == "points")
                 {
-                    str = "50";
+                    str = "15";
                 }
                 else if (type == "mana")
                 {
@@ -233,7 +233,7 @@ namespace Server.Items
                 }
                 else if (type == "points")
                 {
-                    str = "50";
+                    str = "20";
                 }
                 else if (type == "mana")
                 {
@@ -253,7 +253,7 @@ namespace Server.Items
                 }
                 else if (type == "points")
                 {
-                    str = "40";
+                    str = "20";
                 }
                 else if (type == "mana")
                 {
@@ -273,7 +273,7 @@ namespace Server.Items
                 }
                 else if (type == "points")
                 {
-                    str = "60";
+                    str = "20";
                 }
                 else if (type == "mana")
                 {
@@ -313,7 +313,7 @@ namespace Server.Items
                 }
                 else if (type == "points")
                 {
-                    str = "100";
+                    str = "30";
                 }
                 else if (type == "mana")
                 {
@@ -333,7 +333,7 @@ namespace Server.Items
                 }
                 else if (type == "points")
                 {
-                    str = "150";
+                    str = "30";
                 }
                 else if (type == "mana")
                 {
@@ -353,7 +353,7 @@ namespace Server.Items
                 }
                 else if (type == "points")
                 {
-                    str = "50";
+                    str = "20";
                 }
                 else if (type == "mana")
                 {
@@ -373,7 +373,7 @@ namespace Server.Items
                 }
                 else if (type == "points")
                 {
-                    str = "80";
+                    str = "30";
                 }
                 else if (type == "mana")
                 {

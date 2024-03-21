@@ -1,19 +1,19 @@
 using System;
-using Server;
-using Server.Gumps;
-using Server.Network;
-using Server.Menus;
-using Server.Menus.Questions;
-using Server.Accounting;
-using Server.Multis;
-using Server.Mobiles;
-using Server.Regions;
 using System.Collections;
 using System.Collections.Generic;
-using Server.Commands;
-using Server.Misc;
-using Server.Items;
 using System.Globalization;
+using Server;
+using Server.Accounting;
+using Server.Commands;
+using Server.Gumps;
+using Server.Items;
+using Server.Menus;
+using Server.Menus.Questions;
+using Server.Misc;
+using Server.Mobiles;
+using Server.Multis;
+using Server.Network;
+using Server.Regions;
 
 namespace Server.Engines.Help
 {
@@ -346,136 +346,271 @@ namespace Server.Engines.Help
             r = r + e;
             if (page == 7)
             {
+                int barS = 40;
+                int barM = 30;
+
                 AddButton(904, 10, 3610, 3610, 95, GumpButtonType.Reply, 0);
 
-                AddButton(245, 95, 4005, 4005, 66, GumpButtonType.Reply, 0);
+                AddButton(245, barS, 4005, 4005, 1081, GumpButtonType.Reply, 0);
                 AddHtml(
                     280,
-                    95,
+                    barS,
+                    316,
+                    20,
+                    @"<BODY><BASEFONT Color=" + color + ">Ancient Spell Bar I</BASEFONT></BODY>",
+                    (bool)false,
+                    (bool)false
+                );
+                AddButton(605, barS, 4005, 4005, 384, GumpButtonType.Reply, 0);
+                AddHtml(
+                    640,
+                    barS,
+                    148,
+                    20,
+                    @"<BODY><BASEFONT Color=" + color + ">Open Toolbar</BASEFONT></BODY>",
+                    (bool)false,
+                    (bool)false
+                );
+                AddButton(800, barS, 4020, 4020, 385, GumpButtonType.Reply, 0);
+                AddHtml(
+                    835,
+                    barS,
+                    148,
+                    20,
+                    @"<BODY><BASEFONT Color=" + color + ">Close Toolbar</BASEFONT></BODY>",
+                    (bool)false,
+                    (bool)false
+                );
+                barS = barS + barM;
+
+                AddButton(245, barS, 4005, 4005, 1082, GumpButtonType.Reply, 0);
+                AddHtml(
+                    280,
+                    barS,
+                    316,
+                    20,
+                    @"<BODY><BASEFONT Color=" + color + ">Ancient Spell Bar II</BASEFONT></BODY>",
+                    (bool)false,
+                    (bool)false
+                );
+                AddButton(605, barS, 4005, 4005, 386, GumpButtonType.Reply, 0);
+                AddHtml(
+                    640,
+                    barS,
+                    148,
+                    20,
+                    @"<BODY><BASEFONT Color=" + color + ">Open Toolbar</BASEFONT></BODY>",
+                    (bool)false,
+                    (bool)false
+                );
+                AddButton(800, barS, 4020, 4020, 387, GumpButtonType.Reply, 0);
+                AddHtml(
+                    835,
+                    barS,
+                    148,
+                    20,
+                    @"<BODY><BASEFONT Color=" + color + ">Close Toolbar</BASEFONT></BODY>",
+                    (bool)false,
+                    (bool)false
+                );
+                barS = barS + barM;
+
+                AddButton(245, barS, 4005, 4005, 1083, GumpButtonType.Reply, 0);
+                AddHtml(
+                    280,
+                    barS,
+                    316,
+                    20,
+                    @"<BODY><BASEFONT Color=" + color + ">Ancient Spell Bar III</BASEFONT></BODY>",
+                    (bool)false,
+                    (bool)false
+                );
+                AddButton(605, barS, 4005, 4005, 388, GumpButtonType.Reply, 0);
+                AddHtml(
+                    640,
+                    barS,
+                    148,
+                    20,
+                    @"<BODY><BASEFONT Color=" + color + ">Open Toolbar</BASEFONT></BODY>",
+                    (bool)false,
+                    (bool)false
+                );
+                AddButton(800, barS, 4020, 4020, 389, GumpButtonType.Reply, 0);
+                AddHtml(
+                    835,
+                    barS,
+                    148,
+                    20,
+                    @"<BODY><BASEFONT Color=" + color + ">Close Toolbar</BASEFONT></BODY>",
+                    (bool)false,
+                    (bool)false
+                );
+                barS = barS + barM;
+
+                AddButton(245, barS, 4005, 4005, 1084, GumpButtonType.Reply, 0);
+                AddHtml(
+                    280,
+                    barS,
+                    316,
+                    20,
+                    @"<BODY><BASEFONT Color=" + color + ">Ancient Spell Bar IV</BASEFONT></BODY>",
+                    (bool)false,
+                    (bool)false
+                );
+                AddButton(605, barS, 4005, 4005, 390, GumpButtonType.Reply, 0);
+                AddHtml(
+                    640,
+                    barS,
+                    148,
+                    20,
+                    @"<BODY><BASEFONT Color=" + color + ">Open Toolbar</BASEFONT></BODY>",
+                    (bool)false,
+                    (bool)false
+                );
+                AddButton(800, barS, 4020, 4020, 391, GumpButtonType.Reply, 0);
+                AddHtml(
+                    835,
+                    barS,
+                    148,
+                    20,
+                    @"<BODY><BASEFONT Color=" + color + ">Close Toolbar</BASEFONT></BODY>",
+                    (bool)false,
+                    (bool)false
+                );
+                barS = barS + barM;
+
+                AddButton(245, barS, 4005, 4005, 66, GumpButtonType.Reply, 0);
+                AddHtml(
+                    280,
+                    barS,
                     316,
                     20,
                     @"<BODY><BASEFONT Color=" + color + ">Bard Songs Bar I</BASEFONT></BODY>",
                     (bool)false,
                     (bool)false
                 );
-                AddButton(605, 95, 4005, 4005, 266, GumpButtonType.Reply, 0);
+                AddButton(605, barS, 4005, 4005, 266, GumpButtonType.Reply, 0);
                 AddHtml(
                     640,
-                    95,
+                    barS,
                     148,
                     20,
                     @"<BODY><BASEFONT Color=" + color + ">Open Toolbar</BASEFONT></BODY>",
                     (bool)false,
                     (bool)false
                 );
-                AddButton(800, 95, 4020, 4020, 366, GumpButtonType.Reply, 0);
+                AddButton(800, barS, 4020, 4020, 366, GumpButtonType.Reply, 0);
                 AddHtml(
                     835,
-                    95,
+                    barS,
                     148,
                     20,
                     @"<BODY><BASEFONT Color=" + color + ">Close Toolbar</BASEFONT></BODY>",
                     (bool)false,
                     (bool)false
                 );
+                barS = barS + barM;
 
-                AddButton(245, 125, 4005, 4005, 67, GumpButtonType.Reply, 0);
+                AddButton(245, barS, 4005, 4005, 67, GumpButtonType.Reply, 0);
                 AddHtml(
                     280,
-                    125,
+                    barS,
                     316,
                     20,
                     @"<BODY><BASEFONT Color=" + color + ">Bard Songs Bar II</BASEFONT></BODY>",
                     (bool)false,
                     (bool)false
                 );
-                AddButton(605, 125, 4005, 4005, 267, GumpButtonType.Reply, 0);
+                AddButton(605, barS, 4005, 4005, 267, GumpButtonType.Reply, 0);
                 AddHtml(
                     640,
-                    125,
+                    barS,
                     148,
                     20,
                     @"<BODY><BASEFONT Color=" + color + ">Open Toolbar</BASEFONT></BODY>",
                     (bool)false,
                     (bool)false
                 );
-                AddButton(800, 125, 4020, 4020, 367, GumpButtonType.Reply, 0);
+                AddButton(800, barS, 4020, 4020, 367, GumpButtonType.Reply, 0);
                 AddHtml(
                     835,
-                    125,
+                    barS,
                     148,
                     20,
                     @"<BODY><BASEFONT Color=" + color + ">Close Toolbar</BASEFONT></BODY>",
                     (bool)false,
                     (bool)false
                 );
+                barS = barS + barM;
 
-                AddButton(245, 155, 4005, 4005, 68, GumpButtonType.Reply, 0);
+                AddButton(245, barS, 4005, 4005, 68, GumpButtonType.Reply, 0);
                 AddHtml(
                     280,
-                    155,
+                    barS,
                     316,
                     20,
                     @"<BODY><BASEFONT Color=" + color + ">Knight Spell Bar I</BASEFONT></BODY>",
                     (bool)false,
                     (bool)false
                 );
-                AddButton(605, 155, 4005, 4005, 268, GumpButtonType.Reply, 0);
+                AddButton(605, barS, 4005, 4005, 268, GumpButtonType.Reply, 0);
                 AddHtml(
                     640,
-                    155,
+                    barS,
                     148,
                     20,
                     @"<BODY><BASEFONT Color=" + color + ">Open Toolbar</BASEFONT></BODY>",
                     (bool)false,
                     (bool)false
                 );
-                AddButton(800, 155, 4020, 4020, 368, GumpButtonType.Reply, 0);
+                AddButton(800, barS, 4020, 4020, 368, GumpButtonType.Reply, 0);
                 AddHtml(
                     835,
-                    155,
+                    barS,
                     148,
                     20,
                     @"<BODY><BASEFONT Color=" + color + ">Close Toolbar</BASEFONT></BODY>",
                     (bool)false,
                     (bool)false
                 );
+                barS = barS + barM;
 
-                AddButton(245, 185, 4005, 4005, 69, GumpButtonType.Reply, 0);
+                AddButton(245, barS, 4005, 4005, 69, GumpButtonType.Reply, 0);
                 AddHtml(
                     280,
-                    185,
+                    barS,
                     316,
                     20,
                     @"<BODY><BASEFONT Color=" + color + ">Knight Spell Bar II</BASEFONT></BODY>",
                     (bool)false,
                     (bool)false
                 );
-                AddButton(605, 185, 4005, 4005, 269, GumpButtonType.Reply, 0);
+                AddButton(605, barS, 4005, 4005, 269, GumpButtonType.Reply, 0);
                 AddHtml(
                     640,
-                    185,
+                    barS,
                     148,
                     20,
                     @"<BODY><BASEFONT Color=" + color + ">Open Toolbar</BASEFONT></BODY>",
                     (bool)false,
                     (bool)false
                 );
-                AddButton(800, 185, 4020, 4020, 369, GumpButtonType.Reply, 0);
+                AddButton(800, barS, 4020, 4020, 369, GumpButtonType.Reply, 0);
                 AddHtml(
                     835,
-                    185,
+                    barS,
                     148,
                     20,
                     @"<BODY><BASEFONT Color=" + color + ">Close Toolbar</BASEFONT></BODY>",
                     (bool)false,
                     (bool)false
                 );
+                barS = barS + barM;
 
-                AddButton(245, 215, 4005, 4005, 70, GumpButtonType.Reply, 0);
+                AddButton(245, barS, 4005, 4005, 70, GumpButtonType.Reply, 0);
                 AddHtml(
                     280,
-                    215,
+                    barS,
                     316,
                     20,
                     @"<BODY><BASEFONT Color="
@@ -484,31 +619,32 @@ namespace Server.Engines.Help
                     (bool)false,
                     (bool)false
                 );
-                AddButton(605, 215, 4005, 4005, 270, GumpButtonType.Reply, 0);
+                AddButton(605, barS, 4005, 4005, 270, GumpButtonType.Reply, 0);
                 AddHtml(
                     640,
-                    215,
+                    barS,
                     148,
                     20,
                     @"<BODY><BASEFONT Color=" + color + ">Open Toolbar</BASEFONT></BODY>",
                     (bool)false,
                     (bool)false
                 );
-                AddButton(800, 215, 4020, 4020, 370, GumpButtonType.Reply, 0);
+                AddButton(800, barS, 4020, 4020, 370, GumpButtonType.Reply, 0);
                 AddHtml(
                     835,
-                    215,
+                    barS,
                     148,
                     20,
                     @"<BODY><BASEFONT Color=" + color + ">Close Toolbar</BASEFONT></BODY>",
                     (bool)false,
                     (bool)false
                 );
+                barS = barS + barM;
 
-                AddButton(245, 245, 4005, 4005, 71, GumpButtonType.Reply, 0);
+                AddButton(245, barS, 4005, 4005, 71, GumpButtonType.Reply, 0);
                 AddHtml(
                     280,
-                    245,
+                    barS,
                     316,
                     20,
                     @"<BODY><BASEFONT Color="
@@ -517,279 +653,288 @@ namespace Server.Engines.Help
                     (bool)false,
                     (bool)false
                 );
-                AddButton(605, 245, 4005, 4005, 271, GumpButtonType.Reply, 0);
+                AddButton(605, barS, 4005, 4005, 271, GumpButtonType.Reply, 0);
                 AddHtml(
                     640,
-                    245,
+                    barS,
                     148,
                     20,
                     @"<BODY><BASEFONT Color=" + color + ">Open Toolbar</BASEFONT></BODY>",
                     (bool)false,
                     (bool)false
                 );
-                AddButton(800, 245, 4020, 4020, 371, GumpButtonType.Reply, 0);
+                AddButton(800, barS, 4020, 4020, 371, GumpButtonType.Reply, 0);
                 AddHtml(
                     835,
-                    245,
+                    barS,
                     148,
                     20,
                     @"<BODY><BASEFONT Color=" + color + ">Close Toolbar</BASEFONT></BODY>",
                     (bool)false,
                     (bool)false
                 );
+                barS = barS + barM;
 
-                AddButton(245, 275, 4005, 4005, 978, GumpButtonType.Reply, 0);
+                AddButton(245, barS, 4005, 4005, 978, GumpButtonType.Reply, 0);
                 AddHtml(
                     280,
-                    275,
+                    barS,
                     316,
                     20,
                     @"<BODY><BASEFONT Color=" + color + ">Elemental Spell Bar I</BASEFONT></BODY>",
                     (bool)false,
                     (bool)false
                 );
-                AddButton(605, 275, 4005, 4005, 282, GumpButtonType.Reply, 0);
+                AddButton(605, barS, 4005, 4005, 282, GumpButtonType.Reply, 0);
                 AddHtml(
                     640,
-                    275,
+                    barS,
                     148,
                     20,
                     @"<BODY><BASEFONT Color=" + color + ">Open Toolbar</BASEFONT></BODY>",
                     (bool)false,
                     (bool)false
                 );
-                AddButton(800, 275, 4020, 4020, 382, GumpButtonType.Reply, 0);
+                AddButton(800, barS, 4020, 4020, 382, GumpButtonType.Reply, 0);
                 AddHtml(
                     835,
-                    275,
+                    barS,
                     148,
                     20,
                     @"<BODY><BASEFONT Color=" + color + ">Close Toolbar</BASEFONT></BODY>",
                     (bool)false,
                     (bool)false
                 );
+                barS = barS + barM;
 
-                AddButton(245, 305, 4005, 4005, 979, GumpButtonType.Reply, 0);
+                AddButton(245, barS, 4005, 4005, 979, GumpButtonType.Reply, 0);
                 AddHtml(
                     280,
-                    305,
+                    barS,
                     316,
                     20,
                     @"<BODY><BASEFONT Color=" + color + ">Elemental Spell Bar II</BASEFONT></BODY>",
                     (bool)false,
                     (bool)false
                 );
-                AddButton(605, 305, 4005, 4005, 283, GumpButtonType.Reply, 0);
+                AddButton(605, barS, 4005, 4005, 283, GumpButtonType.Reply, 0);
                 AddHtml(
                     640,
-                    305,
+                    barS,
                     148,
                     20,
                     @"<BODY><BASEFONT Color=" + color + ">Open Toolbar</BASEFONT></BODY>",
                     (bool)false,
                     (bool)false
                 );
-                AddButton(800, 305, 4020, 4020, 383, GumpButtonType.Reply, 0);
+                AddButton(800, barS, 4020, 4020, 383, GumpButtonType.Reply, 0);
                 AddHtml(
                     835,
-                    305,
+                    barS,
                     148,
                     20,
                     @"<BODY><BASEFONT Color=" + color + ">Close Toolbar</BASEFONT></BODY>",
                     (bool)false,
                     (bool)false
                 );
+                barS = barS + barM;
 
-                AddButton(245, 335, 4005, 4005, 72, GumpButtonType.Reply, 0);
+                AddButton(245, barS, 4005, 4005, 72, GumpButtonType.Reply, 0);
                 AddHtml(
                     280,
-                    335,
+                    barS,
                     316,
                     20,
                     @"<BODY><BASEFONT Color=" + color + ">Magery Spell Bar I</BASEFONT></BODY>",
                     (bool)false,
                     (bool)false
                 );
-                AddButton(605, 335, 4005, 4005, 272, GumpButtonType.Reply, 0);
+                AddButton(605, barS, 4005, 4005, 272, GumpButtonType.Reply, 0);
                 AddHtml(
                     640,
-                    335,
+                    barS,
                     148,
                     20,
                     @"<BODY><BASEFONT Color=" + color + ">Open Toolbar</BASEFONT></BODY>",
                     (bool)false,
                     (bool)false
                 );
-                AddButton(800, 335, 4020, 4020, 372, GumpButtonType.Reply, 0);
+                AddButton(800, barS, 4020, 4020, 372, GumpButtonType.Reply, 0);
                 AddHtml(
                     835,
-                    335,
+                    barS,
                     148,
                     20,
                     @"<BODY><BASEFONT Color=" + color + ">Close Toolbar</BASEFONT></BODY>",
                     (bool)false,
                     (bool)false
                 );
+                barS = barS + barM;
 
-                AddButton(245, 365, 4005, 4005, 73, GumpButtonType.Reply, 0);
+                AddButton(245, barS, 4005, 4005, 73, GumpButtonType.Reply, 0);
                 AddHtml(
                     280,
-                    365,
+                    barS,
                     316,
                     20,
                     @"<BODY><BASEFONT Color=" + color + ">Magery Spell Bar II</BASEFONT></BODY>",
                     (bool)false,
                     (bool)false
                 );
-                AddButton(605, 365, 4005, 4005, 273, GumpButtonType.Reply, 0);
+                AddButton(605, barS, 4005, 4005, 273, GumpButtonType.Reply, 0);
                 AddHtml(
                     640,
-                    365,
+                    barS,
                     148,
                     20,
                     @"<BODY><BASEFONT Color=" + color + ">Open Toolbar</BASEFONT></BODY>",
                     (bool)false,
                     (bool)false
                 );
-                AddButton(800, 365, 4020, 4020, 373, GumpButtonType.Reply, 0);
+                AddButton(800, barS, 4020, 4020, 373, GumpButtonType.Reply, 0);
                 AddHtml(
                     835,
-                    365,
+                    barS,
                     148,
                     20,
                     @"<BODY><BASEFONT Color=" + color + ">Close Toolbar</BASEFONT></BODY>",
                     (bool)false,
                     (bool)false
                 );
+                barS = barS + barM;
 
-                AddButton(245, 395, 4005, 4005, 74, GumpButtonType.Reply, 0);
+                AddButton(245, barS, 4005, 4005, 74, GumpButtonType.Reply, 0);
                 AddHtml(
                     280,
-                    395,
+                    barS,
                     316,
                     20,
                     @"<BODY><BASEFONT Color=" + color + ">Magery Spell Bar III</BASEFONT></BODY>",
                     (bool)false,
                     (bool)false
                 );
-                AddButton(605, 395, 4005, 4005, 274, GumpButtonType.Reply, 0);
+                AddButton(605, barS, 4005, 4005, 274, GumpButtonType.Reply, 0);
                 AddHtml(
                     640,
-                    395,
+                    barS,
                     148,
                     20,
                     @"<BODY><BASEFONT Color=" + color + ">Open Toolbar</BASEFONT></BODY>",
                     (bool)false,
                     (bool)false
                 );
-                AddButton(800, 395, 4020, 4020, 374, GumpButtonType.Reply, 0);
+                AddButton(800, barS, 4020, 4020, 374, GumpButtonType.Reply, 0);
                 AddHtml(
                     835,
-                    395,
+                    barS,
                     148,
                     20,
                     @"<BODY><BASEFONT Color=" + color + ">Close Toolbar</BASEFONT></BODY>",
                     (bool)false,
                     (bool)false
                 );
+                barS = barS + barM;
 
-                AddButton(245, 425, 4005, 4005, 75, GumpButtonType.Reply, 0);
+                AddButton(245, barS, 4005, 4005, 75, GumpButtonType.Reply, 0);
                 AddHtml(
                     280,
-                    425,
+                    barS,
                     316,
                     20,
                     @"<BODY><BASEFONT Color=" + color + ">Magery Spell Bar IV</BASEFONT></BODY>",
                     (bool)false,
                     (bool)false
                 );
-                AddButton(605, 425, 4005, 4005, 275, GumpButtonType.Reply, 0);
+                AddButton(605, barS, 4005, 4005, 275, GumpButtonType.Reply, 0);
                 AddHtml(
                     640,
-                    425,
+                    barS,
                     148,
                     20,
                     @"<BODY><BASEFONT Color=" + color + ">Open Toolbar</BASEFONT></BODY>",
                     (bool)false,
                     (bool)false
                 );
-                AddButton(800, 425, 4020, 4020, 375, GumpButtonType.Reply, 0);
+                AddButton(800, barS, 4020, 4020, 375, GumpButtonType.Reply, 0);
                 AddHtml(
                     835,
-                    425,
+                    barS,
                     148,
                     20,
                     @"<BODY><BASEFONT Color=" + color + ">Close Toolbar</BASEFONT></BODY>",
                     (bool)false,
                     (bool)false
                 );
+                barS = barS + barM;
 
-                AddButton(245, 455, 4005, 4005, 980, GumpButtonType.Reply, 0);
+                AddButton(245, barS, 4005, 4005, 980, GumpButtonType.Reply, 0);
                 AddHtml(
                     280,
-                    455,
+                    barS,
                     316,
                     20,
                     @"<BODY><BASEFONT Color=" + color + ">Monk Ability Bar I</BASEFONT></BODY>",
                     (bool)false,
                     (bool)false
                 );
-                AddButton(605, 455, 4005, 4005, 280, GumpButtonType.Reply, 0);
+                AddButton(605, barS, 4005, 4005, 280, GumpButtonType.Reply, 0);
                 AddHtml(
                     640,
-                    455,
+                    barS,
                     148,
                     20,
                     @"<BODY><BASEFONT Color=" + color + ">Open Toolbar</BASEFONT></BODY>",
                     (bool)false,
                     (bool)false
                 );
-                AddButton(800, 455, 4020, 4020, 380, GumpButtonType.Reply, 0);
+                AddButton(800, barS, 4020, 4020, 380, GumpButtonType.Reply, 0);
                 AddHtml(
                     835,
-                    455,
+                    barS,
                     148,
                     20,
                     @"<BODY><BASEFONT Color=" + color + ">Close Toolbar</BASEFONT></BODY>",
                     (bool)false,
                     (bool)false
                 );
+                barS = barS + barM;
 
-                AddButton(245, 485, 4005, 4005, 981, GumpButtonType.Reply, 0);
+                AddButton(245, barS, 4005, 4005, 981, GumpButtonType.Reply, 0);
                 AddHtml(
                     280,
-                    485,
+                    barS,
                     316,
                     20,
                     @"<BODY><BASEFONT Color=" + color + ">Monk Ability Bar II</BASEFONT></BODY>",
                     (bool)false,
                     (bool)false
                 );
-                AddButton(605, 485, 4005, 4005, 281, GumpButtonType.Reply, 0);
+                AddButton(605, barS, 4005, 4005, 281, GumpButtonType.Reply, 0);
                 AddHtml(
                     640,
-                    485,
+                    barS,
                     148,
                     20,
                     @"<BODY><BASEFONT Color=" + color + ">Open Toolbar</BASEFONT></BODY>",
                     (bool)false,
                     (bool)false
                 );
-                AddButton(800, 485, 4020, 4020, 381, GumpButtonType.Reply, 0);
+                AddButton(800, barS, 4020, 4020, 381, GumpButtonType.Reply, 0);
                 AddHtml(
                     835,
-                    485,
+                    barS,
                     148,
                     20,
                     @"<BODY><BASEFONT Color=" + color + ">Close Toolbar</BASEFONT></BODY>",
                     (bool)false,
                     (bool)false
                 );
+                barS = barS + barM;
 
-                AddButton(245, 515, 4005, 4005, 76, GumpButtonType.Reply, 0);
+                AddButton(245, barS, 4005, 4005, 76, GumpButtonType.Reply, 0);
                 AddHtml(
                     280,
-                    515,
+                    barS,
                     316,
                     20,
                     @"<BODY><BASEFONT Color="
@@ -798,31 +943,32 @@ namespace Server.Engines.Help
                     (bool)false,
                     (bool)false
                 );
-                AddButton(605, 515, 4005, 4005, 276, GumpButtonType.Reply, 0);
+                AddButton(605, barS, 4005, 4005, 276, GumpButtonType.Reply, 0);
                 AddHtml(
                     640,
-                    515,
+                    barS,
                     148,
                     20,
                     @"<BODY><BASEFONT Color=" + color + ">Open Toolbar</BASEFONT></BODY>",
                     (bool)false,
                     (bool)false
                 );
-                AddButton(800, 515, 4020, 4020, 376, GumpButtonType.Reply, 0);
+                AddButton(800, barS, 4020, 4020, 376, GumpButtonType.Reply, 0);
                 AddHtml(
                     835,
-                    515,
+                    barS,
                     148,
                     20,
                     @"<BODY><BASEFONT Color=" + color + ">Close Toolbar</BASEFONT></BODY>",
                     (bool)false,
                     (bool)false
                 );
+                barS = barS + barM;
 
-                AddButton(245, 545, 4005, 4005, 77, GumpButtonType.Reply, 0);
+                AddButton(245, barS, 4005, 4005, 77, GumpButtonType.Reply, 0);
                 AddHtml(
                     280,
-                    545,
+                    barS,
                     316,
                     20,
                     @"<BODY><BASEFONT Color="
@@ -831,88 +977,91 @@ namespace Server.Engines.Help
                     (bool)false,
                     (bool)false
                 );
-                AddButton(605, 545, 4005, 4005, 277, GumpButtonType.Reply, 0);
+                AddButton(605, barS, 4005, 4005, 277, GumpButtonType.Reply, 0);
                 AddHtml(
                     640,
-                    545,
+                    barS,
                     148,
                     20,
                     @"<BODY><BASEFONT Color=" + color + ">Open Toolbar</BASEFONT></BODY>",
                     (bool)false,
                     (bool)false
                 );
-                AddButton(800, 545, 4020, 4020, 377, GumpButtonType.Reply, 0);
+                AddButton(800, barS, 4020, 4020, 377, GumpButtonType.Reply, 0);
                 AddHtml(
                     835,
-                    545,
+                    barS,
                     148,
                     20,
                     @"<BODY><BASEFONT Color=" + color + ">Close Toolbar</BASEFONT></BODY>",
                     (bool)false,
                     (bool)false
                 );
+                barS = barS + barM;
 
-                AddButton(245, 575, 4005, 4005, 78, GumpButtonType.Reply, 0);
+                AddButton(245, barS, 4005, 4005, 78, GumpButtonType.Reply, 0);
                 AddHtml(
                     280,
-                    575,
+                    barS,
                     316,
                     20,
                     @"<BODY><BASEFONT Color=" + color + ">Priest Prayer Bar I</BASEFONT></BODY>",
                     (bool)false,
                     (bool)false
                 );
-                AddButton(605, 575, 4005, 4005, 278, GumpButtonType.Reply, 0);
+                AddButton(605, barS, 4005, 4005, 278, GumpButtonType.Reply, 0);
                 AddHtml(
                     640,
-                    575,
+                    barS,
                     148,
                     20,
                     @"<BODY><BASEFONT Color=" + color + ">Open Toolbar</BASEFONT></BODY>",
                     (bool)false,
                     (bool)false
                 );
-                AddButton(800, 575, 4020, 4020, 378, GumpButtonType.Reply, 0);
+                AddButton(800, barS, 4020, 4020, 378, GumpButtonType.Reply, 0);
                 AddHtml(
                     835,
-                    575,
+                    barS,
                     148,
                     20,
                     @"<BODY><BASEFONT Color=" + color + ">Close Toolbar</BASEFONT></BODY>",
                     (bool)false,
                     (bool)false
                 );
+                barS = barS + barM;
 
-                AddButton(245, 605, 4005, 4005, 79, GumpButtonType.Reply, 0);
+                AddButton(245, barS, 4005, 4005, 79, GumpButtonType.Reply, 0);
                 AddHtml(
                     280,
-                    605,
+                    barS,
                     316,
                     20,
                     @"<BODY><BASEFONT Color=" + color + ">Priest Prayer Bar II</BASEFONT></BODY>",
                     (bool)false,
                     (bool)false
                 );
-                AddButton(605, 605, 4005, 4005, 279, GumpButtonType.Reply, 0);
+                AddButton(605, barS, 4005, 4005, 279, GumpButtonType.Reply, 0);
                 AddHtml(
                     640,
-                    605,
+                    barS,
                     148,
                     20,
                     @"<BODY><BASEFONT Color=" + color + ">Open Toolbar</BASEFONT></BODY>",
                     (bool)false,
                     (bool)false
                 );
-                AddButton(800, 605, 4020, 4020, 379, GumpButtonType.Reply, 0);
+                AddButton(800, barS, 4020, 4020, 379, GumpButtonType.Reply, 0);
                 AddHtml(
                     835,
-                    605,
+                    barS,
                     148,
                     20,
                     @"<BODY><BASEFONT Color=" + color + ">Close Toolbar</BASEFONT></BODY>",
                     (bool)false,
                     (bool)false
                 );
+                barS = barS + barM;
             }
 
             /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1835,6 +1984,28 @@ namespace Server.Engines.Help
                     (bool)false
                 );
                 g = g + j;
+
+                g = g + j;
+                if (ResearchSettings.BookCaster(from))
+                {
+                    setB = 4018;
+                }
+                else
+                {
+                    setB = 3609;
+                }
+                AddButton(245, g, setB, setB, 63, GumpButtonType.Reply, 0);
+                AddButton(285, g, 4011, 4011, 106, GumpButtonType.Reply, 0);
+                AddHtml(
+                    325,
+                    g,
+                    316,
+                    20,
+                    @"<BODY><BASEFONT Color=" + color + ">Ancient Spellbook</BASEFONT></BODY>",
+                    (bool)false,
+                    (bool)false
+                );
+                g = g + j;
             }
 
             /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2141,6 +2312,38 @@ namespace Server.Engines.Help
                 {
                     InvokeCommand("elementclose2", from);
                 }
+                else if (info.ButtonID == 384)
+                {
+                    InvokeCommand("archtool1", from);
+                }
+                else if (info.ButtonID == 385)
+                {
+                    InvokeCommand("archclose1", from);
+                }
+                else if (info.ButtonID == 386)
+                {
+                    InvokeCommand("archtool2", from);
+                }
+                else if (info.ButtonID == 387)
+                {
+                    InvokeCommand("archclose2", from);
+                }
+                else if (info.ButtonID == 388)
+                {
+                    InvokeCommand("archtool3", from);
+                }
+                else if (info.ButtonID == 389)
+                {
+                    InvokeCommand("archclose3", from);
+                }
+                else if (info.ButtonID == 390)
+                {
+                    InvokeCommand("archtool4", from);
+                }
+                else if (info.ButtonID == 391)
+                {
+                    InvokeCommand("archclose4", from);
+                }
             }
             else
             {
@@ -2353,6 +2556,19 @@ namespace Server.Engines.Help
                     {
                         from.CloseGump(typeof(SkillTitleGump));
                         from.SendGump(new SkillTitleGump(from));
+                        break;
+                    }
+                    case 63: // Ancient Spellbook
+                    {
+                        if (!ResearchSettings.BookCaster(from))
+                        {
+                            ((PlayerMobile)from).UsingAncientBook = true;
+                        }
+                        else
+                        {
+                            ((PlayerMobile)from).UsingAncientBook = false;
+                        }
+                        from.SendGump(new Server.Engines.Help.HelpGump(from, 12));
                         break;
                     }
                     case 982: // Skill List
@@ -2623,6 +2839,30 @@ namespace Server.Engines.Help
                     case 80:
                     {
                         from.SendGump(new CustomTitleGump(from));
+                        break;
+                    }
+                    case 1081:
+                    {
+                        from.CloseGump(typeof(SetupBarsArch1));
+                        from.SendGump(new SetupBarsArch1(from, 1));
+                        break;
+                    }
+                    case 1082:
+                    {
+                        from.CloseGump(typeof(SetupBarsArch2));
+                        from.SendGump(new SetupBarsArch2(from, 1));
+                        break;
+                    }
+                    case 1083:
+                    {
+                        from.CloseGump(typeof(SetupBarsArch3));
+                        from.SendGump(new SetupBarsArch3(from, 1));
+                        break;
+                    }
+                    case 1084:
+                    {
+                        from.CloseGump(typeof(SetupBarsArch4));
+                        from.SendGump(new SetupBarsArch4(from, 1));
                         break;
                     }
                     case 980:
@@ -3283,41 +3523,42 @@ namespace Server.Engines.Help
             string HelpText =
                 "If you are looking for help exploring this world, you can learn about almost anything within the game world you travel. Some merchants sell scrolls or books that will explain how some skills can be performed, resources gathered, and even how elements of the world can be manipulated. A sage often sells many tomes of useful information on skills, weapon abilities, or various types of magics available. If you are totally new to this game, buy yourself a Guide to Adventure book from a sage if you lost the one you started with. This book explains how to navigate and play the game. You will also learn some things about how the world behaves such as merchant interactions, how to use items, and what to do when your character dies. Talk to the townsfolk to learn whatever you can. On this screen there are many options, information, and settings that can assist in your journey. Many of the options here have keyboard commands that are listed below. Make sure to check out the 'Info' section on your character's paperdoll as it has some vital information about your character.<br><br>"
                 + "Common Commands: Below are the commands you can use for various things in the game.<br><br>"
-                + "[abilitynames - Turns on/off the special weapon ability names next to the appropriate icons.<br><br>"
-                + "[afk - Turns on/off the notification to others that you are away from keyboard.<br><br>"
-                + "[autoattack - Turns on/off whether you auto attack when attacked.<br><br>"
-                + "[bandother - Bandage other command.<br><br>"
-                + "[bandself - Bandage self command.<br><br>"
-                + "[barbaric - Turns on/off the barbaric flavor the game provides (see end).<br><br>"
-                + "[c - Initiates the chat system.<br><br>"
-                + "[corpse - Helps one find their remains.<br><br>"
-                + "[corpseclear - Removes your corpse from a ship's deck.<br><br>"
-                + "[e - Opens the emote mini window.<br><br>"
-                + "[emote - Opens the emote window.<br><br>"
-                + "[evil - Turns on/off the evil flavor the game provides (see end).<br><br>"
-                + "[loot - Automatically take certain items from common dungeon chests or corpses and put them in your backpack. The unknown items are those that will need identification, but you may decide to take them anyway. The reagent options have a few categories. Magery and necromancer reagents are those used specifically by those characters, where witches brew reagents mainly fall into the necromancer category. Alchemic reagents are those that fall outside the category of magery and necromancer reagents, and only alchemists use them. Herbalist reagents are useful in druidic herbalism.<br><br>"
-                + "[magicgate - Helps one find the nearest magical gate.<br><br>"
-                + "[motd - Opens the message of the day.<br><br>"
-                + "[oriental - Turns on/off the oriental flavor the game provides (see end).<br><br>"
-                + "[password - Change your account password.<br><br>"
-                + "[poisons - This changes how poisoned weapons work, which can be for either precise control with special weapon infectious strikes (default) or with hits of a one-handed slashing or piercing weapon.<br><br>"
-                + "[private - Turns on/off detailed messages of your journey for the town crier and local citizen chatter.<br><br>"
-                + "[quests - Opens a scroll to show certain quest events.<br><br>"
+                + "[abilitynames - Turns on/off the special weapon ability names next to the appropriate icons.<BR><BR>"
+                + "[afk - Turns on/off the notification to others that you are away from keyboard.<BR><BR>"
+                + "[ancient - Turns on/off whether you are using magic from the research bag or the ancient spellbook.<br><br>"
+                + "[autoattack - Turns on/off whether you auto attack when attacked.<BR><BR>"
+                + "[bandother - Bandage other command.<BR><BR>"
+                + "[bandself - Bandage self command.<BR><BR>"
+                + "[barbaric - Turns on/off the barbaric flavor the game provides (see end).<BR><BR>"
+                + "[c - Initiates the chat system.<BR><BR>"
+                + "[corpse - Helps one find their remains.<BR><BR>"
+                + "[cleardeck - Removes npc corpses and empty player corpses from your boat deck.<BR><BR>"
+                + "[e - Opens the emote mini window.<BR><BR>"
+                + "[emote - Opens the emote window.<BR><BR>"
+                + "[evil - Turns on/off the evil flavor the game provides (see end).<BR><BR>"
+                + "[loot - Automatically take certain items from common dungeon chests or corpses and put them in your backpack. The unknown items are those that will need identification, but you may decide to take them anyway. The reagent options have a few categories. Magery and necromancer reagents are those used specifically by those characters, where witches brew reagents mainly fall into the necromancer category. Alchemic reagents are those that fall outside the category of magery and necromancer reagents, and only alchemists use them. Herbalist reagents are useful in druidic herbalism.<BR><BR>"
+                + "[magicgate - Helps one find the nearest magical gate.<BR><BR>"
+                + "[motd - Opens the message of the day.<BR><BR>"
+                + "[oriental - Turns on/off the oriental flavor the game provides (see end).<BR><BR>"
+                + "[password - Change your account password.<BR><BR>"
+                + "[poisons - This changes how poisoned weapons work, which can be for either precise control with special weapon infectious strikes (default) or with hits of a one-handed slashing or piercing weapon.<BR><BR>"
+                + "[private - Turns on/off detailed messages of your journey for the town crier and local citizen chatter.<BR><BR>"
+                + "[quests - Opens a scroll to show certain quest events.<BR><BR>"
                 + "[quickbar - Opens a small, vertical bar with common game functions for easier use.<br><br>"
-                + "[sad - Opens the weapon's special abilities.<br><br>"
-                + "[set1 - Sets your weapon's first ability to active.<br>"
-                + "[set2 - Sets your weapon's second ability to active.<br>"
-                + "[set3 - Sets your weapon's third ability to active.<br>"
-                + "[set4 - Sets your weapon's fourth ability to active.<br>"
-                + "[set5 - Sets your weapon's fifth ability to active.<br><br>"
-                + "[sheathe - Turns on/off the feature to sheathe your weapon when not in battle.<br><br>"
-                + "[skill - Shows you what each skill is used for.<br><br>"
-                + "[skilllist - Displays a more condensed list of skills you have set to 'up' and perhaps 'locked'.<br><br>"
-                + "[spellhue ## - This command, following by a color reference hue number, will change all of your magery spell effects to that color. A value of '1' will normally render as '0' so avoid that setting as it will not produce the result you may want.<br><br>"
-                + "[statistics - Shows you some statistics of the server.<br><br>"
-                + "[wealth - Opens a small, horizontal bar showing your gold value for the various forms of currency and gold in your bank and backpack. Currency are items you would have a banker convert to gold for you (silver, copper, xormite, jewels, and crystals). If you put these items in your bank, you can update the values on the wealth bar by right clicking on it.<br><br>"
+                + "[sad - Opens the weapon's special abilities.<BR><BR>"
+                + "[set1 - Sets your weapon's first ability to active.<BR><BR>"
+                + "[set2 - Sets your weapon's second ability to active.<BR><BR>"
+                + "[set3 - Sets your weapon's third ability to active.<BR><BR>"
+                + "[set4 - Sets your weapon's fourth ability to active.<BR><BR>"
+                + "[set5 - Sets your weapon's fifth ability to active.<BR><BR>"
+                + "[sheathe - Turns on/off the feature to sheathe your weapon when not in battle.<BR><BR>"
+                + "[skill - Shows you what each skill is used for.<BR><BR>"
+                + "[skilllist - Displays a more condensed list of skills you have set to 'up' and perhaps 'locked'.<BR><BR>"
+                + "[spellhue ## - This command, following by a color reference hue number, will change all of your magery spell effects to that color. A value of '1' will normally render as '0' so avoid that setting as it will not produce the result you may want.<BR><BR>"
+                + "[statistics - Shows you some statistics of the server.<BR><BR>"
+                + "[wealth - Opens a small, horizontal bar showing your gold value for the various forms of currency and gold in your bank and backpack. Currency are items you would have a banker convert to gold for you (silver, copper, xormite, jewels, and crystals). If you put these items in your bank, you can update the values on the wealth bar by right clicking on it.<BR><BR>"
                 + "<br><br>"
-                + "Area Difficulty Levels: When you enter many dangerous areas, there will be a message to you that you entered a particular area. There may be a level of difficulty shown in parenthesis, that will give you an indication on the difficulty of the area. Below are the descriptions for each level.<br><br>"
+                + "Area Difficulty Levels: When you enter dangerous areas, you will receive a message indicating the specific area you have entered. In addition, there may be a difficulty level indicated in parentheses to provide an indication of the area's difficulty. Below are descriptions for each level.<br><br>"
                 + " - Easy (Not much of a challenge)<br><br>"
                 + " - Normal (An average level of<br>"
                 + "        challenge)<br><br>"
@@ -3333,80 +3574,116 @@ namespace Server.Engines.Help
                 + "  [SkillName \"taming\"<br><br>"
                 + "If you want the game to manage your character's title, simply use the same command with a skill name of \"clear\".<br><br>"
                 + "<br><br>"
-                + "Reagent Bars: Below are the commands you can use to watch your reagent quantities as you cast spells or create potions. These are customizable bars that will show the quantities of the reagents you are carrying. These will show updated quantities of reagents whenever you cast a spell or make a potion that uses them. Otherwise you can make a macro to these commands and use them to refresh the amounts manually.<br><br>"
+                + "Reagent Bars: Below are the commands you can use to monitor your reagent quantities while casting spells or creating potions. These customizable bars display the quantities of the reagents you possess, updating them whenever you cast a spell or make a potion that utilizes them. Alternatively, you can create a macro for these commands and manually refresh the amounts.<br><br>"
                 + "[regbar - Opens the reagent bar.<br><br>"
                 + "[regclose - Closes the reagent bar.<br><br>"
                 + "<br><br>"
-                + "Magic Toolbars: Below are the commands you can use to manage magic toolbars that might help you play better.<br><br>"
+                + "Magic Toolbars: Here are the commands you can utilize to manage magic toolbars, which can enhance your gameplay experience.<br><br>"
+                + "[archspell1 - Opens the 1st ancient spell bar editor.<br><br>"
+                + "[archspell2 - Opens the 2nd ancient spell bar editor.<br><br>"
+                + "[archspell3 - Opens the 3rd ancient spell bar editor.<br><br>"
+                + "[archspell4 - Opens the 4th ancient spell bar editor.<br><br>"
                 + "[bardsong1 - Opens the 1st bard song bar editor.<br><br>"
                 + "[bardsong2 - Opens the 2nd bard song bar editor.<br><br>"
+                + "<br><br>"
                 + "[knightspell1 - Opens the 1st knight spell bar editor.<br><br>"
                 + "[knightspell2 - Opens the 2nd knight spell bar editor.<br><br>"
+                + "<br><br>"
                 + "[deathspell1 - Opens the 1st death knight spell bar editor.<br><br>"
                 + "[deathspell2 - Opens the 2nd death knight spell bar editor.<br><br>"
+                + "<br><br>"
                 + "[elementspell1 - Opens the 1st elemental spell bar editor.<br><br>"
                 + "[elementspell2 - Opens the 2nd elemental spell bar editor.<br><br>"
+                + "<br><br>"
                 + "[holyspell1 - Opens the 1st priest prayer bar editor.<br><br>"
                 + "[holyspell2 - Opens the 2nd priest prayer bar editor.<br><br>"
+                + "<br><br>"
                 + "[magespell1 - Opens the 1st mage spell bar editor.<br><br>"
                 + "[magespell2 - Opens the 2nd mage spell bar editor.<br><br>"
                 + "[magespell3 - Opens the 3rd mage spell bar editor.<br><br>"
                 + "[magespell4 - Opens the 4th mage spell bar editor.<br><br>"
+                + "<br><br>"
                 + "[monkspell1 - Opens the 1st monk ability bar editor.<br><br>"
                 + "[monkspell2 - Opens the 2nd monk ability bar editor.<br><br>"
+                + "<br><br>"
                 + "[necrospell1 - Opens the 1st necromancer spell bar editor.<br><br>"
                 + "[necrospell2 - Opens the 2nd necromancer spell bar editor.<br><br>"
                 + "<br><br>"
+                + "[archtool1 - Opens the 1st ancient spell bar.<br><br>"
+                + "[archtool2 - Opens the 2nd ancient spell bar.<br><br>"
+                + "[archtool3 - Opens the 3rd ancient spell bar.<br><br>"
+                + "[archtool4 - Opens the 4th ancient spell bar.<br><br>"
+                + "<br><br>"
                 + "[bardtool1 - Opens the 1st bard song bar.<br><br>"
                 + "[bardtool2 - Opens the 2nd bard song bar.<br><br>"
+                + "<br><br>"
                 + "[knighttool1 - Opens the 1st knight spell bar.<br><br>"
                 + "[knighttool2 - Opens the 2nd knight spell bar.<br><br>"
+                + "<br><br>"
                 + "[deathtool1 - Opens the 1st death knight spell bar.<br><br>"
                 + "[deathtool2 - Opens the 2nd death knight spell bar.<br><br>"
+                + "<br><br>"
                 + "[elementtool1 - Opens the 1st elemental spell bar.<br><br>"
                 + "[elementtool2 - Opens the 2nd elemental spell bar.<br><br>"
+                + "<br><br>"
                 + "[holytool1 - Opens the 1st priest prayer bar.<br><br>"
                 + "[holytool2 - Opens the 2nd priest prayer bar.<br><br>"
+                + "<br><br>"
                 + "[magetool1 - Opens the 1st mage spell bar.<br><br>"
                 + "[magetool2 - Opens the 2nd mage spell bar.<br><br>"
                 + "[magetool3 - Opens the 3rd mage spell bar.<br><br>"
                 + "[magetool4 - Opens the 4th mage spell bar.<br><br>"
+                + "<br><br>"
                 + "[monktool1 - Opens the 1st monk ability bar.<br><br>"
                 + "[monktool2 - Opens the 2nd monk ability bar.<br><br>"
+                + "<br><br>"
                 + "[necrotool1 - Opens the 1st necromancer spell bar.<br><br>"
                 + "[necrotool2 - Opens the 2nd necromancer spell bar.<br><br>"
                 + "<br><br>"
+                + "[archclose1 - Closes the 1st ancient spell bar.<br><br>"
+                + "[archclose2 - Closes the 2nd ancient spell bar.<br><br>"
+                + "[archclose3 - Closes the 3rd ancient spell bar.<br><br>"
+                + "[archclose4 - Closes the 4th ancient spell bar.<br><br>"
+                + "<br><br>"
                 + "[bardclose1 - Closes the 1st bard song bar.<br><br>"
                 + "[bardclose2 - Closes the 2nd bard song bar.<br><br>"
+                + "<br><br>"
                 + "[knightclose1 - Closes the 1st knight spell bar.<br><br>"
                 + "[knightclose2 - Closes the 2nd knight spell bar.<br><br>"
+                + "<br><br>"
                 + "[deathclose1 - Closes the 1st death knight spell bar.<br><br>"
                 + "[deathclose2 - Closes the 2nd death knight spell bar.<br><br>"
+                + "<br><br>"
                 + "[elementclose1 - Closes the 1st elemental spell bar.<br><br>"
                 + "[elementclose2 - Closes the 2nd elemental spell bar.<br><br>"
+                + "<br><br>"
                 + "[holyclose1 - Closes the 1st priest prayer bar.<br><br>"
                 + "[holyclose2 - Closes the 2nd priest prayer bar.<br><br>"
+                + "<br><br>"
                 + "[mageclose1 - Closes the 1st mage spell bar.<br><br>"
                 + "[mageclose2 - Closes the 2nd mage spell bar.<br><br>"
                 + "[mageclose3 - Closes the 3rd mage spell bar.<br><br>"
                 + "[mageclose4 - Closes the 4th mage spell bar.<br><br>"
+                + "<br><br>"
                 + "[monkclose1 - Closes the 1st monk ability bar.<br><br>"
                 + "[monkclose2 - Closes the 2nd monk ability bar.<br><br>"
+                + "<br><br>"
                 + "[necroclose1 - Closes the 1st necromancer spell bar.<br><br>"
                 + "[necroclose2 - Closes the 2nd necromancer spell bar.<br><br>"
                 + "<br><br>"
-                + "Music: There is many different pieces of classic music in the game, and they play depending on areas you visit. Some of the music is from the original game, but there are some pieces from older games. There are also some pieces from computer games in the 1990's, but they really fit the theme when traveling the land. You can choose to listen to them, or change the music you are listening to when exploring the world. Keep in mind that when you change the music, and you enter a new area, the default music for that area will play and you may have to change your music again. Also keep in mind that your game client will want to play the song for a few seconds before allowing a switch of new music. You can use the below command to open a window that allows you to choose a song to play. Almost all of them play in a loop, where there are three that do not and are marked with an asterisk. There are two pages of songs to choose from so use the top arrow to go back and forth to each screen. When your music begins to play, then press the OKAY button to exit the screen. Although an unnecessary function, it does give you some control over the music in the game.<br><br>"
+                + "<br><br>"
+                + "Music: There are many different pieces of classical music in the game, and they play depending on the areas you visit. Some of the music is from the original game, but there are also some pieces from older games. Additionally, there are some pieces from computer games in the 1990s that really fit the theme when traveling the land. You can choose to listen to them or change the music you are listening to when exploring the world. However, please note that when you change the music and enter a new area, the default music for that area will play, and you may have to change your music again. Also, keep in mind that your game client will play the current song for a few seconds before allowing a switch to new music. You can use the below command to open a window that allows you to choose a song to play. Most of them play in a loop, but there are three that do not, and they are marked with an asterisk. There are two pages of songs to choose from, so use the top arrow to navigate between each screen. Once your chosen music begins to play, press the OKAY button to exit the screen. Although it is an unnecessary function, it does give you some control over the music in the game.<br><br>"
                 + "[music - Opens the music playlist and player.<br><br>"
-                + "The below command will simply toggle your music preference to play a different set of music in the dungeons. When turned on, it will play music you normally hear when traveling the land, instead of the music commonly played in dungeons.<br><br>"
+                + "The following command will toggle your music preference, allowing you to play a different set of music in the dungeons. When enabled, it will play the music typically heard while traveling the land, rather than the usual dungeon music.<br><br>"
                 + "[musical - Sets the default dungeon music.<br><br>"
                 + "<br><br>"
-                + "Evil Style: There is an evil element to the game that some want to participate in. With classes such as Necromancers, some players may want to travel a world with this flavor added. This particular setting allows you to toggle between regular and evil flavors. When in the evil mode, some of the treasure you will find will often have a name that fits in the evil style. When you stay within negative karma, skill titles will change for you as well, but not all. Look over the book of skill titles (found within the game world) to see which titles will change based on karma. Some of the relics you will find may also have this style, to perhaps decorate a home in this fashion. This option can be turned off and on at any time. You can only have one type of play style active at any one time.<br><br>"
+                + "Evil Style: Some players are drawn to the dark side of the game, where they can indulge in evil activities. With classes like Necromancers, players can immerse themselves in a world that embraces this sinister flavor. This unique setting allows players to switch between regular and evil modes. In the evil mode, the treasures they discover often bear names that suit the malevolent theme. Moreover, if players maintain negative karma, some of their skill titles will change, although not all of them. To determine which titles will alter based on karma, players can consult the book of skill titles within the game world. Additionally, players may stumble upon relics that boast this distinctive style, perfect for decorating their homes in a dark fashion. This option can be toggled on and off at any time, but players can only have one play style active at a time.<br><br>"
                 + "[evil - Turns on/off the evil flavor the game provides.<br><br>"
                 + "<br><br>"
-                + "Oriental Style: There is an oriental element to the game that most do not want to participate in. With classes such as Ninja and Samurai, some players may want to travel a world with this flavor added. This particular setting allows you to toggle between fantasy and oriental. When in the oriental mode, much of the treasure you will find will be of Chinese or Japanese historical origins. These types of items will most times be named to match the style. Items that once belonged to someone, will often have a name that fits in the oriental style. Some of the skill titles will change for you as well, but not all. Look over the book of skill titles (found within the game world) to see which titles will change based on this play style. Some of the relics and artwork you will find will also have this style, to perhaps decorate a home in this fashion. This option can be turned off and on at any time. You can only have one type of play style active at any one time.<br><br>"
+                + "Oriental Style: There is an Oriental element in the game that not all players want to experience. With classes like Ninja and Samurai, some players may prefer a world that incorporates this flavor. This specific setting allows you to switch between fantasy and Oriental themes. When in Oriental mode, a significant portion of the treasure you discover will have Chinese or Japanese historical origins. These items are often named to match the style and possessions that once belonged to someone will frequently have an Oriental-sounding name. Some skill titles will also change based on this play style, although not all of them. Take a look at the book of skill titles (found within the game world) to see which titles are affected by this play style. Additionally, you may come across relics and artwork that follow this style, which can be used to decorate your in-game home. This option can be toggled on and off at any time, but only one play style can be active at a time.<br><br>"
                 + "[oriental - Turns on/off the oriental flavor the game provides.<br><br>"
                 + "<br><br>"
-                + "Barbaric Style: The default game does not lend itself to a sword and sorcery experience. This means that it is not the most optimal play experience to be a loin cloth wearing barbarian that roams the land with a huge axe. Characters generally get as much equipment as they can in order to maximize their rate of survivability. This particular play style can help in this regard. Choosing to play in this style will have a satchel appear in your main pack. You cannot store anything in this satchel, as its purpose is to change certain pieces of equipment you place into it. It will change shields, hats, helms, tunics, sleeves, leggings, boots, gorgets, gloves, necklaces, cloaks, and robes. When these items get changed, they will become something that appears differently but behave in the same way the previous item did. These different items can be equipped but may not appear on your character. Also note that when you wear robes, they cover your character's tunics and sleeves. Wearing a sword and sorcery robe will do the same thing so you will have to remove the robe in order to get to the sleeves and/or tunic. This play style has their own set of skill titles for many skills as well. If you are playing a female character, pressing the button further will convert any 'Barbarian' titles to 'Amazon'. You can open your satchel to learn more about this play style. This option can be turned off and on at any time. You can only have one type of play style active at any one time.<br><br>"
+                + "Barbaric Style: The default game does not lend itself to a sword and sorcery experience, making it suboptimal for players who want to embody a loin cloth-wearing barbarian wielding a massive axe. In order to maximize survivability, characters typically strive to acquire as much equipment as possible. However, this particular play style can be advantageous in that it introduces a satchel into the main pack. While the satchel cannot be used for storage, its purpose is to alter specific pieces of equipment that are placed inside. Shields, hats, helms, tunics, sleeves, leggings, boots, gorgets, gloves, necklaces, cloaks, and robes can all be transformed into visually distinct items that maintain the same functionality as their original counterparts. It's worth noting that when wearing robes, they will cover both the tunics and sleeves of the character. Similarly, if a sword and sorcery robe is worn, it will have the same effect, necessitating the removal of the robe to access the sleeves and/or tunic. This play style also introduces its own unique set of skill titles for various abilities. Female characters have the additional option of converting any 'Barbarian' titles to 'Amazon' by pressing a specific button. To learn more about this play style, players can open their satchel. Furthermore, this option can be toggled on or off at any time, although only one play style can be active simultaneously.<br><br>"
                 + "[barbaric - Turns on/off the barbaric flavor the game provides.<br><br>"
                 + "";
 
@@ -3440,52 +3717,52 @@ namespace Server.Gumps
                 scrollbar = false;
                 title = "Music Tone";
                 info =
-                    "This option will simply toggle your music preference to play a different set of music in the dungeons. When turned on, it will play music you normally hear when traveling the land, instead of the music commonly played in dungeons.";
+                    "This option simply toggles your music preference to play a different set of music in the dungeons. When turned on, it will play the music you normally hear when traveling the land, instead of the music commonly played in dungeons.";
             }
             else if (page == 83)
             {
                 title = "Music Playlist";
                 info =
-                    "This gives you a complete list of the in-game music. You can select the music you like and those choices will randomly play as you go from region to region. To listen to a song for review, select the blue gem icon. Note that the client has a delay time when you can start another song so selecting the blue gem may not respond if you started a song too soon before that. Wait for a few seconds and try clicking the blue gem again to see if that song starts to play. Playlists are disabled by default, so if you want your playlist to function, make sure to enable it.";
+                    "This provides a comprehensive list of the in-game music. You can choose the music you prefer, and those selections will play randomly as you move between regions. To listen to a song for review, click on the blue gem icon. Please be aware that there is a delay before you can start another song, so if you clicked on the blue gem too quickly, it may not respond. Wait a few seconds and try clicking on the blue gem again to see if the song starts playing. Playlists are disabled by default, so if you want your playlist to work, remember to enable it.";
             }
             else if (page == 84)
             {
                 scrollbar = false;
                 title = "Private Play";
                 info =
-                    "This option turns on or off the detailed messages of your journey for the town crier and local citizen chatter. This keeps your activities private so others will not see where you are traveling the world.";
+                    "This option allows you to enable or disable the detailed messages regarding your journey for the town crier and local citizen chatter. By doing so, you can keep your activities private, ensuring that others will not be able to see the specific locations you are traveling to in the world.";
             }
             else if (page == 85)
             {
                 title = "Loot Options";
                 info =
-                    "This lets you select from a list of categories, where they will automatically take those types of items from common dungeon chests or corpses and put them in your backpack. If you select coins, you will take wealth in the form of currency or gold nuggets. If you take gems and jewels, this will consist of gems, gemstones, jewelry, jewels, and crystals. The unknown items are those that will need identification, but you may decide to take them anyway. The reagent options have a few categories. Magery and necromancer reagents are those used specifically by those characters, where witches brew reagents fall into the necromancer category. Alchemic reagents are those that fall outside the category of magery and necromancer reagents, and only alchemists use them. Herbalist reagents are useful druidic herbalism.";
+                    "This feature allows you to choose from a variety of categories. When selected, items from these categories will be automatically transferred from common dungeon chests or corpses into your backpack. If you choose the 'coins' category, you will acquire wealth in the form of currency or gold nuggets. The 'gems and jewels' category includes gems, gemstones, jewelry, jewels, and crystals. The 'unknown items' category refers to items that require identification, but you have the option to take them regardless. The 'reagent' options consist of several categories. 'Magery' and 'necromancer' reagents are specifically used by characters with those abilities, while 'witches brew' reagents fall under the necromancer category. 'Alchemic' reagents are distinct from magery and necromancer reagents and are exclusively used by alchemists. Lastly, 'herbalist' reagents are beneficial for druidic herbalism.";
             }
             else if (page == 86)
             {
                 title = "Classic Poisoning";
                 info =
-                    "There are two methods that assassins use to handle poisoned weapons. One is the simple method of soaking the blade and having it poison whenever it strikes their opponent. With this method, known as classic poisoning, there is little control on the dosage given but it is easier to maneuver. When this option is turned off, it has the newer and more tactical method, where only certain weapons can be poisoned and the assassin can control when the poison is administered with the hit. Although the tactical method requires more thought, it does have the potential to allow an assassin to poison certain arrows, for example. The choice of methods can be switched at any time, but only one method can be in use at a given time.";
+                    "There are two methods that assassins use to handle poisoned weapons. One is the simple method of soaking the blade and having it poison whenever it strikes their opponent. With this method, known as classic poisoning, there is little control over the dosage given, but it is easier to maneuver. When this option is turned off, there is the newer and more tactical method, where only certain weapons can be poisoned, and the assassin can control when the poison is administered with each hit. Although the tactical method requires more thought, it does have the potential to allow an assassin to poison specific arrows, for example. The choice of methods can be switched at any time, but only one method can be in use at a given time.";
             }
             else if (page == 87)
             {
                 title = "Skill Title";
                 info =
-                    "When you don't set your skill title here, the game will take your highest skill and make that into your character's title. Choosing a skill here will force your title to that profession. So if you always want to be known as a wizard, then select the 'Magery' option (for example). You can let the game manage this at any time by setting it back to 'Auto Title'. Be warned when choosing a skill, if you have zero skill points in it, you will be titled 'the Village Idiot'. If you get at least 0.1, you will at least be 'Aspiring'.";
+                    "If you do not specify your skill title here, the game will automatically assign your highest skill as your character's title. Selecting a skill here will make that profession your title. For example, if you always want to be known as a wizard, choose the 'Magery' option. You can let the game handle this by setting it to 'Auto Title' anytime. However, be cautious when selecting a skill. If you have no skill points in it, you will be titled 'the Village Idiot'. If you have at least 0.1 skill points, you will be titled 'Aspiring'.";
             }
             else if (page == 88)
             {
                 scrollbar = false;
                 title = "Message Color";
                 info =
-                    "By default, most of the messages appearing on the lower left of the screen are gray in color. Enabling this option will change those messages to have a random color whenenver a new message appears. This feature can help some more easily see such messages and the varying colors can also help distinguish individual messages that may be scrolling by.";
+                    "By default, most of the messages appearing on the lower left of the screen are gray in color. Enabling this option will change those messages to have a random color whenever a new message appears. This feature can help some people more easily see such messages, and the varying colors can also help distinguish individual messages that may be scrolling by.";
             }
             else if (page == 89)
             {
                 scrollbar = false;
                 title = "Auto Attack";
                 info =
-                    "By default, when you are attacked you will automatically attack back. If you want to instead decide when or if you want to attack back, you can turn this option off. This can be helpful if you do not want to kill innocents by accident, or you are trying to tame an angry creature.";
+                    "By default, when you are attacked, you will automatically retaliate. However, if you prefer to have control over when or if you retaliate, you can disable this option. Disabling it can be beneficial if you wish to avoid accidentally harming innocent beings or if you are attempting to tame an aggressive creature.";
             }
             else if (page == 92)
             {
@@ -3493,62 +3770,62 @@ namespace Server.Gumps
                 info =
                     "This is the default play style for "
                     + Server.Misc.ServerList.ServerName
-                    + ". It is designed for a classic fantasy world experience for the players. There are two other play styles available, evil and oriental. Play styles do not change the mechanics of the game playing experience, but it does change the flavor of the treasure you find and the henchman you hire. For example, you can set your play style to an 'evil' style of play. What happens is you will find treasure geared toward that play style. Where you would normally find a blue 'mace of might', the evil style would have you find a black 'mace of ghostly death'. They are simply a way to tweak your character's experience in the game.";
+                    + ". It is designed to provide players with a classic fantasy world experience. There are two additional play styles available: evil and oriental. These play styles do not alter the mechanics of the gameplay, but they do affect the types of treasure you discover and the henchmen you can hire. For instance, if you choose the 'evil' play style, you will come across treasure that is specifically tailored to that style. Instead of finding a blue 'mace of might', you would find a black 'mace of ghostly death'. These play styles serve as a means to customize your character's experience within the game.";
             }
             else if (page == 93)
             {
                 title = "Play Style - Evil";
                 info =
-                    "There is an evil element to the game that some want to participate in. With classes such as Necromancers, some players may want to travel a world with this flavor added. This particular setting allows you to toggle between regular and evil flavors. When in the evil mode, some of the treasure you will find will often have a name that fits in the evil style. When you stay within negative karma, skill titles will change for you as well, but not all. Look over the book of skill titles (found within the game world) to see which titles will change based on karma. Some of the relics you will find may also have this style, to perhaps decorate a home in this fashion. This option can be turned off and on at any time. You can only have one type of play style active at any one time.<br><br>"
+                    "There is an element of evil in the game that some players want to engage with. With classes like Necromancers, players may choose to explore a world with this added flavor. This particular setting allows you to switch between regular and evil modes. In the evil mode, the treasure you find often has names that suit the evil style. When you maintain negative karma, some of your skill titles will change, although not all of them. You can check the book of skill titles in the game world to see which ones are affected by karma. Additionally, some of the relics you find may also follow this style, allowing you to decorate your home in an evil fashion. This option can be toggled on and off at any time. However, you can only have one play style active at a time.<br><br>"
                     + "[evil - Turns on/off the evil flavor the game provides.";
             }
             else if (page == 94)
             {
                 title = "Play Style - Oriental";
                 info =
-                    "There is an oriental element to the game that most do not want to participate in. With classes such as Ninja and Samurai, some players may want to travel a world with this flavor added. This particular setting allows you to toggle between fantasy and oriental. When in the oriental mode, much of the treasure you will find will be of Chinese or Japanese historical origins. These types of items will most times be named to match the style. Items that once belonged to someone, will often have a name that fits in the oriental style. Some of the skill titles will change for you as well, but not all. Look over the book of skill titles (found within the game world) to see which titles will change based on this play style. Some of the relics and artwork you will find will also have this style, to perhaps decorate a home in this fashion. This option can be turned off and on at any time. You can only have one type of play style active at any one time.";
+                    "There is an Oriental element in the game that many players do not wish to engage with. With classes like Ninja and Samurai, some players may be interested in exploring a world with this added flavor. This specific setting allows players to toggle between fantasy and Oriental themes. In Oriental mode, a significant portion of the treasure you find will have Chinese or Japanese historical origins. These items will often be named to match the Oriental style. Items that once belonged to someone will frequently have a name that aligns with the Oriental style as well. Some of the skill titles will also change based on this play style, although not all of them. You can review the book of skill titles (located within the game world) to see which titles will change when playing with this style. Additionally, some of the relics and artwork you discover will also have an Oriental style, allowing players to decorate their homes accordingly. This option can be enabled or disabled at any time, but you can only have one play style active at a time.";
             }
             else if (page == 95)
             {
                 m_Origin = 7;
                 title = "Magic Toolbars";
                 info =
-                    "These toolbars can be configured for all areas of magical-style spells in the game. Each school of magic has two separate toolbars you can customize, except for magery which has four available. The large number of spells for magery benefit from the extra two toolbars. These toolbars allow you to select spells that you like to cast often, and set whether the bar will appear vertical or horizontal. If you choose to have the toolbar appear vertical, you have the additional option of showing the spell names next to the icons. These toolbars can be moved around and you need only single click the appropriate icon to cast the spell. If you have spells selected for a toolbar, but lack the spell in your spellbook, the icon will not appear when you open the toolbar. These toolbars cannot be closed by normal means, to avoid the chance you close them by accident when in combat. You can either use the command button available in the 'Help' section, or the appropriate typed keyboard command.";
+                    "These toolbars can be configured for all areas of magical-style spells in the game. Each school of magic has two separate toolbars that you can customize, except for magery, which has four available. The large number of spells for magery benefits from the extra two toolbars. These toolbars allow you to select spells that you like to cast often and set whether the bar will appear vertically or horizontally. If you choose to have the toolbar appear vertically, you have the additional option of showing the spell names next to the icons. These toolbars can be moved around, and you only need to single-click the appropriate icon to cast the spell. If you have spells selected for a toolbar but lack the spell in your spellbook, the icon will not appear when you open the toolbar. These toolbars cannot be closed by normal means to avoid the chance of accidentally closing them during combat. You can either use the command button available in the 'Help' section or the appropriate typed keyboard command.";
             }
             else if (page == 96)
             {
                 scrollbar = false;
                 title = "Magery Spell Color";
                 info =
-                    "You can change the color for all of your magery spell effects here. There are a limited amount of choices given here. Once set, your spells will be that color for every effect. If you want to set it back to normal, then select the 'Default' option. You can also use the '[spellhue' command followed by a number of any color you want to set it to.";
+                    "You can modify the color of all your magery spell effects here. There are a limited number of options provided. Once set, your spells will display that color for every effect. To revert to the original color, select the 'Default' option. Alternatively, you can use the '[spellhue' command followed by a number to set a custom color of your choice.";
             }
             else if (page == 97)
             {
                 scrollbar = false;
                 title = "Custom Title";
                 info =
-                    "This allows you to enter a custom title for your character, instead of relying on the game to assign you one based on your best skill or the skill you choose to have represent you. To clear out a custom title you may have set with this option, enter the word of 'clear' to remove it.";
+                    "This feature enables you to input a personalized title for your character, instead of depending on the game to assign one based on your highest skill or the skill you choose to represent you. To reset a custom title you have set using this option, simply enter the word 'clear' to remove it.";
             }
             else if (page == 99)
             {
                 scrollbar = false;
                 title = "Weapon Ability Names";
                 info =
-                    "When you get good enough with tactics and a weapon type, you will get special abilities that they can perform. These usually appear as simple icons you can select to do the action, but this option will turn on or off the special weapon ability names next to the appropriate icons.";
+                    "Once you have mastered tactics and a specific weapon type, you will unlock special abilities associated with them. These abilities are represented by simple icons that you can select to perform certain actions. However, you also have the option to enable or disable the display of the names of these special weapon abilities next to their respective icons.";
             }
             else if (page == 100)
             {
                 scrollbar = false;
                 title = "Auto Sheath";
                 info =
-                    "This option turns on or off the feature to sheathe your weapon when not in battle. When you put your character back into war mode, they will draw the weapon.";
+                    "This option allows you to enable or disable the feature of sheathing your weapon when you are not in battle. When you switch your character back to war mode, they will automatically draw their weapon.";
             }
             else if (page == 101)
             {
                 scrollbar = false;
                 title = "Gump Images";
                 info =
-                    "Many window gumps have a faded image in the background. Turning this off will have those windows only be black in color, with no background image.";
+                    "Many window dumps have a faded image in the background. Disabling this option will make those windows appear only in black color, without any background image.";
             }
             else if (page == 102)
             {
@@ -3562,39 +3839,39 @@ namespace Server.Gumps
                 scrollbar = false;
                 title = "Creature Magic";
                 info =
-                    "Some creatures have a natural ability for magic. This setting lets you change which school of magic you want to focus on: magery, necromancy, or elementalism. This allows magery or necromancy creatures to move their focus into elementalism, or to switch between magery and necromancy.";
+                    "Some creatures possess an inherent magical aptitude. In this particular scenario, you have the option to specialize in one of three schools of magic: magery, necromancy, or elementalism. This flexibility enables creatures with a proficiency in magery or necromancy to redirect their attention towards elementalism, or alternate between magery and necromancy as desired.";
             }
             else if (page == 104)
             {
                 scrollbar = false;
                 title = "Creature Type";
                 info =
-                    "Some creature species has more than one option for appearance. This setting lets you change to another of that species if another appearance is available. You can also turn yourself into a human if you choose. If you become human, you will remain that way forever.";
+                    "Some species of creatures have multiple options for their appearance. This feature allows you to switch to a different appearance within the same species, if another option is available. Additionally, you have the ability to transform into a human. Once you make this choice, you will remain in human form indefinitely.";
             }
             else if (page == 105)
             {
                 scrollbar = false;
                 title = "Creature Sounds";
                 info =
-                    "Since you are a creature, you sometimes make sounds when attacking or getting hurt from attacks. You can turn these sounds on or off here.";
+                    "As a creature, you may emit sounds when engaging in combat or sustaining injuries. You have the option to toggle these sounds on or off in this menu.";
             }
             else if (page == 198)
             {
                 title = "Play Style - Barbaric";
                 info =
-                    "The default game does not lend itself to a sword and sorcery experience. This means that it is not the most optimal play experience to be a loin cloth wearing barbarian that roams the land with a huge axe. Characters generally get as much equipment as they can in order to maximize their rate of survivability. This particular play style can help in this regard. Choosing to play in this style will have a satchel appear in your main pack. You cannot store anything in this satchel, as its purpose is to change certain pieces of equipment you place into it. It will change shields, hats, helms, tunics, sleeves, leggings, boots, gorgets, gloves, necklaces, cloaks, and robes. When these items get changed, they will become something that appears differently but behave in the same way the previous item did. These different items can be equipped but may not appear on your character. Also note that when you wear robes, they cover your character's tunics and sleeves. Wearing a sword and sorcery robe will do the same thing so you will have to remove the robe in order to get to the sleeves and/or tunic. This play style has their own set of skill titles for many skills as well. If you are playing a female character, pressing the button further will convert any 'Barbarian' titles to 'Amazon'. You can open your satchel to learn more about this play style. This option can be turned off and on at any time. You can only have one type of play style active at any one time.";
+                    "The default game is not suited for a sword and sorcery experience, making it less than optimal for players who want to be a barbarian wearing a loin cloth and wielding a huge axe. In order to maximize their chances of survival, characters typically gather as much equipment as possible. However, this particular play style can help in that regard. By choosing to play in this style, a satchel will appear in your main pack. It is important to note that you cannot store anything in this satchel; its purpose is to change specific pieces of equipment that you place into it. These changes apply to shields, hats, helms, tunics, sleeves, leggings, boots, gorgets, gloves, necklaces, cloaks, and robes. The altered items will have a different appearance but function in the same way as the original items. These different items can be equipped, although they may not be visible on your character. Additionally, when you wear robes, they will cover your character's tunics and sleeves. Wearing a sword and sorcery robe will have the same effect, so you will need to remove the robe in order to access the sleeves and/or tunic. This play style also introduces its own set of skill titles for many skills. If you are playing as a female character, pressing the button further will change any 'Barbarian' titles to 'Amazon'. You can open your satchel to learn more about this play style. This option can be toggled on or off at any time, but keep in mind that only one play style can be active at a time.";
             }
             else if (page == 199)
             {
                 title = "Skill Lists";
                 info =
-                    "Skill lists are an alternative to the normal skill lists you can get from clicking the appropriate button on the paper doll. Although you still need to use that for skill management (up, down, lock), skill lists have a more condensed appearance for when you play the game. In order for skills to appear in this alternate list, they have to either be set to 'up', or they can be set to 'locked'. The 'locked' skills will only display in this list if you change your settings here to reflect that. The list does not refresh in real time, but it will often refresh itself to show your skill status in both real and enhanced values. Any skill that appears in orange indicates a skill that you have locked. You can open this list with the '[skilllist' command, or the appropriate button on the main screen.";
+                    "Skill lists are an alternative to the standard skill lists accessible by clicking the appropriate button on the paper doll. While you still need to use the standard skill lists for skill management (up, down, lock), the alternate skill lists have a more condensed appearance during gameplay. To have skills appear in this alternate list, they must be set to 'up' or 'locked'. 'Locked' skills will only display in this list if you adjust your settings accordingly. The list does not update in real time, but it will often refresh to reflect your current skill status in both real and enhanced values. Any skill appearing in orange indicates that it is locked. You can access this list using the '[skilllist' command or the designated button on the main screen.";
             }
             else if (page == 1000)
             {
                 title = "Flip Deed";
                 info =
-                    "This option allows you to flip some deeds that can come in one of two direction facings. So if a deed states that furniture faces east, then you can set the deed on the floor of your house and flip it to face south instead. This can flip almost any deed-like items in this manner, but not all items are called 'deeds' or look like deeds. Some items behave as deeds and those can be flipped in the same manner. Tents or bear rugs, for example, have a facing and you can flip those with this command..";
+                    "This option enables you to rotate certain items that have two possible facing directions. For instance, if a deed indicates that furniture faces east, you can place the deed on the floor of your house and rotate it to face south instead. This functionality can be applied to various items that resemble deeds, as well as other items that function similarly. For instance, tents or bear rugs have a specific facing direction that can be altered using this command.";
             }
 
             AddPage(0);

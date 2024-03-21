@@ -1,13 +1,13 @@
 using System;
 using System.Collections;
-using Server.Network;
-using Server.Items;
-using Server.Targeting;
-using Server.Spells.Necromancy;
-using Server.Spells.Fourth;
-using Server.Mobiles;
 using System.Collections.Generic;
+using Server.Items;
 using Server.Misc;
+using Server.Mobiles;
+using Server.Network;
+using Server.Spells.Fourth;
+using Server.Spells.Necromancy;
+using Server.Targeting;
 
 namespace Server.Spells.HolyMan
 {
@@ -21,7 +21,7 @@ namespace Server.Spells.HolyMan
         }
         public override int RequiredTithing
         {
-            get { return 80; }
+            get { return 15; }
         }
         public override double RequiredSkill
         {
@@ -73,40 +73,8 @@ namespace Server.Spells.HolyMan
                     0x100
                 );
 
-                StatMod mod;
+                Server.Spells.Chivalry.RemoveCurseSpell.RemoveBadThings(m);
 
-                mod = m.GetStatMod("[Magic] Str Offset");
-                if (mod != null && mod.Offset < 0)
-                    m.RemoveStatMod("[Magic] Str Offset");
-
-                mod = m.GetStatMod("[Magic] Dex Offset");
-                if (mod != null && mod.Offset < 0)
-                    m.RemoveStatMod("[Magic] Dex Offset");
-
-                mod = m.GetStatMod("[Magic] Int Offset");
-                if (mod != null && mod.Offset < 0)
-                    m.RemoveStatMod("[Magic] Int Offset");
-
-                m.Paralyzed = false;
-
-                EvilOmenSpell.TryEndEffect(m);
-                StrangleSpell.RemoveCurse(m);
-                CorpseSkinSpell.RemoveCurse(m);
-                CurseSpell.RemoveEffect(m);
-                MortalStrike.EndWound(m);
-                if (Core.ML)
-                {
-                    BloodOathSpell.RemoveCurse(m);
-                }
-                MindRotSpell.ClearMindRotScalar(m);
-
-                BuffInfo.RemoveBuff(m, BuffIcon.Clumsy);
-                BuffInfo.RemoveBuff(m, BuffIcon.FeebleMind);
-                BuffInfo.RemoveBuff(m, BuffIcon.Weaken);
-                BuffInfo.RemoveBuff(m, BuffIcon.Curse);
-                BuffInfo.RemoveBuff(m, BuffIcon.MassCurse);
-                BuffInfo.RemoveBuff(m, BuffIcon.MortalStrike);
-                BuffInfo.RemoveBuff(m, BuffIcon.Mindrot);
                 DrainSoulsInSymbol(Caster, RequiredTithing);
             }
 

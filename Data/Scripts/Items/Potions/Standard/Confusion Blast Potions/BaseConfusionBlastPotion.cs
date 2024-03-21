@@ -2,11 +2,11 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Server;
-using Server.Network;
-using Server.Targeting;
-using Server.Spells;
-using Server.Mobiles;
 using Server.Misc;
+using Server.Mobiles;
+using Server.Network;
+using Server.Spells;
+using Server.Targeting;
 
 namespace Server.Items
 {
@@ -132,6 +132,15 @@ namespace Server.Items
                     BaseCreature mon = (BaseCreature)mobile;
 
                     mon.Pacify(from, DateTime.Now + TimeSpan.FromSeconds(5.0)); // TODO check
+                }
+                else if (
+                    mobile.Alive
+                    && from != mobile
+                    && mobile.Blessed == false
+                    && from.CanBeHarmful(mobile, true)
+                )
+                {
+                    mobile.Paralyze(TimeSpan.FromSeconds(5.0));
                 }
             }
         }

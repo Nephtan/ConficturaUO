@@ -2,13 +2,13 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Server;
+using Server.Gumps;
+using Server.Items;
 using Server.Mobiles;
 using Server.Network;
-using Server.Items;
-using Server.Targeting;
-using Server.Gumps;
-using Server.Spells.Necromancy;
 using Server.Regions;
+using Server.Spells.Necromancy;
+using Server.Targeting;
 
 namespace Server.Spells.Chivalry
 {
@@ -140,30 +140,18 @@ namespace Server.Spells.Chivalry
 
                         mod = m.GetStatMod("[Magic] Str Offset");
                         if (mod != null && mod.Offset < 0)
-                        {
-                            m.RemoveStatMod("[Magic] Str Offset");
                             sendEffect = true;
-                        }
 
                         mod = m.GetStatMod("[Magic] Dex Offset");
                         if (mod != null && mod.Offset < 0)
-                        {
-                            m.RemoveStatMod("[Magic] Dex Offset");
                             sendEffect = true;
-                        }
 
                         mod = m.GetStatMod("[Magic] Int Offset");
                         if (mod != null && mod.Offset < 0)
-                        {
-                            m.RemoveStatMod("[Magic] Int Offset");
                             sendEffect = true;
-                        }
 
                         if (m.Paralyzed)
-                        {
-                            m.Paralyzed = false;
                             sendEffect = true;
-                        }
 
                         if (EvilOmenSpell.TryEndEffect(m))
                             sendEffect = true;
@@ -174,10 +162,9 @@ namespace Server.Spells.Chivalry
                         if (CorpseSkinSpell.RemoveCurse(m))
                             sendEffect = true;
 
-                        // TODO: Should this remove blood oath? Pain spike?
-
                         if (sendEffect)
                         {
+                            Server.Spells.Chivalry.RemoveCurseSpell.RemoveBadThings(m);
                             m.FixedParticles(0x375A, 1, 15, 5005, 5, 3, EffectLayer.Head);
                             sacrifice = true;
                         }

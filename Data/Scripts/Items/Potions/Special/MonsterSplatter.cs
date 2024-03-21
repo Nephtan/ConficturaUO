@@ -1,9 +1,13 @@
 using System;
 using Server;
 using Server.Items;
-using Server.Mobiles;
 using Server.Misc;
+using Server.Mobiles;
 using Server.Network;
+using Server.Engines.PartySystem;
+using Server.Engines.XmlSpawner2;
+using Server.Factions;
+using Server.Guilds;
 
 namespace Server.Items
 {
@@ -64,38 +68,133 @@ namespace Server.Items
             return v;
         }
 
+        private enum GuildStatus
+        {
+            None,
+            Peaceful,
+            Waring
+        }
+
+        private static GuildStatus GetGuildStatus(Mobile m)
+        {
+            if (m.Guild == null)
+                return GuildStatus.None;
+            else if (((Guild)m.Guild).Enemies.Count == 0 && m.Guild.Type == GuildType.Regular)
+                return GuildStatus.Peaceful;
+
+            return GuildStatus.Waring;
+        }
+
+        private static bool CheckBeneficialStatus(GuildStatus from, GuildStatus target)
+        {
+            if (from == GuildStatus.Waring || target == GuildStatus.Waring)
+                return false;
+
+            return true;
+        }
+
         public bool CanDealDamageTo(Mobile from, Mobile target)
         {
-            PlayerMobile fromPlayer = from as PlayerMobile;
-            PlayerMobile targetPlayer = target as PlayerMobile;
+            // Casts for player and creature checks
+            BaseCreature bcAttacker = from as BaseCreature;
+            BaseCreature bcTarget = target as BaseCreature;
+            PlayerMobile pmAttacker = from as PlayerMobile;
+            PlayerMobile pmTarget = target as PlayerMobile;
+            Guild attackerGuild = from.Guild as Guild;
+            Guild targetGuild = target.Guild as Guild;
+            GuildStatus attackerGuildStatus = GetGuildStatus(from);
+            GuildStatus targetGuildStatus = GetGuildStatus(target);
 
-            if (fromPlayer == null || targetPlayer == null)
+            // Pet ownership and control checks
+            bool targetIsPet = bcTarget != null && (bcTarget.Controlled || bcTarget.Summoned);
+            Mobile targetOwner = targetIsPet ? bcTarget.ControlMaster ?? bcTarget.SummonMaster : null;
+
+            // Consensual PlayerMobile PvP System bools
+            bool isAttackerNonPk = false, isTargetNonPk = false, isAttackerPk = false, isTargetPk = false, isAttackerNull = false, isTargetNull = false;
+
+            if (pmAttacker != null)
             {
-                return true; // If either is not a player, allow damage.
+                isAttackerNonPk = pmAttacker.NONPK == NONPK.NONPK;
+                isAttackerPk = pmAttacker.NONPK == NONPK.PK;
+                isAttackerNull = pmAttacker.NONPK == NONPK.Null;
             }
 
-            // PvP can damage anyone except PvE
-            if (fromPlayer.NONPK == NONPK.PK && targetPlayer.NONPK != NONPK.NONPK)
+            if (pmTarget != null)
+            {
+                isTargetNonPk = pmTarget.NONPK == NONPK.NONPK;
+                isTargetPk = pmTarget.NONPK == NONPK.PK;
+                isTargetNull = pmTarget.NONPK == NONPK.Null;
+            }
+            else if (targetOwner != null && targetOwner is PlayerMobile)
+            {
+                PlayerMobile ownerTarget = (PlayerMobile)targetOwner;
+                isTargetNonPk = ownerTarget.NONPK == NONPK.NONPK;
+                isTargetPk = ownerTarget.NONPK == NONPK.PK;
+                isTargetNull = ownerTarget.NONPK == NONPK.Null;
+            }
+
+            if (pmAttacker == pmTarget || pmAttacker == targetOwner)
+                return true;
+
+            // Ensure that if from and target are opponents in an Xml Event they may harm each other
+            if (XmlPoints.AreChallengers(from, target))
+                return true;
+
+            // Allow NONPK players to attack non-player mobiles (NPCs) or mobiles not owned by a PlayerMobile,
+            // but not pets or summons owned by PlayerMobiles
+            if (isAttackerNonPk && pmAttacker != null && bcTarget != null && !(targetOwner is PlayerMobile))
             {
                 return true;
             }
 
-            // Neutral can damage PvP and other Neutrals, but not PvE
-            if (
-                fromPlayer.NONPK == NONPK.Null
-                && (targetPlayer.NONPK == NONPK.PK || targetPlayer.NONPK == NONPK.Null)
-            )
+            // Allow non-player mobiles (NPCs) or mobiles not owned by a PlayerMobile to attack all PlayerMobiles or their pets
+            if (bcAttacker != null && (pmTarget != null || bcTarget != null))
             {
                 return true;
             }
 
-            // PvE can't damage anyone
-            if (fromPlayer.NONPK == NONPK.NONPK)
+            // Prevent NONPK.NONPK players or their pets from initiating attacks on other players or their pets
+            if (isAttackerNonPk && pmAttacker != null)
+            {
+                from.SendMessage(33, "You have chosen the path of [PvE] and cannot attack players or their pets.");
+                return false;
+            }
+
+            // Prevent attacks on NONPK players or their pets from other players
+            if (isTargetNonPk && pmAttacker != null)
+            {
+                from.SendMessage(33, "You cannot attack players or pets who have chosen the path of [PvE].");
+                return false;
+            }
+
+            // Prevents pets of any status from attacking pets of NONPK.NONPK players
+            if (targetIsPet && isTargetNonPk)
             {
                 return false;
             }
 
-            return false; // By default, no damage allowed.
+            // Ensure city citizens and banned players can perform harmful actions on each other
+            if (PlayerGovernmentSystem.CheckIfBanned(from, target))
+                return true;
+
+            // Ensure city citizens at war with other city citizens can perform harmful actions on each other
+            if (PlayerGovernmentSystem.CheckAtWarWith(from, target))
+                return true;
+
+            // Ensure city citizens allied with other city citizens can perform harmful actions on each other
+            if (PlayerGovernmentSystem.CheckCityAlly(from, target))
+                return true;
+
+            // Ensure guild members and allies of guild members can perform beneficial actions on each other
+            if (attackerGuild != null && targetGuild != null && (attackerGuild == targetGuild || attackerGuild.IsAlly(targetGuild)))
+                return true;
+
+            // Ensure that if guild members are at war with each other that they cannot perform beneficial actions on each other
+            if (!CheckBeneficialStatus(attackerGuildStatus, targetGuildStatus))
+                return false;
+
+            // Default to allow harm if none of the above conditions are met, including PK vs Null scenarios.
+            return true;
         }
 
         public override bool OnMoveOver(Mobile m)
@@ -448,51 +547,51 @@ namespace Server.Items
                 case "greater poison potion":
                 case "deadly poison potion":
                 case "lethal poison potion":
-                {
-                    int pSkill = (int)(owner.Skills[SkillName.Poisoning].Value / 50);
-                    int tSkill = (int)(owner.Skills[SkillName.Tasting].Value / 33);
-                    int aSkill = (int)(owner.Skills[SkillName.Alchemy].Value / 33);
-                    int pMin = pSkill + tSkill + aSkill;
-                    int pMax = pMin * 2;
-                    Poison pois = Poison.Lesser;
-
-                    switch (this.Name)
                     {
-                        case "poison potion":
-                            pMin += 2;
-                            pMax += 2;
-                            pois = Poison.Regular;
-                            break;
-                        case "greater poison potion":
-                            pMin += 3;
-                            pMax += 3;
-                            pois = Poison.Greater;
-                            break;
-                        case "deadly poison potion":
-                            pMin += 4;
-                            pMax += 4;
-                            pois = Poison.Deadly;
-                            break;
-                        case "lethal poison potion":
-                            pMin += 5;
-                            pMax += 5;
-                            pois = Poison.Lethal;
-                            break;
-                    }
+                        int pSkill = (int)(owner.Skills[SkillName.Poisoning].Value / 50);
+                        int tSkill = (int)(owner.Skills[SkillName.Tasting].Value / 33);
+                        int aSkill = (int)(owner.Skills[SkillName.Alchemy].Value / 33);
+                        int pMin = pSkill + tSkill + aSkill;
+                        int pMax = pMin * 2;
+                        Poison pois = Poison.Lesser;
 
-                    if (pMin >= Utility.RandomMinMax(1, 16))
-                    {
-                        m.ApplyPoison(owner, pois);
-                    }
+                        switch (this.Name)
+                        {
+                            case "poison potion":
+                                pMin += 2;
+                                pMax += 2;
+                                pois = Poison.Regular;
+                                break;
+                            case "greater poison potion":
+                                pMin += 3;
+                                pMax += 3;
+                                pois = Poison.Greater;
+                                break;
+                            case "deadly poison potion":
+                                pMin += 4;
+                                pMax += 4;
+                                pois = Poison.Deadly;
+                                break;
+                            case "lethal poison potion":
+                                pMin += 5;
+                                pMax += 5;
+                                pois = Poison.Lethal;
+                                break;
+                        }
 
-                    HandleDamageEffect(
-                        m,
-                        soundId: 0x4D1,
-                        damage: Hurt(owner, pMin, pMax),
-                        pois: 100
-                    );
-                    break;
-                }
+                        if (pMin >= Utility.RandomMinMax(1, 16))
+                        {
+                            m.ApplyPoison(owner, pois);
+                        }
+
+                        HandleDamageEffect(
+                            m,
+                            soundId: 0x4D1,
+                            damage: Hurt(owner, pMin, pMax),
+                            pois: 100
+                        );
+                        break;
+                    }
 
                 case "liquid fire":
                     int liqMinFire = Server.Items.BaseLiquid.GetLiquidBonus(owner);

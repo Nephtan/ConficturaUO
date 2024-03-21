@@ -1,9 +1,9 @@
 using System;
 using System.Collections;
-using Server.Network;
 using Server.Items;
-using Server.Targeting;
 using Server.Mobiles;
+using Server.Network;
+using Server.Targeting;
 
 namespace Server.Spells.Necromancy
 {
@@ -72,10 +72,20 @@ namespace Server.Spells.Necromancy
 
             m.PlaySound(0x17F);
             m.FixedParticles(0x374A, 1, 15, 9902, 1108, 4, EffectLayer.Waist);
+
+            int wraithLeech = (5 + (int)((15 * m.Skills.Spiritualism.Value) / 100)); // Wraith form gives an additional 5-20% mana leech
+            string args = String.Format("{0}", wraithLeech);
+            BuffInfo.RemoveBuff(m, BuffIcon.WraithForm);
+            BuffInfo.AddBuff(
+                m,
+                new BuffInfo(BuffIcon.WraithForm, 1063607, 1063608, args.ToString(), true)
+            );
         }
 
         public override void RemoveEffect(Mobile m)
         {
+            BuffInfo.RemoveBuff(m, BuffIcon.WraithForm);
+
             if (m is PlayerMobile && m.AccessLevel == AccessLevel.Player)
                 ((PlayerMobile)m).IgnoreMobiles = false;
         }

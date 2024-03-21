@@ -1,7 +1,7 @@
 using System;
 using System.Collections;
-using Server.Targeting;
 using Server.Network;
+using Server.Targeting;
 
 namespace Server.Spells.Elementalism
 {
@@ -89,7 +89,7 @@ namespace Server.Spells.Elementalism
                 string args = String.Format("{0}\t{1}", physloss, resistloss);
                 BuffInfo.AddBuff(
                     target,
-                    new BuffInfo(BuffIcon.Protection, 1075814, 1075815, args.ToString(), true)
+                    new BuffInfo(BuffIcon.ElementalProtect, 1063629, 1075815, args.ToString(), true)
                 );
             }
             else
@@ -103,7 +103,7 @@ namespace Server.Spells.Elementalism
                 target.RemoveResistanceMod((ResistanceMod)mods[0]);
                 target.RemoveSkillMod((SkillMod)mods[1]);
 
-                BuffInfo.RemoveBuff(target, BuffIcon.Protection);
+                BuffInfo.RemoveBuff(target, BuffIcon.ElementalProtect);
             }
         }
 
@@ -119,7 +119,7 @@ namespace Server.Spells.Elementalism
                 m.RemoveResistanceMod((ResistanceMod)mods[0]);
                 m.RemoveSkillMod((SkillMod)mods[1]);
 
-                BuffInfo.RemoveBuff(m, BuffIcon.Protection);
+                BuffInfo.RemoveBuff(m, BuffIcon.ElementalProtect);
             }
         }
 

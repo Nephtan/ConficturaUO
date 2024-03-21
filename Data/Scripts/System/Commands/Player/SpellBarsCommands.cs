@@ -1,31 +1,171 @@
 using System;
-using Server;
 using System.Collections;
-using Server.Network;
-using Server.Mobiles;
-using Server.Items;
-using Server.Misc;
+using Server;
 using Server.Commands;
 using Server.Commands.Generic;
+using Server.Gumps;
+using Server.Items;
+using Server.Misc;
+using Server.Mobiles;
+using Server.Network;
+using Server.Prompts;
 using Server.Spells;
-using Server.Spells.First;
-using Server.Spells.Second;
-using Server.Spells.Third;
-using Server.Spells.Fourth;
-using Server.Spells.Fifth;
-using Server.Spells.Sixth;
-using Server.Spells.Seventh;
-using Server.Spells.Eighth;
-using Server.Spells.Necromancy;
 using Server.Spells.Chivalry;
 using Server.Spells.DeathKnight;
-using Server.Spells.Song;
+using Server.Spells.Eighth;
+using Server.Spells.Fifth;
+using Server.Spells.First;
+using Server.Spells.Fourth;
 using Server.Spells.HolyMan;
-using Server.Prompts;
-using Server.Gumps;
+using Server.Spells.Necromancy;
+using Server.Spells.Research;
+using Server.Spells.Second;
+using Server.Spells.Seventh;
+using Server.Spells.Sixth;
+using Server.Spells.Song;
+using Server.Spells.Third;
 
 namespace Server.Items
 {
+    class AncientBook
+    {
+        public static void Initialize()
+        {
+            CommandSystem.Register(
+                "ancient",
+                AccessLevel.Player,
+                new CommandEventHandler(AncientBook_OnCommand)
+            );
+        }
+
+        public static void Register(string command, AccessLevel access, CommandEventHandler handler)
+        {
+            CommandSystem.Register(command, access, handler);
+        }
+
+        [Usage("ancient")]
+        [Description("Switches ancient magic between book or bag.")]
+        public static void AncientBook_OnCommand(CommandEventArgs e)
+        {
+            Mobile m = e.Mobile;
+
+            if (!((PlayerMobile)m).UsingAncientBook)
+            {
+                ((PlayerMobile)m).UsingAncientBook = true;
+                m.SendMessage(38, "You are now using the ancient spellbook.");
+            }
+            else
+            {
+                ((PlayerMobile)m).UsingAncientBook = false;
+                m.SendMessage(68, "You are now using the research bag.");
+            }
+        }
+    }
+
+    class ArchClose1
+    {
+        public static void Initialize()
+        {
+            CommandSystem.Register(
+                "archclose1",
+                AccessLevel.Player,
+                new CommandEventHandler(CloseBar_OnCommand)
+            );
+        }
+
+        public static void Register(string command, AccessLevel access, CommandEventHandler handler)
+        {
+            CommandSystem.Register(command, access, handler);
+        }
+
+        [Usage("archclose1")]
+        [Description("Close Spell Bar Windows For Archmages - 1.")]
+        public static void CloseBar_OnCommand(CommandEventArgs e)
+        {
+            Mobile from = e.Mobile;
+            from.CloseGump(typeof(SetupBarsArch1));
+            from.CloseGump(typeof(SpellBarsArch1));
+        }
+    }
+
+    class ArchClose2
+    {
+        public static void Initialize()
+        {
+            CommandSystem.Register(
+                "archclose2",
+                AccessLevel.Player,
+                new CommandEventHandler(CloseBar_OnCommand)
+            );
+        }
+
+        public static void Register(string command, AccessLevel access, CommandEventHandler handler)
+        {
+            CommandSystem.Register(command, access, handler);
+        }
+
+        [Usage("archclose2")]
+        [Description("Close Spell Bar Windows For Archmages - 2.")]
+        public static void CloseBar_OnCommand(CommandEventArgs e)
+        {
+            Mobile from = e.Mobile;
+            from.CloseGump(typeof(SetupBarsArch2));
+            from.CloseGump(typeof(SpellBarsArch2));
+        }
+    }
+
+    class ArchClose3
+    {
+        public static void Initialize()
+        {
+            CommandSystem.Register(
+                "archclose3",
+                AccessLevel.Player,
+                new CommandEventHandler(CloseBar_OnCommand)
+            );
+        }
+
+        public static void Register(string command, AccessLevel access, CommandEventHandler handler)
+        {
+            CommandSystem.Register(command, access, handler);
+        }
+
+        [Usage("archclose3")]
+        [Description("Close Spell Bar Windows For Archmages - 3.")]
+        public static void CloseBar_OnCommand(CommandEventArgs e)
+        {
+            Mobile from = e.Mobile;
+            from.CloseGump(typeof(SetupBarsArch3));
+            from.CloseGump(typeof(SpellBarsArch3));
+        }
+    }
+
+    class ArchClose4
+    {
+        public static void Initialize()
+        {
+            CommandSystem.Register(
+                "archclose4",
+                AccessLevel.Player,
+                new CommandEventHandler(CloseBar_OnCommand)
+            );
+        }
+
+        public static void Register(string command, AccessLevel access, CommandEventHandler handler)
+        {
+            CommandSystem.Register(command, access, handler);
+        }
+
+        [Usage("archclose4")]
+        [Description("Close Spell Bar Windows For Archmages - 4.")]
+        public static void CloseBar_OnCommand(CommandEventArgs e)
+        {
+            Mobile from = e.Mobile;
+            from.CloseGump(typeof(SetupBarsArch4));
+            from.CloseGump(typeof(SpellBarsArch4));
+        }
+    }
+
     class ElementClose1
     {
         public static void Initialize()

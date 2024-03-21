@@ -1,10 +1,10 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using Server;
 using Server.Misc;
-using System.Collections.Generic;
-using System.Collections;
-using Server.Network;
 using Server.Mobiles;
+using Server.Network;
 
 namespace Server.Items
 {
@@ -200,6 +200,14 @@ namespace Server.Items
                     SkillBonuses.SetValues(0, SkillName.Elementalism, 10);
                     SkillBonuses.SetValues(1, SkillName.Focus, 10);
                     SkillBonuses.SetValues(2, SkillName.Meditation, 10);
+                    break;
+                case 23:
+                    RingGuild = "JestersGuild";
+                    RingName = "Member of the Jesters Guild";
+                    SkillBonuses.SetValues(0, SkillName.Begging, 10);
+                    SkillBonuses.SetValues(1, SkillName.Hiding, 10);
+                    SkillBonuses.SetValues(2, SkillName.Psychology, 10);
+                    SkillBonuses.SetValues(3, SkillName.Stealth, 10);
                     break;
             }
         }

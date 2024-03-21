@@ -481,7 +481,9 @@ namespace Server
             typeof(MetalShield),
             typeof(MetalKiteShield),
             typeof(WoodenKiteShield),
-            typeof(WoodenShield)
+            typeof(WoodenShield),
+            typeof(SunShield),
+            typeof(VirtueShield)
         };
 
         public static Type[] ShieldTypes
@@ -1865,7 +1867,14 @@ namespace Server
             typeof(EverlastingLoaf),
             typeof(GemOfSeeing),
             typeof(AwesomeDisturbingPortraitDeed),
-            typeof(CandelabraOfSouls)
+            typeof(CandelabraOfSouls),
+            typeof(SmallBagofHolding),
+            typeof(MediumBagofHolding),
+            typeof(LargeBagofHolding),
+            typeof(BagOfHolding),
+            typeof(DruidMirror),
+            typeof(SpecialJars),
+            typeof(EvilItems)
         };
         public static Type[] SArtyTypes
         {

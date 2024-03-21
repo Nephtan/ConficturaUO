@@ -1,13 +1,13 @@
 using System;
 using System.Collections;
-using Server.Network;
-using Server.Items;
-using Server.Targeting;
-using Server.Spells.Necromancy;
-using Server.Spells.Fourth;
-using Server.Mobiles;
 using System.Collections.Generic;
+using Server.Items;
 using Server.Misc;
+using Server.Mobiles;
+using Server.Network;
+using Server.Spells.Fourth;
+using Server.Spells.Necromancy;
+using Server.Targeting;
 
 namespace Server.Spells.Shinobi
 {
@@ -62,6 +62,7 @@ namespace Server.Spells.Shinobi
                     Caster.PlaySound(Caster.Female ? 779 : 1050);
                     Caster.Paralyzed = false;
                     Caster.Frozen = false;
+                    BuffInfo.CleanupIcons(Caster, true);
                     Caster.SendMessage("You freed yourself!");
                 }
                 else

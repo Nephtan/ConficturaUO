@@ -1,13 +1,13 @@
 using System;
-using System.IO;
-using System.Text;
-using System.Reflection;
 using System.Collections;
-using Server;
-using Server.Items;
-using Server.Engines.BulkOrders;
-using Server.Commands.Generic;
 using System.Collections.Generic;
+using System.IO;
+using System.Reflection;
+using System.Text;
+using Server;
+using Server.Commands.Generic;
+using Server.Engines.BulkOrders;
+using Server.Items;
 
 namespace Server.Commands
 {
@@ -1270,11 +1270,13 @@ namespace Server.Commands
                 else if (item is SmallStretchedHideEastDeed || item is SmallStretchedHideSouthDeed)
                     rewards[10] = rewards[11] = true;
                 else if (
-                    item is MediumStretchedHideEastDeed || item is MediumStretchedHideSouthDeed
+                    item is MediumStretchedHideEastDeed
+                    || item is MediumStretchedHideSouthDeed
                 )
                     rewards[10] = rewards[11] = true;
                 else if (
-                    item is LightFlowerTapestryEastDeed || item is LightFlowerTapestrySouthDeed
+                    item is LightFlowerTapestryEastDeed
+                    || item is LightFlowerTapestrySouthDeed
                 )
                     rewards[12] = rewards[13] = true;
                 else if (item is DarkFlowerTapestryEastDeed || item is DarkFlowerTapestrySouthDeed)

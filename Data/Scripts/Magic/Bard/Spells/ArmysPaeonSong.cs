@@ -1,13 +1,13 @@
 using System;
 using System.Collections;
 using Server;
+using Server.Gumps;
+using Server.Items;
+using Server.Misc;
 using Server.Mobiles;
 using Server.Network;
-using Server.Items;
-using Server.Targeting;
-using Server.Gumps;
 using Server.Spells;
-using Server.Misc;
+using Server.Targeting;
 
 namespace Server.Spells.Song
 {
@@ -79,9 +79,6 @@ namespace Server.Spells.Song
                 {
                     Mobile m = (Mobile)targets[i];
 
-                    TimeSpan duration = TimeSpan.FromSeconds(
-                        Caster.Skills[SkillName.Musicianship].Value * 0.5
-                    );
                     int rounds = (int)(Caster.Skills[SkillName.Musicianship].Value * .16);
                     /////
                     double allvalue =
@@ -95,37 +92,48 @@ namespace Server.Spells.Song
                         new ExpireTimer(m, 0, rounds, TimeSpan.FromSeconds(2)).Start();
                     }
                     //2 hits
+
                     else if (allvalue < 240)
                     {
                         new ExpireTimer1(m, 0, rounds, TimeSpan.FromSeconds(2)).Start();
                     }
                     //3 hits
+
                     else if (allvalue < 360)
                     {
                         new ExpireTimer2(m, 0, rounds, TimeSpan.FromSeconds(2)).Start();
                     }
                     //4 hits
+
                     else if (allvalue < 480)
                     {
                         new ExpireTimer3(m, 0, rounds, TimeSpan.FromSeconds(2)).Start();
                     }
                     //5 hits
+
                     else if (allvalue >= 480)
                     {
                         new ExpireTimer4(m, 0, rounds, TimeSpan.FromSeconds(2)).Start();
                     }
                     //10 hits
+
                     else
                     {
                         new ExpireTimer(m, 0, rounds, TimeSpan.FromSeconds(2)).Start();
                     }
-                    //not required, just in case the else if dont cover it all, same as first if
 
-                    /////
-                    //new ExpireTimer( m, 0, rounds, TimeSpan.FromSeconds( 2 ) ).Start();
+                    BuffInfo.RemoveBuff(m, BuffIcon.ArmysPaeon);
+                    BuffInfo.AddBuff(
+                        m,
+                        new BuffInfo(
+                            BuffIcon.ArmysPaeon,
+                            1063561,
+                            TimeSpan.FromSeconds((double)(rounds * 2.0)),
+                            m
+                        )
+                    );
 
                     m.FixedParticles(0x376A, 9, 32, 5030, 0x21, 3, EffectLayer.Waist);
-                    //					m.PlaySound( 0x1F2 );
                 }
             }
 
@@ -157,6 +165,7 @@ namespace Server.Spells.Song
                     if (m_Round >= m_Totalrounds)
                     {
                         m_Mobile.SendMessage("The effect of the army's paeon wears off.");
+                        BuffInfo.RemoveBuff(m_Mobile, BuffIcon.ArmysPaeon);
                     }
                     else
                     {
@@ -196,6 +205,7 @@ namespace Server.Spells.Song
                     if (m_Round >= m_Totalrounds)
                     {
                         m_Mobile.SendMessage("The effect of the army's paeon wears off.");
+                        BuffInfo.RemoveBuff(m_Mobile, BuffIcon.ArmysPaeon);
                     }
                     else
                     {
@@ -235,6 +245,7 @@ namespace Server.Spells.Song
                     if (m_Round >= m_Totalrounds)
                     {
                         m_Mobile.SendMessage("The effect of the army's paeon wears off.");
+                        BuffInfo.RemoveBuff(m_Mobile, BuffIcon.ArmysPaeon);
                     }
                     else
                     {
@@ -274,6 +285,7 @@ namespace Server.Spells.Song
                     if (m_Round >= m_Totalrounds)
                     {
                         m_Mobile.SendMessage("The effect of the army's paeon wears off.");
+                        BuffInfo.RemoveBuff(m_Mobile, BuffIcon.ArmysPaeon);
                     }
                     else
                     {
@@ -313,6 +325,7 @@ namespace Server.Spells.Song
                     if (m_Round >= m_Totalrounds)
                     {
                         m_Mobile.SendMessage("The effect of the army's paeon wears off.");
+                        BuffInfo.RemoveBuff(m_Mobile, BuffIcon.ArmysPaeon);
                     }
                     else
                     {

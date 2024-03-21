@@ -1,13 +1,13 @@
 using System;
-using Server;
 using System.Collections;
 using System.Globalization;
+using Server;
 using Server.Items;
 using Server.Misc;
 using Server.Network;
+using Server.Prompts;
 using Server.Spells;
 using Server.Spells.Syth;
-using Server.Prompts;
 
 namespace Server.Gumps
 {
@@ -15,9 +15,12 @@ namespace Server.Gumps
     {
         private SythSpellbook m_Book;
 
-        public bool HasSpell(int spellID)
+        public bool HasSpell(Mobile from, int spellID)
         {
-            return (m_Book.HasSpell(spellID));
+            if (m_Book.RootParentEntity == from)
+                return (m_Book.HasSpell(spellID));
+            else
+                return false;
         }
 
         public SythSpellbookGump(Mobile from, SythSpellbook book, int page)
@@ -950,13 +953,6 @@ namespace Server.Gumps
             return name;
         }
 
-        public static bool HasSpell(Mobile from, int spellID)
-        {
-            Spellbook book = Spellbook.Find(from, spellID);
-
-            return (book != null && book.HasSpell(spellID));
-        }
-
         public override void OnResponse(NetState state, RelayInfo info)
         {
             Mobile from = state.Mobile;
@@ -968,7 +964,7 @@ namespace Server.Gumps
                 int page = info.ButtonID;
                 from.SendGump(new SythSpellbookGump(from, m_Book, page));
             }
-            else if (info.ButtonID >= 370)
+            else if (info.ButtonID >= 370 && HasSpell(from, info.ButtonID))
             {
                 m_Book.page = 1;
                 int spell = info.ButtonID - 100;

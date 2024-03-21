@@ -1,10 +1,10 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using Server;
 using Server.Mobiles;
-using Server.Targeting;
 using Server.Network;
-using System.Collections.Generic;
+using Server.Targeting;
 
 namespace Server.Commands
 {

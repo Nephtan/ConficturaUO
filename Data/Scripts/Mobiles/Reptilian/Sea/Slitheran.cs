@@ -1,9 +1,9 @@
 using System;
-using Server;
 using System.Collections;
+using Server;
 using Server.Items;
-using Server.Targeting;
 using Server.Network;
+using Server.Targeting;
 
 namespace Server.Mobiles
 {
@@ -95,7 +95,7 @@ namespace Server.Mobiles
                         Server.Items.HiddenTrap.IAmShielding(m, 120)
                         || Server.Items.HiddenTrap.IAmAWeaponSlayer(m, this)
                     ) { }
-                    else if (Server.Items.HiddenTrap.CheckInsuranceOnTrap(iWrapped, m) == true)
+                    else if (Server.Items.HiddenTrap.CheckInsuranceOnTrap(iWrapped, m))
                     {
                         m.LocalOverheadMessage(
                             MessageType.Emote,

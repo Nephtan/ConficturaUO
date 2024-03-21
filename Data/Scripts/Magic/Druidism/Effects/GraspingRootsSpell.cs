@@ -1,8 +1,8 @@
 using System;
-using Server.Targeting;
-using Server.Network;
-using Server.Misc;
 using Server.Items;
+using Server.Misc;
+using Server.Network;
+using Server.Targeting;
 
 namespace Server.Spells.Herbalist
 {
@@ -64,6 +64,12 @@ namespace Server.Spells.Herbalist
                     duration = 9.0;
 
                 duration = duration + (double)(Server.Items.BasePotion.EnhancePotions(Caster) / 10);
+
+                BuffInfo.RemoveBuff(m, BuffIcon.GraspingRoots);
+                BuffInfo.AddBuff(
+                    m,
+                    new BuffInfo(BuffIcon.GraspingRoots, 1063548, TimeSpan.FromSeconds(duration), m)
+                );
 
                 m.PlaySound(0x2A1);
 

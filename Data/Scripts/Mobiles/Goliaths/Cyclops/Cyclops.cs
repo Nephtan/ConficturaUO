@@ -1,9 +1,9 @@
 using System;
-using Server;
 using System.Collections;
+using Server;
 using Server.Items;
-using Server.Targeting;
 using Server.Misc;
+using Server.Targeting;
 
 namespace Server.Mobiles
 {
@@ -226,11 +226,12 @@ namespace Server.Mobiles
                     )
                     {
                         BaseWeapon hammer = new WarHammer();
+                        hammer.Name = "cyclopean hammer";
+                        hammer.ItemID = 0x267C;
                         hammer.AccuracyLevel = WeaponAccuracyLevel.Supremely;
                         hammer.MinDamage = hammer.MinDamage + 6;
                         hammer.MaxDamage = hammer.MaxDamage + 10;
                         hammer.DurabilityLevel = WeaponDurabilityLevel.Indestructible;
-                        hammer.Name = "cyclops hammer";
                         c.DropItem(hammer);
                     }
                 }

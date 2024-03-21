@@ -1,10 +1,10 @@
 using System;
-using Server.Network;
 using Server.Items;
-using Server.Targeting;
-using Server.Spells.Third;
-using Server.Spells;
 using Server.Misc;
+using Server.Network;
+using Server.Spells;
+using Server.Spells.Third;
+using Server.Targeting;
 
 namespace Server.Items
 {

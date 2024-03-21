@@ -6,6 +6,11 @@
  * Description: A class for cloning player characters on logout
  * Special Thanks: Felladrin and Quick_silver for their ideas, methods, and logic included within.
  *************************************************************/
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Reflection;
 using Server;
 using Server.Commands;
 using Server.ContextMenus;
@@ -15,11 +20,29 @@ using Server.Mobiles;
 using Server.Multis;
 using Server.Network;
 using Server.Regions;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Reflection;
+
+namespace Server.Commands
+{
+    public static class CheckClonesCommand
+    {
+        public static void Initialize()
+        {
+            CommandSystem.Register(
+                "CheckClones",
+                AccessLevel.Administrator,
+                new CommandEventHandler(CheckClones_OnCommand)
+            );
+        }
+
+        [Usage("CheckClones")]
+        [Description("Creates clones of all offline players who don't currently have one.")]
+        public static void CheckClones_OnCommand(CommandEventArgs e)
+        {
+            Confictura.Custom.CloneOfflinePlayerCharacters.CheckFirstRun();
+            e.Mobile.SendMessage("Clone check initiated.");
+        }
+    }
+}
 
 namespace Confictura.Custom
 {
@@ -119,7 +142,7 @@ namespace Confictura.Custom
             }
         }
 
-        static void CheckFirstRun()
+        public static void CheckFirstRun()
         {
             // Initialize counters for total clones and processed clones.
             int totalClones = 0;
@@ -241,7 +264,7 @@ namespace Confictura.Custom
         }
     }
 
-    public class CloneThings
+    public static class CloneThings
     {
         public static BaseCreature CreateClone(Mobile mobile)
         {
@@ -251,6 +274,7 @@ namespace Confictura.Custom
 
         public static void CloneMobileProperties(Mobile source, Mobile target)
         {
+            // Clone basic
             target.Dex = source.Dex;
             target.Int = source.Int;
             target.Str = source.Str;
@@ -265,37 +289,55 @@ namespace Confictura.Custom
             target.Body = source.Body;
             target.BodyValue = source.BodyValue;
             target.Hue = source.Hue;
+
+            // Clone max health, mana, and stamina
             target.Hits = source.HitsMax;
             target.Mana = source.ManaMax;
             target.Stam = source.StamMax;
+
+            // Clone followers
             target.FollowersMax = source.FollowersMax;
             target.Followers = source.Followers;
+
+            // Clone appearance
             target.HairItemID = source.HairItemID;
             target.FacialHairItemID = source.FacialHairItemID;
             target.HairHue = source.HairHue;
             target.FacialHairHue = source.FacialHairHue;
 
+            // Clone skills
             for (int i = 0; i < source.Skills.Length; i++)
                 target.Skills[i].Base = source.Skills[i].Base;
         }
 
         public static void CloneMobileItems(Mobile source, Mobile target)
         {
-            ArrayList items = new ArrayList(source.Items);
+            if (source.Items == null)
+                return;
 
-            for (int i = 0; i < items.Count; i++)
+            List<Item> items = new List<Item>(source.Items);
+            List<Item> newItems = new List<Item>();
+
+            foreach (Item item in items)
             {
-                Item item = (Item)items[i];
+                if (item == null || item.Parent != source || item == source.Backpack)
+                    continue;
 
-                if (item != null && item.Parent == source && item != source.Backpack)
-                {
-                    Item newItem = CloneItem(item);
-                    if (newItem != null)
-                    {
-                        target.AddItem(newItem);
-                    }
-                }
+                Item newItem = CloneItem(item);
+                if (newItem == null)
+                    continue;
+
+                newItems.Add(newItem);
             }
+
+            if (newItems.Count > 0)
+                target.AddItem(newItems);
+        }
+
+        public static void AddItem(this Mobile mobile, IEnumerable<Item> items)
+        {
+            foreach (Item item in items)
+                mobile.AddItem(item);
         }
 
         public static void CloneMobileBackpack(Mobile source, Mobile target)
@@ -314,7 +356,8 @@ namespace Confictura.Custom
             Server.Items.Container targetContainer
         )
         {
-            foreach (Item item in sourceContainer.Items)
+            Item[] itemsCopy = sourceContainer.Items.ToArray();
+            foreach (Item item in itemsCopy)
             {
                 Item clonedItem = CloneItem(item);
                 if (clonedItem != null)
@@ -334,61 +377,67 @@ namespace Confictura.Custom
         public static Item CloneItem(Item item)
         {
             Type itemType = item.GetType();
-            if (itemType != null)
+            if (itemType == null)
+                return null;
+
+            try
             {
-                try
+                if (item is StaffFiveParts)
                 {
-                    if (item is StaffFiveParts)
-                    {
-                        StaffFiveParts sourceStaff = (StaffFiveParts)item;
-                        StaffFiveParts newStaff = new StaffFiveParts(
+                    StaffFiveParts sourceStaff = (StaffFiveParts)item;
+                    StaffFiveParts newStaff = (StaffFiveParts)
+                        Activator.CreateInstance(
+                            itemType,
                             sourceStaff.Staff_Owner,
                             sourceStaff.Staff_Magic
                         );
-                        CopyProperties(newStaff, sourceStaff);
-                        item.OnAfterDuped(newStaff);
-                        newStaff.Parent = null;
-                        return newStaff;
-                    }
-                    else
+                    CopyProperties(newStaff, sourceStaff);
+                    item.OnAfterDuped(newStaff);
+                    newStaff.Parent = null;
+                    return newStaff;
+                }
+                else
+                {
+                    ConstructorInfo constructor = itemType.GetConstructor(Type.EmptyTypes);
+                    if (constructor != null)
                     {
-                        ConstructorInfo constructor = itemType.GetConstructor(Type.EmptyTypes);
-                        if (constructor != null)
+                        object o = constructor.Invoke(null);
+                        if (o != null && o is Item)
                         {
-                            object o = constructor.Invoke(null);
-                            if (o != null && o is Item)
-                            {
-                                Item newItem = (Item)o;
-                                CopyProperties(newItem, item);
-                                item.OnAfterDuped(newItem);
-                                newItem.Parent = null;
-                                return newItem;
-                            }
+                            Item newItem = (Item)o;
+                            CopyProperties(newItem, item);
+                            item.OnAfterDuped(newItem);
+                            newItem.Parent = null;
+                            return newItem;
                         }
                     }
                 }
-                catch { }
             }
+            catch (Exception ex)
+            {
+                // Log the exception here
+            }
+
             return null;
         }
 
         public static void CloneMobileMount(Mobile source, Mobile target)
         {
-            if (source.Mounted)
-            {
-                var baseMount = source.Mount as BaseMount;
-                var etherealMount = source.Mount as EtherealMount;
+            if (!source.Mounted)
+                return;
 
-                if (baseMount != null)
-                {
-                    var clonedBaseMount = new MountClone(baseMount);
-                    clonedBaseMount.Rider = target;
-                }
-                else if (etherealMount != null)
-                {
-                    var clonedEtherealMount = new EtherealMountClone(etherealMount);
-                    clonedEtherealMount.Rider = target;
-                }
+            var baseMount = source.Mount as BaseMount;
+            var etherealMount = source.Mount as EtherealMount;
+
+            if (baseMount != null)
+            {
+                var clonedBaseMount = new MountClone(baseMount);
+                clonedBaseMount.Rider = target;
+            }
+            else if (etherealMount != null)
+            {
+                var clonedEtherealMount = new EtherealMountClone(etherealMount);
+                clonedEtherealMount.Rider = target;
             }
         }
 
@@ -396,33 +445,28 @@ namespace Confictura.Custom
         {
             PropertyInfo[] props = src.GetType().GetProperties();
 
-            for (int i = 0; i < props.Length; i++)
+            foreach (PropertyInfo prop in props)
             {
                 try
                 {
-                    if (props[i].CanRead && props[i].CanWrite)
+                    if (prop.CanRead && prop.CanWrite)
                     {
                         // These properties must not be copied during the dupe, they get set implicitely by placing
                         // items properly using "DropItem()" etc. .
-                        switch (props[i].Name)
+                        if (
+                            prop.Name != "Parent"
+                            && prop.Name != "TotalWeight"
+                            && prop.Name != "TotalItems"
+                            && prop.Name != "TotalGold"
+                        )
                         {
-                            case "Parent":
-                            case "TotalWeight":
-                            case "TotalItems":
-                            case "TotalGold":
-                                break;
-                            default:
-                                props[i].SetValue(dest, props[i].GetValue(src, null), null);
-                                break;
+                            prop.SetValue(dest, prop.GetValue(src, null), null);
                         }
-                        // end exceptions
                     }
                 }
                 catch { }
 
                 // BaseArmor, BaseClothing, BaseJewel, BaseWeapon: copy nested classes
-                // ToDo: If someone knows something about dynamic casting these 4 blocks
-                //       could be integrated into one...
                 if (src is BaseWeapon)
                 {
                     object src_obj = ((BaseWeapon)src).Attributes;
@@ -524,13 +568,13 @@ namespace Confictura.Custom
         {
             PropertyInfo[] props = src.GetType().GetProperties();
 
-            for (int i = 0; i < props.Length; i++)
+            foreach (PropertyInfo prop in props)
             {
                 try
                 {
-                    if (props[i].CanRead && props[i].CanWrite)
+                    if (prop.CanRead && prop.CanWrite)
                     {
-                        props[i].SetValue(dest, props[i].GetValue(src, null), null);
+                        prop.SetValue(dest, prop.GetValue(src, null), null);
                     }
                 }
                 catch { }
@@ -715,6 +759,13 @@ namespace Confictura.Custom
                     // Is the item the payment in gold
                     if (item is Gold)
                     {
+                        // Ensure the original player is valid and has a bank
+                        BankBox originalPlayerBank = Original.BankBox;
+                        if (originalPlayerBank == null)
+                        {
+                            return false;
+                        }
+
                         // Is the payment in gold sufficient
                         if (item.Amount >= m_Pay)
                         {
@@ -739,6 +790,7 @@ namespace Confictura.Custom
                                 );
                                 m_HireTable[from] = this;
                                 m_HoldGold += item.Amount;
+                                originalPlayerBank.DropItem(item);
                                 m_PayTimer = new PayTimer(this);
                                 m_PayTimer.Start();
                                 return true;
@@ -1065,7 +1117,7 @@ namespace Confictura.Custom
         private CharacterClone m_Hire;
 
         public HireEntry(Mobile from, CharacterClone hire)
-            : base(6120, 3)
+            : base(6120, 12)
         {
             m_Hire = hire;
             m_Mobile = from;

@@ -1,16 +1,16 @@
 using System;
-using Server;
 using System.Collections;
-using Server.Misc;
-using Server.Network;
+using System.Collections.Generic;
+using Server;
+using Server.Accounting;
 using Server.Commands;
 using Server.Commands.Generic;
+using Server.Items;
+using Server.Misc;
 using Server.Mobiles;
-using Server.Accounting;
+using Server.Network;
 using Server.Regions;
 using Server.Targeting;
-using System.Collections.Generic;
-using Server.Items;
 
 namespace Server.Misc
 {
@@ -646,7 +646,9 @@ namespace Server.Misc
                 dropped.Delete();
             }
             else if (
-                dropped is LesserCurePotion || dropped is CurePotion || dropped is GreaterCurePotion
+                dropped is LesserCurePotion
+                || dropped is CurePotion
+                || dropped is GreaterCurePotion
             )
             {
                 if (henchman is HenchmanMonster)
@@ -686,7 +688,9 @@ namespace Server.Misc
                 dropped.Delete();
             }
             else if (
-                dropped is LesserHealPotion || dropped is HealPotion || dropped is GreaterHealPotion
+                dropped is LesserHealPotion
+                || dropped is HealPotion
+                || dropped is GreaterHealPotion
             )
             {
                 if (henchman is HenchmanMonster)
@@ -732,7 +736,9 @@ namespace Server.Misc
                 dropped.Delete();
             }
             else if (
-                dropped is LesserManaPotion || dropped is ManaPotion || dropped is GreaterManaPotion
+                dropped is LesserManaPotion
+                || dropped is ManaPotion
+                || dropped is GreaterManaPotion
             )
             {
                 if (henchman is HenchmanMonster)

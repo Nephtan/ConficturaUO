@@ -1,6 +1,6 @@
 using System;
-using Server.Misc;
 using Server.Items;
+using Server.Misc;
 using Server.Mobiles;
 using Server.Network;
 using Server.Targeting;
@@ -35,7 +35,11 @@ namespace Server.Spells.Research
             Server.Misc.Research.SpellInformation(spellID, 2),
             Server.Misc.Research.CapsCast(Server.Misc.Research.SpellInformation(spellID, 4)),
             269,
-            9050
+            9050,
+            Reagent.BlackPearl,
+            Reagent.Bloodmoss,
+            Reagent.DragonBlood,
+            Reagent.DaemonBlood
         );
 
         public ResearchSummonBloodElemental(Mobile caster, Item scroll)
@@ -83,7 +87,7 @@ namespace Server.Spells.Research
                     0,
                     EffectLayer.Head
                 );
-                Server.Misc.Research.ConsumeScroll(Caster, true, spellIndex, false);
+                Server.Misc.Research.ConsumeScroll(Caster, true, spellIndex, alwaysConsume, Scroll);
             }
 
             FinishSequence();

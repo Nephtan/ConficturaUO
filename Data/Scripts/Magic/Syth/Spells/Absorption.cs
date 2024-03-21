@@ -1,9 +1,9 @@
 using System;
 using System.Collections;
 using Server;
-using Server.Targeting;
-using Server.Network;
 using Server.Items;
+using Server.Network;
+using Server.Targeting;
 
 namespace Server.Spells.Syth
 {
@@ -90,6 +90,8 @@ namespace Server.Spells.Syth
                         0
                     );
                     Caster.PlaySound(0x64C);
+                    BuffInfo.RemoveBuff(Caster, BuffIcon.Absorption);
+                    BuffInfo.AddBuff(Caster, new BuffInfo(BuffIcon.Absorption, 1063510));
                     DrainCrystals(Caster, RequiredTithing);
                 }
             }

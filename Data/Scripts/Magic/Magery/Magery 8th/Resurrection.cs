@@ -1,11 +1,11 @@
 using System;
-using Server.Targeting;
-using Server.Network;
-using Server.Gumps;
-using Server.Mobiles;
-using Server.Items;
 using System.Collections;
 using System.Collections.Generic;
+using Server.Gumps;
+using Server.Items;
+using Server.Mobiles;
+using Server.Network;
+using Server.Targeting;
 
 namespace Server.Spells.Eighth
 {
@@ -71,6 +71,10 @@ namespace Server.Spells.Eighth
                 iOrb.m_Owner = m;
                 m.AddToBackpack(iOrb);
                 Server.Items.SoulOrb.OnSummoned(m, iOrb);
+            }
+            else if (m == Caster)
+            {
+                Caster.SendMessage("You failed to summon an orb.");
             }
             else if (!Caster.Alive)
             {

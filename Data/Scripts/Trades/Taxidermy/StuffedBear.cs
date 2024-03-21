@@ -1,14 +1,13 @@
 using System;
-using Server.Network;
-using Server.Items;
 using Server;
+using Server.Items;
 using Server.Mobiles;
+using Server.Network;
 using Server.Targeting;
 
 namespace Server.Items
 {
     [Furniture]
-    [Flipable(0x127D, 0x12B4)]
     public class StuffedBear : Item
     {
         public string AnimalKiller;

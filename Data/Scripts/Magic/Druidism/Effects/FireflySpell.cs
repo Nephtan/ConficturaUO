@@ -57,6 +57,7 @@ namespace Server.Spells.Herbalist
                     m.Spell.OnCasterHurt();
 
                 m.Paralyzed = false;
+                BuffInfo.CleanupIcons(m, true);
 
                 if (!Caster.CanBeHarmful(m, false))
                 {
@@ -73,6 +74,10 @@ namespace Server.Spells.Herbalist
                 }
                 else
                 {
+                    double seconds =
+                        (double)(Caster.Skills[DamageSkill].Value / 5)
+                        + (double)(Server.Items.BasePotion.EnhancePotions(m) / 10);
+
                     if (m is BaseCreature)
                     {
                         BaseCreature bc = (BaseCreature)m;
@@ -81,9 +86,6 @@ namespace Server.Spells.Herbalist
 
                         m.Combatant = null;
                         m.Warmode = false;
-                        double seconds =
-                            (double)(Caster.Skills[DamageSkill].Value / 5)
-                            + (double)(Server.Items.BasePotion.EnhancePotions(m) / 10);
 
                         bc.Pacify(Caster, DateTime.Now + TimeSpan.FromSeconds(seconds));
                     }
@@ -93,6 +95,18 @@ namespace Server.Spells.Herbalist
                         m.SendMessage("You forget you were fighting while surrounded by fireflies");
                         m.Combatant = null;
                         m.Warmode = false;
+
+                        m.Paralyze(TimeSpan.FromSeconds(seconds));
+                        BuffInfo.RemoveBuff(m, BuffIcon.Firefly);
+                        BuffInfo.AddBuff(
+                            m,
+                            new BuffInfo(
+                                BuffIcon.Firefly,
+                                1063668,
+                                TimeSpan.FromSeconds(seconds),
+                                m
+                            )
+                        );
                     }
                     m.FixedParticles(0x373A, 10, 15, 5012, EffectLayer.Waist);
                     m.PlaySound(0x1E0);

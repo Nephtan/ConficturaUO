@@ -1,13 +1,13 @@
 using System;
+using System.Collections.Generic;
 using Server;
+using Server.Items;
 using Server.Mobiles;
 using Server.Network;
-using Server.Targeting;
-using System.Collections.Generic;
-using Server.Items;
 using Server.Spells;
 using Server.Spells.Necromancy;
 using Server.Spells.Ninjitsu;
+using Server.Targeting;
 
 namespace Server.Spells.Undead
 {
@@ -93,6 +93,11 @@ namespace Server.Spells.Undead
                     5023
                 );
                 Caster.Hidden = true;
+                BuffInfo.RemoveBuff(Caster, BuffIcon.GhostlyImages);
+                BuffInfo.AddBuff(
+                    Caster,
+                    new BuffInfo(BuffIcon.GhostlyImages, 1063500, duration, Caster)
+                );
             }
 
             FinishSequence();
@@ -184,6 +189,12 @@ namespace Server.Mobiles
 
             VirtualArmor = 0;
             ControlSlots = (Core.SE) ? 2 : 1;
+        }
+
+        public override void OnDelete()
+        {
+            BuffInfo.RemoveBuff(m_Caster, BuffIcon.GhostlyImages);
+            base.OnDelete();
         }
 
         private Item dj_nc_decoyItem(Item item)

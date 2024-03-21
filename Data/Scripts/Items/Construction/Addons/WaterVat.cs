@@ -5,6 +5,11 @@ namespace Server.Items
 {
     public class WaterVatEast : BaseAddon
     {
+        public override string AddonName
+        {
+            get { return "water vat"; }
+        }
+
         [Constructable]
         public WaterVatEast()
         {
@@ -45,6 +50,11 @@ namespace Server.Items
 
     public class WaterVatSouth : BaseAddon
     {
+        public override string AddonName
+        {
+            get { return "water vat"; }
+        }
+
         [Constructable]
         public WaterVatSouth()
         {

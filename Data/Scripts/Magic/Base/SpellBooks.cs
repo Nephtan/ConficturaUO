@@ -1,12 +1,12 @@
 using System;
-using Server;
 using System.Collections.Generic;
+using Server;
 using Server.Commands;
 using Server.Engines.Craft;
+using Server.Items;
 using Server.Network;
 using Server.Spells;
 using Server.Targeting;
-using Server.Items;
 
 namespace Server.Items
 {

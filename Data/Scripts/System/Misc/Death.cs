@@ -1,15 +1,15 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using Server;
+using Server.Accounting;
+using Server.Commands;
+using Server.Commands.Generic;
 using Server.Gumps;
 using Server.Items;
 using Server.Misc;
 using Server.Mobiles;
 using Server.Network;
-using Server;
-using System.Collections.Generic;
-using System.Collections;
-using System;
-using Server.Commands;
-using Server.Commands.Generic;
-using Server.Accounting;
 using Server.Regions;
 
 namespace Server.Gumps
@@ -557,6 +557,7 @@ namespace Server
             Item orb = m.Backpack.FindItemByType(typeof(SoulOrb));
             if (orb == null)
             {
+                BuffInfo.RemoveBuff(m, BuffIcon.Resurrection);
                 m.SendGump(new ResurrectNowGump(m));
             }
         }

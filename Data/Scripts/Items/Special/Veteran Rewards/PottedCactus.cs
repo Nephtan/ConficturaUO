@@ -1,8 +1,8 @@
 using System;
 using Server;
+using Server.Engines.VeteranRewards;
 using Server.Gumps;
 using Server.Network;
-using Server.Engines.VeteranRewards;
 
 namespace Server.Items
 {

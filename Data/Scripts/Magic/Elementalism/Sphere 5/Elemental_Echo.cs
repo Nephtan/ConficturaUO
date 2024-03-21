@@ -1,9 +1,9 @@
 using System;
 using System.Collections;
 using Server;
-using Server.Targeting;
-using Server.Network;
 using Server.Items;
+using Server.Network;
+using Server.Targeting;
 
 namespace Server.Spells.Elementalism
 {
@@ -129,6 +129,9 @@ namespace Server.Spells.Elementalism
                 Effects.SendLocationEffect(loc4, Caster.Map, 0x5469, 30, 10, hue, 0);
 
                 Caster.PlaySound(0x5C9);
+
+                BuffInfo.RemoveBuff(Caster, BuffIcon.ElementalEcho);
+                BuffInfo.AddBuff(Caster, new BuffInfo(BuffIcon.ElementalEcho, 1063630));
             }
 
             FinishSequence();

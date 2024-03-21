@@ -1,3 +1,327 @@
+[*]March 11th, 2024, 10:15am CST
+Nephtan
+Announcements:
+
+**Important Client Update Required!**
+
+Greetings, fellow adventurers of Confictura! As the custodian of our mystical realm, I bring to your attention a vital update that awaits us:
+
+- **Client Update Necessity:** This Wednesday, a significant update will unfold within our world. It is imperative for all adventurers to update their clients to continue their journey in Confictura. Keep an eye on our Discord for guidance on where the adventure leads next.
+
+- **A Pro Tip:** Beware of air elementals, for they might just blow your gear away. A cautionary tale to remind us that even the wind can be a formidable foe.
+
+- **The Journey of Exploration:** Let us remember, the essence of Confictura is not to hasten to the end but to relish in the adventure. Relax, explore, and cherish the treasures and companionships you discover. Be considerate, teach, and learn; for in our realm, every day heralds new adventures and mysteries to unravel.
+
+May your paths be clear and your adventures prosperous,
+**Nephtan**
+
+[*]March 6th, 2024, 8:05am CST
+Nephtan
+Announcements:
+
+**Important Shard Update Announcement!**
+
+Greetings, fellow adventurers! As the custodian of our mystical realm, it is my duty and pleasure to unveil the latest enhancements and adjustments that await within our boundaries:
+
+**Offline Study Manuals - Effective Immediately:**
+- **Simplified Skill Gain:** We have refined the way skills are mastered in our world. The probability of skill improvement now gracefully decreases from a lofty 90% down to a mere 10% as you approach the pinnacle of your skill's potential. This change ensures a smoother and more predictable journey towards mastery.
+- Fear not, for the essence of fairness has been infused into the process, with the chances of skill gain firmly set between the realms of 10% and 90%.
+
+**MageAI NPCs Adjustment - Commencing at Dawn’s Light on the Morrow:**
+- **A New Dawn for MageAI:** Starting at the first light of 9am Central Time, USA, on the morrow of Wednesday, March 6th, 2024, those wizards and witches among you who command summons will notice a change. The likelihood of dispelling player-summoned creatures has been tempered, reduced from the once overwhelming 75% to a more balanced 50%. Moreover, your summoned companions now bear the gift of self-healing, a boon to aid them in their service to you.
+
+I encourage all of you to embrace these changes with open minds and hearts, for they are but steps on our never-ending quest to enrich and balance our world.
+
+May your paths be clear and your spells true,
+**Nephtan**
+
+[*]February 28th, 2024, 9:30pm CST
+Nephtan
+Announcements:
+
+Announcing a major update on our test server! This comprehensive update brings a host of new features, improvements, and fixes to enhance your experience in the world of Confictura. All players are encouraged to join our shard discord server at https://discord.gg/MfbrZdkrY5 to access the test client and stay updated on future announcements. If you're not already part of the discord, now is the time to get involved!
+
+Client and Server Update Highlights:
+
+- Strange portals now feature both an entrance and exit, enhancing navigation.
+- Introduction of Ancient Spellbooks as part of the spell research system. This update includes updated text and help menus, added book graphics, and the ability for spellbooks to be equipped like other spellbooks. The original research system remains unchanged, and players can learn about these new spellbooks from the research bag, which now has increased capacity.
+- Character level calculation now integrates with the game's skill settings for any set extra skill points.
+- The client music folder has been renamed to "Music" to reduce confusion for Linux clients.
+- Numerous item naming fixes and the addition of new monsters.
+- Corrections to some spell references and map decoration issues in Dungeon Clues.
+- Introduction of a source change to fix naming issues of newly added items.
+- The artist now gives money for paintings, necessitating both client and server updates.
+- New settings.xml options added for various gameplay aspects including hunger and thirst reduction times, bonding times for tamed creatures, and disabling the selling of tailor items.
+- Updates to the client to the latest versions of Razor and ClassicUO, along with improved grabbing mechanics, standardized curse removal magic, and the addition of approximately 120 buff icons for every skill, spell, or potion with a duration effect.
+- Overhauls to the admin window, ninja animal form list, and server settings related to animal models.
+- Introduction of server settings for safari animals and skill points adjustments for characters.
+- Client and Server Updates to fix a variety of bugs including saw mill issues, barbaric satchel equipment changes, and invisible elephant corpses.
+- Bank box changed to a larger format, requiring downloading a new client and replacing specific files.
+- Brass now requires copper instead of iron ore, among other fixes and additions.
+
+This update is a testament to our ongoing efforts to improve and expand the world of Confictura. We're eager to hear your feedback on these changes, especially regarding the new Mage AI behavior and other gameplay enhancements. Your insights are invaluable in fine-tuning our world to make it as immersive and enjoyable as possible.
+
+Join us on the test server to experience these updates firsthand and share your feedback in the discord. Your adventures and insights fuel our world's evolution, and together, we'll ensure Confictura remains a thrilling place of endless discovery and challenge.
+
+Happy adventuring, and see you in Confictura!
+
+
+[*]February 21st, 2024, 9:02am CST
+Nephtan
+Announcements:
+
+Important Update and Feedback Request on Mage AI Behavior!
+
+We've listened to your experiences and noticed that our Mage adversaries might have been a little too fond of their poison spells, casting them more frequently than we intended. In our quest to balance the thrill of battle and keep every encounter exciting yet fair, we've rolled out an update to the Mage AI's spellcasting behavior. Here's the scoop:
+
+Adjustments to Poison Spell Casting:
+
+- Introducing a Cooldown: We've implemented a cooldown system for poison spells to temper their frequency. After casting a poison spell, a Mage will now think twice before using it again, with a cooldown period of 30 seconds.
+- Dynamic Casting Odds: Instead of a fixed chance, the likelihood of casting a poison spell again increases gradually over the cooldown period, from a low chance right after casting up to a full chance by the end of the cooldown.
+
+The Numbers Behind the Change:
+
+The chance of a Mage casting poison starts at 20% immediately after a cast and linearly climbs to 100% over the 30-second cooldown. This means that the Mages will diversify their spell usage, making combat encounters less predictable and more engaging.
+
+Why We Need Your Feedback:
+
+- Observing the Impact: While we believe this update will enhance combat dynamics, we're closely monitoring its effects. We need your insight to determine if the cooldown period hits the sweet spot or needs adjustment.
+- Balancing Act: Our goal is to balance spell variety without making any single tactic (like poison) overwhelmingly common or scarce. Your feedback is crucial in fine-tuning this balance.
+
+How to Share Your Thoughts:
+
+After you've faced off against our updated Mages, please share your experiences:
+- Was the poison spell used less frequently?
+- Do battles feel more balanced and enjoyable?
+- Is the 30-second cooldown on poison spells too long, too short, or just right?
+
+Drop your feedback in the discord. Every bit of input helps us make our world more immersive and fun for everyone.
+
+Thank you for your engagement and for helping us refine the magic of our realm. Your adventures fuel our world's evolution, and together, we'll ensure it remains a place of endless excitement and challenge!
+
+Happy adventuring, and let the feedback flow!
+
+
+[*]February 10th, 2024
+Town Crier & Nephtan
+Announcements:
+
+Hear ye, hear ye!
+
+Let it be known across the lands of Confictura, a dire peril has befallen the grand city of Britain. Adimarchus, the nefarious Daemon Prince of Madness, once sealed away by powerful magics, has broken the bonds of his arcane prison. With a horde of malevolent servants at his command, they lay siege to our beloved city, spreading chaos and destruction in their wake. The valiant town guards, though brave and true, found themselves overwhelmed by the sheer number of these fiendish foes.
+
+Let this serve as a clarion call to all seasoned adventurers and valiant warriors of the realm: Britain needed your might, your wisdom, and your courage. Rallying to her defense, you faced the daemon and his servants of darkness head-on, a testament to the bravery and strength that define the heroes of Confictura.
+
+A word of caution had been issued to the novices among us: the roads to Britain were fraught with peril, and the enemies within our gates were not to be underestimated. Many sought strength in numbers, allying themselves with more experienced comrades-in-arms, proving once again that together, we can overcome any onslaught and restore peace to our troubled lands.
+
+The invasion has concluded. Thanks to the combined efforts of our adventurers and the town guards, who managed to beat back most of the spawn to the outer walls, the invasion did not escalate further and fizzled out. This event served as a crucial test of the invasion system, which, though not yet ready for full deployment, has shown great promise for the future.
+
+The town crier will announce the next invasion when adjustments have been made and we are ready to test again. This endeavor has not only tested our defenses but also the strength of our community and the resolve of our heroes.
+
+For Britain, for the realm, for victory! We look forward to standing together again in the face of whatever challenges may come next.
+
+-Nephtan
+
+
+[*]February 2nd, 2024, 12:44pm CST
+Nephtan
+Announcements:
+
+Dire Tidings from the Darkened Graves of Sosaria!
+
+As nightfall drapes its velvet cloak across the lands of Confictura, a chilling spectacle unfolds within the hallowed and forgotten recesses of our cemeteries. Graveyards have become the breeding grounds for unspeakable horrors.
+
+The Awakening of the Undead:
+
+Under the pall of night, the earth trembles and fissures, as from the depths, undead creatures claw their way to the surface. These nocturnal horrors, driven by a malevolent force, seek to spread their curse across Sosaria.
+
+The Emergence of Undead Nests:
+
+In an ominous twist, some nights witness the opening of undead nests, unholy gateways from which an endless tide of these abominations pours forth. The air grows cold, the ground corrupt, as shadows twist and coalesce into forms both pitiful and terrifying.
+
+The Call to Arms:
+
+Hearken, brave adventurers of Confictura! The time has come to brandish your weapons and wield your magics against this nocturnal menace. Let us stand united, for only together can we quell the darkness that seeks to engulf our world.
+
+Strategies for Survival:
+
+- Vigilance is Key: Patrol the graveyards as dusk falls to preempt the rise of these horrors.
+- Strength in Numbers: Form bands of warriors and mages; there is safety and power in alliances.
+- Holy Relics and Enchantments: Arm yourselves with blessed artifacts and spells known to weaken the undead.
+- Destroy the Nest: Melee attackers may double click the nest to attack it. Spellcasters may use AoE spells. Spellcasters or Marksmanship ranged attackers may target the nest directly by holding Ctrl+Shift to target its nameplate. All characters can drag the nest's health bar out by holding Ctrl+Shift and dragging it from the nest's nameplate.
+
+In Unity, There is Hope:
+
+This is a call not just to battle but to solidarity. Share your tales of valor, lend your strength to your fellows, and together, we shall restore peace to the night.
+
+Remember, the spirit of Confictura is indomitable. Together, we shall protect our land from the shadows that seek to claim it.
+
+To arms, heroes of Confictura! Let the darkness fear our resolve!
+
+Long live the brave and the bold!
+
+-Nephtan
+
+
+[*]December 13th, 2023, 8:04am CST
+Nephtan
+Announcements:
+
+Greetings, intrepid explorers of Confictura! As dawn breaks over our enchanted lands, the ancient Magic Pools of Confictura have undergone a mystical transformation, offering new challenges and treasures for those daring enough to discover their secrets.
+
+How to Use Magic Pools
+Interaction: To use a Magic Pool, double-click on it. Remember, you cannot use the pool if you're in a 'Blessed' state and you need to be within 3 tiles of the pool to interact with it. Each pool has a limited number of uses before its magic is spent.
+
+Chances of Effects
+The luck of the user affects the chance of receiving a positive outcome from the pool, with chances ranging from 50% at 0 luck to a maximum of 80% with 2000 luck.
+
+Positive Effects (if luck check succeeds):
+- Mystical Chest: A 5% chance to find a chest filled with treasures.
+- Gold Conversion: A 15% chance to convert lesser coins in your backpack into gold.
+- Gain Stats: A 20% chance to increase your Intelligence, Strength, or Dexterity.
+- Cure: A 20% chance to cure yourself if you are poisoned.
+- Heal: A 20% chance to heal your wounds if you're not poisoned or affected by Mortal Strike.
+
+Negative Effects (if luck check fails):
+- Equipped Item Disappears: A 5% chance to lose an equipped item.
+- Gold to Lead: A 15% chance for all coins in your backpack to turn into lead.
+- Lose a Stat Point: A 20% chance to lose a point in either Strength, Dexterity, or Intelligence.
+- Water Elemental: A 20% chance that a hostile Water Elemental is summoned.
+- Poison: A 20% chance to get poisoned to varying degrees based on the pool's bonus.
+
+What to Expect After Using a Pool
+The pool will be drained after a number of uses, its magic dispersed into the aether.
+
+Tips for Players
+- Check Your Luck: Higher luck increases your chances for positive outcomes.
+- Inventory Management: Organize your backpack for potential gold conversion.
+- Be Prepared for Risks: Have remedies for poison and be ready for unexpected combat scenarios with elementals.
+- Stat Awareness: Be aware of your stat caps, especially when using pools for stat gains.
+
+May your adventures be bold, and your fortunes bright.
+
+Until our next tale unfolds in the vast expanses of Confictura,
+Nephtan.
+
+
+[*]December 11th, 2023, 10:00am CST
+Nephtan
+Announcements:
+Hail, brave souls of Confictura! As the chill winds of winter whisper through our realm, they bring with them a series of enhancements and crucial fixes, refining the experience for every adventurer who dares to explore our mystical lands. These updates go live Wednesday, December 13th, at 9am CST.
+ 
+Enhanced Artifacts: 
+The Death Knight's Soul Lantern and the Priest's Holy Symbol have undergone a mystical transformation. These powerful artifacts now harness the energy from copper and silver found in your fresh conquests, in addition to gold, augmenting their magical capabilities.
+ 
+Woodcraft Correction: 
+The Oil of Wood Polish, a staple for craftsmen and artisans, has been corrected to properly alter the properties of wooden items as intended. This fix ensures that your woodworking endeavors will now yield the results worthy of your skill and effort.
+ 
+Encounter System Alignment: 
+The Random Encounter System now aligns with the character level calculations visible in the Info section of your paper doll. This update brings a more consistent and balanced experience to your adventurous encounters.
+ 
+Offline Skill Training Accuracy: 
+The display issue with Offline Skill Training Manuals has been rectified. Now, the skill gains are rounded correctly and displayed accurately upon your return, ensuring a clearer understanding of your progress.
+ 
+AI Persistence Enhancement: 
+Creatures of Confictura have become more relentless in their pursuit. We've introduced a Deactivation Delay for mobile AI, meaning these beings may continue to hunt you for an extended period even after you've left their immediate vicinity.
+ 
+With these updates, the world of Confictura becomes ever more engaging and challenging. Embrace these changes as you continue your quest for glory and discovery.
+ 
+Until our paths cross again in the magical realm of Confictura,
+Nephtan.
+
+[*]November 14th, 2023, 11:15am CST
+Nephtan
+Announcements:
+Salutations, valiant mages and warriors of Confictura! As the mystic winds of change sweep across our realm, they bring with them a surge of potent magic, altering the very essence of our world's sorcery.
+ 
+Spell Cost Reduction: In a rare cosmic alignment, the costs to harness the ancient arts of Jester, Holy Man, Death Knight, Jedi, Syth, and Monk have been significantly reduced. This celestial phenomenon blesses our spell-weavers with a newfound ease in conjuring these powerful magics.
+ 
+Jester's Trickery: Revel in the art of deception and mirth at a lesser cost.
+Holy Man's Benediction: Channel divine energy with greater efficiency.
+Death Knight's Might: Wield the shadows with a lighter burden.
+Jedi's Wisdom: Master the force with a newfound ease.
+Syth's Power: Harness the dark side with less sacrifice.
+Monk's Serenity: Achieve balance and strength with reduced expenditure.
+This arcane adjustment, courtesy of our realm's high council of mages, is a testament to the ever-evolving magic that courses through Confictura. Embrace this opportunity to explore these disciplines with renewed vigor and lessened gold strain.
+ 
+May your quests be fruitful and your spells more potent than ever before.
+ 
+Until the stars guide us to our next destiny,
+Nephtan.
+
+[*]November 1st, 2023, 8:45pm CST
+Nephtan
+Announcements:
+Good evening, brave souls of Confictura! As the last echoes of our Halloween festivities fade into the night, a new dawn rises, bringing forth an exciting addition to our magical realm.
+
+New Feature:
+Offline Skill Training: Our masterful code sorcerers have unveiled a spellbinding system allowing for skill enhancement during your absence from the realm. Seek out study books from skill trainers across the land, imbued with the knowledge of various arts. Simply engage with these tomes and log out, and upon your return, you may find your skills have grown!
+How it Works:
+
+Acquire a Study Book: Purchase from vendors who train in the skill you wish to enhance.
+Initiate Training: Use the book and log out to begin the process.
+Skill Gain: Depending on your time offline and the magic of the book, your skills could see substantial improvement.
+Special Note: After 5 hours of dedicated study, an accelerated skill gain may be unlocked, making your efforts even more fruitful.
+As we bid farewell to our Halloween event and the chilling thrills it brought, let us embrace this new chapter with open arms. May your journeys be filled with discovery, and your study enrich your adventures in ways untold.
+
+Until our paths cross again under the stars of Confictura,
+Nephtan.
+
+
+[*]October 16, 2023, 6:00pm CST
+Nephtan
+Announcements:
+Greetings, adventurers of Confictura! Our code weavers have been hard at work, refining and enhancing your experience in our world.
+
+New Features:
+* The Hunger Gump has been enchanted by Azrok to live update itself, ensuring you're always aware of your hunger and thirst levels. (THANK YOU @Azrok!)
+* Trade Shoppes tooltips now display the number of available jobs, making it easier for you to find work. (THANK YOU @Azrok!)
+* Your list of stabled pets now shows bonding status and time remaining until they can bond, courtesy of Azrok's arcane mastery. (THANK YOU @Azrok!)
+* The shard will now automatically restart every Wednesday at 9am Central Time, ensuring a smoother and more stable experience for all.
+
+May your paths be clear and your swords stay sharp. Until our next meeting,
+Nephtan.
+
+[*]September 27th, 2023, 8:30pm CST
+Nephtan
+Announcements:
+
+Hail, noble denizens of Confictura! As the threads of fate weave the tapestry of our world, so too do our code weavers refine the very fabric of our shard's existence. As the 'Festival of Shadows' looms, our wise magi have unveiled several arcane enhancements:
+
+Fixes going live at next server restart:
+
+* The mystical bond between a master and pet has been fortified. Now, one must ensure ample space in the stables before their loyal companions are magically auto-stabled during logout. (THANK YOU @awilddingus!)
+* The Shard Greeter, the gypsy guiding you through the initial phases of your journey, has been blessed with clarity of thought. It will no longer tempt you with non-existent tarot pathways, presenting "next" or "previous" only when paths truly lie ahead or behind. (THANK YOU @Azrok!)
+* Deep within the sanctum of our server lies the tome 'CloneOfflinePlayerCharacters'. It has been masterfully re-inked to ensure that the echoes of the past, the clones, are managed with utmost precision. This ritualistic recoding ensures that the spirits of players are duplicated with care, preventing the needless birth of identical apparitions and shaving minutes off of server restarts.
+
+Tread carefully, for while our magic grows in strength, so too does the allure of the coming festival. Be vigilant, and prepare for the wonders and challenges that await.
+
+'Til our next communion,
+Nephtan.
+
+[*]September 21st, 2023, 6:00pm CST
+Nephtan
+Announcements:
+Greetings, denizens of Confictura! Soon the veil between worlds shall thin, unleashing an array of bewitching items and accursed artifacts. Are your coin pouches heavy and your curiosity piqued? Prepare to peruse the most eerie, yet enticing, inventory ever offered by our Provisioners. A haunting experience awaits you this October, full of dread and delight! Brace yourselves, for when the leaves fall and the moon is high, the 'Festival of Shadows' begins. 'Tis almost the witching hour—stay tuned!
+
+Fixes:
+ * Next server restart will see more holes closed in the consensual PvP system.
+
+[*]September 11th, 2023, 10:20pm CST
+Nephtan
+Fixes:
+ * Next server restart will see provocation working again.
+
+[*]September 7th, 2023, 9:30am CST
+Nephtan
+New Feature:
+ * After the next server restart, the [loot command will have a new feature that allows you to select a loot bag from within your backpack. All items looted by the [loot command will be placed into the chosen loot bag. Special thanks to Meenauh Silmataurea for developing this exciting new feature!
+
+[*]August 31st, 2023, 9:45pm CST
+Nephtan
+Fixes:
+ * Next server restart a hole in the Consensual PvP system will be closed.
+
 [*]August 31st, 2023, 8:30am CST
 Nephtan
 Updates:

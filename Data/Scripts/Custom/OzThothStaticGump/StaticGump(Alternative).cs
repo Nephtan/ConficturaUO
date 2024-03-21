@@ -1,8 +1,8 @@
 using System;
 using Server;
+using Server.Commands;
 using Server.Gumps;
 using Server.Network;
-using Server.Commands;
 
 namespace Server.Gumps
 {

@@ -4,9 +4,9 @@ using Server;
 using Server.Items;
 using Server.Misc;
 using Server.Network;
+using Server.Prompts;
 using Server.Spells;
 using Server.Spells.Elementalism;
-using Server.Prompts;
 
 namespace Server.Gumps
 {
@@ -16,7 +16,10 @@ namespace Server.Gumps
 
         public bool HasSpell(Mobile from, int spellID)
         {
-            return (m_Book.HasSpell(spellID));
+            if (m_Book.RootParentEntity == from)
+                return (m_Book.HasSpell(spellID));
+            else
+                return false;
         }
 
         public ElementalSpellbookGump(Mobile from, ElementalSpellbook book, int page)
@@ -521,7 +524,7 @@ namespace Server.Gumps
                 from.SendGump(new ElementalSpellbookGump(from, m_Book, (info.ButtonID - 500)));
                 from.SendGump(new ElementalSpellHelp(from, m_Book, 1));
             }
-            else if (info.ButtonID > 200)
+            else if (info.ButtonID > 200 && HasSpell(from, info.ButtonID))
             {
                 if (info.ButtonID == 300)
                 {
@@ -747,7 +750,7 @@ namespace Server.Gumps
                     60,
                     @"<BODY><BASEFONT Color="
                         + fnt
-                        + ">Below are the [ commands you can either type to quickly cast a particular spell, or set a hot key issue this command and cast the spell.</BASEFONT></BODY>",
+                        + ">Below are the [ commands you can either type to quickly cast a particular spell, or set a hot key to issue this command and cast the spell.</BASEFONT></BODY>",
                     (bool)false,
                     (bool)false
                 );

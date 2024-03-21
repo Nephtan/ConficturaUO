@@ -1,10 +1,10 @@
 using System;
-using Server;
 using System.Collections;
-using Server.Network;
 using System.Text;
+using Server;
 using Server.Items;
 using Server.Mobiles;
+using Server.Network;
 
 namespace Server.Spells.Jedi
 {
@@ -63,6 +63,7 @@ namespace Server.Spells.Jedi
             m.Send(SpeedControl.Disable);
             TableJediRunning.Remove(m);
             m.EndAction(typeof(Celerity));
+            BuffInfo.RemoveBuff(m, BuffIcon.Celerity);
         }
 
         public override void OnCast()
@@ -100,6 +101,16 @@ namespace Server.Spells.Jedi
                 TableJediRunning[Caster] = SpeedControl.MountSpeed;
                 Caster.Send(SpeedControl.MountSpeed);
                 new InternalTimer(Caster, TimeSpan.FromSeconds(TotalTime)).Start();
+                BuffInfo.RemoveBuff(Caster, BuffIcon.Celerity);
+                BuffInfo.AddBuff(
+                    Caster,
+                    new BuffInfo(
+                        BuffIcon.Celerity,
+                        1063516,
+                        TimeSpan.FromSeconds(TotalTime),
+                        Caster
+                    )
+                );
                 Caster.BeginAction(typeof(Celerity));
                 Point3D air = new Point3D((Caster.X + 1), (Caster.Y + 1), (Caster.Z + 5));
                 Effects.SendLocationParticles(

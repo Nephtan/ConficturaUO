@@ -1,23 +1,29 @@
+// Necessary namespaces for the functionality of SummonPrison and related classes.
 using System;
-using Server;
 using System.Collections;
-using Server.ContextMenus;
 using System.Collections.Generic;
-using Server.Misc;
-using Server.Network;
-using Server.Items;
-using Server.Gumps;
-using Server.Mobiles;
-using Server.Commands;
+using System.ComponentModel;
 using System.Globalization;
+using Server;
+using Server.Commands;
+using Server.ContextMenus;
+using Server.Gumps;
+using Server.Items;
+using Server.Misc;
+using Server.Mobiles;
+using Server.Network;
 using Server.Regions;
 
+// Define the namespace and class within the Server.Items namespace.
 namespace Server.Items
 {
+    // Defines a SummonPrison item class, extending the base Item class.
     public class SummonPrison : Item
     {
+        // Field to store the owner of the SummonPrison.
         public Mobile owner;
 
+        // Property to get/set the owner with GameMaster access level. Represents the owner of the SummonPrison.
         [CommandProperty(AccessLevel.GameMaster)]
         public Mobile Owner
         {
@@ -25,6 +31,7 @@ namespace Server.Items
             set { owner = value; }
         }
 
+        // Fields for keys and their corresponding properties. These keys are part of the mechanism to unlock the prison.
         public string KeyA;
 
         [CommandProperty(AccessLevel.GameMaster)]
@@ -52,6 +59,7 @@ namespace Server.Items
             set { KeyC = value; }
         }
 
+        // Fields for reagents including their names and quantities, required to initiate the summoning or opening of the prison.
         public string ReagentNameA;
 
         [CommandProperty(AccessLevel.GameMaster)]
@@ -88,6 +96,7 @@ namespace Server.Items
             set { ReagentQtyB = value; }
         }
 
+        // Fields and properties for defining the prisoner, including their name, appearance, and serial number.
         public string Prisoner;
 
         [CommandProperty(AccessLevel.GameMaster)]
@@ -133,6 +142,7 @@ namespace Server.Items
             set { PrisonerSerial = value; }
         }
 
+        // Fields and properties for customization and metadata, such as cloth color and whether the full name is used.
         public int PrisonerFullNameUsed;
 
         [CommandProperty(AccessLevel.GameMaster)]
@@ -151,6 +161,7 @@ namespace Server.Items
             set { PrisonerClothColorUsed = value; }
         }
 
+        // Fields and properties for defining the jailor and the dungeon context of the prison.
         public string Jailor;
 
         [CommandProperty(AccessLevel.GameMaster)]
@@ -169,6 +180,7 @@ namespace Server.Items
             set { Dungeon = value; }
         }
 
+        // Fields and properties for defining the reward, including its ID, hue, and name.
         public int RewardID;
 
         [CommandProperty(AccessLevel.GameMaster)]
@@ -196,54 +208,61 @@ namespace Server.Items
             set { RewardName = value; }
         }
 
+        // Mark the constructor as constructable, allowing it to be created in-game.
         [Constructable]
         public SummonPrison()
-            : base(0x4FD6)
+            : base(0x4FD6) // Calls the base class constructor with the item ID for the magical prison.
         {
-            Weight = 2.0;
-            Name = "Magical Prison";
-            Light = LightType.Circle150;
+            Weight = 2.0; // Initial weight of the prison.
+            Name = "Magical Prison"; // Name of the item.
+            Light = LightType.Circle150; // Sets the light emitted by the prison.
 
+            // Ensure the prison's weight is set correctly and initialize its properties.
             if (Weight > 1.0)
             {
-                Weight = 1.0;
-                Hue = Utility.RandomMinMax(2501, 2644);
+                Weight = 1.0; // Adjusts the weight to a standard value.
+                Hue = Utility.RandomMinMax(2501, 2644); // Randomizes the color hue of the prison.
 
-                int most = 60;
-                int choice = 0;
+                int most = 60; // The upper limit for random choices.
+                int choice = 0; // Variable to store the current choice.
 
-                string KeepTrack = "_";
+                string KeepTrack = "_"; // Initializes a string to keep track of choices made.
 
+                // Randomly selects a number for KeyA, ensuring it hasn't been used before.
                 choice = Utility.RandomMinMax(1, most);
-                KeepTrack = KeepTrack + choice.ToString() + "_";
-                while (UsedNumberCheck(KeepTrack, choice) == true)
+                KeepTrack += choice.ToString() + "_";
+                while (UsedNumberCheck(KeepTrack, choice))
                 {
                     choice = Utility.RandomMinMax(1, most);
                 }
-                KeepTrack = KeepTrack + choice.ToString() + "_";
+                KeepTrack += choice.ToString() + "_";
                 KeyA = GetItemNeeded(choice, 3);
 
-                while (UsedNumberCheck(KeepTrack, choice) == true)
+                // Repeats the process for KeyB.
+                while (UsedNumberCheck(KeepTrack, choice))
                 {
                     choice = Utility.RandomMinMax(1, most);
                 }
-                KeepTrack = KeepTrack + choice.ToString() + "_";
+                KeepTrack += choice.ToString() + "_";
                 KeyB = GetItemNeeded(choice, 3);
 
-                while (UsedNumberCheck(KeepTrack, choice) == true)
+                // And again for KeyC.
+                while (UsedNumberCheck(KeepTrack, choice))
                 {
                     choice = Utility.RandomMinMax(1, most);
                 }
-                KeepTrack = KeepTrack + choice.ToString() + "_";
+                KeepTrack += choice.ToString() + "_";
                 KeyC = GetItemNeeded(choice, 3);
 
+                // Randomly determines the reagents needed for the prison.
                 ReagentNameA = GetReagentNeeded();
                 ReagentNameB = GetGemsNeeded();
 
+                // Randomizes the quantity of each reagent required.
                 ReagentQtyA = Utility.RandomMinMax(10, 70);
                 ReagentQtyB = Utility.RandomMinMax(5, 20);
 
-                int aCount = 0;
+                // Searches the world for potential dungeon locations for the prison.
                 ArrayList targets = new ArrayList();
                 foreach (Item target in World.Items.Values)
                     if (
@@ -252,66 +271,79 @@ namespace Server.Items
                     )
                     {
                         targets.Add(target);
-                        aCount++;
                     }
 
-                aCount = Utility.RandomMinMax(1, aCount);
-
-                int xCount = 0;
+                // Randomly selects one of the discovered dungeons to associate with this prison.
+                int aCount = Utility.RandomMinMax(1, targets.Count);
                 for (int i = 0; i < targets.Count; ++i)
                 {
-                    xCount++;
-
-                    if (xCount == aCount)
+                    if (i + 1 == aCount)
                     {
                         Item finding = (Item)targets[i];
                         Dungeon = Server.Misc.Worlds.GetRegionName(finding.Map, finding.Location);
+                        break; // Exits the loop once the dungeon is assigned.
                     }
                 }
 
+                // Randomly generates a name for the jailor and selects a random champion.
                 Jailor = RandomThings.GetRandomName() + " " + GetRandomChampion();
-                if (Utility.RandomMinMax(1, 4) == 1)
+                if (Utility.RandomMinMax(1, 4) == 1) // There's a chance to use a different naming scheme.
                 {
                     Jailor = RandomThings.GetRandomSociety();
                 }
 
-                GetPrisoner(this);
+                GetPrisoner(this); // Initializes the prisoner with the specified properties.
             }
         }
 
+        // Overrides the AddNameProperties method to include custom name properties for the SummonPrison item.
         public override void AddNameProperties(ObjectPropertyList list)
         {
+            // Formats the prisoner's name to title case for display.
             string sPrisoner =
                 System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.ToTitleCase(
-                    Prisoner.ToLower()
+                    Prisoner.ToLower() // Ensures the prisoner's name is in lower case before converting to title case.
                 );
 
-            base.AddNameProperties(list);
-            list.Add(1070722, sPrisoner + " Lies Within");
-            list.Add(1049644, "Imprisoned By " + Jailor);
+            base.AddNameProperties(list); // Calls the base method to add default name properties.
+
+            // Adds a custom property indicating who is imprisoned within the magical prison.
+            list.Add(1070722, sPrisoner + " Lies Within"); // The prisoner's name is dynamically inserted into the message.
+
+            // Adds another custom property indicating who imprisoned the creature.
+            list.Add(1049644, "Imprisoned By " + Jailor); // The jailor's name is dynamically inserted into the message.
         }
 
+        // Overrides the OnDragLift method to define custom behavior when the item is picked up.
         public override bool OnDragLift(Mobile from)
         {
+            // Checks if the entity attempting to pick up the item is a player.
             if (from is PlayerMobile)
             {
-                ArrayList targets = new ArrayList();
+                ArrayList targets = new ArrayList(); // Initializes a list to track other SummonPrison items.
+                // Iterates through all items in the world to find other SummonPrison items not equal to this instance.
                 foreach (Item item in World.Items.Values)
                     if (item is SummonPrison && item != this)
                     {
+                        // If the found SummonPrison item belongs to the player attempting the drag, add it to the targets list.
                         if (((SummonPrison)item).owner == from)
                             targets.Add(item);
                     }
+
+                // Deletes all SummonPrison items found in the targets list, ensuring a player cannot own multiple instances simultaneously.
                 for (int i = 0; i < targets.Count; ++i)
                 {
                     Item item = (Item)targets[i];
                     item.Delete();
                 }
 
+                // Formats the prisoner's name to title case for logging or messaging purposes.
                 string sPrisoner =
                     System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.ToTitleCase(
                         Prisoner.ToLower()
                     );
+
+                // If this SummonPrison item does not have an owner, logs the event of the player discovering the prisoner.
                 if (this.owner == null)
                 {
                     LoggingFunctions.LogGenericQuest(
@@ -319,14 +351,19 @@ namespace Server.Items
                         "has discovered " + sPrisoner + " locked in a Magical Prison"
                     );
                 }
+
+                // Sets the player who lifted the item as its new owner.
                 this.owner = from;
             }
 
+            // Always returns true, allowing the drag action to proceed.
             return true;
         }
 
+        // Overrides the OnDoubleClick method to define custom behavior when the item is double-clicked.
         public override void OnDoubleClick(Mobile from)
         {
+            // Checks if the player has the necessary items in their pack to summon the prisoner.
             if (
                 TestMyPack(
                     from,
@@ -340,31 +377,36 @@ namespace Server.Items
                     ReagentNameB,
                     false
                 )
-            ) //|| from.AccessLevel > AccessLevel.Player )
+            )
             {
+                // Finds the type of the prisoner to be summoned using the name stored in PrisonerBase.
                 Type mobType = ScriptCompiler.FindTypeByName(PrisonerBase);
+                // Creates an instance of the prisoner's type.
                 Mobile mob = (Mobile)Activator.CreateInstance(mobType);
-                BaseCreature monster = (BaseCreature)mob;
+                BaseCreature monster = (BaseCreature)mob; // Casts the Mobile to a BaseCreature.
 
+                // Adjusts the difficulty of the summoned monster.
                 SetDifficultyForMonster(monster);
 
-                Map map = from.Map;
+                Map map = from.Map; // Gets the map where the player is located.
 
+                // Tries to find a suitable location near the player to spawn the creature.
                 bool validLocation = false;
                 Point3D loc = from.Location;
-
                 for (int j = 0; !validLocation && j < 10; ++j)
                 {
-                    int x = from.X + Utility.Random(3) - 1;
-                    int y = from.Y + Utility.Random(3) - 1;
-                    int z = map.GetAverageZ(x, y);
+                    int x = from.X + Utility.Random(3) - 1; // Randomly adjusts X location.
+                    int y = from.Y + Utility.Random(3) - 1; // Randomly adjusts Y location.
+                    int z = map.GetAverageZ(x, y); // Gets the average Z location for the new coordinates.
 
+                    // Checks if the location is suitable for spawning.
                     if (validLocation = map.CanFit(x, y, from.Z, 16, false, false))
                         loc = new Point3D(x, y, from.Z);
                     else if (validLocation = map.CanFit(x, y, z, 16, false, false))
                         loc = new Point3D(x, y, z);
                 }
 
+                // Overrides the spawn location if a PremiumSpawner is within range.
                 foreach (Item i in from.GetItemsInRange(10))
                 {
                     if (i is PremiumSpawner)
@@ -373,19 +415,24 @@ namespace Server.Items
                     }
                 }
 
+                // Sets the appearance of the monster.
                 monster.NameHue = 0x22;
                 monster.Hue = PrisonerHue;
                 if (PrisonerBody > 0)
                 {
                     monster.Body = PrisonerBody;
                 }
-                monster.Title = null;
-                monster.Name = Prisoner;
+                monster.Title = null; // Clears any title the monster might have.
+                monster.Name = Prisoner; // Sets the name of the monster to the prisoner's name.
 
+                // Optionally dresses the monster in specific gear.
                 DressUpMonsters(monster, Prisoner);
 
+                // Moves the monster to the world at the determined location and sets the player as its combatant.
                 monster.MoveToWorld(loc, map);
                 monster.Combatant = from;
+
+                // Visual and sound effects to signal the summoning.
                 Effects.SendLocationParticles(
                     EffectItem.Create(monster.Location, monster.Map, EffectItem.DefaultDuration),
                     0x3728,
@@ -394,11 +441,13 @@ namespace Server.Items
                     2023
                 );
                 monster.PlaySound(0x1FE);
-                monster.EmoteHue = 505;
-                monster.PackItem(this);
-                this.PrisonerSerial = monster;
-                this.LootType = LootType.Blessed;
 
+                monster.EmoteHue = 505; // Sets the emote color.
+                monster.PackItem(this); // Adds the SummonPrison item to the monster's inventory.
+                this.PrisonerSerial = monster; // Links the summoned monster to this prison item.
+                this.LootType = LootType.Blessed; // Changes the loot type to Blessed.
+
+                // Removes the necessary items from the player's pack if they are a regular player.
                 if (from.AccessLevel == AccessLevel.Player)
                 {
                     TestMyPack(
@@ -415,11 +464,13 @@ namespace Server.Items
                     );
                 }
 
+                // Starts a timer related to the summoning process.
                 SummonTimer thisTimer = new SummonTimer(this);
                 thisTimer.Start();
             }
             else
             {
+                // If the player lacks the necessary items, sends them a tutorial Gump.
                 if (!from.HasGump(typeof(SummonTutorial)))
                 {
                     from.SendGump(new SummonTutorial(from, this));
@@ -427,13 +478,17 @@ namespace Server.Items
             }
         }
 
+        // Constructor for deserializing an instance of SummonPrison from the data store.
         public SummonPrison(Serial serial)
             : base(serial) { }
 
+        // Serializes the state of the SummonPrison item to the data store.
         public override void Serialize(GenericWriter writer)
         {
-            base.Serialize(writer);
-            writer.Write((int)1); // version
+            base.Serialize(writer); // Calls the base class serialize method.
+            writer.Write((int)1); // version number for future-proofing the serialization format.
+
+            // Writes properties of the SummonPrison to the data store.
             writer.Write((Mobile)owner);
             writer.Write(KeyA);
             writer.Write(KeyB);
@@ -456,10 +511,13 @@ namespace Server.Items
             writer.Write(RewardName);
         }
 
+        // Deserializes the state of the SummonPrison item from the data store.
         public override void Deserialize(GenericReader reader)
         {
-            base.Deserialize(reader);
-            int version = reader.ReadInt();
+            base.Deserialize(reader); // Calls the base class deserialize method.
+            int version = reader.ReadInt(); // Reads the data format version.
+
+            // Reads properties of the SummonPrison from the data store.
             owner = reader.ReadMobile();
             KeyA = reader.ReadString();
             KeyB = reader.ReadString();
@@ -481,77 +539,99 @@ namespace Server.Items
             RewardHue = reader.ReadInt();
             RewardName = reader.ReadString();
 
+            // Additional logic based on the deserialized state.
             if (PrisonerSerial != null)
             {
+                // If a prisoner is associated with this item, perform additional setup.
                 LeaveThisPlace(this);
             }
 
+            // Sets the item's ID to a specific value post-deserialization.
             ItemID = 0x4FD6;
         }
 
+        // Method to check if a number has already been used, based on its presence in a string.
         public static bool UsedNumberCheck(string info, int numb)
         {
+            // Constructs a search string with the number enclosed in underscores.
+            // This helps in ensuring that only distinct numbers are matched, preventing partial matches.
             string number = "_" + numb.ToString() + "_";
+
+            // Checks if the constructed string exists within the provided info string.
             if (info.Contains(number))
             {
+                // If the number is found within the string, it indicates the number has been used.
                 return true;
             }
+
+            // If the number is not found, it indicates the number has not been used.
             return false;
         }
 
+        // Method to check if a player has the required items in their inventory and optionally remove them.
         public static bool TestMyPack(
-            Mobile from,
-            string region,
-            string key1,
-            string key2,
-            string key3,
-            int iReg,
-            string sReg,
-            int iGem,
-            string sGem,
-            bool remove
+            Mobile from, // The player to check.
+            string region, // The region name where the check is applicable.
+            string key1, // Identifier for the first key item.
+            string key2, // Identifier for the second key item.
+            string key3, // Identifier for the third key item.
+            int iReg, // Quantity of the required reagent.
+            string sReg, // Identifier for the reagent.
+            int iGem, // Quantity of the required gem.
+            string sGem, // Identifier for the gem.
+            bool remove // Whether to remove the items if found.
         )
         {
-            bool pass = true;
+            bool pass = true; // Flag to track if all checks pass.
 
+            // Check if the player is in the specified region.
             if (Server.Misc.Worlds.GetRegionName(from.Map, from.Location) != region)
             {
-                pass = false;
+                pass = false; // Fails the check if the player is not in the specified region.
             }
+            // Check for the presence of the first key item in the player's inventory.
             if (CheckForItem(from, key1, 0, remove) == false)
             {
-                pass = false;
+                pass = false; // Fails the check if the first key item is not found.
             }
+            // Repeat the check for the second key item.
             if (CheckForItem(from, key2, 0, remove) == false)
             {
-                pass = false;
+                pass = false; // Fails the check if the second key item is not found.
             }
+            // And again for the third key item.
             if (CheckForItem(from, key3, 0, remove) == false)
             {
-                pass = false;
+                pass = false; // Fails the check if the third key item is not found.
             }
+            // Check for the specified quantity of the reagent.
             if (CheckForItem(from, sReg, iReg, remove) == false)
             {
-                pass = false;
+                pass = false; // Fails the check if the required quantity of the reagent is not found.
             }
+            // Lastly, check for the specified quantity of the gem.
             if (CheckForItem(from, sGem, iGem, remove) == false)
             {
-                pass = false;
+                pass = false; // Fails the check if the required quantity of the gem is not found.
             }
 
-            return pass;
+            return pass; // Returns true if all checks pass, otherwise false.
         }
 
+        // Method to check for the presence of a specific item (or items) in a player's inventory and optionally remove them.
         public static bool CheckForItem(Mobile from, string item, int qty, bool remove)
         {
-            bool pass = false;
-            int carry = 0;
+            bool pass = false; // Initially assumes the check will fail.
+            int carry = 0; // Counter for the amount of the specified item found.
 
+            // If a quantity greater than 0 is specified, proceed with checking standard and custom items.
             if (qty > 0)
             {
-                List<Item> belongings = new List<Item>();
+                // Aggregate all matching items from the player's backpack.
                 foreach (Item i in from.Backpack.Items)
                 {
+                    // Series of if-else statements to match the item by its name and type, then accumulate its quantity.
+                    // Each condition checks for a specific item type that corresponds to the provided string identifier.
                     if (item == "black pearls" && i is BlackPearl)
                     {
                         carry = carry + i.Amount;
@@ -726,10 +806,12 @@ namespace Server.Items
                     }
                 }
 
+                // If the accumulated quantity meets or exceeds the required amount, the check passes.
                 if (carry >= qty)
                 {
                     pass = true;
-                    Container pack = from.Backpack;
+                    Container pack = from.Backpack; // Reference to the player's backpack.
+                    // If removal is requested and the item matches a specific condition, consume the required quantity from the backpack.
                     if (remove == true && item == "black pearls")
                     {
                         pack.ConsumeTotal(typeof(BlackPearl), qty);
@@ -906,33 +988,38 @@ namespace Server.Items
             }
             else
             {
+                // For items without a specified quantity (qty <= 0), perform a different kind of check.
                 ArrayList targets = new ArrayList();
                 foreach (Item i in from.Backpack.Items)
                 {
+                    // Check for custom or unique items by their name.
                     if (i is SummonItems && i.Name == item)
                     {
                         pass = true;
-                        targets.Add(i);
+                        targets.Add(i); // Collect items for potential removal.
                     }
                 }
+                // If removal is requested, delete the collected items from the inventory.
                 for (int r = 0; r < targets.Count; ++r)
                 {
                     Item rid = (Item)targets[r];
                     if (remove == true)
                     {
-                        Server.Items.QuestSouvenir.GiveReward(from, rid.Name, rid.Hue, rid.ItemID);
-                        rid.Delete();
+                        Server.Items.QuestSouvenir.GiveReward(from, rid.Name, rid.Hue, rid.ItemID); // Optionally handle rewards or further processing.
+                        rid.Delete(); // Remove the item from the inventory.
                     }
                 }
             }
 
-            return pass;
+            return pass; // Return the result of the check.
         }
 
+        // Method to randomly select a reagent from a predefined list.
         public static string GetReagentNeeded()
         {
-            string sReagent = "";
+            string sReagent = ""; // Initializes the variable to hold the selected reagent.
 
+            // Randomly selects a number between 1 and 34, each corresponding to a specific reagent.
             switch (Utility.RandomMinMax(1, 34))
             {
                 case 1:
@@ -1039,13 +1126,15 @@ namespace Server.Items
                     break;
             }
 
-            return sReagent;
+            return sReagent; // Returns the name of the randomly selected reagent.
         }
 
+        // Method to randomly select a gem type from a predefined list.
         public static string GetGemsNeeded()
         {
-            string sGem = "";
+            string sGem = ""; // Initializes the variable to hold the selected gem.
 
+            // Randomly selects a number between 1 and 9, with each number corresponding to a specific gem type.
             switch (Utility.RandomMinMax(1, 9))
             {
                 case 1:
@@ -1075,15 +1164,19 @@ namespace Server.Items
                 case 9:
                     sGem = "diamonds";
                     break;
+                // Cases for other gems are omitted for brevity but follow the same assignment logic.
             }
 
-            return sGem;
+            return sGem; // Returns the name of the randomly selected gem.
         }
 
+        // Method to randomly select a title for a champion from a predefined list.
         public static string GetRandomChampion()
         {
+            // Array of possible titles for champions.
             string[] vTitle = new string[]
             {
+                // List includes a diverse range of titles, from traditional fantasy roles to specific ranks or occupations.
                 "Adventurer",
                 "Bandit",
                 "Barbarian",
@@ -1142,21 +1235,27 @@ namespace Server.Items
                 "Witch",
                 "Wizard"
             };
+            // Randomly selects a title from the array and prefixes it with "the".
             string sTitle = "the " + vTitle[Utility.RandomMinMax(0, (vTitle.Length - 1))];
 
-            return sTitle;
+            return sTitle; // Returns the randomly selected title.
         }
 
+        // Method to assign a randomly selected prisoner and their attributes to a SummonPrison item.
         public static void GetPrisoner(SummonPrison item)
         {
+            // Randomly picks a prisoner from a predefined list of 25 possibilities.
             int pick = Utility.RandomMinMax(1, 25);
 
+            // Depending on the random pick, sets various attributes of the prisoner including name, base type, body, hue, and reward details.
             if (pick == 1)
             {
+                // Sets prisoner details for "Tiamat the Lord of Dragons".
                 item.Prisoner = "Tiamat the Lord of Dragons";
                 item.PrisonerBase = "AncientWyrm";
                 item.PrisonerBody = 105;
                 item.PrisonerHue = 0xA54;
+                // Reward details specific to Tiamat.
                 item.RewardID = Utility.RandomList(0x2234, 0x2235);
                 item.RewardHue = 0xA54;
                 item.RewardName = "Head of " + item.Prisoner;
@@ -1201,7 +1300,7 @@ namespace Server.Items
             }
             else if (pick == 5)
             {
-                item.Prisoner = "Orcus the Daemon Prince";
+                item.Prisoner = "Orcus the Daemon Prince of Undead";
                 item.PrisonerBase = "DaemonTemplate";
                 item.PrisonerBody = 427;
                 item.PrisonerHue = 0xA93;
@@ -1274,7 +1373,7 @@ namespace Server.Items
             else if (pick == 11)
             {
                 item.Prisoner = "Merlin the Wizard";
-                item.PrisonerBase = "EvilMage";
+                item.PrisonerBase = "EvilMageLord";
                 item.PrisonerBody = 0x190;
                 item.PrisonerHue = Utility.RandomSkinColor();
                 item.RewardID = 0x1718;
@@ -1286,7 +1385,7 @@ namespace Server.Items
             else if (pick == 12)
             {
                 item.Prisoner = "Saruman the White";
-                item.PrisonerBase = "EvilMage";
+                item.PrisonerBase = "EvilMageLord";
                 item.PrisonerBody = 0x190;
                 item.PrisonerHue = Utility.RandomSkinColor();
                 item.RewardID = Utility.RandomList(0xE89, 0xE8A);
@@ -1453,52 +1552,78 @@ namespace Server.Items
             }
         }
 
+        // Defines a method to adjust the difficulty level of a monster (BaseCreature).
         public static void SetDifficultyForMonster(BaseCreature bc)
         {
+            // Calculate the highest stat (strength, intelligence, or dexterity) of the creature.
             int HighestStat = Math.Max(Math.Max(bc.RawStr, bc.RawInt), bc.RawDex);
 
+            // Determine the amount to increase each stat by, ensuring total stats are at least 1200.
             int BumpUp = 1200 - HighestStat;
 
+            // If the highest stat is less than 1200, increase all stats to meet this threshold.
             if (BumpUp > 0)
             {
-                bc.RawStr = bc.RawStr + BumpUp;
-                bc.RawInt = bc.RawInt + BumpUp;
-                bc.RawDex = bc.RawDex + BumpUp;
+                // Increase strength, intelligence, and dexterity by the calculated amount.
+                bc.RawStr += BumpUp;
+                bc.RawInt += BumpUp;
+                bc.RawDex += BumpUp;
 
-                bc.HitsMaxSeed = (int)(bc.RawStr * 0.6);
+                // Adjust the maximum health, mana, and stamina to the new values.
+                bc.HitsMaxSeed = (int)(bc.RawStr * 1.5);
+                bc.ManaMaxSeed = (int)(bc.RawInt * 1.5);
+                bc.StamMaxSeed = (int)(bc.RawDex * 1.5);
 
+                // Set current health, mana, and stamina to their maximum values.
                 bc.Hits = bc.HitsMax;
                 bc.Mana = bc.ManaMax;
                 bc.Stam = bc.StamMax;
             }
 
+            // Instantiate a Random object outside the following loop.
+            Random rnd = new Random();
+
+            // Iterate through all skills of the creature.
             for (int i = 0; i < bc.Skills.Length; i++)
             {
                 Skill skill = (Skill)bc.Skills[i];
 
+                // If the skill is already developed (base > 0), set it to a random number between 105 and 125.
                 if (skill.Base > 0.0)
-                    skill.Base = 125.0;
+                    skill.Base = rnd.Next(105, 125);
+                // Check if the skill base is 0.0, then increase these skills by a random number from 35 to 85.
+                else if (skill.Base == 0.0)
+                {
+                    skill.Base = rnd.Next(35, 86); // Use the instantiated Random object for number generation.
+                }
             }
 
+            // Add additional hit points to the creature to increase its survivability.
             Server.Mobiles.BaseCreature.AdditionalHitPoints(bc, 4);
 
+            // Set the creature's minimum and maximum damage output.
             bc.DamageMin = 22;
             bc.DamageMax = 35;
+
+            // Reset fame and karma to 0.
             bc.Fame = 0;
             bc.Karma = 0;
         }
 
+        // Method to customize the appearance and equipment of monsters based on specific characters or roles.
         public static void DressUpMonsters(Mobile m, string who)
         {
+            // Removes existing clothes and items from the monster.
             Server.Misc.MorphingTime.RemoveMyClothes(m);
 
+            // Customizes the monster based on the specified character or role.
             if (who == "Lord Verminaard")
             {
+                // Adds specific items to the monster to match the appearance and theme of Lord Verminaard.
                 Item helm = new OrcHelm();
                 helm.Name = "great helm";
                 helm.ItemID = 0x2645;
                 m.AddItem(helm);
-
                 m.AddItem(new PlateArms());
                 m.AddItem(new PlateGorget());
                 m.AddItem(new PlateLegs());
@@ -1778,7 +1903,7 @@ namespace Server.Items
 
                 m.Female = false;
             }
-            else if (who == "Orcus the Daemon Prince")
+            else if (who == "Orcus the Daemon Prince of Undead")
             {
                 m.BaseSoundID = 357;
             }
@@ -1794,14 +1919,17 @@ namespace Server.Items
             Server.Misc.MorphingTime.SetGender(m);
         }
 
+        // Method to determine the required item's location, guardian, and name based on a random selection for game quests or objectives.
         public static string GetItemNeeded(int item, int part)
         {
-            string sWhere = "";
-            string sWho = "";
-            string sWhat = "";
+            string sWhere = ""; // Location of the item.
+            string sWho = ""; // Guardian or character associated with the item.
+            string sWhat = ""; // Name of the item.
 
+            // Random selection determines the specific quest item details.
             switch (item)
             {
+                // Each case sets the location, guardian, and item name for a specific quest or objective.
                 case 1:
                     sWhere = "Stonegate Castle";
                     sWho = "the wyrm of draconic ash";
@@ -2104,47 +2232,61 @@ namespace Server.Items
                     break;
             }
 
+            // Based on the requested part of the information, returns either location, guardian, or item name.
             if (part == 1)
             {
-                return sWhere;
+                return sWhere; // Returns the location if part 1 is requested.
             }
             else if (part == 2)
             {
-                return sWho;
+                return sWho; // Returns the guardian if part 2 is requested.
             }
 
+            // Default return is the item name if part is not 1 or 2.
             return sWhat;
         }
 
+        // Method to remove a summoned prisoner (non-player character) from the game world, typically after their purpose has been fulfilled.
         public static void LeaveThisPlace(SummonPrison item)
         {
+            // Retrieves the Mobile object representing the prisoner associated with the given SummonPrison item.
             Mobile lord = item.PrisonerSerial;
 
+            // Checks if the prisoner is not a player character.
             if (!(lord is PlayerMobile))
             {
+                // If the prisoner is an NPC, apply a visual effect to indicate their departure.
                 Server.Misc.IntelligentAction.BurnAway(lord);
+                // Deletes the NPC from the world, effectively removing them from the game.
                 lord.Delete();
             }
+            // This mechanism ensures that summoned entities are properly cleaned up, maintaining game balance and performance.
         }
     }
 
+    // Defines a Timer subclass specifically for managing the lifetime of a summoned entity or item in the game.
     public class SummonTimer : Timer
     {
-        private Item i_item;
+        private Item i_item; // Holds a reference to the item associated with the timer.
 
+        // Constructor for the timer, setting it to expire after 60 minutes and initializing with the associated item.
         public SummonTimer(Item item)
-            : base(TimeSpan.FromMinutes(60.0))
+            : base(TimeSpan.FromMinutes(60.0)) // Sets the duration of the timer to 60 minutes.
         {
-            Priority = TimerPriority.OneMinute;
-            i_item = item;
+            Priority = TimerPriority.OneMinute; // Sets the timer's check interval to one minute for efficiency.
+            i_item = item; // Stores the item passed to the constructor for later use.
         }
 
+        // Override of the OnTick method, called when the timer expires.
         protected override void OnTick()
         {
+            // Checks if the item still exists and has not been deleted.
             if ((i_item != null) && (!i_item.Deleted))
             {
+                // Calls the LeaveThisPlace method on the SummonPrison item, triggering any cleanup or removal logic.
                 SummonPrison.LeaveThisPlace((SummonPrison)i_item);
             }
+            // This method ensures that summoned entities or items are automatically cleaned up after their intended lifetime, maintaining game balance and world integrity.
         }
     }
 }

@@ -39,6 +39,8 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
+            PlayerMobile pm = (PlayerMobile)from;
+
             if (!IsChildOf(from.Backpack))
             {
                 from.SendLocalizedMessage(1042001); // That must be in your pack for you to use it.
@@ -55,6 +57,12 @@ namespace Server.Items
                 v.SayTo(from, 503246); // Ah! it feels good to be working again.
 
                 this.Delete();
+            }
+            else if (pm.City != null) //NEW
+            {
+                from.SendMessage(
+                    "You may only place City vendors in your house when you are a citizen of a city."
+                );
             }
             else
             {

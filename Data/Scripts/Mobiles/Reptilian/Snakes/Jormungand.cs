@@ -1,13 +1,13 @@
 using System;
-using Server;
 using System.Collections;
-using Server.Items;
-using Server.Targeting;
-using Server.Network;
-using Server.Mobiles;
 using System.Collections.Generic;
+using Server;
+using Server.Items;
 using Server.Misc;
+using Server.Mobiles;
+using Server.Network;
 using Server.Regions;
+using Server.Targeting;
 
 namespace Server.Mobiles
 {
@@ -187,6 +187,13 @@ namespace Server.Mobiles
                             killer.Name + " the " + Server.Misc.GetPlayerInfo.GetSkillTitle(killer);
                         trophy.AnimalKiller = "Killed by " + trophyKiller;
                         c.DropItem(trophy);
+
+                        object obj = c;
+                        if (obj is Corpse)
+                        {
+                            Corpse corpse = (Corpse)obj;
+                            corpse.VisitedByTaxidermist = true;
+                        }
                     }
                     if (
                         GetPlayerInfo.LuckyKiller(killer.Luck)

@@ -6,6 +6,11 @@ namespace Server.Items
 {
     public class AquariumEastAddon : BaseAddon
     {
+        public override string AddonName
+        {
+            get { return "aquarium"; }
+        }
+
         private static int[,] m_AddOnSimpleComponents = new int[,]
         {
             { 15667, 0, -1, 0 },

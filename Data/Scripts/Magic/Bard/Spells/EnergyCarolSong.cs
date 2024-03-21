@@ -1,13 +1,13 @@
 using System;
 using System.Collections;
 using Server;
+using Server.Gumps;
+using Server.Items;
+using Server.Misc;
 using Server.Mobiles;
 using Server.Network;
-using Server.Items;
-using Server.Targeting;
-using Server.Gumps;
 using Server.Spells;
-using Server.Misc;
+using Server.Targeting;
 
 namespace Server.Spells.Song
 {
@@ -92,6 +92,21 @@ namespace Server.Spells.Song
                     m.AddResistanceMod(mod1);
 
                     new ExpireTimer(m, mod1, duration).Start();
+
+                    string args = String.Format("{0}", amount);
+                    BuffInfo.RemoveBuff(m, BuffIcon.EnergyCarol);
+                    BuffInfo.AddBuff(
+                        m,
+                        new BuffInfo(
+                            BuffIcon.EnergyCarol,
+                            1063565,
+                            1063566,
+                            duration,
+                            m,
+                            args.ToString(),
+                            true
+                        )
+                    );
                 }
             }
 

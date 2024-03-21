@@ -1,10 +1,10 @@
 using System;
 using System.Collections;
-using Server.Network;
 using Server.Items;
-using Server.Targeting;
 using Server.Mobiles;
+using Server.Network;
 using Server.Spells.Necromancy;
+using Server.Targeting;
 
 namespace Server.Spells.Herbalist
 {
@@ -61,21 +61,6 @@ namespace Server.Spells.Herbalist
                 m.FixedParticles(0x376A, 9, 32, 5030, EffectLayer.Waist);
                 m.PlaySound(0x202);
 
-                StatMod mod;
-
-                mod = m.GetStatMod("[Magic] Str Offset");
-                if (mod != null && mod.Offset < 0)
-                    m.RemoveStatMod("[Magic] Str Offset");
-
-                mod = m.GetStatMod("[Magic] Dex Offset");
-                if (mod != null && mod.Offset < 0)
-                    m.RemoveStatMod("[Magic] Dex Offset");
-
-                mod = m.GetStatMod("[Magic] Int Offset");
-                if (mod != null && mod.Offset < 0)
-                    m.RemoveStatMod("[Magic] Int Offset");
-
-                m.Paralyzed = false;
                 m.CurePoison(Caster);
 
                 int toHeal = (int)(
@@ -85,9 +70,7 @@ namespace Server.Spells.Herbalist
                 );
                 SpellHelper.Heal(toHeal, m, Caster);
 
-                EvilOmenSpell.TryEndEffect(m);
-                StrangleSpell.RemoveCurse(m);
-                CorpseSkinSpell.RemoveCurse(m);
+                Server.Spells.Chivalry.RemoveCurseSpell.RemoveBadThings(m);
             }
 
             FinishSequence();

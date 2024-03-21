@@ -1,8 +1,8 @@
 using System;
-using Server.Targeting;
-using Server.Network;
 using Server;
 using Server.Items;
+using Server.Network;
+using Server.Targeting;
 
 namespace Server.Spells.Research
 {
@@ -11,6 +11,10 @@ namespace Server.Spells.Research
         public override int spellIndex
         {
             get { return 1; }
+        }
+        public override bool alwaysConsume
+        {
+            get { return bool.Parse(Server.Misc.Research.SpellInformation(spellIndex, 14)); }
         }
         public int CirclePower = 1;
         public static int spellID = 1;
@@ -34,7 +38,9 @@ namespace Server.Spells.Research
             Server.Misc.Research.SpellInformation(spellID, 2),
             Server.Misc.Research.CapsCast(Server.Misc.Research.SpellInformation(spellID, 4)),
             203,
-            9041
+            9041,
+            Reagent.MoonCrystal,
+            Reagent.FairyEgg
         );
 
         public ResearchConjure(Mobile caster, Item scroll)
@@ -222,7 +228,7 @@ namespace Server.Spells.Research
                 );
                 Caster.PlaySound(0x1E2);
 
-                Server.Misc.Research.ConsumeScroll(Caster, true, spellIndex, true);
+                Server.Misc.Research.ConsumeScroll(Caster, true, spellIndex, alwaysConsume, Scroll);
             }
 
             FinishSequence();

@@ -1,12 +1,12 @@
 using System;
 using System.Collections;
-using Server;
-using Server.Multis;
-using Server.Mobiles;
-using Server.Network;
 using System.Reflection;
 using System.Text;
+using Server;
 using Server.Misc;
+using Server.Mobiles;
+using Server.Multis;
+using Server.Network;
 using Server.Regions;
 
 namespace Server.Items
@@ -537,7 +537,9 @@ namespace Server.Items
                 return;
 
             if ( /* from.AccessLevel == AccessLevel.Player && */
-                ContainerTouched != 1 && !from.Blessed)
+                ContainerTouched != 1
+                && !from.Blessed
+            )
             {
                 OpenCoffin(from, this.ItemID, ContainerLevel);
 

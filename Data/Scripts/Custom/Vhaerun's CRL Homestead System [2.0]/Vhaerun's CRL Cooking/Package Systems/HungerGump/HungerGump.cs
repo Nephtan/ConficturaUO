@@ -8,10 +8,10 @@ a pti gump mimi, which numerically gives you the value of your hunger and thirst
 
 using System;
 using Server;
+using Server.Commands;
+using Server.Gumps;
 using Server.Mobiles;
 using Server.Network;
-using Server.Gumps;
-using Server.Commands;
 
 namespace Server.Commands
 {
@@ -54,34 +54,34 @@ namespace Server.Gumps
 
             AddPage(0);
 
-            AddBackground(
-                0,
-                0, /*295*/
-                245,
-                144,
-                5054
-            );
+            //AddBackground(
+            //    10,
+            //    0, /*295*/
+            //    245,
+            //    144,
+            //    5054
+            //);
             AddBackground(
                 14,
                 27, /*261*/
-                211,
-                100,
+                175,
+                90,
                 3500
             );
             AddLabel(
                 60,
-                62,
+                52,
                 from.Hunger < 6 ? 33 : 0,
                 string.Format("Hunger: {0} / 20", from.Hunger)
             );
             AddLabel(
                 60,
-                81,
+                75,
                 from.Thirst < 6 ? 33 : 0,
                 string.Format("Thirst: {0} / 20", from.Thirst)
             );
-            AddItem(8, 78, 8093);
-            AddItem(19, 60, 4155);
+            AddItem(19, 52, 4155);
+            AddItem(10, 75, 8093);
         }
 
         public override void OnResponse(Server.Network.NetState sender, RelayInfo info) { }

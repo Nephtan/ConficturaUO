@@ -1,10 +1,10 @@
 using System;
-using Server;
 using System.Collections;
-using Server.Network;
 using System.Text;
+using Server;
 using Server.Items;
 using Server.Mobiles;
+using Server.Network;
 using Server.Targeting;
 
 namespace Server.Spells.Research
@@ -37,7 +37,10 @@ namespace Server.Spells.Research
             Server.Misc.Research.SpellInformation(spellID, 2),
             Server.Misc.Research.CapsCast(Server.Misc.Research.SpellInformation(spellID, 4)),
             236,
-            9031
+            9031,
+            Reagent.EnchantedSeaweed,
+            Reagent.FairyEgg,
+            Reagent.PixieSkull
         );
 
         public ResearchCharm(Mobile caster, Item scroll)
@@ -45,8 +48,11 @@ namespace Server.Spells.Research
 
         public override void OnCast()
         {
-            Caster.SendMessage("Who do you want to charm?");
-            Caster.Target = new InternalTarget(this);
+            if (CheckSequence())
+            {
+                Caster.SendMessage("Who do you want to charm?");
+                Caster.Target = new InternalTarget(this);
+            }
         }
 
         public void Target(Mobile m)
@@ -68,9 +74,20 @@ namespace Server.Spells.Research
             {
                 Caster.SendLocalizedMessage(500237); // Target can not be seen.
             }
-            else if (!(m is BaseCreature))
+            else if (m is PlayerMobile)
             {
-                Caster.SendMessage("This spell cannot affect those type of creatures.");
+                m.Paralyze(TimeSpan.FromSeconds((DamagingSkill(Caster) / 4)));
+                m.SendMessage("You are charmed.");
+                BuffInfo.RemoveBuff(m, BuffIcon.Charm);
+                BuffInfo.AddBuff(
+                    m,
+                    new BuffInfo(
+                        BuffIcon.Charm,
+                        1063686,
+                        TimeSpan.FromSeconds((DamagingSkill(Caster) / 4)),
+                        m
+                    )
+                );
             }
             else if (!CanAffect)
             {
@@ -119,12 +136,22 @@ namespace Server.Spells.Research
                     m.FixedParticles(0x3039, 9, 32, 5008, 0x48F, 0, EffectLayer.Waist);
 
                     new CharmTimer(m, duration).Start();
-                    Server.Misc.Research.ConsumeScroll(Caster, true, spellIndex, false);
+                    Server.Misc.Research.ConsumeScroll(
+                        Caster,
+                        true,
+                        spellIndex,
+                        alwaysConsume,
+                        Scroll
+                    );
 
                     HarmfulSpell(m);
                 }
 
                 FinishSequence();
+            }
+            else
+            {
+                Caster.SendMessage("This spell cannot affect that.");
             }
         }
 

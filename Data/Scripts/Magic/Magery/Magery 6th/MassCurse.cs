@@ -2,8 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Server.Misc;
-using Server.Targeting;
 using Server.Network;
+using Server.Targeting;
 
 namespace Server.Spells.Sixth
 {
@@ -92,6 +92,32 @@ namespace Server.Spells.Sixth
                         EffectLayer.Waist
                     );
                     m.PlaySound(0x1FB);
+
+                    int percentage = (int)(SpellHelper.GetOffsetScalar(Caster, m, true) * 100);
+                    TimeSpan length = SpellHelper.GetDuration(Caster, m);
+
+                    string args = String.Format(
+                        "{0}\t{1}\t{2}\t{3}\t{4}\t{5}\t{6}",
+                        percentage,
+                        percentage,
+                        percentage,
+                        10,
+                        10,
+                        10,
+                        10
+                    );
+
+                    BuffInfo.AddBuff(
+                        m,
+                        new BuffInfo(
+                            BuffIcon.MassCurse,
+                            1063625,
+                            1075836,
+                            length,
+                            m,
+                            args.ToString()
+                        )
+                    );
 
                     HarmfulSpell(m);
                 }

@@ -1,23 +1,23 @@
 using System;
-using System.Collections.Generic;
 using System.Collections;
-using Server.Regions;
-using Server.Targeting;
-using Server.Network;
-using Server.Multis;
-using Server.Spells;
-using Server.Misc;
-using Server.Items;
-using Server.ContextMenus;
-using Server.Engines.Quests;
-using Server.Engines.PartySystem;
-using Server.Factions;
-using Server.Spells.Bushido;
-using Server.Spells.Necromancy;
-using Server.Spells.Elementalism;
+using System.Collections.Generic;
+using System.IO;
 using System.Text;
 using Server;
-using System.IO;
+using Server.ContextMenus;
+using Server.Engines.PartySystem;
+using Server.Engines.Quests;
+using Server.Factions;
+using Server.Items;
+using Server.Misc;
+using Server.Multis;
+using Server.Network;
+using Server.Regions;
+using Server.Spells;
+using Server.Spells.Bushido;
+using Server.Spells.Elementalism;
+using Server.Spells.Necromancy;
+using Server.Targeting;
 
 namespace Server.Mobiles
 {
@@ -194,6 +194,18 @@ namespace Server.Mobiles
 
     public class BaseCreature : Mobile, IHonorTarget
     {
+        public virtual bool HoldSmartSpawning
+        {
+            get
+            {
+                // dont smartspawn paragons
+                if (IsParagon)
+                    return true;
+
+                return false;
+            }
+        }
+
         public const int MaxLoyalty = 100;
 
         #region Var declarations
@@ -382,7 +394,7 @@ namespace Server.Mobiles
         }
         public virtual TimeSpan BondingDelay
         {
-            get { return TimeSpan.FromDays(7.0); }
+            get { return TimeSpan.FromDays(Server.Misc.MyServerSettings.BondDays()); }
         }
         public virtual TimeSpan BondingAbandonDelay
         {
@@ -964,6 +976,9 @@ namespace Server.Mobiles
         public virtual void BreathDamage_Callback(object state)
         {
             Mobile target = (Mobile)state;
+
+            if (target == ControlMaster)
+                return;
 
             if (target is BaseCreature && ((BaseCreature)target).BreathImmune)
                 return;
@@ -3087,6 +3102,9 @@ namespace Server.Mobiles
                     || this is WhiteWolf
                     || this is SnowLeopard
                     || this is Mammoth
+                    || this is Jaguar
+                    || this is Cougar
+                    || this is Hyena
                     || this is Boar
                     || this is Panda
                     || this is PandaRiding
@@ -6362,6 +6380,7 @@ namespace Server.Mobiles
                 || (corpse.m_Owner is RubyWyrm)
                 || (corpse.m_Owner is SpinelWyrm)
                 || (corpse.m_Owner is Wyrms)
+                || (corpse.m_Owner is Wyrm)
                 || (corpse.m_Owner is QuartzWyrm)
                 || (corpse.m_Owner is WhiteWyrm)
             )
@@ -8366,6 +8385,20 @@ namespace Server.Mobiles
         {
             base.AggressiveAction(aggressor, criminal);
 
+            if (this.Controlled)
+            {
+                if (aggressor is BaseCreature && ((BaseCreature)aggressor).Controlled)
+                {
+                    Mobile ourOwner = this.ControlMaster;
+                    Mobile theirOwner = ((BaseCreature)aggressor).ControlMaster;
+
+                    if (ourOwner == theirOwner)
+                    {
+                        return;
+                    }
+                }
+            }
+
             if (this.ControlMaster != null)
                 if (NotorietyHandlers.CheckAggressor(this.ControlMaster.Aggressors, aggressor))
                     aggressor.Aggressors.Add(AggressorInfo.Create(this, aggressor, true));
@@ -9955,7 +9988,32 @@ namespace Server.Mobiles
             SlayerEntry spreaddeath = SlayerGroup.GetEntryByName(SlayerName.Repond);
 
             Mobile deathknight = this.LastKiller; // DEATH KNIGHT HOLDING SOUL LANTERNS
-            if (spreaddeath.Slays(this) && deathknight != null && this.TotalGold > 0) // TURNS THE MONEY TO SOUL COUNT
+
+            // Initialize variables
+            int totalCopper = 0;
+            int totalSilver = 0;
+            int totalEquivalentGold = this.TotalGold;
+            Item copperItem = null;
+            Item silverItem = null;
+            Item dtcoins = null;
+
+            // Check if the creature has a backpack and calculate total equivalent gold
+            if (this.Backpack != null)
+            {
+                copperItem = this.Backpack.FindItemByType(typeof(DDCopper));
+                silverItem = this.Backpack.FindItemByType(typeof(DDSilver));
+                dtcoins = this.Backpack.FindItemByType(typeof(Gold));
+
+                if (copperItem != null)
+                    totalCopper = copperItem.Amount;
+                if (silverItem != null)
+                    totalSilver = silverItem.Amount;
+
+                totalEquivalentGold += (int)Math.Ceiling(totalCopper / 10.0); // 10 copper = 1 gold, round up
+                totalEquivalentGold += (int)Math.Ceiling(totalSilver / 5.0); // 5 silver = 1 gold, round up
+            }
+
+            if (spreaddeath.Slays(this) && deathknight != null && totalEquivalentGold > 0)
             {
                 if (deathknight is BaseCreature)
                     deathknight = ((BaseCreature)deathknight).GetMaster();
@@ -9967,31 +10025,56 @@ namespace Server.Mobiles
                     if (lantern is SoulLantern)
                     {
                         SoulLantern souls = (SoulLantern)lantern;
-                        souls.TrappedSouls = souls.TrappedSouls + this.TotalGold;
+                        souls.TrappedSouls += totalEquivalentGold;
+
                         if (souls.TrappedSouls > 100000)
-                        {
                             souls.TrappedSouls = 100000;
-                        }
+
                         souls.InvalidateProperties();
 
                         Item deathpack = this.FindItemOnLayer(Layer.Backpack);
+
                         if (deathpack != null)
                         {
-                            Item dtcoins = this.Backpack.FindItemByType(typeof(Gold));
-                            dtcoins.Delete();
-                            deathknight.SendMessage("A soul has been claimed.");
-                            Effects.SendLocationParticles(
-                                EffectItem.Create(
-                                    deathknight.Location,
-                                    deathknight.Map,
-                                    EffectItem.DefaultDuration
-                                ),
-                                0x376A,
-                                9,
-                                32,
-                                5008
-                            );
-                            Effects.PlaySound(deathknight.Location, deathknight.Map, 0x1ED);
+                            bool soulClaimed = false;
+
+                            // Check and delete dtcoins
+                            if (dtcoins != null)
+                            {
+                                dtcoins.Delete();
+                                soulClaimed = true;
+                            }
+
+                            // Check and delete copperItem
+                            if (copperItem != null)
+                            {
+                                copperItem.Delete();
+                                soulClaimed = true;
+                            }
+
+                            // Check and delete silverItem
+                            if (silverItem != null)
+                            {
+                                silverItem.Delete();
+                                soulClaimed = true;
+                            }
+
+                            if (soulClaimed)
+                            {
+                                deathknight.SendMessage("A soul has been claimed.");
+                                Effects.SendLocationParticles(
+                                    EffectItem.Create(
+                                        deathknight.Location,
+                                        deathknight.Map,
+                                        EffectItem.DefaultDuration
+                                    ),
+                                    0x376A,
+                                    9,
+                                    32,
+                                    5008
+                                );
+                                Effects.PlaySound(deathknight.Location, deathknight.Map, 0x1ED);
+                            }
                         }
                     }
                 }
@@ -10003,10 +10086,35 @@ namespace Server.Mobiles
             SlayerEntry holydemons = SlayerGroup.GetEntryByName(SlayerName.Exorcism);
 
             Mobile holyman = this.LastKiller; // HOLY MANY HOLDING HOLY SYMBOL
+
+            // Reset variables for independent calculation
+            totalCopper = 0;
+            totalSilver = 0;
+            totalEquivalentGold = this.TotalGold;
+            copperItem = null;
+            silverItem = null;
+            dtcoins = null;
+
+            // Check if the creature has a backpack and calculate total equivalent gold
+            if (this.Backpack != null)
+            {
+                copperItem = this.Backpack.FindItemByType(typeof(DDCopper));
+                silverItem = this.Backpack.FindItemByType(typeof(DDSilver));
+                dtcoins = this.Backpack.FindItemByType(typeof(Gold));
+
+                if (copperItem != null)
+                    totalCopper = copperItem.Amount;
+                if (silverItem != null)
+                    totalSilver = silverItem.Amount;
+
+                totalEquivalentGold += (int)Math.Ceiling(totalCopper / 10.0); // 10 copper = 1 gold, round up
+                totalEquivalentGold += (int)Math.Ceiling(totalSilver / 5.0); // 5 silver = 1 gold, round up
+            }
+
             if (
                 (holyundead.Slays(this) || holydemons.Slays(this))
                 && holyman != null
-                && this.TotalGold > 0
+                && totalEquivalentGold > 0
             ) // TURNS THE MONEY TO BANISH COUNT
             {
                 if (holyman is BaseCreature)
@@ -10019,21 +10127,46 @@ namespace Server.Mobiles
                     if (symbol is HolySymbol)
                     {
                         HolySymbol banish = (HolySymbol)symbol;
-                        banish.BanishedEvil = banish.BanishedEvil + this.TotalGold;
+                        banish.BanishedEvil += totalEquivalentGold;
+
                         if (banish.BanishedEvil > 100000)
-                        {
                             banish.BanishedEvil = 100000;
-                        }
+
                         banish.InvalidateProperties();
 
                         Item deathpack = this.FindItemOnLayer(Layer.Backpack);
+
                         if (deathpack != null)
                         {
-                            Item dtcoins = this.Backpack.FindItemByType(typeof(Gold));
-                            dtcoins.Delete();
-                            holyman.SendMessage("Evil has been banished.");
-                            holyman.FixedParticles(0x373A, 10, 15, 5018, EffectLayer.Waist);
-                            holyman.PlaySound(0x1EA);
+                            bool evilBanished = false;
+
+                            // Check and delete dtcoins
+                            if (dtcoins != null)
+                            {
+                                dtcoins.Delete();
+                                evilBanished = true;
+                            }
+
+                            // Check and delete copperItem
+                            if (copperItem != null)
+                            {
+                                copperItem.Delete();
+                                evilBanished = true;
+                            }
+
+                            // Check and delete silverItem
+                            if (silverItem != null)
+                            {
+                                silverItem.Delete();
+                                evilBanished = true;
+                            }
+
+                            if (evilBanished)
+                            {
+                                holyman.SendMessage("Evil has been banished.");
+                                holyman.FixedParticles(0x373A, 10, 15, 5018, EffectLayer.Waist);
+                                holyman.PlaySound(0x1EA);
+                            }
                         }
                     }
                 }
@@ -10393,7 +10526,8 @@ namespace Server.Mobiles
                 StandardQuestFunctions.CheckTarget(killer, this, null);
                 FishingQuestFunctions.CheckTarget(killer, this, null);
                 if (
-                    killer.Backpack.FindItemByType(typeof(MuseumBook)) != null && this.Fame >= 18000
+                    killer.Backpack.FindItemByType(typeof(MuseumBook)) != null
+                    && this.Fame >= 18000
                 )
                 {
                     MuseumBook.FoundItem(killer, 1);
@@ -10513,6 +10647,8 @@ namespace Server.Mobiles
                                         titles.Add(info.Mobile);
                                         fame.Add(divedFame);
                                         karma.Add(divedKarma);
+                                        // modification to support XmlQuest Killtasks
+                                        XmlQuest.RegisterKill(this, ds.m_Mobile);
                                     }
                                     else
                                     {
@@ -10527,6 +10663,8 @@ namespace Server.Mobiles
                             titles.Add(ds.m_Mobile);
                             fame.Add(totalFame);
                             karma.Add(totalKarma);
+                            // modification to support XmlQuest Killtasks
+                            XmlQuest.RegisterKill(this, ds.m_Mobile);
                         }
 
                         OnKilledBy(ds.m_Mobile);
@@ -11201,6 +11339,9 @@ namespace Server.Mobiles
                 this.Map == Map.IslesDread
                 && (
                     this is WhiteTigerRiding
+                    || this is Hyena
+                    || this is Jaguar
+                    || this is Cougar
                     || this is WhiteTiger
                     || this is PolarBear
                     || this is WhiteWolf
@@ -11334,13 +11475,15 @@ namespace Server.Mobiles
                         Server.Misc.HenchmanFunctions.DismountHenchman(leader);
                     }
                     else if (
-                        Server.Mobiles.AnimalTrainer.IsBeingFast(leader) && this.ActiveSpeed >= 0.2
+                        Server.Mobiles.AnimalTrainer.IsBeingFast(leader)
+                        && this.ActiveSpeed >= 0.2
                     )
                     {
                         Server.Misc.HenchmanFunctions.MountHenchman(leader);
                     }
                     else if (
-                        !Server.Mobiles.AnimalTrainer.IsBeingFast(leader) && this.ActiveSpeed <= 0.1
+                        !Server.Mobiles.AnimalTrainer.IsBeingFast(leader)
+                        && this.ActiveSpeed <= 0.1
                     )
                     {
                         Server.Misc.HenchmanFunctions.DismountHenchman(leader);
@@ -11439,28 +11582,31 @@ namespace Server.Mobiles
                 }
             }
 
+            //if (
+            //    (
+            //        this is TownGuards
+            //        || (
+            //            this is BaseVendor
+            //            && this.WhisperHue != 999
+            //            && !((this.GetType()).IsAssignableFrom(typeof(PlayerVendor)))
+            //            && !(this is PlayerBarkeeper)
+            //        )
+            //    ) // GUARDS/MERCHANTS SHOULD MOVE BACK TO THEIR POST
+            //    && (
+            //        Math.Abs(this.X - this.Home.X) > 8
+            //        || Math.Abs(this.Y - this.Home.Y) > 8
+            //        || Math.Abs(this.Z - this.Home.Z) > 8
+            //    )
+            //    && Combatant == null
+            //    && this.Title != "the wandering healer"
+            //    && this.Title != "the marketkeeper"
+            //    && this.Title != "the innkeeper"
+            //)
+            //{
+            //    this.Location = this.Home;
+            //}
+            //else
             if (
-                (
-                    this is TownGuards
-                    || (
-                        this is BaseVendor
-                        && this.WhisperHue != 999
-                        && !((this.GetType()).IsAssignableFrom(typeof(PlayerVendor)))
-                        && !(this is PlayerBarkeeper)
-                    )
-                ) // GUARDS/MERCHANTS SHOULD MOVE BACK TO THEIR POST
-                && (
-                    Math.Abs(this.X - this.Home.X) > 8
-                    || Math.Abs(this.Y - this.Home.Y) > 8
-                    || Math.Abs(this.Z - this.Home.Z) > 8
-                )
-                && Combatant == null
-                && this.Title != "the wandering healer"
-            )
-            {
-                this.Location = this.Home;
-            }
-            else if (
                 WhisperHue == 999
                 && CanSwim
                 && !(CanOnlyMoveOnSea())
@@ -11894,8 +12040,12 @@ namespace Server.Mobiles
 
         public override void OnSectorDeactivate()
         {
-            if (PlayerRangeSensitive && m_AI != null)
-                m_AI.Deactivate();
+            // ARTEGORDONMOD
+            // begin PlayerRangeSensitiveMod delayed inactivation
+            // deactivation will be handled by the AI timer OnTick
+            // if (PlayerRangeSensitive && m_AI != null)
+            //     m_AI.Deactivate();
+            // end PlayerRangeSensitiveMod delayed inactivation
 
             base.OnSectorDeactivate();
         }

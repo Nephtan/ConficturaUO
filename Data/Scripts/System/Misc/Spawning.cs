@@ -1,4 +1,11 @@
-using CPA = Server.CommandPropertyAttribute;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.IO;
+using System.Net;
+using System.Reflection;
+using System.Text;
+using Server;
 using Server.Commands;
 using Server.Gumps;
 using Server.Items;
@@ -6,14 +13,7 @@ using Server.Misc;
 using Server.Mobiles;
 using Server.Network;
 using Server.Regions;
-using Server;
-using System.Collections.Generic;
-using System.Collections;
-using System.IO;
-using System.Net;
-using System.Reflection;
-using System.Text;
-using System;
+using CPA = Server.CommandPropertyAttribute;
 
 namespace Server.Commands
 {
@@ -2188,7 +2188,12 @@ namespace Server.Mobiles
         {
             Point3D startLoc = m.Location;
 
-            if (m is BaseVendor || m is Adventurers || m is Jedi)
+            if (
+                m is BaseVendor
+                || m is Adventurers
+                || m is Jedi
+                || (m is YoungDragon && Utility.RandomMinMax(1, 10) > 3)
+            )
             {
                 bool cleanUp = false;
 
@@ -2230,7 +2235,11 @@ namespace Server.Mobiles
                     m.WhisperHue = 911;
                 }
                 else if (
-                    m.X >= 5457 && m.Y >= 3300 && m.X <= 5459 && m.Y <= 3302 && m.Map == Map.Sosaria
+                    m.X >= 5457
+                    && m.Y >= 3300
+                    && m.X <= 5459
+                    && m.Y <= 3302
+                    && m.Map == Map.Sosaria
                 )
                 {
                     cleanUp = true;
@@ -2238,7 +2247,11 @@ namespace Server.Mobiles
                     m.WhisperHue = 911;
                 }
                 else if (
-                    m.X >= 608 && m.Y >= 4090 && m.X <= 704 && m.Y <= 4096 && m.Map == Map.Sosaria
+                    m.X >= 608
+                    && m.Y >= 4090
+                    && m.X <= 704
+                    && m.Y <= 4096
+                    && m.Map == Map.Sosaria
                 )
                 {
                     cleanUp = true;
@@ -2246,7 +2259,11 @@ namespace Server.Mobiles
                     m.WhisperHue = 911;
                 }
                 else if (
-                    m.X >= 6126 && m.Y >= 827 && m.X <= 6132 && m.Y <= 833 && m.Map == Map.Sosaria
+                    m.X >= 6126
+                    && m.Y >= 827
+                    && m.X <= 6132
+                    && m.Y <= 833
+                    && m.Map == Map.Sosaria
                 )
                 {
                     cleanUp = true;
@@ -2300,21 +2317,33 @@ namespace Server.Mobiles
                     m.WhisperHue = 999;
                 }
                 else if (
-                    m.X >= 5457 && m.Y >= 3300 && m.X <= 5459 && m.Y <= 3302 && m.Map == Map.Sosaria
+                    m.X >= 5457
+                    && m.Y >= 3300
+                    && m.X <= 5459
+                    && m.Y <= 3302
+                    && m.Map == Map.Sosaria
                 )
                 {
                     m.Location = Worlds.GetRandomLocation("the Land of Ambrosia", "sea");
                     m.WhisperHue = 999;
                 }
                 else if (
-                    m.X >= 608 && m.Y >= 4090 && m.X <= 704 && m.Y <= 4096 && m.Map == Map.Sosaria
+                    m.X >= 608
+                    && m.Y >= 4090
+                    && m.X <= 704
+                    && m.Y <= 4096
+                    && m.Map == Map.Sosaria
                 )
                 {
                     m.Location = Worlds.GetRandomLocation("the Island of Umber Veil", "sea");
                     m.WhisperHue = 999;
                 }
                 else if (
-                    m.X >= 6126 && m.Y >= 827 && m.X <= 6132 && m.Y <= 833 && m.Map == Map.Sosaria
+                    m.X >= 6126
+                    && m.Y >= 827
+                    && m.X <= 6132
+                    && m.Y <= 833
+                    && m.Map == Map.Sosaria
                 )
                 {
                     m.Location = Worlds.GetRandomLocation("the Bottle World of Kuldar", "sea");
@@ -2337,6 +2366,7 @@ namespace Server.Mobiles
                         m is Balron
                         || m is Daemon
                         || m is RidingDragon
+                        || m is YoungDragon
                         || m is Dragons
                         || m is Wyrms
                     )
@@ -2384,13 +2414,21 @@ namespace Server.Mobiles
                     i.Location = Worlds.GetRandomLocation("the Savaged Empire", "land");
                 }
                 else if (
-                    i.X >= 5457 && i.Y >= 3300 && i.X <= 5459 && i.Y <= 3302 && i.Map == Map.Sosaria
+                    i.X >= 5457
+                    && i.Y >= 3300
+                    && i.X <= 5459
+                    && i.Y <= 3302
+                    && i.Map == Map.Sosaria
                 )
                 {
                     i.Location = Worlds.GetRandomLocation("the Land of Ambrosia", "land");
                 }
                 else if (
-                    i.X >= 608 && i.Y >= 4090 && i.X <= 704 && i.Y <= 4096 && i.Map == Map.Sosaria
+                    i.X >= 608
+                    && i.Y >= 4090
+                    && i.X <= 704
+                    && i.Y <= 4096
+                    && i.Map == Map.Sosaria
                 )
                 {
                     i.Location = Worlds.GetRandomLocation("the Island of Umber Veil", "land");
@@ -2430,19 +2468,31 @@ namespace Server.Mobiles
                     i.Location = Worlds.GetRandomLocation("the Savaged Empire", "sea");
                 }
                 else if (
-                    i.X >= 5457 && i.Y >= 3300 && i.X <= 5459 && i.Y <= 3302 && i.Map == Map.Sosaria
+                    i.X >= 5457
+                    && i.Y >= 3300
+                    && i.X <= 5459
+                    && i.Y <= 3302
+                    && i.Map == Map.Sosaria
                 )
                 {
                     i.Location = Worlds.GetRandomLocation("the Land of Ambrosia", "sea");
                 }
                 else if (
-                    i.X >= 608 && i.Y >= 4090 && i.X <= 704 && i.Y <= 4096 && i.Map == Map.Sosaria
+                    i.X >= 608
+                    && i.Y >= 4090
+                    && i.X <= 704
+                    && i.Y <= 4096
+                    && i.Map == Map.Sosaria
                 )
                 {
                     i.Location = Worlds.GetRandomLocation("the Island of Umber Veil", "sea");
                 }
                 else if (
-                    i.X >= 6126 && i.Y >= 827 && i.X <= 6132 && i.Y <= 833 && i.Map == Map.Sosaria
+                    i.X >= 6126
+                    && i.Y >= 827
+                    && i.X <= 6132
+                    && i.Y <= 833
+                    && i.Map == Map.Sosaria
                 )
                 {
                     i.Location = Worlds.GetRandomLocation("the Bottle World of Kuldar", "sea");
@@ -2847,55 +2897,6 @@ namespace Server.Mobiles
             {
                 Mobile m = (Mobile)ent;
 
-                if (m is Fox)
-                {
-                    m.Delete();
-
-                    switch (Utility.RandomMinMax(1, 5))
-                    {
-                        case 1:
-                            m = new Squirrel();
-                            break;
-                        case 2:
-                            m = new Ferret();
-                            break;
-                        case 3:
-                            m = new Rabbit();
-                            break;
-                        case 4:
-                            m = new Rabbit();
-                            break;
-                        case 5:
-                            m = new Fox();
-                            break;
-                    }
-                }
-                if (!MyServerSettings.AllowElephants() && m is Mastadon)
-                {
-                    m.Delete();
-                    m = new GrizzlyBearRiding();
-                }
-                else if (!MyServerSettings.AllowElephants() && m is Mammoth)
-                {
-                    m.Delete();
-                    m = new PolarBear();
-                }
-                else if (!MyServerSettings.AllowElephants() && m is Elephant)
-                {
-                    m.Delete();
-                    m = new GrizzlyBearRiding();
-                }
-                else if (!MyServerSettings.AllowElephants() && (m is Zebra || m is ZebraRiding))
-                {
-                    m.Delete();
-                    m = new Horse();
-                }
-                else if (!MyServerSettings.AllowFox() && m is Fox)
-                {
-                    m.Delete();
-                    m = new GreyWolf();
-                }
-
                 if (!MyServerSettings.Scary() && SpawnID == 8888)
                 {
                     if (m is RidingDragon)
@@ -2975,7 +2976,72 @@ namespace Server.Mobiles
 
                 Point3D loc = (m is BaseVendor ? this.Location : GetSpawnPosition());
 
-                if (m is WanderingHealer || m is Adventurers || m is Jedi)
+                bool safari = Server.Misc.MyServerSettings.Safari(map, loc);
+                if (!safari && m is Mastadon)
+                {
+                    m.Delete();
+                    m = new DireBear();
+                }
+                else if (!safari && m is Mammoth)
+                {
+                    m.Delete();
+                    m = new PolarBear();
+                }
+                else if (!safari && m is Elephant)
+                {
+                    m.Delete();
+                    m = new GrizzlyBearRiding();
+                }
+                else if (!safari && m is ZebraRiding)
+                {
+                    m.Delete();
+                    m = new Horse();
+                }
+                else if (!safari && m is Giraffe)
+                {
+                    m.Delete();
+                    m = new RidableLlama();
+                }
+                else if (!safari && m is Ostrich)
+                {
+                    m.Delete();
+                    m = new Eagle();
+                    if (Utility.RandomBool())
+                    {
+                        m.Delete();
+                        m = new Hawk();
+                    }
+                }
+                else if (!safari && m is Cheetah)
+                {
+                    m.Delete();
+                    m = new Cougar();
+                }
+                else if (!safari && m is Hyena)
+                {
+                    m.Delete();
+                    m = new GreyWolf();
+                }
+                else if (!safari && m is Gazelle)
+                {
+                    m.Delete();
+                    m = new GreatHart();
+                    if (Utility.RandomBool())
+                    {
+                        m.Delete();
+                        m = new Hind();
+                    }
+                }
+
+                if (m == null)
+                    return;
+
+                if (
+                    m is WanderingHealer
+                    || m is Adventurers
+                    || m is Jedi
+                    || (m is YoungDragon && Utility.RandomMinMax(1, 10) > 3)
+                )
                 {
                     loc = GetSpawnPosition();
                 }
@@ -3029,9 +3095,10 @@ namespace Server.Mobiles
                         c.SpawnerID = this.Serial;
                         Running = false;
                     }
-                }
 
-                m.OnAfterSpawn();
+                    if (m != null)
+                        m.OnAfterSpawn();
+                }
             }
             else if (ent is Item)
             {
@@ -3045,6 +3112,7 @@ namespace Server.Mobiles
                 InvalidateProperties();
 
                 item.MoveToWorld(loc, map);
+                Server.Mobiles.PremiumSpawner.SpreadItems(item);
 
                 if (Region.Find(this.Location, this.Map) != Region.Find(item.Location, item.Map))
                 {
@@ -3053,7 +3121,8 @@ namespace Server.Mobiles
                     return;
                 } // REMOVE IF NOT IN SAME REGION
 
-                item.OnAfterSpawn();
+                if (item != null)
+                    item.OnAfterSpawn();
             }
         }
 
@@ -3080,55 +3149,6 @@ namespace Server.Mobiles
             if (ent is Mobile)
             {
                 Mobile m = (Mobile)ent;
-
-                if (m is Fox)
-                {
-                    m.Delete();
-
-                    switch (Utility.RandomMinMax(1, 5))
-                    {
-                        case 1:
-                            m = new Squirrel();
-                            break;
-                        case 2:
-                            m = new Ferret();
-                            break;
-                        case 3:
-                            m = new Rabbit();
-                            break;
-                        case 4:
-                            m = new Rabbit();
-                            break;
-                        case 5:
-                            m = new Fox();
-                            break;
-                    }
-                }
-                if (!MyServerSettings.AllowElephants() && m is Mastadon)
-                {
-                    m.Delete();
-                    m = new GrizzlyBearRiding();
-                }
-                else if (!MyServerSettings.AllowElephants() && m is Mammoth)
-                {
-                    m.Delete();
-                    m = new PolarBear();
-                }
-                else if (!MyServerSettings.AllowElephants() && m is Elephant)
-                {
-                    m.Delete();
-                    m = new GrizzlyBearRiding();
-                }
-                else if (!MyServerSettings.AllowElephants() && (m is Zebra || m is ZebraRiding))
-                {
-                    m.Delete();
-                    m = new Horse();
-                }
-                else if (!MyServerSettings.AllowFox() && m is Fox)
-                {
-                    m.Delete();
-                    m = new GreyWolf();
-                }
 
                 if (!MyServerSettings.Scary() && SpawnID == 8888)
                 {
@@ -3209,7 +3229,72 @@ namespace Server.Mobiles
 
                 Point3D loc = (m is BaseVendor ? this.Location : GetSpawnPosition());
 
-                if (m is WanderingHealer || m is Adventurers || m is Jedi)
+                bool safari = Server.Misc.MyServerSettings.Safari(map, loc);
+                if (!safari && m is Mastadon)
+                {
+                    m.Delete();
+                    m = new DireBear();
+                }
+                else if (!safari && m is Mammoth)
+                {
+                    m.Delete();
+                    m = new PolarBear();
+                }
+                else if (!safari && m is Elephant)
+                {
+                    m.Delete();
+                    m = new GrizzlyBearRiding();
+                }
+                else if (!safari && m is ZebraRiding)
+                {
+                    m.Delete();
+                    m = new Horse();
+                }
+                else if (!safari && m is Giraffe)
+                {
+                    m.Delete();
+                    m = new RidableLlama();
+                }
+                else if (!safari && m is Ostrich)
+                {
+                    m.Delete();
+                    m = new Eagle();
+                    if (Utility.RandomBool())
+                    {
+                        m.Delete();
+                        m = new Hawk();
+                    }
+                }
+                else if (!safari && m is Cheetah)
+                {
+                    m.Delete();
+                    m = new Cougar();
+                }
+                else if (!safari && m is Hyena)
+                {
+                    m.Delete();
+                    m = new GreyWolf();
+                }
+                else if (!safari && m is Gazelle)
+                {
+                    m.Delete();
+                    m = new GreatHart();
+                    if (Utility.RandomBool())
+                    {
+                        m.Delete();
+                        m = new Hind();
+                    }
+                }
+
+                if (m == null)
+                    return;
+
+                if (
+                    m is WanderingHealer
+                    || m is Adventurers
+                    || m is Jedi
+                    || (m is YoungDragon && Utility.RandomMinMax(1, 10) > 3)
+                )
                 {
                     loc = GetSpawnPosition();
                 }
@@ -3248,9 +3333,10 @@ namespace Server.Mobiles
                         Defrag();
                         return;
                     } // REMOVE IF NOT IN SAME REGION
-                }
 
-                m.OnAfterSpawn();
+                    if (m != null)
+                        m.OnAfterSpawn();
+                }
             }
             else if (ent is Item)
             {
@@ -3264,6 +3350,7 @@ namespace Server.Mobiles
                 InvalidateProperties();
 
                 item.MoveToWorld(loc, map);
+                Server.Mobiles.PremiumSpawner.SpreadItems(item);
 
                 if (Region.Find(this.Location, this.Map) != Region.Find(item.Location, item.Map))
                 {
@@ -3272,7 +3359,8 @@ namespace Server.Mobiles
                     return;
                 } // REMOVE IF NOT IN SAME REGION
 
-                item.OnAfterSpawn();
+                if (item != null)
+                    item.OnAfterSpawn();
             }
         }
 
@@ -3299,55 +3387,6 @@ namespace Server.Mobiles
             if (ent is Mobile)
             {
                 Mobile m = (Mobile)ent;
-
-                if (m is Fox)
-                {
-                    m.Delete();
-
-                    switch (Utility.RandomMinMax(1, 5))
-                    {
-                        case 1:
-                            m = new Squirrel();
-                            break;
-                        case 2:
-                            m = new Ferret();
-                            break;
-                        case 3:
-                            m = new Rabbit();
-                            break;
-                        case 4:
-                            m = new Rabbit();
-                            break;
-                        case 5:
-                            m = new Fox();
-                            break;
-                    }
-                }
-                if (!MyServerSettings.AllowElephants() && m is Mastadon)
-                {
-                    m.Delete();
-                    m = new GrizzlyBearRiding();
-                }
-                else if (!MyServerSettings.AllowElephants() && m is Mammoth)
-                {
-                    m.Delete();
-                    m = new PolarBear();
-                }
-                else if (!MyServerSettings.AllowElephants() && m is Elephant)
-                {
-                    m.Delete();
-                    m = new GrizzlyBearRiding();
-                }
-                else if (!MyServerSettings.AllowElephants() && (m is Zebra || m is ZebraRiding))
-                {
-                    m.Delete();
-                    m = new Horse();
-                }
-                else if (!MyServerSettings.AllowFox() && m is Fox)
-                {
-                    m.Delete();
-                    m = new GreyWolf();
-                }
 
                 if (!MyServerSettings.Scary() && SpawnID == 8888)
                 {
@@ -3428,7 +3467,72 @@ namespace Server.Mobiles
 
                 Point3D loc = (m is BaseVendor ? this.Location : GetSpawnPosition());
 
-                if (m is WanderingHealer || m is Adventurers || m is Jedi)
+                bool safari = Server.Misc.MyServerSettings.Safari(map, loc);
+                if (!safari && m is Mastadon)
+                {
+                    m.Delete();
+                    m = new DireBear();
+                }
+                else if (!safari && m is Mammoth)
+                {
+                    m.Delete();
+                    m = new PolarBear();
+                }
+                else if (!safari && m is Elephant)
+                {
+                    m.Delete();
+                    m = new GrizzlyBearRiding();
+                }
+                else if (!safari && m is ZebraRiding)
+                {
+                    m.Delete();
+                    m = new Horse();
+                }
+                else if (!safari && m is Giraffe)
+                {
+                    m.Delete();
+                    m = new RidableLlama();
+                }
+                else if (!safari && m is Ostrich)
+                {
+                    m.Delete();
+                    m = new Eagle();
+                    if (Utility.RandomBool())
+                    {
+                        m.Delete();
+                        m = new Hawk();
+                    }
+                }
+                else if (!safari && m is Cheetah)
+                {
+                    m.Delete();
+                    m = new Cougar();
+                }
+                else if (!safari && m is Hyena)
+                {
+                    m.Delete();
+                    m = new GreyWolf();
+                }
+                else if (!safari && m is Gazelle)
+                {
+                    m.Delete();
+                    m = new GreatHart();
+                    if (Utility.RandomBool())
+                    {
+                        m.Delete();
+                        m = new Hind();
+                    }
+                }
+
+                if (m == null)
+                    return;
+
+                if (
+                    m is WanderingHealer
+                    || m is Adventurers
+                    || m is Jedi
+                    || (m is YoungDragon && Utility.RandomMinMax(1, 10) > 3)
+                )
                 {
                     loc = GetSpawnPosition();
                 }
@@ -3467,9 +3571,10 @@ namespace Server.Mobiles
                         Defrag();
                         return;
                     } // REMOVE IF NOT IN SAME REGION
-                }
 
-                m.OnAfterSpawn();
+                    if (m != null)
+                        m.OnAfterSpawn();
+                }
             }
             else if (ent is Item)
             {
@@ -3483,6 +3588,7 @@ namespace Server.Mobiles
                 InvalidateProperties();
 
                 item.MoveToWorld(loc, map);
+                Server.Mobiles.PremiumSpawner.SpreadItems(item);
 
                 if (Region.Find(this.Location, this.Map) != Region.Find(item.Location, item.Map))
                 {
@@ -3491,7 +3597,8 @@ namespace Server.Mobiles
                     return;
                 } // REMOVE IF NOT IN SAME REGION
 
-                item.OnAfterSpawn();
+                if (item != null)
+                    item.OnAfterSpawn();
             }
         }
 
@@ -3518,55 +3625,6 @@ namespace Server.Mobiles
             if (ent is Mobile)
             {
                 Mobile m = (Mobile)ent;
-
-                if (m is Fox)
-                {
-                    m.Delete();
-
-                    switch (Utility.RandomMinMax(1, 5))
-                    {
-                        case 1:
-                            m = new Squirrel();
-                            break;
-                        case 2:
-                            m = new Ferret();
-                            break;
-                        case 3:
-                            m = new Rabbit();
-                            break;
-                        case 4:
-                            m = new Rabbit();
-                            break;
-                        case 5:
-                            m = new Fox();
-                            break;
-                    }
-                }
-                if (!MyServerSettings.AllowElephants() && m is Mastadon)
-                {
-                    m.Delete();
-                    m = new GrizzlyBearRiding();
-                }
-                else if (!MyServerSettings.AllowElephants() && m is Mammoth)
-                {
-                    m.Delete();
-                    m = new PolarBear();
-                }
-                else if (!MyServerSettings.AllowElephants() && m is Elephant)
-                {
-                    m.Delete();
-                    m = new GrizzlyBearRiding();
-                }
-                else if (!MyServerSettings.AllowElephants() && (m is Zebra || m is ZebraRiding))
-                {
-                    m.Delete();
-                    m = new Horse();
-                }
-                else if (!MyServerSettings.AllowFox() && m is Fox)
-                {
-                    m.Delete();
-                    m = new GreyWolf();
-                }
 
                 if (!MyServerSettings.Scary() && SpawnID == 8888)
                 {
@@ -3647,7 +3705,72 @@ namespace Server.Mobiles
 
                 Point3D loc = (m is BaseVendor ? this.Location : GetSpawnPosition());
 
-                if (m is WanderingHealer || m is Adventurers || m is Jedi)
+                bool safari = Server.Misc.MyServerSettings.Safari(map, loc);
+                if (!safari && m is Mastadon)
+                {
+                    m.Delete();
+                    m = new DireBear();
+                }
+                else if (!safari && m is Mammoth)
+                {
+                    m.Delete();
+                    m = new PolarBear();
+                }
+                else if (!safari && m is Elephant)
+                {
+                    m.Delete();
+                    m = new GrizzlyBearRiding();
+                }
+                else if (!safari && m is ZebraRiding)
+                {
+                    m.Delete();
+                    m = new Horse();
+                }
+                else if (!safari && m is Giraffe)
+                {
+                    m.Delete();
+                    m = new RidableLlama();
+                }
+                else if (!safari && m is Ostrich)
+                {
+                    m.Delete();
+                    m = new Eagle();
+                    if (Utility.RandomBool())
+                    {
+                        m.Delete();
+                        m = new Hawk();
+                    }
+                }
+                else if (!safari && m is Cheetah)
+                {
+                    m.Delete();
+                    m = new Cougar();
+                }
+                else if (!safari && m is Hyena)
+                {
+                    m.Delete();
+                    m = new GreyWolf();
+                }
+                else if (!safari && m is Gazelle)
+                {
+                    m.Delete();
+                    m = new GreatHart();
+                    if (Utility.RandomBool())
+                    {
+                        m.Delete();
+                        m = new Hind();
+                    }
+                }
+
+                if (m == null)
+                    return;
+
+                if (
+                    m is WanderingHealer
+                    || m is Adventurers
+                    || m is Jedi
+                    || (m is YoungDragon && Utility.RandomMinMax(1, 10) > 3)
+                )
                 {
                     loc = GetSpawnPosition();
                 }
@@ -3686,9 +3809,10 @@ namespace Server.Mobiles
                         Defrag();
                         return;
                     } // REMOVE IF NOT IN SAME REGION
-                }
 
-                m.OnAfterSpawn();
+                    if (m != null)
+                        m.OnAfterSpawn();
+                }
             }
             else if (ent is Item)
             {
@@ -3702,6 +3826,7 @@ namespace Server.Mobiles
                 InvalidateProperties();
 
                 item.MoveToWorld(loc, map);
+                Server.Mobiles.PremiumSpawner.SpreadItems(item);
 
                 if (Region.Find(this.Location, this.Map) != Region.Find(item.Location, item.Map))
                 {
@@ -3710,7 +3835,8 @@ namespace Server.Mobiles
                     return;
                 } // REMOVE IF NOT IN SAME REGION
 
-                item.OnAfterSpawn();
+                if (item != null)
+                    item.OnAfterSpawn();
             }
         }
 
@@ -3737,55 +3863,6 @@ namespace Server.Mobiles
             if (ent is Mobile)
             {
                 Mobile m = (Mobile)ent;
-
-                if (m is Fox)
-                {
-                    m.Delete();
-
-                    switch (Utility.RandomMinMax(1, 5))
-                    {
-                        case 1:
-                            m = new Squirrel();
-                            break;
-                        case 2:
-                            m = new Ferret();
-                            break;
-                        case 3:
-                            m = new Rabbit();
-                            break;
-                        case 4:
-                            m = new Rabbit();
-                            break;
-                        case 5:
-                            m = new Fox();
-                            break;
-                    }
-                }
-                if (!MyServerSettings.AllowElephants() && m is Mastadon)
-                {
-                    m.Delete();
-                    m = new GrizzlyBearRiding();
-                }
-                else if (!MyServerSettings.AllowElephants() && m is Mammoth)
-                {
-                    m.Delete();
-                    m = new PolarBear();
-                }
-                else if (!MyServerSettings.AllowElephants() && m is Elephant)
-                {
-                    m.Delete();
-                    m = new GrizzlyBearRiding();
-                }
-                else if (!MyServerSettings.AllowElephants() && (m is Zebra || m is ZebraRiding))
-                {
-                    m.Delete();
-                    m = new Horse();
-                }
-                else if (!MyServerSettings.AllowFox() && m is Fox)
-                {
-                    m.Delete();
-                    m = new GreyWolf();
-                }
 
                 if (!MyServerSettings.Scary() && SpawnID == 8888)
                 {
@@ -3866,7 +3943,72 @@ namespace Server.Mobiles
 
                 Point3D loc = (m is BaseVendor ? this.Location : GetSpawnPosition());
 
-                if (m is WanderingHealer || m is Adventurers || m is Jedi)
+                bool safari = Server.Misc.MyServerSettings.Safari(map, loc);
+                if (!safari && m is Mastadon)
+                {
+                    m.Delete();
+                    m = new DireBear();
+                }
+                else if (!safari && m is Mammoth)
+                {
+                    m.Delete();
+                    m = new PolarBear();
+                }
+                else if (!safari && m is Elephant)
+                {
+                    m.Delete();
+                    m = new GrizzlyBearRiding();
+                }
+                else if (!safari && m is ZebraRiding)
+                {
+                    m.Delete();
+                    m = new Horse();
+                }
+                else if (!safari && m is Giraffe)
+                {
+                    m.Delete();
+                    m = new RidableLlama();
+                }
+                else if (!safari && m is Ostrich)
+                {
+                    m.Delete();
+                    m = new Eagle();
+                    if (Utility.RandomBool())
+                    {
+                        m.Delete();
+                        m = new Hawk();
+                    }
+                }
+                else if (!safari && m is Cheetah)
+                {
+                    m.Delete();
+                    m = new Cougar();
+                }
+                else if (!safari && m is Hyena)
+                {
+                    m.Delete();
+                    m = new GreyWolf();
+                }
+                else if (!safari && m is Gazelle)
+                {
+                    m.Delete();
+                    m = new GreatHart();
+                    if (Utility.RandomBool())
+                    {
+                        m.Delete();
+                        m = new Hind();
+                    }
+                }
+
+                if (m == null)
+                    return;
+
+                if (
+                    m is WanderingHealer
+                    || m is Adventurers
+                    || m is Jedi
+                    || (m is YoungDragon && Utility.RandomMinMax(1, 10) > 3)
+                )
                 {
                     loc = GetSpawnPosition();
                 }
@@ -3905,9 +4047,10 @@ namespace Server.Mobiles
                         Defrag();
                         return;
                     } // REMOVE IF NOT IN SAME REGION
-                }
 
-                m.OnAfterSpawn();
+                    if (m != null)
+                        m.OnAfterSpawn();
+                }
             }
             else if (ent is Item)
             {
@@ -3921,6 +4064,7 @@ namespace Server.Mobiles
                 InvalidateProperties();
 
                 item.MoveToWorld(loc, map);
+                Server.Mobiles.PremiumSpawner.SpreadItems(item);
 
                 if (Region.Find(this.Location, this.Map) != Region.Find(item.Location, item.Map))
                 {
@@ -3929,7 +4073,8 @@ namespace Server.Mobiles
                     return;
                 } // REMOVE IF NOT IN SAME REGION
 
-                item.OnAfterSpawn();
+                if (item != null)
+                    item.OnAfterSpawn();
             }
         }
 
@@ -3956,55 +4101,6 @@ namespace Server.Mobiles
             if (ent is Mobile)
             {
                 Mobile m = (Mobile)ent;
-
-                if (m is Fox)
-                {
-                    m.Delete();
-
-                    switch (Utility.RandomMinMax(1, 5))
-                    {
-                        case 1:
-                            m = new Squirrel();
-                            break;
-                        case 2:
-                            m = new Ferret();
-                            break;
-                        case 3:
-                            m = new Rabbit();
-                            break;
-                        case 4:
-                            m = new Rabbit();
-                            break;
-                        case 5:
-                            m = new Fox();
-                            break;
-                    }
-                }
-                if (!MyServerSettings.AllowElephants() && m is Mastadon)
-                {
-                    m.Delete();
-                    m = new GrizzlyBearRiding();
-                }
-                else if (!MyServerSettings.AllowElephants() && m is Mammoth)
-                {
-                    m.Delete();
-                    m = new PolarBear();
-                }
-                else if (!MyServerSettings.AllowElephants() && m is Elephant)
-                {
-                    m.Delete();
-                    m = new GrizzlyBearRiding();
-                }
-                else if (!MyServerSettings.AllowElephants() && (m is Zebra || m is ZebraRiding))
-                {
-                    m.Delete();
-                    m = new Horse();
-                }
-                else if (!MyServerSettings.AllowFox() && m is Fox)
-                {
-                    m.Delete();
-                    m = new GreyWolf();
-                }
 
                 if (!MyServerSettings.Scary() && SpawnID == 8888)
                 {
@@ -4085,7 +4181,72 @@ namespace Server.Mobiles
 
                 Point3D loc = (m is BaseVendor ? this.Location : GetSpawnPosition());
 
-                if (m is WanderingHealer || m is Adventurers || m is Jedi)
+                bool safari = Server.Misc.MyServerSettings.Safari(map, loc);
+                if (!safari && m is Mastadon)
+                {
+                    m.Delete();
+                    m = new DireBear();
+                }
+                else if (!safari && m is Mammoth)
+                {
+                    m.Delete();
+                    m = new PolarBear();
+                }
+                else if (!safari && m is Elephant)
+                {
+                    m.Delete();
+                    m = new GrizzlyBearRiding();
+                }
+                else if (!safari && m is ZebraRiding)
+                {
+                    m.Delete();
+                    m = new Horse();
+                }
+                else if (!safari && m is Giraffe)
+                {
+                    m.Delete();
+                    m = new RidableLlama();
+                }
+                else if (!safari && m is Ostrich)
+                {
+                    m.Delete();
+                    m = new Eagle();
+                    if (Utility.RandomBool())
+                    {
+                        m.Delete();
+                        m = new Hawk();
+                    }
+                }
+                else if (!safari && m is Cheetah)
+                {
+                    m.Delete();
+                    m = new Cougar();
+                }
+                else if (!safari && m is Hyena)
+                {
+                    m.Delete();
+                    m = new GreyWolf();
+                }
+                else if (!safari && m is Gazelle)
+                {
+                    m.Delete();
+                    m = new GreatHart();
+                    if (Utility.RandomBool())
+                    {
+                        m.Delete();
+                        m = new Hind();
+                    }
+                }
+
+                if (m == null)
+                    return;
+
+                if (
+                    m is WanderingHealer
+                    || m is Adventurers
+                    || m is Jedi
+                    || (m is YoungDragon && Utility.RandomMinMax(1, 10) > 3)
+                )
                 {
                     loc = GetSpawnPosition();
                 }
@@ -4124,9 +4285,10 @@ namespace Server.Mobiles
                         Defrag();
                         return;
                     } // REMOVE IF NOT IN SAME REGION
-                }
 
-                m.OnAfterSpawn();
+                    if (m != null)
+                        m.OnAfterSpawn();
+                }
             }
             else if (ent is Item)
             {
@@ -4140,6 +4302,7 @@ namespace Server.Mobiles
                 InvalidateProperties();
 
                 item.MoveToWorld(loc, map);
+                Server.Mobiles.PremiumSpawner.SpreadItems(item);
 
                 if (Region.Find(this.Location, this.Map) != Region.Find(item.Location, item.Map))
                 {
@@ -4148,7 +4311,8 @@ namespace Server.Mobiles
                     return;
                 } // REMOVE IF NOT IN SAME REGION
 
-                item.OnAfterSpawn();
+                if (item != null)
+                    item.OnAfterSpawn();
             }
         }
 
@@ -4506,6 +4670,7 @@ namespace Server.Mobiles
                     Item item = (Item)e;
 
                     item.MoveToWorld(Location, Map);
+                    Server.Mobiles.PremiumSpawner.SpreadItems(item);
                 }
             }
 
@@ -4525,6 +4690,7 @@ namespace Server.Mobiles
                     Item item = (Item)o;
 
                     item.MoveToWorld(Location, Map);
+                    Server.Mobiles.PremiumSpawner.SpreadItems(item);
                 }
             }
 
@@ -4544,6 +4710,7 @@ namespace Server.Mobiles
                     Item item = (Item)o;
 
                     item.MoveToWorld(Location, Map);
+                    Server.Mobiles.PremiumSpawner.SpreadItems(item);
                 }
             }
 
@@ -4563,6 +4730,7 @@ namespace Server.Mobiles
                     Item item = (Item)o;
 
                     item.MoveToWorld(Location, Map);
+                    Server.Mobiles.PremiumSpawner.SpreadItems(item);
                 }
             }
 
@@ -4582,6 +4750,7 @@ namespace Server.Mobiles
                     Item item = (Item)o;
 
                     item.MoveToWorld(Location, Map);
+                    Server.Mobiles.PremiumSpawner.SpreadItems(item);
                 }
             }
 
@@ -4601,6 +4770,7 @@ namespace Server.Mobiles
                     Item item = (Item)o;
 
                     item.MoveToWorld(Location, Map);
+                    Server.Mobiles.PremiumSpawner.SpreadItems(item);
                 }
             }
         }
@@ -5906,7 +6076,9 @@ namespace Server.Mobiles
             InvalidateProperties();
 
             spawned.MoveToWorld(loc, map);
-            spawned.OnAfterSpawn();
+
+            if (spawned != null)
+                spawned.OnAfterSpawn();
 
             if (spawned is BaseCreature)
             {

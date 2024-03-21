@@ -1,6 +1,6 @@
 using System;
-using Server.Targeting;
 using Server.Network;
+using Server.Targeting;
 
 namespace Server.Spells.DeathKnight
 {
@@ -64,16 +64,22 @@ namespace Server.Spells.DeathKnight
                 m.PlaySound(0x1EB);
                 m.FixedParticles(0x373A, 10, 15, 5018, EffectLayer.Waist);
 
+                string args = String.Format("{0}", bonus);
+
+                BuffInfo.RemoveBuff(Caster, BuffIcon.StrengthOfSteel);
                 BuffInfo.AddBuff(
                     Caster,
                     new BuffInfo(
-                        BuffIcon.Strength,
-                        1044122,
-                        1044118,
+                        BuffIcon.StrengthOfSteel,
+                        1063557,
+                        1063558,
                         TimeSpan.FromMinutes(timer),
-                        Caster
+                        Caster,
+                        args.ToString(),
+                        true
                     )
                 );
+
                 DrainSoulsInLantern(Caster, RequiredTithing);
             }
 

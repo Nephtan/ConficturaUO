@@ -1,7 +1,8 @@
 using System;
-using Server.Targeting;
-using Server.Network;
+using Server.Items;
 using Server.Mobiles;
+using Server.Network;
+using Server.Targeting;
 
 namespace Server.Spells.Research
 {
@@ -33,7 +34,9 @@ namespace Server.Spells.Research
             Server.Misc.Research.SpellInformation(spellID, 2),
             Server.Misc.Research.CapsCast(Server.Misc.Research.SpellInformation(spellID, 4)),
             245,
-            9042
+            9042,
+            Reagent.MoonCrystal,
+            Reagent.GraveDust
         );
 
         public ResearchFrostStrike(Mobile caster, Item scroll)
@@ -41,7 +44,10 @@ namespace Server.Spells.Research
 
         public override void OnCast()
         {
-            Caster.Target = new InternalTarget(this);
+            if (CheckSequence())
+            {
+                Caster.Target = new InternalTarget(this);
+            }
         }
 
         public void Target(Mobile m)
@@ -78,7 +84,7 @@ namespace Server.Spells.Research
                 );
                 m.PlaySound(0x65D);
 
-                Server.Misc.Research.ConsumeScroll(Caster, true, spellIndex, false);
+                Server.Misc.Research.ConsumeScroll(Caster, true, spellIndex, alwaysConsume, Scroll);
 
                 SpellHelper.Damage(this, m, damage, 0, 0, 100, 0, 0);
             }

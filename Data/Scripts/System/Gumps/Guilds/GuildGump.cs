@@ -236,7 +236,8 @@ namespace Server.Gumps
                 case 9: // Guildmaster functions
                 {
                     if (
-                        m_Mobile.AccessLevel >= AccessLevel.GameMaster || m_Guild.Leader == m_Mobile
+                        m_Mobile.AccessLevel >= AccessLevel.GameMaster
+                        || m_Guild.Leader == m_Mobile
                     )
                     {
                         EnsureClosed(m_Mobile);

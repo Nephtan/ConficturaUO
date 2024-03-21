@@ -72,6 +72,7 @@ namespace Server.Spells.Fourth
                     m.Spell.OnCasterHurt();
 
                 m.Paralyzed = false;
+                BuffInfo.CleanupIcons(m, true);
 
                 if (Core.AOS)
                 {

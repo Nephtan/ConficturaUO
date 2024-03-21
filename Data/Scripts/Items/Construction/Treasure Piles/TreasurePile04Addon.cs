@@ -12,6 +12,11 @@ namespace Server.Items
 {
     public class TreasurePile04Addon : BaseAddon
     {
+        public override string AddonName
+        {
+            get { return "treasure pile"; }
+        }
+
         public override BaseAddonDeed Deed
         {
             get { return new TreasurePile04AddonDeed(); }

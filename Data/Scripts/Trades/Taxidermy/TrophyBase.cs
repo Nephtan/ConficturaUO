@@ -1,15 +1,15 @@
 using System;
-using Server;
 using System.Collections;
-using Server.ContextMenus;
 using System.Collections.Generic;
-using Server.Misc;
-using Server.Network;
-using Server.Items;
-using Server.Gumps;
-using Server.Mobiles;
-using Server.Commands;
 using System.Globalization;
+using Server;
+using Server.Commands;
+using Server.ContextMenus;
+using Server.Gumps;
+using Server.Items;
+using Server.Misc;
+using Server.Mobiles;
+using Server.Network;
 using Server.Regions;
 using Server.Targeting;
 
@@ -23,7 +23,7 @@ namespace Server.Items
             : base(0x3942)
         {
             Weight = 2.0;
-            Name = "Trophy Base";
+            Name = "trophy base";
         }
 
         public override void AddNameProperties(ObjectPropertyList list)
@@ -130,6 +130,7 @@ namespace Server.Items
                     if (obj != null)
                     {
                         Corpse c = (Corpse)targeted;
+                        Item i = (Item)targeted;
 
                         if (c.VisitedByTaxidermist == true)
                         {
@@ -174,7 +175,24 @@ namespace Server.Items
                                 }
                             }
                             else if (
+                                (typeof(DrakkhenRed) == c.Owner.GetType())
+                                || (typeof(Dragoon) == c.Owner.GetType() && i.Amount == 604)
+                            )
+                            {
+                                trophyID = 0x65AD;
+                                trophyColor = 0xB01;
+                            }
+                            else if (
+                                (typeof(DrakkhenBlack) == c.Owner.GetType())
+                                || (typeof(Dragoon) == c.Owner.GetType())
+                            )
+                            {
+                                trophyID = 0x6553;
+                                trophyColor = 0;
+                            }
+                            else if (
                                 (typeof(Dragons) == c.Owner.GetType())
+                                || (typeof(Wyrm) == c.Owner.GetType())
                                 || (typeof(RidingDragon) == c.Owner.GetType())
                                 || (typeof(GemDragon) == c.Owner.GetType())
                                 || (typeof(GhostDragyn) == c.Owner.GetType())
@@ -539,13 +557,19 @@ namespace Server.Items
                                 || (typeof(TigerRiding) == c.Owner.GetType())
                             )
                             {
-                                trophyID = 0x3389;
+                                trophyID = Utility.RandomList(0x3389, 0x6549);
                                 trophyColor = 0;
                             }
                             else if (
                                 (typeof(WhiteTiger) == c.Owner.GetType())
                                 || (typeof(WhiteTigerRiding) == c.Owner.GetType())
-                                || (typeof(PredatorHellCatRiding) == c.Owner.GetType())
+                            )
+                            {
+                                trophyID = 0x654F;
+                                trophyColor = 0;
+                            }
+                            else if (
+                                (typeof(PredatorHellCatRiding) == c.Owner.GetType())
                                 || (typeof(PredatorHellCat) == c.Owner.GetType())
                             )
                             {
@@ -554,7 +578,18 @@ namespace Server.Items
                             else if (
                                 (typeof(Lion) == c.Owner.GetType())
                                 || (typeof(LionRiding) == c.Owner.GetType())
-                                || (typeof(SnowLion) == c.Owner.GetType())
+                            )
+                            {
+                                trophyID = 0x654D;
+                                trophyColor = 0;
+                            }
+                            else if (typeof(Panther) == c.Owner.GetType())
+                            {
+                                trophyID = 0x6551;
+                                trophyColor = 0;
+                            }
+                            else if (
+                                (typeof(SnowLion) == c.Owner.GetType())
                                 || (typeof(Manticore) == c.Owner.GetType())
                                 || (typeof(Chimera) == c.Owner.GetType())
                             )
@@ -670,6 +705,16 @@ namespace Server.Items
                             else if (typeof(FrostGiant) == c.Owner.GetType())
                             {
                                 trophyID = 0x336E;
+                            }
+                            else if (
+                                (typeof(AntaurKing) == c.Owner.GetType())
+                                || (typeof(AntaurProgenitor) == c.Owner.GetType())
+                                || (typeof(AntaurSoldier) == c.Owner.GetType())
+                                || (typeof(AntaurWorker) == c.Owner.GetType())
+                            )
+                            {
+                                trophyID = 0x654B;
+                                trophyColor = 0;
                             }
                             else if (
                                 (typeof(SeaTroll) == c.Owner.GetType())

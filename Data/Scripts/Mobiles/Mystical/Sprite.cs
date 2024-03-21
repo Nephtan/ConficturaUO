@@ -1,8 +1,8 @@
 using System;
 using Server;
+using Server.Items;
 using Server.Misc;
 using Server.Mobiles;
-using Server.Items;
 
 namespace Server.Mobiles
 {

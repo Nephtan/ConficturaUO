@@ -1,9 +1,9 @@
 using System;
 using System.Collections;
 using Server;
-using Server.Targeting;
 using Server.Items;
 using Server.Mobiles;
+using Server.Targeting;
 
 namespace Server.Spells.Sixth
 {
@@ -95,6 +95,8 @@ namespace Server.Spells.Sixth
                 Timer t = new InternalTimer(m, duration);
 
                 BuffInfo.RemoveBuff(m, BuffIcon.HidingAndOrStealth);
+                BuffInfo.RemoveBuff(m, BuffIcon.Invisibility);
+                BuffInfo.RemoveBuff(m, BuffIcon.SpectralShadow);
                 BuffInfo.AddBuff(m, new BuffInfo(BuffIcon.Invisibility, 1075825, duration, m)); //Invisibility/Invisible
 
                 m_Table[m] = t;

@@ -1,15 +1,15 @@
 using System;
-using Server;
-using Server.Misc;
-using Server.Items;
 using System.Collections;
+using Server;
+using Server.Items;
+using Server.Misc;
 
 namespace Server.Mobiles
 {
     [CorpseName("a vampire corpse")]
     public class VampireLord : BaseCreature
     {
-        private bool m_TrueForm;
+        public bool m_TrueForm;
 
         public override WeaponAbility GetWeaponAbility()
         {

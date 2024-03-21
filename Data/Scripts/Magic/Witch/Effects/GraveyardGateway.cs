@@ -1,10 +1,10 @@
 using System;
-using Server.Network;
-using Server.Multis;
 using Server.Items;
-using Server.Targeting;
 using Server.Misc;
+using Server.Multis;
+using Server.Network;
 using Server.Regions;
+using Server.Targeting;
 
 namespace Server.Spells.Undead
 {

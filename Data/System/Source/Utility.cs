@@ -975,7 +975,7 @@ namespace Server
 
 		public static int DateUpdated()
 		{
-			return 2021220;
+			return 20240226;
 		}
 
 		public static string AddSpacesToSentence( string text )

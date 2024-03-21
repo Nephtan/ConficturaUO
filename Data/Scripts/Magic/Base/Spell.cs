@@ -1,24 +1,24 @@
 using System;
-using Server.Items;
-using Server.Network;
-using Server.Targeting;
-using Server.Mobiles;
-using Server.Misc;
-using Server.Spells.Second;
-using Server.Spells.Necromancy;
-using Server.Spells.Ninjitsu;
 using System.Collections.Generic;
-using Server.Spells.Bushido;
 using Server.Gumps;
+using Server.Items;
+using Server.Misc;
+using Server.Mobiles;
+using Server.Network;
+using Server.Spells.Bushido;
+using Server.Spells.Elementalism;
 using Server.Spells.HolyMan;
-using Server.Spells.Song;
-using Server.Spells.Mystic;
-using Server.Spells.Syth;
 using Server.Spells.Jedi;
 using Server.Spells.Jester;
+using Server.Spells.Mystic;
+using Server.Spells.Necromancy;
+using Server.Spells.Ninjitsu;
 using Server.Spells.Research;
+using Server.Spells.Second;
 using Server.Spells.Shinobi;
-using Server.Spells.Elementalism;
+using Server.Spells.Song;
+using Server.Spells.Syth;
+using Server.Targeting;
 
 namespace Server.Spells
 {
@@ -671,7 +671,8 @@ namespace Server.Spells
                 m_Caster.SendLocalizedMessage(502644); // You have not yet recovered from casting a spell.
             }
             else if (
-                m_Caster is PlayerMobile && ((PlayerMobile)m_Caster).PeacedUntil > DateTime.Now
+                m_Caster is PlayerMobile
+                && ((PlayerMobile)m_Caster).PeacedUntil > DateTime.Now
             )
             {
                 m_Caster.SendLocalizedMessage(1072060); // You cannot cast a spell while calmed.
@@ -1064,7 +1065,8 @@ namespace Server.Spells
                 DoFizzle();
             }
             else if (
-                m_Caster is PlayerMobile && ((PlayerMobile)m_Caster).PeacedUntil > DateTime.Now
+                m_Caster is PlayerMobile
+                && ((PlayerMobile)m_Caster).PeacedUntil > DateTime.Now
             )
             {
                 m_Caster.SendLocalizedMessage(1072060); // You cannot cast a spell while calmed.

@@ -10,7 +10,7 @@ namespace Server.Items
     public class GuildCraftingProcess
     {
         private int BaseCost = 100;
-        private bool AttrCountAffectsCost = true;
+        private bool AttrCountAffectsCost = false;
         public int MaxAttrCount = 10;
 
         public Mobile Owner = null;

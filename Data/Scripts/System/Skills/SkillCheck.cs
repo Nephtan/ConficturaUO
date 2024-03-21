@@ -1,8 +1,8 @@
 using System;
 using Server;
+using Server.Factions;
 using Server.Misc;
 using Server.Mobiles;
-using Server.Factions;
 
 namespace Server.Misc
 {
@@ -74,18 +74,43 @@ namespace Server.Misc
 
         public static void Initialize()
         {
+            // Begin mod to enable XmlSpawner skill triggering
             Mobile.SkillCheckLocationHandler = new SkillCheckLocationHandler(
-                Mobile_SkillCheckLocation
-            );
-            Mobile.SkillCheckDirectLocationHandler = new SkillCheckDirectLocationHandler(
-                Mobile_SkillCheckDirectLocation
+                XmlSpawnerSkillCheck.Mobile_SkillCheckLocation
             );
 
-            Mobile.SkillCheckTargetHandler = new SkillCheckTargetHandler(Mobile_SkillCheckTarget);
-            Mobile.SkillCheckDirectTargetHandler = new SkillCheckDirectTargetHandler(
-                Mobile_SkillCheckDirectTarget
+            Mobile.SkillCheckDirectLocationHandler = new SkillCheckDirectLocationHandler(
+                XmlSpawnerSkillCheck.Mobile_SkillCheckDirectLocation
             );
+
+            Mobile.SkillCheckTargetHandler = new SkillCheckTargetHandler(
+                XmlSpawnerSkillCheck.Mobile_SkillCheckTarget
+            );
+
+            Mobile.SkillCheckDirectTargetHandler = new SkillCheckDirectTargetHandler(
+                XmlSpawnerSkillCheck.Mobile_SkillCheckDirectTarget
+            );
+            // End mod to enable XmlSpawner skill triggering
         }
+
+        //public static void Initialize()
+        //{
+        //    Mobile.SkillCheckLocationHandler = new SkillCheckLocationHandler(
+        //        Mobile_SkillCheckLocation
+        //    );
+
+        //    Mobile.SkillCheckDirectLocationHandler = new SkillCheckDirectLocationHandler(
+        //        Mobile_SkillCheckDirectLocation
+        //    );
+
+        //    Mobile.SkillCheckTargetHandler = new SkillCheckTargetHandler(
+        //        Mobile_SkillCheckTarget
+        //    );
+
+        //    Mobile.SkillCheckDirectTargetHandler = new SkillCheckDirectTargetHandler(
+        //        Mobile_SkillCheckDirectTarget
+        //    );
+        //}
 
         public static bool Mobile_SkillCheckLocation(
             Mobile from,
@@ -174,6 +199,8 @@ namespace Server.Misc
                     }
                 }
             }
+
+            gainer = gainer - Server.Misc.MyServerSettings.SkillGain();
 
             bool success = (chance >= Utility.RandomDouble());
             double gc = (double)(from.Skills.Cap - from.Skills.Total) / from.Skills.Cap;
@@ -340,6 +367,10 @@ namespace Server.Misc
                     return true;
                 }
                 else if (skillName == SkillName.Stealth)
+                {
+                    return true;
+                }
+                else if (skillName == SkillName.Begging)
                 {
                     return true;
                 }
@@ -570,6 +601,25 @@ namespace Server.Misc
                     return true;
                 }
             }
+            else if (pm.NpcGuild == NpcGuild.JestersGuild)
+            {
+                if (skillName == SkillName.Hiding)
+                {
+                    return true;
+                }
+                else if (skillName == SkillName.Begging)
+                {
+                    return true;
+                }
+                else if (skillName == SkillName.Psychology)
+                {
+                    return true;
+                }
+                else if (skillName == SkillName.Stealth)
+                {
+                    return true;
+                }
+            }
 
             return false;
         }
@@ -612,7 +662,7 @@ namespace Server.Misc
 
                 Skills skills = from.Skills;
 
-                if (from.Player && (skills.Total / skills.Cap) >= Utility.RandomDouble()) //( skills.Total >= skills.Cap )
+                if (from.Player && (skills.Total / skills.Cap) >= Utility.RandomDouble())
                 {
                     for (int i = 0; i < skills.Length; ++i)
                     {

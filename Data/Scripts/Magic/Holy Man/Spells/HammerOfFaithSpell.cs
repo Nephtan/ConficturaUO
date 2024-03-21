@@ -1,10 +1,10 @@
 using System;
 using System.Collections;
-using Server.Targeting;
-using Server.Network;
-using Server.Mobiles;
 using Server.Items;
+using Server.Mobiles;
+using Server.Network;
 using Server.Spells;
+using Server.Targeting;
 
 namespace Server.Spells.HolyMan
 {
@@ -23,7 +23,7 @@ namespace Server.Spells.HolyMan
         }
         public override int RequiredTithing
         {
-            get { return 100; }
+            get { return 15; }
         }
         public override double RequiredSkill
         {
@@ -130,6 +130,17 @@ namespace Server.Spells.HolyMan
                 m_Timer = new InternalTimer(this, m_Expire);
 
                 m_Timer.Start();
+
+                BuffInfo.RemoveBuff(owner, BuffIcon.HammerOfFaith);
+                BuffInfo.AddBuff(
+                    owner,
+                    new BuffInfo(
+                        BuffIcon.HammerOfFaith,
+                        1063532,
+                        TimeSpan.FromMinutes((int)time),
+                        owner
+                    )
+                );
             }
 
             public override void OnDelete()
@@ -151,6 +162,7 @@ namespace Server.Spells.HolyMan
             public void Remove()
             {
                 m_Owner.SendMessage("Your hammer slowly disappears.");
+                BuffInfo.RemoveBuff(m_Owner, BuffIcon.HammerOfFaith);
                 Delete();
             }
 

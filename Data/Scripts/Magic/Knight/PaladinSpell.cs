@@ -1,7 +1,7 @@
 using System;
 using Server;
-using Server.Spells;
 using Server.Network;
+using Server.Spells;
 
 namespace Server.Spells.Chivalry
 {

@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
-using Server.Network;
 using Server.Items;
-using Server.Targeting;
 using Server.Mobiles;
+using Server.Network;
+using Server.Targeting;
 
 namespace Server.Spells.Research
 {
@@ -35,7 +35,10 @@ namespace Server.Spells.Research
             Server.Misc.Research.SpellInformation(spellID, 2),
             Server.Misc.Research.CapsCast(Server.Misc.Research.SpellInformation(spellID, 4)),
             230,
-            9041
+            9041,
+            Reagent.FairyEgg,
+            Reagent.Brimstone,
+            Reagent.SulfurousAsh
         );
 
         public ResearchExplosion(Mobile caster, Item scroll)
@@ -60,7 +63,7 @@ namespace Server.Spells.Research
             else if (SpellHelper.CheckTown(p, Caster) && CheckSequence())
             {
                 SpellHelper.Turn(Caster, p);
-                Server.Misc.Research.ConsumeScroll(Caster, true, spellIndex, false);
+                Server.Misc.Research.ConsumeScroll(Caster, true, spellIndex, alwaysConsume, Scroll);
 
                 if (p is Item)
                     p = ((Item)p).GetWorldLocation();

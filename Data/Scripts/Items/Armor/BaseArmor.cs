@@ -1,13 +1,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Server.Network;
 using Server.Engines.Craft;
-using Server.Targeting;
 using Server.Factions;
+using Server.Network;
+using Server.Targeting;
+using ABT = Server.Items.ArmorBodyType;
 using AMA = Server.Items.ArmorMeditationAllowance;
 using AMT = Server.Items.ArmorMaterialType;
-using ABT = Server.Items.ArmorBodyType;
 
 namespace Server.Items
 {
@@ -1596,7 +1596,8 @@ namespace Server.Items
                     if (m_ArmorBase == RevertArmorBase)
                         m_ArmorBase = -1;
 
-                    /*m_BodyPos = (ArmorBodyType)*/reader.ReadInt();
+                    /*m_BodyPos = (ArmorBodyType)*/
+                    reader.ReadInt();
 
                     if (version < 4)
                     {
@@ -1873,7 +1874,15 @@ namespace Server.Items
                 }
             }
 
-            return base.CanEquip(from);
+            // XmlAttachment check for CanEquip
+            if (!Server.Engines.XmlSpawner2.XmlAttach.CheckCanEquip(this, from))
+            {
+                return false;
+            }
+            else
+            {
+                return base.CanEquip(from);
+            }
         }
 
         public override bool CheckPropertyConfliction(Mobile m)
@@ -1956,6 +1965,9 @@ namespace Server.Items
                     from.SendMessage("You can double click this to change the color.");
                 }
             }
+
+            // XmlAttachment check for OnEquip
+            Server.Engines.XmlSpawner2.XmlAttach.CheckOnEquip(this, from);
 
             return base.OnEquip(from);
         }
@@ -2094,6 +2106,9 @@ namespace Server.Items
                 ((Mobile)parent).Delta(MobileDelta.Armor); // Tell them armor rating has changed
                 m.CheckStatTimers();
             }
+
+            // XmlAttachment check for OnRemoved
+            Server.Engines.XmlSpawner2.XmlAttach.CheckOnRemoved(this, parent);
 
             base.OnRemoved(parent);
         }
@@ -2498,6 +2513,9 @@ namespace Server.Items
 
             if (m_HitPoints >= 0 && m_MaxHitPoints > 0)
                 list.Add(1060639, "{0}\t{1}", m_HitPoints, m_MaxHitPoints); // durability ~1_val~ / ~2_val~
+
+            // mod to display attachment properties
+            Server.Engines.XmlSpawner2.XmlAttach.AddAttachmentProperties(this, list);
         }
 
         public override void OnSingleClick(Mobile from)

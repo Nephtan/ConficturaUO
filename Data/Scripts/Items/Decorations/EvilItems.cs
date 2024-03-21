@@ -15,7 +15,7 @@ namespace Server.Items
             Weight = 5.0;
             Movable = true;
 
-            switch (Utility.RandomMinMax(0, 4))
+            switch (Utility.RandomMinMax(0, 6))
             {
                 case 0:
                     ItemID = 16382;
@@ -40,6 +40,16 @@ namespace Server.Items
                 case 4:
                     ItemID = Utility.RandomList(0xC17, 0xC18);
                     Name = "covered chair";
+                    Hue = 0;
+                    break;
+                case 5:
+                    ItemID = 0x6548;
+                    Name = "shrine of skulls";
+                    Hue = 0;
+                    break;
+                case 6:
+                    ItemID = 0x6587;
+                    Name = "skull in a jar";
                     Hue = 0;
                     break;
             }

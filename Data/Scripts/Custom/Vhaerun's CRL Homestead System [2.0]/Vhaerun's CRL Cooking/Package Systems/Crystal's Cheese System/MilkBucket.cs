@@ -15,12 +15,12 @@
 
 using System;
 using Server;
+using Server.Gumps;
 using Server.Items;
+using Server.Mobiles;
+using Server.Network;
 using Server.Prompts;
 using Server.Targeting;
-using Server.Network;
-using Server.Mobiles;
-using Server.Gumps;
 
 namespace Server.Items
 {
@@ -226,7 +226,9 @@ namespace Server.Items
                 }
             }
             else if (
-                (o is Bottle) && (m_varsaut.m_laitage > 0) && pack.ConsumeTotal(typeof(Bottle), 1)
+                (o is Bottle)
+                && (m_varsaut.m_laitage > 0)
+                && pack.ConsumeTotal(typeof(Bottle), 1)
             )
             {
                 if (m_varsaut.m_bestiole == 3)

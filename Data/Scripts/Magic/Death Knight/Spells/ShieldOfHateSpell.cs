@@ -1,7 +1,7 @@
 using System;
 using System.Collections;
-using Server.Network;
 using Server.Mobiles;
+using Server.Network;
 using Server.Targeting;
 
 namespace Server.Spells.DeathKnight
@@ -78,10 +78,9 @@ namespace Server.Spells.DeathKnight
                 timer = new ExpireTimer(m, mods, duration);
                 timer.Start();
 
-                BuffInfo.AddBuff(
-                    m,
-                    new BuffInfo(BuffIcon.ReactiveArmor, 1044120, 1044118, duration, m)
-                );
+                BuffInfo.RemoveBuff(m, BuffIcon.ShieldOfHate);
+                BuffInfo.AddBuff(m, new BuffInfo(BuffIcon.ShieldOfHate, 1063553, duration, m));
+
                 DrainSoulsInLantern(Caster, RequiredTithing);
 
                 m_Table[m] = timer;
@@ -131,7 +130,7 @@ namespace Server.Spells.DeathKnight
                     m_Mobile.RemoveResistanceMod(m_Mods[i]);
 
                 Stop();
-                BuffInfo.RemoveBuff(m_Mobile, BuffIcon.AttuneWeapon);
+                BuffInfo.RemoveBuff(m_Mobile, BuffIcon.ShieldOfHate);
                 m_Table.Remove(m_Mobile);
             }
 

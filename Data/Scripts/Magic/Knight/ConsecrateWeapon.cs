@@ -1,7 +1,7 @@
 using System;
 using System.Collections;
-using Server.Network;
 using Server.Items;
+using Server.Network;
 using Server.Targeting;
 
 namespace Server.Spells.Chivalry
@@ -113,6 +113,12 @@ namespace Server.Spells.Chivalry
                 double seconds = Caster.Skills[SkillName.Knightship].Value;
 
                 TimeSpan duration = TimeSpan.FromSeconds(seconds);
+
+                BuffInfo.RemoveBuff(Caster, BuffIcon.ConsecrateWeapon);
+                BuffInfo.AddBuff(
+                    Caster,
+                    new BuffInfo(BuffIcon.ConsecrateWeapon, 1063605, duration, Caster)
+                );
 
                 Timer t = (Timer)m_Table[weapon];
 

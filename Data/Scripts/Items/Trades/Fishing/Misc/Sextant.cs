@@ -1,6 +1,6 @@
 using System;
-using Server.Network;
 using Server.Misc;
+using Server.Network;
 using Server.Regions;
 
 namespace Server.Items
@@ -168,7 +168,11 @@ namespace Server.Items
                 startY = 8;
             }
             else if (
-                world == "the Land of Ambrosia" && x >= 5122 && y >= 3036 && x <= 6126 && y <= 4095
+                world == "the Land of Ambrosia"
+                && x >= 5122
+                && y >= 3036
+                && x <= 6126
+                && y <= 4095
             )
             {
                 xWidth = 1004;

@@ -1,9 +1,9 @@
 using System;
+using Server.Engines.Craft;
 using Server.Items;
+using Server.Mobiles;
 using Server.Network;
 using Server.Targeting;
-using Server.Engines.Craft;
-using Server.Mobiles;
 
 namespace Server.Engines.Craft
 {
@@ -1120,6 +1120,28 @@ namespace Server.Engines.Craft
                 typeof(OrderShield),
                 "Shields",
                 "order shield",
+                85.0,
+                135.0,
+                typeof(IronIngot),
+                1044036,
+                25,
+                1044037
+            );
+            AddCraft(
+                typeof(SunShield),
+                "Shields",
+                "sun shield",
+                85.0,
+                135.0,
+                typeof(IronIngot),
+                1044036,
+                25,
+                1044037
+            );
+            AddCraft(
+                typeof(VirtueShield),
+                "Shields",
+                "virtue shield",
                 85.0,
                 135.0,
                 typeof(IronIngot),

@@ -1,15 +1,15 @@
 using System;
-using Server;
-using Server.Network;
-using Server.Mobiles;
-using Server.Items;
-using Server.Spells;
-using System.Collections.Generic;
-using Server.Misc;
 using System.Collections;
-using System.Text;
+using System.Collections.Generic;
 using System.IO;
+using System.Text;
+using Server;
+using Server.Items;
+using Server.Misc;
+using Server.Mobiles;
+using Server.Network;
 using Server.Regions;
+using Server.Spells;
 using Server.Targeting;
 
 namespace Server.Misc
@@ -765,6 +765,7 @@ namespace Server.Misc
                         || (from is RubyWyrm)
                         || (from is SpinelWyrm)
                         || (from is Wyrms)
+                        || (from is Wyrm)
                         || (from is QuartzWyrm)
                         || (from is WhiteWyrm)
                     )
@@ -931,6 +932,7 @@ namespace Server.Misc
                         || (from is BlueDragon)
                         || (from is SlasherOfVoid)
                         || (from is Dragon)
+                        || (from is Wyrm)
                         || (from is Dragons && from.Body == 59)
                         || (from is RidingDragon && from.Body == 59)
                         || (from is Wyrms && from.Body == 12)

@@ -1,9 +1,9 @@
 using System;
 using Server;
-using Server.Items;
 using Server.Guilds;
-using Server.Mobiles;
 using Server.Gumps;
+using Server.Items;
+using Server.Mobiles;
 using Server.Network;
 
 namespace Server.Misc
@@ -75,7 +75,7 @@ namespace Server.Misc
                                         else if (
                                             (m is BaseVendor)
                                             && (cont.ConsumeTotal(typeof(Gold), 1))
-                                        ) // Line 72
+                                        )
                                         {
                                             Gold m_Gold = (Gold)
                                                 m.Backpack.FindItemByType(typeof(Gold));

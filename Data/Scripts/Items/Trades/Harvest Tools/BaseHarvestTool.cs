@@ -1,10 +1,10 @@
 using System;
 using System.Collections.Generic;
-using Server.Mobiles;
-using Server.Network;
+using Server.ContextMenus;
 using Server.Engines.Craft;
 using Server.Engines.Harvest;
-using Server.ContextMenus;
+using Server.Mobiles;
+using Server.Network;
 
 namespace Server.Items
 {
@@ -189,7 +189,8 @@ namespace Server.Items
                         m_Mobile.SendLocalizedMessage(1054023); // You are already set to mine both ore and stone!
                     }
                     else if (
-                        !m_Mobile.StoneMining || m_Mobile.Skills[SkillName.Mining].Base < 100.0
+                        !m_Mobile.StoneMining
+                        || m_Mobile.Skills[SkillName.Mining].Base < 100.0
                     )
                     {
                         m_Mobile.SendLocalizedMessage(1054024); // You have not learned how to mine stone or you do not have enough skill!

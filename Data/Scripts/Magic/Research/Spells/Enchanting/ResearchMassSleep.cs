@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
-using Server.Network;
 using Server.Items;
-using Server.Targeting;
 using Server.Mobiles;
+using Server.Network;
+using Server.Targeting;
 
 namespace Server.Spells.Research
 {
@@ -12,6 +12,10 @@ namespace Server.Spells.Research
         public override int spellIndex
         {
             get { return 59; }
+        }
+        public override bool alwaysConsume
+        {
+            get { return bool.Parse(Server.Misc.Research.SpellInformation(spellIndex, 14)); }
         }
         public int CirclePower = 8;
         public static int spellID = 59;
@@ -35,7 +39,11 @@ namespace Server.Spells.Research
             Server.Misc.Research.SpellInformation(spellID, 2),
             Server.Misc.Research.CapsCast(Server.Misc.Research.SpellInformation(spellID, 4)),
             233,
-            9042
+            9042,
+            Reagent.FairyEgg,
+            Reagent.MandrakeRoot,
+            Reagent.EnchantedSeaweed,
+            Reagent.LichDust
         );
 
         public ResearchMassSleep(Mobile caster, Item scroll)
@@ -127,11 +135,20 @@ namespace Server.Spells.Research
 
                         m.Paralyze(duration);
 
+                        BuffInfo.RemoveBuff(m, BuffIcon.MassSleep);
+                        BuffInfo.AddBuff(m, new BuffInfo(BuffIcon.MassSleep, 1063650, duration, m));
+
                         new SleepyTimer(m, duration, Caster).Start();
 
                         HarmfulSpell(m);
                     }
-                    Server.Misc.Research.ConsumeScroll(Caster, true, spellIndex, true);
+                    Server.Misc.Research.ConsumeScroll(
+                        Caster,
+                        true,
+                        spellIndex,
+                        alwaysConsume,
+                        Scroll
+                    );
                 }
             }
 
