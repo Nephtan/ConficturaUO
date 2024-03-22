@@ -192,7 +192,7 @@ namespace Server.Mobiles
         public class RewardsGump : Gump
         {
             public RewardsGump(Mobile from, int page)
-                : base(352, 303)
+                : base(0, 0)
             {
                 int rule = 0;
                 this.Closable = true;
@@ -200,42 +200,43 @@ namespace Server.Mobiles
                 this.Dragable = true;
                 this.Resizable = false;
                 this.AddPage(0);
-                this.AddBackground(0, 0, 360, 290, 9380);
-                this.AddButton(262, 240, 0xF7, 0xF8, page + 100, GumpButtonType.Reply, 0); // okay button
+                this.AddBackground(0, 0, 389, 318, 9380);
+
+                this.AddButton(278, 244, 247, 248, page + 100, GumpButtonType.Reply, 0); // okay button
 
                 int prev = pageShow(from, page, false);
                 int next = pageShow(from, page, true);
 
                 if (prev != 30)
-                    AddButton(261, 215, 4014, 4014, prev, GumpButtonType.Reply, 0); // prev is always 20 when it's the last card
+                    AddButton(278, 220, 4014, 4014, prev, GumpButtonType.Reply, 0); // prev is always 20 when it's the last card
                 if (next != 30)
-                    AddButton(295, 215, 4005, 4005, next, GumpButtonType.Reply, 0); // next is always 20 when it's the last card
+                    AddButton(311, 220, 4005, 4005, next, GumpButtonType.Reply, 0); // next is always 20 when it's the last card
 
                 int count = from.Backpack.GetAmount(typeof(TailorGuildCoin));
                 string guildCoin = "Tailor Guild Coins = " + count.ToString();
-                this.AddItem(13, 230, 0xef2, 1155); // tailor guild coin
-                this.AddLabel(50, 230, 2498, guildCoin); // tailor guild coin
+                this.AddItem(34, 230, 0xef2, 1155); // tailor guild coin
+                this.AddLabel(77, 235, 2498, guildCoin); // tailor guild coin
 
                 ItemCheck itemCheck = GetValues(page);
-                this.AddItem(15, 20, itemCheck.itemID[0], itemCheck.itemHue[0]);
-                this.AddLabel(66, 31, 2498, itemCheck.itemString[0]); // item name
-                this.AddLabel(260 - itemCheck.priceStringOffset[0], 31, 2498, itemCheck.priceString[0]); // item price
-                this.AddRadio(306, 31, 210, 211, false, (int)Switches.radioButton1);
+                this.AddItem(34, 50, itemCheck.itemID[0], itemCheck.itemHue[0]);
+                this.AddLabel(78, 50, 2498, itemCheck.itemString[0]); // item name
+                this.AddLabel(272, 50, 2498, itemCheck.priceString[0]); // item price
+                this.AddRadio(320, 50, 210, 211, false, (int)Switches.radioButton1);
 
-                this.AddItem(15, 70, itemCheck.itemID[1], itemCheck.itemHue[1]);
-                this.AddLabel(66, 81, 2498, itemCheck.itemString[1]);
-                this.AddLabel(260 - itemCheck.priceStringOffset[1], 81, 2498, itemCheck.priceString[1]); // item price
-                this.AddRadio(306, 81, 210, 211, false, (int)Switches.radioButton2);
+                this.AddItem(34, 90, itemCheck.itemID[1], itemCheck.itemHue[1]);
+                this.AddLabel(78, 90, 2498, itemCheck.itemString[1]);
+                this.AddLabel(272, 90, 2498, itemCheck.priceString[1]); // item price
+                this.AddRadio(320, 90, 210, 211, false, (int)Switches.radioButton2);
 
-                this.AddItem(15, 120, itemCheck.itemID[2], itemCheck.itemHue[2]);
-                this.AddLabel(66, 131, 2498, itemCheck.itemString[2]);
-                this.AddLabel(260 - itemCheck.priceStringOffset[2], 131, 2498, itemCheck.priceString[2]); // item price
-                this.AddRadio(306, 131, 210, 211, false, (int)Switches.radioButton3);
+                this.AddItem(34, 130, itemCheck.itemID[2], itemCheck.itemHue[2]);
+                this.AddLabel(78, 130, 2498, itemCheck.itemString[2]);
+                this.AddLabel(272, 130, 2498, itemCheck.priceString[2]); // item price
+                this.AddRadio(320, 130, 210, 211, false, (int)Switches.radioButton3);
 
-                this.AddItem(15, 170, itemCheck.itemID[3], itemCheck.itemHue[3]);
-                this.AddLabel(66, 181, 2498, itemCheck.itemString[3]);
-                this.AddLabel(260 - itemCheck.priceStringOffset[3], 181, 2498, itemCheck.priceString[3]); // item price
-                this.AddRadio(306, 181, 210, 211, false, (int)Switches.radioButton4);
+                this.AddItem(34, 170, itemCheck.itemID[3], itemCheck.itemHue[3]);
+                this.AddLabel(78, 170, 2498, itemCheck.itemString[3]);
+                this.AddLabel(272, 170, 2498, itemCheck.priceString[3]); // item price
+                this.AddRadio(320, 170, 210, 211, false, (int)Switches.radioButton4);
             }
 
             public enum Switches
@@ -244,10 +245,6 @@ namespace Server.Mobiles
                 radioButton2,
                 radioButton3,
                 radioButton4,
-                radioButton5,
-                radioButton6,
-                radioButton7,
-                radioButton8,
             }
 
             public int pageShow(Mobile from, int page, bool forward)
@@ -262,7 +259,7 @@ namespace Server.Mobiles
                 }
                 else
                 {
-                    if (page <= 1) 
+                    if (page <= 1)
                     {
                         page = 30;
                     }
@@ -282,13 +279,13 @@ namespace Server.Mobiles
                     int cost = 0;
                     int itemSelected = 0;
 
-                    ItemCheck itemCheck = GetValues(info.ButtonID-100);
+                    ItemCheck itemCheck = GetValues(info.ButtonID - 100);
 
                     if (info.IsSwitched((int)Switches.radioButton1))
                     {
                         cost = int.Parse(itemCheck.priceString[0]);
                         itemSelected = 1;
-                    }                        
+                    }
                     if (info.IsSwitched((int)Switches.radioButton2))
                         from.SayTo(from, "I clicked on button 1 and switch 2");
                     if (info.IsSwitched((int)Switches.radioButton3))
