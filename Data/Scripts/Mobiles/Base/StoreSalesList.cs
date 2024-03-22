@@ -2783,21 +2783,18 @@ namespace Server.Mobiles
                 {
                     if (MyServerSettings.SoldResource())
                     {
-                        if (MyServerSettings.SoldResource())
+                        Add(typeof(BoltOfCloth), 50);
+                        Add(typeof(UncutCloth), 1);
+                    }
+                    else
+                    {
+                        if (MyServerSettings.BuyChance())
                         {
-                            Add(typeof(BoltOfCloth), 50);
                             Add(typeof(UncutCloth), 1);
                         }
-                        else
+                        if (MyServerSettings.BuyChance())
                         {
-                            if (MyServerSettings.BuyChance())
-                            {
-                                Add(typeof(UncutCloth), 1);
-                            }
-                            if (MyServerSettings.BuyChance())
-                            {
-                                Add(typeof(BoltOfCloth), 50);
-                            }
+                            Add(typeof(BoltOfCloth), 50);
                         }
                     }
                 }
@@ -26082,6 +26079,18 @@ namespace Server.Mobiles
                 {
                     Add(
                         new GenericBuyInfo(
+                            typeof(StandardBeggingStudyBook),
+                            7500,
+                            1,
+                            0x225A,
+                            0x1BA
+                        )
+                    );
+                }
+                if (MyServerSettings.SellChance())
+                {
+                    Add(
+                        new GenericBuyInfo(
                             typeof(MyCircusTentEastAddonDeed),
                             1000,
                             1,
@@ -27003,6 +27012,18 @@ namespace Server.Mobiles
                 {
                     Add(
                         new GenericBuyInfo(typeof(StandardHidingStudyBook), 7500, 1, 0x225A, 0x1BA)
+                    );
+                }
+                if (MyServerSettings.SellChance())
+                {
+                    Add(
+                        new GenericBuyInfo(
+                            typeof(StandardBeggingStudyBook),
+                            7500,
+                            1,
+                            0x225A,
+                            0x1BA
+                        )
                     );
                 }
                 if (MyServerSettings.SellChance())
@@ -32256,7 +32277,7 @@ namespace Server.Mobiles
                     Add(
                         new GenericBuyInfo(
                             typeof(LesserManaPotion),
-                            860,
+                            60,
                             Utility.Random(1, 25),
                             0x23BD,
                             0x48D
@@ -32268,7 +32289,7 @@ namespace Server.Mobiles
                     Add(
                         new GenericBuyInfo(
                             typeof(ManaPotion),
-                            890,
+                            90,
                             Utility.Random(1, 15),
                             0x180F,
                             0x48D
@@ -32280,7 +32301,7 @@ namespace Server.Mobiles
                     Add(
                         new GenericBuyInfo(
                             typeof(GreaterManaPotion),
-                            8120,
+                            120,
                             Utility.Random(1, 5),
                             0x2406,
                             0x48D

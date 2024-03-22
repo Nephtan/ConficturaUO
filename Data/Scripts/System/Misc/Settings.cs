@@ -1476,7 +1476,7 @@ namespace Server.Misc
 
         public static string ServerName()
         {
-            return "Confictura - Test";
+            return "Confictura: Legend & Adventure";
         }
 
         public static string Version()

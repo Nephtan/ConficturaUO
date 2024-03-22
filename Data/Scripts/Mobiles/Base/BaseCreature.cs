@@ -8385,6 +8385,20 @@ namespace Server.Mobiles
         {
             base.AggressiveAction(aggressor, criminal);
 
+            if (this.Controlled)
+            {
+                if (aggressor is BaseCreature && ((BaseCreature)aggressor).Controlled)
+                {
+                    Mobile ourOwner = this.ControlMaster;
+                    Mobile theirOwner = ((BaseCreature)aggressor).ControlMaster;
+
+                    if (ourOwner == theirOwner)
+                    {
+                        return;
+                    }
+                }
+            }
+
             if (this.ControlMaster != null)
                 if (NotorietyHandlers.CheckAggressor(this.ControlMaster.Aggressors, aggressor))
                     aggressor.Aggressors.Add(AggressorInfo.Create(this, aggressor, true));

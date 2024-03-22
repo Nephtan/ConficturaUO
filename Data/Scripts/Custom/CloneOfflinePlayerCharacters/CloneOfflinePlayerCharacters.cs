@@ -356,7 +356,8 @@ namespace Confictura.Custom
             Server.Items.Container targetContainer
         )
         {
-            foreach (Item item in sourceContainer.Items)
+            Item[] itemsCopy = sourceContainer.Items.ToArray();
+            foreach (Item item in itemsCopy)
             {
                 Item clonedItem = CloneItem(item);
                 if (clonedItem != null)
@@ -758,6 +759,13 @@ namespace Confictura.Custom
                     // Is the item the payment in gold
                     if (item is Gold)
                     {
+                        // Ensure the original player is valid and has a bank
+                        BankBox originalPlayerBank = Original.BankBox;
+                        if (originalPlayerBank == null)
+                        {
+                            return false;
+                        }
+
                         // Is the payment in gold sufficient
                         if (item.Amount >= m_Pay)
                         {
@@ -782,6 +790,7 @@ namespace Confictura.Custom
                                 );
                                 m_HireTable[from] = this;
                                 m_HoldGold += item.Amount;
+                                originalPlayerBank.DropItem(item);
                                 m_PayTimer = new PayTimer(this);
                                 m_PayTimer.Start();
                                 return true;
@@ -1108,7 +1117,7 @@ namespace Confictura.Custom
         private CharacterClone m_Hire;
 
         public HireEntry(Mobile from, CharacterClone hire)
-            : base(6120, 3)
+            : base(6120, 12)
         {
             m_Hire = hire;
             m_Mobile = from;
