@@ -12,35 +12,31 @@ using Server.Targeting;
 
 namespace Server.Mobiles
 {
-    public class TailorRewardVendor : BasePerson
+    public class TailorRewardVendor : BaseVendor
     {
-        public override bool IsInvulnerable
+        private List<SBInfo> m_SBInfos = new List<SBInfo>();
+        protected override List<SBInfo> SBInfos
         {
-            get { return true; }
+            get { return m_SBInfos; }
+        }
+
+        public override NpcGuild NpcGuild
+        {
+            get { return NpcGuild.TailorsGuild; }
+        }
+
+        public override void InitSBInfo()
+        {
         }
 
         [Constructable]
         public TailorRewardVendor()
-            : base()
+            : base("Guild Reward Vendor")
         {
-            Name = NameList.RandomName("female");
-            Title = "Guild Reward Vendor";
-
-            FancyDress dress = new FancyDress(0xAFE);
-            dress.ItemID = 0x1F00;
-            AddItem(dress);
-            AddItem(new Sandals());
-
-            Utility.AssignRandomHair(this);
-            HairHue = 0x92E;
-            HairItemID = 8252;
-            FacialHairItemID = 0;
-            SetSkill(SkillName.Tailoring, 64.0, 100.0);
         }
 
         public override void GetContextMenuEntries(Mobile from, List<ContextMenuEntry> list)
         {
-            base.GetContextMenuEntries(from, list);
             list.Add(new RewardEntry(from, this));
         }
 
@@ -68,12 +64,134 @@ namespace Server.Mobiles
         public static void BuyRewards(Mobile player, Mobile rewardVendor)
         {
             player.CloseGump(typeof(RewardsGump));
-            player.SendGump(new RewardsGump(player));
+            player.SendGump(new RewardsGump(player, 1));
+        }
+
+        public class ItemCheck
+        {
+            public int[] itemID { get; set; }
+            public int[] itemHue { get; set; }
+            public string[] itemString { get; set; }
+            public string[] priceString { get; set; }
+            public int[] priceStringOffset { get; set; }
+        }
+
+        public static ItemCheck GetValues(int page)
+        {
+            if (page == 1)
+            {
+                return new ItemCheck
+                {
+                    itemID = new int[] { 0x4C81, 0x14F0, 0x14F0, 0x14F0 },
+                    itemHue = new int[] { 0xB19, 0x481, 0x481, 0x481 },
+                    itemString = new string[] { "Serpent Leather Runic Kit", "Tailoring Power Scroll", "Tailoring Power Scroll", "Tailoring Power Scroll" },
+                    priceString = new string[] { "991", "91", "1", "91" },
+                    priceStringOffset = new int[] { 18, 10, 2, 10 } // 18 for 3 numbers, 10 for 2, 2 for 1
+                };
+            }
+            else if (page == 2)
+            {
+                return new ItemCheck
+                {
+                    itemID = new int[] { 0x14F0, 0x14F0, 0x14F0, 0x14F0 },
+                    itemHue = new int[] { 0x481, 0x481, 0x481, 0x481 },
+                    itemString = new string[] { "Tailoring Power Scroll", "Tailoring Power Scroll", "Tailoring Power Scroll", "Tailoring Power Scroll" },
+                    priceString = new string[] { "919", "19", "9", "91" },
+                    priceStringOffset = new int[] { 18, 10, 2, 10 } // 18 for 3 numbers, 10 for 2, 2 for 1
+                };
+            }
+            else if (page == 3)
+            {
+                return new ItemCheck
+                {
+                    itemID = new int[] { 0x4C81, 0x14F0, 0x4C81, 0x14F0 },
+                    itemHue = new int[] { 0xB19, 0x481, 0xB19, 0x481 },
+                    itemString = new string[] { "Serpent Leather Runic Kit", "Tailoring Power Scroll", "Serpent Leather Runic Kit", "Tailoring Power Scroll" },
+                    priceString = new string[] { "199", "99", "9", "99" },
+                    priceStringOffset = new int[] { 18, 10, 2, 10 } // 18 for 3 numbers, 10 for 2, 2 for 1
+                };
+            }
+            else if (page == 4)
+            {
+                return new ItemCheck
+                {
+                    itemID = new int[] { 0x4C81, 0x14F0, 0x4C81, 0x14F0 },
+                    itemHue = new int[] { 0xB19, 0x481, 0xB19, 0x481 },
+                    itemString = new string[] { "Serpent Leather Runic Kit", "Tailoring Power Scroll", "Serpent Leather Runic Kit", "Tailoring Power Scroll" },
+                    priceString = new string[] { "589", "456", "732", "880" },
+                    priceStringOffset = new int[] { 18, 18, 18, 18 }
+                };
+            }
+            else if (page == 5)
+            {
+                return new ItemCheck
+                {
+                    itemID = new int[] { 0x4C81, 0x14F0, 0x4C81, 0x14F0 },
+                    itemHue = new int[] { 0xB19, 0x481, 0xB19, 0x481 },
+                    itemString = new string[] { "Serpent Leather Runic Kit", "Tailoring Power Scroll", "Serpent Leather Runic Kit", "Tailoring Power Scroll" },
+                    priceString = new string[] { "155", "515", "551", "55" },
+                    priceStringOffset = new int[] { 18, 18, 18, 10 }
+                };
+            }
+            else if (page == 6)
+            {
+                return new ItemCheck
+                {
+                    itemID = new int[] { 0x4C81, 0x14F0, 0x4C81, 0x14F0 },
+                    itemHue = new int[] { 0xB19, 0x481, 0xB19, 0x481 },
+                    itemString = new string[] { "Serpent Leather Runic Kit", "Tailoring Power Scroll", "Serpent Leather Runic Kit", "Tailoring Power Scroll" },
+                    priceString = new string[] { "444", "44", "4", "44" },
+                    priceStringOffset = new int[] { 18, 10, 2, 10 }
+                };
+            }
+            else if (page == 7)
+            {
+                return new ItemCheck
+                {
+                    itemID = new int[] { 0x4C81, 0x14F0, 0x4C81, 0x14F0 },
+                    itemHue = new int[] { 0xB19, 0x481, 0xB19, 0x481 },
+                    itemString = new string[] { "Serpent Leather Runic Kit", "Tailoring Power Scroll", "Serpent Leather Runic Kit", "Tailoring Power Scroll" },
+                    priceString = new string[] { "333", "33", "3", "33" },
+                    priceStringOffset = new int[] { 18, 10, 2, 10 }
+                };
+            }
+            else if (page == 8)
+            {
+                return new ItemCheck
+                {
+                    itemID = new int[] { 0x4C81, 0x14F0, 0x4C81, 0x14F0 },
+                    itemHue = new int[] { 0xB19, 0x481, 0xB19, 0x481 },
+                    itemString = new string[] { "Serpent Leather Runic Kit", "Tailoring Power Scroll", "Serpent Leather Runic Kit", "Tailoring Power Scroll" },
+                    priceString = new string[] { "222", "22", "2", "22" },
+                    priceStringOffset = new int[] { 18, 10, 2, 10 }
+                };
+            }
+            else if (page == 9)
+            {
+                return new ItemCheck
+                {
+                    itemID = new int[] { 0x4C81, 0x14F0, 0x4C81, 0x14F0 },
+                    itemHue = new int[] { 0xB19, 0x481, 0xB19, 0x481 },
+                    itemString = new string[] { "Serpent Leather Runic Kit", "Tailoring Power Scroll", "Serpent Leather Runic Kit", "Tailoring Power Scroll" },
+                    priceString = new string[] { "111", "11", "1", "11" },
+                    priceStringOffset = new int[] { 18, 10, 2, 10 }
+                };
+            }
+
+            return new ItemCheck
+            {
+                itemID = new int[] { 0, 0, 0, 0 },
+                itemHue = new int[] { 0, 0, 0, 0 },
+                itemString = new string[] { "item error", "item error", "item error", "item error" },
+                priceString = new string[] { "price error", "price error", "price error", "price error" },
+                priceStringOffset = new int[] { 0, 0, 0, 0 }
+            };
+
         }
 
         public class RewardsGump : Gump
         {
-            public RewardsGump(Mobile from)
+            public RewardsGump(Mobile from, int page)
                 : base(352, 303)
             {
                 int rule = 0;
@@ -82,49 +200,42 @@ namespace Server.Mobiles
                 this.Dragable = true;
                 this.Resizable = false;
                 this.AddPage(0);
-                this.AddBackground(0, 0, 352, 303, 9200);
-                this.AddButton(259, 269, 0xF7, 0xF8, 11, GumpButtonType.Reply, 0);
+                this.AddBackground(0, 0, 360, 290, 9380);
+                this.AddButton(262, 240, 0xF7, 0xF8, page + 100, GumpButtonType.Reply, 0); // okay button
 
+                int prev = pageShow(from, page, false);
+                int next = pageShow(from, page, true);
+
+                if (prev != 30)
+                    AddButton(261, 215, 4014, 4014, prev, GumpButtonType.Reply, 0); // prev is always 20 when it's the last card
+                if (next != 30)
+                    AddButton(295, 215, 4005, 4005, next, GumpButtonType.Reply, 0); // next is always 20 when it's the last card
 
                 int count = from.Backpack.GetAmount(typeof(TailorGuildCoin));
+                string guildCoin = "Tailor Guild Coins = " + count.ToString();
+                this.AddItem(13, 230, 0xef2, 1155); // tailor guild coin
+                this.AddLabel(50, 230, 2498, guildCoin); // tailor guild coin
 
-                string temp = "Tailor Guild Coins = " + count.ToString();
+                ItemCheck itemCheck = GetValues(page);
+                this.AddItem(15, 20, itemCheck.itemID[0], itemCheck.itemHue[0]);
+                this.AddLabel(66, 31, 2498, itemCheck.itemString[0]); // item name
+                this.AddLabel(260 - itemCheck.priceStringOffset[0], 31, 2498, itemCheck.priceString[0]); // item price
+                this.AddRadio(306, 31, 210, 211, false, (int)Switches.radioButton1);
 
-                this.AddItem(13, 251, 0xef0, 1155);
-                this.AddLabel(73, 269, 2498, temp);
+                this.AddItem(15, 70, itemCheck.itemID[1], itemCheck.itemHue[1]);
+                this.AddLabel(66, 81, 2498, itemCheck.itemString[1]);
+                this.AddLabel(260 - itemCheck.priceStringOffset[1], 81, 2498, itemCheck.priceString[1]); // item price
+                this.AddRadio(306, 81, 210, 211, false, (int)Switches.radioButton2);
 
-                this.AddItem(15, 20, 0x4C81, 2841);
-                this.AddLabel(66, 31, 2498, @"Barbed Runic Sewing Kit - 750");
-                this.AddRadio(145, 31, 209, 208, rule == (int)Switches.radioButton1, (int)Switches.radioButton1);
+                this.AddItem(15, 120, itemCheck.itemID[2], itemCheck.itemHue[2]);
+                this.AddLabel(66, 131, 2498, itemCheck.itemString[2]);
+                this.AddLabel(260 - itemCheck.priceStringOffset[2], 131, 2498, itemCheck.priceString[2]); // item price
+                this.AddRadio(306, 131, 210, 211, false, (int)Switches.radioButton3);
 
-                this.AddImage(15, 70, 0x2);
-                this.AddLabel(66, 81, 2498, @"placeholder");
-                this.AddRadio(145, 81, 209, 208, rule == (int)Switches.radioButton2, (int)Switches.radioButton2);
-
-                this.AddImage(15, 120, 3);
-                this.AddLabel(66, 131, 2498, @"placeholder");
-                this.AddRadio(145, 131, 209, 208, rule == (int)Switches.radioButton3, (int)Switches.radioButton3);
-
-                this.AddImage(15, 170, 4);
-                this.AddLabel(66, 181, 2498, @"placeholder");
-                this.AddRadio(145, 181, 209, 208, rule == (int)Switches.radioButton4, (int)Switches.radioButton4);
-
-                //this.AddImage(186, 20, 5);
-                //this.AddLabel(237, 31, 1150, @"item name 5");
-                //this.AddRadio(316, 31, 209, 208, rule == (int)Switches.radioButton5, (int)Switches.radioButton5);
-
-                //this.AddImage(186, 70, 6);
-                //this.AddLabel(237, 81, 1150, @"item name 6");
-                //this.AddRadio(316, 81, 209, 208, rule == (int)Switches.radioButton6, (int)Switches.radioButton6);
-
-                //this.AddImage(186, 120, 7);
-                //this.AddLabel(237, 131, 1150, @"item name 7");
-                //this.AddRadio(316, 131, 209, 208, rule == (int)Switches.radioButton7, (int)Switches.radioButton7);
-
-                //this.AddImage(186, 170, 8);
-                //this.AddLabel(237, 181, 1150, @"item name 8");
-                //this.AddRadio(316, 181, 209, 208, rule == (int)Switches.radioButton8, (int)Switches.radioButton8);
-
+                this.AddItem(15, 170, itemCheck.itemID[3], itemCheck.itemHue[3]);
+                this.AddLabel(66, 181, 2498, itemCheck.itemString[3]);
+                this.AddLabel(260 - itemCheck.priceStringOffset[3], 181, 2498, itemCheck.priceString[3]); // item price
+                this.AddRadio(306, 181, 210, 211, false, (int)Switches.radioButton4);
             }
 
             public enum Switches
@@ -139,21 +250,44 @@ namespace Server.Mobiles
                 radioButton8,
             }
 
+            public int pageShow(Mobile from, int page, bool forward)
+            {
+                if (forward)
+                {
+                    if (page >= 9)
+                    {
+                        page = 30;
+                    }
+                    else page++;
+                }
+                else
+                {
+                    if (page <= 1) 
+                    {
+                        page = 30;
+                    }
+                    else page--;
+                }
+                return page;
+            }
+
             public override void OnResponse(NetState state, RelayInfo info)
             {
                 Mobile from = state.Mobile;
+                from.CloseGump(typeof(RewardsGump));
                 int count = from.Backpack.GetAmount(typeof(TailorGuildCoin));
 
-                if (info.ButtonID == 11)
+                if (info.ButtonID >= 100)
                 {
                     int cost = 0;
                     int itemSelected = 0;
 
+                    ItemCheck itemCheck = GetValues(info.ButtonID-100);
+
                     if (info.IsSwitched((int)Switches.radioButton1))
                     {
-                        cost = 750;
+                        cost = int.Parse(itemCheck.priceString[0]);
                         itemSelected = 1;
-                        from.SayTo(from, "I clicked on button 1 and switch 1");
                     }                        
                     if (info.IsSwitched((int)Switches.radioButton2))
                         from.SayTo(from, "I clicked on button 1 and switch 2");
@@ -161,14 +295,6 @@ namespace Server.Mobiles
                         from.SayTo(from, "I clicked on button 1 and switch 3");
                     if (info.IsSwitched((int)Switches.radioButton4))
                         from.SayTo(from, "I clicked on button 1 and switch 4");
-                    if (info.IsSwitched((int)Switches.radioButton5))
-                        from.SayTo(from, "I clicked on button 1 and switch 5");
-                    if (info.IsSwitched((int)Switches.radioButton6))
-                        from.SayTo(from, "I clicked on button 1 and switch 6");
-                    if (info.IsSwitched((int)Switches.radioButton7))
-                        from.SayTo(from, "I clicked on button 1 and switch 7");
-                    if (info.IsSwitched((int)Switches.radioButton8))
-                        from.SayTo(from, "I clicked on button 1 and switch 8");
 
                     if (count >= cost)
                     {
@@ -178,6 +304,14 @@ namespace Server.Mobiles
                             from.Backpack.ConsumeTotal(typeof(TailorGuildCoin), cost);
                             from.AddToBackpack(new RunicSewingKit(CraftResource.RegularLeather + 3, 50));
                         }
+                    }
+                }
+                else
+                {
+                    int page = info.ButtonID;
+                    if (page != 0)
+                    {
+                        from.SendGump(new RewardsGump(from, page));
                     }
                 }
             }
