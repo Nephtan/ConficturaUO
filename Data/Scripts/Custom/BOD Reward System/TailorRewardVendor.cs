@@ -73,7 +73,6 @@ namespace Server.Mobiles
             public int[] itemHue { get; set; }
             public string[] itemString { get; set; }
             public string[] priceString { get; set; }
-            public int[] priceStringOffset { get; set; }
         }
 
         public static ItemCheck GetValues(int page)
@@ -82,99 +81,20 @@ namespace Server.Mobiles
             {
                 return new ItemCheck
                 {
-                    itemID = new int[] { 0x4C81, 0x14F0, 0x14F0, 0x14F0 },
-                    itemHue = new int[] { 0xB19, 0x481, 0x481, 0x481 },
-                    itemString = new string[] { "Serpent Leather Runic Kit", "Tailoring Power Scroll", "Tailoring Power Scroll", "Tailoring Power Scroll" },
-                    priceString = new string[] { "991", "91", "1", "91" },
-                    priceStringOffset = new int[] { 18, 10, 2, 10 } // 18 for 3 numbers, 10 for 2, 2 for 1
+                    itemID = new int[] { 0x170D, 0x175D, 0x14F0, 0x14F0 },
+                    itemHue = new int[] { 0, 0, 0, 0 },
+                    itemString = new string[] {  "Sandals", "Special Colored Cloth", "Stretched Hide", "Tapestry" },
+                    priceString = new string[] { "5", "10", "10", "10" },
                 };
             }
             else if (page == 2)
             {
                 return new ItemCheck
                 {
-                    itemID = new int[] { 0x14F0, 0x14F0, 0x14F0, 0x14F0 },
-                    itemHue = new int[] { 0x481, 0x481, 0x481, 0x481 },
-                    itemString = new string[] { "Tailoring Power Scroll", "Tailoring Power Scroll", "Tailoring Power Scroll", "Tailoring Power Scroll" },
-                    priceString = new string[] { "919", "19", "9", "91" },
-                    priceStringOffset = new int[] { 18, 10, 2, 10 } // 18 for 3 numbers, 10 for 2, 2 for 1
-                };
-            }
-            else if (page == 3)
-            {
-                return new ItemCheck
-                {
-                    itemID = new int[] { 0x4C81, 0x14F0, 0x4C81, 0x14F0 },
-                    itemHue = new int[] { 0xB19, 0x481, 0xB19, 0x481 },
-                    itemString = new string[] { "Serpent Leather Runic Kit", "Tailoring Power Scroll", "Serpent Leather Runic Kit", "Tailoring Power Scroll" },
-                    priceString = new string[] { "199", "99", "9", "99" },
-                    priceStringOffset = new int[] { 18, 10, 2, 10 } // 18 for 3 numbers, 10 for 2, 2 for 1
-                };
-            }
-            else if (page == 4)
-            {
-                return new ItemCheck
-                {
-                    itemID = new int[] { 0x4C81, 0x14F0, 0x4C81, 0x14F0 },
-                    itemHue = new int[] { 0xB19, 0x481, 0xB19, 0x481 },
-                    itemString = new string[] { "Serpent Leather Runic Kit", "Tailoring Power Scroll", "Serpent Leather Runic Kit", "Tailoring Power Scroll" },
-                    priceString = new string[] { "589", "456", "732", "880" },
-                    priceStringOffset = new int[] { 18, 18, 18, 18 }
-                };
-            }
-            else if (page == 5)
-            {
-                return new ItemCheck
-                {
-                    itemID = new int[] { 0x4C81, 0x14F0, 0x4C81, 0x14F0 },
-                    itemHue = new int[] { 0xB19, 0x481, 0xB19, 0x481 },
-                    itemString = new string[] { "Serpent Leather Runic Kit", "Tailoring Power Scroll", "Serpent Leather Runic Kit", "Tailoring Power Scroll" },
-                    priceString = new string[] { "155", "515", "551", "55" },
-                    priceStringOffset = new int[] { 18, 18, 18, 10 }
-                };
-            }
-            else if (page == 6)
-            {
-                return new ItemCheck
-                {
-                    itemID = new int[] { 0x4C81, 0x14F0, 0x4C81, 0x14F0 },
-                    itemHue = new int[] { 0xB19, 0x481, 0xB19, 0x481 },
-                    itemString = new string[] { "Serpent Leather Runic Kit", "Tailoring Power Scroll", "Serpent Leather Runic Kit", "Tailoring Power Scroll" },
-                    priceString = new string[] { "444", "44", "4", "44" },
-                    priceStringOffset = new int[] { 18, 10, 2, 10 }
-                };
-            }
-            else if (page == 7)
-            {
-                return new ItemCheck
-                {
-                    itemID = new int[] { 0x4C81, 0x14F0, 0x4C81, 0x14F0 },
-                    itemHue = new int[] { 0xB19, 0x481, 0xB19, 0x481 },
-                    itemString = new string[] { "Serpent Leather Runic Kit", "Tailoring Power Scroll", "Serpent Leather Runic Kit", "Tailoring Power Scroll" },
-                    priceString = new string[] { "333", "33", "3", "33" },
-                    priceStringOffset = new int[] { 18, 10, 2, 10 }
-                };
-            }
-            else if (page == 8)
-            {
-                return new ItemCheck
-                {
-                    itemID = new int[] { 0x4C81, 0x14F0, 0x4C81, 0x14F0 },
-                    itemHue = new int[] { 0xB19, 0x481, 0xB19, 0x481 },
-                    itemString = new string[] { "Serpent Leather Runic Kit", "Tailoring Power Scroll", "Serpent Leather Runic Kit", "Tailoring Power Scroll" },
-                    priceString = new string[] { "222", "22", "2", "22" },
-                    priceStringOffset = new int[] { 18, 10, 2, 10 }
-                };
-            }
-            else if (page == 9)
-            {
-                return new ItemCheck
-                {
-                    itemID = new int[] { 0x4C81, 0x14F0, 0x4C81, 0x14F0 },
-                    itemHue = new int[] { 0xB19, 0x481, 0xB19, 0x481 },
-                    itemString = new string[] { "Serpent Leather Runic Kit", "Tailoring Power Scroll", "Serpent Leather Runic Kit", "Tailoring Power Scroll" },
-                    priceString = new string[] { "111", "11", "1", "11" },
-                    priceStringOffset = new int[] { 18, 10, 2, 10 }
+                    itemID = new int[] { 0x14F0, 0x4C81, 0x4C81, 0x4C81 },
+                    itemHue = new int[] { 0x000, 0x0ABB, 0x0AB0, 0x0B19 },
+                    itemString = new string[] { "Clothing Blees Deed", "Deep Sea Serpent Runic Kit", "Lizard Runic Kit", "Serpent Runic Kit" },
+                    priceString = new string[] { "300", "400", "600", "900" },
                 };
             }
 
@@ -184,9 +104,159 @@ namespace Server.Mobiles
                 itemHue = new int[] { 0, 0, 0, 0 },
                 itemString = new string[] { "item error", "item error", "item error", "item error" },
                 priceString = new string[] { "price error", "price error", "price error", "price error" },
-                priceStringOffset = new int[] { 0, 0, 0, 0 }
             };
+        }
 
+        private static Item ChooseAndCreateReward(int page, int RadioButtonSeleced)
+        {
+            if (page == 1)
+            {
+                if (RadioButtonSeleced == 0)
+                {
+                    return CreateSandals();
+                }
+                else if (RadioButtonSeleced == 1)
+                {
+                    return CreateCloth();
+                }
+                else if (RadioButtonSeleced == 2)
+                {
+                    return CreateStretchedHide();
+                }
+                else if (RadioButtonSeleced == 3)
+                {
+                    return CreateTapestry();
+                }
+            }
+            if (page == 2)
+            {
+                if (RadioButtonSeleced == 0)
+                {
+                    return CreateCBD();
+                }
+                else if (RadioButtonSeleced == 1)
+                {
+                    return CreateRunicKit(1);
+                }
+                else if (RadioButtonSeleced == 2)
+                {
+                    return CreateRunicKit(2);
+                }
+                else if (RadioButtonSeleced == 3)
+                {
+                    return CreateRunicKit(3);
+                }
+            }
+
+            return CreateCloth();
+        }
+
+        private static int[][] m_ClothHues = new int[][]
+        {
+            new int[] { 0x483, 0x48C, 0x488, 0x48A },
+            new int[] { 0x495, 0x48B, 0x486, 0x485 },
+            new int[] { 0x48D, 0x490, 0x48E, 0x491 },
+            new int[] { 0x48F, 0x494, 0x484, 0x497 },
+            new int[] { 0x489, 0x47F, 0x482, 0x47E }
+        };
+
+        private static Item CreateCloth()
+        {
+            int type = Utility.RandomMinMax(0, 4);
+            if (type >= 0 && type < m_ClothHues.Length)
+            {
+                UncutCloth cloth = new UncutCloth(100);
+                cloth.Hue = m_ClothHues[type][Utility.Random(m_ClothHues[type].Length)];
+                return cloth;
+            }
+
+            throw new InvalidOperationException();
+        }
+
+        private static int[] m_SandalHues = new int[]
+        {
+            0x489,
+            0x47F,
+            0x482,
+            0x47E,
+            0x48F,
+            0x494,
+            0x484,
+            0x497
+        };
+
+        private static Item CreateSandals()
+        {
+            return new Sandals(m_SandalHues[Utility.Random(m_SandalHues.Length)]);
+        }
+
+        private static Item CreateStretchedHide()
+        {
+            switch (Utility.Random(4))
+            {
+                default:
+                case 0:
+                    return new SmallStretchedHideEastDeed();
+                case 1:
+                    return new SmallStretchedHideSouthDeed();
+                case 2:
+                    return new MediumStretchedHideEastDeed();
+                case 3:
+                    return new MediumStretchedHideSouthDeed();
+            }
+        }
+
+        private static Item CreateTapestry()
+        {
+            switch (Utility.Random(4))
+            {
+                default:
+                case 0:
+                    return new LightFlowerTapestryEastDeed();
+                case 1:
+                    return new LightFlowerTapestrySouthDeed();
+                case 2:
+                    return new DarkFlowerTapestryEastDeed();
+                case 3:
+                    return new DarkFlowerTapestrySouthDeed();
+            }
+        }
+
+        private static Item CreateBearRug()
+        {
+            switch (Utility.Random(4))
+            {
+                default:
+                case 0:
+                    return new BrownBearRugEastDeed();
+                case 1:
+                    return new BrownBearRugSouthDeed();
+                case 2:
+                    return new PolarBearRugEastDeed();
+                case 3:
+                    return new PolarBearRugSouthDeed();
+            }
+        }
+
+        private static Item CreateRunicKit(int type)
+        {
+            if (type >= 1 && type <= 3)
+                return new RunicSewingKit(CraftResource.RegularLeather + type, 60 - (type * 10));
+
+            throw new InvalidOperationException();
+        }
+
+        private static Item CreatePowerScroll(int type)
+        {
+            if (type == 5 || type == 10 || type == 15 || type == 20)
+                return new PowerScroll(SkillName.Tailoring, 100 + type);
+
+            throw new InvalidOperationException();
+        }
+
+        private static Item CreateCBD()
+        {
+            return new ClothingBlessDeed();
         }
 
         public class RewardsGump : Gump
@@ -208,9 +278,9 @@ namespace Server.Mobiles
                 int next = pageShow(from, page, true);
 
                 if (prev != 30)
-                    AddButton(278, 220, 4014, 4014, prev, GumpButtonType.Reply, 0); // prev is always 20 when it's the last card
+                    AddButton(278, 220, 4014, 4014, prev, GumpButtonType.Reply, 0); // prev is always 30 when it's the last card
                 if (next != 30)
-                    AddButton(311, 220, 4005, 4005, next, GumpButtonType.Reply, 0); // next is always 20 when it's the last card
+                    AddButton(311, 220, 4005, 4005, next, GumpButtonType.Reply, 0); // next is always 30 when it's the last card
 
                 int count = from.Backpack.GetAmount(typeof(TailorGuildCoin));
                 string guildCoin = "Tailor Guild Coins = " + count.ToString();
@@ -233,10 +303,13 @@ namespace Server.Mobiles
                 this.AddLabel(272, 130, 2498, itemCheck.priceString[2]); // item price
                 this.AddRadio(320, 130, 210, 211, false, (int)Switches.radioButton3);
 
-                this.AddItem(34, 170, itemCheck.itemID[3], itemCheck.itemHue[3]);
-                this.AddLabel(78, 170, 2498, itemCheck.itemString[3]);
-                this.AddLabel(272, 170, 2498, itemCheck.priceString[3]); // item price
-                this.AddRadio(320, 170, 210, 211, false, (int)Switches.radioButton4);
+                if (itemCheck.itemID[3] > 0)
+                {
+                    this.AddItem(34, 170, itemCheck.itemID[3], itemCheck.itemHue[3]);
+                    this.AddLabel(78, 170, 2498, itemCheck.itemString[3]);
+                    this.AddLabel(272, 170, 2498, itemCheck.priceString[3]); // item price
+                    this.AddRadio(320, 170, 210, 211, false, (int)Switches.radioButton4);
+                }
             }
 
             public enum Switches
@@ -251,7 +324,7 @@ namespace Server.Mobiles
             {
                 if (forward)
                 {
-                    if (page >= 9)
+                    if (page >= 2)
                     {
                         page = 30;
                     }
@@ -277,30 +350,36 @@ namespace Server.Mobiles
                 if (info.ButtonID >= 100)
                 {
                     int cost = 0;
-                    int itemSelected = 0;
+                    int RadioButtonSeleced = 0;
+                    int page = info.ButtonID - 100;
 
                     ItemCheck itemCheck = GetValues(info.ButtonID - 100);
 
                     if (info.IsSwitched((int)Switches.radioButton1))
                     {
-                        cost = int.Parse(itemCheck.priceString[0]);
-                        itemSelected = 1;
+                        RadioButtonSeleced = 0;
+                        cost = int.Parse(itemCheck.priceString[RadioButtonSeleced]);
                     }
                     if (info.IsSwitched((int)Switches.radioButton2))
-                        from.SayTo(from, "I clicked on button 1 and switch 2");
-                    if (info.IsSwitched((int)Switches.radioButton3))
-                        from.SayTo(from, "I clicked on button 1 and switch 3");
-                    if (info.IsSwitched((int)Switches.radioButton4))
-                        from.SayTo(from, "I clicked on button 1 and switch 4");
-
-                    if (count >= cost)
                     {
-                        if (itemSelected == 1)
-                        {
-                            from.SayTo(from, "RewardItem");
-                            from.Backpack.ConsumeTotal(typeof(TailorGuildCoin), cost);
-                            from.AddToBackpack(new RunicSewingKit(CraftResource.RegularLeather + 3, 50));
-                        }
+                        RadioButtonSeleced = 1;
+                        cost = int.Parse(itemCheck.priceString[RadioButtonSeleced]);
+                    }
+                    if (info.IsSwitched((int)Switches.radioButton3))
+                    {
+                        RadioButtonSeleced = 2;
+                        cost = int.Parse(itemCheck.priceString[RadioButtonSeleced]);
+                    }
+                    if (info.IsSwitched((int)Switches.radioButton4))
+                    {
+                        RadioButtonSeleced = 3;
+                        cost = int.Parse(itemCheck.priceString[RadioButtonSeleced]);
+                    }
+
+                    if ((count >= cost) && ((info.IsSwitched((int)Switches.radioButton1)) || (info.IsSwitched((int)Switches.radioButton2)) || (info.IsSwitched((int)Switches.radioButton3)) || (info.IsSwitched((int)Switches.radioButton4))))
+                    {
+                        from.Backpack.ConsumeTotal(typeof(TailorGuildCoin), cost);
+                        from.AddToBackpack(ChooseAndCreateReward(page, RadioButtonSeleced));
                     }
                 }
                 else
@@ -312,155 +391,7 @@ namespace Server.Mobiles
                     }
                 }
             }
-        }
-
-        //public class RewardsGump : Gump
-        //{
-        //    private int m_Amount;
-
-        //    //public void RenderGump(Mobile from)
-        //    //{
-        //    //    from.SendMessage("RenderGump");
-        //    //    m_Amount = 1;
-        //    //    RenderGump(100);
-        //    //}
-
-        //    public void RenderGump(Mobile from)
-        //    {
-        //        from.SendMessage("RenderGump22");
-        //        int rule = 100;
-        //        AddPage(0);
-        //        AddBackground(0, 0, 400, 270, 9260);
-        //        AddLabel(125, 20, 52, @"Distribute Items to Shard");
-        //        AddLabel(25, 40, 52, @"Rules:");
-        //        AddRadio(35, 60, 209, 208, rule == (int)Switches.GiveToAccount, (int)Switches.GiveToAccount);
-        //        AddLabel(65, 60, 2100, @"Per Account");
-        //        AddRadio(35, 80, 209, 208, rule == (int)Switches.GiveToCharacter, (int)Switches.GiveToCharacter);
-        //        AddLabel(65, 80, 2100, @"Per Character (Mobile)");
-        //        AddRadio(35, 100, 209, 208, rule == (int)Switches.GiveToAccessLevel, (int)Switches.GiveToAccessLevel);
-        //        AddLabel(65, 100, 2100, @"Per AccessLevel");
-
-        //    }
-
-        //    public RewardsGump(Mobile from)
-        //        : base(50, 50)
-        //    {
-        //        from.SendMessage("RewardsGump");
-        //        RenderGump(from);
-        //    }
-
-        //    public override void OnResponse(Server.Network.NetState sender, RelayInfo info)
-        //    {
-        //        Mobile from = sender.Mobile;
-        //        from.SendMessage("OnResponse");
-
-        //        string TypeName = string.Empty;
-        //        int GiveRule = 0;
-        //        int Access = 0;
-
-        //        foreach (int sw in info.Switches)
-        //        {
-        //            switch (sw)
-        //            {
-        //                case (int)Switches.GiveToCharacter:
-        //                    {
-        //                        GiveRule = (int)Switches.GiveToCharacter;
-        //                        break;
-        //                    }
-        //                case (int)Switches.GiveToAccount:
-        //                    {
-        //                        GiveRule = (int)Switches.GiveToAccount;
-        //                        break;
-        //                    }
-        //                case (int)Switches.GiveToAccessLevel:
-        //                    {
-        //                        GiveRule = (int)Switches.GiveToAccessLevel;
-        //                        break;
-        //                    }
-        //                case (int)Switches.Administrator:
-        //                case (int)Switches.GameMaster:
-        //                case (int)Switches.Seer:
-        //                case (int)Switches.Counselor:
-        //                    {
-        //                        Access += sw;
-        //                        break;
-        //                    }
-        //            }
-        //        }
-        //        if (GiveRule == 0)
-        //        {
-        //            from.SendMessage("You must select the audience rule to receive the item.");
-        //            from.SendGump(new RewardsGump(from));
-        //            return;
-        //        }
-        //        else if (GiveRule == (int)Switches.GiveToAccessLevel && Access == 0)
-        //        {
-        //            from.SendMessage("You must select the AccessLevel to receive the item.");
-        //            from.SendGump(new RewardsGump(from));
-        //            return;
-        //        }
-
-        //        switch (info.ButtonID)
-        //        {
-        //            case (int)Buttons.GiveByTarget:
-        //                {
-        //                    from.SendMessage("What do you wish to give out?");
-        //                    break;
-        //                }
-        //            case (int)Buttons.GiveByType:
-        //                {
-        //                    if (info.TextEntries.Length > 0)
-        //                    {
-        //                        TypeName = info.TextEntries[0].Text;
-        //                    }
-
-        //                    if (TypeName == string.Empty)
-        //                    {
-        //                        from.SendMessage("You must specify a type");
-        //                        from.SendGump(new RewardsGump(from));
-        //                    }
-        //                    else
-        //                    {
-        //                    }
-        //                    break;
-        //                }
-        //            case (int)Buttons.IncAmount:
-        //                {
-        //                    from.SendGump(new RewardsGump(from));
-        //                    break;
-        //                }
-        //            case (int)Buttons.DecAmount:
-        //                {
-        //                    if (m_Amount > 1)
-        //                        m_Amount -= 1;
-        //                    else
-        //                        from.SendMessage("You cannot give less than 1 item.");
-        //                    from.SendGump(new RewardsGump(from));
-        //                    break;
-        //                }
-        //        }
-        //    }
-
-        //    public enum Buttons
-        //    {
-        //        Cancel,
-        //        GiveByTarget,
-        //        GiveByType,
-        //        IncAmount,
-        //        DecAmount
-        //    }
-
-        //    public enum Switches
-        //    {
-        //        Administrator = 1,
-        //        GameMaster = 2,
-        //        Seer = 4,
-        //        Counselor = 8,
-        //        GiveToAccount = 100,
-        //        GiveToCharacter = 200,
-        //        GiveToAccessLevel = 300
-        //    }
-        //}
+        }       
 
         public TailorRewardVendor(Serial serial)
             : base(serial) { }
