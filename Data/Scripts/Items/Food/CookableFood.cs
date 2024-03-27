@@ -141,6 +141,220 @@ namespace Server.Items
                         from.SendLocalizedMessage(500119); // You must wait to perform another action
                     }
                 }
+                else if (m_Item.ItemID == 0x103d)
+                {
+                    DoughTargetInteractions(from, targeted);
+                }
+            }
+
+            public void DoughTargetInteractions(Mobile from, object targeted)
+            {
+                if (targeted is Eggs)
+                {
+                    if (!((Item)targeted).Movable)
+                        return;
+                    if (((Item)targeted).Parent == null)
+                        new UnbakedQuiche().MoveToWorld(
+                            ((Item)targeted).Location,
+                            ((Item)targeted).Map
+                        );
+                    else
+                        from.AddToBackpack(new UnbakedQuiche());
+                    if (m_Item.Parent == null)
+                        new Eggshells(m_Item.Hue).MoveToWorld(m_Item.Location, (m_Item.Map));
+                    else
+                        from.AddToBackpack(new Eggshells(m_Item.Hue));
+                    m_Item.Consume();
+                    ((Item)targeted).Consume();
+                    from.SendMessage("You made an unbaked quiche");
+                }
+                else if (targeted is CheeseWedgeSmall) // plain pizza will target others to add ingredients.
+                {
+                    if (!((Item)targeted).Movable)
+                        return;
+                    if (((Item)targeted).Parent == null)
+                        new UncookedPizza("cheese").MoveToWorld(
+                            ((Item)targeted).Location,
+                            ((Item)targeted).Map
+                        );
+                    else
+                        from.AddToBackpack(new UncookedPizza("cheese"));
+                    m_Item.Consume();
+                    ((Item)targeted).Consume();
+                    from.SendMessage("You made an uncooked cheese pizza");
+                }
+                else if (targeted is JarHoney)
+                {
+                    if (!((Item)targeted).Movable)
+                        return;
+                    if (((Item)targeted).Parent == null)
+                        new SweetDough().MoveToWorld(
+                            ((Item)targeted).Location,
+                            ((Item)targeted).Map
+                        );
+                    else
+                        from.AddToBackpack(new SweetDough());
+                    m_Item.Consume();
+                    ((Item)targeted).Consume();
+                    from.SendMessage("You made a sweet dough");
+                }
+                else if (targeted is ChickenLeg || targeted is RawChickenLeg)
+                {
+                    if (!((Item)targeted).Movable)
+                        return;
+                    if (((Item)targeted).Parent == null)
+                        new SweetDough().MoveToWorld(
+                            ((Item)targeted).Location,
+                            ((Item)targeted).Map
+                        );
+                    else
+                        from.AddToBackpack(new UnbakedChickenPotPie());
+                    m_Item.Consume();
+                    ((Item)targeted).Consume();
+                    from.SendMessage("You made a chicken pot pie");
+                }
+                else if (targeted is Apple)
+                {
+                    if (!((Item)targeted).Movable)
+                        return;
+                    if (((Item)targeted).Parent == null)
+                        new UnbakedApplePie().MoveToWorld(
+                            ((Item)targeted).Location,
+                            ((Item)targeted).Map
+                        );
+                    else
+                        from.AddToBackpack(new UnbakedApplePie());
+                    m_Item.Consume();
+                    ((Item)targeted).Consume();
+                    from.SendMessage("You made an unbaked apple pie");
+                }
+                else if (targeted is Peach)
+                {
+                    if (!((Item)targeted).Movable)
+                        return;
+                    if (((Item)targeted).Parent == null)
+                        new UnbakedPeachCobbler().MoveToWorld(
+                            ((Item)targeted).Location,
+                            ((Item)targeted).Map
+                        );
+                    else
+                        from.AddToBackpack(new UnbakedPeachCobbler());
+                    m_Item.Consume();
+                    ((Item)targeted).Consume();
+                    from.SendMessage("You made an unbaked peach cobbler");
+                }
+                else if (targeted is Pumpkin)
+                {
+                    if (!((Item)targeted).Movable)
+                        return;
+                    if (((Item)targeted).Parent == null)
+                        new UnbakedPumpkinPie().MoveToWorld(
+                            ((Item)targeted).Location,
+                            ((Item)targeted).Map
+                        );
+                    else
+                        from.AddToBackpack(new UnbakedPumpkinPie());
+                    m_Item.Consume();
+                    ((Item)targeted).Consume();
+                    from.SendMessage("You made an unbaked pumpkin pie");
+                }
+                else if (targeted is Lime)
+                {
+                    if (!((Item)targeted).Movable)
+                        return;
+                    if (((Item)targeted).Parent == null)
+                        new UnbakedKeyLimePie().MoveToWorld(
+                            ((Item)targeted).Location,
+                            ((Item)targeted).Map
+                        );
+                    else
+                        from.AddToBackpack(new UnbakedKeyLimePie());
+                    m_Item.Consume();
+                    ((Item)targeted).Consume();
+                    from.SendMessage("You made an unbaked key lime pie");
+                }
+                else if (targeted is Dough)
+                {
+                    if (!((Item)targeted).Movable)
+                        return;
+                    if (((Item)targeted).Parent == null)
+                        new UncookedFrenchBread().MoveToWorld(
+                            ((Item)targeted).Location,
+                            ((Item)targeted).Map
+                        );
+                    else
+                        from.AddToBackpack(new UncookedFrenchBread());
+                    m_Item.Consume();
+                    ((Item)targeted).Consume();
+                    from.SendMessage("You ... add some more dough onto the dough");
+                }
+                else if (targeted is UncookedFrenchBread)
+                {
+                    if (!((Item)targeted).Movable)
+                        return;
+                    if (((Item)targeted).Parent == null)
+                        new UncookedDonuts().MoveToWorld(
+                            ((Item)targeted).Location,
+                            ((Item)targeted).Map
+                        );
+                    else
+                        from.AddToBackpack(new UncookedDonuts());
+                    m_Item.Consume();
+                    ((Item)targeted).Consume();
+                    from.SendMessage(
+                        "You fumble around for a bit with even more dough, and eventually make these round doughy things"
+                    );
+                }
+
+                try
+                {
+                    if (targeted is FromageDeVacheWedgeSmall) // plain pizza will target others to add ingredients.
+                    {
+                        if (!((Item)targeted).Movable)
+                            return;
+                        if (((Item)targeted).Parent == null)
+                            new UncookedPizza("cheese").MoveToWorld(
+                                ((Item)targeted).Location,
+                                ((Item)targeted).Map
+                            );
+                        else
+                            from.AddToBackpack(new UncookedPizza("cheese"));
+                        m_Item.Consume();
+                        ((Item)targeted).Consume();
+                        from.SendMessage("You made an uncooked cheese pizza");
+                    }
+                    else if (targeted is FromageDeBrebisWedgeSmall) // sheep cheese
+                    {
+                        if (!((Item)targeted).Movable)
+                            return;
+                        if (((Item)targeted).Parent == null)
+                            new UncookedPizza("sheep cheese").MoveToWorld(
+                                ((Item)targeted).Location,
+                                ((Item)targeted).Map
+                            );
+                        else
+                            from.AddToBackpack(new UncookedPizza("sheep cheese"));
+                        m_Item.Consume();
+                        ((Item)targeted).Consume();
+                        from.SendMessage("You made an uncooked sheep cheese pizza");
+                    }
+                    else if (targeted is FromageDeChevreWedgeSmall) // goat cheese
+                    {
+                        if (!((Item)targeted).Movable)
+                            return;
+                        if (((Item)targeted).Parent == null)
+                            new UncookedPizza("goat cheese").MoveToWorld(
+                                ((Item)targeted).Location,
+                                ((Item)targeted).Map
+                            );
+                        else
+                            from.AddToBackpack(new UncookedPizza("goat cheese"));
+                        m_Item.Consume();
+                        ((Item)targeted).Consume();
+                        from.SendMessage("You made an uncooked goat cheese pizza");
+                    }
+                }
+                catch { }
             }
 
             private class InternalTimer : Timer
