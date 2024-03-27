@@ -184,15 +184,21 @@ namespace Knives.TownHouses
         public int GetNextSign(int id)
         {
             if (!s_List.Contains(id))
+            {
                 return id;
+            }
 
             int idx = s_List.IndexOf(id);
 
             if (idx + 2 < s_List.Count)
+            {
                 return (int)s_List[idx + 2];
+            }
 
             if (idx % 2 == 0)
+            {
                 return (int)s_List[0];
+            }
 
             return (int)s_List[1];
         }
@@ -207,7 +213,7 @@ namespace Knives.TownHouses
 
             BaseHouse house = BaseHouse.FindHouseAt(m);
 
-            if (m.AccessLevel == AccessLevel.Player && (house == null || house.Owner != m))
+            if (m.AccessLevel < AccessLevel.Counselor && (house == null || house.Owner != m))
             {
                 m.SendMessage("You have to be inside your house to use this.");
                 return;
@@ -237,18 +243,26 @@ namespace Knives.TownHouses
                 int id = GetFlipFor(item.ItemID);
 
                 if (id == item.ItemID)
+                {
                     m.SendMessage("You cannot change that with this.");
+                }
                 else
+                {
                     item.ItemID = id;
+                }
             }
             else
             {
                 int id = GetNextSign(item.ItemID);
 
                 if (id == item.ItemID)
+                {
                     m.SendMessage("You cannot change that with this.");
+                }
                 else
+                {
                     item.ItemID = id;
+                }
             }
         }
 
