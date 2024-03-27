@@ -51,9 +51,13 @@ namespace Knives.TownHouses
         public void Invoke()
         {
             if (c_Callback is GumpCallback)
+            {
                 ((GumpCallback)c_Callback)();
+            }
             else if (c_Callback is GumpStateCallback)
+            {
                 ((GumpStateCallback)c_Callback)(c_Param);
+            }
         }
     }
 }

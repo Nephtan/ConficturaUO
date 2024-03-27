@@ -9,6 +9,8 @@ namespace Knives.TownHouses
 {
     public class GumpResponse
     {
+        private static PacketHandler m_Successor;
+
         public static void Initialize()
         {
             Timer.DelayCall(TimeSpan.Zero, new TimerCallback(AfterInit));
@@ -16,6 +18,8 @@ namespace Knives.TownHouses
 
         private static void AfterInit()
         {
+            m_Successor = PacketHandlers.GetHandler(0xB1);
+
             PacketHandlers.Register(0xB1, 0, true, new OnPacketReceive(DisplayGumpResponse));
         }
 
@@ -25,8 +29,6 @@ namespace Knives.TownHouses
             int typeID = pvSrc.ReadInt32();
             int buttonID = pvSrc.ReadInt32();
 
-            /* Fixed for SVN */
-            //List<Gump> gumps = state.Gumps;
             List<Gump> gumps = ((List<Gump>)state.Gumps);
 
             for (int i = 0; i < gumps.Count; ++i)
@@ -89,28 +91,13 @@ namespace Knives.TownHouses
                 }
             }
 
-            if (typeID == 461) // Virtue gump
+            if (m_Successor != null)
             {
-                int switchCount = pvSrc.ReadInt32();
-
-                if (buttonID == 1 && switchCount > 0)
-                {
-                    Mobile beheld = World.FindMobile(pvSrc.ReadInt32());
-
-                    if (beheld != null)
-                        EventSink.InvokeVirtueGumpRequest(
-                            new VirtueGumpRequestEventArgs(state.Mobile, beheld)
-                        );
-                }
-                else
-                {
-                    Mobile beheld = World.FindMobile(serial);
-
-                    if (beheld != null)
-                        EventSink.InvokeVirtueItemRequest(
-                            new VirtueItemRequestEventArgs(state.Mobile, beheld, buttonID)
-                        );
-                }
+                m_Successor.OnReceive(state, pvSrc);
+            }
+            else
+            {
+                PacketHandlers.DisplayGumpResponse(state, pvSrc);
             }
         }
 
@@ -122,16 +109,21 @@ namespace Knives.TownHouses
             TownHouse th = null;
 
             ArrayList list = new ArrayList();
+
             foreach (Item item in m.GetItemsInRange(20))
+            {
                 if (item is TownHouse)
                     list.Add(item);
+            }
 
             foreach (TownHouse t in list)
+            {
                 if (t.Owner == m)
                 {
                     th = t;
                     break;
                 }
+            }
 
             if (th == null || th.ForSaleSign == null)
                 return true;
@@ -161,29 +153,6 @@ namespace Knives.TownHouses
                 }
 
                 if (th.ForSaleSign.NoTrade && type == 6 && index == 1)
-                {
-                    m.SendMessage("This house cannot be traded.");
-                    m.SendGump(gump);
-                    return false;
-                }
-            }
-            else if (gump is HouseGump)
-            {
-                if (th.ForSaleSign.ForcePublic && id == 17 && th.Public)
-                {
-                    m.SendMessage("This house cannot be private.");
-                    m.SendGump(gump);
-                    return false;
-                }
-
-                if (th.ForSaleSign.ForcePrivate && id == 17 && !th.Public)
-                {
-                    m.SendMessage("This house cannot be public.");
-                    m.SendGump(gump);
-                    return false;
-                }
-
-                if (th.ForSaleSign.NoTrade && id == 14)
                 {
                     m.SendMessage("This house cannot be traded.");
                     m.SendGump(gump);

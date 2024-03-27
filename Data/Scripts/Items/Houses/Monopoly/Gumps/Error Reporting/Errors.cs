@@ -38,9 +38,13 @@ namespace Knives.TownHouses
         private static void OnErrors(CommandInfo e)
         {
             if (e.ArgString == null || e.ArgString == "")
+            {
                 new ErrorsGump(e.Mobile);
+            }
             else
+            {
                 Report(e.ArgString + " - " + e.Mobile.Name);
+            }
         }
 
         private static void OnLogin(LoginEventArgs e)
@@ -50,7 +54,9 @@ namespace Knives.TownHouses
                 && s_ErrorLog.Count != 0
                 && !s_Checked.Contains(e.Mobile)
             )
+            {
                 new ErrorsNotifyGump(e.Mobile);
+            }
         }
 
         public static void Report(string error)
@@ -67,19 +73,27 @@ namespace Knives.TownHouses
             foreach (NetState state in NetState.Instances)
             {
                 if (state.Mobile == null)
+                {
                     continue;
+                }
 
                 if (state.Mobile.AccessLevel != AccessLevel.Player)
+                {
                     Notify(state.Mobile);
+                }
             }
         }
 
         public static void Notify(Mobile m)
         {
             if (m.HasGump(typeof(ErrorsGump)))
+            {
                 new ErrorsGump(m);
+            }
             else
+            {
                 new ErrorsNotifyGump(m);
+            }
         }
     }
 }

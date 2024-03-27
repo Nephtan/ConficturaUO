@@ -59,12 +59,21 @@ namespace Knives.TownHouses
                 );
 
             ArrayList list = new ArrayList();
+            
             if (c_ListPage == ListPage.Town)
+            {
                 list = new ArrayList(TownHouseSign.AllSigns);
+            }
             else
+            {
                 foreach (Item item in World.Items.Values)
+                {
                     if (item is BaseHouse)
+                    {
                         list.Add(item);
+                    }
+                }
+            }
 
             list.Sort(new InternalSort());
 
@@ -184,7 +193,9 @@ namespace Knives.TownHouses
         private void TownHouseMenu(object obj)
         {
             if (!(obj is TownHouseSign))
+            {
                 return;
+            }
 
             NewGump();
 
@@ -200,7 +211,9 @@ namespace Knives.TownHouses
         private void Goto(object obj)
         {
             if (!(obj is BaseHouse))
+            {
                 return;
+            }
 
             Owner.Location = ((BaseHouse)obj).BanLocation;
             Owner.Map = ((BaseHouse)obj).Map;
@@ -211,7 +224,9 @@ namespace Knives.TownHouses
         private void HouseMenu(object obj)
         {
             if (!(obj is BaseHouse))
+            {
                 return;
+            }
 
             NewGump();
 
@@ -250,7 +265,9 @@ namespace Knives.TownHouses
             public int Compare(object x, object y)
             {
                 if (x == null && y == null)
+                {
                     return 0;
+                }
 
                 if (x is TownHouseSign)
                 {
@@ -265,9 +282,13 @@ namespace Knives.TownHouses
                     BaseHouse b = (BaseHouse)y;
 
                     if (a.Owner == null && b.Owner != null)
+                    {
                         return -1;
+                    }
                     if (a.Owner != null && b.Owner == null)
+                    {
                         return 1;
+                    }
 
                     return Insensitive.Compare(a.Owner.RawName, b.Owner.RawName);
                 }

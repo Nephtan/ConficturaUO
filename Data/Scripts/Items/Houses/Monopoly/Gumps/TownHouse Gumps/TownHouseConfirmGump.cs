@@ -32,6 +32,7 @@ namespace Knives.TownHouses
             AddImage(width / 2 + 70, y + 2, 0x3B);
 
             if (c_Sign.RentByTime == TimeSpan.Zero)
+            {
                 AddHtml(
                     0,
                     y += 25,
@@ -42,20 +43,25 @@ namespace Knives.TownHouses
                         c_Sign.Free ? "Free" : "" + c_Sign.Price
                     )
                 );
+            }
             else if (c_Sign.RecurRent)
+            {
                 AddHtml(
                     0,
                     y += 25,
                     width,
                     String.Format("<CENTER>{0}: {1}", "Recurring " + c_Sign.PriceType, c_Sign.Price)
                 );
+            }
             else
+            {
                 AddHtml(
                     0,
                     y += 25,
                     width,
                     String.Format("<CENTER>{0}: {1}", "One " + c_Sign.PriceTypeShort, c_Sign.Price)
                 );
+            }
 
             if (c_Sign.KeepItems)
             {

@@ -21,9 +21,13 @@ namespace Knives.TownHouses
             int y = 0;
 
             if (c_Contract.RentalClient == null)
+            {
                 AddHtml(0, y + 5, width, HTML.Black + "<CENTER>Rent this House?");
+            }
             else
+            {
                 AddHtml(0, y + 5, width, HTML.Black + "<CENTER>Rental Agreement");
+            }
 
             string text = String.Format(
                 "  I, {0}, agree to rent this property from {1} for the sum of {2} every {3}.  "
@@ -73,9 +77,12 @@ namespace Knives.TownHouses
                     );
                 }
                 else
+                {
                     AddImage(width - 60, y - 10, 0x232C);
+                }
 
                 if (!locsec)
+                {
                     Owner.SendMessage(
                         (
                             Owner == c_Contract.RentalMaster
@@ -83,6 +90,7 @@ namespace Knives.TownHouses
                                 : "The owner of this contract cannot rent this property at this time."
                         )
                     );
+                }
             }
             else
             {
@@ -99,7 +107,9 @@ namespace Knives.TownHouses
                     );
                 }
                 else
+                {
                     AddImage(width - 60, y += 20, 0x232C);
+                }
             }
 
             AddBackgroundZero(0, 0, width, y + 23, 0x24A4);
@@ -119,9 +129,13 @@ namespace Knives.TownHouses
         private void CancelContract()
         {
             if (Owner == c_Contract.RentalClient)
+            {
                 c_Contract.House.Delete();
+            }
             else
+            {
                 c_Contract.Delete();
+            }
         }
 
         private void Accept()
@@ -137,7 +151,9 @@ namespace Knives.TownHouses
             c_Contract.Purchase(Owner);
 
             if (!c_Contract.Owned)
+            {
                 return;
+            }
 
             c_Contract.Visible = true;
             c_Contract.RentalClient = Owner;
