@@ -24,15 +24,21 @@ namespace Knives.TownHouses
         public override void GetProperties(ObjectPropertyList list)
         {
             if (c_Owner != null)
+            {
                 list.Add("a renter's license belonging to " + c_Owner.Name);
+            }
             else
+            {
                 list.Add("a renter's license");
+            }
         }
 
         public override void OnDoubleClick(Mobile m)
         {
             if (c_Owner == null)
+            {
                 c_Owner = m;
+            }
         }
 
         public RentalLicense(Serial serial)

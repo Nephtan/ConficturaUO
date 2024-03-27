@@ -78,7 +78,9 @@ namespace Knives.TownHouses
         protected override void BuildGump()
         {
             if (c_Sign == null)
+            {
                 return;
+            }
 
             int width = 300;
             int y = 0;
@@ -176,6 +178,7 @@ namespace Knives.TownHouses
             );
 
             if (c_Sign.BlocksReady)
+            {
                 AddButton(
                     x += 20,
                     y,
@@ -184,8 +187,10 @@ namespace Knives.TownHouses
                     new GumpStateCallback(ChangePage),
                     2
                 );
+            }
 
             if (c_Sign.FloorsReady)
+            {
                 AddButton(
                     x += 20,
                     y,
@@ -194,8 +199,10 @@ namespace Knives.TownHouses
                     new GumpStateCallback(ChangePage),
                     3
                 );
+            }
 
             if (c_Sign.SignReady)
+            {
                 AddButton(
                     x += 20,
                     y,
@@ -204,8 +211,10 @@ namespace Knives.TownHouses
                     new GumpStateCallback(ChangePage),
                     4
                 );
+            }
 
             if (c_Sign.BanReady)
+            {
                 AddButton(
                     x += 20,
                     y,
@@ -214,6 +223,7 @@ namespace Knives.TownHouses
                     new GumpStateCallback(ChangePage),
                     5
                 );
+            }
 
             if (c_Sign.LocSecReady)
             {
@@ -227,6 +237,7 @@ namespace Knives.TownHouses
                 );
 
                 if (!c_Sign.Owned)
+                {
                     AddButton(
                         x += 20,
                         y,
@@ -235,8 +246,11 @@ namespace Knives.TownHouses
                         new GumpStateCallback(ChangePage),
                         7
                     );
+                }
                 else
+                {
                     x += 20;
+                }
 
                 AddButton(
                     x += 20,
@@ -552,7 +566,9 @@ namespace Knives.TownHouses
         private void BlocksPage(int width, ref int y)
         {
             if (c_Sign == null)
+            {
                 return;
+            }
 
             c_Sign.ShowAreaPreview(Owner);
 
@@ -660,7 +676,9 @@ namespace Knives.TownHouses
         private void SignPage(int width, ref int y)
         {
             if (c_Sign == null)
+            {
                 return;
+            }
 
             c_Sign.ShowSignPreview();
 
@@ -712,7 +730,9 @@ namespace Knives.TownHouses
         private void BanPage(int width, ref int y)
         {
             if (c_Sign == null)
+            {
                 return;
+            }
 
             c_Sign.ShowBanPreview();
 
@@ -1430,10 +1450,14 @@ namespace Knives.TownHouses
         private void ChangePage(object obj)
         {
             if (c_Sign == null)
+            {
                 return;
+            }
 
             if (!(obj is int))
+            {
                 return;
+            }
 
             c_Page = (Page)(int)obj;
 
@@ -1497,7 +1521,9 @@ namespace Knives.TownHouses
         private void Murderers(object obj)
         {
             if (!(obj is Intu))
+            {
                 return;
+            }
 
             c_Sign.Murderers = (Intu)obj;
 
@@ -1568,9 +1594,13 @@ namespace Knives.TownHouses
         private void Skill()
         {
             if (GetTextField("Skill") != "" && SkillNameExists(GetTextField("Skill")))
+            {
                 c_Sign.Skill = GetTextField("Skill");
+            }
             else
+            {
                 c_Sign.Skill = "";
+            }
 
             c_Sign.SkillReq = GetTextFieldInt("SkillReq");
             c_Sign.MinTotalSkill = GetTextFieldInt("MinTotalSkill");
@@ -1615,11 +1645,17 @@ namespace Knives.TownHouses
             c_Sign.Price = c_Sign.CalcVolume() * General.SuggestionFactor;
 
             if (c_Sign.RentByTime == TimeSpan.FromDays(1))
+            {
                 c_Sign.Price /= 60;
+            }
             if (c_Sign.RentByTime == TimeSpan.FromDays(7))
+            {
                 c_Sign.Price = (int)((double)c_Sign.Price / 8.57);
+            }
             if (c_Sign.RentByTime == TimeSpan.FromDays(30))
+            {
                 c_Sign.Price /= 2;
+            }
 
             NewGump();
         }
@@ -1640,7 +1676,9 @@ namespace Knives.TownHouses
         private void AddBlock()
         {
             if (c_Sign == null)
+            {
                 return;
+            }
 
             Owner.SendMessage("Target the north western corner.");
             Owner.Target = new InternalTarget(this, c_Sign, TargetType.BlockOne);
@@ -1649,7 +1687,9 @@ namespace Knives.TownHouses
         private void ClearAll()
         {
             if (c_Sign == null)
+            {
                 return;
+            }
 
             c_Sign.Blocks.Clear();
             c_Sign.ClearPreview();
@@ -1722,10 +1762,14 @@ namespace Knives.TownHouses
                         c_Sign.MinZ = point.Z;
 
                         if (c_Sign.MaxZ < c_Sign.MinZ + 19)
+                        {
                             c_Sign.MaxZ = point.Z + 19;
+                        }
 
                         if (c_Sign.MaxZ == short.MaxValue)
+                        {
                             c_Sign.MaxZ = point.Z + 19;
+                        }
 
                         c_Gump.NewGump();
                         break;
@@ -1734,7 +1778,9 @@ namespace Knives.TownHouses
                         c_Sign.MaxZ = point.Z + 19;
 
                         if (c_Sign.MinZ > c_Sign.MaxZ)
+                        {
                             c_Sign.MinZ = point.Z;
+                        }
 
                         c_Gump.NewGump();
                         break;
