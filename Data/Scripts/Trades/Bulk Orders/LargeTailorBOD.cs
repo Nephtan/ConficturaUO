@@ -28,66 +28,133 @@ namespace Server.Engines.BulkOrders
         }
 
         [Constructable]
-        public LargeTailorBOD()
+        public LargeTailorBOD(Mobile m)
         {
             LargeBulkEntry[] entries;
             bool useMaterials = false;
+            double theirSkill = 0.0;
 
-            switch (Utility.Random(14))
+            if (m != null)
+            {
+                theirSkill = m.Skills[SkillName.Tailoring].Base;
+            }
+
+            int entrySwitchRNG = 0;
+
+            int min, max;
+            if (theirSkill >= 120.0)
+            {
+                min = 11; 
+                max = 12;
+            }
+            else if (theirSkill >= 100.1)
+            {
+                min = 10; 
+                max = 12;
+            }
+            else if (theirSkill >= 90.1)
+            {
+                min = 8; 
+                max = 12;
+            }
+            else if (theirSkill >= 80.1)
+            {
+                min = 5; 
+                max = 10;
+            }
+            else
+            {
+                min = 0; 
+                max = 9;
+            }
+            entrySwitchRNG = Utility.RandomMinMax(min, max);
+
+            switch (entrySwitchRNG)
             {
                 default:
                 case 0:
-                    entries = LargeBulkEntry.ConvertEntries(this, LargeBulkEntry.Farmer);
+                    entries = LargeBulkEntry.ConvertEntries(this, LargeBulkEntry.HatSet); // 4 piece
                     break;
                 case 1:
-                    entries = LargeBulkEntry.ConvertEntries(this, LargeBulkEntry.FemaleLeatherSet);
-                    useMaterials = true;
+                    entries = LargeBulkEntry.ConvertEntries(this, LargeBulkEntry.Farmer); // 4 piece
                     break;
                 case 2:
-                    entries = LargeBulkEntry.ConvertEntries(this, LargeBulkEntry.FisherGirl);
+                    entries = LargeBulkEntry.ConvertEntries(this, LargeBulkEntry.FisherGirl); // 4 piece
                     break;
                 case 3:
-                    entries = LargeBulkEntry.ConvertEntries(this, LargeBulkEntry.Gypsy);
+                    entries = LargeBulkEntry.ConvertEntries(this, LargeBulkEntry.Gypsy); // 4 piece
                     break;
                 case 4:
-                    entries = LargeBulkEntry.ConvertEntries(this, LargeBulkEntry.HatSet);
+                    entries = LargeBulkEntry.ConvertEntries(this, LargeBulkEntry.Jester); // 4 piece
                     break;
                 case 5:
-                    entries = LargeBulkEntry.ConvertEntries(this, LargeBulkEntry.Jester);
+                    entries = LargeBulkEntry.ConvertEntries(this, LargeBulkEntry.Lady); // 4 piece
                     break;
                 case 6:
-                    entries = LargeBulkEntry.ConvertEntries(this, LargeBulkEntry.Lady);
+                    entries = LargeBulkEntry.ConvertEntries(this, LargeBulkEntry.Pirate); // 4 piece
                     break;
                 case 7:
-                    entries = LargeBulkEntry.ConvertEntries(this, LargeBulkEntry.MaleLeatherSet);
-                    useMaterials = true;
+                    entries = LargeBulkEntry.ConvertEntries(this, LargeBulkEntry.Wizard); // 4 piece
                     break;
                 case 8:
-                    entries = LargeBulkEntry.ConvertEntries(this, LargeBulkEntry.Pirate);
-                    break;
-                case 9:
-                    entries = LargeBulkEntry.ConvertEntries(this, LargeBulkEntry.ShoeSet);
+                    entries = LargeBulkEntry.ConvertEntries(this, LargeBulkEntry.ShoeSet); // 4 piece
                     useMaterials = Core.ML;
                     break;
+                case 9:
+                    entries = LargeBulkEntry.ConvertEntries(this, LargeBulkEntry.TownCrier); // 5 piece
+                    break;
                 case 10:
-                    entries = LargeBulkEntry.ConvertEntries(this, LargeBulkEntry.StuddedSet);
+                    entries = LargeBulkEntry.ConvertEntries(this, LargeBulkEntry.StuddedSet); // 5 piece
                     useMaterials = true;
                     break;
                 case 11:
-                    entries = LargeBulkEntry.ConvertEntries(this, LargeBulkEntry.TownCrier);
-                    break;
-                case 12:
-                    entries = LargeBulkEntry.ConvertEntries(this, LargeBulkEntry.Wizard);
-                    break;
-                case 13:
-                    entries = LargeBulkEntry.ConvertEntries(this, LargeBulkEntry.BoneSet);
+                    entries = LargeBulkEntry.ConvertEntries(this, LargeBulkEntry.FemaleLeatherSet); // 6 piece
                     useMaterials = true;
                     break;
+                case 12:
+                    entries = LargeBulkEntry.ConvertEntries(this, LargeBulkEntry.MaleLeatherSet); // 6 piece
+                    useMaterials = true;
+                    break;
+                //case 13:
+                //    entries = LargeBulkEntry.ConvertEntries(this, LargeBulkEntry.BoneSet);
+                //    useMaterials = true;
+                //    break;
             }
 
             int hue = 0x483;
-            int amountMax = Utility.RandomList(10, 15, 20, 20);
-            bool reqExceptional = (0.825 > Utility.RandomDouble());
+            int amountMax = 0;
+
+            if (theirSkill >= 120.0)
+            {
+                amountMax = Utility.RandomList(15, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20);
+            }
+            else if (theirSkill >= 100.1)
+            {
+                amountMax = Utility.RandomList(15, 20, 20, 20);
+            }
+            else if (theirSkill >= 90.1)
+            {
+                amountMax = Utility.RandomList(15, 20);
+            }
+            else if (theirSkill >= 80.1)
+            {
+                amountMax = Utility.RandomList(10, 15, 15, 15, 15, 15, 20, 20, 20, 20);
+            }
+            else
+            {
+                amountMax = Utility.RandomList(10, 10, 10, 10, 10, 15, 15, 15, 20, 20);
+            }
+
+            double excChance = 0.0;
+
+            if (theirSkill >= 90.1)
+                excChance = (theirSkill + 80.0) / 200.0;
+            else if (theirSkill >= 80.1)
+                excChance = (theirSkill + 75.0) / 200.0;
+            else
+                excChance = (theirSkill + 70.0) / 200.0;
+
+            bool reqExceptional = (excChance > Utility.RandomDouble());
 
             BulkMaterialType material;
 

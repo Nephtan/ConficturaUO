@@ -430,8 +430,16 @@ namespace Server.Mobiles
                 else
                     pm.NextTailorBulkOrder = TimeSpan.FromMinutes(0.01);
 
-                if (theirSkill >= 70.1 && ((theirSkill - 40.0) / 300.0) > Utility.RandomDouble())
-                    return new LargeTailorBOD();
+                double calculateLBODChance = Utility.RandomDouble();
+
+                if (theirSkill >= 120.0 && ((theirSkill - 1.0) / 120.0) > calculateLBODChance) // 99.16% of chance 
+                    return new LargeTailorBOD(from);
+                else if (theirSkill >= 100.1 && ((theirSkill - 10.0) / 150.0) > calculateLBODChance) // odds start at 60.06% and end at 70% chance with 115 base skill
+                    return new LargeTailorBOD(from);
+                else if (theirSkill >= 90.1 && ((theirSkill - 15.0) / 170.0) > calculateLBODChance) // odds start at 44.17% and end at 50% chance on this range
+                    return new LargeTailorBOD(from);
+                else if (theirSkill >= 70.1 && ((theirSkill - 20.0) / 200.0) > calculateLBODChance) // odds start at 25.05% and end at 35% chance on this range
+                    return new LargeTailorBOD(from);
 
                 return SmallTailorBOD.CreateRandomFor(from);
             }

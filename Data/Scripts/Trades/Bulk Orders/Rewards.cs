@@ -641,6 +641,8 @@ namespace Server.Engines.BulkOrders
     public sealed class TailorRewardCalculator : RewardCalculator
     {
         #region Constructors
+        private static readonly ConstructCallback TailorGuildCoin = new ConstructCallback(CreateGuildCoins);
+
         private static readonly ConstructCallback Cloth = new ConstructCallback(CreateCloth);
         private static readonly ConstructCallback Sandals = new ConstructCallback(CreateSandals);
         private static readonly ConstructCallback StretchedHide = new ConstructCallback(
@@ -655,6 +657,12 @@ namespace Server.Engines.BulkOrders
         private static readonly ConstructCallback ClothingBlessDeed = new ConstructCallback(
             CreateCBD
         );
+
+        private static Item CreateGuildCoins(int type)
+        {
+            TailorGuildCoin guildCoin = new TailorGuildCoin(type);
+            return guildCoin;
+        }
 
         private static int[][] m_ClothHues = new int[][]
         {
@@ -963,25 +971,37 @@ namespace Server.Engines.BulkOrders
         {
             Groups = new RewardGroup[]
             {
-                new RewardGroup(0, new RewardItem(1, Cloth, 0)),
-                new RewardGroup(50, new RewardItem(1, Cloth, 1)),
-                new RewardGroup(100, new RewardItem(1, Cloth, 2)),
-                new RewardGroup(150, new RewardItem(9, Cloth, 3), new RewardItem(1, Sandals)),
-                new RewardGroup(200, new RewardItem(4, Cloth, 4), new RewardItem(1, Sandals)),
-                new RewardGroup(300, new RewardItem(1, StretchedHide)),
-                new RewardGroup(350, new RewardItem(1, RunicKit, 1)),
-                new RewardGroup(
-                    400,
-                    new RewardItem(2, PowerScroll, 5),
-                    new RewardItem(3, Tapestry)
-                ),
-                new RewardGroup(450, new RewardItem(1, BearRug)),
-                new RewardGroup(500, new RewardItem(1, PowerScroll, 10)),
-                new RewardGroup(550, new RewardItem(1, ClothingBlessDeed)),
-                new RewardGroup(575, new RewardItem(1, PowerScroll, 15)),
-                new RewardGroup(600, new RewardItem(1, RunicKit, 2)),
-                new RewardGroup(650, new RewardItem(1, PowerScroll, 20)),
-                new RewardGroup(700, new RewardItem(1, RunicKit, 3))
+                //new RewardGroup(0, new RewardItem(1, Cloth, 0)),
+                //new RewardGroup(50, new RewardItem(1, Cloth, 1)),
+                //new RewardGroup(100, new RewardItem(1, Cloth, 2)),
+                //new RewardGroup(150, new RewardItem(9, Cloth, 3), new RewardItem(1, Sandals)),
+                //new RewardGroup(200, new RewardItem(4, Cloth, 4), new RewardItem(1, Sandals)),
+                //new RewardGroup(300, new RewardItem(1, StretchedHide)),
+                //new RewardGroup(350, new RewardItem(1, RunicKit, 1)),
+                //new RewardGroup(400, new RewardItem(2, PowerScroll, 5), new RewardItem(3, Tapestry)),
+                //new RewardGroup(450, new RewardItem(1, BearRug)),
+                //new RewardGroup(500, new RewardItem(1, PowerScroll, 10)),
+                //new RewardGroup(550, new RewardItem(1, ClothingBlessDeed)),
+                //new RewardGroup(575, new RewardItem(1, PowerScroll, 15)),
+                //new RewardGroup(600, new RewardItem(1, RunicKit, 2)),
+                //new RewardGroup(650, new RewardItem(1, PowerScroll, 20)),
+                //new RewardGroup(700, new RewardItem(1, RunicKit, 3))
+
+                new RewardGroup(0, new RewardItem(1, TailorGuildCoin, 10)),
+                new RewardGroup(50, new RewardItem(1, TailorGuildCoin, 50)),
+                new RewardGroup(100, new RewardItem(1, TailorGuildCoin, 100)),
+                new RewardGroup(150, new RewardItem(1, TailorGuildCoin, 150)),
+                new RewardGroup(200, new RewardItem(1, TailorGuildCoin, 200)),
+                new RewardGroup(300, new RewardItem(1, TailorGuildCoin, 300)),
+                new RewardGroup(350, new RewardItem(1, TailorGuildCoin, 350)),
+                new RewardGroup(400, new RewardItem(1, TailorGuildCoin, 400)),
+                new RewardGroup(450, new RewardItem(1, TailorGuildCoin, 450)),
+                new RewardGroup(500, new RewardItem(1, TailorGuildCoin, 500)),
+                new RewardGroup(550, new RewardItem(1, TailorGuildCoin, 550)),
+                new RewardGroup(575, new RewardItem(1, TailorGuildCoin, 575)),
+                new RewardGroup(600, new RewardItem(1, TailorGuildCoin, 600)),
+                new RewardGroup(650, new RewardItem(1, TailorGuildCoin, 650)),
+                new RewardGroup(700, new RewardItem(1, TailorGuildCoin, 700))
             };
         }
     }
