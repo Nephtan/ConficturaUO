@@ -26,7 +26,9 @@ namespace Knives.TownHouses
 
             string str = HTML.Black;
             foreach (string text in Errors.ErrorLog)
+            {
                 str += text;
+            }
 
             AddHtml(20, y += 25, width - 40, 200, str, true, true);
 

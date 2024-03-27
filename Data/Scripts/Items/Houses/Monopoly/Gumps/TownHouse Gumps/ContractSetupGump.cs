@@ -70,7 +70,9 @@ namespace Knives.TownHouses
         private void BlocksPage(int width, ref int y)
         {
             if (c_Contract == null)
+            {
                 return;
+            }
 
             c_Contract.ShowAreaPreview(Owner);
 
@@ -189,7 +191,9 @@ namespace Knives.TownHouses
         private void SignPage(int width, ref int y)
         {
             if (c_Contract == null)
+            {
                 return;
+            }
 
             c_Contract.ShowSignPreview();
 
@@ -473,16 +477,24 @@ namespace Knives.TownHouses
         private void SuggestPrice()
         {
             if (c_Contract == null)
+            {
                 return;
+            }
 
             c_Contract.Price = c_Contract.CalcVolume() * General.SuggestionFactor;
 
             if (c_Contract.RentByTime == TimeSpan.FromDays(1))
+            {
                 c_Contract.Price /= 60;
+            }
             if (c_Contract.RentByTime == TimeSpan.FromDays(7))
+            {
                 c_Contract.Price = (int)((double)c_Contract.Price / 8.57);
+            }
             if (c_Contract.RentByTime == TimeSpan.FromDays(30))
+            {
                 c_Contract.Price /= 2;
+            }
 
             NewGump();
         }
@@ -522,7 +534,9 @@ namespace Knives.TownHouses
         private void ChangePage(object obj)
         {
             if (c_Contract == null || !(obj is int))
+            {
                 return;
+            }
 
             c_Contract.ClearPreview();
 
@@ -534,7 +548,9 @@ namespace Knives.TownHouses
         private void EntireHouse()
         {
             if (c_Contract == null || c_Contract.ParentHouse == null)
+            {
                 return;
+            }
 
             c_Contract.EntireHouse = !c_Contract.EntireHouse;
 
@@ -555,7 +571,9 @@ namespace Knives.TownHouses
                     );
 
                     if (once)
+                    {
                         continue;
+                    }
 
                     if (rect.Start.Z >= rect.End.Z)
                     {
@@ -603,12 +621,16 @@ namespace Knives.TownHouses
         private void LengthUp()
         {
             if (c_Contract == null)
+            {
                 return;
+            }
 
             c_Contract.NextPriceType();
 
             if (c_Contract.RentByTime == TimeSpan.FromDays(0))
+            {
                 c_Contract.RentByTime = TimeSpan.FromDays(1);
+            }
 
             NewGump();
         }
@@ -616,12 +638,16 @@ namespace Knives.TownHouses
         private void LengthDown()
         {
             if (c_Contract == null)
+            {
                 return;
+            }
 
             c_Contract.PrevPriceType();
 
             if (c_Contract.RentByTime == TimeSpan.FromDays(0))
+            {
                 c_Contract.RentByTime = TimeSpan.FromDays(30);
+            }
 
             NewGump();
         }
@@ -642,7 +668,9 @@ namespace Knives.TownHouses
         private void ClearBlocks()
         {
             if (c_Contract == null)
+            {
                 return;
+            }
 
             c_Contract.Blocks.Clear();
 
@@ -654,7 +682,9 @@ namespace Knives.TownHouses
         private void FinalizeSetup()
         {
             if (c_Contract == null)
+            {
                 return;
+            }
 
             if (c_Contract.Price == 0)
             {
@@ -712,7 +742,9 @@ namespace Knives.TownHouses
                 IPoint3D point = (IPoint3D)o;
 
                 if (c_Contract == null || c_Contract.ParentHouse == null)
+                {
                     return;
+                }
 
                 if (!c_Contract.ParentHouse.Region.Contains(new Point3D(point.X, point.Y, point.Z)))
                 {
@@ -735,15 +767,21 @@ namespace Knives.TownHouses
                                 new Point3D(point.X, point.Y, point.Z)
                             )
                         )
+                        {
                             m.SendMessage("That isn't within your house.");
+                        }
                         else if (c_Contract.HasContractedArea(point.Z))
+                        {
                             m.SendMessage("That area is already taken by another rental contract.");
+                        }
                         else
                         {
                             c_Contract.MinZ = point.Z;
 
                             if (c_Contract.MaxZ < c_Contract.MinZ + 19)
+                            {
                                 c_Contract.MaxZ = point.Z + 19;
+                            }
                         }
 
                         c_Contract.ShowFloorsPreview(m);
@@ -756,15 +794,21 @@ namespace Knives.TownHouses
                                 new Point3D(point.X, point.Y, point.Z)
                             )
                         )
+                        {
                             m.SendMessage("That isn't within your house.");
+                        }
                         else if (c_Contract.HasContractedArea(point.Z))
+                        {
                             m.SendMessage("That area is already taken by another rental contract.");
+                        }
                         else
                         {
                             c_Contract.MaxZ = point.Z + 19;
 
                             if (c_Contract.MinZ > c_Contract.MaxZ)
+                            {
                                 c_Contract.MinZ = point.Z;
+                            }
                         }
 
                         c_Contract.ShowFloorsPreview(m);
@@ -790,7 +834,9 @@ namespace Knives.TownHouses
                         );
 
                         if (c_Contract.HasContractedArea(rect, point.Z))
+                        {
                             m.SendMessage("That area is already taken by another rental contract.");
+                        }
                         else
                         {
                             c_Contract.Blocks.Add(rect);

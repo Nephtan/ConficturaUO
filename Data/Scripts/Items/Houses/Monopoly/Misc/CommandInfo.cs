@@ -40,7 +40,9 @@ namespace Knives.TownHouses
         public string GetString(int num)
         {
             if (c_Arguments.Length > num)
+            {
                 return c_Arguments[num];
+            }
 
             return "";
         }

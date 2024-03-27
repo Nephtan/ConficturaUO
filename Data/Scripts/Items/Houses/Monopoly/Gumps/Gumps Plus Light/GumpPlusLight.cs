@@ -7,6 +7,7 @@ using Server.Network;
 namespace Knives.TownHouses
 {
     public delegate void GumpStateCallback(object obj);
+
     public delegate void GumpCallback();
 
     public abstract class GumpPlusLight : Gump
@@ -14,20 +15,23 @@ namespace Knives.TownHouses
         public static void RefreshGump(Mobile m, Type type)
         {
             if (m.NetState == null)
+            {
                 return;
+            }
 
             foreach (Gump g in m.NetState.Gumps)
+            {
                 if (g is GumpPlusLight && g.GetType() == type)
                 {
                     m.CloseGump(type);
                     ((GumpPlusLight)g).NewGump();
                     return;
                 }
+            }
         }
 
         private Mobile c_Owner;
-        private Hashtable c_Buttons,
-            c_Fields;
+        private Hashtable c_Buttons, c_Fields;
 
         public Mobile Owner
         {
@@ -60,7 +64,9 @@ namespace Knives.TownHouses
         public void NewGump(bool clear)
         {
             if (clear)
+            {
                 Clear();
+            }
 
             BuildGump();
 
@@ -267,7 +273,9 @@ namespace Knives.TownHouses
         public string GetTextField(string name)
         {
             if (c_Fields[name] == null)
+            {
                 return "";
+            }
 
             return c_Fields[name].ToString();
         }
@@ -292,13 +300,19 @@ namespace Knives.TownHouses
                 }
 
                 foreach (TextRelay t in info.TextEntries)
+                {
                     c_Fields[c_Fields[t.EntryID].ToString()] = t.Text;
+                }
 
                 if (info.ButtonID == 0)
+                {
                     OnClose();
+                }
 
                 if (c_Buttons[info.ButtonID] == null || !(c_Buttons[info.ButtonID] is ButtonPlus))
+                {
                     return;
+                }
 
                 name = ((ButtonPlus)c_Buttons[info.ButtonID]).Name;
 
@@ -310,7 +324,9 @@ namespace Knives.TownHouses
                     "An error occured during a gump response.  More information can be found on the console."
                 );
                 if (name != "")
+                {
                     Console.WriteLine("{0} gump name triggered an error.", name);
+                }
                 Console.WriteLine(e.Message);
                 Console.WriteLine(e.Source);
                 Console.WriteLine(e.StackTrace);

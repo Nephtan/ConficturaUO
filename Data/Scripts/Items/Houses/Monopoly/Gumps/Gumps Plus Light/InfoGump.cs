@@ -6,8 +6,7 @@ namespace Knives.TownHouses
 {
     public class InfoGump : GumpPlusLight
     {
-        private int c_Width,
-            c_Height;
+        private int c_Width, c_Height;
         private string c_Text;
         private bool c_Scroll;
 
