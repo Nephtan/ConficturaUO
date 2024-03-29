@@ -27,10 +27,10 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 //
-[assembly: AssemblyTitle("Adventure Game")]
+[assembly: AssemblyTitle("Confictura: Legend & Adventure")]
 [assembly: AssemblyDescription("Adventure Game")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Djeryv")]
+[assembly: AssemblyCompany("Nephtan")]
 [assembly: AssemblyProduct("")]
 [assembly: AssemblyCopyright("")]
 [assembly: AssemblyTrademark("")]
