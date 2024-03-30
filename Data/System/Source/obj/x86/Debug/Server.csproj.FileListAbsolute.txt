@@ -1,7 +1,0 @@
-C:\Confictura-Server-Solution\ConficturaUO\Data\System\Source\obj\x86\Debug\Server.csproj.AssemblyReference.cache
-C:\Confictura-Server-Solution\ConficturaUO\Data\System\Source\obj\x86\Debug\Server.csproj.CoreCompileInputs.cache
-C:\Confictura-Server-Solution\ConficturaUO\ConficturaServer.exe.config
-C:\Confictura-Server-Solution\ConficturaUO\Data\System\Source\obj\x86\Debug\ConficturaServer.exe
-C:\Confictura-Server-Solution\ConficturaUO\Data\System\Source\obj\x86\Debug\ConficturaServer.pdb
-C:\Confictura-Server-Solution\ConficturaUO\ConficturaServer.exe
-C:\Confictura-Server-Solution\ConficturaUO\ConficturaServer.pdb
