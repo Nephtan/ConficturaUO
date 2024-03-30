@@ -2955,8 +2955,7 @@ namespace Server.Misc
                 "Treasure",
                 "Trident",
                 "Whale",
-                "Whirlpool",
-                "Whore"
+                "Whirlpool"
             };
             string sName2 = vName2[Utility.RandomMinMax(0, (vName2.Length - 1))];
 
