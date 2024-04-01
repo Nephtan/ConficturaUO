@@ -3,3 +3,7 @@
 /Data/Scripts/obj
 /Data/System/Source/obj
 *.log
+/Backups
+/Data/Scripts/.vs
+/Data/System/Source/.vs
+/Saves

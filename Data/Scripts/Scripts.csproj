@@ -6581,6 +6581,7 @@
     <Content Include="Custom\XMLSpawner\XmlPoints PvP\xmlpoints.txt" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="Custom\Invasion System\Add Ins\SubChamps\LichLordDaemonKing.cs.bak" />
     <None Include="Custom\RandomEncounters\Cleaner.old" />
     <None Include="Custom\RandomEncounters\RandomEncounters.xml.orig" />
@@ -6617,6 +6618,12 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\System\Source\Server.csproj">
+      <Project>{3de1790d-3216-4a5a-9341-73adfd552b97}</Project>
+      <Name>Server</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSHARP.Targets" />
   <ProjectExtensions>
