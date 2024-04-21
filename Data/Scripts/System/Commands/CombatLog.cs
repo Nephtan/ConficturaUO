@@ -105,6 +105,9 @@ namespace Server.Commands
 
         private static string ExtractAttackerName(Mobile mobile)
         {
+            if (mobile == null)
+                return "Null"; // some traps send the player as the attacker, while some send a null. so I just return a string with Null on it in that case.
+            
             string result = mobile.ToString();
             int quotePosition = result.IndexOf('\"');
             if (quotePosition != -1)
