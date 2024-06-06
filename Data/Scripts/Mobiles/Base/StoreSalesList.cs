@@ -7841,6 +7841,30 @@ namespace Server.Mobiles
                 if (MyServerSettings.SellChance())
                 {
                     Add(
+                        new GenericBuyInfo(typeof(StandardAlchemyStudyBook), 7500, 1, 0x225A, 0x1BA)
+                    );
+                }
+                if (MyServerSettings.SellChance())
+                {
+                    Add(
+                        new GenericBuyInfo(
+                            typeof(StandardPoisoningStudyBook),
+                            7500,
+                            1,
+                            0x225A,
+                            0x1BA
+                        )
+                    );
+                }
+                if (MyServerSettings.SellChance())
+                {
+                    Add(
+                        new GenericBuyInfo(typeof(StandardTastingStudyBook), 7500, 1, 0x225A, 0x1BA)
+                    );
+                }
+                if (MyServerSettings.SellChance())
+                {
+                    Add(
                         new GenericBuyInfo(
                             typeof(MortarPestle),
                             8,
@@ -42807,6 +42831,30 @@ namespace Server.Mobiles
         {
             public InternalBuyInfo()
             {
+                if (MyServerSettings.SellChance())
+                {
+                    Add(
+                        new GenericBuyInfo(typeof(StandardAlchemyStudyBook), 7500, 1, 0x225A, 0x1BA)
+                    );
+                }
+                if (MyServerSettings.SellChance())
+                {
+                    Add(
+                        new GenericBuyInfo(
+                            typeof(StandardPoisoningStudyBook),
+                            7500,
+                            1,
+                            0x225A,
+                            0x1BA
+                        )
+                    );
+                }
+                if (MyServerSettings.SellChance())
+                {
+                    Add(
+                        new GenericBuyInfo(typeof(StandardTastingStudyBook), 7500, 1, 0x225A, 0x1BA)
+                    );
+                }
                 Add(new GenericBuyInfo(typeof(MortarPestle), 8, Utility.Random(3, 31), 0x4CE9, 0));
                 Add(
                     new GenericBuyInfo(typeof(WitchCauldron), 16, Utility.Random(3, 31), 0x640B, 0)
