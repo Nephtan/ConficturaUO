@@ -19,7 +19,10 @@ namespace Server.Spells.Ninjitsu
         {
             get { return Core.ML ? 30.0 : 60; }
         }
-
+        public override bool BlockedByAnimalForm
+        {
+            get { return false; }
+        }
         public override TextDefinition AbilityMessage
         {
             get { return new TextDefinition(1063095); }
@@ -36,15 +39,31 @@ namespace Server.Spells.Ninjitsu
             Item handOne = from.FindItemOnLayer(Layer.OneHanded) as BaseWeapon;
 
             if (handOne != null && !(handOne is BaseRanged))
-                return base.Validate(from);
+                return CustomValidate(from);
 
             Item handTwo = from.FindItemOnLayer(Layer.TwoHanded) as BaseWeapon;
 
             if (handTwo != null && !(handTwo is BaseRanged))
-                return base.Validate(from);
+                return CustomValidate(from);
 
             from.SendLocalizedMessage(1063097); // You must be wielding a melee weapon without a shield to use this ability.
             return false;
+        }
+
+        private bool CustomValidate(Mobile from)
+        {
+            if (!from.Player)
+                return true;
+
+            if (Bushido.HonorableExecution.IsUnderPenalty(from))
+            {
+                from.SendLocalizedMessage(1063024); // You cannot perform this special move right now.
+                return false;
+            }
+
+            // Skipped AnimalForm check
+
+            return CheckSkills(from) && CheckMana(from, false);
         }
 
         public override double GetDamageScalar(Mobile attacker, Mobile defender)

@@ -26,6 +26,10 @@ namespace Server.Spells.Ninjitsu
             get { return new TextDefinition(1063128); }
         } // You prepare to surprise your prey.
 
+        public override bool BlockedByAnimalForm
+        {
+            get { return false; }
+        }
         public override bool Validate(Mobile from)
         {
             if (!from.Hidden || from.AllowedStealthSteps <= 0)
@@ -34,7 +38,16 @@ namespace Server.Spells.Ninjitsu
                 return false;
             }
 
-            return base.Validate(from);
+            if (!from.Player)
+                return true;
+
+            if (Bushido.HonorableExecution.IsUnderPenalty(from))
+            {
+                from.SendLocalizedMessage(1063024); // You cannot perform this special move right now.
+                return false;
+            }
+
+            return CheckSkills(from) && CheckMana(from, false);
         }
 
         public override bool OnBeforeSwing(Mobile attacker, Mobile defender)

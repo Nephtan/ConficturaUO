@@ -19,7 +19,10 @@ namespace Server.Spells.Ninjitsu
         {
             get { return 80.0; }
         }
-
+        public override bool BlockedByAnimalForm
+        {
+            get { return false; }
+        }
         public override TextDefinition AbilityMessage
         {
             get { return new TextDefinition(1063099); }
@@ -59,7 +62,20 @@ namespace Server.Spells.Ninjitsu
                 }
             }
 
-            return base.Validate(from);
+            // Removed the base.Validate(from) call and added specific checks
+
+            if (!from.Player)
+                return true;
+
+            if (Bushido.HonorableExecution.IsUnderPenalty(from))
+            {
+                from.SendLocalizedMessage(1063024); // You cannot perform this special move right now.
+                return false;
+            }
+
+            // Skipped AnimalForm check
+
+            return CheckSkills(from) && CheckMana(from, false);
         }
 
         public override double GetDamageScalar(Mobile attacker, Mobile defender)

@@ -20,6 +20,10 @@ namespace Server.Spells.Ninjitsu
         {
             get { return Core.ML ? 40.0 : 20.0; }
         }
+        public override bool BlockedByAnimalForm
+        {
+            get { return false; }
+        }
 
         public override TextDefinition AbilityMessage
         {
@@ -41,7 +45,16 @@ namespace Server.Spells.Ninjitsu
                 return false;
             }
 
-            return base.Validate(from);
+            if (!from.Player)
+                return true;
+
+            if (Bushido.HonorableExecution.IsUnderPenalty(from))
+            {
+                from.SendLocalizedMessage(1063024); // You cannot perform this special move right now.
+                return false;
+            }
+
+            return CheckSkills(from) && CheckMana(from, false);
         }
 
         public override bool OnBeforeSwing(Mobile attacker, Mobile defender)
