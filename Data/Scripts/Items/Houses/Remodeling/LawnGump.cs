@@ -441,7 +441,7 @@ namespace Server.Gumps
             }
             else if (info.ButtonID == (int)Buttons.Place)
             {
-                if (m_SelectedID > 0)
+                if (m_LawnTools != null && from != null && m_SelectedID > 0 && !string.IsNullOrEmpty(m_ItemTitle) && m_CurrentCategory != null && !string.IsNullOrEmpty(m_CurrentCategory.Name))
                 {
                     from.SendMessage("Please choose where to place the item");
                     from.Target = new LawnTarget(
@@ -453,6 +453,10 @@ namespace Server.Gumps
                         m_CurrentCategory.Name,
                         m_CurrentPage
                     );
+                }
+                else
+                {
+                    from.SendMessage("An error occurred: missing or invalid data for LawnTarget. Please contact a staff member.");
                 }
             }
             else if (info.ButtonID >= 80851 && info.ButtonID <= 80865)
