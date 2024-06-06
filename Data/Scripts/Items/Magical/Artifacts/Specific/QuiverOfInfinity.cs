@@ -16,8 +16,8 @@ namespace Server.Items
             Name = "Quiver of Infinity";
             ItemID = 0x2B02;
             Hue = 0x99A;
-            WeightReduction = 80;
-            LowerAmmoCost = 20;
+            WeightReduction = 20;
+            LowerAmmoCost = 80;
             Attributes.DefendChance = 5;
         }
 
