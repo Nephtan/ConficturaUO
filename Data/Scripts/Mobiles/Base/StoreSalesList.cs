@@ -12831,6 +12831,18 @@ namespace Server.Mobiles
                         )
                     );
                 }
+                if (MyServerSettings.SellRareChance())
+                {
+                    Add(
+                        new GenericBuyInfo(
+                            typeof(ArcheryButteDeed),
+                            Utility.Random(3750, 5250),
+                            1,
+                            0x14F0,
+                            0
+                        )
+                    );
+                }
                 Add(
                     new GenericBuyInfo(
                         typeof(FletcherTools),
