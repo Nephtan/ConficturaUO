@@ -1326,7 +1326,7 @@ namespace Knives.TownHouses
             if (!Owned || c_House.Deleted)
                 return;
 
-            // PackUpItems();
+            // TryCatch(PackUpItems);
             c_House.Owner.BankBox.DropItem(new BankCheck(c_House.Price));
         }
 
