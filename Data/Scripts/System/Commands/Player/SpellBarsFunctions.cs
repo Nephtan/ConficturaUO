@@ -433,6 +433,12 @@ namespace Server.Misc
                 ToolBarSetting = ((PlayerMobile)m).SpellBarsMonk2;
             }
 
+            // Fix for NullReferenceException - check if ToolBarSetting is null or empty
+            if (string.IsNullOrEmpty(ToolBarSetting))
+            {
+                return 0; // Return default value if the setting is not initialized
+            }
+
             string[] eachSetting = ToolBarSetting.Split('#');
             int nLine = 1;
 
@@ -445,7 +451,12 @@ namespace Server.Misc
                 nLine++;
             }
 
-            int nValue = Convert.ToInt32(sSetting);
+            // Another safety check to ensure sSetting is a valid integer
+            int nValue;
+            if (!int.TryParse(sSetting, out nValue))
+            {
+                nValue = 0; // Default value if conversion fails
+            }
 
             return nValue;
         }
