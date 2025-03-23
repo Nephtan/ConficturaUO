@@ -1816,6 +1816,7 @@
     <Compile Include="Items\Houses\PlayersHouseTeleporter.cs" />
     <Compile Include="Items\Houses\PlayersZTeleporter.cs" />
     <Compile Include="Items\Houses\PreviewHouse.cs" />
+    <Compile Include="Items\Houses\Remodeling\ConfirmRemoveGump.cs" />
     <Compile Include="Items\Houses\Remodeling\ContextMenuEntries.cs" />
     <Compile Include="Items\Houses\Remodeling\LawnGate.cs" />
     <Compile Include="Items\Houses\Remodeling\LawnGump.cs" />
