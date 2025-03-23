@@ -118,6 +118,15 @@ namespace Server.Mobiles
             return false;
         }
 
+        private DateTime m_LastDecoConfirmTime;
+
+        [CommandProperty(AccessLevel.GameMaster)]
+        public DateTime LastDecoConfirmTime
+        {
+            get { return m_LastDecoConfirmTime; }
+            set { m_LastDecoConfirmTime = value; }
+        }
+
         /* Begin Captcha Mod */
         ////////////////////////////////////////
         private DateTime _NextCaptchaTime;
@@ -4517,6 +4526,12 @@ namespace Server.Mobiles
 
             switch (version)
             {
+                case 37:
+                    {
+                        m_LastDecoConfirmTime = reader.ReadDateTime();
+
+                        goto case 36;
+                    }
                 case 36:
                     {
                         UsingAncientBook = reader.ReadBool();
@@ -4988,7 +5003,9 @@ namespace Server.Mobiles
 
             base.Serialize(writer);
 
-            writer.Write((int)36); // version
+            writer.Write((int)37); // version
+
+            writer.Write(m_LastDecoConfirmTime);
 
             writer.Write(UsingAncientBook);
             writer.Write(SpellBarsArch1);
