@@ -1180,6 +1180,8 @@ namespace Server.Items
                         if (val > MaxValue)
                             val = MaxValue;
 
+                        if (reportCurrentValueOnly) return val;
+
                         ((BaseShield)itemToEnhance).Attributes.SetValue((int)attr, val);
                     }
                     else if (itemToEnhance is BaseArmor)
@@ -1188,6 +1190,8 @@ namespace Server.Items
 
                         if (val > MaxValue)
                             val = MaxValue;
+
+                        if (reportCurrentValueOnly) return val;
 
                         ((BaseArmor)itemToEnhance).Attributes.SetValue((int)attr, val);
                     }
@@ -1198,6 +1202,8 @@ namespace Server.Items
                         if (val > MaxValue)
                             val = MaxValue;
 
+                        if (reportCurrentValueOnly) return val;
+
                         ((BaseWeapon)itemToEnhance).Attributes.SetValue((int)attr, val);
                     }
                     else if (itemToEnhance is BaseJewel)
@@ -1206,6 +1212,8 @@ namespace Server.Items
 
                         if (val > MaxValue)
                             val = MaxValue;
+
+                        if (reportCurrentValueOnly) return val;
 
                         ((BaseJewel)itemToEnhance).Attributes.SetValue((int)attr, val);
                     }
@@ -1216,6 +1224,8 @@ namespace Server.Items
                         if (val > MaxValue)
                             val = MaxValue;
 
+                        if (reportCurrentValueOnly) return val;
+
                         ((BaseClothing)itemToEnhance).Attributes.SetValue((int)attr, val);
                     }
                     else if (itemToEnhance is Spellbook)
@@ -1224,6 +1234,8 @@ namespace Server.Items
 
                         if (val > MaxValue)
                             val = MaxValue;
+
+                        if (reportCurrentValueOnly) return val;
 
                         ((Spellbook)itemToEnhance).Attributes.SetValue((int)attr, val);
                     }
@@ -1244,6 +1256,8 @@ namespace Server.Items
                         if (val > MaxValue)
                             val = MaxValue;
 
+                        if (reportCurrentValueOnly) return val;
+
                         ((BaseShield)itemToEnhance).ArmorAttributes.SetValue((int)attr, val);
                     }
                     else if (itemToEnhance is BaseArmor)
@@ -1253,6 +1267,8 @@ namespace Server.Items
 
                         if (val > MaxValue)
                             val = MaxValue;
+
+                        if (reportCurrentValueOnly) return val;
 
                         ((BaseArmor)itemToEnhance).ArmorAttributes.SetValue((int)attr, val);
                     }
@@ -1272,6 +1288,8 @@ namespace Server.Items
                         if (val > MaxValue)
                             val = MaxValue;
 
+                        if (reportCurrentValueOnly) return val;
+
                         ((BaseJewel)itemToEnhance).Resistances.SetValue((int)attr, val);
                     }
                     else if (itemToEnhance is BaseClothing)
@@ -1280,6 +1298,8 @@ namespace Server.Items
 
                         if (val > MaxValue)
                             val = MaxValue;
+
+                        if (reportCurrentValueOnly) return val;
 
                         ((BaseClothing)itemToEnhance).Resistances.SetValue((int)attr, val);
                     }
@@ -1300,6 +1320,8 @@ namespace Server.Items
 
                         if (val > MaxValue)
                             val = MaxValue;
+
+                        if (reportCurrentValueOnly) return val;
 
                         ((BaseWeapon)itemToEnhance).WeaponAttributes.SetValue((int)attr, val);
                     }
@@ -1322,6 +1344,8 @@ namespace Server.Items
                                 if (val > MaxValue)
                                     val = MaxValue;
 
+                                if (reportCurrentValueOnly) return val;
+
                                 armor.PhysicalBonus = val;
                                 break;
                             case "FireBonus":
@@ -1329,6 +1353,8 @@ namespace Server.Items
 
                                 if (val > MaxValue)
                                     val = MaxValue;
+
+                                if (reportCurrentValueOnly) return val;
 
                                 armor.FireBonus = val;
                                 break;
@@ -1338,6 +1364,8 @@ namespace Server.Items
                                 if (val > MaxValue)
                                     val = MaxValue;
 
+                                if (reportCurrentValueOnly) return val;
+
                                 armor.ColdBonus = val;
                                 break;
                             case "PoisonBonus":
@@ -1346,6 +1374,8 @@ namespace Server.Items
                                 if (val > MaxValue)
                                     val = MaxValue;
 
+                                if (reportCurrentValueOnly) return val;
+
                                 armor.PoisonBonus = val;
                                 break;
                             case "EnergyBonus":
@@ -1353,6 +1383,8 @@ namespace Server.Items
 
                                 if (val > MaxValue)
                                     val = MaxValue;
+
+                                if (reportCurrentValueOnly) return val;
 
                                 armor.EnergyBonus = val;
                                 break;
