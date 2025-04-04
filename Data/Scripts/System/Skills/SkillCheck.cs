@@ -312,7 +312,7 @@ namespace Server.Misc
             }
             else if (pm.NpcGuild == NpcGuild.ElementalGuild)
             {
-                if (skillName == SkillName.Psychology)
+                if (skillName == SkillName.Focus)
                 {
                     return true;
                 }
