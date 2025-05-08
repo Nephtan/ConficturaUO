@@ -1094,6 +1094,19 @@ namespace Server.Gumps
                         map = Map.Sosaria;
                         break;
                 }
+                
+                if ( map == Map.Sosaria )
+                {
+                    PlayerSettings.SetDiscovered( m, "the Land of Sosaria", true );
+                }
+                else if ( map == Map.Lodor )
+                {
+                    PlayerSettings.SetDiscovered( m, "the Land of Lodoria", true );
+                }
+                else if ( map == Map.SavagedEmpire )
+                {
+                    PlayerSettings.SetDiscovered( m, "the Savaged Empire", true );
+                }
             }
 
             m.MoveToWorld(loc, map);
