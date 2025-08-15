@@ -946,8 +946,16 @@ namespace Server.Items
 
         public static bool FoundItem(Mobile player, int type, MajorItemOnCorpse chest)
         {
-            Item item = player.Backpack.FindItemByType(typeof(QuestTome));
-            QuestTome book = (QuestTome)item;
+            if (player == null || player.Backpack == null)
+            {
+                return false;
+            }
+
+            QuestTome book = player.Backpack.FindItemByType(typeof(QuestTome)) as QuestTome;
+            if (book == null)
+            {
+                return false;
+            }
 
             if (
                 type == book.QuestTomeType
