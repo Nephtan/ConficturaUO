@@ -82,7 +82,19 @@ namespace Server.Gumps
             );
 
             ToolBarUpdates.InitializeToolBar(from, "SetupBarsArch1");
-            string MyServerSettings = ((PlayerMobile)from).SpellBarsArch1;
+            // string MyServerSettings = ((PlayerMobile)from).SpellBarsArch1;
+
+            string MyServerSettings = null;
+            if (from is PlayerMobile pm) // Check if 'from' is actually a PlayerMobile
+            {
+                MyServerSettings = pm.SpellBarsArch1;
+            }
+
+            if (MyServerSettings == null) // Check if the setting string is null
+            {
+                MyServerSettings = ""; // Assign an empty string to prevent NullReferenceException on Split
+                // Alternatively, you could assign a default settings string here if you have one.
+            }
 
             int button1 = 3609;
             int button2 = 3609;
