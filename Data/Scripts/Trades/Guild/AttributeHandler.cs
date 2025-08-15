@@ -1149,7 +1149,7 @@ namespace Server.Items
             {
                 int currentValue = Upgrade(itemToTest, true);
 
-                if (currentValue == MaxValue)
+                if (currentValue >= MaxValue)
                     allowed = false;
             }
 
@@ -1160,8 +1160,10 @@ namespace Server.Items
         #region Upgrade
         public int Upgrade(Item itemToEnhance, bool reportCurrentValueOnly)
         {
-            int value = (reportCurrentValueOnly ? 0 : IncrementValue);
-
+            // This method now correctly separates reading the value from writing the value.
+            // When reportCurrentValueOnly is true, it will only fetch the current value.
+            // When reportCurrentValueOnly is false, it will fetch, increment, cap, and save the value.
+            
             switch (Type)
             {
                 case EnhanceType.None:
@@ -1175,57 +1177,63 @@ namespace Server.Items
 
                     if (itemToEnhance is BaseShield)
                     {
-                        val = ((BaseShield)itemToEnhance).Attributes.GetValue((int)attr) + value;
-
-                        if (val > MaxValue)
-                            val = MaxValue;
-
-                        ((BaseShield)itemToEnhance).Attributes.SetValue((int)attr, val);
+                        val = ((BaseShield)itemToEnhance).Attributes.GetValue((int)attr);
+                        if (!reportCurrentValueOnly)
+                        {
+                            val += IncrementValue;
+                            if (val > MaxValue) val = MaxValue;
+                            ((BaseShield)itemToEnhance).Attributes.SetValue((int)attr, val);
+                        }
                     }
                     else if (itemToEnhance is BaseArmor)
                     {
-                        val = ((BaseArmor)itemToEnhance).Attributes.GetValue((int)attr) + value;
-
-                        if (val > MaxValue)
-                            val = MaxValue;
-
-                        ((BaseArmor)itemToEnhance).Attributes.SetValue((int)attr, val);
+                        val = ((BaseArmor)itemToEnhance).Attributes.GetValue((int)attr);
+                        if (!reportCurrentValueOnly)
+                        {
+                            val += IncrementValue;
+                            if (val > MaxValue) val = MaxValue;
+                            ((BaseArmor)itemToEnhance).Attributes.SetValue((int)attr, val);
+                        }
                     }
                     else if (itemToEnhance is BaseWeapon)
                     {
-                        val = ((BaseWeapon)itemToEnhance).Attributes.GetValue((int)attr) + value;
-
-                        if (val > MaxValue)
-                            val = MaxValue;
-
-                        ((BaseWeapon)itemToEnhance).Attributes.SetValue((int)attr, val);
+                        val = ((BaseWeapon)itemToEnhance).Attributes.GetValue((int)attr);
+                        if (!reportCurrentValueOnly)
+                        {
+                            val += IncrementValue;
+                            if (val > MaxValue) val = MaxValue;
+                            ((BaseWeapon)itemToEnhance).Attributes.SetValue((int)attr, val);
+                        }
                     }
                     else if (itemToEnhance is BaseJewel)
                     {
-                        val = ((BaseJewel)itemToEnhance).Attributes.GetValue((int)attr) + value;
-
-                        if (val > MaxValue)
-                            val = MaxValue;
-
-                        ((BaseJewel)itemToEnhance).Attributes.SetValue((int)attr, val);
+                        val = ((BaseJewel)itemToEnhance).Attributes.GetValue((int)attr);
+                        if (!reportCurrentValueOnly)
+                        {
+                            val += IncrementValue;
+                            if (val > MaxValue) val = MaxValue;
+                            ((BaseJewel)itemToEnhance).Attributes.SetValue((int)attr, val);
+                        }
                     }
                     else if (itemToEnhance is BaseClothing)
                     {
-                        val = ((BaseClothing)itemToEnhance).Attributes.GetValue((int)attr) + value;
-
-                        if (val > MaxValue)
-                            val = MaxValue;
-
-                        ((BaseClothing)itemToEnhance).Attributes.SetValue((int)attr, val);
+                        val = ((BaseClothing)itemToEnhance).Attributes.GetValue((int)attr);
+                        if (!reportCurrentValueOnly)
+                        {
+                            val += IncrementValue;
+                            if (val > MaxValue) val = MaxValue;
+                            ((BaseClothing)itemToEnhance).Attributes.SetValue((int)attr, val);
+                        }
                     }
                     else if (itemToEnhance is Spellbook)
                     {
-                        val = ((Spellbook)itemToEnhance).Attributes.GetValue((int)attr) + value;
-
-                        if (val > MaxValue)
-                            val = MaxValue;
-
-                        ((Spellbook)itemToEnhance).Attributes.SetValue((int)attr, val);
+                        val = ((Spellbook)itemToEnhance).Attributes.GetValue((int)attr);
+                        if (!reportCurrentValueOnly)
+                        {
+                            val += IncrementValue;
+                            if (val > MaxValue) val = MaxValue;
+                            ((Spellbook)itemToEnhance).Attributes.SetValue((int)attr, val);
+                        }
                     }
 
                     return val;
@@ -1233,28 +1241,27 @@ namespace Server.Items
                 case EnhanceType.AosArmorAttribute:
                 {
                     int val = 0;
-                    AosArmorAttribute attr = (AosArmorAttribute)
-                        Enum.Parse(typeof(AosArmorAttribute), Name);
+                    AosArmorAttribute attr = (AosArmorAttribute)Enum.Parse(typeof(AosArmorAttribute), Name);
 
                     if (itemToEnhance is BaseShield)
                     {
-                        val =
-                            ((BaseShield)itemToEnhance).ArmorAttributes.GetValue((int)attr) + value;
-
-                        if (val > MaxValue)
-                            val = MaxValue;
-
-                        ((BaseShield)itemToEnhance).ArmorAttributes.SetValue((int)attr, val);
+                        val = ((BaseShield)itemToEnhance).ArmorAttributes.GetValue((int)attr);
+                        if (!reportCurrentValueOnly)
+                        {
+                            val += IncrementValue;
+                            if (val > MaxValue) val = MaxValue;
+                            ((BaseShield)itemToEnhance).ArmorAttributes.SetValue((int)attr, val);
+                        }
                     }
                     else if (itemToEnhance is BaseArmor)
                     {
-                        val =
-                            ((BaseArmor)itemToEnhance).ArmorAttributes.GetValue((int)attr) + value;
-
-                        if (val > MaxValue)
-                            val = MaxValue;
-
-                        ((BaseArmor)itemToEnhance).ArmorAttributes.SetValue((int)attr, val);
+                        val = ((BaseArmor)itemToEnhance).ArmorAttributes.GetValue((int)attr);
+                        if (!reportCurrentValueOnly)
+                        {
+                            val += IncrementValue;
+                            if (val > MaxValue) val = MaxValue;
+                            ((BaseArmor)itemToEnhance).ArmorAttributes.SetValue((int)attr, val);
+                        }
                     }
 
                     return val;
@@ -1262,26 +1269,27 @@ namespace Server.Items
                 case EnhanceType.AosElementAttribute:
                 {
                     int val = 0;
-                    AosElementAttribute attr = (AosElementAttribute)
-                        Enum.Parse(typeof(AosElementAttribute), Name);
+                    AosElementAttribute attr = (AosElementAttribute)Enum.Parse(typeof(AosElementAttribute), Name);
 
                     if (itemToEnhance is BaseJewel)
                     {
-                        val = ((BaseJewel)itemToEnhance).Resistances.GetValue((int)attr) + value;
-
-                        if (val > MaxValue)
-                            val = MaxValue;
-
-                        ((BaseJewel)itemToEnhance).Resistances.SetValue((int)attr, val);
+                        val = ((BaseJewel)itemToEnhance).Resistances.GetValue((int)attr);
+                        if (!reportCurrentValueOnly)
+                        {
+                            val += IncrementValue;
+                            if (val > MaxValue) val = MaxValue;
+                            ((BaseJewel)itemToEnhance).Resistances.SetValue((int)attr, val);
+                        }
                     }
                     else if (itemToEnhance is BaseClothing)
                     {
-                        val = ((BaseClothing)itemToEnhance).Resistances.GetValue((int)attr) + value;
-
-                        if (val > MaxValue)
-                            val = MaxValue;
-
-                        ((BaseClothing)itemToEnhance).Resistances.SetValue((int)attr, val);
+                        val = ((BaseClothing)itemToEnhance).Resistances.GetValue((int)attr);
+                        if (!reportCurrentValueOnly)
+                        {
+                            val += IncrementValue;
+                            if (val > MaxValue) val = MaxValue;
+                            ((BaseClothing)itemToEnhance).Resistances.SetValue((int)attr, val);
+                        }
                     }
 
                     return val;
@@ -1289,19 +1297,17 @@ namespace Server.Items
                 case EnhanceType.AosWeaponAttribute:
                 {
                     int val = 0;
-                    AosWeaponAttribute attr = (AosWeaponAttribute)
-                        Enum.Parse(typeof(AosWeaponAttribute), Name);
+                    AosWeaponAttribute attr = (AosWeaponAttribute)Enum.Parse(typeof(AosWeaponAttribute), Name);
 
                     if (itemToEnhance is BaseWeapon)
                     {
-                        val =
-                            ((BaseWeapon)itemToEnhance).WeaponAttributes.GetValue((int)attr)
-                            + value;
-
-                        if (val > MaxValue)
-                            val = MaxValue;
-
-                        ((BaseWeapon)itemToEnhance).WeaponAttributes.SetValue((int)attr, val);
+                        val = ((BaseWeapon)itemToEnhance).WeaponAttributes.GetValue((int)attr);
+                        if (!reportCurrentValueOnly)
+                        {
+                            val += IncrementValue;
+                            if (val > MaxValue) val = MaxValue;
+                            ((BaseWeapon)itemToEnhance).WeaponAttributes.SetValue((int)attr, val);
+                        }
                     }
 
                     return val;
@@ -1317,44 +1323,49 @@ namespace Server.Items
                         switch (Name)
                         {
                             case "PhysicalBonus":
-                                val = armor.PhysicalBonus + value;
-
-                                if (val > MaxValue)
-                                    val = MaxValue;
-
-                                armor.PhysicalBonus = val;
+                                val = armor.PhysicalBonus;
+                                if (!reportCurrentValueOnly)
+                                {
+                                    val += IncrementValue;
+                                    if (val > MaxValue) val = MaxValue;
+                                    armor.PhysicalBonus = val;
+                                }
                                 break;
                             case "FireBonus":
-                                val = armor.FireBonus + value;
-
-                                if (val > MaxValue)
-                                    val = MaxValue;
-
-                                armor.FireBonus = val;
+                                val = armor.FireBonus;
+                                if (!reportCurrentValueOnly)
+                                {
+                                    val += IncrementValue;
+                                    if (val > MaxValue) val = MaxValue;
+                                    armor.FireBonus = val;
+                                }
                                 break;
                             case "ColdBonus":
-                                val = armor.ColdBonus + value;
-
-                                if (val > MaxValue)
-                                    val = MaxValue;
-
-                                armor.ColdBonus = val;
+                                val = armor.ColdBonus;
+                                if (!reportCurrentValueOnly)
+                                {
+                                    val += IncrementValue;
+                                    if (val > MaxValue) val = MaxValue;
+                                    armor.ColdBonus = val;
+                                }
                                 break;
                             case "PoisonBonus":
-                                val = armor.PoisonBonus + value;
-
-                                if (val > MaxValue)
-                                    val = MaxValue;
-
-                                armor.PoisonBonus = val;
+                                val = armor.PoisonBonus;
+                                if (!reportCurrentValueOnly)
+                                {
+                                    val += IncrementValue;
+                                    if (val > MaxValue) val = MaxValue;
+                                    armor.PoisonBonus = val;
+                                }
                                 break;
                             case "EnergyBonus":
-                                val = armor.EnergyBonus + value;
-
-                                if (val > MaxValue)
-                                    val = MaxValue;
-
-                                armor.EnergyBonus = val;
+                                val = armor.EnergyBonus;
+                                if (!reportCurrentValueOnly)
+                                {
+                                    val += IncrementValue;
+                                    if (val > MaxValue) val = MaxValue;
+                                    armor.EnergyBonus = val;
+                                }
                                 break;
                         }
                     }
