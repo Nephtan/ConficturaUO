@@ -87,12 +87,14 @@ namespace Server.Misc
             {
                 Process.Start(Core.ExePath, Core.Arguments);
                 Console.WriteLine("done");
-
-                e.Close = true;
             }
             catch
             {
                 Console.WriteLine("failed");
+            }
+            finally
+            {
+                e.Close = true; // Always close the current process, even if restart fails
             }
         }
 
