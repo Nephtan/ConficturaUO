@@ -400,7 +400,12 @@ namespace Server.Gumps
                     sect = 5;
                 }
 
-                string power = (ElementalSpell.GetPower(circle - 1)).ToString();
+                if (circle < 1 || circle > 8)
+                {
+                    circle = 1;
+                }
+
+                string power = ElementalSpell.GetPower(circle - 1).ToString();
 
                 AddImage(74, 86, ElementalSpell.SpellIcon(book.ItemID, spell));
                 AddHtml(

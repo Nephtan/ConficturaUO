@@ -78,6 +78,7 @@ namespace Server.Spells.Elementalism
 
         public static int GetPower(int circle)
         {
+            circle = Math.Min(m_ManaTable.Length - 1, Math.Max(0, circle));
             return m_ManaTable[circle];
         }
 
