@@ -6728,6 +6728,7 @@ namespace Server.Mobiles
                 )
                 {
                     LootChoiceUpdates.ClearAutoLootBag();
+                    m_AutoLootBag = null;
                     return null;
                 }
 
