@@ -85,7 +85,8 @@ namespace Server.Gumps
             // string MyServerSettings = ((PlayerMobile)from).SpellBarsArch1;
 
             string MyServerSettings = null;
-            if (from is PlayerMobile pm) // Check if 'from' is actually a PlayerMobile
+            PlayerMobile pm = from as PlayerMobile; // ensure 'from' is a PlayerMobile
+            if (pm != null)
             {
                 MyServerSettings = pm.SpellBarsArch1;
             }
