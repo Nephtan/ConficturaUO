@@ -997,7 +997,7 @@ namespace Server.Mobiles
                     from.Region.IsPartOf(typeof(PublicRegion))
                     && DateTime.Now - m_LastRestock > RestockDelayFull
                 )
-                || (this is BaseGuildmaster && DateTime.Now - m_LastRestock > RestockDelayFull)
+                || (this is BaseGuildmaster && DateTime.Now - m_LastRestock > RestockDelay)
             )
                 Restock();
 
@@ -1209,6 +1209,16 @@ namespace Server.Mobiles
                 this.Say("I have no business with you.");
                 return;
             }
+
+            if (
+                DateTime.Now - m_LastRestock > RestockDelay
+                || (
+                    from.Region.IsPartOf(typeof(PublicRegion))
+                    && DateTime.Now - m_LastRestock > RestockDelayFull
+                )
+                || (this is BaseGuildmaster && DateTime.Now - m_LastRestock > RestockDelay)
+            )
+                Restock();
 
             Container pack = from.Backpack;
 
