@@ -10,6 +10,12 @@ namespace Server.Items
     [Flipable(0x14F0, 0x14EF)]
     public abstract class BaseAddonDeed : Item
     {
+        private static readonly TextDefinition PlaceBlockedMessage =
+            new TextDefinition("Placement failed: a roof or wall blocks the location.");
+
+        private static readonly TextDefinition PlaceOutsideMessage =
+            new TextDefinition("Placement failed: the addon would be outside the house.");
+
         public abstract BaseAddon Addon { get; }
 
         public BaseAddonDeed()
@@ -89,7 +95,9 @@ namespace Server.Items
                     AddonFitResult res = addon.CouldFit(p, map, from, ref houses);
 
                     if (res == AddonFitResult.Valid)
+                    {
                         addon.MoveToWorld(new Point3D(p), map);
+                    }
                     else if (ismayor)
                     {
                         CityManagementStone stone = pm.City;
@@ -97,13 +105,27 @@ namespace Server.Items
                         stone.AddOns.Add(addon);
                     }
                     else if (res == AddonFitResult.Blocked)
-                        from.SendLocalizedMessage(500269); // You cannot build that there.
+                    {
+                        TextDefinition.SendMessageTo(from, PlaceBlockedMessage);
+                    }
                     else if (res == AddonFitResult.NotInHouse)
-                        from.SendLocalizedMessage(500274); // You can only place this in a house that you own!
+                    {
+                        Point3D loc = new Point3D(p);
+                        BaseHouse houseAt = BaseHouse.FindHouseAt(loc, map, 16);
+
+                        if (houseAt != null && houseAt.IsOwner(from))
+                            TextDefinition.SendMessageTo(from, PlaceOutsideMessage);
+                        else
+                            from.SendLocalizedMessage(500274); // You can only place this in a house that you own!
+                    }
                     else if (res == AddonFitResult.DoorTooClose)
+                    {
                         from.SendLocalizedMessage(500271); // You cannot build near the door.
+                    }
                     else if (res == AddonFitResult.NoWall)
+                    {
                         from.SendLocalizedMessage(500268); // This object needs to be mounted on something.
+                    }
 
                     if (res == AddonFitResult.Valid)
                     {
