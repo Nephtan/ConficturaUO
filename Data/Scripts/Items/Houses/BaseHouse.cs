@@ -36,12 +36,6 @@ namespace Server.Multis
 
         public static bool DecayEnabled = MyServerSettings.HousesDecay();
 
-        private static readonly TextDefinition RelocateBlockedMessage =
-            new TextDefinition("Relocation failed: a roof or wall blocks the location.");
-
-        private static readonly TextDefinition RelocateOutsideMessage =
-            new TextDefinition("Relocation failed: the addon would be outside the house.");
-
         public static void Decay_OnTick()
         {
             for (int i = 0; i < m_AllHouses.Count; ++i)
@@ -727,59 +721,10 @@ namespace Server.Multis
                     {
                         if (item is IAddon)
                         {
-                            AddonFitResult res = AddonFitResult.Blocked;
-
-                            if (item is BaseAddon ba)
-                            {
-                                List<BaseHouse> houses = new List<BaseHouse> { this };
-                                res = ba.CouldFit(location, this.Map, this.Owner, ref houses);
-                            }
-                            else if (item is BaseAddonContainer bac)
-                            {
-                                BaseHouse houseRef = this;
-                                res = bac.CouldFit(location, this.Map, this.Owner, ref houseRef);
-                            }
-                            else if (((IAddon)item).CouldFit(location, this.Map))
-                            {
-                                res = AddonFitResult.Valid;
-                            }
-
-                            if (res == AddonFitResult.Valid)
+                            if (((IAddon)item).CouldFit(location, this.Map))
                             {
                                 item.MoveToWorld(location, this.Map);
                                 continue;
-                            }
-                            else
-                            {
-                                Mobile owner = this.Owner;
-
-                                if (owner != null)
-                                {
-                                    switch (res)
-                                    {
-                                        case AddonFitResult.Blocked:
-                                            TextDefinition.SendMessageTo(owner, RelocateBlockedMessage);
-                                            break;
-                                        case AddonFitResult.NotInHouse:
-                                            TextDefinition.SendMessageTo(owner, RelocateOutsideMessage);
-                                            break;
-                                    }
-                                }
-                                else
-                                {
-                                    if (res == AddonFitResult.Blocked)
-                                        Console.WriteLine(
-                                            "Relocation of addon {0} failed at {1}: blocked by roof or wall.",
-                                            item.Serial,
-                                            location
-                                        );
-                                    else if (res == AddonFitResult.NotInHouse)
-                                        Console.WriteLine(
-                                            "Relocation of addon {0} failed at {1}: outside of the house.",
-                                            item.Serial,
-                                            location
-                                        );
-                                }
                             }
                         }
                         else
