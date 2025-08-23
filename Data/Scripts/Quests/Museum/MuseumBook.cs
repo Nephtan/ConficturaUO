@@ -254,8 +254,8 @@ namespace Server.Items
                     string say = AntiqueInfo(thing, 4, book);
 
                     Museums relic = new Museums();
-                    relic.ItemID = Int32.Parse(AntiqueInfo(thing, 1, book));
-                    relic.Hue = Int32.Parse(AntiqueInfo(thing, 3, book));
+                    relic.ItemID = Utility.ToInt32(AntiqueInfo(thing, 1, book));
+                    relic.Hue = Utility.ToInt32(AntiqueInfo(thing, 3, book));
 
                     if (relic.ItemID == 0x4FA4)
                     {
