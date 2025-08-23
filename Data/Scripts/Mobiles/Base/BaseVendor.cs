@@ -3129,24 +3129,32 @@ namespace Server.Mobiles
 
             writer.Write((int)1); // version
 
-            List<SBInfo> sbInfos = this.SBInfos;
+            List<SBInfo> sbInfos = SBInfos;
 
-            for (int i = 0; sbInfos != null && i < sbInfos.Count; ++i)
+            if (sbInfos != null)
             {
-                SBInfo sbInfo = sbInfos[i];
-                List<GenericBuyInfo> buyInfo = sbInfo.BuyInfo;
+                int infoCount = sbInfos.Count;
 
-                for (int j = 0; buyInfo != null && j < buyInfo.Count; ++j)
+                for (int i = 0; i < infoCount; ++i)
                 {
-                    GenericBuyInfo gbi = (GenericBuyInfo)buyInfo[j];
+                    SBInfo sbInfo = sbInfos[i];
+                    List<GenericBuyInfo> buyInfo = sbInfo.BuyInfo;
 
-                    int maxAmount = gbi.MaxAmount;
-                    int doubled = 0;
+                    if (buyInfo == null)
+                        continue;
 
-                    if (doubled > 0)
+                    for (int j = 0; j < buyInfo.Count; ++j)
                     {
-                        writer.WriteEncodedInt(1 + ((j * sbInfos.Count) + i));
-                        writer.WriteEncodedInt(doubled);
+                        GenericBuyInfo gbi = (GenericBuyInfo)buyInfo[j];
+
+                        int maxAmount = gbi.MaxAmount;
+                        int doubled = maxAmount - gbi.Amount;
+
+                        if (doubled > 0)
+                        {
+                            writer.WriteEncodedInt(1 + ((j * infoCount) + i));
+                            writer.WriteEncodedInt(doubled);
+                        }
                     }
                 }
             }
@@ -3193,9 +3201,12 @@ namespace Server.Mobiles
                                 {
                                     GenericBuyInfo gbi = (GenericBuyInfo)buyInfo[buyInfoIndex];
 
-                                    int amount = 20;
+                                    int amount = gbi.MaxAmount - doubled;
 
-                                    gbi.Amount = gbi.MaxAmount = amount;
+                                    if (amount < 0)
+                                        amount = 0;
+
+                                    gbi.Amount = amount;
                                 }
                             }
                         }
