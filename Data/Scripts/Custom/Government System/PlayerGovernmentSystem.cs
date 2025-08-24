@@ -257,6 +257,28 @@ namespace Server
             return false;
         }
 
+        public static bool CanAttackBanned(Mobile attacker, Mobile target)
+        {
+            foreach (CityManagementStone stone in AllCityStones)
+            {
+                if (stone.Citizens != null && stone.Citizens.Contains(attacker))
+                {
+                    if (stone.Banned != null && stone.Banned.Contains(target))
+                        return true;
+
+                    DateTime expires;
+                    if (stone.BanAttackTimes.TryGetValue(target, out expires))
+                    {
+                        if (DateTime.UtcNow < expires)
+                            return true;
+
+                        stone.BanAttackTimes.Remove(target);
+                    }
+                }
+            }
+            return false;
+        }
+
         public static List<BaseHouse> GetAllHouses(Mobile m) // thanks to bripbrip
         {
             List<BaseHouse> allHouses = new List<BaseHouse>();

@@ -142,6 +142,7 @@ namespace Server.Items
         private int m_CurrentDecore;
         private bool m_IsRegistered;
         private ArrayList m_Banned;
+        private Dictionary<Mobile, DateTime> m_BanAttackTimes;
 
         private ArrayList m_Waring;
         private ArrayList m_WarsDeclared;
@@ -358,8 +359,14 @@ namespace Server.Items
 
         public ArrayList Banned
         {
-            get { return m_Banned; }
+            // Ensure the banned list is always initialized to prevent null-reference issues
+            get { return m_Banned ?? (m_Banned = new ArrayList()); }
             set { m_Banned = value; }
+        }
+
+        public Dictionary<Mobile, DateTime> BanAttackTimes
+        {
+            get { return m_BanAttackTimes ?? (m_BanAttackTimes = new Dictionary<Mobile, DateTime>()); }
         }
 
         public ArrayList Waring
@@ -493,6 +500,9 @@ namespace Server.Items
         {
             Movable = false;
             Name = "city management stone";
+
+            // initialize collections
+            m_Banned = new ArrayList();
 
             m_Time = DateTime.Now + PlayerGovernmentSystem.StartUpdate;
             m_Timer = new CityUpdateTimer(m_Time, this);
