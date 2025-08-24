@@ -2267,12 +2267,14 @@ namespace Server.Items
 
                 pm.City.HasTavern = true;
 
-                Spawner spwn = new Spawner("Barkeeper");
+                PremiumSpawner spwn = new PremiumSpawner("Barkeeper");
                 spwn.Count = 1;
                 spwn.Running = true;
                 spwn.HomeRange = 3;
                 spwn.MinDelay = TimeSpan.FromMinutes(1);
                 spwn.MaxDelay = TimeSpan.FromMinutes(2);
+                spwn.Visible = false;
+                spwn.Movable = false;
 
                 BaseDoor d1 = new StrongWoodDoor(DoorFacing.WestCW);
                 BaseDoor d2 = new StrongWoodDoor(DoorFacing.EastCCW);
@@ -2284,6 +2286,7 @@ namespace Server.Items
                 d2.MoveToWorld(new Point3D(p.X - 4, p.Y - 1, p.Z + 7), from.Map);
 
                 spwn.MoveToWorld(new Point3D(p.X, p.Y - 7, p.Z + 7), from.Map);
+                spwn.Respawn();
 
                 sign.toDelete.Add(d1);
                 sign.toDelete.Add(d2);
@@ -2317,12 +2320,14 @@ namespace Server.Items
 
                 pm.City.HasTavern = true;
 
-                Spawner spwn = new Spawner("Barkeeper");
+                PremiumSpawner spwn = new PremiumSpawner("Barkeeper");
                 spwn.Count = 1;
                 spwn.Running = true;
                 spwn.HomeRange = 3;
                 spwn.MinDelay = TimeSpan.FromMinutes(1);
                 spwn.MaxDelay = TimeSpan.FromMinutes(2);
+                spwn.Visible = false;
+                spwn.Movable = false;
 
                 BaseDoor d1 = new StrongWoodDoor(DoorFacing.WestCW);
                 BaseDoor d2 = new StrongWoodDoor(DoorFacing.EastCCW);
@@ -2334,6 +2339,7 @@ namespace Server.Items
                 d2.MoveToWorld(new Point3D(p.X - 4, p.Y - 1, p.Z + 7), from.Map);
 
                 spwn.MoveToWorld(new Point3D(p.X, p.Y - 7, p.Z + 7), from.Map);
+                spwn.Respawn();
 
                 sign.toDelete.Add(d1);
                 sign.toDelete.Add(d2);
@@ -2367,12 +2373,14 @@ namespace Server.Items
 
                 pm.City.HasTavern = true;
 
-                Spawner spwn = new Spawner("Barkeeper");
+                PremiumSpawner spwn = new PremiumSpawner("Barkeeper");
                 spwn.Count = 1;
                 spwn.Running = true;
                 spwn.HomeRange = 3;
                 spwn.MinDelay = TimeSpan.FromMinutes(1);
                 spwn.MaxDelay = TimeSpan.FromMinutes(2);
+                spwn.Visible = false;
+                spwn.Movable = false;
 
                 BaseDoor d1 = new StrongWoodDoor(DoorFacing.WestCW);
                 BaseDoor d2 = new StrongWoodDoor(DoorFacing.EastCCW);
@@ -2384,6 +2392,7 @@ namespace Server.Items
                 d2.MoveToWorld(new Point3D(p.X - 4, p.Y - 1, p.Z + 7), from.Map);
 
                 spwn.MoveToWorld(new Point3D(p.X, p.Y - 7, p.Z + 7), from.Map);
+                spwn.Respawn();
 
                 sign.toDelete.Add(d1);
                 sign.toDelete.Add(d2);
@@ -2417,12 +2426,14 @@ namespace Server.Items
 
                 pm.City.HasTavern = true;
 
-                Spawner spwn = new Spawner("Barkeeper");
+                PremiumSpawner spwn = new PremiumSpawner("Barkeeper");
                 spwn.Count = 1;
                 spwn.Running = true;
                 spwn.HomeRange = 3;
                 spwn.MinDelay = TimeSpan.FromMinutes(1);
                 spwn.MaxDelay = TimeSpan.FromMinutes(2);
+                spwn.Visible = false;
+                spwn.Movable = false;
 
                 BaseDoor d1 = new StrongWoodDoor(DoorFacing.WestCW);
                 BaseDoor d2 = new StrongWoodDoor(DoorFacing.EastCCW);
@@ -2434,6 +2445,7 @@ namespace Server.Items
                 d2.MoveToWorld(new Point3D(p.X - 4, p.Y - 1, p.Z + 7), from.Map);
 
                 spwn.MoveToWorld(new Point3D(p.X, p.Y - 7, p.Z + 7), from.Map);
+                spwn.Respawn();
 
                 sign.toDelete.Add(d1);
                 sign.toDelete.Add(d2);
@@ -2467,12 +2479,14 @@ namespace Server.Items
 
                 pm.City.HasTavern = true;
 
-                Spawner spwn = new Spawner("Barkeeper");
+                PremiumSpawner spwn = new PremiumSpawner("Barkeeper");
                 spwn.Count = 1;
                 spwn.Running = true;
                 spwn.HomeRange = 3;
                 spwn.MinDelay = TimeSpan.FromMinutes(1);
                 spwn.MaxDelay = TimeSpan.FromMinutes(2);
+                spwn.Visible = false;
+                spwn.Movable = false;
 
                 BaseDoor d1 = new StrongWoodDoor(DoorFacing.WestCW);
                 BaseDoor d2 = new StrongWoodDoor(DoorFacing.EastCCW);
@@ -2484,6 +2498,7 @@ namespace Server.Items
                 d2.MoveToWorld(new Point3D(p.X - 4, p.Y - 1, p.Z + 7), from.Map);
 
                 spwn.MoveToWorld(new Point3D(p.X, p.Y - 7, p.Z + 7), from.Map);
+                spwn.Respawn();
 
                 sign.toDelete.Add(d1);
                 sign.toDelete.Add(d2);
@@ -2517,12 +2532,14 @@ namespace Server.Items
 
                 pm.City.HasTavern = true;
 
-                Spawner spwn = new Spawner("Barkeeper");
+                PremiumSpawner spwn = new PremiumSpawner("Barkeeper");
                 spwn.Count = 1;
                 spwn.Running = true;
                 spwn.HomeRange = 3;
                 spwn.MinDelay = TimeSpan.FromMinutes(1);
                 spwn.MaxDelay = TimeSpan.FromMinutes(2);
+                spwn.Visible = false;
+                spwn.Movable = false;
 
                 BaseDoor d1 = new StrongWoodDoor(DoorFacing.WestCW);
                 BaseDoor d2 = new StrongWoodDoor(DoorFacing.EastCCW);
@@ -2534,6 +2551,7 @@ namespace Server.Items
                 d2.MoveToWorld(new Point3D(p.X - 4, p.Y - 1, p.Z + 7), from.Map);
 
                 spwn.MoveToWorld(new Point3D(p.X, p.Y - 7, p.Z + 7), from.Map);
+                spwn.Respawn();
 
                 sign.toDelete.Add(d1);
                 sign.toDelete.Add(d2);
@@ -2567,12 +2585,14 @@ namespace Server.Items
 
                 pm.City.HasTavern = true;
 
-                Spawner spwn = new Spawner("Barkeeper");
+                PremiumSpawner spwn = new PremiumSpawner("Barkeeper");
                 spwn.Count = 1;
                 spwn.Running = true;
                 spwn.HomeRange = 3;
                 spwn.MinDelay = TimeSpan.FromMinutes(1);
                 spwn.MaxDelay = TimeSpan.FromMinutes(2);
+                spwn.Visible = false;
+                spwn.Movable = false;
 
                 BaseDoor d1 = new StrongWoodDoor(DoorFacing.WestCW);
                 BaseDoor d2 = new StrongWoodDoor(DoorFacing.EastCCW);
@@ -2584,6 +2604,7 @@ namespace Server.Items
                 d2.MoveToWorld(new Point3D(p.X - 4, p.Y - 1, p.Z + 7), from.Map);
 
                 spwn.MoveToWorld(new Point3D(p.X, p.Y - 7, p.Z + 7), from.Map);
+                spwn.Respawn();
 
                 sign.toDelete.Add(d1);
                 sign.toDelete.Add(d2);
@@ -2617,12 +2638,14 @@ namespace Server.Items
 
                 pm.City.HasTavern = true;
 
-                Spawner spwn = new Spawner("Barkeeper");
+                PremiumSpawner spwn = new PremiumSpawner("Barkeeper");
                 spwn.Count = 1;
                 spwn.Running = true;
                 spwn.HomeRange = 3;
                 spwn.MinDelay = TimeSpan.FromMinutes(1);
                 spwn.MaxDelay = TimeSpan.FromMinutes(2);
+                spwn.Visible = false;
+                spwn.Movable = false;
 
                 BaseDoor d1 = new StrongWoodDoor(DoorFacing.WestCW);
                 BaseDoor d2 = new StrongWoodDoor(DoorFacing.EastCCW);
@@ -2634,6 +2657,7 @@ namespace Server.Items
                 d2.MoveToWorld(new Point3D(p.X - 4, p.Y - 1, p.Z + 7), from.Map);
 
                 spwn.MoveToWorld(new Point3D(p.X, p.Y - 7, p.Z + 7), from.Map);
+                spwn.Respawn();
 
                 sign.toDelete.Add(d1);
                 sign.toDelete.Add(d2);
@@ -2667,14 +2691,17 @@ namespace Server.Items
 
                 pm.City.HasMoongate = true;
 
-                Spawner spwn = new Spawner("PublicMoongate");
+                PremiumSpawner spwn = new PremiumSpawner("PublicMoongate");
                 spwn.Count = 1;
                 spwn.Running = true;
                 spwn.HomeRange = 0;
                 spwn.MinDelay = TimeSpan.FromMinutes(1);
                 spwn.MaxDelay = TimeSpan.FromMinutes(2);
+                spwn.Visible = false;
+                spwn.Movable = false;
 
                 spwn.MoveToWorld(new Point3D(p.X, p.Y - 5, p.Z + 5), from.Map);
+                spwn.Respawn();
 
                 sign.toDelete.Add(spwn);
                 sign.toDelete.Add(building);
@@ -2706,14 +2733,17 @@ namespace Server.Items
 
                 pm.City.HasMoongate = true;
 
-                Spawner spwn = new Spawner("PublicMoongate");
+                PremiumSpawner spwn = new PremiumSpawner("PublicMoongate");
                 spwn.Count = 1;
                 spwn.Running = true;
                 spwn.HomeRange = 0;
                 spwn.MinDelay = TimeSpan.FromMinutes(1);
                 spwn.MaxDelay = TimeSpan.FromMinutes(2);
+                spwn.Visible = false;
+                spwn.Movable = false;
 
                 spwn.MoveToWorld(new Point3D(p.X, p.Y - 5, p.Z + 5), from.Map);
+                spwn.Respawn();
 
                 sign.toDelete.Add(spwn);
                 sign.toDelete.Add(building);
@@ -2745,14 +2775,17 @@ namespace Server.Items
 
                 pm.City.HasMoongate = true;
 
-                Spawner spwn = new Spawner("PublicMoongate");
+                PremiumSpawner spwn = new PremiumSpawner("PublicMoongate");
                 spwn.Count = 1;
                 spwn.Running = true;
                 spwn.HomeRange = 0;
                 spwn.MinDelay = TimeSpan.FromMinutes(1);
                 spwn.MaxDelay = TimeSpan.FromMinutes(2);
+                spwn.Visible = false;
+                spwn.Movable = false;
 
                 spwn.MoveToWorld(new Point3D(p.X, p.Y - 5, p.Z + 5), from.Map);
+                spwn.Respawn();
 
                 sign.toDelete.Add(spwn);
                 sign.toDelete.Add(building);
@@ -2784,14 +2817,17 @@ namespace Server.Items
 
                 pm.City.HasMoongate = true;
 
-                Spawner spwn = new Spawner("PublicMoongate");
+                PremiumSpawner spwn = new PremiumSpawner("PublicMoongate");
                 spwn.Count = 1;
                 spwn.Running = true;
                 spwn.HomeRange = 0;
                 spwn.MinDelay = TimeSpan.FromMinutes(1);
                 spwn.MaxDelay = TimeSpan.FromMinutes(2);
+                spwn.Visible = false;
+                spwn.Movable = false;
 
                 spwn.MoveToWorld(new Point3D(p.X, p.Y - 5, p.Z + 5), from.Map);
+                spwn.Respawn();
 
                 sign.toDelete.Add(spwn);
                 sign.toDelete.Add(building);
@@ -2823,14 +2859,17 @@ namespace Server.Items
 
                 pm.City.HasMoongate = true;
 
-                Spawner spwn = new Spawner("PublicMoongate");
+                PremiumSpawner spwn = new PremiumSpawner("PublicMoongate");
                 spwn.Count = 1;
                 spwn.Running = true;
                 spwn.HomeRange = 0;
                 spwn.MinDelay = TimeSpan.FromMinutes(1);
                 spwn.MaxDelay = TimeSpan.FromMinutes(2);
+                spwn.Visible = false;
+                spwn.Movable = false;
 
                 spwn.MoveToWorld(new Point3D(p.X, p.Y - 5, p.Z + 5), from.Map);
+                spwn.Respawn();
 
                 sign.toDelete.Add(spwn);
                 sign.toDelete.Add(building);
@@ -2863,14 +2902,17 @@ namespace Server.Items
 
                 pm.City.HasMoongate = true;
 
-                Spawner spwn = new Spawner("PublicMoongate");
+                PremiumSpawner spwn = new PremiumSpawner("PublicMoongate");
                 spwn.Count = 1;
                 spwn.Running = true;
                 spwn.HomeRange = 0;
                 spwn.MinDelay = TimeSpan.FromMinutes(1);
                 spwn.MaxDelay = TimeSpan.FromMinutes(2);
+                spwn.Visible = false;
+                spwn.Movable = false;
 
                 spwn.MoveToWorld(new Point3D(p.X, p.Y - 5, p.Z + 5), from.Map);
+                spwn.Respawn();
 
                 sign.toDelete.Add(spwn);
                 sign.toDelete.Add(building);
@@ -3072,7 +3114,26 @@ namespace Server.Items
                 Point3D end = new Point3D(center.X + 6, center.Y + 6, center.Z);
                 Rectangle2D box = new Rectangle2D(start, end);
                 Rectangle3D[] area = PlayerGovernmentSystem.FormatRegion(box);
-                CityLandLord lord = new CityLandLord(pm.City, area, sign, p, from.Map);
+                PremiumSpawner spwn = new PremiumSpawner("CityLandLord");
+                spwn.Count = 1;
+                spwn.Running = true;
+                spwn.HomeRange = 5;
+                spwn.MinDelay = TimeSpan.FromMinutes(1);
+                spwn.MaxDelay = TimeSpan.FromMinutes(2);
+                spwn.Visible = false;
+                spwn.Movable = false;
+                spwn.MoveToWorld(new Point3D(p.X - 4, p.Y, p.Z), from.Map);
+                spwn.Respawn();
+                CityLandLord lord = null;
+                foreach (Mobile m in spwn.GetMobilesInRange(0))
+                {
+                    if (m is CityLandLord)
+                    {
+                        lord = (CityLandLord)m;
+                        lord.Initialize(pm.City, area, sign, p, from.Map);
+                        break;
+                    }
+                }
 
                 //Remove List
                 ArrayList toDelete = new ArrayList();
@@ -3082,6 +3143,7 @@ namespace Server.Items
                 sign.Stone.HasMarket = true;
 
                 sign.toDelete.Add(building);
+                sign.toDelete.Add(spwn);
                 sign.LandlordRemove = lord;
 
                 sign.Type = CivicSignType.Market;
@@ -3107,7 +3169,26 @@ namespace Server.Items
                 Point3D end = new Point3D(center.X + 6, center.Y + 6, center.Z);
                 Rectangle2D box = new Rectangle2D(start, end);
                 Rectangle3D[] area = PlayerGovernmentSystem.FormatRegion(box);
-                CityLandLord lord = new CityLandLord(pm.City, area, sign, p, from.Map);
+                PremiumSpawner spwn = new PremiumSpawner("CityLandLord");
+                spwn.Count = 1;
+                spwn.Running = true;
+                spwn.HomeRange = 5;
+                spwn.MinDelay = TimeSpan.FromMinutes(1);
+                spwn.MaxDelay = TimeSpan.FromMinutes(2);
+                spwn.Visible = false;
+                spwn.Movable = false;
+                spwn.MoveToWorld(new Point3D(p.X - 4, p.Y, p.Z), from.Map);
+                spwn.Respawn();
+                CityLandLord lord = null;
+                foreach (Mobile m in spwn.GetMobilesInRange(0))
+                {
+                    if (m is CityLandLord)
+                    {
+                        lord = (CityLandLord)m;
+                        lord.Initialize(pm.City, area, sign, p, from.Map);
+                        break;
+                    }
+                }
 
                 //Remove List
                 ArrayList toDelete = new ArrayList();
@@ -3117,6 +3198,7 @@ namespace Server.Items
                 sign.Stone.HasMarket = true;
 
                 sign.toDelete.Add(building);
+                sign.toDelete.Add(spwn);
                 sign.LandlordRemove = lord;
 
                 sign.Type = CivicSignType.Market;
@@ -3142,7 +3224,26 @@ namespace Server.Items
                 Point3D end = new Point3D(center.X + 6, center.Y + 6, center.Z);
                 Rectangle2D box = new Rectangle2D(start, end);
                 Rectangle3D[] area = PlayerGovernmentSystem.FormatRegion(box);
-                CityLandLord lord = new CityLandLord(pm.City, area, sign, p, from.Map);
+                PremiumSpawner spwn = new PremiumSpawner("CityLandLord");
+                spwn.Count = 1;
+                spwn.Running = true;
+                spwn.HomeRange = 5;
+                spwn.MinDelay = TimeSpan.FromMinutes(1);
+                spwn.MaxDelay = TimeSpan.FromMinutes(2);
+                spwn.Visible = false;
+                spwn.Movable = false;
+                spwn.MoveToWorld(new Point3D(p.X - 4, p.Y, p.Z), from.Map);
+                spwn.Respawn();
+                CityLandLord lord = null;
+                foreach (Mobile m in spwn.GetMobilesInRange(0))
+                {
+                    if (m is CityLandLord)
+                    {
+                        lord = (CityLandLord)m;
+                        lord.Initialize(pm.City, area, sign, p, from.Map);
+                        break;
+                    }
+                }
 
                 //Remove List
                 ArrayList toDelete = new ArrayList();
@@ -3152,6 +3253,7 @@ namespace Server.Items
                 sign.Stone.HasMarket = true;
 
                 sign.toDelete.Add(building);
+                sign.toDelete.Add(spwn);
                 sign.LandlordRemove = lord;
 
                 sign.Type = CivicSignType.Market;
@@ -3177,7 +3279,26 @@ namespace Server.Items
                 Point3D end = new Point3D(center.X + 6, center.Y + 6, center.Z);
                 Rectangle2D box = new Rectangle2D(start, end);
                 Rectangle3D[] area = PlayerGovernmentSystem.FormatRegion(box);
-                CityLandLord lord = new CityLandLord(pm.City, area, sign, p, from.Map);
+                PremiumSpawner spwn = new PremiumSpawner("CityLandLord");
+                spwn.Count = 1;
+                spwn.Running = true;
+                spwn.HomeRange = 5;
+                spwn.MinDelay = TimeSpan.FromMinutes(1);
+                spwn.MaxDelay = TimeSpan.FromMinutes(2);
+                spwn.Visible = false;
+                spwn.Movable = false;
+                spwn.MoveToWorld(new Point3D(p.X - 4, p.Y, p.Z), from.Map);
+                spwn.Respawn();
+                CityLandLord lord = null;
+                foreach (Mobile m in spwn.GetMobilesInRange(0))
+                {
+                    if (m is CityLandLord)
+                    {
+                        lord = (CityLandLord)m;
+                        lord.Initialize(pm.City, area, sign, p, from.Map);
+                        break;
+                    }
+                }
 
                 //Remove List
                 ArrayList toDelete = new ArrayList();
@@ -3187,6 +3308,7 @@ namespace Server.Items
                 sign.Stone.HasMarket = true;
 
                 sign.toDelete.Add(building);
+                sign.toDelete.Add(spwn);
                 sign.LandlordRemove = lord;
 
                 sign.Type = CivicSignType.Market;
@@ -3212,7 +3334,26 @@ namespace Server.Items
                 Point3D end = new Point3D(center.X + 6, center.Y + 6, center.Z);
                 Rectangle2D box = new Rectangle2D(start, end);
                 Rectangle3D[] area = PlayerGovernmentSystem.FormatRegion(box);
-                CityLandLord lord = new CityLandLord(pm.City, area, sign, p, from.Map);
+                PremiumSpawner spwn = new PremiumSpawner("CityLandLord");
+                spwn.Count = 1;
+                spwn.Running = true;
+                spwn.HomeRange = 5;
+                spwn.MinDelay = TimeSpan.FromMinutes(1);
+                spwn.MaxDelay = TimeSpan.FromMinutes(2);
+                spwn.Visible = false;
+                spwn.Movable = false;
+                spwn.MoveToWorld(new Point3D(p.X - 4, p.Y, p.Z), from.Map);
+                spwn.Respawn();
+                CityLandLord lord = null;
+                foreach (Mobile m in spwn.GetMobilesInRange(0))
+                {
+                    if (m is CityLandLord)
+                    {
+                        lord = (CityLandLord)m;
+                        lord.Initialize(pm.City, area, sign, p, from.Map);
+                        break;
+                    }
+                }
 
                 //Remove List
                 ArrayList toDelete = new ArrayList();
@@ -3222,6 +3363,7 @@ namespace Server.Items
                 sign.Stone.HasMarket = true;
 
                 sign.toDelete.Add(building);
+                sign.toDelete.Add(spwn);
                 sign.LandlordRemove = lord;
 
                 sign.Type = CivicSignType.Market;
@@ -3247,7 +3389,26 @@ namespace Server.Items
                 Point3D end = new Point3D(center.X + 6, center.Y + 6, center.Z);
                 Rectangle2D box = new Rectangle2D(start, end);
                 Rectangle3D[] area = PlayerGovernmentSystem.FormatRegion(box);
-                CityLandLord lord = new CityLandLord(pm.City, area, sign, p, from.Map);
+                PremiumSpawner spwn = new PremiumSpawner("CityLandLord");
+                spwn.Count = 1;
+                spwn.Running = true;
+                spwn.HomeRange = 5;
+                spwn.MinDelay = TimeSpan.FromMinutes(1);
+                spwn.MaxDelay = TimeSpan.FromMinutes(2);
+                spwn.Visible = false;
+                spwn.Movable = false;
+                spwn.MoveToWorld(new Point3D(p.X - 4, p.Y, p.Z), from.Map);
+                spwn.Respawn();
+                CityLandLord lord = null;
+                foreach (Mobile m in spwn.GetMobilesInRange(0))
+                {
+                    if (m is CityLandLord)
+                    {
+                        lord = (CityLandLord)m;
+                        lord.Initialize(pm.City, area, sign, p, from.Map);
+                        break;
+                    }
+                }
 
                 //Remove List
                 ArrayList toDelete = new ArrayList();
@@ -3257,6 +3418,7 @@ namespace Server.Items
                 sign.Stone.HasMarket = true;
 
                 sign.toDelete.Add(building);
+                sign.toDelete.Add(spwn);
                 sign.LandlordRemove = lord;
 
                 sign.Type = CivicSignType.Market;
@@ -3282,7 +3444,26 @@ namespace Server.Items
                 Point3D end = new Point3D(center.X + 6, center.Y + 6, center.Z);
                 Rectangle2D box = new Rectangle2D(start, end);
                 Rectangle3D[] area = PlayerGovernmentSystem.FormatRegion(box);
-                CityLandLord lord = new CityLandLord(pm.City, area, sign, p, from.Map);
+                PremiumSpawner spwn = new PremiumSpawner("CityLandLord");
+                spwn.Count = 1;
+                spwn.Running = true;
+                spwn.HomeRange = 5;
+                spwn.MinDelay = TimeSpan.FromMinutes(1);
+                spwn.MaxDelay = TimeSpan.FromMinutes(2);
+                spwn.Visible = false;
+                spwn.Movable = false;
+                spwn.MoveToWorld(new Point3D(p.X - 4, p.Y, p.Z), from.Map);
+                spwn.Respawn();
+                CityLandLord lord = null;
+                foreach (Mobile m in spwn.GetMobilesInRange(0))
+                {
+                    if (m is CityLandLord)
+                    {
+                        lord = (CityLandLord)m;
+                        lord.Initialize(pm.City, area, sign, p, from.Map);
+                        break;
+                    }
+                }
 
                 //Remove List
                 ArrayList toDelete = new ArrayList();
@@ -3292,6 +3473,7 @@ namespace Server.Items
                 sign.Stone.HasMarket = true;
 
                 sign.toDelete.Add(building);
+                sign.toDelete.Add(spwn);
                 sign.LandlordRemove = lord;
 
                 sign.Type = CivicSignType.Market;
@@ -3317,7 +3499,26 @@ namespace Server.Items
                 Point3D end = new Point3D(center.X + 6, center.Y + 6, center.Z);
                 Rectangle2D box = new Rectangle2D(start, end);
                 Rectangle3D[] area = PlayerGovernmentSystem.FormatRegion(box);
-                CityLandLord lord = new CityLandLord(pm.City, area, sign, p, from.Map);
+                PremiumSpawner spwn = new PremiumSpawner("CityLandLord");
+                spwn.Count = 1;
+                spwn.Running = true;
+                spwn.HomeRange = 5;
+                spwn.MinDelay = TimeSpan.FromMinutes(1);
+                spwn.MaxDelay = TimeSpan.FromMinutes(2);
+                spwn.Visible = false;
+                spwn.Movable = false;
+                spwn.MoveToWorld(new Point3D(p.X - 4, p.Y, p.Z), from.Map);
+                spwn.Respawn();
+                CityLandLord lord = null;
+                foreach (Mobile m in spwn.GetMobilesInRange(0))
+                {
+                    if (m is CityLandLord)
+                    {
+                        lord = (CityLandLord)m;
+                        lord.Initialize(pm.City, area, sign, p, from.Map);
+                        break;
+                    }
+                }
 
                 //Remove List
                 ArrayList toDelete = new ArrayList();
@@ -3327,6 +3528,7 @@ namespace Server.Items
                 sign.Stone.HasMarket = true;
 
                 sign.toDelete.Add(building);
+                sign.toDelete.Add(spwn);
                 sign.LandlordRemove = lord;
 
                 sign.Type = CivicSignType.Market;

@@ -19,12 +19,12 @@ namespace Server.Mobiles
         private Rectangle3D[] m_Area;
         public CityMarketRegion m_Region;
         private CivicSign m_Sign;
-        private List<Mobile> m_vendorlist;
+        private List<PremiumSpawner> m_vendorSpawners;
 
-        public List<Mobile> VendorList
+        public List<PremiumSpawner> VendorSpawners
         {
-            get { return m_vendorlist; }
-            set { m_vendorlist = value; }
+            get { return m_vendorSpawners; }
+            set { m_vendorSpawners = value; }
         }
 
         public CivicSign Sign
@@ -68,6 +68,14 @@ namespace Server.Mobiles
         };
 
         [Constructable]
+        public CityLandLord()
+            : base("Marketkeeper")
+        {
+            Frozen = true;
+            m_vendorSpawners = new List<PremiumSpawner>();
+        }
+
+        [Constructable]
         public CityLandLord(
             CityManagementStone stone,
             Rectangle3D[] area,
@@ -75,17 +83,25 @@ namespace Server.Mobiles
             Point3D p,
             Map map
         )
-            : base("Marketkeeper")
+            : this()
         {
-            Frozen = true;
+            Initialize(stone, area, sign, p, map);
+        }
+
+        public void Initialize(
+            CityManagementStone stone,
+            Rectangle3D[] area,
+            CivicSign sign,
+            Point3D p,
+            Map map
+        )
+        {
             Point3D loc = new Point3D(p.X - 4, p.Y, p.Z);
-            Location = loc;
+            MoveToWorld(loc, map);
             Direction = Direction.South;
-            Map = map;
             m_Stone = stone;
             m_Area = area;
             m_Sign = sign;
-            m_vendorlist = new List<Mobile>();
 
             UpdateMarketRegion();
             CreateRandomVendors(loc, map);
@@ -162,14 +178,13 @@ namespace Server.Mobiles
         {
             m_Region.Unregister();
 
-            if (m_vendorlist.Count > 0)
+            if (m_vendorSpawners.Count > 0)
             {
-                for (int i = 0; i < m_vendorlist.Count; i++)
+                foreach (PremiumSpawner sp in m_vendorSpawners)
                 {
-                    Mobile vend = m_vendorlist[i];
-                    vend.Delete();
+                    sp.Delete();
                 }
-                m_vendorlist.Clear();
+                m_vendorSpawners.Clear();
             }
 
             if (this.Stone != null)
@@ -180,35 +195,64 @@ namespace Server.Mobiles
 
         public void CreateRandomVendors(Point3D p, Map map)
         {
-            if (m_vendorlist.Count > 0)
+            if (m_vendorSpawners.Count > 0)
             {
-                for (int i = 0; i < m_vendorlist.Count; i++)
-                {
-                    Mobile vend = m_vendorlist[i];
-                    vend.Delete();
-                }
-                m_vendorlist.Clear();
+                foreach (PremiumSpawner sp in m_vendorSpawners)
+                    sp.Delete();
+
+                m_vendorSpawners.Clear();
             }
 
             int index = Utility.RandomMinMax(0, types.Length - 1);
             int index2 = Utility.RandomMinMax(0, types.Length - 1);
-            while (index == index2) //Make sure you cannot have the same vendor at once
-            {
+            while (index == index2)
                 index2 = Utility.RandomMinMax(0, types.Length - 1);
+
+            Type type1 = types[index];
+            Type type2 = types[index2];
+
+            PremiumSpawner sp1 = new PremiumSpawner(type1.Name);
+            sp1.Count = 1;
+            sp1.Running = true;
+            sp1.HomeRange = 5;
+            sp1.MinDelay = TimeSpan.FromMinutes(1);
+            sp1.MaxDelay = TimeSpan.FromMinutes(2);
+            sp1.Visible = false;
+            sp1.Movable = false;
+            sp1.MoveToWorld(new Point3D(p.X + 1, p.Y, p.Z), map);
+            sp1.Respawn();
+
+            PremiumSpawner sp2 = new PremiumSpawner(type2.Name);
+            sp2.Count = 1;
+            sp2.Running = true;
+            sp2.HomeRange = 5;
+            sp2.MinDelay = TimeSpan.FromMinutes(1);
+            sp2.MaxDelay = TimeSpan.FromMinutes(2);
+            sp2.Visible = false;
+            sp2.Movable = false;
+            sp2.MoveToWorld(new Point3D(p.X + 2, p.Y, p.Z), map);
+            sp2.Respawn();
+
+            foreach (Mobile m in sp1.GetMobilesInRange(0))
+            {
+                m.Frozen = true;
+                m.Direction = Direction.South;
             }
 
-            Mobile mob1 = (Mobile)Activator.CreateInstance(types[index]);
-            Mobile mob2 = (Mobile)Activator.CreateInstance(types[index2]);
+            foreach (Mobile m in sp2.GetMobilesInRange(0))
+            {
+                m.Frozen = true;
+                m.Direction = Direction.South;
+            }
 
-            mob1.Frozen = true;
-            mob2.Frozen = true;
-            mob1.MoveToWorld(new Point3D(p.X + 1, p.Y, p.Z), map);
-            mob2.MoveToWorld(new Point3D(p.X + 2, p.Y, p.Z), map);
-            mob1.Direction = Direction.South;
-            mob2.Direction = Direction.South;
+            m_vendorSpawners.Add(sp1);
+            m_vendorSpawners.Add(sp2);
 
-            m_vendorlist.Add(mob1);
-            m_vendorlist.Add(mob2);
+            if (m_Sign != null && m_Sign.toDelete != null)
+            {
+                m_Sign.toDelete.Add(sp1);
+                m_Sign.toDelete.Add(sp2);
+            }
         }
 
         public CityLandLord(Serial serial)
@@ -219,7 +263,7 @@ namespace Server.Mobiles
             base.Serialize(writer);
             writer.Write((int)0); // version
 
-            writer.Write(m_vendorlist);
+            writer.WriteItemList<PremiumSpawner>(m_vendorSpawners, true);
             writer.Write(m_Sign);
             writer.Write(m_Stone);
             Server.Items.CityManagementStone.WriteRect3DArray(writer, m_Area);
@@ -230,16 +274,33 @@ namespace Server.Mobiles
             base.Deserialize(reader);
             int version = reader.ReadInt();
 
-            m_vendorlist = reader.ReadStrongMobileList();
+            ArrayList list = reader.ReadItemList();
+            m_vendorSpawners = new List<PremiumSpawner>(list.Count);
+            foreach (Item item in list)
+            {
+                PremiumSpawner sp = item as PremiumSpawner;
+                if (sp != null)
+                {
+                    m_vendorSpawners.Add(sp);
+                }
+            }
             m_Sign = (CivicSign)reader.ReadItem();
             m_Stone = (CityManagementStone)reader.ReadItem();
             m_Area = Server.Items.CityManagementStone.ReadRect3DArray(reader);
 
             Frozen = true;
 
-            foreach (Mobile m in m_vendorlist)
+            foreach (PremiumSpawner sp in m_vendorSpawners)
             {
-                m.Frozen = true;
+                sp.Respawn();
+                foreach (Mobile m in sp.GetMobilesInRange(0))
+                {
+                    m.Frozen = true;
+                    m.Direction = Direction.South;
+                }
+
+                if (m_Sign != null && m_Sign.toDelete != null && !m_Sign.toDelete.Contains(sp))
+                    m_Sign.toDelete.Add(sp);
             }
 
             UpdateMarketRegion();
