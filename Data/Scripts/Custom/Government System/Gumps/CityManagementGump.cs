@@ -375,8 +375,15 @@ namespace Server.Gumps
         {
             Mobile from = state.Mobile;
 
-            if (from == null)
+            if (from == null || m_Stone == null)
                 return;
+
+            // Ensure the responder still has the authority to manage the city.
+            if (from != m_Stone.Mayor && from.AccessLevel < AccessLevel.GameMaster)
+            {
+                from.SendMessage("You are not authorized to manage this city.");
+                return;
+            }
 
             if (info.ButtonID == 1) // Change city name
             {
