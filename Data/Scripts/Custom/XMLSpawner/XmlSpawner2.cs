@@ -14768,72 +14768,12 @@ namespace Server.Mobiles
         {
             base.Serialize(writer);
 
-            writer.Write((int)30); // version
-            // Version 30
+            writer.Write((int)31); // version
+
             writer.Write(m_AllowNPCTriggering);
-
-            // Version 29
-            if (m_SpawnObjects != null)
-            {
-                writer.Write(m_SpawnObjects.Count);
-                for (int i = 0; i < m_SpawnObjects.Count; ++i)
-                {
-                    // Write the spawns per tick value
-                    writer.Write(((SpawnObject)m_SpawnObjects[i]).SpawnsPerTick);
-                }
-            }
-            else
-            {
-                // empty spawner
-                writer.Write((int)0);
-            }
-
-            // Version 28
-            if (m_SpawnObjects != null)
-            {
-                for (int i = 0; i < m_SpawnObjects.Count; ++i)
-                {
-                    // Write the pack range value
-                    writer.Write(((SpawnObject)m_SpawnObjects[i]).PackRange);
-                }
-            }
-
-            // Version 27
-            if (m_SpawnObjects != null)
-            {
-                for (int i = 0; i < m_SpawnObjects.Count; ++i)
-                {
-                    // Write the disable spawn flag
-                    writer.Write(((SpawnObject)m_SpawnObjects[i]).Disabled);
-                }
-            }
-
-            // Version 26
             writer.Write(m_SpawnOnTrigger);
             writer.Write(m_FirstModified);
             writer.Write(m_LastModified);
-
-            // Version 25
-            // eliminated the textentrybook serialization (they autodelete on deser now)
-
-            // Version 24
-            if (m_SpawnObjects != null)
-            {
-                for (int i = 0; i < m_SpawnObjects.Count; ++i)
-                {
-                    SpawnObject so = (SpawnObject)m_SpawnObjects[i];
-                    // Write the restrict kills flag
-                    writer.Write(so.RestrictKillsToSubgroup);
-                    // Write the clear on advance flag
-                    writer.Write(so.ClearOnAdvance);
-                    // Write the mindelay
-                    writer.Write(so.MinDelay);
-                    // Write the maxdelay
-                    writer.Write(so.MaxDelay);
-                    // write the next spawn time for the subgrop
-                    writer.WriteDeltaTime(so.NextSpawn);
-                }
-            }
 
             if (m_ShowBoundsItems != null && m_ShowBoundsItems.Count > 0)
             {
@@ -14842,129 +14782,76 @@ namespace Server.Mobiles
             }
             else
             {
-                // empty showbounds item list
                 writer.Write(false);
             }
 
-            // Version 23
             writer.Write(IsInactivated);
             writer.Write(m_SmartSpawning);
-            // Version 22
             writer.Write(m_SkillTrigger);
             writer.Write((int)m_skill_that_triggered);
             writer.Write(m_FreeRun);
             writer.Write(m_mob_who_triggered);
-            // Version 21
             writer.Write(m_DespawnTime);
-            // Version 20
-            if (m_SpawnObjects != null)
-            {
-                for (int i = 0; i < m_SpawnObjects.Count; ++i)
-                {
-                    // Write the requiresurface flag
-                    writer.Write(((SpawnObject)m_SpawnObjects[i]).RequireSurface);
-                }
-            }
-            // Version 19
             writer.Write(m_ConfigFile);
             writer.Write(m_OnHold);
             writer.Write(m_HoldSequence);
             writer.Write(m_FirstModifiedBy);
             writer.Write(m_LastModifiedBy);
-            // compute the number of tags to save
+
             int tagcount = 0;
+            List<BaseXmlSpawner.KeywordTag> tags = new List<BaseXmlSpawner.KeywordTag>();
             for (int i = 0; i < m_KeywordTagList.Count; i++)
             {
-                // only save WAIT type keywords or other keywords that have the save flag set
-                if (
-                    (
-                        ((BaseXmlSpawner.KeywordTag)(m_KeywordTagList[i])).Flags
-                        & BaseXmlSpawner.KeywordFlags.Serialize
-                    ) != 0
-                )
+                BaseXmlSpawner.KeywordTag tag = (BaseXmlSpawner.KeywordTag)m_KeywordTagList[i];
+                if ((tag.Flags & BaseXmlSpawner.KeywordFlags.Serialize) != 0)
+                {
                     tagcount++;
+                    tags.Add(tag);
+                }
             }
             writer.Write(tagcount);
-            // and write them out
-            for (int i = 0; i < m_KeywordTagList.Count; i++)
+            foreach (BaseXmlSpawner.KeywordTag tag in tags)
             {
-                if (
-                    (
-                        ((BaseXmlSpawner.KeywordTag)(m_KeywordTagList[i])).Flags
-                        & BaseXmlSpawner.KeywordFlags.Serialize
-                    ) != 0
-                )
-                {
-                    ((BaseXmlSpawner.KeywordTag)(m_KeywordTagList[i])).Serialize(writer);
-                }
+                tag.Serialize(writer);
             }
-            // Version 18
+
             writer.Write(m_AllowGhostTriggering);
-            // Version 17
-            // removed in version 25
-            //writer.Write( m_TextEntryBook);
-            // Version 16
             writer.Write(m_SequentialSpawning);
-            // write out the remaining time until sequential reset
             writer.Write(NextSeqReset);
-            // Write the spawn object list
-            if (m_SpawnObjects != null)
-            {
-                for (int i = 0; i < m_SpawnObjects.Count; ++i)
-                {
-                    SpawnObject so = (SpawnObject)m_SpawnObjects[i];
-                    // Write the subgroup and sequential reset time
-                    writer.Write(so.SubGroup);
-                    writer.Write(so.SequentialResetTime);
-                    writer.Write(so.SequentialResetTo);
-                    writer.Write(so.KillsNeeded);
-                }
-            }
+
             writer.Write(m_RegionName); // 2004.02.08 :: Omega Red
 
-            // Version 15
             writer.Write(m_ExternalTriggering);
             writer.Write(m_ExternalTrigger);
 
-            // Version 14
             writer.Write(m_NoItemTriggerName);
 
-            // Version 13
             writer.Write(m_GumpState);
 
-            // Version 12
             int todtype = (int)m_TODMode;
             writer.Write(todtype);
 
-            // Version 11
             writer.Write(m_KillReset);
             writer.Write(m_skipped);
             writer.Write(m_spawncheck);
 
-            // Version 10
             writer.Write(m_SetPropertyItem);
 
-            // Version 9
             writer.Write(m_TriggerProbability);
 
-            // Version 8
             writer.Write(m_MobPropertyName);
             writer.Write(m_MobTriggerName);
             writer.Write(m_PlayerPropertyName);
 
-            // Version 7
             writer.Write(m_SpeechTrigger);
 
-            // Version 6
             writer.Write(m_ItemTriggerName);
 
-            // Version 5
             writer.Write(m_ProximityTriggerMessage);
             writer.Write(m_ObjectPropertyItem);
             writer.Write(m_ObjectPropertyName);
             writer.Write(m_killcount);
 
-            // Version 4
             writer.Write(m_ProximityRange);
             writer.Write(m_ProximityTriggerSound);
             writer.Write(m_proximityActivated);
@@ -14979,16 +14866,13 @@ namespace Server.Mobiles
                 writer.Write(m_RefractEnd - DateTime.Now);
             if (m_durActivated)
                 writer.Write(m_DurEnd - DateTime.Now);
-            // Version 3
+
             writer.Write(m_ShowContainerStatic);
-            // Version 2
             writer.Write(m_Duration);
 
-            // Version 1
             writer.Write(m_UniqueId);
             writer.Write(m_HomeRangeIsRelative);
 
-            // Version 0
             writer.Write(m_Name);
             writer.Write(m_X);
             writer.Write(m_Y);
@@ -15006,42 +14890,13 @@ namespace Server.Mobiles
             if (m_Running)
                 writer.Write(m_End - DateTime.Now);
 
-            // Write the spawn object list
             int nso = 0;
             if (m_SpawnObjects != null)
                 nso = m_SpawnObjects.Count;
             writer.Write(nso);
             for (int i = 0; i < nso; ++i)
             {
-                SpawnObject so = (SpawnObject)m_SpawnObjects[i];
-
-                // Write the type and maximum count
-                writer.Write((string)so.TypeName);
-                writer.Write((int)so.ActualMaxCount);
-
-                // Write the spawned object information
-                writer.Write(so.SpawnedObjects.Count);
-                for (int x = 0; x < so.SpawnedObjects.Count; ++x)
-                {
-                    object o = so.SpawnedObjects[x];
-
-                    if (o is Item)
-                        writer.Write((Item)o);
-                    else if (o is Mobile)
-                        writer.Write((Mobile)o);
-                    else
-                    {
-                        // if this is a keyword tag then add some more info
-                        if (o is BaseXmlSpawner.KeywordTag)
-                        {
-                            writer.Write(-1 * ((BaseXmlSpawner.KeywordTag)o).Serial - 2);
-                        }
-                        else
-                        {
-                            writer.Write(Serial.MinusOne);
-                        }
-                    }
-                }
+                ((SpawnObject)m_SpawnObjects[i]).Serialize(writer);
             }
         }
 
@@ -15069,6 +14924,19 @@ namespace Server.Mobiles
 
             switch (version)
             {
+                case 31:
+                {
+                    m_AllowNPCTriggering = reader.ReadBool();
+                    m_SpawnOnTrigger = reader.ReadBool();
+                    m_FirstModified = reader.ReadDateTime();
+                    m_LastModified = reader.ReadDateTime();
+                    bool hasitems = reader.ReadBool();
+                    if (hasitems)
+                    {
+                        m_ShowBoundsItems = reader.ReadItemList();
+                    }
+                    goto case 23;
+                }
                 case 30:
                 {
                     m_AllowNPCTriggering = reader.ReadBool();
@@ -15399,17 +15267,45 @@ namespace Server.Mobiles
                     m_SpawnObjects = new ArrayList(SpawnListSize);
                     for (int i = 0; i < SpawnListSize; ++i)
                     {
-                        string TypeName = reader.ReadString();
-                        int TypeMaxCount = reader.ReadInt();
+                        SpawnObject so;
+                        if (version >= 31)
+                        {
+                            so = SpawnObject.Deserialize(reader, this);
+                        }
+                        else
+                        {
+                            string TypeName = reader.ReadString();
+                            int TypeMaxCount = reader.ReadInt();
 
-                        SpawnObject TheSpawnObject = new SpawnObject(TypeName, TypeMaxCount);
+                            so = new SpawnObject(TypeName, TypeMaxCount);
 
-                        m_SpawnObjects.Add(TheSpawnObject);
+                            int SpawnedCount = reader.ReadInt();
+                            so.SpawnedObjects = new ArrayList(SpawnedCount);
+                            for (int x = 0; x < SpawnedCount; ++x)
+                            {
+                                int serial = reader.ReadInt();
+                                if (serial < -1)
+                                {
+                                    int tagserial = -1 * (serial + 2);
+                                    BaseXmlSpawner.KeywordTag t = BaseXmlSpawner.GetFromTagList(this, tagserial);
+                                    if (t != null)
+                                    {
+                                        so.SpawnedObjects.Add(t);
+                                    }
+                                }
+                                else
+                                {
+                                    IEntity e = World.FindEntity(serial);
 
-                        string typeName = BaseXmlSpawner.ParseObjectType(TypeName);
-                        // does it have a substitution that might change its validity?
-                        // if so then let it go
+                                    if (e != null)
+                                        so.SpawnedObjects.Add(e);
+                                }
+                            }
+                        }
 
+                        m_SpawnObjects.Add(so);
+
+                        string typeName = BaseXmlSpawner.ParseObjectType(so.TypeName);
                         if (
                             typeName == null
                             || (
@@ -15426,45 +15322,12 @@ namespace Server.Mobiles
                             if (m_WarnTimer == null)
                                 m_WarnTimer = new WarnTimer2();
 
-                            m_WarnTimer.Add(Location, Map, TypeName);
+                            m_WarnTimer.Add(Location, Map, so.TypeName);
 
                             this.status_str = "invalid type: " + typeName;
                         }
-
-                        // Read in the number of spawns already
-                        int SpawnedCount = reader.ReadInt();
-
-                        TheSpawnObject.SpawnedObjects = new ArrayList(SpawnedCount);
-
-                        for (int x = 0; x < SpawnedCount; ++x)
-                        {
-                            int serial = reader.ReadInt();
-                            if (serial < -1)
-                            {
-                                // minusone is reserved for unknown types by default
-                                //  minustwo on is used for referencing keyword tags
-                                int tagserial = -1 * (serial + 2);
-                                // get the tag with that serial and add it
-                                BaseXmlSpawner.KeywordTag t = BaseXmlSpawner.GetFromTagList(
-                                    this,
-                                    tagserial
-                                );
-                                if (t != null)
-                                {
-                                    TheSpawnObject.SpawnedObjects.Add(t);
-                                }
-                            }
-                            else
-                            {
-                                IEntity e = World.FindEntity(serial);
-
-                                if (e != null)
-                                    TheSpawnObject.SpawnedObjects.Add(e);
-                            }
-                        }
                     }
-                    // now have to reintegrate the later version spawnobject information into the earlier version desered objects
-                    if (hasnewobjectinfo && tmpSpawnListSize == SpawnListSize)
+                    if (version < 31 && hasnewobjectinfo && tmpSpawnListSize == SpawnListSize)
                     {
                         for (int i = 0; i < SpawnListSize; ++i)
                         {
@@ -15769,6 +15632,83 @@ namespace Server.Mobiles
                 SpawnsPerTick = spawnsper;
                 PackRange = packrange;
                 SpawnedObjects = new ArrayList();
+            }
+
+            public void Serialize(GenericWriter writer)
+            {
+                writer.Write((string)TypeName);
+                writer.Write((int)ActualMaxCount);
+                writer.Write(SubGroup);
+                writer.Write(SequentialResetTime);
+                writer.Write(SequentialResetTo);
+                writer.Write(KillsNeeded);
+                writer.Write(RestrictKillsToSubgroup);
+                writer.Write(ClearOnAdvance);
+                writer.Write(MinDelay);
+                writer.Write(MaxDelay);
+                writer.WriteDeltaTime(NextSpawn);
+                writer.Write(Disabled);
+                writer.Write(PackRange);
+                writer.Write(SpawnsPerTick);
+                writer.Write(RequireSurface);
+
+                writer.Write(SpawnedObjects.Count);
+                for (int x = 0; x < SpawnedObjects.Count; ++x)
+                {
+                    object o = SpawnedObjects[x];
+
+                    if (o is Item)
+                        writer.Write((Item)o);
+                    else if (o is Mobile)
+                        writer.Write((Mobile)o);
+                    else if (o is BaseXmlSpawner.KeywordTag)
+                        writer.Write(-1 * ((BaseXmlSpawner.KeywordTag)o).Serial - 2);
+                    else
+                        writer.Write(Serial.MinusOne);
+                }
+            }
+
+            public static SpawnObject Deserialize(GenericReader reader, XmlSpawner spawner)
+            {
+                string typeName = reader.ReadString();
+                int maxCount = reader.ReadInt();
+
+                SpawnObject so = new SpawnObject(typeName, maxCount);
+                so.SubGroup = reader.ReadInt();
+                so.SequentialResetTime = reader.ReadDouble();
+                so.SequentialResetTo = reader.ReadInt();
+                so.KillsNeeded = reader.ReadInt();
+                so.RestrictKillsToSubgroup = reader.ReadBool();
+                so.ClearOnAdvance = reader.ReadBool();
+                so.MinDelay = reader.ReadDouble();
+                so.MaxDelay = reader.ReadDouble();
+                so.NextSpawn = reader.ReadDeltaTime();
+                so.Disabled = reader.ReadBool();
+                so.PackRange = reader.ReadInt();
+                so.SpawnsPerTick = reader.ReadInt();
+                so.RequireSurface = reader.ReadBool();
+
+                int spawnedCount = reader.ReadInt();
+                so.SpawnedObjects = new ArrayList(spawnedCount);
+                for (int i = 0; i < spawnedCount; ++i)
+                {
+                    int serial = reader.ReadInt();
+                    if (serial < -1)
+                    {
+                        int tagserial = -1 * (serial + 2);
+                        BaseXmlSpawner.KeywordTag t = BaseXmlSpawner.GetFromTagList(spawner, tagserial);
+                        if (t != null)
+                            so.SpawnedObjects.Add(t);
+                    }
+                    else
+                    {
+                        IEntity e = World.FindEntity(serial);
+                        if (e != null)
+                            so.SpawnedObjects.Add(e);
+                    }
+                }
+
+                return so;
             }
 
             internal static string GetParm(string str, string separator)

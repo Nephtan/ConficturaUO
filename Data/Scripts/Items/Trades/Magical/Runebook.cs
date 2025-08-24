@@ -217,6 +217,8 @@ namespace Server.Items
 
             m_Entries.RemoveAt(index);
 
+            RunebookLogging.Log(from, this, "REMOVE", e);
+
             RecallRune rune = new RecallRune();
 
             rune.Target = e.Location;
@@ -380,18 +382,20 @@ namespace Server.Items
 
                     if (rune.Marked && rune.TargetMap != null)
                     {
-                        m_Entries.Add(
-                            new RunebookEntry(
-                                rune.Target,
-                                rune.TargetMap,
-                                rune.Description,
-                                rune.House
-                            )
+                        RunebookEntry entry = new RunebookEntry(
+                            rune.Target,
+                            rune.TargetMap,
+                            rune.Description,
+                            rune.House
                         );
+
+                        m_Entries.Add(entry);
 
                         dropped.Delete();
 
                         from.Send(new PlaySound(0x42, GetWorldLocation()));
+
+                        RunebookLogging.Log(from, this, "ADD", entry);
 
                         string desc = rune.Description;
 
