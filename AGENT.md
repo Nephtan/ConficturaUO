@@ -64,8 +64,8 @@ If you browse files or use terminal commands to generate your solution, you must
 
 * **Purpose:** Citations provide a reference for the information you used to generate your response.
 * **Formats:**
-    * **Files:** 【F:&lt;file_path>†L&lt;line_start>(-L&lt;line_end>)?】
-    * **Terminal Output:** 【&lt;chunk_id>†L&lt;line_start>(-L&lt;line_end>)?】
+    * **Files:** 【F:<file_path>†L<line_start>(-L<line_end>)?】
+    * **Terminal Output:** 【<chunk_id>†L<line_start>(-L<line_end>)?】
 * **Rules:**
     * File paths must be relative to the repository root.
     * Line numbers are 1-indexed. A single line number is acceptable if the citation refers to one line.
