@@ -2087,6 +2087,14 @@ namespace Server.Items
             m_Timer = new CityUpdateTimer(m_Time, this);
             m_Timer.Start();
 
+            // Ensure the city stone is registered after deserialization so that
+            // city membership and mayor checks continue to function after a
+            // server restart.
+            if (!PlayerGovernmentSystem.AllCityStones.Contains(this))
+            {
+                PlayerGovernmentSystem.AllCityStones.Add(this);
+            }
+
             UpdateRegion();
         }
 
