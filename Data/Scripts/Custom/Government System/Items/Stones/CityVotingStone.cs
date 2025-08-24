@@ -71,57 +71,63 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
-            if (from.InRange(this.GetWorldLocation(), 2))
+            if (!from.InRange(this.GetWorldLocation(), 2))
             {
-                if (
-                    m_Stone.Citizens.Contains(from)
-                    || from == m_Stone.Mayor
-                    || from.AccessLevel >= AccessLevel.GameMaster
-                )
-                {
-                    from.SendGump(new VotingStoneGump(this, from));
+                from.SendMessage("You are too far away to access that.");
+                return;
+            }
 
-                    TimeSpan time = m_Time - DateTime.Now;
+            // Ensure the voting stone has an assigned city management stone
+            if (m_Stone == null)
+            {
+                from.SendMessage("This voting stone is not properly linked to a city.");
+                return;
+            }
 
-                    if (time.Days != 0)
-                        from.SendMessage(
-                            53,
-                            "This election will end in {0} days, {1} hours, {2} minutes, and {3} seconds.",
-                            time.Days,
-                            time.Hours,
-                            time.Minutes,
-                            time.Seconds
-                        );
-                    else if (time.Hours != 0)
-                        from.SendMessage(
-                            53,
-                            "This election will end in {0} hours, {1} minutes, and {2} seconds.",
-                            time.Hours,
-                            time.Minutes,
-                            time.Seconds
-                        );
-                    else if (time.Minutes != 0)
-                        from.SendMessage(
-                            53,
-                            "This election will end in {0} minutes, and {1} seconds.",
-                            time.Minutes,
-                            time.Seconds
-                        );
-                    else if (time.Seconds != 0)
-                        from.SendMessage(
-                            53,
-                            "This election will end in {0} seconds.",
-                            time.Seconds
-                        );
-                }
-                else
-                {
-                    from.SendMessage("You must be a member of the city to vote.");
-                }
+            if (
+                m_Stone.Citizens.Contains(from)
+                || from == m_Stone.Mayor
+                || from.AccessLevel >= AccessLevel.GameMaster
+            )
+            {
+                from.SendGump(new VotingStoneGump(this, from));
+
+                TimeSpan time = m_Time - DateTime.Now;
+
+                if (time.Days != 0)
+                    from.SendMessage(
+                        53,
+                        "This election will end in {0} days, {1} hours, {2} minutes, and {3} seconds.",
+                        time.Days,
+                        time.Hours,
+                        time.Minutes,
+                        time.Seconds
+                    );
+                else if (time.Hours != 0)
+                    from.SendMessage(
+                        53,
+                        "This election will end in {0} hours, {1} minutes, and {2} seconds.",
+                        time.Hours,
+                        time.Minutes,
+                        time.Seconds
+                    );
+                else if (time.Minutes != 0)
+                    from.SendMessage(
+                        53,
+                        "This election will end in {0} minutes, and {1} seconds.",
+                        time.Minutes,
+                        time.Seconds
+                    );
+                else if (time.Seconds != 0)
+                    from.SendMessage(
+                        53,
+                        "This election will end in {0} seconds.",
+                        time.Seconds
+                    );
             }
             else
             {
-                from.SendMessage("You are too far away to access that.");
+                from.SendMessage("You must be a member of the city to vote.");
             }
         }
 
