@@ -19,7 +19,18 @@ namespace Server.Custom.Confictura
         /// Multiplier applied to timer durations when <see cref="Enabled"/> is true.
         /// A value of 2 will cause timers to elapse twice as fast. The default is 1.
         /// </summary>
-        public static double Multiplier { get; set; } = 1.0;
+        private static double _multiplier = 1.0;
+
+        /// <summary>
+        /// Gets or sets the testing speed multiplier. A backing field is used
+        /// instead of an auto-property initializer for compatibility with the
+        /// older C# compiler used by RunUO.
+        /// </summary>
+        public static double Multiplier
+        {
+            get { return _multiplier; }
+            set { _multiplier = value; }
+        }
 
         /// <summary>
         /// Adjusts a <see cref="TimeSpan"/> according to the current testing mode
