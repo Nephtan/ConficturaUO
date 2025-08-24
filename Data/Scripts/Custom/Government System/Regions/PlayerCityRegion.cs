@@ -10,6 +10,7 @@ using Server.Spells.Fourth;
 using Server.Spells.Seventh;
 using Server.Spells.Sixth;
 using Server.Targeting;
+using Server.Custom.Confictura;
 
 namespace Server.Regions
 {
@@ -270,7 +271,8 @@ namespace Server.Regions
         {
             if (m_Stone != null && m_Stone.Banned.Contains(m))
             {
-                m_Stone.BanAttackTimes[m] = DateTime.UtcNow + TimeSpan.FromMinutes(5);
+                m_Stone.BanAttackTimes[m] =
+                    DateTime.UtcNow + GovernmentTestingMode.Adjust(TimeSpan.FromMinutes(5));
                 m.SendMessage(38, "You remain attackable by this city's citizens for five minutes.");
             }
 

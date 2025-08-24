@@ -10,6 +10,7 @@ using Server.Items;
 using Server.Mobiles;
 using Server.Multis;
 using Server.Regions;
+using Server.Custom.Confictura;
 
 namespace Server
 {
@@ -25,13 +26,16 @@ namespace Server
         public static double ForensicsRequirement = 35.0;
 
         // Global Start Timer
-        public static readonly TimeSpan StartUpdate = TimeSpan.FromHours(24.0); // Default 1140 = 24 hours
+        public static TimeSpan StartUpdate =>
+            GovernmentTestingMode.Adjust(TimeSpan.FromHours(24.0)); // Default 1140 = 24 hours
 
         // City Update Time
-        public static readonly TimeSpan CityUpdate = TimeSpan.FromDays(7.0); // Default 10080 = 7 days
+        public static TimeSpan CityUpdate =>
+            GovernmentTestingMode.Adjust(TimeSpan.FromDays(7.0)); // Default 10080 = 7 days
 
         // Mayor Voting Time
-        public static readonly TimeSpan VoteUpdate = TimeSpan.FromDays(14.0); // Default 20160 = 14 Days
+        public static TimeSpan VoteUpdate =>
+            GovernmentTestingMode.Adjust(TimeSpan.FromDays(14.0)); // Default 20160 = 14 Days
 
         // Staring Treasury Amount RECOMMENDED: At least 20k so if player forgets to add, and dont lose on first update.
         public static int TreasuryAmount = 150000; // Default 20000

@@ -6,6 +6,7 @@ using Server.Mobiles;
 using Server.Multis;
 using Server.Regions;
 using Server.Targeting;
+using Server.Custom.Confictura;
 
 namespace Server.Items
 {
@@ -2271,8 +2272,8 @@ namespace Server.Items
                 spwn.Count = 1;
                 spwn.Running = true;
                 spwn.HomeRange = 3;
-                spwn.MinDelay = TimeSpan.FromMinutes(1);
-                spwn.MaxDelay = TimeSpan.FromMinutes(2);
+                spwn.MinDelay = GovernmentTestingMode.Adjust(TimeSpan.FromMinutes(1));
+                spwn.MaxDelay = GovernmentTestingMode.Adjust(TimeSpan.FromMinutes(2));
                 spwn.Visible = false;
                 spwn.Movable = false;
 
@@ -2324,8 +2325,8 @@ namespace Server.Items
                 spwn.Count = 1;
                 spwn.Running = true;
                 spwn.HomeRange = 3;
-                spwn.MinDelay = TimeSpan.FromMinutes(1);
-                spwn.MaxDelay = TimeSpan.FromMinutes(2);
+                spwn.MinDelay = GovernmentTestingMode.Adjust(TimeSpan.FromMinutes(1));
+                spwn.MaxDelay = GovernmentTestingMode.Adjust(TimeSpan.FromMinutes(2));
                 spwn.Visible = false;
                 spwn.Movable = false;
 
@@ -2377,8 +2378,8 @@ namespace Server.Items
                 spwn.Count = 1;
                 spwn.Running = true;
                 spwn.HomeRange = 3;
-                spwn.MinDelay = TimeSpan.FromMinutes(1);
-                spwn.MaxDelay = TimeSpan.FromMinutes(2);
+                spwn.MinDelay = GovernmentTestingMode.Adjust(TimeSpan.FromMinutes(1));
+                spwn.MaxDelay = GovernmentTestingMode.Adjust(TimeSpan.FromMinutes(2));
                 spwn.Visible = false;
                 spwn.Movable = false;
 
@@ -2430,8 +2431,8 @@ namespace Server.Items
                 spwn.Count = 1;
                 spwn.Running = true;
                 spwn.HomeRange = 3;
-                spwn.MinDelay = TimeSpan.FromMinutes(1);
-                spwn.MaxDelay = TimeSpan.FromMinutes(2);
+                spwn.MinDelay = GovernmentTestingMode.Adjust(TimeSpan.FromMinutes(1));
+                spwn.MaxDelay = GovernmentTestingMode.Adjust(TimeSpan.FromMinutes(2));
                 spwn.Visible = false;
                 spwn.Movable = false;
 
@@ -2483,8 +2484,8 @@ namespace Server.Items
                 spwn.Count = 1;
                 spwn.Running = true;
                 spwn.HomeRange = 3;
-                spwn.MinDelay = TimeSpan.FromMinutes(1);
-                spwn.MaxDelay = TimeSpan.FromMinutes(2);
+                spwn.MinDelay = GovernmentTestingMode.Adjust(TimeSpan.FromMinutes(1));
+                spwn.MaxDelay = GovernmentTestingMode.Adjust(TimeSpan.FromMinutes(2));
                 spwn.Visible = false;
                 spwn.Movable = false;
 
@@ -2536,8 +2537,8 @@ namespace Server.Items
                 spwn.Count = 1;
                 spwn.Running = true;
                 spwn.HomeRange = 3;
-                spwn.MinDelay = TimeSpan.FromMinutes(1);
-                spwn.MaxDelay = TimeSpan.FromMinutes(2);
+                spwn.MinDelay = GovernmentTestingMode.Adjust(TimeSpan.FromMinutes(1));
+                spwn.MaxDelay = GovernmentTestingMode.Adjust(TimeSpan.FromMinutes(2));
                 spwn.Visible = false;
                 spwn.Movable = false;
 
@@ -2589,8 +2590,8 @@ namespace Server.Items
                 spwn.Count = 1;
                 spwn.Running = true;
                 spwn.HomeRange = 3;
-                spwn.MinDelay = TimeSpan.FromMinutes(1);
-                spwn.MaxDelay = TimeSpan.FromMinutes(2);
+                spwn.MinDelay = GovernmentTestingMode.Adjust(TimeSpan.FromMinutes(1));
+                spwn.MaxDelay = GovernmentTestingMode.Adjust(TimeSpan.FromMinutes(2));
                 spwn.Visible = false;
                 spwn.Movable = false;
 
@@ -2642,8 +2643,8 @@ namespace Server.Items
                 spwn.Count = 1;
                 spwn.Running = true;
                 spwn.HomeRange = 3;
-                spwn.MinDelay = TimeSpan.FromMinutes(1);
-                spwn.MaxDelay = TimeSpan.FromMinutes(2);
+                spwn.MinDelay = GovernmentTestingMode.Adjust(TimeSpan.FromMinutes(1));
+                spwn.MaxDelay = GovernmentTestingMode.Adjust(TimeSpan.FromMinutes(2));
                 spwn.Visible = false;
                 spwn.Movable = false;
 
@@ -2695,8 +2696,8 @@ namespace Server.Items
                 spwn.Count = 1;
                 spwn.Running = true;
                 spwn.HomeRange = 0;
-                spwn.MinDelay = TimeSpan.FromMinutes(1);
-                spwn.MaxDelay = TimeSpan.FromMinutes(2);
+                spwn.MinDelay = GovernmentTestingMode.Adjust(TimeSpan.FromMinutes(1));
+                spwn.MaxDelay = GovernmentTestingMode.Adjust(TimeSpan.FromMinutes(2));
                 spwn.Visible = false;
                 spwn.Movable = false;
 
@@ -2737,8 +2738,8 @@ namespace Server.Items
                 spwn.Count = 1;
                 spwn.Running = true;
                 spwn.HomeRange = 0;
-                spwn.MinDelay = TimeSpan.FromMinutes(1);
-                spwn.MaxDelay = TimeSpan.FromMinutes(2);
+                spwn.MinDelay = GovernmentTestingMode.Adjust(TimeSpan.FromMinutes(1));
+                spwn.MaxDelay = GovernmentTestingMode.Adjust(TimeSpan.FromMinutes(2));
                 spwn.Visible = false;
                 spwn.Movable = false;
 
@@ -2779,8 +2780,8 @@ namespace Server.Items
                 spwn.Count = 1;
                 spwn.Running = true;
                 spwn.HomeRange = 0;
-                spwn.MinDelay = TimeSpan.FromMinutes(1);
-                spwn.MaxDelay = TimeSpan.FromMinutes(2);
+                spwn.MinDelay = GovernmentTestingMode.Adjust(TimeSpan.FromMinutes(1));
+                spwn.MaxDelay = GovernmentTestingMode.Adjust(TimeSpan.FromMinutes(2));
                 spwn.Visible = false;
                 spwn.Movable = false;
 
@@ -2821,8 +2822,8 @@ namespace Server.Items
                 spwn.Count = 1;
                 spwn.Running = true;
                 spwn.HomeRange = 0;
-                spwn.MinDelay = TimeSpan.FromMinutes(1);
-                spwn.MaxDelay = TimeSpan.FromMinutes(2);
+                spwn.MinDelay = GovernmentTestingMode.Adjust(TimeSpan.FromMinutes(1));
+                spwn.MaxDelay = GovernmentTestingMode.Adjust(TimeSpan.FromMinutes(2));
                 spwn.Visible = false;
                 spwn.Movable = false;
 
@@ -2863,8 +2864,8 @@ namespace Server.Items
                 spwn.Count = 1;
                 spwn.Running = true;
                 spwn.HomeRange = 0;
-                spwn.MinDelay = TimeSpan.FromMinutes(1);
-                spwn.MaxDelay = TimeSpan.FromMinutes(2);
+                spwn.MinDelay = GovernmentTestingMode.Adjust(TimeSpan.FromMinutes(1));
+                spwn.MaxDelay = GovernmentTestingMode.Adjust(TimeSpan.FromMinutes(2));
                 spwn.Visible = false;
                 spwn.Movable = false;
 
@@ -2906,8 +2907,8 @@ namespace Server.Items
                 spwn.Count = 1;
                 spwn.Running = true;
                 spwn.HomeRange = 0;
-                spwn.MinDelay = TimeSpan.FromMinutes(1);
-                spwn.MaxDelay = TimeSpan.FromMinutes(2);
+                spwn.MinDelay = GovernmentTestingMode.Adjust(TimeSpan.FromMinutes(1));
+                spwn.MaxDelay = GovernmentTestingMode.Adjust(TimeSpan.FromMinutes(2));
                 spwn.Visible = false;
                 spwn.Movable = false;
 
@@ -3118,8 +3119,8 @@ namespace Server.Items
                 spwn.Count = 1;
                 spwn.Running = true;
                 spwn.HomeRange = 5;
-                spwn.MinDelay = TimeSpan.FromMinutes(1);
-                spwn.MaxDelay = TimeSpan.FromMinutes(2);
+                spwn.MinDelay = GovernmentTestingMode.Adjust(TimeSpan.FromMinutes(1));
+                spwn.MaxDelay = GovernmentTestingMode.Adjust(TimeSpan.FromMinutes(2));
                 spwn.Visible = false;
                 spwn.Movable = false;
                 spwn.MoveToWorld(new Point3D(p.X - 4, p.Y, p.Z), from.Map);
@@ -3173,8 +3174,8 @@ namespace Server.Items
                 spwn.Count = 1;
                 spwn.Running = true;
                 spwn.HomeRange = 5;
-                spwn.MinDelay = TimeSpan.FromMinutes(1);
-                spwn.MaxDelay = TimeSpan.FromMinutes(2);
+                spwn.MinDelay = GovernmentTestingMode.Adjust(TimeSpan.FromMinutes(1));
+                spwn.MaxDelay = GovernmentTestingMode.Adjust(TimeSpan.FromMinutes(2));
                 spwn.Visible = false;
                 spwn.Movable = false;
                 spwn.MoveToWorld(new Point3D(p.X - 4, p.Y, p.Z), from.Map);
@@ -3228,8 +3229,8 @@ namespace Server.Items
                 spwn.Count = 1;
                 spwn.Running = true;
                 spwn.HomeRange = 5;
-                spwn.MinDelay = TimeSpan.FromMinutes(1);
-                spwn.MaxDelay = TimeSpan.FromMinutes(2);
+                spwn.MinDelay = GovernmentTestingMode.Adjust(TimeSpan.FromMinutes(1));
+                spwn.MaxDelay = GovernmentTestingMode.Adjust(TimeSpan.FromMinutes(2));
                 spwn.Visible = false;
                 spwn.Movable = false;
                 spwn.MoveToWorld(new Point3D(p.X - 4, p.Y, p.Z), from.Map);
@@ -3283,8 +3284,8 @@ namespace Server.Items
                 spwn.Count = 1;
                 spwn.Running = true;
                 spwn.HomeRange = 5;
-                spwn.MinDelay = TimeSpan.FromMinutes(1);
-                spwn.MaxDelay = TimeSpan.FromMinutes(2);
+                spwn.MinDelay = GovernmentTestingMode.Adjust(TimeSpan.FromMinutes(1));
+                spwn.MaxDelay = GovernmentTestingMode.Adjust(TimeSpan.FromMinutes(2));
                 spwn.Visible = false;
                 spwn.Movable = false;
                 spwn.MoveToWorld(new Point3D(p.X - 4, p.Y, p.Z), from.Map);
@@ -3338,8 +3339,8 @@ namespace Server.Items
                 spwn.Count = 1;
                 spwn.Running = true;
                 spwn.HomeRange = 5;
-                spwn.MinDelay = TimeSpan.FromMinutes(1);
-                spwn.MaxDelay = TimeSpan.FromMinutes(2);
+                spwn.MinDelay = GovernmentTestingMode.Adjust(TimeSpan.FromMinutes(1));
+                spwn.MaxDelay = GovernmentTestingMode.Adjust(TimeSpan.FromMinutes(2));
                 spwn.Visible = false;
                 spwn.Movable = false;
                 spwn.MoveToWorld(new Point3D(p.X - 4, p.Y, p.Z), from.Map);
@@ -3393,8 +3394,8 @@ namespace Server.Items
                 spwn.Count = 1;
                 spwn.Running = true;
                 spwn.HomeRange = 5;
-                spwn.MinDelay = TimeSpan.FromMinutes(1);
-                spwn.MaxDelay = TimeSpan.FromMinutes(2);
+                spwn.MinDelay = GovernmentTestingMode.Adjust(TimeSpan.FromMinutes(1));
+                spwn.MaxDelay = GovernmentTestingMode.Adjust(TimeSpan.FromMinutes(2));
                 spwn.Visible = false;
                 spwn.Movable = false;
                 spwn.MoveToWorld(new Point3D(p.X - 4, p.Y, p.Z), from.Map);
@@ -3448,8 +3449,8 @@ namespace Server.Items
                 spwn.Count = 1;
                 spwn.Running = true;
                 spwn.HomeRange = 5;
-                spwn.MinDelay = TimeSpan.FromMinutes(1);
-                spwn.MaxDelay = TimeSpan.FromMinutes(2);
+                spwn.MinDelay = GovernmentTestingMode.Adjust(TimeSpan.FromMinutes(1));
+                spwn.MaxDelay = GovernmentTestingMode.Adjust(TimeSpan.FromMinutes(2));
                 spwn.Visible = false;
                 spwn.Movable = false;
                 spwn.MoveToWorld(new Point3D(p.X - 4, p.Y, p.Z), from.Map);
@@ -3503,8 +3504,8 @@ namespace Server.Items
                 spwn.Count = 1;
                 spwn.Running = true;
                 spwn.HomeRange = 5;
-                spwn.MinDelay = TimeSpan.FromMinutes(1);
-                spwn.MaxDelay = TimeSpan.FromMinutes(2);
+                spwn.MinDelay = GovernmentTestingMode.Adjust(TimeSpan.FromMinutes(1));
+                spwn.MaxDelay = GovernmentTestingMode.Adjust(TimeSpan.FromMinutes(2));
                 spwn.Visible = false;
                 spwn.Movable = false;
                 spwn.MoveToWorld(new Point3D(p.X - 4, p.Y, p.Z), from.Map);

@@ -46,8 +46,9 @@ namespace Server.Mobiles
 
             m_RentalGold = rentalGold;
 
-            m_RentalExpireTime = DateTime.Now + duration.Duration;
-            m_RentalExpireTimer = new RentalExpireTimer(this, duration.Duration, m_Stone);
+            TimeSpan adjusted = GovernmentTestingMode.Adjust(duration.Duration);
+            m_RentalExpireTime = DateTime.Now + adjusted;
+            m_RentalExpireTimer = new RentalExpireTimer(this, adjusted, m_Stone);
             m_RentalExpireTimer.Start();
         }
 
@@ -299,6 +300,7 @@ namespace Server.Mobiles
             m_RentalExpireTime = reader.ReadDeltaTime();
 
             TimeSpan delay = m_RentalExpireTime - DateTime.Now;
+            delay = GovernmentTestingMode.Adjust(delay);
             m_RentalExpireTimer = new RentalExpireTimer(
                 this,
                 delay > TimeSpan.Zero ? delay : TimeSpan.Zero,
@@ -317,7 +319,7 @@ namespace Server.Mobiles
                 TimeSpan delay,
                 CityManagementStone stone
             )
-                : base(delay, vendor.RentalDuration.Duration)
+                : base(delay, GovernmentTestingMode.Adjust(vendor.RentalDuration.Duration))
             {
                 m_Vendor = vendor;
                 m_Stone = stone;
@@ -336,7 +338,9 @@ namespace Server.Mobiles
 
                     m_Vendor.RentalPrice = renewalPrice;
 
-                    m_Vendor.m_RentalExpireTime = DateTime.Now + m_Vendor.RentalDuration.Duration;
+                    m_Vendor.m_RentalExpireTime =
+                        DateTime.Now +
+                        GovernmentTestingMode.Adjust(m_Vendor.RentalDuration.Duration);
                 }
                 else
                 {

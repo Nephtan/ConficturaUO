@@ -3,6 +3,7 @@ using System.Collections;
 using Server;
 using Server.Gumps;
 using Server.Mobiles;
+using Server.Custom.Confictura;
 
 namespace Server.Items
 {
@@ -241,7 +242,7 @@ namespace Server.Items
 
         public void RestartTimer(TimeSpan delay)
         {
-            m_Time = DateTime.Now + delay;
+            m_Time = GovernmentTestingMode.GetAdjustedTime(delay);
             m_Timer = new CityElectionTimer(m_Time, this);
             m_Timer.Start();
         }

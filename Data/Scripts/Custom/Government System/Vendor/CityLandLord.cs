@@ -5,6 +5,7 @@ using Server;
 using Server.Gumps;
 using Server.Items;
 using Server.Regions;
+using Server.Custom.Confictura;
 
 namespace Server.Mobiles
 {
@@ -215,8 +216,8 @@ namespace Server.Mobiles
             sp1.Count = 1;
             sp1.Running = true;
             sp1.HomeRange = 5;
-            sp1.MinDelay = TimeSpan.FromMinutes(1);
-            sp1.MaxDelay = TimeSpan.FromMinutes(2);
+                sp1.MinDelay = GovernmentTestingMode.Adjust(TimeSpan.FromMinutes(1));
+                sp1.MaxDelay = GovernmentTestingMode.Adjust(TimeSpan.FromMinutes(2));
             sp1.Visible = false;
             sp1.Movable = false;
             sp1.MoveToWorld(new Point3D(p.X + 1, p.Y, p.Z), map);
@@ -226,8 +227,8 @@ namespace Server.Mobiles
             sp2.Count = 1;
             sp2.Running = true;
             sp2.HomeRange = 5;
-            sp2.MinDelay = TimeSpan.FromMinutes(1);
-            sp2.MaxDelay = TimeSpan.FromMinutes(2);
+                sp2.MinDelay = GovernmentTestingMode.Adjust(TimeSpan.FromMinutes(1));
+                sp2.MaxDelay = GovernmentTestingMode.Adjust(TimeSpan.FromMinutes(2));
             sp2.Visible = false;
             sp2.Movable = false;
             sp2.MoveToWorld(new Point3D(p.X + 2, p.Y, p.Z), map);

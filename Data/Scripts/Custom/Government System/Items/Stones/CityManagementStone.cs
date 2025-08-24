@@ -16,6 +16,7 @@ using Server.Targeting;
 #if (ChatEnabled )
 using Knives.Chat3;
 #endif
+using Server.Custom.Confictura;
 
 namespace Server.Items
 {
@@ -994,7 +995,7 @@ namespace Server.Items
 #endif
                 }
 
-                this.VoteStone.RestartTimer(TimeSpan.FromDays(1.0));
+                this.VoteStone.RestartTimer(GovernmentTestingMode.Adjust(TimeSpan.FromDays(1.0)));
             }
         }
 
@@ -1307,7 +1308,7 @@ namespace Server.Items
                             else
                             {
                                 vend.City = null;
-                                vend.Die = DateTime.Now + TimeSpan.FromDays(2.0);
+                                vend.Die = GovernmentTestingMode.GetAdjustedTime(TimeSpan.FromDays(2.0));
                                 Timer t = new CityVendorDismiss(vend, vend.Die);
                                 Mobile owner = vend.Owner;
                                 owner.SendMessage(
@@ -1335,7 +1336,7 @@ namespace Server.Items
                         else
                         {
                             vend.City = null;
-                            vend.Die = DateTime.Now + TimeSpan.FromDays(2.0);
+                            vend.Die = GovernmentTestingMode.GetAdjustedTime(TimeSpan.FromDays(2.0));
                             //vend.Die = DateTime.Now + TimeSpan.FromMinutes( 2.0 ); //For Testing
                             Mobile owner = vend.Owner;
                             Timer t = new CityVendorDismiss(vend, vend.Die);
