@@ -8,6 +8,7 @@ using Server.Items;
 using Server.Multis;
 using Server.Prompts;
 using Server.Regions;
+using Server.Custom.Confictura;
 
 namespace Server.Mobiles
 {
