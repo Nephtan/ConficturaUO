@@ -76,3 +76,24 @@
 | Housing System | [BaseHouse.cs](../Data/Scripts/Items/Houses/BaseHouse.cs) | Missing | High | House placement, ownership, and decay rules. |
 | Race Token System | [BaseRace.cs](../Data/Scripts/Mobiles/Races/BaseRace.cs) | Missing | Medium | Items assigning races to characters. |
 | Boat Core Mechanics | [BaseBoat.cs](../Data/Scripts/Items/Boats/BaseBoat.cs) | Missing | High | Base boat movement, docking, and decay. |
+| Mechanic: Auto Sheath | [HelpGump.cs](../Data/Scripts/System/Help/HelpGump.cs) | Missing | Low | Help menu option to auto-sheathe weapons out of battle. |
+| Guide: Play Style - Barbaric | [HelpGump.cs](../Data/Scripts/System/Help/HelpGump.cs) | Missing | Medium | Describes barbaric play style altering gear and titles. |
+| Mechanic: Skill Lists | [HelpGump.cs](../Data/Scripts/System/Help/HelpGump.cs) | Missing | Low | Alternate condensed skill list using `[skilllist]` command. |
+| Mechanic: Flip Deed | [HelpGump.cs](../Data/Scripts/System/Help/HelpGump.cs) | Missing | Low | Explains rotating deed-based items to change facing. |
+| NPC: Banker Speech Commands | [Banker.cs](../Data/Scripts/Mobiles/Civilized/Vendors/Banker.cs) | Missing | Medium | Keywords like withdraw, balance, bank, check perform banking actions. |
+| NPC: Real Estate Broker Appraisal | [RealEstateBroker.cs](../Data/Scripts/Mobiles/Civilized/Vendors/RealEstateBroker.cs) | Missing | Medium | Appraises and buys house deeds via *appraise* keyword. |
+| NPC: Animal Trainer Stable/Claim | [AnimalTrainer.cs](../Data/Scripts/Mobiles/Civilized/Vendors/AnimalTrainer.cs) | Missing | Low | Speech commands to stable or claim pets. |
+| Magic Toolbars Guide | [HelpGump.cs](../Data/Scripts/System/Help/HelpGump.cs) | Missing | Medium | Explains configuring spell toolbars. |
+| Magery Spell Color Setting | [HelpGump.cs](../Data/Scripts/System/Help/HelpGump.cs) | Missing | Low | Describes customizing spell effect hues. |
+| Custom Title Feature | [HelpGump.cs](../Data/Scripts/System/Help/HelpGump.cs) | Missing | Low | Lets players set personalized titles. |
+| Real Estate Broker Deed Appraisal | [RealEstateBroker.cs](../Data/Scripts/Mobiles/Civilized/Vendors/RealEstateBroker.cs) | Missing | Low | NPC explains appraising and selling house deeds. |
+| Ranger Survival Training | [Talk.cs](../Data/Scripts/System/Misc/Talk.cs) | Missing | Medium | Ranger NPC teaches camping and trapping basics. |
+| Shipwright Sailing Tutorial | [Talk.cs](../Data/Scripts/System/Misc/Talk.cs) | Missing | Medium | Shipwright NPC details ship use and navigation. |
+| Mage Spellcasting Tips | [Talk.cs](../Data/Scripts/System/Misc/Talk.cs) | Missing | Medium | Mage NPC covers wand charging and custom spell bars. |
+| Creature Transformation Guide | [RacePotions.cs](../Data/Scripts/Mobiles/Races/RacePotions.cs) | Missing | High | Shelf text describing race-changing potions and creature traits. | Guide: In-Game Command List | [HelpGump.cs](../Data/Scripts/System/Help/HelpGump.cs) | Missing | Medium | Lists common player commands and navigation tips. |
+| Mechanic: Banking Speech Commands | [Banker.cs](../Data/Scripts/Mobiles/Civilized/Vendors/Banker.cs) | Missing | Low | Banker reacts to "withdraw," "balance," "bank," and "check" keywords. |
+| Guide: Guide to Adventure Book | [DynamicBook.cs](../Data/Scripts/Items/Books/DynamicBook.cs) | Missing | Medium | Starter book explaining gameplay basics. |
+| Guide: World Basics & Commands | [HelpGump.cs](../Data/Scripts/System/Help/HelpGump.cs) | Missing | Medium | Lists core commands, help resources, and area difficulty levels. |
+| Guide: Player Government System | [GovHelpGump.cs](../Data/Scripts/Custom/Government%20System/Gumps/GovHelpGump.cs) | Missing | Medium | In-game tutorial covering city setup, elections, taxes, warring, and more. |
+| NPC Dialogue: Shipwright Sailing Guide | [Talk.cs](../Data/Scripts/System/Misc/Talk.cs) | Missing | Medium | Shipwright explains ship placement, navigation, and maintenance. |
+| NPC Dialogue: Mage Advice | [Talk.cs](../Data/Scripts/System/Misc/Talk.cs) | Missing | Medium | Mage provides wand charging service and spellcasting tips. |
