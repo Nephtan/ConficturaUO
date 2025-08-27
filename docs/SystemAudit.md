@@ -8,7 +8,7 @@
 | Player Range Sensitive Mod | [setdeactivation.cs](../Data/Scripts/Custom/Player%20Range%20Sensitive%20Mod/setdeactivation.cs) | Complete | Low | Region-based deactivation of mobiles/items. |
 | Point Command System | [Point.cs](../Data/Scripts/Custom/Point%20Command%20%5B2.0%5D/Point.cs) | Complete | Low | Awards points via `[Point]` command. |
 | Tell A Friend Referral | [TellAFriend.cs](../Data/Scripts/Custom/TellAFriend/TellAFriend.cs) | Complete | Low | Referral rewards for inviting players. |
-| Access Level Stone | [AccessLevelStone.cs](../Data/Scripts/Custom/Access%20Level%20Stone%20%5B2.0%5D/AccessLevelStone.cs) | Stub | Low | Toggles staff access level; minimal docs.
+| Access Level Stone | [AccessLevelStone.cs](../Data/Scripts/Custom/Access%20Level%20Stone%20%5B2.0%5D/AccessLevelStone.cs) | Complete | Low | Toggles staff access level. [Documentation](wiki/Access_Level_Stone.md) |
 | GM Hiding Stone | [gmhidingstone.cs](../Data/Scripts/Custom/CEO's%20GM%20Hiding%20Stone%20%5B2.0%5D/gmhidingstone.cs) | Missing | Low | Staff invisibility utility.
 | Staff Toolbar | [Toolbar.cs](../Data/Scripts/Custom/Staff%20Toolbar%20%5B2.0%5D/Toolbar.cs) | Missing | Low | Multi-tool gump for staff.
 | NPC Control Commands | [CloneCommands.cs](../Data/Scripts/Custom/NPC%20Control/CloneCommands.cs) | Missing | Medium | Staff commands for NPC cloning/control.
