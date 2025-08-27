@@ -97,3 +97,13 @@
 | Guide: Player Government System | [GovHelpGump.cs](../Data/Scripts/Custom/Government%20System/Gumps/GovHelpGump.cs) | Missing | Medium | In-game tutorial covering city setup, elections, taxes, warring, and more. |
 | NPC Dialogue: Shipwright Sailing Guide | [Talk.cs](../Data/Scripts/System/Misc/Talk.cs) | Missing | Medium | Shipwright explains ship placement, navigation, and maintenance. |
 | NPC Dialogue: Mage Advice | [Talk.cs](../Data/Scripts/System/Misc/Talk.cs) | Missing | Medium | Mage provides wand charging service and spellcasting tips. |
+| Static Gump Tool | [StaticGump(Alternative).cs](../Data/Scripts/Custom/OzThothStaticGump/StaticGump%28Alternative%29.cs) | Stub | Low | Provides `StaticsTool` command for editing statics. |
+| Obsolete Script Collection | [Obsolete.cs](../Data/Scripts/System/Obsolete/Obsolete.cs) | Missing | Low | Legacy scripts marked for removal. |
+| Base Spell Framework | [Spell.cs](../Data/Scripts/Magic/Base/Spell.cs) | Missing | High | Core spell class infrastructure. |
+| Magery Spell System | [MagerySpell.cs](../Data/Scripts/Magic/Magery/MagerySpell.cs) | Missing | High | Standard magery spells organized by circle. |
+| Misc Magic Spells | [TravelSpell.cs](../Data/Scripts/Magic/Misc/TravelSpell.cs) | Missing | Medium | Assorted special spells like travel and summoning. |
+| Technology Items | [LightSword.cs](../Data/Scripts/Items/Technology/LightSword.cs) | Missing | Medium | Sci-fi themed weapons and tools. |
+| Relic Items | [DDRelicArmor.cs](../Data/Scripts/Items/Relics/DDRelicArmor.cs) | Missing | Medium | Collectible relic loot system. |
+| Explorer Camping Gear | [CamperTent.cs](../Data/Scripts/Items/Explorers/CamperTent.cs) | Missing | Low | Camping tents and outdoor survival items. |
+| Farmable Crops System | [FarmableCrop.cs](../Data/Scripts/Items/Farming/FarmableCrop.cs) | Missing | Medium | Growable crops such as wheat and corn. |
+| Goliath Monsters | [OrkDemigod.cs](../Data/Scripts/Mobiles/Goliaths/OrkDemigod.cs) | Missing | Medium | Large humanoid creatures and bosses. |
