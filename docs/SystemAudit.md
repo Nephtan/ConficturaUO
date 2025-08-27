@@ -18,7 +18,7 @@
 | PvP Consent System | [PKNONPKGUMP.cs](../Data/Scripts/Custom/PvPConsent/PKNONPKGUMP.cs) | Missing | Medium | Opt-in PvP flag and tools.
 | Random Encounter Engine | [EncounterEngine.cs](../Data/Scripts/Custom/RandomEncounters/EncounterEngine.cs) | Complete | High | Dynamic world encounter spawns. [Documentation](wiki/Random_Encounter_Engine.md) |
 | Invasion System | [Sosaria](../Data/Scripts/Custom/Invasion%20System/Sosaria) | Complete | High | Multi-map invasion events. [Documentation](wiki/Invasion_System.md)
-| XML Spawner Enhancements | [BaseXmlSpawner.cs](../Data/Scripts/Custom/XMLSpawner/BaseXmlSpawner.cs) | Missing | High | Extended XML spawner features.
+| XML Spawner Enhancements | [BaseXmlSpawner.cs](../Data/Scripts/Custom/XMLSpawner/BaseXmlSpawner.cs) | Complete | High | Extended XML spawner features. [Documentation](wiki/XML_Spawner_Enhancements.md) |
 | Monster Nest System | [MonsterNest.cs](../Data/Scripts/Custom/MonsterNest/MonsterNest.cs) | Missing | Medium | Spawns creatures from nests.
 | Government System | [PlayerGovernmentSystem.cs](../Data/Scripts/Custom/Government%20System/PlayerGovernmentSystem.cs) | Missing | High | Player-run city government mechanics.
 | Voting Rewards | [VoteCommand.cs](../Data/Scripts/Custom/Voting/VoteCommand.cs) | Missing | Medium | External vote tracking and rewards.
