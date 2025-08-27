@@ -14,7 +14,7 @@
 | NPC Control Commands | [CloneCommands.cs](../Data/Scripts/Custom/NPC%20Control/CloneCommands.cs) | Missing | Medium | Staff commands for NPC cloning/control.
 | Clear Deck Command | [ClearDeckCommand.cs](../Data/Scripts/Custom/ClearDeckCommand/ClearDeckCommand.cs) | Complete | Low | Clears ship decks of items. [Documentation](wiki/Clear_Deck_Command.md) |
 | Character Swap | [CharacterSwap.cs](../Data/Scripts/Custom/Character%20Swap/CharacterSwap.cs) | Missing | Low | Allows switching characters without relog.
-| Change Season Command | [ChangeSeason.cs](../Data/Scripts/Custom/ChangeSeason/ChangeSeason.cs) | Missing | Low | Alters world seasons via command.
+| Change Season Command | [ChangeSeason.cs](../Data/Scripts/Custom/ChangeSeason/ChangeSeason.cs) | Complete | Low | Alters world seasons via command. [Documentation](wiki/Change_Season_Command.md) |
 | PvP Consent System | [PKNONPKGUMP.cs](../Data/Scripts/Custom/PvPConsent/PKNONPKGUMP.cs) | Missing | Medium | Opt-in PvP flag and tools.
 | Random Encounter Engine | [EncounterEngine.cs](../Data/Scripts/Custom/RandomEncounters/EncounterEngine.cs) | Missing | High | Dynamic world encounter spawns.
 | Invasion System | [Sosaria](../Data/Scripts/Custom/Invasion%20System/Sosaria) | Missing | High | Multi-map invasion events.
