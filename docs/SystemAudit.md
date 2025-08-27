@@ -70,3 +70,9 @@
 | Region System | [BaseRegion.cs](../Data/Scripts/System/Regions/BaseRegion.cs) | Missing | High | Custom region definitions and rules. |
 | Skill Scripts | [Anatomy.cs](../Data/Scripts/System/Skills/Anatomy.cs) | Missing | High | Skill check implementations. |
 | Quest Framework | [Quests](../Data/Scripts/Quests) | Missing | High | Numerous quest lines and engines. |
+| Player Mobile Core | [PlayerMobile.cs](../Data/Scripts/Mobiles/Base/PlayerMobile.cs) | Missing | High | Core player character definitions and features. |
+| Creature AI Core | [BaseCreature.cs](../Data/Scripts/Mobiles/Base/BaseCreature.cs) | Missing | High | Shared creature logic and AI behaviors. |
+| Vendor Core System | [BaseVendor.cs](../Data/Scripts/Mobiles/Base/BaseVendor.cs) | Missing | Medium | Custom vendor buying/selling mechanics. |
+| Housing System | [BaseHouse.cs](../Data/Scripts/Items/Houses/BaseHouse.cs) | Missing | High | House placement, ownership, and decay rules. |
+| Race Token System | [BaseRace.cs](../Data/Scripts/Mobiles/Races/BaseRace.cs) | Missing | Medium | Items assigning races to characters. |
+| Boat Core Mechanics | [BaseBoat.cs](../Data/Scripts/Items/Boats/BaseBoat.cs) | Missing | High | Base boat movement, docking, and decay. |
