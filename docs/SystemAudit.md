@@ -20,7 +20,7 @@
 | Invasion System | [Sosaria](../Data/Scripts/Custom/Invasion%20System/Sosaria) | Complete | High | Multi-map invasion events. [Documentation](wiki/Invasion_System.md)
 | XML Spawner Enhancements | [BaseXmlSpawner.cs](../Data/Scripts/Custom/XMLSpawner/BaseXmlSpawner.cs) | Complete | High | Extended XML spawner features. [Documentation](wiki/XML_Spawner_Enhancements.md) |
 | Monster Nest System | [MonsterNest.cs](../Data/Scripts/Custom/MonsterNest/MonsterNest.cs) | Missing | Medium | Spawns creatures from nests.
-| Government System | [PlayerGovernmentSystem.cs](../Data/Scripts/Custom/Government%20System/PlayerGovernmentSystem.cs) | Missing | High | Player-run city government mechanics.
+| Government System | [PlayerGovernmentSystem.cs](../Data/Scripts/Custom/Government%20System/PlayerGovernmentSystem.cs) | Complete | High | [Documentation](wiki/Government_System.md) |
 | Voting Rewards | [VoteCommand.cs](../Data/Scripts/Custom/Voting/VoteCommand.cs) | Missing | Medium | External vote tracking and rewards.
 | OmniAI | [OmniAI Core.cs](../Data/Scripts/Custom/OmniAI/OmniAI%20Core.cs) | Missing | High | Modular AI framework.
 | Homestead System | [CityUpgradeSystem.cs](../Data/Scripts/Custom/Vhaerun's%20CRL%20Homestead%20System%20%5B2.0%5D/CityUpgradeSystem.cs) | Missing | High | Housing and agriculture expansion.
