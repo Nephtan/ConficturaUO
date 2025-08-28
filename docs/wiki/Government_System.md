@@ -15,6 +15,11 @@ The Government System lets players found and manage their own cities. Mayors con
   | 5 | 30 | Metropolis |
   | 6 | 36 | Empire |
 - **Membership Rules:** Any character with a house inside city limits may join, but characters cannot belong to multiple cities. Every character on an account counts toward the population.
+- **City Limits & Restrictions:**
+  - City names must be unique; duplicate names are blocked.
+  - Cities must be at least 260 tiles apart and each map has a cap on active cities (Lodor/Sosaria 20, Underworld 10, Serpent Island 10, Isles Dread 5). Underworld placement is disabled by default and must be explicitly enabled.
+  - A city can support up to 100 citizens and ban up to 50 players (setting the ban limit to zero disables banning).
+  - If enabled, mayoral candidates must have at least 35.0 Forensics skill before running for office.
 
 ## City Management
 The city management stone controls membership, taxes, and services.
@@ -25,6 +30,7 @@ The city management stone controls membership, taxes, and services.
 - **Lockdowns:** Decorative items can be secured within city limits; lockdown capacity scales with city level.
 - **Bans:** Mayors can ban players, marking them criminal within city boundaries.
 - **War & Allegiance:** Cities can declare wars or form alliances through the war department menu.
+- **Assistant Mayor:** The mayor can appoint an assistant. If the mayor leaves or becomes inactive, the assistant automatically assumes the role. If neither is available, a random citizen is promoted and a new election is scheduled within 24 hours.
 
 ### City Stone Commands
 Use these phrases while in the city:
@@ -42,7 +48,7 @@ Use these phrases while in the city:
 | `GovHelp` | Player | Open in-game help for the system |
 | `AdminAdd` | GameMaster | Administrative item creation gump |
 | `FindCities` | GameMaster | Locate all cities |
-| `GovTesting on/off` | GameMaster | Speed up system timers for testing |
+| `GovTesting on/off` | GameMaster | Toggle accelerated timers for testing long-running mechanics |
 | `UpgradeCitySystem` | Administrator | Upgrade existing cities to the latest version |
 
 ## Example
