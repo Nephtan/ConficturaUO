@@ -23,7 +23,7 @@
 | Government System | [PlayerGovernmentSystem.cs](../Data/Scripts/Custom/Government%20System/PlayerGovernmentSystem.cs) | Complete | High | [Documentation](wiki/Government_System.md) |
 | Voting Rewards | [VoteCommand.cs](../Data/Scripts/Custom/Voting/VoteCommand.cs) | Missing | Medium | External vote tracking and rewards.
 | OmniAI | [OmniAI Core.cs](../Data/Scripts/Custom/OmniAI/OmniAI%20Core.cs) | Complete | High | Modular AI framework. [Documentation](wiki/OmniAI.md)
-| Homestead System | [CityUpgradeSystem.cs](../Data/Scripts/Custom/Vhaerun's%20CRL%20Homestead%20System%20%5B2.0%5D/) | Missing | High | Housing and agriculture expansion.
+| Homestead System | [Folder Contents](../Data/Scripts/Custom/Vhaerun's%20CRL%20Homestead%20System%20%5B2.0%5D/) | Missing | High | Housing and agriculture expansion.
 | Pandora's Gift Box | [PandorasGiftBox.cs](../Data/Scripts/Custom/PandorasGiftBox/PandorasGiftBox.cs) | Missing | Medium | Randomized gift rewards.
 | Animal Shape Stones | [DragonShapeChangeStone-body.cs](../Data/Scripts/Custom/AnimalSystem/ShapeShiftStones/DragonShapeChangeStone-body.cs) | Missing | Low | Stones for player shapeshifting.
 | Book Publisher | [Publisher.cs](../Data/Scripts/Custom/Book%20Publisher%20%5B2.0%5D/Publisher.cs) | Stub | Low | Allows creation of custom books.
