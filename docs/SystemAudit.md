@@ -33,7 +33,7 @@
 | Champion Spawns | [Barracoon.cs](../Data/Scripts/Custom/Champions/Barracoon.cs) | Complete | High | Custom champion boss encounters. [Documentation](wiki/Champion_Spawns.md) |
 | The One Ring | [TheOneRing.cs](../Data/Scripts/Custom/LOTR%20-%20The%20One%20Ring/TheOneRing.cs) | Missing | Medium | Powerful artifact with ringwraiths.
 | Apiculture (Beekeeping) | [BeeHiveAddon.cs](../Data/Scripts/Trades/Apiculture/BeeHiveAddon.cs) | Missing | Medium | Beehive construction and wax crafting. |
-| Bulk Order System | [LargeBOD.cs](../Data/Scripts/Trades/Bulk%20Orders/LargeBOD.cs) | Missing | High | Bulk crafting order rewards. |
+| Bulk Order System | [LargeBOD.cs](../Data/Scripts/Trades/Bulk%20Orders/LargeBOD.cs) | Complete | High | Bulk crafting order rewards. [Documentation](wiki/Bulk_Order_System.md) |
 | Crafting Core | [CraftGump.cs](../Data/Scripts/Trades/Core/CraftGump.cs) | Missing | High | Central crafting UI and context. |
 | Standard Crafting | [DefBlacksmithy.cs](../Data/Scripts/Trades/Crafting/DefBlacksmithy.cs) | Missing | High | Core crafting skill definitions. |
 | Gardening System | [PlantBowl.cs](../Data/Scripts/Trades/Gardening/PlantBowl.cs) | Missing | Medium | Plant growth and care. |
