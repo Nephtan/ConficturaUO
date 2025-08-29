@@ -30,7 +30,7 @@
 | Search System | [Commands.cs](../Data/Scripts/Custom/Searches/Commands.cs) | Missing | Medium | Search commands for items/mobiles.
 | Clone Offline Player Characters | [CloneOfflinePlayerCharacters.cs](../Data/Scripts/Custom/CloneOfflinePlayerCharacters/CloneOfflinePlayerCharacters.cs) | Missing | Medium | Creates clones of logged-out players.
 | Skill Stone | [SkillStone.cs](../Data/Scripts/Custom/Skill%20Stone/SkillStone.cs) | Missing | Low | Resets or grants skills via stone.
-| Champion Spawns | [Barracoon.cs](../Data/Scripts/Custom/Champions/Barracoon.cs) | Missing | High | Custom champion boss encounters.
+| Champion Spawns | [Barracoon.cs](../Data/Scripts/Custom/Champions/Barracoon.cs) | Complete | High | Custom champion boss encounters. [Documentation](wiki/Champion_Spawns.md) |
 | The One Ring | [TheOneRing.cs](../Data/Scripts/Custom/LOTR%20-%20The%20One%20Ring/TheOneRing.cs) | Missing | Medium | Powerful artifact with ringwraiths.
 | Apiculture (Beekeeping) | [BeeHiveAddon.cs](../Data/Scripts/Trades/Apiculture/BeeHiveAddon.cs) | Missing | Medium | Beehive construction and wax crafting. |
 | Bulk Order System | [LargeBOD.cs](../Data/Scripts/Trades/Bulk%20Orders/LargeBOD.cs) | Missing | High | Bulk crafting order rewards. |
