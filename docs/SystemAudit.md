@@ -75,7 +75,7 @@
 | Vendor Core System | [BaseVendor.cs](../Data/Scripts/Mobiles/Base/BaseVendor.cs) | Missing | Medium | Custom vendor buying/selling mechanics. |
 | Housing System | [BaseHouse.cs](../Data/Scripts/Items/Houses/BaseHouse.cs) | Missing | High | House placement, ownership, and decay rules. |
 | Race Token System | [BaseRace.cs](../Data/Scripts/Mobiles/Races/BaseRace.cs) | Missing | Medium | Items assigning races to characters. |
-| Boat Core Mechanics | [BaseBoat.cs](../Data/Scripts/Items/Boats/BaseBoat.cs) | Missing | High | Base boat movement, docking, and decay. |
+| Boat Core Mechanics | [BaseBoat.cs](../Data/Scripts/Items/Boats/BaseBoat.cs) | Complete | High | Base boat movement, docking, and decay. [Documentation](wiki/Boat_Core_Mechanics.md) |
 | Mechanic: Auto Sheath | [HelpGump.cs](../Data/Scripts/System/Help/HelpGump.cs) | Missing | Low | Help menu option to auto-sheathe weapons out of battle. |
 | Guide: Play Style - Barbaric | [HelpGump.cs](../Data/Scripts/System/Help/HelpGump.cs) | Missing | Medium | Describes barbaric play style altering gear and titles. |
 | Mechanic: Skill Lists | [HelpGump.cs](../Data/Scripts/System/Help/HelpGump.cs) | Missing | Low | Alternate condensed skill list using `[skilllist]` command. |
