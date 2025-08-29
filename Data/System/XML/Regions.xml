@@ -594,19 +594,13 @@
 		<region type="BardDungeonRegion" priority="50" name="the Mines">
 			<rect x="6026" y="2314" width="90" height="60" />
 		</region>
-                <region type="BardDungeonRegion" priority="50" name="the Cellar">
-                        <rect x="5373" y="2652" width="280" height="117" />
-                                <spawning>
-                                        <object id="2775" type="HiddenChest" minSpawnTime="PT1S" maxSpawnTime="PT1S" amount="10" />
-                                </spawning>
-                </region>
-		<region type="DungeonRegion" priority="50" name="UndergroundTemple">
-			<rect x="5645" y="702" width="102" height="177" />
+		<region type="BardDungeonRegion" priority="50" name="the Cellar">
+			<rect x="5373" y="2652" width="280" height="117" />
+				<spawning>
+					<object id="2775" type="HiddenChest" minSpawnTime="PT1S" maxSpawnTime="PT1S" amount="10" />
+				</spawning>
 		</region>
-		<region type="DungeonRegion" priority="50" name="CastleBasement">
-			<rect x="5643" y="906" width="98" height="98" />
-		</region>
-        </Facet>
+	</Facet>
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	<Facet name="Sosaria">
 		<region type="SafeRegion" priority="50" name="the Fort of Stonewall">
@@ -1352,44 +1346,14 @@
 					<object id="5006" type="HiddenChest" minSpawnTime="PT1S" maxSpawnTime="PT1S" amount="6" />
 				</spawning>
 		</region>
-                <region type="DungeonRegion" priority="50" name="Vordo's Dungeon">
-                        <rect x="6118" y="0" width="420" height="762" />
-                                <spawning>
-                                        <object id="5007" type="HiddenTrap" minSpawnTime="PT1S" maxSpawnTime="PT1S" amount="150" />
-                                        <object id="5008" type="HiddenChest" minSpawnTime="PT1S" maxSpawnTime="PT1S" amount="75" />
-                                </spawning>
-                </region>
-		<region type="DungeonRegion" priority="50" name="TowerofRunes">
-			<rect x="4157" y="3190" width="285" height="23" />
+		<region type="DungeonRegion" priority="50" name="Vordo's Dungeon">
+			<rect x="6118" y="0" width="420" height="762" />
+				<spawning>
+					<object id="5007" type="HiddenTrap" minSpawnTime="PT1S" maxSpawnTime="PT1S" amount="150" />
+					<object id="5008" type="HiddenChest" minSpawnTime="PT1S" maxSpawnTime="PT1S" amount="75" />
+				</spawning>
 		</region>
-		<region type="DungeonRegion" priority="50" name="ElementalChaos">
-			<rect x="6628" y="2765" width="198" height="186" />
-		</region>
-		<region type="DungeonRegion" priority="50" name="DarkDragonTemple">
-			<rect x="5379" y="0" width="265" height="26" />
-		</region>
-		<region type="DungeonRegion" priority="50" name="WolfgangsCrypt">
-			<rect x="5945" y="2564" width="150" height="112" />
-		</region>
-		<region type="DungeonRegion" priority="50" name="LairofExodus">
-			<rect x="6074" y="335" width="37" height="340" />
-		</region>
-		<region type="DungeonRegion" priority="50" name="MadDukesManor">
-			<rect x="2716" y="1028" width="73" height="30" />
-		</region>
-		<region type="DungeonRegion" priority="50" name="BuriedRuins">
-			<rect x="6562" y="23" width="41" height="329" />
-		</region>
-		<region type="DungeonRegion" priority="50" name="TreeHollow">
-			<rect x="6145" y="2764" width="15" height="81" />
-		</region>
-		<region type="DungeonRegion" priority="50" name="CastleDio">
-			<rect x="5943" y="2269" width="149" height="149" />
-		</region>
-		<region type="DungeonRegion" priority="50" name="OrdainRuins">
-			<rect x="3286" y="888" width="148" height="75" />
-		</region>
-        </Facet>
+	</Facet>
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	<Facet name="Underworld">
 		<region type="SafeRegion" priority="50" name="the Fort of Tenebrae">
@@ -1445,13 +1409,10 @@
 				</spawning>
 		</region>
 
-                <region type="DungeonHomeRegion" priority="70" name="a Dungeon Dwelling">
-                        <rect x="1625" y="1" width="686" height="1067" />
-                </region>
-		<region type="DungeonRegion" priority="50" name="TheBlackPyramid">
-			<rect x="2195" y="1517" width="108" height="82" />
+		<region type="DungeonHomeRegion" priority="70" name="a Dungeon Dwelling">
+			<rect x="1625" y="1" width="686" height="1067" />
 		</region>
-        </Facet>
+	</Facet>
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	<Facet name="SerpentIsland">
 
@@ -1759,14 +1720,11 @@
 		<region type="PirateRegion" priority="50" name="the Waters of the Bloody Wave">
 			<rect x="78" y="1315" width="84" height="84" />
 		</region>
-                <region type="PirateRegion" priority="50" name="the Waters of the Dreams of Gold">
-                        <rect x="625" y="1266" width="84" height="84" />
-                </region>
-		<region type="OutDoorRegion" priority="50" name="BootyBay">
-			<rect x="32" y="682" width="47" height="62" />
+		<region type="PirateRegion" priority="50" name="the Waters of the Dreams of Gold">
+			<rect x="625" y="1266" width="84" height="84" />
 		</region>
 
-        </Facet>
+	</Facet>
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	<Facet name="SavagedEmpire">
 		<region type="SavageRegion" priority="20" name="the Hut">
