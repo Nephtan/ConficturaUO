@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Server;
 using Server.Accounting;
+using Server.Commands;
 using Server.ContextMenus;
 using Server.Engines.CannedEvil;
 using Server.Engines.Craft;
@@ -211,6 +212,21 @@ namespace Server.Mobiles
         private List<Mobile> m_AutoStabled;
         private List<Mobile> m_AllFollowers;
         private List<Mobile> m_RecentlyReported;
+
+        //Combat Log Edits
+        private string[] m_CombatLog = new string[10];
+
+        [CommandProperty(AccessLevel.GameMaster)]
+        public string[] CombatLog
+        {
+            get { return m_CombatLog; }
+            set
+            {
+                m_CombatLog = value;
+                InvalidateProperties();
+            }
+        }
+        //End Combag Log Edits
 
         // Start FSGov Edits
 
@@ -2811,8 +2827,50 @@ namespace Server.Mobiles
             base.OnBeneficialAction(target, isCriminal);
         }
 
+        private static string ExtractAttackerName(Mobile mobile)
+        {
+            string result = mobile.ToString();
+            int quotePosition = result.IndexOf('\"');
+            if (quotePosition != -1)
+            {
+                result = result.Substring(quotePosition + 1);
+                quotePosition = result.IndexOf('\"');
+                if (quotePosition != -1)
+                {
+                    result = result.Substring(0, quotePosition);
+                }
+            }
+            return result;
+        }
+
+        private void PlayerCommandCombatLogUpdate(int amount, Mobile from)
+        {
+            // Find the first empty index in the CombatLog array
+            int indexToUpdate = Array.FindIndex(CombatLog, entry => entry == null);
+
+            if (indexToUpdate == -1)
+            {
+                // If no null entries are found, the array is full and we need to shift the entries
+                for (int i = 0; i < CombatLog.Length - 1; i++)
+                {
+                    CombatLog[i] = CombatLog[i + 1]; // Shift each entry one position left
+                }
+
+                // Update the last position with the new log entry
+                indexToUpdate = CombatLog.Length - 1;
+            }
+
+            if (from != null)
+                CombatLog[indexToUpdate] = "Damage Taken = " + amount.ToString() + " From = " + ExtractAttackerName(from);
+            else
+                CombatLog[indexToUpdate] = "Damage Taken = " + amount.ToString() + " From = NULL";
+        }
+
         public override void OnDamage(int amount, Mobile from, bool willKill)
         {
+            PlayerCommandCombatLogUpdate(amount, from);
+            CombatLogging.LogDamageTaken(this, amount, from, this.Location.ToString(), this.Map.ToString(), Server.Misc.Worlds.GetRegionName(this.Map, this.Location));
+
             int disruptThreshold;
 
             if (!Core.AOS)
