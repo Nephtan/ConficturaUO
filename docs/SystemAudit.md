@@ -45,7 +45,7 @@
 | Shoppes Vendors | [BaseShoppe.cs](../Data/Scripts/Trades/Shoppes/BaseShoppe.cs) | Missing | Medium | Custom vendor shop system. |
 | Stonecrafting | [BaseStatue.cs](../Data/Scripts/Trades/Stone/BaseStatue.cs) | Missing | Medium | Creates stone statues and furniture. |
 | Taxidermy | [MountedTrophyHead.cs](../Data/Scripts/Trades/Taxidermy/MountedTrophyHead.cs) | Missing | Low | Mounting creature trophies. |
-| Bard Song Magic | [SongBook.cs](../Data/Scripts/Magic/Bard/SongBook.cs) | Missing | High | Musical spellcasting using songs. |
+| Bard Song Magic | [SongBook.cs](../Data/Scripts/Magic/Bard/SongBook.cs) | Complete | High | Musical spellcasting using songs. [Documentation](wiki/Bard_Song_Magic.md) |
 | Bushido | [BookOfBushido.cs](../Data/Scripts/Magic/Bushido/BookOfBushido.cs) | Missing | High | Samurai combat abilities. |
 | Death Knight Magic | [DeathKnightSpell.cs](../Data/Scripts/Magic/Death%20Knight/DeathKnightSpell.cs) | Missing | High | Dark knight spell line. |
 | Druidism | [HerbalistSpell.cs](../Data/Scripts/Magic/Druidism/HerbalistSpell.cs) | Missing | High | Nature-based spells and potions. |
