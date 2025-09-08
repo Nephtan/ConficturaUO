@@ -64,7 +64,8 @@ namespace Server.Mobiles
 
         [Constructable]
         public PegasusRiding(string name)
-            : base(name, 672, 1343, AIType.AI_Mage, FightMode.Evil, 10, 1, 0.2, 0.4)
+            // ItemID 0x3EB5 ensures the pegasus remains visible while mounted
+            : base(name, 672, 0x3EB5, AIType.AI_Mage, FightMode.Evil, 10, 1, 0.2, 0.4)
         {
             BaseSoundID = 0xA8;
             Hue = 2500;
