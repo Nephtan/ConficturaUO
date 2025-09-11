@@ -720,9 +720,25 @@ namespace Server.Multis
             {
                 MultiComponentList mcl = Components;
 
+                // Like IsInside in BaseHouse, the region for custom houses should
+                // exclude the tiles used for the exterior walkway.  The original
+                // implementation returned a rectangle covering the entire multi which
+                // meant the walkway was treated as part of the house region.  Players
+                // standing on the south or east edges were therefore considered inside
+                // by the region system even though IsInside() would return false,
+                // causing inconsistent behavior such as being dismounted while still
+                // being unable to interact with the interior.  Shrink the region to
+                // remove the southern row and eastern column reserved for the walkway
+                // so only the true house interior is considered part of the house
+                // region.
                 return new Rectangle2D[]
                 {
-                    new Rectangle2D(mcl.Min.X, mcl.Min.Y, mcl.Width, mcl.Height)
+                    new Rectangle2D(
+                        mcl.Min.X + 1,
+                        mcl.Min.Y + 1,
+                        mcl.Width - 3,
+                        mcl.Height - 2
+                    )
                 };
             }
         }

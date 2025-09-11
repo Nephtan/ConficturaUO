@@ -1224,8 +1224,24 @@ namespace Server.Multis
             if (x < 0 || x >= mcl.Width || y < 0 || y >= mcl.Height)
                 return false;
 
-            if (this is HouseFoundation && y < (mcl.Height - 1) && p.Z >= this.Z)
-                return true;
+            if (this is HouseFoundation)
+            {
+                // House foundations include an external border used for the walkway.  The
+                // region code previously considered these border tiles as being inside the
+                // house which caused players standing on the edge of a house (outside the
+                // walls) to be treated as if they were inside.  When this happened the
+                // standard house security rules prevented them from manipulating items in
+                // their own backpack and "You cannot pick that up" was displayed.
+
+                // Exclude the outer border of the multi, including the extra walkway
+                // space along the southern and eastern edges.  These tiles are visually
+                // outside the house and should not be treated as interior.
+                if (x <= 0 || y <= 0 || x >= mcl.Width - 2 || y >= mcl.Height - 1)
+                    return false;
+
+                if (p.Z >= this.Z)
+                    return true;
+            }
 
             StaticTile[] tiles = mcl.Tiles[x][y];
 
