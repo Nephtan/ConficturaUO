@@ -120,8 +120,29 @@ namespace Server.Regions
             for (int i = 0; i < area.Length; i++)
             {
                 Rectangle2D rect = houseArea[i];
+
+                // Shrink the region so the southern and eastern exterior edges are
+                // not considered part of the house interior.  Treating those border
+                // tiles as inside causes players standing on the outer edge of a
+                // house to be dismounted while still being unable to interact with
+                // items because BaseHouse.IsInside() reports they are outside.
+                //
+                // Customizable house foundations already return a trimmed Area, so
+                // only adjust the boundaries for the standard static house layouts.
+                int width = rect.Width;
+                int height = rect.Height;
+
+                if (!(house is HouseFoundation))
+                {
+                    if (width > 0)
+                        width -= 1;
+
+                    if (height > 0)
+                        height -= 1;
+                }
+
                 area[i] = Region.ConvertTo3D(
-                    new Rectangle2D(x + rect.Start.X, y + rect.Start.Y, rect.Width, rect.Height)
+                    new Rectangle2D(x + rect.Start.X, y + rect.Start.Y, width, height)
                 );
             }
 
