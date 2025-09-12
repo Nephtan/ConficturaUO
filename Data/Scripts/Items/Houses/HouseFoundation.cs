@@ -737,7 +737,7 @@ namespace Server.Multis
                         mcl.Min.X + 1,
                         mcl.Min.Y + 1,
                         mcl.Width - 1,
-                        mcl.Height - 1
+                        mcl.Height - 2
                     )
                 };
             }
