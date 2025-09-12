@@ -1236,7 +1236,7 @@ namespace Server.Multis
                 // Exclude the outer border of the multi, including the extra walkway
                 // space along the southern and eastern edges.  These tiles are visually
                 // outside the house and should not be treated as interior.
-                if (x <= 0 || y <= 0 || x >= mcl.Width - 2 || y >= mcl.Height - 1)
+                if (x <= 0 || y <= 0 || x >= mcl.Width - 1 || y >= mcl.Height - 1)
                     return false;
 
                 if (p.Z >= this.Z)

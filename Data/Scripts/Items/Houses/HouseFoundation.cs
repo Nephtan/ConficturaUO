@@ -736,7 +736,7 @@ namespace Server.Multis
                     new Rectangle2D(
                         mcl.Min.X + 1,
                         mcl.Min.Y + 1,
-                        mcl.Width - 3,
+                        mcl.Width - 2,
                         mcl.Height - 2
                     )
                 };
