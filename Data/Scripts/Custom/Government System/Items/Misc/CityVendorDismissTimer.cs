@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Server;
 using Server.Items;
 using Server.Mobiles;
+using Server.Custom.Confictura;
 
 namespace Server.Misc
 {
@@ -14,7 +15,7 @@ namespace Server.Misc
         private DateTime m_Expire;
 
         public CityVendorDismiss(CityPlayerVendor vend, DateTime expire)
-            : base(TimeSpan.Zero, TimeSpan.FromSeconds(1.5))
+            : base(TimeSpan.Zero, GovernmentTestingMode.Adjust(TimeSpan.FromSeconds(1.5)))
         {
             m_vendor = vend;
             m_Expire = expire;

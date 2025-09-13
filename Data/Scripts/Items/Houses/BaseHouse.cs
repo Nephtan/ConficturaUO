@@ -1224,8 +1224,14 @@ namespace Server.Multis
             if (x < 0 || x >= mcl.Width || y < 0 || y >= mcl.Height)
                 return false;
 
-            if (this is HouseFoundation && y < (mcl.Height - 1) && p.Z >= this.Z)
-                return true;
+            if (this is HouseFoundation)
+            {
+                // House foundations include an external border used for the walkway.
+                // Treat these border tiles as part of the interior so players standing
+                // on the edge of the foundation are considered inside the house region.
+                if (p.Z >= this.Z)
+                    return true;
+            }
 
             StaticTile[] tiles = mcl.Tiles[x][y];
 

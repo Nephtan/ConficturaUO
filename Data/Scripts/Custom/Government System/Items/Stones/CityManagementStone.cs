@@ -16,6 +16,7 @@ using Server.Targeting;
 #if (ChatEnabled )
 using Knives.Chat3;
 #endif
+using Server.Custom.Confictura;
 
 namespace Server.Items
 {
@@ -142,6 +143,7 @@ namespace Server.Items
         private int m_CurrentDecore;
         private bool m_IsRegistered;
         private ArrayList m_Banned;
+        private Dictionary<Mobile, DateTime> m_BanAttackTimes;
 
         private ArrayList m_Waring;
         private ArrayList m_WarsDeclared;
@@ -358,8 +360,14 @@ namespace Server.Items
 
         public ArrayList Banned
         {
-            get { return m_Banned; }
+            // Ensure the banned list is always initialized to prevent null-reference issues
+            get { return m_Banned ?? (m_Banned = new ArrayList()); }
             set { m_Banned = value; }
+        }
+
+        public Dictionary<Mobile, DateTime> BanAttackTimes
+        {
+            get { return m_BanAttackTimes ?? (m_BanAttackTimes = new Dictionary<Mobile, DateTime>()); }
         }
 
         public ArrayList Waring
@@ -493,6 +501,9 @@ namespace Server.Items
         {
             Movable = false;
             Name = "city management stone";
+
+            // initialize collections
+            m_Banned = new ArrayList();
 
             m_Time = DateTime.Now + PlayerGovernmentSystem.StartUpdate;
             m_Timer = new CityUpdateTimer(m_Time, this);
@@ -984,7 +995,7 @@ namespace Server.Items
 #endif
                 }
 
-                this.VoteStone.RestartTimer(TimeSpan.FromDays(1.0));
+                this.VoteStone.RestartTimer(GovernmentTestingMode.Adjust(TimeSpan.FromDays(1.0)));
             }
         }
 
@@ -1297,7 +1308,7 @@ namespace Server.Items
                             else
                             {
                                 vend.City = null;
-                                vend.Die = DateTime.Now + TimeSpan.FromDays(2.0);
+                                vend.Die = GovernmentTestingMode.GetAdjustedTime(TimeSpan.FromDays(2.0));
                                 Timer t = new CityVendorDismiss(vend, vend.Die);
                                 Mobile owner = vend.Owner;
                                 owner.SendMessage(
@@ -1325,7 +1336,7 @@ namespace Server.Items
                         else
                         {
                             vend.City = null;
-                            vend.Die = DateTime.Now + TimeSpan.FromDays(2.0);
+                            vend.Die = GovernmentTestingMode.GetAdjustedTime(TimeSpan.FromDays(2.0));
                             //vend.Die = DateTime.Now + TimeSpan.FromMinutes( 2.0 ); //For Testing
                             Mobile owner = vend.Owner;
                             Timer t = new CityVendorDismiss(vend, vend.Die);
@@ -2086,6 +2097,14 @@ namespace Server.Items
 
             m_Timer = new CityUpdateTimer(m_Time, this);
             m_Timer.Start();
+
+            // Ensure the city stone is registered after deserialization so that
+            // city membership and mayor checks continue to function after a
+            // server restart.
+            if (!PlayerGovernmentSystem.AllCityStones.Contains(this))
+            {
+                PlayerGovernmentSystem.AllCityStones.Add(this);
+            }
 
             UpdateRegion();
         }

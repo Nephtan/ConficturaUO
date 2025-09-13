@@ -73,14 +73,14 @@ If you browse files or use terminal commands to generate your solution, you must
     * Prefer file citations for code and documentation references. Use terminal citations for results of commands (e.g., test output).
 
 
-## AGENT.md Interpretation Rules
+## AGENTS.md Interpretation Rules
 
-This section contains meta-instructions on how to interpret AGENT.md files.
+This section contains meta-instructions on how to interpret AGENTS.md files.
 
 
 
-* **Scope:** The rules in an AGENT.md file apply to the entire directory tree where the file is located.
+* **Scope:** The rules in an AGENTS.md file apply to the entire directory tree where the file is located.
 * **Precedence:**
-    1. Direct instructions from the user prompt override all AGENT.md files.
-    2. More-deeply-nested AGENT.md files take precedence over those in parent directories.
-* **Compliance:** For every file you modify, you must obey the instructions in any AGENT.md file whose scope includes that file.
+    1. Direct instructions from the user prompt override all AGENTS.md files.
+    2. More-deeply-nested AGENTS.md files take precedence over those in parent directories.
+* **Compliance:** For every file you modify, you must obey the instructions in any AGENTS.md file whose scope includes that file.

@@ -323,11 +323,28 @@ namespace Confictura.Custom
                 if (item == null || item.Parent != source || item == source.Backpack)
                     continue;
 
-                Item newItem = CloneItem(item);
-                if (newItem == null)
-                    continue;
+                // Handle non-stackable items that have an Amount greater than 1 by
+                // cloning them individually so that each clone has a proper amount.
+                if (!item.Stackable && item.Amount > 1)
+                {
+                    for (int i = 0; i < item.Amount; i++)
+                    {
+                        Item newItem = CloneItem(item);
+                        if (newItem == null)
+                            continue;
 
-                newItems.Add(newItem);
+                        newItem.Amount = 1; // ensure the clone is valid
+                        newItems.Add(newItem);
+                    }
+                }
+                else
+                {
+                    Item newItem = CloneItem(item);
+                    if (newItem == null)
+                        continue;
+
+                    newItems.Add(newItem);
+                }
             }
 
             if (newItems.Count > 0)
@@ -359,16 +376,40 @@ namespace Confictura.Custom
             Item[] itemsCopy = sourceContainer.Items.ToArray();
             foreach (Item item in itemsCopy)
             {
-                Item clonedItem = CloneItem(item);
-                if (clonedItem != null)
+                // If a non-stackable item somehow has Amount > 1, create separate
+                // clones for each unit to avoid invalid stacked items.
+                if (!item.Stackable && item.Amount > 1)
                 {
-                    targetContainer.AddItem(clonedItem);
-                    Server.Items.Container sourceNestedContainer = item as Server.Items.Container;
-                    Server.Items.Container targetNestedContainer =
-                        clonedItem as Server.Items.Container;
-                    if (sourceNestedContainer != null && targetNestedContainer != null)
+                    for (int i = 0; i < item.Amount; i++)
                     {
-                        CloneContainerContents(sourceNestedContainer, targetNestedContainer);
+                        Item clonedItem = CloneItem(item);
+                        if (clonedItem == null)
+                            continue;
+
+                        clonedItem.Amount = 1;
+                        targetContainer.AddItem(clonedItem);
+
+                        Server.Items.Container sourceNestedContainer = item as Server.Items.Container;
+                        Server.Items.Container targetNestedContainer = clonedItem as Server.Items.Container;
+                        if (sourceNestedContainer != null && targetNestedContainer != null)
+                        {
+                            CloneContainerContents(sourceNestedContainer, targetNestedContainer);
+                        }
+                    }
+                }
+                else
+                {
+                    Item clonedItem = CloneItem(item);
+                    if (clonedItem != null)
+                    {
+                        targetContainer.AddItem(clonedItem);
+                        Server.Items.Container sourceNestedContainer = item as Server.Items.Container;
+                        Server.Items.Container targetNestedContainer =
+                            clonedItem as Server.Items.Container;
+                        if (sourceNestedContainer != null && targetNestedContainer != null)
+                        {
+                            CloneContainerContents(sourceNestedContainer, targetNestedContainer);
+                        }
                     }
                 }
             }
