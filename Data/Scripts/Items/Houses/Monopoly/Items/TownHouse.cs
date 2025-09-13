@@ -51,7 +51,20 @@ namespace Knives.TownHouses
 
             SetSign(0, 0, 0);
 
-            s_TownHouses.Add(this);
+            s_TownHouses.Add(this);			
+			
+            // The sign references this house only after construction completes.
+            // Delay region initialization so that the association is valid.
+            Timer.DelayCall(TimeSpan.Zero, new TimerCallback(FinishInit));
+        }
+
+        private void FinishInit()
+        {
+            if (c_Sign != null)
+            {
+                RUOVersion.UpdateRegion(c_Sign);
+                InitSectorDefinition();
+            }
         }
 
         public void InitSectorDefinition()
@@ -329,6 +342,10 @@ namespace Knives.TownHouses
             ItemID = 0x1DD6 | 0x4000;
 
             Price = Math.Max(1, Price);
+
+            // Ensure the townhouse registers its region after all
+            // linked objects have been deserialized.
+            Timer.DelayCall(TimeSpan.Zero, new TimerCallback(FinishInit));
         }
     }
 }
