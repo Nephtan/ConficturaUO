@@ -3284,8 +3284,9 @@ namespace Server.Mobiles
                     // to replace the mount. Certain spawns may fail to mount,
                     // which previously resulted in a null reference crash.
                     IMount bSteed = this.Mount;
+                    BaseMount iSteed = bSteed as BaseMount;
 
-                    if (bSteed is BaseMount iSteed)
+                    if (iSteed != null)
                     {
                         BaseMount steed = new EvilMount();
                         steed.Body = iSteed.Body;
