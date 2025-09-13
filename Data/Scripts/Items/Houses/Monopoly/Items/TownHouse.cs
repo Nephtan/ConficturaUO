@@ -134,56 +134,55 @@ namespace Knives.TownHouses
 
         public override bool IsInside(Point3D p, int height)
         {
-            if (c_Sign == null)
+            if (c_Sign == null || Map == null)
             {
                 return false;
             }
 
-            if (Map == null || Region == null)
+            // If the region has already been created and this is a rental contract
+            // we can rely on the region check which already includes the proper bounds.
+            if (c_Sign is RentalContract && Region != null && Region.Contains(p))
             {
-                Delete();
-                return false;
+                return true;
             }
 
-            Sector sector = null;
+            bool inside = false;
 
-            try
+            foreach (Rectangle2D rect in c_Sign.Blocks)
             {
-                if (c_Sign is RentalContract && Region.Contains(p))
+                if (
+                    p.X >= rect.Start.X
+                    && p.Y >= rect.Start.Y
+                    && p.X < rect.End.X
+                    && p.Y < rect.End.Y
+                )
                 {
-                    return true;
+                    inside = true;
+                    break;
                 }
-
-                sector = Map.GetSector(p);
-
-                foreach (BaseMulti m in sector.Multis)
-                {
-                    if (
-                        m != this
-                        && m is TownHouse
-                        && ((TownHouse)m).ForSaleSign is RentalContract
-                        && ((TownHouse)m).IsInside(p, height)
-                    )
-                        return false;
-                }
-
-                return Region.Contains(p);
             }
-            catch (Exception e)
+
+            if (!inside || p.Z < c_Sign.MinZ || p.Z >= c_Sign.MaxZ)
             {
-                Errors.Report("Error occured in IsInside().  More information on the console.");
-                Console.WriteLine(
-                    "Info:{0}, {1}, {2}, {3}",
-                    Map,
-                    sector,
-                    Region,
-                    sector != null ? "" + sector.Multis : "**"
-                );
-                Console.WriteLine(e.Source);
-                Console.WriteLine(e.Message);
-                Console.WriteLine(e.StackTrace);
                 return false;
             }
+
+            Sector sector = Map.GetSector(p);
+
+            foreach (BaseMulti m in sector.Multis)
+            {
+                if (
+                    m != this
+                    && m is TownHouse
+                    && ((TownHouse)m).ForSaleSign is RentalContract
+                    && ((TownHouse)m).IsInside(p, height)
+                )
+                {
+                    return false;
+                }
+            }
+
+            return true;
         }
 
         public static int MaxVendors = 50;
