@@ -139,9 +139,9 @@ namespace Knives.TownHouses
                 return false;
             }
 
-            // Prefer the registered region bounds when available so that
-            // townhouses behave the same as other house types.
-            if (Region != null && Region.Contains(p))
+            // If the region has already been created and this is a rental contract
+            // we can rely on the region check which already includes the proper bounds.
+            if (c_Sign is RentalContract && Region != null && Region.Contains(p))
             {
                 return true;
             }
