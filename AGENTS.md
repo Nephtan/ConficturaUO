@@ -2,7 +2,7 @@
 
 This document provides instructions for completing tasks within this repository. Please adhere to these guidelines carefully.
 
-## Primary Objective
+# Primary Objective
 
 The agent's primary objective is to assist with the development and maintenance of the Confictura RunUO shard. This includes, but is not limited to:
 
@@ -22,7 +22,7 @@ The agent's primary objective is to assist with the development and maintenance 
 
 * **Core Dependencies:** All custom scripts located in the `Data/Scripts/` directory depend on the core engine files located in `System/Source/`. Keep this relationship in mind when analyzing or modifying code.
 
-* **Line Endings:** Use Windows-style (CRLF) line endings to remain compatible with the server environment.
+* **Line Endings:** Use (LF) line endings to remain compatible with the server environment.
 
 ## Coding Conventions
 
@@ -68,9 +68,9 @@ If you browse files or use terminal commands to generate your solution, you must
 
 * **Formats:**
 
-  * **Files:** `【F:<file_path>†L<line_start>(-L<line_end>)?】`
+  * **Files:** `?F:<file_path>�L<line_start>(-L<line_end>)??`
 
-  * **Terminal Output:** `【<chunk_id>†L<line_start>(-L<line_end>)?】`
+  * **Terminal Output:** `?<chunk_id>�L<line_start>(-L<line_end>)??`
 
 * **Rules:**
 
