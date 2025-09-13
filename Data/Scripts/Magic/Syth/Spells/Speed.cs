@@ -60,7 +60,7 @@ namespace Server.Spells.Syth
 
         public static void RemoveEffect(Mobile m)
         {
-            m.Send(SpeedControl.Disable);
+            m.Send(SpeedControl.WalkSpeed);
             TableSythRunning.Remove(m);
             m.EndAction(typeof(SythSpeed));
             BuffInfo.RemoveBuff(m, BuffIcon.Speed);
