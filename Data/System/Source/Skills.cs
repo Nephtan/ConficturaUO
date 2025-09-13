@@ -704,7 +704,9 @@ namespace Server
                         value = Cap;
                 }
 
-                if (value > 125)
+                // Allow certain items (e.g., Ancient Smithy Hammer) to push skills beyond the normal 125 cap
+                // by skipping the hard limit when a non-cap-obeying bonus is present
+                if (value > 125 && bonusNotObey <= 0.0)
                 {
                     value = 125;
                 }
