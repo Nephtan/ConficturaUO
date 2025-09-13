@@ -685,52 +685,55 @@ namespace Server.Multis
             // copy the original..
             mcl = new MultiComponentList(mcl);
 
-            mcl.Resize(mcl.Width, mcl.Height + 1);
+            // Expand the multi to provide a one-tile-wide walkway on the south and east
+            // sides.  The southern strip is populated with stair tiles so players can
+            // step up onto the foundation.  The eastern strip uses the same placeholder
+            // tiles to reserve space for optional east-side stairs added through
+            // customization.
+            mcl.Resize(mcl.Width + 1, mcl.Height + 1);
 
             int xCenter = mcl.Center.X;
             int yCenter = mcl.Center.Y;
-            int y = mcl.Height - 1;
+            int south = mcl.Height - 1;
+            int east = mcl.Width - 1;
 
             for (int x = 0; x < mcl.Width; ++x)
-                mcl.Add(0x63, x - xCenter, y - yCenter, 0);
+                mcl.Add(0x63, x - xCenter, south - yCenter, 0);
+
+            for (int y = 0; y < mcl.Height - 1; ++y)
+                mcl.Add(0x63, east - xCenter, y - yCenter, 0);
         }
 
         public MultiComponentList GetEmptyFoundation()
         {
-            // Copy original foundation layout
+            // Copy the base foundation and extend it to include a fixed L-shaped walkway
+            // along the south and east sides.  The walkway is one tile wide and uses floor
+            // tiles so players can customize it later.
             MultiComponentList mcl = new MultiComponentList(MultiData.GetComponents(ItemID));
 
-            mcl.Resize(mcl.Width, mcl.Height + 1);
+            mcl.Resize(mcl.Width + 1, mcl.Height + 1);
 
             int xCenter = mcl.Center.X;
             int yCenter = mcl.Center.Y;
-            int y = mcl.Height - 1;
+            int south = mcl.Height - 1;
+            int east = mcl.Width - 1;
 
+            // Lay down the walls and posts that make up the foundation using the selected style.
             ApplyFoundation(m_Type, mcl);
-
-            for (int x = 1; x < mcl.Width; ++x)
-                mcl.Add(0x751, x - xCenter, y - yCenter, 0);
 
             return mcl;
         }
 
+        // Defines the interior region of the house.  One tile on the south and east edges is
+        // reserved for the exterior walkway and signpost and is intentionally excluded.
         public override Rectangle2D[] Area
         {
             get
             {
                 MultiComponentList mcl = Components;
 
-                // Like IsInside in BaseHouse, the region for custom houses should
-                // exclude the tiles used for the exterior walkway.  The original
-                // implementation returned a rectangle covering the entire multi which
-                // meant the walkway was treated as part of the house region.  Players
-                // standing on the south or east edges were therefore considered inside
-                // by the region system even though IsInside() would return false,
-                // causing inconsistent behavior such as being dismounted while still
-                // being unable to interact with the interior.  Shrink the region to
-                // remove the southern row and eastern column reserved for the walkway
-                // so only the true house interior is considered part of the house
-                // region.
+                // Trim the walkway from the region so only the true interior is treated as part of
+                // the house for spellcasting, item placement, and similar checks.
                 return new Rectangle2D[]
                 {
                     new Rectangle2D(
