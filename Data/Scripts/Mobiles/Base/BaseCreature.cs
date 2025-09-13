@@ -3280,18 +3280,23 @@ namespace Server.Mobiles
                 {
                     Citizens.MountCitizens(this, false);
 
+                    // Ensure the creature is actually mounted before attempting
+                    // to replace the mount. Certain spawns may fail to mount,
+                    // which previously resulted in a null reference crash.
                     IMount bSteed = this.Mount;
-                    BaseMount iSteed = (BaseMount)bSteed;
 
-                    BaseMount steed = new EvilMount();
-                    steed.Body = iSteed.Body;
-                    steed.ItemID = iSteed.ItemID;
-                    steed.Hue = iSteed.Hue;
-                    iSteed.Delete();
+                    if (bSteed is BaseMount iSteed)
+                    {
+                        BaseMount steed = new EvilMount();
+                        steed.Body = iSteed.Body;
+                        steed.ItemID = iSteed.ItemID;
+                        steed.Hue = iSteed.Hue;
+                        iSteed.Delete();
 
-                    steed.Rider = this;
-                    ActiveSpeed = 0.1;
-                    PassiveSpeed = 0.2;
+                        steed.Rider = this;
+                        ActiveSpeed = 0.1;
+                        PassiveSpeed = 0.2;
+                    }
                 }
             }
 
