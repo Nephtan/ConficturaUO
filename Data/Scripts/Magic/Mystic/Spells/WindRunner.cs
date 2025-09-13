@@ -50,7 +50,7 @@ namespace Server.Spells.Mystic
 
         public static void RemoveEffect(Mobile m)
         {
-            m.Send(SpeedControl.Disable);
+            m.Send(SpeedControl.WalkSpeed);
             TableWindRunning.Remove(m);
             m.EndAction(typeof(WindRunner));
             BuffInfo.RemoveBuff(m, BuffIcon.WindRunner);

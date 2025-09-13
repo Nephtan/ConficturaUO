@@ -26,7 +26,7 @@ namespace Server.Items
                     )
                 )
                 {
-                    from.Send(SpeedControl.Disable);
+                    from.Send(SpeedControl.WalkSpeed);
                     Weight = 5.0;
                 }
                 else
@@ -45,7 +45,7 @@ namespace Server.Items
                 Mobile from = (Mobile)parent;
                 if (from.RaceID > 0)
                 {
-                    from.Send(SpeedControl.Disable);
+                    from.Send(SpeedControl.WalkSpeed);
                 }
             }
             base.OnRemoved(parent);

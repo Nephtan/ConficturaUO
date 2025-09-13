@@ -2616,7 +2616,7 @@ namespace Server.Mobiles
                             && shoes.Weight < 5.0
                         )
                         {
-                            this.Send(SpeedControl.Disable);
+                            this.Send(SpeedControl.WalkSpeed);
                             shoes.Weight = 5.0;
                             if (!(shoes is HikingBoots))
                             {
