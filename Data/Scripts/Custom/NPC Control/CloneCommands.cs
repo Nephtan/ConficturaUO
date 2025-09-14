@@ -50,7 +50,6 @@ namespace Server.Commands
         {
             bool real = true;
             bool location = false;
-            bool statsskills = false;
 
             public CloneTarget()
                 : base(-1, false, TargetFlags.None) { }
