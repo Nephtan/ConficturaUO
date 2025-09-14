@@ -319,7 +319,8 @@ namespace Confictura.Custom
                 target.Skills[i].Base = source.Skills[i].Base;
 
             // Finalize any CharacterClone-specific initialization
-            if (target is CharacterClone clone)
+            CharacterClone clone = target as CharacterClone;
+            if (clone != null)
                 clone.FinalizeClone();
         }
 
