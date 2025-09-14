@@ -7,6 +7,7 @@ using Server.Items;
 using Server.Mobiles;
 using Server.Network;
 using Server.Targeting;
+using Confictura.Custom;
 
 namespace Server.Commands
 {
@@ -77,23 +78,8 @@ namespace Server.Commands
                             CommandLogging.Format(targ)
                         );
 
-                        from.Dex = targ.Dex;
-                        from.Int = targ.Int;
-                        from.Str = targ.Str;
-                        from.Fame = targ.Fame;
-                        from.Karma = targ.Karma;
-                        from.NameHue = targ.NameHue;
-                        from.SpeechHue = targ.SpeechHue;
-
-                        from.Name = targ.Name;
-                        from.Title = targ.Title;
-                        from.Female = targ.Female;
-                        from.Body = targ.Body;
-                        from.Hue = targ.Hue;
-
-                        from.Hits = from.HitsMax;
-                        from.Mana = from.ManaMax;
-                        from.Stam = from.StamMax;
+                        // Clone mobile stats, skills, and appearance using advanced logic
+                        CloneThings.CloneMobileProperties(targ, from);
 
                         if (location)
                         {
@@ -102,56 +88,51 @@ namespace Server.Commands
                             from.Map = targ.Map;
                         }
 
-                        from.HairItemID = targ.HairItemID;
-                        from.FacialHairItemID = targ.FacialHairItemID;
-                        from.HairHue = targ.HairHue;
-                        from.FacialHairHue = targ.FacialHairHue;
-
+                        // Adjust body mod for non-player targets
                         if (!targ.Player)
                             from.BodyMod = targ.Body;
                         else
                             from.BodyMod = 0;
 
-                        for (int i = 0; i < from.Skills.Length; i++)
-                            from.Skills[i].Base = targ.Skills[i].Base;
-
-                        ArrayList m_items = new ArrayList(from.Items);
-                        for (int i = 0; i < m_items.Count; i++)
+                        // Remove existing worn items
+                        List<Item> wornItems = new List<Item>(from.Items);
+                        foreach (Item item in wornItems)
                         {
-                            Item item = (Item)m_items[i];
-                            if (((item.Parent == from) && (item != from.Backpack)))
+                            if (item != null && item.Parent == from && item != from.Backpack)
                                 item.Delete();
                         }
 
-                        ArrayList items = new ArrayList(targ.Items);
-                        for (int i = 0; i < items.Count; i++)
+                        // Clear current backpack contents
+                        Container fromPack = from.Backpack as Container;
+                        if (fromPack == null)
                         {
-                            Item item = (Item)items[i]; //my favorite line of code, ever.
-
-                            if (
-                                ((item != null) && (item.Parent == targ) && (item != targ.Backpack))
-                            )
-                            {
-                                Type t = item.GetType();
-                                ConstructorInfo c = t.GetConstructor(Type.EmptyTypes);
-                                if (c != null)
-                                {
-                                    try
-                                    {
-                                        object o = c.Invoke(null);
-                                        if (o != null && o is Item)
-                                        {
-                                            Item newItem = (Item)o;
-                                            CopyProperties(newItem, item);
-                                            item.OnAfterDuped(newItem);
-                                            newItem.Parent = null;
-                                            from.AddItem(newItem);
-                                        }
-                                    }
-                                    catch { }
-                                }
-                            }
+                            fromPack = new Backpack();
+                            from.AddItem(fromPack);
                         }
+
+                        foreach (Item item in fromPack.Items.ToArray())
+                            item.Delete();
+
+                        // Clone target's worn items
+                        CloneThings.CloneMobileItems(targ, from);
+
+                        // Clone target's backpack contents recursively
+                        Container targPack = targ.Backpack as Container;
+                        if (targPack != null)
+                            CloneThings.CloneContainerContents(targPack, fromPack);
+
+                        // Replace mount with target's mount, if any
+                        if (from.Mount != null)
+                        {
+                            IMount oldMount = from.Mount;
+                            oldMount.Rider = null;
+                            if (oldMount is EtherealMount)
+                                ((EtherealMount)oldMount).Delete();
+                            else if (oldMount is BaseMount)
+                                ((BaseMount)oldMount).Delete();
+                        }
+
+                        CloneThings.CloneMobileMount(targ, from);
                         if (!real)
                             CopyProps(from, targ, true, true, location);
                     }
