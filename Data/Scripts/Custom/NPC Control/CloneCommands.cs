@@ -8,6 +8,7 @@ using Server.Mobiles;
 using Server.Network;
 using Server.Targeting;
 using Confictura.Custom;
+using Server.Custom.Confictura;
 
 namespace Server.Commands
 {
@@ -70,6 +71,29 @@ namespace Server.Commands
 
                     if (from != targ && (!real || from.AccessLevel > targ.AccessLevel))
                     {
+                        if (real)
+                        {
+                            CloneItem existing = GetCloneItem(from);
+
+                            if (existing != null)
+                            {
+                                from.SendMessage("You are already cloned. Use the clone item to revert.");
+                                return;
+                            }
+
+                            Mobile playerClone = DupeMobile(from);
+                            new CloneTarget().SimulateTarget(playerClone, from, false);
+
+                            Container pack = from.Backpack as Container;
+                            if (pack == null)
+                            {
+                                pack = new Backpack();
+                                from.AddItem(pack);
+                            }
+
+                            pack.DropItem(new CloneItem(from, playerClone));
+                        }
+
                         CommandLogging.WriteLine(
                             from,
                             "{0} {1} is cloning {2}",
@@ -317,6 +341,17 @@ namespace Server.Commands
             }
         }
 
+        /*Find the Clone item of the Mobile from*/
+        public static CloneItem GetCloneItem(Mobile from)
+        {
+            Item result = SearchItemInCont(typeof(CloneItem), from.Backpack);
+
+            if (result != null && result is CloneItem)
+                return (CloneItem)result;
+            else
+                return null;
+        }
+
         /*Find the Control item of the Mobile from*/
         public static ControlItem GetControlItem(Mobile from)
         {
@@ -535,6 +570,23 @@ namespace Server.Commands
             }
         }
 
+        public static void EndClone(CloneItem cloneItem)
+        {
+            Mobile from = cloneItem.Owner;
+            Mobile oldPlayer = cloneItem.Player;
+
+            if (from == null)
+                return;
+
+            from.SendMessage("You return to your original form.");
+
+            if (oldPlayer != null && !oldPlayer.Deleted)
+            {
+                new CloneTarget().SimulateTarget(from, oldPlayer, false);
+                oldPlayer.Delete();
+            }
+        }
+
         //Return true if the base.OnBeforeDeath should be executed and false if not.
         public static bool UncontrolDeath(Mobile from)
         {
@@ -747,6 +799,93 @@ namespace Server.Commands
                 return true;
             else
                 return false;
+        }
+    }
+}
+
+namespace Server.Custom.Confictura
+{
+    /// <summary>
+    /// Item used to restore a mobile after using the Clone command.
+    /// </summary>
+    public class CloneItem : Item
+    {
+        private Mobile m_Owner;
+        private Mobile m_Player;
+
+        [CommandProperty(AccessLevel.GameMaster)]
+        public Mobile Owner
+        {
+            get { return m_Owner; }
+        }
+
+        [CommandProperty(AccessLevel.GameMaster)]
+        public Mobile Player
+        {
+            get { return m_Player; }
+        }
+
+        public CloneItem(Mobile owner, Mobile player)
+            : base(0x2106)
+        {
+            m_Owner = owner;
+            m_Player = player;
+
+            Name = "Clone Item";
+            LootType = LootType.Blessed;
+        }
+
+        public CloneItem(Serial serial)
+            : base(serial) { }
+
+        public override void OnDoubleClick(Mobile from)
+        {
+            if (from == m_Owner)
+                Delete();
+
+            base.OnDoubleClick(from);
+        }
+
+        public override void OnAdded(object parent)
+        {
+            base.OnAdded(parent);
+
+            if (RootParent != m_Owner)
+                Delete();
+        }
+
+        public override bool DropToWorld(Mobile from, Point3D p)
+        {
+            Delete();
+
+            return false;
+        }
+
+        public override void OnDelete()
+        {
+            CloneCommands.EndClone(this);
+
+            base.OnDelete();
+        }
+
+        public override void Serialize(GenericWriter writer)
+        {
+            base.Serialize(writer);
+
+            writer.Write((int)0); // version
+
+            writer.Write((Mobile)m_Owner);
+            writer.Write((Mobile)m_Player);
+        }
+
+        public override void Deserialize(GenericReader reader)
+        {
+            base.Deserialize(reader);
+
+            int version = reader.ReadInt();
+
+            m_Owner = reader.ReadMobile();
+            m_Player = reader.ReadMobile();
         }
     }
 }
