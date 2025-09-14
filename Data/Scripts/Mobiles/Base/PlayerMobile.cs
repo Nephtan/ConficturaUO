@@ -2581,8 +2581,11 @@ namespace Server.Mobiles
                     && Server.Misc.Worlds.InBuilding(this)
                 )
                 || (
-                    Region.Find(this.Location, this.Map) is HouseRegion
-                    && MyServerSettings.NoMountsInHouses()
+                    MyServerSettings.NoMountsInHouses()
+                    && (
+                        Region.Find(this.Location, this.Map) is HouseRegion
+                        || BaseHouse.FindHouseAt(this) != null // Include Knives TownHouses
+                    )
                 )
             )
             {
