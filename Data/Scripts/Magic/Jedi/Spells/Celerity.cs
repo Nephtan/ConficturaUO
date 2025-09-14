@@ -60,7 +60,7 @@ namespace Server.Spells.Jedi
 
         public static void RemoveEffect(Mobile m)
         {
-            m.Send(SpeedControl.WalkSpeed);
+            m.Send(SpeedControl.Disable);
             TableJediRunning.Remove(m);
             m.EndAction(typeof(Celerity));
             BuffInfo.RemoveBuff(m, BuffIcon.Celerity);
