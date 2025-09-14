@@ -649,12 +649,7 @@ namespace Knives.TownHouses
                 }
             }
 
-            if (blocks.Count > 500)
-            {
-                m.SendMessage("Due to size of the area, skipping the preview.");
-                return;
-            }
-
+            // Preview large areas without restrictions; modern hardware can handle the load.
             Item item = null;
 
             foreach (Point2D p in blocks)
