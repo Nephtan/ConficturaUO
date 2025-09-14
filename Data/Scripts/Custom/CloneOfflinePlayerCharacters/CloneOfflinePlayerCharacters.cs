@@ -274,7 +274,16 @@ namespace Confictura.Custom
 
         public static void CloneMobileProperties(Mobile source, Mobile target)
         {
-            // Clone basic
+            // Clone positional information
+            target.Location = source.Location;
+            target.Map = source.Map;
+            target.Direction = source.Direction;
+
+            // Ensure the clone starts visible and without lingering
+            // action states from the original mobile.
+            target.Hidden = false;
+
+            // Clone basic stats and reputation
             target.Dex = source.Dex;
             target.Int = source.Int;
             target.Str = source.Str;
@@ -308,6 +317,10 @@ namespace Confictura.Custom
             // Clone skills
             for (int i = 0; i < source.Skills.Length; i++)
                 target.Skills[i].Base = source.Skills[i].Base;
+
+            // Finalize any CharacterClone-specific initialization
+            if (target is CharacterClone clone)
+                clone.FinalizeClone();
         }
 
         public static void CloneMobileItems(Mobile source, Mobile target)
@@ -671,22 +684,29 @@ namespace Confictura.Custom
                 0.3
             )
         {
+            // Only store the original reference here. All cloning of
+            // statistics, items, and appearance is handled explicitly
+            // after construction to avoid copying internal state such
+            // as timers or network references from the source mobile.
             Original = original;
-            foreach (var property in (typeof(Mobile)).GetProperties())
-            {
-                if (property.CanRead && property.CanWrite)
-                {
-                    property.SetValue(this, property.GetValue(Original, null), null);
-                }
-            }
 
-            for (int i = 0, l = Original.Skills.Length; i < l; ++i)
-            {
-                Skills[i].Base = Original.Skills[i].Base;
-            }
+            // Cloned mobiles should not inherit player-specific
+            // behaviors by default.
+            Player = false;
+        }
+
+        /// <summary>
+        /// Performs post-copy initialization after <see cref="CloneThings.CloneMobileProperties"/>
+        /// has populated the clone with the source mobile's data. This method recalculates
+        /// combat values and ensures the clone is fully initialized without referencing
+        /// the original player's state.
+        /// </summary>
+        public void FinalizeClone()
+        {
             Payday(this);
 
-            // Set maximum hit points, stamina, and mana
+            // Recalculate vital statistics and combat damage based on the
+            // now-populated attributes and skills.
             SetHits(Str * 2);
             SetStam(Dex * 2);
             SetMana(Int * 2);
@@ -699,21 +719,10 @@ namespace Confictura.Custom
 
             ControlSlots = 4;
 
-            Player = false;
-
             if (Map == Map.Internal)
             {
                 Map = LogoutMap;
             }
-
-            //if (Kills >= 1)
-            //{
-            //    FightMode = FightMode.Aggressor;
-            //}
-            //else
-            //{
-            //    FightMode = FightMode.Evil;
-            //}
         }
 
         protected override BaseAI ForcedAI
