@@ -14,7 +14,6 @@ namespace Server.Commands
     public class CloneMeCommand
     {
         public static AccessLevel accessLevel = AccessLevel.Counselor;
-        private static List<Mobile> m_HearAll = new List<Mobile>();
 
         public static void Initialize()
         {
@@ -48,7 +47,9 @@ namespace Server.Commands
                 0.4
             );
 
-            if (mobile.Female = Utility.RandomBool())
+            m.Female = Utility.RandomBool();
+
+            if (m.Female)
             {
                 m.Body = 0x1A6;
                 m.Name = NameList.RandomName("female");
@@ -167,8 +168,7 @@ namespace Server.Commands
                 {
                     if (props[i].CanRead && props[i].CanWrite)
                     {
-                        // These properties must not be copied during the dupe, they get set implicitely by placing
-                        // items properly using "DropItem()" etc. .
+                        // These properties must not be copied during the dupe, they get set implicitely by placing items properly using "DropItem()" etc.
                         switch (props[i].Name)
                         {
                             case "Parent":

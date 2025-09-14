@@ -13,7 +13,6 @@ namespace Server.Commands
     public class GmMeCommand
     {
         public static AccessLevel accessLevel = AccessLevel.Counselor;
-        private static List<Mobile> m_HearAll = new List<Mobile>();
 
         public static void Initialize()
         {
