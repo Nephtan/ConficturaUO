@@ -872,7 +872,8 @@ namespace Server.Custom.Confictura
         {
             // Remove the item from its container before processing the end of clone
             // to avoid recursive deletion when the player's backpack is cleared.
-            if (Parent is Container container)
+            Container container = Parent as Container;
+            if (container != null)
             {
                 container.RemoveItem(this);
             }
@@ -1036,7 +1037,8 @@ namespace Server.Items
         {
             // Detach the control item from its container before ending control
             // to prevent recursive deletion when the owner's backpack is cleared.
-            if (Parent is Container container)
+            Container container = Parent as Container;
+            if (container != null)
             {
                 container.RemoveItem(this);
             }
