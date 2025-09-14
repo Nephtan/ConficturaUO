@@ -408,9 +408,10 @@ namespace Server.Commands
 
             if (from is PlayerMobile && targeted is Mobile)
             {
-                if (targeted is PlayerMobile && ((PlayerMobile)targeted).Player)
+                // Prevent controlling player mobiles entirely
+                if (targeted is PlayerMobile)
                 {
-                    from.SendMessage("You cant control players.");
+                    from.SendMessage("You can't control players.");
                     return;
                 }
 
@@ -458,7 +459,7 @@ namespace Server.Commands
             PlayerMobile playerClone = (PlayerMobile)DupeMobile(from);
             new CloneTarget().SimulateTarget(playerClone, from, false);
 
-            //Create ControlItem
+            //Create ControlItem that links owner, clone, and NPC
             ControlItem controlItem = new ControlItem(
                 from,
                 playerClone,
@@ -467,18 +468,20 @@ namespace Server.Commands
                 skills,
                 items
             );
-            from.Backpack.DropItem(controlItem);
 
-            /*
-            //Props target -> player
-            CopyProps(from, target, stats, skills);
-
-            //Backup Equip
-            //Equip from target to player
-            MoveEquip(target, from, items);
-            */
+            // Clone the target onto the controller before dropping the control item.
+            // Dropping beforehand would delete the item when the backpack is cleared.
             new CloneTarget().SimulateTarget(from, target, true);
             from.Hidden = target.Hidden;
+
+            // Ensure the backpack exists after cloning and drop the control item.
+            Container pack = from.Backpack as Container;
+            if (pack == null)
+            {
+                pack = new Backpack();
+                from.AddItem(pack);
+            }
+            pack.DropItem(controlItem);
 
             target.Internalize();
             playerClone.Internalize();
