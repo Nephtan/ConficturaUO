@@ -453,13 +453,18 @@ namespace Server.Commands
         )
         {
             from.SendMessage("You possess the mortal body of {0}, {1}", target.Name, target.Title);
-            //"You leave your Body and control {0}, {1}"
+            // "You leave your Body and control {0}, {1}"
 
-            //Clone Player
+            // Remember the controller's original position and direction.
+            Map originalMap = from.Map;
+            Point3D originalLocation = from.Location;
+            Direction originalDirection = from.Direction;
+
+            // Clone Player
             PlayerMobile playerClone = (PlayerMobile)DupeMobile(from);
             new CloneTarget().SimulateTarget(playerClone, from, false);
 
-            //Create ControlItem that links owner, clone, and NPC
+            // Create ControlItem that links owner, clone, and NPC
             ControlItem controlItem = new ControlItem(
                 from,
                 playerClone,
@@ -467,7 +472,12 @@ namespace Server.Commands
                 stats,
                 skills,
                 items
-            );
+            )
+            {
+                OriginalMap = originalMap,
+                OriginalLocation = originalLocation,
+                OriginalDirection = originalDirection
+            };
 
             // Clone the target onto the controller before dropping the control item.
             // Dropping beforehand would delete the item when the backpack is cleared.
@@ -573,6 +583,9 @@ namespace Server.Commands
                 //Props: oldPlayer -> player
                 //CopyProps(from, oldPlayer, true, true);
                 new CloneTarget().SimulateTarget(from, oldPlayer, false);
+                // Restore the original position and direction after cloning.
+                from.MoveToWorld(controlItem.OriginalLocation, controlItem.OriginalMap);
+                from.Direction = controlItem.OriginalDirection;
                 //Equip: oldPlayer -> player
                 //MoveEquip(oldPlayer, from, true);
 
@@ -920,6 +933,10 @@ namespace Server.Items
         private bool m_Skills;
         private bool m_Items;
 
+        private Map m_Map;
+        private Point3D m_Location;
+        private Direction m_Direction;
+
         [CommandProperty(AccessLevel.GameMaster)]
         public PlayerMobile Owner
         {
@@ -970,6 +987,27 @@ namespace Server.Items
         {
             get { return m_Items; }
             set { m_Items = value; }
+        }
+
+        [CommandProperty(AccessLevel.GameMaster)]
+        public Map OriginalMap
+        {
+            get { return m_Map; }
+            set { m_Map = value; }
+        }
+
+        [CommandProperty(AccessLevel.GameMaster)]
+        public Point3D OriginalLocation
+        {
+            get { return m_Location; }
+            set { m_Location = value; }
+        }
+
+        [CommandProperty(AccessLevel.GameMaster)]
+        public Direction OriginalDirection
+        {
+            get { return m_Direction; }
+            set { m_Direction = value; }
         }
 
         public ControlItem(
@@ -1055,14 +1093,19 @@ namespace Server.Items
         {
             base.Serialize(writer);
 
-            writer.Write((int)1); // version
+            writer.Write((int)2); // version
 
-            //Version 1
+            // Version 2
+            writer.Write(m_Map);
+            writer.Write(m_Location);
+            writer.Write((byte)m_Direction);
+
+            // Version 1
             writer.Write((bool)m_Stats);
             writer.Write((bool)m_Skills);
             writer.Write((bool)m_Items);
 
-            //Version 0
+            // Version 0
             writer.Write((Mobile)m_Owner);
             writer.Write((Mobile)m_Player);
             writer.Write((Mobile)m_NPC);
@@ -1076,6 +1119,13 @@ namespace Server.Items
 
             switch (version)
             {
+                case 2:
+                {
+                    m_Map = reader.ReadMap();
+                    m_Location = reader.ReadPoint3D();
+                    m_Direction = (Direction)reader.ReadByte();
+                    goto case 1;
+                }
                 case 1:
                 {
                     m_Stats = reader.ReadBool();
