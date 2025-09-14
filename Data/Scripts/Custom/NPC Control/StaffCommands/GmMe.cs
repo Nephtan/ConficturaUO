@@ -19,19 +19,6 @@ namespace Server.Commands
             CommandSystem.Register("GmMe", accessLevel, new CommandEventHandler(GmMe_OnCommand));
         }
 
-        public static void HearAllOnSpeech(SpeechEventArgs e)
-        {
-            if (m_HearAll.Count > 0)
-            {
-                string msg = String.Format("({0}): {1}", e.Mobile.RawName, e.Speech);
-
-                for (int i = 0; i < m_HearAll.Count; ++i)
-                {
-                    m_HearAll[i].SendMessage(msg);
-                }
-            }
-        }
-
         [Usage("GmMe")]
         [Description("Helps senior staff members set their body to GM style.")]
         public static void GmMe_OnCommand(CommandEventArgs e)
