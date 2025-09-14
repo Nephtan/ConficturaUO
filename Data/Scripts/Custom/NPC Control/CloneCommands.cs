@@ -870,6 +870,13 @@ namespace Server.Custom.Confictura
 
         public override void OnDelete()
         {
+            // Remove the item from its container before processing the end of clone
+            // to avoid recursive deletion when the player's backpack is cleared.
+            if (Parent is Container container)
+            {
+                container.RemoveItem(this);
+            }
+
             CloneCommands.EndClone(this);
 
             base.OnDelete();
@@ -1027,6 +1034,13 @@ namespace Server.Items
 
         public override void OnDelete()
         {
+            // Detach the control item from its container before ending control
+            // to prevent recursive deletion when the owner's backpack is cleared.
+            if (Parent is Container container)
+            {
+                container.RemoveItem(this);
+            }
+
             CloneCommands.EndControl(this, m_Stats, m_Skills, m_Items);
 
             base.OnDelete();
