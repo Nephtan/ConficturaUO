@@ -71,6 +71,8 @@ namespace Server.Commands
 
                     if (from != targ && (!real || from.AccessLevel > targ.AccessLevel))
                     {
+                        CloneItem cloneItem = null;
+
                         if (real)
                         {
                             CloneItem existing = GetCloneItem(from);
@@ -91,7 +93,8 @@ namespace Server.Commands
                                 from.AddItem(pack);
                             }
 
-                            pack.DropItem(new CloneItem(from, playerClone));
+                            // Defer dropping the clone item until after the backpack is cleared
+                            cloneItem = new CloneItem(from, playerClone);
                         }
 
                         CommandLogging.WriteLine(
@@ -144,6 +147,10 @@ namespace Server.Commands
                         Container targPack = targ.Backpack as Container;
                         if (targPack != null)
                             CloneThings.CloneContainerContents(targPack, fromPack);
+
+                        // Drop the clone item after cloning to ensure it isn't deleted
+                        if (cloneItem != null)
+                            fromPack.DropItem(cloneItem);
 
                         // Replace mount with target's mount, if any
                         if (from.Mount != null)
