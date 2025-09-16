@@ -299,10 +299,16 @@ namespace Confictura.Custom
             target.BodyValue = source.BodyValue;
             target.Hue = source.Hue;
 
-            // Clone max health, mana, and stamina
-            target.Hits = source.HitsMax;
-            target.Mana = source.ManaMax;
-            target.Stam = source.StamMax;
+            // Clone current health, mana, stamina, hunger, and thirst values
+            int sourceHitsMax = Math.Max(1, source.HitsMax);
+            int sourceStamMax = Math.Max(1, source.StamMax);
+            int sourceManaMax = Math.Max(0, source.ManaMax);
+
+            target.Hits = Math.Min(Math.Max(0, source.Hits), sourceHitsMax);
+            target.Stam = Math.Min(Math.Max(0, source.Stam), sourceStamMax);
+            target.Mana = Math.Min(Math.Max(0, source.Mana), sourceManaMax);
+            target.Hunger = source.Hunger;
+            target.Thirst = source.Thirst;
 
             // Clone followers
             target.FollowersMax = source.FollowersMax;

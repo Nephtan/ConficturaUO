@@ -166,9 +166,32 @@ namespace Server.Commands
                         CloneThings.CloneMobileMount(targ, from);
                         if (!real)
                             CopyProps(from, targ, true, true, location);
+
+                        UpdateStaffDisguise(from, targ);
                     }
                 }
             }
+        }
+
+        private static void UpdateStaffDisguise(Mobile controller, Mobile template)
+        {
+            if (controller is PlayerMobile player)
+            {
+                if (template == null || player.NetState != null)
+                    player.SetStaffDisguise(template);
+            }
+        }
+
+        private static void RestoreNpcState(ControlItem controlItem, Mobile npc)
+        {
+            if (controlItem == null || npc == null || npc.Deleted)
+            {
+                return;
+            }
+
+            npc.Hidden = controlItem.OriginalHidden;
+            npc.CantWalk = controlItem.OriginalCantWalk;
+            npc.Frozen = controlItem.OriginalFrozen;
         }
 
         private static void CopyProperties(Item dest, Item src)
@@ -479,6 +502,10 @@ namespace Server.Commands
                 OriginalDirection = originalDirection
             };
 
+            controlItem.OriginalHidden = target.Hidden;
+            controlItem.OriginalCantWalk = target.CantWalk;
+            controlItem.OriginalFrozen = target.Frozen;
+
             // Clone the target onto the controller before dropping the control item.
             // Dropping beforehand would delete the item when the backpack is cleared.
             new CloneTarget().SimulateTarget(from, target, true);
@@ -495,9 +522,6 @@ namespace Server.Commands
 
             target.Internalize();
             playerClone.Internalize();
-
-            from.Hunger = 100;
-            from.Thirst = 100;
         }
 
         private static void ChangeControl(
@@ -521,6 +545,7 @@ namespace Server.Commands
                     //Yes, because stats change
                     //Props from -> oldNPC
                     new CloneTarget().SimulateTarget(oldNPC, from, true);
+                    RestoreNpcState(controlItem, oldNPC);
                 }
                 else
                 {
@@ -540,12 +565,13 @@ namespace Server.Commands
                 controlItem.Stats = stats;
                 controlItem.Skills = skills;
                 controlItem.Items = items;
+                controlItem.OriginalHidden = target.Hidden;
+                controlItem.OriginalCantWalk = target.CantWalk;
+                controlItem.OriginalFrozen = target.Frozen;
                 new CloneTarget().SimulateTarget(from, target, true);
+                from.Hidden = target.Hidden;
 
                 target.Internalize();
-
-                from.Hunger = 100;
-                from.Thirst = 100;
             }
             else if (target == oldPlayer && !target.Deleted)
             {
@@ -569,12 +595,14 @@ namespace Server.Commands
             if (oldNPC != null && !oldNPC.Deleted)
             {
                 new CloneTarget().SimulateTarget(oldNPC, from, true);
+                RestoreNpcState(controlItem, oldNPC);
             }
             else
             {
                 from.SendMessage("The original NPC was deleted. Maybe because a manual respawn.");
                 //"The original NPC was deleted. Maybe because a manual respawn"
-                oldNPC.Delete();
+                if (oldNPC != null)
+                    oldNPC.Delete();
             }
 
             if (oldPlayer != null && !oldPlayer.Deleted)
@@ -591,6 +619,8 @@ namespace Server.Commands
 
                 oldPlayer.Delete();
             }
+
+            UpdateStaffDisguise(from, null);
         }
 
         public static void EndClone(CloneItem cloneItem)
@@ -608,6 +638,8 @@ namespace Server.Commands
                 new CloneTarget().SimulateTarget(from, oldPlayer, false);
                 oldPlayer.Delete();
             }
+
+            UpdateStaffDisguise(from, null);
         }
 
         //Return true if the base.OnBeforeDeath should be executed and false if not.
@@ -932,6 +964,9 @@ namespace Server.Items
         private bool m_Stats;
         private bool m_Skills;
         private bool m_Items;
+        private bool m_OriginalHidden;
+        private bool m_OriginalCantWalk;
+        private bool m_OriginalFrozen;
 
         private Map m_Map;
         private Point3D m_Location;
@@ -1008,6 +1043,27 @@ namespace Server.Items
         {
             get { return m_Direction; }
             set { m_Direction = value; }
+        }
+
+        [CommandProperty(AccessLevel.GameMaster)]
+        public bool OriginalHidden
+        {
+            get { return m_OriginalHidden; }
+            set { m_OriginalHidden = value; }
+        }
+
+        [CommandProperty(AccessLevel.GameMaster)]
+        public bool OriginalCantWalk
+        {
+            get { return m_OriginalCantWalk; }
+            set { m_OriginalCantWalk = value; }
+        }
+
+        [CommandProperty(AccessLevel.GameMaster)]
+        public bool OriginalFrozen
+        {
+            get { return m_OriginalFrozen; }
+            set { m_OriginalFrozen = value; }
         }
 
         public ControlItem(
@@ -1093,7 +1149,7 @@ namespace Server.Items
         {
             base.Serialize(writer);
 
-            writer.Write((int)2); // version
+            writer.Write((int)3); // version
 
             // Version 2
             writer.Write(m_Map);
@@ -1109,6 +1165,11 @@ namespace Server.Items
             writer.Write((Mobile)m_Owner);
             writer.Write((Mobile)m_Player);
             writer.Write((Mobile)m_NPC);
+
+            // Version 3
+            writer.Write(m_OriginalHidden);
+            writer.Write(m_OriginalCantWalk);
+            writer.Write(m_OriginalFrozen);
         }
 
         public override void Deserialize(GenericReader reader)
@@ -1117,29 +1178,32 @@ namespace Server.Items
 
             int version = reader.ReadInt();
 
-            switch (version)
+            if (version >= 2)
             {
-                case 2:
-                {
-                    m_Map = reader.ReadMap();
-                    m_Location = reader.ReadPoint3D();
-                    m_Direction = (Direction)reader.ReadByte();
-                    goto case 1;
-                }
-                case 1:
-                {
-                    m_Stats = reader.ReadBool();
-                    m_Skills = reader.ReadBool();
-                    m_Items = reader.ReadBool();
-                    goto case 0;
-                }
-                case 0:
-                {
-                    m_Owner = reader.ReadMobile();
-                    m_Player = reader.ReadMobile();
-                    m_NPC = reader.ReadMobile();
-                    break;
-                }
+                m_Map = reader.ReadMap();
+                m_Location = reader.ReadPoint3D();
+                m_Direction = (Direction)reader.ReadByte();
+            }
+
+            if (version >= 1)
+            {
+                m_Stats = reader.ReadBool();
+                m_Skills = reader.ReadBool();
+                m_Items = reader.ReadBool();
+            }
+
+            if (version >= 0)
+            {
+                m_Owner = reader.ReadMobile();
+                m_Player = reader.ReadMobile();
+                m_NPC = reader.ReadMobile();
+            }
+
+            if (version >= 3)
+            {
+                m_OriginalHidden = reader.ReadBool();
+                m_OriginalCantWalk = reader.ReadBool();
+                m_OriginalFrozen = reader.ReadBool();
             }
         }
     }
