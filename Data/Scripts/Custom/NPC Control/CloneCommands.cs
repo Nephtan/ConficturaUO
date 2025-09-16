@@ -182,6 +182,23 @@ namespace Server.Commands
             }
         }
 
+        // Keeps staff-controlled bodies fed and hydrated so the command does not
+        // immediately apply hunger or thirst penalties copied from NPCs.
+        private static void EnsureControllerNeeds(Mobile controller)
+        {
+            if (controller == null)
+            {
+                return;
+            }
+
+            if (controller.AccessLevel >= accessLevel)
+            {
+                controller.Hunger = 20;
+                controller.Thirst = 20;
+            }
+        }
+
+        // Restores the original mobility/visibility flags for an NPC when control ends.
         private static void RestoreNpcState(ControlItem controlItem, Mobile npc)
         {
             if (controlItem == null || npc == null || npc.Deleted)
@@ -192,6 +209,17 @@ namespace Server.Commands
             npc.Hidden = controlItem.OriginalHidden;
             npc.CantWalk = controlItem.OriginalCantWalk;
             npc.Frozen = controlItem.OriginalFrozen;
+            npc.Paralyzed = controlItem.OriginalParalyzed;
+
+            if (!controlItem.OriginalHidden && npc.Hidden)
+            {
+                npc.RevealingAction();
+            }
+
+            if (npc.Map != null && npc.Map != Map.Internal)
+            {
+                npc.MoveToWorld(npc.Location, npc.Map);
+            }
         }
 
         private static void CopyProperties(Item dest, Item src)
@@ -505,11 +533,14 @@ namespace Server.Commands
             controlItem.OriginalHidden = target.Hidden;
             controlItem.OriginalCantWalk = target.CantWalk;
             controlItem.OriginalFrozen = target.Frozen;
+            controlItem.OriginalParalyzed = target.Paralyzed;
 
             // Clone the target onto the controller before dropping the control item.
             // Dropping beforehand would delete the item when the backpack is cleared.
             new CloneTarget().SimulateTarget(from, target, true);
             from.Hidden = target.Hidden;
+
+            EnsureControllerNeeds(from);
 
             // Ensure the backpack exists after cloning and drop the control item.
             Container pack = from.Backpack as Container;
@@ -568,8 +599,11 @@ namespace Server.Commands
                 controlItem.OriginalHidden = target.Hidden;
                 controlItem.OriginalCantWalk = target.CantWalk;
                 controlItem.OriginalFrozen = target.Frozen;
+                controlItem.OriginalParalyzed = target.Paralyzed;
                 new CloneTarget().SimulateTarget(from, target, true);
                 from.Hidden = target.Hidden;
+
+                EnsureControllerNeeds(from);
 
                 target.Internalize();
             }
@@ -967,6 +1001,7 @@ namespace Server.Items
         private bool m_OriginalHidden;
         private bool m_OriginalCantWalk;
         private bool m_OriginalFrozen;
+        private bool m_OriginalParalyzed;
 
         private Map m_Map;
         private Point3D m_Location;
@@ -1066,6 +1101,13 @@ namespace Server.Items
             set { m_OriginalFrozen = value; }
         }
 
+        [CommandProperty(AccessLevel.GameMaster)]
+        public bool OriginalParalyzed
+        {
+            get { return m_OriginalParalyzed; }
+            set { m_OriginalParalyzed = value; }
+        }
+
         public ControlItem(
             Mobile owner,
             Mobile player,
@@ -1149,7 +1191,7 @@ namespace Server.Items
         {
             base.Serialize(writer);
 
-            writer.Write((int)3); // version
+            writer.Write((int)4); // version
 
             // Version 2
             writer.Write(m_Map);
@@ -1170,6 +1212,9 @@ namespace Server.Items
             writer.Write(m_OriginalHidden);
             writer.Write(m_OriginalCantWalk);
             writer.Write(m_OriginalFrozen);
+
+            // Version 4
+            writer.Write(m_OriginalParalyzed);
         }
 
         public override void Deserialize(GenericReader reader)
@@ -1204,6 +1249,11 @@ namespace Server.Items
                 m_OriginalHidden = reader.ReadBool();
                 m_OriginalCantWalk = reader.ReadBool();
                 m_OriginalFrozen = reader.ReadBool();
+            }
+
+            if (version >= 4)
+            {
+                m_OriginalParalyzed = reader.ReadBool();
             }
         }
     }
