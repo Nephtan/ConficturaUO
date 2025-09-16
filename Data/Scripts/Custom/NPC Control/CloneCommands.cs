@@ -175,7 +175,9 @@ namespace Server.Commands
 
         private static void UpdateStaffDisguise(Mobile controller, Mobile template)
         {
-            if (controller is PlayerMobile player)
+            PlayerMobile player = controller as PlayerMobile;
+
+            if (player != null)
             {
                 if (template == null || player.NetState != null)
                     player.SetStaffDisguise(template);
