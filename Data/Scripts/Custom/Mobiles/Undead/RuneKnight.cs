@@ -41,7 +41,7 @@ namespace Server.Custom.Confictura.Mobiles
                 Name = "Runeblade",
                 MinDamage = 20,
                 MaxDamage = 50,
-                Speed = 1.5,
+                Speed = 1.5f,
                 StrRequirement = 150,
                 MaxHitPoints = 500,
                 HitPoints = 500,
