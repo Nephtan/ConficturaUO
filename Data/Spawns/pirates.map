@@ -178,3 +178,13 @@
 #
 *|PirateCaptain||||||988|792|-5|5|45|60|6|6|7655|1|0|0|0|0|0
 *|PirateCrew|PirateCrewBow|PirateCrewMage||||988|792|15|5|45|60|17|17|7656|8|6|4|0|0|0
+#
+# Dio spawn conversions from DioSpawns-20250922.csv
+#
+# Booty Bay (IslesDread)
+# dio-bootybay-001
+*|Pirate:Scallywag||||||58|716|0|5|30|60|5|5|800000|60|0|0|0|0|0
+# dio-bootybay-002
+*|CaptainSwag||||||67|691|20|5|30|60|0|0|800001|1|0|0|0|0|0
+# dio-bootybay-003
+*|DungeonChest||||||58|717|0|5|25|30|5|5|800002|40|0|0|0|0|0
