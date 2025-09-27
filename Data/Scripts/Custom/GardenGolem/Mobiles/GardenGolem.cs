@@ -6,6 +6,7 @@ using Server.Custom.Confictura.Items;
 using Server.Engines.Plants;
 using Server.Items;
 using Server.Mobiles;
+using Server.Network;
 
 namespace Server.Custom.Confictura.Mobiles
 {
@@ -71,7 +72,7 @@ namespace Server.Custom.Confictura.Mobiles
 
             SetSkill(SkillName.MagicResist, 60.0, 75.0);
             SetSkill(SkillName.Tactics, 80.0, 95.0);
-            SetSkill(SkillName.Wrestling, 80.0, 95.0);
+            SetSkill(SkillName.FistFighting, 80.0, 95.0);
 
             Fame = 5500;
             Karma = -5500;
@@ -93,7 +94,7 @@ namespace Server.Custom.Confictura.Mobiles
         {
             base.OnThink();
 
-            if (m_PlanterState.Tick(DateTime.UtcNow) && ControlMaster != null)
+            if (m_PlanterState.Tick(DateTime.Now) && ControlMaster != null)
             {
                 PublicOverheadMessage(
                     MessageType.Emote,
