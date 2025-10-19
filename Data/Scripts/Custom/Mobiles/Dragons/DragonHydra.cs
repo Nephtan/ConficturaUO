@@ -9,10 +9,10 @@ namespace Server.Custom.Confictura.Mobiles
     ///     Hard-coded DragonTurtle variant generated from the Dio XML spawn entry for "Dragon Hydra".
     ///     Applies the stat, resistance, facing, and attachment overrides defined in DioXMLSpawns.md.
     /// </summary>
-    public class BuffDragonTurtle : DragonTurtle
+    public class DragonHydra : DragonTurtle
     {
         [Constructable]
-        public BuffDragonTurtle()
+        public DragonHydra()
             : base()
         {
             // Identity configuration from the XML definition
@@ -36,7 +36,7 @@ namespace Server.Custom.Confictura.Mobiles
             XmlAttach.AttachTo(this, new XmlManaDrain(90));
         }
 
-        public BuffDragonTurtle(Serial serial)
+        public DragonHydra(Serial serial)
             : base(serial)
         {
         }

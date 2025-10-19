@@ -445,7 +445,7 @@
     <Compile Include="Custom\Mobiles\Daemons\GuardianOfTheUnderworld.cs" />
     <Compile Include="Custom\Mobiles\Daemons\PlagueGod.cs" />
     <Compile Include="Custom\Mobiles\Daemons\TombPest.cs" />
-    <Compile Include="Custom\Mobiles\Dragons\BuffDragonTurtle.cs" />
+    <Compile Include="Custom\Mobiles\Dragons\DragonHydra.cs" />
     <Compile Include="Custom\Mobiles\Dragons\DarkDragonAvatar.cs" />
     <Compile Include="Custom\Mobiles\Dragons\DragonIllusion.cs" />
     <Compile Include="Custom\Mobiles\Dragons\Wyrmling.cs" />
@@ -486,7 +486,7 @@
     <Compile Include="Custom\Mobiles\Undead\CryptKeeper.cs" />
     <Compile Include="Custom\Mobiles\Undead\EvilDruid.cs" />
     <Compile Include="Custom\Mobiles\Undead\GhostOfLadyEverdear.cs" />
-    <Compile Include="Custom\Mobiles\Undead\HonorguardSouth.cs" />
+    <Compile Include="Custom\Mobiles\Undead\Honorguard.cs" />
     <Compile Include="Custom\Mobiles\Undead\OldKingWolfgang.cs" />
     <Compile Include="Custom\Mobiles\Undead\Rattlebones.cs" />
     <Compile Include="Custom\Mobiles\Undead\RedDeath.cs" />

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Server;
 using Server.Items;
 using Server.Mobiles;
@@ -9,17 +10,25 @@ namespace Server.Custom.Confictura.Mobiles
     ///     Hard-coded variant of the Skeletal Samurai named "Honorguard" that guards Wolfgang's crypt.
     ///     Applies the XML-spawner configuration including health, damage, hue, facing, and custom helm loot.
     /// </summary>
-    public class HonorguardSouth : SkeletalSamurai
+    public class Honorguard : SkeletalSamurai
     {
+        private const Direction DefaultDirection = Direction.South;
+
+        private static readonly Dictionary<Point3D, Direction> DirectionOverrides = new()
+        {
+            // The east-facing sentry positioned at (5963, 2578, 0)
+            { new Point3D(5963, 2578, 0), Direction.East }
+        };
+
         [Constructable]
-        public HonorguardSouth()
+        public Honorguard()
             : base()
         {
             // Identity and appearance
             Name = "Honorguard";
             Title = null; // No title specified in the XML definition
             Hue = 2091;
-            Direction = Direction.South;
+            Direction = DefaultDirection;
 
             // Health and damage values from the XML entry
             HitsMaxSeed = 900;
@@ -54,9 +63,15 @@ namespace Server.Custom.Confictura.Mobiles
             pack.DropItem(crown);
         }
 
-        public HonorguardSouth(Serial serial)
+        public Honorguard(Serial serial)
             : base(serial)
         {
+        }
+
+        public override void OnAfterSpawn()
+        {
+            base.OnAfterSpawn();
+            ApplyDirectionalOverride();
         }
 
         public override void Serialize(GenericWriter writer)
@@ -69,6 +84,23 @@ namespace Server.Custom.Confictura.Mobiles
         {
             base.Deserialize(reader);
             reader.ReadInt(); // version
+        }
+
+        /// <summary>
+        ///     Applies any coordinate-specific facing overrides, defaulting to south when none are found.
+        /// </summary>
+        private void ApplyDirectionalOverride()
+        {
+            Direction facing;
+
+            if (DirectionOverrides.TryGetValue(Location, out facing))
+            {
+                Direction = facing;
+            }
+            else
+            {
+                Direction = DefaultDirection;
+            }
         }
     }
 }
