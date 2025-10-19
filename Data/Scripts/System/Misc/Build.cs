@@ -55,6 +55,18 @@ namespace Server.Misc
                 Mobile mnt = (Mobile)mounts[i];
                 BaseMount mounter = (BaseMount)mnt;
                 Type mobType = mnt.GetType();
+
+                if (mobType.GetConstructor(Type.EmptyTypes) == null)
+                {
+                    /*
+                     * Some custom mounts (such as CharacterClone hirelings) require constructor
+                     * parameters for their runtime cloning logic. Skipping these prevents
+                     * BuildWorld from attempting to instantiate them via reflection, which would
+                     * otherwise throw a MissingMethodException and halt the command.
+                     */
+                    continue;
+                }
+
                 Mobile mob = (Mobile)Activator.CreateInstance(mobType);
                 BaseMount mounted = (BaseMount)mob;
                 mounter.Body = mounted.Body;
