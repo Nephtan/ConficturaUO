@@ -14,7 +14,7 @@ namespace Server.Custom.Confictura.Mobiles
     {
         private const Direction DefaultDirection = Direction.South;
 
-        private static readonly Dictionary<Point3D, Direction> DirectionOverrides = new()
+        private static readonly Dictionary<Point3D, Direction> DirectionOverrides = new Dictionary<Point3D, Direction>()
         {
             // The east-facing sentry positioned at (5963, 2578, 0)
             { new Point3D(5963, 2578, 0), Direction.East }
@@ -103,4 +103,4 @@ namespace Server.Custom.Confictura.Mobiles
             }
         }
     }
-}
+} 
