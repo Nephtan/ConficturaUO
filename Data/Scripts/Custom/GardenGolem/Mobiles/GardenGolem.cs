@@ -164,7 +164,7 @@ namespace Server.Custom.Confictura.Mobiles
                     return false;
                 }
 
-                if (!seed.IsChildOf(from.Backpack))
+                if (from.Backpack == null || (!seed.IsChildOf(from.Backpack) && seed.RootParent != from))
                 {
                     from.SendLocalizedMessage(1042664); // You must have the object in your backpack to use it.
                     return false;
@@ -300,7 +300,8 @@ namespace Server.Custom.Confictura.Mobiles
             if (c == null)
                 return;
 
-            c.DropItem(new FreshGardenSoil(Utility.RandomMinMax(3, 5)));
+            int soilAmount = m_IsCrafted ? Utility.RandomMinMax(1, 3) : Utility.RandomMinMax(3, 5);
+            c.DropItem(new FreshGardenSoil(soilAmount));
 
             if (Utility.RandomDouble() < 0.60)
                 c.DropItem(new Seed(PlantTypeInfo.RandomFirstGeneration(), PlantHueInfo.RandomFirstGeneration(), false));

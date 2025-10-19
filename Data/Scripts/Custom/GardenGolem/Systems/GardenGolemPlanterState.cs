@@ -74,6 +74,9 @@ namespace Server.Custom.Confictura.GardenGolems.Systems
                     return "None";
 
                 PlantHueInfo hueInfo = PlantHueInfo.GetInfo(m_SeedPlantHue);
+				
+                if (hueInfo == null)
+                    return m_SeedPlantType.ToString();
 
                 return string.Format("{0} ({1})", m_SeedPlantType, hueInfo.PlantHue);
             }
@@ -109,6 +112,22 @@ namespace Server.Custom.Confictura.GardenGolems.Systems
         public int Infestation
         {
             get { return m_Infestation; }
+        }
+
+        /// <summary>
+        ///     Exposes the number of stored harvests waiting to be collected by the caretaker.
+        /// </summary>
+        public int StoredYields
+        {
+            get { return m_StoredYields; }
+        }
+
+        /// <summary>
+        ///     Gets the currently applied fertility bonus multiplier from treatments.
+        /// </summary>
+        public int FertilityBonus
+        {
+            get { return m_FertilityBonus; }
         }
 
         /// <summary>

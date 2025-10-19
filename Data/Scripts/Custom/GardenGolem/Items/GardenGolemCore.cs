@@ -78,6 +78,11 @@ namespace Server.Custom.Confictura.Items
 
             if (golem.SetControlMaster(from))
             {
+                golem.Loyalty = BaseCreature.MaxLoyalty;
+                golem.IsBonded = true;
+                golem.BondingBegin = DateTime.MinValue;
+                golem.OwnerAbandonTime = DateTime.MinValue;
+
                 Delete();
                 golem.MoveToWorld(from.Location, from.Map);
                 from.PlaySound(0x241);

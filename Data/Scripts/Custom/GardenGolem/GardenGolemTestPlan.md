@@ -1,138 +1,100 @@
-# Garden Golem System Test Plan
+# Garden Golem System Test Plan – Pass 2
 
 ## 1. Scope and Objectives
-- Validate the full feature set for the Garden Golem system located under `Data/Scripts/Custom/GardenGolem/`.
-- Confirm that planter interactions, creature behaviors, item drops, and serialization operate as designed.
-- Ensure regressions are detectable by exercising both success and failure paths defined in the scripts.
+- Validate the Garden Golem feature set located under `Data/Scripts/Custom/GardenGolem/` after the post-pass fixes.
+- Confirm the crafted golem bonding workflow, planter usability, gump feedback, and loot adjustments operate as intended.
+- Regress core wild golem functionality to ensure no collateral regressions were introduced while addressing pass-one issues.
 
 ## 2. Test Environment Prerequisites
-1. Configure a RunUO shard using the Confictura server binaries with GM access.
-2. Enable command logging for traceability of steps and results.
-3. Prepare two test accounts:
-   - **Caretaker**: GM or Seer level for spawning and controlling the golem.
-   - **Observer**: Regular player used to validate access restrictions.
-4. Stock a GM toolset with gardening seeds, fertilizers, and reagents:
-   - Seeds representing multiple `PlantType`/`PlantHue` combinations.
-   - 3× `FreshGardenSoil`, 20× `FertileDirt`, 25× `MandrakeRoot`.
-5. Position the testing in a safe area with world-save cycles enabled (for persistence checks).
+1. Configure a Confictura RunUO shard with GM access and command logging enabled.
+2. Prepare two accounts:
+   - **Caretaker (GM or Seer):** Responsible for spawning, crafting, and managing garden golems.
+   - **Observer (Player):** Validates unauthorized access handling and message clarity.
+3. Stock the caretaker with:
+   - Seeds spanning multiple `PlantType`/`PlantHue` combinations and at least one second-generation hue to exercise fallback text.
+   - 3× `FreshGardenSoil`, 20× `FertileDirt`, 25× `MandrakeRoot` (plus reserves for repeat attempts).
+   - A pack beetle or spare container to capture corpse loot for drop-quantity validation.
+4. Enable periodic world saves and restart at least once during the test session to cover serialization.
 
-## 3. Test Cases
+## 3. Pass-One Retrospective and Critique
+- **Bonding failure:** Previous testing accurately surfaced that the crafted golem never bonded. Root cause traced to `GardenGolemCore` not setting `IsBonded`, loyalty, or bonding timers after `SetControlMaster`. The fix explicitly sets those values; the new plan exercises bonding edge cases to confirm resolution.
+- **Seed drag/drop rejection:** The reported "Item must be in backpack" block occurred because the drop handler required the seed to remain parented to the backpack, which is invalid once the client lifts the item. The fix now accepts seeds whose root parent is the caretaker. Additional negative tests confirm world/observer drops still fail.
+- **Caretaker gump feedback:** The first pass noted missing seed text and an unclosable gump. While the label technically existed, it lacked context and the gump forcibly reopened even when closed. The updated gump now presents explicit cultivation, stored yield, and fertility information and only refreshes after actionable button presses. Tests below verify that the close button works and that data updates without reopening loops.
+- **Loot parity concern:** Crafted golems mirroring wild loot made reagent conversion too generous. The crafted variant now drops a reduced soil bundle (1–3). Tests will confirm both crafted and wild distributions while watching for regression in the seed drop logic.
+- **Unverified combat logs:** The earlier feedback cited missing logging tooling. No code change was required, but the second pass will focus on verifying damage types via `[props` and in-combat system messages rather than depending on unavailable logs.
 
-### 3.1 Fresh Garden Soil Item
-1. Spawn `FreshGardenSoil` via `[add` to confirm default amount is 1 and weight is 1.0.
-   - **Result:** Confirmed. Default amount remained 1 and weight 1.0.
-2. Stack two soil items and verify they combine and retain hue `0x8A5`.
-   - **Result:** Confirmed. Stacked soils combined and preserved hue.
-3. Delete inventory and confirm soil persists through logout/login when stored in bank.
-   - **Result:** Confirmed. Soil persisted through logout/login.
-4. Kill a spawned Garden Golem (see Section 3.4) and verify corpse contains 3–5 soil units.
-   - **Result:** Partially confirmed. Both naturally spawned and crafted golems dropped 5 soil and shared loot pools; investigate crafted loot parity.
+## 4. Pass-Two Strategy Overview
+- Prioritize re-testing all areas touched by code changes: crafting, planter interaction, gump UX, and loot.
+- Execute targeted negative tests around each fix (e.g., closing the gump, dragging seeds from the ground) to ensure defensive messaging remains intact.
+- Perform a light regression sweep of wild golem behavior and persistence to confirm no unintended differences.
+- Capture screenshots of the caretaker gump after major state changes for defect documentation.
 
-### 3.2 Garden Golem Core Item
-1. Spawn `GardenGolemCore` and verify appearance (itemID `0x1EA8`) and hue `0x48E`.
-   - **Result:** Confirmed. Core displays as a pink variant of the standard golem kit.
-2. Attempt to double-click while item is on ground; expect system message requiring backpack.
-   - **Result:** Confirmed. Interaction required the core to be in backpack.
-3. Place core in backpack and double-click with Alchemy below 90.0; expect failure message.
-   - **Result:** Confirmed. With Alchemy at 80.0 the failure message appeared.
-4. Raise Alchemy to ≥90.0 and ensure follower slots are available:
-   - Attempt with follower cap exceeded and validate rejection message.
-   - **Result:** Confirmed. Unable to construct when follower slots were full.
-5. With prerequisites met but without reagents, double-click and verify reagent-specific error messages for missing soil, fertile dirt, and mandrake (remove each requirement separately).
-   - **Result:** Confirmed. All required reagent prompts fired when components were missing.
-6. With all reagents present, double-click and confirm:
-   - Core deletes from inventory.
-   - 3× soil, 20× fertile dirt, 25× mandrake consumed.
-   - Garden Golem spawns at player location, plays sound `0x241`, and bonds to caretaker.
-   - **Result:** Issue. Core and reagents were consumed, golem spawned with correct sound, but it did not bond to the summoner.
+## 5. Test Cases
 
-### 3.3 Wild Garden Golem Behavior
-1. Spawn an untamed Garden Golem via `[add GardenGolem`.
-   - **Result:** Confirmed. Wild golem spawned successfully.
-2. Confirm taming requirements: attempt to double-click and interact as Observer and verify refusal due to wild status.
-   - **Result:** Confirmed. Taming requirements enforced.
-3. Tame the golem with GM powers; ensure control slots usage is 3 and `MinTameSkill` gating works by attempting as a low-skill player (should fail).
-   - **Result:** Confirmed. Taming consumed three slots and low skill could not tame.
-4. Verify combat stats by provoking the golem into combat and observing damage types (physical/poison mix) using combat logs.
-   - **Result:** Not verified. Combat logs unavailable during this pass.
-5. Kill the wild golem and validate loot packs (Rich + Average) drop alongside soil bundle and 60% chance seed.
-   - **Result:** Confirmed. Loot pool matched expectations.
+### 5.1 Fresh Garden Soil and Loot Distribution
+1. `[add FreshGardenSoil` → confirm default amount 1, weight 1.0, hue `0x8A5`.
+2. Stack multiple soil items → verify stacking behavior and hue retention.
+3. Kill a **wild** golem → record soil quantity (expect 3–5) and presence of Rich/Average loot packs plus 60% seed.
+4. Kill a **crafted** golem → record soil quantity (expect 1–3) and verify planter seed, if present, is returned alongside normal loot.
+5. Repeat crafted kill with no seed loaded to confirm absence of spurious seed drops.
 
-### 3.4 Crafted Garden Golem Behavior
-1. Animate a crafted golem via Section 3.2 and confirm `IsCrafted` property is true with `[props`.
-   - **Result:** Confirmed. Crafted golem animated correctly.
-2. Transfer control to the caretaker and ensure Observer cannot issue commands.
-   - **Result:** Not tested. Secondary tester unavailable.
-3. Log out caretaker to check golem persistence and auto-stable rules per shard configuration.
-   - **Result:** Confirmed. Crafted golem remained stable through logout.
-4. Kill the crafted golem and verify planter seed (if any) is returned to corpse alongside soil and random seed drop logic.
-   - **Result:** Issue. Unable to plant a seed, so planter-return behavior could not be evaluated.
+### 5.2 Garden Golem Core Activation & Bonding
+1. Attempt double-click on ground → expect backpack requirement message.
+2. Double-click in backpack with Alchemy below 90 → expect failure message; ensure reagents remain.
+3. Attempt activation while follower cap exceeded → expect refusal, golem not spawned, reagents untouched.
+4. With requirements met, double-click core without reagents → ensure reagent-specific errors appear (remove each ingredient in turn).
+5. With all reagents and follower slots available, activate core → confirm:
+   - Core deletes and reagents consumed (3 soil, 20 fertile dirt, 25 mandrake).
+   - Golem spawns at caretaker location, plays sound `0x241`.
+   - `IsBonded = true`, `BondingBegin = DateTime.MinValue`, loyalty at 100, and caretaker listed as control master via `[props`.
+6. Logout/login caretaker → ensure bonded crafted golem remains loyal and under control.
 
-### 3.5 Planter Seed Management
-1. As caretaker, double-click the controlled golem; confirm caretaker gump displays seed “None”, moisture 2/4, infestation 0/4, next growth timestamp.
-   - **Result:** Issue. Gump displayed moisture and infestation values plus next growth time but lacked seed status text; gump did not close until golem death.
-2. Attempt gump access as Observer and confirm rejection message.
-   - **Result:** Not tested. Requires additional participant.
-3. Drag-drop a seed from caretaker’s backpack onto the golem:
-   - Validate seed deletion and gump refresh shows correct plant type/hue.
-   - **Result:** Issue. Attempt returned “Item must be in backpack to be used” and seed remained in caretaker backpack.
-4. Attempt to add a second seed and verify refusal message.
-   - **Result:** Blocked. Dependent on seed insertion succeeding (see step 3).
-5. Eject the seed via gump and ensure a duplicate seed is placed in caretaker’s backpack (requires free space); confirm planter returns to empty state.
-   - **Result:** Blocked. Dependent on seed insertion succeeding (see step 3).
+### 5.3 Wild Garden Golem Regression
+1. `[add GardenGolem` (wild) → verify spawn.
+2. Attempt observer interaction (double-click, commands) → expect wild refusal messages.
+3. Attempt taming with low skill (without GM override) → expect failure tied to `MinTameSkill`.
+4. Trigger combat (e.g., spawn target dummy) → validate mix of physical and poison damage using combat messages and `[props DamageTypes`.
 
-### 3.A Findings from Latest Test Pass
-- Crafted golems currently mirror wild golem loot tables, including dropping the full 5 soil on death; confirm whether crafted variants should have reduced or differentiated drops (Section 3.1.4).
-- Garden golems created via the core are not bonding to the summoning player despite consuming all reagents and playing the activation effects (Section 3.2.6).
-- Combat log validation tooling is needed to complete damage-type verification for wild golems (Section 3.3.4).
-- Planter gump lacks explicit seed status text and remains open until the golem dies (Section 3.5.1).
-- Seed drag-and-drop is failing with “Item must be in backpack to be used,” preventing any subsequent planter interactions (Section 3.5.3).
-- Observer access tests and caretaker-to-observer control transfer scenarios require coordination with an additional tester (Sections 3.4.2 and 3.5.2).
+### 5.4 Crafted Garden Golem Control Flow
+1. After crafting, issue commands (follow, stay) → ensure obedience and no "not bonded" warnings.
+2. Transfer control via `[givepet Observer` → expect refusal (crafted golem should reject non-caretaker control).
+3. Logout caretaker with golem active → confirm auto-stable/persistence mirrors shard expectations.
+4. Observer double-click attempt → verify caretaker-only message and no gump display.
 
-### 3.6 Growth Cycle Simulation
-1. With a seed loaded, advance time via `[set time` or shard time manipulation to exceed 12-hour growth interval.
-2. Confirm `OnThink` broadcasts emote when harvest becomes available while caretaker is set.
-3. Observe moisture decrement per tick (should decrease by 1 each interval) and infestation increment when moisture ≤1.
-4. Validate that harvest does not accumulate beyond 3 stored yields by advancing multiple intervals without harvesting.
+### 5.5 Planter Seed Management
+1. Open caretaker gump → confirm cultivation line reads "No seed loaded" on new golem.
+2. Drag-drop seed from caretaker backpack → ensure acceptance message, seed deletion, gump refresh showing seed type/hue, stored yields reset to 0.
+3. Drag-drop seed from ground → expect rejection and seed remains on ground.
+4. Observer attempts to drag-drop seed → expect caretaker restriction message.
+5. Attempt to load second seed while one is present → expect refusal.
+6. Use "Eject seed" button → verify duplicate seed placed in caretaker backpack (respecting capacity) and gump returns to "No seed loaded".
 
-### 3.7 Care Actions via Gump
-1. Water Button:
-   - Reduce moisture to 0 using repeated time advancement.
-   - Use Water button and confirm moisture resets to 4.
-2. Treat Button:
-   - Allow infestation to reach ≥1, then use Treat button.
-   - Verify infestation resets to 0 and fertility bonus increases (check via subsequent harvest increment reaching 2 when bonus active).
-   - Attempt treat when infestation is 0 and confirm informational message only.
-3. Harvest Button:
-   - Harvest when infestation <4 to receive either plant resource or fallback seed into backpack.
-   - Attempt harvest with full backpack and confirm harvest deletion with warning.
-   - Allow infestation to reach 4 and ensure harvest attempt fails with pest warning.
-4. Eject Seed Button:
-   - Confirm seed returned to backpack and planter cleared; ensure operation blocked when backpack lacks space.
+### 5.6 Care Gump Actions and Feedback
+1. With seed loaded, advance shard time to trigger growth → confirm stored yield counter increments and gump refreshes to "Harvest ready" after button press.
+2. Reduce moisture to 0 (time advance) and press "Water" → ensure moisture resets to 4 and infestation does not change.
+3. Allow infestation to rise ≥1, press "Treat" → verify infestation resets to 0, fertility bonus increments by +1, and gump displays updated bonus.
+4. Harvest with available yield and free backpack space → ensure produce/seed delivered and stored yield resets to 0.
+5. Attempt harvest with full backpack → confirm warning and no orphaned items.
+6. Attempt harvest when infestation at 4 → expect refusal message.
+7. Close gump using the window close button → ensure it stays closed until re-opened manually.
 
-### 3.8 Unauthorized Interaction Safeguards
-1. Observer attempts drag-dropping seed on caretaker’s golem; confirm rejection message.
-2. Caretaker attempts interactions while out of 2-tile range; verify localized distance message.
-3. Attempt planter actions while golem uncontrolled or ControlMaster null (release pet and try); expect refusal messages.
+### 5.7 Persistence and Serialization
+1. Load seed, accrue partial growth, adjust fertility, then `[save` and restart server.
+2. After relog, verify golem retains control state, bonding, seed type/hue, moisture, infestation, stored yields, and fertility bonus.
+3. Kill golem post-restart → ensure corpse drops align with Section 5.1 expectations.
 
-### 3.9 Persistence and Serialization
-1. Load seed, water, and let planter accumulate partial growth.
-2. Force world save and restart server.
-3. After login, confirm planter state (seed type, moisture, infestation, stored yields, fertility bonus) persists.
-4. Verify `IsCrafted` flag persists across save/load for crafted golems.
+### 5.8 Failure Recovery & Edge Scenarios
+1. Delete caretaker while crafted golem active → ensure golem becomes uncontrolled and planter interactions are blocked until retamed.
+2. Attempt planter actions while outside 2-tile range → confirm distance message.
+3. Attempt to drop non-seed items onto golem → expect fallback to base drag/drop behavior (item returns or falls to ground without special handling).
+4. Stress-test gump buttons during combat to ensure no crashes or unexpected state desync.
 
-### 3.10 Failure Recovery and Edge Scenarios
-1. Delete caretaker while golem remains; ensure golem becomes uncontrolled and planter locks interactions until retamed.
-2. Attempt to drop non-seed items onto golem and confirm default drag-drop handling (should fall back to base behavior).
-3. Evaluate behavior when caretaker backpack is overloaded (weight limit) during harvest/eject operations.
-4. Test interaction timing during active combat to ensure gump operations do not cause crashes or unexpected behavior.
+## 6. Reporting
+- Capture chat log excerpts, gump screenshots, and corpse loot inventories for each major verification.
+- Document defects with reproduction steps referencing this plan's section numbers and include `SetControlMaster`/bonding screenshots when relevant.
+- Update shard QA tracker with bonding regression risk assessment if any edge cases fail.
 
-## 4. Reporting
-- Capture screenshots of gump states and system messages for each major step.
-- Record timestamps, commands used, and outcomes in a shared test log.
-- File defects with reproduction steps referencing this plan’s section numbers.
-
-## 5. Exit Criteria
-- All test cases in Section 3 executed with pass/fail results documented.
-- Critical defects resolved and retested.
-- Stakeholder sign-off confirming Garden Golem system readiness for release.
+## 7. Exit Criteria
+- All Section 5 test cases executed with documented pass/fail results.
+- Critical and high-severity issues resolved, re-tested, and closed.
+- Crafted golem bonding, planter management, loot drops, and gump UX verified as stable by QA and gameplay stakeholders.
