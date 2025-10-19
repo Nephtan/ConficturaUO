@@ -50,7 +50,8 @@ namespace Server.Custom.Confictura.Mobiles
             m_IsCrafted = crafted;
 
             Name = "a garden golem";
-            Body = 752;
+            Body = 446;
+            Hue = 1782;
             BaseSoundID = 541;
 
             SetStr(450, 500);
