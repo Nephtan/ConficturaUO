@@ -38,24 +38,36 @@
 ### 6.1 Crafted vs. Wild Loot Validation
 1. Spawn a wild golem with `[add GardenGolem` and kill it.
    - Record soil amount (expect 3–5), confirm presence of Rich/Average loot entries, and verify a 60% chance random seed can appear.
+     - **Result:** 3 Soil, Rich/Average loot entries confirmed, 60% chance of random seed confirmed.
 2. Spawn a crafted golem via `GardenGolemCore`.
    - Kill immediately with no planter seed loaded.
    - Expected: soil 1–3, **no** Rich/Average loot packs, **no** random seed; corpse should contain only soil (and gold if any external system injects it).
+     - **Result:** 1 Soil, no loot packs confirmed, no random seed confirmed.
+       - **Note:** Crafted Garden Golems are bonded, which means they can be resurrected by those with veterinary skill, or when taken near a druid npc, or when using resurrection spells. Each time the golem is killed, they drop more soil. This is an exploit. Crafted golems should drop no random loot when killed. They should only drop the contents that were put into them.
 3. Load a planter seed into a new crafted golem (Section 6.2) and then kill it.
    - Confirm planter seed is returned on the corpse alongside reduced soil.
+     - **Result:** Confirmed seed was returned on the corpse alongside reduced soil.
 4. Repeat Steps 1–3 after a server restart to validate persistence.
+  - **Result:** Passed
 
 ### 6.2 Seed Loading and Access Control
 1. Drag a seed from the caretaker backpack to the crafted golem.
    - Expect successful absorption message and gump refresh.
+     - **Result:** Failed.
+       - **Note:** The golem was the same one we killed to confirm the planter seed was returned on the corpse in previous steps. It had been resurrected. When dragging the seed from its corpse from the caretaker backpack to the golem, the golem reported, "The planter already cultivates a specimen. Eject it first." So, I opened the Garden Golem Caretaker gump and pressed the Eject Seed button, and the seed was ejected. Now I had two of the same seed, which means this is a bug that can produce duplicate seeds.
 2. Drag the same seed type from the world floor.
    - Expect the `1042664` backpack requirement message; seed should remain on the ground.
+     - **Result:** Passed
 3. Attempt to drop a seed owned by another player or removed from an observer’s pack.
    - Expect refusal messaging identical to Step 2.
+     - **Result:** Not identical and doesn't need to be. This passes because a refusal message was given both times, though not identical messaging to Step 2.
 4. Try loading a seed from a caretaker-controlled pack animal without first moving it to the backpack.
    - Document behavior; if refusal occurs, confirm that moving the seed to the backpack allows success (ensures testers understand the current limitation).
+     - **Result:** Refusal occurred. Confirmed that moving the seed to the caretaker backpack first allows success.
 5. Observer performs a drag/drop attempt to confirm caretaker-only messaging is intact.
+  - **Result:** Passed
 6. Load a seed, eject it via the gump button, and confirm the duplicate seed lands in the caretaker backpack with correct hue/type metadata.
+  - **Result:** Passed. The seed lands in the caretaker backpack with the correct hue and type metadata.
 
 ### 6.3 Caretaker Gump and Planter Maintenance
 1. With a seed loaded, advance time or use staff commands to tick growth until harvest is ready.
