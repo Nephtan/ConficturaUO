@@ -164,7 +164,7 @@ namespace Server.Custom.Confictura.Mobiles
                     return false;
                 }
 
-                if (from.Backpack == null || (!seed.IsChildOf(from.Backpack) && seed.RootParent != from))
+                if (!CanCaretakerProvideSeed(from, seed))
                 {
                     from.SendLocalizedMessage(1042664); // You must have the object in your backpack to use it.
                     return false;
@@ -289,8 +289,11 @@ namespace Server.Custom.Confictura.Mobiles
 
         public override void GenerateLoot()
         {
-            AddLoot(LootPack.Rich);
-            AddLoot(LootPack.Average);
+            if (!m_IsCrafted)
+            {
+                AddLoot(LootPack.Rich);
+                AddLoot(LootPack.Average);
+            }
         }
 
         public override void OnDeath(Container c)
@@ -303,14 +306,48 @@ namespace Server.Custom.Confictura.Mobiles
             int soilAmount = m_IsCrafted ? Utility.RandomMinMax(1, 3) : Utility.RandomMinMax(3, 5);
             c.DropItem(new FreshGardenSoil(soilAmount));
 
-            if (Utility.RandomDouble() < 0.60)
+            if (!m_IsCrafted && Utility.RandomDouble() < 0.60)
+            {
                 c.DropItem(new Seed(PlantTypeInfo.RandomFirstGeneration(), PlantHueInfo.RandomFirstGeneration(), false));
+            }
 
             if (m_PlanterState.HasSeed)
             {
                 Item sample = new Seed(m_PlanterState.SeedPlantType, m_PlanterState.SeedPlantHue, true);
                 c.DropItem(sample);
             }
+        }
+
+        private bool CanCaretakerProvideSeed(Mobile from, Seed seed)
+        {
+            if (from == null || seed == null)
+                return false;
+
+            if (from.Backpack != null && seed.IsChildOf(from.Backpack))
+                return true;
+
+            if (seed.RootParent == from)
+                return true;
+
+            BounceInfo bounce = seed.GetBounce();
+
+            if (bounce != null)
+            {
+                if (bounce.m_Parent == from.Backpack)
+                    return true;
+
+                Item bounceItem = bounce.m_Parent as Item;
+
+                if (bounceItem != null && bounceItem.RootParent == from)
+                    return true;
+
+                Mobile bounceMobile = bounce.m_Parent as Mobile;
+
+                if (bounceMobile == from)
+                    return true;
+            }
+
+            return false;
         }
 
         public override void Serialize(GenericWriter writer)
