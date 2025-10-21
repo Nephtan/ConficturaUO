@@ -7,6 +7,7 @@ using Server;
 using Server.Accounting;
 using Server.Commands;
 using Server.Commands.Generic;
+using Server.Custom.Confictura.CloneOfflinePlayerCharacters;
 using Server.Guilds;
 using Server.Gumps;
 using Server.Items;

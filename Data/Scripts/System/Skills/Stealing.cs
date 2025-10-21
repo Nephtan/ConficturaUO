@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Server;
+using Server.Custom.Confictura.CloneOfflinePlayerCharacters;
 using Server.Factions;
 using Server.Items;
 using Server.Misc;

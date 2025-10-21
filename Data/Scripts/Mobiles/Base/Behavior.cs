@@ -5,6 +5,7 @@ using System.IO;
 using System.Text;
 using Server;
 using Server.ContextMenus;
+using Server.Custom.Confictura.CloneOfflinePlayerCharacters;
 using Server.Factions;
 using Server.Items;
 using Server.Misc;
