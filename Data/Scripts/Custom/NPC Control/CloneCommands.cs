@@ -7,8 +7,8 @@ using Server.Items;
 using Server.Mobiles;
 using Server.Network;
 using Server.Targeting;
-using Confictura.Custom;
 using Server.Custom.Confictura;
+using Server.Custom.Confictura.CloneOfflinePlayerCharacters;
 
 namespace Server.Commands
 {

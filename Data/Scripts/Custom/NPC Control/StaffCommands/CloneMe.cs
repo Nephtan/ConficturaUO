@@ -1,7 +1,7 @@
 ﻿using System;
 using Server.Commands;
 using Server.Mobiles;
-using Confictura.Custom;
+using Server.Custom.Confictura.CloneOfflinePlayerCharacters;
 
 namespace Server.Commands
 {
