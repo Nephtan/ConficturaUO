@@ -32,12 +32,19 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="OrbServerSDK">
+      <HintPath>..\..\OrbServerSDK.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Runtime.Remoting" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
+    <Reference Include="UOArchitectInterface">
+      <HintPath>..\..\UOArchitectInterface.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Custom\Access Level Stone [2.0]\AccessLevelStone.cs" />
@@ -116,7 +123,13 @@
     <Compile Include="Custom\ChangeSeason\ChangeSeason.cs" />
     <Compile Include="Custom\Character Swap\CharacterSwap.cs" />
     <Compile Include="Custom\ClearDeckCommand\ClearDeckCommand.cs" />
+    <Compile Include="Custom\CloneOfflinePlayerCharacters\BackpackClone.cs" />
+    <Compile Include="Custom\CloneOfflinePlayerCharacters\CharacterClone.cs" />
+    <Compile Include="Custom\CloneOfflinePlayerCharacters\CheckClonesCommand.cs" />
     <Compile Include="Custom\CloneOfflinePlayerCharacters\CloneOfflinePlayerCharacters.cs" />
+    <Compile Include="Custom\CloneOfflinePlayerCharacters\CloneThings.cs" />
+    <Compile Include="Custom\CloneOfflinePlayerCharacters\EtherealMountClone.cs" />
+    <Compile Include="Custom\CloneOfflinePlayerCharacters\MountClone.cs" />
     <Compile Include="Custom\GardenGolem\Gumps\GolemCaretakerGump.cs" />
     <Compile Include="Custom\GardenGolem\Items\FreshGardenSoil.cs" />
     <Compile Include="Custom\GardenGolem\Items\GardenGolemCore.cs" />
@@ -529,6 +542,21 @@
     <Compile Include="Custom\OmniAI\OmniAI Necromancy.cs" />
     <Compile Include="Custom\OmniAI\OmniAI Ninjitsu.cs" />
     <Compile Include="Custom\OmniAI\OmniAI Shared.cs" />
+    <Compile Include="Custom\OrbRemoteServer\MetalDoors.cs" />
+    <Compile Include="Custom\OrbRemoteServer\OrbServer.cs" />
+    <Compile Include="Custom\OrbRemoteServer\SEDoors.cs" />
+    <Compile Include="Custom\OrbRemoteServer\UOArchitect\BaseOrbToolRequest.cs" />
+    <Compile Include="Custom\OrbRemoteServer\UOArchitect\BoundingBoxEx.cs" />
+    <Compile Include="Custom\OrbRemoteServer\UOArchitect\BuildDesignRequest.cs" />
+    <Compile Include="Custom\OrbRemoteServer\UOArchitect\BuildDesignTarget.cs" />
+    <Compile Include="Custom\OrbRemoteServer\UOArchitect\ClientCommands.cs" />
+    <Compile Include="Custom\OrbRemoteServer\UOArchitect\DeleteItemsCommand.cs" />
+    <Compile Include="Custom\OrbRemoteServer\UOArchitect\ExtractItemsRequest.cs" />
+    <Compile Include="Custom\OrbRemoteServer\UOArchitect\GetLocationRequest.cs" />
+    <Compile Include="Custom\OrbRemoteServer\UOArchitect\MobileSaver.cs" />
+    <Compile Include="Custom\OrbRemoteServer\UOArchitect\MoveItemsCommand.cs" />
+    <Compile Include="Custom\OrbRemoteServer\UOArchitect\SelectItemsRequest.cs" />
+    <Compile Include="Custom\OrbRemoteServer\UOArchitect\UOAR_ObjectTarget.cs" />
     <Compile Include="Custom\OzThothStaticGump\Side Gumps\AddAnimation.cs" />
     <Compile Include="Custom\OzThothStaticGump\Side Gumps\AddArch.cs" />
     <Compile Include="Custom\OzThothStaticGump\Side Gumps\AddCooking.cs" />
@@ -6562,6 +6590,8 @@
     <Content Include="Custom\Book Publisher [2.0]\Info.txt" />
     <Content Include="Custom\NPC Control\installation.txt" />
     <Content Include="Custom\Offline Skill Training\readme.txt" />
+    <Content Include="Custom\OrbRemoteServer\ExportMobiles.txt" />
+    <Content Include="Custom\OrbRemoteServer\UOArchitect\BuildDesignTarget Backup.txt" />
     <Content Include="Custom\OzThothStaticGump\README.txt" />
     <Content Include="Custom\PvPConsent\READ ME.txt" />
     <Content Include="Custom\RandomEncounters\COPYING.txt" />
