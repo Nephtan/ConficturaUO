@@ -33,6 +33,7 @@ namespace Server.Items
             }
 
             double NecroSkill = from.Skills[SkillName.Necromancy].Value;
+            double SpiritSkill = from.Skills[SkillName.SpiritSpeak].Value;
 
             if (NecroSkill < 80.0)
             {
@@ -49,16 +50,36 @@ namespace Server.Items
 
             double scalar;
 
-            if (NecroSkill >= 100.0)
-                scalar = 1.0;
+            if (NecroSkill >= 120.0)
+                scalar = 1.45;
+            else if (NecroSkill >= 115.0)
+                scalar = 1.35;
+            else if (NecroSkill >= 110.0)
+                scalar = 1.25;
+            else if (NecroSkill >= 105.0)
+                scalar = 1.15;
+            else if (NecroSkill >= 100.0)
+                scalar = 1.1;
+            else if (NecroSkill >= 95.0)
+                scalar = 1.02;
             else if (NecroSkill >= 90.0)
-                scalar = 0.9;
-            else if (NecroSkill >= 80.0)
-                scalar = 0.8;
-            else if (NecroSkill >= 70.0)
-                scalar = 0.7;
+                scalar = 1.0;
             else
-                scalar = 0.6;
+                scalar = 0.9;
+
+            // Spirit Speak grants additional control over the construct. Small bonuses are
+            // applied to the overall stat scalar and to the new sustain mechanics.
+            double spiritBonus = Math.Max(0.0, (SpiritSkill - 80.0) * 0.0025);
+            double siphonRatio = 0.75 - Math.Min(0.35, Math.Max(0.0, (SpiritSkill - 80.0) * 0.007));
+            double empowermentBonus = Math.Max(0.0, (SpiritSkill - 80.0) * 0.004);
+
+            scalar += spiritBonus;
+
+            // Ensure the siphon ratio stays within reasonable limits (35% - 75%).
+            if (siphonRatio < 0.35)
+                siphonRatio = 0.35;
+            else if (siphonRatio > 0.75)
+                siphonRatio = 0.75;
 
             Container pack = from.Backpack;
 
@@ -118,7 +139,7 @@ namespace Server.Items
                 }
                 default:
                 {
-                    corpse z = new corpse(true, scalar);
+                    corpse z = new corpse(true, scalar, siphonRatio, empowermentBonus);
 
                     if (z.SetControlMaster(from))
                     {
@@ -126,6 +147,10 @@ namespace Server.Items
                         from.PlaySound(0x754);
                         from.FixedParticles(0x376A, 10, 30, 5052, EffectLayer.LeftFoot);
                         from.Say("Um Zex Fal Lum");
+                        from.SendMessage(
+                            0x59,
+                            "Your mastery over spirit and sinew strengthens the corpse you summon."
+                        );
                     }
 
                     break;
