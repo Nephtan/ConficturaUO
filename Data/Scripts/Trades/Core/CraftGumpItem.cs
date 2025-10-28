@@ -21,6 +21,10 @@ namespace Server.Engines.Craft
 
         private const int GreyLabelColor = 0x3DEF;
 
+        // Number of material entries that can be displayed on a single page without
+        // overlapping other sections of the gump.
+        private const int ResourcesPerPage = 4;
+
         private int m_OtherCount;
 
         public CraftGumpItem(
@@ -39,7 +43,76 @@ namespace Server.Engines.Craft
             from.CloseGump(typeof(CraftGump));
             from.CloseGump(typeof(CraftGumpItem));
 
-            AddPage(0);
+            bool needsRecipe = (
+                craftItem.Recipe != null
+                && from is PlayerMobile
+                && !((PlayerMobile)from).HasRecipe(craftItem.Recipe)
+            );
+
+            CraftContext context = m_CraftSystem.GetContext(m_From);
+
+            CraftSubResCol res = (
+                m_CraftItem.UseSubRes2 ? m_CraftSystem.CraftSubRes2 : m_CraftSystem.CraftSubRes
+            );
+            int resIndex = -1;
+
+            if (context != null)
+                resIndex = (
+                    m_CraftItem.UseSubRes2 ? context.LastResourceIndex2 : context.LastResourceIndex
+                );
+
+            bool cropScroll =
+                (m_CraftItem.Resources.Count > 1)
+                && m_CraftItem.Resources.GetAt(m_CraftItem.Resources.Count - 1).ItemType
+                    == typeofBlankScroll
+                && typeofSpellScroll.IsAssignableFrom(m_CraftItem.ItemType);
+
+            int resourcesPerPage = ResourcesPerPage;
+            int totalResources = m_CraftItem.Resources.Count - (cropScroll ? 1 : 0);
+
+            if (totalResources < 0)
+                totalResources = 0;
+
+            int totalPages = Math.Max(1, (int)Math.Ceiling(totalResources / (double)resourcesPerPage));
+            bool retainedColorShown = false;
+
+            // Build the gump one page at a time so long resource lists can be paged
+            // through instead of being truncated after four entries.
+            for (int pageIndex = 0; pageIndex < totalPages; pageIndex++)
+            {
+                if (pageIndex == 0)
+                    AddPage(0);
+                else
+                    AddPage(pageIndex);
+
+                BuildPage(
+                    pageIndex,
+                    totalPages,
+                    needsRecipe,
+                    res,
+                    resIndex,
+                    cropScroll,
+                    resourcesPerPage,
+                    totalResources,
+                    ref retainedColorShown
+                );
+            }
+        }
+
+        // Builds a single page of the crafting gump, including navigation controls,
+        // the per-page resource list, and the "Other" section messaging.
+        private void BuildPage(
+            int pageIndex,
+            int totalPages,
+            bool needsRecipe,
+            CraftSubResCol res,
+            int resIndex,
+            bool cropScroll,
+            int resourcesPerPage,
+            int totalResources,
+            ref bool retainedColorShown
+        )
+        {
             AddBackground(0, 0, 530, 417, 5054);
             AddImageTiled(10, 10, 510, 22, 2624);
             AddImageTiled(10, 37, 150, 148, 2624);
@@ -60,32 +133,43 @@ namespace Server.Engines.Craft
             AddHtmlLocalized(10, 277, 150, 22, 1044055, LabelColor, false, false); // <CENTER>MATERIALS</CENTER>
             AddHtmlLocalized(10, 362, 150, 22, 1044056, LabelColor, false, false); // <CENTER>OTHER</CENTER>
 
-            if (craftSystem.GumpTitleNumber > 0)
+            if (totalPages > 1)
+            {
+                if (pageIndex > 0)
+                    AddButton(170, 277, 4014, 4016, 0, GumpButtonType.Page, pageIndex - 1);
+
+                if (pageIndex < totalPages - 1)
+                    AddButton(480, 277, 4005, 4007, 0, GumpButtonType.Page, pageIndex + 1);
+
+                // Let crafters know which materials page they are viewing.
+                AddLabel(
+                    340,
+                    277,
+                    LabelHue,
+                    String.Format("Page {0}/{1}", pageIndex + 1, totalPages)
+                );
+            }
+
+            if (m_CraftSystem.GumpTitleNumber > 0)
                 AddHtmlLocalized(
                     10,
                     12,
                     510,
                     20,
-                    craftSystem.GumpTitleNumber,
+                    m_CraftSystem.GumpTitleNumber,
                     LabelColor,
                     false,
                     false
                 );
             else
-                AddHtml(10, 12, 510, 20, craftSystem.GumpTitleString, false, false);
+                AddHtml(10, 12, 510, 20, m_CraftSystem.GumpTitleString, false, false);
 
             AddButton(15, 387, 4014, 4016, 0, GumpButtonType.Reply, 0);
             AddHtmlLocalized(50, 390, 150, 18, 1044150, LabelColor, false, false); // BACK
 
-            bool needsRecipe = (
-                craftItem.Recipe != null
-                && from is PlayerMobile
-                && !((PlayerMobile)from).HasRecipe(craftItem.Recipe)
-            );
-
             if (needsRecipe)
             {
-                AddButton(270, 387, 4005, 4007, 0, GumpButtonType.Page, 0);
+                AddButton(270, 387, 4005, 4007, 0, GumpButtonType.Page, pageIndex);
                 AddHtmlLocalized(305, 390, 150, 18, 1044151, GreyLabelColor, false, false); // MAKE NOW
             }
             else
@@ -94,12 +178,14 @@ namespace Server.Engines.Craft
                 AddHtmlLocalized(305, 390, 150, 18, 1044151, LabelColor, false, false); // MAKE NOW
             }
 
-            if (craftItem.NameNumber > 0)
-                AddHtmlLocalized(330, 40, 180, 18, craftItem.NameNumber, LabelColor, false, false);
+            if (m_CraftItem.NameNumber > 0)
+                AddHtmlLocalized(330, 40, 180, 18, m_CraftItem.NameNumber, LabelColor, false, false);
             else
-                AddLabel(330, 40, LabelHue, craftItem.NameString);
+                AddLabel(330, 40, LabelHue, m_CraftItem.NameString);
 
-            if (craftItem.UseAllRes)
+            m_OtherCount = 0;
+
+            if (m_CraftItem.UseAllRes)
                 AddHtmlLocalized(
                     170,
                     302 + (m_OtherCount++ * 20),
@@ -113,18 +199,21 @@ namespace Server.Engines.Craft
 
             DrawItem();
             DrawSkill();
-            DrawResource();
 
-            /*
-            if( craftItem.RequiresSE )
-                AddHtmlLocalized( 170, 302 + (m_OtherCount++ * 20), 310, 18, 1063363, LabelColor, false, false ); //* Requires the "Samurai Empire" expansion
-             * */
+            retainedColorShown = DrawResource(
+                pageIndex,
+                resourcesPerPage,
+                totalResources,
+                res,
+                resIndex,
+                retainedColorShown
+            );
 
-            if (craftItem.RequiredExpansion != Expansion.None)
+            if (m_CraftItem.RequiredExpansion != Expansion.None)
             {
                 bool supportsEx = (
-                    from.NetState != null
-                    && from.NetState.SupportsExpansion(craftItem.RequiredExpansion)
+                    m_From.NetState != null
+                    && m_From.NetState.SupportsExpansion(m_CraftItem.RequiredExpansion)
                 );
                 TextDefinition.AddHtmlText(
                     this,
@@ -132,7 +221,7 @@ namespace Server.Engines.Craft
                     302 + (m_OtherCount++ * 20),
                     310,
                     18,
-                    RequiredExpansionMessage(craftItem.RequiredExpansion),
+                    RequiredExpansionMessage(m_CraftItem.RequiredExpansion),
                     false,
                     false,
                     supportsEx ? LabelColor : RedLabelColor,
@@ -151,6 +240,18 @@ namespace Server.Engines.Craft
                     false,
                     false
                 ); // You have not learned this recipe.
+
+            if (cropScroll)
+                AddHtmlLocalized(
+                    170,
+                    302 + (m_OtherCount++ * 20),
+                    360,
+                    18,
+                    1044379,
+                    LabelColor,
+                    false,
+                    false
+                ); // Inscribing scrolls also requires a blank scroll and mana.
         }
 
         private TextDefinition RequiredExpansionMessage(Expansion expansion)
@@ -266,35 +367,31 @@ namespace Server.Engines.Craft
         private static Type typeofBlankScroll = typeof(BlankScroll);
         private static Type typeofSpellScroll = typeof(SpellScroll);
 
-        public void DrawResource()
+        // Draws the resources that belong on the requested page. Returns whether the
+        // color-retention note has been shown so subsequent pages avoid duplicating it.
+        private bool DrawResource(
+            int pageIndex,
+            int resourcesPerPage,
+            int totalResources,
+            CraftSubResCol res,
+            int resIndex,
+            bool retainedColor
+        )
         {
-            bool retainedColor = false;
+            int startIndex = pageIndex * resourcesPerPage;
 
-            CraftContext context = m_CraftSystem.GetContext(m_From);
-
-            CraftSubResCol res = (
-                m_CraftItem.UseSubRes2 ? m_CraftSystem.CraftSubRes2 : m_CraftSystem.CraftSubRes
-            );
-            int resIndex = -1;
-
-            if (context != null)
-                resIndex = (
-                    m_CraftItem.UseSubRes2 ? context.LastResourceIndex2 : context.LastResourceIndex
-                );
-
-            bool cropScroll =
-                (m_CraftItem.Resources.Count > 1)
-                && m_CraftItem.Resources.GetAt(m_CraftItem.Resources.Count - 1).ItemType
-                    == typeofBlankScroll
-                && typeofSpellScroll.IsAssignableFrom(m_CraftItem.ItemType);
-
-            for (int i = 0; i < m_CraftItem.Resources.Count - (cropScroll ? 1 : 0) && i < 4; i++)
+            for (int i = 0; i < resourcesPerPage; i++)
             {
+                int resourceIndex = startIndex + i;
+
+                if (resourceIndex >= totalResources)
+                    break;
+
                 Type type;
                 string nameString;
                 int nameNumber;
 
-                CraftRes craftResource = m_CraftItem.Resources.GetAt(i);
+                CraftRes craftResource = m_CraftItem.Resources.GetAt(resourceIndex);
 
                 type = craftResource.ItemType;
                 nameString = craftResource.NameString;
@@ -331,40 +428,17 @@ namespace Server.Engines.Craft
                     AddLabel(500, 219 + (i * 20), LabelHue, "*");
                 }
 
-                if (nameNumber > 0)
-                    AddHtmlLocalized(
-                        170,
-                        219 + (i * 20),
-                        310,
-                        18,
-                        nameNumber,
-                        LabelColor,
-                        false,
-                        false
-                    );
-                else
-                    AddLabel(170, 219 + (i * 20), LabelHue, nameString);
+                int rowY = 219 + (i * 20);
 
-                AddLabel(430, 219 + (i * 20), LabelHue, craftResource.Amount.ToString());
+                if (nameNumber > 0)
+                    AddHtmlLocalized(170, rowY, 310, 18, nameNumber, LabelColor, false, false);
+                else
+                    AddLabel(170, rowY, LabelHue, nameString);
+
+                AddLabel(430, rowY, LabelHue, craftResource.Amount.ToString());
             }
-            /*
-                        if ( m_CraftItem.NameNumber == 1041267 ) // runebook
-                        {
-                            AddHtmlLocalized( 170, 219 + (m_CraftItem.Resources.Count * 20), 310, 18, 1044447, LabelColor, false, false );
-                            AddLabel( 430, 219 + (m_CraftItem.Resources.Count * 20), LabelHue, "1" );
-                        }
-            */
-            if (cropScroll)
-                AddHtmlLocalized(
-                    170,
-                    302 + (m_OtherCount++ * 20),
-                    360,
-                    18,
-                    1044379,
-                    LabelColor,
-                    false,
-                    false
-                ); // Inscribing scrolls also requires a blank scroll and mana.
+
+            return retainedColor;
         }
 
         public override void OnResponse(NetState sender, RelayInfo info)
