@@ -33,7 +33,7 @@ namespace Server.Items
             }
 
             double NecroSkill = from.Skills[SkillName.Necromancy].Value;
-            double SpiritSkill = from.Skills[SkillName.SpiritSpeak].Value;
+            double SpiritSkill = from.Skills[SkillName.Spiritualism].Value;
 
             if (NecroSkill < 80.0)
             {
