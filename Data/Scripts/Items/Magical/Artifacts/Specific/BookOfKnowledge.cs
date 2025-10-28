@@ -45,22 +45,10 @@ namespace Server.Items
             Attributes.CastSpeed = 1;
             Attributes.CastRecovery = 1;
 
-            SkillBonuses.SetValues(
-                0,
-                SkillName.Psychology,
-                (10.0 + (Utility.RandomMinMax(0, 2) * 5))
-            );
+            SkillBonuses.SetValues(0, SkillName.Psychology, (10.0 + (Utility.RandomMinMax(0, 2) * 5)));
             SkillBonuses.SetValues(1, SkillName.Magery, (10.0 + (Utility.RandomMinMax(0, 2) * 5)));
-            SkillBonuses.SetValues(
-                2,
-                SkillName.MagicResist,
-                (10.0 + (Utility.RandomMinMax(0, 2) * 5))
-            );
-            SkillBonuses.SetValues(
-                3,
-                SkillName.Meditation,
-                (10.0 + (Utility.RandomMinMax(0, 2) * 5))
-            );
+            SkillBonuses.SetValues(2, SkillName.MagicResist, (10.0 + (Utility.RandomMinMax(0, 2) * 5)));
+            SkillBonuses.SetValues(3, SkillName.Meditation, (10.0 + (Utility.RandomMinMax(0, 2) * 5)));
         }
 
         public override void AddNameProperties(ObjectPropertyList list)
