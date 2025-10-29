@@ -58,7 +58,7 @@ namespace Server.Spells.Shinobi
 
         public static void RemoveEffect(Mobile m)
         {
-            m.Send(SpeedControl.WalkSpeed);
+            m.Send(SpeedControl.Disable);
             TableCheetahPaws.Remove(m);
             m.EndAction(typeof(CheetahPaws));
             BuffInfo.RemoveBuff(m, BuffIcon.CheetahPaws);

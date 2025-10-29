@@ -269,7 +269,7 @@ namespace Server.Spells.Ninjitsu
             m_Table.Remove(m);
 
             if (context.SpeedBoost)
-                m.Send(SpeedControl.WalkSpeed);
+                m.Send(SpeedControl.Disable);
 
             SkillMod mod = context.Mod;
 
