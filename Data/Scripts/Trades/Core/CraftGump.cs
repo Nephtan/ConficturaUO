@@ -1,6 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
+using System.Reflection;
+using System.Text;
 using Server.Gumps;
 using Server.Items;
 using Server.Network;
@@ -18,6 +21,10 @@ namespace Server.Engines.Craft
         private const int LabelHue = 0x480;
         private const int LabelColor = 0x7FFF;
         private const int FontColor = 0xFFFFFF;
+        private const int SearchEntryID = 1;
+        private const int SelectionListTop = 90;
+        private const int SelectionListSpacing = 20;
+        private const int SelectionListLabelOffset = 3;
 
         private enum CraftPage
         {
@@ -247,6 +254,11 @@ namespace Server.Engines.Craft
             }
             // ****************************************
 
+            string searchText = (context != null && context.SearchTerm != null) ? context.SearchTerm : String.Empty;
+
+            AddLabel(220, 62, LabelHue, "Search:");
+            AddTextEntry(270, 60, 240, 20, LabelHue, SearchEntryID, searchText);
+
             CreateGroupList();
 
             if (page == CraftPage.PickResource)
@@ -302,20 +314,14 @@ namespace Server.Engines.Craft
                         resourceCount += items[j].Amount;
                 }
 
-                AddButton(
-                    220,
-                    60 + (index * 20),
-                    4005,
-                    4007,
-                    GetButtonID(5, i),
-                    GumpButtonType.Reply,
-                    0
-                );
+                int y = SelectionListTop + (index * SelectionListSpacing);
+
+                AddButton(220, y, 4005, 4007, GetButtonID(5, i), GumpButtonType.Reply, 0);
 
                 if (subResource.NameNumber > 0)
                     AddHtmlLocalized(
                         255,
-                        63 + (index * 20),
+                        y + SelectionListLabelOffset,
                         250,
                         18,
                         subResource.NameNumber,
@@ -327,7 +333,7 @@ namespace Server.Engines.Craft
                 else
                     AddLabel(
                         255,
-                        60 + (index * 20),
+                        y,
                         LabelHue,
                         String.Format("{0} ({1})", subResource.NameString, resourceCount)
                     );
@@ -343,71 +349,83 @@ namespace Server.Engines.Craft
 
             List<CraftItem> items = context.Items;
 
-            if (items.Count > 0)
-            {
-                for (int i = 0; i < items.Count; ++i)
-                {
-                    int index = i % 10;
-
-                    CraftItem craftItem = items[i];
-
-                    if (index == 0)
-                    {
-                        if (i > 0)
-                        {
-                            AddButton(370, 260, 4005, 4007, 0, GumpButtonType.Page, (i / 10) + 1);
-                            AddHtmlLocalized(405, 263, 100, 18, 1044045, LabelColor, false, false); // NEXT PAGE
-                        }
-
-                        AddPage((i / 10) + 1);
-
-                        if (i > 0)
-                        {
-                            AddButton(220, 260, 4014, 4015, 0, GumpButtonType.Page, i / 10);
-                            AddHtmlLocalized(255, 263, 100, 18, 1044044, LabelColor, false, false); // PREV PAGE
-                        }
-                    }
-
-                    AddButton(
-                        220,
-                        60 + (index * 20),
-                        4005,
-                        4007,
-                        GetButtonID(3, i),
-                        GumpButtonType.Reply,
-                        0
-                    );
-
-                    if (craftItem.NameNumber > 0)
-                        AddHtmlLocalized(
-                            255,
-                            63 + (index * 20),
-                            220,
-                            18,
-                            craftItem.NameNumber,
-                            LabelColor,
-                            false,
-                            false
-                        );
-                    else
-                        AddLabel(255, 60 + (index * 20), LabelHue, craftItem.NameString);
-
-                    AddButton(
-                        480,
-                        60 + (index * 20),
-                        4011,
-                        4012,
-                        GetButtonID(4, i),
-                        GumpButtonType.Reply,
-                        0
-                    );
-                }
-            }
-            else
+            if (items.Count == 0)
             {
                 // NOTE: This is not as OSI; it is an intentional difference
 
-                AddHtmlLocalized(230, 62, 200, 22, 1044165, LabelColor, false, false); // You haven't made anything yet.
+                AddHtmlLocalized(
+                    230,
+                    SelectionListTop + 2,
+                    200,
+                    22,
+                    1044165,
+                    LabelColor,
+                    false,
+                    false
+                ); // You haven't made anything yet.
+
+                return;
+            }
+
+            string search = NormalizeSearchTerm(context.SearchTerm);
+            int displayIndex = 0;
+
+            for (int i = 0; i < items.Count; ++i)
+            {
+                CraftItem craftItem = items[i];
+
+                if (!MatchesSearch(search, craftItem.NameNumber, craftItem.NameString))
+                    continue;
+
+                int pageIndex = displayIndex / 10;
+                int rowIndex = displayIndex % 10;
+
+                if (rowIndex == 0)
+                {
+                    if (displayIndex > 0)
+                    {
+                        AddButton(370, 260, 4005, 4007, 0, GumpButtonType.Page, pageIndex + 1);
+                        AddHtmlLocalized(405, 263, 100, 18, 1044045, LabelColor, false, false); // NEXT PAGE
+                    }
+
+                    AddPage(pageIndex + 1);
+
+                    if (displayIndex > 0)
+                    {
+                        AddButton(220, 260, 4014, 4015, 0, GumpButtonType.Page, pageIndex);
+                        AddHtmlLocalized(255, 263, 100, 18, 1044044, LabelColor, false, false); // PREV PAGE
+                    }
+                }
+
+                int y = SelectionListTop + (rowIndex * SelectionListSpacing);
+
+                AddButton(220, y, 4005, 4007, GetButtonID(3, i), GumpButtonType.Reply, 0);
+
+                if (craftItem.NameNumber > 0)
+                    AddHtmlLocalized(
+                        255,
+                        y + SelectionListLabelOffset,
+                        220,
+                        18,
+                        craftItem.NameNumber,
+                        LabelColor,
+                        false,
+                        false
+                    );
+                else
+                    AddLabel(255, y, LabelHue, craftItem.NameString);
+
+                AddButton(480, y, 4011, 4012, GetButtonID(4, i), GumpButtonType.Reply, 0);
+
+                displayIndex++;
+            }
+
+            if (displayIndex == 0)
+            {
+                if (search != null)
+                    AddLabel(230, SelectionListTop + 2, LabelHue, "No results match your search.");
+                else
+                    AddLabel(230, SelectionListTop + 2, LabelHue, "No recent items to display.");
             }
         }
 
@@ -423,43 +441,45 @@ namespace Server.Engines.Craft
             CraftGroup craftGroup = craftGroupCol.GetAt(selectedGroup);
             CraftItemCol craftItemCol = craftGroup.CraftItems;
 
+            CraftContext context = m_CraftSystem.GetContext(m_From);
+            string search = NormalizeSearchTerm(context != null ? context.SearchTerm : null);
+            int displayIndex = 0;
+
             for (int i = 0; i < craftItemCol.Count; ++i)
             {
-                int index = i % 10;
-
                 CraftItem craftItem = craftItemCol.GetAt(i);
 
-                if (index == 0)
+                if (!MatchesSearch(search, craftItem.NameNumber, craftItem.NameString))
+                    continue;
+
+                int pageIndex = displayIndex / 10;
+                int rowIndex = displayIndex % 10;
+
+                if (rowIndex == 0)
                 {
-                    if (i > 0)
+                    if (displayIndex > 0)
                     {
-                        AddButton(370, 260, 4005, 4007, 0, GumpButtonType.Page, (i / 10) + 1);
+                        AddButton(370, 260, 4005, 4007, 0, GumpButtonType.Page, pageIndex + 1);
                         AddHtmlLocalized(405, 263, 100, 18, 1044045, LabelColor, false, false); // NEXT PAGE
                     }
 
-                    AddPage((i / 10) + 1);
+                    AddPage(pageIndex + 1);
 
-                    if (i > 0)
+                    if (displayIndex > 0)
                     {
-                        AddButton(220, 260, 4014, 4015, 0, GumpButtonType.Page, i / 10);
+                        AddButton(220, 260, 4014, 4015, 0, GumpButtonType.Page, pageIndex);
                         AddHtmlLocalized(255, 263, 100, 18, 1044044, LabelColor, false, false); // PREV PAGE
                     }
                 }
 
-                AddButton(
-                    220,
-                    60 + (index * 20),
-                    4005,
-                    4007,
-                    GetButtonID(1, i),
-                    GumpButtonType.Reply,
-                    0
-                );
+                int y = SelectionListTop + (rowIndex * SelectionListSpacing);
+
+                AddButton(220, y, 4005, 4007, GetButtonID(1, i), GumpButtonType.Reply, 0);
 
                 if (craftItem.NameNumber > 0)
                     AddHtmlLocalized(
                         255,
-                        63 + (index * 20),
+                        y + SelectionListLabelOffset,
                         220,
                         18,
                         craftItem.NameNumber,
@@ -468,23 +488,28 @@ namespace Server.Engines.Craft
                         false
                     );
                 else
-                    AddLabel(255, 60 + (index * 20), LabelHue, craftItem.NameString);
+                    AddLabel(255, y, LabelHue, craftItem.NameString);
 
-                AddButton(
-                    480,
-                    60 + (index * 20),
-                    4011,
-                    4012,
-                    GetButtonID(2, i),
-                    GumpButtonType.Reply,
-                    0
-                );
+                AddButton(480, y, 4011, 4012, GetButtonID(2, i), GumpButtonType.Reply, 0);
+
+                displayIndex++;
+            }
+
+            if (displayIndex == 0)
+            {
+                if (search != null)
+                    AddLabel(230, SelectionListTop + 2, LabelHue, "No results match your search.");
+                else
+                    AddLabel(230, SelectionListTop + 2, LabelHue, "No items available.");
             }
         }
 
         public int CreateGroupList()
         {
             CraftGroupCol craftGroupCol = m_CraftSystem.CraftGroups;
+            CraftContext context = m_CraftSystem.GetContext(m_From);
+            string search = NormalizeSearchTerm(context != null ? context.SearchTerm : null);
+            int displayIndex = 0;
 
             AddButton(15, 60, 4005, 4007, GetButtonID(6, 3), GumpButtonType.Reply, 0);
             AddHtmlLocalized(50, 63, 150, 18, 1044014, LabelColor, false, false); // LAST TEN
@@ -493,9 +518,14 @@ namespace Server.Engines.Craft
             {
                 CraftGroup craftGroup = craftGroupCol.GetAt(i);
 
+                if (!MatchesSearch(search, craftGroup.NameNumber, craftGroup.NameString))
+                    continue;
+
+                int y = 80 + (displayIndex * 20);
+
                 AddButton(
                     15,
-                    80 + (i * 20),
+                    y,
                     4005,
                     4007,
                     GetButtonID(0, i),
@@ -506,7 +536,7 @@ namespace Server.Engines.Craft
                 if (craftGroup.NameNumber > 0)
                     AddHtmlLocalized(
                         50,
-                        83 + (i * 20),
+                        y + 3,
                         150,
                         18,
                         craftGroup.NameNumber,
@@ -515,15 +545,85 @@ namespace Server.Engines.Craft
                         false
                     );
                 else
-                    AddLabel(50, 80 + (i * 20), LabelHue, craftGroup.NameString);
+                    AddLabel(50, y, LabelHue, craftGroup.NameString);
+
+                displayIndex++;
             }
 
-            return craftGroupCol.Count;
+            if (displayIndex == 0 && search != null)
+                AddLabel(50, 80, LabelHue, "No categories match your search.");
+
+            return displayIndex;
         }
 
         public static int GetButtonID(int type, int index)
         {
             return 1 + type + (index * 7);
+        }
+
+        private static string NormalizeSearchTerm(string term)
+        {
+            if (String.IsNullOrWhiteSpace(term))
+                return null;
+
+            return term.Trim();
+        }
+
+        private static bool MatchesSearch(string searchTerm, int nameNumber, string nameString)
+        {
+            if (searchTerm == null)
+                return true;
+
+            string text = GetLocalizedText(nameNumber, nameString);
+
+            if (String.IsNullOrEmpty(text))
+                return false;
+
+            return text.IndexOf(searchTerm, StringComparison.OrdinalIgnoreCase) >= 0;
+        }
+
+        private static string GetLocalizedText(int nameNumber, string nameString)
+        {
+            if (!String.IsNullOrEmpty(nameString))
+                return nameString;
+
+            if (nameNumber > 0)
+            {
+                string localized = LocalizationHelper.GetString(nameNumber);
+
+                if (!String.IsNullOrEmpty(localized))
+                    return localized;
+
+                return "#" + nameNumber.ToString();
+            }
+
+            return String.Empty;
+        }
+
+        private static bool TryReadSearchTerm(RelayInfo info, out string term)
+        {
+            term = null;
+
+            if (info == null)
+                return false;
+
+            TextRelay[] entries = info.TextEntries;
+
+            if (entries == null)
+                return false;
+
+            for (int i = 0; i < entries.Length; ++i)
+            {
+                TextRelay entry = entries[i];
+
+                if (entry != null && entry.EntryID == SearchEntryID)
+                {
+                    term = NormalizeSearchTerm(entry.Text);
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         public void CraftItem(CraftItem item)
@@ -569,6 +669,14 @@ namespace Server.Engines.Craft
             CraftSystem system = m_CraftSystem;
             CraftGroupCol groups = system.CraftGroups;
             CraftContext context = system.GetContext(m_From);
+
+            if (context != null)
+            {
+                string updatedSearch;
+
+                if (TryReadSearchTerm(info, out updatedSearch))
+                    context.SearchTerm = updatedSearch;
+            }
 
             switch (type)
             {
@@ -821,6 +929,158 @@ namespace Server.Engines.Craft
 
                     break;
                 }
+            }
+        }
+
+        private static class LocalizationHelper
+        {
+            private static readonly Dictionary<int, string> m_Cache = new Dictionary<int, string>();
+            private static bool m_CheckedLocalization;
+            private static MethodInfo m_GetStringMethod;
+            private static Dictionary<int, string> m_ClilocTable;
+            private static bool m_ClilocAttempted;
+
+            public static string GetString(int number)
+            {
+                if (number <= 0)
+                    return null;
+
+                string text;
+
+                if (m_Cache.TryGetValue(number, out text))
+                    return text;
+
+                text = Fetch(number);
+
+                if (!String.IsNullOrEmpty(text))
+                    m_Cache[number] = text;
+
+                return text;
+            }
+
+            private static string Fetch(int number)
+            {
+                string value = FetchFromLocalization(number);
+
+                if (!String.IsNullOrEmpty(value))
+                    return value;
+
+                return FetchFromCliloc(number);
+            }
+
+            private static string FetchFromLocalization(int number)
+            {
+                if (!m_CheckedLocalization)
+                {
+                    m_CheckedLocalization = true;
+
+                    Type localizationType = Type.GetType("Server.Misc.Localization");
+
+                    if (localizationType != null)
+                        m_GetStringMethod = localizationType.GetMethod("GetString", new[] { typeof(int) });
+                }
+
+                if (m_GetStringMethod != null)
+                {
+                    try
+                    {
+                        return m_GetStringMethod.Invoke(null, new object[] { number }) as string;
+                    }
+                    catch
+                    {
+                    }
+                }
+
+                return null;
+            }
+
+            private static string FetchFromCliloc(int number)
+            {
+                EnsureClilocLoaded();
+
+                if (m_ClilocTable != null)
+                {
+                    string value;
+
+                    if (m_ClilocTable.TryGetValue(number, out value))
+                        return value;
+                }
+
+                return null;
+            }
+
+            private static void EnsureClilocLoaded()
+            {
+                if (m_ClilocAttempted)
+                    return;
+
+                m_ClilocAttempted = true;
+
+                string path = GetClilocPath();
+
+                if (path == null)
+                    return;
+
+                try
+                {
+                    Dictionary<int, string> table = new Dictionary<int, string>();
+
+                    using (FileStream fs = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read))
+                    using (BinaryReader br = new BinaryReader(fs))
+                    {
+                        if (fs.Length < 6)
+                            return;
+
+                        br.ReadInt32();
+                        br.ReadInt16();
+
+                        while (fs.Position < fs.Length)
+                        {
+                            int entryId = br.ReadInt32();
+                            short length = br.ReadInt16();
+
+                            if (length < 0 || fs.Position >= fs.Length)
+                                break;
+
+                            br.ReadByte();
+
+                            byte[] data = br.ReadBytes(length);
+                            string text = Encoding.UTF8.GetString(data);
+
+                            table[entryId] = text;
+                        }
+                    }
+
+                    m_ClilocTable = table;
+                }
+                catch
+                {
+                    m_ClilocTable = null;
+                }
+            }
+
+            private static string GetClilocPath()
+            {
+                if (Server.Core.DataDirectories != null)
+                {
+                    foreach (string directory in Server.Core.DataDirectories)
+                    {
+                        if (String.IsNullOrEmpty(directory))
+                            continue;
+
+                        string candidate = Path.Combine(directory, "Cliloc.enu");
+
+                        if (File.Exists(candidate))
+                            return candidate;
+                    }
+                }
+
+                string fallback = Path.Combine(Server.Core.BaseDirectory, "Data", "Files", "Cliloc.enu");
+
+                if (File.Exists(fallback))
+                    return fallback;
+
+                return null;
             }
         }
     }
