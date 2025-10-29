@@ -27,7 +27,7 @@ namespace Server.Items
                 )
             )
             {
-                from.Send(SpeedControl.WalkSpeed);
+                from.Send(SpeedControl.Disable);
                 Weight = 5.0;
                 from.SendMessage("These shoes seem to have their magic diminished here.");
             }
@@ -45,7 +45,7 @@ namespace Server.Items
             if (parent is Mobile)
             {
                 Mobile from = (Mobile)parent;
-                from.Send(SpeedControl.WalkSpeed);
+                from.Send(SpeedControl.Disable);
             }
             base.OnRemoved(parent);
         }
