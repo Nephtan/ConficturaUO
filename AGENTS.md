@@ -80,7 +80,6 @@ Codex MUST:
 Codex MUST NOT:
 
 * Add new dependencies without rationale and file edits documenting why/where.
-* Modify protected/generated/vendor areas (if present) without explicit instruction.
 
 ---
 
