@@ -22,9 +22,10 @@ namespace Server.Engines.Craft
         private const int LabelColor = 0x7FFF;
         private const int FontColor = 0xFFFFFF;
         private const int SearchEntryID = 1;
-        private const int SelectionListTop = 75;
-        private const int SelectionListSpacing = 20;
+        private const int SelectionListTop = 90;
+        private const int SelectionListSpacing = 22;
         private const int SelectionListLabelOffset = 3;
+        private const int SelectionListNavigationY = 320;
         private const int CategoryListTop = 80;
         private const int CategoryListSpacing = 20;
         private const int SearchButtonIndex = 9;
@@ -269,7 +270,7 @@ namespace Server.Engines.Craft
             string searchText = (context != null && context.SearchTerm != null) ? context.SearchTerm : String.Empty;
             string normalizedSearch = NormalizeSearchTerm(searchText);
 
-            AddLabel(220, 62, LabelColor, "Search:");
+            AddLabel(220, 62, LabelHue, "Search:");
             AddImageTiled(
                 SearchEntryX - 2,
                 SearchEntryY - 3,
@@ -288,7 +289,7 @@ namespace Server.Engines.Craft
                 GumpButtonType.Reply,
                 0
             );
-            AddLabel(480, 62, LabelColor, "GO");
+            AddLabel(480, 62, LabelHue, "GO");
 
             int visibleGroups = CreateGroupList();
 
@@ -315,19 +316,43 @@ namespace Server.Engines.Craft
                 if (index == 0)
                 {
                     if (i > 0)
-                        AddButton(485, 260, 4005, 4007, 0, GumpButtonType.Page, (i / 10) + 1);
+                        AddButton(
+                            485,
+                            SelectionListNavigationY,
+                            4005,
+                            4007,
+                            0,
+                            GumpButtonType.Page,
+                            (i / 10) + 1
+                        );
 
                     AddPage((i / 10) + 1);
 
                     if (i > 0)
-                        AddButton(455, 260, 4014, 4015, 0, GumpButtonType.Page, i / 10);
+                        AddButton(
+                            455,
+                            SelectionListNavigationY,
+                            4014,
+                            4015,
+                            0,
+                            GumpButtonType.Page,
+                            i / 10
+                        );
 
                     CraftContext context = m_CraftSystem.GetContext(m_From);
 
-                    AddButton(220, 260, 4005, 4007, GetButtonID(6, 4), GumpButtonType.Reply, 0);
+                    AddButton(
+                        220,
+                        SelectionListNavigationY,
+                        4005,
+                        4007,
+                        GetButtonID(6, 4),
+                        GumpButtonType.Reply,
+                        0
+                    );
                     AddHtmlLocalized(
                         255,
-                        263,
+                        SelectionListNavigationY + SelectionListLabelOffset,
                         200,
                         18,
                         (context == null || !context.DoNotColor) ? 1061591 : 1061590,
@@ -421,16 +446,50 @@ namespace Server.Engines.Craft
                 {
                     if (displayIndex > 0)
                     {
-                        AddButton(370, 260, 4005, 4007, 0, GumpButtonType.Page, pageIndex + 1);
-                        AddHtmlLocalized(405, 263, 100, 18, 1044045, LabelColor, false, false); // NEXT PAGE
+                        AddButton(
+                            370,
+                            SelectionListNavigationY,
+                            4005,
+                            4007,
+                            0,
+                            GumpButtonType.Page,
+                            pageIndex + 1
+                        );
+                        AddHtmlLocalized(
+                            405,
+                            SelectionListNavigationY + SelectionListLabelOffset,
+                            100,
+                            18,
+                            1044045,
+                            LabelColor,
+                            false,
+                            false
+                        ); // NEXT PAGE
                     }
 
                     AddPage(pageIndex + 1);
 
                     if (displayIndex > 0)
                     {
-                        AddButton(220, 260, 4014, 4015, 0, GumpButtonType.Page, pageIndex);
-                        AddHtmlLocalized(255, 263, 100, 18, 1044044, LabelColor, false, false); // PREV PAGE
+                        AddButton(
+                            220,
+                            SelectionListNavigationY,
+                            4014,
+                            4015,
+                            0,
+                            GumpButtonType.Page,
+                            pageIndex
+                        );
+                        AddHtmlLocalized(
+                            255,
+                            SelectionListNavigationY + SelectionListLabelOffset,
+                            100,
+                            18,
+                            1044044,
+                            LabelColor,
+                            false,
+                            false
+                        ); // PREV PAGE
                     }
                 }
 
@@ -496,16 +555,50 @@ namespace Server.Engines.Craft
                 {
                     if (displayIndex > 0)
                     {
-                        AddButton(370, 260, 4005, 4007, 0, GumpButtonType.Page, pageIndex + 1);
-                        AddHtmlLocalized(405, 263, 100, 18, 1044045, LabelColor, false, false); // NEXT PAGE
+                        AddButton(
+                            370,
+                            SelectionListNavigationY,
+                            4005,
+                            4007,
+                            0,
+                            GumpButtonType.Page,
+                            pageIndex + 1
+                        );
+                        AddHtmlLocalized(
+                            405,
+                            SelectionListNavigationY + SelectionListLabelOffset,
+                            100,
+                            18,
+                            1044045,
+                            LabelColor,
+                            false,
+                            false
+                        ); // NEXT PAGE
                     }
 
                     AddPage(pageIndex + 1);
 
                     if (displayIndex > 0)
                     {
-                        AddButton(220, 260, 4014, 4015, 0, GumpButtonType.Page, pageIndex);
-                        AddHtmlLocalized(255, 263, 100, 18, 1044044, LabelColor, false, false); // PREV PAGE
+                        AddButton(
+                            220,
+                            SelectionListNavigationY,
+                            4014,
+                            4015,
+                            0,
+                            GumpButtonType.Page,
+                            pageIndex
+                        );
+                        AddHtmlLocalized(
+                            255,
+                            SelectionListNavigationY + SelectionListLabelOffset,
+                            100,
+                            18,
+                            1044044,
+                            LabelColor,
+                            false,
+                            false
+                        ); // PREV PAGE
                     }
                 }
 
@@ -555,7 +648,25 @@ namespace Server.Engines.Craft
             {
                 CraftGroup craftGroup = craftGroupCol.GetAt(i);
 
-                if (!MatchesSearch(search, craftGroup.NameNumber, craftGroup.NameString))
+                bool includeGroup = MatchesSearch(search, craftGroup.NameNumber, craftGroup.NameString);
+
+                if (!includeGroup && search != null)
+                {
+                    CraftItemCol craftItems = craftGroup.CraftItems;
+
+                    for (int j = 0; j < craftItems.Count; ++j)
+                    {
+                        CraftItem craftItem = craftItems.GetAt(j);
+
+                        if (MatchesSearch(search, craftItem.NameNumber, craftItem.NameString))
+                        {
+                            includeGroup = true;
+                            break;
+                        }
+                    }
+                }
+
+                if (!includeGroup)
                     continue;
 
                 int y = CategoryListTop + (displayIndex * CategoryListSpacing);
