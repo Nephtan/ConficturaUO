@@ -30,14 +30,15 @@ namespace Server.Engines.Craft
         private const int CategoryListSpacing = 20;
         private const int SearchButtonIndex = 9;
         private const int SearchBackgroundGumpID = 0xBBC;
-        private const int SearchButtonX = 456;
+        private const int SearchButtonX = 474;
         private const int SearchButtonY = 58;
         private const int SearchEntryX = 270;
         private const int SearchEntryY = 60;
-        private const int SearchEntryWidth = 176;
+        private const int SearchEntryWidth = 188;
         private const int SearchEntryHeight = 20;
-        private const int SearchBackgroundWidth = 182;
+        private const int SearchBackgroundWidth = 194;
         private const int SearchBackgroundHeight = 24;
+        private const int SearchLabelX = 498;
 
         private enum CraftPage
         {
@@ -74,14 +75,14 @@ namespace Server.Engines.Craft
 
             AddPage(0);
 
-            AddBackground(0, 0, 530, 437, 5054);
+            AddBackground(0, 0, 530, 457, 5054);
             AddImageTiled(10, 10, 510, 22, 2624);
-            AddImageTiled(10, 292, 150, 45, 2624);
-            AddImageTiled(165, 292, 355, 45, 2624);
-            AddImageTiled(10, 342, 510, 85, 2624);
-            AddImageTiled(10, 37, 200, 250, 2624);
-            AddImageTiled(215, 37, 305, 250, 2624);
-            AddAlphaRegion(10, 10, 510, 417);
+            AddImageTiled(10, 332, 150, 40, 2624);
+            AddImageTiled(165, 332, 355, 40, 2624);
+            AddImageTiled(10, 372, 510, 85, 2624);
+            AddImageTiled(10, 37, 200, 295, 2624);
+            AddImageTiled(215, 37, 305, 295, 2624);
+            AddAlphaRegion(10, 10, 510, 437);
 
             if (craftSystem.GumpTitleNumber > 0)
                 AddHtmlLocalized(
@@ -99,21 +100,21 @@ namespace Server.Engines.Craft
 
             AddHtmlLocalized(10, 37, 200, 22, 1044010, LabelColor, false, false); // <CENTER>CATEGORIES</CENTER>
             AddHtmlLocalized(215, 37, 305, 22, 1044011, LabelColor, false, false); // <CENTER>SELECTIONS</CENTER>
-            AddHtmlLocalized(10, 302, 150, 25, 1044012, LabelColor, false, false); // <CENTER>NOTICES</CENTER>
+            AddHtmlLocalized(10, 342, 150, 25, 1044012, LabelColor, false, false); // <CENTER>NOTICES</CENTER>
 
-            AddButton(15, 402, 4017, 4019, 0, GumpButtonType.Reply, 0);
-            AddHtmlLocalized(50, 405, 150, 18, 1011441, LabelColor, false, false); // EXIT
+            AddButton(15, 432, 4017, 4019, 0, GumpButtonType.Reply, 0);
+            AddHtmlLocalized(50, 435, 150, 18, 1011441, LabelColor, false, false); // EXIT
 
-            AddButton(270, 402, 4005, 4007, GetButtonID(6, 2), GumpButtonType.Reply, 0);
-            AddHtmlLocalized(305, 405, 150, 18, 1044013, LabelColor, false, false); // MAKE LAST
+            AddButton(270, 432, 4005, 4007, GetButtonID(6, 2), GumpButtonType.Reply, 0);
+            AddHtmlLocalized(305, 435, 150, 18, 1044013, LabelColor, false, false); // MAKE LAST
 
             // Mark option
             if (craftSystem.MarkOption)
             {
-                AddButton(270, 362, 4005, 4007, GetButtonID(6, 6), GumpButtonType.Reply, 0);
+                AddButton(270, 392, 4005, 4007, GetButtonID(6, 6), GumpButtonType.Reply, 0);
                 AddHtmlLocalized(
                     305,
-                    365,
+                    395,
                     150,
                     18,
                     1044017 + (context == null ? 0 : (int)context.MarkOption),
@@ -127,35 +128,35 @@ namespace Server.Engines.Craft
             // Resmelt option
             if (craftSystem.Resmelt)
             {
-                AddButton(15, 342, 4005, 4007, GetButtonID(6, 1), GumpButtonType.Reply, 0);
-                AddHtmlLocalized(50, 345, 150, 18, 1044259, LabelColor, false, false); // SMELT ITEM
+                AddButton(15, 372, 4005, 4007, GetButtonID(6, 1), GumpButtonType.Reply, 0);
+                AddHtmlLocalized(50, 375, 150, 18, 1044259, LabelColor, false, false); // SMELT ITEM
             }
             // ****************************************
 
             // Repair option
             if (craftSystem.Repair)
             {
-                AddButton(270, 342, 4005, 4007, GetButtonID(6, 5), GumpButtonType.Reply, 0);
-                AddHtmlLocalized(305, 345, 150, 18, 1044260, LabelColor, false, false); // REPAIR ITEM
+                AddButton(270, 372, 4005, 4007, GetButtonID(6, 5), GumpButtonType.Reply, 0);
+                AddHtmlLocalized(305, 375, 150, 18, 1044260, LabelColor, false, false); // REPAIR ITEM
             }
             // ****************************************
 
             // Enhance option
             if (craftSystem.CanEnhance)
             {
-                AddButton(270, 382, 4005, 4007, GetButtonID(6, 8), GumpButtonType.Reply, 0);
-                AddHtmlLocalized(305, 385, 150, 18, 1061001, LabelColor, false, false); // ENHANCE ITEM
+                AddButton(270, 412, 4005, 4007, GetButtonID(6, 8), GumpButtonType.Reply, 0);
+                AddHtmlLocalized(305, 415, 150, 18, 1061001, LabelColor, false, false); // ENHANCE ITEM
             }
             // ****************************************
 
             if (notice is int && (int)notice > 0)
-                AddHtmlLocalized(170, 295, 350, 40, (int)notice, LabelColor, false, false);
+                AddHtmlLocalized(170, 338, 350, 34, (int)notice, LabelColor, false, false);
             else if (notice is string)
                 AddHtml(
                     170,
-                    295,
+                    338,
                     350,
-                    40,
+                    34,
                     String.Format("<BASEFONT COLOR=#{0:X6}>{1}</BASEFONT>", FontColor, notice),
                     false,
                     false
@@ -278,7 +279,6 @@ namespace Server.Engines.Craft
                 SearchBackgroundHeight,
                 SearchBackgroundGumpID
             );
-            AddImageTiled(SearchButtonX - 2, SearchButtonY - 3, 60, SearchBackgroundHeight, SearchBackgroundGumpID);
             AddTextEntry(SearchEntryX, SearchEntryY, SearchEntryWidth, SearchEntryHeight, LabelHue, SearchEntryID, searchText);
             AddButton(
                 SearchButtonX,
@@ -289,18 +289,42 @@ namespace Server.Engines.Craft
                 GumpButtonType.Reply,
                 0
             );
-            AddLabel(480, 62, LabelHue, "GO");
+            AddLabel(SearchLabelX, 62, LabelHue, "GO");
 
             int visibleGroups = CreateGroupList();
+            bool hasSelectionResults = false;
 
             if (page == CraftPage.PickResource)
+            {
                 CreateResList(false, from);
+            }
             else if (page == CraftPage.PickResource2)
+            {
                 CreateResList(true, from);
-            else if (visibleGroups == 0 && normalizedSearch != null)
-                AddLabel(230, SelectionListTop + 2, LabelHue, "No results match your search.");
-            else if (context != null && context.LastGroupIndex > -1)
-                CreateItemList(context.LastGroupIndex);
+            }
+            else
+            {
+                if (context != null)
+                {
+                    EnsureSelectionForSearch(context, normalizedSearch);
+
+                    if (context.LastGroupIndex > -1)
+                        hasSelectionResults = CreateItemList(context.LastGroupIndex);
+                }
+
+                if (!hasSelectionResults && normalizedSearch != null)
+                {
+                    bool hasGroupMatches = visibleGroups > 0;
+                    bool hasLastTenMatches = HasLastTenMatches(context, normalizedSearch);
+
+                    if (
+                        !hasGroupMatches
+                        && !hasLastTenMatches
+                        && (context == null || context.LastGroupIndex != 501)
+                    )
+                        AddLabel(230, SelectionListTop + 2, LabelHue, "No results match your search.");
+                }
+            }
         }
 
         public void CreateResList(bool opt, Mobile from)
@@ -398,12 +422,12 @@ namespace Server.Engines.Craft
             }
         }
 
-        public void CreateMakeLastList()
+        public bool CreateMakeLastList()
         {
             CraftContext context = m_CraftSystem.GetContext(m_From);
 
             if (context == null)
-                return;
+                return false;
 
             List<CraftItem> items = context.Items;
             string search = NormalizeSearchTerm(context.SearchTerm);
@@ -428,7 +452,7 @@ namespace Server.Engines.Craft
                     ); // You haven't made anything yet.
                 }
 
-                return;
+                return false;
             }
             int displayIndex = 0;
 
@@ -522,18 +546,24 @@ namespace Server.Engines.Craft
                     AddLabel(230, SelectionListTop + 2, LabelHue, "No results match your search.");
                 else
                     AddLabel(230, SelectionListTop + 2, LabelHue, "No recent items to display.");
+
+                return false;
             }
+
+            return true;
         }
 
-        public void CreateItemList(int selectedGroup)
+        public bool CreateItemList(int selectedGroup)
         {
             if (selectedGroup == 501) // 501 : Last 10
             {
-                CreateMakeLastList();
-                return;
+                return CreateMakeLastList();
             }
 
             CraftGroupCol craftGroupCol = m_CraftSystem.CraftGroups;
+            if (selectedGroup < 0 || selectedGroup >= craftGroupCol.Count)
+                return false;
+
             CraftGroup craftGroup = craftGroupCol.GetAt(selectedGroup);
             CraftItemCol craftItemCol = craftGroup.CraftItems;
 
@@ -631,7 +661,11 @@ namespace Server.Engines.Craft
                     AddLabel(230, SelectionListTop + 2, LabelHue, "No results match your search.");
                 else
                     AddLabel(230, SelectionListTop + 2, LabelHue, "No items available.");
+
+                return false;
             }
+
+            return true;
         }
 
         public int CreateGroupList()
@@ -648,25 +682,7 @@ namespace Server.Engines.Craft
             {
                 CraftGroup craftGroup = craftGroupCol.GetAt(i);
 
-                bool includeGroup = MatchesSearch(search, craftGroup.NameNumber, craftGroup.NameString);
-
-                if (!includeGroup && search != null)
-                {
-                    CraftItemCol craftItems = craftGroup.CraftItems;
-
-                    for (int j = 0; j < craftItems.Count; ++j)
-                    {
-                        CraftItem craftItem = craftItems.GetAt(j);
-
-                        if (MatchesSearch(search, craftItem.NameNumber, craftItem.NameString))
-                        {
-                            includeGroup = true;
-                            break;
-                        }
-                    }
-                }
-
-                if (!includeGroup)
+                if (!GroupMatchesSearch(craftGroup, search))
                     continue;
 
                 int y = CategoryListTop + (displayIndex * CategoryListSpacing);
@@ -715,6 +731,105 @@ namespace Server.Engines.Craft
             }
 
             return displayIndex;
+        }
+
+        private void EnsureSelectionForSearch(CraftContext context, string searchTerm)
+        {
+            if (context == null || searchTerm == null)
+                return;
+
+            CraftGroupCol groups = m_CraftSystem.CraftGroups;
+
+            if (context.LastGroupIndex == 501)
+            {
+                if (HasLastTenMatches(context, searchTerm))
+                    return;
+            }
+            else if (context.LastGroupIndex >= 0 && context.LastGroupIndex < groups.Count)
+            {
+                CraftGroup currentGroup = groups.GetAt(context.LastGroupIndex);
+
+                if (GroupMatchesSearch(currentGroup, searchTerm))
+                    return;
+            }
+            else
+            {
+                context.LastGroupIndex = -1;
+            }
+
+            int matchedGroup = FindFirstMatchingGroup(searchTerm);
+
+            if (matchedGroup >= 0)
+            {
+                context.LastGroupIndex = matchedGroup;
+                return;
+            }
+
+            if (HasLastTenMatches(context, searchTerm))
+            {
+                context.LastGroupIndex = 501;
+                return;
+            }
+
+            context.LastGroupIndex = -1;
+        }
+
+        private int FindFirstMatchingGroup(string searchTerm)
+        {
+            CraftGroupCol groups = m_CraftSystem.CraftGroups;
+
+            for (int i = 0; i < groups.Count; ++i)
+            {
+                if (GroupMatchesSearch(groups.GetAt(i), searchTerm))
+                    return i;
+            }
+
+            return -1;
+        }
+
+        private bool GroupMatchesSearch(CraftGroup group, string searchTerm)
+        {
+            if (group == null)
+                return false;
+
+            if (MatchesSearch(searchTerm, group.NameNumber, group.NameString))
+                return true;
+
+            if (searchTerm == null)
+                return true;
+
+            CraftItemCol craftItems = group.CraftItems;
+
+            for (int i = 0; i < craftItems.Count; ++i)
+            {
+                CraftItem craftItem = craftItems.GetAt(i);
+
+                if (MatchesSearch(searchTerm, craftItem.NameNumber, craftItem.NameString))
+                    return true;
+            }
+
+            return false;
+        }
+
+        private bool HasLastTenMatches(CraftContext context, string searchTerm)
+        {
+            if (context == null)
+                return false;
+
+            if (searchTerm == null)
+                return context.Items.Count > 0;
+
+            List<CraftItem> items = context.Items;
+
+            for (int i = 0; i < items.Count; ++i)
+            {
+                CraftItem craftItem = items[i];
+
+                if (MatchesSearch(searchTerm, craftItem.NameNumber, craftItem.NameString))
+                    return true;
+            }
+
+            return false;
         }
 
         public static int GetButtonID(int type, int index)
