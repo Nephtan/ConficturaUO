@@ -19,7 +19,6 @@ namespace Server.Engines.Craft
         private int m_LastGroupIndex;
         private bool m_DoNotColor;
         private CraftMarkOption m_MarkOption;
-        private string m_SearchTerm;
 
         public List<CraftItem> Items
         {
@@ -50,11 +49,6 @@ namespace Server.Engines.Craft
             get { return m_MarkOption; }
             set { m_MarkOption = value; }
         }
-        public string SearchTerm
-        {
-            get { return m_SearchTerm; }
-            set { m_SearchTerm = value; }
-        }
 
         public CraftContext()
         {
@@ -62,7 +56,6 @@ namespace Server.Engines.Craft
             m_LastResourceIndex = -1;
             m_LastResourceIndex2 = -1;
             m_LastGroupIndex = -1;
-            m_SearchTerm = null;
         }
 
         public CraftItem LastMade
