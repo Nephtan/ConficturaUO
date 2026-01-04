@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading.Tasks;
 using Server;
 using Server.Commands;
 using Server.Items;
@@ -144,16 +145,23 @@ namespace Server.Misc
 
             World.WaitForWriteCompletion();
 
-            try
-            {
-                Backup();
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine("WARNING: Automatic backup FAILED: {0}", e);
-            }
-
             World.Save(true, permitBackgroundWrite);
+
+            World.WaitForWriteCompletion();
+
+            Task.Run(
+                () =>
+                {
+                    try
+                    {
+                        Backup();
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine("WARNING: Automatic backup FAILED: {0}", e);
+                    }
+                }
+            );
         }
 
         private static string[] m_Backups = new string[]
