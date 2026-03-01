@@ -112,7 +112,8 @@ namespace Server.Mobiles
         private static string defwaypointname = null; // default waypoint name will get assigned in Initialize
         private const string XmlTableName = "Properties";
         private const string XmlDataSetName = "XmlSpawner";
-        public static AccessLevel DiskAccessLevel = AccessLevel.Administrator; // minimum access level required by commands that can access the disk such as XmlLoad, XmlSave, and the Save function of XmlEdit
+        public static AccessLevel DiskAccessLevel = AccessLevel.Administrator; // minimum access level required by commands that can access the disk such as XmlLoad and XmlSave
+        public static AccessLevel XmlEditSaveAccessLevel = AccessLevel.GameMaster; // minimum access level required to use the Save option in XmlEdit
 #if(RESTRICTCONSTRUCTABLE)
         public static AccessLevel ConstructableAccessLevel = AccessLevel.GameMaster; // only allow spawning of objects that have Constructable access restrictions at this level or lower. Must define RESTRICTCONSTRUCTABLE to enable this.
 #endif
@@ -152,6 +153,12 @@ namespace Server.Mobiles
 
         // hash table for optimizing HoldSmartSpawning method invocation
         private static Hashtable holdSmartSpawningHash;
+
+        public static bool HasXmlEditSaveAccess(Mobile from)
+        {
+            return from != null
+                && (from.AccessLevel >= DiskAccessLevel || from.AccessLevel >= XmlEditSaveAccessLevel);
+        }
 
         public static int seccount;
 
