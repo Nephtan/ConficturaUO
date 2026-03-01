@@ -1046,7 +1046,9 @@ namespace Server.Items
 
             Item item = pack.FindItemByType(typeof(QuestTome));
 
-            if (!(item is QuestTome book))
+            QuestTome book = item as QuestTome;
+
+            if (book == null)
             {
                 return;
             }
