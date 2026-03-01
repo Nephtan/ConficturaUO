@@ -13,24 +13,10 @@ namespace Server.Commands
     public class GmMeCommand
     {
         public static AccessLevel accessLevel = AccessLevel.Counselor;
-        private static List<Mobile> m_HearAll = new List<Mobile>();
 
         public static void Initialize()
         {
             CommandSystem.Register("GmMe", accessLevel, new CommandEventHandler(GmMe_OnCommand));
-        }
-
-        public static void HearAllOnSpeech(SpeechEventArgs e)
-        {
-            if (m_HearAll.Count > 0)
-            {
-                string msg = String.Format("({0}): {1}", e.Mobile.RawName, e.Speech);
-
-                for (int i = 0; i < m_HearAll.Count; ++i)
-                {
-                    m_HearAll[i].SendMessage(msg);
-                }
-            }
         }
 
         [Usage("GmMe")]

@@ -7,13 +7,14 @@ using Server.Items;
 using Server.Mobiles;
 using Server.Network;
 using Server.Targeting;
+using Server.Custom.Confictura;
+using Server.Custom.Confictura.CloneOfflinePlayerCharacters;
 
 namespace Server.Commands
 {
     public class CloneCommands
     {
         public static AccessLevel accessLevel = AccessLevel.Counselor;
-        private static List<Mobile> m_HearAll = new List<Mobile>();
 
         public static void Initialize()
         {
@@ -51,7 +52,6 @@ namespace Server.Commands
         {
             bool real = true;
             bool location = false;
-            bool statsskills = false;
 
             public CloneTarget()
                 : base(-1, false, TargetFlags.None) { }
@@ -71,6 +71,32 @@ namespace Server.Commands
 
                     if (from != targ && (!real || from.AccessLevel > targ.AccessLevel))
                     {
+                        CloneItem cloneItem = null;
+
+                        if (real)
+                        {
+                            CloneItem existing = GetCloneItem(from);
+
+                            if (existing != null)
+                            {
+                                from.SendMessage("You are already cloned. Use the clone item to revert.");
+                                return;
+                            }
+
+                            Mobile playerClone = DupeMobile(from);
+                            new CloneTarget().SimulateTarget(playerClone, from, false);
+
+                            Container pack = from.Backpack as Container;
+                            if (pack == null)
+                            {
+                                pack = new Backpack();
+                                from.AddItem(pack);
+                            }
+
+                            // Defer dropping the clone item until after the backpack is cleared
+                            cloneItem = new CloneItem(from, playerClone);
+                        }
+
                         CommandLogging.WriteLine(
                             from,
                             "{0} {1} is cloning {2}",
@@ -79,23 +105,8 @@ namespace Server.Commands
                             CommandLogging.Format(targ)
                         );
 
-                        from.Dex = targ.Dex;
-                        from.Int = targ.Int;
-                        from.Str = targ.Str;
-                        from.Fame = targ.Fame;
-                        from.Karma = targ.Karma;
-                        from.NameHue = targ.NameHue;
-                        from.SpeechHue = targ.SpeechHue;
-
-                        from.Name = targ.Name;
-                        from.Title = targ.Title;
-                        from.Female = targ.Female;
-                        from.Body = targ.Body;
-                        from.Hue = targ.Hue;
-
-                        from.Hits = from.HitsMax;
-                        from.Mana = from.ManaMax;
-                        from.Stam = from.StamMax;
+                        // Clone mobile stats, skills, and appearance using advanced logic
+                        CloneThings.CloneMobileProperties(targ, from);
 
                         if (location)
                         {
@@ -104,60 +115,112 @@ namespace Server.Commands
                             from.Map = targ.Map;
                         }
 
-                        from.HairItemID = targ.HairItemID;
-                        from.FacialHairItemID = targ.FacialHairItemID;
-                        from.HairHue = targ.HairHue;
-                        from.FacialHairHue = targ.FacialHairHue;
-
+                        // Adjust body mod for non-player targets
                         if (!targ.Player)
                             from.BodyMod = targ.Body;
                         else
                             from.BodyMod = 0;
 
-                        for (int i = 0; i < from.Skills.Length; i++)
-                            from.Skills[i].Base = targ.Skills[i].Base;
-
-                        ArrayList m_items = new ArrayList(from.Items);
-                        for (int i = 0; i < m_items.Count; i++)
+                        // Remove existing worn items
+                        List<Item> wornItems = new List<Item>(from.Items);
+                        foreach (Item item in wornItems)
                         {
-                            Item item = (Item)m_items[i];
-                            if (((item.Parent == from) && (item != from.Backpack)))
+                            if (item != null && item.Parent == from && item != from.Backpack)
                                 item.Delete();
                         }
 
-                        ArrayList items = new ArrayList(targ.Items);
-                        for (int i = 0; i < items.Count; i++)
+                        // Clear current backpack contents
+                        Container fromPack = from.Backpack as Container;
+                        if (fromPack == null)
                         {
-                            Item item = (Item)items[i]; //my favorite line of code, ever.
-
-                            if (
-                                ((item != null) && (item.Parent == targ) && (item != targ.Backpack))
-                            )
-                            {
-                                Type t = item.GetType();
-                                ConstructorInfo c = t.GetConstructor(Type.EmptyTypes);
-                                if (c != null)
-                                {
-                                    try
-                                    {
-                                        object o = c.Invoke(null);
-                                        if (o != null && o is Item)
-                                        {
-                                            Item newItem = (Item)o;
-                                            CopyProperties(newItem, item);
-                                            item.OnAfterDuped(newItem);
-                                            newItem.Parent = null;
-                                            from.AddItem(newItem);
-                                        }
-                                    }
-                                    catch { }
-                                }
-                            }
+                            fromPack = new Backpack();
+                            from.AddItem(fromPack);
                         }
+
+                        foreach (Item item in fromPack.Items.ToArray())
+                            item.Delete();
+
+                        // Clone target's worn items
+                        CloneThings.CloneMobileItems(targ, from);
+
+                        // Clone target's backpack contents recursively
+                        Container targPack = targ.Backpack as Container;
+                        if (targPack != null)
+                            CloneThings.CloneContainerContents(targPack, fromPack);
+
+                        // Drop the clone item after cloning to ensure it isn't deleted
+                        if (cloneItem != null)
+                            fromPack.DropItem(cloneItem);
+
+                        // Replace mount with target's mount, if any
+                        if (from.Mount != null)
+                        {
+                            IMount oldMount = from.Mount;
+                            oldMount.Rider = null;
+                            if (oldMount is EtherealMount)
+                                ((EtherealMount)oldMount).Delete();
+                            else if (oldMount is BaseMount)
+                                ((BaseMount)oldMount).Delete();
+                        }
+
+                        CloneThings.CloneMobileMount(targ, from);
                         if (!real)
                             CopyProps(from, targ, true, true, location);
+
+                        UpdateStaffDisguise(from, targ);
                     }
                 }
+            }
+        }
+
+        private static void UpdateStaffDisguise(Mobile controller, Mobile template)
+        {
+            PlayerMobile player = controller as PlayerMobile;
+
+            if (player != null)
+            {
+                if (template == null || player.NetState != null)
+                    player.SetStaffDisguise(template);
+            }
+        }
+
+        // Keeps staff-controlled bodies fed and hydrated so the command does not
+        // immediately apply hunger or thirst penalties copied from NPCs.
+        private static void EnsureControllerNeeds(Mobile controller)
+        {
+            if (controller == null)
+            {
+                return;
+            }
+
+            if (controller.AccessLevel >= accessLevel)
+            {
+                controller.Hunger = 20;
+                controller.Thirst = 20;
+            }
+        }
+
+        // Restores the original mobility/visibility flags for an NPC when control ends.
+        private static void RestoreNpcState(ControlItem controlItem, Mobile npc)
+        {
+            if (controlItem == null || npc == null || npc.Deleted)
+            {
+                return;
+            }
+
+            npc.Hidden = controlItem.OriginalHidden;
+            npc.CantWalk = controlItem.OriginalCantWalk;
+            npc.Frozen = controlItem.OriginalFrozen;
+            npc.Paralyzed = controlItem.OriginalParalyzed;
+
+            if (!controlItem.OriginalHidden && npc.Hidden)
+            {
+                npc.RevealingAction();
+            }
+
+            if (npc.Map != null && npc.Map != Map.Internal)
+            {
+                npc.MoveToWorld(npc.Location, npc.Map);
             }
         }
 
@@ -338,6 +401,17 @@ namespace Server.Commands
             }
         }
 
+        /*Find the Clone item of the Mobile from*/
+        public static CloneItem GetCloneItem(Mobile from)
+        {
+            Item result = SearchItemInCont(typeof(CloneItem), from.Backpack);
+
+            if (result != null && result is CloneItem)
+                return (CloneItem)result;
+            else
+                return null;
+        }
+
         /*Find the Control item of the Mobile from*/
         public static ControlItem GetControlItem(Mobile from)
         {
@@ -387,9 +461,10 @@ namespace Server.Commands
 
             if (from is PlayerMobile && targeted is Mobile)
             {
-                if (targeted is PlayerMobile && ((PlayerMobile)targeted).Player)
+                // Prevent controlling player mobiles entirely
+                if (targeted is PlayerMobile)
                 {
-                    from.SendMessage("You cant control players.");
+                    from.SendMessage("You can't control players.");
                     return;
                 }
 
@@ -431,13 +506,18 @@ namespace Server.Commands
         )
         {
             from.SendMessage("You possess the mortal body of {0}, {1}", target.Name, target.Title);
-            //"You leave your Body and control {0}, {1}"
+            // "You leave your Body and control {0}, {1}"
 
-            //Clone Player
+            // Remember the controller's original position and direction.
+            Map originalMap = from.Map;
+            Point3D originalLocation = from.Location;
+            Direction originalDirection = from.Direction;
+
+            // Clone Player
             PlayerMobile playerClone = (PlayerMobile)DupeMobile(from);
             new CloneTarget().SimulateTarget(playerClone, from, false);
 
-            //Create ControlItem
+            // Create ControlItem that links owner, clone, and NPC
             ControlItem controlItem = new ControlItem(
                 from,
                 playerClone,
@@ -445,25 +525,36 @@ namespace Server.Commands
                 stats,
                 skills,
                 items
-            );
-            from.Backpack.DropItem(controlItem);
+            )
+            {
+                OriginalMap = originalMap,
+                OriginalLocation = originalLocation,
+                OriginalDirection = originalDirection
+            };
 
-            /*
-            //Props target -> player
-            CopyProps(from, target, stats, skills);
+            controlItem.OriginalHidden = target.Hidden;
+            controlItem.OriginalCantWalk = target.CantWalk;
+            controlItem.OriginalFrozen = target.Frozen;
+            controlItem.OriginalParalyzed = target.Paralyzed;
 
-            //Backup Equip
-            //Equip from target to player
-            MoveEquip(target, from, items);
-            */
+            // Clone the target onto the controller before dropping the control item.
+            // Dropping beforehand would delete the item when the backpack is cleared.
             new CloneTarget().SimulateTarget(from, target, true);
             from.Hidden = target.Hidden;
 
+            EnsureControllerNeeds(from);
+
+            // Ensure the backpack exists after cloning and drop the control item.
+            Container pack = from.Backpack as Container;
+            if (pack == null)
+            {
+                pack = new Backpack();
+                from.AddItem(pack);
+            }
+            pack.DropItem(controlItem);
+
             target.Internalize();
             playerClone.Internalize();
-
-            from.Hunger = 100;
-            from.Thirst = 100;
         }
 
         private static void ChangeControl(
@@ -487,6 +578,7 @@ namespace Server.Commands
                     //Yes, because stats change
                     //Props from -> oldNPC
                     new CloneTarget().SimulateTarget(oldNPC, from, true);
+                    RestoreNpcState(controlItem, oldNPC);
                 }
                 else
                 {
@@ -506,12 +598,16 @@ namespace Server.Commands
                 controlItem.Stats = stats;
                 controlItem.Skills = skills;
                 controlItem.Items = items;
+                controlItem.OriginalHidden = target.Hidden;
+                controlItem.OriginalCantWalk = target.CantWalk;
+                controlItem.OriginalFrozen = target.Frozen;
+                controlItem.OriginalParalyzed = target.Paralyzed;
                 new CloneTarget().SimulateTarget(from, target, true);
+                from.Hidden = target.Hidden;
+
+                EnsureControllerNeeds(from);
 
                 target.Internalize();
-
-                from.Hunger = 100;
-                from.Thirst = 100;
             }
             else if (target == oldPlayer && !target.Deleted)
             {
@@ -535,12 +631,14 @@ namespace Server.Commands
             if (oldNPC != null && !oldNPC.Deleted)
             {
                 new CloneTarget().SimulateTarget(oldNPC, from, true);
+                RestoreNpcState(controlItem, oldNPC);
             }
             else
             {
                 from.SendMessage("The original NPC was deleted. Maybe because a manual respawn.");
                 //"The original NPC was deleted. Maybe because a manual respawn"
-                oldNPC.Delete();
+                if (oldNPC != null)
+                    oldNPC.Delete();
             }
 
             if (oldPlayer != null && !oldPlayer.Deleted)
@@ -549,11 +647,35 @@ namespace Server.Commands
                 //Props: oldPlayer -> player
                 //CopyProps(from, oldPlayer, true, true);
                 new CloneTarget().SimulateTarget(from, oldPlayer, false);
+                // Restore the original position and direction after cloning.
+                from.MoveToWorld(controlItem.OriginalLocation, controlItem.OriginalMap);
+                from.Direction = controlItem.OriginalDirection;
                 //Equip: oldPlayer -> player
                 //MoveEquip(oldPlayer, from, true);
 
                 oldPlayer.Delete();
             }
+
+            UpdateStaffDisguise(from, null);
+        }
+
+        public static void EndClone(CloneItem cloneItem)
+        {
+            Mobile from = cloneItem.Owner;
+            Mobile oldPlayer = cloneItem.Player;
+
+            if (from == null)
+                return;
+
+            from.SendMessage("You return to your original form.");
+
+            if (oldPlayer != null && !oldPlayer.Deleted)
+            {
+                new CloneTarget().SimulateTarget(from, oldPlayer, false);
+                oldPlayer.Delete();
+            }
+
+            UpdateStaffDisguise(from, null);
         }
 
         //Return true if the base.OnBeforeDeath should be executed and false if not.
@@ -772,6 +894,101 @@ namespace Server.Commands
     }
 }
 
+namespace Server.Custom.Confictura
+{
+    /// <summary>
+    /// Item used to restore a mobile after using the Clone command.
+    /// </summary>
+    public class CloneItem : Item
+    {
+        private Mobile m_Owner;
+        private Mobile m_Player;
+
+        [CommandProperty(AccessLevel.GameMaster)]
+        public Mobile Owner
+        {
+            get { return m_Owner; }
+        }
+
+        [CommandProperty(AccessLevel.GameMaster)]
+        public Mobile Player
+        {
+            get { return m_Player; }
+        }
+
+        public CloneItem(Mobile owner, Mobile player)
+            : base(0x2106)
+        {
+            m_Owner = owner;
+            m_Player = player;
+
+            Name = "Clone Item";
+            LootType = LootType.Blessed;
+        }
+
+        public CloneItem(Serial serial)
+            : base(serial) { }
+
+        public override void OnDoubleClick(Mobile from)
+        {
+            if (from == m_Owner)
+                Delete();
+
+            base.OnDoubleClick(from);
+        }
+
+        public override void OnAdded(object parent)
+        {
+            base.OnAdded(parent);
+
+            if (RootParent != m_Owner)
+                Delete();
+        }
+
+        public override bool DropToWorld(Mobile from, Point3D p)
+        {
+            Delete();
+
+            return false;
+        }
+
+        public override void OnDelete()
+        {
+            // Remove the item from its container before processing the end of clone
+            // to avoid recursive deletion when the player's backpack is cleared.
+            Container container = Parent as Container;
+            if (container != null)
+            {
+                container.RemoveItem(this);
+            }
+
+            CloneCommands.EndClone(this);
+
+            base.OnDelete();
+        }
+
+        public override void Serialize(GenericWriter writer)
+        {
+            base.Serialize(writer);
+
+            writer.Write((int)0); // version
+
+            writer.Write((Mobile)m_Owner);
+            writer.Write((Mobile)m_Player);
+        }
+
+        public override void Deserialize(GenericReader reader)
+        {
+            base.Deserialize(reader);
+
+            int version = reader.ReadInt();
+
+            m_Owner = reader.ReadMobile();
+            m_Player = reader.ReadMobile();
+        }
+    }
+}
+
 namespace Server.Items
 {
     public class ControlItem : Item
@@ -783,6 +1000,14 @@ namespace Server.Items
         private bool m_Stats;
         private bool m_Skills;
         private bool m_Items;
+        private bool m_OriginalHidden;
+        private bool m_OriginalCantWalk;
+        private bool m_OriginalFrozen;
+        private bool m_OriginalParalyzed;
+
+        private Map m_Map;
+        private Point3D m_Location;
+        private Direction m_Direction;
 
         [CommandProperty(AccessLevel.GameMaster)]
         public PlayerMobile Owner
@@ -834,6 +1059,55 @@ namespace Server.Items
         {
             get { return m_Items; }
             set { m_Items = value; }
+        }
+
+        [CommandProperty(AccessLevel.GameMaster)]
+        public Map OriginalMap
+        {
+            get { return m_Map; }
+            set { m_Map = value; }
+        }
+
+        [CommandProperty(AccessLevel.GameMaster)]
+        public Point3D OriginalLocation
+        {
+            get { return m_Location; }
+            set { m_Location = value; }
+        }
+
+        [CommandProperty(AccessLevel.GameMaster)]
+        public Direction OriginalDirection
+        {
+            get { return m_Direction; }
+            set { m_Direction = value; }
+        }
+
+        [CommandProperty(AccessLevel.GameMaster)]
+        public bool OriginalHidden
+        {
+            get { return m_OriginalHidden; }
+            set { m_OriginalHidden = value; }
+        }
+
+        [CommandProperty(AccessLevel.GameMaster)]
+        public bool OriginalCantWalk
+        {
+            get { return m_OriginalCantWalk; }
+            set { m_OriginalCantWalk = value; }
+        }
+
+        [CommandProperty(AccessLevel.GameMaster)]
+        public bool OriginalFrozen
+        {
+            get { return m_OriginalFrozen; }
+            set { m_OriginalFrozen = value; }
+        }
+
+        [CommandProperty(AccessLevel.GameMaster)]
+        public bool OriginalParalyzed
+        {
+            get { return m_OriginalParalyzed; }
+            set { m_OriginalParalyzed = value; }
         }
 
         public ControlItem(
@@ -902,6 +1176,14 @@ namespace Server.Items
 
         public override void OnDelete()
         {
+            // Detach the control item from its container before ending control
+            // to prevent recursive deletion when the owner's backpack is cleared.
+            Container container = Parent as Container;
+            if (container != null)
+            {
+                container.RemoveItem(this);
+            }
+
             CloneCommands.EndControl(this, m_Stats, m_Skills, m_Items);
 
             base.OnDelete();
@@ -911,17 +1193,30 @@ namespace Server.Items
         {
             base.Serialize(writer);
 
-            writer.Write((int)1); // version
+            writer.Write((int)4); // version
 
-            //Version 1
+            // Version 2
+            writer.Write(m_Map);
+            writer.Write(m_Location);
+            writer.Write((byte)m_Direction);
+
+            // Version 1
             writer.Write((bool)m_Stats);
             writer.Write((bool)m_Skills);
             writer.Write((bool)m_Items);
 
-            //Version 0
+            // Version 0
             writer.Write((Mobile)m_Owner);
             writer.Write((Mobile)m_Player);
             writer.Write((Mobile)m_NPC);
+
+            // Version 3
+            writer.Write(m_OriginalHidden);
+            writer.Write(m_OriginalCantWalk);
+            writer.Write(m_OriginalFrozen);
+
+            // Version 4
+            writer.Write(m_OriginalParalyzed);
         }
 
         public override void Deserialize(GenericReader reader)
@@ -930,22 +1225,37 @@ namespace Server.Items
 
             int version = reader.ReadInt();
 
-            switch (version)
+            if (version >= 2)
             {
-                case 1:
-                {
-                    m_Stats = reader.ReadBool();
-                    m_Skills = reader.ReadBool();
-                    m_Items = reader.ReadBool();
-                    goto case 0;
-                }
-                case 0:
-                {
-                    m_Owner = reader.ReadMobile();
-                    m_Player = reader.ReadMobile();
-                    m_NPC = reader.ReadMobile();
-                    break;
-                }
+                m_Map = reader.ReadMap();
+                m_Location = reader.ReadPoint3D();
+                m_Direction = (Direction)reader.ReadByte();
+            }
+
+            if (version >= 1)
+            {
+                m_Stats = reader.ReadBool();
+                m_Skills = reader.ReadBool();
+                m_Items = reader.ReadBool();
+            }
+
+            if (version >= 0)
+            {
+                m_Owner = reader.ReadMobile();
+                m_Player = reader.ReadMobile();
+                m_NPC = reader.ReadMobile();
+            }
+
+            if (version >= 3)
+            {
+                m_OriginalHidden = reader.ReadBool();
+                m_OriginalCantWalk = reader.ReadBool();
+                m_OriginalFrozen = reader.ReadBool();
+            }
+
+            if (version >= 4)
+            {
+                m_OriginalParalyzed = reader.ReadBool();
             }
         }
     }

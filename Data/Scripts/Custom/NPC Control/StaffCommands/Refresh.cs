@@ -13,7 +13,6 @@ namespace Server.Commands
     public class RefreshCommand
     {
         public static AccessLevel accessLevel = AccessLevel.Counselor;
-        private static List<Mobile> m_HearAll = new List<Mobile>();
 
         public static void Initialize()
         {
@@ -28,12 +27,12 @@ namespace Server.Commands
         [Description("Sets all targets stats to full.")]
         public static void Refresh_OnCommand(CommandEventArgs e)
         {
-            e.Mobile.Target = new freshTarget();
+            e.Mobile.Target = new FreshTarget();
         }
 
-        public class freshTarget : Target
+        public class FreshTarget : Target
         {
-            public freshTarget()
+            public FreshTarget()
                 : base(12, false, TargetFlags.None) { }
 
             protected override void OnTarget(Mobile from, object targeted)

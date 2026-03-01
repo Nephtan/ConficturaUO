@@ -42,22 +42,10 @@ namespace Server.Items
 
             Server.Misc.BookProperties.GetBookProperties(this, 10, 40);
 
-            SkillBonuses.SetValues(
-                0,
-                SkillName.Elementalism,
-                (10.0 + (Utility.RandomMinMax(0, 2) * 5))
-            );
-            SkillBonuses.SetValues(
-                1,
-                SkillName.MagicResist,
-                (10.0 + (Utility.RandomMinMax(0, 2) * 5))
-            );
+            SkillBonuses.SetValues(0, SkillName.Elementalism, (10.0 + (Utility.RandomMinMax(0, 2) * 5)));
+            SkillBonuses.SetValues(1, SkillName.MagicResist, (10.0 + (Utility.RandomMinMax(0, 2) * 5)));
             SkillBonuses.SetValues(2, SkillName.Focus, (10.0 + (Utility.RandomMinMax(0, 2) * 5)));
-            SkillBonuses.SetValues(
-                3,
-                SkillName.Meditation,
-                (10.0 + (Utility.RandomMinMax(0, 2) * 5))
-            );
+            SkillBonuses.SetValues(3, SkillName.Meditation, (10.0 + (Utility.RandomMinMax(0, 2) * 5)));
         }
 
         public override void AddNameProperties(ObjectPropertyList list)

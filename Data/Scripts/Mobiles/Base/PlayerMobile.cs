@@ -195,6 +195,11 @@ namespace Server.Mobiles
         private bool m_IgnoreMobiles; // IgnoreMobiles should be moved to Server.Mobiles
         private int m_NonAutoreinsuredItems; // number of items that could not be automaitically reinsured because gold in bank was not enough
         private bool m_NinjaWepCooldown;
+        private bool m_StaffDisguiseActive;
+        private Mobile m_StaffDisguiseTemplate;
+        private int m_StaffDisguiseHitsMax;
+        private int m_StaffDisguiseStamMax;
+        private int m_StaffDisguiseManaMax;
 
         /*
          * a value of zero means, that the mobile is not executing the spell. Otherwise,
@@ -1587,6 +1592,9 @@ namespace Server.Mobiles
         {
             get
             {
+                if (m_StaffDisguiseActive)
+                    return m_StaffDisguiseHitsMax;
+
                 int strBase;
                 int strOffs = GetStatOffset(StatType.Str);
 
@@ -1611,6 +1619,9 @@ namespace Server.Mobiles
         {
             get
             {
+                if (m_StaffDisguiseActive)
+                    return m_StaffDisguiseStamMax;
+
                 return (Server.Misc.MyServerSettings.PlayerLevelMod(base.StamMax, this))
                     + AosAttributes.GetValue(this, AosAttribute.BonusStam);
             }
@@ -1621,6 +1632,9 @@ namespace Server.Mobiles
         {
             get
             {
+                if (m_StaffDisguiseActive)
+                    return m_StaffDisguiseManaMax;
+
                 return (Server.Misc.MyServerSettings.PlayerLevelMod(base.ManaMax, this))
                     + AosAttributes.GetValue(this, AosAttribute.BonusMana);
             }
@@ -5288,6 +5302,57 @@ namespace Server.Mobiles
             DisguiseTimers.RemoveTimer(this);
         }
 
+        #region Staff disguise support
+
+        [CommandProperty(AccessLevel.GameMaster)]
+        public bool HasStaffDisguise
+        {
+            get { return m_StaffDisguiseActive; }
+        }
+
+        [CommandProperty(AccessLevel.GameMaster)]
+        public Mobile StaffDisguiseTemplate
+        {
+            get { return m_StaffDisguiseTemplate; }
+        }
+
+        public void SetStaffDisguise(Mobile template)
+        {
+            if (template == null)
+            {
+                m_StaffDisguiseActive = false;
+                m_StaffDisguiseTemplate = null;
+                m_StaffDisguiseHitsMax = 0;
+                m_StaffDisguiseStamMax = 0;
+                m_StaffDisguiseManaMax = 0;
+
+                Hits = Math.Min(Hits, HitsMax);
+                Stam = Math.Min(Stam, StamMax);
+                Mana = Math.Min(Mana, ManaMax);
+
+                InvalidateProperties();
+                Delta(MobileDelta.Stat);
+                return;
+            }
+
+            m_StaffDisguiseActive = true;
+            m_StaffDisguiseTemplate = template;
+            m_StaffDisguiseHitsMax = Math.Max(1, template.HitsMax);
+            m_StaffDisguiseStamMax = Math.Max(1, template.StamMax);
+            m_StaffDisguiseManaMax = Math.Max(0, template.ManaMax);
+
+            Hits = Math.Min(Math.Max(0, template.Hits), m_StaffDisguiseHitsMax);
+            Stam = Math.Min(Math.Max(0, template.Stam), m_StaffDisguiseStamMax);
+            Mana = Math.Min(Math.Max(0, template.Mana), m_StaffDisguiseManaMax);
+            Hunger = template.Hunger;
+            Thirst = template.Thirst;
+
+            InvalidateProperties();
+            Delta(MobileDelta.Stat);
+        }
+
+        #endregion
+
         public override bool NewGuildDisplay
         {
             get { return Server.Guilds.Guild.NewGuildSystem; }
@@ -5296,6 +5361,32 @@ namespace Server.Mobiles
         public override void AddNameProperties(ObjectPropertyList list)
         {
             base.AddNameProperties(list);
+
+            if (m_StaffDisguiseActive)
+            {
+                Mobile template = m_StaffDisguiseTemplate;
+
+                if (template != null && !template.Deleted)
+                {
+                    XmlPoints templatePoints = XmlAttach.FindAttachment(
+                        template,
+                        typeof(XmlPoints)
+                    ) as XmlPoints;
+
+                    if (templatePoints != null)
+                    {
+                        list.Add(
+                            1070722,
+                            "Kills {0} / Deaths {1} : Rank={2}",
+                            templatePoints.Kills,
+                            templatePoints.Deaths,
+                            templatePoints.Rank
+                        );
+                    }
+                }
+
+                return;
+            }
 
             if (m_ShowCityTitle == true && m_City != null)
             {
@@ -5321,7 +5412,7 @@ namespace Server.Mobiles
             if (AccessLevel < AccessLevel.Counselor)
                 list.Add(Utility.FixHtml(sTitle));
 
-            if (AccessLevel > AccessLevel.Player)
+            if (!m_StaffDisguiseActive && AccessLevel > AccessLevel.Player)
                 list.Add(
                     1060847,
                     "{0}\t{1}",

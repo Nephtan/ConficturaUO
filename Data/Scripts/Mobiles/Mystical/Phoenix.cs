@@ -64,6 +64,15 @@ namespace Server.Mobiles
             return base.OnBeforeDeath();
         }
 
+        public override void OnAfterResurrect()
+        {
+            base.OnAfterResurrect();
+
+            // Ensure bonded resurrection restores phoenix appearance.
+            if (Body == 13)
+                Body = 243;
+        }
+
         public override int Meat
         {
             get { return 1; }
@@ -98,6 +107,10 @@ namespace Server.Mobiles
         {
             base.Deserialize(reader);
             int version = reader.ReadInt();
+
+            // Normalize any legacy glitched state where the phoenix remained in vortex form.
+            if (!IsDeadPet && Body == 13)
+                Body = 243;
         }
     }
 }
