@@ -66,6 +66,9 @@ When a task requires file changes, Codex MUST:
 5. **Do not amend history**.
 6. Use **brief, descriptive commit messages**; Conventional Commits encouraged.
 
+**EXCEPTION:**
+* When the active task is explicitly read-only QA or static analysis, do **not** modify files, do **not** commit, and do **not** open PRs.
+
 ---
 
 ## 5. Agent Behavior Contract (Deterministic, No Persona)
