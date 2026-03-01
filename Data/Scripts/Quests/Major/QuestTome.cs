@@ -1032,47 +1032,60 @@ namespace Server.Items
 
         public static void BossEscaped(Mobile from, string region)
         {
-            if (from.Backpack.FindItemByType(typeof(QuestTome)) != null)
+            if (from == null || from.Deleted)
             {
-                Item item = from.Backpack.FindItemByType(typeof(QuestTome));
-                QuestTome book = (QuestTome)item;
+                return;
+            }
 
-                if (
-                    book.QuestTomeGoals > 2
-                    && book.QuestTomeDungeon == region
-                    && book.QuestTomeOwner == from
-                )
+            Container pack = from.Backpack;
+
+            if (pack == null || pack.Deleted)
+            {
+                return;
+            }
+
+            Item item = pack.FindItemByType(typeof(QuestTome));
+
+            if (!(item is QuestTome book))
+            {
+                return;
+            }
+
+            if (
+                book.QuestTomeGoals > 2
+                && book.QuestTomeDungeon == region
+                && book.QuestTomeOwner == from
+            )
+            {
+                ArrayList targets = new ArrayList();
+                foreach (Mobile creature in World.Mobiles.Values)
                 {
-                    ArrayList targets = new ArrayList();
-                    foreach (Mobile creature in World.Mobiles.Values)
+                    if (
+                        creature.Name == book.VillainName
+                        && creature.Title == book.VillainTitle
+                    )
                     {
-                        if (
-                            creature.Name == book.VillainName
-                            && creature.Title == book.VillainTitle
-                        )
-                        {
-                            targets.Add(creature);
-                        }
+                        targets.Add(creature);
                     }
-                    for (int i = 0; i < targets.Count; ++i)
-                    {
-                        Mobile creature = (Mobile)targets[i];
+                }
+                for (int i = 0; i < targets.Count; ++i)
+                {
+                    Mobile creature = (Mobile)targets[i];
 
-                        Effects.SendLocationParticles(
-                            EffectItem.Create(
-                                creature.Location,
-                                creature.Map,
-                                EffectItem.DefaultDuration
-                            ),
-                            0x3728,
-                            10,
-                            10,
-                            2023
-                        );
-                        creature.PlaySound(0x1FE);
+                    Effects.SendLocationParticles(
+                        EffectItem.Create(
+                            creature.Location,
+                            creature.Map,
+                            EffectItem.DefaultDuration
+                        ),
+                        0x3728,
+                        10,
+                        10,
+                        2023
+                    );
+                    creature.PlaySound(0x1FE);
 
-                        creature.Delete();
-                    }
+                    creature.Delete();
                 }
             }
         }
