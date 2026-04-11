@@ -8,7 +8,7 @@ echo [System] Handing process control to internal C# architecture...
 echo.
 
 :: Launch the server and detach
-start "" "ConficturaServer.exe"
+start "" "C:\ConficturaUO-Live\ConficturaServer.exe"
 
 :: Exit the batch script immediately. The console window for the server will remain open.
 exit
