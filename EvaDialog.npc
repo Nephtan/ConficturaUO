@@ -1,0 +1,86 @@
+<?xml version="1.0" standalone="yes"?>
+<XmlQuestNPC>
+  <NPC>
+    <Name>Madame Eva</Name>
+    <Running>True</Running>
+    <ProximityRange>3</ProximityRange>
+    <ResetRange>16</ResetRange>
+    <AllowGhost>False</AllowGhost>
+    <SpeechPace>10</SpeechPace>
+    <ResetTime>0.333333333333333</ResetTime>
+    <SpeechEntries>5</SpeechEntries>
+  </NPC>
+  <SpeechEntry>
+    <EntryNumber>0</EntryNumber>
+    <ID>0</ID>
+    <DependsOn>-1</DependsOn>
+    <Pause>0</Pause>
+    <PrePause>-1</PrePause>
+    <LockConversation>True</LockConversation>
+    <IgnoreCarried>False</IgnoreCarried>
+    <AllowNPCTrigger>False</AllowNPCTrigger>
+    <SpeechStyle>Regular</SpeechStyle>
+    <SpeechHue>-1</SpeechHue>
+  </SpeechEntry>
+  <SpeechEntry>
+    <EntryNumber>10</EntryNumber>
+    <ID>10</ID>
+    <Keywords>Free Reading</Keywords>
+    <DependsOn>0</DependsOn>
+    <Pause>0</Pause>
+    <PrePause>-1</PrePause>
+    <LockConversation>True</LockConversation>
+    <IgnoreCarried>False</IgnoreCarried>
+    <AllowNPCTrigger>False</AllowNPCTrigger>
+    <SpeechStyle>Regular</SpeechStyle>
+    <SpeechHue>-1</SpeechHue>
+    <Gump>GUMP,Madame Eva,4/Greetings traveler. I see you are here for your Free Reading?;Yes, I am ready.;ready;No, sounds fake.;fake</Gump>
+  </SpeechEntry>
+  <SpeechEntry>
+    <EntryNumber>20</EntryNumber>
+    <ID>20</ID>
+    <Text>*She flips the first card: The Chariot.* Claim your power and move with purpose. Stop second-guessing and start steering.</Text>
+    <Keywords>ready</Keywords>
+    <Action>SETONTHIS/ANIMATE,17,7,1,true,false,0</Action>
+    <DependsOn>10</DependsOn>
+    <Pause>0</Pause>
+    <PrePause>-1</PrePause>
+    <LockConversation>True</LockConversation>
+    <IgnoreCarried>False</IgnoreCarried>
+    <AllowNPCTrigger>False</AllowNPCTrigger>
+    <SpeechStyle>Regular</SpeechStyle>
+    <SpeechHue>-1</SpeechHue>
+    <Gump>GUMP,The Chariot,4/The card shows a warrior.;Reveal the next card.;next</Gump>
+  </SpeechEntry>
+  <SpeechEntry>
+    <EntryNumber>30</EntryNumber>
+    <ID>30</ID>
+    <Text>*The Knight of Wands.* Focused action must be taken. The time is ripe to draw upon your resources.</Text>
+    <Keywords>next</Keywords>
+    <Action>SETONTHIS/ANIMATE,17,7,1,true,false,0</Action>
+    <DependsOn>20</DependsOn>
+    <Pause>0</Pause>
+    <PrePause>-1</PrePause>
+    <LockConversation>True</LockConversation>
+    <IgnoreCarried>False</IgnoreCarried>
+    <AllowNPCTrigger>False</AllowNPCTrigger>
+    <SpeechStyle>Regular</SpeechStyle>
+    <SpeechHue>-1</SpeechHue>
+    <Gump>GUMP,Knight of Wands,4/The card shows a charging knight.;And the final card?;final</Gump>
+  </SpeechEntry>
+  <SpeechEntry>
+    <EntryNumber>40</EntryNumber>
+    <ID>40</ID>
+    <Text>*She recoils.* The Ten of Swords. A severe storm rages. Lady Katara is the person you must seek. Take this card to her.</Text>
+    <Keywords>final</Keywords>
+    <Action>GIVE/&lt;QuestNote/name/Ten of Swords/ItemID/4778/hue/1150/Objective1/GIVENAMED,Katara,Ten of Swords&gt;</Action>
+    <DependsOn>30</DependsOn>
+    <Pause>0</Pause>
+    <PrePause>-1</PrePause>
+    <LockConversation>True</LockConversation>
+    <IgnoreCarried>False</IgnoreCarried>
+    <AllowNPCTrigger>False</AllowNPCTrigger>
+    <SpeechStyle>Regular</SpeechStyle>
+    <SpeechHue>-1</SpeechHue>
+  </SpeechEntry>
+</XmlQuestNPC>
