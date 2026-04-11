@@ -15,3 +15,6 @@ Data/Data.hash
 Data/Data.pdb
 /docs
 /Data/Logs
+/output
+reportHistory.xml
+staffHistory.xml
