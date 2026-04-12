@@ -559,6 +559,7 @@ namespace Server
             ScriptCompiler.Invoke("Initialize");
 
             MessagePump messagePump = new MessagePump();
+            m_MessagePump = messagePump;
 
             timerThread.Start();
 

@@ -5928,6 +5928,7 @@
     <Compile Include="System\Commands\Commands\Commands.cs" />
     <Compile Include="System\Commands\Commands\Interface.cs" />
     <Compile Include="System\Commands\ConvertPlayers.cs" />
+    <Compile Include="System\Commands\CrashCommand.cs" />
     <Compile Include="System\Commands\Docs.cs" />
     <Compile Include="System\Commands\Dupe.cs" />
     <Compile Include="System\Commands\ExportWSC.cs" />
