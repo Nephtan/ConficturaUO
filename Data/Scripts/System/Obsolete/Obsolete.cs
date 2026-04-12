@@ -6589,7 +6589,7 @@ namespace Server.Engines.CannedEvil
                         Core.AOS
                             ? new Type[]
                             {
-                                typeof(Bogle),
+                                typeof(Undead),
                                 typeof(Ghoul),
                                 typeof(Shade),
                                 typeof(Spectre),
@@ -6605,7 +6605,7 @@ namespace Server.Engines.CannedEvil
                     ), // Level 1
                     new Type[] { typeof(BoneMagi), typeof(Mummy), typeof(SkeletalMage) }, // Level 2
                     new Type[] { typeof(BoneKnight), typeof(Lich), typeof(SkeletalKnight) }, // Level 3
-                    new Type[] { typeof(LichLord), typeof(RottingCorpse) } // Level 4
+                    new Type[] { typeof(LichLord), typeof(RottingCorpse), typeof(SkeletonDragon) } // Level 4
                 }
             ),
             new ChampionSpawnInfo(
