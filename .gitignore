@@ -21,3 +21,5 @@ staffHistory.xml
 ConficturaServer.exe - Shortcut.lnk
 Info/adventures.txt
 Info/battles.txt
+*.pdb
+*.bin
