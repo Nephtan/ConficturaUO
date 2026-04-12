@@ -401,7 +401,6 @@ namespace Server.Mobiles
                     //case 6: SpellweavingPower(); break;
                 }
 
-                }
             }
 
             return true;
