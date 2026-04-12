@@ -102,11 +102,11 @@ namespace Server.Mobiles
                         {
                             if (m_Mobile.Poisoned)
                             {
-                                spell = new Elemental_Sanctuary(m_Mobile, null);
+                                spell = new Elemental_Sanctuary_Spell(m_Mobile, null);
                             }
                             else
                             {
-                                spell = new Elemental_Mend(m_Mobile, null);
+                                spell = new Elemental_Mend_Spell(m_Mobile, null);
                             }
                         }
                         break;

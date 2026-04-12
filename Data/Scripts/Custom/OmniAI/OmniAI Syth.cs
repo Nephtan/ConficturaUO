@@ -30,7 +30,7 @@ namespace Server.Mobiles
             }
             else
             {
-                spell = new Speed(m_Mobile, null);
+                spell = new SythSpeed(m_Mobile, null);
             }
 
             if (spell != null)
