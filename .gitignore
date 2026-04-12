@@ -22,3 +22,5 @@ ConficturaServer.exe - Shortcut.lnk
 /Data/Files
 Info/adventures.txt
 Info/battles.txt
+*.pdb
+*.bin
