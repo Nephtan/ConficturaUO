@@ -82,7 +82,7 @@ namespace Server.Engines.CannedEvil
         public void SetInitialSpawnArea()
         {
             //Previous default used to be 24;
-            SpawnArea = new Rectangle2D(new Point2D(X - 24, Y - 24), new Point2D(X + 24, Y + 24));
+            SpawnRadius = 24;
         }
 
         public void UpdateRegion()
@@ -137,6 +137,20 @@ namespace Server.Engines.CannedEvil
                 m_SpawnArea = value;
                 InvalidateProperties();
                 UpdateRegion();
+            }
+        }
+
+        [CommandProperty(AccessLevel.GameMaster)]
+        public int SpawnRadius
+        {
+            get { return Math.Max(m_SpawnArea.Width, m_SpawnArea.Height) / 2; }
+            set
+            {
+                int radius = Math.Max(0, value);
+                SpawnArea = new Rectangle2D(
+                    new Point2D(X - radius, Y - radius),
+                    new Point2D(X + radius, Y + radius)
+                );
             }
         }
 
