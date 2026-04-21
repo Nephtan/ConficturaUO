@@ -75,14 +75,17 @@ namespace Server.Engines.CannedEvil
             m_RestartDelay = TimeSpan.FromMinutes(10.0);
 
             m_DamageEntries = new Dictionary<Mobile, int>();
-
-            Timer.DelayCall(TimeSpan.Zero, new TimerCallback(SetInitialSpawnArea));
+            m_SpawnArea = BuildSpawnArea(24);
         }
 
-        public void SetInitialSpawnArea()
+        private Rectangle2D BuildSpawnArea(int radius)
         {
-            //Previous default used to be 24;
-            SpawnRadius = 24;
+            radius = Math.Max(0, radius);
+
+            return new Rectangle2D(
+                new Point2D(X - radius, Y - radius),
+                new Point2D(X + radius, Y + radius)
+            );
         }
 
         public void UpdateRegion()
@@ -144,14 +147,7 @@ namespace Server.Engines.CannedEvil
         public int SpawnRadius
         {
             get { return Math.Max(m_SpawnArea.Width, m_SpawnArea.Height) / 2; }
-            set
-            {
-                int radius = Math.Max(0, value);
-                SpawnArea = new Rectangle2D(
-                    new Point2D(X - radius, Y - radius),
-                    new Point2D(X + radius, Y + radius)
-                );
-            }
+            set { SpawnArea = BuildSpawnArea(value); }
         }
 
         [CommandProperty(AccessLevel.GameMaster)]
@@ -1240,10 +1236,7 @@ namespace Server.Engines.CannedEvil
                     {
                         int oldRange = reader.ReadInt();
 
-                        m_SpawnArea = new Rectangle2D(
-                            new Point2D(X - oldRange, Y - oldRange),
-                            new Point2D(X + oldRange, Y + oldRange)
-                        );
+                        m_SpawnArea = BuildSpawnArea(oldRange);
                     }
 
                     m_Kills = reader.ReadInt();
@@ -1253,10 +1246,7 @@ namespace Server.Engines.CannedEvil
                 case 0:
                 {
                     if (version < 1)
-                        m_SpawnArea = new Rectangle2D(
-                            new Point2D(X - 24, Y - 24),
-                            new Point2D(X + 24, Y + 24)
-                        ); //Default was 24
+                        m_SpawnArea = BuildSpawnArea(24); // Default was 24
 
                     bool active = reader.ReadBool();
                     m_Type = (ChampionSpawnType)reader.ReadInt();
