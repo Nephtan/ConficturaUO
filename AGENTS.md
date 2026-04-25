@@ -1,143 +1,109 @@
-# AGENTS.md (Codex-Only)
+# Agent Instructions for Confictura RunUO Shard
 
-> **Purpose**: This file is the **single source of truth** for how OpenAI **Codex** must operate in this repository. It encodes setup constraints, run/test realities, modification protocols, and inheritance rules. **No persona** rules—functional operation only.
+This document provides instructions for completing tasks within this repository. Please adhere to these guidelines carefully.
 
----
+# Primary Objective
 
-## 0. High-Signal Summary (Read First)
+The agent's primary objective is to assist with the development and maintenance of the Confictura RunUO shard. This includes, but is not limited to:
 
-* **Runtime/Stack**: C# / .NET Framework **4.8** (Windows-only server runtime).
-* **Editor**: Visual Studio 2022 (Community).
-* **Project Domain**: **RunUO**-based Confictura shard; custom scripts under `Data/Scripts/` depend on core engine in `System/Source/`.
-* **Testing in Agent Env**: **Not possible** (agent runs on Ubuntu). Perform **static analysis only**; changes must be syntactically correct and logically sound.
-* **Search Tool**: Prefer `rg` (ripgrep) for code search.
-* **Inheritance**: Root `AGENTS.md` is **base**. Subdirectory `AGENTS.md` files **extend** (inherit) root rules.
+* Creating new C# scripts for items, mobiles (monsters), and game systems.
 
----
+* Refactoring and optimizing existing code for clarity and performance.
 
-## 1. Setup & Environment (Idempotent)
+* Analyzing the codebase to answer questions or identify potential issues.
 
-Codex MUST assume **no Windows build or execution** is possible in its environment.
+* Assisting with any other C#-based coding tasks related to the RunUO environment.
 
-* **Agent (Linux) Reality**
+## Environment Setup
 
-  * Use repository search + static analysis only (no compile/run).
-  * Prefer `rg` (ripgrep) for code search.
-  * Line endings: **LF**.
-  * Respect dependency flow: `Data/Scripts/*` ? `System/Source/*`.
+* **Framework:** .NET Framework 4.8
 
-> If a change implies a Windows build or runtime validation, Codex MUST scope work to **static diffs** and provide the **Windows operator** with the commands in §2.
+* **IDE:** The project is developed using Visual Studio Community 2022.
 
----
+* **Core Dependencies:** All custom scripts located in the `Data/Scripts/` directory depend on the core engine files located in `Data/System/Source/`. Keep this relationship in mind when analyzing or modifying code.
 
-## 2. Run, Lint, Format, Test
+* **Line Endings:** Use (LF) line endings to remain compatible with the server environment.
 
-> The server cannot be compiled/executed in the agent environment. Perform **static checks only**.
+## Known Build Workflows
 
-### 2.1 Agent (Linux) Actions
+* **Preferred Build Entry Point:** Open `ConficturaUO.sln` in Visual Studio 2022. The solution includes `Data/System/Source/Server.csproj` and `Data/Scripts/Scripts.csproj`, and the `Scripts` project depends on `Server`.
 
-* **Build**: *Not executable in agent env*
-* **Unit Tests**: *None available*
-* **Lint/Format**: Enforce STYLEGUIDE manually in diffs; prefer idiomatic C#.
+* **Command-Line Solution Build:** Use `msbuild ConficturaUO.sln /p:Configuration=Debug /p:Platform=x86` or `msbuild ConficturaUO.sln /p:Configuration=Release /p:Platform=x86`. The solution maps the `Server` project to `x86` and the `Scripts` project to `Any CPU`.
 
-> Codex cannot execute builds here. For human/local build & run steps, see **OPERATOR.md**.
+* **Server Output:** `Data/System/Source/Server.csproj` builds `ConficturaServer.exe`; the `Debug|x86` output path is the repository root.
 
----
+* **Manual Compile Reference:** `Data/System/Source/README` documents a direct server compile from the source directory with `C:\Windows\Microsoft.NET\Framework64\v4.0.30319\csc /optimize /unsafe /t:exe /out:World.exe /win32icon:Source\icon.ico /d:NEWTIMERS /d:NEWPARENT /recurse:*.cs`.
 
-## 3. Coding Conventions & File Layout
+* **TODO:** The README compile command outputs `World.exe`, while the current project file outputs `ConficturaServer.exe`. Prefer the solution/project workflow unless you verify the manual command is still current.
 
-* **C# Style**: Standard C# conventions; **PascalCase** for classes/files.
-* **Namespaces**: Place new custom scripts under `Server.Custom.Confictura`.
-* **File Placement**: New scripts go in `Data/Scripts/Custom/` with logical subfolders (e.g., `Items/`, `Mobiles/`, `Systems/`).
-* **Core Dependency Rule**: Scripts in `Data/Scripts/` depend on `System/Source/`—maintain compatibility.
-* **Comments**: Provide class/method purpose and explain complex logic.
-* **Search**: Prefer `rg` over `grep -R` for performance & fidelity.
+## Coding Conventions
 
----
+* **Style Guide:** Adhere to standard C# naming and style conventions.
 
-## 4. Repository Rules (Git & Version Control)
+* **Naming:** All new C# files and classes must use PascalCase (e.g., `MyNewItem.cs`).
 
-When a task requires file changes, Codex MUST:
+* **Namespaces:** All new custom scripts must belong to the `Server.Custom.Confictura` namespace.
 
-1. **Work on the current main branch**; do **not** create branches.
-2. **Commit all changes**; uncommitted work is not evaluated.
-3. **Fix pre-commit failures** and retry until clean.
-4. **Maintain a clean worktree** (`git status` clean when done).
-5. **Do not amend history**.
-6. Use **brief, descriptive commit messages**; Conventional Commits encouraged.
+* **File Location:** Place all new scripts within the `Data/Scripts/Custom/` directory. Organize them into logical subdirectories based on their function (e.g., `Items/`, `Mobiles/`, `Systems/`).
 
-**EXCEPTION:**
-* When the active task is explicitly read-only QA or static analysis, do **not** modify files, do **not** commit, and do **not** open PRs.
+* **Comments:** Your code must be well-commented. Include comments to explain the purpose of classes, methods, and any complex logic to ensure clarity for other developers.
 
----
+* **Searching:** When searching the codebase, prefer the `rg` (ripgrep) tool over `grep -R` or similar commands for better performance.
 
-## 5. Agent Behavior Contract (Deterministic, No Persona)
+## Testing & Verification
 
-Codex MUST:
+* **Test Command:** None.
 
-* **Summarize intent** of the change before proposing edits.
-* Prefer **minimal, safe diffs**; limit blast radius.
-* **Ask a clarifying question only** when ambiguity blocks correctness; otherwise proceed conservatively.
-* **Never fabricate runtime results**; if a runtime proof is required, provide a Windows operator checklist.
+* **CRITICAL NOTE:** The agent's operating environment (Ubuntu-based) is incompatible with the project's Windows-based execution environment. **The agent cannot compile or run the server to test its changes.** All code modifications must be syntactically correct and logically sound based on a static analysis of the existing codebase.
 
-Codex MUST NOT:
+## Git & Version Control
 
-* Add new dependencies without rationale and file edits documenting why/where.
+If your task requires modifying or creating files, follow these steps:
 
----
+1. **Work on the Main Branch:** Do not create new branches. All work should be done on the current checked-out branch.
 
-## 6. Task Playbooks (Concrete Procedures)
+2. **Commit Your Changes:** Use git to commit all your changes. Uncommitted code will not be evaluated.
 
-### A) Add Feature `<X>`
+3. **Handle Pre-Commit Hooks:** If a pre-commit hook fails, you must fix the reported issues and retry the commit until it succeeds.
 
-1. Place files under `Data/Scripts/Custom/<Area>/...` per layout.
-2. Use namespace `Server.Custom.Confictura`; document public APIs.
-3. Include targeted defensive checks; provide example usage in comments.
-4. Validate via static analysis; note Windows validation steps for operator.
-5. Commit with `feat: <scope> <summary>`.
+4. **Maintain a Clean Worktree:** Run `git status` to confirm your commit. Your worktree must be in a clean state when you are finished.
 
-### B) Refactor `<Module>`
+5. **Do Not Amend History:** Do not modify or amend existing commits.
 
-1. Preserve public API shape unless the task requires changes.
-2. Improve readability/perf; add comments for non-obvious logic.
-3. Re-scan for references with `rg` and adjust call sites if needed.
-4. Perform static sanity checks; list potential runtime risks.
-5. Commit with `refactor: <scope> <summary>`.
+6. **Commit Messages:** Use brief, descriptive commit messages. When possible, follow the [Conventional Commits](https://www.conventionalcommits.org/) style (e.g., `docs: improve AGENTS instructions`).
 
----
+## Citation Guidelines
 
-## 7. Testing & Verification Reality
+If you browse files or use terminal commands to generate your solution, you must add citations to your final response.
 
-* **No test command** available; rely on **static analysis**.
-* The agent environment is **Ubuntu**; the project is **Windows-only** to run. Provide operator instructions where runtime proof is necessary.
+* **Purpose:** Citations provide a reference for the information you used to generate your response.
 
----
+* **Formats:**
 
-## 8. Citations in Final Responses (if applicable)
+  * **Files:** `?F:<file_path>†L<line_start>(-L<line_end>)??`
 
-If Codex references repository files in its output, include explicit file paths and 1-indexed line ranges, e.g. `Data/Scripts/Custom/Items/Foo.cs:L12-L34`. Avoid special markup; use plain text so humans can follow and verify.
+  * **Terminal Output:** `?<chunk_id>†L<line_start>(-L<line_end>)??`
 
----
+* **Rules:**
 
-## 9. Interpretation, Scope & Inheritance
+  * File paths must be relative to the repository root.
 
-* **Scope**: This file applies to the entire directory tree beneath its location.
-* **Precedence/Inheritance** (this repo’s policy):
+  * Line numbers are 1-indexed. A single line number is acceptable if the citation refers to one line.
 
-  * **User prompt** > AGENTS.md (always).
-  * **Subdirectory AGENTS.md** files **extend** this root (inheritance). Where conflicts exist, the **more specific (deeper) file’s explicit rule wins**.
-* **Compliance**: For every modified file, obey all AGENTS.md files whose scope includes that path.
+  * Ensure line numbers are correct and the cited content is directly relevant to the clause preceding the citation.
 
----
+  * Prefer file citations for code and documentation references. Use terminal citations for results of commands (e.g., test output).
 
-## 10. Continuous Improvement
+## AGENTS.md Interpretation Rules
 
-This is a **living document**. If Codex detects conflicts, errors, or missing instructions while completing a task, it MUST propose an update (exact text to add/remove/change) as part of its final output.
+This section contains meta-instructions on how to interpret AGENTS.md files.
 
----
+* **Scope:** The rules in an AGENTS.md file apply to the entire directory tree where the file is located.
 
-### Appendix: Project Snapshot (Stable Facts)
+* **Precedence:**
 
-* **Primary Objective**: Assist development/maintenance of Confictura RunUO shard: new items/mobiles/systems, refactors, analysis, and C# tasks.
-* **Key Structure**: `Data/Scripts/` (custom) ? `System/Source/` (engine).
-* **Style**: Standard C#; PascalCase; document complex logic.
+  1. Direct instructions from the user prompt override all AGENTS.md files.
+
+  2. More deeply nested AGENTS.md files take precedence over those in parent directories.
+
+* **Compliance:** For every file you modify, you must obey the instructions in any AGENTS.md file whose scope includes that file.

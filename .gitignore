@@ -19,8 +19,12 @@ Data/Data.pdb
 reportHistory.xml
 staffHistory.xml
 ConficturaServer.exe - Shortcut.lnk
-/Data/Files
 Info/adventures.txt
 Info/battles.txt
 *.pdb
 *.bin
+Info/adventures.txt
+Info/battles.txt
+Info/online.txt
+Info/quests.txt
+Info/deaths.txt
