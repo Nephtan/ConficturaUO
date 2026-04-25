@@ -15,32 +15,75 @@ This audit is based on source review and codewide search only. It does not rely 
 
 ## Executive Summary
 
-The shard does not have one AI system. It has at least six layers that interact:
+The shard does not have one AI system. It has a layered behavior stack:
 
-1. `BaseCreature` owns AI assignment, targeting legality, pet orders, bard state, and reacquire timing.
+1. `BaseCreature` owns AI assignment, targeting legality, control state, bard state, perception/fight ranges, home anchors, movement affordances, and reacquire timing.
 2. `BaseAI` and the classes in `Data/Scripts/Mobiles/Base/Behavior.cs` provide the stock state-machine shells.
-3. Individual mobiles assign an `AIType` and `FightMode` in constructors.
-4. Some scripts switch `AI` at runtime.
-5. Some mobiles bypass the stock shell system entirely with `ForcedAI`.
-6. Many mobiles and encounters layer custom behavior on top with `OnThink`, `OnMovement`, `OnDamage`, `OnDamagedBySpell`, and `OnGotMeleeAttack`.
+3. `Behavior.cs` movement helpers and timer logic define much of how AI feels in practice, including movement cadence, pathing fallback, home wandering, and activation/deactivation.
+4. Engine classes such as `Sector`, `Region`, and spawning code directly affect when AI runs and what targets are legal.
+5. Many mobiles assign `AIType` and `FightMode` in constructors, but some scripts switch `AI` later and some bypass stock assignment entirely with `ForcedAI`.
+6. Many encounters layer bespoke logic on top with `OnThink`, `OnMovement`, `OnDamage`, `OnDamagedBySpell`, `OnGotMeleeAttack`, and similar hooks.
 
-The most important practical conclusion is this:
+The most important practical conclusions are:
 
 - `AcquireFocusMob` is the legal and mechanical choke point for target selection.
-- `ChangeAIType` is the central assignment seam for stock shells.
+- `ChangeAIType` is the central assignment seam for stock shells, but it does not tell the whole truth for every creature.
 - `OnThink` and the combat event hooks are the main places where bespoke encounter behavior piggybacks on the AI timer.
-- `ForcedAI`, runtime `AI = ...` changes, summon-specific target ranking, and civilian/vendor subclasses mean a "global AI change" will not affect everything equally.
+- `PlayerRangeSensitive`, sector activation, and deactivation-return rules mean "AI cadence" is partly a world-activation system, not just a combat system.
+- `ForcedAI`, runtime `AI = ...` changes, summon-specific target ranking, civilian/vendor subclasses, and script-driven encounter logic mean a "global AI change" will not affect everything equally.
 
 Any large overhaul has to treat AI as an ecosystem, not as a single class replacement.
 
-## Review Method
+## Methodology And Confidence
 
-This audit used two levels of review:
+This audit deliberately separates verified deep-read findings from search-derived inventories.
 
-- direct reading of the core framework files and high-risk exception files
-- codewide pattern searches to inventory assignment styles, override hotspots, and bypass mechanisms
+### Direct-read review
 
-The pattern counts in this document are meant as audit guidance, not perfect gameplay taxonomy. They are most reliable for identifying risk concentrations and exception classes.
+These files were read directly because they define the framework or high-risk behavior seams:
+
+- `Data/Scripts/Mobiles/Base/BaseCreature.cs`
+- `Data/Scripts/Mobiles/Base/Behavior.cs`
+- `Data/Scripts/Mobiles/Base/BaseNPC.cs`
+- `Data/Scripts/Mobiles/Base/BasePerson.cs`
+- `Data/Scripts/Mobiles/Base/BaseVendor.cs`
+- `Data/Scripts/Mobiles/Base/BaseHealer.cs`
+- `Data/System/Source/Sector.cs`
+- `Data/System/Source/Region.cs`
+- `Data/Scripts/Custom/OmniAI/OmniAI Core.cs`
+- `Data/Scripts/Custom/OmniAI/OmniAI Shared.cs`
+- key exception files for clones, summons, pirates, champions, and scripted bosses
+
+Facts in the core-framework, timer, control-order, movement/pathing, legality, and engine-hook sections should be treated as high-confidence findings because they are grounded in direct source review.
+
+### Search-derived inventories
+
+Several appendices use grep-style inventories to size the override surface:
+
+- `ForcedAI`
+- `GetFightModeRanking`
+- `ReacquireDelay`
+- `ReacquireOnMovement`
+- `PlayerRangeSensitive`
+- `OnThink`
+- other AI-adjacent event hooks such as `OnMovement`, `OnDamage`, `OnDamagedBySpell`, and `OnGotMeleeAttack`
+
+Those inventories are useful for locating risk concentrations, but they are not the same thing as a gameplay taxonomy. Some hits are:
+
+- constructors or spawn-time setup, not live combat pivots
+- service or social NPC logic, not hostile AI
+- item, quest, region, or environment hooks, not mobile brains
+- custom systems that borrow AI-adjacent events for non-combat reasons
+
+### Count conventions used in this document
+
+- When a list says `exact`, it means the listed paths were directly confirmed for that symbol or override pattern.
+- When a list says `search-derived`, it means the list or count came from code search and may include mixed semantics.
+- Unless otherwise noted, refreshed counts in the appendix exclude `Data/Scripts/System/Obsolete` and `Data/Scripts/Custom/XMLSpawner` so the numbers better reflect live behavior rather than archive or plugin noise.
+
+### Confidence boundaries
+
+This document is overhaul-ready, but it is still a static-analysis document. It does not prove live encounter behavior under all shard content combinations. Whenever a section makes a rollout recommendation, that recommendation should be read as "safe based on source architecture" rather than "battle-tested on a running shard."
 
 ## Core Framework
 
@@ -54,17 +97,14 @@ These are the primary files that define the AI framework:
 - `Data/Scripts/Mobiles/Base/BasePerson.cs`
 - `Data/Scripts/Mobiles/Base/BaseVendor.cs`
 - `Data/Scripts/Mobiles/Base/BaseHealer.cs`
-- `Data/Scripts/Custom/OmniAI/OmniAI Core.cs`
-- `Data/Scripts/Custom/OmniAI/OmniAI Shared.cs`
-- `Data/Scripts/Custom/OmniAI/OmniAI Bushido.cs`
-- `Data/Scripts/Custom/OmniAI/OmniAI Knightship.cs`
-- `Data/Scripts/Custom/OmniAI/OmniAI Magery.cs`
-- `Data/Scripts/Custom/OmniAI/OmniAI Necromancy.cs`
-- `Data/Scripts/Custom/OmniAI/OmniAI Ninjitsu.cs`
+- `Data/System/Source/Sector.cs`
+- `Data/System/Source/Region.cs`
+
+These files are not optional reading for an overhaul. They define the real assignment seams, the real timer loop, the real target-legality path, and the real world-activation behavior.
 
 ### FightMode
 
-`FightMode` determines the broad targeting rule before all the deeper filters and rankings:
+`FightMode` determines the broad targeting rule before all deeper legality filters and rankings:
 
 - `None`
 - `Aggressor`
@@ -78,7 +118,7 @@ These are the primary files that define the AI framework:
 
 Important implication:
 
-- `FightMode` is not just "who feels best to attack." It feeds into legality, faction/ethic logic, aggression rules, and the ranking pass inside `AcquireFocusMob`.
+- `FightMode` is not just "who feels best to attack." It feeds into legality, faction and ethic logic, aggression rules, and the ranking pass inside `AcquireFocusMob`.
 
 ### AIType
 
@@ -96,10 +136,11 @@ The stock AI enum currently exposes:
 - `AI_Thief`
 - `AI_Citizen`
 
-Important implication:
+Important implications:
 
-- The enum advertises more behaviors than most content actually uses.
-- `AI_Predator` is especially dangerous to assume is live, because the current `ChangeAIType` mapping routes `AI_Predator` to `MeleeAI`, not `PredatorAI`.
+- The enum advertises more behaviors than the live `ChangeAIType` mapping actually instantiates.
+- `AI_Predator` is especially dangerous to assume is live, because `ChangeAIType` currently routes `AI_Predator` to `MeleeAI`, not `PredatorAI`.
+- `AI_Citizen` is even trickier: the enum value exists and the `CitizenAI` class exists, but `ChangeAIType` does not currently map `AI_Citizen` to `CitizenAI`. Content that sets `AI_Citizen` is therefore not selecting a live stock shell through the normal mapping path.
 
 ### ActionType
 
@@ -120,9 +161,9 @@ The stock AI shells are mostly different implementations of how those action sta
 
 ### AI assignment
 
-`BaseCreature.ChangeAIType(AIType)` is the central mapping point from enum to stock AI class. That means any system that writes `AI = ...` eventually passes through the same shell-selection seam, unless `ForcedAI` intercepts it first.
+`BaseCreature.ChangeAIType(AIType)` is the central stock mapping point from enum to shell. Any system that writes `AI = ...` eventually passes through this seam unless `ForcedAI` intercepts it first.
 
-Current stock mapping:
+Current live mapping:
 
 - `AI_Melee` -> `MeleeAI`
 - `AI_Animal` -> `AnimalAI`
@@ -133,10 +174,73 @@ Current stock mapping:
 - `AI_Mage` -> `MageAI`
 - `AI_Predator` -> `MeleeAI` in practice, with the `PredatorAI` line commented out
 - `AI_Thief` -> `ThiefAI`
+- `AI_Citizen` -> no stock mapping in `ChangeAIType`
+
+Important implication:
+
+- `AIType` is part enum, part content marker, and part real factory input. For `AI_Predator` and `AI_Citizen`, the enum label is not the same thing as the instantiated shell.
+
+### Constructor-time behavior knobs
+
+The `BaseCreature` constructor stores several core AI parameters that define how the creature perceives, fights, and moves:
+
+- `RangePerception`
+- `RangeFight`
+- `FightMode`
+- `ActiveSpeed`
+- `PassiveSpeed`
+- `CurrentSpeed`
+- `DefaultAI`
+- `CurrentAI`
+
+Additional notes:
+
+- legacy `RangePerception` values of `10` are normalized to `DefaultRangePerception = 16`
+- speed values are passed through `SpeedInfo.GetSpeeds(...)` before storage
+- the constructor initializes `NextReacquireTime` and immediately calls `ChangeAIType(AI)`
+
+Important implication:
+
+- large parts of "AI behavior" are actually encoded in spawn-time numeric parameters, not only in the shell class
+
+### Behavior-affecting live properties
+
+Several `BaseCreature` properties materially change how the AI executes:
+
+- `CurrentWayPoint`
+- `TargetLocation`
+- `ConstantFocus`
+- `Home`
+- `RangeHome`
+- `RangePerception`
+- `RangeFight`
+- `ActiveSpeed`
+- `PassiveSpeed`
+- `CurrentSpeed`
+- `ControlTarget`
+- `ControlOrder`
+- `Team`
+- `Combatant`
+- `FightMode`
+- `Controlled`
+- `Summoned`
+- `BardProvoked`
+- `BardPacified`
+- `CanOpenDoors`
+- `CanMoveOverObstacles`
+- `CanDestroyObstacles`
+- `DisallowAllMoves`
+
+Important implications:
+
+- `TargetLocation` hard-forces `CurrentSpeed` to `0.3` while it is set
+- changing `CurrentSpeed` calls `m_AI.OnCurrentSpeedChanged()` and resets the AI timer interval
+- `ConstantFocus` bypasses normal target acquisition
+- door and obstacle affordances are part of the movement brain, not map-only metadata
 
 ### ForcedAI
 
-`ForcedAI` short-circuits `ChangeAIType`. If a mobile overrides `ForcedAI`, the normal enum-to-shell mapping effectively stops mattering.
+`ForcedAI` short-circuits `ChangeAIType`. If a mobile overrides `ForcedAI`, the normal enum-to-shell mapping stops mattering for that actor.
 
 This is one of the biggest reasons a naive overhaul can miss important content.
 
@@ -150,53 +254,238 @@ This is one of the biggest reasons a naive overhaul can miss important content.
 
 Important implication:
 
-- This is the safest central seam for adding richer scoring, but only after all the engine legality filters have already accepted the candidate.
+- this is the safest central seam for richer target scoring, but only after all legality filters have already accepted the candidate
+
+### Team-aware helper surface
+
+`BaseCreature.GetTeamSize(int range)` already counts visible same-team nearby `BaseCreature` allies.
+
+Important implication:
+
+- the codebase already contains a lightweight squad-context helper, so future tactical profiles do not need a brand-new group-awareness system just to ask "how many allies are near me?"
 
 ### Reacquire timing
 
 The central reacquire controls are:
 
 - `NextReacquireTime`
-- `ReacquireDelay` with a default of 10 seconds
-- `ReacquireOnMovement` with a default of `false`
-- `ForceReacquire()`, which simply resets `NextReacquireTime`
+- `ReacquireDelay`, with a default of 10 seconds
+- `ReacquireOnMovement`, with a default of `false`
+- `ForceReacquire()`, which simply resets `NextReacquireTime` to `DateTime.MinValue`
 
 Important implication:
 
-- The engine already prefers "reacquire occasionally or when something meaningful happens" over maintaining a persistent threat table.
-- This strongly favors event-driven tactical retargeting rather than permanent target bookkeeping.
+- the engine already prefers "reacquire occasionally or when something meaningful happens" over maintaining a persistent threat table
 
-### Behavior-affecting state owned by BaseCreature
+## Activation, Timer, And Execution Flow
 
-Several shard rules that feel unrelated to AI are still wired directly into the AI surface:
+The stock timer loop lives in `Behavior.cs` and is more than a simple combat tick.
 
-- `ControlTarget` and `ControlOrder`
-- `ConstantFocus`
-- `BardProvoked`
-- `BardPacified`
-- `Combatant`
-- `FightMode`
-- `Team`
-- `Controlled` and `Summoned`
+### BaseAI construction and startup activation
 
-These are not cosmetic fields. They alter how `AcquireFocusMob`, `Obey`, `Think`, and aggression resolution behave.
+`BaseAI` constructs an `AITimer`, but it does not always start it immediately.
 
-## The BaseAI Timer And Execution Flow
+Startup activation rules:
 
-The stock timer loop lives in `Behavior.cs` and runs the AI in a fixed order:
+- if `PlayerRangeSensitive` is `false`, the timer starts immediately
+- if the world is loading, `PlayerRangeSensitive` actors start inactive
+- if the mobile is on `Map.Internal`, has no map, or is in an inactive sector, `PlayerRangeSensitive` actors start inactive
+- otherwise, the timer starts normally
 
-1. sector and activity guards
-2. `m_Mobile.OnThink()`
-3. bard pacify/provoke handling
-4. `Think()` for uncontrolled creatures, `Obey()` for controlled ones
-5. optional searching pass
+Important implication:
 
-This matters for overhaul planning because:
+- for many actors, "does this AI exist?" and "is this AI currently running?" are different questions
+
+### PlayerRangeSensitive delayed deactivation
+
+While the timer is running, `AITimer.OnTick()` rechecks `PlayerRangeSensitive` actors:
+
+- if their sector is inactive, they stay alive until `DeactivationDelay` expires
+- once the delay expires, `BaseAI.Deactivate()` stops the timer
+- if the creature came from a `SpawnEntry` with `ReturnOnDeactivate`, deactivation may also send it back home
+
+Important implication:
+
+- activation and home-return behavior are partly spawn-system behavior, not just combat behavior
+
+### Tick order
+
+The timer loop runs in this order:
+
+1. stop if deleted or on `Map.Internal`
+2. handle player-range-sensitive activation and delayed deactivation
+3. call `m_Mobile.OnThink()`
+4. handle bard pacify and bard provoke
+5. call `Think()` for uncontrolled creatures, `Obey()` for controlled ones
+6. run a separate `Searching()` pass if the creature has the `Searching` skill and its independent cooldown has expired
+
+Important implications:
 
 - encounter scripts often rely on `OnThink()` happening before stock combat logic
-- controlled pets do not use the same path as wild mobs
+- controlled pets do not run the same behavior path as wild mobs
 - bard effects get their own branch before normal combat logic
 - "AI speed" and "script cadence" are partly the same thing
+- the `Searching` pass is its own cadence, not just part of combat state transitions
+
+### Speed changes rewire timer cadence
+
+`OnCurrentSpeedChanged()` stops the timer, randomizes a new delay, and restarts the interval based on the new `CurrentSpeed`.
+
+Important implication:
+
+- any overhaul that changes when `CurrentSpeed` flips between active and passive values is also changing timer cadence
+
+## Controlled Pet Order Pipeline
+
+Controlled creatures use `Obey()`, not `Think()`. This is a separate behavior pipeline and should be treated as a first-class AI system.
+
+### Order dispatch table
+
+`Obey()` directly dispatches to order-specific handlers for:
+
+- `None`
+- `Come`
+- `Drop`
+- `Friend`
+- `Unfriend`
+- `Guard`
+- `Attack`
+- `Patrol`
+- `Release`
+- `Stay`
+- `Stop`
+- `Follow`
+- `Transfer`
+
+Important implication:
+
+- a "generic tactical layer" that assumes all combatants choose targets the same way will break pets unless it respects the order pipeline
+
+### OnCurrentOrderChanged side effects
+
+Changing a pet order is not just intent metadata. It immediately mutates behavior state.
+
+Examples:
+
+- `None` and `Stop` reset `Home` to the current location, set passive speed, clear `Combatant`, and drop out of warmode
+- `Come`, `Patrol`, and `Follow` switch to active speed but clear `Combatant`
+- `Guard` switches to active speed, enters warmode, and tells the master the pet is guarding
+- `Attack` switches to active speed, enters warmode, and clears the old `Combatant` so the attack order can take over
+- `Release` and `Transfer` clear combat and move the creature back toward passive state
+
+Important implication:
+
+- control orders already own a large amount of movement state, pacing, and combat intent; they are not optional overlays on the stock wild-AI model
+
+### ControlTarget short-circuit
+
+When a creature is controlled, `AcquireFocusMob` first checks `ControlTarget`. If the control target is valid, alive, visible, and in range, it becomes `FocusMob` immediately.
+
+Important implication:
+
+- pet target selection is command-first, not score-first
+
+## Movement, Pathing, And Spatial Constraints
+
+Much of the shard's perceived AI quality is actually movement behavior.
+
+### Action-state side effects
+
+`OnActionChanged()` does more than change labels:
+
+- `Wander` clears `Combatant`, clears `FocusMob`, disables warmode, and sets passive speed
+- `Combat` enables warmode, clears `FocusMob`, and sets active speed
+- `Guard` enables warmode, clears both `Combatant` and `FocusMob`, sets active speed, and starts a guard timeout
+- `Flee` enables warmode, clears `FocusMob`, and sets active speed
+- `Interact` and `Backoff` use passive speed and disable warmode
+
+Important implication:
+
+- changing action-transition rules will also change movement speed and warmode behavior unless handled very carefully
+
+### Core move stack
+
+The shared movement stack includes:
+
+- `CheckMove()`
+- `DoMove(...)`
+- `DoMoveImpl(...)`
+- `MoveTo(...)`
+- `WalkMobileRange(...)`
+- `WalkRandomInHome(...)`
+- `PathFollower`
+
+This is the main shared infrastructure for chase, spacing, flee, and wandering.
+
+### Movement blockers and affordances
+
+`DoMoveImpl(...)` refuses movement when the creature is:
+
+- deleted
+- frozen
+- paralyzed
+- casting a spell
+- under `DisallowAllMoves`
+- still within the current move-delay window
+
+When blocked, the same function can also:
+
+- open unlocked or unlock-free doors if `CanOpenDoors`
+- ignore movable impassables if `CanMoveOverObstacles`
+- destroy movable impassables if `CanDestroyObstacles`
+- auto-turn and retry when a straight move fails
+
+Important implication:
+
+- movement capability is a meaningful AI differentiator already; it is not just map traversal plumbing
+
+### Home, spawner regions, and roaming boundaries
+
+`WalkRandomInHome(...)` uses `Home` and `RangeHome` to keep creatures within their roaming boundary.
+
+Special cases:
+
+- if `Home == Point3D.Zero` and the creature came from a `SpawnEntry`, the code can temporarily constrain wandering to the spawner region
+- if the current region does not accept spawns from the spawner region, the creature may bias toward `region.GoLocation`
+- if the creature is outside `RangeHome`, the logic steers it back toward `Home`
+
+Important implication:
+
+- spawn regions and home anchors are already part of the AI movement contract; changing wander behavior without respecting them can break ecology, encounter spacing, and spawn containment
+
+### Pathing and teleport recovery
+
+`MoveTo(...)` tries direct movement first. If direct movement fails while trying to close distance, it creates a `PathFollower` and falls back to pathing.
+
+`OnTeleported()` forces repathing if a path already exists.
+
+Important implication:
+
+- a lot of stock chase logic is "simple move first, pathing second." Any replacement system should match that bias unless there is a deliberate performance reason not to.
+
+### Range control helper
+
+`WalkMobileRange(...)` is the main shared helper for spacing around another mobile:
+
+- used for melee closing
+- used for flee/backoff spacing
+- used for archer and caster envelopes
+- used by controlled followers to maintain distance from masters
+
+Important implication:
+
+- many shell differences are envelope-management differences, not entirely separate brains
+
+### TargetLocation and waypoint-driven exceptions
+
+Two special movement surfaces deserve extra care:
+
+- `CurrentWayPoint` affects how wander logic traverses scripted waypoint chains
+- `TargetLocation` forces a `CurrentSpeed` of `0.3`, so it silently overrides normal active/passive movement pacing
+
+Important implication:
+
+- escorts, guided actors, or scripted movers can "feel strange" if an overhaul assumes `CurrentSpeed` always reflects the shell's own combat state
 
 ## AcquireFocusMob: The Real Targeting Choke Point
 
@@ -204,16 +493,38 @@ This matters for overhaul planning because:
 
 It does much more than "pick a target."
 
-### What it handles before ranking
+### What it handles before normal ranking
 
-Before normal candidate scoring, `AcquireFocusMob` already handles:
+Before the candidate loop even begins, `AcquireFocusMob` already handles:
 
 - bard-provoked fixed targeting
 - controlled-pet `ControlTarget`
 - `ConstantFocus`
 - `FightMode.None`
-- reacquire timing gates
-- some fight-mode-specific short circuits
+- `FightMode.Aggressor` early exit when there is no aggression, faction, or ethic context
+- reacquire timing gates through `NextReacquireTime`
+
+Important implication:
+
+- several gameplay systems bypass ranking entirely and never enter the "best target" comparison loop
+
+### Reacquire timing gate
+
+If `NextReacquireTime` has not expired, `AcquireFocusMob` clears `FocusMob` and returns `false`. When the function does proceed, it immediately advances `NextReacquireTime` by `ReacquireDelay`.
+
+Important implication:
+
+- the reacquire cadence is intentionally sparse unless a hook calls `ForceReacquire()`
+
+### Boat-freeze workaround
+
+The function does not iterate the pooled enumerable directly. It first copies nearby mobiles into a `List<Mobile>` and only then scores them.
+
+The inline comment documents this as a "random freeze fix while sailing on a boat."
+
+Important implication:
+
+- this is a shard-specific safeguard, not cosmetic code. An optimization pass that "simplifies" the loop back to direct pooled iteration may reintroduce a live bug.
 
 ### What it filters during the candidate loop
 
@@ -225,9 +536,11 @@ The candidate loop includes gameplay-sensitive checks such as:
 - summon restrictions
 - faction and ethic hostility
 - honor restrictions
-- harmful action legality
+- harmful-action legality
 - aggression-mode semantics
-- karma / criminal / kill-count / evil-good filters
+- karma, criminal, kill-count, and evil-good filters
+
+Only after those filters pass does the function call `GetFightModeRanking(...)`.
 
 ### Why this matters
 
@@ -242,6 +555,8 @@ If you replace or bypass this logic with a custom threat table, you risk:
 This is the reason central targeting improvements should be layered after legality, not instead of it.
 
 ## Stock AI Shells
+
+These summaries describe the live stock shells and their practical role in the current shard.
 
 ### AnimalAI
 
@@ -273,12 +588,13 @@ Implication:
 Current role:
 
 - stock caster shell with combat spellcasting, healing, dispel, poison timing, and movement logic
-- has a `SmartAI` branch, but that branch currently defaults to `m_Mobile is BaseVendor`
+- contains a `SmartAI` branch
+- that branch currently defaults to `m_Mobile is BaseVendor`
 
 Implication:
 
 - the code already contains richer mage behavior than most hostile mage mobs are currently using
-- expanding mage intelligence can likely reuse existing code rather than requiring a new mage brain from scratch
+- expanding mage intelligence can likely reuse existing code rather than requiring a brand-new mage brain from scratch
 
 ### MeleeAI
 
@@ -309,7 +625,7 @@ Implication:
 
 Current role:
 
-- service NPC behavior
+- service-NPC behavior
 - reacts to `FocusMob` interaction
 - flees when attacked
 
@@ -322,7 +638,7 @@ Implication:
 Current role:
 
 - aggressive minimal brain
-- close on the nearest valid target and stay committed
+- closes on the nearest valid target and stays committed
 
 Implication:
 
@@ -332,23 +648,32 @@ Implication:
 
 Current role:
 
-- role-specific disruptive AI
-- behavior is driven by stealing logic, not pure combat optimization
+- specialist disruptive AI, not a generic skirmisher
+- closes on its target like a melee shell, but then looks for a weapon to disarm and steal
+- if the target is not currently wielding something useful, it searches the backpack for bandages, regs, spellbooks, runebooks, potions, scrolls, magic staffs, and gold
+- if nothing worth stealing is found, or if conditions turn against it, it can pivot into flee behavior
 
 Implication:
 
-- thief mobs are specialists and should keep their identity rather than being flattened into a generic skirmisher
+- thief mobs are identity-driven utility enemies
+- flattening them into a generic tactical scorer would remove disarm-and-loot behavior that is currently their core combat gimmick
 
 ### CitizenAI
 
-Current role:
+Current role in source:
 
-- effectively inert shell
-- action methods return `false`
+- `CitizenAI` exists as a class
+- its action methods return `false`
+
+Current role in practice:
+
+- `AI_Citizen` is not currently mapped by `ChangeAIType`
+- content that sets `AI = AIType.AI_Citizen` is therefore not receiving `new CitizenAI(this)` through the normal stock assignment path
 
 Implication:
 
-- any content that sets `AI_Citizen` is opting out of normal combat shell behavior
+- `AI_Citizen` should be treated as a content marker and special-case gameplay tag, not as a reliably instantiated shell
+- any overhaul or cleanup pass should explicitly decide whether to wire `CitizenAI` back in or continue treating `AI_Citizen` as an "effectively no stock brain" state
 
 ### PredatorAI
 
@@ -366,252 +691,280 @@ Implication:
 
 ## OmniAI
 
-`OmniAI` is the closest thing in the codebase to "player-like AI."
+`OmniAI` is not the stock system, but it matters because it demonstrates what the shard already considers desirable "player-like" behavior.
 
 ### What OmniAI can do
 
-From the `Custom/OmniAI` files, OmniAI is built to:
+Observed capabilities include:
 
-- inspect the creature's trained skills and decide what systems it can use
-- cast from multiple magic schools
-- self-heal through several possible skill paths
-- swap weapons
-- use weapon abilities and stun moves
-- react to field spells
-- hide when appropriate
-- reacquire better targets when the current one gets far away or pathing fails
+- hazard awareness
+- self-healing and recovery behavior
+- action selection across trained skills
+- mobility and spacing tools
+- weapon and style changes
+- role-specific utility usage
 
 ### Why OmniAI matters
 
-OmniAI shows what the shard already considers "advanced behavior," but it also shows the cost and complexity of full-stack intelligence:
+Practical implication:
 
-- it is a broad skill-using tactical layer, not a small targeting tweak
-- it is mostly used through `ForcedAI`
-- it is a better model for special actors than for universal deployment on every mob
+- it is a design reference for readable tactical behavior
+- it should not be assumed to be a drop-in replacement for stock NPCs
+- its value for a broad overhaul is architectural inspiration, not blanket deployment
 
 ### Practical reading
 
-Use OmniAI as a design reference, not as the default answer for ordinary mobs.
+If the goal is "make regular mobs act more like players without turning them into stat sticks," OmniAI is best treated as a library of desirable combat instincts:
 
-Good ideas to borrow:
-
-- hazard awareness
-- self-preservation
-- better mid-fight reacquire logic
-- readable utility actions
-
-Bad idea to universalize:
-
-- every NPC using a full player-kit decision tree
+- preserve legality-first target selection from the stock framework
+- borrow readable tactical choices and spacing patterns
+- avoid granting every stock NPC the full player-kit decision tree
 
 ## How AI Is Assigned Today
 
-AI assignment happens in three major ways.
+AI assignment is spread across several different mechanisms.
 
 ### 1. Constructor-time shell selection
 
-This is the dominant pattern.
+The most common pattern is still:
 
-Most mobiles pass `AIType` and `FightMode` directly through the `BaseCreature` constructor.
+- pick an `AIType`
+- pick a `FightMode`
+- define ranges and speeds in the constructor
 
-Observed single-line constructor pattern counts:
-
-- `AI_Melee`: 492
-- `AI_Mage`: 349
-- `AI_Animal`: 96
-- `AI_Archer`: 14
-- `AI_Citizen`: 1
-
-Observed single-line constructor `FightMode` counts:
-
-- `Closest`: 807
-- `Aggressor`: 101
-- `Evil`: 20
-- `None`: 8
-
-Use these as directional counts, not as perfect truth. Multi-line constructors and nonstandard initialization patterns can hide additional assignments.
+This is the baseline hostile-mobile assignment path.
 
 ### 2. Runtime reassignment
 
-Some scripts explicitly write `AI = AIType.X` after construction or during behavior changes.
+A second layer changes `AI` later by writing the `AI` property, which re-enters `ChangeAIType(...)`.
 
-Observed runtime AI assignment counts:
+This surface is mixed:
 
-- `AI_Melee`: 49
-- `AI_Mage`: 29
-- `AI_Archer`: 18
-- `AI_Citizen`: 11
+- some uses are true runtime switches
+- some are spawn-time or role-randomization assignments
+- some are temporary or scripted transformations
 
-This matters because constructor AI is not always the final AI.
+Important implication:
+
+- counting `AI = AIType...` lines is useful for risk discovery, but those counts should not be read as "number of live combat shapeshifters"
 
 ### 3. ForcedAI bypass
 
-Some scripts ignore normal shell mapping and inject a concrete `BaseAI` instance through `ForcedAI`.
-
-This is a hard bypass of any enum-level overhaul.
+`ForcedAI` is a separate assignment lane. Anything using it is outside the normal enum factory.
 
 ## Assignment Patterns By Mobile Family
 
-A quick group-by of single-line constructor signatures shows where the stock shell families are concentrated.
+At a high level, the shard currently uses a few broad assignment patterns:
 
-Largest observed buckets:
+- standard hostile creatures usually pick one stock shell in the constructor and stay there
+- some humanoids randomize between melee, archer, and mage shells during construction
+- some special actors begin in a social or citizen-like state and later switch shells
+- some summons and clone-like actors bypass stock assignment entirely
+- some encounters layer custom behavior mostly through hooks rather than shell replacement
 
-- `Humanoids / Melee`: 85
-- `Animals / Animal`: 65
-- `Humanoids / Mage`: 48
-- `Reptilian / Melee`: 46
-- `Undead / Melee`: 45
-- `Undead / Mage`: 41
-- `Elementals / Mage`: 37
-- `Dragons / Mage`: 34
-- `Constructs / Melee`: 31
-- `Elementals / Melee`: 29
+Important implication:
 
-Practical takeaway:
-
-- most of the shard's regular combat population is still stock `MeleeAI` or `MageAI`
-- an overhaul centered on those shells plus target scoring will reach a large amount of content
-- that still does not cover the exception systems discussed below
+- an overhaul needs to classify content by assignment pattern, not just by species or folder
 
 ## Civilian, Service, And Social NPCs
 
-These are especially important because they look like mobs in code, but they are not normal combat content.
+These actors are high-risk to globalize because their use of AI is not mainly about combat.
 
 ### BaseNPC
 
-Characteristics:
+Current role:
 
-- built on `AI_Animal` with `FightMode.Aggressor`
-- `Blessed = true`
-- `AlwaysAttackable = false`
-- `ReacquireOnMovement = true`
-- `Unprovokable = true`
-- `Uncalmable = true`
+- provides basic civilian or service-style behavior
+- overrides `ReacquireOnMovement`
+- frequently participates in systems like speech, teaching, or quest interaction
 
 Implication:
 
-- this is a service/town actor base, not a generic animal combatant
+- many `BaseNPC` derivatives should be out of scope for a combat overhaul unless the goal explicitly includes social NPC behavior
 
 ### BasePerson
 
-Characteristics:
+Current role:
 
-- built on `AI_Melee` with `FightMode.Closest`
-- `AlwaysAttackable = true`
-- `ReacquireOnMovement = true`
-- `Unprovokable = true`
-- `Uncalmable = true`
-- custom `IsEnemy` logic tied to `IntelligentAction`
+- civilian-personality layer on top of the base mobile stack
+- also overrides `ReacquireOnMovement`
 
 Implication:
 
-- this class looks like a plain melee person on the surface, but it is already using custom social/region logic
+- this hierarchy is closer to town and life simulation behavior than to hostile AI
 
 ### BaseVendor
 
-Characteristics:
+Current role:
 
-- service NPC base class
-- `PlayerRangeSensitive = true`
-- interacts with vendor, training, restock, and buy/sell systems
+- `PlayerRangeSensitive` is explicitly `true`
+- `OnThink()` is actively used
+- `VendorAI` is a service behavior, not a combat shell
 
 Implication:
 
-- vendor AI is tied to service availability and sector activity, not only combat
+- vendor behavior sits directly on the same activation and timer framework as combat AI, but it exists for service interactions rather than difficulty design
 
 ### BaseHealer
 
-Characteristics:
+Current role:
 
-- subclass of `BaseVendor`
-- when not invulnerable, sets `AI = AI_Mage`, `FightMode = Aggressor`
-- also has movement-triggered resurrection and healing logic for nearby players
+- uses mage-style support logic for service and resurrection behavior
 
 Implication:
 
-- healers are hybrid service/combat actors and need their own audit bucket
+- healer NPCs are one of the clearest examples of AI code being reused for non-hostile gameplay
 
 ## Dynamic AI Switchers
 
-Some scripts use AI as a mode switch rather than a permanent creature identity.
+These are the most important reviewed examples of content that does not keep one shell forever.
 
 ### Adventurers
 
-Pattern:
+Observed pattern:
 
-- constructor starts from `AI_Melee`
-- sets `AI_Citizen`
-- then promotes to `AI_Mage`, `AI_Melee`, or `AI_Archer` based on generated citizen type and loadout
+- start by setting `AI_Citizen`
+- then branch to `AI_Mage`, `AI_Melee`, or `AI_Archer` based on generated role
 
 Implication:
 
-- constructor AI alone is not enough to classify this mobile
+- this class mixes social-NPC setup with combat-role specialization, which makes it a useful model for staged-role assignment but a risky target for blanket assumptions about `AI_Citizen`
 
 ### Syth and Jedi
 
-Pattern:
+Observed pattern:
 
-- `SwitchTactics()` flips between `AI_Melee` and `AI_Mage`
+- override combat event hooks
+- swap between mage and melee AI states in response to encounter conditions
 
 Implication:
 
-- some content already uses AI shells as stance changes
-- a future profile system needs to survive AI shell swaps cleanly
+- these are true runtime switchers and should be treated as bespoke combat actors
 
 ### RuneGuardian
 
-Pattern:
+Observed pattern:
 
-- starts as a mage-style creature and can randomly switch to `AI_Melee`
+- participates in runtime AI reassignment and movement-sensitive combat behavior
 
 Implication:
 
-- some uniques vary shell identity per spawn, not just per class
+- it belongs in the special-case register, not the generic stock-mob bucket
 
 ### Generated crews and transformed actors
 
-Example:
+Observed pattern:
 
-- `Mobiles/Humanoids/Sailors/Galleons/BasePirate.cs` spawns crew and then assigns AI, fight mode, karma, and identity at runtime
+- ship crews, animated spell creatures, and some summon or scripted systems assign AI after construction as part of spawn or transformation setup
 
 Implication:
 
-- generated encounters can inherit AI from staging code rather than from the class you think you are balancing
+- "runtime AI assignment" spans several meanings and should be grouped before any refactor tries to normalize it
+
+## Engine Hooks And World Activation
+
+AI execution is coupled to the world engine, not just to the mobile hierarchy.
+
+### PlayerRangeSensitive
+
+By default, `BaseCreature.PlayerRangeSensitive` returns `CurrentWayPoint == null`.
+
+Important implications:
+
+- creatures following waypoints stay active even when players are not nearby
+- ordinary wandering creatures are generally eligible for sector-based activation and deactivation
+
+### OnSectorActivate and location reactivation
+
+`BaseCreature.OnSectorActivate()` calls `m_AI.Activate()` when the creature is `PlayerRangeSensitive`.
+
+`BaseCreature.OnLocationChange(...)` also reactivates AI when the creature enters an active sector and already has an AI instance.
+
+Important implication:
+
+- AI activation is not a one-time spawn decision; it is refreshed by world movement and sector activity
+
+### Sector player activation
+
+`Sector.OnEnter(...)` and `Sector.OnLeave(...)` activate and deactivate sectors when players enter or leave them.
+
+Important implication:
+
+- the presence of players is literally part of whether many AI timers run
+
+### Vendor override
+
+`BaseVendor` explicitly overrides `PlayerRangeSensitive` to `true`.
+
+Important implication:
+
+- service NPCs are intentionally wired into the same player-proximity activation model as ordinary mobs
+
+### Region combat and legality hooks
+
+The region system contributes directly to AI legality and combat state:
+
+- `Region.OnCombatantChange(...)`
+- `Region.AllowHarmful(...)`
+- `Region.OnCriminalAction(...)`
+
+Important implication:
+
+- region rules are not downstream consequences of target selection; they are part of the target-selection and combat-state pipeline itself
+
+## Shard-Specific Behavioral Quirks
+
+These are easy-to-miss live rules that an overhaul could erase by accident.
+
+### Bard unpacify on damage
+
+`BaseCreature.OnDamage(...)` can break bard pacification probabilistically based on missing health.
+
+Implication:
+
+- bard control is not only managed in the timer branch; damage events can also alter it
+
+### Ocean-monster leap behavior
+
+The same `OnDamage(...)` path contains special behavior for some ocean monsters:
+
+- when hurt by a player on shore under the right conditions, the creature can set `Home` to its current spot and leap to the attacker
+
+Implication:
+
+- this is combat-adjacent movement behavior living outside the stock shell methods
+
+### AcquireFocusMob boat-freeze workaround
+
+The target-acquisition loop snapshots nearby mobiles into a list before scoring them.
+
+Implication:
+
+- this is documented in source as a freeze workaround while sailing and should be preserved unless replaced by something proven safe
 
 ## ForcedAI Inventory
 
-These are the main `ForcedAI` users found in the codebase:
+This list is exact for non-obsolete gameplay code reviewed through search.
+
+### Live `ForcedAI` overrides
 
 - `Data/Scripts/Custom/CloneOfflinePlayerCharacters/CharacterClone.cs`
 - `Data/Scripts/Custom/OmniAI/AITester.cs`
 - `Data/Scripts/Magic/Jester/Spells/Clowns.cs`
 - `Data/Scripts/Magic/Ninjitsu/MirrorImage.cs`
-- `Data/Scripts/System/Obsolete/Obsolete.cs`
 
-How they matter:
+Practical reading:
 
-- `CharacterClone` forces `OmniAI`
-- `MirrorImage` forces `CloneAI`
-- `Clowns` forces `ClownAI`
-- test and obsolete content also touch this seam
-
-### CloneAI and ClownAI
-
-These are not general combat brains.
-
-They mostly:
-
-- follow their summon master
-- avoid normal searching
-- exist to preserve illusion/summon behavior rather than to make tactical combat decisions
-
-Implication:
-
-- do not fold these into a generic targeting overhaul
+- clones, test harnesses, mirror images, and clown summons all bypass normal stock assignment
+- these are high-confidence exclusions for any stock-NPC tactical rollout
 
 ## Custom Target-Ranking Overrides
 
-The following scripts override `GetFightModeRanking` directly:
+This list is exact for non-obsolete gameplay code reviewed through search.
+
+### Live `GetFightModeRanking(...)` overrides
+
+Summon and conjuration identity dominates this list:
 
 - `Data/Scripts/Magic/Death Knight/DevilPact.cs`
 - `Data/Scripts/Magic/Druidism/Effects/TreefellowSpell.cs`
@@ -633,50 +986,106 @@ The following scripts override `GetFightModeRanking` directly:
 - `Data/Scripts/Mobiles/Summoned/GasCloud.cs`
 - `Data/Scripts/Mobiles/Summoned/Swarm.cs`
 
-Pattern:
+Practical reading:
 
-- most of these are summons, conjurations, or temporary magical entities
+- this override surface is not a generic hostile-mob surface
+- it is strongly tied to summon identity and magical flavor
 
-Implication:
+## Runtime AI Reassignment Inventory
 
-- summon identity often depends on nonstandard prey logic
-- a universal tactical score must either preserve or explicitly layer on top of these overrides
+This section is intentionally mixed and search-derived. The point is to identify categories of reassignment rather than pretend every `AI = AIType...` hit means the same thing.
+
+### Reviewed dynamic switchers
+
+These are the clearest true switchers confirmed by direct review:
+
+- `Data/Scripts/Mobiles/Humanoids/Humans/Adventurers.cs`
+- `Data/Scripts/Mobiles/Humanoids/Aliens/Syth.cs`
+- `Data/Scripts/Mobiles/Humanoids/Aliens/Jedi.cs`
+- `Data/Scripts/Mobiles/Unique/RuneGuardian.cs`
+
+### Search-derived reassignment families
+
+Other `AI = AIType...` hits cluster into several families:
+
+- spell-created or animated creatures such as `AnimateDeadSpell`, `MagicLock`, and alchemical or magical summons
+- generated ship and pirate crews
+- constructor-time role randomizers for humanoids and townsfolk
+- special social or encounter actors that begin in one AI state and are later reassigned
+
+Practical reading:
+
+- runtime AI reassignment is a real surface, but its semantics vary too much to treat it as one uniform mechanism
 
 ## Reacquire And Retarget Special Cases
 
 ### Default behavior
 
-By default, creatures do not rapidly retarget:
+Default stock behavior is:
 
-- `ReacquireDelay` defaults to 10 seconds
-- `ReacquireOnMovement` defaults to `false`
+- `ReacquireDelay` = 10 seconds
+- `ReacquireOnMovement` = `false`
+- `ForceReacquire()` clears the time gate
 
 ### Known explicit delay overrides
 
-Observed `ReacquireDelay` overrides:
+Exact non-obsolete overrides:
 
-- `Data/Scripts/Mobiles/Mystical/Wisp.cs`
 - `Data/Scripts/Mobiles/Mystical/DarkWisp.cs`
-- `Data/Scripts/System/Obsolete/Obsolete.cs`
+- `Data/Scripts/Mobiles/Mystical/Wisp.cs`
 
-The live mystical examples both cut delay to 1 second.
+Practical reading:
+
+- delay overrides are rare
+- when they exist, they are deliberate and should be treated as role or encounter tuning
 
 ### Movement-based retargeting
 
-Observed codewide count for `override bool ReacquireOnMovement`: 286
+`BaseCreature.OnMovement(...)` calls `ForceReacquire()` when:
 
-Important implication:
+- `ReacquireOnMovement` is `true`
+- or the creature is a paragon
 
-- movement-triggered retargeting is already a major behavior surface
-- a global change to movement-driven reacquire will have wide, uneven effects
+Practical reading:
 
-### Paragon interaction
+- movement-driven retargeting already exists, but it is opt-in and broad when enabled
 
-Base movement handling also forces reacquire for paragons, even without a per-class override.
+### Aggression-driven retargeting
 
-Implication:
+`BaseCreature.AggressiveAction(...)` stops flee and calls `ForceReacquire()`.
 
-- not all movement-reactive creatures advertise that behavior with a local override
+Practical reading:
+
+- the codebase already has an event-driven "wake up and re-evaluate" pattern on meaningful combat events
+
+## AI-Adjacent OnThink Hooks
+
+The current codebase has a large `OnThink()` surface. Some of it is encounter logic, some of it is summon identity, and some of it is civilian behavior.
+
+### Directly reviewed encounter-critical examples
+
+- `Exodus`
+- `PlagueBeast`
+- `BasePirate` and pirate-captain style ship logic
+- `CharacterClone`
+
+These should be treated as encounter or system logic piggybacking on AI cadence.
+
+### Common OnThink families
+
+Search-derived clusters include:
+
+- summoned magical entities
+- elemental and spirit conjurations
+- base vendors and social NPCs
+- citizen and training NPCs
+- pirate and crew logic
+- clones and champion minions
+
+Practical reading:
+
+- `OnThink` counts size the cadence-sensitive surface
+- they do not mean every hit is a bespoke combat boss
 
 ## Scripted Encounter Hooks
 
@@ -688,7 +1097,7 @@ Relevant behavior:
 
 - `ReacquireOnMovement` is enabled while uncontrolled
 - `OnThink()` reactivates field state when not hurt
-- `Move()` emits field particles in combat
+- movement is part of the encounter effect surface
 
 Implication:
 
@@ -717,26 +1126,32 @@ Implication:
 
 ## Codewide Override Surface
 
-Observed codewide grep counts across `Data/Scripts`:
+These refreshed counts exclude `Data/Scripts/System/Obsolete` and `Data/Scripts/Custom/XMLSpawner`.
 
-- `ForcedAI`: 8 matching lines
-- `override double GetFightModeRanking`: 19
-- `override bool ReacquireOnMovement`: 286
-- `override TimeSpan ReacquireDelay`: 3
-- `override void OnThink(...)`: 71
-- `override void OnMovement(...)`: 131
-- `override void OnDamage(...)`: 58
-- `override void OnDamagedBySpell(...)`: 19
-- `override void OnGotMeleeAttack(...)`: 161
-- `override void AggressiveAction(...)`: 2
-- `ChangeAIType(...)` call sites: 5
-- runtime `AI = AIType...` assignments: 107
+### Exact or narrowly search-derived counts
 
-How to read these numbers:
+- `ForcedAI`: 4 files
+- `GetFightModeRanking(...)`: 19 files
+- `ReacquireDelay`: 2 files
+- `PlayerRangeSensitive`: 5 files
+- `ReacquireOnMovement`: 255 files
+- `OnThink(...)`: 69 files
+
+### Broader event-hook counts
+
+These are still useful, but they include mixed systems such as items, quests, and environment logic:
+
+- `OnMovement(...)`: 91 files
+- `OnDamage(...)`: 58 files
+- `OnDamagedBySpell(...)`: 19 files
+- `OnGotMeleeAttack(...)`: 157 files
+- `AggressiveAction(...)`: 2 files
+
+### How to read these numbers
 
 - they size the review surface
 - they do not mean every hit is a normal hostile AI script
-- they do mean encounter logic, summon logic, social NPC logic, and AI assignment are spread across the codebase
+- they do mean encounter logic, summon logic, social NPC logic, pathing behavior, and AI assignment are spread across the codebase
 
 ## Gameplay Systems Tightly Coupled To AI
 
@@ -750,6 +1165,7 @@ AI interacts directly with:
 - `ControlTarget`
 - master-follow behavior
 - attack-order propagation
+- control-state speed and warmode changes
 
 Changing target selection without understanding pet order logic will produce bad pet behavior.
 
@@ -759,6 +1175,7 @@ AI is explicitly branched by:
 
 - bard pacify
 - bard provoke
+- unpacify-on-damage behavior
 
 These are not optional buffs layered on top. They are part of the AI flow itself.
 
@@ -770,13 +1187,24 @@ Target selection is already aware of:
 - ethic hostility
 - honor rules
 - harmful-action legality
-- evil/good/criminal/karma filters
+- evil-good and criminal filters
+- aggression semantics
 
 Any overhaul that ignores these rules will create gameplay regressions, not just tactical differences.
 
 ### Region and service behavior
 
-Town actors, vendors, healers, and some quest actors use AI-adjacent hooks for interaction, resurrection, healing, teaching, or scripted conversation.
+Town actors, vendors, healers, and some quest actors use AI-adjacent hooks for interaction, resurrection, healing, teaching, scripted conversation, and region-controlled combat legality.
+
+### Spawn and home behavior
+
+AI activation, deactivation, and wandering already depend on:
+
+- sector activity
+- `PlayerRangeSensitive`
+- waypoint exceptions
+- `SpawnEntry.ReturnOnDeactivate`
+- `Home`, `RangeHome`, and region acceptance
 
 ### Summon identity
 
@@ -791,6 +1219,7 @@ These are the safest high-value central seams for a future overhaul:
 - role-sensitive reacquire timing
 - event-driven `ForceReacquire()` hooks for meaningful combat events
 - better use of existing mage and healer role logic
+- grouped use of existing movement helpers rather than replacing the entire movement stack at once
 
 ## What Is Not Safe To Globalize
 
@@ -803,85 +1232,125 @@ These are the most dangerous things to change globally without a whitelist:
 - treating `ForcedAI` actors as normal stock mobs
 - globally speeding up `OnMovement`-driven reacquire
 - changing AI timer cadence without auditing `OnThink` encounter scripts
+- rewriting movement rules without respecting `Home`, `RangeHome`, waypoint, and spawn-region behavior
+- assuming `AI_Citizen` is a live shell instead of checking the actual mapping
 
 ## Recommended Overhaul Workstreams
 
 ### Workstream 1: Core tactical layer
 
-Scope:
-
-- add tactical scoring after legality
-- leave `FightMode`, control logic, and summon legality intact
+- keep legality in `AcquireFocusMob`
+- add richer post-legality target weighting
+- keep the first rollout stateless and event-driven
 
 ### Workstream 2: Whitelist rollout
 
-Scope:
-
-- start with ordinary uncontrolled hostile mobs using stock `MeleeAI`, `MageAI`, and `ArcherAI`
-- exclude civilians, vendors, healers, `ForcedAI` actors, scripted summons, and major encounter scripts
+- start with ordinary uncontrolled hostile mobs using stock shells
+- exclude civilians, vendors, healers, `ForcedAI` actors, and summon-ranking overrides
 
 ### Workstream 3: Exception register
 
-Maintain an explicit list of:
-
-- `ForcedAI` users
-- runtime AI switchers
-- custom target ranking users
-- special reacquire users
-- encounter scripts that depend on `OnThink` cadence
+- maintain a live register of `ForcedAI`, target-ranking overrides, runtime shell switchers, and cadence-sensitive `OnThink` actors
 
 ### Workstream 4: Mage and healer pass
 
-Scope:
+- reuse existing `MageAI` and `HealerAI` role logic before inventing new brains
+- treat support behavior as a role problem, not just a target-scoring problem
 
-- reuse the richer logic already present in `MageAI`
-- preserve healer/support identity rather than forcing generic aggressor scoring
+### Workstream 5: Movement and activation audit
 
-### Workstream 5: Encounter audit
+- audit anything that changes `CurrentSpeed`, `OnActionChanged`, `PlayerRangeSensitive`, or movement helpers as a separate risk stream from target selection
 
-Scope:
+### Workstream 6: Encounter audit
 
-- deep-audit bosses and event systems that override `OnThink`, `OnDamage`, `OnDamagedBySpell`, or `OnGotMeleeAttack`
-- verify whether each one depends on stock AI cadence, combatant changes, or movement-triggered reacquire
+- explicitly review bosses and systems where `OnThink`, `OnDamage`, or `OnGotMeleeAttack` are part of the encounter mechanic
+
+## Overhaul-Readiness Matrix
+
+Use this matrix to decide what can be centralized and what must stay exception-driven.
+
+| Surface | Current owner | Centralize carefully? | Why |
+| --- | --- | --- | --- |
+| Target legality | `AcquireFocusMob`, `Region`, faction and ethic code | No | This is rules enforcement, not tactical flavor. |
+| Post-legality target preference | `GetFightModeRanking` and shell logic | Yes | This is the best seam for better choices without breaking lawfulness. |
+| Control orders | `Obey()` and `OnCurrentOrderChanged()` | No | Pets are command-driven, not generic score-driven. |
+| Movement envelope | `WalkMobileRange`, `MoveTo`, shell logic | Yes, but incrementally | Shell identity depends heavily on spacing and chase rules. |
+| Home and wander constraints | `Home`, `RangeHome`, `SpawnEntry`, waypoint logic | No | This is ecology and encounter containment behavior. |
+| Timer cadence | `CurrentSpeed`, `AITimer`, `OnThink()` hooks | No, except by whitelist | Many systems borrow the same cadence. |
+| World activation | `PlayerRangeSensitive`, `Sector`, `OnSectorActivate()` | No | This is a server-activation and performance system. |
+| Summon prey identity | summon-specific ranking overrides | No | This is spell identity. |
+| Stock melee, archer, and mage tactics | shell methods plus post-legality scoring | Yes | This is the main opportunity for better combat feel. |
 
 ## Minimum Exclusion List For V1
 
-If an overhaul starts tomorrow, the first version should exclude at least:
+Any first-pass tactical overhaul should exclude at least:
 
-- `BaseNPC`
-- `BasePerson`
-- `BaseVendor`
-- `BaseHealer`
-- all `ForcedAI` users
-- all `GetFightModeRanking` override users
-- all obvious runtime AI switchers
-- scripted encounter bosses and event spawners
-- summon illusion/follow-master AI
+- `ForcedAI` actors
+- stock summons and magical constructs with `GetFightModeRanking(...)` overrides
+- vendors, healers, town actors, and service NPCs
+- citizen-tagged content until `AI_Citizen` behavior is explicitly resolved
+- runtime switchers such as `Adventurers`, `Syth`, `Jedi`, and `RuneGuardian`
+- encounter actors with important `OnThink()` mechanics
+- anything whose behavior depends on custom `OnDamage`, `OnDamagedBySpell`, or `OnGotMeleeAttack` reactions in a boss-style context
 
 ## Refresh Commands
 
-These are the most useful commands for refreshing this audit after future changes:
+These commands are useful for refreshing the inventories after future content changes.
+
+### Exact override surfaces
 
 ```powershell
-rg -n "enum FightMode|public enum FightMode" Data
-rg -n "AIType\\.|ActionType\\.|class .*AI" Data/Scripts/Mobiles/Base/Behavior.cs Data/Scripts/Mobiles/Base/BaseCreature.cs
-rg -l "ForcedAI" Data/Scripts | Sort-Object
-rg -l "override double GetFightModeRanking" Data/Scripts | Sort-Object
-rg -n "AI = AIType\\.AI_|ChangeAIType\\(" Data/Scripts | Sort-Object
-rg -n ": base\\(AIType\\.AI_" Data/Scripts | Sort-Object
-rg -n "override bool ReacquireOnMovement|override TimeSpan ReacquireDelay" Data/Scripts | Sort-Object
-rg -n "override void OnThink\\(|override void OnMovement\\(|override void OnDamage\\(|override void OnDamagedBySpell\\(|override void OnGotMeleeAttack\\(" Data/Scripts | Sort-Object
+rg -n -F "protected override BaseAI ForcedAI" Data/Scripts
+rg -n -F "public override double GetFightModeRanking(" Data/Scripts
+rg -n -F "public override TimeSpan ReacquireDelay" Data/Scripts
+rg -n -F "public override bool PlayerRangeSensitive" Data/Scripts
 ```
+
+### Large search-derived surfaces
+
+```powershell
+rg -n -F "public override bool ReacquireOnMovement" Data/Scripts
+rg -n -F "public override void OnThink(" Data/Scripts
+rg -n -F "override void OnMovement(" Data/Scripts
+rg -n -F "override void OnDamage(" Data/Scripts
+rg -n -F "override void OnDamagedBySpell(" Data/Scripts
+rg -n -F "override void OnGotMeleeAttack(" Data/Scripts
+```
+
+### Assignment and switching surfaces
+
+```powershell
+rg -n "AI\\s*=\\s*AIType\\." Data/Scripts
+rg -n "ChangeAIType\\(" Data/Scripts
+rg -n "CurrentAI\\s*=|DefaultAI\\s*=" Data/Scripts
+```
+
+### Suggested exclusions when refreshing counts
+
+For a "live gameplay" count instead of a raw repository count, exclude at least:
+
+- `Data/Scripts/System/Obsolete`
+- `Data/Scripts/Custom/XMLSpawner`
 
 ## Bottom Line
 
-The shard's AI is already a layered, rule-heavy system. The right way to overhaul it is:
+The current shard AI is not one replaceable brain. It is a distributed behavior system built from:
 
-- keep legality and shard-rule enforcement centralized
-- treat stock shells, runtime assignment, and `ForcedAI` as separate concerns
-- roll out tactical improvements with a whitelist
-- preserve specialist identity for summons, support mobs, vendors, and scripted encounters
+- `BaseCreature` state and assignment
+- `BaseAI` timer and state-machine shells
+- movement and pathing helpers
+- world-activation rules
+- target-legality rules
+- pet orders and bard branches
+- summon identity overrides
+- encounter-specific event hooks
 
-If the overhaul is approached as "replace the AI," it will likely break shard rules and bespoke content.
+That is not bad news. It means the safest path to a strong overhaul is visible:
 
-If it is approached as "add a tactical layer to the stock shells, then audit exceptions deliberately," it has a much better chance of improving gameplay without collateral damage.
+- keep legality and control semantics intact
+- improve post-legality target choice
+- respect movement and cadence as gameplay systems
+- whitelist ordinary hostile stock mobs first
+- maintain an explicit exception register for everything else
+
+If future work follows those rules, the shard can make ordinary NPCs smarter and more fun without turning the server into a pile of broken edge cases.
