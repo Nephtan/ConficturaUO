@@ -64,6 +64,16 @@ namespace Server.Mobiles
             get { return (m_Mobile.Skills[SkillName.Bushido].Base > 10.0); }
         }
 
+        public virtual bool m_CanUseElementalism
+        {
+            get { return (m_Mobile.Skills[SkillName.Elementalism].Base > 10.0); }
+        }
+
+        public virtual bool m_CanUseHolyMan
+        {
+            get { return (m_Mobile.Skills[SkillName.Spiritualism].Base > 10.0); }
+        }
+
         public virtual bool m_CanUseKnightship
         {
             get { return (m_Mobile.Skills[SkillName.Knightship].Base > 10.0); }
@@ -74,6 +84,11 @@ namespace Server.Mobiles
             get { return (m_Mobile.Skills[SkillName.Magery].Base > 10.0); }
         }
 
+        public virtual bool m_CanUseMystic
+        {
+            get { return (m_Mobile.Skills[SkillName.FistFighting].Base > 10.0); }
+        }
+
         public virtual bool m_CanUseNecromancy
         {
             get { return (m_Mobile.Skills[SkillName.Necromancy].Base > 10.0); }
@@ -82,6 +97,21 @@ namespace Server.Mobiles
         public virtual bool m_CanUseNinjitsu
         {
             get { return (m_Mobile.Skills[SkillName.Ninjitsu].Base > 10.0); }
+        }
+
+        public virtual bool m_CanUseResearch
+        {
+            get { return (m_Mobile.Skills[SkillName.Inscribe].Base > 10.0); }
+        }
+
+        public virtual bool m_CanUseShinobi
+        {
+            get { return (m_Mobile.Skills[SkillName.Ninjitsu].Base > 10.0); }
+        }
+
+        public virtual bool m_CanUseSyth
+        {
+            get { return (m_Mobile.Skills[SkillName.Psychology].Base > 10.0); }
         }
 
         public virtual bool m_SwapWeapons
@@ -299,16 +329,28 @@ namespace Server.Mobiles
                     skill.Add(0);
                 if (m_CanUseBushido)
                     skill.Add(1);
+                if (m_CanUseElementalism)
+                    skill.Add(6);
+                if (m_CanUseHolyMan)
+                    skill.Add(7);
                 if (m_CanUseKnightship)
                     skill.Add(2);
                 if (m_CanUseMagery)
                     skill.Add(3);
+                if (m_CanUseMystic)
+                    skill.Add(8);
                 if (m_CanUseNecromancy)
                     skill.Add(4);
                 if (m_CanUseNinjitsu)
                     skill.Add(5);
+                if (m_CanUseResearch)
+                    skill.Add(9);
+                if (m_CanUseShinobi)
+                    skill.Add(10);
+                if (m_CanUseSyth)
+                    skill.Add(11);
                 //if ( m_CanUseSpellweaving )
-                //	skill.Add( 6 );
+                //skill.Add( 6 );
 
                 if (skill.Count == 0)
                     return true;
@@ -320,7 +362,9 @@ namespace Server.Mobiles
 
                 switch (whichone)
                 {
-                    // case 0: BardPower(); break;
+                    case 0:
+                        BardPower();
+                        break;
                     case 1:
                         BushidoPower();
                         break;
@@ -336,8 +380,27 @@ namespace Server.Mobiles
                     case 5:
                         NinjitsuPower();
                         break;
+                    case 6:
+                        ElementalismPower();
+                        break;
+                    case 7:
+                        HolyManPower();
+                        break;
+                    case 8:
+                        MysticPower();
+                        break;
+                    case 9:
+                        ResearchPower();
+                        break;
+                    case 10:
+                        ShinobiPower();
+                        break;
+                    case 11:
+                        SythPower();
+                        break;
                     //case 6: SpellweavingPower(); break;
                 }
+
             }
 
             return true;

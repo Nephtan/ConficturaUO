@@ -75,9 +75,14 @@ namespace Server.Mobiles
 
             List<SkillName> healingSkills = new List<SkillName>
             {
+                SkillName.Elementalism,
                 SkillName.Magery,
                 SkillName.Necromancy,
                 SkillName.Knightship,
+                SkillName.Spiritualism,
+                SkillName.FistFighting,
+                SkillName.Inscribe,
+                SkillName.Psychology,
                 SkillName.Healing
             };
 
@@ -92,6 +97,20 @@ namespace Server.Mobiles
 
                 switch (skill)
                 {
+                    case SkillName.Elementalism:
+                        if (m_CanUseElementalism)
+                        {
+                            if (m_Mobile.Poisoned)
+                            {
+                                spell = new Elemental_Sanctuary_Spell(m_Mobile, null);
+                            }
+                            else
+                            {
+                                spell = new Elemental_Mend_Spell(m_Mobile, null);
+                            }
+                        }
+                        break;
+
                     case SkillName.Magery:
                         if (m_CanUseMagery)
                         {
@@ -110,6 +129,54 @@ namespace Server.Mobiles
                                     spell = new HealSpell(m_Mobile, null);
                                 }
                             }
+                        }
+                        break;
+
+                    case SkillName.Spiritualism:
+                        if (m_CanUseHolyMan)
+                        {
+                            if (m_Mobile.Poisoned)
+                            {
+                                spell = new PurgeSpell(m_Mobile, null);
+                            }
+                            else
+                            {
+                                spell = new TouchOfLifeSpell(m_Mobile, null);
+                            }
+                        }
+                        break;
+
+                    case SkillName.FistFighting:
+                        if (m_CanUseMystic)
+                        {
+                            if (m_Mobile.Poisoned)
+                            {
+                                spell = new PurityOfBody(m_Mobile, null);
+                            }
+                            else
+                            {
+                                spell = new GentleTouch(m_Mobile, null);
+                            }
+                        }
+                        break;
+
+                    case SkillName.Inscribe:
+                        if (m_CanUseResearch)
+                        {
+                            if (m_Mobile.Hits < m_Mobile.HitsMax / 2)
+                                spell = new ResearchIntervention(m_Mobile, null);
+                            else
+                                spell = new ResearchHealingTouch(m_Mobile, null);
+                        }
+                        break;
+
+                    case SkillName.Psychology:
+                        if (m_CanUseSyth)
+                        {
+                            if (m_Mobile.Hits < m_Mobile.HitsMax / 2)
+                                spell = new Absorption(m_Mobile, null);
+                            else
+                                spell = new DrainLife(m_Mobile, null);
                         }
                         break;
 
