@@ -20,9 +20,21 @@ The agent's primary objective is to assist with the development and maintenance 
 
 * **IDE:** The project is developed using Visual Studio Community 2022.
 
-* **Core Dependencies:** All custom scripts located in the `Data/Scripts/` directory depend on the core engine files located in `System/Source/`. Keep this relationship in mind when analyzing or modifying code.
+* **Core Dependencies:** All custom scripts located in the `Data/Scripts/` directory depend on the core engine files located in `Data/System/Source/`. Keep this relationship in mind when analyzing or modifying code.
 
 * **Line Endings:** Use (LF) line endings to remain compatible with the server environment.
+
+## Known Build Workflows
+
+* **Preferred Build Entry Point:** Open `ConficturaUO.sln` in Visual Studio 2022. The solution includes `Data/System/Source/Server.csproj` and `Data/Scripts/Scripts.csproj`, and the `Scripts` project depends on `Server`.
+
+* **Command-Line Solution Build:** Use `msbuild ConficturaUO.sln /p:Configuration=Debug /p:Platform=x86` or `msbuild ConficturaUO.sln /p:Configuration=Release /p:Platform=x86`. The solution maps the `Server` project to `x86` and the `Scripts` project to `Any CPU`.
+
+* **Server Output:** `Data/System/Source/Server.csproj` builds `ConficturaServer.exe`; the `Debug|x86` output path is the repository root.
+
+* **Manual Compile Reference:** `Data/System/Source/README` documents a direct server compile from the source directory with `C:\Windows\Microsoft.NET\Framework64\v4.0.30319\csc /optimize /unsafe /t:exe /out:World.exe /win32icon:Source\icon.ico /d:NEWTIMERS /d:NEWPARENT /recurse:*.cs`.
+
+* **TODO:** The README compile command outputs `World.exe`, while the current project file outputs `ConficturaServer.exe`. Prefer the solution/project workflow unless you verify the manual command is still current.
 
 ## Coding Conventions
 
