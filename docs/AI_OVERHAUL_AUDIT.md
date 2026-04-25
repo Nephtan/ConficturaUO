@@ -163,7 +163,7 @@ The stock AI shells are mostly different implementations of how those action sta
 
 `BaseCreature.ChangeAIType(AIType)` is the central stock mapping point from enum to shell. Any system that writes `AI = ...` eventually passes through this seam unless `ForcedAI` intercepts it first.
 
-Current live mapping:
+Current stock factory mapping:
 
 - `AI_Melee` -> `MeleeAI`
 - `AI_Animal` -> `AnimalAI`
@@ -176,9 +176,11 @@ Current live mapping:
 - `AI_Thief` -> `ThiefAI`
 - `AI_Citizen` -> no stock mapping in `ChangeAIType`
 
-Important implication:
+Important implications:
 
-- `AIType` is part enum, part content marker, and part real factory input. For `AI_Predator` and `AI_Citizen`, the enum label is not the same thing as the instantiated shell.
+- `AIType` is part enum, part content marker, and part real factory input
+- for `AI_Predator` and `AI_Citizen`, the enum label is not the same thing as the instantiated shell
+- even when a mapping exists in `ChangeAIType`, that still does not prove broad live deployment of the corresponding shell
 
 ### Constructor-time behavior knobs
 
@@ -237,6 +239,31 @@ Important implications:
 - changing `CurrentSpeed` calls `m_AI.OnCurrentSpeedChanged()` and resets the AI timer interval
 - `ConstantFocus` bypasses normal target acquisition
 - door and obstacle affordances are part of the movement brain, not map-only metadata
+
+### Persistence And Rehydration
+
+`BaseCreature.Deserialize(...)` is an AI lifecycle path, not just a save-data concern. The load path restores or reconstructs all of the following before re-entering the stock AI factory:
+
+- `CurrentAI` and `DefaultAI`
+- `RangePerception`, `RangeFight`, `Home`, `RangeHome`, and `Team`
+- `FightMode`
+- `ActiveSpeed`, `PassiveSpeed`, and `CurrentSpeed`, including post-load normalization through `SpeedInfo.GetSpeeds(...)`
+- `Controlled`, `ControlMaster`, `ControlTarget`, `ControlDest`, and `ControlOrder`
+- `Tamable`, `Summoned`, `SummonEnd`, and the unsummon timer restart
+- `CurrentWayPoint`
+- loyalty, owners, bonded-pet state, remove-if-untamed state, and delete timers
+
+The load path then:
+
+- restarts delete and unsummon timers when needed
+- runs `CheckStatTimers()`
+- calls `ChangeAIType(m_CurrentAI)`
+
+Important implications:
+
+- an AI overhaul has to be save/load safe and restart-safe, not only combat-safe
+- `CurrentAI` is not just a spawn-time choice; it is persisted state that gets re-instantiated on deserialize
+- any new AI assignment surface, tactical profile, or role layer needs an explicit serialization story if it is meant to survive a server restart
 
 ### ForcedAI
 
@@ -556,7 +583,22 @@ This is the reason central targeting improvements should be layered after legali
 
 ## Stock AI Shells
 
-These summaries describe the live stock shells and their practical role in the current shard.
+These summaries separate shell behavior in source from deployment reality. Prevalence notes in this section are refreshed search-derived signals, not exact live-NPC totals, and they exclude `Data/Scripts/System/Obsolete` plus `Data/Scripts/Custom/XMLSpawner`.
+
+### Deployment-aware shell matrix
+
+| AIType / shell | Factory mapping in `ChangeAIType` | Search-derived deployment signal | Practical note |
+| --- | --- | --- | --- |
+| `AI_Melee` / `MeleeAI` | direct | constructor-heavy, common runtime setter | dominant general-purpose hostile shell and also a service-class fallback |
+| `AI_Mage` / `MageAI` | direct | constructor-heavy, common runtime setter | live hostile caster shell plus non-hostile reuse |
+| `AI_Animal` / `AnimalAI` | direct | regular constructor use, no refreshed runtime setter hits | simple creature shell |
+| `AI_Archer` / `ArcherAI` | direct | sparse constructor use, meaningful runtime setter use | often appears as a switchable role rather than a permanent species identity |
+| `AI_Healer` / `HealerAI` | direct | no refreshed non-obsolete constructor or runtime assignments confirmed | available shell and semantic tag, but not a broadly confirmed live assignment path |
+| `AI_Vendor` / `VendorAI` | direct | no refreshed non-obsolete constructor or runtime assignments confirmed | available shell and semantic tag, but `BaseVendor` does not start here |
+| `AI_Berserk` / `BerserkAI` | direct | no refreshed non-obsolete constructor or runtime assignments confirmed | available in source, not currently confirmed as a live assignment lane |
+| `AI_Thief` / `ThiefAI` | direct | no refreshed non-obsolete constructor or runtime assignments confirmed | specialist shell present in the factory, but current deployment looks sparse or absent |
+| `AI_Citizen` / `CitizenAI` | no stock factory mapping | one refreshed constructor hit, multiple runtime setter hits | inconsistent state or content marker rather than a reliable shell assignment |
+| `AI_Predator` / `PredatorAI` | `AI_Predator` instantiates `MeleeAI` | no refreshed non-obsolete deployment confirmed | legacy label; the source class exists, but the stock factory does not instantiate it |
 
 ### AnimalAI
 
@@ -590,6 +632,7 @@ Current role:
 - stock caster shell with combat spellcasting, healing, dispel, poison timing, and movement logic
 - contains a `SmartAI` branch
 - that branch currently defaults to `m_Mobile is BaseVendor`
+- is also reused by non-invulnerable `BaseHealer` instances through runtime `AI = AIType.AI_Mage`
 
 Implication:
 
@@ -602,6 +645,7 @@ Current role:
 
 - standard melee shell for the majority of hostile mobs
 - handles reacquisition, chase logic, and target swaps when current target is far or movement is blocked
+- is also the constructor-time shell used by `BaseVendor`, which means not every `AI_Melee` actor is meant to be difficulty content
 
 Implication:
 
@@ -609,54 +653,78 @@ Implication:
 
 ### HealerAI
 
-Current role:
+Current role in source:
 
 - ally-support shell, not normal hostile target-selection logic
 - scans same-team visible `BaseCreature` allies
 - cures poison first, then greater-heal threshold, then lesser-heal threshold
 - when nobody needs help, drifts toward the weakest hostile target
 
+Deployment reality:
+
+- refreshed non-obsolete searches did not find constructor-time `: base(AIType.AI_Healer, ...)` or runtime `AI = AIType.AI_Healer` assignments
+- `BaseHealer` does not instantiate `HealerAI` by default; vulnerable healers switch to `AI_Mage` instead
+- import and encounter tooling still treat `AI_Healer` as a meaningful semantic label
+
 Implication:
 
 - healer behavior is already role-based and team-aware
-- forcing a generic hostile scoring model onto healer logic would be a regression
+- `HealerAI` should currently be treated as an available role asset and semantic marker, not as a broadly confirmed live shell
+- forcing a generic hostile scoring model onto healer logic would be a regression if this shell is reintroduced or expanded later
 
 ### VendorAI
 
-Current role:
+Current role in source:
 
 - service-NPC behavior
 - reacts to `FocusMob` interaction
 - flees when attacked
 
+Deployment reality:
+
+- refreshed non-obsolete searches did not find constructor-time `: base(AIType.AI_Vendor, ...)` or runtime `AI = AIType.AI_Vendor` assignments
+- `BaseVendor` starts as `AI_Melee` and layers most vendor behavior through class-specific logic and `OnThink()`
+- import and encounter tooling still check `AI_Vendor` semantically
+
 Implication:
 
+- vendor behavior is not a reliable `AI_Vendor` deployment story; it is mostly service-class behavior riding the shared AI/timer framework
 - vendor brains are not combat difficulty content and should be excluded from combat-overhaul assumptions
 
 ### BerserkAI
 
-Current role:
+Current role in source:
 
 - aggressive minimal brain
 - closes on the nearest valid target and stays committed
 
+Deployment reality:
+
+- refreshed non-obsolete searches did not confirm live constructor-time or runtime `AI_Berserk` assignments
+
 Implication:
 
 - a good candidate for "low-cost simple aggressor" if you want some mobs to stay dumb on purpose
+- treat it as available-but-undeployed until live usage is individually verified
 
 ### ThiefAI
 
-Current role:
+Current role in source:
 
 - specialist disruptive AI, not a generic skirmisher
 - closes on its target like a melee shell, but then looks for a weapon to disarm and steal
 - if the target is not currently wielding something useful, it searches the backpack for bandages, regs, spellbooks, runebooks, potions, scrolls, magic staffs, and gold
 - if nothing worth stealing is found, or if conditions turn against it, it can pivot into flee behavior
 
+Deployment reality:
+
+- refreshed non-obsolete searches did not confirm live constructor-time or runtime `AI_Thief` assignments
+
 Implication:
 
 - thief mobs are identity-driven utility enemies
 - flattening them into a generic tactical scorer would remove disarm-and-loot behavior that is currently their core combat gimmick
+- if this shell is brought back into active use, it should be treated as a specialist exception, not normal melee flavor
 
 ### CitizenAI
 
@@ -669,6 +737,7 @@ Current role in practice:
 
 - `AI_Citizen` is not currently mapped by `ChangeAIType`
 - content that sets `AI = AIType.AI_Citizen` is therefore not receiving `new CitizenAI(this)` through the normal stock assignment path
+- refreshed non-obsolete searches found one constructor-time `AI_Citizen` assignment and multiple runtime setters, which reinforces that the enum is still used even though the shell is not factory-backed
 
 Implication:
 
@@ -683,11 +752,13 @@ Current role in source:
 
 Current role in practice:
 
-- not mapped by `ChangeAIType`
+- `AI_Predator` currently instantiates `MeleeAI`, not `PredatorAI`
+- refreshed non-obsolete searches did not confirm live constructor-time or runtime `AI_Predator` assignments
 
 Implication:
 
 - `PredatorAI` is a dormant or legacy behavior asset, not a live stock assignment path
+- the enum value should be treated as legacy labeling unless and until the factory mapping is intentionally restored
 
 ## OmniAI
 
@@ -752,6 +823,33 @@ Important implication:
 
 `ForcedAI` is a separate assignment lane. Anything using it is outside the normal enum factory.
 
+### 4. Deserialize-time rehydration
+
+`BaseCreature.Deserialize(...)` restores `m_CurrentAI`, `m_DefaultAI`, control state, movement parameters, summon timers, waypoint state, and adjacent lifecycle fields, then calls `ChangeAIType(m_CurrentAI)`.
+
+Important implication:
+
+- saved AI state is part of the live assignment story
+- an overhaul that only works for freshly spawned mobs but not for deserialized ones is incomplete
+
+### 5. Service-class emulation and semantic AIType usage
+
+Some actor families are not assigned through a special-purpose shell even though the enum or source tree suggests they might be:
+
+- `BaseVendor` starts `AI_Melee`, not `AI_Vendor`
+- non-invulnerable `BaseHealer` switches to `AI_Mage`, not `AI_Healer`
+- `AI_Predator` currently resolves to `MeleeAI`
+
+Separately, some code still treats dormant enum values semantically:
+
+- `RandomEncounters.Import` treats `AI_Healer` and `AI_Vendor` as non-hostile
+- `EncounterEngine` checks `AI_Vendor` before force-assigning `Combatant`
+
+Important implication:
+
+- the enum is used as a blend of factory input, legacy label, and semantic metadata
+- a safe overhaul has to separate "what shell gets instantiated" from "what downstream systems infer from the enum"
+
 ## Assignment Patterns By Mobile Family
 
 At a high level, the shard currently uses a few broad assignment patterns:
@@ -761,10 +859,37 @@ At a high level, the shard currently uses a few broad assignment patterns:
 - some special actors begin in a social or citizen-like state and later switch shells
 - some summons and clone-like actors bypass stock assignment entirely
 - some encounters layer custom behavior mostly through hooks rather than shell replacement
+- some service and social classes emulate their role through `AI_Melee` or `AI_Mage` plus class-specific hooks rather than through a bespoke enum-backed shell
 
 Important implication:
 
 - an overhaul needs to classify content by assignment pattern, not just by species or folder
+
+## AIType Deployment Prevalence
+
+These counts are refreshed search-derived prevalence signals, not exact live gameplay totals. They are useful for prioritization because they distinguish dominant assignment lanes from dormant or semantic-only ones.
+
+### Constructor-time prevalence
+
+- `AI_Melee`: 460 non-obsolete constructor hits
+- `AI_Mage`: 324 non-obsolete constructor hits
+- `AI_Animal`: 90 non-obsolete constructor hits
+- `AI_Archer`: 14 non-obsolete constructor hits
+- `AI_Citizen`: 1 non-obsolete constructor hit
+- `AI_Healer`, `AI_Vendor`, `AI_Berserk`, `AI_Thief`, and `AI_Predator`: no refreshed non-obsolete constructor hits confirmed
+
+### Runtime setter prevalence
+
+- `AI_Melee`: 48 refreshed non-obsolete `AI = AIType.AI_Melee` hits
+- `AI_Mage`: 29 refreshed non-obsolete `AI = AIType.AI_Mage` hits
+- `AI_Archer`: 18 refreshed non-obsolete `AI = AIType.AI_Archer` hits
+- `AI_Citizen`: 11 refreshed non-obsolete `AI = AIType.AI_Citizen` hits
+- `AI_Animal`, `AI_Healer`, `AI_Vendor`, `AI_Berserk`, `AI_Thief`, and `AI_Predator`: no refreshed non-obsolete runtime setter hits confirmed
+
+Important implication:
+
+- the first overhaul wave should optimize for `MeleeAI`, `MageAI`, `AnimalAI`, and `ArcherAI`, because those are the clearly dominant deployment paths
+- the remaining AIType values should be treated as exceptions, dormant assets, or semantic labels until individually re-verified
 
 ## Civilian, Service, And Social NPCs
 
@@ -799,17 +924,20 @@ Current role:
 
 - `PlayerRangeSensitive` is explicitly `true`
 - `OnThink()` is actively used
-- `VendorAI` is a service behavior, not a combat shell
+- constructor-time assignment is `AI_Melee`, not `AI_Vendor`
+- vendor behavior is mostly class-specific service logic, not proof of live `VendorAI` deployment
 
 Implication:
 
 - vendor behavior sits directly on the same activation and timer framework as combat AI, but it exists for service interactions rather than difficulty design
+- vendor content should be classified by service-class behavior and activation hooks, not by assuming the `AI_Vendor` shell is active
 
 ### BaseHealer
 
 Current role:
 
-- uses mage-style support logic for service and resurrection behavior
+- vulnerable instances explicitly switch to `AI_Mage` with `FightMode.Aggressor`
+- uses mage-style support logic for service and resurrection behavior rather than a broadly confirmed live `HealerAI` shell
 
 Implication:
 
@@ -860,6 +988,37 @@ Observed pattern:
 Implication:
 
 - "runtime AI assignment" spans several meanings and should be grouped before any refactor tries to normalize it
+
+## Action Callback Extension Surface
+
+This is a small but important extension seam that does not require a custom `BaseAI` subclass.
+
+### What the seam is
+
+`BaseCreature` exposes these virtual callbacks:
+
+- `OnActionWander()`
+- `OnActionCombat()`
+- `OnActionGuard()`
+- `OnActionFlee()`
+- `OnActionInteract()`
+- `OnActionBackoff()`
+
+`Behavior.cs` invokes the matching callback immediately before dispatching the corresponding `DoAction*()` branch.
+
+Important implication:
+
+- content can inject behavior on action-state transitions without replacing the stock shell
+- an overhaul that bypasses or rewires the normal action dispatcher can break bespoke combat logic that does not advertise itself as a custom AI class
+
+### Current reviewed deployment
+
+Refreshed non-obsolete searches found only two live overrides of this surface:
+
+- `SandVortex.OnActionCombat()`
+- `OrcBomber.OnActionCombat()`
+
+In both cases, the mobile keeps its stock shell but adds combat-only special behavior through the callback seam.
 
 ## Engine Hooks And World Activation
 
@@ -1136,6 +1295,7 @@ These refreshed counts exclude `Data/Scripts/System/Obsolete` and `Data/Scripts/
 - `PlayerRangeSensitive`: 5 files
 - `ReacquireOnMovement`: 255 files
 - `OnThink(...)`: 69 files
+- `OnAction*()` overrides: 2 files in refreshed non-obsolete searches, both `OnActionCombat()`
 
 ### Broader event-hook counts
 
@@ -1151,7 +1311,7 @@ These are still useful, but they include mixed systems such as items, quests, an
 
 - they size the review surface
 - they do not mean every hit is a normal hostile AI script
-- they do mean encounter logic, summon logic, social NPC logic, pathing behavior, and AI assignment are spread across the codebase
+- they do mean encounter logic, summon logic, social NPC logic, pathing behavior, AI assignment, and action-state callbacks are spread across the codebase
 
 ## Gameplay Systems Tightly Coupled To AI
 
@@ -1195,6 +1355,12 @@ Any overhaul that ignores these rules will create gameplay regressions, not just
 ### Region and service behavior
 
 Town actors, vendors, healers, and some quest actors use AI-adjacent hooks for interaction, resurrection, healing, teaching, scripted conversation, and region-controlled combat legality.
+
+### Persistence and restart behavior
+
+Deserialization restores AI assignment, control state, timers, and movement parameters before re-entering `ChangeAIType(m_CurrentAI)`.
+
+Any overhaul that ignores restart/load behavior can create bugs that only appear after a world save, reboot, or deserialized spawn.
 
 ### Spawn and home behavior
 
@@ -1278,6 +1444,8 @@ Use this matrix to decide what can be centralized and what must stay exception-d
 | Home and wander constraints | `Home`, `RangeHome`, `SpawnEntry`, waypoint logic | No | This is ecology and encounter containment behavior. |
 | Timer cadence | `CurrentSpeed`, `AITimer`, `OnThink()` hooks | No, except by whitelist | Many systems borrow the same cadence. |
 | World activation | `PlayerRangeSensitive`, `Sector`, `OnSectorActivate()` | No | This is a server-activation and performance system. |
+| Deserialize-time AI rehydration | `BaseCreature.Deserialize(...)` and `ChangeAIType(m_CurrentAI)` | No | Assignment changes have to survive save/load and restart cycles. |
+| Action-state callbacks | `OnAction*()` on `BaseCreature` plus `Behavior.cs` dispatch | No, except by review | Some content piggybacks on stock action transitions instead of custom shells. |
 | Summon prey identity | summon-specific ranking overrides | No | This is spell identity. |
 | Stock melee, archer, and mage tactics | shell methods plus post-legality scoring | Yes | This is the main opportunity for better combat feel. |
 
@@ -1304,6 +1472,7 @@ rg -n -F "protected override BaseAI ForcedAI" Data/Scripts
 rg -n -F "public override double GetFightModeRanking(" Data/Scripts
 rg -n -F "public override TimeSpan ReacquireDelay" Data/Scripts
 rg -n -F "public override bool PlayerRangeSensitive" Data/Scripts
+rg -n "public override void OnAction(Wander|Combat|Guard|Flee|Interact|Backoff)\\(" Data/Scripts
 ```
 
 ### Large search-derived surfaces
@@ -1323,6 +1492,9 @@ rg -n -F "override void OnGotMeleeAttack(" Data/Scripts
 rg -n "AI\\s*=\\s*AIType\\." Data/Scripts
 rg -n "ChangeAIType\\(" Data/Scripts
 rg -n "CurrentAI\\s*=|DefaultAI\\s*=" Data/Scripts
+rg -n --glob '!Data/Scripts/System/Obsolete/**' --glob '!Data/Scripts/Custom/XMLSpawner/**' ": base\\(AIType\\.AI_" Data/Scripts
+rg -n --glob '!Data/Scripts/System/Obsolete/**' --glob '!Data/Scripts/Custom/XMLSpawner/**' "AI\\s*=\\s*AIType\\." Data/Scripts
+rg -n "AIType\\.AI_(Vendor|Healer|Citizen|Predator)" Data/Scripts/Mobiles/Base/BaseVendor.cs Data/Scripts/Mobiles/Base/BaseHealer.cs Data/Scripts/Custom/RandomEncounters/Import.cs Data/Scripts/Custom/RandomEncounters/EncounterEngine.cs
 ```
 
 ### Suggested exclusions when refreshing counts
@@ -1337,11 +1509,13 @@ For a "live gameplay" count instead of a raw repository count, exclude at least:
 The current shard AI is not one replaceable brain. It is a distributed behavior system built from:
 
 - `BaseCreature` state and assignment
+- deserialize-time AI rehydration
 - `BaseAI` timer and state-machine shells
 - movement and pathing helpers
 - world-activation rules
 - target-legality rules
 - pet orders and bard branches
+- action-state callbacks
 - summon identity overrides
 - encounter-specific event hooks
 
