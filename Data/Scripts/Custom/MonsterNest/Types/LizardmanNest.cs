@@ -13,8 +13,8 @@ namespace Server.Custom.Confictura
             : base()
         {
             Name = "Lizardman Nest";
-            ItemID = 13335;
-            Hue = 1573;
+            ItemID = 9956;
+            Hue = 0;
             m_MaxCount = 30;
             m_RespawnTime = TimeSpan.FromSeconds(3.0);
             HitsMax = 5000;
