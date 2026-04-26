@@ -139,8 +139,9 @@ The stock AI enum currently exposes:
 Important implications:
 
 - The enum advertises more behaviors than the live `ChangeAIType` mapping actually instantiates.
+- `AI_Use_Default` is not its own shell. It is an alias value that collapses back to `DefaultAI` in the `AI` property setter.
 - `AI_Predator` is especially dangerous to assume is live, because `ChangeAIType` currently routes `AI_Predator` to `MeleeAI`, not `PredatorAI`.
-- `AI_Citizen` is even trickier: the enum value exists and the `CitizenAI` class exists, but `ChangeAIType` does not currently map `AI_Citizen` to `CitizenAI`. Content that sets `AI_Citizen` is therefore not selecting a live stock shell through the normal mapping path.
+- `AI_Citizen` is even trickier: the enum value exists and the `CitizenAI` class exists, but `ChangeAIType` does not currently map `AI_Citizen` to `CitizenAI`. Content that sets `AI_Citizen` is therefore not selecting a live stock shell through the normal mapping path, even though other systems still branch on the enum value semantically.
 
 ### ActionType
 
@@ -181,6 +182,28 @@ Important implications:
 - `AIType` is part enum, part content marker, and part real factory input
 - for `AI_Predator` and `AI_Citizen`, the enum label is not the same thing as the instantiated shell
 - even when a mapping exists in `ChangeAIType`, that still does not prove broad live deployment of the corresponding shell
+
+### Enum vs Live Shell State
+
+The live AI system is split across two different state layers:
+
+- owner-side enum state on `BaseCreature`: `CurrentAI` and `DefaultAI`
+- the instantiated live shell object exposed through `AIObject`
+
+Observed behavior:
+
+- the constructor sets both `m_CurrentAI` and `m_DefaultAI`, then calls `ChangeAIType(AI)`
+- the `AI` property setter updates `m_CurrentAI`
+- if the new value is `AI_Use_Default`, the setter collapses it back to `m_DefaultAI`
+- `ChangeAIToDefault()` skips the alias and directly re-enters `ChangeAIType(m_DefaultAI)`
+- `AIObject` returns the current live `BaseAI` instance, which outside code can inspect or drive directly
+
+Important implications:
+
+- the enum fields are persistent owner state, not the same thing as the live shell instance
+- `AI_Use_Default` is a reset instruction, not a separate behavior family
+- unmapped enum values such as `AI_Citizen` leave `ChangeAIType` without creating a stock shell, so `AIObject` can remain `null` unless something later reassigns the AI or `ForcedAI` supplies one
+- any overhaul that adds new shell-local state has to decide whether that state belongs on the owner, on the shell, or both
 
 ### Constructor-time behavior knobs
 
@@ -259,10 +282,18 @@ The load path then:
 - runs `CheckStatTimers()`
 - calls `ChangeAIType(m_CurrentAI)`
 
+Direct-read inference about reconstructed shell state:
+
+- `BaseCreature.Serialize(...)` persists `m_CurrentAI` and `m_DefaultAI`, but not the live `BaseAI` object itself
+- `ChangeAIType(m_CurrentAI)` therefore recreates the shell on load
+- the `BaseAI` constructor allocates a new timer and resets `Action = ActionType.Wander`
+- shell-local timing fields such as `NextMove` and searching cadence live on `BaseAI`, so they are rebuilt from startup behavior rather than individually restored through `BaseCreature` serialization
+
 Important implications:
 
 - an AI overhaul has to be save/load safe and restart-safe, not only combat-safe
 - `CurrentAI` is not just a spawn-time choice; it is persisted state that gets re-instantiated on deserialize
+- transient shell state is reconstructed, not replayed exactly, unless the owner explicitly persists enough data to rebuild it
 - any new AI assignment surface, tactical profile, or role layer needs an explicit serialization story if it is meant to survive a server restart
 
 ### ForcedAI
@@ -738,11 +769,13 @@ Current role in practice:
 - `AI_Citizen` is not currently mapped by `ChangeAIType`
 - content that sets `AI = AIType.AI_Citizen` is therefore not receiving `new CitizenAI(this)` through the normal stock assignment path
 - refreshed non-obsolete searches found one constructor-time `AI_Citizen` assignment and multiple runtime setters, which reinforces that the enum is still used even though the shell is not factory-backed
+- `BaseCreature.OnBeforeDeath()` contains citizen-specific death handling behind `if (AI == AIType.AI_Citizen)`
+- `BaseRegion` blocks harmful action for `AI_Citizen` actors when `FightMode == None`
 
 Implication:
 
-- `AI_Citizen` should be treated as a content marker and special-case gameplay tag, not as a reliably instantiated shell
-- any overhaul or cleanup pass should explicitly decide whether to wire `CitizenAI` back in or continue treating `AI_Citizen` as an "effectively no stock brain" state
+- `AI_Citizen` should be treated as a semantic gameplay flag with no stock shell mapping, not as a reliably instantiated shell
+- any overhaul or cleanup pass should explicitly decide whether to wire `CitizenAI` back in or continue treating `AI_Citizen` as a rules-bearing enum state that may have no `AIObject`
 
 ### PredatorAI
 
@@ -1020,6 +1053,30 @@ Refreshed non-obsolete searches found only two live overrides of this surface:
 
 In both cases, the mobile keeps its stock shell but adds combat-only special behavior through the callback seam.
 
+## External AIObject Control Surface
+
+`AIObject` is a public live-shell integration point, not only an internal convenience getter.
+
+### What outside code does with it
+
+Refreshed non-obsolete searches show several kinds of direct shell control:
+
+- release-oriented systems call `AIObject.DoOrderRelease()` to force pet or construct cleanup
+- combat scripts force `AIObject.Action = ActionType.Combat`
+- movement choreography code pushes `AIObject.NextMove`
+
+Representative examples:
+
+- `Revenant` forces combat state through `AIObject.Action = ActionType.Combat`
+- `SavageShaman` delays movement animations by writing `AIObject.NextMove`
+- quest or familiar cleanup paths such as `GolemFighter` and `Familiar` call `AIObject.DoOrderRelease()`
+
+Important implications:
+
+- outside code already depends on the mutable public shell API, not just on `BaseCreature` properties
+- if a future overhaul hides, renames, or virtualizes shell internals, the `AIObject` consumers become a compatibility surface that must be audited deliberately
+- this also reinforces why unmapped enum states matter: `AIObject` can be `null`, and several consumers already guard for that explicitly
+
 ## Engine Hooks And World Activation
 
 AI execution is coupled to the world engine, not just to the mobile hierarchy.
@@ -1296,6 +1353,14 @@ These refreshed counts exclude `Data/Scripts/System/Obsolete` and `Data/Scripts/
 - `ReacquireOnMovement`: 255 files
 - `OnThink(...)`: 69 files
 - `OnAction*()` overrides: 2 files in refreshed non-obsolete searches, both `OnActionCombat()`
+- `AI_Use_Default`: 2 hits
+- `ChangeAIToDefault()`: 1 file
+- semantic `AI == AIType.AI_Citizen` branches: 3 hits
+
+### Live-shell integration surface
+
+- `AIObject`: 14 refreshed non-obsolete hits, including the public getter, internal base-class uses, and external consumers
+- direct `AIObject` member writes or calls are concentrated around `DoOrderRelease()`, `Action`, and `NextMove`
 
 ### Broader event-hook counts
 
@@ -1311,7 +1376,7 @@ These are still useful, but they include mixed systems such as items, quests, an
 
 - they size the review surface
 - they do not mean every hit is a normal hostile AI script
-- they do mean encounter logic, summon logic, social NPC logic, pathing behavior, AI assignment, and action-state callbacks are spread across the codebase
+- they do mean encounter logic, summon logic, social NPC logic, pathing behavior, AI assignment, action-state callbacks, and live-shell integrations are spread across the codebase
 
 ## Gameplay Systems Tightly Coupled To AI
 
@@ -1358,7 +1423,7 @@ Town actors, vendors, healers, and some quest actors use AI-adjacent hooks for i
 
 ### Persistence and restart behavior
 
-Deserialization restores AI assignment, control state, timers, and movement parameters before re-entering `ChangeAIType(m_CurrentAI)`.
+Deserialization restores AI assignment, control state, timers, and movement parameters before re-entering `ChangeAIType(m_CurrentAI)`. See `Persistence And Rehydration` above for the owner-state versus reconstructed-shell distinction.
 
 Any overhaul that ignores restart/load behavior can create bugs that only appear after a world save, reboot, or deserialized spawn.
 
@@ -1473,6 +1538,9 @@ rg -n -F "public override double GetFightModeRanking(" Data/Scripts
 rg -n -F "public override TimeSpan ReacquireDelay" Data/Scripts
 rg -n -F "public override bool PlayerRangeSensitive" Data/Scripts
 rg -n "public override void OnAction(Wander|Combat|Guard|Flee|Interact|Backoff)\\(" Data/Scripts
+rg -n -F "AI_Use_Default" Data/Scripts
+rg -n -F "ChangeAIToDefault(" Data/Scripts
+rg -n -F "AI == AIType.AI_Citizen" Data/Scripts
 ```
 
 ### Large search-derived surfaces
@@ -1492,9 +1560,12 @@ rg -n -F "override void OnGotMeleeAttack(" Data/Scripts
 rg -n "AI\\s*=\\s*AIType\\." Data/Scripts
 rg -n "ChangeAIType\\(" Data/Scripts
 rg -n "CurrentAI\\s*=|DefaultAI\\s*=" Data/Scripts
+rg -n -F "AIObject" Data/Scripts
+rg -n -F "AIObject." Data/Scripts
 rg -n --glob '!Data/Scripts/System/Obsolete/**' --glob '!Data/Scripts/Custom/XMLSpawner/**' ": base\\(AIType\\.AI_" Data/Scripts
 rg -n --glob '!Data/Scripts/System/Obsolete/**' --glob '!Data/Scripts/Custom/XMLSpawner/**' "AI\\s*=\\s*AIType\\." Data/Scripts
 rg -n "AIType\\.AI_(Vendor|Healer|Citizen|Predator)" Data/Scripts/Mobiles/Base/BaseVendor.cs Data/Scripts/Mobiles/Base/BaseHealer.cs Data/Scripts/Custom/RandomEncounters/Import.cs Data/Scripts/Custom/RandomEncounters/EncounterEngine.cs
+rg -n -F "AIType.AI_Citizen" Data/Scripts/Mobiles/Base Data/Scripts/System Data/Scripts/Mobiles/Civilized
 ```
 
 ### Suggested exclusions when refreshing counts
