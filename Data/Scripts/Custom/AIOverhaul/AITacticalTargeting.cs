@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Server;
 using Server.Mobiles;
 
@@ -22,8 +23,44 @@ namespace Server.Custom.Confictura
 
     public static class AITacticalTargeting
     {
+        // Phase 3 is an exact-type whitelist. Default deny keeps later content additions,
+        // service actors sharing stock shells, and shell-switching families out until audited.
+        private static readonly Dictionary<Type, AITacticalTargetProfile> m_PhaseThreeProfiles =
+            new Dictionary<Type, AITacticalTargetProfile>
+            {
+                { typeof(HeadlessOne), AITacticalTargetProfile.Bruiser },
+                { typeof(Ratman), AITacticalTargetProfile.Bruiser },
+                { typeof(Lizardman), AITacticalTargetProfile.Bruiser },
+                { typeof(RatmanArcher), AITacticalTargetProfile.Skirmisher },
+                { typeof(LizardmanArcher), AITacticalTargetProfile.Skirmisher }
+            };
+
         public static AITacticalTargetProfile ResolveProfile(BaseCreature mobile)
         {
+            if (
+                mobile == null
+                || mobile.Deleted
+                || mobile.Controlled
+                || mobile.Summoned
+                || mobile.AIObject == null
+                || mobile.FightMode != FightMode.Closest
+            )
+            {
+                return AITacticalTargetProfile.None;
+            }
+
+            if (mobile.AI != AIType.AI_Melee && mobile.AI != AIType.AI_Archer)
+            {
+                return AITacticalTargetProfile.None;
+            }
+
+            AITacticalTargetProfile profile;
+
+            if (m_PhaseThreeProfiles.TryGetValue(mobile.GetType(), out profile))
+            {
+                return profile;
+            }
+
             return AITacticalTargetProfile.None;
         }
 

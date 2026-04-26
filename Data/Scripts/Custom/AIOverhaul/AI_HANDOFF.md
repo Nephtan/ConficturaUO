@@ -12,8 +12,8 @@ This file is the living state record for the AI overhaul project. Review it befo
 
 ## Current Phase
 
-- Status: `Phase 2 - Core Tactical Targeting Seam completed`
-- Next execution target: `Phase 3 - Whitelist Rollout To Ordinary Hostile Stock Mobs`
+- Status: `Phase 3 - Whitelist Rollout To Ordinary Hostile Stock Mobs completed`
+- Next execution target: `Phase 4 - Movement, Spacing, And Cadence For The Whitelist`
 
 ## Completed Work
 
@@ -27,13 +27,16 @@ This file is the living state record for the AI overhaul project. Review it befo
 - Added guarded `BaseCreature` tactical profile and event-driven reacquire seams without introducing persisted state.
 - Added post-legality tactical scoring injection at the stock `AcquireFocusMob` ranking point.
 - Confirmed phase 2 keeps all live content on the inert `None` tactical profile until phase 3 explicitly populates the rollout guard.
+- Activated the tactical layer for a narrow exact-type whitelist of stock hostile melee and archer mobs.
+- Added GM-visible inspection for `TacticalTargetProfile` and `UsesAITacticalTargeting` so live rollout status can be checked with `Props`.
+- Confirmed the phase-3 rollout remains resolver-only, default-deny, and reversible from a single file.
 
 ## Files And Seams Touched
 
-- `Data/Scripts/Custom/AIOverhaul/AITacticalTargeting.cs` added for the default-off tactical profile resolver, reacquire-reason enum, and bounded scoring helper.
-- `Data/Scripts/Mobiles/Base/BaseCreature.cs` extended with guarded tactical profile accessors and event-driven reacquire hooks.
+- `Data/Scripts/Custom/AIOverhaul/AITacticalTargeting.cs` now owns the exact-type whitelist rollout guard, active phase-3 profile assignments, and bounded scoring helper.
+- `Data/Scripts/Mobiles/Base/BaseCreature.cs` now exposes GM-visible tactical profile inspection in addition to the guarded tactical profile accessors and event-driven reacquire hooks.
 - `Data/Scripts/Mobiles/Base/Behavior.cs` updated to layer tactical scoring only after the stock legality and mode filters pass.
-- `Data/Scripts/Custom/AIOverhaul/AI_HANDOFF.md` refreshed to record completed phase-2 state and deferred exception surfaces.
+- `Data/Scripts/Custom/AIOverhaul/AI_HANDOFF.md` refreshed to record the active phase-3 whitelist, exclusions, and rollout guard status.
 
 ## Phase 1 Completion Notes
 
@@ -46,6 +49,15 @@ This file is the living state record for the AI overhaul project. Review it befo
 - No whitelist families are enabled yet; phase 3 remains the first rollout phase.
 - The legality pipeline, bard/control-order semantics, movement, activation, deserialize behavior, and global timer cadence remain unchanged.
 - `FightMode.Strongest`, `FightMode.Weakest`, and special legality-driven fight modes receive no tactical bonus in phase 2.
+
+## Phase 3 Completion Notes
+
+- Phase 3 activates the tactical layer only through the exact-type `AITacticalTargeting.ResolveProfile(...)` whitelist.
+- The active whitelist is limited to `HeadlessOne`, `Ratman`, `Lizardman`, `RatmanArcher`, and `LizardmanArcher`.
+- `Bruiser` is assigned to the whitelisted melee cohort and `Skirmisher` to the whitelisted archer cohort.
+- The rollout remains default-deny for every other family, shell, and subclass.
+- `Props` can now verify rollout membership through the GM-visible `TacticalTargetProfile` and `UsesAITacticalTargeting` properties.
+- No new persisted state, legality changes, cadence changes, or deserialize changes were introduced in phase 3.
 
 ## Unchanged Safety Invariants
 
@@ -62,11 +74,14 @@ This file is the living state record for the AI overhaul project. Review it befo
 - No new persisted AI owner-side or shell-side state was introduced in phase 2.
 - No shell assignment, movement, activation, cadence, bard, summon, control-order, or deserialize behavior changed in phase 2.
 
-## Initial Whitelist Target
+## Active Phase 3 Whitelist
 
-- Ordinary uncontrolled hostile stock mobs using standard shells.
+- `Bruiser`: `HeadlessOne`, `Ratman`, `Lizardman`
+- `Skirmisher`: `RatmanArcher`, `LizardmanArcher`
+- Rollout preconditions: uncontrolled, unsummoned, live `AIObject`, `FightMode.Closest`, and live enum shell `AI_Melee` or `AI_Archer`
+- Rollout policy: exact concrete type equality only; no subclass inheritance, namespace-wide inclusion, or shell-wide inclusion
 
-## Initial Exclusions
+## Phase 3 Exclusions
 
 - Civilians, town actors, vendors, healers, and service NPCs.
 - `ForcedAI` actors.
@@ -75,6 +90,8 @@ This file is the living state record for the AI overhaul project. Review it befo
 - Runtime AI switchers and transformation-driven shell changes.
 - Encounter-critical bosses or systems with cadence-sensitive `OnThink`, `OnDamage`, or `OnGotMeleeAttack` behavior.
 - Any family that depends directly on `AIObject` manipulation until separately reviewed.
+- Stock mages, including `RatmanMage` and `OrcishMage`, until the later mage/healer role pass.
+- `Orc` and `Urc`, which look like simple melee rollout candidates at first glance but can switch to `AI_Archer` inside their constructors.
 
 ## Exception Register
 
@@ -88,6 +105,8 @@ This file is the living state record for the AI overhaul project. Review it befo
 | Encounter-critical `OnThink` families | Excluded | Timer/cadence sensitivity | Review in phase 6 |
 | Vendors, healers, service NPCs | Excluded | Social/service semantics, not generic hostile combat | Keep excluded unless explicitly re-scoped |
 | Citizen-tagged semantics | Excluded | Enum semantics do not imply a stock live shell | Keep excluded unless explicitly re-scoped |
+| `Orc` and `Urc` | Excluded from phase 3 whitelist | Constructor-time shell switching prevents clean single-shell rollout assumptions | Revisit only if a later phase audits dynamic shell families |
+| Stock hostile mages such as `RatmanMage` and `OrcishMage` | Deferred from phase 3 whitelist | Mage behavior is reserved for the later role-specific pass | Review in phase 5 |
 | `FightMode.Strongest` and `FightMode.Weakest` tactical weighting | Deferred from phase-2 bonus | Heterogeneous score domains should not be rescaled in the first tactical pass | Revisit after whitelist rollout proves stable |
 | `FightMode.Aggressor`, `FightMode.Evil`, `FightMode.CharmMonster`, `FightMode.CharmAnimal` tactical weighting | Deferred from phase-2 bonus | Special legality semantics should remain untouched in the first tactical pass | Revisit after whitelist rollout proves stable |
 | `Support` tactical profile | Reserved / inactive | Forward-compatible role token; hostile support targeting is deferred | Review in phase 5 |
@@ -99,6 +118,7 @@ This file is the living state record for the AI overhaul project. Review it befo
 - Any new tactical profile, role layer, or shell-local state needs an explicit persistence story if it must survive restart.
 - Any rollout guard that changes assignment or shell behavior must be checked against deserialize-time rehydration.
 - Phase 2 added no serialized fields and made no `Serialize(...)` or `Deserialize(...)` changes.
+- Phase 3 keeps the whitelist resolver code-defined and non-persistent; restart/load behavior still depends on the same owner-side enum plus live-shell rehydration path.
 
 ## Validation Performed
 
@@ -111,24 +131,31 @@ This file is the living state record for the AI overhaul project. Review it befo
 - Confirmed `AIObject` consumers and `OnAction*()` callback dispatch are still flowing through the stock live-shell and action-state paths.
 - Confirmed `FightMode.Strongest`, `FightMode.Weakest`, and special legality-driven fight modes remain untouched by tactical weighting in phase 2.
 - Confirmed the whitelist target remains ordinary uncontrolled hostile stock mobs using standard shells and that no whitelist rollout is enabled yet.
+- Re-reviewed the audit sections covering whitelist rollout, minimum exclusions, stock shell deployment reality, civilian/service actors, runtime AI switchers, summon identity, and safe versus unsafe centralization before enabling phase 3.
+- Confirmed `AITacticalTargeting.ResolveProfile(...)` now enables only five exact concrete classes and returns `None` for all other types by default.
+- Confirmed the phase-3 rollout guard additionally requires uncontrolled, unsummoned, live-shell, `FightMode.Closest`, and live enum shell `AI_Melee` or `AI_Archer`.
+- Confirmed `RatmanMage`, `OrcishMage`, `Orc`, `Urc`, vendors, healers, `ForcedAI` actors, citizen-tagged content, and summon prey-override families remain excluded from active rollout.
+- Confirmed phase 3 adds no new persisted state and does not modify `AcquireFocusMob(...)` legality ordering, deserialize behavior, or global reacquire cadence.
+- Confirmed `BaseCreature.TacticalTargetProfile` and `BaseCreature.UsesAITacticalTargeting` are now GM-visible for live rollout inspection.
 
 ## Open Risks
 
 - The biggest future risk is accidental expansion beyond the hostile stock whitelist.
-- Phase 3 rollout can still overreach if the whitelist guard is populated too broadly.
+- Phase 3 rollout can still overreach if later edits weaken the exact-type default-deny guard.
 - Movement/cadence changes can spill into encounter behavior if not tightly scoped.
 - Shell-local improvements can become restart bugs if persistence is not designed deliberately.
 - External `AIObject` consumers and action-state callbacks can break even when shell inheritance looks unchanged.
 - Deferred fight-mode domains and reserved role profiles still need separate audits before they can carry tactical weighting.
+- Broadening from the exact-type cohort into stock mage or dynamic-shell families without a role-specific audit is still a high-risk step.
 
 ## Next-Phase Prerequisites
 
 - Review `docs/AI_OVERHAUL_AUDIT.md`.
 - Review this handoff file.
-- Keep phase 3 limited to audited rollout guard population for ordinary uncontrolled hostile stock mobs using standard shells.
-- Confirm the whitelist and exclusions before enabling any non-`None` tactical profile.
-- Preserve legality, control-order, bard, summon identity, `AIObject`, restart/load, and action-state callback invariants while expanding beyond the inert phase-2 seam.
-- Leave civilians, vendors, healers, `ForcedAI`, summons with custom prey logic, citizen-tagged semantics, runtime switchers, and encounter-critical hook families excluded unless explicitly re-audited.
+- Keep phase 4 limited to movement, spacing, and cadence work on the active phase-3 whitelist only.
+- Preserve the exact-type rollout guard while adjusting movement behavior; do not broaden the active cohort as part of phase 4.
+- Preserve legality, control-order, bard, summon identity, `AIObject`, restart/load, and action-state callback invariants while tuning movement and spacing.
+- Leave civilians, vendors, healers, stock mages, `ForcedAI`, summons with custom prey logic, citizen-tagged semantics, runtime switchers, and encounter-critical hook families excluded unless explicitly re-audited.
 - Record any new exception or opt-out immediately.
 
 ## Update Checklist For Future Phases

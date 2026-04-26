@@ -2270,11 +2270,13 @@ namespace Server.Mobiles
             get { return m_AI; }
         }
 
+        [CommandProperty(AccessLevel.GameMaster)]
         public virtual AITacticalTargetProfile TacticalTargetProfile
         {
             get { return AITacticalTargeting.ResolveProfile(this); }
         }
 
+        [CommandProperty(AccessLevel.GameMaster)]
         public virtual bool UsesAITacticalTargeting
         {
             get { return TacticalTargetProfile != AITacticalTargetProfile.None; }
