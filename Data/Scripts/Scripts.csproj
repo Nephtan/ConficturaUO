@@ -518,6 +518,8 @@
     <Compile Include="Custom\MonsterNest\MonsterNest.cs" />
     <Compile Include="Custom\MonsterNest\MonsterNestEntity.cs" />
     <Compile Include="Custom\MonsterNest\MonsterNestLoot.cs" />
+    <Compile Include="Custom\MonsterNest\Types\LizardmanNest.cs" />
+    <Compile Include="Custom\MonsterNest\Types\RatmanNest.cs" />
     <Compile Include="Custom\MonsterNest\Types\UndeadNest.cs" />
     <Compile Include="Custom\NPC Control\CloneCommands.cs" />
     <Compile Include="Custom\NPC Control\StaffCommands\CloneMe.cs" />
