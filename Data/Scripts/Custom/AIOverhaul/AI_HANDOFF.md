@@ -59,6 +59,11 @@ This file is the living state record for the AI overhaul project. Review it befo
 - `Props` can now verify rollout membership through the GM-visible `TacticalTargetProfile` and `UsesAITacticalTargeting` properties.
 - No new persisted state, legality changes, cadence changes, or deserialize changes were introduced in phase 3.
 
+## Live Shard Testing Note
+
+- Phase 3 is live on the main shard and public player testing is now running through `Data/Scripts/Custom/AIOverhaul/AI_PHASE3_PLAYER_TESTING.md`.
+- Archer spacing or kiting feedback should be triaged as likely phase-4 movement feedback unless the report clearly involves target selection.
+
 ## Unchanged Safety Invariants
 
 - Legality-first targeting stays intact.
