@@ -5,6 +5,7 @@ using System.IO;
 using System.Text;
 using Server;
 using Server.ContextMenus;
+using Server.Custom.Confictura;
 using Server.Custom.Confictura.CloneOfflinePlayerCharacters;
 using Server.Factions;
 using Server.Items;
@@ -12715,6 +12716,11 @@ namespace Server.Mobiles
                 Mobile newFocusMob = null;
                 double val = double.MinValue;
                 double theirVal;
+                AITacticalTargetProfile tacticalProfile = m_Mobile.TacticalTargetProfile;
+                int nearbyTeamSize = -1;
+
+                if (tacticalProfile == AITacticalTargetProfile.Captain && acqType == FightMode.Closest)
+                    nearbyTeamSize = m_Mobile.GetTeamSize(8);
 
                 // Original Code Below
                 // IPooledEnumerable eable = map.GetMobilesInRange(m_Mobile.Location, iRange);
@@ -12886,6 +12892,17 @@ namespace Server.Mobiles
                     }
 
                     theirVal = m_Mobile.GetFightModeRanking(m, acqType, bPlayerOnly);
+
+                    // Tactical scoring layers only after the stock legality and mode filters pass.
+                    if (m_Mobile.UsesAITacticalTargeting)
+                        theirVal += AITacticalTargeting.GetTargetBonus(
+                            m_Mobile,
+                            m,
+                            acqType,
+                            bPlayerOnly,
+                            tacticalProfile,
+                            nearbyTeamSize
+                        );
 
                     if (theirVal > val && m_Mobile.InLOS(m))
                     {
