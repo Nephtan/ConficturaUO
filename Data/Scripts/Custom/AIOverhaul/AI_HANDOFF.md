@@ -12,8 +12,8 @@ This file is the living state record for the AI overhaul project. Review it befo
 
 ## Current Phase
 
-- Status: `Phase 0 - Planning complete / implementation not started`
-- Next execution target: `Phase 1 - Workspace, Governance, And No-Op Infrastructure`
+- Status: `Phase 1 - Workspace, Governance, And No-Op Infrastructure completed`
+- Next execution target: `Phase 2 - Core Tactical Targeting Seam`
 
 ## Completed Work
 
@@ -21,13 +21,20 @@ This file is the living state record for the AI overhaul project. Review it befo
 - Created the phased implementation roadmap.
 - Created the local AI overhaul operating rules.
 - Seeded the handoff structure and initial exclusion register.
+- Refreshed the phase-1 governance artifacts against the current audit.
+- Confirmed the existing three-file workspace is sufficient for phase 1 and does not need extra no-op scaffolding.
 
 ## Files And Seams Touched
 
-- `Data/Scripts/Custom/AIOverhaul/AI_PHASED_OVERHAUL_PLAN.md`
-- `Data/Scripts/Custom/AIOverhaul/AI_HANDOFF.md`
-- `Data/Scripts/Custom/AIOverhaul/AGENTS.md`
+- `Data/Scripts/Custom/AIOverhaul/AI_HANDOFF.md` refreshed to record completed phase-1 state.
+- `Data/Scripts/Custom/AIOverhaul/AGENTS.md` refreshed to tighten phase-1 guardrails.
+- `Data/Scripts/Custom/AIOverhaul/AI_PHASED_OVERHAUL_PLAN.md` reviewed and confirmed as the controlling roadmap with no changes needed.
 - No live gameplay code touched yet.
+
+## Phase 1 Completion Notes
+
+- No additional no-op scaffolding files were needed beyond `AI_PHASED_OVERHAUL_PLAN.md`, `AI_HANDOFF.md`, and `AGENTS.md`.
+- No live gameplay code or live AI behavior changed in phase 1.
 
 ## Unchanged Safety Invariants
 
@@ -39,6 +46,7 @@ This file is the living state record for the AI overhaul project. Review it befo
 - `AIObject` compatibility remains a required audit surface.
 - Action-state callback behavior remains a required audit surface.
 - Rollout stays whitelist-first.
+- No live targeting, shell assignment, movement, activation, cadence, bard, summon, control-order, or persistence behavior changed in phase 1.
 
 ## Initial Whitelist Target
 
@@ -76,9 +84,15 @@ This file is the living state record for the AI overhaul project. Review it befo
 
 ## Validation Performed
 
-- Documentation-only initialization.
-- Confirmed the project workspace lives outside `/docs`, which is gitignored.
-- Confirmed no gameplay code has been changed yet.
+- Re-reviewed the audit executive summary and confirmed phase 1 still reflects the shard's layered AI model and no-single-brain architecture.
+- Re-reviewed the audit methodology and confidence notes to keep the workspace aligned with direct-read findings versus search-derived inventories.
+- Re-validated the owner-side enum versus live-shell state model, including `AIObject` exposure and the need to preserve nullable/unmapped shell assumptions.
+- Re-validated the persistence and restart constraints around deserialize-time AI rehydration and reconstructed shell-local state.
+- Re-validated the safe-to-centralize versus not-safe-to-globalize boundaries for legality, control, cadence, movement, summon identity, and encounter logic.
+- Confirmed the whitelist target remains ordinary uncontrolled hostile stock mobs using standard shells.
+- Confirmed the exclusion register still covers the audit's minimum v1 exclusions plus the broader exception families already identified for later review.
+- Confirmed the current three-file workspace is sufficient for phase 1 and no extra no-op scaffolding is required yet.
+- Confirmed no gameplay code has been changed and no live AI behavior has changed in this phase.
 
 ## Open Risks
 
@@ -91,8 +105,9 @@ This file is the living state record for the AI overhaul project. Review it befo
 
 - Review `docs/AI_OVERHAUL_AUDIT.md`.
 - Review this handoff file.
-- Keep phase 1 no-op with respect to live AI behavior.
-- Confirm the whitelist and exclusions before adding any scaffolding.
+- Keep phase 2 limited to post-legality target preference and event-driven reacquire behavior only.
+- Confirm the whitelist and exclusions before adding any rollout guards or tactical scoring seams.
+- Preserve legality, control-order, bard, summon identity, `AIObject`, and restart/load invariants while designing the phase-2 seam.
 - Record any new exception or opt-out immediately.
 
 ## Update Checklist For Future Phases

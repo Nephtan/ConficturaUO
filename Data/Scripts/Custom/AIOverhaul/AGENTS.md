@@ -16,6 +16,8 @@ This folder is the versioned coordination workspace for the AI overhaul project.
 - Treat `AIObject` and `OnAction*()` compatibility as mandatory audit surfaces whenever assignment, shell behavior, movement cadence, or dispatcher flow is touched.
 - Document every new exception, opt-out, compatibility shim, or rollout guard in `AI_HANDOFF.md` immediately.
 - Prefer no-op scaffolding, explicit rollout guards, and opt-in behavior over silent global behavior changes.
+- During phase 1 specifically, limit work to documentation, guardrails, exception registration, and inert scaffolding only. Do not mutate gameplay code outside this workspace during phase 1.
+- Do not add new no-op scaffolding files during phase 1 unless a concrete later-phase dependency is missing. The default phase-1 artifact set is `AI_PHASED_OVERHAUL_PLAN.md`, `AI_HANDOFF.md`, and `AGENTS.md`.
 
 ## Documentation Expectations
 
