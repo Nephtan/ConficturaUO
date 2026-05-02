@@ -1,5 +1,8 @@
 # ConficturaUO Game Systems
 
+## Start Here
+- [Confictura Introduction](Confictura_Introduction.md)
+
 ## Systems
 - [Point Command](point-command.md)
 - [Player Range Sensitive Deactivation](player-range-sensitive-mod.md)
