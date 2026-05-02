@@ -10,3 +10,4 @@
 - [Boat Navigation Console](boat-navigation-control.md)
 - [Tell A Friend Referral System](tell-a-friend.md)
 - [Random Encounter Engine](Random_Encounter_Engine.md)
+- [Character Level Recon Report](Character_Level_Recon_Report.md)
