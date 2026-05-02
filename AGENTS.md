@@ -30,6 +30,8 @@ The agent's primary objective is to assist with the development and maintenance 
 
 * **Command-Line Solution Build:** Use `msbuild ConficturaUO.sln /p:Configuration=Debug /p:Platform=x86` or `msbuild ConficturaUO.sln /p:Configuration=Release /p:Platform=x86`. The solution maps the `Server` project to `x86` and the `Scripts` project to `Any CPU`.
 
+* **Command-Line Project Builds:** For narrower builds, use `msbuild Data/System/Source/Server.csproj /p:Configuration=Debug /p:Platform=x86` for the server or `msbuild Data/Scripts/Scripts.csproj /p:Configuration=Debug /p:Platform=AnyCPU` for scripts. `Scripts.csproj` has a project reference to `..\System\Source\Server.csproj`, so building scripts also pulls in the server project.
+
 * **Server Output:** `Data/System/Source/Server.csproj` builds `ConficturaServer.exe`; the `Debug|x86` output path is the repository root.
 
 * **Manual Compile Reference:** `Data/System/Source/README` documents a direct server compile from the source directory with `C:\Windows\Microsoft.NET\Framework64\v4.0.30319\csc /optimize /unsafe /t:exe /out:World.exe /win32icon:Source\icon.ico /d:NEWTIMERS /d:NEWPARENT /recurse:*.cs`.
