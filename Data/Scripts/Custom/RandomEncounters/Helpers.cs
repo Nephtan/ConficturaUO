@@ -66,6 +66,14 @@ namespace Server.Misc
             {
                 str = "SafeRegion";
             }
+            else if (currentRegion is CaveRegion)
+            {
+                str = "CaveRegion";
+            }
+            else if (currentRegion is BardDungeonRegion)
+            {
+                str = "BardDungeonRegion";
+            }
             else if (currentRegion is DungeonRegion)
             {
                 str = "DungeonRegion";
