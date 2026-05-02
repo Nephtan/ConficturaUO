@@ -11,6 +11,7 @@ using System.Xml;
 //------------------------------------------------------------------------------
 using Server;
 using Server.Accounting;
+using Server.Custom.Confictura;
 using Server.Engines.XmlSpawner2;
 using Server.Items;
 using Server.Misc;
@@ -113,58 +114,10 @@ namespace Server.Misc
         // It takes in two parameters: the mobile to calculate the level for, and the type of level to calculate
         public static double CalculateLevelForMobile(Mobile m, LevelType levelType)
         {
-            int fame = m.Fame;
+            if (m is PlayerMobile)
+                return CharacterLevelService.GetEncounterLevel(m, levelType);
 
-            if (fame > 15000)
-            {
-                fame = 15000;
-            }
-
-            int karma = m.Karma;
-
-            if (karma < 0)
-            {
-                karma = m.Karma * -1;
-            }
-
-            if (karma > 15000)
-            {
-                karma = 15000;
-            }
-
-            int skills = m.Skills.Total;
-
-            if (skills > 10000)
-            {
-                skills = 10000;
-            }
-
-            skills = (int)(1.5 * skills); // UP TO 15,000
-
-            int stats = m.RawStr + m.RawDex + m.RawInt;
-
-            if (stats > 250)
-            {
-                stats = 250;
-            }
-
-            stats = 60 * stats; // UP TO 15,000
-
-            int calcLevel = (int)((fame + karma + skills + stats) / 600);
-
-            calcLevel = (int)((calcLevel - 10) * 1.12);
-
-            if (calcLevel < 1)
-            {
-                calcLevel = 1;
-            }
-
-            if (calcLevel > 100)
-            {
-                calcLevel = 100;
-            }
-
-            return calcLevel;
+            return CharacterLevelService.GetLegacyMobileLevel(m);
         }
 
         public static double CalculateWeightedSkillsForClass(Mobile m, LevelType levelType)

@@ -586,6 +586,8 @@
     <Compile Include="Custom\PvPConsent\NONPKSword.cs" />
     <Compile Include="Custom\PvPConsent\PKNONPKGUMP.cs" />
     <Compile Include="Custom\PvPConsent\PKSword.cs" />
+    <Compile Include="Custom\CharacterLevel\CharacterLevelCommands.cs" />
+    <Compile Include="Custom\CharacterLevel\CharacterLevelService.cs" />
     <Compile Include="Custom\RandomEncounters\Commands.cs" />
     <Compile Include="Custom\RandomEncounters\Definitions.cs" />
     <Compile Include="Custom\RandomEncounters\EncounterEngine.cs" />
