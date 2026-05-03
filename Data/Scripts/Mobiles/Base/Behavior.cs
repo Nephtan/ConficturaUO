@@ -9508,10 +9508,22 @@ namespace Server.Mobiles
                 }
             }
 
-            // When we have no ammo, we flee
+            // When we have no usable ammo, we flee. Prefer the equipped ranged weapon's
+            // ammo contract so thrown-weapon archers do not fall into the old Arrow-only path.
             Container pack = m_Mobile.Backpack;
+            BaseQuiver quiver = m_Mobile.FindItemOnLayer(Layer.Cloak) as BaseQuiver;
+            BaseRanged rangedWeapon = m_Mobile.Weapon as BaseRanged;
+            Type ammoType = rangedWeapon != null ? rangedWeapon.AmmoType : typeof(Arrow);
+            bool hasAmmo = false;
 
-            if (pack == null || pack.FindItemByType(typeof(Arrow)) == null)
+            if (ammoType != null)
+            {
+                hasAmmo =
+                    (quiver != null && quiver.FindItemByType(ammoType) != null)
+                    || (pack != null && pack.FindItemByType(ammoType) != null);
+            }
+
+            if (!hasAmmo)
             {
                 Action = ActionType.Flee;
                 return true;

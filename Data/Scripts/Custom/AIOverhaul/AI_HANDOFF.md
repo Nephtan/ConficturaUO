@@ -33,12 +33,13 @@ This file is the living state record for the AI overhaul project. Review it befo
 - Added a whitelist-bound skirmisher spacing overlay for phase 4 without broadening the tactical rollout guard.
 - Applied the phase-4 movement overlay only to whitelisted `Skirmisher` archers while keeping `Bruiser` movement on the stock melee chase path.
 - Removed the extra tactical `LastMoveTime` chase gate after live testing showed it made skirmisher pursuit feel under-responsive; whitelisted archers now rely on the stock move scheduler while still honoring the tactical spacing band.
+- Corrected the stock `ArcherAI` ammo check so it respects the equipped `BaseRanged` weapon's `AmmoType` instead of assuming `Arrow`, which restores proper chase pressure for `MonsterGloves` throwers without broadening the tactical whitelist.
 
 ## Files And Seams Touched
 
 - `Data/Scripts/Custom/AIOverhaul/AITacticalTargeting.cs` now owns the exact-type whitelist rollout guard, active phase-3 profile assignments, bounded scoring helper, and whitelist-bound skirmisher spacing helper.
 - `Data/Scripts/Mobiles/Base/BaseCreature.cs` now exposes GM-visible tactical profile inspection in addition to the guarded tactical profile accessors and event-driven reacquire hooks.
-- `Data/Scripts/Mobiles/Base/Behavior.cs` now layers tactical scoring only after the stock legality and mode filters pass, and phase 4 reuses that same whitelist data to drive archer-only spacing inside the stock combat branch without replacing the stock move scheduler.
+- `Data/Scripts/Mobiles/Base/Behavior.cs` now layers tactical scoring only after the stock legality and mode filters pass, drives archer-only spacing inside the stock combat branch without replacing the stock move scheduler, and uses weapon-aware ranged ammo checks inside `ArcherAI`.
 - `Data/Scripts/Custom/AIOverhaul/AI_HANDOFF.md` refreshed to record the active whitelist, exclusions, rollout guard status, and the new phase-4 movement assumptions.
 
 ## Phase 1 Completion Notes
@@ -158,7 +159,7 @@ This file is the living state record for the AI overhaul project. Review it befo
 - Re-reviewed the audit sections covering movement/pathing, activation/timer flow, action callbacks, spawn/home containment, and movement-related overhaul-readiness guidance before implementing phase 4.
 - Confirmed phase 4 only touches `Data/Scripts/Custom/AIOverhaul/AITacticalTargeting.cs`, `Data/Scripts/Mobiles/Base/Behavior.cs`, and this handoff file.
 - Confirmed the exact-type whitelist in `AITacticalTargeting.ResolveProfile(...)` remains unchanged in phase 4.
-- Confirmed non-whitelisted archers still use the stock `RangeFight..Weapon.MaxRange` spacing envelope and `1.0` second movement gate.
+- Confirmed non-whitelisted archers still use the stock `RangeFight..Weapon.MaxRange` spacing envelope and `1.0` second movement gate, while the shell-level ammo check now respects the equipped `BaseRanged` weapon's `AmmoType`.
 - Confirmed whitelisted `Skirmisher` archers alone now use a preferred `3..6` tile spacing band clamped by weapon range while relying on the stock move scheduler instead of a separate tactical chase cadence.
 - Confirmed `MeleeAI.DoActionCombat()` remains unchanged and `Bruiser` movement stays stock in phase 4.
 - Confirmed phase 4 does not modify `DoMoveImpl(...)`, `MoveTo(...)`, `WalkRandomInHome(...)`, `Deactivate()`, `Activate()`, `OnCurrentSpeedChanged()`, `AITimer.OnTick()`, `PlayerRangeSensitive`, `ReacquireOnMovement`, or `AggressiveAction(...)`.
