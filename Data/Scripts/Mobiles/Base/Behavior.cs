@@ -9463,8 +9463,10 @@ namespace Server.Mobiles
             {
                 int minimumRange = m_Mobile.RangeFight;
                 int maximumRange = m_Mobile.Weapon.MaxRange;
+                int tacticalMin;
+                int tacticalMax;
 
-                if (AITacticalTargeting.TryGetCombatSpacingBand(m_Mobile, out int tacticalMin, out int tacticalMax))
+                if (AITacticalTargeting.TryGetCombatSpacingBand(m_Mobile, out tacticalMin, out tacticalMax))
                 {
                     minimumRange = tacticalMin;
                     maximumRange = tacticalMax;
