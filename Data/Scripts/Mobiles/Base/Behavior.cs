@@ -9460,20 +9460,21 @@ namespace Server.Mobiles
             int tacticalMin;
             int tacticalMax;
 
-            if (AITacticalTargeting.TryGetCombatSpacingBand(m_Mobile, out tacticalMin, out tacticalMax))
+            bool usesTacticalSpacingBand = AITacticalTargeting.TryGetCombatSpacingBand(
+                m_Mobile,
+                out tacticalMin,
+                out tacticalMax
+            );
+
+            if (usesTacticalSpacingBand)
             {
                 minimumRange = tacticalMin;
                 maximumRange = tacticalMax;
             }
 
-            int currentDistance = (int)m_Mobile.GetDistanceToSqrt(m_Mobile.Combatant);
-            TimeSpan movementDecisionCadence = AITacticalTargeting.GetClosingMovementDecisionCadence(
-                m_Mobile,
-                currentDistance,
-                maximumRange
-            );
-
-            if ((m_Mobile.LastMoveTime + movementDecisionCadence) < DateTime.Now)
+            // Tactical skirmishers rely on the stock DoMoveImpl()/NextMove scheduler so
+            // they do not stack an extra LastMoveTime gate on top of active-speed movement.
+            if (usesTacticalSpacingBand || (m_Mobile.LastMoveTime + TimeSpan.FromSeconds(1.0)) < DateTime.Now)
             {
 
                 if (WalkMobileRange(m_Mobile.Combatant, 1, true, minimumRange, maximumRange))

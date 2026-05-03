@@ -23,11 +23,6 @@ namespace Server.Custom.Confictura
 
     public static class AITacticalTargeting
     {
-        private static readonly TimeSpan m_DefaultMovementDecisionCadence = TimeSpan.FromSeconds(1.0);
-        private static readonly TimeSpan m_SkirmisherMovementDecisionCadence = TimeSpan.FromSeconds(
-            0.5
-        );
-
         // Phase 3 is an exact-type whitelist. Default deny keeps later content additions,
         // service actors sharing stock shells, and shell-switching families out until audited.
         private static readonly Dictionary<Type, AITacticalTargetProfile> m_PhaseThreeProfiles =
@@ -67,42 +62,6 @@ namespace Server.Custom.Confictura
             }
 
             return AITacticalTargetProfile.None;
-        }
-
-        // Phase 4 keeps cadence opt-in and whitelist-bound so stock timing remains unchanged
-        // outside the active tactical cohort.
-        public static TimeSpan GetMovementDecisionCadence(BaseCreature mobile)
-        {
-            switch (ResolveProfile(mobile))
-            {
-                case AITacticalTargetProfile.Skirmisher:
-                    return m_SkirmisherMovementDecisionCadence;
-                case AITacticalTargetProfile.Bruiser:
-                case AITacticalTargetProfile.Captain:
-                case AITacticalTargetProfile.Support:
-                case AITacticalTargetProfile.None:
-                default:
-                    return m_DefaultMovementDecisionCadence;
-            }
-        }
-
-        // Phase 4 keeps chase tightening separate from retreat spacing so skirmishers
-        // can press attacks faster without turning every spacing correction into jitter.
-        public static TimeSpan GetClosingMovementDecisionCadence(
-            BaseCreature mobile,
-            int currentDistance,
-            int preferredMaximumRange
-        )
-        {
-            if (
-                ResolveProfile(mobile) == AITacticalTargetProfile.Skirmisher
-                && currentDistance > preferredMaximumRange
-            )
-            {
-                return TimeSpan.FromSeconds(0.25);
-            }
-
-            return GetMovementDecisionCadence(mobile);
         }
 
         // Phase 4 only overrides combat spacing for whitelisted skirmishers.
