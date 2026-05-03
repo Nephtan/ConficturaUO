@@ -9455,22 +9455,26 @@ namespace Server.Mobiles
                 return true;
             }
 
-            TimeSpan movementDecisionCadence = AITacticalTargeting.GetMovementDecisionCadence(
-                m_Mobile
+            int minimumRange = m_Mobile.RangeFight;
+            int maximumRange = m_Mobile.Weapon.MaxRange;
+            int tacticalMin;
+            int tacticalMax;
+
+            if (AITacticalTargeting.TryGetCombatSpacingBand(m_Mobile, out tacticalMin, out tacticalMax))
+            {
+                minimumRange = tacticalMin;
+                maximumRange = tacticalMax;
+            }
+
+            int currentDistance = (int)m_Mobile.GetDistanceToSqrt(m_Mobile.Combatant);
+            TimeSpan movementDecisionCadence = AITacticalTargeting.GetClosingMovementDecisionCadence(
+                m_Mobile,
+                currentDistance,
+                maximumRange
             );
 
             if ((m_Mobile.LastMoveTime + movementDecisionCadence) < DateTime.Now)
             {
-                int minimumRange = m_Mobile.RangeFight;
-                int maximumRange = m_Mobile.Weapon.MaxRange;
-                int tacticalMin;
-                int tacticalMax;
-
-                if (AITacticalTargeting.TryGetCombatSpacingBand(m_Mobile, out tacticalMin, out tacticalMax))
-                {
-                    minimumRange = tacticalMin;
-                    maximumRange = tacticalMax;
-                }
 
                 if (WalkMobileRange(m_Mobile.Combatant, 1, true, minimumRange, maximumRange))
                 {

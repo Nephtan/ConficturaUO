@@ -86,6 +86,25 @@ namespace Server.Custom.Confictura
             }
         }
 
+        // Phase 4 keeps chase tightening separate from retreat spacing so skirmishers
+        // can press attacks faster without turning every spacing correction into jitter.
+        public static TimeSpan GetClosingMovementDecisionCadence(
+            BaseCreature mobile,
+            int currentDistance,
+            int preferredMaximumRange
+        )
+        {
+            if (
+                ResolveProfile(mobile) == AITacticalTargetProfile.Skirmisher
+                && currentDistance > preferredMaximumRange
+            )
+            {
+                return TimeSpan.FromSeconds(0.25);
+            }
+
+            return GetMovementDecisionCadence(mobile);
+        }
+
         // Phase 4 only overrides combat spacing for whitelisted skirmishers.
         public static bool TryGetCombatSpacingBand(
             BaseCreature mobile,

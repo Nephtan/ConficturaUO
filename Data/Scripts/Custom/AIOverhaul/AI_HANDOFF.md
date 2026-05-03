@@ -32,10 +32,11 @@ This file is the living state record for the AI overhaul project. Review it befo
 - Confirmed the phase-3 rollout remains resolver-only, default-deny, and reversible from a single file.
 - Added whitelist-bound movement cadence and spacing helpers for phase 4 without broadening the tactical rollout guard.
 - Applied the phase-4 movement overlay only to whitelisted `Skirmisher` archers while keeping `Bruiser` movement on the stock melee chase path.
+- Tightened phase-4 skirmisher chase cadence so whitelisted archers close distance faster when a target drifts beyond their preferred spacing band.
 
 ## Files And Seams Touched
 
-- `Data/Scripts/Custom/AIOverhaul/AITacticalTargeting.cs` now owns the exact-type whitelist rollout guard, active phase-3 profile assignments, bounded scoring helper, and whitelist-bound movement cadence and spacing helpers.
+- `Data/Scripts/Custom/AIOverhaul/AITacticalTargeting.cs` now owns the exact-type whitelist rollout guard, active phase-3 profile assignments, bounded scoring helper, and whitelist-bound movement cadence, chase, and spacing helpers.
 - `Data/Scripts/Mobiles/Base/BaseCreature.cs` now exposes GM-visible tactical profile inspection in addition to the guarded tactical profile accessors and event-driven reacquire hooks.
 - `Data/Scripts/Mobiles/Base/Behavior.cs` now layers tactical scoring only after the stock legality and mode filters pass, and phase 4 reuses that same whitelist data to drive archer-only spacing and cadence inside the stock combat branch.
 - `Data/Scripts/Custom/AIOverhaul/AI_HANDOFF.md` refreshed to record the active whitelist, exclusions, rollout guard status, and the new phase-4 movement assumptions.
@@ -70,7 +71,7 @@ This file is the living state record for the AI overhaul project. Review it befo
 
 - Phase 4 keeps the exact-type whitelist and applies helper-driven spacing and cadence only to whitelisted `Skirmisher` archers.
 - `Bruiser` movement remains on the stock `MeleeAI.DoActionCombat()` chase path in phase 4.
-- Whitelisted skirmishers now make movement decisions on a `0.5` second cadence and prefer a `3..6` tile combat band, clamped by weapon range.
+- Whitelisted skirmishers now use a baseline `0.5` second movement cadence, accelerate to `0.25` seconds while closing from beyond their preferred band, and prefer a `3..6` tile combat band clamped by weapon range.
 - The stock `Combat` action dispatcher remains intact; phase 4 does not repurpose `ActionType.Backoff`, rewrite `OnActionChanged()`, or alter warmode or speed transition rules.
 - No new persisted state, activation changes, deserialize changes, or global timer cadence changes were introduced in phase 4.
 - Cornered or terrain-blocked skirmishers intentionally fall back to stock helper behavior and may keep firing in place rather than using bespoke retreat pathing.
@@ -158,7 +159,7 @@ This file is the living state record for the AI overhaul project. Review it befo
 - Confirmed phase 4 only touches `Data/Scripts/Custom/AIOverhaul/AITacticalTargeting.cs`, `Data/Scripts/Mobiles/Base/Behavior.cs`, and this handoff file.
 - Confirmed the exact-type whitelist in `AITacticalTargeting.ResolveProfile(...)` remains unchanged in phase 4.
 - Confirmed non-whitelisted archers still use the stock `RangeFight..Weapon.MaxRange` spacing envelope and `1.0` second movement gate.
-- Confirmed whitelisted `Skirmisher` archers alone now use helper-driven `0.5` second movement cadence and a preferred `3..6` tile spacing band clamped by weapon range.
+- Confirmed whitelisted `Skirmisher` archers alone now use helper-driven `0.5` second movement cadence, a faster `0.25` second chase cadence beyond their preferred band, and a preferred `3..6` tile spacing band clamped by weapon range.
 - Confirmed `MeleeAI.DoActionCombat()` remains unchanged and `Bruiser` movement stays stock in phase 4.
 - Confirmed phase 4 does not modify `DoMoveImpl(...)`, `MoveTo(...)`, `WalkRandomInHome(...)`, `Deactivate()`, `Activate()`, `OnCurrentSpeedChanged()`, `AITimer.OnTick()`, `PlayerRangeSensitive`, `ReacquireOnMovement`, or `AggressiveAction(...)`.
 - Confirmed the `Combat` action path continues to own whitelisted archer repositioning and that `ActionType.Backoff`, `OnActionBackoff()`, and `OnActionChanged()` behavior remain untouched.
