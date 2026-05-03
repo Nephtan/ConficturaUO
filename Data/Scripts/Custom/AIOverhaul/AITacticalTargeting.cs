@@ -23,6 +23,11 @@ namespace Server.Custom.Confictura
 
     public static class AITacticalTargeting
     {
+        private static readonly TimeSpan m_DefaultMovementDecisionCadence = TimeSpan.FromSeconds(1.0);
+        private static readonly TimeSpan m_SkirmisherMovementDecisionCadence = TimeSpan.FromSeconds(
+            0.5
+        );
+
         // Phase 3 is an exact-type whitelist. Default deny keeps later content additions,
         // service actors sharing stock shells, and shell-switching families out until audited.
         private static readonly Dictionary<Type, AITacticalTargetProfile> m_PhaseThreeProfiles =
@@ -62,6 +67,46 @@ namespace Server.Custom.Confictura
             }
 
             return AITacticalTargetProfile.None;
+        }
+
+        // Phase 4 keeps cadence opt-in and whitelist-bound so stock timing remains unchanged
+        // outside the active tactical cohort.
+        public static TimeSpan GetMovementDecisionCadence(BaseCreature mobile)
+        {
+            switch (ResolveProfile(mobile))
+            {
+                case AITacticalTargetProfile.Skirmisher:
+                    return m_SkirmisherMovementDecisionCadence;
+                case AITacticalTargetProfile.Bruiser:
+                case AITacticalTargetProfile.Captain:
+                case AITacticalTargetProfile.Support:
+                case AITacticalTargetProfile.None:
+                default:
+                    return m_DefaultMovementDecisionCadence;
+            }
+        }
+
+        // Phase 4 only overrides combat spacing for whitelisted skirmishers.
+        public static bool TryGetCombatSpacingBand(
+            BaseCreature mobile,
+            out int minimumRange,
+            out int maximumRange
+        )
+        {
+            minimumRange = 0;
+            maximumRange = 0;
+
+            if (ResolveProfile(mobile) != AITacticalTargetProfile.Skirmisher)
+            {
+                return false;
+            }
+
+            int weaponMaxRange = mobile != null && mobile.Weapon != null ? mobile.Weapon.MaxRange : 0;
+
+            minimumRange = 3;
+            maximumRange = Math.Min(6, Math.Max(3, weaponMaxRange - 1));
+
+            return true;
         }
 
         public static double GetTargetBonus(

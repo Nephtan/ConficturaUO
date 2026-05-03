@@ -12,8 +12,8 @@ This file is the living state record for the AI overhaul project. Review it befo
 
 ## Current Phase
 
-- Status: `Phase 3 - Whitelist Rollout To Ordinary Hostile Stock Mobs completed`
-- Next execution target: `Phase 4 - Movement, Spacing, And Cadence For The Whitelist`
+- Status: `Phase 4 - Movement, Spacing, And Cadence For The Whitelist completed`
+- Next execution target: `Phase 5 - Role-Specialist Pass For Mage, Healer, And Squad Behaviors`
 
 ## Completed Work
 
@@ -30,13 +30,15 @@ This file is the living state record for the AI overhaul project. Review it befo
 - Activated the tactical layer for a narrow exact-type whitelist of stock hostile melee and archer mobs.
 - Added GM-visible inspection for `TacticalTargetProfile` and `UsesAITacticalTargeting` so live rollout status can be checked with `Props`.
 - Confirmed the phase-3 rollout remains resolver-only, default-deny, and reversible from a single file.
+- Added whitelist-bound movement cadence and spacing helpers for phase 4 without broadening the tactical rollout guard.
+- Applied the phase-4 movement overlay only to whitelisted `Skirmisher` archers while keeping `Bruiser` movement on the stock melee chase path.
 
 ## Files And Seams Touched
 
-- `Data/Scripts/Custom/AIOverhaul/AITacticalTargeting.cs` now owns the exact-type whitelist rollout guard, active phase-3 profile assignments, and bounded scoring helper.
+- `Data/Scripts/Custom/AIOverhaul/AITacticalTargeting.cs` now owns the exact-type whitelist rollout guard, active phase-3 profile assignments, bounded scoring helper, and whitelist-bound movement cadence and spacing helpers.
 - `Data/Scripts/Mobiles/Base/BaseCreature.cs` now exposes GM-visible tactical profile inspection in addition to the guarded tactical profile accessors and event-driven reacquire hooks.
-- `Data/Scripts/Mobiles/Base/Behavior.cs` updated to layer tactical scoring only after the stock legality and mode filters pass.
-- `Data/Scripts/Custom/AIOverhaul/AI_HANDOFF.md` refreshed to record the active phase-3 whitelist, exclusions, and rollout guard status.
+- `Data/Scripts/Mobiles/Base/Behavior.cs` now layers tactical scoring only after the stock legality and mode filters pass, and phase 4 reuses that same whitelist data to drive archer-only spacing and cadence inside the stock combat branch.
+- `Data/Scripts/Custom/AIOverhaul/AI_HANDOFF.md` refreshed to record the active whitelist, exclusions, rollout guard status, and the new phase-4 movement assumptions.
 
 ## Phase 1 Completion Notes
 
@@ -64,6 +66,15 @@ This file is the living state record for the AI overhaul project. Review it befo
 - Phase 3 is live on the main shard and public player testing is now running through `Data/Scripts/Custom/AIOverhaul/AI_PHASE3_PLAYER_TESTING.md`.
 - Archer spacing or kiting feedback should be triaged as likely phase-4 movement feedback unless the report clearly involves target selection.
 
+## Phase 4 Completion Notes
+
+- Phase 4 keeps the exact-type whitelist and applies helper-driven spacing and cadence only to whitelisted `Skirmisher` archers.
+- `Bruiser` movement remains on the stock `MeleeAI.DoActionCombat()` chase path in phase 4.
+- Whitelisted skirmishers now make movement decisions on a `0.5` second cadence and prefer a `3..6` tile combat band, clamped by weapon range.
+- The stock `Combat` action dispatcher remains intact; phase 4 does not repurpose `ActionType.Backoff`, rewrite `OnActionChanged()`, or alter warmode or speed transition rules.
+- No new persisted state, activation changes, deserialize changes, or global timer cadence changes were introduced in phase 4.
+- Cornered or terrain-blocked skirmishers intentionally fall back to stock helper behavior and may keep firing in place rather than using bespoke retreat pathing.
+
 ## Unchanged Safety Invariants
 
 - Legality-first targeting stays intact.
@@ -78,8 +89,9 @@ This file is the living state record for the AI overhaul project. Review it befo
 - `AggressiveAction(...)` and `OnMovement(...)` reacquire behavior remain unchanged.
 - No new persisted AI owner-side or shell-side state was introduced in phase 2.
 - No shell assignment, movement, activation, cadence, bard, summon, control-order, or deserialize behavior changed in phase 2.
+- Phase 4 reuses the stock action dispatcher and shared movement helpers rather than replacing global movement, activation, home, or timer systems.
 
-## Active Phase 3 Whitelist
+## Active Phase 4 Whitelist
 
 - `Bruiser`: `HeadlessOne`, `Ratman`, `Lizardman`
 - `Skirmisher`: `RatmanArcher`, `LizardmanArcher`
@@ -142,6 +154,14 @@ This file is the living state record for the AI overhaul project. Review it befo
 - Confirmed `RatmanMage`, `OrcishMage`, `Orc`, `Urc`, vendors, healers, `ForcedAI` actors, citizen-tagged content, and summon prey-override families remain excluded from active rollout.
 - Confirmed phase 3 adds no new persisted state and does not modify `AcquireFocusMob(...)` legality ordering, deserialize behavior, or global reacquire cadence.
 - Confirmed `BaseCreature.TacticalTargetProfile` and `BaseCreature.UsesAITacticalTargeting` are now GM-visible for live rollout inspection.
+- Re-reviewed the audit sections covering movement/pathing, activation/timer flow, action callbacks, spawn/home containment, and movement-related overhaul-readiness guidance before implementing phase 4.
+- Confirmed phase 4 only touches `Data/Scripts/Custom/AIOverhaul/AITacticalTargeting.cs`, `Data/Scripts/Mobiles/Base/Behavior.cs`, and this handoff file.
+- Confirmed the exact-type whitelist in `AITacticalTargeting.ResolveProfile(...)` remains unchanged in phase 4.
+- Confirmed non-whitelisted archers still use the stock `RangeFight..Weapon.MaxRange` spacing envelope and `1.0` second movement gate.
+- Confirmed whitelisted `Skirmisher` archers alone now use helper-driven `0.5` second movement cadence and a preferred `3..6` tile spacing band clamped by weapon range.
+- Confirmed `MeleeAI.DoActionCombat()` remains unchanged and `Bruiser` movement stays stock in phase 4.
+- Confirmed phase 4 does not modify `DoMoveImpl(...)`, `MoveTo(...)`, `WalkRandomInHome(...)`, `Deactivate()`, `Activate()`, `OnCurrentSpeedChanged()`, `AITimer.OnTick()`, `PlayerRangeSensitive`, `ReacquireOnMovement`, or `AggressiveAction(...)`.
+- Confirmed the `Combat` action path continues to own whitelisted archer repositioning and that `ActionType.Backoff`, `OnActionBackoff()`, and `OnActionChanged()` behavior remain untouched.
 
 ## Open Risks
 
@@ -152,15 +172,16 @@ This file is the living state record for the AI overhaul project. Review it befo
 - External `AIObject` consumers and action-state callbacks can break even when shell inheritance looks unchanged.
 - Deferred fight-mode domains and reserved role profiles still need separate audits before they can carry tactical weighting.
 - Broadening from the exact-type cohort into stock mage or dynamic-shell families without a role-specific audit is still a high-risk step.
+- Whitelisted skirmishers can still degrade to stock stand-and-fire behavior when poor terrain or blockers prevent them from reopening space cleanly.
 
 ## Next-Phase Prerequisites
 
 - Review `docs/AI_OVERHAUL_AUDIT.md`.
 - Review this handoff file.
-- Keep phase 4 limited to movement, spacing, and cadence work on the active phase-3 whitelist only.
-- Preserve the exact-type rollout guard while adjusting movement behavior; do not broaden the active cohort as part of phase 4.
-- Preserve legality, control-order, bard, summon identity, `AIObject`, restart/load, and action-state callback invariants while tuning movement and spacing.
-- Leave civilians, vendors, healers, stock mages, `ForcedAI`, summons with custom prey logic, citizen-tagged semantics, runtime switchers, and encounter-critical hook families excluded unless explicitly re-audited.
+- Keep phase 5 limited to role-specialist improvements for hostile mage, healer, and squad behavior on audited hostile content only.
+- Preserve the exact-type rollout guard and phase-4 movement overlay while reviewing stock mage and support-role families; do not broaden civilians, vendors, healers, or service actors into the rollout.
+- Preserve legality, control-order, bard, summon identity, `AIObject`, restart/load, action-state callback, and phase-4 movement invariants while adding hostile role behavior.
+- Leave `ForcedAI`, summons with custom prey logic, citizen-tagged semantics, runtime switchers, and encounter-critical hook families excluded unless explicitly re-audited.
 - Record any new exception or opt-out immediately.
 
 ## Update Checklist For Future Phases

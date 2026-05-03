@@ -9455,17 +9455,22 @@ namespace Server.Mobiles
                 return true;
             }
 
-            if ((m_Mobile.LastMoveTime + TimeSpan.FromSeconds(1.0)) < DateTime.Now)
+            TimeSpan movementDecisionCadence = AITacticalTargeting.GetMovementDecisionCadence(
+                m_Mobile
+            );
+
+            if ((m_Mobile.LastMoveTime + movementDecisionCadence) < DateTime.Now)
             {
-                if (
-                    WalkMobileRange(
-                        m_Mobile.Combatant,
-                        1,
-                        true,
-                        m_Mobile.RangeFight,
-                        m_Mobile.Weapon.MaxRange
-                    )
-                )
+                int minimumRange = m_Mobile.RangeFight;
+                int maximumRange = m_Mobile.Weapon.MaxRange;
+
+                if (AITacticalTargeting.TryGetCombatSpacingBand(m_Mobile, out int tacticalMin, out int tacticalMax))
+                {
+                    minimumRange = tacticalMin;
+                    maximumRange = tacticalMax;
+                }
+
+                if (WalkMobileRange(m_Mobile.Combatant, 1, true, minimumRange, maximumRange))
                 {
                     // Be sure to face the combatant
                     m_Mobile.Direction = m_Mobile.GetDirectionTo(m_Mobile.Combatant.Location);
