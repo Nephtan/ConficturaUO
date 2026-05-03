@@ -93,12 +93,28 @@ namespace Server
             if (m_DiskWriteHandle.Set())
             {
                 Console.WriteLine("Closing Save Files...");
+                Core.WriteDiagnostic("World.Save disk write complete ({0})", NetState.ConnectionSummary);
             }
         }
 
         public static void WaitForWriteCompletion()
         {
             m_DiskWriteHandle.WaitOne();
+        }
+
+        private static TimeSpan LogSavePhase(string phase, Stopwatch watch, TimeSpan previous)
+        {
+            TimeSpan current = watch.Elapsed;
+
+            Core.WriteDiagnostic(
+                "World.Save phase: {0} took {1:F2}s (elapsed={2:F2}s, {3})",
+                phase,
+                (current - previous).TotalSeconds,
+                current.TotalSeconds,
+                NetState.ConnectionSummary
+            );
+
+            return current;
         }
 
         public static Dictionary<Serial, Mobile> Mobiles
@@ -979,24 +995,42 @@ namespace Server
             if (m_Saving)
                 return;
 
+            Stopwatch totalWatch = Stopwatch.StartNew();
+            TimeSpan lastPhase = TimeSpan.Zero;
+
+            Core.WriteDiagnostic(
+                "World.Save start (message={0}, backgroundWrite={1}, {2})",
+                message,
+                permitBackgroundWrite,
+                NetState.ConnectionSummary
+            );
+
             ++m_Saves;
 
             NetState.FlushAll();
+            lastPhase = LogSavePhase("network flush", totalWatch, lastPhase);
+
             NetState.Pause();
+            lastPhase = LogSavePhase("network pause", totalWatch, lastPhase);
 
             World.WaitForWriteCompletion(); //Blocks Save until current disk flush is done.
+            lastPhase = LogSavePhase("wait for previous disk write", totalWatch, lastPhase);
 
             m_Saving = true;
 
             m_DiskWriteHandle.Reset();
 
             if (message)
+            {
                 Broadcast(0x35, true, "The game is saving, please wait.");
+                lastPhase = LogSavePhase("save start broadcast", totalWatch, lastPhase);
+            }
 
             SaveStrategy strategy = SaveStrategy.Acquire();
             Console.WriteLine("Core: Using {0} save strategy", strategy.Name.ToLowerInvariant());
+            lastPhase = LogSavePhase("save strategy acquire", totalWatch, lastPhase);
 
-            Console.Write("Game: Saving...");
+            Console.WriteLine("Game: Saving...");
 
             Stopwatch watch = Stopwatch.StartNew();
 
@@ -1006,14 +1040,17 @@ namespace Server
                 Directory.CreateDirectory("Saves/Items/");
             if (!Directory.Exists("Saves/Guilds/"))
                 Directory.CreateDirectory("Saves/Guilds/");
+            lastPhase = LogSavePhase("save directory setup", totalWatch, lastPhase);
 
             /*using ( SaveMetrics metrics = new SaveMetrics() ) {*/
             strategy.Save(null, permitBackgroundWrite);
             /*}*/
+            lastPhase = LogSavePhase("save strategy run", totalWatch, lastPhase);
 
             try
             {
                 EventSink.InvokeWorldSave(new WorldSaveEventArgs(message));
+                lastPhase = LogSavePhase("world-save event hooks", totalWatch, lastPhase);
             }
             catch (Exception e)
             {
@@ -1026,22 +1063,37 @@ namespace Server
 
             if (!permitBackgroundWrite)
                 World.NotifyDiskWriteComplete(); //Sets the DiskWriteHandle.  If we allow background writes, we leave this upto the individual save strategies.
+            lastPhase = LogSavePhase("disk write notification", totalWatch, lastPhase);
 
             ProcessSafetyQueues();
+            lastPhase = LogSavePhase("safety queues", totalWatch, lastPhase);
 
             strategy.ProcessDecay();
+            lastPhase = LogSavePhase("decay processing", totalWatch, lastPhase);
 
             Console.WriteLine("Save done in {0:F2} seconds.", watch.Elapsed.TotalSeconds);
 
             if (message)
+            {
                 Broadcast(
                     0x35,
                     true,
                     "Game save complete. The entire process took {0:F1} seconds.",
                     watch.Elapsed.TotalSeconds
                 );
+                lastPhase = LogSavePhase("save complete broadcast", totalWatch, lastPhase);
+            }
 
             NetState.Resume();
+            lastPhase = LogSavePhase("network resume", totalWatch, lastPhase);
+
+            totalWatch.Stop();
+            Core.WriteDiagnostic(
+                "World.Save complete in {0:F2}s (reported save={1:F2}s, {2})",
+                totalWatch.Elapsed.TotalSeconds,
+                watch.Elapsed.TotalSeconds,
+                NetState.ConnectionSummary
+            );
         }
 
         internal static List<Type> m_ItemTypes = new List<Type>();

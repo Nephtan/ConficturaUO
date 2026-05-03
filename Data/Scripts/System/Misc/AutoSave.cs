@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using Server;
 using Server.Commands;
@@ -142,18 +143,68 @@ namespace Server.Misc
             if (AutoRestart.Restarting)
                 return;
 
-            World.WaitForWriteCompletion();
+            Stopwatch totalWatch = Stopwatch.StartNew();
 
+            Core.WriteDiagnostic(
+                "AutoSave start (backgroundWrite={0}, {1})",
+                permitBackgroundWrite,
+                NetState.ConnectionSummary
+            );
+
+            Stopwatch waitWatch = Stopwatch.StartNew();
+            World.WaitForWriteCompletion();
+            waitWatch.Stop();
+
+            Core.WriteDiagnostic(
+                "AutoSave phase: wait for previous disk write took {0:F2}s",
+                waitWatch.Elapsed.TotalSeconds
+            );
+
+            Stopwatch backupWatch = Stopwatch.StartNew();
             try
             {
-                Backup();
+                Core.WriteDiagnostic("AutoSave backup start");
+                BackupReport report = Backup();
+                backupWatch.Stop();
+
+                Core.WriteDiagnostic(
+                    "AutoSave backup complete in {0:F2}s ({1})",
+                    backupWatch.Elapsed.TotalSeconds,
+                    report
+                );
             }
             catch (Exception e)
             {
+                backupWatch.Stop();
+                Core.WriteDiagnostic(
+                    "WARNING: Automatic backup FAILED after {0:F2}s: {1}",
+                    backupWatch.Elapsed.TotalSeconds,
+                    e
+                );
                 Console.WriteLine("WARNING: Automatic backup FAILED: {0}", e);
             }
 
-            World.Save(true, permitBackgroundWrite);
+            Stopwatch saveWatch = Stopwatch.StartNew();
+            bool worldSaveCompleted = false;
+
+            try
+            {
+                World.Save(true, permitBackgroundWrite);
+                worldSaveCompleted = true;
+            }
+            finally
+            {
+                saveWatch.Stop();
+                totalWatch.Stop();
+
+                Core.WriteDiagnostic(
+                    "AutoSave end in {0:F2}s (worldSaveCompleted={1}, worldSaveElapsed={2:F2}s, {3})",
+                    totalWatch.Elapsed.TotalSeconds,
+                    worldSaveCompleted,
+                    saveWatch.Elapsed.TotalSeconds,
+                    NetState.ConnectionSummary
+                );
+            }
         }
 
         private static string[] m_Backups = new string[]
@@ -166,10 +217,35 @@ namespace Server.Misc
             "Most Recent"
         };
 
-        private static void Backup()
+        private class BackupReport
         {
+            public bool SavesMoved;
+            public int RotatedBackups;
+            public int DeletedBackups;
+            public int InfoFiles;
+            public int ArticleFiles;
+            public int CustomFiles;
+
+            public override string ToString()
+            {
+                return String.Format(
+                    "savesMoved={0}, rotatedBackups={1}, deletedBackups={2}, infoFiles={3}, articleFiles={4}, customFiles={5}",
+                    SavesMoved,
+                    RotatedBackups,
+                    DeletedBackups,
+                    InfoFiles,
+                    ArticleFiles,
+                    CustomFiles
+                );
+            }
+        }
+
+        private static BackupReport Backup()
+        {
+            BackupReport report = new BackupReport();
+
             if (m_Backups.Length == 0)
-                return;
+                return report;
 
             string root = Path.Combine(Core.BaseDirectory, "Backups/Automatic");
 
@@ -194,6 +270,7 @@ namespace Server.Misc
                         try
                         {
                             dir.MoveTo(FormatDirectory(root, m_Backups[i - 1], timeStamp));
+                            ++report.RotatedBackups;
                         }
                         catch { }
                     }
@@ -203,6 +280,7 @@ namespace Server.Misc
                     try
                     {
                         dir.Delete(true);
+                        ++report.DeletedBackups;
                     }
                     catch { }
                 }
@@ -213,19 +291,38 @@ namespace Server.Misc
             if (Directory.Exists(saves))
             {
                 string time = GetTimeStamp();
-                Directory.Move(saves, FormatDirectory(root, m_Backups[m_Backups.Length - 1], time));
-                InfoBackup(FormatDirectory(root, m_Backups[m_Backups.Length - 1], time));
-                ArticleBackup(FormatDirectory(root, m_Backups[m_Backups.Length - 1], time));
-                CustomBackup(FormatDirectory(root, m_Backups[m_Backups.Length - 1], time));
+                string target = FormatDirectory(root, m_Backups[m_Backups.Length - 1], time);
+
+                Directory.Move(saves, target);
+                report.SavesMoved = true;
+                report.InfoFiles = InfoBackup(target);
+                report.ArticleFiles = ArticleBackup(target);
+                report.CustomFiles = CustomBackup(target);
             }
+
+            return report;
         }
 
-        public static void InfoBackup(string targetPath)
+        public static int InfoBackup(string targetPath)
         {
-            string sourcePath = "Info";
+            return CopyBackupFiles("Info", Path.Combine(targetPath, "Info"));
+        }
+
+        public static int ArticleBackup(string targetPath)
+        {
+            return CopyBackupFiles("Info/Articles", Path.Combine(targetPath, "Info/Articles"));
+        }
+
+        public static int CustomBackup(string targetPath)
+        {
+            return CopyBackupFiles("Info/Custom", Path.Combine(targetPath, "Info/Custom"));
+        }
+
+        private static int CopyBackupFiles(string sourcePath, string targetPath)
+        {
             string fileName = "";
             string destFile = "";
-            targetPath = targetPath + "/Info";
+            int copied = 0;
 
             System.IO.Directory.CreateDirectory(targetPath);
 
@@ -237,50 +334,11 @@ namespace Server.Misc
                     fileName = System.IO.Path.GetFileName(s);
                     destFile = System.IO.Path.Combine(targetPath, fileName);
                     System.IO.File.Copy(s, destFile, true);
+                    ++copied;
                 }
             }
-        }
 
-        public static void ArticleBackup(string targetPath)
-        {
-            string sourcePath = "Info/Articles";
-            string fileName = "";
-            string destFile = "";
-            targetPath = targetPath + "/Info/Articles";
-
-            System.IO.Directory.CreateDirectory(targetPath);
-
-            if (System.IO.Directory.Exists(sourcePath))
-            {
-                string[] files = System.IO.Directory.GetFiles(sourcePath);
-                foreach (string s in files)
-                {
-                    fileName = System.IO.Path.GetFileName(s);
-                    destFile = System.IO.Path.Combine(targetPath, fileName);
-                    System.IO.File.Copy(s, destFile, true);
-                }
-            }
-        }
-
-        public static void CustomBackup(string targetPath)
-        {
-            string sourcePath = "Info/Custom";
-            string fileName = "";
-            string destFile = "";
-            targetPath = targetPath + "/Info/Custom";
-
-            System.IO.Directory.CreateDirectory(targetPath);
-
-            if (System.IO.Directory.Exists(sourcePath))
-            {
-                string[] files = System.IO.Directory.GetFiles(sourcePath);
-                foreach (string s in files)
-                {
-                    fileName = System.IO.Path.GetFileName(s);
-                    destFile = System.IO.Path.Combine(targetPath, fileName);
-                    System.IO.File.Copy(s, destFile, true);
-                }
-            }
+            return copied;
         }
 
         private static DirectoryInfo Match(string[] paths, string match)
