@@ -2,7 +2,7 @@
 
 | System Name | Key Script(s) | Doc Status | Est. Complexity | Notes |
 | --- | --- | --- | --- | --- |
-| Bond Info Command | [BondInfo.cs](../Data/Scripts/Custom/BondInfo/BondInfo.cs) | Complete | Low | Pets bonding timer command. |
+| Bond Info Command | [BondInfo.cs](../Data/Scripts/Custom/BondInfo/BondInfo.cs) | Code-Verified 2026-05-04; Needs Rework | Low | Functional read-only pet bonding timer command. [Documentation](wiki/bond-info-command.md). Needs C# rework: `MyServerSettings.BondDays()` ignores normal in-range `S_BondDays` values, so the countdown effectively uses 7 days except clamp edge cases. |
 | Boat Navigation Control | [BoatNavigationTotam.cs](../Data/Scripts/Custom/BoatNavigationTotem/BoatNavigationTotam.cs) | Complete | Low | Uses control totem for boats. |
 | Offline Skill Training | [Items/StudyBook.cs](../Data/Scripts/Custom/Offline%20Skill%20Training/Items/StudyBook.cs) | Complete | Medium | Books allow skill gains while logged out. |
 | Player Range Sensitive Mod | [setdeactivation.cs](../Data/Scripts/Custom/Player%20Range%20Sensitive%20Mod/setdeactivation.cs) | Complete | Low | Region-based deactivation of mobiles/items. |
