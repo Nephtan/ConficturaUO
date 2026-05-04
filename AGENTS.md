@@ -161,6 +161,8 @@ If your task requires modifying or creating files, follow these steps:
 
 3. **Handle Pre-Commit Hooks:** If a pre-commit hook fails, you must fix the reported issues and retry the commit until it succeeds.
 
+* **Pre-Commit Enforcement:** This checkout currently has no active commit-blocking linter, formatter, or static-analysis hook. `.git/hooks` contains only disabled `.sample` hook templates, `core.hooksPath` is unset, and the repository does not contain `.gitattributes`, `.pre-commit-config.yaml`, or `.pre-commit-config.yml`. The inactive Git `pre-commit.sample` template would check for non-ASCII filenames and staged whitespace errors if renamed to `pre-commit`, but those checks are not currently enforced.
+
 4. **Maintain a Clean Worktree:** Run `git status` to confirm your commit. Your worktree must be in a clean state when you are finished.
 
 5. **Do Not Amend History:** Do not modify or amend existing commits.
