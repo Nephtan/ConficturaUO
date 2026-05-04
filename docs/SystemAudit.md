@@ -3,7 +3,7 @@
 | System Name | Key Script(s) | Doc Status | Est. Complexity | Notes |
 | --- | --- | --- | --- | --- |
 | Bond Info Command | [BondInfo.cs](../Data/Scripts/Custom/BondInfo/BondInfo.cs) | Code-Verified 2026-05-04; Needs Rework | Low | Functional read-only pet bonding timer command. [Documentation](wiki/bond-info-command.md). Needs C# rework: `MyServerSettings.BondDays()` ignores normal in-range `S_BondDays` values, so the countdown effectively uses 7 days except clamp edge cases. |
-| Boat Navigation Control | [BoatNavigationTotam.cs](../Data/Scripts/Custom/BoatNavigationTotem/BoatNavigationTotam.cs) | Complete | Low | Uses control totem for boats. |
+| Boat Navigation Control | [BoatNavigationTotam.cs](../Data/Scripts/Custom/BoatNavigationTotem/BoatNavigationTotam.cs) | Code-Verified 2026-05-04; Needs Rework | Low | Command-opened `BoatNavigationControl` gump for `BaseBoat` controls. [Documentation](wiki/boat-navigation-control.md). Needs C# rework: dead players aboard a boat can operate controls, ownership/key checks are not enforced, and plank buttons clear `Locked` without relocking on close. |
 | Offline Skill Training | [Items/StudyBook.cs](../Data/Scripts/Custom/Offline%20Skill%20Training/Items/StudyBook.cs) | Complete | Medium | Books allow skill gains while logged out. |
 | Player Range Sensitive Mod | [setdeactivation.cs](../Data/Scripts/Custom/Player%20Range%20Sensitive%20Mod/setdeactivation.cs) | Complete | Low | Region-based deactivation of mobiles/items. |
 | Point Command System | [Point.cs](../Data/Scripts/Custom/Point%20Command%20%5B2.0%5D/Point.cs) | Complete | Low | Awards points via `[Point]` command. |
