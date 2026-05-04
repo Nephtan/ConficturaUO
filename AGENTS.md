@@ -26,17 +26,15 @@ The agent's primary objective is to assist with the development and maintenance 
 
 ## Known Build Workflows
 
-* **Preferred Build Entry Point:** Open `ConficturaUO.sln` in Visual Studio 2022. The solution includes `Data/System/Source/Server.csproj` and `Data/Scripts/Scripts.csproj`, and the `Scripts` project depends on `Server`.
+* **Preferred Build Entry Point:** Open `ConficturaUO.sln` in Visual Studio 2022. This is the maintained server build workflow. The solution includes `Data/System/Source/Server.csproj` and `Data/Scripts/Scripts.csproj`, and the `Scripts` project depends on `Server`.
 
 * **Command-Line Solution Build:** From a Visual Studio Developer PowerShell/Command Prompt, use `msbuild ConficturaUO.sln /p:Configuration=Debug /p:Platform=x86` or `msbuild ConficturaUO.sln /p:Configuration=Release /p:Platform=x86`. If `msbuild` is not on PATH, use the Visual Studio 2022 MSBuild executable directly. The solution maps the `Server` project to `x86` and the `Scripts` project to `Any CPU`.
 
 * **Command-Line Project Builds:** For narrower builds, use `msbuild Data/System/Source/Server.csproj /p:Configuration=Debug /p:Platform=x86` or `msbuild Data/System/Source/Server.csproj /p:Configuration=Release /p:Platform=x86` for the server, or `msbuild Data/Scripts/Scripts.csproj /p:Configuration=Debug /p:Platform=AnyCPU` or `msbuild Data/Scripts/Scripts.csproj /p:Configuration=Release /p:Platform=AnyCPU` for scripts. `Scripts.csproj` has a project reference to `..\System\Source\Server.csproj`, so building scripts also pulls in the server project.
 
-* **Project Outputs:** `Data/System/Source/Server.csproj` builds `ConficturaServer.exe`; `Debug|x86` outputs to the repository root and `Release|x86` outputs to `Data/System/Source/bin/Release/`. `Data/Scripts/Scripts.csproj` builds `ClassLibrary.dll`; `Debug|AnyCPU` outputs to `Data/Scripts/` and `Release|AnyCPU` outputs to `Data/Scripts/bin/Release/`.
+* **Project Outputs:** `Data/System/Source/Server.csproj` builds the maintained server executable as `ConficturaServer.exe`. `Debug|x86` outputs `ConficturaServer.exe`, `ConficturaServer.exe.config`, and `ConficturaServer.pdb` to the repository root; `Release|x86` outputs to `Data/System/Source/bin/Release/`. `Data/Scripts/Scripts.csproj` builds `ClassLibrary.dll`; `Debug|AnyCPU` outputs to `Data/Scripts/` and `Release|AnyCPU` outputs to `Data/Scripts/bin/Release/`.
 
-* **Manual Compile Reference:** `Data/System/Source/README` documents a direct server compile from the source directory with `C:\Windows\Microsoft.NET\Framework64\v4.0.30319\csc /optimize /unsafe /t:exe /out:World.exe /win32icon:Source\icon.ico /d:NEWTIMERS /d:NEWPARENT /recurse:*.cs`.
-
-* **TODO:** The README compile command outputs `World.exe`, while the current project file outputs `ConficturaServer.exe`. Prefer the solution/project workflow unless you verify the manual command is still current.
+* **Legacy Manual Compile Reference:** `Data/System/Source/README` still documents an old direct `csc` command that outputs `World.exe`. Treat that executable name as stale documentation only; the current production/server artifact produced by the maintained Visual Studio/MSBuild workflow is `ConficturaServer.exe`.
 
 ## Coding Conventions
 
