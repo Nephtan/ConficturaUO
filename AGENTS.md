@@ -50,6 +50,91 @@ The agent's primary objective is to assist with the development and maintenance 
 
 * **Searching:** When searching the codebase, prefer the `rg` (ripgrep) tool over `grep -R` or similar commands for better performance.
 
+## RunUO Serialization Standards
+
+RunUO serialization is positional: the order and type of every `writer.Write(...)` call defines the save-file format, and `Deserialize` must read the same values in the same order with matching `reader.Read...()` methods. A mismatched read order can corrupt the world save by shifting every later value.
+
+For every `Item`, `Mobile`, or other RunUO object that overrides serialization:
+
+* Include the `Serial` constructor required for world loading:
+
+  ```csharp
+  public MyThing(Serial serial)
+      : base(serial)
+  {
+  }
+  ```
+
+* In `Serialize(GenericWriter writer)`, call `base.Serialize(writer);` before writing this class's data.
+* Immediately after the base call, write this class's version integer. New serializers start at version `0`.
+
+  ```csharp
+  public override void Serialize(GenericWriter writer)
+  {
+      base.Serialize(writer);
+
+      writer.Write((int)0); // version
+
+      writer.Write(m_Field);
+  }
+  ```
+
+* In `Deserialize(GenericReader reader)`, call `base.Deserialize(reader);` before reading this class's data.
+* Immediately after the base call, read the version integer.
+
+  ```csharp
+  public override void Deserialize(GenericReader reader)
+  {
+      base.Deserialize(reader);
+
+      int version = reader.ReadInt();
+
+      m_Field = reader.ReadString();
+  }
+  ```
+
+* Write and read fields with matching types and in identical order. For example, `writer.Write((Mobile)m_Owner)` must be matched by `reader.ReadMobile()`, `writer.Write((bool)m_Enabled)` by `reader.ReadBool()`, and enum values written as `int` must be read with `reader.ReadInt()` and cast back to the enum.
+* Do not reorder, remove, or change the type of existing serialized values. When adding serialized data to an existing class, increment the version number and add guarded deserialization for the new version.
+* Prefer the established RunUO fall-through pattern for versioned upgrades:
+
+  ```csharp
+  public override void Serialize(GenericWriter writer)
+  {
+      base.Serialize(writer);
+
+      writer.Write((int)1); // version
+
+      writer.Write(m_NewField); // version 1
+      writer.Write(m_OldField); // version 0
+  }
+
+  public override void Deserialize(GenericReader reader)
+  {
+      base.Deserialize(reader);
+
+      int version = reader.ReadInt();
+
+      switch (version)
+      {
+          case 1:
+          {
+              m_NewField = reader.ReadString();
+              goto case 0;
+          }
+          case 0:
+          {
+              m_OldField = reader.ReadInt();
+              break;
+          }
+      }
+  }
+  ```
+
+* If an existing class already uses `if (version >= N)` gates instead of `switch`/`goto case`, preserve that local style and keep the reads aligned with the write order.
+* If a previously serialized field is removed, stop writing it only in a bumped version, but keep a conditional read for older versions to consume and discard the old value.
+* For old versions that did not contain a new field, initialize a safe default through field initializers, constructors, or explicit `if (version < N)` fallback logic.
+* Even classes with no custom fields should still write and read a version integer after the base call.
+
 ## Testing & Verification
 
 * **Test Command:** None.
