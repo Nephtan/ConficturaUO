@@ -38,13 +38,23 @@ The agent's primary objective is to assist with the development and maintenance 
 
 ## Coding Conventions
 
-* **Style Guide:** Adhere to standard C# naming and style conventions.
+* **Style Source:** Follow the style already used by maintained Confictura scripts in `Data/Scripts/Custom/` before applying generic C# preferences. When extending an imported custom system, match the nearby local style even if it differs from Confictura-native code.
 
 * **Naming:** All new C# files and classes must use PascalCase (e.g., `MyNewItem.cs`).
 
 * **Namespaces:** New Confictura-native scripts should use `Server.Custom.Confictura` or a child namespace such as `Server.Custom.Confictura.Mobiles`. When extending an existing RunUO or imported custom system, match the nearby namespace such as `Server.Items`, `Server.Mobiles`, `Server.Commands`, or `Server.Engines.*`.
 
 * **File Location:** Place new Confictura custom scripts within the `Data/Scripts/Custom/` directory and organize them into logical subdirectories based on their function (e.g., `Items/`, `Mobiles/`, `Systems/`). `Scripts.csproj` explicitly lists source files, so add new `.cs` files to that project file with a `Compile Include` entry unless Visual Studio has already done it.
+
+* **Local Variables:** Prefer explicit local variable types over `var`, including collection declarations and temporary values. Use explicit casts or `as` assignments followed by null checks where that is the surrounding pattern.
+
+* **Formatting:** Use Allman braces for namespaces, classes, methods, switches, and multi-line condition blocks. Keep single-line guard clauses only when the nearby file already uses that RunUO style; otherwise include braces for guarded blocks, especially when adding logic.
+
+* **Null Checks and Compatibility:** Use `== null` and `!= null` for null checks. Avoid newer null syntax such as `is null`, `is not null`, and null-conditional `?.` in shard scripts unless the nearby subsystem already depends on it.
+
+* **Gumps:** Build custom gumps in their constructors with the standard RunUO calls such as `AddPage`, `AddBackground`, `AddHtml`, `AddLabel`, `AddButton`, and related helpers. Prefer named button enums or clear button ID ranges, and handle replies in `OnResponse(NetState sender, RelayInfo info)` or `OnResponse(NetState state, RelayInfo info)` by taking `Mobile from = sender.Mobile` or `state.Mobile`, guarding invalid state, then switching on `info.ButtonID`.
+
+* **Commands, Events, and Network Handlers:** Register commands and event hooks from `Initialize`. Use named static handler methods such as `Thing_OnCommand`, include `[Usage]` and `[Description]` attributes where command files already do so, and guard invalid mobiles early. Packet handlers should be named methods that receive `NetState` and `PacketReader`, read packet fields explicitly, and delegate shared behavior to helper methods when needed.
 
 * **Comments:** Add comments for non-obvious gameplay rules, serialization behavior, and complex logic. Avoid comments that merely restate straightforward C#.
 
