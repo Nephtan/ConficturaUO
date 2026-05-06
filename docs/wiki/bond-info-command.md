@@ -4,6 +4,8 @@
 
 `BondInfoCommand` adds the player command `[BondInfo`. The command targets a controlled pet and reports whether that pet is already bonded, has not started bonding, is still counting down to bonding, or is ready to bond on the next qualifying feed.
 
+Code-Verified: 2026-05-06
+
 This system is a read-only command helper. It does not create pets, alter bonding state, serialize its own data, or add XMLSpawner hooks.
 
 ---
@@ -25,7 +27,7 @@ Valid targets are `BaseCreature` instances whose `ControlMaster` is the player u
 * **Already bonded:** If `BaseCreature.IsBonded == true`, the player receives `Bonded`.
 * **Bonding not started:** If `BaseCreature.BondingBegin == DateTime.MinValue`, the player receives `Your pet hasn't started to bond yet, please feed it and try again.`
 * **Countdown active:** The command calculates `willbebonded = BondingBegin + BondingDelay`, subtracts `DateTime.Now`, and displays `BondingBegin` plus remaining days, hours, and minutes.
-* **Timer elapsed:** If the remaining `TimeSpan` has no positive days, hours, or minutes, the command sends `Ready to bond!`. The command does not set `IsBonded`; the actual bond is completed by the pet-feeding code.
+* **Timer elapsed:** If the remaining `TimeSpan` has no positive days, hours, or minutes, the command sends `Ready to bond!`. The command does not set `IsBonded`; `BaseCreature.OnDragDrop` completes the bond only when the owner feeds the pet again after the delay has elapsed.
 
 ---
 
@@ -35,6 +37,7 @@ Valid targets are `BaseCreature` instances whose `ControlMaster` is the player u
 * Wiki claimed only controlled pets work -> traced `BondInfo_OnTarget` -> code accepts only `BaseCreature` targets where `ControlMaster == from`, then re-prompts for non-owned creatures or non-pets.
 * Wiki claimed bonded, not-started, and timer states -> traced `BondInfo_OnTarget` -> code sends `Bonded`, the feed-to-start message, a countdown, or `Ready to bond!`.
 * Wiki claimed the formula `(BondingBegin + BondingDelay) - current time` -> traced `BondInfo_OnTarget` and `BaseCreature.BondingDelay` -> code uses `DateTime.Now`, `BondingBegin + BondingDelay`, and `TimeSpan.FromDays(Server.Misc.MyServerSettings.BondDays())`.
+* Wiki claimed the pet becomes bonded after the countdown -> traced `BaseCreature.OnDragDrop` -> code only marks `IsBonded = true` when the owner feeds the pet again after the countdown has elapsed; `[BondInfo` is read-only.
 * XMLSpawner references -> traced this system by class and command name -> no XMLSpawner configuration, attachment, or spawn-entry integration is used by `BondInfoCommand`.
 
 ---
