@@ -20,7 +20,7 @@ The command does not clamp values, require positive finite input, or persist the
 ---
 
 ### Runtime Behavior
-Sectors become active when a player enters range and may deactivate after the last nearby player leaves. When a sector deactivates, `BaseCreature.OnSectorDeactivate` deliberately does not stop AI immediately; the comment states that delayed deactivation is handled by the AI timer.
+Sectors become active when a player enters them and may deactivate when the last player leaves and no players remain within `Map.SectorActiveRange` sectors. When a sector deactivates, `BaseCreature.OnSectorDeactivate` deliberately does not stop AI immediately; the comment states that delayed deactivation is handled by the AI timer.
 
 For player-range-sensitive creatures, `BaseAI.AITimer.OnTick` performs the delay math:
 
@@ -44,7 +44,8 @@ Known overrides include:
 | `BaseVendor` | Forces `PlayerRangeSensitive` to `true`. |
 | `Citizens` | Forces `PlayerRangeSensitive` to `true`. |
 | `DragonRider` | Forces `PlayerRangeSensitive` to `false`. |
-| Chasing pirate captain and crew scripts | Force `PlayerRangeSensitive` to `false`. |
+| `PirateCaptain` | Forces `PlayerRangeSensitive` to `false`. |
+| `PirateCrew` | Forces `PlayerRangeSensitive` to `false`. |
 
 ---
 
