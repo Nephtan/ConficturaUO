@@ -7,9 +7,9 @@
 picker="all"
 language="en-US"
 skiphidden="true"
-delay="10"
-interval="60:600:600"
-cleanup="180"
+delay="120"
+interval="150:300:300"
+cleanup="300"
 cleanupGrace="1"
 debug="true"
 debugEffect="false">
