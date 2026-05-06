@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Reflection;
+using System;
 using Server.Commands;
-using Server.Items;
 using Server.Mobiles;
-using Server.Network;
 using Server.Targeting;
 
 namespace Server.Commands
@@ -27,6 +22,9 @@ namespace Server.Commands
         [Description("Sets all targets stats to full.")]
         public static void Refresh_OnCommand(CommandEventArgs e)
         {
+            if (e == null || e.Mobile == null || e.Mobile.Deleted)
+                return;
+
             e.Mobile.Target = new FreshTarget();
         }
 
@@ -37,20 +35,23 @@ namespace Server.Commands
 
             protected override void OnTarget(Mobile from, object targeted)
             {
-                if (targeted is Mobile)
+                if (from == null || from.Deleted)
+                    return;
+
+                Mobile target = targeted as Mobile;
+
+                if (target == null || target.Deleted)
+                    return;
+
+                if (!from.CanSee(target))
                 {
-                    Mobile targ = (Mobile)targeted;
-                    if (!from.CanSee(targ))
-                    {
-                        from.SendMessage("The target is not in your line of sight!");
-                    }
-                    else
-                    {
-                        targ.Hits = targ.HitsMax;
-                        targ.Mana = targ.ManaMax;
-                        targ.Stam = targ.StamMax;
-                    }
+                    from.SendMessage("The target is not in your line of sight!");
+                    return;
                 }
+
+                target.Hits = target.HitsMax;
+                target.Mana = target.ManaMax;
+                target.Stam = target.StamMax;
             }
         }
     }

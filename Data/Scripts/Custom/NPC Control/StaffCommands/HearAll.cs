@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections;
+using System;
 using System.Collections.Generic;
-using System.Reflection;
 using Server.Commands;
-using Server.Items;
 using Server.Mobiles;
-using Server.Network;
-using Server.Targeting;
 
 namespace Server.Commands
 {
@@ -27,14 +22,27 @@ namespace Server.Commands
 
         public static void HearAllOnSpeech(SpeechEventArgs e)
         {
-            if (m_HearAll.Count > 0)
-            {
-                string msg = String.Format("({0}): {1}", e.Mobile.RawName, e.Speech);
+            if (e == null || e.Mobile == null || m_HearAll.Count == 0)
+                return;
 
-                for (int i = 0; i < m_HearAll.Count; ++i)
+            string msg = String.Format("({0}): {1}", e.Mobile.RawName, e.Speech);
+
+            for (int i = m_HearAll.Count - 1; i >= 0; --i)
+            {
+                Mobile listener = m_HearAll[i];
+
+                if (
+                    listener == null
+                    || listener.Deleted
+                    || listener.NetState == null
+                    || listener.AccessLevel < accessLevel
+                )
                 {
-                    m_HearAll[i].SendMessage(msg);
+                    m_HearAll.RemoveAt(i);
+                    continue;
                 }
+
+                listener.SendMessage(msg);
             }
         }
 
@@ -42,6 +50,9 @@ namespace Server.Commands
         [Description("Enable or Disable hearing everything in the world.")]
         public static void HearAll_OnCommand(CommandEventArgs e)
         {
+            if (e == null || e.Mobile == null || e.Mobile.Deleted)
+                return;
+
             if (m_HearAll.Contains(e.Mobile))
             {
                 m_HearAll.Remove(e.Mobile);
