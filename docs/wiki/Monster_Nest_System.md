@@ -17,6 +17,31 @@ There are no commands, gumps, `EventSink` hooks, or XMLSpawner attachments in th
 * `Data/Scripts/Custom/MonsterNest/Types/LizardmanNest.cs`
 * `Data/Scripts/Custom/MonsterNest/Types/UndeadNest.cs`
 
+`Data/Scripts/Scripts.csproj` explicitly compiles all six scripts, so the system is part of the maintained script assembly.
+
+## Administrator Surface
+
+The Monster Nest System does not register any custom `CommandSystem` commands, `[Usage]` metadata, packet handlers, or Gumps. Administrative placement uses RunUO's standard `[add <ConstructableType>]` command surface for the constructable item classes:
+
+| Constructable type | Result |
+| --- | --- |
+| `MonsterNest` | Places the unconfigured base nest item. |
+| `RatmanNest` | Places a configured ratman-family nest. |
+| `LizardmanNest` | Places a configured lizardman-family nest. |
+| `UndeadNest` | Places a configured legacy string-spawn nest using `NestSpawnType = "Undead"`. |
+
+The base `MonsterNest` exposes these `[CommandProperty(AccessLevel.GameMaster)]` properties for in-game property editing:
+
+| Property | Serialized field | Purpose |
+| --- | --- | --- |
+| `NestSpawnType` | `m_NestSpawnType` | Legacy string type name resolved by `SpawnerType.GetType()`. |
+| `MaxCount` | `m_MaxCount` | Maximum number of living tracked spawn mobiles. |
+| `RespawnTime` | `m_RespawnTime` | Delay used when each spawn timer is rescheduled. |
+| `HitsMax` | `m_HitsMax` | Maximum nest item hit points. |
+| `Hits` | `m_Hits` | Current nest item hit points. |
+| `RangeHome` | `m_RangeHome` | `BaseCreature.RangeHome` assigned to spawned mobiles. |
+| `LootLevel` | `m_LootLevel` | Multiplier used by the remains reward formula. |
+
 ## Base `MonsterNest` Defaults
 
 The bare `[add MonsterNest` constructable is only a scaffold. Its constructor does not configure a usable spawn profile.
