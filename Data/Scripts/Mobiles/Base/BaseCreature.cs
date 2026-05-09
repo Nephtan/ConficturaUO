@@ -5,6 +5,7 @@ using System.IO;
 using System.Text;
 using Server;
 using Server.ContextMenus;
+using Server.Custom.Confictura;
 using Server.Engines.PartySystem;
 using Server.Engines.Quests;
 using Server.Factions;
@@ -2269,6 +2270,18 @@ namespace Server.Mobiles
             get { return m_AI; }
         }
 
+        [CommandProperty(AccessLevel.GameMaster)]
+        public virtual AITacticalTargetProfile TacticalTargetProfile
+        {
+            get { return AITacticalTargeting.ResolveProfile(this); }
+        }
+
+        [CommandProperty(AccessLevel.GameMaster)]
+        public virtual bool UsesAITacticalTargeting
+        {
+            get { return TacticalTargetProfile != AITacticalTargetProfile.None; }
+        }
+
         public const int MaxOwners = 5;
 
         public virtual OppositionGroup OppositionGroup
@@ -3280,18 +3293,24 @@ namespace Server.Mobiles
                 {
                     Citizens.MountCitizens(this, false);
 
+                    // Ensure the creature is actually mounted before attempting
+                    // to replace the mount. Certain spawns may fail to mount,
+                    // which previously resulted in a null reference crash.
                     IMount bSteed = this.Mount;
-                    BaseMount iSteed = (BaseMount)bSteed;
+                    BaseMount iSteed = bSteed as BaseMount;
 
-                    BaseMount steed = new EvilMount();
-                    steed.Body = iSteed.Body;
-                    steed.ItemID = iSteed.ItemID;
-                    steed.Hue = iSteed.Hue;
-                    iSteed.Delete();
+                    if (iSteed != null)
+                    {
+                        BaseMount steed = new EvilMount();
+                        steed.Body = iSteed.Body;
+                        steed.ItemID = iSteed.ItemID;
+                        steed.Hue = iSteed.Hue;
+                        iSteed.Delete();
 
-                    steed.Rider = this;
-                    ActiveSpeed = 0.1;
-                    PassiveSpeed = 0.2;
+                        steed.Rider = this;
+                        ActiveSpeed = 0.1;
+                        PassiveSpeed = 0.2;
+                    }
                 }
             }
 
@@ -5837,6 +5856,15 @@ namespace Server.Mobiles
             if (m_ReceivedHonorContext != null)
                 m_ReceivedHonorContext.OnTargetDamaged(from, amount);
 
+            int tacticalDamageThreshold = (int)Math.Ceiling(HitsMax * 0.15);
+
+            if (from != null && from != Combatant && amount >= tacticalDamageThreshold)
+                RequestTacticalReacquire(
+                    AITacticalReacquireReason.DamagedByNewAttacker,
+                    from,
+                    amount
+                );
+
             if (willKill && from is PlayerMobile)
                 Timer.DelayCall(
                     TimeSpan.FromSeconds(10),
@@ -5846,7 +5874,11 @@ namespace Server.Mobiles
             base.OnDamage(amount, from, willKill);
         }
 
-        public virtual void OnDamagedBySpell(Mobile from) { }
+        public virtual void OnDamagedBySpell(Mobile from)
+        {
+            if (from != null && from != Combatant)
+                RequestTacticalReacquire(AITacticalReacquireReason.DamagedBySpell, from, 0);
+        }
 
         public virtual void OnHarmfulSpell(Mobile from) { }
 
@@ -7841,6 +7873,13 @@ namespace Server.Mobiles
 
         public virtual void OnGotMeleeAttack(Mobile attacker)
         {
+            if (attacker != null && attacker != Combatant)
+                RequestTacticalReacquire(
+                    AITacticalReacquireReason.HitByNewMeleeAttacker,
+                    attacker,
+                    0
+                );
+
             if (
                 attacker is PlayerMobile
                 && attacker.RaceID > 0
@@ -10742,6 +10781,32 @@ namespace Server.Mobiles
             get { return false; }
         }
 
+        protected virtual void RequestTacticalReacquire(
+            AITacticalReacquireReason reason,
+            Mobile source,
+            int amount
+        )
+        {
+            if (!UsesAITacticalTargeting || source == null || source == this || source.Deleted)
+                return;
+
+            switch (reason)
+            {
+                case AITacticalReacquireReason.DamagedByNewAttacker:
+                    if (amount <= 0)
+                        return;
+
+                    break;
+                case AITacticalReacquireReason.DamagedBySpell:
+                case AITacticalReacquireReason.HitByNewMeleeAttacker:
+                    break;
+                default:
+                    return;
+            }
+
+            ForceReacquire();
+        }
+
         public void ForceReacquire()
         {
             m_NextReacquireTime = DateTime.MinValue;
@@ -10835,8 +10900,10 @@ namespace Server.Mobiles
             if (this.Mounted)
             {
                 Mobiles.IMount mt = this.Mount;
-                Mobile animal = (Mobile)mt;
-                animal.Delete();
+                Mobile animal = mt as Mobile;
+
+                if (animal != null)
+                    animal.Delete();
             }
 
             base.OnDelete();

@@ -1,0 +1,86 @@
+<?xml version="1.0" standalone="yes"?>
+<XmlQuestNPC>
+  <NPC>
+    <Name>Katara</Name>
+    <Running>True</Running>
+    <ProximityRange>3</ProximityRange>
+    <ResetRange>16</ResetRange>
+    <AllowGhost>False</AllowGhost>
+    <SpeechPace>10</SpeechPace>
+    <ResetTime>1</ResetTime>
+    <SpeechEntries>5</SpeechEntries>
+  </NPC>
+  <SpeechEntry>
+    <EntryNumber>0</EntryNumber>
+    <ID>0</ID>
+    <DependsOn>-1</DependsOn>
+    <Pause>0</Pause>
+    <PrePause>-1</PrePause>
+    <LockConversation>True</LockConversation>
+    <IgnoreCarried>False</IgnoreCarried>
+    <AllowNPCTrigger>False</AllowNPCTrigger>
+    <SpeechStyle>Regular</SpeechStyle>
+    <SpeechHue>-1</SpeechHue>
+  </SpeechEntry>
+  <SpeechEntry>
+    <EntryNumber>10</EntryNumber>
+    <ID>10</ID>
+    <Text>Suilad. I am busy discussing trade relations with the King. Come back later.</Text>
+    <Keywords>hail</Keywords>
+    <Condition>~GETONCARRIED,Ten of Swords,visible=true</Condition>
+    <DependsOn>0</DependsOn>
+    <Pause>0</Pause>
+    <PrePause>-1</PrePause>
+    <LockConversation>True</LockConversation>
+    <IgnoreCarried>False</IgnoreCarried>
+    <AllowNPCTrigger>False</AllowNPCTrigger>
+    <SpeechStyle>Regular</SpeechStyle>
+    <SpeechHue>-1</SpeechHue>
+  </SpeechEntry>
+  <SpeechEntry>
+    <EntryNumber>20</EntryNumber>
+    <ID>20</ID>
+    <Text>Suilad... wait, is that the card? I have been looking for a long-lost heirloom. Go find my Undead Informant in the city of Umbra. Do you accept?</Text>
+    <Keywords>hail</Keywords>
+    <Condition>GETONCARRIED,Ten of Swords,visible=true</Condition>
+    <DependsOn>0</DependsOn>
+    <Pause>0</Pause>
+    <PrePause>-1</PrePause>
+    <LockConversation>True</LockConversation>
+    <IgnoreCarried>False</IgnoreCarried>
+    <AllowNPCTrigger>False</AllowNPCTrigger>
+    <SpeechStyle>Regular</SpeechStyle>
+    <SpeechHue>-1</SpeechHue>
+    <Gump>GUMP,Katara,4/Do you accept?;I accept.;accept;No thanks.;no</Gump>
+  </SpeechEntry>
+  <SpeechEntry>
+    <EntryNumber>30</EntryNumber>
+    <ID>30</ID>
+    <Text>Excellent. He hides in the Dark Caves near the fires. Go.</Text>
+    <Keywords>accept</Keywords>
+    <Action>SETONCARRIED,Ten of Swords,Completed1/true;SETONCARRIED,Ten of Swords,Objective2/FIND,Undead Informant</Action>
+    <DependsOn>20</DependsOn>
+    <Pause>0</Pause>
+    <PrePause>-1</PrePause>
+    <LockConversation>True</LockConversation>
+    <IgnoreCarried>False</IgnoreCarried>
+    <AllowNPCTrigger>False</AllowNPCTrigger>
+    <SpeechStyle>Regular</SpeechStyle>
+    <SpeechHue>-1</SpeechHue>
+  </SpeechEntry>
+  <SpeechEntry>
+    <EntryNumber>999</EntryNumber>
+    <ID>999</ID>
+    <Text>*Katara raises a finger and the Ten of Swords flies from your hands and into hers* "Then begone with you."</Text>
+    <Keywords>no</Keywords>
+    <Action>TAKE/Ten of Swords</Action>
+    <DependsOn>20</DependsOn>
+    <Pause>0</Pause>
+    <PrePause>-1</PrePause>
+    <LockConversation>True</LockConversation>
+    <IgnoreCarried>False</IgnoreCarried>
+    <AllowNPCTrigger>False</AllowNPCTrigger>
+    <SpeechStyle>Regular</SpeechStyle>
+    <SpeechHue>-1</SpeechHue>
+  </SpeechEntry>
+</XmlQuestNPC>

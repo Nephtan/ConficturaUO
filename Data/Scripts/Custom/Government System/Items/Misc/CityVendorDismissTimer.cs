@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Server;
 using Server.Items;
 using Server.Mobiles;
+using Server.Custom.Confictura;
 
 namespace Server.Misc
 {
@@ -14,20 +15,16 @@ namespace Server.Misc
         private DateTime m_Expire;
 
         public CityVendorDismiss(CityPlayerVendor vend, DateTime expire)
-            : base(TimeSpan.Zero, TimeSpan.FromSeconds(1.5))
+            : base(TimeSpan.Zero, GovernmentTestingMode.Adjust(TimeSpan.FromSeconds(1.5)))
         {
             m_vendor = vend;
             m_Expire = expire;
-            //m_Expire = DateTime.Now + TimeSpan.FromSeconds( 10.0 );  Left in for Testing purposes.
             m_owner = vend.Owner;
         }
 
         public bool CheckVendorExist(Mobile vend)
         {
-            if (World.FindMobile(vend.Serial) != null)
-                return true;
-            else
-                return false;
+            return World.FindMobile(vend.Serial) != null;
         }
 
         protected override void OnTick()
@@ -35,27 +32,20 @@ namespace Server.Misc
             if (DateTime.Now >= m_Expire)
             {
                 if (m_vendor == null || !CheckVendorExist(m_vendor))
+                {
                     Stop();
+                }
                 else
                 {
-                    Container pack = m_vendor.Backpack;
+                    Server.Items.Container pack = m_vendor.Backpack; // Fully qualify the reference
                     if (pack != null && pack.Items.Count > 0)
                     {
                         BankBox box = m_owner.BankBox;
-                        List<Item> list = new List<Item>();
-                        list = pack.Items;
-                        int number = pack.Items.Count;
+                        List<Item> list = new List<Item>(pack.Items);
+                        int number = list.Count; // Ensure we're using the list count
                         for (int i = 0; i < number; i++)
                         {
-                            /*if ( (Item)list[i] is Container )
-                            {
-                                
-                            }*/
-
-                            if (box.TryDropItem(m_owner, (Item)list[i], false))
-                                continue;
-                            else
-                                //list.Remove( list[i] );
+                            if (box.TryDropItem(m_owner, list[i], false))
                                 continue;
                         }
                         m_vendor.Dismiss(m_owner);

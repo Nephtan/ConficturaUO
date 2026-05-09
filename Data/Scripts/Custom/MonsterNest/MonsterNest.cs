@@ -209,6 +209,26 @@ namespace Server.Items
             return c; // Return the total count of alive creatures.
         }
 
+        // Allows derived nests to provide mixed-family spawn pools while preserving the
+        // legacy single-type string spawning path used by existing nests.
+        protected virtual BaseCreature CreateSpawnMobile()
+        {
+            if (this.NestSpawnType == null)
+                return null;
+
+            Type type = SpawnerType.GetType(this.NestSpawnType); // Resolve the configured type name.
+
+            if (type == null)
+                return null;
+
+            object o = Activator.CreateInstance(type); // Attempt to create an instance of the configured type.
+
+            if (o is BaseCreature)
+                return (BaseCreature)o;
+
+            return null;
+        }
+
         // Attempts to spawn a new creature based on the nest's configuration.
         public void DoSpawn()
         {
@@ -216,35 +236,25 @@ namespace Server.Items
             if (this.m_Entity != null)
                 this.m_Entity.MoveToWorld(this.Location, this.Map);
 
-            // Check conditions: spawn type is set, spawn list exists, and current count is below max allowed.
-            if (
-                this.NestSpawnType != null
-                && this.m_Spawn != null
-                && this.Count() < this.m_MaxCount
-            )
+            // Check conditions: spawn list exists and current count is below max allowed.
+            if (this.m_Spawn != null && this.Count() < this.m_MaxCount)
             {
                 try
                 {
-                    Type type = SpawnerType.GetType(this.NestSpawnType); // Get the Type object for the specified spawn.
-                    object o = Activator.CreateInstance(type); // Attempt to create an instance of the specified type.
+                    BaseCreature m = CreateSpawnMobile(); // Let the nest decide which creature to create.
 
-                    if (o != null && o is Mobile)
+                    if (m != null)
                     {
-                        Mobile c = o as Mobile;
-                        if (c is BaseCreature)
-                        {
-                            BaseCreature m = o as BaseCreature; // Cast the object to BaseCreature if applicable.
-                            this.m_Spawn.Add(m); // Add the creature to the spawn list.
-                            m.OnBeforeSpawn(this.Location, this.Map); // Invoke any pre-spawn actions.
-                            m.MoveToWorld(this.Location, this.Map); // Place the creature in the world at the nest's location.
-                            m.Home = this.Location; // Set the creature's home location to the nest's location.
-                            m.RangeHome = this.m_RangeHome; // Set the creature's wander range.
-                        }
+                        this.m_Spawn.Add(m); // Add the creature to the spawn list.
+                        m.OnBeforeSpawn(this.Location, this.Map); // Invoke any pre-spawn actions.
+                        m.MoveToWorld(this.Location, this.Map); // Place the creature in the world at the nest's location.
+                        m.Home = this.Location; // Set the creature's home location to the nest's location.
+                        m.RangeHome = this.m_RangeHome; // Set the creature's wander range.
                     }
                 }
                 catch
                 {
-                    this.NestSpawnType = null; // Reset spawn type if there was an error during spawning.
+                    this.NestSpawnType = null; // Reset legacy spawn type if there was an error during spawning.
                 }
             }
         }

@@ -262,7 +262,11 @@ namespace Server.Regions
             {
                 BuffInfo.CleanupIcons(m, false);
 
-                QuestTome.BossEscaped(m, this.Name);
+                // Prevent quest-side effects during synthetic clone/body-swap cleanup transitions.
+                if (m != null && !m.Deleted && m.Map != Map.Internal)
+                {
+                    QuestTome.BossEscaped(m, this.Name);
+                }
 
                 Server.Mobiles.BaseAI.MarchingOrder(m);
                 Server.Items.RuneOfVirtue.MoralityCheck(m.FindItemOnLayer(Layer.Talisman), m);

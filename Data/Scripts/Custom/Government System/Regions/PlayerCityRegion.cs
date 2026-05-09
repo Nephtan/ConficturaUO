@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using Server;
 using Server.Items;
 using Server.Mobiles;
@@ -9,6 +10,7 @@ using Server.Spells.Fourth;
 using Server.Spells.Seventh;
 using Server.Spells.Sixth;
 using Server.Targeting;
+using Server.Custom.Confictura;
 
 namespace Server.Regions
 {
@@ -167,9 +169,8 @@ namespace Server.Regions
                 else if (mob.AccessLevel == AccessLevel.Player)
                 {
                     from.SendMessage("You have banned them from the city.");
-                    mob.SendMessage("You have been banned from this city.");
+                    mob.SendMessage("You have been banned from this city and may be attacked by its citizens.");
                     banned.Add(mob);
-                    // TODO: Set up a ban location.
                 }
                 else
                 {
@@ -268,6 +269,13 @@ namespace Server.Regions
 
         public override void OnExit(Mobile m)
         {
+            if (m_Stone != null && m_Stone.Banned.Contains(m))
+            {
+                m_Stone.BanAttackTimes[m] =
+                    DateTime.UtcNow + GovernmentTestingMode.Adjust(TimeSpan.FromMinutes(5));
+                m.SendMessage(38, "You remain attackable by this city's citizens for five minutes.");
+            }
+
             if (m_Stone != null)
             {
                 if (m_Stone.Level == 1)
@@ -319,23 +327,10 @@ namespace Server.Regions
 
         public override void OnEnter(Mobile m)
         {
-            bool isBanned = false;
-
-            if (m_Stone != null && m_Stone.Banned != null)
+            if (m_Stone != null && m_Stone.Banned.Contains(m))
             {
-                foreach (Mobile mob in m_Stone.Banned)
-                {
-                    if (m == mob)
-                        isBanned = true;
-                }
-
-                if (isBanned == true)
-                {
-                    m.SendMessage(
-                        38,
-                        "You are banned from this city, You will be attackable by any of this cities citizens while in city limits."
-                    );
-                }
+                m.SendMessage(38, "You are banned from this city and may be attacked by its citizens.");
+                m_Stone.BanAttackTimes.Remove(m);
             }
 
             if (m_Stone != null)
@@ -385,6 +380,31 @@ namespace Server.Regions
             }
 
             base.OnEnter(m);
+        }
+
+        public override bool AllowHarmful(Mobile from, Mobile target)
+        {
+            if (
+                m_Stone != null
+                && m_Stone.Citizens != null
+                && m_Stone.Banned != null
+                && m_Stone.Citizens.Contains(from)
+            )
+            {
+                if (m_Stone.Banned.Contains(target))
+                    return true;
+
+                DateTime expires;
+                if (m_Stone.BanAttackTimes.TryGetValue(target, out expires))
+                {
+                    if (DateTime.UtcNow < expires)
+                        return true;
+
+                    m_Stone.BanAttackTimes.Remove(target);
+                }
+            }
+
+            return base.AllowHarmful(from, target);
         }
 
         public override bool OnBeginSpellCast(Mobile m, ISpell s)

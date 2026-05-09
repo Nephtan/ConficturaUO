@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Reflection;
+using System;
 using Server.Commands;
 using Server.Items;
 using Server.Mobiles;
@@ -13,7 +10,6 @@ namespace Server.Commands
     public class SayThisCommand
     {
         public static AccessLevel accessLevel = AccessLevel.Counselor;
-        private static List<Mobile> m_HearAll = new List<Mobile>();
 
         public static void Initialize()
         {
@@ -28,7 +24,11 @@ namespace Server.Commands
         [Description("Forces Target to Say <text>.")]
         public static void SayThis_OnCommand(CommandEventArgs e)
         {
-            string toSay = e.ArgString.Trim();
+            if (e == null || e.Mobile == null || e.Mobile.Deleted)
+                return;
+
+            string argString = e.ArgString == null ? String.Empty : e.ArgString;
+            string toSay = argString.Trim();
 
             if (toSay.Length > 0)
                 e.Mobile.Target = new SayThisTarget(toSay);
@@ -48,16 +48,23 @@ namespace Server.Commands
 
             protected override void OnTarget(Mobile from, object targeted)
             {
-                if (targeted is Mobile)
+                if (from == null || from.Deleted)
+                    return;
+
+                Mobile mobile = targeted as Mobile;
+
+                if (mobile != null)
                 {
-                    Mobile targ = (Mobile)targeted;
-                    targ.Say(m_toSay);
+                    if (!mobile.Deleted)
+                        mobile.Say(m_toSay);
+
+                    return;
                 }
-                else if (targeted is Item)
-                {
-                    Item objet = targeted as Item;
-                    objet.PublicOverheadMessage(MessageType.Regular, 0, false, "" + m_toSay + "");
-                }
+
+                Item item = targeted as Item;
+
+                if (item != null && !item.Deleted)
+                    item.PublicOverheadMessage(MessageType.Regular, 0, false, m_toSay);
             }
         }
     }

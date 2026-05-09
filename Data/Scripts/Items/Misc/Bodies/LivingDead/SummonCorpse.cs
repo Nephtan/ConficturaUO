@@ -1,6 +1,7 @@
 using System;
 using Server.Items;
 using Server.Network;
+using Server.Spells;
 
 namespace Server.Mobiles
 {
@@ -8,6 +9,8 @@ namespace Server.Mobiles
     public class corpse : BaseCreature
     {
         private bool m_Stunning;
+        private readonly double m_DamageRedirectRatio;
+        private readonly double m_EmpowerBonus;
 
         public override bool IsScaredOfScaryThings
         {
@@ -30,10 +33,14 @@ namespace Server.Mobiles
 
         [Constructable]
         public corpse()
-            : this(false, 1.0) { }
+            : this(false, 1.0, 0.75, 0.0) { }
 
         [Constructable]
         public corpse(bool summoned, double scalar)
+            : this(summoned, scalar, 0.75, 0.0) { }
+
+        [Constructable]
+        public corpse(bool summoned, double scalar, double damageRedirectRatio, double empowerBonus)
             : base(AIType.AI_Melee, FightMode.Closest, 10, 1, 0.4, 0.8)
         {
             Name = "a summoned corpse";
@@ -41,6 +48,9 @@ namespace Server.Mobiles
 
             if (summoned)
                 Hue = 2707;
+
+            m_DamageRedirectRatio = Math.Max(0.0, Math.Min(1.0, damageRedirectRatio));
+            m_EmpowerBonus = Math.Max(0.0, empowerBonus);
 
             SetStr((int)(251 * scalar), (int)(350 * scalar));
             SetDex((int)(76 * scalar), (int)(100 * scalar));
@@ -50,7 +60,9 @@ namespace Server.Mobiles
 
             SetDamage((int)(13 * scalar), (int)(24 * scalar));
 
-            SetDamageType(ResistanceType.Physical, 100);
+            // Empowered corpses now deliver a mix of physical and necrotic (poison) damage.
+            SetDamageType(ResistanceType.Physical, 70);
+            SetDamageType(ResistanceType.Poison, 30);
 
             SetResistance(ResistanceType.Physical, (int)(35 * scalar), (int)(55 * scalar));
 
@@ -64,8 +76,8 @@ namespace Server.Mobiles
             SetResistance(ResistanceType.Energy, (int)(30 * scalar), (int)(40 * scalar));
 
             SetSkill(SkillName.MagicResist, (150.1 * scalar), (190.0 * scalar));
-            SetSkill(SkillName.Tactics, (60.1 * scalar), (100.0 * scalar));
-            SetSkill(SkillName.FistFighting, (60.1 * scalar), (100.0 * scalar));
+            SetSkill(SkillName.Tactics, (70.1 * scalar), (110.0 * scalar));
+            SetSkill(SkillName.FistFighting, (70.1 * scalar), (110.0 * scalar));
 
             if (summoned)
             {
@@ -174,6 +186,43 @@ namespace Server.Mobiles
                     );
                 }
             }
+
+            if (Controlled)
+            {
+                Mobile master = ControlMaster;
+
+                if (master != null)
+                {
+                    double chance = 0.15 + Math.Min(0.25, m_EmpowerBonus);
+
+                    if (Utility.RandomDouble() <= chance)
+                    {
+                        int siphon = Utility.RandomMinMax(10, 16) + (int)Math.Round(m_EmpowerBonus * 20);
+                        int manaGain = Math.Max(1, (int)Math.Round(siphon * 0.6));
+                        int selfHeal = Math.Max(1, (int)Math.Round(siphon * 0.4));
+
+                        SpellHelper.Heal(siphon, master, this);
+
+                        master.Mana += manaGain;
+
+                        if (master.Mana > master.ManaMax)
+                            master.Mana = master.ManaMax;
+
+                        int newHits = Hits + selfHeal;
+
+                        if (newHits > HitsMax)
+                            newHits = HitsMax;
+
+                        Hits = newHits;
+
+                        defender.FixedParticles(0x374A, 10, 15, 5032, 0x455, 3, EffectLayer.Head);
+                        master.FixedParticles(0x375A, 1, 15, 5037, 0x455, 3, EffectLayer.Waist);
+                        FixedParticles(0x376A, 1, 15, 5037, 0x455, 3, EffectLayer.Waist);
+
+                        master.SendMessage(0x59, "Your corpse siphons vitality from its foe.");
+                    }
+                }
+            }
         }
 
         private void Recover_Callback(object state)
@@ -211,15 +260,20 @@ namespace Server.Mobiles
                     && master.InRange(Location, 20)
                 )
                 {
-                    if (master.Mana >= amount)
+                    int siphon = (int)Math.Ceiling(amount * m_DamageRedirectRatio);
+
+                    if (siphon > 0)
                     {
-                        master.Mana -= amount;
-                    }
-                    else
-                    {
-                        amount -= master.Mana;
-                        master.Mana = 0;
-                        master.Damage(amount);
+                        if (master.Mana >= siphon)
+                        {
+                            master.Mana -= siphon;
+                        }
+                        else
+                        {
+                            siphon -= master.Mana;
+                            master.Mana = 0;
+                            master.Damage(siphon);
+                        }
                     }
                 }
             }

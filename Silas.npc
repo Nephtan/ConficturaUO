@@ -1,0 +1,49 @@
+<?xml version="1.0" standalone="yes"?>
+
+<XmlQuestNPC>
+<NPC>
+<Name>Gutter-Tooth Silas</Name>
+<Running>True</Running>
+<ProximityRange>3</ProximityRange>
+<AllowGhost>False</AllowGhost>
+<SpeechPace>10</SpeechPace>
+<ResetTime>1</ResetTime>
+</NPC>
+<SpeechEntry>
+<EntryNumber>10</EntryNumber>
+<ID>10</ID>
+<DependsOn>-1</DependsOn>
+<Keywords>hello,hi,hail,greet</Keywords>
+<Condition>~GETONCARRIED,The Rat's Rent,questholder,visible=true</Condition>
+<Text>Silas hacks, spitting something dark onto the cobbles. You. You look like you'll gut a man for a copper. I've got a tenant problem. Slippery Pete. Need him evicted.</Text>
+</SpeechEntry>
+<SpeechEntry>
+<EntryNumber>20</EntryNumber>
+<ID>20</ID>
+<DependsOn>10</DependsOn>
+<Gump>GUMP,Gutter-Tooth Silas,4/Slippery Pete is hiding in the old cistern down the road. Bring me his brass tooth as proof he's done. You in?;I'll gut him.;accept;Find another fool.;decline</Gump>
+</SpeechEntry>
+<SpeechEntry>
+<EntryNumber>30</EntryNumber>
+<ID>30</ID>
+<Keywords>accept</Keywords>
+<DependsOn>20</DependsOn>
+<Action>GIVE/&lt;questholder/name/The Rat's Rent/notestring/Silas wants Slippery Pete dead. Find him in the cistern and bring back his brass tooth./objective1/KILLNAMED,Slippery Pete,1/objective2/GIVENAMED,Gutter-Tooth Silas,Pete's Brass Tooth,goldring,1/autoreward/true/rewardstring/@bag/name/Silas' Payoff/ADD/gold,500/ADD/&lt;dagger/name/Pete's Rib-Tickler/damagelevel/ruin/hue/1157&gt;&gt;</Action>
+<Text>Don't come back without that tooth. Or you'll be the one paying his rent.</Text>
+</SpeechEntry>
+<SpeechEntry>
+<EntryNumber>40</EntryNumber>
+<ID>40</ID>
+<Keywords>decline</Keywords>
+<DependsOn>20</DependsOn>
+<Text>He sneers. Piss off, then. I'll find someone with a spine.</Text>
+</SpeechEntry>
+<SpeechEntry>
+<EntryNumber>50</EntryNumber>
+<ID>50</ID>
+<DependsOn>-1</DependsOn>
+<Keywords>hello,hi,hail,greet</Keywords>
+<Condition>GETONCARRIED,The Rat's Rent,questholder,visible=true &amp; ~GETONCARRIED,The Rat's Rent,questholder,completed1=true</Condition>
+<Text>You deaf? I said kill Slippery Pete. Stop breathing my air and get to the cistern.</Text>
+</SpeechEntry>
+</XmlQuestNPC>

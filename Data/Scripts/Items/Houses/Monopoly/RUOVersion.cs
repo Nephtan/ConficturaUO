@@ -53,14 +53,20 @@ namespace Knives.TownHouses
             for (int i = 0; i < sign.House.Region.Area.Length; ++i)
             {
                 rect = sign.House.Region.Area[i];
+
+                // Removing the house-location offset keeps the region aligned with the
+                // townhouse's actual world coordinates.  The refreshed housing boundary
+                // definitions rely on the region covering the real-world tiles.  Offsetting
+                // by the multi's origin caused the region to be created near the map origin
+                // instead of the townhouse, so players inside the townhouse were no longer
+                // considered to be in a HouseRegion (breaking logout, hunger, and thirst
+                // behavior).  Preserve the world X/Y values and only clamp the Z range to
+                // the configured townhouse floors.
                 rect = new Rectangle3D(
-                    new Point3D(
-                        rect.Start.X - sign.House.X,
-                        rect.Start.Y - sign.House.Y,
-                        sign.MinZ
-                    ),
-                    new Point3D(rect.End.X - sign.House.X, rect.End.Y - sign.House.Y, sign.MaxZ)
+                    new Point3D(rect.Start.X, rect.Start.Y, sign.MinZ),
+                    new Point3D(rect.End.X, rect.End.Y, sign.MaxZ)
                 );
+
                 sign.House.Region.Area[i] = rect;
             }
 

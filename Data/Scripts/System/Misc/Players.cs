@@ -6,6 +6,7 @@ using Server.Accounting;
 using Server.Commands;
 using Server.Commands.Generic;
 using Server.ContextMenus;
+using Server.Custom.Confictura;
 using Server.Gumps;
 using Server.Items;
 using Server.Misc;
@@ -891,73 +892,7 @@ namespace Server.Misc
 
         public static int GetPlayerLevel(Mobile m)
         {
-            int fame = m.Fame;
-            if (fame > 15000)
-            {
-                fame = 15000;
-            }
-
-            int karma = m.Karma;
-            if (karma < 0)
-            {
-                karma = m.Karma * -1;
-            }
-            if (karma > 15000)
-            {
-                karma = 15000;
-            }
-
-            int skills = m.Skills.Total;
-            int based = MyServerSettings.SkillBase();
-
-            if (skills > based)
-            {
-                skills = based;
-            }
-
-            if (based >= 20000)
-                skills = (int)(skills / 2);
-            else if (based >= 19000)
-                skills = (int)(skills / 1.9);
-            else if (based >= 18000)
-                skills = (int)(skills / 1.8);
-            else if (based >= 17000)
-                skills = (int)(skills / 1.7);
-            else if (based >= 16000)
-                skills = (int)(skills / 1.6);
-            else if (based >= 15000)
-                skills = (int)(skills / 1.5);
-            else if (based >= 14000)
-                skills = (int)(skills / 1.4);
-            else if (based >= 13000)
-                skills = (int)(skills / 1.3);
-            else if (based >= 12000)
-                skills = (int)(skills / 1.2);
-            else if (based >= 11000)
-                skills = (int)(skills / 1.1);
-
-            skills = (int)(1.5 * skills); // UP TO 15,000
-
-            int stats = m.RawStr + m.RawDex + m.RawInt;
-            if (stats > 250)
-            {
-                stats = 250;
-            }
-            stats = 60 * stats; // UP TO 15,000
-
-            int level = (int)((fame + karma + skills + stats) / 600);
-            level = (int)((level - 10) * 1.12);
-
-            if (level < 1)
-            {
-                level = 1;
-            }
-            if (level > 100)
-            {
-                level = 100;
-            }
-
-            return level;
+            return CharacterLevelService.GetOverallLevel(m);
         }
 
         public static int GetPlayerDifficulty(Mobile m)
