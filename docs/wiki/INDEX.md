@@ -38,9 +38,11 @@ Guides are grouped by primary audience and use case.
 - [Knight Chivalry](Knight_Chivalry.md)
 - [Magery Spell Color Setting](Magery_Spell_Color_Setting.md)
 - [Magic Toolbars Guide](Magic_Toolbars_Guide.md)
+- [Mage Spellcasting Tips](Mage_Spellcasting_Tips.md)
 - [Mystic Magic](Mystic_Magic.md)
 - [Necromancy](Necromancy.md)
 - [Ninjitsu](Ninjitsu.md)
+- [Creature Transformation Guide](Creature_Transformation_Guide.md)
 - [Race Token System](Race_Token_System.md)
 - [Research Magic](Research_Magic.md)
 - [Shinobi Magic](Shinobi_Magic.md)
@@ -80,6 +82,7 @@ Guides are grouped by primary audience and use case.
 - [Random Encounter Engine](Random_Encounter_Engine.md)
 - [Ranger Survival Training](Ranger_Survival_Training.md)
 - [Region System](Region_System.md)
+- [Shipwright Sailing Tutorial](Shipwright_Sailing_Tutorial.md)
 
 ## Staff And Administration
 - [Access Level Stone](Access_Level_Stone.md)
