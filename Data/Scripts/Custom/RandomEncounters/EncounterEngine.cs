@@ -128,30 +128,31 @@ namespace Server.Misc
                     m_DebugEffect
                 );
 
-                //Dungeon Wilderness Guarded House Jail
+                string[] timedRegionTypes = new string[]
+                {
+                    "DungeonRegion",
+                    "CaveRegion",
+                    "BardDungeonRegion",
+                    "OutDoorRegion",
+                    "VillageRegion",
+                };
 
-                m_EncounterTimers = new EncounterTimer[m_Intervals.Length];
+                float[] timedIntervals = new float[]
+                {
+                    m_Intervals[0],
+                    m_Intervals[0],
+                    m_Intervals[0],
+                    m_Intervals[1],
+                    m_Intervals[2],
+                };
 
-                if (m_Intervals.Length >= 3)
-                {
-                    m_EncounterTimers[0] = new EncounterTimer("DungeonRegion", m_Intervals[0]);
-                    m_EncounterTimers[1] = new EncounterTimer("OutDoorRegion", m_Intervals[1]);
-                    m_EncounterTimers[2] = new EncounterTimer("VillageRegion", m_Intervals[2]);
-                }
-                if (m_Intervals.Length >= 4)
-                {
-                    //m_EncounterTimers[3] = new EncounterTimer( "House", m_Intervals[3] );
-                    Console.WriteLine(
-                        "RandomEncounters: WARNING, House Spawning not implemented yet."
+                m_EncounterTimers = new EncounterTimer[timedRegionTypes.Length];
+
+                for (int i = 0; i < timedRegionTypes.Length; i++)
+                    m_EncounterTimers[i] = new EncounterTimer(
+                        timedRegionTypes[i],
+                        timedIntervals[i]
                     );
-                }
-                if (m_Intervals.Length == 5)
-                {
-                    //m_EncounterTimers[4] = new EncounterTimer( "Jail", m_Intervals[4] );
-                    Console.WriteLine(
-                        "RandomEncounters: WARNING, Jail Spawning not implemented yet."
-                    );
-                }
 
                 foreach (EncounterTimer timer in m_EncounterTimers)
                     timer.Start();
@@ -754,9 +755,12 @@ namespace Server.Misc
 
             if (m_Picker == "sqrt")
             {
-                int nEncounterChecks = (int)Math.Sqrt(chosenMobiles.Count);
+                int nEncounterChecks = (int)Math.Sqrt(candidateMobiles.Count);
 
-                for (int i = 0; i < candidateMobiles.Count; i++)
+                if (nEncounterChecks < 1)
+                    nEncounterChecks = 1;
+
+                for (int i = 0; i < nEncounterChecks && candidateMobiles.Count > 0; i++)
                 {
                     int chosen = Utility.RandomMinMax(0, candidateMobiles.Count - 1);
                     Mobile chosenMobile = (Mobile)candidateMobiles[chosen];
@@ -836,15 +840,20 @@ namespace Server.Misc
 
                 foreach (string key in keys1)
                 {
-                    Console.WriteLine("Searching for region key: " + key);
+                    if (m_Debug)
+                        Console.WriteLine("Searching for region key: " + key);
+
                     if (m_RegionHash.Contains(key)) //  Search to for match against named region;
                     {
                         possibleEncounters = ((RegionRecord)m_RegionHash[key]).PossibleEncounters;
-                        Console.WriteLine(
-                            "Found match for key: {0}, with value: {1}",
-                            key,
-                            possibleEncounters
-                        );
+
+                        if (m_Debug)
+                            Console.WriteLine(
+                                "Found match for key: {0}, with value: {1}",
+                                key,
+                                possibleEncounters
+                            );
+
                         break;
                     }
                 }
@@ -889,10 +898,14 @@ namespace Server.Misc
 
                     foreach (string key in keys2)
                     {
-                        Console.WriteLine("Searching for region key: " + key);
+                        if (m_Debug)
+                            Console.WriteLine("Searching for region key: " + key);
+
                         if (m_RegionHash.Contains(key)) //  Search to for match against named region;
                         {
-                            Console.WriteLine("Found match for key: " + key);
+                            if (m_Debug)
+                                Console.WriteLine("Found match for key: " + key);
+
                             possibleEncounters = (
                                 (RegionRecord)m_RegionHash[key]
                             ).PossibleEncounters;
@@ -937,18 +950,19 @@ namespace Server.Misc
 
                         if (encounter.Level <= playerLevel)
                         {
-                            Console.WriteLine(
-                                "Encounter Level "
-                                    + encounter.LevelType
-                                    + " <= Player Level "
-                                    + playerLevel
-                            );
+                            if (m_Debug)
+                                Console.WriteLine(
+                                    "Encounter Level "
+                                        + encounter.LevelType
+                                        + " <= Player Level "
+                                        + playerLevel
+                                );
 
                             GenerateEncounter(chosenMobile, encounter, cleanupList);
 
                             break;
                         }
-                        else
+                        else if (m_Debug)
                             Console.WriteLine(
                                 "Encounter Level "
                                     + encounter.LevelType
@@ -968,21 +982,23 @@ namespace Server.Misc
 
                         if (encounter.Level <= playerLevel)
                         {
-                            Console.WriteLine(
-                                "Encounter Level "
-                                    + encounter.LevelType
-                                    + " <= Player Level "
-                                    + playerLevel
-                            );
+                            if (m_Debug)
+                                Console.WriteLine(
+                                    "Encounter Level "
+                                        + encounter.LevelType
+                                        + " <= Player Level "
+                                        + playerLevel
+                                );
 
                             GenerateEncounter(chosenMobile, encounter, cleanupList);
                         }
-                        Console.WriteLine(
-                            "Encounter Level "
-                                + encounter.LevelType
-                                + " > Player Level "
-                                + playerLevel
-                        );
+                        else if (m_Debug)
+                            Console.WriteLine(
+                                "Encounter Level "
+                                    + encounter.LevelType
+                                    + " > Player Level "
+                                    + playerLevel
+                            );
                     }
             }
 

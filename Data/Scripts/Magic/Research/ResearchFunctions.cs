@@ -16,6 +16,9 @@ namespace Server.Misc
 {
     class ResearchSettings
     {
+        private static readonly string DefaultArchBar =
+            "0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#";
+
         public static bool BookCaster(Mobile m)
         {
             if (m is PlayerMobile)
@@ -60,31 +63,41 @@ namespace Server.Misc
         public static void ResearchTransfer(Mobile m, int bar)
         {
             if (bar == 1)
-                ((PlayerMobile)m).SpellBarsArch1 =
-                    "0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#";
+                ((PlayerMobile)m).SpellBarsArch1 = DefaultArchBar;
             else if (bar == 2)
-                ((PlayerMobile)m).SpellBarsArch2 =
-                    "0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#";
+                ((PlayerMobile)m).SpellBarsArch2 = DefaultArchBar;
             else if (bar == 3)
-                ((PlayerMobile)m).SpellBarsArch3 =
-                    "0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#";
+                ((PlayerMobile)m).SpellBarsArch3 = DefaultArchBar;
             else if (bar == 4)
-                ((PlayerMobile)m).SpellBarsArch4 =
-                    "0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#";
+                ((PlayerMobile)m).SpellBarsArch4 = DefaultArchBar;
 
             if (m.Backpack.FindItemByType(typeof(ResearchBag)) != null)
             {
                 Item sack = m.Backpack.FindItemByType(typeof(ResearchBag));
                 ResearchBag pouch = (ResearchBag)sack;
 
+                string storedBars = null;
+
                 if (bar == 1)
-                    ((PlayerMobile)m).SpellBarsArch1 = pouch.BarsCast1;
+                    storedBars = pouch.BarsCast1;
                 else if (bar == 2)
-                    ((PlayerMobile)m).SpellBarsArch2 = pouch.BarsCast1;
+                    storedBars = pouch.BarsCast2;
                 else if (bar == 3)
-                    ((PlayerMobile)m).SpellBarsArch3 = pouch.BarsCast1;
+                    storedBars = pouch.BarsCast3;
                 else if (bar == 4)
-                    ((PlayerMobile)m).SpellBarsArch4 = pouch.BarsCast1;
+                    storedBars = pouch.BarsCast4;
+
+                if (string.IsNullOrEmpty(storedBars))
+                    storedBars = DefaultArchBar;
+
+                if (bar == 1)
+                    ((PlayerMobile)m).SpellBarsArch1 = storedBars;
+                else if (bar == 2)
+                    ((PlayerMobile)m).SpellBarsArch2 = storedBars;
+                else if (bar == 3)
+                    ((PlayerMobile)m).SpellBarsArch3 = storedBars;
+                else if (bar == 4)
+                    ((PlayerMobile)m).SpellBarsArch4 = storedBars;
             }
         }
 

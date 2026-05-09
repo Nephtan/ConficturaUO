@@ -79,20 +79,52 @@ namespace Server.Misc
 
         private static void Restart(CrashedEventArgs e)
         {
-            string root = GetRoot();
-
             Console.Write("Crash: Restarting...");
 
             try
             {
+                // Release listening sockets before launching a replacement process.
+                DisposeListeners();
+
                 Process.Start(Core.ExePath, Core.Arguments);
                 Console.WriteLine("done");
-
-                e.Close = true;
             }
             catch
             {
                 Console.WriteLine("failed");
+            }
+            finally
+            {
+                // Always terminate the crashing process so it cannot keep ports bound.
+                e.Close = true;
+
+                try
+                {
+                    Core.Process.Kill();
+                }
+                catch { }
+            }
+        }
+
+        private static void DisposeListeners()
+        {
+            MessagePump messagePump = Core.MessagePump;
+
+            if (messagePump == null || messagePump.Listeners == null)
+                return;
+
+            for (int i = 0; i < messagePump.Listeners.Length; i++)
+            {
+                Listener listener = messagePump.Listeners[i];
+
+                if (listener == null)
+                    continue;
+
+                try
+                {
+                    listener.Dispose();
+                }
+                catch { }
             }
         }
 

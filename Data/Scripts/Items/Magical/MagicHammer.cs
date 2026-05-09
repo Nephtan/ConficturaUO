@@ -116,7 +116,7 @@ namespace Server.Items
                         }
 
                         from.PlaySound(0x541);
-                        from.SendMessage("The hammer magical transforms the sceptre.");
+                        from.SendMessage("The hammer magically transforms the sceptre.");
                     }
                     else if (iWear is WizardStaff || iWear is GiftStave || iWear is LevelStave)
                     {
@@ -146,12 +146,38 @@ namespace Server.Items
                         }
 
                         from.PlaySound(0x541);
-                        from.SendMessage("The hammer magical transforms the stave.");
+                        from.SendMessage("The hammer magically transforms the stave.");
                     }
                     else if (iWear is BaseWeapon)
                     {
-                        Item weapon = (Item)Activator.CreateInstance(iWear.GetType());
-                        if (weapon.Name != null && weapon.Name != "")
+                        if (iWear is StaffFiveParts)
+                        {
+                            from.SendMessage("This weapon is far too powerful for the hammer's magic.");
+                            return;
+                        }
+
+                        Item weapon = null;
+
+                        try
+                        {
+                            var ctor = iWear.GetType().GetConstructor(Type.EmptyTypes);
+                            if (ctor != null)
+                            {
+                                weapon = (Item)ctor.Invoke(null);
+                            }
+                        }
+                        catch
+                        {
+                            weapon = null;
+                        }
+
+                        if (weapon == null)
+                        {
+                            from.SendMessage("The hammer's magic cannot affect this weapon.");
+                            return;
+                        }
+
+                        if (!string.IsNullOrEmpty(weapon.Name))
                         {
                             NewName = weapon.Name;
                         }
@@ -168,7 +194,7 @@ namespace Server.Items
                         else
                         {
                             from.PlaySound(0x541);
-                            from.SendMessage("The hammer magical transforms the weapon.");
+                            from.SendMessage("The hammer magically transforms the weapon.");
                         }
 
                         iWear.ItemID = weapon.ItemID;
@@ -711,7 +737,7 @@ namespace Server.Items
                             iWear.Name =
                                 Server.Misc.MaterialInfo.GetSpecialMaterialName(iWear) + NewName;
                             from.PlaySound(0x541);
-                            from.SendMessage("The hammer magical transforms the item.");
+                            from.SendMessage("The hammer magically transforms the item.");
                         }
                         else
                         {

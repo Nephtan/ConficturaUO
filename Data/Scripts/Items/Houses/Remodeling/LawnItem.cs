@@ -31,6 +31,15 @@ namespace Server.Items
             set { m_Placer = value; }
         }
 
+        private DateTime m_LastConfirmTime;
+
+        [CommandProperty(AccessLevel.GameMaster)]
+        public DateTime LastConfirmTime
+        {
+            get { return m_LastConfirmTime; }
+            set { m_LastConfirmTime = value; }
+        }
+
         private int m_Price;
 
         [CommandProperty(AccessLevel.GameMaster)]
@@ -161,7 +170,19 @@ namespace Server.Items
                     || from.AccessLevel >= AccessLevel.GameMaster
                 )
                 {
-                    Refund(from);
+                    PlayerMobile pm = from as PlayerMobile;
+
+                    if (
+                        m_LastConfirmTime < DateTime.Now - TimeSpan.FromMinutes(10) &&
+                        (pm == null || pm.LastDecoConfirmTime < DateTime.Now - TimeSpan.FromMinutes(10))
+                    )
+                    {
+                        from.SendGump(new ConfirmRemoveGump(from, this));
+                    }
+                    else
+                    {
+                        Refund(from);
+                    }
                 }
             }
             else
@@ -202,26 +223,26 @@ namespace Server.Items
             switch (version)
             {
                 case 1:
-                {
-                    if (reader.ReadBool())
                     {
-                        House = reader.ReadItem() as BaseHouse;
+                        if (reader.ReadBool())
+                        {
+                            House = reader.ReadItem() as BaseHouse;
+                        }
+                        goto case 0;
                     }
-                    goto case 0;
-                }
                 case 0:
-                {
-                    Placer = reader.ReadMobile();
-                    Price = reader.ReadInt();
-                    Title = reader.ReadString();
-
-                    Pieces = new List<LawnPiece>();
-                    foreach (LawnPiece item in reader.ReadItemList())
                     {
-                        Pieces.Add(item);
+                        Placer = reader.ReadMobile();
+                        Price = reader.ReadInt();
+                        Title = reader.ReadString();
+
+                        Pieces = new List<LawnPiece>();
+                        foreach (LawnPiece item in reader.ReadItemList())
+                        {
+                            Pieces.Add(item);
+                        }
+                        break;
                     }
-                    break;
-                }
             }
 
             if (House == null)
@@ -422,10 +443,10 @@ namespace Server.Items
             switch (version)
             {
                 case 0:
-                {
-                    ParentLawnItem = reader.ReadItem() as LawnItem;
-                    break;
-                }
+                    {
+                        ParentLawnItem = reader.ReadItem() as LawnItem;
+                        break;
+                    }
             }
         }
     }

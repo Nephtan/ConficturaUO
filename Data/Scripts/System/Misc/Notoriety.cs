@@ -145,6 +145,9 @@ namespace Server.Misc
             if (attMap == null || targMap == null || attMap != targMap)
                 return false;
 
+            if (PlayerGovernmentSystem.CanAttackBanned(attacker, target))
+                return true;
+
             // Casts for player and creature checks
             BaseCreature bcAttacker = attacker as BaseCreature;
             BaseCreature bcTarget = target as BaseCreature;

@@ -1072,14 +1072,30 @@ namespace Server.Items
                 else if (from.CheckTargetSkill(SkillName.Mercantile, o, -5, 125) || automatic)
                 {
                     Container pack = (Container)relic;
-                    List<Item> items = new List<Item>();
-                    foreach (Item item in pack.Items)
+
+                    if (pack.Items.Count == 0)
                     {
-                        items.Add(item);
+                        Item artifact = ArtifactBuilder.CreateArtifact("random");
+
+                        if (artifact != null)
+                        {
+                            if (!from.AddToBackpack(artifact))
+                            {
+                                artifact.MoveToWorld(from.Location, from.Map);
+                            }
+                        }
                     }
-                    foreach (Item item in items)
+                    else
                     {
-                        from.AddToBackpack(item);
+                        List<Item> items = new List<Item>();
+                        foreach (Item item in pack.Items)
+                        {
+                            items.Add(item);
+                        }
+                        foreach (Item item in items)
+                        {
+                            from.AddToBackpack(item);
+                        }
                     }
 
                     from.SendMessage("You successfully identify the artifact.");

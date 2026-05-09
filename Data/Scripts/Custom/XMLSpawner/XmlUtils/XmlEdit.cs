@@ -1125,8 +1125,17 @@ namespace Server.Engines.XmlSpawner2
                 {
                     // Create a new gump
                     Refresh(state);
-                    // try to save
-                    m_Dialog.DoSaveNPC(state.Mobile, SaveFilename, true);
+
+                    if (XmlSpawner.HasXmlEditSaveAccess(state.Mobile))
+                    {
+                        // try to save
+                        m_Dialog.DoSaveNPC(state.Mobile, SaveFilename, true);
+                    }
+                    else
+                    {
+                        state.Mobile.SendMessage("You do not have access to save dialog files.");
+                    }
+
 
                     return;
                 }

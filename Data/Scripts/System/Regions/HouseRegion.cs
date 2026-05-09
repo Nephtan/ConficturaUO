@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using Server;
@@ -110,22 +111,65 @@ namespace Server.Regions
 
         private static Rectangle3D[] GetArea(BaseHouse house)
         {
-            int x = house.X;
-            int y = house.Y;
-            int z = house.Z;
+            MultiComponentList mcl = house.Components;
 
-            Rectangle2D[] houseArea = house.Area;
-            Rectangle3D[] area = new Rectangle3D[houseArea.Length];
+            int originX = house.X + mcl.Min.X;
+            int originY = house.Y + mcl.Min.Y;
 
-            for (int i = 0; i < area.Length; i++)
+            bool[,] inside = new bool[mcl.Width, mcl.Height];
+
+            for (int x = 0; x < mcl.Width; ++x)
             {
-                Rectangle2D rect = houseArea[i];
-                area[i] = Region.ConvertTo3D(
-                    new Rectangle2D(x + rect.Start.X, y + rect.Start.Y, rect.Width, rect.Height)
-                );
+                for (int y = 0; y < mcl.Height; ++y)
+                {
+                    Point3D p = new Point3D(originX + x, originY + y, house.Z);
+
+                    if (house.IsInside(p, 16))
+                        inside[x, y] = true;
+                }
             }
 
-            return area;
+            List<Rectangle3D> rects = new List<Rectangle3D>();
+
+            for (int y = 0; y < mcl.Height; ++y)
+            {
+                int start = -1;
+
+                for (int x = 0; x < mcl.Width; ++x)
+                {
+                    if (inside[x, y])
+                    {
+                        if (start < 0)
+                            start = x;
+                    }
+                    else if (start >= 0)
+                    {
+                        Rectangle2D rect = new Rectangle2D(
+                            originX + start,
+                            originY + y,
+                            x - start,
+                            1
+                        );
+
+                        rects.Add(Region.ConvertTo3D(rect));
+                        start = -1;
+                    }
+                }
+
+                if (start >= 0)
+                {
+                    Rectangle2D rect = new Rectangle2D(
+                        originX + start,
+                        originY + y,
+                        mcl.Width - start,
+                        1
+                    );
+
+                    rects.Add(Region.ConvertTo3D(rect));
+                }
+            }
+
+            return rects.ToArray();
         }
 
         public override bool SendInaccessibleMessage(Item item, Mobile from)

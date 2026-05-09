@@ -3,9 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
-using Confictura.Custom;
 using Server;
 using Server.ContextMenus;
+using Server.Custom.Confictura;
+using Server.Custom.Confictura.CloneOfflinePlayerCharacters;
 using Server.Factions;
 using Server.Items;
 using Server.Misc;
@@ -9454,17 +9455,29 @@ namespace Server.Mobiles
                 return true;
             }
 
-            if ((m_Mobile.LastMoveTime + TimeSpan.FromSeconds(1.0)) < DateTime.Now)
+            int minimumRange = m_Mobile.RangeFight;
+            int maximumRange = m_Mobile.Weapon.MaxRange;
+            int tacticalMin;
+            int tacticalMax;
+
+            bool usesTacticalSpacingBand = AITacticalTargeting.TryGetCombatSpacingBand(
+                m_Mobile,
+                out tacticalMin,
+                out tacticalMax
+            );
+
+            if (usesTacticalSpacingBand)
             {
-                if (
-                    WalkMobileRange(
-                        m_Mobile.Combatant,
-                        1,
-                        true,
-                        m_Mobile.RangeFight,
-                        m_Mobile.Weapon.MaxRange
-                    )
-                )
+                minimumRange = tacticalMin;
+                maximumRange = tacticalMax;
+            }
+
+            // Tactical skirmishers rely on the stock DoMoveImpl()/NextMove scheduler so
+            // they do not stack an extra LastMoveTime gate on top of active-speed movement.
+            if (usesTacticalSpacingBand || (m_Mobile.LastMoveTime + TimeSpan.FromSeconds(1.0)) < DateTime.Now)
+            {
+
+                if (WalkMobileRange(m_Mobile.Combatant, 1, true, minimumRange, maximumRange))
                 {
                     // Be sure to face the combatant
                     m_Mobile.Direction = m_Mobile.GetDirectionTo(m_Mobile.Combatant.Location);
@@ -9495,10 +9508,22 @@ namespace Server.Mobiles
                 }
             }
 
-            // When we have no ammo, we flee
+            // When we have no usable ammo, we flee. Prefer the equipped ranged weapon's
+            // ammo contract so thrown-weapon archers do not fall into the old Arrow-only path.
             Container pack = m_Mobile.Backpack;
+            BaseQuiver quiver = m_Mobile.FindItemOnLayer(Layer.Cloak) as BaseQuiver;
+            BaseRanged rangedWeapon = m_Mobile.Weapon as BaseRanged;
+            Type ammoType = rangedWeapon != null ? rangedWeapon.AmmoType : typeof(Arrow);
+            bool hasAmmo = false;
 
-            if (pack == null || pack.FindItemByType(typeof(Arrow)) == null)
+            if (ammoType != null)
+            {
+                hasAmmo =
+                    (quiver != null && quiver.FindItemByType(ammoType) != null)
+                    || (pack != null && pack.FindItemByType(ammoType) != null);
+            }
+
+            if (!hasAmmo)
             {
                 Action = ActionType.Flee;
                 return true;
@@ -12715,6 +12740,11 @@ namespace Server.Mobiles
                 Mobile newFocusMob = null;
                 double val = double.MinValue;
                 double theirVal;
+                AITacticalTargetProfile tacticalProfile = m_Mobile.TacticalTargetProfile;
+                int nearbyTeamSize = -1;
+
+                if (tacticalProfile == AITacticalTargetProfile.Captain && acqType == FightMode.Closest)
+                    nearbyTeamSize = m_Mobile.GetTeamSize(8);
 
                 // Original Code Below
                 // IPooledEnumerable eable = map.GetMobilesInRange(m_Mobile.Location, iRange);
@@ -12886,6 +12916,17 @@ namespace Server.Mobiles
                     }
 
                     theirVal = m_Mobile.GetFightModeRanking(m, acqType, bPlayerOnly);
+
+                    // Tactical scoring layers only after the stock legality and mode filters pass.
+                    if (m_Mobile.UsesAITacticalTargeting)
+                        theirVal += AITacticalTargeting.GetTargetBonus(
+                            m_Mobile,
+                            m,
+                            acqType,
+                            bPlayerOnly,
+                            tacticalProfile,
+                            nearbyTeamSize
+                        );
 
                     if (theirVal > val && m_Mobile.InLOS(m))
                     {

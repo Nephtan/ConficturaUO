@@ -141,6 +141,9 @@ namespace Server.Gumps
                 + "Marksmanship - This will improve the more you use the appropriate weapons, increasing damage and possibilities to hit with ranged weapons. These are weapons like bows, crossbows, wizard staves, some magic wands, and throwing gloves. You have the ability to throw daggers, stones, harpoons, darts, axes, or shurikens.<BR><BR>";
             text =
                 text
+                + "Meditation - Harnessing your inner focus allows your mana to return faster. Remaining still and using the Meditation skill will restore your mind more quickly, and practicing in tranquil areas will improve your success. Wearing cloth or other meditative armors enhances your concentration, while heavy metal armor can keep you from meditating at all.<BR><BR>";
+            text =
+                text
                 + "Mercantile - If you want to make more money selling items to vendors in town, this skill will allow you to persuade them. You will also come across artifacts, wands, and scrolls that can only be identified with this skill. If you have some unusual item, you can sometimes tell what you can get for it, and from whom. These are strange items that are usually decorative in nature, and not something you would be able to use. It could be artwork, banners, books, cloth, carpets, coins, srinks, furs, gems, gravestones, instruments, jewels, leather, orbs, paintings, reagents, rugs, scrolls, statues, tablets, or vases. If you determine that it does have value, give the item to the merchant you determined and they will give you some gold for it. Just hand it to them or keep it to decorate your home. If you master this skill, you will get double the price for rare items like these.<BR><BR>";
             text =
                 text
