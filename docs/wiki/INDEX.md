@@ -63,6 +63,7 @@ Guides are grouped by primary audience and use case.
 - [Invasion System](Invasion_System.md)
 - [Monster Nest System](Monster_Nest_System.md)
 - [Random Encounter Engine](Random_Encounter_Engine.md)
+- [Ranger Survival Training](Ranger_Survival_Training.md)
 
 ## Staff And Administration
 - [Access Level Stone](Access_Level_Stone.md)
