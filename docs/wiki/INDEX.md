@@ -89,6 +89,7 @@ Guides are grouped by primary audience and use case.
 - [Housing System](Housing_System.md)
 - [Invasion System](Invasion_System.md)
 - [Monster Nest System](Monster_Nest_System.md)
+- [Goliath Monsters](Goliath_Monsters.md)
 - [Quest Framework](Quest_Framework.md)
 - [Random Encounter Engine](Random_Encounter_Engine.md)
 - [Ranger Survival Training](Ranger_Survival_Training.md)
@@ -104,6 +105,7 @@ Guides are grouped by primary audience and use case.
 - [NPC Control Commands](NPC_Control_Commands.md)
 - [Pandora's Gift Box](Pandoras_Gift_Box.md)
 - [Staff Toolbar](Staff_Toolbar.md)
+- [Static Gump Tool](Static_Gump_Tool.md)
 - [XML Spawner Enhancements](XML_Spawner_Enhancements.md)
 
 ## Technical And Engine Reference
@@ -114,6 +116,7 @@ Guides are grouped by primary audience and use case.
 - [Creature AI Core](Creature_AI_Core.md)
 - [Gump Framework](Gump_Framework.md)
 - [Misc Core Systems](Misc_Core_Systems.md)
+- [Obsolete Script Collection](Obsolete_Script_Collection.md)
 - [OmniAI](OmniAI.md)
 - [Player Mobile Core](Player_Mobile_Core.md)
 - [Player Range Sensitive Deactivation](player-range-sensitive-mod.md)

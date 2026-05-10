@@ -5,14 +5,14 @@ This file stores stable state for the wiki audit and fix automation loop. Keep i
 ## Schedule
 
 - Audit automation: daily at 02:10 America/Chicago.
-- Fix automation: hourly at minute 40.
+- Fix automation: hourly at minute 01.
 - Human commit review: manual, after one or more automation runs leave reviewed wiki changes.
 
 ## Run Locks
 
 - Active lock: none.
 - Last audit run: 2026-05-10 11:31:35 -05:00 America/Chicago; manual audit run added WIKI-0015 and WIKI-0016.
-- Last fix run: 2026-05-10 11:07:19 -05:00 America/Chicago; WIKI-0011 fixed by manual automation run.
+- Last fix run: 2026-05-10 18:06:58 -05:00 America/Chicago; WIKI-0004 fixed by manual automation run.
 - Last setup run: 2026-05-10.
 
 ## Backlog State
@@ -20,7 +20,7 @@ This file stores stable state for the wiki audit and fix automation loop. Keep i
 - Last issued ID: WIKI-0016.
 - Next ID: WIKI-0017.
 - Initial backlog source: SystemAudit Missing/Stub rows and duplicate documentation-link groups.
-- Last fixed ID: WIKI-0011; Farmable Crops System documentation created and linked.
+- Last fixed ID: WIKI-0004; Obsolete Script Collection documented and linked from the technical reference index.
 
 ## Intentional Exceptions
 
@@ -33,6 +33,8 @@ This file stores stable state for the wiki audit and fix automation loop. Keep i
 - `docs/wiki/wikihandoff.md` is an automation support file and is intentionally not listed in the player-facing systems index.
 - `docs/wiki/wikiautomationmemory.md` is an automation support file and is intentionally not listed in the player-facing systems index.
 - `docs/wiki/wikicommitprompt.md` is an automation support file and is intentionally not listed in the player-facing systems index.
+- `NPC: Banker Speech Commands` and `Mechanic: Banking Speech Commands` intentionally share `docs/wiki/Banker_Speech_Commands.md`; the mechanic row is a low-priority audit alias for the same banker speech system.
+- `NPC: Real Estate Broker Appraisal` and `Real Estate Broker Deed Appraisal` intentionally share `docs/wiki/Real_Estate_Broker_Appraisal.md`; the deed row is a low-priority audit alias for the same broker appraisal/buyback flow.
 
 ## Canonical Slug Map
 
