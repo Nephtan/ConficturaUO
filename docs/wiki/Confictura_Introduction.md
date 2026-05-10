@@ -311,15 +311,15 @@ commands. ?F:docs/wiki/XML_Spawner_Enhancements.md†L3-L18??
 The most recent direction in the repo points toward making Confictura more
 coherent rather than merely larger.
 
-First, character level is becoming canonical. The older recon report proposed a
-single service, public facades, random encounter integration, diagnostics, and
-retuned XML gates. ?F:docs/wiki/Character_Level_Recon_Report.md†L190-L207??
-The current code now has that service, routes visible player level through it,
-and routes random encounter player level checks through it. ?F:Data/Scripts/Custom/CharacterLevel/CharacterLevelService.cs†L99-L224?? ?F:Data/Scripts/System/Misc/Players.cs†L893-L901?? ?F:Data/Scripts/Custom/RandomEncounters/Helpers.cs†L113-L121??
+First, character level is now canonical. The recon report describes the live
+service, player level display routing, player random encounter routing, and the
+remaining creature legacy path. ?F:docs/wiki/Character_Level_Recon_Report.md†L3-L10??
+The current code routes visible player level and random encounter player level
+checks through that service. ?F:Data/Scripts/Custom/CharacterLevel/CharacterLevelService.cs†L99-L224?? ?F:Data/Scripts/System/Misc/Players.cs†L893-L901?? ?F:Data/Scripts/Custom/RandomEncounters/Helpers.cs†L113-L121??
 
 Second, random encounters have been moved from placeholder-ish low gates toward
-a real 1-100 dungeon curve. The earlier recommendation was to move to
-`1/25/45/65/85` after the canonical service existed. ?F:docs/wiki/Character_Level_Recon_Report.md†L179-L188??
+a real 1-100 dungeon curve, while player checks now honor the encounter alias
+mapping. ?F:docs/wiki/Character_Level_Recon_Report.md†L76-L89??
 The current XML and documentation show that curve in live tables. ?F:Data/Scripts/Custom/RandomEncounters/RandomEncounters.xml†L17-L35?? ?F:docs/wiki/Random_Encounter_Engine.md†L68-L75??
 
 Third, AI work is being treated with caution and respect for the shard's

@@ -12,7 +12,7 @@ This file stores stable state for the wiki audit and fix automation loop. Keep i
 
 - Active lock: none.
 - Last audit run: not run by scheduled automation yet.
-- Last fix run: not run by scheduled automation yet.
+- Last fix run: 2026-05-10 11:07:19 -05:00 America/Chicago; WIKI-0011 fixed by manual automation run.
 - Last setup run: 2026-05-10.
 
 ## Backlog State
@@ -20,6 +20,7 @@ This file stores stable state for the wiki audit and fix automation loop. Keep i
 - Last issued ID: WIKI-0014.
 - Next ID: WIKI-0015.
 - Initial backlog source: SystemAudit Missing/Stub rows and duplicate documentation-link groups.
+- Last fixed ID: WIKI-0011; Farmable Crops System documentation created and linked.
 
 ## Intentional Exceptions
 
