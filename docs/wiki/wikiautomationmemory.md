@@ -11,14 +11,14 @@ This file stores stable state for the wiki audit and fix automation loop. Keep i
 ## Run Locks
 
 - Active lock: none.
-- Last audit run: not run by scheduled automation yet.
+- Last audit run: 2026-05-10 11:31:35 -05:00 America/Chicago; manual audit run added WIKI-0015 and WIKI-0016.
 - Last fix run: 2026-05-10 11:07:19 -05:00 America/Chicago; WIKI-0011 fixed by manual automation run.
 - Last setup run: 2026-05-10.
 
 ## Backlog State
 
-- Last issued ID: WIKI-0014.
-- Next ID: WIKI-0015.
+- Last issued ID: WIKI-0016.
+- Next ID: WIKI-0017.
 - Initial backlog source: SystemAudit Missing/Stub rows and duplicate documentation-link groups.
 - Last fixed ID: WIKI-0011; Farmable Crops System documentation created and linked.
 
@@ -48,6 +48,8 @@ This file stores stable state for the wiki audit and fix automation loop. Keep i
 - Do not treat `Confictura_Introduction.md` as missing from SystemAudit.
 - Treat duplicate SystemAudit documentation links as backlog candidates unless listed here as intentional.
 - Treat Missing or Stub SystemAudit rows without documentation links as backlog candidates.
+- Treat source-behavior mentions of TODO, stub, placeholder, or generated text in wiki pages as documentation content unless the wording is automation provenance or generated status metadata.
+- Do not treat `Creature_AI_Core.md`'s `Target Acquisition` heading or discussion as stale audit provenance.
 
 ## Verification Baseline
 

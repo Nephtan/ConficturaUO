@@ -2,49 +2,52 @@
 
 ## Latest Run
 
-- Timestamp: 2026-05-10 11:07:19 -05:00 America/Chicago.
-- Run type: fix automation.
+- Timestamp: 2026-05-10 11:31:35 -05:00 America/Chicago.
+- Run type: audit automation.
 - Actor: Codex manual automation run.
-- Selected backlog ID: WIKI-0011.
-- Schedule note: manual run recorded outside the preferred minute 40.
+- Schedule note: manual run recorded outside the preferred 02:10 America/Chicago time.
 - Git policy: no staging or commit performed.
+
+## Dirty Worktree Summary
+
+- `git status --short` before edits: clean.
+- No unrelated dirty files were present.
+- Audit edits were limited to wiki automation control files.
+
+## Checks Performed
+
+- Wiki index coverage: passed; every non-index wiki markdown file is indexed or listed as an intentional exception.
+- Local Markdown link resolution: wiki page links passed; the broader documentation scan found two missing `docs/SystemAudit.md` source-script links now tracked as WIKI-0016.
+- Heading integrity: passed; every wiki markdown file has exactly one H1 and no duplicate H1 title was found.
+- Citation health: passed; no Unicode replacement characters or malformed `?F:` citation markers were found in wiki pages.
+- SystemAudit alignment: documentation targets all resolve; Missing/Stub rows without documentation links are already represented by backlog items WIKI-0003, WIKI-0004, WIKI-0010, and WIKI-0012.
+- SystemAudit duplicate documentation links: duplicate groups for `Banker_Speech_Commands.md` and `Real_Estate_Broker_Appraisal.md` remain represented by WIKI-0013 and WIKI-0014.
+- Metadata hygiene: stale `Target acquisition` provenance bullets found in four user-facing wiki pages and tracked as WIKI-0015.
+- Final verification: reran the structural summary, `git diff --check` passed with Git's LF-to-CRLF working-copy warnings, and the edited files contain LF line endings only.
+
+## New Or Updated Backlog IDs
+
+- WIKI-0015 added: remove stale target-acquisition provenance bullets from four wiki pages.
+- WIKI-0016 added: fix or intentionally document two missing `docs/SystemAudit.md` source-script link targets.
 
 ## Files Changed
 
-- `docs/wiki/Farmable_Crops_System.md`
-- `docs/wiki/INDEX.md`
-- `docs/SystemAudit.md`
 - `docs/wiki/wikibacklog.md`
 - `docs/wiki/wikihandoff.md`
 - `docs/wiki/wikiautomationmemory.md`
-- `$CODEX_HOME/automations/wiki-fix-automation/memory.md`
+- `$CODEX_HOME/automations/wiki-audit-automation/memory.md`
 
-## Summary Of Fix
+## Recommended Next Action
 
-Created source-backed Farmable Crops System documentation for `Data/Scripts/Items/Farming/` and the inherited reagent crop scripts under `Data/Scripts/Items/Trades/Resources/Reagents/Farm/`.
+- Fixer automation should pick WIKI-0016 first because it is a concrete link-integrity issue with known replacement paths.
+- Then address WIKI-0015 by removing only stale provenance bullets, leaving source-backed gameplay sections intact.
 
-The page distinguishes simple static harvest nodes from the Gardening and Homestead farming systems, documents double-click and walk-over harvest behavior, lists crop outputs, records serialization behavior, and calls out C# rework candidates.
+## Blockers
 
-Linked the new page from the wiki index, updated the SystemAudit row from `Missing` to documented coverage with rework notes, and marked WIKI-0011 fixed after verification.
-
-## Verification
-
-- `git status --short` before edits: documentation/wiki files were already dirty from prior WIKI-0001, WIKI-0002, WIKI-0005, WIKI-0006, WIKI-0007, WIKI-0008, and WIKI-0009 work; no C# source, project, or binary files were dirty.
-- Local Markdown link resolution for `docs/wiki`: passed; 111 wiki files scanned.
-- H1 count and duplicate title scan: passed; 111 wiki files scanned.
-- Citation/replacement-character scan: passed; 113 documentation files scanned.
-- SystemAudit documentation-target scan: passed; 103 documentation links resolve.
-- Wiki index coverage scan: passed; 104 linked markdown pages.
-- `git diff --check`: passed. Git warned that edited tracked files have LF in the working copy and would be converted to CRLF the next time Git touches them under the current local settings.
-- LF/trailing-whitespace scan for edited repo files: passed; 6 paths checked.
-
-## Remaining Risk Or Blocker
-
-- No blocker. Remaining risk is documentation-only: the new page records C# rework candidates for farmable crop harvest cleanup and amount handling, but this run did not change C# code.
+- No blockers.
 
 ## Worktree State
 
-- The worktree is intentionally dirty for human review.
+- The worktree is intentionally dirty with audit-control file edits only.
 - This run did not stage or commit.
-- Final observed `git status --short`: `docs/SystemAudit.md`, `docs/wiki/INDEX.md`, `docs/wiki/wikiautomationmemory.md`, `docs/wiki/wikibacklog.md`, and `docs/wiki/wikihandoff.md` modified; `docs/wiki/Base_Spell_Framework.md`, `docs/wiki/Book_Publisher.md`, `docs/wiki/Farmable_Crops_System.md`, `docs/wiki/Magery_Spell_System.md`, `docs/wiki/Misc_Magic_Spells.md`, `docs/wiki/NPC_Mage_Advice.md`, `docs/wiki/Relic_Items.md`, and `docs/wiki/Technology_Items.md` untracked.
-- Existing WIKI-0001, WIKI-0002, WIKI-0005, WIKI-0006, WIKI-0007, WIKI-0008, and WIKI-0009 files remain dirty alongside the new WIKI-0011 documentation updates.
+- Final observed `git status --short`: `docs/wiki/wikiautomationmemory.md`, `docs/wiki/wikibacklog.md`, and `docs/wiki/wikihandoff.md` modified.
