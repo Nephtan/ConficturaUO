@@ -4,6 +4,8 @@ Guides are grouped by primary audience and use case.
 
 ## Start Here
 - [Confictura Introduction](Confictura_Introduction.md)
+- [Guide To Adventure Book](Guide_To_Adventure_Book.md)
+- [World Basics And Commands](World_Basics_Commands.md)
 
 ## Player Commands And Account Tools
 - [Auto Sheath](Auto_Sheath.md)
@@ -14,6 +16,7 @@ Guides are grouped by primary audience and use case.
 - [Clear Deck Command](Clear_Deck_Command.md)
 - [Custom Title Feature](Custom_Title_Feature.md)
 - [Help Request System](Help_Request_System.md)
+- [In-Game Command List](In_Game_Command_List.md)
 - [Offline Skill Training](offline-skill-training.md)
 - [Point Command](point-command.md)
 - [PvP Consent System](PvP_Consent_System.md)
