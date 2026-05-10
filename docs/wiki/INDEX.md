@@ -78,6 +78,7 @@ Guides are grouped by primary audience and use case.
 ## World And Gameplay Systems
 - [Champion Spawns](Champion_Spawns.md)
 - [Government System](Government_System.md)
+- [Player Government System Guide](Player_Government_System_Guide.md)
 - [Housing System](Housing_System.md)
 - [Invasion System](Invasion_System.md)
 - [Monster Nest System](Monster_Nest_System.md)
