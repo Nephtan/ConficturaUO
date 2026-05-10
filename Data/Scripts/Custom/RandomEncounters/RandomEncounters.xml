@@ -12,7 +12,7 @@ interval="150:300:300"
 cleanup="300"
 cleanupGrace="1"
 debug="true"
-debugEffect="false">
+debugEffect="true">
 
   <Facet name="Lodor">
     <Region type="DungeonRegion" name="default">
