@@ -1873,6 +1873,13 @@ namespace Server
             typeof(LargeBagofHolding),
             typeof(BagOfHolding),
             typeof(DruidMirror),
+            typeof(ShadowToken),
+            typeof(CrystalToken),
+            typeof(PhoenixFeather),
+            typeof(GolemManual),
+            typeof(TreasurePile01AddonDeed),
+            typeof(RobotCircuitBoard),
+            typeof(KilrathiHeavyGun),
             typeof(SpecialJars),
             typeof(EvilItems)
         };
