@@ -18,11 +18,11 @@ The agent's primary objective is to assist with the development and maintenance 
 
 * **Framework:** .NET Framework 4.8
 
-* **IDE:** The project is developed using Visual Studio Community 2022.
+* **IDE/Build Tools:** Use Visual Studio 2022 with .NET Framework build tools. Visual Studio Community 2022 is sufficient, but other Visual Studio 2022 editions should work.
 
 * **Core Dependencies:** The `Data/Scripts/Scripts.csproj` project depends on the core engine project at `Data/System/Source/Server.csproj`. Keep this relationship in mind when analyzing or modifying code.
 
-* **Line Endings:** Use (LF) line endings to remain compatible with the server environment.
+* **Line Endings:** Keep committed text files normalized to LF. A Windows checkout may show CRLF depending on Git autocrlf settings.
 
 ## Known Build Workflows
 
