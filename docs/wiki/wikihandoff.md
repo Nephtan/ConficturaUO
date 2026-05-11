@@ -2,42 +2,41 @@
 
 ## Latest Run
 
-- Timestamp: 2026-05-10 18:32:30 -05:00 America/Chicago.
-- Run type: audit automation.
+- Timestamp: 2026-05-10 20:31:43 -05:00 America/Chicago.
+- Run type: focused SystemAudit audit.
 - Actor: Codex manual automation run.
 - Schedule note: manual run recorded outside the preferred 02:10 America/Chicago cadence.
 - Git policy: no staging or commit performed.
 
 ## Dirty Worktree Summary
 
-- `git status --short` before audit: clean.
-- `git status --short` immediately before edits: clean.
-- This audit intentionally left only wiki automation state files dirty.
+- `git status --short` before audit: modified `docs/SystemAudit.md`, `docs/wiki/wikiautomationmemory.md`, `docs/wiki/wikibacklog.md`, and `docs/wiki/wikihandoff.md`.
+- Existing dirty files matched wiki/documentation automation work from the WIKI-0010 fixer run; no C# source, project, binary, or unrelated documentation files were dirty.
+- This audit intentionally left wiki automation state files dirty for human review.
 
 ## Checks Performed
 
-- Wiki index coverage for every `docs/wiki/*.md` file except `INDEX.md`: passed.
-- Local Markdown link resolution, including case-sensitive path checks, across `docs/wiki/*.md` and `docs/SystemAudit.md`: passed.
-- Heading scan for exactly one H1 per wiki page and duplicate H1 titles: passed.
-- Citation health scan for Unicode replacement characters, malformed `?F:` markers, invalid line ranges, and missing cited files: passed.
-- SystemAudit alignment for documentation targets, Missing/Stub backlog coverage, and duplicate documentation links with memory exceptions: passed.
-- Metadata hygiene sweep for canonical legacy slug pages and generated-looking audit provenance: no new backlog items; existing WIKI-0015 still covers stale target-acquisition bullets.
+- SystemAudit table-shape scan: failed because the `Animal Shape Stones` row does not end with a closing table pipe.
+- SystemAudit local Markdown link resolution with case-sensitive path checks: passed.
+- SystemAudit documentation-target alignment: passed.
+- Missing/Stub SystemAudit row coverage against the wiki backlog: passed.
+- Duplicate SystemAudit documentation-link scan against memory exceptions: passed.
 
 ## Backlog Updates
 
-- New backlog IDs: none.
-- Updated backlog IDs: none.
-- Existing actionable items still relevant: WIKI-0010 for Explorer Camping Gear coverage and WIKI-0015 for stale target-acquisition provenance bullets.
+- Added WIKI-0017 as Ready/P3 for the malformed `Animal Shape Stones` row in `docs/SystemAudit.md`.
+- No existing backlog IDs were changed by this audit.
 
 ## Files Changed
 
+- `docs/wiki/wikibacklog.md`
 - `docs/wiki/wikihandoff.md`
 - `docs/wiki/wikiautomationmemory.md`
 - `$CODEX_HOME/automations/wiki-audit-automation/memory.md`
 
 ## Recommended Next Action
 
-- Fixer automation should continue with the oldest Ready item, WIKI-0010, unless a human prefers to clear the lower-risk metadata cleanup in WIKI-0015 first.
+- Fixer automation should handle WIKI-0017 by adding the missing trailing table pipe, then rerun SystemAudit table-shape, link, and alignment checks.
 
 ## Blockers
 
@@ -45,5 +44,5 @@
 
 ## Worktree State
 
-- The worktree is intentionally dirty with wiki automation files only.
+- The worktree is intentionally dirty for human review.
 - This run did not stage or commit.

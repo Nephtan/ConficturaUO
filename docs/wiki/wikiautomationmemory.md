@@ -11,16 +11,16 @@ This file stores stable state for the wiki audit and fix automation loop. Keep i
 ## Run Locks
 
 - Active lock: none.
-- Last audit run: 2026-05-10 18:32:30 -05:00 America/Chicago; manual audit run found no new backlog items; WIKI-0015 remains Ready.
-- Last fix run: 2026-05-10 18:06:58 -05:00 America/Chicago; WIKI-0004 fixed by manual automation run.
+- Last audit run: 2026-05-10 20:31:43 -05:00 America/Chicago; focused SystemAudit audit added WIKI-0017.
+- Last fix run: 2026-05-10 19:06:22 -05:00 America/Chicago; WIKI-0010 fixed by manual automation run.
 - Last setup run: 2026-05-10.
 
 ## Backlog State
 
-- Last issued ID: WIKI-0016.
-- Next ID: WIKI-0017.
+- Last issued ID: WIKI-0017.
+- Next ID: WIKI-0018.
 - Initial backlog source: SystemAudit Missing/Stub rows and duplicate documentation-link groups.
-- Last fixed ID: WIKI-0004; Obsolete Script Collection documented and linked from the technical reference index.
+- Last fixed ID: WIKI-0010; Explorer Camping Gear reconciled to the existing source-backed Ranger Survival Training documentation.
 
 ## Intentional Exceptions
 
@@ -35,6 +35,7 @@ This file stores stable state for the wiki audit and fix automation loop. Keep i
 - `docs/wiki/wikicommitprompt.md` is an automation support file and is intentionally not listed in the player-facing systems index.
 - `NPC: Banker Speech Commands` and `Mechanic: Banking Speech Commands` intentionally share `docs/wiki/Banker_Speech_Commands.md`; the mechanic row is a low-priority audit alias for the same banker speech system.
 - `NPC: Real Estate Broker Appraisal` and `Real Estate Broker Deed Appraisal` intentionally share `docs/wiki/Real_Estate_Broker_Appraisal.md`; the deed row is a low-priority audit alias for the same broker appraisal/buyback flow.
+- `Ranger Survival Training` and `Explorer Camping Gear` intentionally share `docs/wiki/Ranger_Survival_Training.md`; the explorer row is a low-priority coverage alias for the same source-backed camping gear reference.
 
 ## Canonical Slug Map
 
