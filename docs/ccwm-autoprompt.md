@@ -76,9 +76,17 @@ You are a human looking at a screen, not a compiler reading a single script. The
 - If the scan finds no nearby entities, record negative evidence: which source paths were searched, whether the result is `none_found` or `inconclusive`, and what unresolved spawn source could still change live visibility.
 - If there is an NPC, a chest, or a corpse within visual range, you must acknowledge it in your internal monologue before you formulate your next goal. Players are easily distracted by shiny things; act like one.
 
+PHASE 1.75: OPEN GUMPS ARE VISIBLE UI
+If any gump is currently open, or if the chosen action opens a gump, treat that gump as part of the player's screen before choosing the next action.
+- Trace the visible text and controls, not just the gump type, page number, or ButtonIDs. Inspect `AddHtml`, `AddLabel`, `AddHtmlLocalized`, `AddTextEntry`, `AddButton`, and helper methods that supply text such as `GypsySpeech()` or `cardText()`.
+- Record the gump's title/header when traceable, visible body text summary, visible controls, text-entry fields, close/drag/resize flags, and whether the text has been read yet.
+- A newly opened information-rich gump usually makes the next chronological action "read and think over the visible text" before pressing next, OK, close, or choice buttons.
+- Gump text can teach actionable player knowledge, such as where to find a nearby shelf, journal, NPC, danger, or control. This knowledge can guide the next move, but it does not grant mechanical discovery flags, unlock tarot pages, move the character, or mutate account/character state unless the code path explicitly writes that state.
+- Do not skip from opening a gump to using a response unless the current state says the player has already read or intentionally ignored the visible text and the response control is visible.
+
 PHASE 2: THE NEXT MOVE
-Based purely on your current State, Location, Inventory, Last Action, AND the persisted results of your Phase 1.5 Visual Scan, decide one chronological action.
-Visible, mechanically traced interactive entities from Phase 1.5 outrank long-term goals. If a tutorial NPC is standing two tiles away, your next move is likely to click them, not to blindly walk to the gypsy table. If no mechanically traced entity competes, continue with the table/tarot flow or the next state-legal goal.
+Based purely on your current State, Location, Inventory, Last Action, persisted Phase 1.5 Visual Scan, AND any open-gump reading state from Phase 1.75, decide one chronological action.
+Visible, mechanically traced interactive entities from Phase 1.5 and unread information-rich gumps from Phase 1.75 outrank long-term goals. If a tutorial NPC is standing two tiles away, your next move is likely to click them; if a readable gump just opened, your next move is likely to read and interpret it. If no mechanically traced entity or unread gump competes, continue with the table/tarot flow or the next state-legal goal.
 - A new character does not already know Savage, Titan mechanics, Atlantis, or advanced systems.
 - A pre-tarot character is still in the start forest/camp.
 - A post-tarot character starts from the actual selected card destination.
@@ -89,6 +97,7 @@ Trace the RunUO/ServUO C# execution path for the chosen action.
 Examples:
 - Creating character: CharacterCreation.EventSink_CharacterCreated -> AddBackpack -> SetStats/SetSkills -> MoveToWorld.
 - Talking to gypsy: ShardGreeterEntry.OnClick -> GypsyTarotGump.
+- Reading a gump: gump constructor -> visible AddHtml/AddLabel/AddTextEntry/AddButton calls -> helper text methods such as GypsySpeech/cardText -> record player-facing knowledge without pressing a response.
 - Paging cards: GypsyTarotGump.pageShow -> visitLodor/visitSavage/AllowAlienChoice.
 - Choosing a card: GypsyTarotGump.OnResponse -> EnterLand, but only for a card that was visible through pageShow.
 - Moving into a region: Region.OnEnter / StartRegion.OnEnter.
