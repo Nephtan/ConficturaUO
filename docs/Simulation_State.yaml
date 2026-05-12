@@ -1,0 +1,649 @@
+schema:
+  schema_version: 1
+  run_number: 17
+  last_updated: "2026-05-12T07:04:51.1132237-05:00"
+  source_paths_traced:
+    - "Data/Scripts/System/Misc/CharacterCreation.cs"
+    - "Data/Scripts/System/Misc/Settings.cs"
+    - "Data/Scripts/Mobiles/Base/PlayerMobile.cs"
+    - "Data/Scripts/Mobiles/Base/PlayerSettings.cs"
+    - "Data/Scripts/Mobiles/Civilized/ShardGreeter.cs"
+    - "Data/Scripts/System/Regions/StartRegion.cs"
+    - "Data/Scripts/System/Regions/CrashRegion.cs"
+    - "Data/System/XML/Regions.xml"
+    - "Data/Spawns/towns.map"
+    - "Data/Decoration/Sosaria/decorate.cfg"
+    - "Data/Scripts/Quests/HelpMessage.cs"
+    - "Data/Scripts/Custom/PvPConsent/GoddessOfProtection.cs"
+    - "Data/Scripts/Custom/PvPConsent/Gumps/PKNONPKGUMP.cs"
+    - "Data/Scripts/Mobiles/Races/RacePotions.cs"
+    - "Data/Scripts/System/Misc/Naming.cs"
+    - "Data/Scripts/Mobiles/Base/BaseCreature.cs"
+    - "Data/System/Source/Mobile.cs"
+    - "Data/System/Source/Map.cs"
+    - "Data/System/Source/Utility.cs"
+    - "Data/System/Source/Skills.cs"
+    - "Data/Scripts/Custom/CharacterLevel/CharacterLevelService.cs"
+  unresolved_unknowns:
+    - "Exact runtime serials are unavailable without a live server save."
+    - "Exact random starter gold, random food classes, spare backpack lights, and held light are RNG branches; simulated choices are recorded below."
+    - "Spawner runtime realization and wander offsets are not known from static files alone."
+    - "Body/hair/facial hair values depend on client creation args and Race assignment internals not needed for the next action."
+    - "Some quest, toolbar, buff, and city fields remain default/null by PlayerMobile construction but are not serialized in this first static trace."
+  random_branches_chosen:
+    - "Profession simulated as warrior, matching a normal creation profession path."
+    - "Stats simulated as Str 50, Dex 20, Int 20, legal under the new-character 90-point cap."
+    - "Starter gold simulated as 124 from the 100-150 range."
+    - "Starter blade simulated as Dagger from the Dagger/LargeKnife branch."
+    - "Held light simulated as Candle from the Torch/Lantern/Candle branch."
+    - "Spare backpack lights simulated as Torch and Lantern."
+    - "GypsyTarotGump page 1 body text simulated with the default visible prefix: 'If you choose this fate, you will begin your journey...'."
+    - "GypsyTarotGump page 2 body text simulated with the default visible prefix: 'If you choose this fate, you will begin your journey...'."
+    - "GypsyTarotGump page 3 body text simulated with the default visible prefix: 'If you choose this fate, you will begin your journey...'."
+    - "GypsyTarotGump page 4 body text simulated with the default visible prefix: 'If you choose this fate, you will begin your journey...'."
+    - "GypsyTarotGump page 5 body text simulated with the default visible prefix: 'If you choose this fate, you will begin your journey...'."
+    - "GypsyTarotGump page 6 body text simulated with the default visible prefix: 'If you choose this fate, you will begin your journey...'."
+    - "GypsyTarotGump page 7 body text simulated with the default visible prefix: 'If you choose this fate, you will begin your journey...'."
+    - "GypsyTarotGump page 8 body text simulated with the default visible prefix: 'If you choose this fate, you will begin your journey...'."
+    - "GypsyTarotGump page 9 fugitive text has fixed visible wording for its opening sentence and interpolates SkillGypsy('fugitive')=13 and SkillGypsy('default')=10 before any configured boost."
+    - "GypsyTarotGump page 13 alien text has fixed visible wording and interpolates SkillGypsy('alien')=40 before any configured boost."
+  random_branches_unresolved:
+    - "The ten Loot.RandomFoods() item classes in the starter food bag."
+    - "Which towns.map mobile spawners have materialized at exact home locations on a live server tick."
+
+account:
+  account_id: "placeholder:first_account"
+  name: "placeholder:first_account"
+  access_level: "Player"
+  character_slot_index: 0
+  other_known_account_characters: []
+  account_character_discovery_flags:
+    - slot: 0
+      name: "Mira Vale"
+      raw_character_discovered: ""
+      decoded_discovery_flags:
+        land_of_sosaria: false
+        land_of_lodoria: false
+        savaged_empire: false
+        ambrosia: false
+        serpent_island: false
+        isle_of_dread: false
+        lodoria_other: false
+        underworld: false
+        unknown_ninth_world: false
+
+lifecycle:
+  stage: "pre_tarot"
+  last_action: "pressed the visible right-arrow button on GypsyTarotGump page 9, opened GypsyTarotGump page 13 after pageShow skipped hidden Lodoria and Savage pages, and read the visible Star/Shuttle Crash Site alien card text; no OK or back-arrow button was pressed after page 13 appeared"
+  current_goal: "Decide from the visible Star card: draw it with the OK button, page back to the fugitive card, close the deck, or turn aside to the nearby potion shelf or visitor journal before fate is chosen."
+  elapsed_play_time: "about seventeen minutes of simulated walking, speech, one visible PvP/PvE gump reply, table approach, gypsy Talk, reading the tarot introduction, opening/reading the first card, and paging through/reading tarot cards through the alien crash card"
+  session_marker: "run_1_first_login"
+  login_status: "logged_in_after_character_creation"
+  create_status: "created_player_mobile"
+  tarot_status: "gypsy_card_page_13_open_read_no_card_chosen"
+  current_open_gumps:
+    - "GypsyTarotGump card page 13; visible header THE STAR, town line The Shuttle Crash Site, body text has been read and interpreted; visible OK button would send reply 113 and EnterLand(13), visible left arrow would send reply 9, and there is no visible right arrow because pageShow returns 20 past the final allowed human card."
+  recently_closed_gumps:
+    - "PKNONPK consent gump closed after pressing its visible Remain Neutral reply button."
+    - "ShardGreeterEntry.OnClick closed WelcomeGump and RacePotionsGump before opening GypsyTarotGump."
+  recent_visible_messages:
+    - "HelpMessage 'gypsy help' likely sent: Single click the gypsy and select 'Talk' to speak with her."
+    - "GypsyTarotGump page 1 opened after the visible page-0 next button response and played the page-turn sound."
+    - "GypsyTarotGump page 2 opened after the visible page-1 right-arrow response and played the page-turn sound."
+    - "GypsyTarotGump page 3 opened after the visible page-2 right-arrow response and played the page-turn sound."
+    - "GypsyTarotGump page 4 opened after the visible page-3 right-arrow response and played the page-turn sound."
+    - "GypsyTarotGump page 5 opened after the visible page-4 right-arrow response and played the page-turn sound."
+    - "GypsyTarotGump page 6 opened after the visible page-5 right-arrow response and played the page-turn sound."
+    - "GypsyTarotGump page 7 opened after the visible page-6 right-arrow response and played the page-turn sound."
+    - "GypsyTarotGump page 8 opened after the visible page-7 right-arrow response and played the page-turn sound."
+    - "GypsyTarotGump page 9 opened after the visible page-8 right-arrow response and played the page-turn sound."
+    - "GypsyTarotGump page 13 opened after the visible page-9 right-arrow response and played the page-turn sound."
+  has_left_start_flow: false
+
+identity:
+  serial: "placeholder:runtime_serial_unknown"
+  name: "Mira Vale"
+  title: null
+  profile: null
+  player: true
+  access_level: "Player"
+  young: false
+  public_my_runuo: true
+  female: true
+  body: "unknown_after_human_race_assignment"
+  hue: "client_creation_hue_unresolved"
+  hair: "client_creation_hair_unresolved"
+  facial_hair: "client_creation_facial_hair_unresolved"
+  race: "Human"
+  race_id: 0
+  race_home_land: 0
+  creature_race_start_area: null
+
+fate_tarot:
+  selected_card: null
+  selected_page: null
+  selected_name: null
+  fate_family: null
+  current_open_tarot_page: 13
+  current_open_tarot_page_type: "visible_card_page_star_read_no_card_chosen"
+  current_open_gump_text:
+    source: "GypsyTarotGump page 13 AddHtml -> cardText(page, section, from.RaceID)"
+    read_status: "read_interpreted"
+    visible_title: "THE STAR"
+    visible_town_line: "The Shuttle Crash Site"
+    visible_body_summary: "The card offers an alien crash start: no memory, no starting skills, no Sosarian gold, 40 grandmaster-skill capacity before configured boosts, three-times resurrection cost, severe fame/karma/skill/stat losses around tribute, no luck benefit, four-times guild fees, a crash-site computer terminal for appearance changes, and survival pressure from only a knife, alien meat, an empty canteen, and the mountain crash site if the card is actually drawn."
+    visible_controls:
+      - "top-right OK/card-selection button sends reply 113 and would call EnterLand(13)"
+      - "left arrow sends reply 9 and would reopen page 9"
+      - "no right arrow is visible because pageShow forward from page 13 returns 20"
+      - "gump is closable through normal close control"
+      - "no text-entry fields are present"
+      - "scrollbar is true for human page 13"
+    actionable_facts_visible_on_card:
+      - "The Star is the last currently visible normal human tarot card."
+      - "The visible destination is The Shuttle Crash Site."
+      - "The OK button would draw the card and commit the alien crash start, but the player has not pressed it."
+      - "The left arrow can return to the Hanged Man/Britain Dungeons card; no forward arrow is exposed from this card."
+      - "The card body warns that alien play changes skill capacity, starting skills, starting gold, resurrection penalties, luck, guild costs, equipment, and crash-site survival, but those mutations require the OK/EnterLand/CrashRegion path."
+    mechanical_state_changes_from_page_button:
+      - "GypsyTarotGump page 9 was closed."
+      - "GypsyTarotGump page 13 was sent."
+      - "A page-turn sound was played."
+      - "No MoveToWorld, PlayerSettings.SetDiscovered, CrashRegion.OnEnter, PlayerSettings.SetSpaceMan, SkillBegin('alien'), inventory wipe, skill reset, race change, name change, or PvP/PvE mutation occurred."
+    actionable_facts_visible_in_intro:
+      - "top-right button begins looking through the tarot deck"
+      - "arrow buttons page through cards after the deck starts"
+      - "OK button on a visible card draws that card"
+      - "the nearby gypsy potion shelf can be used before tarot to choose a non-human species while monster characters are allowed"
+      - "Thuvia outside the tent handles PvP/PvE safety choices"
+      - "taverns, inns, and banks are safer than open travel"
+      - "guards in settlements punish murderers and criminals"
+      - "merchant buy/sell choices can vary day to day"
+      - "Sosaria settlement outskirts are relatively safer for hunting"
+      - "minor dungeons near settlements exist but traps can kill quickly"
+      - "the visitor journal on the table can change the character name before tarot"
+    mechanical_state_changes_from_reading: "none; reading page 13 text granted player knowledge only, not discovery flags, travel, alien status, skill-cap changes, skill resets, inventory changes, race changes, name changes, or PvP/PvE mode changes"
+  accessible_tarot_cards:
+    exposed_to_player_now: "page 13 is visible now: THE STAR / The Shuttle Crash Site, with OK reply 113 and left-arrow reply 9 exposed to the player; no next-arrow is visible"
+    computed_from_pageShow_if_gypsy_opens:
+      - { page: 1, card: "Emperor", destination_hint: "Britain" }
+      - { page: 2, card: "Devil", destination_hint: "Devil Guard" }
+      - { page: 3, card: "Hermit", destination_hint: "Grey" }
+      - { page: 4, card: "Tower", destination_hint: "Montor" }
+      - { page: 5, card: "Magician", destination_hint: "Moon" }
+      - { page: 6, card: "Fool", destination_hint: "Mountain Crest" }
+      - { page: 7, card: "Death", destination_hint: "Umbra" }
+      - { page: 8, card: "Sun", destination_hint: "Yew" }
+      - { page: 9, card: "Hanged Man", destination_hint: "Britain Dungeons" }
+      - { page: 13, card: "Star", destination_hint: "Shuttle Crash Site" }
+  inaccessible_tarot_pages:
+    - { page: 10, card: "Hierophant", gate_reason: "visitLodor false; no account character has discovered the Land of Lodoria" }
+    - { page: 11, card: "High Priestess", gate_reason: "visitLodor false; no account character has discovered the Land of Lodoria" }
+    - { page: 12, card: "STRNGTH", gate_reason: "visitSavage false; no account character has discovered the Savaged Empire" }
+  allow_alien_choice: true
+  visit_lodor: false
+  visit_savage: false
+  gypsy_table_position_requirement:
+    required_for_human: "X=3567,Y=3404"
+    current_position_satisfies: true
+    race_bypass_satisfies: false
+
+location:
+  map: "Map.Sosaria"
+  point3d: { x: 3567, y: 3404, z: 0 }
+  previous_point3d: { x: 3565, y: 3414, z: 0 }
+  region_name: "the Forest"
+  region_type: "StartRegion"
+  start_region_status: "inside"
+  nearby_known_npcs_items:
+    - "Potential live ShardGreeter at 3567,3401 is inside visual range; Talk was clicked from the valid table coordinate and GypsyTarotGump page 13 remains open after pressing the page-9 right arrow and reading The Star/Shuttle Crash Site."
+    - "RacePotions shelf at 3564,3406 is visible and within 4 tiles from the table; MonstersAllowed() is true by default, and the gypsy intro now explicitly points to it, but it has not been double-clicked."
+    - "Visitor Journal at 3570,3400 is inside close visual range; the gypsy intro now explicitly points to it for name changes, but ChangeName.OnDoubleClick has not been used."
+    - "HelpMessage 'gypsy help' at 3565,3404 is within 5 tiles and already taught the single-click-Talk hint during the table approach."
+    - "Potential live GoddessOfProtection/Thuvia near 3563,3413 remains inside visual range behind the player; the PKNONPK consent gump is closed."
+  land_bucket: "Land of Sosaria start forest"
+  time_bucket: "first login, before fate"
+  safe_flags:
+    guarded: "unknown"
+    public_area: true
+    start_region_harmful_pvp_blocked: true
+    start_region_spell_casting_blocked: true
+
+perception_visual_scan:
+  scan_center: { x: 3567, y: 3404, z: 0 }
+  pre_action_scan_center: { x: 3565, y: 3414, z: 0 }
+  post_action_scan_center: { x: 3567, y: 3404, z: 0 }
+  map: "Map.Sosaria"
+  radius_tiles: 18
+  sources_searched:
+    - "Data/Decoration/Sosaria/decorate.cfg"
+    - "Data/Spawns/towns.map"
+    - "Data/Spawns/*.map"
+    - "Data/XMLSpawn/*.xml"
+    - "Data/Scripts/Custom/XMLSpawner/XmlExtras/Spawns/*.xml"
+    - "Data/Scripts/System/Misc/Build.cs"
+    - "Data/System/XML/Regions.xml"
+  visible_mobiles:
+    - type: "GoddessOfProtection"
+      name: "Thuvia"
+      title: "the Goddess Of Protection"
+      point3d: { x: 3563, y: 3413, z: 0 }
+      status: "potential_live_spawn_from_towns_map"
+      interaction: "OnMovement within 8 can prompt PvP/PvE help; the player already used help/choose/Remain Neutral in prior runs. No Thuvia speech or gump action happened during this movement."
+    - type: "ShardGreeter"
+      name: "random gypsy name"
+      title: "the gypsy"
+      point3d: { x: 3567, y: 3401, z: 0 }
+      status: "potential_live_spawn_from_towns_map_now_inside_visual_range_talk_used"
+      interaction_gate: "Context Talk opens tarot only at X=3567,Y=3404 or RaceID > 0; the player satisfied the human table coordinate and used Talk, opening GypsyTarotGump page 0."
+  visible_items:
+    - type: "RacePotions"
+      name: "gypsy potion shelf"
+      point3d: { x: 3564, y: 3406, z: 0 }
+      status: "mechanically_decorated"
+      interaction: "Double-click requires within 4 tiles and MonstersAllowed(); from the table tile it is within range and MonstersAllowed() traces true through the default S_MonsterCharacters=1 path. Not used this run; ShardGreeter Talk would close any RacePotionsGump if it had been open."
+    - type: "HelpMessage"
+      name: "gypsy bag"
+      point3d: { x: 3574, y: 3419, z: 0 }
+      status: "mechanically_decorated_invisible_helper"
+      interaction: "OnMovement within 5 sends backpack hint; table tile is outside range."
+    - type: "HelpMessage"
+      name: "gypsy help"
+      point3d: { x: 3565, y: 3404, z: 0 }
+      status: "mechanically_decorated_invisible_helper_now_inside_visual_range"
+      interaction: "OnMovement within 5 sends gypsy talk hint; walking to the table put the player in range, so the hint likely fired."
+    - type: "ChangeName"
+      name: "Visitor Journal"
+      point3d: { x: 3570, y: 3400, z: 7 }
+      status: "mechanically_decorated_now_inside_visual_range"
+      interaction: "ChangeName.OnDoubleClick opens NameAlterGump and plays a sound; not used this run."
+    - type: "ForestSounds"
+      name: "ambient forest sound"
+      point3d: { x: 3561, y: 3389, z: 0 }
+      status: "mechanically_decorated_ambient_now_inside_target_scan"
+    - type: "ForestSounds"
+      name: "ambient forest sound"
+      point3d: { x: 3561, y: 3416, z: 0 }
+      status: "mechanically_decorated_ambient"
+    - type: "ForestSounds"
+      name: "ambient forest sound"
+      point3d: { x: 3577, y: 3417, z: 0 }
+      status: "mechanically_decorated_ambient"
+    - type: "ForestSounds"
+      name: "ambient forest sound"
+      point3d: { x: 3585, y: 3401, z: 0 }
+      status: "mechanically_decorated_ambient_now_inside_target_scan"
+  potential_entities:
+    - type: "Spawner runtime variance"
+      name: "towns.map live placements"
+      status: "GoddessOfProtection and ShardGreeter are mechanically traced but live spawn realization/wander is still unresolved."
+  scan_result_before_action: "At Point3D(3567,3404,0), ShardGreeter, RacePotions, ChangeName, HelpMessage, ForestSounds, and Thuvia remain inside the 18-tile client box. The already-read GypsyTarotGump page 9 exposed a normal right arrow to page 13, which outranked the nearby shelf and journal for this chronological action."
+  scan_result_after_action: "GypsyTarotGump page 13 is open and read. THE STAR / The Shuttle Crash Site is visible, with OK reply 113 and left-arrow reply 9 available; no right arrow is visible. RacePotions, ChangeName, ShardGreeter, and Thuvia remain nearby but unused in this action."
+  scan_confidence: "medium_static_trace"
+  unresolved_spawn_sources:
+    - "Static .map spawners record home/range/count but not current live position."
+    - "Saved XMLSpawner runtime state was not available."
+    - "XMLSpawner extra files with coordinate-like strings were checked; matches were GUID fragments, not current Sosaria entities."
+
+vitals_status:
+  alive: true
+  death_state: "alive"
+  corpse: null
+  resurrection_state: null
+  hidden: false
+  criminal: false
+  wanted: 0
+  murderer: false
+  hunger: 20
+  thirst: 20
+  poison: null
+  disease: null
+  hits: { current: 100, max: 100 }
+  stam: { current: 40, max: 40 }
+  mana: { current: 40, max: 40 }
+  raw_stats: { str: 50, dex: 20, int: 20 }
+  stat_cap: 250
+  fame: 0
+  karma: 0
+  kills: 0
+
+skills_leveling:
+  profession: 1
+  profession_label: "warrior"
+  skill_start: 10000
+  skill_boost: 0
+  skill_ether: 0
+  skills_cap: 10000
+  computed_overall_level: 28
+  best_archetype: "Martial"
+  best_archetype_level: 39
+  encounter_alias_levels:
+    Overall: 28
+    Fighter: 39
+    Ranger: 1
+    Mage: 6
+    Necromancer: 1
+    Thief: 1
+  anti_macro_or_skill_cooldowns:
+    anti_macro_table: "created_empty"
+    skill_use_cooldowns_affecting_next_action: []
+  skill_table:
+    Alchemy: { base: 0.0, value: 0.0, cap: 100.0, lock: "Up" }
+    Anatomy: { base: 0.0, value: 0.0, cap: 100.0, lock: "Up" }
+    Druidism: { base: 0.0, value: 0.0, cap: 100.0, lock: "Up" }
+    Mercantile: { base: 0.0, value: 0.0, cap: 100.0, lock: "Up" }
+    ArmsLore: { base: 0.0, value: 0.0, cap: 100.0, lock: "Up" }
+    Parry: { base: 0.0, value: 0.0, cap: 100.0, lock: "Up" }
+    Begging: { base: 0.0, value: 0.0, cap: 100.0, lock: "Up" }
+    Blacksmith: { base: 0.0, value: 0.0, cap: 100.0, lock: "Up" }
+    Bowcraft: { base: 0.0, value: 0.0, cap: 100.0, lock: "Up" }
+    Peacemaking: { base: 0.0, value: 0.0, cap: 100.0, lock: "Up" }
+    Camping: { base: 0.0, value: 0.0, cap: 100.0, lock: "Up" }
+    Carpentry: { base: 0.0, value: 0.0, cap: 100.0, lock: "Up" }
+    Cartography: { base: 0.0, value: 0.0, cap: 100.0, lock: "Up" }
+    Cooking: { base: 0.0, value: 0.0, cap: 100.0, lock: "Up" }
+    Searching: { base: 0.0, value: 0.0, cap: 100.0, lock: "Up" }
+    Discordance: { base: 0.0, value: 0.0, cap: 100.0, lock: "Up" }
+    Psychology: { base: 0.0, value: 0.0, cap: 100.0, lock: "Up" }
+    Healing: { base: 50.0, value: 50.0, cap: 100.0, lock: "Up" }
+    Seafaring: { base: 0.0, value: 0.0, cap: 100.0, lock: "Up" }
+    Forensics: { base: 0.0, value: 0.0, cap: 100.0, lock: "Up" }
+    Herding: { base: 0.0, value: 0.0, cap: 100.0, lock: "Up" }
+    Hiding: { base: 0.0, value: 0.0, cap: 100.0, lock: "Up" }
+    Provocation: { base: 0.0, value: 0.0, cap: 100.0, lock: "Up" }
+    Inscribe: { base: 0.0, value: 0.0, cap: 100.0, lock: "Up" }
+    Lockpicking: { base: 0.0, value: 0.0, cap: 100.0, lock: "Up" }
+    Magery: { base: 0.0, value: 0.0, cap: 100.0, lock: "Up" }
+    MagicResist: { base: 0.0, value: 0.0, cap: 100.0, lock: "Up" }
+    Tactics: { base: 0.0, value: 0.0, cap: 100.0, lock: "Up" }
+    Snooping: { base: 0.0, value: 0.0, cap: 100.0, lock: "Up" }
+    Musicianship: { base: 0.0, value: 0.0, cap: 100.0, lock: "Up" }
+    Poisoning: { base: 0.0, value: 0.0, cap: 100.0, lock: "Up" }
+    Marksmanship: { base: 0.0, value: 0.0, cap: 100.0, lock: "Up" }
+    Spiritualism: { base: 0.0, value: 0.0, cap: 100.0, lock: "Up" }
+    Stealing: { base: 0.0, value: 0.0, cap: 100.0, lock: "Up" }
+    Tailoring: { base: 0.0, value: 0.0, cap: 100.0, lock: "Up" }
+    Taming: { base: 0.0, value: 0.0, cap: 100.0, lock: "Up" }
+    Tasting: { base: 0.0, value: 0.0, cap: 100.0, lock: "Up" }
+    Tinkering: { base: 0.0, value: 0.0, cap: 100.0, lock: "Up" }
+    Tracking: { base: 0.0, value: 0.0, cap: 100.0, lock: "Up" }
+    Veterinary: { base: 0.0, value: 0.0, cap: 100.0, lock: "Up" }
+    Swords: { base: 50.0, value: 50.0, cap: 100.0, lock: "Up" }
+    Bludgeoning: { base: 0.0, value: 0.0, cap: 100.0, lock: "Up" }
+    Fencing: { base: 0.0, value: 0.0, cap: 100.0, lock: "Up" }
+    FistFighting: { base: 0.0, value: 0.0, cap: 100.0, lock: "Up" }
+    Lumberjacking: { base: 0.0, value: 0.0, cap: 100.0, lock: "Up" }
+    Mining: { base: 0.0, value: 0.0, cap: 100.0, lock: "Up" }
+    Meditation: { base: 0.0, value: 0.0, cap: 100.0, lock: "Up" }
+    Stealth: { base: 0.0, value: 0.0, cap: 100.0, lock: "Up" }
+    RemoveTrap: { base: 0.0, value: 0.0, cap: 100.0, lock: "Up" }
+    Necromancy: { base: 0.0, value: 0.0, cap: 100.0, lock: "Up" }
+    Focus: { base: 0.0, value: 0.0, cap: 100.0, lock: "Up" }
+    Knightship: { base: 0.0, value: 0.0, cap: 100.0, lock: "Up" }
+    Bushido: { base: 0.0, value: 0.0, cap: 100.0, lock: "Up" }
+    Ninjitsu: { base: 0.0, value: 0.0, cap: 100.0, lock: "Up" }
+    Elementalism: { base: 0.0, value: 0.0, cap: 100.0, lock: "Up" }
+    Mysticism: { base: 0.0, value: 0.0, cap: 100.0, lock: "Up" }
+    Imbuing: { base: 0.0, value: 0.0, cap: 100.0, lock: "Up" }
+    Throwing: { base: 0.0, value: 0.0, cap: 100.0, lock: "Up" }
+
+inventory_equipment:
+  backpack:
+    exists: true
+    movable: false
+    contents:
+      - { type: "Gold", name: "gold", amount: 124, loot_type: "normal", evidence: "random range 100-150; branch simulated" }
+      - { type: "Waterskin", name: "waterskin", amount: 1 }
+      - { type: "Dagger", name: "dagger", amount: 1, evidence: "Dagger branch simulated instead of LargeKnife" }
+      - type: "Bag"
+        name: "starter food bag"
+        amount: 1
+        contents:
+          - { type: "Loot.RandomFoods", amount: 10, exact_classes: "unresolved_random" }
+      - { type: "Torch", name: "torch", amount: 1, evidence: "simulated spare light" }
+      - { type: "Lantern", name: "lantern", amount: 1, evidence: "simulated spare light" }
+  equipped_items_by_layer:
+    held: { type: "Candle", name: "candle", lit_by_double_click: true, evidence: "simulated held light branch" }
+    clothing: "unknown_default_character_creation_clothing"
+  held_light_source: "Candle"
+  gold_currency: 124
+  containers:
+    - "backpack"
+    - "starter food bag"
+  nested_contents_known: true
+  bank: "unknown"
+  stable: { pets: [], auto_stabled_pets: [] }
+  followers: []
+
+quests_progression:
+  character_discovered_raw: ""
+  character_discovered_decoded_nine_world_map:
+    land_of_sosaria: false
+    land_of_lodoria: false
+    savaged_empire: false
+    ambrosia: false
+    serpent_island: false
+    isle_of_dread: false
+    unknown_7: false
+    unknown_8: false
+    unknown_9: false
+  character_keys: null
+  character_guilds: null
+  standard_quest: null
+  fishing_quest: null
+  assassin_quest: null
+  message_quest: null
+  bards_tale_quest: null
+  thief_quest: null
+  epic_quest_name: null
+  epic_quest_number: 0
+  killed_special_monsters: null
+  current_quest_object: null
+  completed_quests: []
+  restart_timers: []
+  acquired_recipes: []
+  artifact_quest_timer: null
+  champion_titles: "created_empty"
+  treasures_of_tokuno_counters: "unknown"
+
+playstyle_settings:
+  CharacterMOTD: 0
+  CharacterSkill: null
+  CharacterSheath: null
+  CharacterBoatDoor: 0
+  CharacterPublicDoor: 0
+  CharacterBegging: 0
+  CharacterWepAbNames: 0
+  CharacterElement: null
+  CharacterWanted: 0
+  CharacterLoot: 0
+  CharMusical: 0
+  CharacterBarbaric: 0
+  CharacterEvil: 0
+  CharacterOriental: 0
+  NONPK_PvP_consent_state: "Null; explicitly confirmed by pressing the visible Remain Neutral button in PKNONPK, but stored identically to not-yet-chosen and therefore still eligible for the ChoosePvP command/gump."
+  SkillDisplay: "unknown"
+  MagerySpellHue: "unknown"
+  ClassicPoisoning: 0
+  GumpHue: 1
+  WeaponBarOpen: 1
+
+ui_tools_books_bars:
+  MyChat: null
+  RegBar: null
+  MyLibrary: null
+  QuickBar: null
+  MusicPlaylist: null
+  UsingAncientBook: 0
+  spellbar_strings:
+    cleric: null
+    druid: null
+    mage: null
+    necromancer: null
+    paladin: null
+    ranger: null
+    bard: null
+    ancient: null
+  toolbar_state:
+    weapon_bar_open: 1
+    other_toolbars: "unknown"
+
+guild_social_city:
+  npc_guild: "None"
+  guild_join_time: null
+  guild_game_time: 0
+  guild_rank: "Lowest"
+  guild_message_hues: "default_unknown"
+  alliance_hue: "default_unknown"
+  perma_flags: "created_empty"
+  solen_friendship: "unknown"
+  city_stone: null
+  city_title: null
+  city_show_title: "unknown"
+  owed_back_taxes: false
+  owed_back_taxes_amount: 0
+
+timers_effects_cooldowns:
+  peaced_until: null
+  ankh_next_use: null
+  honor_timer: null
+  valor_timer: null
+  compassion_timer: null
+  compassion_gains_today: 0
+  last_online: "first_login_now"
+  last_deco_confirmation: null
+  savage_paint_expiration: null
+  next_tailor_bulk_order: null
+  next_smith_bulk_order: null
+  camp_reference: null
+  bedroll_reference: null
+  auto_stabled_pets: []
+  temporary_hair_mod: null
+  temporary_beard_mod: null
+  active_buffs_debuffs: []
+  thuvia_prompt_spam_timer: "GoddessOfProtection.m_Talked is a global static anti-spam flag reset by an 8-second timer; not persisted on the player."
+  open_gump_effects:
+    - "PKNONPK was Closable=false, Disposable=true, Dragable=true, Resizable=false; pressing its visible Remain Neutral reply closed it through OnResponse."
+    - "No consent modal remains open after the simulated action."
+    - "Historical prior tarot cards: page 1 displayed THE EMPEROR / The City of Britain with OK reply 101 and right-arrow reply 2; page 2 displayed THE DEVIL / The Town of Devil Guard with OK reply 102, left-arrow reply 1, and right-arrow reply 3; page 3 displayed THE HERMIT / The Village of Grey with OK reply 103, left-arrow reply 2, and right-arrow reply 4; page 4 displayed THE TOWER / The City of Montor with OK reply 104, left-arrow reply 3, and right-arrow reply 5; page 5 displayed THE MAGICIAN / The Town of Moon with OK reply 105, left-arrow reply 4, and right-arrow reply 6; page 6 displayed THE FOOL / The Town of Mountain Crest with OK reply 106, left-arrow reply 5, and right-arrow reply 7; page 7 displayed DEATH / The Undercity of Umbra with OK reply 107, left-arrow reply 6, and right-arrow reply 8."
+    - "Historical prior tarot cards: page 8 displayed THE SUN / The Village of Yew with OK reply 108, left-arrow reply 7, and right-arrow reply 9."
+    - "Historical prior tarot cards: page 9 displayed THE HANGED MAN / The Britain Dungeons with OK reply 109, left-arrow reply 8, right-arrow reply 13, and a scrollbar in the body text region."
+    - "GypsyTarotGump page 13 is now open. It is Closable=true, Disposable=true, Dragable=true, Resizable=false, and displays THE STAR / The Shuttle Crash Site."
+    - "GypsyTarotGump page 13 has a visible OK button with reply 113, a visible left arrow with reply 9, no visible right arrow, and a scrollbar in the body text region."
+    - "EnterLand is now one visible OK press away for the alien Shuttle Crash Site start, but it has not run because no page-13 OK response was pressed after the card appeared."
+  movement_effects:
+    - "Walking to Point3D(3567,3404,0) did not leave StartRegion and did not open tarot by itself."
+    - "The gypsy help item can send its single-click-Talk hint when the player enters its 5-tile range."
+
+evidence:
+  character_creation_path:
+    - "CharacterCreation.Initialize registers EventSink.CharacterCreated."
+    - "CharacterCreation.EventSink_CharacterCreated creates PlayerMobile, sets flags/stats/skills, calls AddBackpack, and MoveToWorld to the Forest start."
+  inventory:
+    - "CharacterCreation.AddBackpack creates non-movable Backpack and starter contents."
+  start_region:
+    - "Regions.xml defines StartRegion the Forest around the wake-up point."
+    - "StartRegion blocks harmful PvP and spell casting, sends WelcomeGump on enter."
+    - "Regions.xml defines CrashRegion the Crash Site around the page-13 destination, but the character has not entered it because the page-13 OK response was not pressed."
+  tarot_gates:
+    - "ShardGreeterEntry.OnClick requires X=3567,Y=3404 or RaceID > 0 before opening GypsyTarotGump."
+    - "GypsyTarotGump.pageShow hides Lodoria pages without visitLodor, Savage page without visitSavage, and alien page without AllowAlienChoice."
+    - "visitLodor checks account characters for discovery of the Land of Lodoria."
+    - "visitSavage checks account characters for discovery of the Savaged Empire."
+  visual_scan:
+    - "Map.GetItemsInRange and Map.GetMobilesInRange default to an 18-tile rectangle around the current Point3D."
+    - "Data/Spawns/towns.map places ShardGreeter and GoddessOfProtection in the gypsy forest spawn group."
+    - "Data/Decoration/Sosaria/decorate.cfg places RacePotions, HelpMessage, ChangeName, and ForestSounds near the wake-up/table path."
+  gypsy_table_walk:
+    - "HelpMessage.OnMovement sends the gypsy Talk hint when a PlayerMobile is within 5 tiles of the 'gypsy help' item."
+    - "ShardGreeterEntry.OnClick passed its table-coordinate branch because the player is at X=3567,Y=3404, then closed WelcomeGump/RacePotionsGump and opened GypsyTarotGump page 0."
+    - "GypsyTarotGump page 0 is an intro page with visible GypsySpeech(from) body text and visible reply 99; pageShow is not used until the player advances to page 1 or later."
+    - "GypsySpeech(from) was read this run. It points the player toward the nearby potion shelf, Thuvia, safer public buildings, variable merchants, settlement-adjacent minor dungeons, trap danger, and the visitor journal; these are player-facing knowledge, not mechanical discovery unlocks."
+    - "GypsyTarotGump.OnResponse with visible reply 99 closes tarot/welcome/race-potion gumps, sends GypsyTarotGump page 1, and plays a page-turn sound."
+    - "GypsyTarotGump page 1 constructs a card page: cardText returns THE EMPEROR and The City of Britain, pageShow gives no previous arrow and a next-arrow reply 2, and the visible OK button reply is 101."
+    - "EnterLand(1) would move a human to Point3D(2999,1030,0) on Map.Sosaria and set the Land of Sosaria discovery flag, but that code path did not run this action."
+    - "GypsyTarotGump.OnResponse with visible reply 2 closes tarot/welcome/race-potion gumps, sends GypsyTarotGump page 2, and plays a page-turn sound."
+    - "GypsyTarotGump page 2 constructs a card page: cardText returns THE DEVIL and The Town of Devil Guard, pageShow gives previous-arrow reply 1 and next-arrow reply 3, and the visible OK button reply is 102."
+    - "EnterLand(2) would move a human to Point3D(1617,1502,2) on Map.Sosaria and set the Land of Sosaria discovery flag, but that code path did not run this action."
+    - "GypsyTarotGump.OnResponse with visible reply 3 closes tarot/welcome/race-potion gumps, sends GypsyTarotGump page 3, and plays a page-turn sound."
+    - "GypsyTarotGump page 3 constructs a card page: cardText returns THE HERMIT and The Village of Grey, pageShow gives previous-arrow reply 2 and next-arrow reply 4, and the visible OK button reply is 103."
+    - "EnterLand(3) would move a human to Point3D(851,2062,1) on Map.Sosaria and set the Land of Sosaria discovery flag, but that code path did not run this action."
+    - "GypsyTarotGump.OnResponse with visible reply 4 closes tarot/welcome/race-potion gumps, sends GypsyTarotGump page 4, and plays a page-turn sound."
+    - "GypsyTarotGump page 4 constructs a card page: cardText returns THE TOWER and The City of Montor, cardGraphic returns 1122, pageShow gives previous-arrow reply 3 and next-arrow reply 5, and the visible OK button reply is 104."
+    - "EnterLand(4) would move a human to Point3D(3220,2606,1) on Map.Sosaria and set the Land of Sosaria discovery flag, but that code path did not run this action."
+    - "GypsyTarotGump.OnResponse with visible reply 5 closes tarot/welcome/race-potion gumps, sends GypsyTarotGump page 5, and plays a page-turn sound."
+    - "GypsyTarotGump page 5 constructs a card page: cardText returns THE MAGICIAN and The Town of Moon, cardGraphic returns 1116, pageShow gives previous-arrow reply 4 and next-arrow reply 6, and the visible OK button reply is 105."
+    - "EnterLand(5) would move a human to Point3D(806,710,5) on Map.Sosaria and set the Land of Sosaria discovery flag, but that code path did not run this action."
+    - "GypsyTarotGump.OnResponse with visible reply 6 closes tarot/welcome/race-potion gumps, sends GypsyTarotGump page 6, and plays a page-turn sound."
+    - "GypsyTarotGump page 6 constructs a card page: cardText returns THE FOOL and The Town of Mountain Crest, cardGraphic returns 1108, pageShow gives previous-arrow reply 5 and next-arrow reply 7, and the visible OK button reply is 106."
+    - "EnterLand(6) would move a human to Point3D(4546,1267,2) on Map.Sosaria and set the Land of Sosaria discovery flag, but that code path did not run this action."
+    - "GypsyTarotGump.OnResponse with visible reply 7 closes tarot/welcome/race-potion gumps, sends GypsyTarotGump page 7, and plays a page-turn sound."
+    - "GypsyTarotGump page 7 constructs a card page: cardText returns DEATH and The Undercity of Umbra, cardGraphic returns 1104, pageShow gives previous-arrow reply 6 and next-arrow reply 8, and the visible OK button reply is 107."
+    - "EnterLand(7) would recolor clothing through MorphingTime.ColorOnlyClothes(m, 0, 1), move a human to Point3D(2666,3325,0) on Map.Sosaria, and set the Land of Sosaria discovery flag, but that code path did not run this action."
+    - "GypsyTarotGump.OnResponse with visible reply 8 closes tarot/welcome/race-potion gumps, sends GypsyTarotGump page 8, and plays a page-turn sound."
+    - "GypsyTarotGump page 8 constructs a card page: cardText returns THE SUN and The Village of Yew, cardGraphic returns 1120, pageShow gives previous-arrow reply 7 and next-arrow reply 9, and the visible OK button reply is 108."
+    - "EnterLand(8) would move a human to Point3D(2460,893,7) on Map.Sosaria and set the Land of Sosaria discovery flag, but that code path did not run this action."
+    - "GypsyTarotGump.OnResponse with visible reply 9 closes tarot/welcome/race-potion gumps, sends GypsyTarotGump page 9, and plays a page-turn sound."
+    - "GypsyTarotGump page 9 constructs a card page: cardText returns THE HANGED MAN and The Britain Dungeons, cardGraphic returns 1109, scrollBar returns true, pageShow gives previous-arrow reply 8 and next-arrow reply 13 because Lodoria and Savage gates hide pages 10-12, and the visible OK button reply is 109."
+    - "EnterLand(9) would move a human to Point3D(4104,3232,0) on Map.Sosaria and set the Land of Sosaria discovery flag, but that code path did not run this action."
+    - "If page 9 OK were pressed, the fugitive text's SkillGypsy values are backed by SkillGypsy('fugitive')=13 and SkillGypsy('default')=10 before configured boost; however SkillBegin('fugitive'), Kills=1, Profession=1, and wanted/criminal social pressure have not been applied."
+    - "GypsyTarotGump.OnResponse with visible reply 13 closes tarot/welcome/race-potion gumps, sends GypsyTarotGump page 13, and plays a page-turn sound."
+    - "GypsyTarotGump page 13 constructs a card page: cardText returns THE STAR and The Shuttle Crash Site, cardGraphic returns 1118, scrollBar returns true, pageShow gives previous-arrow reply 9 and no next arrow because forward pageShow returns 20, and the visible OK button reply is 113."
+    - "EnterLand(13) would move a human to Point3D(4109,3775,2) on Map.Sosaria and set the Land of Sosaria discovery flag; that destination sits in CrashRegion, whose OnEnter calls PlayerSettings.SetSpaceMan if SkillStart is not already 40000, but no page-13 OK response was pressed."
+    - "If the alien path were actually entered, PlayerSettings.SetSpaceMan would SkillBegin('alien'), delete backpack contents, zero all skill bases, equip plain clothing plus a named knife, add cooked alien meat, an empty canteen, and a MedicalRecord, then place the character at Point3D(4109,3775,2) on Map.Sosaria. None of that has happened."
+    - "RacePotions.OnDoubleClick would pass the range part from the table tile and MonstersAllowed() defaults true from S_MonsterCharacters=1, but it was not used."
+    - "ChangeName.OnDoubleClick can send NameAlterGump from the Visitor Journal, but it was not used."
+  thuvia_interaction:
+    - "GoddessOfProtection.OnMovement prompts a PlayerMobile within 8 tiles and tells them to say 'help' or 'choose'."
+    - "GoddessOfProtection.HandlesOnSpeech only explicitly opts in at range 3 before falling back to BaseCreature behavior; CheckSpeech is called from OnSpeech only when the mobile is within 6."
+    - "GoddessOfProtection.CheckSpeech with 'help' only speaks an explanation; 'choose' sends the PKNONPK gump."
+    - "The prior run used the normal 'choose' speech branch from close range, opening PKNONPK."
+    - "A prior consent run pressed the visible Remain Neutral reply. PKNONPK.OnResponse case 0 set NONPK to Null, Title to null, sent neutrality messages, and closed the gump."
+    - "ChoosePvP_OnCommand only blocks players whose NONPK is not Null, so the neutral reply remains mechanically reopenable."
+  unavailable_actions:
+    - action: "Choose Savage page 12"
+      gate: "GypsyTarotGump.pageShow skips page 12 because visitSavage is false."
+    - action: "Choose Lodoria pages 10 or 11"
+      gate: "GypsyTarotGump.pageShow skips pages 10 and 11 because visitLodor is false."
+    - action: "Open tarot from current tile"
+      gate: "No longer unavailable; completed through visible ShardGreeter context-menu Talk from Point3D(3567,3404,0)."
+    - action: "Use potion shelf from current tile"
+      gate: "No longer blocked by range at the table tile, but the player did not double-click the visible shelf in this chronological action."
+    - action: "Claim a tarot destination after reaching the table"
+      gate: "The current GypsyTarotGump page is 13 and has a visible OK reply 113 for The Star/Shuttle Crash Site, but the player has not pressed it; only that response would call EnterLand(13)."
+    - action: "Advance from tarot intro to page 1 without player input"
+      gate: "GypsyTarotGump.OnResponse only sends page 1 when the visible page-0 button reply 99 is pressed."
+    - action: "Advance from tarot intro to page 1 without pressing the visible top-right button"
+      gate: "No longer unavailable; completed by pressing the visible page-0 top-right button, which sent reply 99 through GypsyTarotGump.OnResponse."
+    - action: "Treat Britain as chosen because The Emperor is visible"
+      gate: "The Emperor page only displays card text and controls. The travel/discovery path is gated behind the visible OK reply 101, which was not pressed."
+    - action: "Treat Devil Guard as chosen because The Devil is visible"
+      gate: "The Devil page only displays card text and controls. The travel/discovery path is gated behind the visible OK reply 102, which was not pressed."
+    - action: "Treat Grey as chosen because The Hermit is visible"
+      gate: "The Hermit page only displayed card text and controls. The travel/discovery path was gated behind the visible OK reply 103, which was not pressed before paging away."
+    - action: "Treat Montor as chosen because The Tower is visible"
+      gate: "The Tower page only displayed card text and controls. The travel/discovery path was gated behind the visible OK reply 104, which was not pressed before paging away."
+    - action: "Treat Moon as chosen because The Magician is visible"
+      gate: "The Magician page only displayed card text and controls. The travel/discovery path was gated behind the visible OK reply 105, which was not pressed before paging away."
+    - action: "Treat Mountain Crest as chosen because The Fool is visible"
+      gate: "The Fool page only displays card text and controls. The travel/discovery path is gated behind the visible OK reply 106, which has not been pressed."
+    - action: "Treat Umbra as chosen because Death is visible"
+      gate: "Death page only displays card text and controls. The travel/discovery path is gated behind the visible OK reply 107, which has not been pressed."
+    - action: "Treat Yew as chosen because The Sun is visible"
+      gate: "The Sun page only displays card text and controls. The travel/discovery path is gated behind the visible OK reply 108, which has not been pressed."
+    - action: "Treat the fugitive start as chosen because The Hanged Man was read"
+      gate: "The Hanged Man page only displayed card text and controls. The travel/discovery/fugitive path was gated behind the visible OK reply 109, which was not pressed before paging away."
+    - action: "Treat the alien crash start as chosen because The Star is visible"
+      gate: "The Star page only displays card text and controls. The travel/discovery/CrashRegion/SetSpaceMan path is gated behind the visible OK reply 113, which has not been pressed."
+    - action: "Treat the potion shelf or visitor journal as used because the introduction mentioned them"
+      gate: "GypsySpeech(from) only returns text for AddHtml. RacePotions.OnDoubleClick and ChangeName.OnDoubleClick require separate visible item interactions."
+    - action: "Get Thuvia's help response from Point3D(3570,3416,0) without approaching"
+      gate: "GoddessOfProtection prompts within 8 but her traced speech path requires closer range; the player moved to Point3D(3565,3414,0) before speaking."
+    - action: "Become PvP or PvE by saying 'help'"
+      gate: "The 'help' speech branch only speaks an explanation. The selection gump requires saying 'choose', then using the visible gump buttons."
+    - action: "Become PvP, PvE, or explicitly neutral by saying 'choose'"
+      gate: "The 'choose' speech branch only opens PKNONPK. State changes happen only through visible OnResponse buttons 1, 2, or 0."
+    - action: "Close the PKNONPK window with the normal close control to remain neutral"
+      gate: "PKNONPK sets Closable=false; the state-legal neutral route is the visible Remain Neutral reply button."
+    - action: "Treat neutral as a distinct committed PvP/PvE mode"
+      gate: "PKNONPK case 0 writes NONPK.Null, the same enum value used before choosing; ChoosePvP_OnCommand reopens the selector whenever NONPK is Null."
