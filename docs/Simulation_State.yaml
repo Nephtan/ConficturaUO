@@ -1,7 +1,7 @@
 schema:
   schema_version: 1
-  run_number: 17
-  last_updated: "2026-05-12T07:04:51.1132237-05:00"
+  run_number: 28
+  last_updated: "2026-05-13T08:27:16.8727492-05:00"
   source_paths_traced:
     - "Data/Scripts/System/Misc/CharacterCreation.cs"
     - "Data/Scripts/System/Misc/Settings.cs"
@@ -20,16 +20,44 @@ schema:
     - "Data/Scripts/System/Misc/Naming.cs"
     - "Data/Scripts/Mobiles/Base/BaseCreature.cs"
     - "Data/System/Source/Mobile.cs"
+    - "Data/System/Source/Region.cs"
     - "Data/System/Source/Map.cs"
+    - "Data/Scripts/System/Misc/MapDefinitions.cs"
     - "Data/System/Source/Utility.cs"
     - "Data/System/Source/Skills.cs"
     - "Data/Scripts/Custom/CharacterLevel/CharacterLevelService.cs"
+    - "Data/Scripts/Items/Technology/ComputerDatabase.cs"
+    - "Data/Scripts/Items/Technology/MedicalRecord.cs"
+    - "Data/System/Source/Gumps/Gump.cs"
+    - "Data/System/Source/Gumps/RelayInfo.cs"
+    - "Data/System/Source/Network/PacketHandlers.cs"
+    - "Data/System/XML/names.xml"
+    - "Data/Scripts/Items/Food/Food.cs"
+    - "Data/Scripts/Items/Food/Waterskin.cs"
+    - "Data/Scripts/System/Misc/Spawning.cs"
+    - "Data/Files/map1.mul"
+    - "Data/Files/tiledata.mul"
+    - "Data/Files/staidx1.mul"
+    - "Data/Files/statics1.mul"
+    - "Data/Scripts/Custom/Vhaerun's CRL Homestead System [2.0]/Vhaerun's CRL Cooking/Base Cooking/Cooked/Meat/CookedBird.cs"
+    - "Data/Scripts/Items/Doors/Teleporter.cs"
+    - "Data/Spawns/animals.map"
+    - "Data/Spawns/world.map"
   unresolved_unknowns:
     - "Exact runtime serials are unavailable without a live server save."
     - "Exact random starter gold, random food classes, spare backpack lights, and held light are RNG branches; simulated choices are recorded below."
     - "Spawner runtime realization and wander offsets are not known from static files alone."
     - "Body/hair/facial hair values depend on client creation args and Race assignment internals not needed for the next action."
     - "Some quest, toolbar, buff, and city fields remain default/null by PlayerMobile construction but are not serialized in this first static trace."
+    - "CrashRegion.OnEnter may send the crash-site message twice because SetSpaceMan moves the player to Lodor and back into the CrashRegion; exact client message ordering needs live verification."
+    - "Exact MedicalRecord hue and ItemID are random from Utility.RandomList during SetSpaceMan."
+    - "Exact current hair and facial-hair hues remain unresolved; pressing the skin swatch recorded the unresolved current hair/beard colors through RecordFeatures(true), but did not change them."
+    - "No decorated water trough, tub, barrel, or visible water source was found in the searched crash-site repository sources."
+    - "Exact live movement smoothing for the eastward crash-site walk still needs client/server verification, but Map.Sosaria fileIndex=1 terrain confirms the route uses dry cave/exit terrain rather than map0 water."
+    - "Exact terrain-adjusted passability for the final step onto the hidden crash-site teleporter row still needs live verification; the simulation uses the decorated tile at 4138,3773,1 as the stepped trigger."
+    - "The destination at Point3D(1075,1312,2) has no named Regions.xml rectangle in the traced file; its terrain bucket is now resolved from map1 as grass outside a mountain/cave edge."
+    - "Several animal/world spawner ranges overlap the destination visual box, but live spawner realization, current creature positions, and immediate combat aggro are unavailable from static files."
+    - "Exact live movement/passability behavior after the hidden teleporter placed the player at Point3D(1075,1312,2) needs live verification before simulating a step, but the corrected map1 tile underfoot is dry passable grass at z=2."
   random_branches_chosen:
     - "Profession simulated as warrior, matching a normal creation profession path."
     - "Stats simulated as Str 50, Dex 20, Int 20, legal under the new-character 90-point cap."
@@ -47,9 +75,19 @@ schema:
     - "GypsyTarotGump page 8 body text simulated with the default visible prefix: 'If you choose this fate, you will begin your journey...'."
     - "GypsyTarotGump page 9 fugitive text has fixed visible wording for its opening sentence and interpolates SkillGypsy('fugitive')=13 and SkillGypsy('default')=10 before any configured boost."
     - "GypsyTarotGump page 13 alien text has fixed visible wording and interpolates SkillGypsy('alien')=40 before any configured boost."
+    - "Pressed the visible GypsyTarotGump page 13 OK button; ButtonID 113 was exposed by the gump, not forged."
+    - "Post-crash MedicalRecord exact ItemID/Hue left unresolved; DataPatient is known to be the character name."
+    - "Pressed the visible ComputerDatabaseGump skin swatch reply 2, selecting the deterministic skin hue 0x6F6 instead of the random reply 1."
+    - "Opened and read the visible Medical Record from the backpack. DataPlanet is simulated as Alaunrae V from SetupMedicalRecord using dark_elf_prefix_female=Alaun, dark_elf_suffix_female=rae, and roman suffix V."
+    - "Double-clicked the visible backpack empty canteen after no decorated water source was found nearby; Waterskin.OnDoubleClick treated ItemID 0x4971 as totally empty and sent the fill-source message."
+    - "After the canteen failed, chose an eastward survival walk away from the shuttle and stopped at simulated Point3D(4120,3775,2), before stepping on any teleporter tile."
+    - "Corrected the prior mental scan: the crash-site teleporter row is mechanically traced but invisible to normal players because Teleporter sets Visible=false."
+    - "Continued scouting east-northeast for water/help and unknowingly stepped onto the hidden Teleporter tile at simulated Point3D(4138,3773,1), which moved the player to Point3D(1075,1312,2) on Map.Sosaria."
+    - "Corrected the post-exit terrain scan: Map.Sosaria uses fileIndex=1, so Point3D(1075,1312,2) is map1 tile 0x4 grass at z=2, not map0 water; the canteen was not retried after this correction."
   random_branches_unresolved:
-    - "The ten Loot.RandomFoods() item classes in the starter food bag."
-    - "Which towns.map mobile spawners have materialized at exact home locations on a live server tick."
+    - "The deleted starter food bag's ten Loot.RandomFoods() item classes remain historical unknowns."
+    - "Which static spawners have materialized at exact live positions on a server tick."
+    - "Exact MedicalRecord ItemID/Hue after PlayerSettings.SetSpaceMan."
 
 account:
   account_id: "placeholder:first_account"
@@ -60,9 +98,9 @@ account:
   account_character_discovery_flags:
     - slot: 0
       name: "Mira Vale"
-      raw_character_discovered: ""
+      raw_character_discovered: "0#1#0#0#0#0#0#0#0##"
       decoded_discovery_flags:
-        land_of_sosaria: false
+        land_of_sosaria: true
         land_of_lodoria: false
         savaged_empire: false
         ambrosia: false
@@ -73,19 +111,33 @@ account:
         unknown_ninth_world: false
 
 lifecycle:
-  stage: "pre_tarot"
-  last_action: "pressed the visible right-arrow button on GypsyTarotGump page 9, opened GypsyTarotGump page 13 after pageShow skipped hidden Lodoria and Savage pages, and read the visible Star/Shuttle Crash Site alien card text; no OK or back-arrow button was pressed after page 13 appeared"
-  current_goal: "Decide from the visible Star card: draw it with the OK button, page back to the fugitive card, close the deck, or turn aside to the nearby potion shelf or visitor journal before fate is chosen."
-  elapsed_play_time: "about seventeen minutes of simulated walking, speech, one visible PvP/PvE gump reply, table approach, gypsy Talk, reading the tarot introduction, opening/reading the first card, and paging through/reading tarot cards through the alien crash card"
+  stage: "post_crash_hidden_teleport_mountain_forest_edge"
+  last_action: "refreshed the destination terrain scan at Point3D(1075,1312,2), resolved Map.Sosaria through MapDefinitions to fileIndex=1, corrected the underfoot tile to dry passable map1 grass at z=2 with west and northwest/farther-north mountain pressure and east/south wilderness, and left the empty canteen unchanged because no visible or recognized fill source was present"
+  current_goal: "Orient outside the one-way cave exit, favor walkable grass/jungle away from mountain blockers, and keep looking for a real trough/tub/barrel/static water target before trying the empty canteen again."
+  elapsed_play_time: "about twenty-eight minutes of simulated walking, speech, one visible PvP/PvE gump reply, table approach, gypsy Talk, reading and paging tarot cards, drawing the Star card, arrival scanning, opening/reading the crash-site computer terminal, pressing one deterministic skin swatch, reading and closing the Medical Record, closing the terminal unchanged, testing the alien meat while already full, testing the empty canteen with no visible crash-site fill source nearby, taking one cautious eastward scouting walk, continuing into a hidden crash-site teleporter trigger, and correcting the destination scan to Map.Sosaria fileIndex=1 grass/mountain/forest-edge terrain"
   session_marker: "run_1_first_login"
   login_status: "logged_in_after_character_creation"
   create_status: "created_player_mobile"
-  tarot_status: "gypsy_card_page_13_open_read_no_card_chosen"
-  current_open_gumps:
-    - "GypsyTarotGump card page 13; visible header THE STAR, town line The Shuttle Crash Site, body text has been read and interpreted; visible OK button would send reply 113 and EnterLand(13), visible left arrow would send reply 9, and there is no visible right arrow because pageShow returns 20 past the final allowed human card."
+  tarot_status: "selected_star_entered_crash_site"
+  current_open_gumps: []
+  current_open_gump_detail:
+    type: null
+    source: "ComputerDatabaseGump was closed through its visible normal close control in run 23."
+    read_status: "no_open_gump"
+    visible_title: null
+    visible_body_summary: null
+    visible_controls: []
+    mechanical_state_changes_from_closing_terminal:
+      - "Clicked the normal close control on ComputerDatabaseGump after reading it and after earlier skin swatch reply 2."
+      - "PacketHandlers.DisplayGumpResponse removed the responding gump and called ComputerDatabaseGump.OnResponse with RelayInfo."
+      - "ComputerDatabaseGump.OnResponse did not match any skin reply 1-8 or hair reply 9-32, so skinColor and hairColor stayed zero."
+      - "The response fell through to from.SendSound(0x54D) only; it did not reopen the gump, call RecordFeatures(true), or write Hue, HairHue, FacialHairHue, RecordSkinColor, RecordHairColor, RecordBeardColor, inventory, skill, stat, location, discovery, quest, hunger, thirst, or tarot values."
   recently_closed_gumps:
+    - "ComputerDatabaseGump closed after its visible body text was read and skin swatch reply 2 had already been applied; normal close response removed the terminal gump and played sound 0x54D without further mutation."
+    - "MedicalRecordGump closed after its visible body text was read; normal close response removed only the record gump and played sound 0x54D through MedicalRecordGump.OnResponse."
     - "PKNONPK consent gump closed after pressing its visible Remain Neutral reply button."
     - "ShardGreeterEntry.OnClick closed WelcomeGump and RacePotionsGump before opening GypsyTarotGump."
+    - "GypsyTarotGump page 13 closed through OnResponse after pressing its visible OK/card-selection button."
   recent_visible_messages:
     - "HelpMessage 'gypsy help' likely sent: Single click the gypsy and select 'Talk' to speak with her."
     - "GypsyTarotGump page 1 opened after the visible page-0 next button response and played the page-turn sound."
@@ -98,7 +150,18 @@ lifecycle:
     - "GypsyTarotGump page 8 opened after the visible page-7 right-arrow response and played the page-turn sound."
     - "GypsyTarotGump page 9 opened after the visible page-8 right-arrow response and played the page-turn sound."
     - "GypsyTarotGump page 13 opened after the visible page-9 right-arrow response and played the page-turn sound."
-  has_left_start_flow: false
+    - "CrashRegion.OnEnter sends: You find yourself near a crashed shuttle."
+    - "EnterLand sends: The card vanishes from your hand as you magically appear elsewhere."
+    - "ComputerDatabase.OnDoubleClick played sound 0x54D when the terminal gump opened."
+    - "ComputerDatabaseGump.OnResponse for visible skin reply 2 played sound 0x54B and reopened the same terminal gump."
+    - "MedicalRecord.OnDoubleClick played sound 0x54D when the MedicalRecordGump opened."
+    - "MedicalRecordGump normal close response played sound 0x54D and left ComputerDatabaseGump open."
+    - "ComputerDatabaseGump normal close response played sound 0x54D and left no traced gumps open."
+    - "Food.FillHunger sent localized message 500867: You are simply too full to eat any more!"
+    - "Waterskin.OnDoubleClick sent: You can only fill this at a water trough, tub, or barrel!"
+    - "No new message is traced from the eastward walk because the player stayed inside the CrashRegion and did not step on a teleporter tile."
+    - "The hidden teleporter row sent no player-facing message, sound, source effect, or destination effect; the move was silent in the traced decoration."
+  has_left_start_flow: true
 
 identity:
   serial: "placeholder:runtime_serial_unknown"
@@ -111,45 +174,53 @@ identity:
   public_my_runuo: true
   female: true
   body: "unknown_after_human_race_assignment"
-  hue: "client_creation_hue_unresolved"
+  hue: "0x6F6"
   hair: "client_creation_hair_unresolved"
   facial_hair: "client_creation_facial_hair_unresolved"
+  record_skin_color: "0x6F6"
+  record_hair_color: "current_hair_hue_recorded_but_unresolved"
+  record_beard_color: "current_facial_hair_hue_recorded_but_unresolved"
   race: "Human"
   race_id: 0
   race_home_land: 0
   creature_race_start_area: null
+  appearance_terminal_status: "ComputerDatabaseGump has been opened/read, visible skin swatch reply 2 set skin hue 0x6F6, the Medical Record has been opened/read/closed, and the terminal has now been closed unchanged through its visible normal close control; hair/facial-hair hues were not changed."
 
 fate_tarot:
-  selected_card: null
-  selected_page: null
-  selected_name: null
-  fate_family: null
-  current_open_tarot_page: 13
-  current_open_tarot_page_type: "visible_card_page_star_read_no_card_chosen"
+  selected_card: "THE STAR"
+  selected_page: 13
+  selected_name: "The Shuttle Crash Site"
+  fate_family: "alien_crash_site"
+  current_open_tarot_page: null
+  current_open_tarot_page_type: "closed_after_visible_star_ok_selection"
   current_open_gump_text:
     source: "GypsyTarotGump page 13 AddHtml -> cardText(page, section, from.RaceID)"
-    read_status: "read_interpreted"
+    read_status: "read_interpreted_then_closed_by_visible_ok"
     visible_title: "THE STAR"
     visible_town_line: "The Shuttle Crash Site"
     visible_body_summary: "The card offers an alien crash start: no memory, no starting skills, no Sosarian gold, 40 grandmaster-skill capacity before configured boosts, three-times resurrection cost, severe fame/karma/skill/stat losses around tribute, no luck benefit, four-times guild fees, a crash-site computer terminal for appearance changes, and survival pressure from only a knife, alien meat, an empty canteen, and the mountain crash site if the card is actually drawn."
     visible_controls:
-      - "top-right OK/card-selection button sends reply 113 and would call EnterLand(13)"
-      - "left arrow sends reply 9 and would reopen page 9"
-      - "no right arrow is visible because pageShow forward from page 13 returns 20"
-      - "gump is closable through normal close control"
+      - "top-right OK/card-selection button sent reply 113 and called EnterLand(13)"
+      - "left arrow would have sent reply 9 and reopened page 9, but it was not pressed"
+      - "no right arrow was visible because pageShow forward from page 13 returned 20"
+      - "gump was closable through normal close control, but the player used OK"
       - "no text-entry fields are present"
       - "scrollbar is true for human page 13"
     actionable_facts_visible_on_card:
       - "The Star is the last currently visible normal human tarot card."
       - "The visible destination is The Shuttle Crash Site."
-      - "The OK button would draw the card and commit the alien crash start, but the player has not pressed it."
-      - "The left arrow can return to the Hanged Man/Britain Dungeons card; no forward arrow is exposed from this card."
-      - "The card body warns that alien play changes skill capacity, starting skills, starting gold, resurrection penalties, luck, guild costs, equipment, and crash-site survival, but those mutations require the OK/EnterLand/CrashRegion path."
-    mechanical_state_changes_from_page_button:
-      - "GypsyTarotGump page 9 was closed."
-      - "GypsyTarotGump page 13 was sent."
-      - "A page-turn sound was played."
-      - "No MoveToWorld, PlayerSettings.SetDiscovered, CrashRegion.OnEnter, PlayerSettings.SetSpaceMan, SkillBegin('alien'), inventory wipe, skill reset, race change, name change, or PvP/PvE mutation occurred."
+      - "The OK button drew the card and committed the alien crash start through normal visible UI."
+      - "The left arrow was available but not pressed; after OK there is no tarot gump open."
+      - "The card body warned that alien play changes skill capacity, starting skills, starting gold, resurrection penalties, luck, guild costs, equipment, and crash-site survival; those mutations now apply because the OK/EnterLand/CrashRegion path ran."
+    mechanical_state_changes_from_ok_button:
+      - "GypsyTarotGump page 13 was closed by OnResponse."
+      - "EnterLand(13) selected Point3D(4109,3775,2) on Map.Sosaria for this human character."
+      - "PlayerSettings.SetDiscovered marked the Land of Sosaria discovered."
+      - "MoveToWorld entered CrashRegion, which sent the crash-site message and called PlayerSettings.SetSpaceMan because SkillStart was 10000."
+      - "SetSpaceMan called SkillBegin('alien'), setting SkillStart and Skills.Cap to 40000 before configured boosts."
+      - "SetSpaceMan removed worn starter clothes, deleted all backpack contents, zeroed every skill base, equipped plain clothing and a named knife, and added cooked alien meat, an empty canteen, and a Medical Record."
+      - "SetSpaceMan moved through a temporary Lodor holding point and returned the player to Point3D(4109,3775,2) on Map.Sosaria."
+      - "No RaceID, Race, name, title, PvP/PvE consent, fame, karma, kills, raw stats, hunger, or thirst mutation was traced on this path."
     actionable_facts_visible_in_intro:
       - "top-right button begins looking through the tarot deck"
       - "arrow buttons page through cards after the deck starts"
@@ -162,10 +233,10 @@ fate_tarot:
       - "Sosaria settlement outskirts are relatively safer for hunting"
       - "minor dungeons near settlements exist but traps can kill quickly"
       - "the visitor journal on the table can change the character name before tarot"
-    mechanical_state_changes_from_reading: "none; reading page 13 text granted player knowledge only, not discovery flags, travel, alien status, skill-cap changes, skill resets, inventory changes, race changes, name changes, or PvP/PvE mode changes"
+    mechanical_state_changes_from_reading: "historical only; reading page 13 did nothing, but this run pressed the visible OK button after reading and committed the EnterLand/CrashRegion/SetSpaceMan path"
   accessible_tarot_cards:
-    exposed_to_player_now: "page 13 is visible now: THE STAR / The Shuttle Crash Site, with OK reply 113 and left-arrow reply 9 exposed to the player; no next-arrow is visible"
-    computed_from_pageShow_if_gypsy_opens:
+    exposed_to_player_now: "none; tarot gump is closed after selecting The Star"
+    computed_from_pageShow_before_selection:
       - { page: 1, card: "Emperor", destination_hint: "Britain" }
       - { page: 2, card: "Devil", destination_hint: "Devil Guard" }
       - { page: 3, card: "Hermit", destination_hint: "Grey" }
@@ -185,105 +256,153 @@ fate_tarot:
   visit_savage: false
   gypsy_table_position_requirement:
     required_for_human: "X=3567,Y=3404"
-    current_position_satisfies: true
+    current_position_satisfies: false
     race_bypass_satisfies: false
 
 location:
   map: "Map.Sosaria"
-  point3d: { x: 3567, y: 3404, z: 0 }
-  previous_point3d: { x: 3565, y: 3414, z: 0 }
-  region_name: "the Forest"
-  region_type: "StartRegion"
-  start_region_status: "inside"
+  point3d: { x: 1075, y: 1312, z: 2 }
+  previous_point3d: { x: 4120, y: 3775, z: 2 }
+  trigger_point3d: { x: 4138, y: 3773, z: 1 }
+  region_name: "none matched in Data/System/XML/Regions.xml at 1075,1312"
+  region_type: "default_or_unresolved_region"
+  start_region_status: "left_start_flow_after_tarot_selection"
   nearby_known_npcs_items:
-    - "Potential live ShardGreeter at 3567,3401 is inside visual range; Talk was clicked from the valid table coordinate and GypsyTarotGump page 13 remains open after pressing the page-9 right arrow and reading The Star/Shuttle Crash Site."
-    - "RacePotions shelf at 3564,3406 is visible and within 4 tiles from the table; MonstersAllowed() is true by default, and the gypsy intro now explicitly points to it, but it has not been double-clicked."
-    - "Visitor Journal at 3570,3400 is inside close visual range; the gypsy intro now explicitly points to it for name changes, but ChangeName.OnDoubleClick has not been used."
-    - "HelpMessage 'gypsy help' at 3565,3404 is within 5 tiles and already taught the single-click-Talk hint during the table approach."
-    - "Potential live GoddessOfProtection/Thuvia near 3563,3413 remains inside visual range behind the player; the PKNONPK consent gump is closed."
-  land_bucket: "Land of Sosaria start forest"
-  time_bucket: "first login, before fate"
+    - "No deterministic decorated items were found inside the 18-tile destination scan around Point3D(1075,1312,2)."
+    - "No deterministic mobile home/current position was found inside the 18-tile destination scan, but multiple animals.map/world.map spawner ranges overlap the scan and could have live materialized entities."
+    - "Corrected binary map data shows the destination tile is dry passable grass at z=2, with impassable rock/grass pressure west and northwest/farther north and no item/static tile with a canteen water-target ID within 3 tiles."
+    - "No decorated water trough, tub, barrel, chest, corpse, or visible item-style water source was found near Point3D(1075,1312,2)."
+    - "The crash-site terminal, glow, and hidden teleporter row are no longer in visual range after the teleport."
+  land_bucket: "Land of Sosaria mountain/forest edge outside a one-way cave exit; center map1 land tile 0x4 grass is dry and passable at z=2, with impassable rock/grass west and northwest/farther north and grass/jungle wilderness east and south"
+  time_bucket: "first login, after fate"
   safe_flags:
     guarded: "unknown"
-    public_area: true
-    start_region_harmful_pvp_blocked: true
-    start_region_spell_casting_blocked: true
+    public_area: "no PublicRegion rectangle matched the destination in the traced Regions.xml search"
+    start_region_harmful_pvp_blocked: false
+    start_region_spell_casting_blocked: false
+    crash_region_harmful_pvp_blocked: false
+    crash_region_spell_casting_blocked: false
+    crash_region_logout_delay: "not_in_crash_region_after_teleport"
 
 perception_visual_scan:
-  scan_center: { x: 3567, y: 3404, z: 0 }
-  pre_action_scan_center: { x: 3565, y: 3414, z: 0 }
-  post_action_scan_center: { x: 3567, y: 3404, z: 0 }
+  scan_center: { x: 1075, y: 1312, z: 2 }
+  pre_action_scan_center: { x: 4120, y: 3775, z: 2 }
+  trigger_scan_center: { x: 4138, y: 3773, z: 1 }
+  post_action_scan_center: { x: 1075, y: 1312, z: 2 }
   map: "Map.Sosaria"
   radius_tiles: 18
   sources_searched:
     - "Data/Decoration/Sosaria/decorate.cfg"
     - "Data/Spawns/towns.map"
     - "Data/Spawns/*.map"
+    - "Data/Spawns/animals.map"
+    - "Data/Spawns/world.map"
     - "Data/XMLSpawn/*.xml"
     - "Data/Scripts/Custom/XMLSpawner/XmlExtras/Spawns/*.xml"
-    - "Data/Scripts/System/Misc/Build.cs"
+    - "Data/Scripts/Custom/RandomEncounters/RandomEncounters.xml"
     - "Data/System/XML/Regions.xml"
-  visible_mobiles:
-    - type: "GoddessOfProtection"
-      name: "Thuvia"
-      title: "the Goddess Of Protection"
-      point3d: { x: 3563, y: 3413, z: 0 }
-      status: "potential_live_spawn_from_towns_map"
-      interaction: "OnMovement within 8 can prompt PvP/PvE help; the player already used help/choose/Remain Neutral in prior runs. No Thuvia speech or gump action happened during this movement."
-    - type: "ShardGreeter"
-      name: "random gypsy name"
-      title: "the gypsy"
-      point3d: { x: 3567, y: 3401, z: 0 }
-      status: "potential_live_spawn_from_towns_map_now_inside_visual_range_talk_used"
-      interaction_gate: "Context Talk opens tarot only at X=3567,Y=3404 or RaceID > 0; the player satisfied the human table coordinate and used Talk, opening GypsyTarotGump page 0."
-  visible_items:
-    - type: "RacePotions"
-      name: "gypsy potion shelf"
-      point3d: { x: 3564, y: 3406, z: 0 }
-      status: "mechanically_decorated"
-      interaction: "Double-click requires within 4 tiles and MonstersAllowed(); from the table tile it is within range and MonstersAllowed() traces true through the default S_MonsterCharacters=1 path. Not used this run; ShardGreeter Talk would close any RacePotionsGump if it had been open."
-    - type: "HelpMessage"
-      name: "gypsy bag"
-      point3d: { x: 3574, y: 3419, z: 0 }
-      status: "mechanically_decorated_invisible_helper"
-      interaction: "OnMovement within 5 sends backpack hint; table tile is outside range."
-    - type: "HelpMessage"
-      name: "gypsy help"
-      point3d: { x: 3565, y: 3404, z: 0 }
-      status: "mechanically_decorated_invisible_helper_now_inside_visual_range"
-      interaction: "OnMovement within 5 sends gypsy talk hint; walking to the table put the player in range, so the hint likely fired."
-    - type: "ChangeName"
-      name: "Visitor Journal"
-      point3d: { x: 3570, y: 3400, z: 7 }
-      status: "mechanically_decorated_now_inside_visual_range"
-      interaction: "ChangeName.OnDoubleClick opens NameAlterGump and plays a sound; not used this run."
-    - type: "ForestSounds"
-      name: "ambient forest sound"
-      point3d: { x: 3561, y: 3389, z: 0 }
-      status: "mechanically_decorated_ambient_now_inside_target_scan"
-    - type: "ForestSounds"
-      name: "ambient forest sound"
-      point3d: { x: 3561, y: 3416, z: 0 }
-      status: "mechanically_decorated_ambient"
-    - type: "ForestSounds"
-      name: "ambient forest sound"
-      point3d: { x: 3577, y: 3417, z: 0 }
-      status: "mechanically_decorated_ambient"
-    - type: "ForestSounds"
-      name: "ambient forest sound"
-      point3d: { x: 3585, y: 3401, z: 0 }
-      status: "mechanically_decorated_ambient_now_inside_target_scan"
+    - "Data/Scripts/Items/Doors/Teleporter.cs"
+    - "Data/Scripts/System/Misc/MapDefinitions.cs"
+    - "Data/Files/map1.mul"
+    - "Data/Files/tiledata.mul"
+    - "Data/Files/staidx1.mul"
+    - "Data/Files/statics1.mul"
+  visible_mobiles: []
+  visible_items: []
+  map_file_resolution:
+    current_map: "Map.Sosaria"
+    map_index: 1
+    map_id: 1
+    file_index: 1
+    source: "Data/Scripts/System/Misc/MapDefinitions.cs"
+    binary_files_used:
+      - "Data/Files/map1.mul"
+      - "Data/Files/staidx1.mul"
+      - "Data/Files/statics1.mul"
+    invalidated_prior_scan: "The prior map0/staidx0/statics0 read belonged to Map.Lodor fileIndex=0, not Map.Sosaria, and created the false water-underfoot conclusion."
+  visible_terrain:
+    - type: "LandTile"
+      name: "grass"
+      point3d: { x: 1075, y: 1312, z: 2 }
+      tile_id: "0x4"
+      flags: []
+      status: "corrected Map.Sosaria/fileIndex=1 terrain; dry passable grass outside the cave exit"
+    - type: "LandTileCluster"
+      name: "west and northwest/farther-north mountain pressure"
+      radius_tiles: 5
+      status: "Immediate west 1074,1312 is 0x23A impassable grass at z=5. Direct north 1075,1311 is 0x5 passable grass at z=2, but the wider northwest and farther-north rows contain impassable rock/grass, including 1074,1311 as 0x23A at z=7 and 1075,1308 as 0x233 at z=4."
+    - type: "LandTileCluster"
+      name: "east and south wilderness"
+      radius_tiles: 18
+      status: "Corrected map1 scan shows walkable grass near the player and grass/jungle wilderness increasing east/south; this is the outside side of a one-way cave exit."
+  static_water_target_scan:
+    range_tiles: 3
+    static_tile_count: 2
+    water_target_hits: []
+    result: "No map Item or StaticTile matched DrinkingFunctions.CheckWaterTarget within canteen fill range after the corrected staidx1/statics1 scan."
+  wider_static_scan:
+    range_tiles: 18
+    static_tile_count: 63
+    water_target_hits: []
+    directional_summary:
+      - "Land: immediate west is blocked, direct north/east/south are walkable grass, wider northwest/farther-north rows rise into impassable rock/grass, and east/south open into grass/jungle wilderness."
+      - "Statics: corrected staidx1/statics1 scan buckets 56 static tiles east and 7 north within 18 tiles; no west/south static bucket and no DrinkingFunctions.CheckWaterTarget ID hit."
+    result: "Corrected staidx1/statics1 scan finds ordinary cave-edge/wilderness statics in the wider screen but none use canteen fill target IDs."
+  mechanically_traced_invisible_items:
+    - type: "Teleporter"
+      name: "hidden crash-site exit tile"
+      point3d: { x: 4138, y: 3769, z: 0 }
+      status: "mechanically_decorated_invisible_prior_location"
+      interaction: "Teleporter constructor sets Visible=false; a normal player could not see this tile, but stepping on it would have used the same PointDest=(1075,1312,2)."
+    - type: "Teleporter"
+      name: "hidden crash-site exit tile"
+      point3d: { x: 4138, y: 3770, z: 0 }
+      status: "mechanically_decorated_invisible_prior_location"
+      interaction: "Same destination PointDest=(1075,1312,2); not visible to a normal player."
+    - type: "Teleporter"
+      name: "hidden crash-site exit tile"
+      point3d: { x: 4138, y: 3771, z: 0 }
+      status: "mechanically_decorated_invisible_prior_location"
+      interaction: "Same destination PointDest=(1075,1312,2); not visible to a normal player."
+    - type: "Teleporter"
+      name: "hidden crash-site exit tile"
+      point3d: { x: 4138, y: 3772, z: 0 }
+      status: "mechanically_decorated_invisible_prior_location"
+      interaction: "Same destination PointDest=(1075,1312,2); not visible to a normal player."
+    - type: "Teleporter"
+      name: "hidden crash-site exit tile"
+      point3d: { x: 4138, y: 3773, z: 1 }
+      status: "mechanically_decorated_invisible_trigger_stepped"
+      interaction: "The simulated scouting walk stepped here; Teleporter.OnMoveOver called StartTeleport/DoTeleport and moved the player to PointDest=(1075,1312,2) on Map.Sosaria."
   potential_entities:
-    - type: "Spawner runtime variance"
-      name: "towns.map live placements"
-      status: "GoddessOfProtection and ShardGreeter are mechanically traced but live spawn realization/wander is still unresolved."
-  scan_result_before_action: "At Point3D(3567,3404,0), ShardGreeter, RacePotions, ChangeName, HelpMessage, ForestSounds, and Thuvia remain inside the 18-tile client box. The already-read GypsyTarotGump page 9 exposed a normal right arrow to page 13, which outranked the nearby shelf and journal for this chronological action."
-  scan_result_after_action: "GypsyTarotGump page 13 is open and read. THE STAR / The Shuttle Crash Site is visible, with OK reply 113 and left-arrow reply 9 available; no right arrow is visible. RacePotions, ChangeName, ShardGreeter, and Thuvia remain nearby but unused in this action."
-  scan_confidence: "medium_static_trace"
+    - type: "Overlapping animal spawner"
+      name: "animals.map line 237"
+      status: "home=(1090,1263), range=(32,32), possible Boar/Gorilla/Monkey/PandaRiding/Panther and tropical birds at the northern edge of the destination scan if live-spawned."
+    - type: "Overlapping animal spawner"
+      name: "animals.map line 602"
+      status: "home=(1124,1293), range=(42,42), possible Boar/Gorilla/Monkey/PandaRiding/Panther/Toad and tropical birds at the eastern edge of the destination scan if live-spawned."
+    - type: "Overlapping animal/world spawner"
+      name: "animals.map lines 1111,1163,1227 and world.map lines 706,758,834"
+      status: "Large wilderness ranges overlap the destination scan; possible animal/desert/jungle/hostile picks exist, but static files do not reveal current materialized positions."
+    - type: "Overlapping world spawner"
+      name: "world.map lines 204 and 385"
+      status: "Smaller jungle-style world spawner ranges overlap the scan edge and include hostile possibilities such as GiantRat, Skeleton, Snake, Zombie, Goblin/Kobold variants, and stronger table picks if live-spawned."
+    - type: "Region lookup"
+      name: "no named Regions.xml match"
+      status: "The traced Regions.xml rectangles did not contain Point3D(1075,1312,2); default region behavior and exact client label need live/server context."
+    - type: "Corrected land terrain"
+      name: "map1.mul land tiles"
+      status: "Resolved: Map.Sosaria uses fileIndex=1. Point3D(1075,1312,2) is dry passable grass at z=2, with mountain/rock pressure west and northwest/farther north and wilderness grass/jungle east/south."
+    - type: "Movement passability"
+      name: "exact live tile Z/blocking"
+      status: "Mobile.Move delegates to CheckMovement for terrain and blocking; corrected binary land data shows the destination tile is passable grass at z=2, but any next step should still trace the target tile before being simulated."
+  scan_result_before_action: "At Point3D(4120,3775,2), no gumps were open. The deterministic crash-site terminal/glow were visible behind the player but out of use range, no deterministic mobiles or water sources were traced, and the previously noted teleporter row was corrected to mechanically present but invisible because Teleporter.Visible=false."
+  scan_result_after_action: "At Point3D(1075,1312,2), no deterministic visible items, mobiles, chests, corpses, troughs, tubs, barrels, or item/static water targets were found in the 18-tile entity/static scan. Corrected Map.Sosaria fileIndex=1 binary terrain shows dry grass underfoot, impassable rock/mountain pressure west and northwest/farther north, and grass/jungle wilderness east/south. Multiple animal/world spawner ranges overlap the scan, but live realization is unresolved."
+  scan_confidence: "high_for_map_file_resolution_and_binary_land; high_for_static_water_target_absence; medium_for_live_spawner_visibility"
   unresolved_spawn_sources:
     - "Static .map spawners record home/range/count but not current live position."
     - "Saved XMLSpawner runtime state was not available."
-    - "XMLSpawner extra files with coordinate-like strings were checked; matches were GUID fragments, not current Sosaria entities."
+    - "Region-based random encounter timers are not live-executed in this static simulation."
 
 vitals_status:
   alive: true
@@ -310,18 +429,18 @@ vitals_status:
 skills_leveling:
   profession: 1
   profession_label: "warrior"
-  skill_start: 10000
+  skill_start: 40000
   skill_boost: 0
   skill_ether: 0
-  skills_cap: 10000
-  computed_overall_level: 28
-  best_archetype: "Martial"
-  best_archetype_level: 39
+  skills_cap: 40000
+  computed_overall_level: 10
+  best_archetype: "Alien"
+  best_archetype_level: 26
   encounter_alias_levels:
-    Overall: 28
-    Fighter: 39
+    Overall: 10
+    Fighter: 1
     Ranger: 1
-    Mage: 6
+    Mage: 1
     Necromancer: 1
     Thief: 1
   anti_macro_or_skill_cooldowns:
@@ -345,7 +464,7 @@ skills_leveling:
     Searching: { base: 0.0, value: 0.0, cap: 100.0, lock: "Up" }
     Discordance: { base: 0.0, value: 0.0, cap: 100.0, lock: "Up" }
     Psychology: { base: 0.0, value: 0.0, cap: 100.0, lock: "Up" }
-    Healing: { base: 50.0, value: 50.0, cap: 100.0, lock: "Up" }
+    Healing: { base: 0.0, value: 0.0, cap: 100.0, lock: "Up" }
     Seafaring: { base: 0.0, value: 0.0, cap: 100.0, lock: "Up" }
     Forensics: { base: 0.0, value: 0.0, cap: 100.0, lock: "Up" }
     Herding: { base: 0.0, value: 0.0, cap: 100.0, lock: "Up" }
@@ -368,7 +487,7 @@ skills_leveling:
     Tinkering: { base: 0.0, value: 0.0, cap: 100.0, lock: "Up" }
     Tracking: { base: 0.0, value: 0.0, cap: 100.0, lock: "Up" }
     Veterinary: { base: 0.0, value: 0.0, cap: 100.0, lock: "Up" }
-    Swords: { base: 50.0, value: 50.0, cap: 100.0, lock: "Up" }
+    Swords: { base: 0.0, value: 0.0, cap: 100.0, lock: "Up" }
     Bludgeoning: { base: 0.0, value: 0.0, cap: 100.0, lock: "Up" }
     Fencing: { base: 0.0, value: 0.0, cap: 100.0, lock: "Up" }
     FistFighting: { base: 0.0, value: 0.0, cap: 100.0, lock: "Up" }
@@ -392,33 +511,35 @@ inventory_equipment:
     exists: true
     movable: false
     contents:
-      - { type: "Gold", name: "gold", amount: 124, loot_type: "normal", evidence: "random range 100-150; branch simulated" }
-      - { type: "Waterskin", name: "waterskin", amount: 1 }
-      - { type: "Dagger", name: "dagger", amount: 1, evidence: "Dagger branch simulated instead of LargeKnife" }
-      - type: "Bag"
-        name: "starter food bag"
-        amount: 1
-        contents:
-          - { type: "Loot.RandomFoods", amount: 10, exact_classes: "unresolved_random" }
-      - { type: "Torch", name: "torch", amount: 1, evidence: "simulated spare light" }
-      - { type: "Lantern", name: "lantern", amount: 1, evidence: "simulated spare light" }
+      - { type: "CookedBird", name: "cooked alien meat", amount: 10, hue: "0xB64", fill_factor_each: 10, loot_type: "normal", last_interaction: "double-click attempted while Hunger was 20; Food.FillHunger returned false before Consume(), so amount stayed 10", evidence: "PlayerSettings.SetSpaceMan creates CookedBird(10), sets Hue and Name, and AddToBackpack; Food.OnDoubleClick/Eat/FillHunger gate blocks eating at full hunger" }
+      - { type: "Waterskin", name: "empty canteen", amount: 1, item_id: "0x4971", weight: 1.0, last_interaction: "double-click attempted at the crash site before leaving; no map item/static tile with a CheckWaterTarget ID existed within 3 tiles, so Waterskin.OnDoubleClick sent the fill-source message and left item/thirst unchanged. The later post-exit map0 water inference was invalidated by corrected Map.Sosaria fileIndex=1 terrain and is no longer part of the chronological state.", evidence: "PlayerSettings.SetSpaceMan creates Waterskin, sets ItemID and Name; Waterskin treats 0x4971 as totally empty unless CheckWater finds a nearby item/static fill source." }
+      - { type: "MedicalRecord", name: "Medical Record", amount: 1, data_patient: "Mira Vale", data_planet: "Alaunrae V", read_status: "opened/read via MedicalRecord.OnDoubleClick, then foreground MedicalRecordGump closed through normal close control", item_id: "unresolved_random_0x27FB_or_0x27FC", hue: "unresolved_random_medical_record_hue", evidence: "PlayerSettings.SetSpaceMan creates MedicalRecord and sets DataPatient to m.Name; SetupMedicalRecord generated DataPlanet; MedicalRecord.OnDoubleClick opened/read the gump; normal gump response closed the MedicalRecordGump without mutating the item" }
   equipped_items_by_layer:
-    held: { type: "Candle", name: "candle", lit_by_double_click: true, evidence: "simulated held light branch" }
-    clothing: "unknown_default_character_creation_clothing"
-  held_light_source: "Candle"
-  gold_currency: 124
+    shirt: { type: "FancyShirt", name: "fancy shirt", evidence: "PlayerSettings.SetSpaceMan m.AddItem(new FancyShirt()) after RemoveMyClothes" }
+    shoes: { type: "Boots", name: "boots", evidence: "PlayerSettings.SetSpaceMan m.AddItem(new Boots())" }
+    pants: { type: "LongPants", name: "long pants", evidence: "PlayerSettings.SetSpaceMan m.AddItem(new LongPants())" }
+    weapon: { type: "Dagger", name: "knife", evidence: "PlayerSettings.SetSpaceMan creates Dagger, renames it knife, and m.AddItem(dagger)" }
+  held_light_source: null
+  gold_currency: 0
   containers:
     - "backpack"
-    - "starter food bag"
+  deleted_historical_contents:
+    - "starter gold 124"
+    - "starter waterskin"
+    - "starter dagger"
+    - "starter food bag with unresolved random foods"
+    - "starter torch"
+    - "starter lantern"
+    - "starter candle/light and starter clothing removed by SetSpaceMan"
   nested_contents_known: true
   bank: "unknown"
   stable: { pets: [], auto_stabled_pets: [] }
   followers: []
 
 quests_progression:
-  character_discovered_raw: ""
+  character_discovered_raw: "0#1#0#0#0#0#0#0#0##"
   character_discovered_decoded_nine_world_map:
-    land_of_sosaria: false
+    land_of_sosaria: true
     land_of_lodoria: false
     savaged_empire: false
     ambrosia: false
@@ -528,12 +649,16 @@ timers_effects_cooldowns:
     - "Historical prior tarot cards: page 1 displayed THE EMPEROR / The City of Britain with OK reply 101 and right-arrow reply 2; page 2 displayed THE DEVIL / The Town of Devil Guard with OK reply 102, left-arrow reply 1, and right-arrow reply 3; page 3 displayed THE HERMIT / The Village of Grey with OK reply 103, left-arrow reply 2, and right-arrow reply 4; page 4 displayed THE TOWER / The City of Montor with OK reply 104, left-arrow reply 3, and right-arrow reply 5; page 5 displayed THE MAGICIAN / The Town of Moon with OK reply 105, left-arrow reply 4, and right-arrow reply 6; page 6 displayed THE FOOL / The Town of Mountain Crest with OK reply 106, left-arrow reply 5, and right-arrow reply 7; page 7 displayed DEATH / The Undercity of Umbra with OK reply 107, left-arrow reply 6, and right-arrow reply 8."
     - "Historical prior tarot cards: page 8 displayed THE SUN / The Village of Yew with OK reply 108, left-arrow reply 7, and right-arrow reply 9."
     - "Historical prior tarot cards: page 9 displayed THE HANGED MAN / The Britain Dungeons with OK reply 109, left-arrow reply 8, right-arrow reply 13, and a scrollbar in the body text region."
-    - "GypsyTarotGump page 13 is now open. It is Closable=true, Disposable=true, Dragable=true, Resizable=false, and displays THE STAR / The Shuttle Crash Site."
-    - "GypsyTarotGump page 13 has a visible OK button with reply 113, a visible left arrow with reply 9, no visible right arrow, and a scrollbar in the body text region."
-    - "EnterLand is now one visible OK press away for the alien Shuttle Crash Site start, but it has not run because no page-13 OK response was pressed after the card appeared."
+    - "GypsyTarotGump page 13 was open, read, and exposed a visible OK button with reply 113, a visible left arrow with reply 9, no visible right arrow, and a scrollbar in the body text region."
+    - "The visible OK reply 113 was pressed. GypsyTarotGump is now closed; no tarot, consent, medical record, race potion, welcome, or name-change gump is currently open."
+    - "ComputerDatabaseGump was opened/read, then refreshed after visible skin reply 2 selected skin hue 0x6F6. It is Closable=true, Disposable=true, Dragable=true, Resizable=false; reply buttons 1 and 3-8 could mutate skin color again, and buttons 9-32 could mutate hair and facial hair color if the gump is reopened."
+    - "MedicalRecordGump was open/read in front of the terminal, then closed through its visible normal close control. It is Closable=true, Disposable=true, Dragable=true, Resizable=false; it has no reply buttons, no text entries, and OnResponse only plays sound 0x54D if a response is sent."
+    - "ComputerDatabaseGump was closed through its visible normal close control after the MedicalRecordGump was already closed; the close response played sound 0x54D and left no traced gumps open."
   movement_effects:
-    - "Walking to Point3D(3567,3404,0) did not leave StartRegion and did not open tarot by itself."
-    - "The gypsy help item can send its single-click-Talk hint when the player enters its 5-tile range."
+    - "EnterLand(13) moved to Point3D(4109,3775,2) on Map.Sosaria, inside the CrashRegion rectangle."
+    - "CrashRegion.OnEnter called PlayerSettings.SetSpaceMan, which briefly moved through Point3D(7000,4000,0) on Map.Lodor before returning to the crash-site point."
+    - "Run 26 walked east to simulated Point3D(4120,3775,2), still within the CrashRegion rectangle x=4086..4145,y=3745..3804. No region-entry effect reran and no teleporter OnMoveOver fired because the player stopped before x=4138."
+    - "Run 27 continued east-northeast and stepped onto the hidden Teleporter tile at simulated Point3D(4138,3773,1). Teleporter.OnMoveOver fired, StartTeleport had zero delay, DoTeleport used the current map because MapDest was null, and MoveToWorld placed the player at Point3D(1075,1312,2) on Map.Sosaria."
 
 evidence:
   character_creation_path:
@@ -544,7 +669,7 @@ evidence:
   start_region:
     - "Regions.xml defines StartRegion the Forest around the wake-up point."
     - "StartRegion blocks harmful PvP and spell casting, sends WelcomeGump on enter."
-    - "Regions.xml defines CrashRegion the Crash Site around the page-13 destination, but the character has not entered it because the page-13 OK response was not pressed."
+    - "Regions.xml defines CrashRegion the Crash Site around the page-13 destination, and the character entered it after pressing the visible page-13 OK button."
   tarot_gates:
     - "ShardGreeterEntry.OnClick requires X=3567,Y=3404 or RaceID > 0 before opening GypsyTarotGump."
     - "GypsyTarotGump.pageShow hides Lodoria pages without visitLodor, Savage page without visitSavage, and alien page without AllowAlienChoice."
@@ -552,8 +677,54 @@ evidence:
     - "visitSavage checks account characters for discovery of the Savaged Empire."
   visual_scan:
     - "Map.GetItemsInRange and Map.GetMobilesInRange default to an 18-tile rectangle around the current Point3D."
-    - "Data/Spawns/towns.map places ShardGreeter and GoddessOfProtection in the gypsy forest spawn group."
-    - "Data/Decoration/Sosaria/decorate.cfg places RacePotions, HelpMessage, ChangeName, and ForestSounds near the wake-up/table path."
+    - "Data/Decoration/Sosaria/decorate.cfg places ComputerDatabase and GlowingLight named computer terminal at 4108,3779 near the crash-site arrival point."
+    - "A static scan of the searched .map spawn files found no deterministic mobile home within 18 tiles of Point3D(4109,3775,2)."
+    - "A static destination scan around Point3D(1075,1312,2) found no deterministic decorated item coordinate and no deterministic mobile home/current position inside the 18-tile box."
+    - "Data/Scripts/System/Misc/MapDefinitions.cs registers Map.Sosaria with mapIndex=1, mapID=1, and fileIndex=1, so binary Sosaria terrain/static scans must use map1.mul, staidx1.mul, and statics1.mul."
+    - "The corrected Data/Files/map1.mul plus Data/Files/tiledata.mul scan decodes Point3D(1075,1312,2) as tile 0x4 grass at z=2, dry and passable; nearby west and northwest/farther-north pressure includes impassable rock or impassable grass, while direct north, east, and south remain walkable grass with east/south opening into grass/jungle wilderness."
+    - "Data/Files/staidx1.mul plus Data/Files/statics1.mul found two static tiles within 3 tiles and 63 static tiles within 18 tiles of Point3D(1075,1312,2), with no DrinkingFunctions.CheckWaterTarget ID hit."
+    - "animals.map lines 237, 602, 1111, 1163, and 1227 plus world.map lines 204, 385, 706, 758, and 834 have spawn ranges that overlap the Point3D(1075,1312,2) destination scan; they are potential live entities, not confirmed visible mobiles."
+  computer_terminal:
+    - "ComputerDatabase.OnDoubleClick checks from.InRange(GetWorldLocation(), 4); the player at Point3D(4109,3775,2) is within range of the item at 4108,3779,0."
+    - "ComputerDatabase.OnDoubleClick closes any existing ComputerDatabaseGump, sends a new ComputerDatabaseGump, and plays sound 0x54D."
+    - "ComputerDatabaseGump visible text says the computer is corrupt, references the Medical Record in the backpack, and frames skin/hair swatches as appearance style choices."
+    - "ComputerDatabaseGump.OnResponse mutates appearance only after a visible swatch reply: skin replies set Hue/RecordSkinColor and hair replies set HairHue/FacialHairHue/RecordHairColor/RecordBeardColor, then reopens the gump and records features."
+    - "This run used the visible deterministic skin swatch reply 2. ComputerDatabaseGump.OnResponse set Hue and RecordSkinColor to 0x6F6, reopened the gump, played sound 0x54B, and called RecordFeatures(true)."
+    - "RecordFeatures(true) also wrote RecordHairColor and RecordBeardColor from the current unresolved hair/facial-hair hues; no hair swatch branch ran."
+    - "MedicalRecord.OnDoubleClick does not call CloseGump(typeof(ComputerDatabaseGump)), so the terminal gump remains open behind the MedicalRecordGump."
+    - "PacketHandlers.DisplayGumpResponse removes the responding gump before calling ComputerDatabaseGump.OnResponse; closing the terminal with no color reply therefore removes the terminal gump and reaches the sound-only OnResponse branch."
+    - "ComputerDatabaseGump.OnResponse only reopens the gump and mutates appearance when skinColor > 0 or hairColor > 0; the normal close response leaves both zero and only plays sound 0x54D."
+  medical_record:
+    - "Mobile.Use gates the backpack item interaction through update range, visibility, accessibility, alive state, item-use permission, and Region.OnDoubleClick before MedicalRecord.OnDoubleClick."
+    - "MedicalRecord.OnDoubleClick closes any prior MedicalRecordGump, sends MedicalRecordGump, and plays sound 0x54D."
+    - "MedicalRecordGump visible header is 'Medical Record for ' plus DataPatient, with a byline 'By Dr. Thomas Witman'."
+    - "MedicalRecordGump body text is SetupMedicalRecord(Data); it can reveal and, if missing, initialize DataPlanet."
+    - "The simulated visible DataPlanet is Alaunrae V, generated from Data/System/XML/names.xml dark-elf name lists and roman suffix V."
+    - "MedicalRecordGump.OnResponse only plays sound 0x54D and has no visible reply buttons or text-entry fields."
+    - "PacketHandlers.DisplayGumpResponse removes the responding gump from state.Gumps before calling its OnResponse; closing the MedicalRecordGump therefore leaves unrelated ComputerDatabaseGump instances alone."
+  food_survival:
+    - "Mobile.Use gates the backpack food interaction through update range, visibility, accessibility, alive state, item-use permission, and Region.OnDoubleClick before Food.OnDoubleClick."
+    - "CookedBird(amount) inherits Food, uses itemID 0x9B7, weight 1.0, and FillFactor 10."
+    - "Food.OnDoubleClick ignores non-movable food, then calls Eat(from) when the user is within one tile of the food's world location; backpack food resolves its world location to the player through RootParent."
+    - "Food.Eat only plays eating effects, applies poison, heals, and calls Consume() when FillHunger returns true."
+    - "Food.FillHunger immediately returns false and sends localized message 500867 when from.Hunger >= 20. The character's Hunger was 20, so no Consume(), poison, stamina, healing, mana, inventory, thirst, skill, stat, quest, discovery, location, Lodoria, or Savage mutation happened."
+  drink_survival:
+    - "Mobile.Use gates the backpack canteen interaction through update range, visibility, accessibility, alive state, item-use permission, and Region.OnDoubleClick before Waterskin.OnDoubleClick."
+    - "PlayerSettings.SetSpaceMan created a Waterskin, set ItemID to 0x4971, named it empty canteen, and placed it in the backpack."
+    - "Waterskin.OnDoubleClick calls DrinkingFunctions.CheckWater(from, 3, out soaked) before any fill or drink branch."
+    - "DrinkingFunctions.CheckWater scans map items and static tiles in range 3 for water-target item IDs; no decorated water trough, tub, barrel, or visible water source was found in the searched crash-site sources."
+    - "Because the canteen was ItemID 0x4971 and no traced water source filled it first, Waterskin.OnDoubleClick sent 'You can only fill this at a water trough, tub, or barrel!' and did not change weight, item ID, name, thirst, stamina, poison, inventory, quests, discovery, location, Lodoria, or Savage state."
+    - "At the post-teleport destination, corrected Map.Sosaria terrain is dry grass rather than water; no canteen retry occurred there, and no map item/static tile target was found within 3 tiles."
+  crash_site_scouting:
+    - "Mobile.Move checks deletion, bank box state, active spell movement, frozen/paralyzed state, CheckMovement, item/mobile OnMoveOver blockers, and Region.CanMove before movement succeeds."
+    - "Regions.xml defines the CrashRegion rectangle for 'the Crash Site' as x=4086,y=3745,width=60,height=60, so Point3D(4120,3775,2) remains inside the same named region."
+    - "Because the old and new locations are in the same CrashRegion, this scouting move does not rerun CrashRegion.OnEnter or PlayerSettings.SetSpaceMan."
+    - "Data/Decoration/Sosaria/decorate.cfg places Teleporter tiles at 4138,3769 through 4138,3773, each with PointDest=(1075,1312,2), Creatures=False, no source/destination effects, SoundID=0, and no delay."
+    - "Teleporter constructor sets Visible=false, so the crash-site exit row is mechanically present but not visible to a normal player; the player-facing cue is the cave mouth terrain continuing east."
+    - "Teleporter.OnMoveOver only starts the teleport when a mobile moves over the item; stopping at Point3D(4120,3775,2) did not call StartTeleport or DoTeleport, but run 27's continued scouting step onto Point3D(4138,3773,1) did."
+    - "Teleporter.DoTeleport uses m.Map when MapDest is null or internal, so the decorated row with no MapDest kept the destination on Map.Sosaria."
+    - "Teleporter.DoTeleport calls MoveToWorld(PointDest,map); for the triggered tile this placed the player at Point3D(1075,1312,2)."
+    - "No deterministic .map spawner home was found inside the 18-tile box centered on Point3D(4120,3775,2); live save state and wandering positions remain unresolved."
   gypsy_table_walk:
     - "HelpMessage.OnMovement sends the gypsy Talk hint when a PlayerMobile is within 5 tiles of the 'gypsy help' item."
     - "ShardGreeterEntry.OnClick passed its table-coordinate branch because the player is at X=3567,Y=3404, then closed WelcomeGump/RacePotionsGump and opened GypsyTarotGump page 0."
@@ -589,8 +760,11 @@ evidence:
     - "If page 9 OK were pressed, the fugitive text's SkillGypsy values are backed by SkillGypsy('fugitive')=13 and SkillGypsy('default')=10 before configured boost; however SkillBegin('fugitive'), Kills=1, Profession=1, and wanted/criminal social pressure have not been applied."
     - "GypsyTarotGump.OnResponse with visible reply 13 closes tarot/welcome/race-potion gumps, sends GypsyTarotGump page 13, and plays a page-turn sound."
     - "GypsyTarotGump page 13 constructs a card page: cardText returns THE STAR and The Shuttle Crash Site, cardGraphic returns 1118, scrollBar returns true, pageShow gives previous-arrow reply 9 and no next arrow because forward pageShow returns 20, and the visible OK button reply is 113."
-    - "EnterLand(13) would move a human to Point3D(4109,3775,2) on Map.Sosaria and set the Land of Sosaria discovery flag; that destination sits in CrashRegion, whose OnEnter calls PlayerSettings.SetSpaceMan if SkillStart is not already 40000, but no page-13 OK response was pressed."
-    - "If the alien path were actually entered, PlayerSettings.SetSpaceMan would SkillBegin('alien'), delete backpack contents, zero all skill bases, equip plain clothing plus a named knife, add cooked alien meat, an empty canteen, and a MedicalRecord, then place the character at Point3D(4109,3775,2) on Map.Sosaria. None of that has happened."
+    - "GypsyTarotGump.OnResponse with visible reply 113 closed tarot/welcome/race-potion gumps, computed go=13, and called EnterLand(13)."
+    - "EnterLand(13) moved this human to Point3D(4109,3775,2) on Map.Sosaria and called PlayerSettings.SetDiscovered for the Land of Sosaria."
+    - "The page-13 destination sits in CrashRegion; CrashRegion.OnEnter called PlayerSettings.SetSpaceMan because SkillStart was not yet 40000."
+    - "PlayerSettings.SetSpaceMan called SkillBegin('alien'), deleted backpack contents, zeroed all skill bases, equipped plain clothing plus a named knife, added cooked alien meat, an empty canteen, and a MedicalRecord, then placed the character back at Point3D(4109,3775,2) on Map.Sosaria."
+    - "The arrival scan found a ComputerDatabase item and matching GlowingLight named computer terminal at 4108,3779; ComputerDatabase.OnDoubleClick would open ComputerDatabaseGump from within 4 tiles. It was not used during the arrival action, then run 19 used it through normal double-click flow."
     - "RacePotions.OnDoubleClick would pass the range part from the table tile and MonstersAllowed() defaults true from S_MonsterCharacters=1, but it was not used."
     - "ChangeName.OnDoubleClick can send NameAlterGump from the Visitor Journal, but it was not used."
   thuvia_interaction:
@@ -606,11 +780,11 @@ evidence:
     - action: "Choose Lodoria pages 10 or 11"
       gate: "GypsyTarotGump.pageShow skips pages 10 and 11 because visitLodor is false."
     - action: "Open tarot from current tile"
-      gate: "No longer unavailable; completed through visible ShardGreeter context-menu Talk from Point3D(3567,3404,0)."
+      gate: "No longer relevant at the crash-site tile; the tarot selection is complete and the gypsy is no longer in visual range."
     - action: "Use potion shelf from current tile"
-      gate: "No longer blocked by range at the table tile, but the player did not double-click the visible shelf in this chronological action."
+      gate: "No longer in visual range after the Star card moved the player from the gypsy table to Point3D(4109,3775,2)."
     - action: "Claim a tarot destination after reaching the table"
-      gate: "The current GypsyTarotGump page is 13 and has a visible OK reply 113 for The Star/Shuttle Crash Site, but the player has not pressed it; only that response would call EnterLand(13)."
+      gate: "No longer unavailable; completed only after pressing the visible page-13 OK reply 113, which called EnterLand(13)."
     - action: "Advance from tarot intro to page 1 without player input"
       gate: "GypsyTarotGump.OnResponse only sends page 1 when the visible page-0 button reply 99 is pressed."
     - action: "Advance from tarot intro to page 1 without pressing the visible top-right button"
@@ -626,17 +800,41 @@ evidence:
     - action: "Treat Moon as chosen because The Magician is visible"
       gate: "The Magician page only displayed card text and controls. The travel/discovery path was gated behind the visible OK reply 105, which was not pressed before paging away."
     - action: "Treat Mountain Crest as chosen because The Fool is visible"
-      gate: "The Fool page only displays card text and controls. The travel/discovery path is gated behind the visible OK reply 106, which has not been pressed."
+      gate: "The Fool page only displayed card text and controls. The travel/discovery path was gated behind the visible OK reply 106, which was not pressed before paging away."
     - action: "Treat Umbra as chosen because Death is visible"
-      gate: "Death page only displays card text and controls. The travel/discovery path is gated behind the visible OK reply 107, which has not been pressed."
+      gate: "Death page only displayed card text and controls. The travel/discovery path was gated behind the visible OK reply 107, which was not pressed before paging away."
     - action: "Treat Yew as chosen because The Sun is visible"
-      gate: "The Sun page only displays card text and controls. The travel/discovery path is gated behind the visible OK reply 108, which has not been pressed."
+      gate: "The Sun page only displayed card text and controls. The travel/discovery path was gated behind the visible OK reply 108, which was not pressed before paging away."
     - action: "Treat the fugitive start as chosen because The Hanged Man was read"
       gate: "The Hanged Man page only displayed card text and controls. The travel/discovery/fugitive path was gated behind the visible OK reply 109, which was not pressed before paging away."
     - action: "Treat the alien crash start as chosen because The Star is visible"
-      gate: "The Star page only displays card text and controls. The travel/discovery/CrashRegion/SetSpaceMan path is gated behind the visible OK reply 113, which has not been pressed."
+      gate: "No longer unavailable; it became true only after the visible OK reply 113 was pressed. The prior friction remains: visibility alone was not enough."
     - action: "Treat the potion shelf or visitor journal as used because the introduction mentioned them"
-      gate: "GypsySpeech(from) only returns text for AddHtml. RacePotions.OnDoubleClick and ChangeName.OnDoubleClick require separate visible item interactions."
+      gate: "GypsySpeech(from) only returned text for AddHtml. RacePotions.OnDoubleClick and ChangeName.OnDoubleClick required separate visible item interactions, and the Star selection moved the player away before using them."
+    - action: "Use the crash-site computer terminal"
+      gate: "No longer unavailable; completed by double-clicking the visible ComputerDatabase item within its range-4 gate."
+    - action: "Change appearance from the terminal"
+      gate: "No longer unavailable for skin. It became true only after pressing visible skin swatch reply 2. Hair and facial-hair changes still require a visible hair swatch reply 9-32."
+    - action: "Read the Medical Record because the terminal mentions it"
+      gate: "No longer unavailable; completed by double-clicking the Medical Record backpack item through normal item-use flow. The read opened MedicalRecordGump and revealed DataPlanet Alaunrae V but granted no travel, skill, quest, inventory, Lodoria, or Savage unlock."
+    - action: "Treat the Medical Record as a rescue, quest unlock, or planet-travel key"
+      gate: "MedicalRecordGump only displays SetupMedicalRecord text. Its OnResponse only plays sound 0x54D, and no code path writes discovery flags, quests, location, skills, stats, hunger, thirst, or inventory from reading it."
+    - action: "Treat closing the Medical Record as accepting its story or closing every tech window"
+      gate: "The normal close response removes only MedicalRecordGump and calls MedicalRecordGump.OnResponse, which only plays sound 0x54D; the already-open ComputerDatabaseGump remains open and no record, terminal, quest, inventory, discovery, appearance, location, skill, stat, hunger, or thirst field changes."
+    - action: "Treat closing the computer terminal as confirming a new hair color, accepting an origin story, or unlocking rescue"
+      gate: "The normal close response removes ComputerDatabaseGump and falls through to the sound-only branch because no skin or hair reply is selected; no appearance, quest, discovery, inventory, location, skill, stat, hunger, or thirst value changes."
+    - action: "Convert cooked alien meat into hunger, healing, poison, or a smaller stack while Hunger is already 20"
+      gate: "Food.FillHunger checks from.Hunger >= 20 before all eat-side effects and returns false with localized message 500867, so Food.Eat does not call Consume() or apply later food effects."
+    - action: "Treat Point3D(1075,1312,2) as visible water terrain"
+      gate: "Invalidated. The prior water read used map0.mul, but Map.Sosaria is registered with fileIndex=1. The corrected map1.mul tile is dry passable grass at z=2."
+    - action: "Fill the empty canteen from the post-exit grass tile"
+      gate: "The corrected screen has no visible trough, tub, barrel, or recognized item/static water target within three tiles, so there is no normal canteen-fill source at Point3D(1075,1312,2)."
+    - action: "Drink from or refill the empty canteen at the crash site without a water source"
+      gate: "Waterskin.OnDoubleClick first needs CheckWater to find a nearby fill source for an empty ItemID 0x4971 canteen; no visible/decorated water trough, tub, barrel, or water source was traced near Point3D(4109,3775,2), so the action only sent the fill-source message."
+    - action: "Deliberately choose a visible teleporter row from Point3D(4120,3775,2)"
+      gate: "The Teleporter items are mechanically present at x=4138 but Teleporter.Visible is false, so a normal player cannot see/select the row as a visible lure. The move to PointDest=(1075,1312,2) happened only after normal scouting movement stepped onto the hidden tile."
+    - action: "Treat overlapping destination spawner definitions as visible monsters"
+      gate: "animals.map/world.map ranges overlap the 18-tile destination scan, but static spawner definitions do not prove a live mobile has materialized or wandered into view."
     - action: "Get Thuvia's help response from Point3D(3570,3416,0) without approaching"
       gate: "GoddessOfProtection prompts within 8 but her traced speech path requires closer range; the player moved to Point3D(3565,3414,0) before speaking."
     - action: "Become PvP or PvE by saying 'help'"
