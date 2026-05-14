@@ -1044,3 +1044,218 @@ Mechanical friction learned:
 Next pressure:
 
 Now I have a little Druidism and still no fox. The next honest move is to hold position through the second timer tick, unless the screen changes first.
+
+## Run 51 - The Second Tick Still Isn't Mine
+
+I keep my feet planted at `Point3D(1210,1326,0)`. The fox is still just northwest at `1209,1324`, close enough for the timer's range-6 leash. The same saved animals are still on the screen: eagles, goats, deer, a swallow, a llama, the fox, and the old horse. The live item slice is still empty. No trough, tub, barrel, chest, corpse, sign, vendor, road, trainer, or named region appears. The grey wolf is still outside the client rectangle by one tile of y-distance, which means I can remember it but cannot legally click it.
+
+Three more seconds pass. The taming timer ticks again, and it is still not the finish line. The same maintenance gates have to hold: range, life, visibility, line of sight, pathing, tamability, ownership, subdual, and no fresh damage after the start. In this static pass, they hold. I say `Nice and easy...` out loud to a fox that is still not mine.
+
+The second tick pays the same weird consolation prize as the first. Because the fox is not already owned, the code passively checks `Druidism` again. At `0.2`, the chance is still basically nothing, about 0.16% after the max-skill widening to `126.0`, so I treat the check as a failure. But the shard's skill gain code still gives under-10 skills a push. This time the simulated gain is `0.3`, taking `Druidism` from `0.2` to `0.5`. No stat rises. The fox remains wild, uncontrolled, unfollowing, unbonded, and outside my follower slots.
+
+Mechanical friction learned:
+
+- The second non-final taming tick is another maintenance check, not ownership.
+- `InternalTimer.OnTick` does not reset `NextSkillTime` during non-final ticks; the active taming attempt still owns the skill path.
+- Passive `Druidism` gain can keep happening before any successful tame because `SkillCheck.CheckSkill` calls `Gain` while the skill is under `10.0`, even when the chance roll fails.
+- The final tick is still the real gate: it can abort first, then it must run the final `Taming` check before `SetControlMaster`, owner list mutation, follower accounting, and pet state can happen.
+- No movement, hunger, thirst, inventory, quest, discovery, Lodoria, Savage, tarot, PvP/PvE, combat damage, equipment, ownership, or follower state changed.
+
+Next pressure:
+
+The fox is still a wild animal under an active timer. The honest next move is to survive the final tick and let the real taming roll decide whether this becomes a pet or just another lesson.
+
+## Run 52 - The Fox Teaches Failure
+
+I hold still at `Point3D(1210,1326,0)`, because moving now would be the dumbest way to lose the attempt. The screen is the same open grass box: twelve saved animals, zero visible items, no water, no chest, no corpse, no road, no trainer, no named region. The fox is still close at `1209,1324`, dx `1`, dy `2`. The grey wolf is still just outside the update range, which means it is worry, not a clickable problem.
+
+Three more seconds pass. This is the final tick, so the timer stops being suspense and becomes judgment. The maintenance gates still pass: I am close enough, alive, able to see the fox, with line of sight and pathing, and the fox is still tamable, uncontrolled, not over-owned, not requiring subdual, and not newly damaged. The code removes the active taming entry and resets my skill timer before it asks whether I actually win.
+
+First, the shard gives me one more consolation prize. The passive `Druidism` check is basically hopeless, but the under-10 gain rule still pushes the skill from `0.5` to `0.7`. Then the real tame roll happens. The fox is beginner-friendly, and my tiny Druidism bump helps a little, but the final `Taming` chance is still only about thirty-one percent. I miss it. The fox tells me what the grass already knew: `You fail to tame the creature.`
+
+That failure still trains me. The final `Taming` check also triggers under-10 gain, so `Taming` rises from `0.0` to `0.2`. But there is no pet. `SetControlMaster` never runs. The owner list does not change. Follower slots stay empty. The fox is still wild, still close, and now the timer is gone.
+
+Mechanical friction learned:
+
+- A completed taming timer is not automatically a tame. The final branch resets `NextSkillTime`, removes `m_BeingTamed`, passively checks `Druidism`, then rolls `Taming`.
+- `Fox.MinTameSkill = -15.3` makes a zero-skill attempt possible, not safe. With `Druidism` at `0.7`, this simulated final check still only has roughly a thirty-one percent success chance.
+- Failed skill checks can still train under-10 skills. This failed fox attempt raised `Druidism` to `0.7` and `Taming` to `0.2`.
+- The failure path sends `You fail to tame the creature.` and does not call `SetControlMaster`, add an owner, change follower accounting, mount, bond, guard, or follow.
+- No movement, hunger, thirst, inventory, quest, discovery, Lodoria, Savage, tarot, PvP/PvE, combat damage, equipment, ownership, or follower state changed.
+
+Next pressure:
+
+The fox is still two tiles away and legal to try again after reopening its menu, but the screen is still just wilderness and animals. The honest next fork is whether I waste another few seconds gambling on a fox, or finally move on looking for water, a road, shelter, or someone who can teach me why I am whispering at wildlife.
+
+## Run 53 - The Menu Comes Back, Not the Pet
+
+I do the predictable thing: I stare at the fox that just rejected me and ask the client what I can do to it again. I am still at `Point3D(1210,1326,0)`. The fox is still at `1209,1324`, dx `1`, dy `2`. The live screen is still twelve saved animals and zero visible items: eagles, goats, deer, a swallow, a llama, the fox, and the old horse. No water source, chest, corpse, sign, road, trainer, shelter, or named region has appeared. The grey wolf is still one tile beyond the client rectangle, which makes it background anxiety, not a button.
+
+The context-menu request is legal. Same map, I can see the fox, and update range is not the problem. The menu builder asks the fox for its entries. The fox is still tamable, still uncontrolled, and I am still alive, so the shard gives me the same visible row: `Tame`.
+
+That row being back is useful, but it is not action yet. I have not selected it. The code has not run `TameEntry.OnClick`, has not used the Taming skill, has not opened a target cursor, has not put the fox back into `m_BeingTamed`, and has not started another timer. The open menu only proves that the failed final tick reset enough state to let me try again through normal UI.
+
+Mechanical friction learned:
+
+- `PacketHandlers.ContextMenuRequest` is a visibility and update-range gate, not a skill use.
+- `BaseCreature.GetContextMenuEntries` adds `TameEntry` when the creature is tamable, uncontrolled, and the player is alive.
+- `TameEntry` is visible at context range `6`; the stricter Taming target range `2` only matters after selecting the row.
+- A reopened `Tame` row is not a pet, not a timer, and not a second attempt. The next mutation requires pressing the visible row.
+- No movement, hunger, thirst, stat, skill, inventory, quest, discovery, Lodoria, Savage, tarot, PvP/PvE, combat, owner, follower, or equipment state changed.
+
+Next pressure:
+
+The menu is open and the row is visible. The honest next move is either to press `Tame` and gamble again from legal range, or close/ignore the fox and finally walk toward water, road, shelter, or a trainer.
+
+## Run 54 - The Second Try Starts, Not Ends
+
+I press `Tame` again.
+
+Nothing about the screen has changed enough to save me from myself. I am still at `Point3D(1210,1326,0)`. The fox is still close at `1209,1324`, dx `1`, dy `2`. The live snapshot still gives me twelve saved animals and zero visible items: eagles, goats, deer, a swallow, a llama, the fox, and the old horse. No water source, chest, corpse, sign, road, trainer, shelter, or named region has appeared. The grey wolf is still just outside the client rectangle by one tile of y-distance.
+
+This click is legal. The reopened context menu is still tied to the fox. `ContextMenuResponse` clears the menu before it does anything useful, finds the same visible fox, and checks the selected row's range `6`. That passes. `TameEntry.OnClick` locks targeting, suppresses the normal "Tame which animal?" prompt, uses the Taming skill, and immediately invokes the fox as the target. The real target range is still `2`, and from here the fox passes it.
+
+The code lets the attempt start. The fox is tamable, uncontrolled, allowed for a female tamer, uses one follower slot, has no owner-cap block, does not need to be subdued, and my miserable `0.2` Taming is still above `Fox.MinTameSkill = -15.3`. I get the overhead emote again: `You start to tame the creature.`
+
+That is still not ownership. The shard stores the fox in `m_BeingTamed` and starts another three-second `InternalTimer`. This time I simulate the timer length branch as four ticks. No tick has happened yet. No Druidism check has trained me. No final Taming roll has fired. `SetControlMaster` has not run. The fox is still wild, unowned, uncontrolled, and not using a follower slot.
+
+Mechanical friction learned:
+
+- A reopened context menu only becomes an attempt after the visible row is selected.
+- `ContextMenuResponse` consumes the menu first, so there is no open menu after the click.
+- The second try passes the same two range gates: context row range `6`, then `Taming.InternalTarget` range `2`.
+- `Taming.OnUse` sets the long skill delay again, but the active timer now owns the reset path.
+- `Utility.Random(3, 2)` can make this attempt longer than the first one; this simulated second timer has four ticks pending.
+- No movement, hunger, thirst, stat, skill value, inventory, quest, discovery, Lodoria, Savage, tarot, PvP/PvE, combat damage, pet, follower, ownership, equipment, or social state changed.
+
+Next pressure:
+
+The menu is gone and the fox is in the timer again. The honest next move is to stand still through the first three-second tick unless the visible grass changes first.
+
+## Run 55 - The Timer Teaches, Not Tames
+
+I stand still and let the first tick happen.
+
+The screen is the same trap I agreed to: `Point3D(1210,1326,0)`, open grass, twelve visible saved animals, and zero visible items. The fox is still at `1209,1324`, close enough at dx `1`, dy `2`. The old horse is still west of me. The grey wolf is still just outside the 18-tile client rectangle, which means it is anxiety, not a button. There is no open gump, no open context menu, no water source, no road, no shelter, and no trainer. The only thing that has a turn right now is the active taming timer.
+
+The first tick is not the final tick. `Taming.InternalTimer.OnTick` increments `m_Count` from `0` to `1`, then checks whether I stayed within range `6`, stayed alive, could see the fox, had line of sight or pathing, and whether the fox stayed tamable, uncontrolled, not over-owned, not needing subdual, and not newly damaged. I simulate all of those as still true because I did not move and no live AI tick is being advanced here.
+
+Since this second attempt has `m_MaxCount = 4`, count `1` lands in the non-final branch. I reveal myself again and whisper the simulated line `See? Nothing to be afraid of...`. The shard then passively checks `Druidism` against the fox. The success chance is tiny, about `0.56%` at `Druidism 0.7` against the widened max `126.0`, and I miss it. Missing still trains under the under-10 rule. This tick raises `Druidism` from `0.7` to `0.8`. The fox remains wild, unowned, uncontrolled, and outside my follower count.
+
+Mechanical friction learned:
+
+- A non-final taming timer tick is a maintenance check plus speech plus passive `Druidism`; it is not the tame result.
+- The active second timer is now `1 / 4` ticks complete. `m_BeingTamed` still points from the fox to Mira Vale.
+- `NextSkillTime` still stays under the active timer's control. It does not reset on this non-final tick.
+- The passive `Druidism` check can fail and still train while the skill is under `10.0`.
+- No movement, hunger, thirst, stats, inventory, quest, discovery, Lodoria, Savage, tarot, PvP/PvE, combat damage, Taming value, pet, follower, ownership, equipment, or social state changed.
+
+Next pressure:
+
+The fox timer is still running. The honest next move is to keep standing still for the second three-second tick unless the visible wilderness changes first.
+
+## Run 56 - The Fox Stays a Fox
+
+I do the only thing the active timer allows without sabotaging myself: I stand still.
+
+The screen has not turned into help. I am still at `Point3D(1210,1326,0)` on Sosaria grass, with twelve saved animals in the client rectangle and zero visible items. The fox is still at `1209,1324`, close enough at dx `1`, dy `2`. The horse, llama, eagles, goats, deer, and swallow are still scenery with teeth or hooves. The grey wolf is still one tile beyond the update range by y-distance, so it stays memory and worry, not a thing I can click.
+
+Three more seconds pass. The timer count moves from `1` to `2`, and the same maintenance gates have to hold before anything useful can happen: range `6`, alive, visible, line of sight or path, tamable, uncontrolled, owner cap, subdual, and no fresh damage since the attempt started. In this static pass they hold. Because this second attempt has four ticks, count `2` is still not the final branch.
+
+So I whisper `Easy...easy...` and learn another tiny, humiliating lesson. The passive `Druidism` check is still almost impossible, about `0.63%` at `0.8` skill after the shard widens the max to `126.0`. I miss it. Missing still trains under the under-10 rule, so `Druidism` rises from `0.8` to `1.0`. No stat rises. The fox remains wild, uncontrolled, unowned, unfollowing, unbonded, and outside my follower slots.
+
+Mechanical friction learned:
+
+- A second non-final tick is still only maintenance, speech, and passive `Druidism`.
+- The active timer is now `2 / 4` ticks complete; `m_BeingTamed` still points from the fox to Mira Vale.
+- `NextSkillTime` still does not reset on a non-final tick.
+- Under-10 passive skill gain keeps paying out even when the `Druidism` success roll fails.
+- No movement, hunger, thirst, Taming value, inventory, quest, discovery, Lodoria, Savage, tarot, PvP/PvE, combat damage, pet, follower, ownership, equipment, or social state changed.
+
+Next pressure:
+
+The fox is still not mine, but the timer still has control. The honest next move is to stand still through the third tick unless the visible grass changes first.
+
+## Run 57 - Third Whisper, Still No Master
+
+I stand still again at `Point3D(1210,1326,0)`, because the active taming timer is the only thing on screen that can honestly change before I move. The live snapshot still shows the same open Sosarian grass: twelve visible saved animals and zero visible saved items. The fox is still at `1209,1324`, dx `1`, dy `2`. The old horse is west of me, the llama and eagle are close, and the grey wolf is still one tile outside the client rectangle. No gump, context menu, corpse, chest, road, water source, shelter, trainer, or named region appears.
+
+Three seconds pass. The timer count moves from `2` to `3`. The maintenance gates still have to hold first: range `6`, alive state, visibility, line of sight or pathing, tamability, uncontrolled state, owner cap, subdual rule, and no fresh damage since the attempt started. In this static pass they hold. Because this second attempt was simulated with four ticks, count `3` is still not the final branch.
+
+So I reveal myself again and say `Don't be afraid...` to a fox that has heard enough from me. The passive `Druidism` check is still almost nothing, about `0.79%` at `1.0` skill after the shard widens the max to `126.0`, and I miss it. The under-10 gain rule still pays out. This tick raises `Druidism` from `1.0` to `1.4`. No stat rises. The fox remains wild, uncontrolled, unowned, unfollowing, unbonded, and outside my follower slots.
+
+Mechanical friction learned:
+
+- A third non-final tick is still only maintenance, speech, and passive `Druidism`; the final `Taming` roll has not happened.
+- The active second timer is now `3 / 4` ticks complete; `m_BeingTamed` still points from the fox to Mira Vale.
+- `NextSkillTime` still does not reset on a non-final tick.
+- Under-10 passive skill gain can keep advancing even when the check itself fails.
+- No movement, hunger, thirst, Taming value, inventory, quest, discovery, Lodoria, Savage, tarot, PvP/PvE, combat damage, pet, follower, ownership, equipment, or social state changed.
+
+Next pressure:
+
+The next timer tick is finally the real branch. The honest next move is to hold still through the fourth tick and let the shard decide whether this gamble becomes a pet or another failure message.
+
+## Run 58 - The Fox Finally Yields
+
+I hold still one more time.
+
+The screen does not change before the timer does. I am still at `Point3D(1210,1326,0)` in open Sosarian grass, with the same twelve saved animals in the client rectangle and zero visible saved items. The fox is still close at `1209,1324`, dx `1`, dy `2`. The llama and eagle are close enough to make the screen feel crowded, the old horse is still west, and the grey wolf is still just outside the update range. No gump, context menu, water source, road, shelter, trainer, corpse, chest, or named region appears.
+
+Three more seconds pass. This time `m_Count` reaches `m_MaxCount`, so the timer stops being background pressure and resolves the tame. The same maintenance gates still have to hold first: range `6`, alive state, visibility, line of sight or pathing, tamability, uncontrolled state, owner cap, subdual rule, and no fresh damage since the attempt started. In this static pass they all hold. The code reveals me, resets my skill timer, and removes the fox from `m_BeingTamed` before it rolls anything useful.
+
+The passive Druidism check fires one last time first. At `1.4`, the success chance is still only about `1.11%` after the shard widens the max to `126.0`, so I treat that check as another miss. Under-10 gain still pays out, raising `Druidism` from `1.4` to `1.7`. Then the real `Taming` roll happens. With the fox's `MinTameSkill = -15.3` and my tiny Druidism modifier, the chance is only about `31.7%`. This time the roll lands.
+
+The message changes from rejection to acceptance: `It seems to accept you as master.` The first-tame branch scales the fox's skills down to ninety percent, adds me to its owner list, and calls `SetControlMaster`. That property change is the real pet moment: my follower count goes from `0` to `1`, the fox becomes controlled, its order becomes `Come`, it is not bonded, and it is still standing at the same tile. The Taming check also trains under the under-10 rule, so `Taming` rises from `0.2` to `0.5`. Nothing about this creates food, water, a road, a trainer, a town, a tarot unlock, Lodoria, Savage, or safety.
+
+Mechanical friction learned:
+
+- A successful final taming tick is the first point where `Owners`, `ControlMaster`, `Controlled`, and follower accounting change.
+- The timer removes `m_BeingTamed` and resets `NextSkillTime` before the final `Druidism` and `Taming` checks.
+- First tame is not a free full-strength animal: the fox's skills are scaled to `0.90` because it was not paralyzed.
+- A pet is not a solved survival loop. It follows and costs one follower slot, but I still have no visible water, shelter, road, vendor, trainer, or safe region.
+
+Next pressure:
+
+I have a fox now, not a plan. The next honest move is to take stock of the new follower and start moving again for water, a road, shelter, or a trainer without assuming the pet can save me from the next wolf.
+
+## Run 59 - I Tell the Fox to Follow
+
+I do not sprint off just because the fox accepted me. I am still at `Point3D(1210,1326,0)` in the same open Sosarian grass. The screen still shows twelve saved animals and zero visible saved items. The fox is close at `1209,1324`, dx `1`, dy `2`, now mine by the state I just earned. The llama and eagle are close enough to distract me, the old horse is still west, and the grey wolf is still just outside the update rectangle. There is still no water source, road, shelter, trainer, chest, corpse, gump, context menu, or named region.
+
+So I use the one normal thing a new pet owner knows: I say `all follow me`.
+
+That is not a forged command. It goes through ordinary speech. Regular speech has range `15`, and the fox is within both speech range and its perception range. The fox is controlled, commandable, alive, and owned by me, so its AI listens. The client keyword for `all follow me` reaches the controlled-creature speech handler, and the command does not need a target cursor. The fox's control chance is deterministic here because `Fox.MinTameSkill = -15.3`, and the control code returns `1.0` for creatures at or below `29.1` minimum taming skill.
+
+The result is smaller than comfort but better than guessing. The fox's `ControlTarget` becomes me, and its `ControlOrder` changes from `Come` to `Follow`. The order-change hook reveals me, sets the fox to active speed, plays its idle sound, clears warmode, and clears combat. It does not move the fox yet. I have not advanced an AI tick, and I have not watched pathing prove that it can keep up through terrain, other animals, or a surprise hostile. It is a follower ordered to follow, not a shield, not a map, and not a canteen.
+
+Mechanical friction learned:
+
+- Pet commands are normal speech heard by nearby controlled creatures, not gumps and not context-menu ButtonIDs.
+- A controlled creature's AI only listens when it is commandable and the speaker is its owner or pet friend.
+- `all follow me` sets `ControlTarget` to the speaker and `ControlOrder` to `Follow`; plain `all follow` would instead open a target-picking flow.
+- Fox command obedience is deterministic at this point because `GetControlChance` returns `1.0` when `MinTameSkill <= 29.1`.
+- The command changes order state only. No AI movement tick, location change, hunger/thirst change, inventory use, skill gain, quest/discovery/tarot trigger, combat damage, or PvP/PvE change ran.
+
+Next pressure:
+
+Now the fox is actually ordered to follow me. The next honest move is movement again: leave the crowded animal patch and keep searching for water, a road, shelter, or a trainer while treating the fox's pathing and usefulness as unresolved until I see it happen.
+
+## Run 60 - The Map Reader Lied
+
+I start at `Point3D(1210,1326,0)` with no gump open, no context menu open, and a fox that is finally mine but only ordered to follow. The screen is still animals and empty grass: saved animals around me, zero visible saved items, no trough, no barrel, no road, no sign, no shelter, no trainer. The old grey wolf is still just off the north edge of the client rectangle.
+
+Before I take the first southeast step, I catch the bad assumption that made the last note nonsense. Sosaria is registered to file index `1`, so yes, the files are `map1.mul`, `staidx1.mul`, `statics1.mul`, and `tiledata.mul`. But the server does not read those block files in the row-major order I used. `TileMatrix.ReadLandBlock` seeks by `((blockX * blockHeight) + blockY) * 196 + 4`. With that order, the ground under me is not secret water at all. `1210,1326` is land `0x3`, z `0`, zero statics. The attempted southeast tile `1211,1327` is land `0x6`, z `0`, zero statics. The nearby northwest route tiles are grass too. The water was my reader looking at the wrong block.
+
+I also have a second layer of player knowledge now: the client world map has marker CSVs. They are not things standing on the screen, and they do not grant discovery, but a normal player can open the map and see them. From here the nearest Sosaria overlay lure is `Ruins` at `1303,1449`, then `Mines of Morinia` at `1022,1372`, then `Chamber of Bane` at `1427,1555`; the `West` moongate marker is farther away at `1052,1570`. That changes orientation, not immediate click targets.
+
+Mechanical friction learned:
+
+- The blocked southeast step was invalid automation output. No real `Mobile.Move`, `CheckMovement`, `OnMoveOver`, `Region.CanMove`, `OnAfterMove`, hunger tick, item use, discovery, or pet follow AI path ran from it.
+- Future binary terrain scans must use the server's `TileMatrix` block order, not row-major block order.
+- World-map markers are available player navigation knowledge, but they are not screen-visible mobiles/items and do not prove anything inside the 18-tile update box.
+- The fox remains at `1209,1324,0`, controlled by me, ordered to `Follow`, and still untested as an actual moving companion.
+
+Next pressure:
+
+The first southeast step is back on the table because the tile is grass, not water. The next honest move is to scan the same animal-crowded screen, remember that the world map points toward distant named places, and then take one legal movement step only after the live entities and the corrected terrain agree.

@@ -1,7 +1,7 @@
 schema:
   schema_version: 1
-  run_number: 50
-  last_updated: "2026-05-14T10:03:54.8923739-05:00"
+  run_number: 60
+  last_updated: "2026-05-14T17:18:00.7541581-05:00"
   source_paths_traced:
     - "Data/Scripts/System/Misc/CharacterCreation.cs"
     - "Data/Scripts/System/Misc/Settings.cs"
@@ -19,6 +19,8 @@ schema:
     - "Data/Scripts/Mobiles/Races/RacePotions.cs"
     - "Data/Scripts/System/Misc/Naming.cs"
     - "Data/Scripts/Mobiles/Base/BaseCreature.cs"
+    - "Data/Scripts/Mobiles/Base/Behavior.cs"
+    - "Data/System/Source/EventSink.cs"
     - "Data/System/Source/Mobile.cs"
     - "Data/System/Source/Movement.cs"
     - "Data/System/Source/Region.cs"
@@ -53,6 +55,10 @@ schema:
     - "docs/CCWM/live-state/mobiles.jsonl"
     - "docs/CCWM/live-state/items.jsonl"
     - "docs/CCWM/live-state/spawners.jsonl"
+    - "docs/CCWM/client-worldmap-markers/Sosaria.csv"
+    - "docs/CCWM/client-worldmap-markers/Sosaria-Common.csv"
+    - "docs/CCWM/client-worldmap-markers/Moongates.csv"
+    - "docs/CCWM/ccwm-autoprompt.md"
     - "Data/Scripts/Mobiles/Animals/Mounts/Horse.cs"
     - "Data/Scripts/Mobiles/Base/BaseMount.cs"
     - "Data/Scripts/Mobiles/Animals/Misc/Hind.cs"
@@ -103,7 +109,15 @@ schema:
     - "At Point3D(1210,1326,0), the live-state snapshot resolves twelve visible saved animals and zero visible saved items. The fox is now inside Taming.InternalTarget range 2, but no new context menu, Tame response, Taming.OnTarget, ownership, follower, or pet path has run."
     - "At Point3D(1210,1326,0), requesting the visible fox's context menu resolved the next normal-client step: the menu is open with an enabled Tame row, but no ContextMenuResponse, TameEntry.OnClick, Taming.OnTarget, skill roll, ownership, follower, or pet path has run."
     - "At Point3D(1210,1326,0), selecting the visible fox Tame row now reaches Taming.OnTarget and starts an InternalTimer; future timer speech, LOS/path survival, final skill roll, live wandering, and aggro remain unresolved."
-    - "At Point3D(1210,1326,0), the first fox taming timer tick is simulated with no live movement, death, LOS/path loss, tamability change, owner-cap change, subdual requirement, or post-start damage. Future timer ticks, final Taming roll, live wandering, and aggro remain unresolved."
+    - "At Point3D(1210,1326,0), the first and second fox taming timer ticks completed without live movement, death, LOS/path loss, tamability change, owner-cap change, subdual requirement, or post-start damage. The final tick is now resolved as a failed tame; future live wandering and aggro remain unresolved."
+    - "At Point3D(1210,1326,0), the final fox taming timer tick is simulated with no live movement, death, LOS/path loss, tamability change, owner-cap change, subdual requirement, or post-start damage. The passive Druidism check and final Taming check both failed as success rolls, but under-10 skill gain raised Druidism and Taming; the fox remained wild."
+    - "At Point3D(1210,1326,0), requesting the same visible fox's context menu after the failed tame resolves that the Tame row is visible/enabled again. No ContextMenuResponse, TameEntry.OnClick, Taming.OnUse, Target.Invoke, ownership, follower, or new timer path has run."
+    - "At Point3D(1210,1326,0), selecting the reopened visible fox Tame row starts a second active taming timer. The context menu is consumed and m_BeingTamed is active again, but no timer tick, final skill roll, SetControlMaster, owner mutation, or follower accounting has run."
+    - "At Point3D(1210,1326,0), the first non-final tick of the second fox taming timer completed without live movement, death, LOS/path loss, tamability change, owner-cap change, subdual requirement, or post-start damage. The fox remains wild; future timer ticks, final Taming roll, live wandering, and aggro remain unresolved."
+    - "At Point3D(1210,1326,0), the second non-final tick of the second fox taming timer completed without live movement, death, LOS/path loss, tamability change, owner-cap change, subdual requirement, or post-start damage. The fox remains wild; the third tick, final roll, live wandering, and aggro remain unresolved."
+    - "At Point3D(1210,1326,0), the third non-final tick of the second fox taming timer completed without live movement, death, LOS/path loss, tamability change, owner-cap change, subdual requirement, or post-start damage. The fourth/final tick is now resolved as a successful tame; future live movement, pet command behavior, and aggro remain unresolved."
+    - "At Point3D(1210,1326,0), saying the normal speech command 'all follow me' resolved pet-command parsing and changed the controlled fox from ControlOrder Come to ControlOrder Follow with ControlTarget Mira Vale; future AI movement/pathing and aggro remain unresolved because no AI tick was advanced."
+    - "At Point3D(1210,1326,0), the prior wet/impassable water result is invalidated: the probe used row-major MUL block addressing, while TileMatrix.ReadLandBlock uses column-major block addressing. The corrected server-order read shows the current tile and attempted southeast tile are grass with zero statics; no movement action was actually simulated for this correction."
   random_branches_chosen:
     - "Profession simulated as warrior, matching a normal creation profession path."
     - "Stats simulated as Str 50, Dex 20, Int 20, legal under the new-character 90-point cap."
@@ -152,11 +166,22 @@ schema:
     - "Requested the visible fox's normal context menu from Point3D(1210,1326,0); the request passed same-map, visibility, and update-range gates, and the menu now shows an enabled Tame row without selecting it."
     - "Selected the visible close-range fox Tame row from Point3D(1210,1326,0); the response passed ContextMenuResponse range 6 and Taming.InternalTarget range 2, then Taming.OnTarget stored m_BeingTamed and started a taming timer. Utility.Random(3,2) is simulated as 3 timer ticks."
     - "Waited through the first fox taming InternalTimer tick without moving. Utility.Random(5) for the taming speech is simulated as case 2, 'I won't hurt you...'. The passive Druidism CheckTargetSkill had chance 0 and failed as a check, but SkillCheck.Gain still ran because Druidism base was under 10.0; Utility.Random(4)+1 is simulated as 2 fixed points, raising Druidism from 0.0 to 0.2. The Druidism Int stat-gain branch is simulated as no stat gain."
+    - "Waited through the second fox taming InternalTimer tick without moving. Utility.Random(5) for the taming speech is simulated as case 4, 'Nice and easy...'. The passive Druidism CheckTargetSkill had about 0.16% chance at Druidism 0.2 against max 126.0 and is simulated as failed, but SkillCheck.Gain still ran because Druidism base was under 10.0; Utility.Random(4)+1 is simulated as 3 fixed points, raising Druidism from 0.2 to 0.5. The Druidism Int stat-gain branch is simulated as no stat gain."
+    - "Waited through the final fox taming InternalTimer tick without moving. The maintenance gates passed, the final passive Druidism CheckTargetSkill had about 0.40% chance at Druidism 0.5 against max 126.0 and is simulated as failed, but under-10 gain still ran; Utility.Random(4)+1 is simulated as 2 fixed points, raising Druidism from 0.5 to 0.7. The Druidism Int stat-gain branch is simulated as no stat gain."
+    - "The final Taming CheckTargetSkill is simulated as failed despite roughly 31% odds after the Druidism modifier; under-10 gain still ran, and Utility.Random(4)+1 is simulated as 2 fixed points, raising Taming from 0.0 to 0.2. The Taming stat-gain branch is simulated as no Str/Dex/Int gain. The fox sent the failure message and remained wild."
+    - "Requested the visible fox's normal context menu again after the failed tame. The request passed same-map, can-see, update-range, and CheckContextMenuDisplay gates; BaseCreature.GetContextMenuEntries added a TameEntry because the fox is still tamable, uncontrolled, and Mira is alive. No entry was selected."
+    - "Selected the reopened visible fox Tame row from Point3D(1210,1326,0); the response passed ContextMenuResponse range 6 and Taming.InternalTarget range 2, then Taming.OnTarget stored m_BeingTamed again and started a second InternalTimer. Utility.Random(3,2) is simulated as 4 timer ticks for this second attempt."
+    - "Waited through the first non-final tick of the second fox taming InternalTimer without moving. Utility.Random(5) for taming speech is simulated as case 3, 'See? Nothing to be afraid of...'. The passive Druidism CheckTargetSkill had about 0.56% chance at Druidism 0.7 against max 126.0 and is simulated as failed, but SkillCheck.Gain still ran because Druidism base was under 10.0; Utility.Random(4)+1 is simulated as 1 fixed point, raising Druidism from 0.7 to 0.8. The Druidism Int stat-gain branch is simulated as no stat gain."
+    - "Waited through the second non-final tick of the second fox taming InternalTimer without moving. Utility.Random(5) for taming speech is simulated as case 0, 'Easy...easy...'. The passive Druidism CheckTargetSkill had about 0.63% chance at Druidism 0.8 against max 126.0 and is simulated as failed, but SkillCheck.Gain still ran because Druidism base was under 10.0; Utility.Random(4)+1 is simulated as 2 fixed points, raising Druidism from 0.8 to 1.0. The Druidism Int stat-gain branch is simulated as no stat gain."
+    - "Waited through the third non-final tick of the second fox taming InternalTimer without moving. Utility.Random(5) for taming speech is simulated as case 1, 'Don't be afraid...'. The passive Druidism CheckTargetSkill had about 0.79% chance at Druidism 1.0 against max 126.0 and is simulated as failed, but SkillCheck.Gain still ran because Druidism base was under 10.0; Utility.Random(4)+1 is simulated as 4 fixed points, raising Druidism from 1.0 to 1.4. The Druidism Int stat-gain branch is simulated as no stat gain."
+    - "Waited through the fourth/final tick of the second fox taming InternalTimer without moving. The passive Druidism CheckTargetSkill had about 1.11% chance at Druidism 1.4 against max 126.0 and is simulated as failed, but under-10 gain still ran; Utility.Random(4)+1 is simulated as 3 fixed points, raising Druidism from 1.4 to 1.7. The final Taming CheckTargetSkill is simulated as successful at roughly 31.7% odds after the Druidism modifier, and under-10 gain also ran; Utility.Random(4)+1 is simulated as 3 fixed points, raising Taming from 0.2 to 0.5. Both stat-gain branches are simulated as no stat gain."
+    - "Said the visible normal speech command 'all follow me' while the newly controlled fox was close at dx=1,dy=2. The speech keyword branch is simulated as recognized by the client/server speech path, and Fox.MinTameSkill <= 29.1 makes CheckControlChance deterministic at 1.0, changing ControlTarget to Mira Vale and ControlOrder to Follow."
   random_branches_unresolved:
     - "The deleted starter food bag's ten Loot.RandomFoods() item classes remain historical unknowns."
     - "Which static spawners have materialized at exact live positions on a server tick."
     - "Exact MedicalRecord ItemID/Hue after PlayerSettings.SetSpaceMan."
-    - "The second fox taming timer speech line, final passive Druidism gain, and final Taming CheckTargetSkill result are future RNG branches, not resolved by the first timer tick."
+    - "Future tamed fox movement, command following, aggro, and nearby hostile behavior remain unresolved because the live-state snapshot is not a running AI tick."
+    - "The 'all follow me' command resolved command following state only; exact fox movement/pathing remains unresolved until a future AI Obey/DoOrderFollow tick or player movement is simulated."
 
 account:
   account_id: "placeholder:first_account"
@@ -180,10 +205,10 @@ account:
         unknown_ninth_world: false
 
 lifecycle:
-  stage: "post_crash_fox_taming_first_tick"
-  last_action: "waited through the first fox taming InternalTimer tick at Point3D(1210,1326,0); the timer gates passed, Mira publicly said 'I won't hurt you...', passive Druidism gain raised Druidism from 0.0 to 0.2, and the fox remained wild/uncontrolled because the final taming roll has not run"
-  current_goal: "Stay close enough and in clear path while the active fox taming timer continues; the next chronological pressure is the second timer tick, not claiming the fox as a pet."
-  elapsed_play_time: "about sixty-three minutes and three seconds of simulated walking, speech, one visible PvP/PvE gump reply, table approach, gypsy Talk, reading and paging tarot cards, drawing the Star card, arrival scanning, opening/reading the crash-site computer terminal, pressing one deterministic skin swatch, reading and closing the Medical Record, closing the terminal unchanged, testing the alien meat while already full, testing the empty canteen with no visible crash-site fill source nearby, taking one cautious eastward scouting walk, continuing into a hidden crash-site teleporter trigger, correcting the destination scan to Map.Sosaria fileIndex=1 grass/mountain/forest-edge terrain, walking east-northeast toward visible water graphics outside the cave, failing to fill the empty canteen from those scenery water statics, walking east-southeast around the impassable water graphics, walking southeast/east through dry jungle, walking east across harmless foliage statics, walking east until grass started appearing inside the jungle scan, jogging around an impassable rock to the first dry grass edge at Point3D(1170,1321,0), detouring around an apple tree and rocks to Point3D(1186,1321,0), single-clicking the visible horse label from inside the live-state update range, edging close enough to the horse for a range-6 context-menu action, opening the visible horse context menu, selecting Tame and learning the hidden range-2 target gate blocks from dx=5,dy=1, walking toward the smaller visible animal cluster and discovering a grey wolf in the shifted screen, single-clicking the visible grey wolf label without starting combat or taming, backing away south-southeast through clear grass until the wolf fell off-screen, walking north and west to put the visible fox inside range-6, opening and reading the fox's visible Tame context-menu row, selecting it and hitting the same range-2 target gate at dx=5,dy=6, walking northwest to Point3D(1210,1326,0) so the fox is inside range 2, reopening the fox context menu from the closer tile, pressing the visible Tame row and starting the taming timer, then waiting through the first three-second timer tick"
+  stage: "post_crash_terrain_reader_corrected"
+  last_action: "audited the prior southeast movement block from Point3D(1210,1326,0) toward Point3D(1211,1327,0); the row-major MUL probe was invalid, the server-order TileMatrix probe shows grass with zero statics, and no in-world movement action was taken"
+  current_goal: "Use the corrected grass terrain and player-visible world-map markers to choose the next legal movement step while keeping the controlled fox's Follow pathing unresolved."
+  elapsed_play_time: "about sixty-three minutes and twenty-six seconds of simulated walking, speech, one visible PvP/PvE gump reply, table approach, gypsy Talk, reading and paging tarot cards, drawing the Star card, arrival scanning, opening/reading the crash-site computer terminal, pressing one deterministic skin swatch, reading and closing the Medical Record, closing the terminal unchanged, testing the alien meat while already full, testing the empty canteen with no visible crash-site fill source nearby, taking one cautious eastward scouting walk, continuing into a hidden crash-site teleporter trigger, correcting the destination scan to Map.Sosaria fileIndex=1 grass/mountain/forest-edge terrain, walking east-northeast toward visible water graphics outside the cave, failing to fill the empty canteen from those scenery water statics, walking east-southeast around the impassable water graphics, walking southeast/east through dry jungle, walking east across harmless foliage statics, walking east until grass started appearing inside the jungle scan, jogging around an impassable rock to the first dry grass edge at Point3D(1170,1321,0), detouring around an apple tree and rocks to Point3D(1186,1321,0), single-clicking the visible horse label from inside the live-state update range, edging close enough to the horse for a range-6 context-menu action, opening the visible horse context menu, selecting Tame and learning the hidden range-2 target gate blocks from dx=5,dy=1, walking toward the smaller visible animal cluster and discovering a grey wolf in the shifted screen, single-clicking the visible grey wolf label without starting combat or taming, backing away south-southeast through clear grass until the wolf fell off-screen, walking north and west to put the visible fox inside range-6, opening and reading the fox's visible Tame context-menu row, selecting it and hitting the same range-2 target gate at dx=5,dy=6, walking northwest to Point3D(1210,1326,0) so the fox is inside range 2, reopening the fox context menu from the closer tile, pressing the visible Tame row and starting the taming timer, waiting through two non-final three-second timer ticks, waiting through the final tick that failed to tame the fox, reopening the fox's context menu, pressing the visible Tame row again to start a second timer, waiting through the first and second non-final ticks of that second timer, waiting through the third non-final tick of that second timer, waiting through the fourth/final tick that successfully tamed the fox, saying 'all follow me' so the fox's order changed from Come to Follow, then auditing and invalidating the prior false water-blocked southeast movement result without consuming in-world time"
   session_marker: "run_1_first_login"
   login_status: "logged_in_after_character_creation"
   create_status: "created_player_mobile"
@@ -191,54 +216,95 @@ lifecycle:
   current_open_gumps: []
   current_open_context_menu: null
   current_context_menu_result:
-    status: "selected_visible_tame_row_started_taming_timer"
+    status: "historical_previous_run_selected_visible_tame_row_started_second_taming_timer"
     target_serial: 200274
     target_name: "a fox"
     target_type: "Server.Mobiles.Fox"
     target_point3d: { x: 1209, y: 1324, z: 0 }
     selected_visible_entry: "Tame"
-    visible_entry_available: null
+    visible_entry_available: "consumed_by_response"
     localization_number: 6130
     context_entry_range_tiles: 6
     taming_target_range_tiles: 2
-    current_range_from_player_after_run_49: { dx: 1, dy: 2 }
-    source: "PacketHandlers.ContextMenuResponse -> TameEntry.OnClick -> Mobile.UseSkill(SkillName.Taming) -> Taming.OnUse -> Target.Invoke -> Taming.InternalTarget.OnTarget"
-    result: "The context menu is closed, the fox is being tamed, and the player saw the start-taming overhead emote. The fox is not yet owned, controlled, following, mounted, bonded, or counted as a follower."
-    active_taming_attempt:
-      target_serial: 200274
-      target_type: "Server.Mobiles.Fox"
-      target_point3d: { x: 1209, y: 1324, z: 0 }
-      tamer: "Mira Vale"
-      range_from_player_at_start: { dx: 1, dy: 2 }
-      m_being_tamed_entry: "fox serial 200274 -> Mira Vale"
-      timer_interval_seconds: 3
-      timer_max_count: 3
-      timer_count_completed: 1
-      timer_count_source: "Utility.Random(3, 2), simulated branch chose 3"
-      next_timer_pressure: "second InternalTimer.OnTick; stay within range 6, alive, visible, in LOS, and pathable"
-      final_roll_status: "not_reached"
-      ownership_status: "not_owned"
-      control_master_status: "not_set"
-      follower_slots_after_start: { used: 0, max: 5 }
-      first_timer_tick:
-        status: "completed_non_final_tick"
-        count_after_tick: 1
-        max_count: 3
-        gate_result: "range 6, alive, can-see, LOS/path, tamable, uncontrolled, owner-cap, subdual, and post-start damage checks passed in the static simulation"
-        visible_feedback: "public overhead speech: I won't hurt you..."
-        passive_druidism_check: "CheckTargetSkill(SkillName.Druidism, fox, 0.0, 125.0) ran because the fox was not already owned; the chance check failed at 0.0 skill, but SkillCheck.Gain still ran because Druidism base was under 10.0"
-        skill_gain: { skill: "Druidism", from: 0.0, to: 0.2, fixed_point_gain: 2 }
-        stat_gain: "none; Druidism Int stat-gain random branch simulated as no gain"
+    current_range_from_player: { dx: 1, dy: 2 }
+    source: "PacketHandlers.ContextMenuResponse -> BaseCreature.TameEntry.OnClick -> Skills.UseSkill -> Taming.OnUse -> Target.Invoke -> Taming.InternalTarget.OnTarget"
+    result: "Historical Run 54 result: the context menu was consumed and a second active taming timer started. Ownership did not change on the click itself; Run 58 later completed the timer successfully and made the fox controlled."
     mechanical_state_changes_from_response:
-      - "PacketHandlers.ContextMenuResponse cleared from.ContextMenu before processing the selected entry."
-      - "World.FindEntity found the same fox target and from.CanSee(entity) passed."
-      - "The selected TameEntry was enabled and from.InRange(p, 6) passed at dx=1,dy=2."
-      - "TameEntry.OnClick set TargetLocked=true and Taming.DisableMessage=true, then UseSkill(SkillName.Taming) created Taming.InternalTarget without showing the 'Tame which animal?' prompt."
-      - "Target.Invoke accepted same map, range 2, visibility, mobile CheckTarget, and Region.OnTarget, then called Taming.InternalTarget.OnTarget."
-      - "Taming.OnTarget passed fox gates: Tamable true, Controlled false, female tamer allowed, follower capacity 0+1<=5, owner cap not reached, SubdueBeforeTame false, and Taming 0.0 >= Fox.MinTameSkill -15.3."
-      - "BaseCreature.CanAngerOnTame defaults false, so the anger branch did not run for the fox."
-      - "Taming stored m_BeingTamed[targeted]=from, sent 'You start to tame the creature.', and started InternalTimer with a simulated max count of 3."
-      - "No final CheckTargetSkill roll, SetControlMaster, owner list mutation, follower accounting, skill value gain, movement, inventory, hunger, thirst, quest, discovery, tarot, combat, or PvP/PvE path completed yet."
+      - "ContextMenuResponse cleared from.ContextMenu before using the selected entry."
+      - "World.FindEntity found fox serial 200274, entity matched the stored menu target, and from.CanSee(entity) passed."
+      - "The selected TameEntry was enabled and from.InRange(fox, 6) passed at dx=1,dy=2."
+      - "TameEntry.OnClick set TargetLocked, suppressed the normal skill prompt through Taming.DisableMessage, and called UseSkill(SkillName.Taming)."
+      - "Taming.OnUse assigned InternalTarget with range 2 and returned a six-hour skill delay placeholder."
+      - "Target.Invoke accepted the fox because same map, visibility, and the range-2 target gate all passed."
+      - "Taming.OnTarget passed the fox gates and stored m_BeingTamed[fox]=Mira Vale again, then started InternalTimer with Utility.Random(3,2) simulated as 4 ticks."
+      - "No timer tick, Druidism check, final Taming check, skill gain, combat damage, SetControlMaster, owner list mutation, follower accounting, movement, hunger, thirst, quest, discovery, tarot, or PvP/PvE state changed in this click."
+  current_taming_timer_result:
+    status: "second_fox_timer_final_completed_success"
+    target_serial: 200274
+    target_name: "a fox"
+    target_type: "Server.Mobiles.Fox"
+    target_point3d: { x: 1209, y: 1324, z: 0 }
+    player_point3d: { x: 1210, y: 1326, z: 0 }
+    timer_interval_seconds: 3
+    timer_max_count: 4
+    timer_count_completed: 4
+    source: "Taming.InternalTimer.OnTick -> maintenance gates -> final branch -> CheckTargetSkill(SkillName.Druidism) -> CheckTargetSkill(SkillName.Taming) -> BaseCreature.SetControlMaster"
+    visible_feedback: "private overhead message: It seems to accept you as master."
+    passive_druidism_result:
+      min_skill: 0.0
+      max_skill_after_mobile_widening: 126.0
+      starting_value: 1.4
+      approximate_success_chance: "1.11%"
+      success_roll: "simulated_failed"
+      under_10_gain: true
+      gain_fixed_points: 3
+      ending_value: 1.7
+      stat_gain: "simulated_no_int_gain"
+    final_taming_result:
+      min_skill_after_owner_count_and_offset: 9.6
+      druidism_modifier_after_passive_gain: 0.34
+      check_range: { min: -15.74, max: 34.6 }
+      starting_value: 0.2
+      approximate_success_chance: "31.7%"
+      success_roll: "simulated_success"
+      under_10_gain: true
+      gain_fixed_points: 3
+      ending_value: 0.5
+      stat_gain: "simulated_no_str_dex_int_gain"
+      visible_success_message: "It seems to accept you as master."
+    mechanical_state_changes_from_tick:
+      - "m_Count incremented from 3 to 4."
+      - "Range 6, alive, visibility, LOS/path, Tamable, Controlled, owner-cap, subdual, and post-start damage maintenance gates passed."
+      - "Because m_Count equaled m_MaxCount 4, the final branch ran."
+      - "NextSkillTime reset to DateTime.Now before the final skill checks."
+      - "m_BeingTamed removed fox serial 200274 before the final Druidism and Taming checks."
+      - "The final passive Druidism check failed as a success roll but gained under 10.0, raising Druidism to 1.7."
+      - "The final Taming check succeeded and gained under 10.0, raising Taming to 0.5."
+      - "First-tame handling scaled the fox's skills to 90% because it was not paralyzed and Fox.StatLossAfterTame resolves false through SubdueBeforeTame."
+      - "The fox sent localized success message 502799, added Mira Vale to Owners, and SetControlMaster made it controlled with ControlOrder Come."
+      - "Mira Vale's follower count increased from 0 to 1; the fox is controlled, unbonded, visible, not mounted, and still at Point3D(1209,1324,0)."
+      - "No movement, hunger, thirst, inventory item, quest, discovery, tarot, PvP/PvE, combat damage, bank, stable, equipment, or social state changed."
+  current_pet_command_result:
+    status: "normal_speech_command_processed"
+    spoken_text: "all follow me"
+    speaker: "Mira Vale"
+    speaker_point3d: { x: 1210, y: 1326, z: 0 }
+    target_serial: 200274
+    target_name: "a fox"
+    target_type: "Server.Mobiles.Fox"
+    target_point3d: { x: 1209, y: 1324, z: 0 }
+    range_from_player: { dx: 1, dy: 2, regular_speech_range: 15, fox_perception_range: 10 }
+    source: "Mobile.DoSpeech -> Map.GetObjectsInRange -> BaseCreature.HandlesOnSpeech -> BaseCreature.OnSpeech -> BaseAI.OnSpeech -> CheckControlChance -> BaseCreature.ControlTarget/ControlOrder"
+    visible_feedback: "Mira Vale speaks 'all follow me'; the fox plays its idle sound through OnCurrentOrderChanged, but no gump or context menu opens."
+    mechanical_state_changes_from_speech:
+      - "Mobile.DoSpeech used normal regular-speech range 15 and created SpeechEventArgs with the client keyword for all follow me."
+      - "The controlled fox was inside the range and BaseCreature.HandlesOnSpeech returned true because its AI handles owner speech and Mira was inside RangePerception."
+      - "BaseAI.OnSpeech identified Mira Vale as the fox's owner and matched keyword 0x16C, all follow me."
+      - "BaseCreature.GetControlChance returned 1.0 because Fox.MinTameSkill is -15.3, which is <= 29.1, so CheckControlChance succeeded without meaningful risk."
+      - "The fox's ControlTarget changed to Mira Vale and ControlOrder changed from Come to Follow."
+      - "OnCurrentOrderChanged revealed Mira, set the fox to active speed, played the fox idle sound, set Warmode=false, and cleared Combatant."
+      - "No AI Obey/DoOrderFollow movement tick was advanced; fox pathing and following movement remain unresolved."
+      - "No location, hunger, thirst, stat, skill, inventory, quest, discovery, tarot, PvP/PvE, combat damage, bank, stable, equipment, follower count, ownership, or bonding value changed."
   previous_fox_context_menu_response:
     status: "historical_previous_run"
     target_serial: 200274
@@ -279,15 +345,18 @@ lifecycle:
       - "Mobile.OnSingleClick computed the ordinary overhead name label and sent it privately to the clicking player."
       - "No TameEntry, UseSkill, Taming.OnTarget, combat target, movement, inventory, hunger, thirst, quest, discovery, tarot, pet, follower, ownership, or PvP/PvE path ran."
   current_movement_result:
-    status: "historical_previous_run_not_current_action"
-    from_point3d: { x: 1214, y: 1330, z: 0 }
-    to_point3d: { x: 1210, y: 1326, z: 0 }
-    source: "Mobile.Move -> CheckMovement -> OnMoveOver checks -> Region.CanMove -> InternalOnMove -> OnAfterMove"
-    route_summary: "northwest through local Map.Sosaria land at 1213,1329; 1212,1328; 1211,1327; and 1210,1326; the binary static probe found zero statics on each stepped tile"
-    visible_result: "the visible fox is now inside the actual Taming.InternalTarget range at dx=1,dy=2; the grey wolf remains outside update range by dy=19, and the destination live scan shows eagle/goat/goat/eagle/eagle/deer/deer/swallow/llama/fox/eagle/horse"
+    status: "invalidated_previous_block_no_player_move"
+    from_point3d: { x: 1210, y: 1326, z: 0 }
+    attempted_direction: "southeast / Direction.Down"
+    attempted_to_point3d: { x: 1211, y: 1327, z: 0 }
+    actual_to_point3d: { x: 1210, y: 1326, z: 0 }
+    source: "Data/System/Source/TileMatrix.cs ReadLandBlock block addressing audit; no Mobile.Move path executed for this correction"
+    route_summary: "no route completed because the prior block was invalidated before simulating another player action; server-order map1.mul/tiledata.mul reads 1210,1326 as land 0x3 z=0 and 1211,1327 as land 0x6 z=0, with zero statics on both tiles"
+    visible_result: "the player remains at Point3D(1210,1326,0) because this was an audit, not a movement action; the controlled fox remains at Point3D(1209,1324,0) with ControlOrder Follow, and no pet AI movement tick runs"
     mechanical_state_changes_from_move:
-      - "Location changed from Point3D(1214,1330,0) to Point3D(1210,1326,0)."
-      - "No gump, context menu, skill, item, combat, taming, hunger, thirst, inventory, quest, discovery, tarot, PvP/PvE, pet, follower, or ownership path ran."
+      - "Location did not change because no corrected Mobile.Move action was simulated after discovering the binary reader bug."
+      - "The prior water-blocked CheckMovement result is not valid evidence and must not be carried forward as player friction."
+      - "No gump, context menu, skill, item, combat, taming, hunger, thirst, inventory, quest, discovery, tarot, PvP/PvE, pet, follower, ownership, or pet-pathing state changed."
   current_open_gump_detail:
     type: null
     source: "ComputerDatabaseGump was closed through its visible normal close control in run 23."
@@ -349,6 +418,13 @@ lifecycle:
     - "Requesting the visible fox context menu sent a client context menu with an enabled Tame entry; it did not send an overhead message, select the entry, use Taming, move the player, or change ownership."
     - "Selecting the visible close-range fox Tame entry sent the local overhead emote 1010597: You start to tame the creature."
     - "The first fox taming timer tick sent public overhead speech: I won't hurt you..."
+    - "The second fox taming timer tick sent public overhead speech: Nice and easy..."
+    - "Requesting the same visible fox context menu after the failed tame sent a client context menu with an enabled Tame entry; it did not send an overhead message, select the entry, use Taming, move the player, or change ownership."
+    - "The first tick of the second fox taming timer sent public overhead speech: See? Nothing to be afraid of..."
+    - "The second tick of the second fox taming timer sent public overhead speech: Easy...easy..."
+    - "The third tick of the second fox taming timer sent public overhead speech: Don't be afraid..."
+    - "The fourth/final tick of the second fox taming timer sent private overhead message 502799: It seems to accept you as master."
+    - "Mira Vale said 'all follow me'; the controlled fox heard the owner command and played its idle sound when ControlOrder changed to Follow."
   has_left_start_flow: true
 
 identity:
@@ -451,6 +527,7 @@ location:
   map: "Map.Sosaria"
   point3d: { x: 1210, y: 1326, z: 0 }
   previous_point3d: { x: 1210, y: 1326, z: 0 }
+  attempted_point3d: { x: 1211, y: 1327, z: 0 }
   trigger_point3d: { x: 4138, y: 3773, z: 1 }
   region_name: "none matched in Data/System/XML/Regions.xml at 1210,1326"
   region_type: "default_or_unresolved_region"
@@ -471,7 +548,17 @@ location:
     - "Run 48 stayed at Point3D(1210,1326,0) and requested the visible fox's context menu; the menu exposed an enabled Tame row from within the true target range."
     - "Run 49 stayed at Point3D(1210,1326,0) and selected the visible fox Tame row; the fox entered an active taming timer but stayed wild/uncontrolled."
     - "Run 50 stayed at Point3D(1210,1326,0) and let the first non-final fox taming timer tick run; the fox stayed wild/uncontrolled, but passive Druidism gain raised Druidism to 0.2."
-  land_bucket: "Land of Sosaria open grass beyond the jungle edge; center map1 land tile is dry land at z=0 with an active fox taming timer at count 1 of 3 and the wolf still just off-screen"
+    - "Run 51 stayed at Point3D(1210,1326,0) and let the second non-final fox taming timer tick run; the fox stayed wild/uncontrolled, but passive Druidism gain raised Druidism to 0.5."
+    - "Run 52 stayed at Point3D(1210,1326,0) and let the final fox taming timer tick run; the final Taming roll failed, the fox stayed wild/uncontrolled, and Druidism/Taming gained to 0.7/0.2 from under-10 gain side effects."
+    - "Run 53 stayed at Point3D(1210,1326,0) and requested the same visible fox's context menu after the failed tame; the menu reopened with an enabled Tame row, but no row was selected."
+    - "Run 54 stayed at Point3D(1210,1326,0), selected the reopened visible fox Tame row, and started a second active fox taming timer with four simulated ticks."
+    - "Run 55 stayed at Point3D(1210,1326,0) through the first non-final tick of that second timer; Druidism gained to 0.8, but the fox remains wild/uncontrolled and the timer is still active."
+    - "Run 56 stayed at Point3D(1210,1326,0) through the second non-final tick of that second timer; Druidism gained to 1.0, but the fox remains wild/uncontrolled and the timer is still active."
+    - "Run 57 stayed at Point3D(1210,1326,0) through the third non-final tick of that second timer; Druidism gained to 1.4, but the fox remains wild/uncontrolled and the timer is still active."
+    - "Run 58 stayed at Point3D(1210,1326,0) through the fourth/final tick of that second timer; Druidism gained to 1.7, final Taming succeeded and gained to 0.5, and the fox became Mira's controlled one-slot follower."
+    - "Run 59 stayed at Point3D(1210,1326,0) and said 'all follow me'; the controlled fox heard the owner speech command, changed ControlOrder from Come to Follow, and set ControlTarget to Mira Vale."
+    - "Run 60 audited the prior southeast-step block from Point3D(1210,1326,0) toward Point3D(1211,1327,0); the row-major MUL probe was invalid, and server-order map1/tiledata reads both current and attempted tiles as grass with zero statics."
+  land_bucket: "Land of Sosaria open grass/wildlife edge; current and attempted southeast tiles decode as dry grass with zero statics under server TileMatrix block order, with the controlled fox at dx=1,dy=2 ordered to Follow and the wolf still just off-screen"
   time_bucket: "first login, after fate"
   safe_flags:
     guarded: "unknown"
@@ -484,7 +571,7 @@ location:
 
 perception_visual_scan:
   scan_center: { x: 1210, y: 1326, z: 0 }
-  pre_action_scan_center: { x: 1214, y: 1330, z: 0 }
+  pre_action_scan_center: { x: 1210, y: 1326, z: 0 }
   trigger_scan_center: { x: 4138, y: 3773, z: 1 }
   post_action_scan_center: { x: 1210, y: 1326, z: 0 }
   map: "Map.Sosaria"
@@ -495,6 +582,9 @@ perception_visual_scan:
     - "docs/CCWM/live-state/mobiles.jsonl"
     - "docs/CCWM/live-state/items.jsonl"
     - "docs/CCWM/live-state/spawners.jsonl"
+    - "docs/CCWM/client-worldmap-markers/Sosaria.csv"
+    - "docs/CCWM/client-worldmap-markers/Sosaria-Common.csv"
+    - "docs/CCWM/client-worldmap-markers/Moongates.csv"
     - "Data/Decoration/Sosaria/decorate.cfg"
     - "Data/Spawns/towns.map"
     - "Data/Spawns/*.map"
@@ -506,11 +596,14 @@ perception_visual_scan:
     - "Data/Scripts/Custom/RandomEncounters/RandomEncounters.xml"
     - "Data/System/XML/Regions.xml"
     - "Data/Scripts/System/Misc/MapDefinitions.cs"
+    - "Data/System/Source/TileMatrix.cs"
     - "Data/Files/map1.mul"
     - "Data/Files/tiledata.mul"
     - "Data/Files/staidx1.mul"
     - "Data/Files/statics1.mul"
     - "Data/Scripts/Mobiles/Base/BaseCreature.cs"
+    - "Data/Scripts/Mobiles/Base/Behavior.cs"
+    - "Data/System/Source/EventSink.cs"
     - "Data/Scripts/Mobiles/Animals/Birds/Eagle.cs"
     - "Data/Scripts/Mobiles/Animals/Canines/Fox.cs"
     - "Data/Scripts/Mobiles/Animals/Canines/GreyWolf.cs"
@@ -588,7 +681,7 @@ perception_visual_scan:
       name: "a fox"
       point3d: { x: 1209, y: 1324, z: 0 }
       source: "docs/CCWM/live-state/mobiles.jsonl filtered to x 1192..1228, y 1308..1344"
-      status: "visible_saved_mobile plus simulated active taming target; northwest at dx=1,dy=2; m_BeingTamed contains fox->Mira Vale and timer count is 1 of 3, but the fox remains uncontrolled and not a follower until the final timer branch and final skill roll complete"
+      status: "visible_saved_mobile; northwest at dx=1,dy=2; live snapshot exported it as uncontrolled, but simulated Run 58 final timer success now overrides current state: controlled by Mira Vale, owner list includes Mira, follower slot cost 1, unbonded, and still at this tile; Run 59 owner speech changed ControlOrder from Come to Follow and ControlTarget to Mira Vale"
     - serial: 444927
       type: "Server.Mobiles.Eagle"
       name: "an eagle"
@@ -602,6 +695,25 @@ perception_visual_scan:
       source: "docs/CCWM/live-state/mobiles.jsonl filtered to x 1192..1228, y 1308..1344"
       status: "visible_saved_mobile; same wild horse from earlier; west at dx=14,dy=0; no new horse menu or Tame action"
   visible_items: []
+  client_worldmap_markers:
+    status: "available_to_player_as_world_map_overlay_not_screen_entities"
+    schema: "x,y,map,name,type_or_icon,color,zoom_or_layer"
+    map_filter:
+      current_map: "Map.Sosaria"
+      accepted_marker_map_value: 1
+      rejected_other_maps: true
+    sources:
+      - "docs/CCWM/client-worldmap-markers/Sosaria.csv"
+      - "docs/CCWM/client-worldmap-markers/Sosaria-Common.csv"
+      - "docs/CCWM/client-worldmap-markers/Moongates.csv"
+    nearest_known_markers:
+      - { name: "Ruins", point2d: { x: 1303, y: 1449 }, source: "Sosaria.csv", type_or_icon: "ruins", color: "blue", zoom_or_layer: 0, chebyshev_distance_tiles: 123, player_use: "navigation lure only; not visible in the 18-tile screen" }
+      - { name: "Mines of Morinia", point2d: { x: 1022, y: 1372 }, source: "Sosaria.csv", type_or_icon: "dungeonx", color: "red", zoom_or_layer: 0, chebyshev_distance_tiles: 188, player_use: "navigation lure only; not visible in the 18-tile screen" }
+      - { name: "Chamber of Bane", point2d: { x: 1427, y: 1555 }, source: "Sosaria.csv", type_or_icon: "dungeon", color: "white", zoom_or_layer: 0, chebyshev_distance_tiles: 229, player_use: "navigation lure only; not visible in the 18-tile screen" }
+      - { name: "West", point2d: { x: 1052, y: 1570 }, source: "Moongates.csv", type_or_icon: "moongate", color: "blue", zoom_or_layer: 0, chebyshev_distance_tiles: 244, player_use: "navigation lure only; not visible in the 18-tile screen" }
+    unavailable_actions:
+      - "Do not treat marker rows as nearby Mobiles, Items, corpses, chests, vendors, roads, or discovery flags."
+      - "Do not click or interact with a marker unless a matching in-world entity is also present through the normal screen/update flow."
   visible_ui:
     open_context_menu: null
     last_context_menu_response:
@@ -609,14 +721,28 @@ perception_visual_scan:
       target_serial: 200274
       target_type: "Server.Mobiles.Fox"
       selected_entry: { label: "Tame", localization_number: 6130, context_entry_range_tiles: 6 }
-      result: "current run 49: closed menu; Taming.InternalTarget range 2 accepted dx=1,dy=2 and started the fox taming timer"
-    active_taming_attempt:
-      visible_feedback: "local overhead emote: You start to tame the creature.; first-tick public overhead speech: I won't hurt you..."
-      timer_status: "running; first non-final tick completed, two ticks remain before any final taming roll"
+      result: "run 54: closed the reopened menu; Taming.InternalTarget range 2 accepted dx=1,dy=2 and started a second fox taming timer, which Run 58 later completed successfully"
+    completed_taming_attempt:
+      target: "a fox"
+      target_serial: 200274
+      target_type: "Server.Mobiles.Fox"
+      visible_feedback: "local overhead emote: You start to tame the creature.; first non-final tick public overhead speech: See? Nothing to be afraid of...; second non-final tick public overhead speech: Easy...easy...; third non-final tick public overhead speech: Don't be afraid...; final private overhead message: It seems to accept you as master."
+      timer_status: "completed_success"
+      timer_interval_seconds: 3
+      timer_max_count: 4
+      timer_count_completed: 4
+    current_pet_command:
+      spoken_text: "all follow me"
+      target: "a fox"
+      target_serial: 200274
+      result: "normal owner speech command processed; ControlTarget=Mira Vale and ControlOrder=Follow"
+    last_taming_attempt:
+      visible_feedback: "local overhead emote: You start to tame the creature.; first-tick public overhead speech: I won't hurt you...; second-tick public overhead speech: Nice and easy...; final private overhead message: You fail to tame the creature."
+      timer_status: "completed_failed; no active taming timer remains"
       timer_interval_seconds: 3
       timer_max_count: 3
-      timer_count_completed: 1
-    current_screen_ui: "no open gumps, no open context menu, and no targeting cursor; the fox taming timer is active while the player stands in open grass"
+      timer_count_completed: 3
+    current_screen_ui: "no open gumps, no open context menu, no targeting cursor, and no active taming timer after the Run 59 speech command; the fox is now a controlled close follower ordered to Follow in open grass"
   map_file_resolution:
     current_map: "Map.Sosaria"
     map_index: 1
@@ -627,7 +753,8 @@ perception_visual_scan:
       - "Data/Files/map1.mul"
       - "Data/Files/staidx1.mul"
       - "Data/Files/statics1.mul"
-    invalidated_prior_scan: "The prior map0/staidx0/statics0 read belonged to Map.Lodor fileIndex=0, not Map.Sosaria, and created the false water-underfoot conclusion."
+    block_order_required: "TileMatrix.ReadLandBlock uses ((blockX * blockHeight) + blockY) column-major block addressing."
+    invalidated_prior_scan: "The earlier map0/staidx0/statics0 read belonged to Map.Lodor fileIndex=0, not Map.Sosaria. The later Run 60 water conclusion also came from an invalid row-major map1 block read; server-order map1 reads the current and attempted southeast tiles as grass."
   visible_terrain:
     - type: "LandTile"
       name: "grass"
@@ -636,15 +763,15 @@ perception_visual_scan:
       flags: []
       status: "prior pre-move center from run 44; dry passable grass with three visible saved animals, no visible items, no open gump, and no open context menu"
     - type: "LandTile"
-      name: "dry open land"
+      name: "grass under saved position"
       point3d: { x: 1210, y: 1326, z: 0 }
-      tile_id: "0x244"
-      flags: ["tiledata_probe_0x50", "zero_statics"]
-      status: "current center after run 47; zero statics on the tile, no open gump, no open context menu, and the fox is inside target range; exact land flag semantics remain subordinate to the simulated successful Mobile.Move route"
+      tile_id: "0x3"
+      flags: ["zero_statics", "dry_passable_land"]
+      status: "current center after Run 60 audit; server-order map1.mul/tiledata.mul decode the underlying land as grass at z=0 with zero statics. The prior wet/impassable water result is invalidated as a row-major block reader bug."
     - type: "LandTileCluster"
       name: "fox-target open wildlife screen"
       radius_tiles: 18
-      status: "The current scan around Point3D(1210,1326,0) is open dry land with no visible saved items, no water-target hits, no open gump or context menu, and an active taming timer on the fox at dx=1,dy=2; timer count is now 1 of 3."
+      status: "The current live-snapshot screen around Point3D(1210,1326,0) still has no visible saved items, no water-target item/static hits, no open gump, and no open context menu. Corrected server-order binary terrain says the center and attempted southeast step are grass with zero statics, while the fox remains controlled at dx=1,dy=2 and no taming timer remains active."
     - type: "LandTileRoute"
       name: "north-then-west fox approach"
       route_tiles:
@@ -664,17 +791,26 @@ perception_visual_scan:
     - type: "LandTileRoute"
       name: "northwest fox target approach"
       route_tiles:
-        - { x: 1213, y: 1329, z: 0, tile_id: "0x244", name: "dry open land", statics: 0 }
-        - { x: 1212, y: 1328, z: 0, tile_id: "0x244", name: "dry open land", statics: 0 }
-        - { x: 1211, y: 1327, z: 0, tile_id: "0x244", name: "dry open land", statics: 0 }
-        - { x: 1210, y: 1326, z: 0, tile_id: "0x244", name: "dry open land", statics: 0 }
+        - { x: 1213, y: 1329, z: 0, tile_id: "0x3", name: "grass", statics: 0 }
+        - { x: 1212, y: 1328, z: 0, tile_id: "0x4", name: "grass", statics: 0 }
+        - { x: 1211, y: 1327, z: 0, tile_id: "0x6", name: "grass", statics: 0 }
+        - { x: 1210, y: 1326, z: 0, tile_id: "0x3", name: "grass", statics: 0 }
       status: "run 47 movement route toward actual Taming.InternalTarget range; no hidden teleporter, gump, context menu, skill, item, combat, or region interaction was traced"
+    - type: "BinaryTerrainAudit"
+      name: "run 60 southeast step correction"
+      from_point3d: { x: 1210, y: 1326, z: 0 }
+      attempted_to_point3d: { x: 1211, y: 1327, z: 0 }
+      tile_id: "0x6"
+      tile_name: "grass"
+      flags: ["zero_statics", "dry_passable_land"]
+      statics: 0
+      status: "The prior Mobile.Move rejection is invalidated because it was based on row-major map block addressing. Server-order TileMatrix addressing reads the attempted Direction.Down tile as grass at z=0 with zero statics; no corrected movement action has been taken yet."
   static_water_target_scan:
     range_tiles: 3
     static_tile_count: "range_3_static_tile_count_zero_at_post_action_center_in_live_route_probe; no water_or_fill_static_found_in_post_action_range_or_18_tile_scan"
     water_target_hits: []
     visible_non_target_water_graphics: []
-    result: "No decorated trough, tub, barrel, map item water source, known water static, or DrinkingFunctions.CheckWaterTarget static was found in the post-action scan around Point3D(1210,1326,0); the canteen was not used this run."
+    result: "No decorated trough, tub, barrel, map item water source, or DrinkingFunctions.CheckWaterTarget static was found in the post-action scan around Point3D(1210,1326,0). Corrected server-order land terrain shows grass, not water, and the canteen was not used this run."
   wider_static_scan:
     range_tiles: 18
     static_tile_count: "unresolved_filtered_tile_count_after_center_shift; route tiles were checked and had zero statics"
@@ -685,7 +821,7 @@ perception_visual_scan:
       - "Statics: corrected staidx1/statics1 scan around Point3D(1210,1326,0) finds no DrinkingFunctions.CheckWaterTarget hits; the route itself has zero statics."
       - "Live mobiles: the canonical snapshot filtered to x 1192..1228, y 1308..1344 sees twelve visible saved animals and no grey wolf."
       - "Spawners: live snapshot still shows running invisible PremiumSpawner sources with broad home/walking ranges in the area. Their saved spawned_refs are source pressure, not automatically visible unless matching mobile records are inside the client rectangle."
-    result: "The fox is close enough for the actual Taming timer maintenance range. The first non-final timer tick has run; the screen has twelve visible saved animals, no visible saved items, no water fill target, no obvious built help, no open context menu, and the fox remains wild until the final timer branch succeeds."
+    result: "The fox is close enough and the fourth/final second Tame timer tick has completed successfully. The screen has twelve visible saved animals, no visible saved items, no water fill target, no obvious built help, no open context menu after Run 59, and the fox is controlled by Mira Vale as a one-slot follower ordered to Follow. Run 60 invalidated the false row-major water block; the southeast tile is grass under server-order map1 reads, but no corrected movement has run yet."
   mechanically_traced_invisible_items:
     - type: "Teleporter"
       name: "hidden crash-site exit tile"
@@ -730,7 +866,10 @@ perception_visual_scan:
       status: "The traced Regions.xml rectangles did not contain Point3D(1210,1326,0); default region behavior and exact client label need live/server context."
     - type: "Corrected land terrain"
       name: "map1.mul land tiles"
-      status: "Resolved: Map.Sosaria uses fileIndex=1. Point3D(1210,1326,0) is the current dry local land endpoint at z=0; the route from 1214,1330 to 1210,1326 had zero statics on each stepped tile, with exact land flag semantics left as a static-probe caveat."
+      status: "Map.Sosaria uses fileIndex=1, and the corrected server-order TileMatrix probe decodes Point3D(1210,1326,0) as land 0x3 grass and Point3D(1211,1327,0) as land 0x6 grass, both z=0 with zero statics."
+    - type: "Invalidated movement block"
+      name: "run 60 southeast step"
+      status: "The previous water-blocked Direction.Down result is invalid because it used row-major MUL block addressing. No valid Mobile.Move/CheckMovement path was simulated after correction, so the next run may still choose the southeast step through normal visible flow."
     - type: "Movement passability"
       name: "exact live tile Z/blocking"
       status: "Mobile.Move delegates to CheckMovement for terrain and blocking; corrected binary static data shows the selected route and endpoint have zero statics, but live items/mobiles could still block or aggro and exact land flag semantics remain unresolved without live movement."
@@ -741,16 +880,19 @@ perception_visual_scan:
       name: "visible grey wolf label"
       status: "Historical from run 42: PacketHandlers.LookReq accepted grey wolf serial 445033 because it was visible, alive, on Map.Sosaria, and inside Utility.InUpdateRange at dx=3,dy=17; after run 47 movement the same wolf is outside the current 18-tile client rectangle by dy=19."
     - type: "Fox context menu"
-      name: "visible Tame row selected"
-      status: "Current run 49: fox serial 200274 is dx=1,dy=2 from the player. PacketHandlers.ContextMenuResponse selected the visible Tame row, cleared the menu, passed the range-6 menu gate, and reached Taming.OnTarget."
+      name: "visible Tame row reopened"
+      status: "Run 58 result: the reopened Tame row selected in Run 54 has now resolved through four timer ticks. The context menu is closed, m_BeingTamed has been removed, and fox serial 200274 is controlled by Mira Vale. Run 59 then used owner speech, not the old Tame row, to set ControlOrder Follow."
     - type: "Taming range gate"
       name: "menu range exceeds target range"
       status: "TameEntry is visible/enabled at range 6, but Taming.InternalTarget is created with range 2; the historical horse attempt at dx=5,dy=1 and run 46 fox attempt at dx=5,dy=6 stopped before any creature MinTameSkill check. Run 47 only solved the distance part by moving to dx=1,dy=2."
     - type: "Skill cooldown"
       name: "active Tame leaves skill delay until timer resolution"
-      status: "Taming.OnUse returns a six-hour skill delay. Because Taming.OnTarget reached the branch that sets m_SetSkillTime=false after starting the InternalTimer, the immediate OnTargetFinish does not reset NextSkillTime; timer success/fail/abort paths reset it later."
-  scan_result_before_action: "At Point3D(1210,1326,0), the canonical live snapshot filtered to x 1192..1228, y 1308..1344 saw twelve visible saved mobiles and zero visible saved items: eagle/goat/goat/eagle/eagle/deer/deer/swallow/llama/fox/eagle/horse. The fox at 1209,1324 was dx=1,dy=2 from the player, the context menu was closed, and the active taming timer had count 0 of 3."
-  scan_result_after_action: "At Point3D(1210,1326,0), the canonical live snapshot filtered to x 1192..1228, y 1308..1344 still sees twelve visible saved mobiles and zero visible saved items: eagle/goat/goat/eagle/eagle/deer/deer/swallow/llama/fox/eagle/horse. The fox at 1209,1324 is dx=1,dy=2; the grey wolf at 1207,1307 is still outside update range by dy=19. Run 50 waited for the first InternalTimer.OnTick, passed its maintenance gates, displayed the simulated taming speech 'I won't hurt you...', raised Druidism to 0.2 through passive gain, and still did not run the final Taming roll, SetControlMaster, owner list mutation, follower accounting, item use, combat, hunger, thirst, inventory, quest, discovery, tarot, or PvP/PvE state changes."
+      status: "Taming.OnUse returns a six-hour skill delay. Run 54 started a second active timer and set m_SetSkillTime=false; Run 55, Run 56, and Run 57 non-final ticks did not reset NextSkillTime, but Run 58's final branch reset NextSkillTime to DateTime.Now before resolving the successful final checks."
+    - type: "Pet speech command"
+      name: "all follow me"
+      status: "Run 59 normal speech at Point3D(1210,1326,0) was heard by the controlled fox at dx=1,dy=2; BaseAI.OnSpeech matched keyword 0x16C, CheckControlChance succeeded deterministically for Fox.MinTameSkill -15.3, and the fox's ControlTarget became Mira Vale with ControlOrder Follow."
+  scan_result_before_action: "At Point3D(1210,1326,0), the canonical live snapshot filtered to x 1192..1228, y 1308..1344 saw twelve visible saved mobiles and zero visible saved items: eagle/goat/goat/eagle/eagle/deer/deer/swallow/llama/fox/eagle/horse. The fox at 1209,1324 was dx=1,dy=2, was already controlled by Mira Vale after Run 58, no gump or context menu was open, and no active taming timer remained."
+  scan_result_after_action: "At Point3D(1210,1326,0), the canonical live snapshot filtered to x 1192..1228, y 1308..1344 still sees twelve visible saved mobiles and zero visible saved items: eagle/goat/goat/eagle/eagle/deer/deer/swallow/llama/fox/eagle/horse. The fox at 1209,1324 is dx=1,dy=2, controlled by Mira Vale, owner list includes Mira, follower count remains 1 of 5, and Run 59 changed ControlOrder from Come to Follow with ControlTarget Mira Vale. Run 60 audited the prior southeast-blocked result and invalidated it: server-order TileMatrix addressing reads 1210,1326 as land 0x3 grass and 1211,1327 as land 0x6 grass, both z=0 with zero statics. Client world-map markers are now recognized as navigation overlay knowledge, with Ruins, Mines of Morinia, Chamber of Bane, and the West moongate as the nearest known marker lures. The grey wolf at 1207,1307 is still outside update range by dy=19. No item use, combat damage, AI movement tick, hunger/thirst change, location change, skill gain, quest/discovery/tarot trigger, or PvP/PvE change ran."
   scan_confidence: "high_for_live_saved_mobiles_and_items_from_snapshot; high_for_map_file_resolution_binary_land_and_static_ids; medium_for_future_spawner_tick_or_live_wander_changes"
   unresolved_spawn_sources:
     - "The live-state snapshot records saved positions after World.Load(), but it does not advance normal spawner timers, creature AI, wandering, or aggro after the snapshot time."
@@ -760,7 +902,8 @@ perception_visual_scan:
     - "The shifted post-approach scan proves twelve saved animals are currently visible in the exported snapshot, but a live server could still materialize, despawn, path, or aggro mobiles between scans."
     - "The failed Tame actions now prove a nearer immediate range-2 target gate; they do not prove future taming odds after stepping closer, training, elixirs, mastery, or a different creature."
     - "The post-approach scan proves the grey wolf is still outside the current 18-tile client rectangle by dy=19, but this static simulation does not execute its AI, pathing, target acquisition, or aggression after the snapshot."
-    - "The fox tame attempt has passed the first non-final timer tick, but the second tick and final tick can still abort if range 6, alive state, visibility, LOS, pathing, tamability, ownership, subdue, or damage checks fail."
+    - "The first fox tame attempt completed and failed in this static simulation; the second attempt completed successfully on its fourth/final tick, and Run 59 resolved the owner speech command into ControlOrder Follow, but future live pet pathing, actual follow movement, aggro, and nearby hostile behavior remain unresolved because the live snapshot is not advancing AI."
+    - "Run 60 invalidated the prior wet/impassable water conclusion as a row-major binary-reader error; the southeast tile is grass under server-order reads, but a corrected movement step and live pet pathing still have not been simulated."
 
 vitals_status:
   alive: true
@@ -806,11 +949,18 @@ skills_leveling:
     skill_use_cooldowns_affecting_next_action:
       - "Run 49 selected the visible fox Tame entry. Taming.OnUse set NextSkillTime to DateTime.Now plus six hours; because Taming.OnTarget started InternalTimer and set m_SetSkillTime=false, the immediate target finish did not reset the cooldown. Timer completion or abort paths reset NextSkillTime to DateTime.Now later."
       - "Run 50's first non-final InternalTimer tick did not reset NextSkillTime; the active taming timer still owns the skill path until it aborts or completes."
-    last_skill_use_attempt: "Run 50 waited through the first non-final fox taming timer tick. It did not run the final Taming CheckTargetSkill roll, but its passive Druidism CheckTargetSkill triggered a guaranteed under-10 skill gain side effect and raised Druidism to 0.2."
+      - "Run 51's second non-final InternalTimer tick did not reset NextSkillTime; the active taming timer still owns the skill path until it aborts or completes."
+      - "Run 52's final InternalTimer tick reset NextSkillTime to DateTime.Now before resolving the failed final Taming roll, so the prior six-hour placeholder no longer blocks a new skill use."
+      - "Run 54 selected the reopened visible Tame row. Taming.OnUse set NextSkillTime to DateTime.Now plus six hours again; because Taming.OnTarget started a second InternalTimer and set m_SetSkillTime=false, the timer owns the reset path until it aborts or completes."
+      - "Run 55's first non-final tick of the second InternalTimer did not reset NextSkillTime; the active taming timer still owns the skill path until it aborts or completes."
+      - "Run 56's second non-final tick of the second InternalTimer did not reset NextSkillTime; the active taming timer still owns the skill path until it aborts or completes."
+      - "Run 57's third non-final tick of the second InternalTimer did not reset NextSkillTime; the active taming timer still owns the skill path until it aborts or completes."
+      - "Run 58's fourth/final tick reset NextSkillTime to DateTime.Now before the final skill checks, then completed successfully; no active taming timer or six-hour placeholder remains."
+    last_skill_use_attempt: "Run 58 waited through the fourth/final tick of the second fox taming timer. Druidism rose from 1.4 to 1.7 from under-10 gain, Taming rose from 0.2 to 0.5 from under-10 gain, and the timer completed successfully."
   skill_table:
     Alchemy: { base: 0.0, value: 0.0, cap: 100.0, lock: "Up" }
     Anatomy: { base: 0.0, value: 0.0, cap: 100.0, lock: "Up" }
-    Druidism: { base: 0.2, value: 0.2, cap: 100.0, lock: "Up" }
+    Druidism: { base: 1.7, value: 1.7, cap: 100.0, lock: "Up" }
     Mercantile: { base: 0.0, value: 0.0, cap: 100.0, lock: "Up" }
     ArmsLore: { base: 0.0, value: 0.0, cap: 100.0, lock: "Up" }
     Parry: { base: 0.0, value: 0.0, cap: 100.0, lock: "Up" }
@@ -843,7 +993,7 @@ skills_leveling:
     Spiritualism: { base: 0.0, value: 0.0, cap: 100.0, lock: "Up" }
     Stealing: { base: 0.0, value: 0.0, cap: 100.0, lock: "Up" }
     Tailoring: { base: 0.0, value: 0.0, cap: 100.0, lock: "Up" }
-    Taming: { base: 0.0, value: 0.0, cap: 100.0, lock: "Up" }
+    Taming: { base: 0.5, value: 0.5, cap: 100.0, lock: "Up" }
     Tasting: { base: 0.0, value: 0.0, cap: 100.0, lock: "Up" }
     Tinkering: { base: 0.0, value: 0.0, cap: 100.0, lock: "Up" }
     Tracking: { base: 0.0, value: 0.0, cap: 100.0, lock: "Up" }
@@ -895,7 +1045,20 @@ inventory_equipment:
   nested_contents_known: true
   bank: "unknown"
   stable: { pets: [], auto_stabled_pets: [] }
-  followers: []
+  followers:
+    - serial: 200274
+      type: "Server.Mobiles.Fox"
+      name: "a fox"
+      point3d: { x: 1209, y: 1324, z: 0 }
+      control_slots: 1
+      control_order: "Follow"
+      control_target: "Mira Vale"
+      controlled: true
+      control_master: "Mira Vale"
+      owner_list_includes: ["Mira Vale"]
+      bonded: false
+      follower_count_after_tame: { current: 1, max: 5 }
+      evidence: "Run 58 final Taming success reached BaseCreature.SetControlMaster, which set ControlMaster, Controlled=true, ControlOrder=Come, and added the fox's ControlSlots to Mira's Followers; Run 59 normal owner speech 'all follow me' changed ControlTarget to Mira Vale and ControlOrder to Follow."
 
 quests_progression:
   character_discovered_raw: "0#1#0#0#0#0#0#0#0##"
@@ -1003,21 +1166,53 @@ timers_effects_cooldowns:
   temporary_hair_mod: null
   temporary_beard_mod: null
   active_buffs_debuffs: []
-  active_taming_attempt:
+  active_taming_attempt: null
+  completed_taming_attempt:
     target_serial: 200274
     target_type: "Server.Mobiles.Fox"
     target_name: "a fox"
     target_point3d: { x: 1209, y: 1324, z: 0 }
-    source_path: "PacketHandlers.ContextMenuResponse -> BaseCreature.TameEntry.OnClick -> Skills.UseSkill -> Taming.OnUse -> Target.Invoke -> Taming.InternalTarget.OnTarget"
-    m_being_tamed_entry: "fox serial 200274 -> Mira Vale"
+    source_path: "PacketHandlers.ContextMenuResponse -> BaseCreature.TameEntry.OnClick -> Skills.UseSkill -> Taming.OnUse -> Target.Invoke -> Taming.InternalTarget.OnTarget -> Taming.InternalTimer"
+    started_by: "Run 54 selected the visible reopened Tame row from the fox context menu"
+    m_being_tamed_entry: "removed on final successful tick"
+    timer_interval_seconds: 3
+    timer_max_count: 4
+    timer_count_completed: 4
+    first_tick_result: "maintenance gates passed; Mira publicly said 'See? Nothing to be afraid of...'; passive Druidism gain raised Druidism from 0.7 to 0.8; no ownership/control/follower state changed"
+    second_tick_result: "maintenance gates passed; Mira publicly said 'Easy...easy...'; passive Druidism gain raised Druidism from 0.8 to 1.0; no ownership/control/follower state changed"
+    third_tick_result: "maintenance gates passed; Mira publicly said 'Don't be afraid...'; passive Druidism gain raised Druidism from 1.0 to 1.4; no ownership/control/follower state changed"
+    final_tick_result: "maintenance gates passed; passive Druidism gain raised Druidism from 1.4 to 1.7; final Taming check succeeded at roughly 31.7% odds and under-10 gain raised Taming from 0.2 to 0.5; message 502799 'It seems to accept you as master.' was sent"
+    final_roll_status: "succeeded"
+    pet_status: "controlled_owned_follower_ordered_follow"
+    owner_and_control_result: "Owners.Add(Mira Vale) ran, SetControlMaster(Mira Vale) set ControlMaster, Controlled=true, ControlOrder=Come, follower count 1 of 5, Home=(0,0,0), RangeHome=-1, Fame=0, Karma=0, IsBonded=false, Hidden=false, CantWalk=false. Run 59 then changed ControlTarget to Mira Vale and ControlOrder to Follow through normal owner speech."
+    next_skill_time: "reset to DateTime.Now by final timer branch"
+  current_pet_order:
+    target_serial: 200274
+    target_type: "Server.Mobiles.Fox"
+    target_name: "a fox"
+    control_master: "Mira Vale"
+    control_target: "Mira Vale"
+    control_order: "Follow"
+    source_path: "Mobile.DoSpeech -> BaseCreature.OnSpeech -> BaseAI.OnSpeech -> CheckControlChance -> ControlTarget/ControlOrder"
+    last_command: "Run 59 said 'all follow me'"
+    command_result: "ControlTarget=Mira Vale, ControlOrder=Follow, CurrentSpeed=ActiveSpeed, Warmode=false, Combatant=null; no movement tick advanced. Run 60 invalidated the later false southeast movement block before any corrected pet follow AI/pathing tick could be observed."
+  last_taming_attempt:
+    target_serial: 200274
+    target_type: "Server.Mobiles.Fox"
+    target_name: "a fox"
+    target_point3d: { x: 1209, y: 1324, z: 0 }
+    attempt_status: "previous_completed_failed_attempt_from_runs_49_52"
+    source_path: "PacketHandlers.ContextMenuResponse -> BaseCreature.TameEntry.OnClick -> Skills.UseSkill -> Taming.OnUse -> Target.Invoke -> Taming.InternalTarget.OnTarget -> Taming.InternalTimer.OnTick"
+    m_being_tamed_entry: "removed on final failed tick"
     timer_interval_seconds: 3
     timer_max_count: 3
-    timer_count_completed: 1
+    timer_count_completed: 3
     first_tick_result: "maintenance gates passed; Mira publicly said 'I won't hurt you...'; passive Druidism gain raised Druidism from 0.0 to 0.2; no ownership/control/follower state changed"
-    next_tick_expected: "about three seconds after Run 50 first tick if no live interruption occurs"
-    next_tick_requirements: "tamer within range 6, alive, can see fox, in LOS, CanPath true, fox still tamable/uncontrolled, owner cap not exceeded, not requiring subdual, and no damage after start time"
-    final_roll_status: "not_reached"
+    second_tick_result: "maintenance gates passed; Mira publicly said 'Nice and easy...'; passive Druidism gain raised Druidism from 0.2 to 0.5; no ownership/control/follower state changed"
+    final_tick_result: "maintenance gates passed; passive Druidism gain raised Druidism from 0.5 to 0.7; final Taming check failed but under-10 gain raised Taming from 0.0 to 0.2; message 502798 'You fail to tame the creature.' was sent"
+    final_roll_status: "failed"
     pet_status: "not_controlled_not_owned_not_follower"
+    next_skill_time: "reset to DateTime.Now by final timer branch"
   thuvia_prompt_spam_timer: "GoddessOfProtection.m_Talked is a global static anti-spam flag reset by an 8-second timer; not persisted on the player."
   open_gump_effects:
     - "PKNONPK was Closable=false, Disposable=true, Dragable=true, Resizable=false; pressing its visible Remain Neutral reply closed it through OnResponse."
@@ -1030,6 +1225,7 @@ timers_effects_cooldowns:
     - "ComputerDatabaseGump was opened/read, then refreshed after visible skin reply 2 selected skin hue 0x6F6. It is Closable=true, Disposable=true, Dragable=true, Resizable=false; reply buttons 1 and 3-8 could mutate skin color again, and buttons 9-32 could mutate hair and facial hair color if the gump is reopened."
     - "MedicalRecordGump was open/read in front of the terminal, then closed through its visible normal close control. It is Closable=true, Disposable=true, Dragable=true, Resizable=false; it has no reply buttons, no text entries, and OnResponse only plays sound 0x54D if a response is sent."
     - "The horse context menu is closed after selecting the visible Tame entry. It was not a gump; it was visible UI sent by DisplayContextMenu, and the normal ContextMenuResponse path consumed it before running TameEntry.OnClick."
+    - "The reopened fox context menu is closed after selecting the visible Tame entry in Run 54. It was not a gump; ContextMenuResponse consumed it before TameEntry.OnClick started the second active taming timer."
     - "ComputerDatabaseGump was closed through its visible normal close control after the MedicalRecordGump was already closed; the close response played sound 0x54D and left no traced gumps open."
   movement_effects:
     - "EnterLand(13) moved to Point3D(4109,3775,2) on Map.Sosaria, inside the CrashRegion rectangle."
@@ -1056,6 +1252,13 @@ timers_effects_cooldowns:
     - "Run 46 did not move. It selected the visible fox Tame entry, passed ContextMenuResponse's range-6 entry gate, failed Target.Invoke's Taming.InternalTarget range-2 gate, cleared the menu, and left the fox wild."
     - "Run 47 walked northwest from Point3D(1214,1330,0) to Point3D(1210,1326,0), using static-free local route tiles and stopping with the fox at dx=1,dy=2 inside Taming.InternalTarget range 2; no new menu, skill, combat, follower, ownership, or pet path ran."
     - "Run 49 did not move. It selected the already-open visible fox Tame entry from Point3D(1210,1326,0), cleared the context menu, passed Taming.InternalTarget range 2, and started the fox taming timer."
+    - "Run 54 did not move. It selected the reopened visible fox Tame entry from Point3D(1210,1326,0), cleared the context menu, passed Taming.InternalTarget range 2, and started a second active fox taming timer."
+    - "Run 55 did not move. It waited through the first non-final tick of the second active fox taming timer at Point3D(1210,1326,0); no movement, region, item, gump, context menu, combat, ownership, or follower path ran."
+    - "Run 56 did not move. It waited through the second non-final tick of the second active fox taming timer at Point3D(1210,1326,0); no movement, region, item, gump, context menu, combat, ownership, or follower path ran."
+    - "Run 57 did not move. It waited through the third non-final tick of the second active fox taming timer at Point3D(1210,1326,0); no movement, region, item, gump, context menu, combat, ownership, or follower path ran."
+    - "Run 58 did not move. It waited through the fourth/final tick of the second active fox taming timer at Point3D(1210,1326,0); no movement, region, item, gump, context menu, or combat path ran, but the final Taming success created ownership/control/follower state."
+    - "Run 59 did not move. It said 'all follow me' and changed the controlled fox's order to Follow without advancing pet movement."
+    - "Run 60 audited and invalidated the prior Direction.Down block from Point3D(1210,1326,0) toward Point3D(1211,1327,0). The prior result used row-major MUL block addressing; TileMatrix server-order addressing reads the current and attempted tiles as grass with zero statics. No corrected Mobile.Move path, OnMoveOver, Region.CanMove, InternalOnMove, OnAfterMove, or pet AI movement ran."
 
 evidence:
   character_creation_path:
@@ -1108,6 +1311,11 @@ evidence:
     - "Filtering docs/CCWM/live-state/mobiles.jsonl to the shifted range x=1192..1228,y=1308..1344 around Point3D(1210,1326,0) finds twelve visible saved mobiles: eagle/goat/goat/eagle/eagle/deer/deer/swallow/llama/fox/eagle/horse."
     - "Filtering docs/CCWM/live-state/items.jsonl to the shifted range x=1192..1228,y=1308..1344 around Point3D(1210,1326,0) finds zero visible saved world items."
     - "The binary route scan of map1.mul/staidx1.mul/statics1.mul finds zero statics on each walked route tile from 1213,1329 through 1210,1326."
+    - "Data/System/Source/TileMatrix.cs ReadLandBlock seeks map blocks with ((blockX * blockHeight) + blockY) * 196 + 4; any row-major ((blockY * blockWidth) + blockX) terrain probe is invalid for this server."
+    - "Run 60 binary audit: server-order Data/Files/map1.mul plus Data/Files/tiledata.mul decodes the current Point3D(1210,1326,0) land tile as 0x3 grass at z=0 and the attempted southeast Point3D(1211,1327,0) land tile as 0x6 grass at z=0."
+    - "Run 60 staidx1/statics1 audit found zero statics on Point3D(1210,1326) and Point3D(1211,1327); the previous wet/impassable water block is invalidated and no corrected MovementImpl.Check result has been simulated yet."
+    - "docs/CCWM/client-worldmap-markers/Sosaria.csv provides player-visible map overlay markers filtered to map 1, including Ruins at 1303,1449, Mines of Morinia at 1022,1372, and Chamber of Bane at 1427,1555."
+    - "docs/CCWM/client-worldmap-markers/Moongates.csv provides a map 1 West moongate marker at 1052,1570; marker rows are navigation overlay knowledge, not in-world screen entities or discovery flags."
     - "The Regions.xml Sosaria facet rectangle scan found no named region containing Point3D(1210,1326,0)."
   animal_interaction:
     - "PacketHandlers.SingleClick finds a mobile by serial, requires from.CanSee(m), and requires Utility.InUpdateRange(from,m) before calling OnSingleClick."
@@ -1156,6 +1364,54 @@ evidence:
     - "Run 50: SkillCheck.Mobile_SkillCheckTarget calculated Druidism chance 0.0 at value 0.0, so the success result was simulated as false; SkillCheck.CheckSkill still called Gain because skill.Base < 10.0."
     - "Run 50: SkillCheck.Gain used the simulated Utility.Random(4)+1 branch of 2 fixed points, raising Druidism base/value from 0.0 to 0.2. Druidism has only Int stat gain metadata, and the Int stat-gain random branch was simulated as no gain."
     - "Run 50 result: m_BeingTamed still contains fox->Mira Vale, timer count is 1 of 3, the fox remains wild/uncontrolled/not a follower, and the final Taming CheckTargetSkill roll has not run."
+    - "Run 51: Taming.InternalTimer.OnTick incremented m_Count to 2, checked range 6, alive state, visibility/LOS/pathing, Tamable, Controlled, owner cap, subdual, and post-start damage, then entered the non-final m_Count < m_MaxCount branch."
+    - "Run 51: the non-final timer branch called RevealingAction, sent the simulated public overhead taming speech 'Nice and easy...', and because the fox was not already owned, called CheckTargetSkill(SkillName.Druidism, fox, 0.0, 125.0)."
+    - "Run 51: Mobile.CheckTargetSkill widened max 125.0 to 126.0 before dispatching through XmlSpawnerSkillCheck to SkillCheck.Mobile_SkillCheckTarget."
+    - "Run 51: SkillCheck.Mobile_SkillCheckTarget calculated Druidism chance about 0.16% at value 0.2, so the success result was simulated as false; SkillCheck.CheckSkill still called Gain because skill.Base < 10.0."
+    - "Run 51: SkillCheck.Gain used the simulated Utility.Random(4)+1 branch of 3 fixed points, raising Druidism base/value from 0.2 to 0.5. Druidism has only Int stat gain metadata, and the Int stat-gain random branch was simulated as no gain."
+    - "Run 51 result: m_BeingTamed still contains fox->Mira Vale, timer count is 2 of 3, the fox remains wild/uncontrolled/not a follower, and the final Taming CheckTargetSkill roll has not run."
+    - "Run 52: Taming.InternalTimer.OnTick incremented m_Count to 3, passed the same maintenance gates, entered the final branch, called RevealingAction, reset NextSkillTime, and removed m_BeingTamed before rolling final skill checks."
+    - "Run 52: the final branch passively called CheckTargetSkill(Druidism, fox, 0.0, 125.0); Mobile.CheckTargetSkill widened max to 126.0, the Druidism success roll at value 0.5 was simulated as false, and SkillCheck.Gain raised Druidism from 0.5 to 0.7 through under-10 gain."
+    - "Run 52: final Taming used minSkill -15.3, added 24.9, applied Druidism/5 as a 0.14 modifier, then called CheckTargetSkill(Taming, fox, -15.54, 34.6). The roughly 31% success roll was simulated as failed, but SkillCheck.Gain raised Taming from 0.0 to 0.2 through under-10 gain."
+    - "Run 52 result: the fox sent message 502798, 'You fail to tame the creature.' SetControlMaster did not run, Owners did not change, follower accounting did not change, and the fox remains wild/uncontrolled/not a follower."
+    - "Run 53: PacketHandlers.ContextMenuRequest found fox serial 200274, verified same map and CanSee, accepted Utility.InUpdateRange at dx=1,dy=2, passed CheckContextMenuDisplay, constructed ContextMenu, and set from.ContextMenu because entries existed."
+    - "Run 53: ContextMenu called BaseCreature.GetContextMenuEntries for the fox. Because the fox remains m_bTamable true, m_bControlled false, and Mira is alive, GetContextMenuEntries added TameEntry."
+    - "Run 53: TameEntry is localization 6130 with range 6 and stayed enabled for Mira's female character. No ContextMenuResponse was sent, so TameEntry.OnClick, UseSkill(Taming), Target.Invoke, Taming.OnTarget, m_BeingTamed, skill gain, owner mutation, and follower accounting did not run."
+    - "Run 54: ContextMenuResponse selected the visible reopened fox Tame row, cleared from.ContextMenu, found the same visible fox entity, and passed TameEntry range 6 at dx=1,dy=2."
+    - "Run 54: TameEntry.OnClick set TargetLocked and DisableMessage, UseSkill(Taming) set a six-hour NextSkillTime and created InternalTarget, and Target.Invoke accepted the fox inside range 2."
+    - "Run 54: Taming.OnTarget again passed the fox gates because Fox is tamable, uncontrolled, allows female tamers, uses one control slot, does not require subdual, has no owner cap issue, and Mira's Taming 0.2 is above Fox.MinTameSkill -15.3."
+    - "Run 54 result: Taming stored m_BeingTamed[fox]=Mira Vale again, sent the start-taming overhead emote, and started a second InternalTimer with four simulated ticks. It did not yet run timer speech, Druidism gain, final CheckTargetSkill, SetControlMaster, owner list mutation, follower accounting, or pet state."
+    - "Run 55: Taming.InternalTimer.OnTick incremented m_Count to 1, checked range 6, alive state, visibility/LOS/pathing, Tamable, Controlled, owner cap, subdual, and post-start damage, then entered the non-final m_Count < m_MaxCount branch."
+    - "Run 55: the non-final timer branch called RevealingAction, sent the simulated public overhead taming speech 'See? Nothing to be afraid of...', and because the fox was not already owned, called CheckTargetSkill(SkillName.Druidism, fox, 0.0, 125.0)."
+    - "Run 55: Mobile.CheckTargetSkill widened max 125.0 to 126.0 before dispatching through XmlSpawnerSkillCheck to SkillCheck.Mobile_SkillCheckTarget."
+    - "Run 55: SkillCheck.Mobile_SkillCheckTarget calculated Druidism chance about 0.56% at value 0.7, so the success result was simulated as false; SkillCheck.CheckSkill still called Gain because skill.Base < 10.0."
+    - "Run 55: SkillCheck.Gain used the simulated Utility.Random(4)+1 branch of 1 fixed point, raising Druidism base/value from 0.7 to 0.8. Druidism has only Int stat gain metadata, and the Int stat-gain random branch was simulated as no gain."
+    - "Run 55 result: m_BeingTamed still contains fox->Mira Vale, timer count is 1 of 4, the fox remains wild/uncontrolled/not a follower, and the final Taming CheckTargetSkill roll has not run."
+    - "Run 56: Taming.InternalTimer.OnTick incremented m_Count to 2, checked range 6, alive state, visibility/LOS/pathing, Tamable, Controlled, owner cap, subdual, and post-start damage, then entered the non-final m_Count < m_MaxCount branch."
+    - "Run 56: the non-final timer branch called RevealingAction, sent the simulated public overhead taming speech 'Easy...easy...', and because the fox was not already owned, called CheckTargetSkill(SkillName.Druidism, fox, 0.0, 125.0)."
+    - "Run 56: Mobile.CheckTargetSkill widened max 125.0 to 126.0 before dispatching through XmlSpawnerSkillCheck to SkillCheck.Mobile_SkillCheckTarget."
+    - "Run 56: SkillCheck.Mobile_SkillCheckTarget calculated Druidism chance about 0.63% at value 0.8, so the success result was simulated as false; SkillCheck.CheckSkill still called Gain because skill.Base < 10.0."
+    - "Run 56: SkillCheck.Gain used the simulated Utility.Random(4)+1 branch of 2 fixed points, raising Druidism base/value from 0.8 to 1.0. Druidism has only Int stat gain metadata, and the Int stat-gain random branch was simulated as no gain."
+    - "Run 56 result: m_BeingTamed still contains fox->Mira Vale, timer count is 2 of 4, the fox remains wild/uncontrolled/not a follower, and the final Taming CheckTargetSkill roll has not run."
+    - "Run 57: Taming.InternalTimer.OnTick incremented m_Count to 3, checked range 6, alive state, visibility/LOS/pathing, Tamable, Controlled, owner cap, subdual, and post-start damage, then entered the non-final m_Count < m_MaxCount branch."
+    - "Run 57: the non-final timer branch called RevealingAction, sent the simulated public overhead taming speech 'Don't be afraid...', and because the fox was not already owned, called CheckTargetSkill(SkillName.Druidism, fox, 0.0, 125.0)."
+    - "Run 57: Mobile.CheckTargetSkill widened max 125.0 to 126.0 before dispatching through XmlSpawnerSkillCheck to SkillCheck.Mobile_SkillCheckTarget."
+    - "Run 57: SkillCheck.Mobile_SkillCheckTarget calculated Druidism chance about 0.79% at value 1.0, so the success result was simulated as false; SkillCheck.CheckSkill still called Gain because skill.Base < 10.0."
+    - "Run 57: SkillCheck.Gain used the simulated Utility.Random(4)+1 branch of 4 fixed points, raising Druidism base/value from 1.0 to 1.4. Druidism has only Int stat gain metadata, and the Int stat-gain random branch was simulated as no gain."
+    - "Run 57 result: m_BeingTamed still contains fox->Mira Vale, timer count is 3 of 4, the fox remains wild/uncontrolled/not a follower, and the final Taming CheckTargetSkill roll has not run."
+    - "Run 58: Taming.InternalTimer.OnTick incremented m_Count to 4, passed the same maintenance gates, entered the final branch, called RevealingAction, reset NextSkillTime, and removed m_BeingTamed before rolling final skill checks."
+    - "Run 58: the final branch passively called CheckTargetSkill(Druidism, fox, 0.0, 125.0); Mobile.CheckTargetSkill widened max to 126.0, the Druidism success roll at value 1.4 was simulated as false, and SkillCheck.Gain raised Druidism from 1.4 to 1.7 through under-10 gain."
+    - "Run 58: final Taming used minSkill -15.3, added 24.9, applied Druidism/5 as a 0.34 modifier after passive gain, then called CheckTargetSkill(Taming, fox, -15.74, 34.6). The roughly 31.7% success roll was simulated as successful, and SkillCheck.Gain raised Taming from 0.2 to 0.5 through under-10 gain."
+    - "Run 58 result: the fox sent message 502799, 'It seems to accept you as master.' The first-tame branch scaled fox skills to 90%, Owners added Mira Vale, SetControlMaster ran, ControlOrder became Come, follower accounting increased Mira's follower count from 0 to 1, and the fox is now controlled/unbonded/not mounted."
+  pet_command:
+    - "Mobile.DoSpeech first invokes global and region speech handlers, then collects nearby objects in regular speech range 15 for ordinary speech."
+    - "BaseCreature.HandlesOnSpeech returns true for the controlled fox because BaseAI.HandlesOnSpeech accepts alive owner speech for controlled, commandable creatures, and Mira is inside the fox's RangePerception."
+    - "BaseAI.OnSpeech checks owner/friend status, then processes all-command keywords before named commands; keyword 0x16C is all follow me."
+    - "The all follow me branch does not open a target cursor. On CheckControlChance success, it sets ControlTarget to the speaker and ControlOrder to Follow."
+    - "BaseCreature.GetControlChance returns 1.0 for this fox because MinTameSkill -15.3 is <= 29.1, so Run 59's command obedience is deterministic in the traced code."
+    - "BaseCreature.ControlOrder setter calls AI.OnCurrentOrderChanged; the Follow branch reveals the control master, sets CurrentSpeed to ActiveSpeed, plays the idle sound, sets Warmode=false, and clears Combatant."
+    - "Run 59 result: saying 'all follow me' changed fox serial 200274 from ControlOrder Come to Follow with ControlTarget Mira Vale. It did not run AI Obey/DoOrderFollow movement, use skills, open gumps, alter inventory, change hunger/thirst, change quests/discoveries, or start combat."
+    - "Run 60 result: the rejected player movement did not advance BaseAI.Obey or DoOrderFollow, so the fox remained ordered to Follow but did not prove pathing, protection, or body-blocking."
   computer_terminal:
     - "ComputerDatabase.OnDoubleClick checks from.InRange(GetWorldLocation(), 4); the player at Point3D(4109,3775,2) is within range of the item at 4108,3779,0."
     - "ComputerDatabase.OnDoubleClick closes any existing ComputerDatabaseGump, sends a new ComputerDatabaseGump, and plays sound 0x54D."
@@ -1200,6 +1456,7 @@ evidence:
     - "At Point3D(1214,1330,0), the post-move scan found no decorated trough, tub, barrel, map item water source, water-named static, or DrinkingFunctions.CheckWaterTarget static; the canteen was not used this run."
   crash_site_scouting:
     - "Mobile.Move checks deletion, bank box state, active spell movement, frozen/paralyzed state, CheckMovement, item/mobile OnMoveOver blockers, and Region.CanMove before movement succeeds."
+    - "MovementImpl.CheckMovement calls MovementImpl.Check on the forward tile before the move-over and region checks. Run 60 stopped here because the forward land blocked and no tile/item surface made moveIsOk true."
     - "Regions.xml defines the CrashRegion rectangle for 'the Crash Site' as x=4086,y=3745,width=60,height=60, so Point3D(4120,3775,2) remains inside the same named region."
     - "Because the old and new locations are in the same CrashRegion, this scouting move does not rerun CrashRegion.OnEnter or PlayerSettings.SetSpaceMan."
     - "Data/Decoration/Sosaria/decorate.cfg places Teleporter tiles at 4138,3769 through 4138,3773, each with PointDest=(1075,1312,2), Creatures=False, no source/destination effects, SoundID=0, and no delay."
@@ -1392,7 +1649,21 @@ evidence:
     - action: "Treat the newly opened close-range fox menu as a pet or active taming attempt"
       gate: "Historical run 48 only used PacketHandlers.ContextMenuRequest to open the visible fox context menu. Pet state still required selecting the visible row and then surviving the taming timer."
     - action: "Treat the active fox taming timer as a completed tame"
-      gate: "Run 50 has only reached the first non-final InternalTimer tick: m_BeingTamed still contains the fox, but the final CheckTargetSkill, SetControlMaster, owner list mutation, follower accounting, and pet state have not run yet."
+      gate: "Run 52 completed the InternalTimer, but the final Taming CheckTargetSkill failed. The timer removed m_BeingTamed and did not call SetControlMaster, mutate Owners, fill follower slots, or create pet state."
+    - action: "Treat the reopened fox context menu as a new active taming attempt"
+      gate: "Run 53 only requested PacketHandlers.ContextMenuRequest and opened an enabled Tame row. No ContextMenuResponse selected the row, so TameEntry.OnClick, Taming.OnUse, Target.Invoke, Taming.OnTarget, and m_BeingTamed did not run."
+    - action: "Treat the second fox Tame row press as a completed tame"
+      gate: "Run 54 only selected the visible row and started a second InternalTimer. Pet state still requires future timer ticks plus a successful final Taming CheckTargetSkill before SetControlMaster, Owners, or follower accounting can change."
+    - action: "Treat the first non-final tick of the second fox timer as a completed tame"
+      gate: "Run 55 only reached the m_Count < m_MaxCount branch of Taming.InternalTimer.OnTick. It spoke and passively checked Druidism, but did not run the final Taming CheckTargetSkill, SetControlMaster, Owners, or follower accounting paths."
+    - action: "Treat the second non-final tick of the second fox timer as a completed tame"
+      gate: "Run 56 only reached the m_Count < m_MaxCount branch of Taming.InternalTimer.OnTick. It spoke and passively checked Druidism, but did not run the final Taming CheckTargetSkill, SetControlMaster, Owners, or follower accounting paths."
+    - action: "Treat the third non-final tick of the second fox timer as a completed tame"
+      gate: "Run 57 only reached the m_Count < m_MaxCount branch of Taming.InternalTimer.OnTick. It spoke and passively checked Druidism, but did not run the final Taming CheckTargetSkill, SetControlMaster, Owners, or follower accounting paths."
+    - action: "Treat the newly tamed fox as shelter, water, or a safe-region unlock"
+      gate: "Run 58 only resolved Taming ownership/control/follower state. It did not create a water source, road, trainer, shelter, named region, tarot unlock, Lodoria discovery, Savage discovery, or PvP/PvE safety change."
+    - action: "Treat saying all follow me as proven pet movement or protection"
+      gate: "Run 59 only changed ControlTarget and ControlOrder through normal owner speech. BaseAI.Obey/DoOrderFollow movement, pathing, guarding, attacking, aggro response, and body-blocking were not advanced."
     - action: "Get Thuvia's help response from Point3D(3570,3416,0) without approaching"
       gate: "GoddessOfProtection prompts within 8 but her traced speech path requires closer range; the player moved to Point3D(3565,3414,0) before speaking."
     - action: "Become PvP or PvE by saying 'help'"
