@@ -1,0 +1,141 @@
+run_36_live_scan:
+  center: { map: "Sosaria", x: 1186, y: 1321, z: 0 }
+  range:
+    tiles: 18
+    shape: "rectangle"
+    x_min: 1168
+    x_max: 1204
+    y_min: 1303
+    y_max: 1339
+    width: 37
+    height: 37
+    source: "Data/System/Source/Map.cs GetMobilesInRange"
+  interpretation:
+    live_saved_spawns_visible: true
+    spawner_timers_started: false
+    note: "Snapshot was taken after World.Load() and before normal Initialize/timer startup."
+  visible_mobiles:
+    - serial: 224081
+      type: "Server.Mobiles.Hind"
+      name: "a deer"
+      location: { x: 1194, y: 1306, z: 0 }
+      spawner_id: 0
+      home: { x: 1209, y: 1292, z: 53 }
+      range_home: 58
+    - serial: 226270
+      type: "Server.Mobiles.Eagle"
+      name: "an eagle"
+      location: { x: 1198, y: 1310, z: 0 }
+      spawner_id: 0
+      home: { x: 1209, y: 1292, z: 53 }
+      range_home: 58
+    - serial: 444945
+      type: "Server.Mobiles.Eagle"
+      name: "an eagle"
+      location: { x: 1196, y: 1314, z: 0 }
+      spawner_id: 0
+      home: { x: 1209, y: 1292, z: 53 }
+      range_home: 58
+    - serial: 323473
+      type: "Server.Mobiles.Hind"
+      name: "a deer"
+      location: { x: 1203, y: 1316, z: 0 }
+      spawner_id: 0
+      home: { x: 1209, y: 1292, z: 53 }
+      range_home: 58
+    - serial: 200909
+      type: "Server.Mobiles.Horse"
+      name: "a horse"
+      location: { x: 1196, y: 1326, z: 0 }
+      spawner_id: 0
+      home: { x: 1209, y: 1292, z: 53 }
+      range_home: 58
+  visible_items:
+    []
+  invisible_transition_items:
+    []
+  active_spawners_touching_range:
+    - serial: 1075618303
+      location: { x: 1209, y: 1292, z: 53 }
+      running: true
+      spawn_id: 8989
+      home_range: 58
+      walking_range: 58
+      names:
+        - "BrownBear"
+        - "Elephant"
+        - "Fox"
+        - "Goat"
+        - "Gazelle"
+        - "Moose"
+        - "Ostrich"
+        - "Cheetah"
+        - "Hyena"
+        - "Giraffe"
+        - "MountainGoat"
+        - "ZebraRiding"
+      spawned_refs_in_range:
+        []
+    - serial: 1075638804
+      location: { x: 1209, y: 1292, z: 50 }
+      running: true
+      spawn_id: 8888
+      home_range: 58
+      walking_range: 58
+      names:
+        - "WolfDire"
+        - "Goblin"
+        - "GoblinArcher"
+        - "LionRiding"
+        - "Ratman"
+        - "Skeleton"
+        - "SkeletonArcher"
+        - "Tarantula"
+        - "TigerRiding"
+        - "Zombie"
+      spawned_refs_in_range:
+        []
+    - serial: 1075615710
+      location: { x: 1165, y: 1361, z: 33 }
+      running: true
+      spawn_id: 8989
+      home_range: 33
+      walking_range: 33
+      names:
+        - "Boar"
+        - "Gorilla"
+        - "Monkey"
+        - "PandaRiding"
+        - "Panther"
+        - "Toad"
+      spawned_refs_in_range:
+        []
+    - serial: 1075633268
+      location: { x: 1165, y: 1361, z: 30 }
+      running: true
+      spawn_id: 8888
+      home_range: 33
+      walking_range: 33
+      names:
+        - "Alligator"
+        - "Ape"
+        - "BullFrog"
+        - "GiantBat"
+        - "GiantRat"
+        - "GiantSpider"
+        - "Goblin"
+        - "GoblinArcher"
+        - "Gnome"
+        - "GnomeWarrior"
+        - "GnomeMage"
+        - "Kobold"
+        - "KoboldMage"
+        - "Mongbat"
+        - "Skeleton"
+        - "SkeletonArcher"
+        - "Snake"
+        - "TigerRiding"
+        - "TigerBeetleRiding"
+        - "Zombie"
+      spawned_refs_in_range:
+        []

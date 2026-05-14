@@ -1,0 +1,53 @@
+ccwm_live_state_snapshot:
+  generated_utc: "2026-05-14T01:46:54.1057819Z"
+  exporter: "Server.Custom.Confictura.CCWM.CCWMLiveStateExporter"
+  source: "root Saves/ loaded through World.Load()"
+  saves_read_only: true
+  automation_policy: "Reuse this committed snapshot until manually refreshed; do not re-export every run."
+  files:
+    spawners: "docs/CCWM/live-state/spawners.jsonl"
+    mobiles: "docs/CCWM/live-state/mobiles.jsonl"
+    items: "docs/CCWM/live-state/items.jsonl"
+    run_36_scan: "docs/CCWM/live-state/scans/run-36-1186-1321.yaml"
+  counts:
+    spawners: 17562
+    mobiles: 59342
+    interactable_world_items: 83512
+    world_mobiles_loaded: 64366
+    world_items_loaded: 661892
+  run_36_scan:
+    center: { map: "Sosaria", x: 1186, y: 1321, z: 0 }
+    range_tiles: 18
+    range_shape: "rectangle"
+    range_width: 37
+    range_height: 37
+    source_semantics: "Map.GetMobilesInRange(Point3D) uses Rectangle2D(x-18,y-18,37,37)."
+  maps:
+    - name: "Lodor"
+      map_id: 0
+      map_index: 0
+      file_index: 0
+    - name: "Sosaria"
+      map_id: 1
+      map_index: 1
+      file_index: 1
+    - name: "Underworld"
+      map_id: 2
+      map_index: 2
+      file_index: 2
+    - name: "SerpentIsland"
+      map_id: 3
+      map_index: 3
+      file_index: 3
+    - name: "IslesDread"
+      map_id: 4
+      map_index: 4
+      file_index: 4
+    - name: "SavagedEmpire"
+      map_id: 5
+      map_index: 5
+      file_index: 5
+    - name: "Atlantis"
+      map_id: 1
+      map_index: 6
+      file_index: 1

@@ -726,23 +726,23 @@ Next pressure:
 
 Grass is only orientation. I am still skillless, poor, carrying ten alien meat and an empty canteen, and now standing on the jungle/grass edge without a named road, settlement, NPC, or water source. The next honest move is another screen check before choosing a direction.
 
-## Run 36 - Trees Are Walls Too
+## Run 36 - The Woods Finally Move
 
-I start at `Point3D(1170,1321,0)`, with no gump open and no fixed person, chest, corpse, trough, tub, barrel, vendor, journal, road sign, or spawner home inside the 18-tile screen. The scan is not visually empty: it is grass and jungle, with leaves, trees, flowers, mushrooms, rocks, ferns, and fruit trees. But none of that is a thing I can click for food, water, safety, or directions. The canteen has no target either. There is no water-named static, no `CheckWaterTarget` ID, and no crafted fill source in the scan.
+I start at `Point3D(1170,1321,0)` under the old static-scan habit: no gump open, no fixed person, chest, corpse, trough, tub, barrel, vendor, journal, or road sign obvious in the tile files. That was the mistake. From this run forward, the live save snapshot is part of the screen. `.map` files explain where spawners came from; they do not decide whether the saved world is empty.
 
-So I try to keep moving east, but the screen pushes back again. The first east tile, `1171,1321`, is not open grass; it has an impassable apple tree. Farther along the same line, `1185,1321` has impassable rocks. I do not walk through either one. I jog one tile south to `1171,1322`, follow the clear grass east along `y=1322`, then cut back to `Point3D(1186,1321,0)`. No message appears, no region name appears, no gump opens, no item is used, and no hidden trigger is traced under the route.
+I still cannot walk straight east. The first east tile, `1171,1321`, is blocked by an impassable apple tree, and the same line hits impassable rocks at `1185,1321`. I jog one tile south to `1171,1322`, follow the clear grass east along `y=1322`, then step back to `Point3D(1186,1321,0)`. No message appears, no region name appears, no gump opens, no item is used, and no hidden trigger is traced under the route.
 
-The new screen is more grass than jungle now, but it is still wilderness. The `map1.mul` scan says the 18-tile box has 1195 grass tiles and 174 jungle tiles. The static scan finds 120 statics, led by leaves, trees, flowers, apple trees, rocks, ferns, peach trees, mushrooms, pear trees, walnut trees, walnut leaves, and fall leaves. `decorate.cfg` has no deterministic hit here. `towns.map`, `animals.map`, and `world.map` have no spawner home inside the visual box. The closest new source pressure I can name is still south, around `1165,1361`, outside the screen.
+The corrected post-action screen is not empty. The live export loaded root `Saves/` through `World.Load()` and then scanned the 37-by-37 client rectangle around `1186,1321,0`. I can now see five saved mobiles in range: deer at `1194,1306`, eagle at `1198,1310`, eagle at `1196,1314`, deer at `1203,1316`, and horse at `1196,1326`. There are no visible world items and no invisible transition item in this slice, but the nearby spawner pressure is real: an animal spawner at `1209,1292,53`, a hostile/world spawner at `1209,1292,50`, and two southern jungle spawners centered around `1165,1361`.
 
 Mechanical friction learned:
 
-- `Map.Sosaria` still resolves to file index `1`; this scan used `map1.mul`, `staidx1.mul`, `statics1.mul`, and `tiledata.mul`.
-- The pre-action screen around `1170,1321,0` has no deterministic visible mobile, fixed item, chest, corpse, vendor, crafted water source, named region, or `.map` spawner home.
+- `Map.Sosaria` still resolves to file index `1`; terrain/static attribution stays on `map1.mul`, `staidx1.mul`, `statics1.mul`, and `tiledata.mul`.
+- The live-state snapshot is now authoritative for visible saved entities. `docs/CCWM/live-state/scans/run-36-1186-1321.yaml` uses the server's rectangular 18-tile client range: x `1168..1204`, y `1303..1339`.
 - A direct east line from `1170,1321` is blocked immediately by an impassable apple tree at `1171,1321`, and later by rocks at `1185,1321`.
 - The chosen route stays on dry passable grass: `1171,1322` through `1185,1322`, then back to `1186,1321`.
-- The post-action scan around `1186,1321,0` has 120 statics and 33 impassable static blockers, but no deterministic interactives, no fill source, no spawner home, and no named region.
+- The post-action live scan sees animals, not help: two deer, two eagles, and a horse. No visible item, fill source, cave exit, settlement, named region, or usable object appears in this screen.
 - No hunger, thirst, skill, stat, inventory, quest, discovery, Lodoria, Savage, tarot, or PvP/PvE state changed.
 
 Next pressure:
 
-The grass is easier walking, not civilization. I still have ten alien meat, an empty canteen, no skills, no gold, and no visible help. The next move should scan again before drifting toward anything that looks built, named, moving, or usable.
+The woods are no longer just terrain. There is wildlife on screen and active spawner pressure nearby, but I still have ten alien meat, an empty canteen, no skills, no gold, and no visible help. The next move should treat moving creatures as part of the player experience before drifting toward anything built, named, or usable.
