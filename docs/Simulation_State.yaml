@@ -1,7 +1,7 @@
 schema:
   schema_version: 1
-  run_number: 28
-  last_updated: "2026-05-13T08:27:16.8727492-05:00"
+  run_number: 36
+  last_updated: "2026-05-13T17:06:42.4591838-05:00"
   source_paths_traced:
     - "Data/Scripts/System/Misc/CharacterCreation.cs"
     - "Data/Scripts/System/Misc/Settings.cs"
@@ -20,8 +20,12 @@ schema:
     - "Data/Scripts/System/Misc/Naming.cs"
     - "Data/Scripts/Mobiles/Base/BaseCreature.cs"
     - "Data/System/Source/Mobile.cs"
+    - "Data/System/Source/Movement.cs"
     - "Data/System/Source/Region.cs"
     - "Data/System/Source/Map.cs"
+    - "Data/System/Source/TileData.cs"
+    - "Data/System/Source/TileMatrix.cs"
+    - "Data/Scripts/System/Misc/Paths.cs"
     - "Data/Scripts/System/Misc/MapDefinitions.cs"
     - "Data/System/Source/Utility.cs"
     - "Data/System/Source/Skills.cs"
@@ -35,6 +39,7 @@ schema:
     - "Data/Scripts/Items/Food/Food.cs"
     - "Data/Scripts/Items/Food/Waterskin.cs"
     - "Data/Scripts/System/Misc/Spawning.cs"
+    - "Data/Scripts/Custom/XMLSpawner/XmlSpawner2.cs"
     - "Data/Files/map1.mul"
     - "Data/Files/tiledata.mul"
     - "Data/Files/staidx1.mul"
@@ -56,8 +61,14 @@ schema:
     - "Exact live movement smoothing for the eastward crash-site walk still needs client/server verification, but Map.Sosaria fileIndex=1 terrain confirms the route uses dry cave/exit terrain rather than map0 water."
     - "Exact terrain-adjusted passability for the final step onto the hidden crash-site teleporter row still needs live verification; the simulation uses the decorated tile at 4138,3773,1 as the stepped trigger."
     - "The destination at Point3D(1075,1312,2) has no named Regions.xml rectangle in the traced file; its terrain bucket is now resolved from map1 as grass outside a mountain/cave edge."
-    - "Several animal/world spawner ranges overlap the destination visual box, but live spawner realization, current creature positions, and immediate combat aggro are unavailable from static files."
-    - "Exact live movement/passability behavior after the hidden teleporter placed the player at Point3D(1075,1312,2) needs live verification before simulating a step, but the corrected map1 tile underfoot is dry passable grass at z=2."
+    - "At Point3D(1108,1308,0), animals.map line 602 and world.map line 385 put invisible PremiumSpawner homes inside the 18-tile visual box, but live materialization, current mobile positions, and immediate combat aggro remain unavailable from static files."
+    - "The east-northeast route from Point3D(1075,1312,2) to Point3D(1090,1306,0) has dry passable map1 grass/jungle land tiles and no blocking statics in the static scan, but live mobiles/items could still alter movement through OnMoveOver or aggro."
+    - "The shoreline route from Point3D(1090,1306,0) to Point3D(1108,1308,0) was statically routed around impassable water graphics, but exact live mobile/item blockers and aggro remain unresolved."
+    - "At Point3D(1122,1320,0), the static 18-tile scan has no .map spawner homes or deterministic decorated items, but live wandering mobiles from previous spawner envelopes remain unresolved."
+    - "At Point3D(1138,1320,0), the static 18-tile scan has no .map spawner homes or deterministic decorated items, but live wandering mobiles remain unresolved without server save state."
+    - "At Point3D(1154,1320,0), the static 18-tile scan has no .map spawner homes or deterministic decorated items; binary land data shows the jungle thinning into grass inside the visible range, but live wandering mobiles remain unresolved without server save state."
+    - "At Point3D(1170,1321,0), the static 18-tile scan has no .map spawner homes, deterministic decorated items, named region, or fill source; binary land data shows a jungle/grass edge, but live wandering mobiles remain unresolved without server save state."
+    - "At Point3D(1186,1321,0), the static 18-tile scan has no .map spawner homes, deterministic decorated items, named region, water/fill target, or visible mobile; binary land data is mostly grass with remaining tree/rock blockers, but live wandering mobiles remain unresolved without server save state."
   random_branches_chosen:
     - "Profession simulated as warrior, matching a normal creation profession path."
     - "Stats simulated as Str 50, Dex 20, Int 20, legal under the new-character 90-point cap."
@@ -84,6 +95,14 @@ schema:
     - "Corrected the prior mental scan: the crash-site teleporter row is mechanically traced but invisible to normal players because Teleporter sets Visible=false."
     - "Continued scouting east-northeast for water/help and unknowingly stepped onto the hidden Teleporter tile at simulated Point3D(4138,3773,1), which moved the player to Point3D(1075,1312,2) on Map.Sosaria."
     - "Corrected the post-exit terrain scan: Map.Sosaria uses fileIndex=1, so Point3D(1075,1312,2) is map1 tile 0x4 grass at z=2, not map0 water; the canteen was not retried after this correction."
+    - "Walked east-northeast toward visible static water graphics and stopped at simulated Point3D(1090,1306,0); the route was dry passable grass/jungle, and the canteen was not used yet."
+    - "Double-clicked the backpack empty canteen while standing at Point3D(1090,1306,0) within three tiles of visible water graphics; CheckWater found no accepted water target and Waterskin.OnDoubleClick sent the fill-source message."
+    - "Walked east-southeast from Point3D(1090,1306,0) to Point3D(1108,1308,0), following dry jungle tiles around the impassable static water graphics instead of trying to force a straight line through them."
+    - "Walked southeast/east from Point3D(1108,1308,0) to Point3D(1122,1320,0) through dry passable jungle, leaving the previously traced invisible PremiumSpawner homes outside the new 18-tile box."
+    - "Walked east from Point3D(1122,1320,0) to Point3D(1138,1320,0) through dry passable jungle and harmless foliage statics, with no visible fixed NPC, item, gump, or spawner home in the new scan."
+    - "Walked east from Point3D(1138,1320,0) to Point3D(1154,1320,0) through dry passable jungle after the current scan showed no visible fixed NPC, item, gump, corpse, chest, or spawner home."
+    - "Corrected the next-east route from Point3D(1154,1320,0): direct east is blocked by static 0x1778 rock at 1156,1320, so the visible route jogged south and continued east to Point3D(1170,1321,0) through passable jungle/grass."
+    - "Corrected the next-east route from Point3D(1170,1321,0): direct east is blocked by an impassable apple tree at 1171,1321 and later rocks at 1185,1321, so the visible route jogged south through y=1322 and returned to Point3D(1186,1321,0) on passable grass."
   random_branches_unresolved:
     - "The deleted starter food bag's ten Loot.RandomFoods() item classes remain historical unknowns."
     - "Which static spawners have materialized at exact live positions on a server tick."
@@ -111,10 +130,10 @@ account:
         unknown_ninth_world: false
 
 lifecycle:
-  stage: "post_crash_hidden_teleport_mountain_forest_edge"
-  last_action: "refreshed the destination terrain scan at Point3D(1075,1312,2), resolved Map.Sosaria through MapDefinitions to fileIndex=1, corrected the underfoot tile to dry passable map1 grass at z=2 with west and northwest/farther-north mountain pressure and east/south wilderness, and left the empty canteen unchanged because no visible or recognized fill source was present"
-  current_goal: "Orient outside the one-way cave exit, favor walkable grass/jungle away from mountain blockers, and keep looking for a real trough/tub/barrel/static water target before trying the empty canteen again."
-  elapsed_play_time: "about twenty-eight minutes of simulated walking, speech, one visible PvP/PvE gump reply, table approach, gypsy Talk, reading and paging tarot cards, drawing the Star card, arrival scanning, opening/reading the crash-site computer terminal, pressing one deterministic skin swatch, reading and closing the Medical Record, closing the terminal unchanged, testing the alien meat while already full, testing the empty canteen with no visible crash-site fill source nearby, taking one cautious eastward scouting walk, continuing into a hidden crash-site teleporter trigger, and correcting the destination scan to Map.Sosaria fileIndex=1 grass/mountain/forest-edge terrain"
+  stage: "post_crash_jungle_scouting"
+  last_action: "walked east-southeast around an impassable apple tree at Point3D(1171,1321,0), followed passable grass along y=1322, then jogged back north-east to Point3D(1186,1321,0) after the scan showed no visible fixed NPC, item, corpse, chest, spawner home, water target, or open gump"
+  current_goal: "Keep scanning for something built, named, moving, or mechanically usable; the new screen is mostly grass with trees and rocks, but still has no real canteen target, crafted water source, visible NPC, road, or settlement object."
+  elapsed_play_time: "about forty-six minutes of simulated walking, speech, one visible PvP/PvE gump reply, table approach, gypsy Talk, reading and paging tarot cards, drawing the Star card, arrival scanning, opening/reading the crash-site computer terminal, pressing one deterministic skin swatch, reading and closing the Medical Record, closing the terminal unchanged, testing the alien meat while already full, testing the empty canteen with no visible crash-site fill source nearby, taking one cautious eastward scouting walk, continuing into a hidden crash-site teleporter trigger, correcting the destination scan to Map.Sosaria fileIndex=1 grass/mountain/forest-edge terrain, walking east-northeast toward visible water graphics outside the cave, failing to fill the empty canteen from those scenery water statics, walking east-southeast around the impassable water graphics, walking southeast/east through dry jungle, walking east across harmless foliage statics, walking east until grass started appearing inside the jungle scan, jogging around an impassable rock to the first dry grass edge at Point3D(1170,1321,0), then detouring around an apple tree and rocks to Point3D(1186,1321,0)"
   session_marker: "run_1_first_login"
   login_status: "logged_in_after_character_creation"
   create_status: "created_player_mobile"
@@ -161,6 +180,14 @@ lifecycle:
     - "Waterskin.OnDoubleClick sent: You can only fill this at a water trough, tub, or barrel!"
     - "No new message is traced from the eastward walk because the player stayed inside the CrashRegion and did not step on a teleporter tile."
     - "The hidden teleporter row sent no player-facing message, sound, source effect, or destination effect; the move was silent in the traced decoration."
+    - "No new player-facing message is traced from the east-northeast wilderness walk toward the water graphics; no gump opened and no item was used."
+    - "Waterskin.OnDoubleClick sent: You can only fill this at a water trough, tub, or barrel!"
+    - "No new player-facing message is traced from the east-southeast shoreline walk to Point3D(1108,1308,0); no gump opened and no item was used."
+    - "No new player-facing message is traced from the southeast/east jungle walk to Point3D(1122,1320,0); no gump opened and no item was used."
+    - "No new player-facing message is traced from the eastward jungle walk to Point3D(1138,1320,0); no gump opened and no item was used."
+    - "No new player-facing message is traced from the eastward jungle walk to Point3D(1154,1320,0); no gump opened and no item was used."
+    - "No new player-facing message is traced from the rock-avoiding jungle/grass walk to Point3D(1170,1321,0); no gump opened and no item was used."
+    - "No new player-facing message is traced from the apple-tree/rock-avoiding grass walk to Point3D(1186,1321,0); no gump opened and no item was used."
   has_left_start_flow: true
 
 identity:
@@ -261,19 +288,20 @@ fate_tarot:
 
 location:
   map: "Map.Sosaria"
-  point3d: { x: 1075, y: 1312, z: 2 }
-  previous_point3d: { x: 4120, y: 3775, z: 2 }
+  point3d: { x: 1186, y: 1321, z: 0 }
+  previous_point3d: { x: 1170, y: 1321, z: 0 }
   trigger_point3d: { x: 4138, y: 3773, z: 1 }
-  region_name: "none matched in Data/System/XML/Regions.xml at 1075,1312"
+  region_name: "none matched in Data/System/XML/Regions.xml at 1186,1321"
   region_type: "default_or_unresolved_region"
   start_region_status: "left_start_flow_after_tarot_selection"
   nearby_known_npcs_items:
-    - "No deterministic decorated items were found inside the 18-tile destination scan around Point3D(1075,1312,2)."
-    - "No deterministic mobile home/current position was found inside the 18-tile destination scan, but multiple animals.map/world.map spawner ranges overlap the scan and could have live materialized entities."
-    - "Corrected binary map data shows the destination tile is dry passable grass at z=2, with impassable rock/grass pressure west and northwest/farther north and no item/static tile with a canteen water-target ID within 3 tiles."
-    - "No decorated water trough, tub, barrel, chest, corpse, or visible item-style water source was found near Point3D(1075,1312,2)."
-    - "The crash-site terminal, glow, and hidden teleporter row are no longer in visual range after the teleport."
-  land_bucket: "Land of Sosaria mountain/forest edge outside a one-way cave exit; center map1 land tile 0x4 grass is dry and passable at z=2, with impassable rock/grass west and northwest/farther north and grass/jungle wilderness east and south"
+    - "No deterministic decorated item, fixed mobile, or .map spawner home was found inside the 18-tile scan around Point3D(1186,1321,0)."
+    - "The prior northeast water graphics are now out of the scan; no accepted DrinkingFunctions.CheckWaterTarget ID or crafted trough/tub/barrel was found in the new scan."
+    - "Corrected binary map/static data shows direct east from Point3D(1170,1321,0) is blocked by an impassable apple tree at 1171,1321 and direct east near the target is blocked by rocks at 1185,1321; the normal route jogged through y=1322 before returning to Point3D(1186,1321,0)."
+    - "The new visible terrain is mostly grass: the 18-tile post-action scan has 1195 grass land tiles and 174 jungle land tiles."
+    - "No decorated trough, tub, barrel, chest, corpse, vendor, or usable item-style water source was found near Point3D(1186,1321,0)."
+    - "The crash-site terminal, glow, and hidden teleporter row remain out of visual range after the teleport."
+  land_bucket: "Land of Sosaria grass edge outside a one-way cave exit; center map1 land tile is dry grass at z=0, with jungle now only a smaller part of the 18-tile scan"
   time_bucket: "first login, after fate"
   safe_flags:
     guarded: "unknown"
@@ -285,10 +313,10 @@ location:
     crash_region_logout_delay: "not_in_crash_region_after_teleport"
 
 perception_visual_scan:
-  scan_center: { x: 1075, y: 1312, z: 2 }
-  pre_action_scan_center: { x: 4120, y: 3775, z: 2 }
+  scan_center: { x: 1186, y: 1321, z: 0 }
+  pre_action_scan_center: { x: 1170, y: 1321, z: 0 }
   trigger_scan_center: { x: 4138, y: 3773, z: 1 }
-  post_action_scan_center: { x: 1075, y: 1312, z: 2 }
+  post_action_scan_center: { x: 1186, y: 1321, z: 0 }
   map: "Map.Sosaria"
   radius_tiles: 18
   sources_searched:
@@ -297,6 +325,7 @@ perception_visual_scan:
     - "Data/Spawns/*.map"
     - "Data/Spawns/animals.map"
     - "Data/Spawns/world.map"
+    - "Data/Scripts/Custom/XMLSpawner/XmlSpawner2.cs"
     - "Data/XMLSpawn/*.xml"
     - "Data/Scripts/Custom/XMLSpawner/XmlExtras/Spawns/*.xml"
     - "Data/Scripts/Custom/RandomEncounters/RandomEncounters.xml"
@@ -322,32 +351,47 @@ perception_visual_scan:
     invalidated_prior_scan: "The prior map0/staidx0/statics0 read belonged to Map.Lodor fileIndex=0, not Map.Sosaria, and created the false water-underfoot conclusion."
   visible_terrain:
     - type: "LandTile"
-      name: "grass"
-      point3d: { x: 1075, y: 1312, z: 2 }
-      tile_id: "0x4"
+      name: "jungle"
+      point3d: { x: 1154, y: 1320, z: 0 }
+      tile_id: "0xAD"
       flags: []
-      status: "corrected Map.Sosaria/fileIndex=1 terrain; dry passable grass outside the cave exit"
+      status: "historical previous center from run 34; dry passable jungle before this rock-avoiding walk"
+    - type: "LandTile"
+      name: "grass"
+      point3d: { x: 1170, y: 1321, z: 0 }
+      tile_id: "0x5"
+      flags: []
+      status: "historical previous center from run 35; dry passable grass before this apple-tree/rock-avoiding walk"
+    - type: "LandTile"
+      name: "grass"
+      point3d: { x: 1186, y: 1321, z: 0 }
+      tile_id: "0x3"
+      flags: []
+      status: "corrected Map.Sosaria/fileIndex=1 terrain; dry passable grass after jogging around visible static blockers"
     - type: "LandTileCluster"
-      name: "west and northwest/farther-north mountain pressure"
-      radius_tiles: 5
-      status: "Immediate west 1074,1312 is 0x23A impassable grass at z=5. Direct north 1075,1311 is 0x5 passable grass at z=2, but the wider northwest and farther-north rows contain impassable rock/grass, including 1074,1311 as 0x23A at z=7 and 1075,1308 as 0x233 at z=4."
-    - type: "LandTileCluster"
-      name: "east and south wilderness"
+      name: "grass with trailing jungle edge"
       radius_tiles: 18
-      status: "Corrected map1 scan shows walkable grass near the player and grass/jungle wilderness increasing east/south; this is the outside side of a one-way cave exit."
+      status: "The post-action scan around Point3D(1186,1321,0) includes 1195 grass land tiles and 174 jungle land tiles inside the 18-tile box."
+    - type: "LandTileCluster"
+      name: "apple-tree/rock-avoiding movement route"
+      radius_tiles: 18
+      status: "The direct east tile 1171,1321 is blocked by an impassable apple tree and 1185,1321 is blocked by rocks, so the walked route used clear grass tiles at 1171,1322 through 1185,1322 before returning to 1186,1321."
   static_water_target_scan:
     range_tiles: 3
-    static_tile_count: 2
+    static_tile_count: "no water_or_fill_static_found_in_post_action_range_or_18_tile_scan"
     water_target_hits: []
-    result: "No map Item or StaticTile matched DrinkingFunctions.CheckWaterTarget within canteen fill range after the corrected staidx1/statics1 scan."
+    visible_non_target_water_graphics: []
+    result: "No decorated trough, tub, barrel, map item water source, or DrinkingFunctions.CheckWaterTarget static was found in the post-action visual scan around Point3D(1186,1321,0); the canteen was not used this run."
   wider_static_scan:
     range_tiles: 18
-    static_tile_count: 63
+    static_tile_count: 120
+    visible_water_graphic_count: 0
     water_target_hits: []
     directional_summary:
-      - "Land: immediate west is blocked, direct north/east/south are walkable grass, wider northwest/farther-north rows rise into impassable rock/grass, and east/south open into grass/jungle wilderness."
-      - "Statics: corrected staidx1/statics1 scan buckets 56 static tiles east and 7 north within 18 tiles; no west/south static bucket and no DrinkingFunctions.CheckWaterTarget ID hit."
-    result: "Corrected staidx1/statics1 scan finds ordinary cave-edge/wilderness statics in the wider screen but none use canteen fill target IDs."
+      - "Land: the route from Point3D(1170,1321,0) to Point3D(1186,1321,0) is dry passable grass after jogging south around a blocking apple tree and rocks."
+      - "Statics: corrected staidx1/statics1 scan around Point3D(1186,1321,0) finds 120 statics, led by leaves, tree, flowers, apple tree, rock, fern, peach tree, mushrooms, pear tree, walnut tree, walnut leaves, and fall leaves."
+      - "Spawners: no .map spawner home was found inside the new 18-tile box; the southern animals.map/world.map homes at 1165,1361 remain outside visual range."
+    result: "The new screen is still wilderness with no real fill source or deterministic visible NPC/item; binary land is now mostly grass with scattered tree/rock blockers, while live wandering positions remain unresolved."
   mechanically_traced_invisible_items:
     - type: "Teleporter"
       name: "hidden crash-site exit tile"
@@ -375,34 +419,30 @@ perception_visual_scan:
       status: "mechanically_decorated_invisible_trigger_stepped"
       interaction: "The simulated scouting walk stepped here; Teleporter.OnMoveOver called StartTeleport/DoTeleport and moved the player to PointDest=(1075,1312,2) on Map.Sosaria."
   potential_entities:
-    - type: "Overlapping animal spawner"
-      name: "animals.map line 237"
-      status: "home=(1090,1263), range=(32,32), possible Boar/Gorilla/Monkey/PandaRiding/Panther and tropical birds at the northern edge of the destination scan if live-spawned."
-    - type: "Overlapping animal spawner"
-      name: "animals.map line 602"
-      status: "home=(1124,1293), range=(42,42), possible Boar/Gorilla/Monkey/PandaRiding/Panther/Toad and tropical birds at the eastern edge of the destination scan if live-spawned."
-    - type: "Overlapping animal/world spawner"
-      name: "animals.map lines 1111,1163,1227 and world.map lines 706,758,834"
-      status: "Large wilderness ranges overlap the destination scan; possible animal/desert/jungle/hostile picks exist, but static files do not reveal current materialized positions."
-    - type: "Overlapping world spawner"
-      name: "world.map lines 204 and 385"
-      status: "Smaller jungle-style world spawner ranges overlap the scan edge and include hostile possibilities such as GiantRat, Skeleton, Snake, Zombie, Goblin/Kobold variants, and stronger table picks if live-spawned."
+    - type: "Southern animal spawner"
+      name: "animals.map line 603"
+      status: "home=(1165,1361,33) is outside the new 18-tile visual box around Point3D(1186,1321,0); the PremiumSpawner item itself is invisible, and live wandering creatures remain unresolved."
+    - type: "Southern world spawner"
+      name: "world.map line 386"
+      status: "home=(1165,1361,30) is outside the new 18-tile visual box around Point3D(1186,1321,0); hostile wilderness picks remain possible only as unresolved live state."
     - type: "Region lookup"
       name: "no named Regions.xml match"
-      status: "The traced Regions.xml rectangles did not contain Point3D(1075,1312,2); default region behavior and exact client label need live/server context."
+      status: "The traced Regions.xml rectangles did not contain Point3D(1186,1321,0); default region behavior and exact client label need live/server context."
     - type: "Corrected land terrain"
       name: "map1.mul land tiles"
-      status: "Resolved: Map.Sosaria uses fileIndex=1. Point3D(1075,1312,2) is dry passable grass at z=2, with mountain/rock pressure west and northwest/farther north and wilderness grass/jungle east/south."
+      status: "Resolved: Map.Sosaria uses fileIndex=1. Point3D(1186,1321,0) is dry passable grass at z=0, and the route from 1170,1321 to 1186,1321 uses passable grass after detouring around an apple tree at 1171,1321 and rocks at 1185,1321."
     - type: "Movement passability"
       name: "exact live tile Z/blocking"
-      status: "Mobile.Move delegates to CheckMovement for terrain and blocking; corrected binary land data shows the destination tile is passable grass at z=2, but any next step should still trace the target tile before being simulated."
-  scan_result_before_action: "At Point3D(4120,3775,2), no gumps were open. The deterministic crash-site terminal/glow were visible behind the player but out of use range, no deterministic mobiles or water sources were traced, and the previously noted teleporter row was corrected to mechanically present but invisible because Teleporter.Visible=false."
-  scan_result_after_action: "At Point3D(1075,1312,2), no deterministic visible items, mobiles, chests, corpses, troughs, tubs, barrels, or item/static water targets were found in the 18-tile entity/static scan. Corrected Map.Sosaria fileIndex=1 binary terrain shows dry grass underfoot, impassable rock/mountain pressure west and northwest/farther north, and grass/jungle wilderness east/south. Multiple animal/world spawner ranges overlap the scan, but live realization is unresolved."
-  scan_confidence: "high_for_map_file_resolution_and_binary_land; high_for_static_water_target_absence; medium_for_live_spawner_visibility"
+      status: "Mobile.Move delegates to CheckMovement for terrain and blocking; corrected binary land/static data shows the selected route and endpoint are passable, but live items/mobiles could still block or aggro."
+  scan_result_before_action: "At Point3D(1170,1321,0), no gumps were open. The corrected map1 scan showed dry grass underfoot, 740 jungle and 629 grass land tiles in range, no visible water/canteen target, no deterministic visible NPC/item/chest/corpse, no .map spawner home, and no named Regions.xml match. The direct east tile 1171,1321 was blocked by an impassable apple tree."
+  scan_result_after_action: "At Point3D(1186,1321,0), no deterministic visible item, mobile, chest, corpse, vendor, trough, tub, barrel, usable item-style water source, named region, or .map spawner home was found. The 18-tile land scan is mostly grass with 1195 grass and 174 jungle land tiles, plus 120 statics and 33 impassable static blockers."
+  scan_confidence: "high_for_map_file_resolution_binary_land_and_static_ids; high_for_no_decorated_items_or_spawner_homes_in_target_range; medium_for_live_spawner_visibility"
   unresolved_spawn_sources:
     - "Static .map spawners record home/range/count but not current live position."
     - "Saved XMLSpawner runtime state was not available."
     - "Region-based random encounter timers are not live-executed in this static simulation."
+    - "The scan can prove no .map spawner home is inside the new 18-tile box, but it cannot prove no creature wandered into or out of client range on a live server."
+    - "The eastward route proves only static passability; a live server could still materialize or path a mobile into the visual box between scans."
 
 vitals_status:
   alive: true
@@ -512,7 +552,7 @@ inventory_equipment:
     movable: false
     contents:
       - { type: "CookedBird", name: "cooked alien meat", amount: 10, hue: "0xB64", fill_factor_each: 10, loot_type: "normal", last_interaction: "double-click attempted while Hunger was 20; Food.FillHunger returned false before Consume(), so amount stayed 10", evidence: "PlayerSettings.SetSpaceMan creates CookedBird(10), sets Hue and Name, and AddToBackpack; Food.OnDoubleClick/Eat/FillHunger gate blocks eating at full hunger" }
-      - { type: "Waterskin", name: "empty canteen", amount: 1, item_id: "0x4971", weight: 1.0, last_interaction: "double-click attempted at the crash site before leaving; no map item/static tile with a CheckWaterTarget ID existed within 3 tiles, so Waterskin.OnDoubleClick sent the fill-source message and left item/thirst unchanged. The later post-exit map0 water inference was invalidated by corrected Map.Sosaria fileIndex=1 terrain and is no longer part of the chronological state.", evidence: "PlayerSettings.SetSpaceMan creates Waterskin, sets ItemID and Name; Waterskin treats 0x4971 as totally empty unless CheckWater finds a nearby item/static fill source." }
+      - { type: "Waterskin", name: "empty canteen", amount: 1, item_id: "0x4971", weight: 1.0, last_interaction: "double-click attempted at the crash site before leaving and again at Point3D(1090,1306,0) beside visible water graphics; neither position had a map item/static tile with a CheckWaterTarget ID within 3 tiles, so Waterskin.OnDoubleClick sent the fill-source message both times and left item/thirst unchanged.", evidence: "PlayerSettings.SetSpaceMan creates Waterskin, sets ItemID and Name; Waterskin treats 0x4971 as totally empty unless CheckWater finds a nearby item/static fill source." }
       - { type: "MedicalRecord", name: "Medical Record", amount: 1, data_patient: "Mira Vale", data_planet: "Alaunrae V", read_status: "opened/read via MedicalRecord.OnDoubleClick, then foreground MedicalRecordGump closed through normal close control", item_id: "unresolved_random_0x27FB_or_0x27FC", hue: "unresolved_random_medical_record_hue", evidence: "PlayerSettings.SetSpaceMan creates MedicalRecord and sets DataPatient to m.Name; SetupMedicalRecord generated DataPlanet; MedicalRecord.OnDoubleClick opened/read the gump; normal gump response closed the MedicalRecordGump without mutating the item" }
   equipped_items_by_layer:
     shirt: { type: "FancyShirt", name: "fancy shirt", evidence: "PlayerSettings.SetSpaceMan m.AddItem(new FancyShirt()) after RemoveMyClothes" }
@@ -659,6 +699,14 @@ timers_effects_cooldowns:
     - "CrashRegion.OnEnter called PlayerSettings.SetSpaceMan, which briefly moved through Point3D(7000,4000,0) on Map.Lodor before returning to the crash-site point."
     - "Run 26 walked east to simulated Point3D(4120,3775,2), still within the CrashRegion rectangle x=4086..4145,y=3745..3804. No region-entry effect reran and no teleporter OnMoveOver fired because the player stopped before x=4138."
     - "Run 27 continued east-northeast and stepped onto the hidden Teleporter tile at simulated Point3D(4138,3773,1). Teleporter.OnMoveOver fired, StartTeleport had zero delay, DoTeleport used the current map because MapDest was null, and MoveToWorld placed the player at Point3D(1075,1312,2) on Map.Sosaria."
+    - "Run 29 walked east-northeast from Point3D(1075,1312,2) to Point3D(1090,1306,0). The traced route stayed on dry passable map1 grass/jungle land tiles and did not cross a decorated teleporter, public door, region trigger, or visible item."
+    - "Run 30 double-clicked the backpack empty canteen from Point3D(1090,1306,0). No movement occurred; Waterskin.OnDoubleClick only sent the fill-source message because CheckWater found no accepted water target."
+    - "Run 31 walked east-southeast from Point3D(1090,1306,0) to Point3D(1108,1308,0), routing around impassable water statics and using only normal Mobile.Move/CheckMovement terrain movement."
+    - "Run 32 walked southeast/east from Point3D(1108,1308,0) to Point3D(1122,1320,0), staying on dry passable jungle tiles and leaving the prior invisible PremiumSpawner homes outside the new 18-tile box."
+    - "Run 33 walked east from Point3D(1122,1320,0) to Point3D(1138,1320,0), staying on dry passable jungle tiles; route statics mushrooms 0xD0D, leaves 0xD79, and snake plant 0xCA9 had no impassable flag."
+    - "Run 34 walked east from Point3D(1138,1320,0) to Point3D(1154,1320,0), staying on dry passable jungle tiles; no visible mobile/item move-over blocker, region trigger, gump, or item use was traced."
+    - "Run 35 walked around static 0x1778 rock at 1156,1320 by jogging south from Point3D(1154,1320,0), then east through clear map1 jungle/grass tiles to Point3D(1170,1321,0); no visible mobile/item move-over blocker, region trigger, gump, or item use was traced."
+    - "Run 36 walked around an impassable apple tree at 1171,1321 and rocks at 1185,1321 by using clear grass tiles along y=1322, then returned to Point3D(1186,1321,0); no visible mobile/item move-over blocker, region trigger, gump, or item use was traced."
 
 evidence:
   character_creation_path:
@@ -679,11 +727,12 @@ evidence:
     - "Map.GetItemsInRange and Map.GetMobilesInRange default to an 18-tile rectangle around the current Point3D."
     - "Data/Decoration/Sosaria/decorate.cfg places ComputerDatabase and GlowingLight named computer terminal at 4108,3779 near the crash-site arrival point."
     - "A static scan of the searched .map spawn files found no deterministic mobile home within 18 tiles of Point3D(4109,3775,2)."
-    - "A static destination scan around Point3D(1075,1312,2) found no deterministic decorated item coordinate and no deterministic mobile home/current position inside the 18-tile box."
+    - "A static destination scan around Point3D(1090,1306,0) found no deterministic decorated item coordinate and no deterministic mobile home/current position inside the 18-tile box."
     - "Data/Scripts/System/Misc/MapDefinitions.cs registers Map.Sosaria with mapIndex=1, mapID=1, and fileIndex=1, so binary Sosaria terrain/static scans must use map1.mul, staidx1.mul, and statics1.mul."
     - "The corrected Data/Files/map1.mul plus Data/Files/tiledata.mul scan decodes Point3D(1075,1312,2) as tile 0x4 grass at z=2, dry and passable; nearby west and northwest/farther-north pressure includes impassable rock or impassable grass, while direct north, east, and south remain walkable grass with east/south opening into grass/jungle wilderness."
-    - "Data/Files/staidx1.mul plus Data/Files/statics1.mul found two static tiles within 3 tiles and 63 static tiles within 18 tiles of Point3D(1075,1312,2), with no DrinkingFunctions.CheckWaterTarget ID hit."
-    - "animals.map lines 237, 602, 1111, 1163, and 1227 plus world.map lines 204, 385, 706, 758, and 834 have spawn ranges that overlap the Point3D(1075,1312,2) destination scan; they are potential live entities, not confirmed visible mobiles."
+    - "The route from Point3D(1075,1312,2) to Point3D(1090,1306,0) crosses dry passable map1 land tiles: grass at 1075-1084 and jungle at 1085-1090, with no blocking statics on the walked tiles."
+    - "Data/Files/staidx1.mul plus Data/Files/statics1.mul found 26 static tiles within 3 tiles and 329 static tiles within 18 tiles of Point3D(1090,1306,0). Six named water statics are within 3 tiles, but none match DrinkingFunctions.CheckWaterTarget."
+    - "Using the .map parser fields x=split[7], y=split[8], z=split[9], map=split[10], home=split[13], walking=split[14], only animals.map line 602 and world.map line 385 overlap the Point3D(1090,1306,0) scan when constrained to Map.Sosaria."
   computer_terminal:
     - "ComputerDatabase.OnDoubleClick checks from.InRange(GetWorldLocation(), 4); the player at Point3D(4109,3775,2) is within range of the item at 4108,3779,0."
     - "ComputerDatabase.OnDoubleClick closes any existing ComputerDatabaseGump, sends a new ComputerDatabaseGump, and plays sound 0x54D."
@@ -714,7 +763,14 @@ evidence:
     - "Waterskin.OnDoubleClick calls DrinkingFunctions.CheckWater(from, 3, out soaked) before any fill or drink branch."
     - "DrinkingFunctions.CheckWater scans map items and static tiles in range 3 for water-target item IDs; no decorated water trough, tub, barrel, or visible water source was found in the searched crash-site sources."
     - "Because the canteen was ItemID 0x4971 and no traced water source filled it first, Waterskin.OnDoubleClick sent 'You can only fill this at a water trough, tub, or barrel!' and did not change weight, item ID, name, thirst, stamina, poison, inventory, quests, discovery, location, Lodoria, or Savage state."
-    - "At the post-teleport destination, corrected Map.Sosaria terrain is dry grass rather than water; no canteen retry occurred there, and no map item/static tile target was found within 3 tiles."
+    - "At the post-teleport destination, corrected Map.Sosaria terrain is dry grass rather than water; no canteen retry occurred there."
+    - "At Point3D(1090,1306,0), static water graphics 0x1797, 0x179F, 0x17A1, 0x17A4, 0x17A6, and 0x17A8 are within 3 tiles, but DrinkingFunctions.CheckWaterTarget does not include those IDs. Double-clicking the empty canteen therefore sent the fill-source message again and did not change weight, item ID, name, thirst, stamina, poison, inventory, quests, discovery, location, Lodoria, or Savage state."
+    - "At Point3D(1108,1308,0), the prior water graphics are still visible in the wider screen but no water-named or CheckWaterTarget static is within the canteen's 3-tile range."
+    - "At Point3D(1122,1320,0), the canteen range-3 scan has 19 static tiles, no water-named static, and no CheckWaterTarget ID. The wider 18-tile scan sees nine non-target water graphics at 1118-1120,1331-1333, but they are too far away and still excluded from the allowlist."
+    - "At Point3D(1138,1320,0), the canteen range-3 scan has 26 static tiles, no water-named static, and no CheckWaterTarget ID. The wider 18-tile scan sees twelve non-target water graphics at 1145-1147,1306-1308 and 1120,1331-1333, but they are too far away and still excluded from the allowlist."
+    - "At Point3D(1154,1320,0), the post-move scan found no decorated trough, tub, barrel, map item water source, or DrinkingFunctions.CheckWaterTarget static; the canteen was not used this run."
+    - "At Point3D(1170,1321,0), the post-move scan found no decorated trough, tub, barrel, map item water source, or DrinkingFunctions.CheckWaterTarget static; the canteen was not used this run."
+    - "At Point3D(1186,1321,0), the post-move scan found no decorated trough, tub, barrel, map item water source, water-named static, or DrinkingFunctions.CheckWaterTarget static; the canteen was not used this run."
   crash_site_scouting:
     - "Mobile.Move checks deletion, bank box state, active spell movement, frozen/paralyzed state, CheckMovement, item/mobile OnMoveOver blockers, and Region.CanMove before movement succeeds."
     - "Regions.xml defines the CrashRegion rectangle for 'the Crash Site' as x=4086,y=3745,width=60,height=60, so Point3D(4120,3775,2) remains inside the same named region."
@@ -725,6 +781,14 @@ evidence:
     - "Teleporter.DoTeleport uses m.Map when MapDest is null or internal, so the decorated row with no MapDest kept the destination on Map.Sosaria."
     - "Teleporter.DoTeleport calls MoveToWorld(PointDest,map); for the triggered tile this placed the player at Point3D(1075,1312,2)."
     - "No deterministic .map spawner home was found inside the 18-tile box centered on Point3D(4120,3775,2); live save state and wandering positions remain unresolved."
+    - "The later outside walk toward water did not re-enter CrashRegion and did not call Teleporter.OnMoveOver; it only exercised normal Mobile.Move/CheckMovement terrain movement."
+    - "The shoreline scouting walk from Point3D(1090,1306,0) to Point3D(1108,1308,0) also used only normal Mobile.Move/CheckMovement terrain movement. The static route was passable only after routing around impassable water statics at 1092-1094,1304-1306."
+    - "The deeper jungle scouting walk from Point3D(1108,1308,0) to Point3D(1122,1320,0) also used only normal Mobile.Move/CheckMovement terrain movement. The selected route stayed on dry passable map1 jungle tiles and no Regions.xml rectangle matched the endpoint."
+    - "The eastward jungle scouting walk from Point3D(1122,1320,0) to Point3D(1138,1320,0) also used only normal Mobile.Move/CheckMovement terrain movement. The selected route stayed on dry passable map1 jungle tiles, crossed non-impassable foliage statics, and no Regions.xml rectangle matched the endpoint."
+    - "The eastward jungle scouting walk from Point3D(1138,1320,0) to Point3D(1154,1320,0) also used only normal Mobile.Move/CheckMovement terrain movement; a later corrected static audit found that the still-farther direct east tile 1156,1320 is blocked by static 0x1778 rock, so it was not used for the next route."
+    - "The rock-avoiding jungle/grass scouting walk from Point3D(1154,1320,0) to Point3D(1170,1321,0) also used only normal Mobile.Move/CheckMovement terrain movement. The selected route used clear tiles at 1155,1321, 1156,1321, 1158,1321, 1160,1321, 1162,1321, 1164,1321, 1166,1321, 1168,1321, and 1170,1321; no Regions.xml rectangle matched the endpoint."
+    - "The apple-tree/rock-avoiding grass scouting walk from Point3D(1170,1321,0) to Point3D(1186,1321,0) also used only normal Mobile.Move/CheckMovement terrain movement. The selected route avoided an impassable apple tree at 1171,1321 and rocks at 1185,1321 by using clear grass tiles along y=1322 before returning to 1186,1321; no Regions.xml rectangle matched the endpoint."
+    - "PremiumSpawner map imports create PremiumSpawner items at the .map coordinates and PremiumSpawner.InitSpawn sets Visible=false, so prior homes at animals.map line 602/world.map line 385 and southern homes at animals.map line 603/world.map line 386 are invisible source pressure, not visible NPCs or items."
   gypsy_table_walk:
     - "HelpMessage.OnMovement sends the gypsy Talk hint when a PlayerMobile is within 5 tiles of the 'gypsy help' item."
     - "ShardGreeterEntry.OnClick passed its table-coordinate branch because the player is at X=3567,Y=3404, then closed WelcomeGump/RacePotionsGump and opened GypsyTarotGump page 0."
@@ -829,12 +893,32 @@ evidence:
       gate: "Invalidated. The prior water read used map0.mul, but Map.Sosaria is registered with fileIndex=1. The corrected map1.mul tile is dry passable grass at z=2."
     - action: "Fill the empty canteen from the post-exit grass tile"
       gate: "The corrected screen has no visible trough, tub, barrel, or recognized item/static water target within three tiles, so there is no normal canteen-fill source at Point3D(1075,1312,2)."
+    - action: "Treat visible water graphics near Point3D(1090,1306,0) as a confirmed fill source"
+      gate: "Static tiles 0x1797, 0x179F, 0x17A1, 0x17A4, 0x17A6, and 0x17A8 are named water and visible within 3 tiles, but DrinkingFunctions.CheckWaterTarget does not include those IDs; the canteen was double-clicked from range and still sent the trough/tub/barrel message."
+    - action: "Walk straight east from Point3D(1090,1306,0) through the visible water graphics"
+      gate: "The direct east route crosses static water tiles at 1092-1094,1306 with impassable item flags; the normal walk had to route around them through dry jungle tiles."
+    - action: "Treat invisible PremiumSpawner homes near Point3D(1108,1308,0) as visible entities"
+      gate: "PremiumSpawner.InitSpawn sets Visible=false. The .map lines prove nearby spawn sources only, not a player-visible NPC, corpse, chest, or usable item."
+    - action: "Treat Point3D(1122,1320,0) as safe because no .map spawner home is inside the scan"
+      gate: "The static scan only proves no spawner home coordinate is inside the new 18-tile box; live wandering mobiles, save-state positions, and random encounters remain unresolved."
+    - action: "Fill the empty canteen from the water-looking statics south of Point3D(1122,1320,0)"
+      gate: "The visible water graphics at 1118-1120,1331-1333 are outside the canteen's three-tile range and still use IDs excluded by DrinkingFunctions.CheckWaterTarget."
+    - action: "Fill the empty canteen from the water-looking statics near Point3D(1138,1320,0)"
+      gate: "The visible water graphics at 1145-1147,1306-1308 and 1120,1331-1333 are outside the canteen's three-tile range and still use IDs excluded by DrinkingFunctions.CheckWaterTarget."
+    - action: "Walk straight east from Point3D(1154,1320,0) without adjusting for scenery"
+      gate: "Corrected statics1/tiledata data finds impassable static 0x1778 rock at 1156,1320, so the normal player route must step around it instead of treating the east line as open."
+    - action: "Walk straight east from Point3D(1170,1321,0) without adjusting for scenery"
+      gate: "Corrected statics1/tiledata data finds an impassable apple tree at 1171,1321 and impassable rocks at 1185,1321, so the normal player route must jog south through y=1322 instead of treating the east line as open."
+    - action: "Fill the empty canteen at Point3D(1170,1321,0)"
+      gate: "The post-action scan found no water, trough, tub, barrel, map item water source, or DrinkingFunctions.CheckWaterTarget static near Point3D(1170,1321,0), so no visible fill action was taken."
+    - action: "Fill the empty canteen at Point3D(1186,1321,0)"
+      gate: "The post-action scan found no water, trough, tub, barrel, map item water source, water-named static, or DrinkingFunctions.CheckWaterTarget static near Point3D(1186,1321,0), so no visible fill action was taken."
     - action: "Drink from or refill the empty canteen at the crash site without a water source"
       gate: "Waterskin.OnDoubleClick first needs CheckWater to find a nearby fill source for an empty ItemID 0x4971 canteen; no visible/decorated water trough, tub, barrel, or water source was traced near Point3D(4109,3775,2), so the action only sent the fill-source message."
     - action: "Deliberately choose a visible teleporter row from Point3D(4120,3775,2)"
       gate: "The Teleporter items are mechanically present at x=4138 but Teleporter.Visible is false, so a normal player cannot see/select the row as a visible lure. The move to PointDest=(1075,1312,2) happened only after normal scouting movement stepped onto the hidden tile."
     - action: "Treat overlapping destination spawner definitions as visible monsters"
-      gate: "animals.map/world.map ranges overlap the 18-tile destination scan, but static spawner definitions do not prove a live mobile has materialized or wandered into view."
+      gate: "animals.map line 602 and world.map line 385 previously placed invisible PremiumSpawner homes inside an older 18-tile scan, but they are outside the current Point3D(1186,1321,0) box; even when in range, static spawner definitions do not prove a live mobile has materialized or wandered into view."
     - action: "Get Thuvia's help response from Point3D(3570,3416,0) without approaching"
       gate: "GoddessOfProtection prompts within 8 but her traced speech path requires closer range; the player moved to Point3D(3565,3414,0) before speaking."
     - action: "Become PvP or PvE by saying 'help'"
