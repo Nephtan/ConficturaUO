@@ -1259,3 +1259,513 @@ Mechanical friction learned:
 Next pressure:
 
 The first southeast step is back on the table because the tile is grass, not water. The next honest move is to scan the same animal-crowded screen, remember that the world map points toward distant named places, and then take one legal movement step only after the live entities and the corrected terrain agree.
+
+## Run 61 - My Feet Remember Facing
+
+I start exactly where the audit left me: `Point3D(1210,1326,0)` on Sosaria grass, no gump, no context menu, no target cursor, no water source, no chest, no corpse, no sign, and no named region. The screen is still crowded with saved animals and empty of saved items. The fox at `1209,1324,0` is mine now and ordered to `Follow`, but it has not moved yet. The old grey wolf is still outside the 18-tile client rectangle by y-distance, so it is not a click target.
+
+The corrected terrain says the southeast tile at `1211,1327,0` is valid grass with zero statics. So I try to walk southeast.
+
+The shard catches me on a smaller truth than terrain: I was still facing northwest from the last real walk toward the fox. `Mobile.Move` only enters the real movement block when my current direction already matches the requested direction. This first southeast input changes my facing from `Direction.Up` to `Direction.Down`; it does not call `CheckMovement`, does not test the grass tile, does not run `OnMoveOver`, and does not ask `Region.CanMove`. My location stays `1210,1326,0`.
+
+Nearby creatures still get a movement notification pass with the old location equal to the same tile, but that does not prove pet pathing. The fox stays at `1209,1324,0`, still controlled, still ordered to `Follow`, and still untested as a moving companion. The next southeast input is the one that can finally step onto the corrected grass tile.
+
+Mechanical friction learned:
+
+- A normal movement key can be only a facing change if the character is not already facing that direction.
+- The corrected `map1.mul` result is still useful, but it has not been consumed by a full movement step yet.
+- Turning in place does not trigger item use, discovery, hunger/thirst changes, combat, skill gain, or pet follow movement.
+- `Map.GetObjectsInRange` movement notifications can still fire after the packet, but this run produced no player-facing effect from them.
+
+Next pressure:
+
+I am now facing southeast. The honest next move is to press southeast again and let the full movement path test the grass, blockers, region, and pet follow pressure.
+
+## Run 62 - The Second Press Actually Moves
+
+I start at `Point3D(1210,1326,0)`, already facing southeast. The screen is still not a road, a camp, or a town. The live snapshot gives me animals and empty grass: eagles, goats, deer, a swallow, a llama, my fox at `1209,1324`, the old horse to the west, and no saved world items. The grey wolf is still north of the screen, outside the client rectangle. The world map can tempt me with `Ruins` at `1303,1449`, `Mines of Morinia` at `1022,1372`, `Chamber of Bane` at `1427,1555`, and the west moongate at `1052,1570`, but those are overlay lures, not things I can click from the grass.
+
+I press southeast again.
+
+This time `Mobile.Move` does not stop at facing. My current direction already matches `Direction.Down`, so the real movement block runs. The forward tile `1211,1327`, and the two diagonal side-check tiles `1211,1326` and `1210,1327`, are all dry grass at z `0` with zero statics. There is no mobile or item standing on the destination tile in the live snapshot, and the traced region lookup still finds no named region to block the step. I move one tile to `Point3D(1211,1327,0)`.
+
+The step is progress, not rescue. The client rectangle shifts just enough to pull one more eagle onto the southeast-facing screen at `1229,1309`, while the grey wolf remains outside by y-distance `20`. My fox does not magically path on the same player movement call. Nearby mobiles receive `OnMovement`, but `BaseCreature.OnMovement` is not `BaseAI.Obey`; the controlled fox stays at `1209,1324`, still ordered to `Follow`, now dx `2`, dy `3`, waiting for a real AI tick to prove it can keep up.
+
+Mechanical friction learned:
+
+- A second movement input in the same direction is the one that enters `CheckMovement`; the first one only turned me.
+- Diagonal movement checks the forward tile and the adjacent side tiles before letting a player cut the corner. All three were passable grass with zero statics here.
+- Moving one tile shifts the visible rectangle. It revealed a corner eagle, but it did not reveal water, a road, a sign, a corpse, a chest, a trainer, or a named region.
+- Player movement notifications do not equal pet follow pathing. The fox still needs an AI `Obey`/`DoOrderFollow` tick before I can treat it as physically following.
+
+Next pressure:
+
+I am one tile southeast, still in open grass, with a follower behind me and no survival infrastructure in sight. The next honest move is to keep walking toward some navigable landmark while watching whether the fox actually moves on its own tick.
+
+## Run 63 - The Fox Thinks Close Enough Counts
+
+I stop for a beat at `Point3D(1211,1327,0)` instead of pretending my new pet is already useful. The screen is still crowded grass: eagles, goats, deer, a swallow, a llama, the old horse, and my fox northwest at `1209,1324`. There are still zero visible saved items in range. No water source, road, sign, shelter, trainer, corpse, chest, gump, context menu, or target cursor appears. The grey wolf is still just outside the client rectangle by y-distance `20`, which is far enough to worry about but not far enough to click.
+
+Then the fox gets its turn.
+
+The tick is real server behavior, but it is not heroic. The AI timer calls `OnThink`, sees the fox is controlled, and routes into `Obey`. Since the order is `Follow`, it reaches `DoOrderFollow` and measures the distance to me as a floored `3` tiles. The shard has `FriendsAvoidHeels` on, so the follow code does not blindly stack the pet under my boots. I simulate that random spacing branch as `FollowersMax = 7`, which makes the fox want to stay `2` to `3` tiles away. It is already at the outer edge of that band.
+
+So nothing moves. `WalkMobileRange` returns true before `DoMove` or pathfinding runs. The fox stays at `Point3D(1209,1324,0)`, still controlled, still ordered to `Follow`, still targeting me, and now carrying that random heel-spacing state. I saw the command become AI logic, but I did not see pathing. A pet that thinks it is close enough is not the same as a pet that has proven it can follow me through wilderness.
+
+Mechanical friction learned:
+
+- Controlled creature movement is timer-driven: `AITimer.OnTick` calls `OnThink`, then controlled mobiles use `Obey` instead of the uncontrolled `Think` path.
+- `OrderType.Follow` reaches `DoOrderFollow`, which only calls `WalkMobileRange` when the control target is valid and inside perception range.
+- With `FriendsAvoidHeels` enabled, `WalkMobileRange` mutates the pet's spacing target through `Utility.RandomMinMax(6,9)` instead of forcing heel-stacking.
+- This simulated spacing roll chose `7`, so the desired range became `2..3`; the fox's floored distance to me was already `3`, so no `DoMove`, `PathFollower`, terrain check, combat, skill, hunger, thirst, inventory, quest, discovery, or follower-count change ran.
+- The fox is still mine, but its actual terrain-following ability remains unproven until I move far enough that the spacing band forces a step.
+
+Next pressure:
+
+Waiting taught me why the fox did not close the gap. The honest next move is to keep walking toward a map-overlay landmark, probably the `Ruins` southeast of here, while treating the fox as a follower that may lag until the AI decides distance matters.
+
+## Run 64 - I Make the Fox Care About Distance
+
+I do not touch the llama, the eagle, or the old horse. They are on the screen, but none of them is food, water, shelter, a trainer, a sign, a chest, or a safe region. There is no open gump, no context menu, no target cursor, and no active taming timer. The world map is still only an overlay lure: `Ruins` sits southeast at `1303,1449`, closer than the other names, but it is not a thing I can click from this grass.
+
+So I keep moving.
+
+I am already facing southeast, which matters because the last pair of runs taught me how easily a movement key can be only a turn. This time `Mobile.Move` enters the real movement block immediately. The server-order terrain check uses Sosaria's file index `1`, not a guessed map file, and `GetLandTile` indexes the block by local y first. The forward tile `1212,1328` is grass at z `0` with zero statics. The diagonal side-check tiles `1212,1327` and `1211,1328` are also grass at z `0` with zero statics. No saved mobile or visible saved item occupies the destination tile, and the region file still gives me no named rectangle here.
+
+The step lands. I move from `Point3D(1211,1327,0)` to `Point3D(1212,1328,0)`. The screen shifts by one tile and gets a little less busy: the far corner eagle at `1229,1309` falls out of the 18-tile rectangle, leaving twelve visible saved animals and still zero visible saved items. The grey wolf remains outside the client rectangle by y-distance `21`. My fox does not move on this call. It is still at `1209,1324`, still controlled, still ordered to `Follow`, but the gap is now dx `3`, dy `4`, a floored distance of `5`.
+
+That last number is the point of the step. The previous AI tick decided distance `3` was close enough because the heel-spacing roll wanted `2..3`. After this movement, the fox is outside that band. I have not advanced the next AI tick yet, so I cannot claim it pathfinds, steps, teleports, fights, or catches up. I have only made the next tick interesting.
+
+Mechanical friction learned:
+
+- A movement input while already facing `Direction.Down` runs the full `Mobile.Move` path instead of stopping at a facing change.
+- Diagonal player movement still has to pass the forward tile and both side tiles; this step passed because all three decoded as dry grass with zero statics.
+- The client-range scan after the step has twelve visible saved animals and no visible saved items, so there is still no immediate water, road, sign, shelter, trainer, corpse, chest, or gump to distract me.
+- Player movement alone does not move the controlled fox. It only increases the follow pressure; the next `BaseAI.Obey` / `DoOrderFollow` tick is where physical pet pathing has to prove itself.
+
+Next pressure:
+
+The fox is now far enough away that its own spacing logic should no longer be satisfied. The honest next move is to pause for the next follow AI tick and see whether the pet walks, pathfinds, or fails to keep up.
+
+## Run 65 - The Fox Finally Takes a Step
+
+I stop at `Point3D(1212,1328,0)` and let the fox think. The screen is the same open grass, which is good and bad: twelve visible saved animals, zero visible saved items, no water, no road, no sign, no corpse, no chest, no shelter, no trainer, no gump, no context menu, and no target cursor. The llama and eagle are still close enough to be tempting, and the old horse is still west. My fox is the thing that matters now, because it is mine, ordered to `Follow`, and sitting behind me at `1209,1324`.
+
+The AI tick does not read like magic. `AITimer.OnTick` calls the fox's `OnThink`, then controlled state routes it into `Obey`. `OrderType.Follow` reaches `DoOrderFollow`, which measures the distance to me as a floored `5`. The earlier `FriendsAvoidHeels` roll is still `7`, so the fox wants to be `2..3` tiles away. Five is too far.
+
+So the fox tries the ordinary step: `Direction.Down`, southeast, toward me. The server-order `map1.mul` check says the start tile `1209,1324`, target tile `1210,1325`, and both diagonal side tiles are grass with zero statics. Because the mover is a creature, the diagonal rule only needs one side to pass, and both do. No saved mobile or item is standing on the target tile, and no named region block appears. The fox moves one tile to `Point3D(1210,1325,0)`.
+
+That is useful, but it is not a promise. I have proven one pet follow step on open grass. I have not proven pathfinding through blockers, hostile aggro response, guarding, attacking, body-blocking, or that the fox will save me from the next wolf. My own location, hunger, thirst, inventory, skills, discovery flags, PvP/PvE state, ownership, and follower count do not change.
+
+Mechanical friction learned:
+
+- Player movement and pet movement are separate clocks. The fox only moved when its AI timer advanced.
+- `FriendsAvoidHeels` can intentionally keep a pet off my heels; with spacing `7`, the desired band is `2..3` tiles.
+- Once the fox was at floored distance `5`, `WalkMobileRange` called `DoMove` instead of returning early.
+- A controlled creature's diagonal movement is less strict than a player's corner cut: at least one side tile must pass, not both.
+- One clean grass step is not a general pet-pathing guarantee.
+
+Next pressure:
+
+The fox is close again. I can keep walking toward the map-overlay lure at `Ruins`, but every few steps I need to check whether the pet actually keeps up and whether the empty grass turns into water, a road, shelter, or danger.
+
+## Run 66 - I Walk, the Fox Does Not
+
+I start at `Point3D(1212,1328,0)`, facing southeast, with no gump, no context menu, no target cursor, and no active taming timer. The screen is still mostly animals and nothing useful: goats, eagles, deer, a swallow, a llama, the old horse, my fox, and no saved world items. The world map keeps whispering `Ruins` southeast at `1303,1449`, but that marker is a map overlay, not a road under my boots and not a thing I can click.
+
+So I take one more southeast step.
+
+This time there is no facing trick. I am already facing `Direction.Down`, so `Mobile.Move` goes into the real movement path. The server-order map read uses Sosaria's file index `1`: the forward tile `1213,1329` is grass, and the two diagonal side-check tiles `1213,1328` and `1212,1329` are grass too. All three have zero statics. The live snapshot has no mobile or item standing on the destination, and the region scan finds no named rectangle to stop me. I move to `Point3D(1213,1329,0)`.
+
+The fox does not move with the keypress. That is the lesson, again. Player movement sends nearby movement notifications, but it is not a pet AI tick. The fox stays at `Point3D(1210,1325,0)`, still controlled, still ordered to `Follow`, and now back at a floored distance of `5` from me. The northern edge eagle drops out of the client rectangle, leaving eleven visible saved animals and still zero visible saved items. No hunger, thirst, combat, skill, inventory, quest, discovery, tarot, PvP/PvE, ownership, or follower count changes.
+
+Mechanical friction learned:
+
+- A movement input while already facing `Direction.Down` runs the full player movement path.
+- Player diagonal movement requires the forward tile and both side-check tiles to pass; this step passed on grass with zero statics.
+- The world-map `Ruins` marker is useful direction, not in-world proof of shelter, safety, or discovery.
+- A controlled follower does not move during my movement call. The next honest check is a future `BaseAI.Obey` / `DoOrderFollow` tick.
+
+Next pressure:
+
+The fox is lagging again by exactly enough for the heel-spacing code to care. I can keep walking toward the marker, but the clean next thing to learn is whether the fox takes another follow step or starts failing behind me.
+
+## Run 67 - The Fox Keeps Its Distance
+
+I stay at `Point3D(1213,1329,0)` and let the pet clock tick instead of mashing southeast again. The screen is still all animal shapes and no supplies: two goats, three eagles, two deer, a swallow, a llama, the old horse, and my fox. There are still zero visible saved items, no canteen fill target, no road, no sign, no corpse, no chest, no gump, no context menu, and no target cursor. The grey wolf is still beyond the update rectangle. The `Ruins` marker on the world map keeps giving me a direction, but it is not an entity on the grass.
+
+The fox thinks the same way it did before. `AITimer.OnTick` calls `OnThink`, the controlled state routes into `Obey`, and the `Follow` order reaches `DoOrderFollow`. My last step put the fox at a floored distance of `5`, and its remembered `FriendsAvoidHeels` spacing still wants `2..3`. Five is too far, so it tries to close the gap.
+
+It takes the plain southeast step: from `Point3D(1210,1325,0)` to `Point3D(1211,1326,0)`. The server-order `map1.mul` read says the start tile, target tile, and both diagonal side tiles are grass at z `0` with zero statics. Because the mover is a creature, one clear side tile would have been enough; both are clear. No saved mobile or item occupies the target, and no named region block appears. The fox moves, ending at dx `2`, dy `3`, floored distance `3` from me.
+
+That is two successful follow steps on open grass, not proof of protection. The fox did not attack, guard, body-block, find water, reveal a road, trigger a discovery flag, or make the wilderness safe. It just kept itself in the follow band.
+
+Mechanical friction learned:
+
+- Pet movement is still timer-driven; waiting advanced `BaseAI.Obey` / `DoOrderFollow`, while my character did not move.
+- The `FriendsAvoidHeels` spacing value stayed at `7`, so the fox still wanted to hover `2..3` tiles away instead of stacking on me.
+- A second clean pet step confirms the local grass is easy terrain, but only for this exact tile and moment.
+- No hunger, thirst, combat, skill, inventory, quest, discovery, tarot, PvP/PvE, ownership, follower count, gump, or context-menu state changed.
+
+Next pressure:
+
+The fox is close again. The next honest move is to keep walking southeast toward the map-marker lure while continuing to treat the empty grass, hidden spawner pressure, and future pet pathing as unresolved.
+
+## Run 68 - Another Step, Another Lag
+
+I start at `Point3D(1213,1329,0)`, facing southeast, with no gump, no context menu, no target cursor, and no active taming timer. The screen is still wildlife instead of help: goats, eagles, deer, a swallow, a llama, the old horse, and my fox. There are still zero visible saved items. No road, water, chest, corpse, sign, shelter, trainer, or named region appears. The `Ruins` marker is southeast on the client world map, but it is still just a navigation lure.
+
+So I press southeast again.
+
+This is a real movement input because I am already facing `Direction.Down`. `Mobile.Move` enters `CheckMovement`; the server-order `map1.mul` read puts the forward tile `1214,1330` on grass, and both diagonal side-check tiles `1214,1329` and `1213,1330` are grass too. All three have zero statics. The live snapshot has no mobile or item standing on the destination tile, and the region scan still gives me no named rectangle to block the step. I move one tile to `Point3D(1214,1330,0)`.
+
+The fox does not move with me. It stays at `Point3D(1211,1326,0)`, still controlled, still ordered to `Follow`, and now back at a floored distance of `5`. That means the next pet AI tick should care again, but this step did not run `BaseAI.Obey`, did not prove pathfinding, and did not make the animal protect me. The screen stays empty of supplies, and the hidden local spawner pressure remains only pressure until a saved mobile enters the update rectangle.
+
+Mechanical friction learned:
+
+- A normal southeast input while already facing southeast consumes the full player movement path.
+- Diagonal player movement still needs the forward tile and both side tiles to pass; this step passed on grass with zero statics.
+- Moving one tile does not advance the controlled fox's follow AI. It only stretches the spacing band again.
+- No hunger, thirst, combat, skill, inventory, quest, discovery, tarot, PvP/PvE, ownership, follower count, gump, or context-menu state changed.
+
+Next pressure:
+
+The fox is lagging by enough for the follow code to react. The clean next move is to pause for another pet AI tick, unless a live refresh puts a hostile or useful object on the screen first.
+
+## Run 69 - The Fox Catches the Band Again
+
+I do not keep walking just because the world map says `Ruins` is southeast. I stop at `Point3D(1214,1330,0)` and look at the actual screen first. The saved live slice is still a mess of animals and empty grass: goats, eagles, deer, a swallow, a llama, the old horse, and my fox. There are still zero visible saved items, no water source, no road, no sign, no corpse, no chest, no shelter, no trainer, no gump, no context menu, and no target cursor. The old grey wolf is still north of the client rectangle by y-distance `23`, which makes it pressure rather than a legal click.
+
+The only thing that has a clean turn is the fox. It is behind me at `Point3D(1211,1326,0)`, still controlled, still ordered to `Follow`, and still carrying the `FriendsAvoidHeels` spacing value `7`. My last player step stretched it back to floored distance `5`, outside the `2..3` band.
+
+So I wait for the pet AI tick.
+
+The tick goes through the same ordinary chain: `AITimer.OnTick`, `OnThink`, controlled `Obey`, `DoOrderFollow`, then `WalkMobileRange`. The target is valid and close enough to perceive, so there is no teleport-to-master shortcut. Five tiles is too far for the remembered spacing band, so `WalkMobileRange` asks for `Direction.Down`, southeast toward me.
+
+The third real follow step is still just grass. The fox moves from `Point3D(1211,1326,0)` to `Point3D(1212,1327,0)`. Server-order `map1.mul` reads the start, target, and both diagonal side tiles as grass at z `0`, and `staidx1.mul` / `statics1.mul` find zero statics on all four tiles. No saved mobile or item occupies the target tile. Because the mover is a creature, one clear diagonal side would have been enough; both sides are clear. Mira does not move. The fox ends at dx `2`, dy `3`, floored distance `3`, exactly back in the follow band.
+
+Mechanical friction learned:
+
+- Waiting can be a real action when the moving object is a controlled pet on an AI timer.
+- `Follow` does not mean heel-stacking here. `FriendsAvoidHeels` keeps reusing the fox's spacing value, so the pet moves only when I stretch beyond `2..3` tiles.
+- Three clean pet steps prove this small patch of grass, not future pathfinding, guarding, combat help, or safety from hidden spawner pressure.
+- No hunger, thirst, combat, skill, inventory, quest, discovery, tarot, PvP/PvE, ownership, follower count, gump, context-menu, or player location state changed.
+
+Next pressure:
+
+The fox is close again, and the screen still has nothing useful except animal bodies and distant map-marker lures. The honest next move is to take another careful southeast step toward `Ruins`, then check whether the pet falls behind again.
+
+## Run 70 - My Step Makes the Fox Late Again
+
+I start at `Point3D(1214,1330,0)`, facing southeast, with the fox close behind at `Point3D(1212,1327,0)`. The screen still looks like open grass and animal bodies: two goats, three eagles, two deer, a swallow, a llama, the old horse at the far west edge, and my fox. There are still no visible saved world items, no water source, no chest, no corpse, no road, no sign, no trainer, no shelter, no open gump, no context menu, and no target cursor. The grey wolf is still outside the client rectangle, and the `Ruins` marker remains only a world-map direction southeast.
+
+So I press southeast again.
+
+This is a real step because I am already facing `Direction.Down`. `Mobile.Move` enters `CheckMovement`; the forward tile `1215,1331` is grass at z `0`, and the diagonal side-check tiles `1215,1330` and `1214,1331` are grass too. All three have zero statics. The live snapshot has no saved mobile or item standing on `1215,1331`, and the region scan still finds no named rectangle to stop me. I move to `Point3D(1215,1331,0)`.
+
+The fox does not move with the keypress. It stays at `Point3D(1212,1327,0)`, still controlled, still ordered to `Follow`, and now stretched back to dx `3`, dy `4`, floored distance `5`. The shifted client rectangle loses the far north goat, the far west eagle, and the old horse, leaving eight visible saved animals and still zero visible saved items. That smaller screen is not safer; it is just less crowded. No pet AI tick ran, so I cannot claim the fox pathfound, guarded, attacked, or protected me.
+
+Mechanical friction learned:
+
+- Repeating southeast while already facing southeast consumes the real player movement path.
+- Diagonal player movement still requires the forward tile and both side tiles; this step passed on map1 grass with zero statics.
+- A player movement step shifts the client rectangle and can drop visible creatures off-screen without despawning them.
+- The controlled fox still moves on its own AI timer, not during my movement call, so the next honest pressure is another follow tick.
+- No hunger, thirst, combat, skill, inventory, quest, discovery, tarot, PvP/PvE, ownership, follower count, gump, context-menu, or pet-order state changed.
+
+Next pressure:
+
+The fox is lagging by the same `2..3` heel-spacing rule that has been driving this little march. If nothing hostile or useful appears first, the clean next move is to pause again and see whether the fox takes the next southeast follow step.
+
+## Run 71 - The Fox Steps Back Into the Band
+
+I stay at `Point3D(1215,1331,0)` and look before I do anything clever. The live slice around me still has only animals and empty grass: a goat, two eagles, two deer, a swallow, a llama, and my fox. There are zero visible saved items, no water source, no road, no sign, no corpse, no chest, no shelter, no trainer, no open gump, no context menu, and no target cursor. The `Ruins` marker is still southeast on the world map, but the only thing on-screen with a real pending clock is the fox behind me.
+
+So I wait for the pet AI tick.
+
+The code does not teleport it or make it guard me. `AITimer.OnTick` calls the fox's `OnThink`, sees it is controlled, and sends it through `Obey`. `Follow` reaches `DoOrderFollow`; the target is still me, still in perception range, and the remembered `FriendsAvoidHeels` spacing value is still `7`, so the desired band is still `2..3` tiles. The fox is at dx `3`, dy `4`, floored distance `5`. That is too far.
+
+`WalkMobileRange` chooses `Direction.Down`, and this time the ordinary step passes. Server-order `map1.mul` reads the fox's start tile `1212,1327`, forward tile `1213,1328`, and both diagonal side tiles as dry grass at z `0`; `staidx1.mul` and `statics1.mul` find zero statics on all four. No saved visible mobile or item occupies `1213,1328`, and no named region rectangle catches it. The fox moves one tile southeast to `Point3D(1213,1328,0)`, ending at dx `2`, dy `3`, floored distance `3`.
+
+That is the fourth clean follow step on this grass. It still is not protection, pathfinding through blockers, combat help, or proof that the next hidden spawner pressure is safe. Mira does not move. No hunger, thirst, combat, skill, inventory, quest, discovery, tarot, PvP/PvE, ownership, follower count, gump, context-menu, or pet-order state changes.
+
+Mechanical friction learned:
+
+- Waiting can be a real chronological action when a controlled pet has an AI timer ready.
+- `Follow` with `FriendsAvoidHeels` keeps the fox near me but deliberately off my heels; distance `5` triggers movement, distance `3` satisfies the band.
+- A controlled creature's diagonal move still uses normal terrain and move-over checks, but non-player diagonal movement only needs one adjacent side tile to pass. Both side tiles passed here.
+- Four grass steps are still local evidence, not a general safety guarantee.
+
+Next pressure:
+
+The fox is close again and the screen still has no supplies. If no hostile or useful entity appears first, the next honest move is another cautious southeast step toward the `Ruins` overlay marker.
+
+## Run 72 - The Grass Lets Me Walk, Then Shows Teeth
+
+I start at `Point3D(1215,1331,0)`, already facing southeast, with the fox close again at `Point3D(1213,1328,0)`. The screen is still mostly empty grass with animal bodies scattered through it: a goat and eagle at the north edge, two deer, a swallow, a llama, another eagle, and my fox. There are zero visible saved items. No water source, road, sign, chest, corpse, trainer, shelter, gump, context menu, or target cursor appears. The `Ruins` marker still sits far southeast on the world-map overlay, but the overlay is not a walkable road or an in-world object.
+
+So I press southeast.
+
+Because I am already facing `Direction.Down`, this input enters the real `Mobile.Move` path. The forward tile `1216,1332` is dry grass at z `0`; the diagonal side-check tiles `1216,1331` and `1215,1332` are also grass, with zero statics on all three. Since I am a player, the diagonal rule has to pass both side tiles, not just one. It does. The live snapshot has no saved mobile or item standing on `1216,1332`, and the traced region lookup still has no named rectangle here. I move to `Point3D(1216,1332,0)`.
+
+The fox does not move with the keypress. It stays at `Point3D(1213,1328,0)`, still controlled, still ordered to `Follow`, and now stretched back to dx `3`, dy `4`, floored distance `5`. That means the next pet AI tick should care again, but it has not happened yet.
+
+The shifted screen matters more than the tile. The north-edge goat and eagle fall away, but a new shape appears at the far east edge: a saved `SwampDrakeRiding` at `Point3D(1234,1319,0)`, visible as a swamp drake at dx `18`, dy `13`. I do not know from the client whether that means opportunity, danger, or just another animal I cannot handle. I only know it is now on-screen and it is much more attention-grabbing than empty grass. No combat, skill, item use, hunger, thirst, quest, discovery, PvP/PvE, ownership, follower count, gump, or context-menu state changes.
+
+Mechanical friction learned:
+
+- A repeated southeast input while already facing southeast runs `Mobile.Move`, not just a facing turn.
+- Player diagonal movement still requires the forward tile and both adjacent side-check tiles to pass; this step passed on map1 grass with zero statics.
+- Player movement does not advance the controlled fox's follow AI, so the fox is lagging again outside the `2..3` heel-spacing band.
+- The update-range rectangle can introduce new pressure without any spawn tick: after the step, the saved swamp drake at the far east edge becomes visible.
+
+Next pressure:
+
+The fox is behind me and the swamp drake has appeared at the edge of the screen. The next honest move is to stop walking blindly, acknowledge the drake, and decide whether to wait for the fox, inspect the drake, or detour before I get closer.
+
+## Run 73 - The Label Is Not Safety
+
+I stop at `Point3D(1216,1332,0)` instead of stepping closer. The screen is not empty anymore: two deer, a swallow, a llama, an eagle, my lagging fox, and the new shape at the far east edge. The fox is still behind me at `Point3D(1213,1328,0)`, controlled and ordered to `Follow`, but outside the `2..3` heel band again at floored distance `5`. There are still zero visible saved items, no water, no road, no chest, no corpse, no trainer, no shelter, no gump, no context menu, and no target cursor.
+
+So I do the smallest normal-client inspection: I single-click the swamp drake.
+
+That works only because the server's update range is inclusive. The drake is at `Point3D(1234,1319,0)`, which is dx `18`, dy `13` from me. `PacketHandlers.LookReq` finds mobile serial `28109`, checks that I can see it, and accepts `Utility.InUpdateRange` because both axes are still within `±18`. The region single-click hook does not block it, so `BaseCreature.OnSingleClick` runs. Because the drake is uncontrolled, it does not show a tame/bonded overhead line. The inherited `Mobile.OnSingleClick` sends exactly the visible label: `a swamp drake`.
+
+The label is useful, but it is not a handshake. The class behind that label is not wildlife in the fox sense: `SwampDrakeRiding` is a `BaseMount` with melee AI, `FightMode.Closest`, poison breath, high stats, `Tamable = true`, `ControlSlots = 2`, and `MinTameSkill = 84.3`. None of that becomes mine or even becomes a visible menu from a single click. I do not attack it. I do not request a context menu. I do not start Taming. I do not move, and the fox does not get an AI tick.
+
+Mechanical friction learned:
+
+- The update-range edge is inclusive. A mobile at dx `18`, dy `13` can still be single-clicked.
+- Single-clicking an uncontrolled creature only proves the overhead name label unless that creature's click path adds more visible text.
+- The swamp drake is mechanically much more dangerous than the deer and fox class cluster, but the player action only revealed `a swamp drake`.
+- No combat, aggro tick, pet follow tick, taming attempt, ownership change, follower change, skill gain, item use, hunger/thirst change, quest flag, discovery flag, gump, context menu, or movement happened.
+
+Next pressure:
+
+The drake is identified and still far enough away to avoid provoking with movement. The fox is the immediate loose end again: wait for the follow tick, then decide whether to retreat or steer around the drake instead of walking toward it.
+
+## Run 74 - Let the Fox Catch Up Before I Flinch
+
+I do not take another step toward the drake. I am still at `Point3D(1216,1332,0)`, facing southeast, with the swamp drake labeled at the far east edge of the screen. The live slice is still all bodies and no supplies: two deer, a swallow, a llama, an eagle, the identified swamp drake, and my controlled fox. There are zero visible saved items, no water source, no chest, no corpse, no road, no sign, no trainer, no shelter, no gump, no context menu, and no target cursor. The nearest world-map lure is still `Ruins`, but that is overlay knowledge, not a road under my boots.
+
+The fox is the only thing with a clean clock. It is behind me at `Point3D(1213,1328,0)`, ordered to `Follow`, stretched out to dx `3`, dy `4`, floored distance `5`. That is outside the `FriendsAvoidHeels` band I have already watched the code enforce.
+
+So I wait.
+
+The tick runs the controlled path, not a new taming path: `AITimer.OnTick`, `OnThink`, `Obey`, `DoOrderFollow`, `WalkMobileRange`, then `DoMove`. The fox reuses its spacing value `7`, so it wants to sit `2..3` tiles from me. Distance `5` is too far, and `Direction.Down` points southeast toward me. The local grass cooperates again. Server-order `map1.mul` reads the fox start `1213,1328`, target `1214,1329`, and diagonal side tiles `1214,1328` and `1213,1329` as grass at z `0`; `staidx1.mul` and `statics1.mul` find zero statics on all four. No saved visible mobile or item occupies the target tile, and the Sosaria region scan finds no named rectangle there.
+
+The fox steps to `Point3D(1214,1329,0)`. Mira does not move. The drake is still only an identified edge threat, not a target, pet, mount, fight, or discovery. The fox is now back in the spacing band at dx `2`, dy `3`, floored distance `3`.
+
+Mechanical friction learned:
+
+- Waiting can be the right move when a controlled pet is already ordered to `Follow` and lagging outside its spacing band.
+- `FriendsAvoidHeels` is not cosmetic. With the fox's stored spacing value `7`, follow movement waits until the fox falls outside `2..3` tiles, then takes one normal movement step.
+- A controlled creature's diagonal move still checks terrain and move-over blockers. This step passed because the forward and side tiles were open grass with zero statics.
+- Catching the fox up does not prove guarding, attacking, body-blocking, aggro handling, or future pathfinding. It also does not test the swamp drake.
+- No player movement, drake AI, combat, taming, skill gain, hunger/thirst change, item use, quest, discovery, PvP/PvE, ownership, follower count, gump, context menu, or target cursor changed.
+
+Next pressure:
+
+The fox is close again, and the drake is still on the far edge. The next honest move is to choose a careful direction away from the drake or deliberately risk another visible inspection step, but not to pretend the label made it safe.
+
+## Run 75 - The First Flinch Is Only a Turn
+
+I am still at `Point3D(1216,1332,0)`. The fox is close again at `Point3D(1214,1329,0)`, ordered to `Follow`, and the swamp drake is still labeled at the far east edge at `Point3D(1234,1319,0)`. The live scan has the same seven saved animals and no saved items: two deer, a swallow, a llama, an eagle, my fox, and the swamp drake. No water, road, chest, corpse, shelter, trainer, gump, context menu, or target cursor is on the screen.
+
+I decide not to drift closer to the drake. I press southwest, trying to angle away from the east-edge threat while keeping the fox behind me. The code catches the embarrassing part: I was facing `Direction.Down`, so a southwest input is only a facing change to `Direction.Left`. `Mobile.Move` does not enter `CheckMovement`, does not test the southwest tile, and does not change my location. The client gets a movement acknowledgement, my facing changes, and the same nearby objects receive `OnMovement` notification with my old location still equal to my current tile.
+
+That notification matters but it is not combat. The swamp drake class says uncontrolled drakes reacquire on movement, so its `OnMovement` can call `ForceReacquire`, setting its next reacquire time to ready. But no drake AI tick is advanced in this action, and the notice-sound branch does not fire because I was already inside its 18-tile range before the turn. I do not get bitten, breathed on, targeted, chased, or warned. I also do not move far enough to stretch the fox again.
+
+Mechanical friction learned:
+
+- A normal movement packet routes through `PacketHandlers.MovementReq` and `Mobile.Move`.
+- Movement input is not always movement. If the masked current direction does not match the requested direction, `Mobile.Move` skips the terrain path and only sets direction.
+- Turning still sends movement notifications to nearby mobiles and movement-aware items, so visible monsters can become primed for future AI even when my coordinates do not change.
+- The swamp drake's `ReacquireOnMovement` is true only while it is uncontrolled. This turn can make its future AI reacquire check ready, but it does not itself run acquisition, set `Combatant`, move the drake, or use poison breath.
+- No player location, fox location, hunger, thirst, combat damage, skill, inventory, quest, discovery, tarot, PvP/PvE, ownership, follower count, gump, context-menu, or target state changed.
+
+Next pressure:
+
+I am now facing southwest, still on the same grass tile. If I press southwest again, that should be the real retreat step, but now I have to respect that the drake may be ready to reacquire on its next AI pulse.
+
+## Run 76 - The Second Flinch Actually Moves
+
+I start exactly where the failed retreat left me: `Point3D(1216,1332,0)`, now facing southwest. The screen still has the far-edge swamp drake at `1234,1319,0`, two deer, a swallow, a llama, an eagle, and my fox behind me at `1214,1329,0`. There are still zero visible saved items, no water, no road, no sign, no chest, no corpse, no shelter, no trainer, no gump, no context menu, and no target cursor. The drake is identified and probably primed for a future reacquire check, but no AI tick is running inside my keypress.
+
+So I press southwest again.
+
+This time it is a real step. `Mobile.Move` sees that my current direction already matches `Direction.Left`, so it enters `CheckMovement`. The forward tile is `1215,1333`, and the corrected server-order map read puts it on grass at z `1`. The two diagonal side-check tiles are `1216,1333` and `1215,1332`; both are grass with zero statics. Because I am a player, both side tiles have to pass. They do. The live-state slice has no saved mobile or item standing on the destination tile, and the Sosaria region scan finds no named rectangle there.
+
+I step to `Point3D(1215,1333,1)`. That single tile is enough to make the drake fall off the normal client rectangle: it is now dx `19`, dy `14`, so I cannot legally single-click it, request its context menu, or treat it as still on screen. That does not make it harmless. Run 75 already let its `OnMovement` path mark reacquire ready, and this movement notifies nearby mobiles again. It still does not advance the drake's AI, choose a combatant, move it, bite me, breathe poison, or play a notice sound.
+
+The fox does not move with me. It stays at `Point3D(1214,1329,0)`, still controlled and ordered to `Follow`, now at dx `1`, dy `4`, floored distance `4`. That is outside the `2..3` heel-spacing band, so the next pet AI tick should care. The screen after the step has six visible saved animals and no visible saved items. The drake is now pressure behind the edge, not a visible target.
+
+Mechanical friction learned:
+
+- A second southwest input while already facing `Direction.Left` runs the full player movement path.
+- `Direction.Left` moves one tile southwest, from `1216,1332` to `1215,1333`.
+- The southwest target tile steps up to z `1`; `CheckMovement` accepts the land step because the forward tile and both diagonal side tiles are passable grass with zero statics.
+- Leaving a monster's update rectangle is not the same as resolving its AI. Movement notifications can prime reacquire, but combat still waits on a later AI pulse.
+- Player movement does not advance the controlled fox's `Follow` AI, so the pet is now stretched outside its current spacing band again.
+
+Next pressure:
+
+The immediate screen no longer includes the drake, but the fox is lagging and the drake may still be awake just off-screen. The honest next move is to pause for the fox's follow tick or keep retreating while accepting that pet pathing and hostile AI are unresolved.
+
+## Run 77 - I Hold Still For One Pet Step
+
+I stop at `Point3D(1215,1333,1)` instead of immediately spamming southwest. The screen is quieter than it feels: two deer, a swallow, a llama, an eagle, and my fox are visible, with zero saved world items, no water, no road, no sign, no chest, no corpse, no shelter, no trainer, no open gump, no context menu, and no target cursor. The swamp drake I labeled is one x-tile outside the client rectangle at `Point3D(1234,1319,0)`. That means I cannot legally click it now, but it is not erased from the world or from my nerves.
+
+So I wait for the fox.
+
+This is a timer-order bet, not a safety spell. In this simulated beat, the fox's `AITimer` is the next visible thing I let resolve, while the off-screen drake's future AI tick stays unresolved. The controlled path runs through `OnThink`, `Obey`, `DoOrderFollow`, and `WalkMobileRange`. The fox is still ordered to `Follow`, still targeting me, and still using the stored `FriendsAvoidHeels` spacing value `7`, so it wants to sit `2..3` tiles away. From `Point3D(1214,1329,0)` to me it is dx `1`, dy `4`, floored distance `4`, which is too far.
+
+The direction calculation points it straight south, not southeast this time. `Direction.South` moves from `1214,1329` to `1214,1330`. Server-order `map1.mul` reads the start as grass tile `0x4` at z `0` and the target as grass tile `0x6` at z `0`; `staidx1.mul` and `statics1.mul` find zero statics on both tiles. The live snapshot has no saved visible mobile or item on the target tile, and no named Sosaria region catches the move. The fox steps to `Point3D(1214,1330,0)` and lands back in the spacing band at dx `1`, dy `3`, floored distance `3`.
+
+Mira does not move. The drake does not get a simulated AI tick, combatant, bite, breath, notice sound, or movement. That is the uncomfortable part: catching the fox up improves my screen, but it does not prove the off-screen drake is harmless.
+
+Mechanical friction learned:
+
+- Waiting can advance a controlled pet without moving the player, but timer ordering is a real uncertainty.
+- `GetDirectionTo` can change the follow step from diagonal to cardinal movement when the fox is mostly south of the target line.
+- A straight `Direction.South` follow step checks only the forward tile path, not player-style diagonal side tiles.
+- The fox following me is still not guarding, attacking, body-blocking, or solving hostile aggro.
+- No player movement, drake AI, combat, taming, skill gain, hunger/thirst change, item use, quest, discovery, PvP/PvE, ownership, follower count, gump, context menu, or target cursor changed.
+
+Next pressure:
+
+The fox is close again, but the drake is still a primed off-screen threat. The next honest move is another cautious retreat or a deliberate scan step, not pretending the pet step made the field safe.
+
+## Run 78 - One More Step Away From Teeth
+
+I start at `Point3D(1215,1333,1)`, already facing southwest. The fox is close at `Point3D(1214,1330,0)`, controlled and ordered to `Follow`, but only close because I waited for it. The screen is still wilderness, not help: two deer, a swallow, a llama, an eagle, my fox, and zero saved world items. No water, road, sign, chest, corpse, trainer, shelter, gump, context menu, or target cursor appears. The swamp drake I labeled is still just off the east edge at `1234,1319`, outside my legal click range from here.
+
+So I press southwest again.
+
+Because I am already facing `Direction.Left`, this keypress is not another turn. `Mobile.Move` enters the actual movement block and asks `MovementImpl.CheckMovement` about the southwest tile. The forward tile is `1214,1334`; the adjacent player diagonal checks are `1215,1334` and `1214,1333`. The server-order `map1.mul` read makes the forward tile flat grass at z `0`, and both side tiles are grass with zero statics. The live-state slice has no saved mobile or visible item on the destination or side-check tiles, and no named Sosaria region catches the move. The step is allowed.
+
+I move to `Point3D(1214,1334,0)`. That drops me another tile away from the drake: it is now dx `20`, dy `15`, still off-screen and still not resolved by AI. It also stretches the fox again. The fox does not move during my keypress; it stays at `Point3D(1214,1330,0)`, still ordered to `Follow`, now dx `0`, dy `4`, floored distance `4`. The shifted screen picks the old horse back up on the far west edge, giving seven visible saved animals and still no saved items. The drake is less clickable, not less real.
+
+Mechanical friction learned:
+
+- Repeating `Direction.Left` while already facing southwest consumes a real player movement step.
+- `Direction.Left` moves from `1215,1333,1` to `1214,1334,0`; the z drops back to flat grass.
+- Player diagonal movement again requires the forward tile and both adjacent side-check tiles to pass; all three passed with zero statics and no saved blocker.
+- Player movement does not advance the fox's `Follow` AI, so the pet is now outside its `2..3` heel-spacing band again.
+- Moving farther from a labeled hostile removes it from client range but does not execute or disprove its future AI, aggro, movement, melee, or breath.
+
+Next pressure:
+
+The drake is farther off-screen, but the fox is stretched again. The next honest move is to pause for the fox or keep retreating with the cost of leaving the pet lagging behind.
+
+## Run 79 - I Wait Until the Fox Is Not a Trail
+
+The written map already had me make the Run 78 southwest step, even though the persisted state lagged behind it. I accept that step as the real prior beat and start from `Point3D(1214,1334,0)`, facing southwest. The fox is behind me on the same x line at `Point3D(1214,1330,0)`, controlled, ordered to `Follow`, and stretched to floored distance `4`. The screen is still not help: two deer, a swallow, a llama, an eagle, the old horse at the far west edge, my fox, and zero saved world items. No water, road, sign, chest, corpse, trainer, shelter, gump, context menu, or target cursor appears. The swamp drake is now farther off-screen at dx `20`, dy `15`; I cannot legally click it, but I also have not made it harmless.
+
+So I stop again and let the fox tick.
+
+This is the same uncomfortable bargain as before. I am choosing the timer-order branch where the controlled fox's `AITimer` resolves before any off-screen drake AI. The fox is controlled, so the AI path goes through `Obey`, `DoOrderFollow`, and `WalkMobileRange` instead of a new taming or combat path. The stored `FriendsAvoidHeels` spacing value is still `7`, which means the desired band remains `2..3` tiles. Distance `4` is too far, so `WalkMobileRange` asks for movement toward me.
+
+Because the fox and I share x `1214`, `GetDirectionTo` points it straight `Direction.South`. The server-order `map1.mul` read says the start tile `1214,1330` is grass `0x6` at z `0`, and the target tile `1214,1331` is grass `0x4` at z `0`; `staidx1.mul` and `statics1.mul` find zero statics on both. The live snapshot has no saved mobile or visible saved item on `1214,1331`, and the Sosaria region file has no named rectangle here. `Mobile.Move` accepts the pet step.
+
+The fox moves to `Point3D(1214,1331,0)`. I do not move. The fox is close again at dx `0`, dy `3`, floored distance `3`, which satisfies the heel-spacing band. The old horse is still visible at the west edge and still not mine. The drake is still off-screen and unresolved. No drake AI, combat, breath, melee, notice sound, player damage, skill gain, item use, hunger/thirst change, quest, discovery, PvP/PvE state, ownership change, follower-count change, gump, context menu, or target cursor happens.
+
+Mechanical friction learned:
+
+- The map/state mismatch matters: Run 78 was already present in the map, so the next simulated state has to assimilate that movement before taking a new action.
+- Waiting can again be a real player choice when the controlled fox is outside its `2..3` follow band.
+- A straight south controlled-creature follow step only needed the forward tile to pass movement checks; the target tile was clear grass with zero statics and no saved blocker.
+- Keeping the fox close is not the same as guarding, attacking, body-blocking, or solving the off-screen swamp drake.
+- The visible horse returning at the west edge is only screen pressure. No click, context menu, taming attempt, or ownership path ran.
+
+Next pressure:
+
+The fox is close and the drake is farther off-screen, but I still have no water, road, shelter, or trainer. The honest next move is either another cautious retreat step away from the drake or a deliberate reorientation toward the `Ruins` marker while keeping the fox from stretching too far.
+
+## Run 80 - Turning Back Toward the Map Lure Is Not Walking
+
+I start at `Point3D(1214,1334,0)`, facing southwest, with no gump, no context menu, no target cursor, and no active taming timer. The screen is still more animal than help: two deer, a swallow, a llama, an eagle, the old failed horse at the west edge, and my controlled fox three tiles north. There are zero visible saved items, no water source, no road, no sign, no corpse, no chest, no trainer, and no shelter. The swamp drake I labeled earlier is not on the legal screen anymore; it sits at `1234,1319`, dx `20`, dy `15`, close enough to remember and too far to click.
+
+The world-map overlay still says the nearest named thing is `Ruins` at `1303,1449`. That is southeast. I do not want to keep sliding southwest forever just because a drake scared me, so I press southeast once to face the marker again.
+
+The keypress is not a step. `PacketHandlers.MovementReq` reads `Direction.Down` and calls `Mobile.Move`, but my current direction mask is still `Direction.Left`. Because those masks do not match, the movement block is skipped: no `CheckMovement`, no forward tile test, no diagonal side-check tiles, no `Region.CanMove`, no `InternalOnMove`, and no location change. The server still acknowledges the movement packet, calls `SetLocation` with the same point, and changes my facing to `Direction.Down`.
+
+That quiet turn still matters. The same-location movement notification loop can call `OnMovement` on nearby mobiles. The uncontrolled swamp drake remains outside my update range, but its `ReacquireOnMovement` code path is still the reason I do not treat turning as harmless world time. In this simulated beat I do not advance any drake AI timer, so there is no combatant, breath, bite, notice sound, or movement. The fox also does not get a follow tick and stays at `Point3D(1214,1331,0)`, still inside its `2..3` heel-spacing band.
+
+Mechanical friction learned:
+
+- A direction input can be only a facing change even when it is the direction I intend to travel next.
+- A turn does not prove the southeast tile `1215,1335`; that tile has not gone through `CheckMovement`.
+- Facing toward a world-map marker is not a discovery, teleport, road, or safety flag.
+- Movement notifications can still happen on a turn, but no visible monster AI, pet AI, combat, item, skill, quest, hunger, thirst, gump, context-menu, ownership, follower-count, or discovery path ran.
+
+Next pressure:
+
+I am now facing southeast again, with the fox close and the drake off-screen but unresolved. If the screen stays empty of useful objects, the next honest step is a real southeast movement check toward `Ruins`, not a claim that I have found the ruins or escaped the drake.
+
+## Run 81 - The Grass Lets Me Move, The Fox Does Not
+
+I start at `Point3D(1214,1334,0)`, facing southeast, with no gump, no context menu, no target cursor, and no active taming timer. The screen is still only wilderness pressure: two deer at the north edge, a swallow, a llama, an eagle, the old horse at the west edge, and my controlled fox three tiles north. There are still zero visible saved items, no water source, no road, no sign, no corpse, no chest, no trainer, and no shelter. The swamp drake I labeled earlier is still off-screen at `1234,1319`, dx `20`, dy `15`, so I cannot legally click it or prove it harmless.
+
+The world-map overlay still points southeast toward `Ruins` at `1303,1449`. That marker is not a road under my boots, but with nothing useful on-screen and the fox close enough, I press southeast again.
+
+This time it is a real step. `PacketHandlers.MovementReq` reads `Direction.Down`, and `Mobile.Move` sees that my current direction mask already matches. `MovementImpl.CheckMovement` tests the forward tile `1215,1335` and the player diagonal side tiles `1215,1334` and `1214,1335`. The server-order `map1.mul` read makes all three dry grass at z `0`: land `0x3`, `0x4`, and `0x5`, with no wet or impassable flags and zero statics. The live-state slice has no saved visible mobile or item on the destination or side-check tiles, and the Sosaria region scan finds no named rectangle at the target. The step is allowed.
+
+I move to `Point3D(1215,1335,0)`. The fox does not move with the keypress. It stays at `Point3D(1214,1331,0)`, still controlled, still ordered to `Follow`, but now stretched to dx `1`, dy `4`, floored distance `4`, outside the remembered `2..3` heel band. The shifted screen loses the far west horse and the north-edge deer, leaving a deer, a swallow, a llama, an eagle, and my fox. There are still zero saved items. The drake remains just outside the rectangle at dx `19`, dy `16`, not visible and not AI-resolved.
+
+Mechanical friction learned:
+
+- A second `Direction.Down` input from the already-facing state consumes a real southeast movement step.
+- Player diagonal movement checks the forward tile and both adjacent side tiles; all three were dry `Map.Sosaria` fileIndex `1` grass with zero statics.
+- Player movement does not advance the controlled fox's follow AI, so the pet falls outside its current `2..3` spacing band again.
+- The client-range rectangle shifted: the horse and one deer fell off-screen, but no item, road, water, shelter, trainer, region text, gump, context menu, target cursor, discovery, skill, hunger/thirst, combat, or pet-order path appeared.
+- The off-screen swamp drake is still unresolved. This step moved one tile toward the overlay marker, not toward safety.
+
+Next pressure:
+
+The fox is lagging again and the screen still has no supplies. The honest next move is probably to stop for the fox's follow tick before walking farther toward the `Ruins` marker.
+
+## Run 82 - The Fox Gets One More Step
+
+I stop at `Point3D(1215,1335,0)` instead of immediately pressing southeast again. The screen is still not a town, road, camp, or rescue. The live-state rectangle around me shows a deer at the north edge, a swallow, a llama, an eagle, and my controlled fox. There are still zero visible saved items, no water source, no chest, no corpse, no sign, no trainer, no shelter, no open gump, no context menu, and no target cursor. The `Ruins` marker remains southeast at `1303,1449`, but that is the world-map overlay whispering, not something I can click or stand under.
+
+The fox is the thing that deserves the next beat. It is at `Point3D(1214,1331,0)`, controlled, ordered to `Follow`, and stretched to dx `1`, dy `4`, floored distance `4`. The stored `FriendsAvoidHeels` spacing value is still `7`, so the fox wants the same `2..3` tile band. Distance `4` is just far enough that waiting is not wasted.
+
+So I wait.
+
+The controlled AI path runs again: `AITimer.OnTick`, `OnThink`, `Obey`, `DoOrderFollow`, `WalkMobileRange`, `GetDirectionTo`, then `DoMove`. The direction is straight `Direction.South`, because from the fox's tile the target is mostly south and only one tile east. The server-order map read uses Sosaria's file index `1`; `map1.mul` decodes the fox start `1214,1331` as grass tile `0x4` at z `0`, and the target `1214,1332` as grass tile `0x6` at z `0`. `staidx1.mul` and `statics1.mul` find zero statics on both tiles. The live snapshot has no visible saved mobile or item on the target tile, and the Sosaria region scan still finds no named rectangle there.
+
+The fox steps to `Point3D(1214,1332,0)`. Mira does not move. The new distance is dx `1`, dy `3`, floored distance `3`, which puts the pet back inside the heel-spacing band. Nothing else resolves: the off-screen swamp drake gets no AI tick, no combatant, no movement, no notice sound, no breath, and no bite. The screen is still dry grass and animals, not safety.
+
+Mechanical friction learned:
+
+- A controlled pet follow tick is a normal timed world event a player can wait for; it is not a hidden command or forged helper call.
+- `GetDirectionTo` chose straight south from `1214,1331` toward Mira at `1215,1335`, so this pet step checked only the forward tile.
+- The target tile was open Sosaria grass with zero statics, no live saved blocker, and no named region gate.
+- Catching the fox up changes only pet position and spacing. It does not prove guarding, attacking, body-blocking, future pathfinding, hostile AI safety, or progress toward the `Ruins` marker.
+
+Next pressure:
+
+The fox is close again and the screen still has no supplies. The honest next move is another cautious southeast step toward the overlay marker, after checking the next tile instead of assuming the grass continues forever.
+
+## Run 83 - One Step Toward Ruins, One Drake Back On Screen
+
+I start at `Point3D(1215,1335,0)`, already facing southeast. The fox is close at `Point3D(1214,1332,0)`, controlled and ordered to `Follow`. The screen before I move is still just animals and grass: a llama, an eagle, a swallow, one deer at the northern edge, and the fox. There are zero visible saved items, no road, no water source, no corpse, no chest, no sign, no trainer, no shelter, no gump, no context menu, and no target cursor. The swamp drake I labeled earlier is one x-tile outside the rectangle at `Point3D(1234,1319,0)`, so I cannot legally click it from here.
+
+The map overlay keeps pulling southeast. `Ruins` sits at `1303,1449`, still far enough away that it is only navigation pressure, not something in the world around my feet. With no visible object to use and the fox inside its spacing band, I press southeast.
+
+This is a real step because I am already facing `Direction.Down`. `Mobile.Move` enters the movement block, and `MovementImpl.CheckMovement` tests the forward tile `1216,1336` plus the two player diagonal side-check tiles `1216,1335` and `1215,1336`. The server-order `map1.mul` read uses Sosaria's file index `1`: the forward tile is grass `0x5` at z `0`, the side tiles are grass `0x3` and `0x5`, and `staidx1.mul`/`statics1.mul` find zero statics on all three. The live snapshot has no saved mobile or visible item standing on the destination or side-check tiles, and the Sosaria region scan finds no named rectangle at the target. The step passes.
+
+I move to `Point3D(1216,1336,0)`, still facing southeast. The fox does not move with the keypress. It stays at `Point3D(1214,1332,0)`, which stretches it to dx `2`, dy `4`, floored distance `4`, outside the remembered `2..3` heel band. The shifted screen drops the north-edge deer but pulls the swamp drake back into legal view at dx `18`, dy `17`. I have not clicked it again, requested its context menu, attacked it, targeted it, tamed it, or advanced its AI; it is simply visible again, which is not comforting.
+
+Mechanical friction learned:
+
+- A second consecutive `Direction.Down` input from an already-facing state consumes a real southeast movement step.
+- Player diagonal movement has to clear the forward tile and both adjacent side tiles; this step passed because all three were dry Sosaria grass with zero statics and no saved blocker.
+- Moving one tile toward the overlay marker reduces the `Ruins` chebyshev distance from `114` to `113`, but it does not create a road, region, discovery, shelter, or safety flag.
+- Player movement does not advance the controlled fox's `Follow` AI, so the pet is now lagging outside the current heel-spacing band again.
+- The swamp drake is visible again at the far edge of the update rectangle. Visibility is not combat, taming, safety, or proof of its next AI tick.
+
+Next pressure:
+
+The screen now has a visible swamp drake again and a fox that needs to catch up. The next honest beat is not blind travel; I need to acknowledge the edge threat and decide whether to wait for the fox, inspect the drake, or retreat.
