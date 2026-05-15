@@ -90,9 +90,29 @@ If any gump is currently open, or if the chosen action opens a gump, treat that 
 - Gump text can teach actionable player knowledge, such as where to find a nearby shelf, journal, NPC, danger, or control. This knowledge can guide the next move, but it does not grant mechanical discovery flags, unlock tarot pages, move the character, or mutate account/character state unless the code path explicitly writes that state.
 - Do not skip from opening a gump to using a response unless the current state says the player has already read or intentionally ignored the visible text and the response control is visible.
 
-PHASE 2: THE NEXT MOVE
-Based purely on your current State, Location, Inventory, Last Action, persisted Phase 1.5 Visual Scan, AND any open-gump reading state from Phase 1.75, decide one chronological action.
+PHASE 2: THE HOURLY MICRO-BATCHED NEXT MOVE
+Based purely on your current State, Location, Inventory, Last Action, persisted Phase 1.5 Visual Scan, AND any open-gump reading state from Phase 1.75, decide up to 3 chronological normal-player beats for this hourly wake.
+
+Treat each beat as a real mini-run:
+- Before beat 1, use the persisted Phase 1.5 scan and current open-gump state.
+- For every beat, choose exactly one normal-player action or waitable visible/timed event.
+- Trace the C# path for that beat before mutating state.
+- Apply the state mutation for that beat immediately.
+- Re-scan visible range and re-evaluate open UI before deciding whether beat 2 or beat 3 is legal.
+- Append the map entry as one run heading with clearly separated `Beat 1`, `Beat 2`, and `Beat 3` subsections when more than one beat completes. Do not create separate top-level headings like `Run 84.1` unless a future prompt explicitly changes this convention.
+- Keep `docs/CCWM/Simulation_State.yaml` authoritative at the end of the hourly wake. Repeated unchanged sections may be summarized, but every completed beat must have its own state delta, code trace, visible-scan result, random branches, unresolved branches, evidence, and unavailable-action gates.
+
 Visible, mechanically traced interactive entities from Phase 1.5 and unread information-rich gumps from Phase 1.75 outrank long-term goals. If a tutorial NPC is standing two tiles away, your next move is likely to click them; if a readable gump just opened, your next move is likely to read and interpret it. If no mechanically traced entity or unread gump competes, continue with the table/tarot flow or the next state-legal goal.
+
+Stop the micro-batch early and save after the current beat when anything would make the next action a real player decision instead of routine continuation:
+- A hostile or high-risk mobile is visible, enters range, or has unresolved AI pressure.
+- A new NPC, corpse, chest, usable item, sign, road, shelter, water source, region text, gump, context menu, or target cursor appears.
+- A movement check fails, terrain/source evidence is uncertain, or binary map/static data has not been traced.
+- A random branch affects outcome and was not already committed in state.
+- Combat, damage, ownership, follower count, quest, discovery, teleport, region transition, hunger/thirst, skill gain, or open UI state changes.
+- The player would naturally pause to read, inspect, choose, or react.
+
+Safety beats speed. If any stop rule triggers, do not force beats 2 or 3.
 - A new character does not already know Savage, Titan mechanics, Atlantis, or advanced systems.
 - A pre-tarot character is still in the start forest/camp.
 - A post-tarot character starts from the actual selected card destination.
@@ -118,8 +138,12 @@ PHASE 4: ASSIMILATION & SAVING
 OUTPUT
 Print a brief Simulation Log:
 - Starting state
-- Action taken
+- beats_attempted
+- beats_completed
+- Action taken for each completed beat
 - C# paths traced
 - Access gates checked
 - Ending state
+- early_stop_reason
+- next_pressure
 - git diff --check result
