@@ -1769,3 +1769,146 @@ Mechanical friction learned:
 Next pressure:
 
 The screen now has a visible swamp drake again and a fox that needs to catch up. The next honest beat is not blind travel; I need to acknowledge the edge threat and decide whether to wait for the fox, inspect the drake, or retreat.
+
+## Run 84 - The Drake Menu Says No From Here
+
+I am still at `Point3D(1216,1336,0)`, facing southeast. The screen is not empty: a llama, an eagle, a swallow, my controlled fox behind me at `Point3D(1214,1332,0)`, and the swamp drake at `Point3D(1234,1319,0)`. There are still zero visible saved items, no road, no water source, no corpse, no chest, no sign, no trainer, no shelter, no gump, and no target cursor. The fox is stretched to dx `2`, dy `4`, outside the `2..3` heel band, but the drake is the thing my eyes keep snapping back to.
+
+So I right-click the drake instead of walking.
+
+The request is legal, but only barely. `PacketHandlers.ContextMenuRequest` finds the drake, confirms same map and visibility, and accepts `Utility.InUpdateRange` because dx `18`, dy `-17` is still inside the inclusive client rectangle. My player has no house-design context, so `CheckContextMenuDisplay` passes. `ContextMenu` asks the drake for entries. The swamp drake is a `SwampDrakeRiding`, which is tamable, uncontrolled, alive, and female-tamer compatible, so `BaseCreature.GetContextMenuEntries` adds `TameEntry`.
+
+The menu is not permission. `TameEntry` uses range `6`, and the packet builder marks entries disabled when `menu.From.InRange(target, range)` fails. From here the drake is far outside range `6`, so the only useful row, `Tame`, is greyed out. I do not select it. No `ContextMenuResponse` runs, no target cursor opens, no `UseSkill(Taming)` happens, no range-2 `Taming.InternalTarget` check runs, and the drake's `84.3` tame requirement remains future friction rather than a test I have reached.
+
+Mira does not move. The fox does not get a follow tick. The drake does not get an AI tick, acquire me, breathe poison, bite, or move. The only state change is visible UI: an open context menu tied to the drake, with a disabled `Tame` row. That is enough to stop. A real player has to decide whether to close the menu, back away, or risk waiting for the fox while a poison-breath drake sits on the edge.
+
+Mechanical friction learned:
+
+- Context-menu request range is the 18-tile update rectangle, not the action range of the rows inside it.
+- A wild tamable creature can expose `Tame` in the context menu while the row is disabled by its own range gate.
+- The disabled row is client-visible pressure, not a tame attempt. Selecting `Tame` still requires a later `ContextMenuResponse`, an enabled entry, `UseSkill(Taming)`, and then the shorter taming target path.
+- `SwampDrakeRiding` is not a fox-class starter pet: it has poison breath, 241-258 hits, 11-17 damage, bad karma, two control slots, and `MinTameSkill = 84.3`.
+- Opening the menu does not advance the controlled fox, hostile AI, combat, skill gain, hunger/thirst, inventory, quest, discovery, pet order, ownership, or movement.
+
+Next pressure:
+
+The drake menu is open and its `Tame` row is disabled. The next honest move is a visible UI decision: close/ignore the menu and retreat, or accept the risk of waiting for the fox while the drake remains on screen.
+
+## Run 85 - I Close the Lie Before It Becomes a Plan
+
+I am still at `Point3D(1216,1336,0)`, facing southeast, with the swamp drake's context menu open on the edge of the screen. The only row I care about is `Tame`, and it is greyed out. Behind the menu the same five moving things matter: a llama at `1208,1323`, my fox at `1214,1332`, an eagle at `1213,1324`, a swallow at `1221,1319`, and the swamp drake at `1234,1319`. There are still zero visible saved items, no road, no water source, no corpse, no chest, no sign, no trainer, no shelter, no gump, and no target cursor. The nearest useful world-map lure is still `Ruins` at `1303,1449`, far outside the screen.
+
+I do not click the disabled row. I dismiss the menu.
+
+That is less satisfying than a skill attempt, but it is the real client flow. The server has a `ContextMenuRequest` path that made this menu and a `ContextMenuResponse` path that would clear `from.ContextMenu`, find the selected entry, re-check `Enabled`, re-check range, and only then call `OnClick`. I am not sending that response. I am not forging a row selection the client would not allow. The visible menu goes away, but no `TameEntry.OnClick`, `UseSkill(Taming)`, target cursor, range-2 `Taming.InternalTarget`, or `MinTameSkill = 84.3` check happens.
+
+Nothing in the world moves. Mira stays at `Point3D(1216,1336,0)`. The fox stays at `Point3D(1214,1332,0)`, still controlled, still ordered to `Follow`, still stretched to dx `2`, dy `4`, floored distance `4`, outside the `2..3` heel-spacing band. The drake stays visible at dx `18`, dy `-17`. It does not acquire me, breathe poison, bite, or step, because I did not advance an AI tick. The uncomfortable part is that closing the menu may not even prove the server forgot it; the traced server clear happens inside `ContextMenuResponse`, and I did not send one.
+
+Mechanical friction learned:
+
+- A visible context menu is not a gump, and dismissing it can be only a client-visible UI action.
+- The only traced server response path for a context menu is `PacketHandlers.ContextMenuResponse`; it clears `from.ContextMenu` before checking the target, selected index, enabled flag, and range.
+- Closing or ignoring a disabled row is not selection, taming, targeting, combat, movement, pet AI, or safety.
+- The swamp drake remains a visible high-risk mobile, and the fox remains stretched outside its follow band.
+
+Next pressure:
+
+The screen is back to wilderness view with no menu in my way. I still have to choose between retreating from the drake or waiting a tick so the fox can close the gap, and either choice leaves the drake's future AI unresolved.
+
+## Run 86 - Turning Away Still Makes Noise
+
+I am still at `Point3D(1216,1336,0)`. The menu is gone, but the screen is not clean: the swallow and eagle are north, the llama is northwest, my fox is behind me at `Point3D(1214,1332,0)`, and the swamp drake is still stuck on the far northeast edge at `Point3D(1234,1319,0)`. There are still zero visible saved items, no road, no water source, no corpse, no chest, no sign, no trainer, no shelter, no gump, no context menu, and no target cursor. `Ruins` is still only a map-overlay lure at `1303,1449`, 113 tiles away.
+
+I choose retreat over waiting. I press southwest.
+
+The keypress does not move me. `Direction.Left` is southwest, but I was still facing `Direction.Down`, so `Mobile.Move` treats this as a direction change instead of a movement step. It never calls `CheckMovement`, never tests the future southwest tile, never calls `Region.CanMove`, and never gives the fox a follow tick. Mira stays on `Point3D(1216,1336,0)` and turns to face southwest.
+
+That is not the same as nothing. The movement acknowledgement path still calls `SetDirection`, gathers nearby objects, and fires `OnMovement(this, oldLocation)` for mobiles in range. The swamp drake is an uncontrolled `SwampDrakeRiding`, and its `ReacquireOnMovement` returns true while uncontrolled, so `BaseCreature.OnMovement` runs `ForceReacquire`. That only resets its next reacquire time; it does not perform `AcquireFocusMob`, does not assign `Combatant`, and does not breathe or bite because no AI tick is being simulated. The notice-sound gate also needs me to have entered its 18-tile range from outside, and my old location is the same tile, so there is no anger sound from this turn.
+
+I am now facing away from the drake, but I have not actually put a tile between us. The fox is still too far back. The drake is still visible. Worse, the next drake AI tick is less comfortably abstract because my turn just told the creature system to be ready to reacquire.
+
+Mechanical friction learned:
+
+- A retreat keypress can be only a facing change when the current facing mask does not match the requested direction.
+- Facing changes skip `CheckMovement`, target-tile terrain, `Region.CanMove`, pet follow movement, and player displacement.
+- Even a facing-only `Mobile.Move` still sends movement acknowledgement, sets direction, and notifies nearby mobiles/items through `OnMovement`.
+- `SwampDrakeRiding.ReacquireOnMovement` is true while uncontrolled; a visible turn can call `ForceReacquire` without immediately starting combat.
+- `ForceReacquire` is not `AcquireFocusMob`. No combatant, breath, melee, damage, movement, hunger/thirst, quest, discovery, item, skill, follower-count, ownership, or pet-order state changed this beat.
+
+Next pressure:
+
+The next real choice is sharper, but I do not get to pretend it is only my choice anymore. The old habit in these notes was to say "no drake AI tick advanced" and then keep making player beats. That is too clean for a live shard. A visible uncontrolled poison-breath drake with `ReacquireOnMovement` primed is not scenery.
+
+Before I press southwest again or wait for the fox, the next wake has to run the drake's AI pressure pass. The client rectangle lets me see the drake at dx `18`, dy `-17`, but the drake does not acquire targets from my screen center. Its constructor's old perception `10` is remapped by `BaseCreature` to `RangePerception = 16`, so the acquisition scan is centered on the drake at `Point3D(1234,1319,0)`. From there I am dx `18`, dy `17`, outside the scan. The swallow at `Point3D(1221,1319,0)` is inside it, but it still has to pass `IsEnemy`, `CanBeHarmful`, fight-mode ranking, and line of sight. If no target is legal, the drake's wander step is still a random/pathing branch, not proof of safety.
+
+So the next pressure is not just "move or wait." It is: resolve `AITimer.OnTick -> OnThink -> MeleeAI.DoActionWander -> AcquireFocusMob` for the primed drake, or stop with that branch still unresolved.
+
+## Run 87 - The Drake Brain Tick Has Its Own Gate
+
+I do not get to press southwest again yet. I am still at `Point3D(1216,1336,0)`, facing southwest, with the fox stuck behind me at `Point3D(1214,1332,0)` and the swamp drake still visible at the far northeast edge, `Point3D(1234,1319,0)`. The drake was just poked by my movement notification, so the next honest beat is not my legs. It is the creature timer.
+
+I wait for the drake pressure pass.
+
+The tick starts cleanly enough. `AITimer.OnTick` reaches the uncontrolled creature path and calls `Think`, which is still in `ActionType.Wander`. `MeleeAI.DoActionWander` tries `AcquireFocusMob(drake.RangePerception, FightMode.Closest, false, false, true)`. The drake's constructor passed old perception `10`, but `BaseCreature` remaps that to `16`, so the scan is centered on the drake, not on my screen.
+
+That matters. I can see the drake because the client update rectangle is about 18 tiles and the drake is dx `18`, dy `-17` from me. The drake cannot acquire me through this scan because from its tile I am dx `-18`, dy `17`, outside range `16`. The live snapshot shows other creatures inside the drake's range-16 rectangle: deer, eagles, a goat, the swallow, and an ape. They are not me, and most importantly they are uncontrolled `BaseCreature` mobiles on the same default team state. `BaseCreature.IsEnemy` returns false for same-team uncontrolled creatures, so `AcquireFocusMob` does not promote them into a focus target. No `Combatant` is assigned. No notice sound, breath, bite, damage, targeting cursor, pet command, or player movement happens.
+
+The pressure does not become safety. After the failed acquisition, `MeleeAI` falls into `base.DoActionWander`. There the next visible branch is `CheckMove()`, which depends on the creature AI move timer `m_NextMove`. The live-state export does not include that timer. If it is not due, the drake stands still. If it is due, the drake is outside its home radius and the deterministic next path would try a southeast homeward `DoMove` toward `Point3D(1282,1374,30)`, with the forward tile at `1235,1320` likely pulling it just off my screen. I cannot choose either branch as a normal player, and I cannot claim the drake moved or stayed.
+
+Mechanical friction learned:
+
+- A visible edge creature can be inside my update range while I am outside its own perception scan.
+- `ForceReacquire` made the next acquisition check ready, but acquisition still has normal filters: range, visibility, `IsEnemy`, harmful legality, ranking, and line of sight.
+- The nearby wild animals inside the drake's scan are not automatically targets for a `FightMode.Closest` swamp drake because same-team uncontrolled `BaseCreature` targets fail `IsEnemy`.
+- The drake's acquisition branch resolved to no focus and no combatant. The next branch is movement timing, not player choice.
+- The live-state snapshot does not export `BaseAI.m_NextMove`, so I stop instead of inventing whether the drake steps southeast or remains on the edge.
+
+Next pressure:
+
+The drake has not attacked me, but it is not proven safe. The next state has to carry the unresolved `CheckMove` branch: either the drake's homeward movement timer is due and it may step toward `1235,1320`, or it is not due and it remains visible at `1234,1319`. I still should not take a routine retreat step or fox-follow wait until that branch is resolved or explicitly deferred as a live-timer unknown.
+
+## Run 88 - The Timer Is Not On My Screen
+
+I start from the same bad breath of air: `Point3D(1216,1336,0)`, facing southwest, with my fox still behind me at `Point3D(1214,1332,0)` and the swamp drake still last-known at `Point3D(1234,1319,0)`. The saved screen slice has the same five bodies after the fox override: llama, fox, eagle, swallow, and swamp drake. It has zero saved world items. No road, water source, corpse, chest, sign, trainer, shelter, open gump, context menu, or target cursor appears.
+
+I do not press southwest. I do not wait for the fox. The next pressure is still the drake's private movement timer.
+
+The code gives me no fair way to settle it from the snapshot. `AITimer.OnTick` can reach `MeleeAI.DoActionWander`; Run 87 already resolved the acquisition part to no target because I am outside the drake's `RangePerception = 16` scan and the wild animals inside that scan fail the same-team uncontrolled `IsEnemy` gate. After that, `base.DoActionWander` asks `CheckMove()`, and `CheckMove()` is only `DateTime.Now >= m_NextMove`. The live-state export does not include `m_NextMove`.
+
+If the timer is due, the drake is outside its home range and the next homeward direction is `Direction.Down`, toward `Point3D(1235,1320,0)`. If the timer is not due, the drake stays on `Point3D(1234,1319,0)`. Both branches change what I can see next. I cannot pick either as a normal player, and I cannot pretend that "no combatant" means "safe."
+
+So this run is a hard stop, not a step. I explicitly carry the drake movement branch as a live-timer unknown. Mira does not move. The fox does not move. The drake does not move. No combatant, focus mob, breath, bite, damage, target cursor, skill gain, hunger/thirst change, item use, quest, discovery, ownership, follower-count, pet order, gump, or context-menu response is committed.
+
+Mechanical friction learned:
+
+- A resolved `AcquireFocusMob` branch is not a resolved AI tick when `base.DoActionWander` still reaches `CheckMove`.
+- `BaseAI.m_NextMove` is private timer state, not player-visible state and not present in the JSONL save snapshot.
+- The normal-client answer to an unresolved creature movement timer is not to choose the branch; it is to stop or defer it explicitly.
+- The fox being outside its follow band stays real pressure, but the poison-breath drake's unresolved movement timer still outranks a routine pet-follow wait.
+- The world-map `Ruins` marker remains overlay knowledge only. No in-world ruins, route, road, or safety flag entered the screen.
+
+Next pressure:
+
+The next wake is still blocked on the same choice: resolve the swamp drake's `m_NextMove` from a refreshed/live timer source, or keep the branch explicitly deferred before any player movement, fox-follow wait, or curiosity click.
+
+## Run 89 - I Still Do Not Own the Drake's Clock
+
+I start in the same tile and the same problem: `Point3D(1216,1336,0)`, facing southwest, with the fox behind me at `Point3D(1214,1332,0)` and the swamp drake last-known on the screen edge at `Point3D(1234,1319,0)`. The saved screen still resolves five bodies after the fox override: llama, fox, eagle, swallow, and swamp drake. It resolves zero saved world items. No road, water source, corpse, chest, sign, trainer, shelter, gump, context menu, or target cursor appears.
+
+I try the only legal beat first: the high-risk creature pressure pass. There is no fair player-side lever here. Run 87 already carried the drake through `AITimer.OnTick`, uncontrolled `Think`, `MeleeAI.DoActionWander`, and `AcquireFocusMob`. That found no target: I am outside its `RangePerception = 16` box, and the wild animals inside that box are same-team uncontrolled creatures, so they are not enemies. Run 88 then hit the next gate, `base.DoActionWander -> CheckMove()`.
+
+This wake confirms the same hard stop from code and snapshot, not from nerves. `CheckMove()` is only `DateTime.Now >= m_NextMove`. The JSONL live-state record for this drake gives me serial, class, location, map, visible/alive state, home, range home, source spawner, and controlled state. It does not give me `m_NextMove`, the AI timer schedule, or a live tick result. If I say the drake stayed put, I am forging the not-due branch. If I say it stepped southeast toward home, I am forging the due branch.
+
+So I do neither. Mira does not move. The fox does not move. The drake does not move in the committed state. No `Combatant`, `FocusMob`, breath, bite, damage, target cursor, item use, hunger/thirst change, skill gain, quest, discovery, ownership change, follower-count change, pet-order change, gump, context-menu response, fame, karma, or PvP/PvE state changes.
+
+Mechanical friction learned:
+
+- A repeated pressure pass can still be the honest chronological action when a visible high-risk creature has unresolved private timer state.
+- `AcquireFocusMob` being resolved to no target does not license routine travel while `base.DoActionWander` is still stopped at `CheckMove`.
+- The live-state snapshot is canonical for saved entities, but it is not a running AI clock.
+- The fox being outside the follow band remains real pressure, but it still loses priority to the unresolved poison-breath drake timer.
+- The next useful external change is not another simulated keypress. It is a refreshed/live timer source, or a deliberate continued deferral with no world mutation.
+
+Next pressure:
+
+I am still pinned by the same fork: the drake is either still at `1234,1319` on the inclusive update edge, or its due movement timer would try `Direction.Down` toward `1235,1320` and probably leave the screen. Until that branch is resolved, retreating, waiting for the fox, or clicking around would be pretending the shard paused for me.
