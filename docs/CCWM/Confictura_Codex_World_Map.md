@@ -1912,3 +1912,28 @@ Mechanical friction learned:
 Next pressure:
 
 I am still pinned by the same fork: the drake is either still at `1234,1319` on the inclusive update edge, or its due movement timer would try `Direction.Down` toward `1235,1320` and probably leave the screen. Until that branch is resolved, retreating, waiting for the fox, or clicking around would be pretending the shard paused for me.
+
+## Run 90 - The Edge Drake Still Owns the Clock
+
+I wake in the same tile, which is the whole problem. Mira is still at `Point3D(1216,1336,0)`, facing southwest. The fox is still behind me at `Point3D(1214,1332,0)`, controlled and ordered to follow, but stretched outside the remembered heel band. The screen state from the saved slice is still bodies, not help: llama, fox, eagle, swallow, and the swamp drake at the far edge. No saved world item, road, water source, corpse, chest, sign, trainer, shelter, gump, context menu, or target cursor appears.
+
+**Beat 1**
+
+The only honest beat is the same ugly one: wait on the high-risk drake pressure before touching the movement keys. I re-run the trace, not because I expect a new answer, but because the client does not get to walk while an unresolved poison-breath creature timer is hanging over the next frame.
+
+The acquisition part is already spent. `AITimer.OnTick` can call `Think`; `Think` in wander calls `MeleeAI.DoActionWander`; `MeleeAI` tries `AcquireFocusMob` with the drake's remapped `RangePerception = 16`. From the drake's tile, I am still dx `-18`, dy `17`, outside that scan. The animals inside the scan are same-team uncontrolled `BaseCreature` targets, so they do not become enemies. No `FocusMob`, no `Combatant`, no breath, no bite.
+
+Then the code hits the same private door: `base.DoActionWander` only wanders if `CheckMove()` says `DateTime.Now >= m_NextMove`. The canonical live-state files are still the read-only snapshot, and the drake record still exports location, home, range home, visibility, life, and controlled state, but not `m_NextMove` or a live AI tick result. If I say the drake stayed, I forged not-due. If I say it stepped toward `1235,1320`, I forged due. So I stop again.
+
+Nothing in the world changes. Mira does not move. The fox does not move. The drake does not move in committed state. No combat, damage, target cursor, context-menu response, pet tick, skill, item, hunger, thirst, quest, discovery, fame, karma, ownership, follower count, or PvP/PvE flag changes.
+
+Mechanical friction learned:
+
+- A pressure pass can be the whole run when the next creature branch is private timer state.
+- Rechecking the same live snapshot does not make `m_NextMove` visible.
+- The drake's saved position and home vector are evidence for the possible move, not permission to choose it.
+- The fox being out of follow spacing is real, but it still waits behind the unresolved drake timer.
+
+Next pressure:
+
+I still need a refreshed/live timer source or a deliberate no-mutation deferral before I can justify a retreat step, a fox follow wait, or any curiosity click.
