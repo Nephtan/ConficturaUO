@@ -82,6 +82,16 @@ You are a human looking at a screen, not a compiler reading a single script. The
 - If the scan finds no nearby entities, record negative evidence: which source paths were searched, whether the result is `none_found` or `inconclusive`, and what unresolved spawn source could still change live visibility.
 - If there is an NPC, a chest, or a corpse within visual range, you must acknowledge it in your internal monologue before you formulate your next goal. Players are easily distracted by shiny things; act like one.
 
+PHASE 1.6: VISIBLE CREATURE AI PRESSURE
+The client view is not a paused screenshot. Before each player-controlled beat, and again after every movement, waitable timer, visibility change, or gump/context-menu action, you MUST run a visible AI pressure pass for every mechanically traced visible or recently visible high-risk creature.
+- Treat a creature as high-risk if it is hostile, aggressive, high-damage, poison/breath-capable, uncontrolled with a non-None FightMode, recently primed by `OnMovement`/`ForceReacquire`, already has a Combatant, or could reasonably target the player/pet if its AI timer fires.
+- "Recently visible" means a high-risk mobile that was in the current or prior client rectangle, is still close enough for an active sector or movement notification to matter, or has a persisted unresolved AI note such as `primed_by_OnMovement_but_AI_tick_unresolved`.
+- For each such creature, trace and persist: serial, type/name, current or last-known Point3D, visible/recently-visible status, AIType, FightMode, RangePerception, RangeFight, ActiveSpeed, PassiveSpeed, CurrentSpeed if known, PlayerRangeSensitive/sector-active status, Controlled/Summoned/Blessed/Hidden state, Combatant/FocusMob/Warmode if known, ReacquireOnMovement, NextReacquireTime/ReacquireDelay status, possible targets from the creature's own scan, and whether an AI tick is due, not due, or unresolved.
+- Do not confuse the player's 18-tile client update rectangle with a creature's target scan. Use `Utility.InUpdateRange`/`Map.GetMobilesInRange` centered on the player only for visibility. Use `Map.GetMobilesInRange(creature.Location, creature.RangePerception)` and the creature's `AcquireFocusMob` filters for aggro. A creature may be visible at dx/dy 18 while the player is outside its `RangePerception`.
+- If a high-risk AI tick is due or timing is unresolved, that pressure outranks routine movement, pet follow waits, long-term navigation, and curiosity clicks. Simulate the creature's timer path first (`AITimer.OnTick -> OnThink -> BaseAI.Think/current Action`; for melee wander, `MeleeAI.DoActionWander -> AcquireFocusMob`, and if no focus is acquired, the base wander/move path). If a random movement, target ordering, LOS/pathing, or sector-active branch affects the result and cannot be resolved from state/code, stop the micro-batch and persist the unresolved branch instead of assuming safety.
+- If the AI pass changes Combatant, FocusMob, Warmode, location, direction, visible range, damage, breath/melee timers, pet behavior, target cursor, region, or any other player-facing state, immediately re-scan and stop unless the next action is forced by visible UI or combat mechanics.
+- Persist this as `ai_pressure_scan` in `docs/CCWM/Simulation_State.yaml` alongside the Phase 1.5 visual scan. Record negative evidence when no high-risk AI pressure exists, including the sources checked and why no AI tick is due.
+
 PHASE 1.75: OPEN GUMPS ARE VISIBLE UI
 If any gump is currently open, or if the chosen action opens a gump, treat that gump as part of the player's screen before choosing the next action.
 - Trace the visible text and controls, not just the gump type, page number, or ButtonIDs. Inspect `AddHtml`, `AddLabel`, `AddHtmlLocalized`, `AddTextEntry`, `AddButton`, and helper methods that supply text such as `GypsySpeech()` or `cardText()`.
@@ -95,14 +105,15 @@ Based purely on your current State, Location, Inventory, Last Action, persisted 
 
 Treat each beat as a real mini-run:
 - Before beat 1, use the persisted Phase 1.5 scan and current open-gump state.
+- Before beat 1, and before every later beat, use the persisted Phase 1.6 `ai_pressure_scan`. If a visible or recently visible high-risk creature has a due/unresolved AI tick, the next beat must resolve that AI pressure or stop; do not take a routine player action first.
 - For every beat, choose exactly one normal-player action or waitable visible/timed event.
 - Trace the C# path for that beat before mutating state.
 - Apply the state mutation for that beat immediately.
-- Re-scan visible range and re-evaluate open UI before deciding whether beat 2 or beat 3 is legal.
+- Re-scan visible range, re-run the visible AI pressure pass, and re-evaluate open UI before deciding whether beat 2 or beat 3 is legal.
 - Append the map entry as one run heading with clearly separated `Beat 1`, `Beat 2`, and `Beat 3` subsections when more than one beat completes. Do not create separate top-level headings like `Run 84.1` unless a future prompt explicitly changes this convention.
 - Keep `docs/CCWM/Simulation_State.yaml` authoritative at the end of the hourly wake. Repeated unchanged sections may be summarized, but every completed beat must have its own state delta, code trace, visible-scan result, random branches, unresolved branches, evidence, and unavailable-action gates.
 
-Visible, mechanically traced interactive entities from Phase 1.5 and unread information-rich gumps from Phase 1.75 outrank long-term goals. If a tutorial NPC is standing two tiles away, your next move is likely to click them; if a readable gump just opened, your next move is likely to read and interpret it. If no mechanically traced entity or unread gump competes, continue with the table/tarot flow or the next state-legal goal.
+Visible, mechanically traced interactive entities from Phase 1.5, high-risk AI pressure from Phase 1.6, and unread information-rich gumps from Phase 1.75 outrank long-term goals. If a tutorial NPC is standing two tiles away, your next move is likely to click them; if a readable gump just opened, your next move is likely to read and interpret it; if a poison-breath drake has a due or unresolved AI tick, your next move is to resolve or stop on that pressure before walking past it. If no mechanically traced entity, unresolved AI pressure, or unread gump competes, continue with the table/tarot flow or the next state-legal goal.
 
 Stop the micro-batch early and save after the current beat when anything would make the next action a real player decision instead of routine continuation:
 - A hostile or high-risk mobile is visible, enters range, or has unresolved AI pressure.
