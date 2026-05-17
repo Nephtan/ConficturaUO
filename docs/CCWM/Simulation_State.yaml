@@ -1,7 +1,7 @@
 schema:
   schema_version: 1
   run_number: 129
-  last_updated: "2026-05-17T09:10:11.8386870-05:00"
+  last_updated: "2026-05-17T10:07:00.5683381-05:00"
   source_paths_traced:
     - "Data/Scripts/System/Misc/CharacterCreation.cs"
     - "Data/Scripts/System/Misc/Settings.cs"
@@ -395,7 +395,68 @@ mechanics_model:
     - "C# server/runtime files are read-only evidence for CCWM runs; do not mutate RunUO server behavior for simulation convenience."
     - "Off-screen creatures are not hibernated unless a live export proves timer stopped, deletion, or despawn."
     - "The 18-tile client rectangle controls visibility and normal click/context-menu legality, not AI sleep."
-    - "Creature AI pressure must be classified before each beat and after every movement, wait, visibility, gump, or context-menu change."
+    - "Creature AI pressure must be classified before each normal beat and after every wait, visibility, gump, or context-menu change. Routine Travel Segment movement is classified at the segment start, endpoint, and any stop event rather than after each compressed tile."
+    - "Routine movement and controlled follower catch-up may be compressed only through the Travel Segment policy below; UI, combat, target cursors, active timers, discovery, region/teleport, visible interactables, and failed/uncertain movement still force normal beat handling."
+
+travel_segment_policy:
+  introduced_after_run: 129
+  policy_status: "active_for_future_runs"
+  movement_is_beat: "false_for_routine_travel_only"
+  max_segment_tiles: 12
+  scan_policy: "start_end_and_stop_events"
+  classifier_policy: "start_end_and_stop_events"
+  follower_policy: "controlled_follow_shadowing"
+  ambient_ai_policy: "offscreen_passive_unengaged_not_blocking"
+  spawner_policy: "invisible_home_ranges_are_area_risk_summary; spawned visible refs still stop travel"
+  route_precheck_required:
+    - "current map file index and server-order binary land/static passability when route tiles are not already proven"
+    - "live-state saved mobile/item blockers on proposed target tiles"
+    - "diagonal side-check tiles for player movement"
+    - "known region, teleporter, decorator, and terrain context that could create a normal-player decision"
+  follower_shadowing_allowed_when:
+    - "follower is controlled, on the same map, alive, and already ordered to Follow"
+    - "compressed route keeps follower pathing locally clear or conservatively shadows to the established trailing band"
+    - "no combat, Guard/Attack order, ownership mutation, follower-count mutation, body-blocking, target cursor, or pet-specific interaction occurs"
+  follower_shadowing_must_record:
+    - "approximation label, not exact BaseAI timer execution"
+    - "start and end follower Point3D or trailing-band estimate"
+    - "path evidence or the uncertainty that stopped the segment"
+  ambient_unresolved_allowed_when:
+    - "creature is outside the 18-tile client rectangle"
+    - "no Combatant, FocusMob, Aggressor, Aggressed, Faction, or Ethic state involves Mira or her follower"
+    - "no special timer's current scan can include Mira or her follower"
+    - "proposed segment does not bring Mira or her follower back into visible range, RangePerception, movement-notice pressure, or special timer range"
+  hard_stop_conditions:
+    - "visible hostile or high-risk mobile appears or enters range"
+    - "new NPC, corpse, chest, usable item, sign, road, shelter, water source, region text, gump, context menu, or target cursor appears"
+    - "movement fails, route evidence is uncertain, or required binary map/static evidence is missing"
+    - "random branch affects the outcome and is not already committed"
+    - "combat, damage, ownership, follower count, quest, discovery, teleport, region transition, hunger/thirst, skill gain, or open UI state changes"
+    - "the player would naturally pause to read, inspect, choose, or react"
+  current_state_implication:
+    from_point3d: { x: 1216, y: 1384, z: 0 }
+    follower_point3d: { x: 1213, y: 1381, z: 0 }
+    route_intent: "Future routine travel may compress east/southeast movement around the known rock instead of spending a full beat on a fox-only wait, provided the fresh start scan exposes no active pressure or visible interactable."
+    known_hard_stop: "Direct southeast from Point3D(1214,1384,0) already failed on static 0x1775 rock at Point3D(1215,1385,0); future segments must route around it or stop on any new blocker."
+
+last_travel_segment:
+  status: "not_yet_used"
+  introduced_after_run: 129
+  reason: "Runs before this policy used per-tile movement and explicit controlled-fox Follow waits. Future routine navigation should write the first compressed Travel Segment here."
+  required_fields_when_used:
+    - "start_point3d"
+    - "end_point3d"
+    - "route_summary"
+    - "movement_inputs_accepted"
+    - "facing_turns_compressed"
+    - "tiles_or_blockers_checked"
+    - "start_scan"
+    - "end_scan_or_stop_scan"
+    - "ai_pressure_start"
+    - "ai_pressure_end_or_stop"
+    - "follower_shadowing"
+    - "area_risk_summary"
+    - "hard_stop_trigger"
 
 account:
   account_id: "placeholder:first_account"
@@ -422,17 +483,17 @@ lifecycle:
   stage: "post_crash_scouting_skirted_rock_east_after_run129_fox_outside_band_six_spawner_overlap"
   last_action: >-
     Run 129 completed three chronological normal-player beats from Point3D(1214,1384,0). The required pre-beat scan contained only the simulated controlled fox overlay, zero saved visible mobiles, zero saved visible items, and zero running spawner object locations; the toads, crane, and swamp drake were off-screen unresolved history, while six invisible PremiumSpawner home ranges overlapped by source range. Beat 1 pressed east while Mira faced Direction.Down, so Mobile.Move skipped CheckMovement, kept Mira at Point3D(1214,1384,0), and changed only facing to Direction.East. Beat 2 pressed east again; MovementImpl.CheckMovement accepted Point3D(1215,1384,0) as dry passable jungle with zero statics, no live blocker, and no named region, moving Mira to Point3D(1215,1384,0). Beat 3 pressed east once more; MovementImpl.CheckMovement accepted Point3D(1216,1384,0) as dry passable jungle with zero statics, no live blocker, and no named region. No pet AI tick ran, so the controlled fox stayed at Point3D(1213,1381,0) and is now outside the 2..3 FriendsAvoidHeels band at floored distance 4. No combat, damage, gump, context menu, target cursor, item, hunger/thirst, skill, quest, discovery, ownership, follower-count, pet-order, fame, karma, or PvP/PvE state changed.
-  current_goal: "Fresh-scan from Point3D(1216,1384,0); the fox is visible but outside the heel band after two east movement steps, and the final screen is still saved-empty except for six invisible spawner home-range overlaps. The next legal player beat is likely a controlled-fox Follow AI wait before more east/southeast route movement toward the Ruins marker."
+  current_goal: "Fresh-scan from Point3D(1216,1384,0), then use the active Travel Segment policy if the screen remains saved-empty and no active pressure appears. The fox is visible but outside the heel band after two east movement steps; future routine travel may compress controlled-follower shadowing instead of spending a full beat on a fox-only wait, while still stopping on terrain blockers, visible entities, UI, combat, region/discovery, or other hard-stop mutations."
   beats_attempted_current_run: 3
   beats_completed_current_run: 3
-  early_stop_reason_current_run: "Stopped at the hourly three-beat cap after turning east and moving east twice around the north side of the rock. The final saved rectangle is still empty, but the fox is now outside the 2..3 follow band at floored distance 4 and six invisible PremiumSpawner home ranges overlap the rectangle, so the next run must scan/classify and likely wait the fox before further movement."
+  early_stop_reason_current_run: "Stopped at the historical hourly three-beat cap after turning east and moving east twice around the north side of the rock. The final saved rectangle is still empty, the fox is outside the 2..3 follow band at floored distance 4, and six invisible PremiumSpawner home ranges overlap the rectangle. Under the active Travel Segment policy, the next run must still scan/classify first, but routine fox catch-up can be shadowed inside a compressed travel segment if no hard stop appears."
   loop_break_status:
     applied_after_run: 90
     branch: "swamp drake serial 28109 BaseAI.m_NextMove / BaseAI.CheckMove"
     status: "carried_unresolved_not_active_blocker"
     reason: "Runs 88, 89, and 90 rechecked the same unchanged canonical live-state snapshot and AI code; docs/CCWM/live-state/mobiles.jsonl exports saved entity fields but not private BaseAI.m_NextMove or the live AI timer schedule."
     preserved_risk: "The drake may still be at Point3D(1234,1319,0) or may have had a due timer that would attempt Direction.Down toward Point3D(1235,1320,0); neither outcome is chosen."
-    next_state_legal_action: "Re-scan from Point3D(1216,1384,0) before further navigation or follower waiting; the drake branch stays carried risk, not safety, and the off-screen crane/toads/southern/eastern spawner records remain unresolved pressure even though no saved mobile is currently visible. The fox is outside the remembered heel-spacing band after Run 129 Beat 3, so the next conservative action is likely a controlled-fox Follow AI wait unless a fresh scan exposes a new visible entity or active pressure."
+    next_state_legal_action: "Re-scan from Point3D(1216,1384,0) before further navigation; the drake branch stays carried risk, not safety, and the off-screen crane/toads/southern/eastern spawner records remain unresolved evidence even though no saved mobile is currently visible. If the scan exposes no active pressure or visible interactable, the next conservative action may be a Travel Segment that compresses east/southeast route movement around the rock and shadows the controlled fox back toward the follow band instead of spending a standalone beat on fox waiting."
     allowed_action_scope: "lowest-risk normal-player action that reduces exposure or resolves visible screen uncertainty; no taming, waiting near the drake, movement toward high-risk pressure, or safety claims."
     prohibited_claims:
       - "drake is safe"
@@ -1266,13 +1327,14 @@ perception_visual_scan:
       status: "visible_simulated_follower; northwest at dx=-3,dy=-3 after Run 129's two east player movement steps. It remains controlled by Mira Vale, owner list includes Mira, follower slot cost 1, unbonded, ControlOrder Follow, ControlTarget Mira Vale, and outside the 2..3 FriendsAvoidHeels band at floored distance 4."
   visible_items: []
   ai_pressure_scan:
-    status: "empty_saved_mobile_screen_after_run129_except_simulated_controlled_fox; known_rock_static_0x1775_remains_behind_and_southwest; toads_and_crane_offscreen_but_unresolved; fox_outside_follow_band; recently_visible_drake_carried_unresolved_not_active_blocker; no_visible_saved_items_or_running_spawner_locations_in_final_rectangle; six_invisible_spawner_home_ranges_overlap"
-    policy: "Phase 1.6 creature/timer pressure classifier; high-risk due/unknown AI or special timer pressure outranks routine player movement and pet-follow waits unless the exact repeated private-timer branch is marked carried_unresolved_not_active_blocker."
+    status: "empty_saved_mobile_screen_after_run129_except_simulated_controlled_fox; known_rock_static_0x1775_remains_behind_and_southwest; toads_and_crane_offscreen_ambient_unresolved; fox_outside_follow_band_but_shadowable_for_routine_travel; recently_visible_drake_carried_unresolved_not_active_blocker; no_visible_saved_items_or_running_spawner_locations_in_final_rectangle; six_invisible_spawner_home_ranges_are_area_risk_summary"
+    policy: "Phase 1.6 creature/timer pressure classifier with active Travel Segment acceleration; high-risk due/unknown AI or special timer pressure outranks routine player movement unless the exact repeated private-timer branch is marked carried_unresolved_not_active_blocker. Off-screen passive unengaged creatures may be ambient_unresolved, and routine controlled-follower catch-up may be shadowed inside a Travel Segment."
     classifier_statuses:
       - "visible_active_pressure"
       - "recently_visible_pressure"
       - "timer_negative_evidence"
       - "carried_unresolved_not_active_blocker"
+      - "ambient_unresolved"
       - "not_relevant_this_beat"
     required_classifier_fields:
       - "serial"
@@ -1289,7 +1351,7 @@ perception_visual_scan:
       - "private_timer_available"
       - "chosen_status"
       - "why"
-    timing_basis: "Run 86 reset the drake's NextReacquireTime through ForceReacquire. Run 87 waited for the AI pressure path and resolved AcquireFocusMob far enough to set NextReacquireTime to DateTime.Now + ReacquireDelay, but the live-state snapshot does not export BaseAI.m_NextMove. Runs 88, 89, and 90 rechecked this gate and did not find an exported timer source, so the branch is carried_unresolved_not_active_blocker. Runs 91 through 109 moved Mira southwest out of the 18-tile client rectangle and/or regrouped the follower; Mobile.Move's larger movement-notification range may still call the drake's OnMovement/ForceReacquire when in range, but Mira remains outside the drake-centered RangePerception 16 scan and no due/not-due m_NextMove branch is chosen. Runs 111 and 112 labeled the visible edge animals without moving. Runs 113 through 128 skirted southeast and kept repairing the fox leash. Run 128 moved Mira to Point3D(1214,1384,0), waited the fox to Point3D(1213,1381,0), then attempted a southeast step blocked by impassable rock 0x1775 at Point3D(1215,1385,0). Run 129 turned east and moved east twice to Point3D(1216,1384,0) without advancing pet AI. Both toads and the crane are now outside Mira's client rectangle but unresolved, passive Aggressor acquisition still has no aggressor/aggressed/faction/ethic state, the toads remain outside range-10 teleport target scans from Mira's final point by x distance, the fox is outside the follow band, six invisible PremiumSpawner home ranges overlap the final rectangle, and the carried drake m_NextMove branch remains unchosen."
+    timing_basis: "Run 86 reset the drake's NextReacquireTime through ForceReacquire. Run 87 waited for the AI pressure path and resolved AcquireFocusMob far enough to set NextReacquireTime to DateTime.Now + ReacquireDelay, but the live-state snapshot does not export BaseAI.m_NextMove. Runs 88, 89, and 90 rechecked this gate and did not find an exported timer source, so the branch is carried_unresolved_not_active_blocker. Runs 91 through 109 moved Mira southwest out of the 18-tile client rectangle and/or regrouped the follower; Mobile.Move's larger movement-notification range may still call the drake's OnMovement/ForceReacquire when in range, but Mira remains outside the drake-centered RangePerception 16 scan and no due/not-due m_NextMove branch is chosen. Runs 111 and 112 labeled the visible edge animals without moving. Runs 113 through 128 skirted southeast and kept repairing the fox leash. Run 128 moved Mira to Point3D(1214,1384,0), waited the fox to Point3D(1213,1381,0), then attempted a southeast step blocked by impassable rock 0x1775 at Point3D(1215,1385,0). Run 129 turned east and moved east twice to Point3D(1216,1384,0) without advancing pet AI. Under the active Travel Segment policy, both toads and the crane are now off-screen ambient_unresolved because no player/follower aggro state or current special-timer inclusion is committed; the fox is outside the follow band but can be shadowed during routine travel if path evidence is clear; six invisible PremiumSpawner home ranges are area-risk summaries; and the carried drake m_NextMove branch remains unchosen."
     current_post_run129_classification:
       - serial: 28109
         type: "Server.Mobiles.SwampDrakeRiding"
@@ -1317,8 +1379,8 @@ perception_visual_scan:
         range_perception_contains_player: "not_traced_this_beat"
         special_timer_contains_player: false
         private_timer_available: false
-        chosen_status: "recently_visible_pressure"
-        why: "Run 113 shifted this west-edge toad outside Utility.InUpdateRange, and Runs 114-124 moved farther southeast. It did not despawn, die, teleport, attack, or resolve a timer; it remains recently visible unresolved pressure."
+        chosen_status: "ambient_unresolved"
+        why: "Run 113 shifted this west-edge toad outside Utility.InUpdateRange, and Runs 114-129 moved farther away. It has no committed Combatant/FocusMob/Aggressor state involving Mira or the fox, no current special-timer scan containing either of them, and the active Travel Segment policy carries it as ambient off-screen uncertainty rather than a routine-travel blocker."
       - serial: 737437
         type: "Server.Mobiles.Toad"
         name: "a toad"
@@ -1331,8 +1393,8 @@ perception_visual_scan:
         range_perception_contains_player: "not_required_for_current_negative_timer_evidence"
         special_timer_contains_player: false
         private_timer_available: false
-        chosen_status: "recently_visible_pressure"
-        why: "Run 114 Beat 1 shifted this previously visible toad outside Utility.InUpdateRange, and Run 129 left it at dx=-42,dy=-5. Mira remains outside its range-10 TeleportTimer scan by x distance, but future wandering/timer ticks remain unresolved."
+        chosen_status: "ambient_unresolved"
+        why: "Run 114 Beat 1 shifted this previously visible toad outside Utility.InUpdateRange, and Run 129 left it at dx=-42,dy=-5. Mira remains outside its range-10 TeleportTimer scan by x distance, no player/follower aggro state is committed, and the active Travel Segment policy carries future wandering/timer uncertainty as ambient unless a proposed route re-enters visible or timer pressure."
       - serial: 288081
         type: "Server.Mobiles.Crane"
         name: "a crane"
@@ -1345,8 +1407,8 @@ perception_visual_scan:
         range_perception_contains_player: "not_applicable_without_aggressor_state"
         special_timer_contains_player: "not_applicable"
         private_timer_available: "not_applicable"
-        chosen_status: "recently_visible_pressure"
-        why: "Run 115 Beat 2 shifted this previously visible labeled crane outside Utility.InUpdateRange, and Run 129 left it at dx=-40,dy=-5. The crane is passive AI_Animal/FightMode.Aggressor, one-point damage, and has no special timer traced, but future wandering remains unresolved."
+        chosen_status: "ambient_unresolved"
+        why: "Run 115 Beat 2 shifted this previously visible labeled crane outside Utility.InUpdateRange, and Run 129 left it at dx=-40,dy=-5. The crane is passive AI_Animal/FightMode.Aggressor, one-point damage, has no special timer traced, and has no committed player/follower aggro state, so the active Travel Segment policy carries it as ambient off-screen uncertainty rather than an active blocker."
       - serial: 200274
         type: "Server.Mobiles.Fox"
         name: "a fox"
@@ -1395,7 +1457,7 @@ perception_visual_scan:
       preserved_outcomes:
         - "not_due: drake may remain at Point3D(1234,1319,0), outside Mira's current inclusive 18-tile rectangle at dx=18,dy=-65"
         - "due: drake may attempt Direction.Down toward Point3D(1235,1320,0), still outside Mira's current inclusive 18-tile rectangle at dx=19,dy=-64"
-      next_state_legal_action: "Continue only after a fresh scan from Point3D(1216,1384,0); do not treat the drake as safe, gone, stationary, or moved, do not ignore the off-screen crane, unresolved off-screen toads, or southern/eastern/western spawner records, and recognize that the fox is now outside the remembered heel-spacing band after Run 129's two east movement steps."
+      next_state_legal_action: "Continue only after a fresh scan from Point3D(1216,1384,0); do not treat the drake as safe, gone, stationary, or moved. The off-screen crane, toads, and southern/eastern/western spawner records remain ambient risk evidence, while the active Travel Segment policy allows routine east/southeast navigation and controlled-fox shadowing if the fresh scan exposes no hard stop."
       active_blocker: false
       risk_note: "The drake remains high-risk; this loop break only prevents the absent private timer from deadlocking every future run."
       prohibited_claims:
@@ -1410,7 +1472,7 @@ perception_visual_scan:
       facing: "Direction.East"
       combatant: null
       visible_context_menu: "none_client_visible; server-side stale Mobile.ContextMenu unknown because Run 85 did not send ContextMenuResponse"
-      follower_pressure: "controlled fox at Point3D(1213,1381,0), ControlOrder Follow, floored distance 4, outside the remembered 2..3 FriendsAvoidHeels band after Run 129's two east movement steps; the next likely action is a fox-follow wait only after the required fresh scan/classifier pass."
+      follower_pressure: "controlled fox at Point3D(1213,1381,0), ControlOrder Follow, floored distance 4, outside the remembered 2..3 FriendsAvoidHeels band after Run 129's two east movement steps. Under the active Travel Segment policy, this is follower-shadowing evidence rather than a mandatory standalone fox-follow wait, provided the next route remains locally clear and no combat/order/ownership/follower-count state changes."
     candidates:
       - serial: 28109
         type: "Server.Mobiles.SwampDrakeRiding"
@@ -1665,7 +1727,7 @@ perception_visual_scan:
             - { x: 1194, y: 1358, z: 0, land_tile: "0x4 grass", statics: 0, movement_check: "open_side" }
             - { x: 1193, y: 1357, z: 0, land_tile: "0x583 jungle", statics: ["0xD43 tree", "0xD49 leaves"], movement_check: "blocked_side_but_non_player_diagonal_has_one_open_side" }
           result: "Mira waited at Point3D(1191,1361,0), and the fox followed southwest from Point3D(1194,1357,0) to Point3D(1193,1358,0), returning to the 2..3 band without changing player location, pet order, ownership, follower count, combat, or skills."
-        stop_rule: "Historical Run 110 stop rule superseded by Runs 113-129. The current next action must start with a fresh scan from Point3D(1216,1384,0); conservative navigation remains legal only while the carried drake branch stays non-active and the off-screen toads/crane/southern/eastern spawner sources remain unresolved rather than active blockers. The controlled fox is outside the follow band after two east player steps, so the next action is likely a fox-follow wait if no new pressure appears."
+        stop_rule: "Historical Run 110 stop rule superseded by Runs 113-129 and by the active Travel Segment policy. The current next action must start with a fresh scan from Point3D(1216,1384,0); conservative navigation remains legal only while the carried drake branch stays non-active and the off-screen toads/crane/southern/eastern spawner sources remain ambient risk rather than active blockers. The controlled fox is outside the follow band after two east player steps, but routine follower catch-up may be shadowed inside a Travel Segment if path evidence stays clear."
   client_worldmap_markers:
     status: "available_to_player_as_world_map_overlay_not_screen_entities"
     schema: "x,y,map,name,type_or_icon,color,zoom_or_layer"
@@ -4370,7 +4432,7 @@ evidence:
     - action: "Treat Run 128's fox follow tick as guarding, body-blocking, or combat protection"
       gate: "Blocked. Run 128 Beat 2 advanced only the controlled fox's Follow movement from Point3D(1212,1380,1) to Point3D(1213,1381,0). No Guard, Attack, Combatant, PathFollower around future blockers, hostile aggro response, body-blocking, swamp drake AI, notice sound, breath, melee, or player damage path ran."
     - action: "Continue after Run 129 without considering the fox"
-      gate: "Blocked. Run 129 consumed one facing turn and two east player movement steps but no BaseAI.Obey/DoOrderFollow tick, so the controlled fox stayed at Point3D(1213,1381,0) and is now outside the 2..3 follow band at floored distance 4. The next run must fresh-scan/classify and likely wait the fox before further route movement."
+      gate: "Blocked. Run 129 consumed one facing turn and two east player movement steps but no BaseAI.Obey/DoOrderFollow tick, so the controlled fox stayed at Point3D(1213,1381,0) and is now outside the 2..3 follow band at floored distance 4. The next run must fresh-scan/classify before travel. Under the active Travel Segment policy, the fox may be shadowed during routine movement if path evidence is clear, but it still cannot be treated as guarding, body-blocking, or exact timer proof."
     - action: "Treat Run 129's east slide as a safety proof or completed route through the rock field"
       gate: "Blocked. Run 129 only proved that Point3D(1215,1384,0) and Point3D(1216,1384,0) are passable east-route tiles. It did not remove static 0x1775 rock at Point3D(1215,1385,0), prove future southeast side checks, reveal shelter, or resolve any live spawner/AI branch."
     - action: "Treat Run 129's empty saved rectangle as safety or shelter"

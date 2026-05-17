@@ -16,6 +16,7 @@ If it does not exist, initialize a brand-new first-time account/character state 
 - fate/tarot: selected card/page/name if chosen, fate family, accessible tarot pages, inaccessible tarot pages with gate reason, AllowAlienChoice result, visitLodor result, visitSavage result, gypsy/table position requirement status.
 - location: map, Point3D, region name/type, start-region status, nearby known NPCs/items, land bucket, time bucket, safe/guarded/public-area flags if traced.
 - perception/visual_scan: scan_center, map, radius_tiles, sources_searched, visible_mobiles, visible_items, potential_entities, scan_confidence, and unresolved_spawn_sources. Distinguish mechanically traced entities from text-only scenery.
+- travel/movement: travel_segment_policy, last_travel_segment, max segment tiles, scan/classifier boundary policy, follower shadowing policy, ambient AI policy, area-risk spawner policy, hard-stop conditions, and any known route blockers.
 - vitals/status: alive/dead, death/corpse/resurrection state, hidden/criminal/wanted/murderer flags, hunger, thirst, poison/disease, hits/stam/mana current and max, raw stats, stat cap, fame, karma, kills.
 - skills/leveling: full skill table with base/value/cap/lock where known, profession, SkillStart, SkillBoost, SkillEther, Skills.Cap, computed overall level, encounter alias levels, best archetype, and any anti-macro or skill-use cooldowns that affect the next action.
 - inventory/equipment: backpack exists/movable, all backpack contents with type/name/amount/hue/loot type/blessed/owner/charges/durability/location where relevant, equipped items by layer, held light source, gold/currency, containers and nested contents, bank/stable/pet/follower state if discovered.
@@ -40,6 +41,7 @@ Required state sections:
 - fate/tarot: selected card/page/name if chosen, fate family, accessible tarot pages, inaccessible tarot pages with gate reason, AllowAlienChoice result, visitLodor result, visitSavage result, gypsy/table position requirement status.
 - location: map, Point3D, region name/type, start-region status, nearby known NPCs/items, land bucket, time bucket, safe/guarded/public-area flags if traced.
 - perception/visual_scan: scan_center, map, radius_tiles, sources_searched, visible_mobiles, visible_items, potential_entities, scan_confidence, and unresolved_spawn_sources. Distinguish mechanically traced entities from text-only scenery.
+- travel/movement: travel_segment_policy, last_travel_segment, max segment tiles, scan/classifier boundary policy, follower shadowing policy, ambient AI policy, area-risk spawner policy, hard-stop conditions, and any known route blockers.
 - vitals/status: alive/dead, death/corpse/resurrection state, hidden/criminal/wanted/murderer flags, hunger, thirst, poison/disease, hits/stam/mana current and max, raw stats, stat cap, fame, karma, kills.
 - skills/leveling: full skill table with base/value/cap/lock where known, profession, SkillStart, SkillBoost, SkillEther, Skills.Cap, computed overall level, encounter alias levels, best archetype, and any anti-macro or skill-use cooldowns that affect the next action.
 - inventory/equipment: backpack exists/movable, all backpack contents with type/name/amount/hue/loot type/blessed/owner/charges/durability/location where relevant, equipped items by layer, held light source, gold/currency, containers and nested contents, bank/stable/pet/follower state if discovered.
@@ -83,9 +85,10 @@ You are a human looking at a screen, not a compiler reading a single script. The
 - If there is an NPC, a chest, or a corpse within visual range, you must acknowledge it in your internal monologue before you formulate your next goal. Players are easily distracted by shiny things; act like one.
 
 PHASE 1.6: CREATURE/TIMER PRESSURE CLASSIFIER
-The client view is not a paused screenshot, and off-screen is not hibernation. Before each player-controlled beat, and again after every movement, waitable timer, visibility change, or gump/context-menu action, you MUST classify every mechanically traced visible, recently visible, or persisted-risk creature before deciding the next action.
+The client view is not a paused screenshot, and off-screen is not hibernation. Before each player-controlled beat, and again after every waitable timer, visibility change, or gump/context-menu action, you MUST classify every mechanically traced visible, recently visible, or persisted-risk creature before deciding the next action. Routine movement inside a Phase 2 Travel Segment is the only exception: classify at the segment start, at the segment endpoint, and immediately at any segment stop event instead of after every compressed tile.
 - Treat a creature as pressure-relevant if it is hostile, aggressive, high-damage, poison/breath-capable, uncontrolled with a non-None FightMode, recently primed by `OnMovement`/`ForceReacquire`, already has a Combatant, has a special timer such as `GiantToad.TeleportTimer`, could target the player/pet if its AI timer fires, or has a persisted unresolved AI note.
-- Classify each pressure-relevant creature as exactly one of: `visible_active_pressure`, `recently_visible_pressure`, `timer_negative_evidence`, `carried_unresolved_not_active_blocker`, or `not_relevant_this_beat`.
+- Classify each pressure-relevant creature as exactly one of: `visible_active_pressure`, `recently_visible_pressure`, `timer_negative_evidence`, `carried_unresolved_not_active_blocker`, `ambient_unresolved`, or `not_relevant_this_beat`.
+- Downgrade an off-screen passive creature to `ambient_unresolved` when it is outside the 18-tile client rectangle, has no Combatant/FocusMob/Aggressor/Aggressed/Faction/Ethic state involving the player or follower, has no special timer whose current scan can include the player or follower, and has not been recently primed in a way that can include them during the proposed next segment. Keep the note as uncertainty, but do not spend a beat re-litigating passive wandering just because the creature remains unresolved history.
 - For each classified creature, persist: serial, type/name, current or last-known Point3D, dx, dy, `within_client_update_range_18`, `within_movement_notice_range_24`, `sector_active_possible`, `range_perception_contains_player`, `special_timer_contains_player`, `private_timer_available`, `chosen_status`, and `why`.
 - Do not confuse the player's 18-tile client update rectangle with AI sleep or creature target scans. Use `Utility.InUpdateRange`/`Map.GetMobilesInRange` centered on the player only for visibility and click legality. Use `Map.GetMobilesInRange(creature.Location, creature.RangePerception)`, special timer scans, and the creature's acquisition filters for aggro. A creature may be visible at dx/dy 18 while the player is outside its `RangePerception`, and a creature outside the client rectangle may still be unresolved risk.
 - Never claim off-screen hibernation unless a live export explicitly proves the timer stopped, the creature was deleted, or the creature despawned. Sector-active AI and delayed deactivation are the server truth; strict 18-tile culling is only a simulation safety policy, not a shard guarantee.
@@ -105,16 +108,26 @@ If any gump is currently open, or if the chosen action opens a gump, treat that 
 PHASE 2: THE HOURLY MICRO-BATCHED NEXT MOVE
 Based purely on your current State, Location, Inventory, Last Action, persisted Phase 1.5 Visual Scan, AND any open-gump reading state from Phase 1.75, decide up to 3 chronological normal-player beats for this hourly wake.
 
-Treat each beat as a real mini-run:
+Treat each beat as a real mini-run, except that routine travel can be compressed into one `Travel Segment` beat:
 - Before beat 1, use the persisted Phase 1.5 scan and current open-gump state.
 - Before beat 1, and before every later beat, use the persisted Phase 1.6 `ai_pressure_scan`. If any creature is classified `visible_active_pressure` or `recently_visible_pressure` with a due/unresolved AI or special timer result, the next beat must resolve that pressure or stop unless the exact branch is already marked `carried_unresolved_not_active_blocker`; do not take a routine player action first.
-- If `ai_pressure_scan` marks a branch as `carried_unresolved_not_active_blocker`, treat it as risk evidence rather than an active pre-beat blocker. The next beat must still be conservative and risk-reducing or resolve visible uncertainty, and must re-scan and re-run the classifier after any movement or wait.
-- For every beat, choose exactly one normal-player action or waitable visible/timed event.
+- If `ai_pressure_scan` marks a branch as `carried_unresolved_not_active_blocker`, treat it as risk evidence rather than an active pre-beat blocker. The next beat must still be conservative and risk-reducing or resolve visible uncertainty. If the next beat is a Travel Segment, re-scan and re-run the classifier at the segment endpoint or stop event.
+- If `ai_pressure_scan` marks a branch as `ambient_unresolved`, carry it as background uncertainty rather than an active pre-beat blocker. It does not block routine travel unless the proposed segment would bring the player or follower back into that creature's visible range, target scan, movement-notice pressure, or special timer range.
+- For every beat, choose exactly one normal-player action, one waitable visible/timed event, or one Travel Segment.
 - Trace the C# path for that beat before mutating state.
 - Apply the state mutation for that beat immediately.
-- Re-scan visible range, re-run the creature/timer pressure classifier, and re-evaluate open UI before deciding whether beat 2 or beat 3 is legal.
-- Append the map entry as one run heading with clearly separated `Beat 1`, `Beat 2`, and `Beat 3` subsections when more than one beat completes. Do not create separate top-level headings like `Run 84.1` unless a future prompt explicitly changes this convention.
-- Keep `docs/CCWM/Simulation_State.yaml` authoritative at the end of the hourly wake. Repeated unchanged sections may be summarized, but every completed beat must have its own state delta, code trace, visible-scan result, random branches, unresolved branches, evidence, and unavailable-action gates.
+- Re-scan visible range, re-run the creature/timer pressure classifier, and re-evaluate open UI before deciding whether beat 2 or beat 3 is legal. For a Travel Segment, this happens at segment end or at the first stop event, not after each compressed tile.
+- Append the map entry as one run heading with clearly separated `Beat 1`, `Beat 2`, and `Beat 3` subsections when more than one beat completes. When a beat is a Travel Segment, use a `Travel Segment` subsection that records the route summary instead of listing every movement keypress as a separate beat. Do not create separate top-level headings like `Run 84.1` unless a future prompt explicitly changes this convention.
+- Keep `docs/CCWM/Simulation_State.yaml` authoritative at the end of the hourly wake. Repeated unchanged sections may be summarized, but every completed beat must have its own state delta, code trace, visible-scan result, random branches, unresolved branches, evidence, and unavailable-action gates. For a Travel Segment, store this evidence in `last_travel_segment` and summarize the compressed substeps.
+
+Travel Segment rules:
+- Use a Travel Segment only for routine navigation across already-visible or mechanically probed terrain when no unread gump, target cursor, combat, active timer, visible interactive entity, or active high-risk AI pressure outranks movement.
+- A Travel Segment may include up to `12` accepted player movement inputs, facing-only turns needed for those inputs, and controlled follower catch-up needed to keep existing `Follow` orders coherent.
+- Pre-check the proposed route through the same movement evidence a normal player has earned: current map file index, binary land/static passability where needed, live saved mobile/item blockers, known region/teleporter/decorator evidence, and visible terrain context. Do not path through a tile whose passability, side-check, region, or blocker status is unknown.
+- Stop the segment immediately if any normal stop rule fires: a visible hostile/high-risk mobile appears, any new NPC/corpse/chest/usable item/sign/road/shelter/water source/region text/gump/context menu/target cursor appears, movement fails, terrain/source evidence becomes uncertain, a random branch affects the outcome, or combat/damage/ownership/follower-count/quest/discovery/teleport/region/hunger/thirst/skill/open UI state changes.
+- Scan and classify at the segment start and at the final endpoint. If the segment stops early, scan/classify at the stop point before choosing any later beat.
+- Treat invisible spawner home ranges as `area_risk_summary` during travel, not as visible entities or active blockers. Spawned refs from the live-state snapshot still count as visible/potential entities when they enter range.
+- Controlled followers on `Follow` may be shadowed back into their established trailing band, such as the current 2..3 tile `FriendsAvoidHeels` band, when they are on the same map, pathing over the compressed route is locally clear, and no combat, Guard/Attack order, ownership change, follower-count change, body-blocking, target cursor, or pet-specific interaction occurs. Persist this as approximate follower shadowing, not an exact `BaseAI.Obey` timer result. If follower pathing is blocked or uncertain, stop the segment and record the blocker.
 
 Visible, mechanically traced interactive entities from Phase 1.5, high-risk AI pressure from Phase 1.6, and unread information-rich gumps from Phase 1.75 outrank long-term goals. If a tutorial NPC is standing two tiles away, your next move is likely to click them; if a readable gump just opened, your next move is likely to read and interpret it; if a poison-breath drake has a due or unresolved active AI tick, your next move is to resolve or stop on that pressure before walking past it. If no mechanically traced entity, unresolved active AI pressure, or unread gump competes, continue with the table/tarot flow or the next state-legal goal.
 
@@ -141,6 +154,7 @@ Examples:
 - Paging cards: GypsyTarotGump.pageShow -> visitLodor/visitSavage/AllowAlienChoice.
 - Choosing a card: GypsyTarotGump.OnResponse -> EnterLand, but only for a card that was visible through pageShow.
 - Moving into a region: Region.OnEnter / StartRegion.OnEnter.
+- Routine Travel Segment: route pre-check -> Mobile.Move / MovementImpl.CheckMovement for accepted movement inputs -> Region.CanMove / OnMoveOver gates -> endpoint scan/classifier -> optional controlled follower shadowing evidence. Do not expand every accepted movement input into its own beat unless a stop rule fires.
 Identify the exact friction: inaccessible card, missing discovery flag, position requirement, inventory shortage, skill check, PvP rule, random encounter gate, hunger/thirst pressure, etc.
 
 PHASE 4: ASSIMILATION & SAVING
@@ -155,6 +169,7 @@ Print a brief Simulation Log:
 - beats_attempted
 - beats_completed
 - Action taken for each completed beat
+- Travel Segment route summary if a beat compressed movement
 - C# paths traced
 - Access gates checked
 - Ending state
