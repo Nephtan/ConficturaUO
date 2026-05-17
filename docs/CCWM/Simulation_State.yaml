@@ -1,7 +1,7 @@
 schema:
   schema_version: 1
   run_number: 113
-  last_updated: "2026-05-16T18:08:29.1723362-05:00"
+  last_updated: "2026-05-16T19:10:34.6933979-05:00"
   source_paths_traced:
     - "Data/Scripts/System/Misc/CharacterCreation.cs"
     - "Data/Scripts/System/Misc/Settings.cs"
@@ -329,6 +329,25 @@ schema:
     - "Run 112 ended with Mira still at Point3D(1191,1361,0), still facing Direction.Left, and the controlled fox still at Point3D(1193,1358,0), inside the 2..3 follow band. The remaining edge animals were labeled through normal LookReq: serial 737437 is another toad and serial 288081 is a crane. All three visible edge animals are now player-known, but their future wandering/timer branches and the carried swamp-drake branch remain unresolved."
     - "Run 113 ended with Mira at Point3D(1192,1362,0), facing Direction.Down, and the controlled fox at Point3D(1193,1359,0), inside the 2..3 follow band. The west toad is outside the client rectangle but unresolved, and the southwest toad/crane remain visible; future wandering/timers and the carried swamp-drake branch remain unresolved."
     - "Run 62 resolved the corrected southeast player step, Run 63 resolved a no-move follow tick, Run 64 resolved one more southeast player step, Run 65 resolved the fox's first physical follow step to Point3D(1210,1325,0), Run 66 resolved one more southeast player step to Point3D(1213,1329,0), Run 67 resolved the fox's second physical follow step to Point3D(1211,1326,0), Run 68 resolved another southeast player step to Point3D(1214,1330,0), Run 69 resolved the fox's third physical follow step to Point3D(1212,1327,0), Run 70 resolved another southeast player step to Point3D(1215,1331,0), Run 71 resolved the fox's fourth physical follow step to Point3D(1213,1328,0), Run 72 resolved one more southeast player step to Point3D(1216,1332,0), Run 73 only labeled the visible swamp drake, Run 74 resolved the fox's fifth physical follow step to Point3D(1214,1329,0), Run 75 resolved a southwest facing turn only, Run 76 resolved the next southwest player step to Point3D(1215,1333,1), Run 77 resolved one fox Follow AI tick to Point3D(1214,1330,0), Run 78 moved Mira southwest to Point3D(1214,1334,0), Run 79 resolved one fox Follow AI tick to Point3D(1214,1331,0), Run 80 resolved a southeast facing turn only at the same Point3D, Run 81 resolved the real southeast step to Point3D(1215,1335,0), Run 82 resolved one fox Follow AI tick to Point3D(1214,1332,0), Run 83 resolved a real southeast step to Point3D(1216,1336,0), Run 84 opened the drake's context menu with disabled Tame, Run 85 closed/ignored that visible menu without a server response, and Run 86 turned southwest in place while notifying the drake's ReacquireOnMovement path. Future movement tiles, live creature AI, wandering, aggro, pet follow, UI response, and swamp drake behavior remain unresolved."
+
+mechanics_model:
+  server_code_mutation_allowed: false
+  client_update_range_tiles: 18
+  client_update_range_shape: "inclusive_rectangle_37x37"
+  global_movement_notice_range_tiles: 24
+  sector_size_tiles: 16
+  sector_active_range_sectors: 2
+  offscreen_hibernation_assumption: false
+  ai_culling_model: "sector_active_with_delayed_deactivation"
+  private_ai_timer_exported: false
+  player_diagonal_rule: "both_side_tiles_must_pass"
+  non_player_diagonal_rule: "one_side_clear_can_pass"
+  range_checks_ignore_z: true
+  automation_contract:
+    - "C# server/runtime files are read-only evidence for CCWM runs; do not mutate RunUO server behavior for simulation convenience."
+    - "Off-screen creatures are not hibernated unless a live export proves timer stopped, deletion, or despawn."
+    - "The 18-tile client rectangle controls visibility and normal click/context-menu legality, not AI sleep."
+    - "Creature AI pressure must be classified before each beat and after every movement, wait, visibility, gump, or context-menu change."
 
 account:
   account_id: "placeholder:first_account"
@@ -1070,8 +1089,100 @@ perception_visual_scan:
   visible_items: []
   ai_pressure_scan:
     status: "two_visible_passive_edge_animals_after_run113; west_toad_288077_offscreen_but_unresolved; fox_inside_follow_band; recently_visible_drake_carried_unresolved_not_active_blocker; no_visible_saved_items_or_running_spawners_in_final_rectangle"
-    policy: "Phase 1.6 visible creature AI pressure pass added after Run 86; high-risk due/unknown AI pressure outranks routine player movement and pet-follow waits unless the repeated private-timer loop-break rule marks the exact branch carried_unresolved_not_active_blocker."
+    policy: "Phase 1.6 creature/timer pressure classifier; high-risk due/unknown AI or special timer pressure outranks routine player movement and pet-follow waits unless the exact repeated private-timer branch is marked carried_unresolved_not_active_blocker."
+    classifier_statuses:
+      - "visible_active_pressure"
+      - "recently_visible_pressure"
+      - "timer_negative_evidence"
+      - "carried_unresolved_not_active_blocker"
+      - "not_relevant_this_beat"
+    required_classifier_fields:
+      - "serial"
+      - "type"
+      - "name"
+      - "point3d"
+      - "dx"
+      - "dy"
+      - "within_client_update_range_18"
+      - "within_movement_notice_range_24"
+      - "sector_active_possible"
+      - "range_perception_contains_player"
+      - "special_timer_contains_player"
+      - "private_timer_available"
+      - "chosen_status"
+      - "why"
     timing_basis: "Run 86 reset the drake's NextReacquireTime through ForceReacquire. Run 87 waited for the AI pressure path and resolved AcquireFocusMob far enough to set NextReacquireTime to DateTime.Now + ReacquireDelay, but the live-state snapshot does not export BaseAI.m_NextMove. Runs 88, 89, and 90 rechecked this gate and did not find an exported timer source, so the branch is carried_unresolved_not_active_blocker. Runs 91 through 109 moved Mira southwest out of the 18-tile client rectangle and/or regrouped the follower; Mobile.Move's larger movement-notification range may still call the drake's OnMovement/ForceReacquire when in range, but Mira remains outside the drake-centered RangePerception 16 scan and no due/not-due m_NextMove branch is chosen. Run 110 advanced only the controlled fox's Follow AI from Point3D(1194,1357,0) to Point3D(1193,1358,0). Runs 111 and 112 labeled the visible edge animals without moving. Run 113 turned southeast, stepped one tile southeast, and advanced one controlled fox Follow AI tick; the west toad is now outside Mira's client rectangle, the southwest toad/crane remain visible, both toads remain outside range-10 teleport target scans, passive Aggressor acquisition still has no aggressor/aggressed/faction/ethic state, and the carried drake m_NextMove branch remains unchosen."
+    current_post_run113_classification:
+      - serial: 28109
+        type: "Server.Mobiles.SwampDrakeRiding"
+        name: "a swamp drake"
+        point3d: { x: 1234, y: 1319, z: 0 }
+        dx: 42
+        dy: -43
+        within_client_update_range_18: false
+        within_movement_notice_range_24: false
+        sector_active_possible: "unknown; sector activity and delayed deactivation are not exported by the live-state snapshot"
+        range_perception_contains_player: false
+        special_timer_contains_player: "not_applicable"
+        private_timer_available: false
+        chosen_status: "carried_unresolved_not_active_blocker"
+        why: "Runs 88-90 repeatedly found no exported BaseAI.m_NextMove or AI timer schedule for serial 28109. Carry both due/not-due movement outcomes as risk evidence; do not claim the drake is safe, gone, stationary, moved, or hibernated."
+      - serial: 288077
+        type: "Server.Mobiles.Toad"
+        name: "a toad"
+        point3d: { x: 1173, y: 1360, z: 0 }
+        dx: -19
+        dy: -2
+        within_client_update_range_18: false
+        within_movement_notice_range_24: true
+        sector_active_possible: "unknown; off-screen does not prove timer stopped"
+        range_perception_contains_player: "not_traced_this_beat"
+        special_timer_contains_player: false
+        private_timer_available: false
+        chosen_status: "recently_visible_pressure"
+        why: "Run 113 shifted this west-edge toad just outside Utility.InUpdateRange at dx=-19,dy=-2. It did not despawn, die, teleport, attack, or resolve a timer; it remains recently visible unresolved pressure."
+      - serial: 737437
+        type: "Server.Mobiles.Toad"
+        name: "a toad"
+        point3d: { x: 1174, y: 1379, z: 0 }
+        dx: -18
+        dy: 17
+        within_client_update_range_18: true
+        within_movement_notice_range_24: true
+        sector_active_possible: true
+        range_perception_contains_player: "not_required_for_current_negative_timer_evidence"
+        special_timer_contains_player: false
+        private_timer_available: false
+        chosen_status: "timer_negative_evidence"
+        why: "The toad remains visible at the southwest edge, but Mira is outside the toad-centered range-10 TeleportTimer scan. Future wandering/timer ticks remain unresolved."
+      - serial: 288081
+        type: "Server.Mobiles.Crane"
+        name: "a crane"
+        point3d: { x: 1176, y: 1379, z: 0 }
+        dx: -16
+        dy: 17
+        within_client_update_range_18: true
+        within_movement_notice_range_24: true
+        sector_active_possible: true
+        range_perception_contains_player: "not_applicable_without_aggressor_state"
+        special_timer_contains_player: "not_applicable"
+        private_timer_available: "not_applicable"
+        chosen_status: "timer_negative_evidence"
+        why: "The crane is visible edge wildlife with passive AI_Animal/FightMode.Aggressor, one-point damage, no special timer traced, and no aggressor/aggressed/faction/ethic state that would create active acquisition."
+      - serial: 200274
+        type: "Server.Mobiles.Fox"
+        name: "a fox"
+        point3d: { x: 1193, y: 1359, z: 0 }
+        dx: 1
+        dy: -3
+        within_client_update_range_18: true
+        within_movement_notice_range_24: true
+        sector_active_possible: true
+        range_perception_contains_player: "controlled_follower_obey_path_only"
+        special_timer_contains_player: "not_applicable"
+        private_timer_available: "not_exported_but_not_currently_blocking"
+        chosen_status: "not_relevant_this_beat"
+        why: "The fox is controlled, ordered to Follow, and back inside the remembered 2..3 FriendsAvoidHeels band. It is follower-spacing pressure, not guarding, body-blocking, combat protection, or hostile AI pressure."
     run87_resolution:
       action: "waited for the primed swamp drake AI pressure pass; no normal player keypress, pet command, context-menu response, or target cursor action occurred"
       code_path: "AITimer.OnTick -> SwampDrakeRiding/BaseMount.OnThink -> BaseCreature.OnThink -> BaseAI.Think(ActionType.Wander) -> MeleeAI.DoActionWander -> AcquireFocusMob(RangePerception 16, FightMode.Closest, false, false, true) -> base.DoActionWander -> CheckMove"

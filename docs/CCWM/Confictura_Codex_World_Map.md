@@ -2799,3 +2799,13 @@ Mechanical friction learned:
 Next pressure:
 
 Mira ends at `Point3D(1192,1362,0)`, facing southeast. The fox is at `Point3D(1193,1359,0)`, back inside the `2..3` heel band. The southwest toad and crane are still visible at the edge, the west toad is off-screen but unresolved, and the next run needs a fresh scan before choosing whether to keep skirting east/southeast or stop and reassess.
+
+## Audit Note - Automation Truthfulness After Run 113
+
+No server code changed. The simulation model is being tightened, not the shard.
+
+The important correction is that off-screen is not hibernation. The RunUO AI evidence says player-range-sensitive AI is controlled by sector activity and delayed deactivation, not by strict 18-tile client visibility. The 18-tile rectangle is the player's click and visibility envelope; it is not proof that a mobile's AI timer stopped, that a sector slept, or that a creature despawned.
+
+So the next runs must treat off-screen AI as unobserved/carryable risk unless the live export proves deletion, despawn, or a stopped timer. The carried swamp-drake branch remains exactly that: risk evidence, not an active blocker and not a safety verdict. The drake is not visible from `Point3D(1192,1362,0)`, and its own range-perception scan does not currently contain Mira, but the missing private `BaseAI.m_NextMove` branch is still not chosen.
+
+The post-Run-113 screen truth stays unchanged. Mira ended at `Point3D(1192,1362,0)`, the fox ended at `Point3D(1193,1359,0)` inside the follow band, the southwest toad and crane remain visible edge pressure, and the west toad is off-screen but unresolved. Run 114 must begin with a fresh visible scan and the stricter creature/timer pressure classifier before any movement, wait, click, or route choice.
