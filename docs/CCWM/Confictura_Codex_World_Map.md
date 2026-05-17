@@ -3449,3 +3449,26 @@ Mechanical friction learned:
 Next pressure:
 
 Mira ends at `Point3D(1216,1384,0)`, facing east. The controlled fox is at `Point3D(1213,1381,0)`, visible but outside the follow band. No saved mobile, item, corpse, chest, NPC, road, water source, sign, gump, context menu, target cursor, or named region appeared. The next honest beat is likely a fox-follow wait before I spend another movement input toward the `Ruins` marker.
+
+## Run 130 - The First Compressed Walk Finds Another Rock
+
+I start at `Point3D(1216,1384,0)`, facing east, with the fox behind me at `Point3D(1213,1381,0)`. The fresh 18-tile rectangle is still empty in the live save: no saved visible mobiles, no visible saved items, and no running spawner object locations. The fox is the only body on my screen, and even that is the simulated controlled follower state. The old toads, crane, and swamp drake are all off-screen pressure notes, not clickable bodies. Six invisible `PremiumSpawner` home ranges still overlap the screen by range only. The `Ruins` marker is about 109 tiles away, but the marker is not a road.
+
+**Travel Segment**
+
+I use the new routine-travel rhythm instead of pretending every empty grass step is a new decision. First I turn southeast in place; `Mobile.Move` changes only facing from east to `Direction.Down`. Then I walk southeast over five accepted inputs: `1217,1385`, `1218,1386`, `1219,1387`, `1220,1388`, and `1221,1389`. The server-order `map1.mul` / `staidx1.mul` / `statics1.mul` read shows dry passable jungle all the way. Ferns, leaves, pampas grass, and bulrushes are visible static clutter, but none of those tiles carries the blocking flag.
+
+I shadow the fox instead of spending standalone wait beats. It trails the same southeast line from `Point3D(1213,1381,0)` to `Point3D(1218,1386,0)` through locally clear tiles. That is only follower-shadowing evidence under the travel policy, not an exact `BaseAI` timer proof, and it still does not make the fox a guard.
+
+The sixth southeast input hits the stop rule. `MovementImpl.CheckMovement` tests `Point3D(1222,1390,0)`. The land is jungle, but the static block contains rock `0x1778`, height `2`, with `TileFlag.Impassable`. The move fails, so Mira stays at `Point3D(1221,1389,0)`, facing southeast. No damage, combat, region text, gump, context menu, target cursor, discovery, hunger, thirst, skill, pet order, ownership, or follower-count state changes.
+
+Mechanical friction learned:
+
+- A Travel Segment can compress routine visible movement, but it still stops on the first failed movement input.
+- The north-side route around the first rock was real for five southeast steps, then another impassable rock closed the straight line at `Point3D(1222,1390,0)`.
+- The final saved rectangle x `1203..1239`, y `1371..1407` is still empty of saved mobiles/items/spawner object locations, but four invisible spawner homes overlap by range only.
+- Shadowing the fox back into dx `-3`, dy `-3` keeps the leash coherent; it does not run Guard, Attack, hostile aggro handling, body-blocking, or exact pet timer behavior.
+
+Next pressure:
+
+Mira ends at `Point3D(1221,1389,0)`, facing southeast. The fox is at `Point3D(1218,1386,0)`, inside the remembered `2..3` heel band. There is no visible NPC, corpse, chest, water source, road, sign, gump, or target cursor, but the next action has to be another fresh scan and route decision around rock `0x1778` at `Point3D(1222,1390,0)`.
