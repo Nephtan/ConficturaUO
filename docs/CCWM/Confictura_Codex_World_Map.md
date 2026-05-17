@@ -2809,3 +2809,643 @@ The important correction is that off-screen is not hibernation. The RunUO AI evi
 So the next runs must treat off-screen AI as unobserved/carryable risk unless the live export proves deletion, despawn, or a stopped timer. The carried swamp-drake branch remains exactly that: risk evidence, not an active blocker and not a safety verdict. The drake is not visible from `Point3D(1192,1362,0)`, and its own range-perception scan does not currently contain Mira, but the missing private `BaseAI.m_NextMove` branch is still not chosen.
 
 The post-Run-113 screen truth stays unchanged. Mira ended at `Point3D(1192,1362,0)`, the fox ended at `Point3D(1193,1359,0)` inside the follow band, the southwest toad and crane remain visible edge pressure, and the west toad is off-screen but unresolved. Run 114 must begin with a fresh visible scan and the stricter creature/timer pressure classifier before any movement, wait, click, or route choice.
+
+## Run 114 - I Keep Sliding Off The Toads
+
+I start at `Point3D(1192,1362,0)`, facing southeast, with the fox at `Point3D(1193,1359,0)`. The screen scan is still honest and small: the live snapshot shows a labeled toad at `Point3D(1174,1379,0)` and a labeled crane at `Point3D(1176,1379,0)`, with zero visible saved items and zero running spawner objects. The west toad is not visible now, but I do not get to call it gone. The old swamp drake is far off-screen and still carried as unresolved private-timer risk, not safety.
+
+The world-map overlay keeps changing by inches. `Ruins` is the nearest lure, about 141 tiles away from the starting tile and 138 from the final tile. `Mines of Morinia` and the West moongate are still just map names, not roads or shelter on the ground.
+
+**Beat 1**
+
+I press southeast because I am already facing that way and it moves me away from the toads by x range.
+
+`Mobile.Move` reaches `MovementImpl.CheckMovement`. The forward tile `Point3D(1193,1363,0)` is grass `0x4`; the two player diagonal side checks, `Point3D(1193,1362,0)` and `Point3D(1192,1363,0)`, are grass `0x6` and jungle `0x583`. The server-order Sosaria file index is still `1`; all three tiles are dry, passable, and have zero statics. No saved mobile or item occupies the destination, and no named region catches it.
+
+Mira moves to `Point3D(1193,1363,0)`. The southwest toad falls out of the 18-tile client rectangle at dx `-19`, dy `16`; the crane remains visible at dx `-17`, dy `16`. The fox does not move on my keypress and is now four tiles behind by floored distance.
+
+**Beat 2**
+
+I wait for the fox instead of walking off and stretching the leash.
+
+The pet follow path runs through `BaseAI.Obey`, `DoOrderFollow`, `WalkMobileRange`, `GetDirectionTo`, `DoMove(Direction.South)`, and `Mobile.Move`. FriendsAvoidHeels is still using the remembered spacing value `7`, so the desired band is `2..3`. From `Point3D(1193,1359,0)` toward me, the fox chooses south. The target `Point3D(1193,1360,0)` is jungle `0x583`, dry, passable, and has zero statics. The fox steps there and lands back at floored distance `3`.
+
+Nothing else gets a turn in my favor. The crane is still visible, the toads are off-screen but unresolved, and no item, corpse, chest, gump, context menu, target cursor, combat, damage, hunger, thirst, skill, quest, discovery, or pet-order state changes.
+
+**Beat 3**
+
+I take one more southeast step.
+
+`Mobile.Move` again gets the real movement path because I am still facing `Direction.Down`. The forward tile `Point3D(1194,1364,0)` is grass `0x6`; the player diagonal side checks `Point3D(1194,1363,0)` and `Point3D(1193,1364,0)` are grass `0x3` and `0x5`. All three are dry, passable, and static-free. No live saved blocker or named region is there.
+
+Mira moves to `Point3D(1194,1364,0)`. The crane is still just visible on the far west/southwest edge at dx `-18`, dy `15`. Both toads are now outside the client rectangle, but neither was despawned, killed, moved, tamed, attacked, or timed. The fox is stretched again at dx `-1`, dy `-4`, floored distance `4`, so the next honest beat is probably another fox wait before any further route choice.
+
+Mechanical friction learned:
+
+- Moving southeast is currently a real retreat from the toads, not a discovery route.
+- Dropping a toad out of the client rectangle is only visibility friction; it does not prove the timer stopped.
+- The crane can stay visible at the edge even after both toads leave the screen.
+- One southeast movement step immediately reintroduces follower-spacing pressure.
+
+Next pressure:
+
+Mira ends at `Point3D(1194,1364,0)`, facing southeast. The fox is at `Point3D(1193,1360,0)`, outside the remembered `2..3` heel band. The crane remains visible at the edge, both toads are off-screen but unresolved, and the old swamp drake branch remains carried unresolved rather than solved.
+
+## Run 115 - The Last Bird Leaves The Screen
+
+I start at `Point3D(1194,1364,0)`, still facing southeast, with the fox behind me at `Point3D(1193,1360,0)`. The screen has exactly one saved creature left: the labeled crane at `Point3D(1176,1379,0)`, stuck on the far west/southwest edge at dx `-18`, dy `15`. The toads are not visible now. That does not make them dead, despawned, or safe; it only means my client rectangle no longer contains them. The old swamp drake is far off-screen and still the same carried private-timer risk, not a solved threat.
+
+**Beat 1**
+
+I wait for the fox instead of walking farther with it stretched.
+
+The pet tick goes through `AITimer.OnTick`, `BaseCreature.OnThink`, `BaseAI.Obey`, `DoOrderFollow`, `WalkMobileRange`, `GetDirectionTo`, `DoMove(Direction.South)`, and `Mobile.Move`. FriendsAvoidHeels is still using spacing `7`, so the fox wants the `2..3` tile band. From `Point3D(1193,1360,0)` to me, the fox resolves south. The target `Point3D(1193,1361,0)` is jungle `0x57D`, dry, passable, and has zero statics. The fox steps there and lands at floored distance `3`.
+
+The crane remains visible. It is passive `AI_Animal`/`FightMode.Aggressor` with no special timer traced, but visible wildlife still tugs at the edge of my attention.
+
+**Beat 2**
+
+With the leash repaired, I press southeast one more time.
+
+`Mobile.Move` enters the real movement path because I am already facing `Direction.Down`. The server-order Sosaria read uses file index `1`. The forward tile `Point3D(1195,1365,0)` is grass `0x3`; the two player diagonal side checks, `Point3D(1195,1364,0)` and `Point3D(1194,1365,0)`, are also grass `0x3`. All three have zero statics, no saved blocker, and no named `Regions.xml` rectangle.
+
+Mira moves to `Point3D(1195,1365,0)`. The crane drops outside the 18-tile client rectangle at dx `-19`, dy `14`. It is not gone; I just cannot see or click it from here. The fox stays at `Point3D(1193,1361,0)` and stretches back to floored distance `4`.
+
+**Beat 3**
+
+I wait again.
+
+The same controlled-follow path runs. From `Point3D(1193,1361,0)` toward me at `Point3D(1195,1365,0)`, `GetDirectionTo` resolves `Direction.Down`. The fox's target `Point3D(1194,1362,0)` is grass `0x3` with zero statics. The diagonal side checks `Point3D(1194,1361,0)` and `Point3D(1193,1362,0)` are grass `0x6` and `0x3`, also static-free. The fox steps southeast and ends at dx `-1`, dy `-3`, floored distance `3`.
+
+The final screen is empty except for my controlled fox. The live-state rectangle around `Point3D(1195,1365,0)` has zero saved visible mobiles, zero saved visible items, and zero running spawner objects. That feels quieter, but it is not proof of safety: both toads, the crane, and the swamp drake are all unresolved off-screen history rather than deleted facts.
+
+Mechanical friction learned:
+
+- A visible edge animal can be moved off-screen by ordinary walking without resolving its AI or timer state.
+- The conservative rhythm is still one player step, then a follower wait; otherwise the fox immediately falls outside the heel band.
+- The current patch of Sosaria is plain grass/jungle under server-order `map1.mul` with zero statics on the consumed movement tiles.
+- Empty screen is not a town, guard zone, water source, road, shelter, or safety verdict.
+
+Next pressure:
+
+Mira ends at `Point3D(1195,1365,0)`, facing southeast. The fox is at `Point3D(1194,1362,0)`, inside the remembered `2..3` heel band. No saved mobile or item is visible in the final 18-tile rectangle. The labeled toads and crane are off-screen but unresolved, and the swamp drake branch remains carried unresolved rather than solved.
+
+## Run 116 - Empty Grass Still Takes Turns
+
+I start at `Point3D(1195,1365,0)`, facing southeast, with the fox close at `Point3D(1194,1362,0)`. The saved screen is empty: no saved visible mobiles, no saved visible items, no running spawner object in the 18-tile rectangle. That does not make it a road, camp, water source, guard zone, or proof that the toads, crane, and swamp drake stopped existing. It just means there is nothing new to click.
+
+The overlay is still the only lure. `Ruins` is roughly 137 tiles away from the starting tile and 134 tiles from the final tile. `Mines of Morinia` and the West moongate sit farther off. None of those rows are visible terrain.
+
+**Beat 1**
+
+I press southeast.
+
+Because I am already facing `Direction.Down`, this is a real movement beat. `Mobile.Move` reaches `MovementImpl.CheckMovement`. The forward tile `Point3D(1196,1366,0)` is grass `0x4`; the two player diagonal side checks, `Point3D(1196,1365,0)` and `Point3D(1195,1366,0)`, are grass `0x5` and `0x4`. The Sosaria scan still uses file index `1`, and `map1.mul`, `staidx1.mul`, and `statics1.mul` say all three are dry, passable, and have zero statics. No saved mobile or item occupies the step.
+
+Mira moves to `Point3D(1196,1366,0)`. The fox does not move on my keypress, so it stretches to dx `-2`, dy `-4`, floored distance `4`. The shifted saved-world screen is still empty except for the simulated follower overlay.
+
+**Beat 2**
+
+I wait for the fox.
+
+The controlled follower path runs through `AITimer.OnTick`, `BaseCreature.OnThink`, `BaseAI.Obey`, `DoOrderFollow`, `WalkMobileRange`, `GetDirectionTo`, `DoMove(Direction.Down)`, and `Mobile.Move`. FriendsAvoidHeels is still using spacing `7`, so the fox wants the `2..3` tile band. From `Point3D(1194,1362,0)` toward me, the target is `Point3D(1195,1363,0)`.
+
+That tile is grass `0x6` with zero statics. The diagonal side checks, `Point3D(1195,1362,0)` and `Point3D(1194,1363,0)`, are grass `0x4` and `0x3`, also static-free. The fox steps southeast and lands at dx `-1`, dy `-3`, floored distance `3`.
+
+No gump opens. No animal returns to the screen. No item, corpse, chest, sign, road, water target, vendor, or named region appears.
+
+**Beat 3**
+
+With the leash repaired, I press southeast again.
+
+`Mobile.Move` runs the real movement block. The forward tile `Point3D(1197,1367,0)` is grass `0x4`; the player side checks `Point3D(1197,1366,0)` and `Point3D(1196,1367,0)` are grass `0x4` and `0x3`. Zero statics, no saved blocker, no named region. The step is allowed.
+
+Mira moves to `Point3D(1197,1367,0)`. The final saved rectangle, x `1179..1215` and y `1349..1385`, still contains zero saved visible mobiles, zero saved visible items, and zero running spawner objects. The fox stays at `Point3D(1195,1363,0)`, now stretched back to dx `-2`, dy `-4`, floored distance `4`.
+
+Mechanical friction learned:
+
+- Empty grass is not safety. It is only negative screen evidence from the current live-state rectangle.
+- The map overlay keeps shrinking the distance to `Ruins`, but it still grants no road, shelter, discovery flag, or clickable entity.
+- Moving southeast remains mechanically cheap for Mira, but every player step reintroduces fox leash pressure.
+- The off-screen toads, crane, and swamp drake remain unresolved history, not deleted facts.
+
+Next pressure:
+
+Mira ends at `Point3D(1197,1367,0)`, facing southeast. The fox is at `Point3D(1195,1363,0)`, outside the `2..3` heel band. The screen has no saved mobile or item, so the next honest beat is likely a fox wait before any more route movement.
+
+## Run 117 - Leash Rhythm Over Empty Grass
+
+I start at `Point3D(1197,1367,0)`, still facing southeast, with the fox behind me at `Point3D(1195,1363,0)`. The saved screen rectangle is empty again: no saved visible mobiles, no saved visible items, and no running spawner object inside x `1179..1215`, y `1349..1385`. That is only negative screen evidence. The running animal and world spawners at `Point3D(1165,1361,33)` and `Point3D(1165,1361,30)` still have spawned animals and hostile picks west of me, but none of their saved mobile records are currently inside my client rectangle.
+
+The pressure pass stays annoying rather than dramatic. The old swamp drake is still carried private-timer risk, not a visible blocker. The labeled west toad, southwest toad, and crane are off-screen; the nearest toad timer still cannot target me because the toad-centered range-10 scan does not include my tile. The only thing on my screen is my own fox, and it is stretched outside the remembered heel band.
+
+**Beat 1**
+
+I wait for the fox.
+
+The controlled AI path runs through `AITimer.OnTick`, `BaseCreature.OnThink`, `BaseAI.Obey`, `DoOrderFollow`, `WalkMobileRange`, `GetDirectionTo`, `DoMove(Direction.Down)`, and `Mobile.Move`. FriendsAvoidHeels still wants the `2..3` band. From `Point3D(1195,1363,0)` toward me, `GetDirectionTo` points southeast. The target `Point3D(1196,1364,0)` is grass `0x6` at z `0`; the diagonal side tiles `Point3D(1196,1363,0)` and `Point3D(1195,1364,0)` are grass `0x3` and `0x4`. All three are dry, passable, and have zero statics.
+
+The fox steps to `Point3D(1196,1364,0)` and lands at dx `-1`, dy `-3`, floored distance `3`. No animal returns to view.
+
+**Beat 2**
+
+With the leash repaired, I press southeast.
+
+`Mobile.Move` reaches the real movement block because I am already facing `Direction.Down`. The forward tile `Point3D(1198,1368,0)` is grass `0x3`; the player diagonal side-check tiles `Point3D(1198,1367,0)` and `Point3D(1197,1368,0)` are grass `0x3` and `0x4`. The server-order Sosaria read uses `map1.mul`, `staidx1.mul`, and `statics1.mul`; all three tiles are dry, passable, and static-free. No saved mobile or item occupies the destination, and no named `Regions.xml` rectangle catches it.
+
+Mira moves to `Point3D(1198,1368,0)`. The shifted rectangle x `1180..1216`, y `1350..1386` is still empty of saved visible mobiles and items. The fox stays on `Point3D(1196,1364,0)`, now stretched back to floored distance `4`.
+
+**Beat 3**
+
+I wait for the fox again instead of walking a second time.
+
+The same controlled-follow path runs. From `Point3D(1196,1364,0)` toward `Point3D(1198,1368,0)`, `GetDirectionTo` again resolves `Direction.Down`. The fox target `Point3D(1197,1365,0)` is grass `0x4`, and the side tiles `Point3D(1197,1364,0)` and `Point3D(1196,1365,0)` are grass `0x3` and `0x5`. Zero statics, no saved blocker, no named region.
+
+The fox steps to `Point3D(1197,1365,0)` and returns to dx `-1`, dy `-3`, floored distance `3`. I stop at the three-beat cap. Nothing opened, nothing attacked, nothing was looted, no item was used, no hunger or thirst changed, no skill rolled, no quest or discovery flag moved, and no pet order or follower count changed.
+
+Mechanical friction learned:
+
+- A fox wait is a real server beat even when the player does not move.
+- The current grass tiles remain cheap, but a single southeast player step immediately creates another leash tax.
+- The live saved rectangle is empty, yet the off-screen southern spawner records still explain why those toads and cranes existed a few screens back.
+- The `Ruins` marker is closer, but it is still overlay knowledge only, not visible shelter or a discovered place.
+
+Next pressure:
+
+Mira ends at `Point3D(1198,1368,0)`, facing southeast. The fox is at `Point3D(1197,1365,0)`, inside the `2..3` heel band. The screen has no saved mobile or item, so the next run can make a fresh route decision, but it cannot call the off-screen toads, crane, spawners, or swamp drake solved.
+
+## Run 118 - The Map Marker Keeps Pulling
+
+I start at `Point3D(1198,1368,0)`, facing southeast, with the fox close at `Point3D(1197,1365,0)`. The live screen is still empty of saved bodies and things: zero saved visible mobiles, zero saved visible items, and zero running spawner objects inside x `1180..1216`, y `1350..1386`. My fox is the only visible body because the simulation has moved it with me; the original save record is stale for pet position.
+
+The map overlay keeps whispering `Ruins` southeast, about 132.6 tiles away from this starting spot. That is not a ruin on my screen. It is just the nearest marker. The old toads and crane are still behind me as unresolved recently visible animals, and the swamp drake is still a carried private-timer risk, not a solved thing. Nothing visible competes with one cautious route step.
+
+**Beat 1**
+
+I press southeast.
+
+`Mobile.Move` reaches the real movement block because I am already facing `Direction.Down`. The forward tile `Point3D(1199,1369,0)` is grass `0x3`; the player diagonal side-check tiles `Point3D(1199,1368,0)` and `Point3D(1198,1369,0)` are also grass `0x3`. Sosaria is still map index `1`, map id `1`, file index `1`, and the server-order `map1.mul` / `staidx1.mul` / `statics1.mul` read says all three tiles are dry, passable, and static-free. No saved mobile, saved visible item, or named region blocks the step.
+
+Mira moves to `Point3D(1199,1369,0)`. The shifted live rectangle x `1181..1217`, y `1351..1387` is still empty of saved visible mobiles/items/spawners. The fox does not move on my keypress and is now at floored distance `4`, outside the `2..3` band.
+
+**Beat 2**
+
+I wait for the fox.
+
+The controlled follower path runs through `AITimer.OnTick`, `BaseCreature.OnThink`, `BaseAI.Obey`, `DoOrderFollow`, `WalkMobileRange`, `GetDirectionTo`, `DoMove(Direction.Down)`, and `Mobile.Move`. FriendsAvoidHeels is still carrying the spacing value `7`, so the desired range remains `2..3`. From `Point3D(1197,1365,0)` toward me, the fox chooses southeast.
+
+The fox target `Point3D(1198,1366,0)` is grass `0x3`. The non-player diagonal side tiles `Point3D(1198,1365,0)` and `Point3D(1197,1366,0)` are grass `0x3` and `0x4`. Zero statics, no saved blocker. The fox steps to `Point3D(1198,1366,0)` and lands back at dx `-1`, dy `-3`, floored distance `3`.
+
+**Beat 3**
+
+The screen is still just grass and the fox, so I take one more southeast step toward the marker without pretending I can see it.
+
+`Mobile.Move` again enters `CheckMovement`. The forward tile `Point3D(1200,1370,0)` is grass `0x6`; the side-check tiles `Point3D(1200,1369,0)` and `Point3D(1199,1370,0)` are grass `0x6` and `0x4`. All are dry, passable, and have zero statics. The destination has no saved blocker and no named region.
+
+Mira moves to `Point3D(1200,1370,0)`. The final live rectangle x `1182..1218`, y `1352..1388` still has zero saved visible mobiles, zero saved visible items, and zero running spawner objects. The two running southern PremiumSpawner homes at `1165,1361` still overlap by home range, but they are invisible source pressure, not visible NPCs. The fox stays at `Point3D(1198,1366,0)` and is stretched again to floored distance `4`.
+
+Mechanical friction learned:
+
+- Empty screen travel still needs a full terrain check for every diagonal step.
+- Southeast is the marker-correct direction toward `Ruins`, but the marker remains overlay knowledge only.
+- The follower rhythm continues: one player step is cheap, the next pet tick is usually owed.
+- Invisible spawner ranges can overlap an empty live rectangle without creating a visible entity.
+
+Next pressure:
+
+Mira ends at `Point3D(1200,1370,0)`, facing southeast. The fox is at `Point3D(1198,1366,0)`, outside the `2..3` heel band at floored distance `4`. The next honest beat is likely another fox wait before further marker-directed movement, with the toads, crane, southern spawners, and swamp drake still carried as unresolved risk rather than safety.
+
+## Run 119 - Leash First, Marker Later
+
+I start at `Point3D(1200,1370,0)`, still facing southeast. The saved screen is empty again: zero saved visible mobiles, zero saved visible items, and zero running spawner objects inside the 18-tile rectangle. The only body I can honestly account for is my controlled fox at `Point3D(1198,1366,0)`, northwest and stretched to floored distance `4`.
+
+That matters more than the map marker. `Ruins` is still the nearest overlay lure, now about 130 tiles away, but it is not on the screen and it is not shelter. The toads, crane, southern spawner homes, and old swamp drake are unresolved off-screen pressure, not solved threats.
+
+**Beat 1**
+
+I wait for the fox.
+
+The pet tick runs through `AITimer.OnTick`, `BaseCreature.OnThink`, `BaseAI.Obey`, `DoOrderFollow`, `WalkMobileRange`, `GetDirectionTo`, `DoMove(Direction.Down)`, and `Mobile.Move`. FriendsAvoidHeels still wants the `2..3` band. The fox is too far, so it steps southeast from `Point3D(1198,1366,0)` to `Point3D(1199,1367,0)`.
+
+The checked map1 tiles are plain grass: target `0x6`, side tiles `0x6` and `0x3`, all zero statics. No message, gump, combat, skill, item, hunger, thirst, quest, follower count, or pet order changes.
+
+**Beat 2**
+
+With the fox back near enough, I press southeast once.
+
+`Mobile.Move` enters the real movement path because I am already facing `Direction.Down`. The forward tile `Point3D(1201,1371,1)` is grass `0x5`; the player diagonal side checks `Point3D(1201,1370,0)` and `Point3D(1200,1371,0)` are grass `0x6` and `0x5`. All three have zero statics, no saved blocker, and no named `Regions.xml` rectangle.
+
+Mira moves to `Point3D(1201,1371,1)`. The live-state rectangle shifts to x `1183..1219`, y `1353..1389` and still contains zero saved visible mobiles, zero saved visible items, and zero running spawner objects. The invisible southern `PremiumSpawner` home ranges still overlap by source range, but nothing from them is visible or clickable.
+
+**Beat 3**
+
+The player step stretched the fox again, so I wait instead of walking twice.
+
+The same follow path runs. From `Point3D(1199,1367,0)` toward me, `GetDirectionTo` again resolves `Direction.Down`. The target `Point3D(1200,1368,0)` is grass `0x3`; the non-player side tiles `Point3D(1200,1367,1)` and `Point3D(1199,1368,0)` are also grass `0x3`, with zero statics. The fox steps to `Point3D(1200,1368,0)` and lands at dx `-1`, dy `-3`, floored distance `3`.
+
+Mechanical friction learned:
+
+- The route southeast is still open grass, but a z step can happen on ordinary land.
+- Empty screen travel is not safety; it only means no saved entity is currently inside the client rectangle.
+- The fox is not a guard. Waiting it in changes only follower position, not combat readiness.
+- The nearest marker keeps getting closer, but it remains overlay knowledge only.
+
+Next pressure:
+
+Mira ends at `Point3D(1201,1371,1)`, facing southeast. The fox is at `Point3D(1200,1368,0)`, inside the `2..3` heel band. No saved mobile or item is visible in the final 18-tile rectangle. The next run can make a fresh route choice, but the off-screen toads, crane, southern spawners, and carried swamp drake branch are still unresolved risk.
+
+## Run 120 - The Empty Screen Starts To Smell Like Spawner Range
+
+I start at `Point3D(1201,1371,1)`, facing southeast, with the fox close at `Point3D(1200,1368,0)`. The saved client rectangle is empty again: no saved visible mobiles, no visible items, and no running spawner object sitting inside the 18-tile box. The empty grass is not peace. The old toads and crane are still off-screen unresolved history, the swamp drake is still carried private-timer risk, and the southern invisible spawners at `1165,1361` still overlap the screen by home range.
+
+The map overlay says `Ruins` is about 128 tiles southeast. That is still only overlay knowledge, not something I can see.
+
+**Beat 1**
+
+I press southeast.
+
+`Mobile.Move` reaches the real movement path because I am already facing `Direction.Down`. The forward tile `Point3D(1202,1372,0)` is grass `0x5`; the player diagonal side checks `Point3D(1202,1371,0)` and `Point3D(1201,1372,1)` are grass `0x5` and `0x4`. The server-order `map1.mul` / `staidx1.mul` / `statics1.mul` read finds zero statics on all three tiles, and the live snapshot has no saved mobile or visible item on the step.
+
+Mira moves to `Point3D(1202,1372,0)`. The shifted rectangle x `1184..1220`, y `1354..1390` is still empty of saved visible mobiles and items. The fox does not move on my keypress, so it stretches to dx `-2`, dy `-4`, floored distance `4`.
+
+**Beat 2**
+
+I wait for the fox instead of walking twice.
+
+The controlled follower path runs through `AITimer.OnTick`, `BaseCreature.OnThink`, `BaseAI.Obey`, `DoOrderFollow`, `WalkMobileRange`, `GetDirectionTo`, `DoMove(Direction.Down)`, and `Mobile.Move`. FriendsAvoidHeels is still carrying spacing `7`, so the fox wants the `2..3` band. From `Point3D(1200,1368,0)` toward me, it picks southeast.
+
+The fox target `Point3D(1201,1369,0)` is grass `0x3`; its side tiles `Point3D(1201,1368,0)` and `Point3D(1200,1369,0)` are grass `0x4` and `0x6`. All three have zero statics. The fox steps to `Point3D(1201,1369,0)` and returns to dx `-1`, dy `-3`, floored distance `3`.
+
+**Beat 3**
+
+With the leash repaired and the screen still empty, I take one more southeast step toward the marker.
+
+`Mobile.Move` again enters `CheckMovement`. The forward tile `Point3D(1203,1373,0)` is grass `0x5`; the player side checks `Point3D(1203,1372,0)` and `Point3D(1202,1373,0)` are both grass `0x6`. There are zero statics on the forward tile and both side checks, no saved blocker, and no named region.
+
+Mira moves to `Point3D(1203,1373,0)`. The final saved rectangle x `1185..1221`, y `1355..1391` still has zero saved visible mobiles, zero saved visible items, and zero running spawner locations. The catch is that four invisible `PremiumSpawner` home ranges now overlap the rectangle: the older animal/world pair at `1165,1361`, and a southern animal/world pair at `1206,1455`. Nothing from them is visible or clickable, but the route is drifting deeper into their pressure.
+
+Mechanical friction learned:
+
+- Empty-screen travel can still move into more invisible spawner home overlap.
+- The marker got closer, from about 128 tiles to about 126 tiles, but it remains a world-map hint rather than visible ruins.
+- The fox is still not protection. Waiting it in only changes follower position.
+- Two player steps around one fox wait leave the leash stretched again.
+
+Next pressure:
+
+Mira ends at `Point3D(1203,1373,0)`, facing southeast. The fox is at `Point3D(1201,1369,0)`, outside the `2..3` heel band at floored distance `4`. No saved mobile or item is visible, but four invisible spawner home ranges now overlap the final rectangle, and the off-screen toads, crane, and carried swamp drake branch remain unresolved risk. The next honest beat is likely another fox wait before walking farther.
+
+## Run 121 - The Empty Screen Gains Edges I Cannot See
+
+I start at `Point3D(1203,1373,0)`, facing southeast. The screen is still saved-empty: no saved visible mobiles, no visible items, and no running spawner object location inside the client rectangle. The only body I can act on is my fox, and it is stretched behind me at `Point3D(1201,1369,0)`, outside the remembered `2..3` follow band. The `Ruins` marker is still only a map overlay, about 126 tiles away from where I stand.
+
+**Beat 1**
+
+I wait for the fox.
+
+The controlled AI tick runs the usual path: `AITimer.OnTick`, `BaseCreature.OnThink`, `BaseAI.Obey`, `DoOrderFollow`, `WalkMobileRange`, `GetDirectionTo`, `DoMove(Direction.Down)`, and `Mobile.Move`. The existing FriendsAvoidHeels spacing value `7` still wants the fox `2..3` tiles away. From `Point3D(1201,1369,0)` toward me, the fox resolves southeast.
+
+The target `Point3D(1202,1370,0)` is grass `0x4`. The side tiles `Point3D(1202,1369,0)` and `Point3D(1201,1370,0)` are grass `0x3` and `0x6`. The server-order `map1.mul` read says all three are dry, passable, and static-free. The fox steps to `Point3D(1202,1370,0)` and lands at dx `-1`, dy `-3`, floored distance `3`.
+
+**Beat 2**
+
+With the leash repaired and nothing saved-visible on the screen, I press southeast once.
+
+`Mobile.Move` reaches the real movement block because I am already facing `Direction.Down`. The forward tile `Point3D(1204,1374,0)` is grass `0x4`; the player diagonal side checks `Point3D(1204,1373,0)` and `Point3D(1203,1374,0)` are also grass `0x4`. There are zero statics, no saved blocker, and no named region match.
+
+Mira moves to `Point3D(1204,1374,0)`. The shifted live rectangle x `1186..1222`, y `1356..1392` still has zero saved visible mobiles, zero saved visible items, and zero running spawner object locations. The catch is invisible: the eastern animal/world spawner pair at `1282,1374` now overlaps the rectangle by home range, joining the western `1165,1361` pair and southern `1206,1455` pair. None of those are screen entities, but the route is accumulating source pressure.
+
+**Beat 3**
+
+The player step stretched the fox again, so I wait rather than take a second blind step.
+
+The same controlled-follow path runs. From `Point3D(1202,1370,0)` toward me, the fox again picks `Direction.Down`. The target `Point3D(1203,1371,0)` is grass `0x3`; the side tiles `Point3D(1203,1370,0)` and `Point3D(1202,1371,0)` are grass `0x4` and `0x5`. Zero statics, no saved blocker. The fox steps to `Point3D(1203,1371,0)` and returns to dx `-1`, dy `-3`, floored distance `3`.
+
+Mechanical friction learned:
+
+- Empty screen travel can still add invisible spawner overlap; nothing new is clickable, but the pressure map gets worse.
+- The southeast route remains open grass for this single step.
+- A fox follow wait is still only leash repair. It does not guard, body-block, scout, or resolve hostile spawner outcomes.
+- The `Ruins` marker drops to about 124 tiles away, but it remains overlay knowledge rather than visible shelter.
+
+Next pressure:
+
+Mira ends at `Point3D(1204,1374,0)`, facing southeast. The fox is at `Point3D(1203,1371,0)`, back inside the `2..3` heel band. No saved mobile or item is visible, but six invisible spawner home ranges overlap the final rectangle, including the newly overlapping eastern pair at `1282,1374`. The off-screen toads, crane, and carried swamp drake branch remain unresolved risk rather than safety.
+
+## Run 122 - Empty Grass Still Charges Interest
+
+I start at `Point3D(1204,1374,0)`, facing southeast, with the fox close at `Point3D(1203,1371,0)`. The current live-state rectangle is empty again: zero saved visible mobiles, zero saved visible items, and zero running spawner object locations. That is not comfort. Six invisible `PremiumSpawner` home ranges overlap the screen now, and none of them are clickable bodies.
+
+The overlay keeps teasing `Ruins`, about 124 tiles away. The map marker is still just a marker. The older toads and crane are behind me, the swamp drake is still a carried private-timer risk, and the fox is the only visible creature I can honestly use.
+
+**Beat 1**
+
+I press southeast.
+
+`Mobile.Move` runs the real movement block because I am already facing `Direction.Down`. The forward tile `Point3D(1205,1375,0)` is grass `0x3`; the player diagonal side checks `Point3D(1205,1374,0)` and `Point3D(1204,1375,0)` are grass `0x4` and `0x6`. The server-order `map1.mul` / `staidx1.mul` / `statics1.mul` read says all three are dry, passable, and static-free. The live snapshot has no saved mobile or visible item on the destination, and `Regions.xml` gives me no named place.
+
+Mira moves to `Point3D(1205,1375,0)`. The shifted rectangle x `1187..1223`, y `1357..1393` still contains zero saved visible mobiles, zero saved items, and zero running spawner object locations. The fox does not move on my keypress, so it stretches to dx `-2`, dy `-4`, floored distance `4`.
+
+**Beat 2**
+
+I wait for the fox.
+
+The controlled follower path runs through `AITimer.OnTick`, `BaseCreature.OnThink`, `BaseAI.Obey`, `DoOrderFollow`, `WalkMobileRange`, `GetDirectionTo`, `DoMove(Direction.Down)`, and `Mobile.Move`. FriendsAvoidHeels is still carrying spacing `7`, so the desired band remains `2..3`. From `Point3D(1203,1371,0)` toward me, the fox chooses southeast.
+
+The fox target `Point3D(1204,1372,0)` is grass `0x4`; the non-player diagonal side checks `Point3D(1204,1371,0)` and `Point3D(1203,1372,0)` are grass `0x6` and `0x5`. Zero statics, no saved blocker. The fox steps there and lands at dx `-1`, dy `-3`, floored distance `3`.
+
+**Beat 3**
+
+With the leash repaired and the screen still empty, I take one more southeast step toward the marker.
+
+`Mobile.Move` enters `CheckMovement` again. The forward tile `Point3D(1206,1376,0)` is grass `0x3`; the side-check tiles `Point3D(1206,1375,0)` and `Point3D(1205,1376,0)` are grass `0x5` and `0x3`. All are dry, passable, and have zero statics. No saved mobile or item occupies the step, and no named region catches it.
+
+Mira moves to `Point3D(1206,1376,0)`. The final rectangle x `1188..1224`, y `1358..1394` still has zero saved visible mobiles, zero saved visible items, and zero running spawner object locations. The six invisible spawner home ranges still overlap: the western pair, the southern pair, and the eastern pair. The fox stays at `Point3D(1204,1372,0)`, stretched again to floored distance `4`.
+
+Mechanical friction learned:
+
+- Empty grass keeps letting me walk, but it never becomes proof of safety.
+- The `Ruins` marker drops to about 121 tiles away, still not visible and still not an in-world shelter.
+- The invisible spawner-range overlap is stable pressure, not a screen entity.
+- Every second route step taxes the fox leash again.
+
+Next pressure:
+
+Mira ends at `Point3D(1206,1376,0)`, facing southeast. The fox is at `Point3D(1204,1372,0)`, outside the `2..3` heel band at floored distance `4`. No saved mobile or item is visible, but the next honest beat is likely another fox wait before any more marker-directed walking.
+
+## Run 123 - Leash Debt Before Another Step
+
+I start at `Point3D(1206,1376,0)`, facing southeast, with the fox behind me at `Point3D(1204,1372,0)`. The saved screen is empty again: zero saved visible mobiles, zero visible items, and zero running spawner object locations inside x `1188..1224`, y `1358..1394`. Empty is only empty. Six invisible `PremiumSpawner` home ranges still overlap the screen, and the old toads, crane, and swamp drake are still unresolved off-screen history.
+
+The `Ruins` marker is about 121 tiles away. It is a map overlay, not a ruin I can see.
+
+**Beat 1**
+
+I wait for the fox before I walk.
+
+The controlled follower path runs through `AITimer.OnTick`, `BaseCreature.OnThink`, `BaseAI.Obey`, `DoOrderFollow`, `WalkMobileRange`, `GetDirectionTo`, `DoMove(Direction.Down)`, and `Mobile.Move`. FriendsAvoidHeels is still using spacing `7`, so the fox wants the `2..3` band. From `Point3D(1204,1372,0)`, the fox is too far, picks southeast, and steps to `Point3D(1205,1373,0)`.
+
+The target tile is grass `0x3`; side tiles `1205,1372` and `1204,1373` are grass `0x6` and `0x4`. Zero statics, no saved blocker, no message.
+
+**Beat 2**
+
+With the fox back near enough, I press southeast once.
+
+`Mobile.Move` enters the real movement path because I am already facing `Direction.Down`. `MovementImpl.CheckMovement` accepts `Point3D(1207,1377,0)`, with side-check tiles `Point3D(1207,1376,0)` and `Point3D(1206,1377,1)`. The server-order `map1.mul` scan reads all three as grass with zero statics, and `Regions.xml` gives no named place.
+
+Mira moves to `Point3D(1207,1377,0)`. The shifted screen x `1189..1225`, y `1359..1395` still contains zero saved visible mobiles, zero saved items, and zero running spawner object locations. The same six invisible spawner ranges overlap by home range only.
+
+**Beat 3**
+
+The step stretches the fox again, so I wait instead of taking a second blind stride.
+
+The fox repeats the controlled follow path. From `Point3D(1205,1373,0)`, `GetDirectionTo` resolves southeast. The target `Point3D(1206,1374,0)` is grass `0x5`; side tiles `1206,1373` and `1205,1374` are grass `0x4` and `0x4`, all with zero statics. The fox steps into dx `-1`, dy `-3`, floored distance `3`.
+
+Mechanical friction learned:
+
+- The southeast ground is still ordinary passable grass, including a one-tile side-check z rise.
+- Empty saved rectangles are still not shelter; six invisible spawner ranges keep overlapping the screen.
+- The fox is useful as leash pressure, not as protection. Waiting it in did not run Guard, Attack, body-blocking, or hostile aggro logic.
+- The `Ruins` marker drops to about 120 tiles away, still only overlay knowledge.
+
+Next pressure:
+
+Mira ends at `Point3D(1207,1377,0)`, facing southeast. The fox is at `Point3D(1206,1374,0)`, inside the `2..3` heel band. No saved mobile or item is visible, but the next action still needs a fresh scan because the invisible spawner overlap and carried off-screen creature risks did not resolve.
+
+## Run 124 - Empty Grass Lets Me Overspend The Leash
+
+I start at `Point3D(1207,1377,0)`, facing southeast, with the fox close at `Point3D(1206,1374,0)`. The live snapshot still gives me an empty screen: zero saved visible mobiles, zero visible items, and zero running spawner object locations inside x `1189..1225`, y `1359..1395`. The six invisible `PremiumSpawner` home ranges are still overlapping by source range only, and the old toads, crane, and swamp drake remain off-screen risk notes rather than bodies I can click.
+
+The `Ruins` marker is about 120 tiles away. It is still only a map overlay.
+
+**Beat 1**
+
+I press southeast.
+
+`Mobile.Move` reaches the real movement path because I am already facing `Direction.Down`. The forward tile `Point3D(1208,1378,0)` is grass `0x4`; the player diagonal side checks `Point3D(1208,1377,0)` and `Point3D(1207,1378,0)` are grass `0x4` and `0x3`. Sosaria is still file index `1`, and the server-order `map1.mul` / `staidx1.mul` / `statics1.mul` read finds zero statics on all three tiles. No saved blocker or named region catches the step.
+
+Mira moves to `Point3D(1208,1378,0)`. The shifted rectangle x `1190..1226`, y `1360..1396` still has zero saved visible mobiles, zero visible items, and zero running spawner object locations. The fox does not move on my keypress, so it stretches to dx `-2`, dy `-4`, floored distance `4`.
+
+**Beat 2**
+
+I wait for the fox before taking another step.
+
+The controlled follower path runs through `AITimer.OnTick`, `BaseCreature.OnThink`, `BaseAI.Obey`, `DoOrderFollow`, `WalkMobileRange`, `GetDirectionTo`, `DoMove(Direction.Down)`, and `Mobile.Move`. FriendsAvoidHeels still carries spacing `7`, so the fox wants the `2..3` band. From `Point3D(1206,1374,0)` toward me, it picks southeast.
+
+The fox target `Point3D(1207,1375,0)` is grass `0x6`. The non-player diagonal side checks `Point3D(1207,1374,0)` and `Point3D(1206,1375,0)` are grass `0x5` and `0x6`, both with zero statics. The fox steps there and returns to dx `-1`, dy `-3`, floored distance `3`.
+
+**Beat 3**
+
+The screen is still empty and the fox is back in range, so I take one more southeast step toward the marker.
+
+`Mobile.Move` enters `CheckMovement` again. The forward tile `Point3D(1209,1379,0)` is grass `0x5`; the player side checks `Point3D(1209,1378,0)` and `Point3D(1208,1379,0)` are both grass `0x5`. All three are dry, passable, and static-free. The live snapshot has no saved mobile or visible item on the destination, and `Regions.xml` has no containing rectangle for it.
+
+Mira moves to `Point3D(1209,1379,0)`. The final rectangle x `1191..1227`, y `1361..1397` is still saved-empty, and the same six invisible spawner ranges overlap by home range only. The fox stays at `Point3D(1207,1375,0)`, stretched back outside the `2..3` band at floored distance `4`.
+
+Mechanical friction learned:
+
+- Empty grass can support steady southeast travel, but every second player step reopens leash debt.
+- The `Ruins` marker drops to about 117 tiles away; it is still not visible terrain, shelter, or a discovered place.
+- Six invisible spawner ranges overlapping an empty screen remain pressure evidence, not screen entities.
+- The controlled fox still provides no Guard, Attack, body-blocking, hostile aggro response, or combat protection.
+
+Next pressure:
+
+Mira ends at `Point3D(1209,1379,0)`, facing southeast. The fox is at `Point3D(1207,1375,0)`, outside the follow band at floored distance `4`. No saved mobile or item is visible in the final rectangle, but the next honest beat is likely another fox wait before more marker-directed movement.
+
+## Run 125 - The Leash Becomes The Clock Again
+
+I start at `Point3D(1209,1379,0)`, facing southeast, with the fox behind me at `Point3D(1207,1375,0)`. The screen is still almost nothing: no saved visible mobiles, no visible saved items, and no running spawner object locations inside x `1191..1227`, y `1361..1397`. The only body on the screen is my own fox, and even that is simulated forward from the live snapshot. Six invisible `PremiumSpawner` home ranges overlap by source range, which means empty grass is not the same as empty danger.
+
+The nearest world-map tease is still `Ruins` at `1303,1449`, about 117 tiles away from where I stand. It is not in sight. It is not shelter. It is only a mark on the client's map.
+
+**Beat 1**
+
+I wait for the fox, because walking again with it already stretched feels like pretending it is protection.
+
+The controlled follower path runs through `AITimer.OnTick`, `BaseCreature.OnThink`, `BaseAI.Obey`, `DoOrderFollow`, `WalkMobileRange`, `GetDirectionTo`, `DoMove(Direction.Down)`, and `Mobile.Move`. FriendsAvoidHeels is still carrying spacing `7`, so the fox wants the `2..3` band. From `Point3D(1207,1375,0)` toward Mira, it picks southeast.
+
+The fox target `Point3D(1208,1376,0)` is grass `0x3`; the non-player diagonal side checks `Point3D(1208,1375,0)` and `Point3D(1207,1376,0)` are grass `0x3` and `0x4`. The server-order `map1.mul` / `staidx1.mul` / `statics1.mul` read finds zero statics on all three. The fox steps to `Point3D(1208,1376,0)` and lands at dx `-1`, dy `-3`, floored distance `3`.
+
+**Beat 2**
+
+With the leash repaired and the screen still saved-empty, I press southeast once.
+
+`Mobile.Move` reaches `CheckMovement` because I am already facing `Direction.Down`. The forward tile `Point3D(1210,1380,0)` is grass `0x4`; the player diagonal side checks `Point3D(1210,1379,0)` and `Point3D(1209,1380,0)` are grass `0x3` and `0x4`. There are zero statics, no saved blocker, and no named region match.
+
+Mira moves to `Point3D(1210,1380,0)`. The shifted rectangle x `1192..1228`, y `1362..1398` still has zero saved visible mobiles, zero visible saved items, and zero running spawner object locations. The same six invisible spawner home ranges overlap by source range: the western animal/world pair, the southern animal/world pair, and the eastern animal/world pair. None of them is a screen entity.
+
+**Beat 3**
+
+The player step stretched the fox back outside the `2..3` band, so I wait instead of taking a second blind stride.
+
+The fox repeats the controlled follow path. From `Point3D(1208,1376,0)` toward Mira at `Point3D(1210,1380,0)`, `GetDirectionTo` again resolves southeast. The target `Point3D(1209,1377,0)` is grass `0x5`; side checks `Point3D(1209,1376,0)` and `Point3D(1208,1377,0)` are grass `0x5` and `0x4`, all static-free. The fox steps into dx `-1`, dy `-3`, floored distance `3`.
+
+Mechanical friction learned:
+
+- The fox is now the pace-setter. If I move twice in a row, I immediately create leash debt again.
+- The route remains ordinary grass for this one step, but no new visible shelter, item, corpse, NPC, water source, or region name appears.
+- Invisible spawner overlap is stable pressure, not a visible thing I can react to or click.
+- The `Ruins` marker drops to about 116 tiles away, still only overlay knowledge.
+
+Next pressure:
+
+Mira ends at `Point3D(1210,1380,0)`, facing southeast. The fox is at `Point3D(1209,1377,0)`, inside the follow band at floored distance `3`. The final saved rectangle is still empty except for the simulated controlled fox overlay, but six invisible spawner home ranges, the off-screen toads/crane, and the carried swamp-drake private timer branch remain unresolved pressure.
+
+## Run 126 - Jungle Starts Under The Same Empty Screen
+
+I start at `Point3D(1210,1380,0)`, facing southeast, with the fox tucked northwest at `Point3D(1209,1377,0)`. The live-state screen is still a blank sort of nervous: zero saved visible mobiles, zero visible saved items, and zero running spawner object locations inside x `1192..1228`, y `1362..1398`. The fox is the only body I can see, and it only exists here because the state has been simulating its follow ticks forward from the old snapshot.
+
+The `Ruins` marker sits around 116 tiles away. It is not a wall, roof, chest, shrine, road, or NPC. Six invisible `PremiumSpawner` home ranges still overlap the screen by source range, so the quiet grass still has teeth somewhere off the glass.
+
+**Beat 1**
+
+I press southeast.
+
+`Mobile.Move` reaches the real movement path because I am already facing `Direction.Down`. The forward tile `Point3D(1211,1381,0)` is grass `0x3`; the player diagonal side checks `Point3D(1211,1380,0)` and `Point3D(1210,1381,0)` are grass `0x3` and `0x6`. The server-order `map1.mul` / `staidx1.mul` / `statics1.mul` read finds zero statics on all three tiles, the live snapshot has no destination blocker, and `Regions.xml` gives no named place.
+
+Mira moves to `Point3D(1211,1381,0)`. The shifted rectangle x `1193..1229`, y `1363..1399` is still saved-empty, with the same six invisible spawner home ranges overlapping by source range. The fox does not move on my keypress, so it stretches to dx `-2`, dy `-4`, floored distance `4`.
+
+**Beat 2**
+
+I wait for the fox before spending another step.
+
+The controlled follower path runs through `AITimer.OnTick`, `BaseCreature.OnThink`, `BaseAI.Obey`, `DoOrderFollow`, `WalkMobileRange`, `GetDirectionTo`, `DoMove(Direction.Down)`, and `Mobile.Move`. FriendsAvoidHeels still carries spacing `7`, so the fox wants the `2..3` band. From `Point3D(1209,1377,0)`, it chooses southeast.
+
+The fox target `Point3D(1210,1378,0)` is grass `0x5`; the non-player side checks `Point3D(1210,1377,0)` and `Point3D(1209,1378,0)` are grass `0x3` and `0x5`. Zero statics, no saved blocker. The fox steps there and returns to dx `-1`, dy `-3`, floored distance `3`.
+
+**Beat 3**
+
+The screen is still empty, so I take one more southeast step toward the marker.
+
+`Mobile.Move` enters `CheckMovement` again. The forward tile `Point3D(1212,1382,0)` is land `0x580`, named grass by `tiledata.mul`; the player side checks `Point3D(1212,1381,0)` and `Point3D(1211,1382,0)` are `0x57F` grass and `0x581` jungle. TileData marks all three as not wet and not impassable, and the static block is empty. No saved mobile or item occupies the step, and no named region catches it.
+
+Mira moves to `Point3D(1212,1382,0)`. The final rectangle x `1194..1230`, y `1364..1400` still has zero saved visible mobiles, zero visible saved items, and zero running spawner object locations. The six invisible spawner home ranges are unchanged. The fox stays at `Point3D(1210,1378,0)`, stretched back outside the follow band at floored distance `4`.
+
+Mechanical friction learned:
+
+- The ground is starting to read like jungle again, but the server still treats these exact tiles as passable.
+- Empty live-state rectangles are not permission to forget the invisible spawner overlap.
+- The fox rhythm keeps taxing every second player step.
+- The `Ruins` marker drops to about 113 tiles away, still only overlay knowledge.
+
+Next pressure:
+
+Mira ends at `Point3D(1212,1382,0)`, facing southeast. The fox is at `Point3D(1210,1378,0)`, outside the `2..3` heel band at floored distance `4`. The next honest beat is probably another fox wait unless the fresh scan finally puts a real body, item, road, structure, or region name on screen.
+
+## Run 127 - I Let The Fox Catch Its Breath
+
+I start at `Point3D(1212,1382,0)`, facing southeast, with the fox behind me at `Point3D(1210,1378,0)`. The screen is still clean in the worst way: zero saved visible mobiles, zero visible saved items, and zero running spawner object locations inside x `1194..1230`, y `1364..1400`. Only my simulated fox is visible. The six invisible `PremiumSpawner` home ranges still overlap the rectangle, and the old toads, crane, and swamp drake remain unresolved off-screen pressure.
+
+The `Ruins` marker is about 113 tiles away. It is still only the map whispering at me.
+
+**Beat 1**
+
+I wait for the fox before walking.
+
+The controlled follower path runs through `AITimer.OnTick`, `BaseCreature.OnThink`, `BaseAI.Obey`, `DoOrderFollow`, `WalkMobileRange`, `GetDirectionTo`, `DoMove(Direction.Down)`, and `Mobile.Move`. FriendsAvoidHeels still wants the `2..3` band. From `Point3D(1210,1378,0)` toward me, the fox chooses southeast.
+
+The target `Point3D(1211,1379,0)` is grass `0x3`; side tiles `1211,1378` and `1210,1379` are also grass `0x3`. Zero statics, no saved blocker. The fox steps in, back to dx `-1`, dy `-3`, floored distance `3`.
+
+**Beat 2**
+
+With the leash repaired and nothing visible to click, I press southeast once.
+
+`Mobile.Move` reaches `CheckMovement` because I am already facing `Direction.Down`. The forward tile `Point3D(1213,1383,0)` is jungle `0xAC`; the player side checks `Point3D(1213,1382,0)` and `Point3D(1212,1383,0)` are jungle `0xAD` and `0xAF`. TileData marks them not wet and not impassable, and the static block is empty. No saved mobile or item occupies the step, and no named region catches it.
+
+Mira moves to `Point3D(1213,1383,0)`. The shifted rectangle x `1195..1231`, y `1365..1401` is still saved-empty. The same six invisible spawner ranges overlap by source range only. The fox is stretched again at floored distance `4`.
+
+**Beat 3**
+
+I wait again. The fox is the only visible body I own, and leaving it behind just makes the empty grass feel worse.
+
+The same controlled-follow path runs. From `Point3D(1211,1379,0)` toward me, `GetDirectionTo` resolves southeast. The target `Point3D(1212,1380,1)` is grass `0x3`; side tiles `1212,1379` and `1211,1380` are grass `0x3` with zero statics. The fox steps there and returns to dx `-1`, dy `-3`, floored distance `3`.
+
+Mechanical friction learned:
+
+- The jungle tile under the next step is still mechanically passable, but it is not shelter.
+- Empty saved rectangles still do not erase invisible spawner range pressure.
+- Two fox waits changed only follower position. They did not run Guard, Attack, body-blocking, hostile aggro response, or damage.
+- The `Ruins` marker drops to about 112 tiles away, still overlay knowledge and not a visible wall, road, NPC, or chest.
+
+Next pressure:
+
+Mira ends at `Point3D(1213,1383,0)`, facing southeast. The fox is at `Point3D(1212,1380,1)`, inside the follow band. No saved mobile or item is visible in the final rectangle, but the next run still owes a fresh scan before deciding whether to keep trusting the marker.
+
+## Run 128 - The Jungle Finally Says No
+
+I start at `Point3D(1213,1383,0)`, facing southeast, with the fox tucked northwest at `Point3D(1212,1380,1)`. The screen is still empty in the live save: zero saved visible mobiles, zero visible items, and zero running spawner object locations inside x `1195..1231`, y `1365..1401`. The fox is the only visible body I own. Six invisible `PremiumSpawner` home ranges still overlap the rectangle, so I do not get to call the quiet safe.
+
+The map overlay keeps offering `Ruins` at `1303,1449`, about 112 tiles away. That is still a map mark, not a wall or road on the ground.
+
+**Beat 1**
+
+I press southeast once.
+
+`Mobile.Move` reaches `MovementImpl.CheckMovement` because I am already facing `Direction.Down`. The forward tile `Point3D(1214,1384,0)` is jungle `0xAC`; the player side checks `Point3D(1214,1383,0)` and `Point3D(1213,1384,0)` are jungle `0xAD` and `0xAE`. The server-order `map1.mul` / `staidx1.mul` / `statics1.mul` read finds all three dry, not impassable, and static-free. No saved blocker or named region catches the step.
+
+Mira moves to `Point3D(1214,1384,0)`. The shifted rectangle x `1196..1232`, y `1366..1402` is still saved-empty. The fox does not move on my keypress and stretches to dx `-2`, dy `-4`, floored distance `4`.
+
+**Beat 2**
+
+I wait for the fox before pushing deeper into empty jungle.
+
+The controlled follower path runs through `AITimer.OnTick`, `BaseCreature.OnThink`, `BaseAI.Obey`, `DoOrderFollow`, `WalkMobileRange`, `GetDirectionTo`, `DoMove(Direction.Down)`, and `Mobile.Move`. FriendsAvoidHeels still carries spacing `7`, so the fox wants the `2..3` band. From `Point3D(1212,1380,1)` toward me, it chooses southeast.
+
+The fox target `Point3D(1213,1381,0)` is grass `0x580`; side tiles `1213,1380` and `1212,1381` are grass `0x57F`. Zero statics, no saved blocker. The fox steps to `Point3D(1213,1381,0)` and returns to dx `-1`, dy `-3`, floored distance `3`.
+
+**Beat 3**
+
+The screen is still empty, so I try one more southeast step. This is where the jungle stops being abstract.
+
+`MovementImpl.CheckMovement` tests `Point3D(1215,1385,0)`. The land tile is jungle `0xAE`, but the static block is not empty: static `0x1775` is named `rock`, has height `3`, and carries `TileFlag.Impassable`. `Paths.IsOk` rejects the destination because that impassable static overlaps my standing height. The movement request fails. Mira stays at `Point3D(1214,1384,0)`, still facing southeast. No `SetLocation`, `OnMovement`, region enter, item move-over, combat, damage, gump, target cursor, skill, hunger, thirst, quest, discovery, follower-count, ownership, or pet-order state changes.
+
+Mechanical friction learned:
+
+- The southeast route is no longer clean: `Point3D(1215,1385,0)` is blocked by an impassable rock static.
+- A failed movement key is still a player-facing result; it changes knowledge, not location.
+- The fox remains in the heel band after the wait, but it did not guard, scout, body-block, or solve any hostile spawner pressure.
+- The final live-state rectangle is still empty of saved mobiles/items, with the same six invisible spawner home ranges overlapping by source range.
+
+Next pressure:
+
+Mira ends at `Point3D(1214,1384,0)`, facing southeast, with the fox at `Point3D(1213,1381,0)`, inside the `2..3` follow band. The next honest action is not another blind southeast retry; it is a fresh scan and a route decision around the rock.
+
+## Run 129 - I Slide Along The Rock
+
+I start at `Point3D(1214,1384,0)`, still facing southeast, with the fox tucked northwest at `Point3D(1213,1381,0)`. The fresh live-state rectangle x `1196..1232`, y `1366..1402` is saved-empty: no visible saved mobiles, no visible saved items, and no running spawner object location. That is not safety. Six invisible `PremiumSpawner` home ranges still overlap by source range, and the old toads, crane, and swamp drake are still unresolved off-screen history.
+
+The world-map overlay still points at `Ruins` around 110 tiles away. The blocked southeast tile is more important than the marker. I cannot just keep pressing into `Point3D(1215,1385,0)` because the rock is a real static, not scenery text.
+
+**Beat 1**
+
+I tap east to start sliding around the north side of the rock.
+
+`Mobile.Move` does not enter `CheckMovement` because I was facing `Direction.Down` and sent `Direction.East`. The normal client result is only a facing change. Mira stays at `Point3D(1214,1384,0)`, now facing east. The screen rectangle does not change. The fox does not move, and no pet AI tick runs.
+
+**Beat 2**
+
+I press east again.
+
+Now the direction matches, so `Mobile.Move` reaches `MovementImpl.CheckMovement`. The forward tile `Point3D(1215,1384,0)` is jungle `0xAC`, dry, not impassable, and static-free. This is not a diagonal move, so the player side-check tiles are not tested. `Regions.xml` has no containing Sosaria rectangle for the tile, and the live snapshot has no mobile or item blocker there.
+
+Mira moves to `Point3D(1215,1384,0)`. The shifted rectangle x `1197..1233`, y `1366..1402` still contains zero saved visible mobiles, zero visible saved items, and zero running spawner object locations. The same six invisible spawner home ranges overlap by range only. The fox stays at `Point3D(1213,1381,0)`, still just inside the heel band at floored distance `3`.
+
+**Beat 3**
+
+I keep sliding east instead of trying southeast immediately. From this tile, the southeast diagonal would still have the rock as a side-check problem, so east is the conservative route-around.
+
+`Mobile.Move` tests `Point3D(1216,1384,0)`. The tile is jungle `0xAD`, dry, not impassable, and has zero statics. There is no saved mobile or item blocker and no named region catch.
+
+Mira moves to `Point3D(1216,1384,0)`, still facing east. The final rectangle x `1198..1234`, y `1366..1402` remains saved-empty except for the simulated controlled fox overlay. The fox did not get a timer beat during this run, so it is now stretched to dx `-3`, dy `-3`, floored distance `4`, outside the remembered `2..3` band.
+
+Mechanical friction learned:
+
+- A blocked diagonal does not mean the whole jungle wall is closed; the north edge has passable east tiles.
+- Turning is its own client beat. It can change facing without proving the next tile.
+- The rock still matters. From `Point3D(1215,1384,0)`, an immediate southeast diagonal would still be suspect because player diagonal movement requires both side tiles to pass.
+- The fox is no shield. Two player steps without a pet tick leave it stretched again.
+
+Next pressure:
+
+Mira ends at `Point3D(1216,1384,0)`, facing east. The controlled fox is at `Point3D(1213,1381,0)`, visible but outside the follow band. No saved mobile, item, corpse, chest, NPC, road, water source, sign, gump, context menu, target cursor, or named region appeared. The next honest beat is likely a fox-follow wait before I spend another movement input toward the `Ruins` marker.
