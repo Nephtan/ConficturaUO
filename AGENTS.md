@@ -26,9 +26,9 @@ The agent's primary objective is to assist with the development and maintenance 
 
 ## Known Build Workflows
 
-* **Preferred Build Entry Point:** Open `ConficturaUO.sln` in Visual Studio 2022. This is the maintained server build workflow. The solution includes `Data/System/Source/Server.csproj` and `Data/Scripts/Scripts.csproj`, and the `Scripts` project depends on `Server`.
+* **Preferred Build Entry Point:** Open `ConficturaUO.sln` in Visual Studio 2022. This is the maintained server build workflow. The solution includes `Data/System/Source/Server.csproj` and `Data/Scripts/Scripts.csproj`, and the `Scripts` project depends on `Server`. Use `Debug|Any CPU` or `Release|Any CPU` when building both projects from the solution.
 
-* **Command-Line Solution Build:** From a Visual Studio Developer PowerShell/Command Prompt, use `msbuild ConficturaUO.sln /p:Configuration=Debug /p:Platform=x86` or `msbuild ConficturaUO.sln /p:Configuration=Release /p:Platform=x86`. If `msbuild` is not on PATH, use the Visual Studio 2022 MSBuild executable directly. The solution maps the `Server` project to `x86` and the `Scripts` project to `Any CPU`.
+* **Command-Line Solution Build:** From a Visual Studio Developer PowerShell/Command Prompt, use `msbuild ConficturaUO.sln /p:Configuration=Debug /p:Platform="Any CPU"` or `msbuild ConficturaUO.sln /p:Configuration=Release /p:Platform="Any CPU"` for full solution builds. If `msbuild` is not on PATH, use the Visual Studio 2022 MSBuild executable directly. The solution maps the `Server` project to `x86` and the `Scripts` project to `Any CPU` for these configurations; `Debug|x86` currently builds only the `Server` project.
 
 * **Command-Line Project Builds:** For narrower builds, use `msbuild Data/System/Source/Server.csproj /p:Configuration=Debug /p:Platform=x86` or `msbuild Data/System/Source/Server.csproj /p:Configuration=Release /p:Platform=x86` for the server, or `msbuild Data/Scripts/Scripts.csproj /p:Configuration=Debug /p:Platform=AnyCPU` or `msbuild Data/Scripts/Scripts.csproj /p:Configuration=Release /p:Platform=AnyCPU` for scripts. `Scripts.csproj` has a project reference to `..\System\Source\Server.csproj`, so building scripts also pulls in the server project.
 
