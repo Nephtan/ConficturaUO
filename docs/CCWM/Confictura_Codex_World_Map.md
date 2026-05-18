@@ -3472,3 +3472,1270 @@ Mechanical friction learned:
 Next pressure:
 
 Mira ends at `Point3D(1221,1389,0)`, facing southeast. The fox is at `Point3D(1218,1386,0)`, inside the remembered `2..3` heel band. There is no visible NPC, corpse, chest, water source, road, sign, gump, or target cursor, but the next action has to be another fresh scan and route decision around rock `0x1778` at `Point3D(1222,1390,0)`.
+
+## Run 131 - The Jungle Finally Moves Back
+
+I start at `Point3D(1221,1389,0)`, facing southeast, with the fox tucked behind me at `Point3D(1218,1386,0)`. The first scan is still quiet: no saved visible mobiles, no visible saved items, and no running spawner object location inside x `1203..1239`, y `1371..1407`. Four invisible `PremiumSpawner` home ranges overlap by range only. The old toads, crane, and swamp drake are not on screen. The forward southeast tile is still the known rock at `Point3D(1222,1390,0)`, so pressing the same line would just bounce off it again.
+
+**Travel Segment**
+
+I slide east instead. The first east input only turns me from `Direction.Down` to `Direction.East`; no movement check runs. Then four east steps carry me through `1222,1389`, `1223,1389`, `1224,1389`, and `1225,1389`. These are dry jungle tiles, and the server-order `map1.mul` / `staidx1.mul` / `statics1.mul` read finds no blocking saved entity or impassable static on the walked tiles.
+
+From there I turn southeast again and take six accepted diagonal steps: `1226,1390`, `1227,1391`, `1228,1392`, `1229,1393`, `1230,1394`, and `1231,1395`. The route matters because I can see what I avoided: the old `0x1778` rock at `1222,1390`, an impassable tree at `1225,1392`, and impassable rocks at `1227,1393`. The path between them is narrow but legal.
+
+The fox is shadowed along the same bypass from `Point3D(1218,1386,0)` to `Point3D(1228,1392,0)`. That keeps the leash believable at dx `-3`, dy `-3`, but it is still only travel-segment follower shadowing, not an exact `BaseAI.Obey` timer tick and not protection.
+
+The stop is not a rock this time. The endpoint scan x `1213..1249`, y `1377..1413` has bodies in it: a panda at `Point3D(1243,1379,0)`, a monkey on the east edge at `Point3D(1249,1381,0)`, and a toad at `Point3D(1243,1382,0)`. No item, chest, corpse, road, water source, gump, context menu, or target cursor appears.
+
+Mechanical friction learned:
+
+- The east-then-southeast bypass around `0x1778` is real for ten accepted movement inputs.
+- The jungle is no longer an empty corridor. The live save has visible spawned animals from the eastern `animals.map` spawner.
+- Panda, monkey, and toad are all uncontrolled `AI_Animal` / `FightMode.Aggressor` bodies. The constructors pass legacy perception `10`, but `BaseCreature` promotes that to `16`; the important brake is that `FightMode.Aggressor` refuses to acquire anything when there is no aggressor/aggressed/faction/ethic state. The toad's separate teleport timer still uses range `10` and misses Mira.
+- A visible animal is still a stop rule. I do not get to keep walking past three new silhouettes just because no combat roll fired immediately.
+
+Next pressure:
+
+Mira ends at `Point3D(1231,1395,0)`, facing southeast. The fox is at `Point3D(1228,1392,0)`, still inside the heel band. The panda, monkey, and toad are on screen and unclicked. The next honest action is to react to those visible creatures before pushing toward the `Ruins` marker.
+
+## Run 132 - I Name The Things Before Moving
+
+I start exactly where the last run left me: `Point3D(1231,1395,0)`, facing southeast, with the fox tucked at `Point3D(1228,1392,0)`. The live rectangle x `1213..1249`, y `1377..1413` still has no saved items and no running spawner object standing in it. It does have three saved wild mobiles from the eastern animals spawner: the toad at `1243,1382`, the panda at `1243,1379`, and the monkey on the east edge at `1249,1381`.
+
+The `Ruins` map marker sits around 90 tiles away. That is a lure, not permission to walk through three living bodies without looking.
+
+**Beat 1**
+
+I single-click the nearest shape first, the toad.
+
+`PacketHandlers.LookReq` finds serial `8544`, passes `CanSee` and the inclusive `Utility.InUpdateRange` rectangle at dx `12`, dy `-13`, asks the region's `OnSingleClick`, then reaches `BaseCreature.OnSingleClick` and `Mobile.OnSingleClick`. The toad is uncontrolled, so there is no tame or bonded line. I get only the private overhead label: `a toad`.
+
+The pressure check stays negative without becoming safety. Toads start a `GiantToad.TeleportTimer`, but that timer scans range `10` from the toad. Mira is outside it. The toad's animal AI has effective `RangePerception 16`, but `FightMode.Aggressor` returns before target scanning because there is no aggressor, aggressed, faction, or ethic state.
+
+**Beat 2**
+
+I single-click the panda next.
+
+The same `LookReq` path accepts serial `206400` at dx `12`, dy `-16`. The label comes back as `a panda`. Again, no context menu, no Tame row, no target cursor, no pet command, and no combat assignment.
+
+The panda is close enough to sit on the effective range-16 edge, but the `Aggressor` acquisition gate is still empty. That is the friction: visible and potentially moving later, not actively committed to attack me now.
+
+**Beat 3**
+
+I single-click the far east-edge body, the monkey.
+
+`Utility.InUpdateRange` still accepts dx `18`, dy `-14`, so the label is legal even at the screen edge. `Mobile.OnSingleClick` sends `a monkey`. The monkey is outside effective range `16` by x distance anyway, and the same no-aggressor gate prevents an `Aggressor` target branch.
+
+Mechanical friction learned:
+
+- Single-clicking wildlife is only a label path. It does not open a context menu, pick Tame, roll skill, attack, move, or mutate the world.
+- The old "range-10 perception" note was too shallow. Legacy constructor range `10` is remapped to `16`, but `FightMode.Aggressor` still blocks passive acquisition without prior hostility state.
+- The toad's scary part is not the normal animal acquisition check; it is the separate range-10 teleport timer, and that still does not contain Mira from here.
+- The screen is identified now, not safe. Future wandering, timer ticks, and spawner behavior are still live uncertainty.
+
+Next pressure:
+
+Mira ends unchanged at `Point3D(1231,1395,0)`, facing southeast. The fox stays at `Point3D(1228,1392,0)`, inside the heel band. The three visible animals are now player-labeled as a toad, a panda, and a monkey. The next decision is whether to back away, skirt wider, or risk another careful route toward the `Ruins` marker.
+
+## Run 133 - The Jungle Catches My First Step
+
+I start at `Point3D(1231,1395,0)`, still facing southeast. The fox is tucked behind me at `Point3D(1228,1392,0)`, inside the remembered heel band. The screen is not empty: the labeled toad, panda, and monkey are still north-east of me, and the map overlay keeps whispering `Ruins` at `1303,1449`, about 90 tiles away. None of those animals has an active attack branch committed, but they are bodies on the screen, not background text.
+
+**Beat 1**
+
+I try the obvious southeast step toward the marker.
+
+The target tile `Point3D(1232,1396,0)` looks reasonable at first: land `0xAF`, jungle, dry, passable, with only a nonblocking blade plant. But this is a player diagonal move, so `MovementImpl.CheckMovement` tests both side tiles too. The north-east side tile `Point3D(1232,1395,0)` has an impassable `0xD59` tree, height `20`, plus harmless leaves. The south-west side tile `Point3D(1231,1396,0)` is passable jungle clutter. One blocked side is enough for a player diagonal, so `CheckMovement` returns false.
+
+Mira does not move. No region, item move-over, teleporter, hunger, thirst, combat, pet AI tick, context menu, gump, skill, discovery, ownership, follower-count, or quest path runs. The fox stays put, and the animals stay visible at the same saved positions. The failed keypress still teaches me something: the route toward the ruins is not the clean southeast line my eyes wanted it to be.
+
+Mechanical friction learned:
+
+- `Point3D(1232,1396,0)` is not the blocker; the diagonal side-check tree at `Point3D(1232,1395,0)` is.
+- Player diagonals are stricter than pet diagonals here: both side checks must pass.
+- The visible toad, panda, and monkey remain labeled screen pressure, but the failed movement did not advance their AI timers or create combat.
+- The `Ruins` marker is still only navigation overlay knowledge.
+
+Next pressure:
+
+Mira ends unchanged at `Point3D(1231,1395,0)`, facing southeast, with the fox still at `Point3D(1228,1392,0)`. The next honest action is a fresh scan and a route choice around the `0xD59` side-check tree rather than another blind southeast retry.
+
+## Run 134 - The Bypass Shows Teeth
+
+I start at `Point3D(1231,1395,0)`, facing southeast, with the fox behind me at `Point3D(1228,1392,0)`. The southeast key already lied to me once: the forward tile was fine, but the diagonal side-check tree at `1232,1395` made the move fail. East is not the answer either, because that is the same tree tile. South is the only visible way to slide around it without pretending the collision did not happen.
+
+**Travel Segment**
+
+I turn south first. That is just a facing change, not a step. Then I press south again and move to `Point3D(1231,1396,0)`. The tile is dry jungle `0xAD`; the tree and leaves there are decorative, not impassable.
+
+Now I turn southeast and take three accepted southeast steps: `1232,1397`, `1233,1398`, and `1234,1399`. The player diagonal side checks all pass. `1232,1396` has only a nonblocking blade plant; `1231,1397`, `1233,1397`, `1232,1398`, `1234,1398`, and `1233,1399` are dry passable jungle with no blocking statics. No saved mobile or item is standing on the stepped tiles, and no named region catches the movement.
+
+I shadow the fox to `Point3D(1231,1396,0)`, keeping the old follow spacing believable at dx `-3`, dy `-3`. That is travel-segment shadowing, not an exact `BaseAI.Obey` tick, and it does not make the fox a guard.
+
+The segment stops at the endpoint scan. The old panda has slipped off the top of the screen, but the toad and monkey are still on the north edge. More importantly, a new saved hostile appears at the south edge: `Urulg`, an orc, at `Point3D(1226,1417,0)`, dx `-8`, dy `18`. The orc is `AI_Melee` / `FightMode.Closest`; its constructor range `10` becomes effective `RangePerception 16`, so I am just outside its acquisition rectangle by y distance. That is not safety. Its private AI timer is not exported, and its movement-notice sound branch depends on enemy/LOS checks I am not going to hand-wave.
+
+Mechanical friction learned:
+
+- South then southeast is a real bypass around the `0xD59` side-check tree.
+- The bypass does not open a clean corridor. It pulls the southern world spawner into sight.
+- The visible orc is a hard stop even before combat starts. It is hostile screen pressure, not scenery.
+- The `Ruins` marker is closer, about 85 tiles away, but the marker just lost priority to a living enemy on the edge of the client view.
+
+Next pressure:
+
+Mira ends at `Point3D(1234,1399,0)`, facing southeast. The fox is approximately at `Point3D(1231,1396,0)`, still inside the follow band. Visible bodies are the monkey at `1249,1381`, the toad at `1243,1382`, and the newly visible orc at `1226,1417`. The next honest action is to deal with or back away from the orc pressure, not to keep walking toward the marker.
+
+## Run 135 - The Orc's Clock Is Not Mine
+
+I start exactly where the orc stopped me: `Point3D(1234,1399,0)`, facing southeast. The fox is behind me at about `Point3D(1231,1396,0)`. The screen still has the labeled toad at `1243,1382`, the labeled monkey at `1249,1381`, and `Urulg` the orc at `1226,1417`, dx `-8`, dy `18`. No item, chest, corpse, road, water source, gump, context menu, or target cursor is visible.
+
+The `Ruins` marker is still about 85 tiles away. It can wait. A visible hostile at the south edge is not a navigation problem yet; it is a clock problem.
+
+**Beat 1**
+
+I do not click the orc. I do not turn. I do not take the northwest step my hands want. The pressure rule gets the first move.
+
+`Orc` constructs as `AI_Melee` / `FightMode.Closest` with range `10`, and `BaseCreature` remaps that old range to `16`. If the private `AITimer` ticks, the path is `AITimer.OnTick -> BaseCreature.OnThink -> BaseAI.Think -> DoActionWander`. The acquisition part is clear enough: `AcquireFocusMob` would scan range `16` around the orc, and Mira at dy `18` is not in that rectangle. So I do not invent an immediate combatant.
+
+Then the code falls into the part I cannot see from a save snapshot. `DoActionWander` checks `BaseAI.m_NextMove`; if that private timer is due, `WalkRandomInHome` can pick a direction and move the orc. That changes the screen and possibly the next range check. The live export gives me the orc's saved position, not its timer due state, not `m_NextMove`, and not the random movement direction.
+
+So the beat stops before a player input. Mira stays at `Point3D(1234,1399,0)`, facing southeast. The fox stays modeled at `Point3D(1231,1396,0)`. No combat, damage, movement, gump, menu, target cursor, hunger, thirst, skill, ownership, follower count, quest, discovery, or pet order changes.
+
+Mechanical friction learned:
+
+- A visible hostile can block even a retreat key when its AI clock is unresolved.
+- The current range math is negative for immediate acquisition: dy `18` is outside the orc's effective range `16`.
+- Negative acquisition is not safety. The unresolved `m_NextMove` branch could still move the orc before I move.
+- The next run may recheck the exact same private timer branch; only after the repeated-private-timer loop-break can I treat it as carried unresolved risk rather than the active blocker.
+
+Next pressure:
+
+Mira is still pinned at `Point3D(1234,1399,0)`. Urulg remains visible active pressure at `1226,1417`. The toad and monkey are still edge wildlife, the panda is off-screen ambient uncertainty, the fox is only a follower, and the `Ruins` marker remains lower priority than the orc's unresolved clock.
+
+## Run 136 - I Back Out Of The Orc's Screen
+
+I start at the same ugly edge: `Point3D(1234,1399,0)`, facing southeast. The fox is still behind me at `Point3D(1231,1396,0)`. The screen has the labeled toad at `1243,1382`, the labeled monkey at `1249,1381`, and Urulg the orc at `1226,1417`, dx `-8`, dy `18`. There are no saved visible items, no chest, no corpse, no road, no water source, no gump, no context menu, and no target cursor.
+
+**Beat 1**
+
+The orc's clock gets checked again before I move.
+
+The code path is the same one that stopped the last run: `AITimer.OnTick -> BaseCreature.OnThink -> BaseAI.Think -> MeleeAI.DoActionWander -> AcquireFocusMob -> base.DoActionWander -> CheckMove`. The geometry is still negative for immediate acquisition. Urulg's `RangePerception` is `16`, and Mira is still outside that rectangle by y distance.
+
+The unresolved part is also exactly the same. The live snapshot still does not export the private AI timer due state, `NextReacquireTime`, `BaseAI.m_NextMove`, or the `WalkRandomInHome` direction roll. I do not choose due or not-due. Because this is the same unchanged private timer branch after the prior full stop, I mark it as carried unresolved risk instead of spending another run staring at the missing field. That is not safety. It only lets me do the conservative thing: leave the orc's screen.
+
+**Beat 2**
+
+I press northeast. Since I was facing southeast, `Mobile.Move` only changes facing to `Direction.Right`; no `CheckMovement`, `OnMoveOver`, `Region.CanMove`, pet AI tick, combat, or item interaction runs.
+
+The turn still sends movement notification to nearby objects. Urulg does not get a notice-sound event: I was already inside its 18-tile movement-notice edge before the turn, and orcs do not have `ReacquireOnMovement` set like the swamp drake did. The screen stays the same.
+
+**Beat 3**
+
+I press northeast again, now actually stepping to `Point3D(1235,1398,0)`.
+
+`MovementImpl.CheckMovement` tests the forward tile `1235,1398` and the two player diagonal side-check tiles `1235,1399` and `1234,1398`. Server-order `map1.mul` reads them as dry, passable jungle/grass edge tiles at z `0`; `staidx1.mul` and `statics1.mul` find zero blocking statics on all three. The live saved mobile/item filters find no blocker on the target tile.
+
+Mira moves one tile northeast. The fox does not get an AI tick, so it stays at `Point3D(1231,1396,0)` and stretches to floored distance `4`, outside the old heel band. Urulg drops just outside the client rectangle at dy `19`; that does not mean it vanished, stopped, or became safe. It is now `carried_unresolved_not_active_blocker` instead of visible active pressure.
+
+Mechanical friction learned:
+
+- The repeated private-timer loop-break is not permission to claim a creature outcome. It only permits conservative player action while carrying both timer branches.
+- A facing turn is real time and sends movement notification, but it does not test terrain or move the character.
+- The northeast retreat tile is open. The straight southeast route toward `Ruins` is still the wrong instinct while a hostile spawner body is this close.
+- The fox is trailing again. One retreat step without a pet tick leaves it outside the remembered `2..3` spacing band.
+
+Next pressure:
+
+Mira ends at `Point3D(1235,1398,0)`, facing northeast. The visible saved bodies are now only the monkey at `1249,1381` and the toad at `1243,1382`; the orc is recently visible at `1226,1417`, off-screen by one tile of y distance and still inside movement-notice range. The next honest move is a fresh scan and either another exposure-reducing step or a fox-follow regroup, not a rush toward the `Ruins` marker.
+
+## Run 137 - The Fox Catches Up, The Panda Comes Back
+
+I start at `Point3D(1235,1398,0)`, facing northeast. The fox is visible behind me at `Point3D(1231,1396,0)`, stretched outside the remembered `2..3` heel band. The live screen still has the labeled toad at `1243,1382` and monkey at `1249,1381`. The panda is just above the top edge, and Urulg is just below the south edge, carried as unresolved hostile pressure rather than erased.
+
+**Beat 1**
+
+I wait for the fox instead of dragging the leash farther.
+
+The controlled AI path is `AITimer.OnTick -> BaseCreature.OnThink -> BaseAI.Obey -> DoOrderFollow -> WalkMobileRange -> GetDirectionTo -> DoMove`. The `FriendsAvoidHeels` value is still `7`, so the fox wants to sit `2..3` tiles from me. Its floored distance is `4`, so `WalkMobileRange` points it `Direction.Down`, southeast.
+
+The terrain cooperates. The fox steps from `Point3D(1231,1396,0)` to `Point3D(1232,1397,0)`. Server-order `map1.mul` reads the target as dry jungle at z `0`; `staidx1.mul` and `statics1.mul` find no static on the target. One side tile has only a nonblocking blade plant, and the other side tile is clear. The fox lands at dx `-3`, dy `-1`, floored distance `3`.
+
+No Guard, Attack, Combatant, body-blocking, ownership, follower-count, pet-order, gump, context menu, target cursor, skill, item, hunger, thirst, quest, discovery, or combat path changes.
+
+**Beat 2**
+
+Now I press northeast again, because I am already facing that way and I still want one more tile away from the orc's southern edge.
+
+`Mobile.Move` enters the full movement path. `MovementImpl.CheckMovement` tests `Point3D(1236,1397,0)` and the player diagonal side checks at `1236,1398` and `1235,1397`. The target and east side tile are dry jungle with zero statics. The north side tile has a plant static, but it is not a blocker, so the player diagonal passes.
+
+Mira moves to `Point3D(1236,1397,0)`. The scan changes immediately. The rectangle x `1218..1254`, y `1379..1415` now contains the panda again at `1243,1379`, plus the monkey and toad. There are still zero saved visible items and zero running spawner object locations inside the rectangle. Urulg is now off-screen at dx `-10`, dy `20`, still inside movement-notice range and still carried as the same unchosen private-timer branch. The fox, after doing exactly what I waited for, is stretched again at `Point3D(1232,1397,0)`, dx `-4`, dy `0`, floored distance `4`.
+
+Mechanical friction learned:
+
+- Waiting for a controlled follower tick is not protection. It only moved the fox one clear tile back into range.
+- A single player step can immediately stretch the follower back out of the band.
+- The northeast retreat tile is passable, but it brings the already-labeled panda back onto the client edge.
+- The orc being off-screen is still not a resolved creature outcome. The live snapshot still does not expose its private timer or next move.
+
+Next pressure:
+
+Mira ends at `Point3D(1236,1397,0)`, facing northeast. Visible bodies are now the panda, monkey, toad, and the controlled fox; zero saved items are visible. Urulg and the swamp drake remain carried unresolved risks. The next honest action is a fresh classifier pass and a decision about the re-visible panda/toad/monkey cluster before any more movement.
+
+## Run 138 - I Stop Dragging The Leash
+
+I start at `Point3D(1236,1397,0)`, facing northeast. The fox is visible west of me at `Point3D(1232,1397,0)`, stretched outside the remembered `2..3` heel band again. The screen is not clean: the panda is still at the top edge, the toad and monkey are still north-east, and Urulg is below the screen as carried hostile uncertainty. No saved item, chest, corpse, road, water source, gump, context menu, or target cursor is visible.
+
+**Beat 1**
+
+I wait for the fox first. It is not a shield, but I do not want to keep walking with the follower lagging.
+
+The controlled AI path is the same follow machinery as before: `AITimer.OnTick -> BaseCreature.OnThink -> BaseAI.Obey -> DoOrderFollow -> WalkMobileRange -> GetDirectionTo -> DoMove`. The fox is four tiles away by floored distance, outside the `FriendsAvoidHeels` band, and the direction to me is east.
+
+`DoMove(Direction.East)` steps the fox from `Point3D(1232,1397,0)` to `Point3D(1233,1397,0)`. The target is dry jungle `0xAF` at z `0`, with zero statics and no saved blocker. The fox ends at dx `-3`, dy `0`, floored distance `3`.
+
+No Guard, Attack, Combatant, ownership, follower-count, pet-order, body-blocking, gump, target cursor, item, hunger, thirst, quest, discovery, or combat path changes.
+
+**Beat 2**
+
+I choose north, not southeast. The ruins marker can keep whispering; the southern edge has already produced an orc.
+
+The first north input only turns me. `Mobile.Move` sees that I was facing `Direction.Right`, so it skips `MovementImpl.CheckMovement`, leaves me at `Point3D(1236,1397,0)`, and changes facing to `Direction.North`. The visible rectangle and creature pressure do not change.
+
+**Beat 3**
+
+I press north again and actually step.
+
+`MovementImpl.CheckMovement` tests the forward tile `Point3D(1236,1396,0)`. Server-order `map1.mul` reads it as dry jungle `0xAC` at z `0`, `staidx1.mul` and `statics1.mul` find zero statics, and the live saved mobile/item filters find no target blocker. This is a cardinal move, so there are no player diagonal side checks.
+
+Mira moves to `Point3D(1236,1396,0)`, facing north. The endpoint scan x `1218..1254`, y `1378..1414` still contains the same three labeled wild animals: panda at `1243,1379`, toad at `1243,1382`, and monkey at `1249,1381`. There are still zero saved visible items and zero running spawner object locations. Urulg is now dx `-10`, dy `21`, still off-screen and still carried unresolved; the southern goblin archer is also off-screen at dx `14`, dy `23`, route-adjacent but not visible. The fox is at `1233,1397`, inside the follow band at floored distance `3`.
+
+Mechanical friction learned:
+
+- Waiting for the controlled fox can restore spacing without changing protection, ownership, or combat state.
+- A facing turn is its own visible beat and does not prove the next tile.
+- The north tile is open, but it does not clear the screen. The panda, toad, and monkey are still visible bodies.
+- Stepping away from Urulg improves geometry, but it does not resolve the orc's private timer branch or prove the goblin archer irrelevant.
+
+Next pressure:
+
+Mira ends at `Point3D(1236,1396,0)`, facing north. The fox is in the heel band at `Point3D(1233,1397,0)`. The panda, toad, and monkey remain visible; Urulg and the swamp drake remain carried unresolved risks, and the goblin archer is off-screen route-adjacent pressure. The next action needs another scan and classifier before any route push toward the `Ruins` marker.
+
+## Run 139 - North Has Its Own Teeth
+
+I start at `Point3D(1236,1396,0)`, facing north. The fox is where I want it for once, behind and a little west at `Point3D(1233,1397,0)`, still following and inside the old heel band. The screen is not empty. The panda is up near the top edge at `1243,1379`, the toad is at `1243,1382`, and the monkey is at `1249,1381`. Urulg is below the screen as carried hostile uncertainty, and the goblin archer is still south of me, route-adjacent but not visible.
+
+**Beat 1**
+
+I press north because I am already facing that way and because south is where the orc and goblin pressure lives.
+
+`MovementImpl.CheckMovement` tests `Point3D(1236,1395,0)`. Server-order `map1.mul` reads it as dry jungle `0xAC` at z `0`; `staidx1.mul` and `statics1.mul` find no statics there, and the live saved item/mobile filters find no target blocker. This is a cardinal step, so there are no diagonal side checks.
+
+Mira moves to `Point3D(1236,1395,0)`. The same three labeled wild animals stay visible. The toad is now dx `7`, dy `-13`, still outside its range-10 teleport scan. Urulg falls to dy `22`, and the goblin archer to dy `24`. That is better geometry, not safety.
+
+**Beat 2**
+
+I press north again.
+
+The target `Point3D(1236,1394,0)` is also dry jungle `0xAC`. This tile has leaves `0xD8C`, but the tiledata flags are foliage only, not impassable or surface, so the step passes. No saved mobile or item is on the tile. Mira moves to `Point3D(1236,1394,0)`.
+
+The panda, toad, and monkey are still on the screen. The toad is now dx `7`, dy `-12`, still outside the timer's range-10 rectangle. The fox does not get an AI tick during these player steps, so it stays at `1233,1397`, stretching to floored distance `4`.
+
+**Beat 3**
+
+I take one more north step, but I am watching the toad now.
+
+`Point3D(1236,1393,0)` is dry jungle `0xAC`, zero statics, no saved blocker. `Mobile.Move` accepts the step and leaves Mira facing north at `Point3D(1236,1393,0)`.
+
+The screen still has the panda, toad, and monkey. The toad is dx `7`, dy `-11`: still not inside the range-10 teleport scan, but one more north step would put me at dy `-10`, which is inside the timer rectangle if it ticks and wins its random branch. The fox is still visible behind me at `Point3D(1233,1397,0)`, now floored distance `5`, outside the heel band again. I stop there. North was useful, but it is about to become a different problem.
+
+Mechanical friction learned:
+
+- A cardinal north step only needs the forward tile; it does not use the player diagonal side-check rule.
+- Leaves are not automatically blockers. `0xD8C` on `1236,1394` is foliage only, so movement passed.
+- Moving north improves distance from Urulg and the southern goblin archer, but it also pulls me toward the toad's special timer range.
+- The toad's teleport timer is still negative evidence at dy `-11`; the next north step would change that to active timer pressure.
+- Three player steps without a pet AI tick stretch the fox back outside the follow band.
+
+Next pressure:
+
+Mira ends at `Point3D(1236,1393,0)`, facing north. The fox is at `Point3D(1233,1397,0)`, outside the heel band. The panda, toad, and monkey remain visible, and the toad is one north step away from containing Mira in its range-10 timer scan. The next honest move is likely to wait the fox back in or choose an east/west route that avoids both the southern hostiles and the toad's timer rectangle.
+
+## Run 140 - I Sidestep The Toad's Clock
+
+I start at `Point3D(1236,1393,0)`, facing north. The fox is visible behind me at `Point3D(1233,1397,0)`, stretched to floored distance `5`. The panda, toad, and monkey are still on screen. The toad is close enough that one more north step would put me inside its range-10 teleport timer scan. South still smells like Urulg and the goblin archer, even though both are off-screen.
+
+**Beat 1**
+
+I wait for the fox instead of taking the tempting north tile.
+
+The path is `AITimer.OnTick -> BaseCreature.OnThink -> BaseAI.Obey -> DoOrderFollow -> WalkMobileRange -> GetDirectionTo -> DoMove`. `FriendsAvoidHeels` still leaves the fox wanting distance `2..3`. From `1233,1397`, the direction to me is `Direction.Right`, so it steps northeast to `Point3D(1234,1396,0)`.
+
+The fox target, the start tile, and both non-player diagonal side tiles are dry map1 jungle at z `0` with zero statics. No saved mobile or item is on the target. The fox ends at dx `-2`, dy `3`, floored distance `3`. It is following again, not guarding me.
+
+**Beat 2**
+
+I turn west. `Mobile.Move` changes facing from north to `Direction.West` without entering `MovementImpl.CheckMovement`, so no tile is tested and no location changes.
+
+The turn still sends movement notifications. The visible wild animals are `FightMode.Aggressor`, so their notice-sound branch is skipped. Urulg is still outside range 18 before and after the turn, so no notice sound is produced there either.
+
+**Beat 3**
+
+I press west again and actually step to `Point3D(1235,1393,0)`.
+
+This is a cardinal movement check. `MovementImpl.CheckMovement` only needs the forward tile. Server-order `map1.mul` reads `1235,1393` as dry jungle `0xAC` at z `0`; `staidx1.mul` and `statics1.mul` find zero statics, and the live saved mobile/item filters find no target blocker. `Region.CanMove` and `OnMoveOver` have no traced blocker.
+
+The final screen is basically the same, but the geometry is a hair less stupid. The panda is at dx `8`, dy `-14`; the toad is at dx `8`, dy `-11`, still outside its teleport timer scan; and the monkey is at dx `14`, dy `-12`. The fox is at dx `-1`, dy `3`, still in the follow band. Urulg is off-screen at dx `-9`, dy `24`, carried unresolved rather than safe. The goblin archer is dx `15`, dy `26`, still route-adjacent if I drift south. No item, corpse, chest, water source, road, sign, gump, context menu, target cursor, combat, hunger, thirst, quest, discovery, ownership, follower-count, or skill state changes.
+
+Mechanical friction learned:
+
+- Waiting for the fox is a leash action, not protection.
+- Facing west consumes a visible beat and not a terrain proof.
+- A one-tile west sidestep avoids entering the toad's current range-10 timer rectangle.
+- The client world-map `Ruins` marker is still only overlay knowledge at about 88 tiles southeast; it is not a reason to walk through southern hostile pressure.
+
+Next pressure:
+
+Mira ends at `Point3D(1235,1393,0)`, facing west. The fox is back in the heel band at `Point3D(1234,1396,0)`. The same panda, toad, and monkey remain visible; the toad is still timer-negative but close. Urulg, the goblin archer, and the old swamp drake remain unresolved carried risks rather than solved threats.
+
+## Run 141 - I Step Sideways Before I Step North
+
+I start at `Point3D(1235,1393,0)`, facing west. The fox is close enough behind me at `Point3D(1234,1396,0)`, still following and inside the remembered heel band. The screen still has the labeled panda at `1243,1379`, the toad at `1243,1382`, and the monkey at `1249,1381`. The toad is not inside its range-10 teleport scan yet, but one sloppy north move from the old line would have changed that. South is still where Urulg and the goblin archer sit in the back of my mind.
+
+**Travel Segment**
+
+I keep moving west first.
+
+Because I am already facing `Direction.West`, the first three inputs are real steps: `1234,1393`, `1233,1393`, and `1232,1393`. These are cardinal moves, so there are no player diagonal side checks. The server-order `map1.mul` read says all three tiles are dry jungle. The statics are visual clutter, not blockers: mushrooms, a tree, and leaves on `1234,1393`, nothing on `1233,1393`, and a tree with leaves on `1232,1393`, all without impassable or surface flags. The live snapshot has no saved mobile or item on any of those targets.
+
+Then I turn north in place and take one actual north step to `Point3D(1232,1392,0)`. That tile is dry jungle with zero statics and no saved blocker. This is not progress toward the `Ruins` marker. It is progress away from the toad's timer rectangle and away from the southern hostile line.
+
+I let the travel segment keep the fox believable instead of pretending an exact private AI clock fired. The follower is shadowed one clear northwest step from `Point3D(1234,1396,0)` to `Point3D(1233,1395,0)`. The target and both non-player side tiles are dry jungle with zero statics, and no Guard, Attack, Combatant, body-blocking, ownership, follower-count, or pet-order state changes.
+
+The endpoint scan is boring in the useful way. The same three wild bodies remain visible: panda dx `11`, dy `-13`; toad dx `11`, dy `-10`; monkey dx `17`, dy `-11`. The toad is now still outside the range-10 teleport rectangle because the x distance is `11`. There are zero saved visible items and zero running spawner objects standing in the rectangle. Urulg is off-screen at dx `-6`, dy `25`, and the goblin archer is off-screen at dx `18`, dy `27`; both are still unresolved risk, not gone.
+
+Mechanical friction learned:
+
+- West first is the honest way to make a north step without entering the toad's range-10 timer rectangle.
+- Nonblocking jungle statics can look dense without stopping cardinal movement.
+- Travel-segment fox shadowing keeps the leash coherent, but it is not an exact pet timer tick and not protection.
+- The `Ruins` marker is now farther away, about 91 tiles by straight distance, and still lower priority than visible wildlife and southern hostile pressure.
+
+Next pressure:
+
+Mira ends at `Point3D(1232,1392,0)`, facing north. The fox is approximately at `Point3D(1233,1395,0)`, inside the heel band. The panda, toad, and monkey remain visible, with the toad timer-negative by x distance instead of y distance. Urulg, the goblin archer, and the old swamp drake remain carried unresolved risks. The next run needs a fresh scan before deciding whether to keep skirting west/north or finally turn back toward a marker.
+
+## Run 142 - I Keep North Narrow
+
+I start at `Point3D(1232,1392,0)`, facing north. The screen is still not empty: the panda is at `1243,1379`, the toad at `1243,1382`, and the monkey at `1249,1381`. The toad is close in y, but the important number is still x. At dx `11`, its range-10 teleport scan does not contain me. The fox is behind at `Point3D(1233,1395,0)`, close enough for now. No item, corpse, chest, water source, road, sign, gump, context menu, target cursor, combat, or taming timer is visible.
+
+**Beat 1**
+
+I press north, because I am already facing north and because north preserves the x gap from the toad.
+
+`Mobile.Move` enters `MovementImpl.CheckMovement` for a cardinal step. The target `Point3D(1232,1391,0)` is dry jungle `0xAE`, z `0`, with zero statics. There is no saved mobile or item on the target. Mira moves one tile north.
+
+The shifted screen still contains the same three wild bodies and no saved items: panda dx `11`, dy `-12`; toad dx `11`, dy `-9`; monkey dx `17`, dy `-10`. The toad is still outside the teleport timer rectangle by x distance. The fox is now stretched to floored distance `4`.
+
+**Beat 2**
+
+I wait the fox in. That is not courage; it is leash management.
+
+The path is `AITimer.OnTick -> BaseCreature.OnThink -> BaseAI.Obey -> DoOrderFollow -> WalkMobileRange -> GetDirectionTo -> DoMove`. `FriendsAvoidHeels` still means the fox wants the `2..3` band. From `Point3D(1233,1395,0)`, `GetDirectionTo` points north toward me. The fox steps to `Point3D(1233,1394,0)`.
+
+The target is dry jungle `0xAE`. It has a tree and leaves, but their tile flags are nonblocking/foliage only, so they do not stop the controlled follower. No Guard, Attack, Combatant, Warmode, body-blocking, ownership, follower-count, pet-order, hunger, thirst, quest, discovery, or skill state changes.
+
+**Beat 3**
+
+I take one more north step while the x gap is still doing the work.
+
+`MovementImpl.CheckMovement` accepts `Point3D(1232,1390,0)`. The tile is dry jungle `0xAF`; the tree and leaves there are visual statics, not impassable or surface blockers. The live saved mobile/item filters find no target blocker.
+
+The final scan is still the same problem, just shifted north: panda dx `11`, dy `-11`; toad dx `11`, dy `-8`; monkey dx `17`, dy `-9`. Zero saved visible items and zero running spawner objects stand in the rectangle, though the same four PremiumSpawner home ranges overlap by source range. Urulg is farther south at dx `-6`, dy `27`; the goblin archer is dx `18`, dy `29`; both stay unresolved risk, not solved. The fox is behind at `Point3D(1233,1394,0)`, stretched again to floored distance `4`.
+
+Mechanical friction learned:
+
+- Cardinal north movement keeps avoiding the toad's special timer only because x stays `11`.
+- The jungle tree graphics on the north line are not blockers when tiledata lacks impassable/surface flags.
+- The fox follow tick can fix spacing for one beat, but a single player step stretches it back out.
+- Moving away from southern hostiles is useful geometry, not proof that Urulg or the goblin archer stopped existing.
+
+Next pressure:
+
+Mira ends at `Point3D(1232,1390,0)`, facing north. The fox is at `Point3D(1233,1394,0)`, outside the heel band again. The panda, toad, and monkey remain visible; the toad is still timer-negative by x distance. The next honest move is another fresh scan/classifier pass, probably a fox-follow wait or another north/west avoidance step, not a turn back toward the `Ruins` marker.
+
+## Run 143 - I Let The Leash Breathe
+
+I start at `Point3D(1232,1390,0)`, facing north. The fox is visible behind me at `Point3D(1233,1394,0)`, just stretched past the old heel band. The same three wild bodies are still on screen: panda `206400` at `1243,1379`, toad `8544` at `1243,1382`, and monkey `289478` at `1249,1381`. The toad is not inside its teleport timer rectangle because the x gap is still `11`. No item, corpse, chest, sign, water source, gump, context menu, target cursor, or combat feedback is visible.
+
+**Beat 1**
+
+I wait for the fox before I move.
+
+The path is `AITimer.OnTick -> BaseCreature.OnThink -> BaseAI.Obey -> DoOrderFollow -> WalkMobileRange -> GetDirectionTo -> DoMove`. The fox is four tiles away by floored distance, so `FriendsAvoidHeels` wants it closer. `GetDirectionTo` chooses `Direction.North`, and `DoMove` steps the fox from `Point3D(1233,1394,0)` to `Point3D(1233,1393,0)`.
+
+The target is dry jungle `0xAF`, z `0`, with zero statics and no saved mobile or item blocker. The fox ends at dx `1`, dy `3`, floored distance `3`. It is following, not guarding.
+
+**Beat 2**
+
+I press north once while the toad is still held off by x distance.
+
+`Mobile.Move` enters `MovementImpl.CheckMovement` because I was already facing north. The target `Point3D(1232,1389,0)` is dry jungle `0xAF`, z `0`, with zero statics. The live saved mobile/item filters find no target blocker, and no named region gate is traced. Mira steps to `Point3D(1232,1389,0)`.
+
+The screen shifts but does not clear. Panda is dx `11`, dy `-10`; toad is dx `11`, dy `-7`; monkey is dx `17`, dy `-8`. Zero saved visible items and zero running spawner object locations are in the rectangle. Urulg is still off-screen at dx `-6`, dy `28`, and the goblin archer is off-screen at dx `18`, dy `30`. The fox is stretched again to floored distance `4`.
+
+**Beat 3**
+
+I wait the fox back in again instead of taking another north step.
+
+The same follow path runs. From `Point3D(1233,1393,0)`, `GetDirectionTo` again resolves north. The fox steps to `Point3D(1233,1392,0)`. The tile is dry jungle `0xAD`; static `0xD58` is a nonblocking tree and `0xD5E` is foliage leaves, so the target does not block the non-player movement. No saved mobile or item occupies the tile.
+
+The endpoint is quiet but not safe. The fox is back inside the heel band at dx `1`, dy `3`. The panda, toad, and monkey are still visible, and the toad is still timer-negative only because x remains `11`. The `Ruins` marker is still only map-overlay knowledge, now about `93` tiles straight-line away and south-east of the pressure I am deliberately avoiding.
+
+Mechanical friction learned:
+
+- Waiting the fox before and after a player step keeps the follower coherent without creating any Guard, Attack, body-block, or protection state.
+- A north player step from here is locally passable, but it does not remove visible animal pressure.
+- The toad remains a geometry problem rather than a resolved one. The timer scan still misses by x distance, not because the timer is proven idle.
+- Moving north increases distance from Urulg and the goblin archer, but those branches remain carried unresolved risk, not erased enemies.
+
+Next pressure:
+
+Mira ends at `Point3D(1232,1389,0)`, facing north. The fox is at `Point3D(1233,1392,0)`, inside the follow band. Panda, toad, and monkey remain visible; the toad is timer-negative by dx `11`, dy `-7`. Urulg, the goblin archer, and the old swamp drake remain off-screen carried or ambient risks. The next move needs another scan/classifier pass before choosing between another cautious north step, a west sidestep, or stopping to inspect the visible wildlife again.
+
+## Run 144 - I Give The Toad More Side-Eye
+
+I start at `Point3D(1232,1389,0)`, facing north. The fox is close behind at `Point3D(1233,1392,0)`, inside the old heel band at dx `1`, dy `3`. The screen is still not clean. The panda is at `1243,1379`, the toad at `1243,1382`, and the monkey at `1249,1381`. The toad is the number I keep staring at: dx `11`, dy `-7`, just outside its range-10 teleport scan because of the x gap. South is where Urulg and the goblin archer sit in the unresolved part of my head.
+
+**Beat 1**
+
+I turn west first.
+
+`Mobile.Move` sees that I was facing `Direction.North`, so this is only a facing change to `Direction.West`; it does not enter `MovementImpl.CheckMovement` and it does not change my location. The turn still notifies nearby objects through `OnMovement`. The visible animals are `FightMode.Aggressor`, so the notice-sound branch is skipped, and no combatant, focus, teleport, item, region, gump, target cursor, pet order, hunger, thirst, quest, discovery, or skill path changes.
+
+**Beat 2**
+
+I press west again and actually step to `Point3D(1231,1389,0)`.
+
+This is a cardinal movement check. `MovementImpl.CheckMovement` only needs the forward tile. Server-order `map1.mul` reads `1231,1389` as dry jungle `0xAD`, z `0`, with zero statics. The live snapshot has no saved mobile or item standing on the target tile, and the region scan found no named `Regions.xml` rectangle here.
+
+The screen stays populated, but the geometry gets better. The panda is dx `12`, dy `-10`; the toad is dx `12`, dy `-7`; the monkey is still barely legal on the east edge at dx `18`, dy `-8`. The toad is still timer-negative by x distance. The fox remains at `1233,1392`, now dx `2`, dy `3`, still inside the follow band without spending a pet tick.
+
+**Beat 3**
+
+I take one more west step while that line is still open.
+
+`MovementImpl.CheckMovement` accepts `Point3D(1230,1389,0)`. The land is dry jungle `0xAD`; there is one `0xD18` mushroom on the tile, but tiledata marks it nonblocking, not a surface or bridge. No saved mobile or item blocks the target, and no named region catches the move.
+
+The monkey finally drops off the client rectangle at dx `19`. I do not pretend it disappeared. It becomes recently visible ambient uncertainty. The panda and toad are still visible: panda dx `13`, dy `-10`, toad dx `13`, dy `-7`. The toad's range-10 timer scan still misses me by x distance. The fox is still behind at `Point3D(1233,1392,0)`, dx `3`, dy `3`, inside the heel band. Urulg is farther south at dx `-4`, dy `28`; the goblin archer is dx `20`, dy `30`; both remain unresolved, not solved.
+
+Mechanical friction learned:
+
+- A facing turn is a real visible beat, but it is not a terrain proof.
+- Two west tiles from the current line are passable Sosaria jungle; `1230,1389` only has a nonblocking mushroom.
+- Moving west is the clean way to widen the toad timer gap without dragging the fox out of the follow band.
+- Leaving the monkey's update rectangle is not deletion or safety. It only changes the screen and pressure classification.
+
+Next pressure:
+
+Mira ends at `Point3D(1230,1389,0)`, facing west. The fox is still at `Point3D(1233,1392,0)`, inside the 2..3 heel band. The panda and toad remain visible, with the toad timer-negative at dx `13`, dy `-7`. The monkey is just off-screen to the east. The next move needs a fresh scan/classifier before any further west step, north turn, or route back toward the `Ruins` marker.
+
+## Run 145 - The Leash Math Catches Me
+
+I start at `Point3D(1230,1389,0)`, facing west. The screen still has the panda at `1243,1379` and the toad at `1243,1382`; the monkey is off the east edge now, not gone. Before I move, I catch the stupid part: the fox at `1233,1392` is not actually inside the heel band. `Mobile.GetDistanceToSqrt` uses real square-root distance, so dx `3`, dy `3` floors to `4`, not `3`. My little fox is already stretched.
+
+**Beat 1**
+
+I wait for the fox.
+
+The path is `AITimer.OnTick -> BaseCreature.OnThink -> BaseAI.Obey -> DoOrderFollow -> WalkMobileRange -> GetDirectionTo -> DoMove`. `FriendsAvoidHeels` still wants the old `2..3` band. From `Point3D(1233,1392,0)` to me at `Point3D(1230,1389,0)`, `GetDirectionTo` chooses `Direction.Up`, so the fox steps northwest to `Point3D(1232,1391,0)`.
+
+That target is dry jungle `0xAE`, z `0`, with zero statics and no saved mobile or item blocker. The fox is back at dx `2`, dy `2`, floored distance `2`. It is following, not guarding.
+
+**Beat 2**
+
+I press west while I am already facing west.
+
+`Mobile.Move` enters `MovementImpl.CheckMovement` for the cardinal step. `Point3D(1229,1389,0)` is dry jungle `0xAF`, z `0`, with zero statics and no saved blocker. Mira moves there. Panda is dx `14`, dy `-10`; toad is dx `14`, dy `-7`; the toad timer still misses by x distance. The fox is still close enough at dx `3`, dy `2`.
+
+**Beat 3**
+
+I take one more west step.
+
+`Point3D(1228,1389,0)` is dry jungle `0xAC`. There is `0xD69` leaves on the tile, but tiledata marks it as foliage only, not impassable, surface, or bridge. The step passes, and no saved mobile or item occupies the target.
+
+The visible world is still not empty. Panda is dx `15`, dy `-10`; toad is dx `15`, dy `-7`, still timer-negative by x distance. The monkey is farther off-screen at dx `21`, so it stays ambient uncertainty. Urulg is off-screen at dx `-2`, dy `28`, and the goblin archer is dx `22`, dy `30`; neither is solved. The fox is visible at `Point3D(1232,1391,0)`, but the final west step stretches it back to floored distance `4`.
+
+Mechanical friction learned:
+
+- Follow spacing uses `Mobile.GetDistanceToSqrt`, so dx `3`, dy `3` is outside the `2..3` heel band.
+- Waiting a fox tick can correct the leash, but two player steps can stretch it again immediately.
+- `0xD69` leaves are foliage, not a movement blocker.
+- West keeps widening the toad timer gap; it does not remove the visible panda/toad problem or the carried southern hostiles.
+
+Next pressure:
+
+Mira ends at `Point3D(1228,1389,0)`, facing west. The fox is at `Point3D(1232,1391,0)`, outside the follow band. Panda and toad remain visible, with the toad timer-negative at dx `15`, dy `-7`. The next honest move is probably another fox-follow wait before any more route pushing.
+
+## Run 146 - I Stop Making The Fox Sprint
+
+I start at `Point3D(1228,1389,0)`, facing west. The fox is visible but stretched at `Point3D(1232,1391,0)`, dx `4`, dy `2`, floored distance `4`. The panda and toad are still on the right side of the screen. The toad is dx `15`, dy `-7`, which means its range-10 teleport timer still misses me by x distance. That is not safety. It is just geometry I have to keep.
+
+**Beat 1**
+
+I wait for the fox.
+
+The path is `AITimer.OnTick -> BaseCreature.OnThink -> BaseAI.Obey -> DoOrderFollow -> WalkMobileRange -> GetDirectionTo -> DoMove`. `FriendsAvoidHeels` still wants distance `2..3`. From `Point3D(1232,1391,0)` toward me, `GetDirectionTo` returns `Direction.Up`, so the fox steps northwest to `Point3D(1231,1390,0)`.
+
+The target is dry `map1.mul` jungle `0xAE` at z `0`, with zero statics and no saved mobile or item blocker. The fox ends at dx `3`, dy `1`, floored distance `3`. It is following again, not guarding.
+
+**Beat 2**
+
+I press west while I am already facing west.
+
+`Mobile.Move` enters the real movement path. `MovementImpl.CheckMovement` accepts `Point3D(1227,1389,0)`: dry jungle `0xAF`, z `0`, zero statics, no saved mobile or item on the target, and no traced region blocker. Mira moves one tile west.
+
+The screen does not clear. Panda is dx `16`, dy `-10`; toad is dx `16`, dy `-7`. The toad is still outside its range-10 timer scan by x distance. The fox is now dx `4`, dy `1`, floored distance `4`, stretched again.
+
+**Beat 3**
+
+I wait the fox back in instead of pretending the leash can be ignored.
+
+The same follow path runs. From `Point3D(1231,1390,0)`, `GetDirectionTo` chooses `Direction.West`, and `DoMove` steps the fox to `Point3D(1230,1390,0)`. That tile is dry jungle `0xAD`, z `0`, with zero statics and no saved blocker. The fox ends at dx `3`, dy `1`, floored distance `3`.
+
+The endpoint is still a nervous jungle edge. Panda and toad remain visible at dx `16`; the toad timer is still negative by x distance, not by proof that the private timer is idle. The monkey is farther off-screen at dx `22`. Urulg is off-screen at dx `-1`, dy `28`, and the goblin archer is dx `23`, dy `30`; both stay unresolved southern pressure. The `Ruins` marker is still only overlay knowledge, roughly 97 tiles southeast. No item, corpse, chest, water source, road, sign, gump, context menu, target cursor, combat, hunger, thirst, quest, discovery, ownership, follower-count, pet-order, or skill state changes.
+
+Mechanical friction learned:
+
+- Two exact fox follow ticks can keep the leash coherent across one player step, but neither tick creates protection.
+- `Point3D(1227,1389,0)` is another dry west tile, not a shelter or route solution.
+- The toad remains visible and timer-negative only because x distance is `16`.
+- Moving west keeps widening the toad gap but also keeps the `Ruins` marker behind hostile southern pressure.
+
+Next pressure:
+
+Mira ends at `Point3D(1227,1389,0)`, facing west. The fox is at `Point3D(1230,1390,0)`, inside the `2..3` follow band. Panda and toad remain visible on the east edge, with the toad still outside its range-10 timer scan at dx `16`, dy `-7`. The next run needs a fresh scan before deciding whether to keep sidestepping west, turn north, or reassess the map marker.
+
+## Run 147 - I Keep Sliding Out Of The Toad Box
+
+I start at `Point3D(1227,1389,0)`, facing west. The fox is close at `Point3D(1230,1390,0)`, still following and inside the old heel band. The screen is not clean: the panda is still at `1243,1379`, and the toad is still at `1243,1382`. The monkey is off the east edge, not gone. Urulg and the goblin archer are south of the screen in the unresolved part of the run. The `Ruins` marker is still only a map overlay, about 98 tiles away, and the way back toward it points through the pressure I have been avoiding.
+
+**Beat 1**
+
+I press west because I am already facing west.
+
+`Mobile.Move` enters the real movement path. The server-order `map1.mul` read says `Point3D(1226,1389,0)` is dry jungle `0xAF` with zero statics. The live snapshot has no saved mobile or item on that tile, and no named region catches the step. Mira moves one tile west.
+
+The screen still has the same two visible wild bodies: panda dx `17`, dy `-10`, and toad dx `17`, dy `-7`. The toad is outside its range-10 teleport scan by x distance. The fox is now stretched to dx `4`, dy `1`, floored distance `4`.
+
+**Beat 2**
+
+I wait for the fox instead of letting the leash drift.
+
+The path is `AITimer.OnTick -> BaseCreature.OnThink -> BaseAI.Obey -> DoOrderFollow -> WalkMobileRange -> GetDirectionTo -> DoMove`. The fox is outside the `2..3` band, and `GetDirectionTo` points west toward me. It steps from `Point3D(1230,1390,0)` to `Point3D(1229,1390,0)`.
+
+That target is dry jungle `0xAC`, z `0`, with zero statics and no saved blocker. The fox returns to dx `3`, dy `1`, floored distance `3`. It is still following, not guarding.
+
+**Beat 3**
+
+I take one more west step while the east-edge animals are still only a geometry problem.
+
+`MovementImpl.CheckMovement` accepts `Point3D(1225,1389,0)`. The land is dry jungle `0xAD`. There is a `0xD0D` mushrooms static on the tile, but tiledata names it `mushrooms`, height `1`, with no impassable, surface, bridge, foliage, or wet flags. No saved mobile or item occupies the target.
+
+The final scan leaves the panda and toad barely visible at dx `18`. The toad is still outside its range-10 teleport scan by x distance, but I do not pretend the private timer is idle. The monkey is off-screen at dx `24`; Urulg is off-screen at dx `1`, dy `28`; the goblin archer is off-screen at dx `25`, dy `30`; and the old swamp drake branch remains carried unresolved. The fox is visible at `Point3D(1229,1390,0)`, but this last west step stretches it back to floored distance `4`.
+
+Mechanical friction learned:
+
+- `Point3D(1226,1389,0)` and `Point3D(1225,1389,0)` are passable west jungle tiles.
+- `0xD0D` mushrooms look like clutter but do not block the west step.
+- The panda and toad stay visible at the inclusive 18-tile edge, so they are not resolved or gone.
+- One fox-follow tick fixes spacing for one beat; one more player step stretches it again.
+
+Next pressure:
+
+Mira ends at `Point3D(1225,1389,0)`, facing west. The fox is at `Point3D(1229,1390,0)`, outside the follow band at floored distance `4`. Panda and toad are still visible on the east edge at dx `18`; the toad remains timer-negative by x distance. The next honest move is a fresh scan/classifier pass, likely a fox-follow wait or one more cautious west step only after proving the tile.
+
+## Run 148 - I Pull The Fox Off The Edge
+
+I start at `Point3D(1225,1389,0)`, facing west. The fox is visible at `Point3D(1229,1390,0)`, too far again at floored distance `4`. The panda and toad are still barely on the east edge at `1243`, both dx `18`; that toad is still only timer-negative because the x gap keeps it outside the range-10 rectangle. The monkey is off-screen, and the southern orc/goblin problems are still carried, not solved.
+
+**Beat 1**
+
+I wait the fox in before I take another step.
+
+The path is `AITimer.OnTick -> BaseCreature.OnThink -> BaseAI.Obey -> DoOrderFollow -> WalkMobileRange -> GetDirectionTo -> DoMove`. `FriendsAvoidHeels` still wants `2..3`. From `Point3D(1229,1390,0)`, `GetDirectionTo` points west toward me, so the fox steps to `Point3D(1228,1390,0)`.
+
+That target is dry jungle `0xAF`, z `0`, with zero statics and no saved blocker. The fox ends at dx `3`, dy `1`, floored distance `3`. Still following, not guarding.
+
+**Beat 2**
+
+I press west while already facing west.
+
+`Mobile.Move` enters the movement path. `MovementImpl.CheckMovement` accepts `Point3D(1224,1389,0)`: dry jungle `0xAE`, z `0`, zero statics, no saved mobile or item on the target, and no traced region blocker. Mira moves one tile west.
+
+That finally pushes the panda and toad off the client rectangle: both are now dx `19`. I do not get to delete them from the world. The toad is recently visible timer-negative evidence, not gone. The fox is stretched back out to dx `4`, dy `1`, floored distance `4`.
+
+**Beat 3**
+
+I wait the fox back in again.
+
+The same follow path runs. From `Point3D(1228,1390,0)`, `GetDirectionTo` again chooses west, and the fox steps to `Point3D(1227,1390,0)`. The land is dry jungle `0xAD`; the statics there are grasses, a background tree, and foliage leaves, with no impassable, surface, or bridge flags. No saved mobile or item blocks it.
+
+The final screen has my fox and no saved visible items. Panda and toad are just beyond the east edge at dx `19`; the toad still misses its range-10 teleport scan by x distance. Monkey is farther east at dx `25`. Urulg is south at dx `2`, dy `28`, and the goblin archer is dx `26`, dy `30`; both remain unresolved route pressure. The old swamp drake branch stays far north and carried.
+
+Mechanical friction learned:
+
+- A follower wait is the right response when the fox slips to floored distance `4`; moving first just stretches the leash more.
+- `Point3D(1224,1389,0)` is another passable west tile and it finally removes the panda/toad pair from legal client visibility.
+- Off-screen edge animals are not dead, despawned, or safe. They are just no longer click-visible.
+- `Point3D(1227,1390,0)` looks busier than it is: grasses, a background tree, and leaves do not block the fox.
+
+Next pressure:
+
+Mira ends at `Point3D(1224,1389,0)`, facing west. The fox is at `Point3D(1227,1390,0)`, back inside the `2..3` follow band. The immediate screen is cleaner, but the recently visible toad/panda, Urulg, GoblinArcher, and old swamp drake all remain unresolved risk. The next run needs a fresh scan before another west step or any turn back toward the `Ruins` marker.
+
+## Run 149 - I Keep The Edge Behind Me
+
+I start at `Point3D(1224,1389,0)`, facing west. For once the screen is almost clean: the only visible mobile I can honestly point at is my fox at `Point3D(1227,1390,0)`. The live snapshot rectangle has no saved wild mobiles, no saved items, and no running spawner object standing inside it. That does not make the jungle safe. The panda and toad are just past the east edge at dx `19`, the monkey is farther east, Urulg is still south as carried unresolved hostile pressure, and four invisible spawner home ranges still overlap the area as background risk.
+
+The marker overlay is useful but not sovereign. `Ruins` is still southeast at about `99` tiles from the start, but turning back toward it walks me back toward the toad/orc/goblin pressure. West has the cleanest immediate geometry.
+
+**Beat 1**
+
+I press west while I am already facing west.
+
+`Mobile.Move` enters `MovementImpl.CheckMovement`. The target `Point3D(1223,1389,0)` is dry jungle `0xAC` at z `0`. It has a background tree `0xD6E` and foliage leaves `0xD74`, but neither static has impassable, surface, or bridge flags. No saved mobile or item stands on the target tile, and no named region trigger catches the step. Mira moves west.
+
+The endpoint scan is still empty of saved visible wild mobiles and visible items. The recently visible toad is now dx `20`, dy `-7`, outside its range-10 teleport rectangle by x distance. The fox stretches to dx `4`, dy `1`, floored distance `4`.
+
+**Beat 2**
+
+I wait the fox back in before I press west again.
+
+The controlled pet path is `AITimer.OnTick -> BaseCreature.OnThink -> BaseAI.Obey -> DoOrderFollow -> WalkMobileRange -> GetDirectionTo -> DoMove`. `FriendsAvoidHeels` still wants the `2..3` band. From `Point3D(1227,1390,0)`, `GetDirectionTo` chooses west, and the fox steps to `Point3D(1226,1390,0)`.
+
+That tile is dry jungle `0xAF`, z `0`, with zero statics and no saved blocker. The fox lands at dx `3`, dy `1`, floored distance `3`. It is following, not guarding.
+
+**Beat 3**
+
+I take one more west step while the east edge keeps getting farther away.
+
+`MovementImpl.CheckMovement` accepts `Point3D(1222,1389,0)`. The land is dry jungle `0xAC`; the only static on the tile is foliage leaves `0xD4B`, which do not block. No saved mobile or item occupies the target, and no region, teleporter, gump, context menu, target cursor, hunger/thirst, combat, quest, discovery, ownership, follower-count, pet-order, or skill state changes.
+
+The final screen still contains no saved visible wild mobiles or visible items. The toad and panda are dx `21` east now, the monkey is dx `27`, Urulg is dx `4`, dy `28` south, and the goblin archer is dx `28`, dy `30`. The four invisible spawner home ranges are still only area risk. The fox is visible at `Point3D(1226,1390,0)`, but my last step stretches it back to floored distance `4`.
+
+Mechanical friction learned:
+
+- West from `1224,1389` through `1223,1389` and `1222,1389` is passable jungle, despite background tree/leaf clutter.
+- The live-state JSONL has nested `map.name` and `location` fields; the corrected scan still finds zero saved visible wild mobiles/items in the current rectangle.
+- Moving west keeps the recently visible toad outside both the 18-tile client rectangle and its range-10 teleport scan by x distance.
+- One fox-follow tick buys exactly one more step. After the final west move, the fox is outside the heel band again and needs attention before more route pushing.
+
+Next pressure:
+
+Mira ends at `Point3D(1222,1389,0)`, facing west. The fox is at `Point3D(1226,1390,0)`, visible but stretched to floored distance `4`. The immediate screen has no saved wild mobiles or items, but the recently visible toad/panda/monkey, carried Urulg, route-adjacent GoblinArcher, old swamp drake, and overlapping invisible spawner home ranges remain unresolved. The next honest move is likely another fox-follow wait before any west/north decision.
+
+## Run 150 - I Make The Fox Catch Up Before I Move
+
+I start at `Point3D(1222,1389,0)`, facing west. The screen is still empty of saved wild mobiles and saved items. The only body I can honestly react to is my fox at `Point3D(1226,1390,0)`, and it is stretched just outside the `2..3` heel band at floored distance `4`. The panda and toad are off the east edge, the monkey is farther east, and the southern orc/goblin pressure is still carried risk rather than proof of safety.
+
+**Beat 1**
+
+I wait the fox in.
+
+The path is `AITimer.OnTick -> BaseCreature.OnThink -> BaseAI.Obey -> DoOrderFollow -> WalkMobileRange -> GetDirectionTo -> DoMove`. `FriendsAvoidHeels` still wants `2..3`. From `Point3D(1226,1390,0)`, `GetDirectionTo` points west toward me, and the fox steps to `Point3D(1225,1390,0)`.
+
+That target is dry jungle `0xAF`, z `0`, with zero statics and no saved blocker. The fox lands at dx `3`, dy `1`, floored distance `3`. Still following, not guarding.
+
+**Beat 2**
+
+I press west while already facing west.
+
+`Mobile.Move` enters `MovementImpl.CheckMovement`. The target `Point3D(1221,1389,0)` is dry jungle `0xAE`, z `0`. The only static on the tile is foliage leaves `0xD4B`, height `2`, with no impassable, surface, or bridge flags. No saved mobile or item stands there, and no named region or visible UI catches the step. Mira moves west.
+
+The shifted live rectangle is x `1203..1239`, y `1371..1407`. It still has zero saved visible wild mobiles, zero saved visible items, and zero running spawner object locations. The toad and panda are now dx `22` east; the toad is still outside its range-10 teleport scan by x distance. The fox is stretched back out to floored distance `4`.
+
+**Beat 3**
+
+I wait the fox back in again instead of dragging it farther.
+
+The same follow path runs. From `Point3D(1225,1390,0)`, the fox steps west to `Point3D(1224,1390,0)`. The tile is dry jungle `0xAD`, z `0`, with zero statics and no saved blocker.
+
+The final screen is still mechanically quiet: no saved wild mobiles, no saved items, no running spawner object standing inside the client rectangle. That is not the same as safe. Panda and toad are recently visible off-screen at dx `22`, monkey is dx `28`, Urulg is dx `5`, dy `28`, and the goblin archer is dx `29`, dy `30`. The fox is back inside the follow band at dx `3`, dy `1`.
+
+Mechanical friction learned:
+
+- The correct first move was not route-driving; it was letting the fox catch up.
+- `Point3D(1221,1389,0)` is passable west jungle despite `0xD4B` foliage leaves.
+- `Point3D(1225,1390,0)` and `Point3D(1224,1390,0)` are clean fox-follow tiles.
+- Moving west widens the toad timer geometry, but it does not erase any off-screen creature.
+
+Next pressure:
+
+Mira ends at `Point3D(1221,1389,0)`, facing west. The fox is at `Point3D(1224,1390,0)`, inside the `2..3` heel band. The immediate screen has no saved wild mobiles or items, but the next run still needs a fresh scan/classifier before choosing west, north, or any turn back toward the `Ruins` marker.
+
+## Run 151 - The Rock Is For The Fox Too
+
+I start at `Point3D(1221,1389,0)`, facing west. The screen is still quiet in the strict client sense: no saved wild mobile, no saved item, no running spawner object standing where I can click it. The only body I can react to is my fox at `Point3D(1224,1390,0)`, close enough at dx `3`, dy `1`. The quiet does not erase the off-screen ledger. Panda and toad are east at dx `22`, the monkey is farther east, Urulg and the goblin archer are south, and the old swamp drake timer branch is still carried instead of solved.
+
+**Beat 1**
+
+I press west because I am already facing west.
+
+`Mobile.Move` enters `MovementImpl.CheckMovement`. The target `Point3D(1220,1389,0)` is dry jungle `0xAF`, z `0`, with zero statics. No saved mobile or item occupies it, and no traced region or visible UI catches the step. Mira moves west.
+
+The shifted screen is still empty of saved wild mobiles and items. The toad is now dx `23`, dy `-7`, still outside its range-10 teleport scan by x distance. The fox stretches to floored distance `4`, so I do not keep walking.
+
+**Beat 2**
+
+I wait the fox back in.
+
+The path is `AITimer.OnTick -> BaseCreature.OnThink -> BaseAI.Obey -> DoOrderFollow -> WalkMobileRange -> GetDirectionTo -> DoMove`. `FriendsAvoidHeels` wants `2..3`, and from `Point3D(1224,1390,0)` the direct answer is west. The fox steps to `Point3D(1223,1390,0)`.
+
+That target is dry jungle `0xAE`, z `0`, with zero statics and no saved blocker. The fox is back at dx `3`, dy `1`, floored distance `3`. It is still only following me; it is not guarding, fighting, or body-blocking.
+
+I stop there. The next west step for me toward `Point3D(1219,1389,0)` looks locally passable, but it would stretch the fox again. The fox's next direct catch-up target after that would be `Point3D(1222,1390,0)`, the old `0x1778` rock tile. I can see the problem now: even when the player's line is open, the follower's line can hit the same rock from a different angle. That is not a routine movement beat; that is a route decision.
+
+Mechanical friction learned:
+
+- `Point3D(1220,1389,0)` is passable west jungle with zero statics.
+- `Point3D(1223,1390,0)` is a clean fox-follow tile.
+- The empty live rectangle still does not prove safety; it only proves nothing saved is visible right now.
+- Continuing west would turn the known `1222,1390` rock into a fox pathing problem.
+
+Next pressure:
+
+Mira ends at `Point3D(1220,1389,0)`, facing west. The fox is at `Point3D(1223,1390,0)`, inside the `2..3` heel band. No gump, target cursor, combat, damage, item use, hunger/thirst, quest, discovery, pet order, ownership, or follower count changed. The next honest move is a fresh scan and a route choice around the rock before any more west pushing.
+
+## Run 152 - I Step Above The Fox Rock
+
+I start at `Point3D(1220,1389,0)`, facing west, with the fox at `Point3D(1223,1390,0)`. The strict live rectangle is still quiet: no saved wild mobile, no saved visible item, and no running spawner object standing where I can click it. The quiet is not permission to sprint. Panda and toad are east of the screen at dx `23`, the monkey is farther out at dx `29`, Urulg is south at dx `6`, dy `28`, and the goblin archer is southeast at dx `30`, dy `30`. The real visible problem is the path shape: if I push straight west and then wait for the fox, its direct follow line wants the rock at `Point3D(1222,1390,0)`.
+
+**Beat 1**
+
+I press north once.
+
+`Mobile.Move` does not enter `CheckMovement` because I was facing west. It acknowledges the movement packet, keeps me on `Point3D(1220,1389,0)`, and changes my facing to `Direction.North`. That facing turn still matters, because the server runs the movement-notification path around my current tile. The current rectangle has no saved wild body close enough to make that turn explode into combat.
+
+**Beat 2**
+
+I press north again.
+
+Now the facing matches, so `Mobile.Move -> MovementImpl.CheckMovement` tests the real cardinal step. `Map.Sosaria` resolves to file index `1`, and the server-order block read puts `Point3D(1220,1388,0)` on dry jungle `0xAD` with zero statics. The live saved mobile/item filter for the shifted rectangle x `1202..1238`, y `1370..1406` is still empty except for my simulated follower overlay. No named Sosaria region rectangle catches the tile. I step north.
+
+The fox does not move on my keypress. From the new tile it is still close enough: dx `3`, dy `2`, floored distance `3`, inside the `2..3` heel band. That is the point of this sidestep. I moved above the rock fork without making the pet solve it.
+
+**Beat 3**
+
+I press west once.
+
+This is another facing turn only. Mira stays at `Point3D(1220,1388,0)` and faces `Direction.West`. The fox stays at `Point3D(1223,1390,0)`, still inside the heel band. No gump, context menu, target cursor, region message, combat, damage, hunger/thirst change, quest flag, discovery flag, pet order, ownership, follower count, or skill change appears.
+
+Mechanical friction learned:
+
+- A facing-only input still has player-facing consequences, but it does not test terrain or move the body.
+- The one-tile north sidestep is real: `Point3D(1220,1388,0)` is dry passable `map1.mul` jungle with zero statics and no saved live blocker.
+- The direct rock at `1222,1390` remains blocked by `0x1778`; I avoided it instead of resolving a pet auto-turn or `PathFollower` branch.
+- The next west step is cleaner than the old one: from this north row, the fox's later direct catch-up points at `Point3D(1222,1389,0)`, which has only foliage leaves, not the rock. That is future evidence, not a movement I have already taken.
+
+Next pressure:
+
+Mira ends at `Point3D(1220,1388,0)`, facing west. The fox is at `Point3D(1223,1390,0)`, inside the follow band at floored distance `3`. The immediate screen still has zero saved visible wild mobiles/items, but the off-screen panda, toad, monkey, Urulg, goblin archer, old drake branch, and four overlapping invisible spawner home ranges remain unresolved. The next honest move is a fresh scan before stepping west or letting the fox move.
+
+## Run 153 - I Use The New Row
+
+I start at `Point3D(1220,1388,0)`, facing west, with the fox at `Point3D(1223,1390,0)`. The live rectangle is still empty of saved wild mobiles, saved items, and running spawner objects I can click. That is only screen truth. The marker overlay says `Ruins` is southeast, but that direction points back toward the recent toad/orc/goblin mess, so I keep peeling west along the row I earned.
+
+**Beat 1**
+
+I press west while already facing west.
+
+`Mobile.Move` reaches `MovementImpl.CheckMovement`. The target `Point3D(1219,1388,0)` is dry jungle `0xAC`; it has `0xC94` bulrushes, but tiledata gives them only `Background` and height `0`, so they do not block. No saved mobile or item stands there, no running spawner object is inside the client rectangle, and no named region catches the step. Mira moves west.
+
+The screen remains empty except for my fox. The fox is now stretched to dx `4`, dy `2`, floored distance `4`, so I do not drag it farther.
+
+**Beat 2**
+
+I wait for the fox.
+
+The controlled path is `AITimer.OnTick -> BaseCreature.OnThink -> BaseAI.Obey -> DoOrderFollow -> WalkMobileRange -> GetDirectionTo -> DoMove`. `FriendsAvoidHeels` still wants the `2..3` band. From `Point3D(1223,1390,0)` toward me at `Point3D(1219,1388,0)`, `GetDirectionTo` chooses northwest, not west, and that matters: the fox targets `Point3D(1222,1389,0)`, not the old rock at `1222,1390`.
+
+`Point3D(1222,1389,0)` is dry jungle `0xAC` with `0xD4B` foliage leaves. The leaves are not impassable, surface, or bridge. The fox steps there and lands at dx `3`, dy `1`, floored distance `3`. Still following, not guarding.
+
+**Beat 3**
+
+I take one more west step.
+
+`MovementImpl.CheckMovement` accepts `Point3D(1218,1388,0)`. The land is dry jungle `0xAD`, z `0`, with zero statics. The shifted rectangle x `1200..1236`, y `1370..1406` still has zero saved visible wild mobiles, zero saved visible items, and zero running spawner object locations. Panda and toad are east at dx `25`; the toad remains outside its range-10 teleport scan by x distance. Monkey is dx `31`, Urulg is dx `8`, dy `29`, and the goblin archer is dx `32`, dy `31`. The old swamp drake branch is still carried.
+
+The final step stretches the fox again to dx `4`, dy `1`, floored distance `4`. That is the next problem, not proof of danger.
+
+Mechanical friction learned:
+
+- `Point3D(1219,1388,0)` is passable despite the bulrush graphic.
+- The north row changes the fox's direct follow target from blocked `1222,1390` to passable `1222,1389`.
+- `Point3D(1218,1388,0)` is another clean west jungle tile.
+- Empty live rectangles are not shelter. They only mean no saved entity is currently inside click range.
+
+Next pressure:
+
+Mira ends at `Point3D(1218,1388,0)`, facing west. The fox is at `Point3D(1222,1389,0)`, visible but outside the follow band at floored distance `4`. The next honest move is another fresh scan/classifier pass, probably a fox-follow wait before any more west movement.
+
+## Run 154 - I Keep The Fox On The New Row
+
+I start at `Point3D(1218,1388,0)`, facing west, with the fox at `Point3D(1222,1389,0)`. The screen is still strict-empty: no saved wild mobile, no visible saved item, no running spawner object standing inside x `1200..1236`, y `1370..1406`. The world map overlay keeps dangling `Ruins` southeast of me, but that is not a body, chest, road, sign, or safe route. It is only a marker, and the fox is the thing on my screen.
+
+**Beat 1**
+
+I wait the fox in.
+
+The path is `AITimer.OnTick -> BaseCreature.OnThink -> BaseAI.Obey -> DoOrderFollow -> WalkMobileRange -> GetDirectionTo -> DoMove`. `FriendsAvoidHeels` still wants the `2..3` band. From `Point3D(1222,1389,0)` toward me at `Point3D(1218,1388,0)`, `GetDirectionTo` chooses `Direction.West`, not the old diagonal. The fox targets `Point3D(1221,1389,0)`.
+
+That tile is dry jungle `0xAE`, z `0`. It has static `0xD4B` leaves, but those are foliage, not a surface, bridge, or impassable blocker. The fox steps west and lands at dx `3`, dy `1`, floored distance `3`. Still following, not guarding.
+
+**Beat 2**
+
+I press west while already facing west.
+
+`Mobile.Move` reaches `MovementImpl.CheckMovement`. The target `Point3D(1217,1388,0)` is dry jungle `0xAC`, z `0`, with zero statics. The shifted live rectangle x `1199..1235`, y `1370..1406` still contains zero saved wild mobiles, zero saved visible items, and zero running spawner object locations. Mira moves west.
+
+The fox is stretched again to dx `4`, dy `1`, floored distance `4`, so I do not keep walking.
+
+**Beat 3**
+
+I wait the fox back in.
+
+The same Follow path runs. From `Point3D(1221,1389,0)` toward `Point3D(1217,1388,0)`, `GetDirectionTo` again chooses `Direction.West`. `Point3D(1220,1389,0)` is dry jungle `0xAF`, z `0`, with zero statics and no saved blocker. The fox steps there and ends at dx `3`, dy `1`, floored distance `3`.
+
+Nothing else opens or bites. The final screen is still empty of saved wild mobiles/items. Panda and toad are farther east at dx `26`, the monkey is dx `32`, Urulg is off-screen at dx `9`, dy `29`, and the goblin archer is dx `33`, dy `31`. The four invisible `PremiumSpawner` home ranges are still source pressure, not visible creatures.
+
+Mechanical friction learned:
+
+- `Point3D(1221,1389,0)` is a legal fox step despite foliage leaves.
+- `Point3D(1217,1388,0)` is another open west-row player tile.
+- `Point3D(1220,1389,0)` remains a clean fox catch-up tile.
+- The west row is only progress because I keep giving the follower timer room to run; dragging the fox is the recurring cost.
+
+Next pressure:
+
+Mira ends at `Point3D(1217,1388,0)`, facing west. The fox is at `Point3D(1220,1389,0)`, inside the `2..3` heel band. No gump, context menu, target cursor, combat, damage, item use, hunger/thirst, quest, discovery, ownership, follower-count, pet-order, or skill state changed. The next honest move is a fresh scan before another west step or a turn toward the map markers.
+
+## Run 155 - I Keep Peeling West
+
+I start at `Point3D(1217,1388,0)`, facing west, with the fox at `Point3D(1220,1389,0)`. The strict client rectangle is still empty of saved wild mobiles, visible saved items, and running spawner objects I can click. That leaves the fox and the shape of the jungle as the only screen problem. The map marker for `Ruins` still pulls southeast, but southeast is the direction of the recently labeled toad, panda, monkey, Urulg, and the goblin archer, so I keep easing west instead of turning back into them.
+
+**Beat 1**
+
+I press west while already facing west.
+
+`Mobile.Move` enters `MovementImpl.CheckMovement`. The target `Point3D(1216,1388,0)` is dry map1 jungle `0xAF`. It has static `0xD90` leaves at z `0`, but the tiledata probe gives those leaves no low `Impassable`, `Surface`, or `Bridge` flags, so the land path remains usable. No saved mobile or item occupies the tile, no running spawner object stands in the rectangle, and no named Sosaria region catches the destination. Mira moves west.
+
+The shifted rectangle is still empty of saved wild bodies and visible items. The fox is now stretched to dx `4`, dy `1`, floored distance `4`, so I do not keep dragging it.
+
+**Beat 2**
+
+I wait for the fox.
+
+The same controlled path runs: `AITimer.OnTick -> BaseCreature.OnThink -> BaseAI.Obey -> DoOrderFollow -> WalkMobileRange -> GetDirectionTo -> DoMove`. `FriendsAvoidHeels` still wants the `2..3` band. From `Point3D(1220,1389,0)` toward me, `GetDirectionTo` chooses `Direction.West`, and the fox steps to `Point3D(1219,1389,0)`.
+
+That tile is dry jungle `0xAD`, z `0`, with zero statics and no saved blocker. The fox ends at dx `3`, dy `1`, floored distance `3`. It is still following, not guarding.
+
+**Beat 3**
+
+I take one more west step.
+
+`MovementImpl.CheckMovement` accepts `Point3D(1215,1388,0)`. The land is dry jungle `0xAE`, z `0`, with zero statics, no saved mobile or item blocker, and no named region. Mira moves west.
+
+The final screen is quiet in the narrow client sense: zero saved wild mobiles, zero saved items, zero running spawner object locations. It is not shelter. Panda and toad are farther east at dx `28`, monkey is dx `34`, Urulg is south-southeast at dx `11`, dy `29`, and the goblin archer is dx `35`, dy `31`. The toad remains outside its range-10 timer by x distance. The four invisible `PremiumSpawner` home ranges still overlap by source range.
+
+Mechanical friction learned:
+
+- `Point3D(1216,1388,0)` is passable despite `0xD90` leaves.
+- `Point3D(1219,1389,0)` is a clean fox-follow tile.
+- `Point3D(1215,1388,0)` is another open west-row player tile.
+- The fox ends outside the heel band again; the likely next direct catch-up tile `Point3D(1218,1389,0)` has only nonblocking `0xCE9` sapling static evidence, but that movement has not run.
+
+Next pressure:
+
+Mira ends at `Point3D(1215,1388,0)`, facing west. The fox is at `Point3D(1219,1389,0)`, visible but outside the `2..3` heel band at floored distance `4`. No gump, context menu, target cursor, combat, damage, item use, hunger/thirst, quest, discovery, ownership, follower-count, pet-order, skill, or PvP/PvE state changed. The next honest move is a fresh scan and probably a fox-follow wait before any more west pushing.
+
+## Run 156 - The Jungle Says No
+
+I start at `Point3D(1215,1388,0)`, facing west. The fox is one step too far out at `Point3D(1219,1389,0)`, dx `4`, dy `1`, floored distance `4`. My screen has no saved wild mobiles, no visible saved items, and no running spawner object locations inside the strict x `1197..1233`, y `1370..1406` client rectangle. The quiet is only screen quiet: panda and toad are still off the east edge at dx `28`, the monkey is farther east at dx `34`, Urulg is south at dx `11`, dy `29`, and the goblin archer is farther southeast. I deal with the fox before trying to push through trees.
+
+**Beat 1**
+
+I wait for the fox.
+
+The controlled follower path runs: `AITimer.OnTick -> BaseCreature.OnThink -> BaseAI.Obey -> DoOrderFollow -> WalkMobileRange -> GetDirectionTo -> DoMove`. `FriendsAvoidHeels` still wants the `2..3` band. From `Point3D(1219,1389,0)` toward me at `Point3D(1215,1388,0)`, `GetDirectionTo` chooses `Direction.West`.
+
+The fox targets `Point3D(1218,1389,0)`. Server-order map1 reads dry jungle `0xAC`, z `0`. The only static is `0xCE9` sapling, flagged `Background` only, so it is scenery, not a movement stop. The fox steps west and lands at dx `3`, dy `1`, floored distance `3`. It is still following, not guarding, not blocking for me, and not fighting.
+
+Before I press west again, I look at the next tile. `Point3D(1214,1388,0)` is dry jungle `0xAC`, but it has static `0xD70` tree with `TileFlag.Impassable` and `0xD76` leaves. That is not a subtle route hint. It is the wall in front of my nose, so I do not send the movement input.
+
+Mechanical friction learned:
+
+- `Point3D(1218,1389,0)` is a legal fox catch-up tile despite the sapling.
+- The fox is back inside the `2..3` heel band.
+- Straight west from `Point3D(1215,1388,0)` is blocked by impassable tree static `0xD70` at `Point3D(1214,1388,0)`.
+- Empty live rectangles are still not shelter; they only say no saved entity is standing in click range right now.
+
+Next pressure:
+
+Mira ends where she started, `Point3D(1215,1388,0)`, facing west. The fox is at `Point3D(1218,1389,0)`, inside the follow band. No gump, context menu, target cursor, combat, damage, item use, hunger/thirst, quest, discovery, ownership, follower-count, pet-order, skill, or PvP/PvE state changed. The next honest move is a fresh scan and a route choice around the west tree, not a blind west shove.
+
+## Run 157 - I Step Around the Tree
+
+I start at `Point3D(1215,1388,0)`, facing west, with the fox inside the heel band at `Point3D(1218,1389,0)`. The client rectangle is still strict-empty: no saved wild mobiles, no visible saved items, and no running spawner body I can click. That does not make the place safe. The recently labeled panda and toad are east off-screen, the monkey is farther east, Urulg and the goblin archer remain southern carried pressure, and the direct west tile is still a real tree.
+
+**Travel Segment**
+
+I do the boring thing a player does when a tree says no: I go around it. From west-facing, the first north key only turns me. The second north key moves me to `Point3D(1215,1387,0)`. Then I turn west and take two west steps through `Point3D(1214,1387,0)` to `Point3D(1213,1387,0)`.
+
+The route is all dry map1 jungle. `1215,1387` has a background tree and foliage leaves but no `Impassable`, `Surface`, or `Bridge` blocker. `1214,1387` and `1213,1387` have no statics. The skipped tile `1214,1388` remains the blocker: dry jungle underneath, but the `0xD70` tree is `Background|Impassable`.
+
+I let the fox shadow the segment instead of dragging it into a pathing problem. This is not an exact pet timer proof. It is the travel policy: the fox is already ordered to Follow, the checked local route is clear, and no combat or ownership state changes. The fox's approximate catch-up line moves from `1218,1389` to `1217,1388`, then west to `1216,1388`. The diagonal side tiles for the first fox step are clear, and the second target has only `0xD90` foliage leaves. The fox ends at dx `3`, dy `1`, inside the `2..3` band.
+
+The endpoint scan is still quiet in the visible sense: zero saved wild mobiles, zero visible saved items, and zero running spawner locations inside x `1195..1231`, y `1369..1405`. The quiet picked up two extra overlapping invisible spawner home ranges from the west, so the area-risk list grows to six. The nearest world-map marker is still `Ruins` southeast, about 109 tiles away, which is information on the map overlay, not a safe road.
+
+Mechanical friction learned:
+
+- A direct west shove from Run 156 would have hit `0xD70`; the north row around it is passable.
+- `Mobile.Move` still burns facing-only inputs before real movement when the direction mask changes.
+- Approximate Travel Segment follower shadowing is useful, but it is not guarding, fighting, body-blocking, or an exact `BaseAI.Obey` timer tick.
+- The empty endpoint rectangle is not shelter. It only means no saved wild body or item is standing in the current 18-tile click/update box.
+
+Next pressure:
+
+Mira ends at `Point3D(1213,1387,0)`, facing west. The fox is approximately at `Point3D(1216,1388,0)`, inside the follow band. The next west tile `1212,1387` is prechecked as dry jungle with no statics, but it has not been walked. A fresh scan/classifier should come before more west pushing or any turn back toward the `Ruins` marker.
+
+## Run 158 - I Do Not Drag The Fox Into The Tree
+
+I start at `Point3D(1213,1387,0)`, facing west, with the fox one tile southeast at `Point3D(1216,1388,0)`. The screen is still empty in the strict saved-entity sense: no wild mobile, no visible item, no running spawner body I can click. Six invisible `PremiumSpawner` home ranges still overlap the rectangle, and the old east animals plus southern hostiles are still unresolved pressure. The only thing I can actually manage is the next west step and the fox's leash.
+
+**Beat 1**
+
+I press west while already facing west.
+
+`Mobile.Move` enters `MovementImpl.CheckMovement`. `Map.Sosaria` is file index `1`, and the server-order read puts `Point3D(1212,1387,0)` on dry jungle `0xAF`, z `0`, with zero statics. The shifted live rectangle x `1194..1230`, y `1369..1405` still has zero saved wild mobiles and zero visible saved items. Mira moves west.
+
+That one step stretches the fox to dx `4`, dy `1`, floored distance `4`. I do not keep walking, because the fox has become the visible problem again.
+
+**Beat 2**
+
+I wait the fox in.
+
+The path is `AITimer.OnTick -> BaseCreature.OnThink -> BaseAI.Obey -> DoOrderFollow -> WalkMobileRange -> GetDirectionTo -> DoMove`. `FriendsAvoidHeels` still wants the `2..3` band. From `Point3D(1216,1388,0)` toward me at `Point3D(1212,1387,0)`, `GetDirectionTo` chooses `Direction.West`, not a diagonal, and the target is `Point3D(1215,1388,0)`.
+
+That target is dry jungle `0xAE`, z `0`, with zero statics and no saved blocker. The fox steps west and lands at dx `3`, dy `1`, floored distance `3`. Still following, not guarding, not fighting, not blocking for me.
+
+I stop there. If I take the next west step to `1211,1387`, the fox's next direct catch-up from `1215,1388` points straight at `1214,1388`, the impassable `0xD70` tree I just routed around. That is a route decision, not a routine third beat.
+
+Mechanical friction learned:
+
+- `Point3D(1212,1387,0)` is a real west step: dry passable map1 jungle, zero statics, no saved live blocker.
+- `Point3D(1215,1388,0)` is a clean exact fox-follow tile.
+- The tree at `Point3D(1214,1388,0)` is still mechanically relevant because the follower's line, not just my line, can run into it.
+- An empty 18-tile rectangle is not shelter; it only means no saved visible body or item is currently inside click range.
+
+Next pressure:
+
+Mira ends at `Point3D(1212,1387,0)`, facing west. The fox is at `Point3D(1215,1388,0)`, inside the `2..3` heel band. No gump, context menu, target cursor, combat, damage, item use, hunger/thirst, quest, discovery, ownership, follower-count, pet-order, skill, or PvP/PvE state changed. The next honest move is a fresh scan and a route choice that accounts for the fox's blocked direct catch-up tile at `1214,1388`.
+
+## Run 159 - I Move Above The Fox Trap
+
+I start at `Point3D(1212,1387,0)`, facing west, with the fox at `Point3D(1215,1388,0)`. The first scan is still empty in the saved-entity sense: zero wild mobiles, zero visible saved items, and zero running spawner bodies inside x `1194..1230`, y `1369..1405`. That is not safety. It just means the only thing on my screen is the fox, and the fox's next direct west catch-up would still ram the impassable tree at `1214,1388`.
+
+**Travel Segment**
+
+I stop trying to push straight west and take the north row.
+
+The first north input is only a facing turn. The second north input moves me to `Point3D(1212,1386,0)`. Then I turn west and walk through `Point3D(1211,1386,0)`, `Point3D(1210,1386,0)`, and `Point3D(1209,1386,0)`.
+
+The route is dry map1 jungle. `1212,1386` is `0xAE` with zero statics. `1211,1386` is `0xAD` with zero statics. `1210,1386` has only `0xD0C` mushrooms flagged `Background`, and `1209,1386` has zero statics. No saved mobile or visible item occupies the route, and no running spawner object stands in the segment rectangle.
+
+I let the fox shadow instead of forcing an exact AI tick. From `1215,1388`, the first natural diagonal catch-up target is `1214,1387`. One side of that diagonal is the blocked `1214,1388` tree, but the other side, `1215,1387`, is only background tree and foliage; non-player diagonal movement only needs one side clear. The fox can then slide west across `1213,1387` to `1212,1387`. It ends dx `3`, dy `1`, inside the heel band. That is approximate Travel Segment follower shadowing, not Guard, Attack, body-blocking, or exact timer proof.
+
+The endpoint scan at `Point3D(1209,1386,0)` is still visually quiet: zero saved visible wild mobiles, zero visible saved items, and zero running spawner object locations inside x `1191..1227`, y `1368..1404`. The overlapping invisible spawner home ranges stay at six. The old panda, toad, and monkey are farther east; Urulg and the goblin archer are still south/southeast carried risk; the old swamp drake branch is still unresolved and off-screen. The `Ruins` marker is now about 113 tiles southeast, while the Mines of Morinia marker is about 187 tiles west. Markers are navigation pressure, not bodies or shelter.
+
+Mechanical friction learned:
+
+- The direct west tile was not the real problem; the follower's next direct target was. Routing north first changes the fox's catch-up line away from the impassable `0xD70` tree.
+- A normal player facing change still consumes an input before movement; the segment had two facing turns and four accepted movement inputs.
+- `MovementImpl.CheckMovement` applies stricter diagonal side checks to players than to non-player mobiles. The fox's diagonal around the tree is plausible because one side tile is clear; I still record it as Travel Segment shadowing, not an exact `BaseAI.Obey` result.
+- The endpoint has fewer eastern marker temptations and fewer visible risks, but empty grass is not shelter. The six invisible `PremiumSpawner` home ranges still overlap by source range.
+
+Next pressure:
+
+Mira ends at `Point3D(1209,1386,0)`, facing west. The fox is approximately at `Point3D(1212,1387,0)`, inside the `2..3` heel band. No gump, context menu, target cursor, combat, damage, item use, hunger/thirst, quest, discovery, ownership, follower-count, pet-order, skill, or PvP/PvE state changed. The next honest move is a fresh scan before deciding whether to keep peeling west toward the Mines marker or turn back toward the Ruins marker.
+
+## Run 160 - I Spend The Whole West Row
+
+I start at `Point3D(1209,1386,0)`, facing west. The fox is at `Point3D(1212,1387,0)`, close enough to follow but still the only living thing on my screen. The fresh rectangle is empty in the saved-entity sense: no wild mobile, no visible item, no running spawner body I can click. That is not safety. It is just enough room to keep walking away from the old southeast pressure.
+
+**Travel Segment**
+
+I press west and keep pressing west until the travel cap says stop.
+
+`Mobile.Move` stays in the normal cardinal path because I am already facing west. The server-order route probe reads twelve target tiles, `1208,1386` through `1197,1386`, as dry map1 jungle. Only the first tile has scenery, `0xD12` mushrooms, and tiledata gives it no blocking flags. No saved mobile, visible item, running spawner object, gump, target cursor, or region text appears along the swept screen.
+
+I let the fox shadow the line instead of pretending I own its private timer. It slides from `1212,1387` to `1200,1387` in the mental travel segment. That row is dry jungle too; the only statics I find are `0xCA3`, `0xCA2`, and `0xCA0`, all nonblocking scenery. The fox ends at dx `3`, dy `1`, floored distance `3`, still following and not guarding.
+
+The endpoint rectangle x `1179..1215`, y `1368..1404` is empty of saved wild bodies, items, and running spawner objects. The good part is that the east spawner pair finally falls out of the overlap list, leaving four invisible home ranges instead of six. The bad part is that invisible home ranges are still not shelter. The old panda, toad, monkey, Urulg, goblin archer, and swamp drake branches are just farther off-screen, not solved.
+
+Mechanical friction learned:
+
+- `Point3D(1208,1386,0)` is passable despite the mushroom graphic.
+- `Point3D(1207,1386,0)` through `Point3D(1197,1386,0)` are dry passable jungle with zero statics.
+- The fox can be conservatively shadowed west along y `1387` without crossing a known blocker, but that is not an exact `BaseAI.Obey` tick.
+- The local spawner-home overlap count drops from six to four when I get to `1197,1386`.
+
+Next pressure:
+
+Mira ends at `Point3D(1197,1386,0)`, facing west. The fox is approximately at `Point3D(1200,1387,0)`, inside the `2..3` heel band. No gump, context menu, target cursor, combat, damage, item use, hunger/thirst, quest, discovery, ownership, follower-count, pet-order, skill, or PvP/PvE state changed. The next honest move is another fresh scan because this segment spent the full twelve accepted movement inputs.
+
+## Run 161 - A Crane Enters The Edge
+
+I start at `Point3D(1197,1386,0)`, facing west. The fox is close at `Point3D(1200,1387,0)`, still only following. The first screen check is empty in the saved-entity sense: no wild body, no visible item, no running spawner object I can click. Four invisible `PremiumSpawner` home ranges still overlap the area, which means danger source, not an on-screen creature.
+
+**Travel Segment**
+
+I keep moving west, but only until the screen changes.
+
+The first two west steps are quiet. `MovementImpl.CheckMovement` accepts `Point3D(1196,1386,0)` and `Point3D(1195,1386,0)`, both dry map1 jungle with zero statics. The fox can shadow west over `1199,1387` and `1198,1387`; `1199,1387` has only background mushrooms.
+
+The third west step reaches `Point3D(1194,1386,0)`. The tile is dry jungle `0xAC`; the only static is `0xCA0` fern scenery with no movement-stopping flags I can use as a wall. But the shifted client rectangle now catches a saved crane at `Point3D(1176,1379,0)`, exactly on the west edge at dx `-18`, dy `-7`.
+
+I stop there. A visible animal is not a road, shelter, or safety, but it is a new thing on the screen, and I do not keep macro-walking past it. The nearby saved toad at `1174,1379` is still just outside the client rectangle at dx `-20`, dy `-7`; its `GiantToad.TeleportTimer` range 10 still misses me by x distance. The fox shadows to `Point3D(1197,1387,0)`, inside the heel band at dx `3`, dy `1`, still not guarding.
+
+Mechanical friction learned:
+
+- A west push from `1197,1386` stops after three accepted inputs because a saved crane enters legal client visibility.
+- `1196,1386`, `1195,1386`, and `1194,1386` are dry passable jungle; `1194,1386` has only nonblocking fern scenery.
+- The fox's adjacent west shadow row to `1197,1387` is locally clear, but it remains approximate Travel Segment shadowing, not an exact pet timer.
+- The west animal cluster is real saved state now, not just source-map possibility. The visible crane comes from the running animal spawner at `1165,1361`.
+
+Next pressure:
+
+Mira ends at `Point3D(1194,1386,0)`, facing west. The fox is approximately at `Point3D(1197,1387,0)`, following inside the `2..3` band. The crane at `Point3D(1176,1379,0)` is visible at the west edge; the toad at `1174,1379` is just outside visibility and outside teleport range for now. No gump, context menu, target cursor, combat, damage, item use, hunger/thirst, quest, discovery, ownership, follower-count, pet-order, skill, or PvP/PvE state changed. The next honest move is to react to or inspect the visible crane before pushing farther west toward the Mines marker.
+
+## Run 162 - I Click The Bird Before I Walk Past It
+
+I start at `Point3D(1194,1386,0)`, facing west. The screen has one new thing I can actually point at: a saved crane on the west edge at `Point3D(1176,1379,0)`, dx `-18`, dy `-7`. The fox is still behind me at `Point3D(1197,1387,0)`, inside the follow band, and the toad at `1174,1379` is still just outside the client rectangle. I do not keep walking west blind.
+
+**Beat 1**
+
+I single-click the visible crane.
+
+`PacketHandlers.LookReq` finds mobile serial `288081`, `Mobile.CanSee` passes, and `Utility.InUpdateRange` accepts the inclusive edge. `Region.OnSingleClick` returns true. `BaseCreature.OnSingleClick` has no tame or bonded line to add because the crane is uncontrolled, so `Mobile.OnSingleClick` only sends the overhead label: `a crane`.
+
+That is all I earn. No context menu opens. No target cursor appears. I do not start taming, attack, move, or wait a creature timer. The crane is now a labeled animal on the edge, not safety. Its class is still `AI_Animal/FightMode.Aggressor`, one damage, no special timer. The nearby toad is still the thing that makes a west push feel bad: just outside the screen and still outside its range-10 teleport scan by x distance.
+
+Mechanical friction learned:
+
+- A crane at dx `-18`, dy `-7` is still inside the normal click/update rectangle.
+- Single-clicking an uncontrolled crane gives only the overhead label `a crane`.
+- Labeling the crane does not clear the route, despawn the toad, move the fox, or prove the spawner area safe.
+
+Next pressure:
+
+Mira remains at `Point3D(1194,1386,0)`, facing west. The fox remains at `Point3D(1197,1387,0)`, following but not guarding. The labeled crane remains visible at `Point3D(1176,1379,0)`. The saved toad at `Point3D(1174,1379,0)` is still outside visibility at dx `-20`, dy `-7` and outside `GiantToad.TeleportTimer` range 10 for now. The next honest action is a route decision or pause around the crane/toad edge, not routine west travel.
+
+## Run 163 - One Step, Then The Leash
+
+I start at `Point3D(1194,1386,0)`, facing west. The crane is not a mystery anymore: it is still on the west edge, labeled `a crane`, and it still has not done anything. The uglier thing is the toad two tiles farther west at `Point3D(1174,1379,0)`. It is not on my screen yet, but it is close enough that one more west step after this run would bring it onto the edge.
+
+**Beat 1**
+
+I press west once.
+
+This is not a travel segment. I am creeping. `Mobile.Move` reaches `MovementImpl.CheckMovement` because I am already facing west. The target `Point3D(1193,1386,0)` is dry `map1.mul` jungle `0xAE`, z `0`. The only static there is `0xC93` blade plant, and tiledata gives it `Background|ArticleA`, not `Impassable`, `Surface`, or `Bridge`. No saved mobile or visible item stands on the target tile, and no region gate catches the step. Mira moves west.
+
+The shifted screen is almost the same, which is why it still feels bad. The crane is still visible at dx `-17`, dy `-7`. The toad is still just outside at dx `-19`, dy `-7`, and still outside its range-10 teleport scan by x distance. The fox is now the immediate problem: it stayed at `Point3D(1197,1387,0)`, so it is dx `4`, dy `1`, floored distance `4`, outside the `2..3` follow band.
+
+**Beat 2**
+
+I wait for the fox.
+
+The exact follower path runs this time: `AITimer.OnTick -> BaseCreature.OnThink -> BaseAI.Obey -> DoOrderFollow -> WalkMobileRange -> GetDirectionTo -> DoMove`. `FriendsAvoidHeels` still has the fox's spacing target at `2..3`. From `Point3D(1197,1387,0)` toward me at `Point3D(1193,1386,0)`, `GetDirectionTo` picks `Direction.West`.
+
+The fox target is `Point3D(1196,1387,0)`, dry jungle `0xAE` with zero statics. The fox steps there and ends at dx `3`, dy `1`, floored distance `3`. It is following again, not guarding, not attacking, not body-blocking, and not making the crane or the toad safe.
+
+I stop with the next west key unpressed. The precheck says `Point3D(1192,1386,0)` is probably walkable, even with a nonblocking tree and leaves, but moving there would put the toad into the visible rectangle at dx `-18`, dy `-7`. That is a new visible high-risk timer creature, not routine movement.
+
+Mechanical friction learned:
+
+- `Point3D(1193,1386,0)` is a real west step: dry passable Sosaria jungle with only a nonblocking blade plant.
+- A single west step does not expose the toad yet; the live rectangle becomes x `1175..1211`, y `1368..1404`, still showing the crane and not the toad.
+- The controlled fox stretches outside the heel band after the player step, so the next normal beat is the follower tick, not another route push.
+- `Point3D(1196,1387,0)` is a clean exact fox-follow tile.
+- The next west step would expose saved toad serial `737437` at the inclusive west edge, so I stop before making that choice.
+
+Next pressure:
+
+Mira ends at `Point3D(1193,1386,0)`, facing west. The fox is at `Point3D(1196,1387,0)`, inside the follow band. The crane remains visible at `Point3D(1176,1379,0)`, dx `-17`, dy `-7`. The toad remains just outside visibility at `Point3D(1174,1379,0)`, dx `-19`, dy `-7`, and outside `GiantToad.TeleportTimer` range 10 for now. The next honest move is a fresh route choice: press west and deal with the toad appearing, or avoid that edge.
+
+## Run 164 - The Toad Comes Onto The Screen
+
+I start at `Point3D(1193,1386,0)`, facing west. The crane is still visible and labeled at `Point3D(1176,1379,0)`. The fox is close at `Point3D(1196,1387,0)`, inside the follow band, but not guarding me. The saved toad at `Point3D(1174,1379,0)` is the thing I have been edging around: it is one tile outside the screen and still outside its range-10 teleport scan.
+
+**Beat 1**
+
+I press west once.
+
+`Mobile.Move` takes the real movement path because I am already facing west. `MovementImpl.CheckMovement` accepts `Point3D(1192,1386,0)`: Sosaria uses `map1.mul`, the land tile is dry jungle `0xAF`, z `0`, and the statics on that tile are a fern `0xC9F`, tree `0xD72`, and leaves `0xD78` with no `Impassable`, `Surface`, `Bridge`, or `Wet` flags. No saved mobile or item stands on the destination tile, so Mira steps west.
+
+The screen changes immediately. The client rectangle is now x `1174..1210`, y `1368..1404`. The toad is visible on the west edge at dx `-18`, dy `-7`, and the crane is still visible at dx `-16`, dy `-7`. There are still zero saved visible items and zero visible running spawner objects. The toad's current timer geometry is negative: its `TeleportTimer` uses the toad-centered range-10 scan, and I am outside that by x distance. Its `AI_Animal/FightMode.Aggressor` acquisition is also not currently selecting me because no aggressor/aggressed/faction/ethic state exists and the effective range-16 rectangle misses me by x distance.
+
+That does not make it scenery. It is a saved timer creature from the same running animal spawner as the crane, and I just made it visible. I stop before waiting the fox or pressing west again.
+
+Mechanical friction learned:
+
+- `Point3D(1192,1386,0)` is walkable dry Sosaria jungle even though the tile has fern/tree/leaves statics.
+- A normal west step from `1193,1386` exposes saved Toad serial `737437` at the inclusive client edge.
+- The toad is visible timer pressure but not currently in its range-10 teleport scan from this exact geometry.
+- The fox is now stretched to dx `4`, dy `1`, floored distance `4`, but the newly visible toad decision outranks a routine follow wait.
+
+Next pressure:
+
+Mira ends at `Point3D(1192,1386,0)`, facing west. The fox remains at `Point3D(1196,1387,0)`, following but outside the heel band. The crane remains visible at `Point3D(1176,1379,0)`, dx `-16`, dy `-7`; the toad is now visible at `Point3D(1174,1379,0)`, dx `-18`, dy `-7`, with current teleport/acquisition geometry negative but private timer and future wandering unresolved. The next honest action is to react to the visible toad or pull the fox in after a fresh pressure pass, not routine west travel.
+
+## Run 165 - I Back Out Of The Toad Edge
+
+I start at `Point3D(1192,1386,0)`, facing west. The toad is exactly on the west edge at `Point3D(1174,1379,0)`, dx `-18`, dy `-7`, and the crane is still visible at `Point3D(1176,1379,0)`. The fox is behind me at `Point3D(1196,1387,0)`, following but stretched to floored distance `4`. The toad's current range math is negative: its teleport timer checks range `10`, and its animal `Aggressor` acquisition is gated before scanning because there is no aggressor/aggressed/faction/ethic state. Negative is not safe; it only tells me the honest move is away from the west edge.
+
+**Beat 1**
+
+I press east.
+
+Because I was facing west, this is only a turn. `Mobile.Move` does not enter `MovementImpl.CheckMovement`, does not move me, and does not move the fox. It still acknowledges movement, sets direction to `Direction.East`, and runs nearby movement notification over the same location. I do not treat that as a pet tick, a toad tick, or a route step. The screen is still the same: toad visible at dx `-18`, crane visible at dx `-16`, fox still dx `4`, dy `1`.
+
+**Beat 2**
+
+I press east again and actually step back to `Point3D(1193,1386,0)`.
+
+This is the same tile I had just proven from the other direction in Run 163: dry Sosaria jungle, land `0xAE`, with only a nonblocking `0xC93` blade plant. No saved mobile or visible item is standing on it. `MovementImpl.CheckMovement` accepts the cardinal move, so Mira steps east.
+
+The result is useful, but I stop there. The toad falls just outside the client rectangle at dx `-19`, dy `-7`; it is not gone, dead, despawned, pacified, or safe. The crane remains visible at dx `-17`, dy `-7`. The fox is now naturally back inside the heel band at dx `3`, dy `1`, without needing a pet AI tick. No gump, context menu, target cursor, combat, damage, hunger, thirst, skill, item, quest, discovery, pet order, ownership, follower-count, or PvP/PvE state changes.
+
+Mechanical friction learned:
+
+- Turning away from pressure is still a normal player beat. It changes facing and sends movement notification, but it does not run terrain collision or pet follow.
+- Stepping east to `Point3D(1193,1386,0)` is legal and reduces the toad from visible edge pressure to just-off-screen timer uncertainty.
+- Pulling back one tile also brings the fox into the remembered `2..3` follow band, but that is positioning, not Guard, Attack, or body-blocking.
+- The crane is still visible. The toad is just outside visibility. The west animal spawner is still real saved state, not scenery.
+
+Next pressure:
+
+Mira ends at `Point3D(1193,1386,0)`, facing east. The fox is at `Point3D(1196,1387,0)`, inside the follow band. The labeled crane remains visible at `Point3D(1176,1379,0)`, dx `-17`, dy `-7`; Toad serial `737437` is recently visible just outside the west edge at dx `-19`, dy `-7`, still outside its range-10 teleport scan and outside effective range-16 acquisition by x distance. The next honest action is a fresh scan and route decision; do not push west again as routine travel.
+
+## Run 166 - I Put The Bird Off Screen Too
+
+I start at `Point3D(1193,1386,0)`, facing east. The toad is already just off the west edge at `Point3D(1174,1379,0)`, dx `-19`, dy `-7`; the crane is still visible at `Point3D(1176,1379,0)`, dx `-17`, dy `-7`; and the fox is close at `Point3D(1196,1387,0)`. The toad's current range math is still negative, but that is only geometry. It is not peace.
+
+**Beat 1**
+
+I press east once.
+
+Because I am already facing east, `Mobile.Move` goes through `MovementImpl.CheckMovement`. The target `Point3D(1194,1386,0)` is the dry jungle tile I crossed westward earlier: map1 land `0xAC`, with only a fern `0xCA0` that has no movement-stopping flags. No saved mobile or item occupies the tile. Mira steps east.
+
+The scan after the step still has the crane on the inclusive west edge at dx `-18`, dy `-7`. The toad is farther out at dx `-20`, dy `-7`, outside both my client rectangle and its range-10 teleport scan by x distance. The fox is dx `2`, dy `1`, still inside the heel band without a pet AI tick. I do not call that safe; I only call it one tile more distance.
+
+**Beat 2**
+
+I press east again.
+
+`Mobile.Move -> MovementImpl.CheckMovement` accepts `Point3D(1195,1386,0)`, another dry Sosaria jungle tile with zero statics and no saved blocker. Mira moves east a second time.
+
+Now the west animal cluster is no longer visible: the crane is dx `-19`, dy `-7`, and the toad is dx `-21`, dy `-7`. The endpoint rectangle has zero saved visible wild mobiles, zero saved visible items, and zero visible running spawner objects. The fox remains at `Point3D(1196,1387,0)`, dx `1`, dy `1`, still following and still not guarding, body-blocking, or fighting for me.
+
+Mechanical friction learned:
+
+- Retreating east over `Point3D(1194,1386,0)` and `Point3D(1195,1386,0)` is legal dry-jungle movement.
+- The crane drops from visible edge pressure to recently visible off-screen uncertainty only after the second east step.
+- The toad is farther outside the screen and still outside its current teleport/acquisition geometry, but no timer, despawn, taming, pacification, combat, or safety path resolved it.
+- An empty rectangle here means only that the saved clickable bodies are off-screen. Four invisible running spawner home ranges still overlap by source range.
+
+Next pressure:
+
+Mira ends at `Point3D(1195,1386,0)`, facing east. The fox is at `Point3D(1196,1387,0)`, inside the follow band. Crane serial `288081` is recently visible just outside the west edge at dx `-19`, dy `-7`; Toad serial `737437` is farther off-screen at dx `-21`, dy `-7` and still outside the current range-10 teleport scan. Urulg, the old swamp drake branch, GoblinArcher route pressure, and the four invisible spawner home ranges remain unresolved risk evidence. The next honest action is a fresh route choice from a quieter screen, not a safety claim.
+
+## Run 167 - I Spend The East Row Back Toward Known Jungle
+
+I start at `Point3D(1195,1386,0)`, facing east. The screen is quiet in the narrow client sense: no saved wild body, no visible item, no open gump, no context menu, no target cursor. The only living thing I can actually see is my fox at `Point3D(1196,1387,0)`. Quiet is not the same as safe. The crane and toad are just off the west side, and the map overlay still says the Ruins are southeast while the Mines marker is much farther west through the animal edge.
+
+**Travel Segment**
+
+I press east and keep going until the segment cap stops me.
+
+`Mobile.Move` stays in the cardinal movement path because I am already facing east. The route is not new terrain fantasy: it is the same row I just proved while backing west, now walked in reverse. The accepted targets are `1196,1386` through `1207,1386`, all dry passable Sosaria jungle. No saved mobile or item occupies the target row, no visible running spawner object appears, and no region text, gump, corpse, chest, sign, shelter, water source, or target cursor interrupts the walk.
+
+I let the fox shadow the segment instead of pretending a private pet timer tick ran. It ends approximately at `Point3D(1204,1387,0)`, dx `-3`, dy `1`, still following in the heel band. That is useful leash management, not Guard, Attack, body-blocking, or protection.
+
+The endpoint rectangle x `1189..1225`, y `1368..1404` is still empty of saved visible wild mobiles and items. The west crane is now dx `-31`, dy `-7`; the west toad is dx `-33`, dy `-7`. The old east animals are not visible either: the nearest known toad and panda are still around dx `36`, and the monkey is farther. What changed is the invisible pressure count: six running `PremiumSpawner` home ranges overlap this rectangle again. The ground is open, but the jungle is still not shelter.
+
+Mechanical friction learned:
+
+- A full twelve-input east Travel Segment from `1195,1386` to `1207,1386` is legal over previously proved dry map1 jungle.
+- The live snapshot finds zero saved visible wild mobiles, zero visible world items, and zero visible running spawner objects at both the start and endpoint rectangles.
+- Moving east buys distance from Crane serial `288081` and Toad serial `737437`, but it brings the eastern invisible spawner envelopes back into the area-risk summary.
+- The fox shadow is only Travel Segment approximation. No `BaseAI.Obey`, pet order, owner list, follower count, combat, Guard, Attack, or body-blocking state changed.
+
+Next pressure:
+
+Mira ends at `Point3D(1207,1386,0)`, facing east. The fox is approximately at `Point3D(1204,1387,0)`, still following inside the heel band. No gump, context menu, target cursor, combat, damage, hunger/thirst, item, quest, discovery, pet-order, ownership, follower-count, skill, fame, karma, or PvP/PvE state changed. The next honest move is another fresh scan and route choice: east/southeast leans toward the Ruins marker and old eastern wildlife pressure, while west returns toward the just-avoided crane/toad edge.
+
+## Run 168 - I Keep The Quiet Row, But I Do Not Call It Safe
+
+I start at `Point3D(1207,1386,0)`, facing east. The screen is still empty in the client sense: no saved wild mobile, no visible item, no open gump, no context menu, no target cursor. The only body I can account for near me is my controlled fox, approximately at `Point3D(1204,1387,0)` from the last travel-shadow, and that is leash management, not protection.
+
+The overlay marker is tugging me southeast toward `Ruins` at `1303,1449`, now about 115 tiles away. The `Mines of Morinia` marker is back west through the animal edge I just backed out of, so I do not turn around into the crane/toad pressure for no reason. I spend another straight east row first.
+
+**Travel Segment**
+
+I press east and keep going until the segment cap stops me.
+
+`Mobile.Move` stays in the cardinal movement path because I am already facing `Direction.East`. The server-order scan uses `Map.Sosaria` file index `1`, so the route is checked through `map1.mul`, `staidx1.mul`, `statics1.mul`, and `tiledata.mul`. The accepted player targets are `1208,1386` through `1219,1386`, all dry jungle at z `0`.
+
+The row is not perfectly blank, but it is not blocked. `1208,1386` has `0xD12` mushrooms flagged `Background`, `1210,1386` has `0xD0C` mushrooms flagged `Background`, `1214,1386` has nonblocking `0xCA5` pampas grass, and `1216,1386` has a `0xD72` tree flagged `ArticleA|Background` plus `0xD78` foliage leaves. None of those carry `Impassable`, `Surface`, `Bridge`, or `Wet`. No saved mobile or visible world item stands on any player target tile.
+
+I let the fox shadow the same routine movement instead of inventing a private pet timer. It trails to approximately `Point3D(1216,1387,0)`, dx `-3`, dy `1`, still inside the `2..3` heel band. Its shadow row has only nonblocking scenery: a fern at `1205,1387`, another fern at `1209,1387`, and a background tree plus foliage at `1215,1387`. No `BaseAI.Obey`, Guard, Attack, Combatant, ownership, follower-count, or body-blocking path runs.
+
+The endpoint rectangle x `1201..1237`, y `1368..1404` stays empty of saved visible wild mobiles and saved visible items. The west crane is now dx `-43`, dy `-7`; the west toad is dx `-45`, dy `-7`, still unresolved but no longer screen pressure. The eastern toad and panda are closer again at dx `24`, and the monkey is dx `30`; the toad is still outside its range-10 teleport scan and outside effective range-16 acquisition from this exact geometry. The invisible pressure count drops from six to four overlapping `PremiumSpawner` home ranges because the west pair falls out of overlap.
+
+Mechanical friction learned:
+
+- A second twelve-input east Travel Segment from `1207,1386` to `1219,1386` is legal over dry Sosaria jungle.
+- Scenery on the row is passable because the checked statics do not carry movement-stopping flags.
+- The endpoint still has zero saved visible wild mobiles, zero saved visible items, and zero visible running spawner objects.
+- Moving east reduces the west crane/toad cluster from recently visible pressure to route history, but it does not despawn, kill, tame, pacify, or timer-resolve them.
+- The fox remains only approximately shadowed, not exact pet AI proof.
+
+Next pressure:
+
+Mira ends at `Point3D(1219,1386,0)`, facing east. The fox is approximately at `Point3D(1216,1387,0)`, still following inside the heel band. No gump, context menu, target cursor, combat, damage, hunger/thirst, item, quest, discovery, pet-order, ownership, follower-count, skill, fame, karma, or PvP/PvE state changed. The next honest move is another fresh scan and route choice: east keeps leaning toward the Ruins marker and the old eastern wildlife cluster, while south/southeast starts bending into known rocks, trees, and southern carried pressure.
+
+## Run 169 - The Eastern Animals Come Back Into View
+
+I start at `Point3D(1219,1386,0)`, facing east. The screen is still quiet, but I do not mistake that for a town road. The only visible body is my fox, approximately at `Point3D(1216,1387,0)`, and the live-state rectangle has no saved wild mobile or item I can click. The map overlay keeps pulling me toward `Ruins` at `1303,1449`, while the older eastern animal cluster is just outside the current screen.
+
+**Travel Segment**
+
+I press east, but this is not a full twelve-step march. I stop the moment the screen changes.
+
+`Mobile.Move -> MovementImpl.CheckMovement` accepts six cardinal east steps: `1220,1386` through `1225,1386`. The server-order `map1.mul` read says every target is dry jungle at z `0`. The only scenery on the walked row is a fern at `1223,1386`, and tiledata gives it `ArticleA`, not `Impassable`, `Surface`, `Bridge`, or `Wet`. No saved mobile or item stands on any walked target tile.
+
+I let the fox shadow the routine row from `Point3D(1216,1387,0)` to about `Point3D(1222,1387,0)`. That row is also dry jungle; the only scenery is pampas grass at `1219,1387`, and it has no blocking flags. This is still not a pet AI tick. It is just the travel shadow policy keeping the controlled fox in the remembered trailing band at dx `-3`, dy `1`.
+
+At `Point3D(1225,1386,0)`, the old eastern animals enter the screen again. Panda serial `206400` is visible at `Point3D(1243,1379,0)`, dx `18`, dy `-7`. Toad serial `8544` is visible at `Point3D(1243,1382,0)`, dx `18`, dy `-4`. The toad's current `GiantToad.TeleportTimer` geometry is still negative because range `10` misses by x distance, and `FightMode.Aggressor` has no committed aggressor/aggressed/faction/ethic state to acquire me at effective range `16`. That is only a pressure read, not safety. A visible timer creature and a visible animal are now on the screen, so I stop before pressing east again.
+
+Mechanical friction learned:
+
+- A short east Travel Segment from `1219,1386` to `1225,1386` is legal over dry passable Sosaria jungle.
+- The inclusive client rectangle at `1225,1386` catches the saved eastern panda and toad at dx `18`.
+- The toad is visible pressure even though its current teleport and acquisition geometry are negative.
+- The fox remains approximately shadowed, not exact `BaseAI.Obey` proof, and it is not guarding, attacking, body-blocking, or protecting me.
+
+Next pressure:
+
+Mira ends at `Point3D(1225,1386,0)`, facing east. The fox is approximately at `Point3D(1222,1387,0)`, still following inside the heel band. The visible screen now contains panda serial `206400` and toad serial `8544`; monkey serial `289478` is just outside the east edge at dx `24`, and Urulg remains off-screen south at dx `1`, dy `31` as carried private-timer risk. The next honest action is to react to or inspect the visible eastern animals before any more route movement.
