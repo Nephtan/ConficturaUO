@@ -4739,3 +4739,1515 @@ Mechanical friction learned:
 Next pressure:
 
 Mira ends at `Point3D(1225,1386,0)`, facing east. The fox is approximately at `Point3D(1222,1387,0)`, still following inside the heel band. The visible screen now contains panda serial `206400` and toad serial `8544`; monkey serial `289478` is just outside the east edge at dx `24`, and Urulg remains off-screen south at dx `1`, dy `31` as carried private-timer risk. The next honest action is to react to or inspect the visible eastern animals before any more route movement.
+
+## Run 170 - Names On The Edge, Then I Turn Away
+
+I start at `Point3D(1225,1386,0)`, still facing east. The screen is no longer empty: a toad is on the east edge at `Point3D(1243,1382,0)`, dx `18`, dy `-4`, and a panda is just above it at `Point3D(1243,1379,0)`, dx `18`, dy `-7`. The fox is behind me at about `Point3D(1222,1387,0)`, close enough to follow, but not guarding. I do not keep walking into the edge just because the range math is currently negative.
+
+**Beat 1**
+
+I single-click the visible toad.
+
+`PacketHandlers.LookReq` finds mobile serial `8544`, `Mobile.CanSee` passes, and `Utility.InUpdateRange` accepts the inclusive edge. `Region.OnSingleClick` returns true. `BaseCreature.OnSingleClick` adds no tame or bonded line because the toad is uncontrolled, so `Mobile.OnSingleClick` sends only the overhead label: `a toad`.
+
+That label is all I earn. The toad is still `AI_Animal/FightMode.Aggressor`, still has `GiantToad.TeleportTimer`, and still currently misses me because range `10` and effective range `16` both fail by x distance. No teleport, attack, target cursor, context menu, skill, quest, item, pet order, or movement path runs.
+
+**Beat 2**
+
+I single-click the panda.
+
+The same normal click path accepts the edge mobile: `LookReq`, `CanSee`, inclusive `InUpdateRange`, `Region.OnSingleClick`, then `BaseCreature.OnSingleClick` and `Mobile.OnSingleClick`. The overhead label is `a panda`. It is a visible animal, not a friendly signpost: `PandaRiding` is `AI_Animal/FightMode.Aggressor`, has no special timer, and its effective range still misses me by x distance. No context menu opens and no taming or combat state changes.
+
+**Beat 3**
+
+I press west.
+
+Because I was facing east, this is only a turn. `Mobile.Move` does not enter `MovementImpl.CheckMovement`, does not test `Point3D(1224,1386,0)`, and does not move me or the fox. It changes my facing to `Direction.West` and sends the usual movement notification over the same location. The visible animals do not get a new committed attack from this: their default `ReacquireOnMovement` is false, and the notice-sound branch explicitly skips `FightMode.Aggressor` creatures.
+
+Mechanical friction learned:
+
+- The eastern toad and panda are both real saved mobiles inside the inclusive 18-tile client rectangle.
+- Single-clicking either one only labels it; it does not open a menu, begin taming, pull aggro, move the fox, or resolve the spawner.
+- A west input from east-facing `Point3D(1225,1386,0)` is only a facing turn. No west tile has been entered yet.
+- The toad's current timer/acquisition geometry is negative, but its private five-second timer, 25 percent random gate, and future wandering are still unresolved.
+
+Next pressure:
+
+Mira ends at `Point3D(1225,1386,0)`, facing west. The toad and panda remain visible and now labeled on the east edge. The monkey remains just off-screen to the east at dx `24`, the west crane/toad are far behind, and Urulg plus the old swamp-drake branch remain carried risk evidence. The next honest action is a route decision from a turned-away stance: likely step west to reduce the visible animal edge, but only after a fresh scan and movement precheck.
+
+## Run 171 - I Back Off Until The Edge Is Quiet
+
+I start at `Point3D(1225,1386,0)`, facing west. The toad and panda are still on the east edge, both already labeled, both still wild, and neither one is solved by the fact that the current range math misses me. The fox is a few tiles west of me, following but not guarding. So I do the plain human thing: I back away from the edge instead of walking deeper into it.
+
+**Beat 1**
+
+I press west once.
+
+This time it is not just a turn. `Mobile.Move -> MovementImpl.CheckMovement` takes the real movement path because I am already facing west. The target `Point3D(1224,1386,0)` is the dry jungle tile I crossed in Run 169: `map1.mul` land `0xAF`, z `0`, zero statics, no saved mobile, and no saved item on the tile. Mira steps west.
+
+That one tile matters. The labeled toad and panda slide just outside the client rectangle at dx `19`; the monkey is farther east at dx `25`. They are not gone, killed, tamed, pacified, or despawned. They are just off-screen now. The fox is still visible at `Point3D(1222,1387,0)`, dx `-2`, dy `1`, inside the heel band.
+
+**Beat 2 - Travel Segment**
+
+The screen is quiet enough to compress routine movement, so I keep backing west along the proved row.
+
+I press west twelve times, from `Point3D(1224,1386,0)` through `Point3D(1212,1386,0)`. This is the same dry Sosaria jungle row already proved by the eastward runs: `1223,1386` has only a nonblocking fern, `1208..1219,1386` have zero or nonblocking scenery, and no live saved mobile or item stands on the traveled tiles. No gump, target cursor, region text, corpse, chest, shelter, sign, road, or water source appears.
+
+The fox is only travel-shadowed, not exact-timer advanced. I keep it in the believable follow band, around `Point3D(1215,1387,0)`, dx `3`, dy `1`. That is leash bookkeeping, not `BaseAI.Obey` proof and not protection.
+
+**Beat 3 - Travel Segment**
+
+I keep the same conservative line for one more capped segment.
+
+Twelve more west inputs take me from `Point3D(1212,1386,0)` to `Point3D(1200,1386,0)`. The targets `1211..1200,1386` are still the previously proved dry jungle row. `1210,1386` has only background mushrooms, `1208,1386` has only nonblocking mushrooms, and the rest of the walked targets are clean enough for cardinal movement. The live-state filter at the endpoint has zero saved visible wild mobiles, zero saved visible items, and zero visible running spawner bodies.
+
+I do not call that safe. The west crane is now just outside movement-notice distance at dx `-24`, the west toad is dx `-26`, the eastern toad and panda are far off-screen at dx `43`, and Urulg plus the old drake branch remain carried private-timer risk. The fox is approximately at `Point3D(1203,1387,0)`, still following inside the heel band. I stop because I have spent three beats and the next action is a fresh route decision, not because the jungle became friendly.
+
+Mechanical friction learned:
+
+- A west input from Run 170's west-facing stance finally enters `MovementImpl.CheckMovement`; the prior west input did not.
+- `Point3D(1224,1386,0)` is dry, passable Sosaria jungle with no saved mobile/item blocker, so stepping away from the labeled east-edge animals is legal.
+- Once the player center shifts to `1224,1386`, the labeled eastern toad and panda become recently visible off-screen uncertainty at dx `19`, not visible click targets.
+- Two westward Travel Segments can reuse the already proved `1223..1200,1386` dry-jungle row, but follower movement remains approximate shadowing, not a pet AI timer result.
+- The endpoint at `Point3D(1200,1386,0)` is visually quiet in the saved snapshot, but overlapping invisible spawner ranges and recently visible animals remain risk evidence.
+
+Next pressure:
+
+Mira ends at `Point3D(1200,1386,0)`, facing west. The fox is approximately at `Point3D(1203,1387,0)`, following inside the heel band. The nearest overlay marker is now `Ruins` about 121 tiles southeast; `Mines of Morinia` is about 179 tiles west. The immediate screen has no saved wild mobile or item, but the west crane/toad are route history just beyond the screen and the southern/eastern spawner risk is still carried. The next honest action is a fresh scan and a route choice, not a safety claim.
+
+## Run 172 - The Crane Reappears On The West Edge
+
+I start at `Point3D(1200,1386,0)`, facing west. The screen is quiet in the strict client sense: no saved wild body, no saved visible item, no gump, no context menu, no target cursor. The fox is the only nearby body I can account for, trailing at about `Point3D(1203,1387,0)`. Quiet is not a blessing. The map overlay still says `Mines of Morinia` is west, and I already know the west route has a crane and a toad tucked just beyond the rectangle.
+
+**Travel Segment**
+
+I press west, but I do not spend the full segment cap.
+
+`Mobile.Move -> MovementImpl.CheckMovement` accepts six cardinal west steps: `1199,1386` through `1194,1386`. Sosaria is still file index `1`, so the route is checked against `map1.mul`, `staidx1.mul`, `statics1.mul`, and `tiledata.mul` with the server's column-major block order. The walked tiles are dry jungle at z `0`: `0xAD`, `0xAF`, `0xAE`, `0xAF`, `0xAE`, then `0xAC`. The final target has a fern `0xCA0`, but it is only `ArticleA|Unknown3`; it is not `Impassable`, `Surface`, `Bridge`, or `Wet`. No saved mobile or item stands on any target tile.
+
+I let the fox shadow the same westward line from about `Point3D(1203,1387,0)` to `Point3D(1197,1387,0)`. Its local row is also dry jungle. The only traced static on that shadow row is mushrooms `0xD15` at `1199,1387`, flagged `Background`, so I keep the follower in the believable heel band without pretending an exact `BaseAI.Obey` timer fired. The fox is still following, not guarding, body-blocking, or fighting.
+
+At `Point3D(1194,1386,0)`, the reason to stop is back on the screen: Crane serial `288081` is visible at `Point3D(1176,1379,0)`, dx `-18`, dy `-7`. It is the same crane I labeled earlier, but the screen does not know "same old pressure" as permission to march past it. Toad serial `737437` is still off-screen at dx `-20`, dy `-7`, outside its current range-10 teleport check and outside effective range-16 acquisition by x distance. That is not safety; it is just current geometry. The west spawner homes overlap the rectangle again, and the next west movement would push closer to the toad edge.
+
+Mechanical friction learned:
+
+- A six-input west Travel Segment from `1200,1386` to `1194,1386` is legal over dry Sosaria jungle.
+- The travel stop is visibility, not collision: the crane re-enters at the inclusive west edge.
+- The west toad is still just outside the client rectangle and outside current `GiantToad.TeleportTimer` geometry, but it remains route pressure.
+- Approximate follower shadowing keeps the fox around `1197,1387`; no exact pet AI, Guard, Attack, Combatant, ownership, follower-count, or body-blocking path runs.
+
+Next pressure:
+
+Mira ends at `Point3D(1194,1386,0)`, facing west. The fox is approximately at `Point3D(1197,1387,0)`, still following inside the heel band. The crane is visible on the west edge at dx `-18`, and the west toad is just beyond it at dx `-20`. The immediate honest action is to react to the visible crane and nearby toad edge, not to keep walking west toward the Mines as routine travel.
+
+## Run 173 - I Turn My Back On The Crane Line
+
+I start at `Point3D(1194,1386,0)`, facing west, with the crane visible on the west edge and the toad just behind it outside the client rectangle. The crane is already named from the earlier click, and it is only a one-damage animal, but the toad behind it has the five-second teleport timer code. I do not keep walking toward that line just because the current range math misses me.
+
+**Beat 1**
+
+I press east.
+
+This is only a turn. `Mobile.Move` sees that my current direction mask is west and the requested direction is east, so it skips `MovementImpl.CheckMovement`, leaves me at `Point3D(1194,1386,0)`, sets facing to `Direction.East`, and still sends movement notifications from the same tile. That notification does not create a committed attack: the crane and toad are `FightMode.Aggressor`, their default `ReacquireOnMovement` path is not firing, and the notice-sound branch skips Aggressor animals.
+
+The screen is still the same rectangle. Crane serial `288081` remains visible at dx `-18`, and Toad serial `737437` remains just outside at dx `-20`. The fox stays at about `Point3D(1197,1387,0)`, following but not guarding.
+
+**Beat 2**
+
+I press east again.
+
+Now the movement path is real. `MovementImpl.CheckMovement` accepts `Point3D(1195,1386,0)`, the same dry jungle tile I proved while retreating before: map1 land `0xAE`, z `0`, zero statics, no saved mobile, and no saved item blocker. I step east.
+
+That one tile does what I wanted. The crane falls just outside the west edge at dx `-19`; the toad is farther off-screen at dx `-21` and still outside its range-10 teleport geometry and effective range-16 acquisition by x distance. I have not killed, tamed, pacified, despawned, or timer-resolved either creature. I have only stopped staring at them from the edge.
+
+**Beat 3 - Travel Segment**
+
+The screen is quiet in the narrow client sense, so I use the row I have already earned instead of picking at every blade of grass.
+
+I press east twelve accepted times, from `Point3D(1196,1386,0)` through `Point3D(1207,1386,0)`. This is the same dry Sosaria jungle row from the earlier east retreat. No saved mobile or item stands on the targets, no visible running spawner object appears, and no gump, target cursor, region text, corpse, chest, sign, shelter, road, or water source interrupts the line.
+
+The fox is shadowed, not exact-timer advanced, from about `Point3D(1197,1387,0)` to `Point3D(1204,1387,0)`. It ends at dx `-3`, dy `1`, inside the remembered heel band. That is still not Guard, Attack, body-blocking, or proof that a private pet AI tick fired.
+
+The endpoint rectangle x `1189..1225`, y `1368..1404` has zero saved visible wild mobiles, zero visible saved items, and zero visible running spawner bodies. The west crane is now dx `-31`; the west toad is dx `-33`. The eastern toad and panda are not visible either, sitting around dx `36`, and the southern orc branch remains carried risk rather than a current screen blocker. Six invisible `PremiumSpawner` home ranges overlap the rectangle, so the quiet row is still not a safe place. It is just a better place to breathe than the crane/toad edge.
+
+Mechanical friction learned:
+
+- A direction key opposite the current facing can be only a turn. The first east input changed facing but did not enter `MovementImpl.CheckMovement` or move Mira.
+- The second east input was a real step to `1195,1386`, which clears the visible crane from the client rectangle without resolving the crane or toad.
+- A capped east Travel Segment from `1195,1386` to `1207,1386` is legal over previously proved dry jungle.
+- The live snapshot at the endpoint has no saved visible wild mobile or item, but the overlapping spawner envelopes and unresolved western/eastern animals remain pressure evidence.
+
+Next pressure:
+
+Mira ends at `Point3D(1207,1386,0)`, facing east. The fox is approximately at `Point3D(1204,1387,0)`, still following inside the heel band. The nearest overlay marker is `Ruins` about 115 tiles southeast; `Mines of Morinia` is now about 186 tiles west through the crane/toad edge. No gump, context menu, target cursor, combat, damage, hunger/thirst, item, quest, discovery, pet-order, ownership, follower-count, skill, fame, karma, or PvP/PvE state changed. The next honest action is a fresh scan and route choice from a quiet rectangle, not a safety claim.
+
+## Run 174 - I Skirt North Of The Animal Line
+
+I start at `Point3D(1207,1386,0)`, facing east. The screen is quiet, but it is not a road. The west crane/toad pair is behind me, the east toad/panda pair is ahead of me, and Urulg is south enough that walking southeast would be a dumb way to prove courage. The overlay still tempts me toward `Ruins`, but I take the safer shape first: north, then east above the old animal line.
+
+**Beat 1 - Travel Segment**
+
+I turn north and walk twelve accepted steps to `Point3D(1207,1374,0)`.
+
+`Mobile.Move` only treats a key as movement after the facing matches, so the first north input is just the turn. After that, `MovementImpl.CheckMovement` accepts the cardinal north targets `1207,1385` through `1207,1374`. Sosaria is still file index `1`, and the server-order `map1.mul` / `staidx1.mul` / `statics1.mul` probe says the line is dry jungle/grass with zero statics. No saved mobile, saved item, visible spawner object, region text, gump, corpse, chest, shelter, sign, road, water source, or target cursor appears.
+
+The fox is shadowed, not exact-timer advanced, from about `Point3D(1204,1387,0)` to `Point3D(1204,1375,0)`. Its row is also dry grass/jungle with zero statics, so the leash stays believable at dx `-3`, dy `1`. That is not Guard, Attack, body-blocking, or protection.
+
+**Beat 2 - Travel Segment**
+
+I turn east and take twelve accepted east steps to `Point3D(1219,1374,0)`.
+
+The row `1208,1374` through `1219,1374` is plain dry grass, all zero statics. The live-state rectangle at the endpoint still has no saved wild mobile or saved item inside it. The eastern toad and panda are closer but still off-screen at dx `24`, and Urulg is farther south at dy `43`. I do not call any of them resolved.
+
+The fox shadows the same line to about `Point3D(1216,1375,0)`, again over dry grass with zero statics. No pet AI timer, ownership, follower-count, pet order, combat, or body-blocking state changes.
+
+**Beat 3 - Travel Segment**
+
+I keep going east, but only five steps.
+
+`MovementImpl.CheckMovement` accepts `1220,1374` through `1224,1374`, all dry grass with zero statics and no saved target blocker. I stop there on purpose. One more east step would put the labeled toad and panda at dx `18` on the screen edge again. From here they are dx `19`, just outside the client rectangle. The toad is also outside its range-10 `TeleportTimer` scan by x distance, but it is still a timer creature from a running spawner, not solved scenery.
+
+The fox shadows to about `Point3D(1221,1375,0)`, still dx `-3`, dy `1`, still following, still not guarding.
+
+Mechanical friction learned:
+
+- A north skirt from `1207,1386` to `1207,1374` is legal dry movement and avoids walking south toward Urulg's carried branch.
+- The east skirt at y `1374` is clean grass through `1224,1374`, with no static blocker and no saved item/mobile blocker.
+- Stopping at `1224,1374` keeps the labeled east toad and panda just outside the 18-tile client rectangle; `1225,1374` would expose them.
+- Approximate follower shadowing remains only leash bookkeeping. It is not exact `BaseAI.Obey`, Guard, Attack, or body-blocking proof.
+
+Next pressure:
+
+Mira ends at `Point3D(1224,1374,0)`, facing east. The fox is approximately at `Point3D(1221,1375,0)`, inside the heel band. The immediate screen has zero saved wild mobiles and zero saved items, but eastern Toad serial `8544` and Panda serial `206400` sit just outside the east edge at dx `19`; Monkey serial `289478` is dx `25`; Urulg is off-screen south at dx `2`, dy `43`; and four invisible `PremiumSpawner` home ranges overlap by source range. The next honest input is not routine east travel. It is the decision whether to expose the toad/panda edge again, bend north, or abandon this route.
+
+## Run 175 - A Different Monkey Catches The Corner
+
+I start at `Point3D(1224,1374,0)`, facing east. The old toad and panda are still one tile beyond the east edge. I do not step straight into them. I try the boring answer first: climb farther north, then edge east above their line.
+
+**Beat 1 - Travel Segment**
+
+I turn north and walk twelve accepted steps to `Point3D(1224,1362,0)`.
+
+`Mobile.Move` spends the first north input as a facing change. After that, `MovementImpl.CheckMovement` accepts `Point3D(1224,1373,0)` through `Point3D(1224,1362,0)`. Sosaria is still map file index `1`, and the server-order `map1.mul` / `staidx1.mul` / `statics1.mul` probe reads every target as dry grass at z `0`, with zero statics. No saved mobile, saved item, visible spawner object, gump, context menu, target cursor, region text, corpse, chest, sign, shelter, road, or water source appears.
+
+The fox is only shadowed, not exact-timer advanced, from about `Point3D(1221,1375,0)` to about `Point3D(1221,1363,0)`. That column is also dry grass with zero statics. The fox stays in the familiar trailing band at dx `-3`, dy `1`, still following and still not guarding.
+
+**Beat 2 - Travel Segment**
+
+I keep the skirt going, but the screen stops me before the segment cap.
+
+Two more north steps take me to `Point3D(1224,1360,0)`, then I turn east and move through `Point3D(1225,1360,0)`, `Point3D(1226,1360,0)`, and `Point3D(1227,1360,0)`. The five accepted targets are dry map1 grass at z `0`, with zero statics, no saved target blocker, and no item blocker.
+
+At `Point3D(1227,1360,0)`, a different monkey enters the northeast corner: serial `206380`, `Point3D(1245,1366,0)`, dx `18`, dy `6`. That is not the old off-screen monkey serial `289478`; it is another saved spawn from the same eastern animal home. Its current `FightMode.Aggressor` acquisition is negative because the Aggressor gate has no aggressor/aggressed/faction/ethic state, and its effective range `16` also misses by x distance. Still, it is a real visible body on the screen. I stop there instead of smearing it into route scenery.
+
+The fox shadows to about `Point3D(1224,1361,0)`, again by travel policy rather than `BaseAI.Obey`. It is close, but it is not a shield.
+
+Mechanical friction learned:
+
+- The north skirt from `1224,1374` to `1224,1362` is legal over dry zero-static grass.
+- The next north/east bend is legal only until `1227,1360`; that point exposes saved Monkey serial `206380` at the inclusive edge.
+- The previously labeled eastern toad and panda are now off-screen by y distance, not resolved.
+- A visible saved animal interrupts route movement even when its current Aggressor acquisition is negative.
+
+Next pressure:
+
+Mira ends at `Point3D(1227,1360,0)`, facing east. The fox is approximately at `Point3D(1224,1361,0)`, inside the heel band. The visible screen contains Monkey serial `206380` at dx `18`, dy `6`, zero saved visible items, and zero visible spawner objects. Panther serial `289483` would appear farther east at dx `25`, and the old toad/panda line is south-east off-screen. The next honest action is to react to or inspect the visible monkey before any more east travel.
+
+## Run 176 - I Name The Monkey And Back Off One Tile
+
+I start at `Point3D(1227,1360,0)`, facing east. The monkey is the only wild thing on the screen, right on the northeast edge at `Point3D(1245,1366,0)`, dx `18`, dy `6`. The fox is behind me around `Point3D(1224,1361,0)`, still following and still not a guard dog in code. The monkey is small, but it is not scenery: it is a saved wild mobile from the same animal spawner line that has already thrown toads, pandas, and panthers into this route.
+
+**Beat 1**
+
+I single-click the monkey.
+
+`PacketHandlers.LookReq` finds serial `206380`, `CanSee` passes, and `Utility.InUpdateRange` accepts the inclusive dx `18` edge. `Region.OnSingleClick` allows the click, `BaseCreature.OnSingleClick` adds no tame or bonded line because the monkey is uncontrolled, and `Mobile.OnSingleClick` sends the private overhead label: `a monkey`.
+
+That is all. No context menu opens, no Tame row is selected, no target cursor appears, no taming timer starts, no banana drops out of its backpack, and no combat state changes. Its `AI_Animal/FightMode.Aggressor` path is still currently negative because there is no aggressor/aggressed/faction/ethic state and the effective range `16` misses me by x distance.
+
+**Beat 2**
+
+I press west.
+
+Because I was facing east, this is only a turn. `Mobile.Move` skips `MovementImpl.CheckMovement`, leaves me at `Point3D(1227,1360,0)`, and changes facing to `Direction.West`. The monkey is still visible at the edge. The fox does not move; no pet AI tick has run.
+
+**Beat 3**
+
+I press west again.
+
+Now the movement path is real. `MovementImpl.CheckMovement` accepts `Point3D(1226,1360,0)`: server-order `map1.mul` says dry grass `0x4` at z `0`, and `staidx1/statics1` finds zero statics. No saved mobile or item occupies the tile. I step west.
+
+The monkey slides just outside the screen at dx `19`, dy `6`. It is not gone, dead, tamed, pacified, or resolved. It is merely off the client rectangle after one cautious step. The panther is still farther east at dx `26`, the old toad/panda line remains off-screen by y distance, and the four invisible spawner homes are still only area risk, not visible targets.
+
+Mechanical friction learned:
+
+- A saved monkey at the inclusive 18-tile edge is a legal single-click target, but the normal click only labels it.
+- The first west input from an east-facing stance is just a facing turn; no movement check runs.
+- The second west input legally steps to `Point3D(1226,1360,0)` over dry grass with zero statics.
+- Moving one tile west clears Monkey serial `206380` from visible range without resolving its future AI, wandering, taming, combat, corpse, or loot paths.
+
+Next pressure:
+
+Mira ends at `Point3D(1226,1360,0)`, facing west. The fox remains approximately at `Point3D(1224,1361,0)`, inside the heel band by shadowing only. The immediate screen has zero saved wild mobiles and zero saved visible items, but Monkey serial `206380` is just off-screen at dx `19`, Panther serial `289483` is dx `26`, eastern Toad serial `8544` and Panda serial `206400` are off-screen by y distance, and Urulg plus the old swamp-drake branch remain carried unresolved risk. The next honest action is a fresh scan and route choice, likely north or west rather than re-exposing the monkey line.
+
+## Run 177 - I Skirt A Pear Tree And Stop Before The Toad
+
+I start at `Point3D(1226,1360,0)`, facing west. The screen is empty of saved wild mobiles and saved items, but it is not blank. The west row has a visible pear tree static at `Point3D(1210,1360,0)`, and the live save still puts the old animal pressure lines just outside reach: the monkey I labeled is behind me to the east, and a toad line waits somewhere west. The fox is around `Point3D(1224,1361,0)`, following, not guarding.
+
+**Beat 1 - Travel Segment**
+
+I walk west twelve accepted steps to `Point3D(1214,1360,0)`.
+
+`Mobile.Move` can enter the movement block immediately because I already face west. `MovementImpl.CheckMovement` accepts the cardinal west targets. The server-order `map1.mul` / `staidx1.mul` / `statics1.mul` probe reads the line as dry Sosaria grass with zero statics, and the live-state rectangle at the endpoint has zero saved visible wild mobiles, zero saved items, and zero visible spawner objects. The fox is shadowed to about `Point3D(1217,1361,0)` over the adjacent clear row.
+
+**Beat 2 - Travel Segment**
+
+The pear tree blocks the direct row, so I do not try to walk through it. I turn north to `Point3D(1214,1359,0)`, walk west through `Point3D(1209,1359,0)`, step south to `Point3D(1209,1360,0)`, then continue west to `Point3D(1204,1360,0)`.
+
+The important tile is `Point3D(1210,1360,0)`: static `0xDA8` is a pear tree with `TileFlag.Impassable` and height `20`, while `0xDA9` leaves are harmless visual clutter. The north bypass row is dry grass with zero blocking statics, so the path is legal and the tree stays a real obstacle rather than scenery. No gump, context menu, target cursor, corpse, chest, sign, shelter, water source, region text, combat, hunger, thirst, item, quest, discovery, ownership, follower-count, or pet-order path opens. The fox is shadowed to about `Point3D(1207,1361,0)`.
+
+**Beat 3 - Travel Segment**
+
+I continue west twelve accepted steps to `Point3D(1192,1360,0)`.
+
+The route is still dry map1 grass/jungle with zero statics on accepted targets. The endpoint client rectangle `x=1174..1210,y=1342..1378` has zero saved visible wild mobiles, zero saved visible items, and zero visible running spawner object locations. That quiet result is narrow: Toad serial `288077` sits just outside the west edge at `Point3D(1173,1360,0)`, dx `-19`, dy `0`; Toad serial `737437` and Crane serial `288081` are just below the southwest edge at dy `19`. The fox shadows to about `Point3D(1195,1361,0)`, still only a follower in the heel band.
+
+Mechanical friction learned:
+
+- The direct west row is blocked at `1210,1360` by an impassable pear tree static; the legal player route must skirt it.
+- `Map.Sosaria` still uses file index `1`, and the server-order binary scan matters because the accepted route is proved from `map1/staidx1/statics1`, not from guessed terrain.
+- Three Travel Segment beats can move Mira from `1226,1360` to `1192,1360` without exposing a saved visible wild mobile, but only because the route bends around the tree and stops before the western toad edge.
+- The controlled fox position is approximate travel shadowing, not exact `BaseAI.Obey`, Guard, Attack, or protection.
+
+Next pressure:
+
+Mira ends at `Point3D(1192,1360,0)`, facing west. The fox is approximately at `Point3D(1195,1361,0)`, inside the 2..3 heel band. The visible screen has no saved wild mobile or saved item, but Toad serial `288077` is one tile beyond the west edge and is a `GiantToad.TeleportTimer` creature by code. Current geometry keeps Mira outside that range-10 timer and outside effective range perception, but the next westward route choice would expose it. The next honest action is a fresh scan/classifier and a player decision about the toad edge, not another blind travel segment.
+
+## Run 178 - I Dodge The West Toad And Find The Horse Again
+
+I start at `Point3D(1192,1360,0)`, facing west. The screen is technically empty of wild saved bodies, but the edge math is loud: Toad serial `288077` is one tile beyond the west border at `Point3D(1173,1360,0)`. I can go west and make it visible again, or I can stop pretending the west marker is worth stepping into a timer creature. The map overlay says `Mines of Morinia` is west and `Ruins` is southeast, but neither marker is a road, shelter, vendor, or water source.
+
+**Beat 1 - Travel Segment**
+
+I turn north, take one step to `Point3D(1192,1359,0)`, then immediately discover the straight north line is not open. The server-order static probe shows trees at `1192,1358` and `1192,1357`; both carry `TileFlag.Impassable`. I do the thing a player actually does on screen: sidestep around the trunks instead of walking into them.
+
+The accepted path is twelve movement inputs: `1192,1359`, `1193,1359`, `1193,1358`, `1194,1358`, `1194,1357`, `1195,1357`, then north through `1195,1351`. `Mobile.Move -> MovementImpl.CheckMovement` accepts every target. The route is dry Sosaria jungle/grass in `map1.mul`; the only statics on accepted tiles are nonblocking foliage leaves at `1195,1355` and `1195,1354`. A peach tree at `1194,1356` is also impassable, so the bypass stays east of it.
+
+The fox is shadowed, not exact-timer advanced, along the same bend from about `Point3D(1195,1361,0)` to about `Point3D(1198,1352,0)`. That keeps the leash coherent over locally clear grass, but it is not `BaseAI.Obey`, Guard, Attack, or body-blocking proof.
+
+At `Point3D(1195,1351,0)`, the live-state rectangle still contains zero saved visible wild mobiles, zero saved items, and zero visible running spawner objects. The west toad is farther off-screen at dx `-22`, dy `9`; its range-10 teleport scan and range-16 perception still miss by x distance. I have avoided it, not solved it.
+
+**Beat 2 - Travel Segment**
+
+I keep moving north, but only seven accepted steps.
+
+`MovementImpl.CheckMovement` accepts `Point3D(1195,1350,0)` through `Point3D(1195,1344,0)`. These are dry grass targets with zero blocking statics; the foliage already behind me does not matter. The fox shadows to about `Point3D(1198,1345,0)`, still a following animal in the heel band and still not a shield.
+
+At `Point3D(1195,1344,0)`, the top edge of the screen catches a familiar shape: Horse serial `200909` at `Point3D(1196,1326,0)`, dx `1`, dy `-18`. It is uncontrolled, alive, and visible. Its constructor is `AI_Animal` with `FightMode.Aggressor`, `MinTameSkill` normally `29.1` unless its rare random branch made it `49.1`. I do not know that branch from the save export, and I do not choose it. I also do not click or tame the horse yet. A visible animal at the edge is enough reason for a human to stop and look.
+
+Mechanical friction learned:
+
+- The straight north escape from `1192,1360` is blocked by impassable tree statics at `1192,1358` and `1192,1357`.
+- The legal normal-player bypass bends east around those trees and the impassable peach tree at `1194,1356`.
+- Moving north avoids exposing western Toad serial `288077`; it remains off-screen and unresolved, not safe.
+- The second north segment stops when Horse serial `200909` enters the inclusive 18-tile client rectangle at the top edge.
+
+Next pressure:
+
+Mira ends at `Point3D(1195,1344,0)`, facing north. The fox is approximately at `Point3D(1198,1345,0)`, inside the 2..3 heel band by travel shadowing only. The screen has visible Horse serial `200909` at dx `1`, dy `-18`, zero saved visible items, and no open gump, context menu, or target cursor. The west toad is off-screen at dx `-22`, dy `16`; the older west toad and crane are farther south; Urulg, GoblinArcher, and the old swamp-drake branch remain carried unresolved risk. The next honest action is to inspect or react to the visible horse before more travel.
+
+## Run 179 - The Horse Gets A Name
+
+I start exactly where the last run left me: `Point3D(1195,1344,0)`, facing north, with my fox tucked southeast around `Point3D(1198,1345,0)`. The screen is not empty. The horse is still on the top edge at `Point3D(1196,1326,0)`, dx `1`, dy `-18`. The western toad line is off-screen now, but not solved. The horse is the visible thing.
+
+**Beat 1**
+
+I single-click the horse.
+
+The client path is the plain label path. `LookReq` finds serial `200909`, `CanSee` passes, and the 18-tile update rectangle accepts the top-edge click. The region allows the single-click, the horse is not controlled, so `BaseCreature.OnSingleClick` adds no tame or bonded line, and the inherited mobile click sends the private overhead label: `a horse`.
+
+That is all I get. I do not ask for the context menu. I do not select `Tame`. I do not walk north into the horse, and I do not pretend I know whether this is the normal `29.1` horse or the rare `49.1` one. The horse is now named on screen, but it is still wild, still visible, and still a decision point.
+
+Mechanical friction learned:
+
+- The inclusive update range makes a top-edge horse at dx `1`, dy `-18` a legal single-click target.
+- A normal single-click is not the context menu. It does not expose or select the `Tame` row.
+- The horse constructor makes it tamable and one control slot, with a normal `MinTameSkill` of `29.1` and a rare branch to `49.1`, but the visible label does not reveal which branch this saved horse took.
+- No movement, pet AI tick, combat, targeting cursor, ownership, follower-count, skill, inventory, hunger, thirst, quest, discovery, corpse, loot, gump, or PvP/PvE path ran.
+
+Next pressure:
+
+Mira remains at `Point3D(1195,1344,0)`, facing north. The fox remains approximately at `Point3D(1198,1345,0)`, following but not guarding. The current screen still contains the labeled Horse serial `200909`, zero saved visible items, and no visible running spawner objects. The next honest choice is whether to request the horse's context menu, step closer, back away, or route around it. The label is knowledge, not safety.
+
+## Run 180 - The Horse Menu Is A Gray Tease
+
+I start without moving: `Point3D(1195,1344,0)`, facing north. The fox is still tucked southeast around `Point3D(1198,1345,0)`. The horse is still right on the top edge at `Point3D(1196,1326,0)`, dx `1`, dy `-18`, labeled but wild. The screen has no saved visible items, no chest, no corpse, no road, no shelter, no water source, no gump, and no target cursor. The horse is the only thing asking for a click.
+
+**Beat 1**
+
+I ask the horse for its normal context menu.
+
+The server accepts the request because the horse is on the same map, visible, and inside the 18-tile update rectangle. `ContextMenu` asks the horse for entries, and `BaseCreature.GetContextMenuEntries` adds `Tame` because the horse is tamable, uncontrolled, and I am alive.
+
+Then the range friction lands on the screen. `TameEntry` is localization `6130` with range `6`, but the menu packet checks my current distance to the horse before drawing the row as usable. At dx `1`, dy `-18`, the row is visible but disabled. I have not selected it. `ContextMenuResponse` has not run, the menu has not been cleared, `TameEntry.OnClick` has not called `UseSkill(Taming)`, and the hidden range-2 `Taming.InternalTarget` gate has not even had a chance to reject me.
+
+Mechanical friction learned:
+
+- A visible mobile at the inclusive 18-tile edge can still open a context menu.
+- The `Tame` row exists for the wild horse, but the client receives it disabled because `DisplayContextMenu` applies the row's range-6 gate.
+- Opening the menu changes visible UI state only. It does not move Mira, start taming, open a target cursor, roll a skill check, claim ownership, fill a follower slot, or resolve the horse's normal `29.1` versus rare `49.1` tame branch.
+
+Next pressure:
+
+Mira remains at `Point3D(1195,1344,0)`, facing north. The fox remains approximately at `Point3D(1198,1345,0)`, following but not guarding. The horse menu is open with a disabled `Tame` row, and the horse remains wild at dx `1`, dy `-18`. Western Toad serial `288077`, west Toad serial `737437`, Crane serial `288081`, Urulg, GoblinArcher, and the old swamp-drake branch remain unresolved off-screen risk. The next honest action is to ignore/close the menu, step closer, or back away; pressing a disabled row is not a real progress path.
+
+## Run 181 - Two Steps Toward The Horse, Then Wings
+
+I start at `Point3D(1195,1344,0)`, facing north, with the horse menu still sitting on the screen like a gray dare. `Tame` is visible but disabled. I do not press it. The horse is not closer because I understand it better; it is still eighteen tiles up-screen, wild, and outside the entry range.
+
+**Beat 1**
+
+I press north.
+
+Because I am already facing north, this is real movement, not a turn. `Mobile.Move` reaches `MovementImpl.CheckMovement`, and the server-order map probe accepts `Point3D(1195,1343,0)`: map1 grass `0x6`, z `0`, zero statics, no saved mobile or item blocker on the target. The client-visible horse menu drops off the screen because I moved, but I did not send `ContextMenuResponse`. No row was selected, no target cursor opened, and the stale server-side menu may still exist until a response or replacement menu.
+
+The horse is still visible at dx `1`, dy `-17`. The fox is still only an approximate follower behind me around `Point3D(1198,1345,0)`, now dx `3`, dy `2`, still not guarding.
+
+**Beat 2**
+
+I press north again.
+
+`MovementImpl.CheckMovement` accepts `Point3D(1195,1342,0)`: map1 grass `0x4`, z `0`, zero statics, no saved target blocker. That second step brings the horse a little closer, dx `1`, dy `-16`, but it also pulls a new body onto the screen. Eagle serial `444927` appears at `Point3D(1213,1324,0)`, right on the northeast corner at dx `18`, dy `-18`.
+
+The live save also still lists Fox serial `200274` at `Point3D(1209,1324,0)`, but that is my fox's old saved coordinate. The simulation already won that animal through the taming timer and has it following at `Point3D(1198,1345,0)`. I do not hallucinate a second wild fox out of the stale export.
+
+Mechanical friction learned:
+
+- Moving with a context menu visible is a normal way to drop the client-visible menu, but it is not `ContextMenuResponse` and does not clear/select a row through the traced server path.
+- The direct north approach from `1195,1344` to `1195,1342` is legal dry grass with zero statics.
+- At `1195,1342`, the horse is still outside `TameEntry` range `6`; it is visible at dy `-16`, not reachable for the row yet.
+- A saved eagle enters at the inclusive 18-tile corner after only two north steps, so the approach is no longer routine travel.
+- The immutable live-state fox coordinate is overridden by the simulated controlled-follower state for the same serial.
+
+Next pressure:
+
+Mira ends at `Point3D(1195,1342,0)`, facing north. The fox is approximately at `Point3D(1198,1345,0)`, inside the 2..3 heel band by floored distance, still following and still not protection. The visible screen contains Horse serial `200909` at dx `1`, dy `-16` and Eagle serial `444927` at dx `18`, dy `-18`, with zero saved visible items. Both animals use `AI_Animal`/`FightMode.Aggressor`; the current Aggressor gate is negative because there is no aggressor/aggressed/faction/ethic state involving me or the fox. That makes them visible decisions, not active attacks. The next honest action is to inspect or react to the new eagle before taking another horse-approach step.
+
+## Run 182 - The Eagle Gets Its Name
+
+I start at `Point3D(1195,1342,0)`, facing north. The horse is still up-screen at `Point3D(1196,1326,0)`, dx `1`, dy `-16`, wild and still outside the range-6 `Tame` menu gate. The new thing is the bird in the northeast corner: Eagle serial `444927` at `Point3D(1213,1324,0)`, dx `18`, dy `-18`. The old live-save fox record at `1209,1324` is not a second wild fox; it is the same serial I already tamed, and the simulation has it following behind me around `Point3D(1198,1345,0)`.
+
+**Beat 1**
+
+I single-click the eagle.
+
+`PacketHandlers.LookReq` finds serial `444927`, `CanSee` passes, and `Utility.InUpdateRange` accepts the inclusive 18-tile corner. The region allows the single-click, `BaseCreature.OnSingleClick` adds no tame or bonded overhead because the eagle is uncontrolled, and the inherited mobile click sends the private label: `an eagle`.
+
+That is all. No context menu opens, no `Tame` row appears, no target cursor starts, no taming timer begins, no pet command runs, and no combat state changes. The eagle is only named. Its class says it is an `AI_Animal` with `FightMode.Aggressor`, physical damage `5-10`, one control slot, and `MinTameSkill = 17.1`, but the current Aggressor acquisition is still negative because there is no aggressor/aggressed/faction/ethic state involving me or the fox, and its range-16 perception misses by x/y distance from this corner.
+
+Mechanical friction learned:
+
+- A saved eagle at dx `18`, dy `-18` is still a legal single-click target because update range is an inclusive rectangle.
+- A normal single-click labels the eagle only. It does not ask for a context menu, use Taming, assign Combatant, move the eagle, move the fox, or mutate inventory, skills, quests, hunger, thirst, fame, karma, or discovery flags.
+- The horse remains visible but still too far for an enabled `Tame` context row at dx `1`, dy `-16`.
+- The controlled fox remains a simulated follower override, not the stale wild live-save coordinate.
+
+Next pressure:
+
+Mira remains at `Point3D(1195,1342,0)`, facing north. The fox remains approximately at `Point3D(1198,1345,0)`, inside the heel band by floored distance. The visible screen contains labeled Horse serial `200909` and labeled Eagle serial `444927`, zero saved visible items, and no open gump, context menu, target cursor, combat, corpse, loot, skill timer, quest, or discovery change. The next honest action is a fresh decision: keep approaching the horse, request a menu from something closer, or back away from the wildlife edge.
+
+## Run 183 - One Step Closer, Then A Llama
+
+I start at `Point3D(1195,1342,0)`, facing north. The horse is still the reason my eyes keep drifting up the screen: `Point3D(1196,1326,0)`, dx `1`, dy `-16`, labeled and still too far for the range-6 `Tame` row. The eagle I just named sits on the northeast edge at dx `18`, dy `-18`. The fox is behind me around `Point3D(1198,1345,0)`, following but not guarding.
+
+**Beat 1**
+
+I press north.
+
+Because I am already facing north, this is a real movement attempt. `Mobile.Move` enters `CheckMovement`, and the server-order map/static probe accepts `Point3D(1195,1341,0)`: map1 grass `0x4`, z `0`, zero statics, and no saved mobile or item blocker on the target.
+
+That one step does move the horse closer, to dx `1`, dy `-15`, but it does not make the horse reachable. It also changes the top edge of the screen. RidableLlama serial `226037` appears at `Point3D(1208,1323,0)`, dx `13`, dy `-18`. The eagle remains visible at dx `18`, dy `-17`. The live-save fox row at `1209,1324` is still overridden by my simulated controlled follower at `1198,1345`; I do not split one fox into two animals just because the stale save row is still there.
+
+Mechanical friction learned:
+
+- A single north step from `1195,1342` to `1195,1341` is legal dry Sosaria grass with zero statics.
+- The horse is still outside the visible context-menu `Tame` row range: dx `1`, dy `-15` is not range `6`.
+- The first new thing revealed by the approach is not the horse becoming usable. It is a wild llama on the inclusive top edge.
+- The fox did not get a `BaseAI.Obey` tick, so it stays at `1198,1345` and stretches outside the 2..3 heel band at floored distance `4`.
+
+Next pressure:
+
+Mira ends at `Point3D(1195,1341,0)`, facing north. The screen contains Horse serial `200909`, RidableLlama serial `226037`, and labeled Eagle serial `444927`, with zero saved visible items and no open UI. All three are `AI_Animal`/`FightMode.Aggressor` bodies with current empty Aggressor state, so they are not active attacks, but the newly visible llama is a real screen interruption. The next honest action is to inspect or route around the llama/horse/eagle cluster before any more north movement.
+
+## Run 184 - The Llama Menu Is Gray Too
+
+I start at `Point3D(1195,1341,0)`, facing north. The screen is a little crowded now: the horse is still up-screen at dx `1`, dy `-15`, the eagle is still labeled on the northeast edge, and the new llama is sitting at `Point3D(1208,1323,0)`, dx `13`, dy `-18`. The fox is behind me at about `Point3D(1198,1345,0)`, following but stretched outside the heel band.
+
+**Beat 1**
+
+I single-click the llama.
+
+`PacketHandlers.LookReq` finds serial `226037`, `CanSee` passes, and `Utility.InUpdateRange` accepts the inclusive top-edge rectangle. `Region.OnSingleClick` allows the click. Because the llama is uncontrolled, `BaseCreature.OnSingleClick` adds no tame or bonded line, and the inherited mobile click sends only the private overhead label: `a llama`.
+
+Nothing else moves. No target cursor opens, no taming timer starts, no skill delay changes, and the fox does not get an AI tick.
+
+**Beat 2**
+
+I ask the labeled llama for its normal context menu.
+
+The request is legal because the llama is visible and still inside the 18-tile update rectangle. `ContextMenu` asks the target for entries, and `BaseCreature.GetContextMenuEntries` adds `Tame` because a ridable llama is tamable, uncontrolled, and I am alive. The menu opens, but it is another gray tease: `TameEntry` uses range `6`, and from dx `13`, dy `-18` I am nowhere near it. `DisplayContextMenu` draws the row disabled.
+
+I do not select it. There is no `ContextMenuResponse`, no `TameEntry.OnClick`, no `Taming.OnUse`, no target cursor, no ownership change, and no follower-count change. The stale horse menu is replaced by the llama menu as the current server-side context menu reference, but that is only UI state.
+
+Mechanical friction learned:
+
+- A wild ridable llama at dx `13`, dy `-18` is close enough to label and request a context menu through update range.
+- The llama is tamable by class, with `AI_Animal`, `FightMode.Aggressor`, one control slot, and `MinTameSkill = 29.1`, but the visible row is range-gated.
+- `Tame` is present but disabled at range `6`; the hidden range-2 `Taming.InternalTarget` gate still has not run.
+- Labeling and opening the menu do not advance movement, pet follow AI, combat, hunger, thirst, skills, quests, loot, corpses, or discovery.
+
+Next pressure:
+
+Mira remains at `Point3D(1195,1341,0)`, facing north. The llama menu is open with a disabled `Tame` row. Horse serial `200909` and Eagle serial `444927` remain visible, the fox remains approximate at `Point3D(1198,1345,0)` and outside the 2..3 heel band, and zero saved visible items are on screen. The next honest action is to close/ignore the llama menu, back away, or reposition with the visible wildlife cluster still unresolved.
+
+## Run 185 - Close The Gray Menu, Wait The Fox
+
+I start at `Point3D(1195,1341,0)`, facing north, with the llama menu still in my face. The only tempting row is `Tame`, and it is gray because the llama is way up on the top edge at dx `13`, dy `-18`, outside the row's range `6`. The horse is still visible at dx `1`, dy `-15`, the eagle is still visible at dx `18`, dy `-17`, and my fox is behind me at `Point3D(1198,1345,0)`, stretched farther than the heel band.
+
+**Beat 1**
+
+I close or ignore the disabled llama menu.
+
+That is a client-screen action, not a server-side selection. I do not send `ContextMenuResponse`, so the server path that clears `from.ContextMenu`, range-checks the entry, and calls `OnClick` never runs. No `TameEntry.OnClick`, no `Taming.OnUse`, no target cursor, no ownership change, no follower-count change. I just stop staring at a gray row I cannot press.
+
+**Beat 2**
+
+I wait long enough for the fox to catch up once.
+
+`BaseAI.Obey` routes into `DoOrderFollow`, and the fox's corrected spacing is not four. From `Point3D(1198,1345,0)` to me at `Point3D(1195,1341,0)`, dx `3`, dy `4` floors to distance `5`, which is outside the remembered FriendsAvoidHeels band. `WalkMobileRange` reuses spacing value `7`, wants `2..3`, chooses `Direction.Up`, and `Mobile.Move` accepts `Point3D(1197,1344,0)`. The target and non-player side tiles are dry map1 grass with zero statics and no saved blocker.
+
+The fox is now close enough again: dx `2`, dy `3`, floored distance `3`. I did not move. Nothing got tamed. The wildlife line did not stop watching me.
+
+Mechanical friction learned:
+
+- Closing or ignoring a visible context menu is not the same as selecting a row; without `ContextMenuResponse`, the disabled llama `Tame` row does no work.
+- The fox's dx `3`, dy `4` leash is floored distance `5`, not `4`, so one exact follow tick is legal and expected before more movement.
+- The fox can step northwest to `1197,1344` over clear dry grass; that brings it back into the 2..3 heel band without changing orders, ownership, combat, or follower count.
+- Horse serial `200909`, RidableLlama serial `226037`, and Eagle serial `444927` remain visible player decisions, not resolved systems.
+
+Next pressure:
+
+Mira remains at `Point3D(1195,1341,0)`, facing north. No gump, context menu, target cursor, taming timer, combat, corpse, loot, quest, discovery, hunger, thirst, or skill path is open. The controlled fox is at `Point3D(1197,1344,0)`, following and inside the heel band. The screen still has the horse, the labeled llama, and the labeled eagle, with zero saved visible items. The next honest action is another visible-wildlife decision, not routine travel.
+
+## Run 186 - The Eagle Menu Is Gray Too
+
+I start at `Point3D(1195,1341,0)`, facing north. The horse is still almost straight up-screen at dx `1`, dy `-15`, the llama is still on the top edge at dx `13`, dy `-18`, and the eagle is still named in the northeast corner at dx `18`, dy `-17`. My fox is finally close again at `Point3D(1197,1344,0)`, following and not protecting me. The screen is not empty enough for travel.
+
+**Beat 1**
+
+I ask the labeled eagle for its normal context menu.
+
+`PacketHandlers.ContextMenuRequest` finds Eagle serial `444927`, checks that we are on the same map, visible, and still inside `Utility.InUpdateRange`. `ContextMenu` asks the eagle for entries. Because the eagle is a tamable, uncontrolled `BaseCreature` and I am alive, `BaseCreature.GetContextMenuEntries` adds `Tame`. Then `Mobile.ContextMenu` sends `DisplayContextMenu`.
+
+The row appears, but it is gray. `TameEntry` uses range `6`, and the eagle is at dx `18`, dy `-17`. The packet marks the entry disabled. I do not press it. No `ContextMenuResponse` is sent, so no `TameEntry.OnClick`, no `Taming.OnUse`, no target cursor, no ownership change, no follower-count change, no skill timer, and no combat path runs.
+
+Mechanical friction learned:
+
+- A saved eagle at dx `18`, dy `-17` can still receive a normal context-menu request because the client update rectangle is inclusive.
+- The eagle is tamable by class, with `MinTameSkill = 17.1`, but the visible `Tame` row is disabled by the context-entry range `6`.
+- Opening the eagle menu replaces the prior stored menu reference, but without `ContextMenuResponse` it does not select, clear, tame, attack, move, or resolve anything.
+- The horse, llama, and eagle remain visible wildlife decisions. The fox remains a follower, not a shield.
+
+Next pressure:
+
+Mira remains at `Point3D(1195,1341,0)`, facing north. The eagle context menu is open with a disabled `Tame` row. Horse serial `200909`, RidableLlama serial `226037`, and Eagle serial `444927` remain visible; the controlled fox is at `Point3D(1197,1344,0)` inside the heel band. The next honest action is to close or ignore the gray eagle menu, then decide whether to reposition, back away, or keep inching toward the horse without pretending any animal is solved.
+
+## Run 187 - I Stop Staring At The Gray Row
+
+I start at `Point3D(1195,1341,0)`, facing north, with the eagle's menu still open. The only row I care about is `Tame`, and it is gray because the eagle is still way out at dx `18`, dy `-17`. The horse is closer but still not close enough at dx `1`, dy `-15`; the llama is still high on the screen at dx `13`, dy `-18`. My fox is close behind me at `Point3D(1197,1344,0)`, following, not guarding.
+
+**Beat 1**
+
+I close or ignore the disabled eagle menu.
+
+That is not a selection. The traced server work would be `PacketHandlers.ContextMenuResponse`: clear `from.ContextMenu`, find the menu target, check the entry index, require `e.Enabled`, require `from.InRange(target, range)`, and only then call `OnClick`. I do not send that packet. No `TameEntry.OnClick`, no `Taming.OnUse`, no target cursor, no skill timer, no ownership change, and no follower-count change runs.
+
+The screen underneath has not improved. The same three wild bodies are still there, and the live snapshot rectangle is still `x=1177..1213,y=1323..1359`: Horse serial `200909`, RidableLlama serial `226037`, and Eagle serial `444927`, with zero saved visible items or visible running spawner objects. The old exported fox at `1209,1324` is still my already-tamed serial, overridden by the simulated follower at `1197,1344`; I do not split it into another animal.
+
+Mechanical friction learned:
+
+- Closing or ignoring a context menu is not `ContextMenuResponse`.
+- A disabled row can teach me the range gate, but it cannot be pressed after I close it.
+- The eagle is still only labeled and visible. It is not tame, targeted, fought, moved, pacified, killed, or resolved.
+- Removing the open UI does not make the horse/llama/eagle cluster routine travel.
+
+Next pressure:
+
+Mira remains at `Point3D(1195,1341,0)`, facing north. No gump, client-visible context menu, target cursor, taming timer, combat, corpse, loot, quest, discovery, hunger, thirst, skill path, or pet AI tick is open. The controlled fox stays at `Point3D(1197,1344,0)`, inside the heel band. The horse, llama, and eagle remain visible unresolved wildlife decisions. The next honest action is to inspect, reposition, approach, or retreat; it is not a travel segment and it is not selecting the gray row I just closed.
+
+## Run 188 - The Horse Is Closer, Not Close
+
+I start exactly where the last menu left me: `Point3D(1195,1341,0)`, facing north, with no gump or context menu open. The fox is tucked behind me at `Point3D(1197,1344,0)`. The live screen is still not empty: the horse is the nearest unresolved body at `Point3D(1196,1326,0)`, dx `1`, dy `-15`; the llama is labeled on the top edge at dx `13`, dy `-18`; and the eagle is labeled in the northeast at dx `18`, dy `-17`. There are zero saved visible items, no corpse, no chest, no road, no shelter, no water source, and no running spawner object on-screen. The map overlay still whispers `Ruins` southeast and `Mines of Morinia` west, but those are not screen objects.
+
+**Beat 1**
+
+I ask the horse for its normal context menu again.
+
+The request is legal. The horse is on `Map.Sosaria`, visible, and inside the inclusive 18-tile update rectangle, so `PacketHandlers.ContextMenuRequest` lets the click reach `ContextMenu`. `BaseCreature.GetContextMenuEntries` adds `Tame` because the horse is tamable, uncontrolled, and I am alive. Then the same old range gate bites down: `TameEntry` is localization `6130` with range `6`, and the packet disables the row because the horse is still dx `1`, dy `-15` from me.
+
+This does not start taming. I do not send `ContextMenuResponse`, do not select a row, do not get a target cursor, and do not reach `Taming.OnUse` or `Taming.InternalTarget`. The horse is merely closer than it was in Run 180, not close enough. Its hidden normal-versus-rare tame difficulty branch is still not visible to me.
+
+Mechanical friction learned:
+
+- Reopening a context menu from a new distance is normal play, but it only retests the visible menu gate.
+- The horse can be clicked and menued from dx `1`, dy `-15`, yet the `Tame` row remains disabled because the row range is `6`.
+- The range-2 taming target gate, skill timer, ownership path, follower count, combat, item use, hunger/thirst, quest, discovery, fame, karma, and pet AI do not run from a disabled row.
+- The llama and eagle remain labeled, wild, and unresolved. The fox remains a follower, not a shield.
+
+Next pressure:
+
+Mira remains at `Point3D(1195,1341,0)`, facing north. The horse context menu is open with a disabled `Tame` row. Horse serial `200909`, RidableLlama serial `226037`, and Eagle serial `444927` are still visible; the controlled fox is still at `Point3D(1197,1344,0)` inside the heel band. The next honest action is to close or ignore the gray horse row, step closer, or retreat. Pressing the disabled row is still not a real action.
+
+## Run 189 - I Close The Horse Menu
+
+I start at `Point3D(1195,1341,0)`, facing north, with the horse menu still open from the last click. The row says `Tame`, but it is gray because the horse is still at dx `1`, dy `-15`, far outside the row's range `6`. The llama and eagle are still labeled on the top edge, and my fox is still close behind me at `Point3D(1197,1344,0)`.
+
+**Beat 1**
+
+I close or ignore the disabled horse menu.
+
+That is a client-screen dismissal, not a choice. The server path that would matter is `PacketHandlers.ContextMenuResponse`: clear `from.ContextMenu`, find the same target, read a selected row index, require `e.Enabled`, require `from.InRange(target, range)`, and only then call `OnClick`. I do not send that packet. The disabled `Tame` row does not become an action just because I saw it.
+
+The live rectangle is unchanged: `x=1177..1213,y=1323..1359`. I still see Horse serial `200909` at dx `1`, dy `-15`, RidableLlama serial `226037` at dx `13`, dy `-18`, and Eagle serial `444927` at dx `18`, dy `-17`. There are zero saved visible items and zero visible running spawner objects. The exported fox at `1209,1324` is still my already-tamed serial, overridden by the simulated follower at `1197,1344`; I do not invent a second fox.
+
+Mechanical friction learned:
+
+- Closing or ignoring the horse menu does not send `ContextMenuResponse`.
+- The server-side clear/row-selection/`OnClick` path did not run.
+- `TameEntry.OnClick`, `Taming.OnUse`, target cursor assignment, range-2 taming targeting, skill timers, ownership, follower count, combat, loot, hunger, thirst, quest, discovery, fame, karma, and PvP/PvE state are unchanged.
+- Removing the gray menu only returns me to the same wildlife screen.
+
+Next pressure:
+
+Mira remains at `Point3D(1195,1341,0)`, facing north. No gump, client-visible context menu, target cursor, taming timer, combat, corpse, loot, quest, discovery, hunger, thirst, skill path, or pet AI tick is open. The controlled fox stays at `Point3D(1197,1344,0)`, inside the heel band. The horse, llama, and eagle remain visible unresolved wildlife decisions. The next honest action is to step closer, retreat, or inspect another visible animal; it is not a travel segment and it is not selecting the gray row I just closed.
+
+## Run 190 - Two Steps Toward The Horse
+
+I start at `Point3D(1195,1341,0)`, facing north, with no menu left to hide behind. The horse is still the closest useful-looking body at `Point3D(1196,1326,0)`, dx `1`, dy `-15`; the llama is still labeled up at dx `13`, dy `-18`; the eagle is still labeled on the northeast edge at dx `18`, dy `-17`. My fox is behind me at `Point3D(1197,1344,0)`, following, not guarding.
+
+**Beat 1**
+
+I press north.
+
+Because I am already facing north, `Mobile.Move` takes the real movement path. `MovementImpl.CheckMovement` tests the forward tile and accepts `Point3D(1195,1340,0)`: server-order map1 block `76455`, grass tile `0x4`, average movement z `0`, no statics, and no saved mobile or visible item blocker.
+
+The horse gets a little closer, not close. It is now dx `1`, dy `-14`, still far outside the visible context-entry range `6`. The llama and eagle stay visible at dx `13`, dy `-17` and dx `18`, dy `-16`. The fox is now stretched behind me at dx `2`, dy `4`, floored distance `4`, so I do not keep walking as if it is glued to my heel.
+
+**Beat 2**
+
+I wait for the fox to catch up once.
+
+`BaseAI.Obey` routes into `DoOrderFollow`. FriendsAvoidHeels is still using the remembered `FollowersMax = 7`, so the desired band is `2..3`. The fox's floored distance is `4`, and `GetDirectionTo` chooses `Direction.Up`. `DoMove` forces the direction and moves the fox northwest to `Point3D(1196,1343,0)` over grass tile `0x5`, average movement z `0`, zero statics, and no saved blocker.
+
+That fixes spacing, not danger. The fox is now dx `1`, dy `3`, floored distance `3`, still only a follower. No Guard, Attack, combatant, body-blocking, ownership, follower-count, or pet-order state changes.
+
+**Beat 3**
+
+I press north again.
+
+The player movement path accepts the second forward tile, `Point3D(1195,1339,0)`: grass tile `0x6`, average movement z `0`, no statics, and no saved blocker. The screen does not reveal a new body, chest, corpse, water source, road, sign, or gump. It is the same little animal wall, just closer.
+
+The horse is dx `1`, dy `-13`; the llama is dx `13`, dy `-16`; the eagle is dx `18`, dy `-15`. Zero saved visible items are in the rectangle, and no visible running spawner object stands on-screen. The raw live save still lists fox serial `200274` at `1209,1324`, but that serial is already mine in the simulation and now stands at `1196,1343`; I do not invent a second wild fox.
+
+Mechanical friction learned:
+
+- A north step to `1195,1340` and another to `1195,1339` are both legal dry Sosaria grass with zero statics and no saved blockers.
+- The controlled fox can follow one tile northwest to `1196,1343` through the exact `BaseAI.Obey -> DoOrderFollow -> WalkMobileRange -> DoMove` path, but that still does not make it a guard or shield.
+- The horse is closer but still not usable: dx `1`, dy `-13` fails the visible `TameEntry` range `6`, so the range-2 `Taming.InternalTarget` gate still has not run.
+- The llama has moved into range-perception geometry by rectangle math, but `FightMode.Aggressor` still short-circuits without aggressor/aggressed/faction/ethic state. The eagle remains visible but outside range perception by x distance.
+- The four overlapping invisible PremiumSpawner home ranges remain area risk only; their saved spawned refs are the visible animals already acknowledged.
+
+Next pressure:
+
+Mira ends at `Point3D(1195,1339,0)`, facing north. The fox is visible behind her at `Point3D(1196,1343,0)`, stretched again to dx `1`, dy `4`, floored distance `4`, so the next honest beat is probably another fox-follow wait before any more approach. The screen still contains Horse serial `200909`, RidableLlama serial `226037`, and Eagle serial `444927`, with zero saved visible items and no open UI. The next player decision is whether to keep inching toward the horse, back away from the animal cluster, or inspect the screen again; it is not a travel segment and not a tame attempt.
+
+## Run 191 - The Fox Keeps Me Honest
+
+I start at `Point3D(1195,1339,0)`, facing north. The horse is the obvious temptation now, almost straight ahead at `Point3D(1196,1326,0)`, dx `1`, dy `-13`, but that is still nowhere near the `Tame` row's range `6`. The llama and eagle are still up on the same screen edge, and my fox is stretched behind me at `Point3D(1196,1343,0)`, following but one tile too loose.
+
+**Beat 1**
+
+I wait for the fox instead of pretending it is attached to my boots.
+
+`BaseAI.Obey` goes through `DoOrderFollow`, `WalkMobileRange`, and the same FriendsAvoidHeels spacing. The desired band is still `2..3`; the fox is at floored distance `4`, so it needs to move. From `1196,1343` toward me at `1195,1339`, `GetDirectionTo` resolves to `Direction.North`, not northwest, and `DoMove` accepts `Point3D(1196,1342,0)`. The tile is dry map1 grass `0x6`, z `0`, with zero statics and no saved blocker.
+
+That puts the fox back at dx `1`, dy `3`. No Guard order appears. No combat state appears. It is just following.
+
+**Beat 2**
+
+I press north once.
+
+Because I am already facing north, this is a real `Mobile.Move` attempt. `MovementImpl.CheckMovement` accepts `Point3D(1195,1338,0)`: dry map1 grass `0x4`, z `0`, zero statics, no saved mobile, and no saved item on the target.
+
+The horse is closer, but not close. It is now dx `1`, dy `-12`, still outside the visible `TameEntry` range `6`. The llama is dx `13`, dy `-15`; the eagle is dx `18`, dy `-14`. Nothing new enters the screen, and no menu opens. The fox is stretched again at dx `1`, dy `4`, because I moved after it did.
+
+**Beat 3**
+
+I wait for the fox again.
+
+The same follow path runs: `BaseAI.Obey -> DoOrderFollow -> WalkMobileRange -> GetDirectionTo(Direction.North) -> DoMove`. The fox steps from `Point3D(1196,1342,0)` to `Point3D(1196,1341,0)`. The tile is dry map1 grass `0x3`, z `0`, zero statics, and no saved blocker. It ends inside the heel band at dx `1`, dy `3`.
+
+Mechanical friction learned:
+
+- Two exact fox Follow ticks can keep the follower coherent while I creep north, but they still do not make the fox a guard, shield, or combat participant.
+- The north step to `1195,1338` is legal dry Sosaria grass with zero statics and no saved blocker.
+- Horse serial `200909` is closer but still not usable: dx `1`, dy `-12` fails the visible range-6 `Tame` row, so `TameEntry.OnClick`, `Taming.OnUse`, and `Taming.InternalTarget` still have not run.
+- The live snapshot rectangle `x=1177..1213,y=1320..1356` still shows the same horse, llama, and eagle, zero saved visible items, and zero visible running spawner objects.
+
+Next pressure:
+
+Mira ends at `Point3D(1195,1338,0)`, facing north. The fox is at `Point3D(1196,1341,0)`, following and inside the heel band. The horse is visible at dx `1`, dy `-12`; the llama at dx `13`, dy `-15`; the eagle at dx `18`, dy `-14`. The next honest action is a fresh screen decision: step closer, ask for a new context menu from the new distance, or back away. It is still not a travel segment, and it is still not a tame attempt.
+
+## Run 192 - Still Too Far To Say Tame
+
+I start at `Point3D(1195,1338,0)`, facing north, with no menu open. The horse is still the thing pulling my eye: `Point3D(1196,1326,0)`, dx `1`, dy `-12`. The llama and eagle are still visible up-screen, and the fox is close enough behind me at `Point3D(1196,1341,0)`. The screen is not empty, so I do this one tile at a time instead of calling it travel.
+
+**Beat 1**
+
+I press north.
+
+`Mobile.Move` takes the real movement path because I am already facing `Direction.North`. `MovementImpl.CheckMovement` accepts `Point3D(1195,1337,0)`: server-order `map1.mul` says grass tile `0x6`, z `0`, `staidx1/statics1` has no statics there, and the live save has no mobile or item blocker on the tile.
+
+The horse is closer, not usable: dx `1`, dy `-11`. The llama is dx `13`, dy `-14`; the eagle is dx `18`, dy `-13`. The fox is now stretched to dx `1`, dy `4`, so I pause before taking another step.
+
+**Beat 2**
+
+I wait for the fox to catch up once.
+
+`BaseAI.Obey` goes through `DoOrderFollow` and `WalkMobileRange`. The remembered FriendsAvoidHeels band still wants distance `2..3`; the fox's floored distance is `4`, so `GetDirectionTo` chooses `Direction.North`. `DoMove/Mobile.Move` accepts `Point3D(1196,1340,0)`, another dry grass tile with zero statics and no saved blocker.
+
+That puts the fox at dx `1`, dy `3`, back in the band. It still is not guarding, fighting, blocking, or protecting me.
+
+**Beat 3**
+
+I press north again.
+
+The second player step also enters the real movement path and accepts `Point3D(1195,1336,0)`: dry grass tile `0x3`, z `0`, zero statics, no saved blocker. The shifted live rectangle still shows the same unresolved bodies and no items: horse dx `1`, dy `-10`, llama dx `13`, dy `-13`, eagle dx `18`, dy `-12`. The stale live JSONL fox row at `1209,1324` is still my simulated follower serial, not a second wild fox.
+
+Mechanical friction learned:
+
+- Two more north inputs over clear grass do not make the horse interactable. At dx `1`, dy `-10`, it still fails the visible `TameEntry` range `6`.
+- The fox can follow one tile north to `1196,1340`, but the final player step stretches it back outside the heel band at floored distance `4`.
+- No `ContextMenuRequest`, `ContextMenuResponse`, `TameEntry.OnClick`, `Taming.OnUse`, `Taming.InternalTarget`, skill timer, ownership, follower count, combat, loot, corpse, quest, discovery, hunger, or thirst path runs from walking closer.
+- The map overlay still only gives navigation lures: `Ruins` southeast and `Mines of Morinia` west. They are not visible entities on this screen.
+
+Next pressure:
+
+Mira ends at `Point3D(1195,1336,0)`, facing north. The fox is at `Point3D(1196,1340,0)`, following but stretched again to dx `1`, dy `4`. The horse is visible at dx `1`, dy `-10`, still outside range `6`; the llama and eagle remain visible and unresolved. The next honest beat is probably another fox-follow wait or another cautious approach step, not a tame attempt and not routine travel.
+
+## Run 193 - One Step Closer, Still Not Tame
+
+I start at `Point3D(1195,1336,0)`, facing north, with the horse still almost straight ahead at `Point3D(1196,1326,0)`. It is visible, labeled from earlier, and still too far away. The llama and eagle are still in the same upper-screen cluster, and my fox is stretched behind me at `Point3D(1196,1340,0)`, following but loose. I do not pretend this is a road. I am creeping through animal pressure one tiny correction at a time.
+
+**Beat 1**
+
+I wait for the fox to catch up.
+
+`BaseAI.Obey` follows the `Follow` order into `DoOrderFollow`, then `WalkMobileRange`. FriendsAvoidHeels still wants the fox in the 2..3 tile band. From dx `1`, dy `4`, the floored distance is `4`, so the fox needs one north step. `GetDirectionTo` resolves `Direction.North`, and `DoMove/Mobile.Move` accepts `Point3D(1196,1339,0)`: dry map1 grass tile `0x5`, z `0`, zero statics, and no saved blocker.
+
+The fox is back in the band at dx `1`, dy `3`. It is still a follower, not a guard.
+
+**Beat 2**
+
+I press north once.
+
+Because I am already facing north, this is real movement, not just a turn. `Mobile.Move` enters `CheckMovement` and accepts `Point3D(1195,1335,0)`: dry map1 grass tile `0x5`, z `0`, zero statics, and no saved mobile or item blocker.
+
+The horse closes to dx `1`, dy `-9`. That is progress, but not interaction. The `Tame` context row uses range `6`, and I have not even requested a fresh context menu from this distance. The llama is dx `13`, dy `-12`; the eagle is dx `18`, dy `-11`; zero saved visible items are in the rectangle. The fox is stretched again to dx `1`, dy `4`, so I do not keep walking.
+
+**Beat 3**
+
+I wait for the fox again.
+
+The same follow path runs. `WalkMobileRange` sees floored distance `4`, chooses `Direction.North`, and `DoMove/Mobile.Move` accepts `Point3D(1196,1338,0)`: dry map1 grass tile `0x6`, z `0`, zero statics, and no saved blocker. The fox returns to dx `1`, dy `3`.
+
+Mechanical friction learned:
+
+- Waiting can legally advance the controlled fox through the exact follow AI path, but it does not create Guard, Attack, Combatant, body-blocking, or protection state.
+- The north step to `1195,1335` is legal dry Sosaria grass with zero statics and no saved blocker.
+- Horse serial `200909` is closer at dx `1`, dy `-9`, but still outside the visible `TameEntry` range `6`. No context menu was requested, no row was selected, no target cursor opened, and `Taming.OnUse`/`Taming.InternalTarget` did not run.
+- The llama and eagle remain visible unresolved wildlife. The stale live JSONL row for fox serial `200274` is still my simulated controlled follower, now at `1196,1338`, not a second wild fox.
+
+Next pressure:
+
+Mira ends at `Point3D(1195,1335,0)`, facing north. The fox is at `Point3D(1196,1338,0)`, following and inside the heel band. The horse is visible at dx `1`, dy `-9`; the llama at dx `13`, dy `-12`; the eagle at dx `18`, dy `-11`. The next honest action is another cautious approach step, a fresh context-menu check from the new distance, or retreat. It is still not a tame attempt and still not a travel segment.
+
+## Run 194 - The Deer Joins The Problem
+
+I start at `Point3D(1195,1335,0)`, facing north, with no menu open. The horse is still almost straight ahead at `Point3D(1196,1326,0)`, close enough to tempt me and still not close enough to touch the `Tame` row. The llama and eagle are still up-screen. My fox is tucked behind me at `Point3D(1196,1338,0)`, following and inside the heel band for the moment.
+
+**Beat 1**
+
+I press north once.
+
+Because I am already facing north, this is a real movement attempt. `Mobile.Move` reaches `MovementImpl.CheckMovement`, and the server-order map probe accepts `Point3D(1195,1334,0)`: map1 grass tile `0x3`, average movement z `0`, zero statics, and no saved mobile or item blocker on the target.
+
+The step changes the screen, so I stop. A deer I did not have on-screen before appears at the top edge: Hind serial `323473` at `Point3D(1203,1316,0)`, dx `8`, dy `-18`. The horse is now dx `1`, dy `-8`; that is closer, but the `TameEntry` range is still `6`, and I have not requested a fresh context menu anyway. The llama sits at dx `13`, dy `-11`; the eagle is still on the east edge at dx `18`, dy `-10`. The live item scan is still empty.
+
+My fox did not get a follow tick after I moved. It stays at `Point3D(1196,1338,0)`, now dx `1`, dy `4`, outside the 2..3 heel band. That is a leash problem, not protection.
+
+Mechanical friction learned:
+
+- One north step to `1195,1334` is legal dry Sosaria grass with zero statics and no saved target blocker.
+- A new visible deer stops the batch. Hind constructs as `AI_Animal` with `FightMode.Aggressor`, but current acquisition is negative because there is no aggressor, aggressed, faction, or ethic state involving me or the fox.
+- Horse serial `200909` is closer at dx `1`, dy `-8`, but still outside `TameEntry` range `6`. No context menu, row selection, target cursor, `Taming.OnUse`, or `Taming.InternalTarget` ran.
+- The fox is following, not guarding, and now needs a catch-up decision before I pretend I can keep creeping north.
+
+Next pressure:
+
+Mira ends at `Point3D(1195,1334,0)`, facing north. The controlled fox is at `Point3D(1196,1338,0)`, outside the heel band. The visible wildlife set is now deer, horse, llama, and eagle, with zero saved visible items and no open UI. The next honest action is to react to the newly visible deer, wait the fox back in, inspect a visible animal, or retreat. It is not a travel segment and not a tame attempt.
+
+## Run 195 - I Let The Fox Catch Up
+
+I start at `Point3D(1195,1334,0)`, facing north. The new deer is still on the top edge, the horse is still almost straight ahead, and the llama and eagle are still sitting in the same bad little screen full of options I cannot safely call plans. My fox is the one body I actually own, and after the last step it is stretched behind me at dx `1`, dy `4`. So I do not lunge for the horse menu or pretend the deer is solved. I wait.
+
+**Beat 1**
+
+The controlled fox takes its follow tick.
+
+`BaseAI.Obey` follows the `Follow` order into `DoOrderFollow`, then `WalkMobileRange`. FriendsAvoidHeels is still using the remembered spacing value `7`, so the desired band is `2..3`. From `Point3D(1196,1338,0)` to me, the floored distance is `4`; `GetDirectionTo` chooses `Direction.North`, and `DoMove/Mobile.Move` accepts `Point3D(1196,1337,0)`. The tile is dry map1 grass with zero statics and no saved blocker.
+
+The fox is back in the band at dx `1`, dy `3`. It is still a follower, not a guard.
+
+**Beat 2**
+
+I press north once.
+
+Because I am already facing north, this is real movement. `Mobile.Move` enters `MovementImpl.CheckMovement` and accepts `Point3D(1195,1333,0)`: dry map1 grass, zero statics, and no saved mobile or item blocker on the target.
+
+The horse is now dx `1`, dy `-7`. That is close enough to keep tempting me and still one tile outside the `TameEntry` range `6`. The deer is dx `8`, dy `-17`; the llama is dx `13`, dy `-10`; the eagle is dx `18`, dy `-9`. The screen does not gain a chest, corpse, water source, sign, shelter, road, gump, or target cursor.
+
+The fox is stretched again at dx `1`, dy `4`, so I stop myself from chaining another step.
+
+**Beat 3**
+
+I wait for the fox again.
+
+The same follow path runs: `BaseAI.Obey -> DoOrderFollow -> WalkMobileRange -> GetDirectionTo(Direction.North) -> DoMove/Mobile.Move`. The fox moves from `Point3D(1196,1337,0)` to `Point3D(1196,1336,0)`, another dry map1 grass tile with zero statics and no saved blocker. It ends at dx `1`, dy `3`, back inside the heel band.
+
+Mechanical friction learned:
+
+- A newly visible deer is screen pressure, not a reason to sprint. The first safe thing to resolve was the stretched controlled follower.
+- One north step to `1195,1333` is legal dry Sosaria grass with zero statics and no saved target blocker.
+- The horse is closer but still not usable: dx `1`, dy `-7` fails the visible context-entry range `6`, so no `ContextMenuRequest`, `ContextMenuResponse`, `TameEntry.OnClick`, `Taming.OnUse`, target cursor, skill timer, ownership, or follower-count path ran.
+- The deer, horse, llama, and eagle are all visible unresolved wildlife. Current `FightMode.Aggressor` acquisition stays negative because no aggressor/aggressed/faction/ethic state involving me or the fox is committed.
+- The fox follow ticks restore leash spacing only. They do not create Guard, Attack, Combatant, body-blocking, or protection.
+
+Next pressure:
+
+Mira ends at `Point3D(1195,1333,0)`, facing north. The controlled fox is at `Point3D(1196,1336,0)`, following and inside the heel band. The screen still contains Hind serial `323473`, Horse serial `200909`, RidableLlama serial `226037`, and Eagle serial `444927`, with zero saved visible items and no open UI. The horse is close but still outside the `Tame` row's range. The next honest action is a fresh visible-wildlife decision: ask for a new menu anyway, take one more cautious step, inspect the deer, or retreat. It is not routine travel and not a tame attempt.
+
+## Run 196 - One Tile Makes The Horse Menu Real
+
+I start at `Point3D(1195,1333,0)`, facing north, with no menu open. The horse is still the thing I want, sitting at `Point3D(1196,1326,0)`, dx `1`, dy `-7`. That is close enough to be annoying and still one tile outside the `Tame` row's range `6`. The deer, llama, and eagle are still visible, and my fox is in heel spacing at `Point3D(1196,1336,0)`.
+
+**Beat 1**
+
+I press north once.
+
+Because I am already facing north, `PacketHandlers.MovementReq` reaches the real `Mobile.Move` path. `MovementImpl.CheckMovement` accepts `Point3D(1195,1332,0)`: Sosaria is map/file index `1`, the server-order `map1.mul` read uses `((blockX * blockHeight) + blockY)`, the target tile is dry grass `0x3` at z `0`, its average movement z is `0`, and `staidx1/statics1` has zero statics there. The live save has no mobile or item blocker on the destination.
+
+The step matters immediately, so I stop. A second eagle appears at the top edge: Eagle serial `444945` at `Point3D(1196,1314,0)`, dx `1`, dy `-18`. The horse is now dx `1`, dy `-6`, which means a fresh context menu should be able to draw an enabled `Tame` row. That is not a tame attempt yet. I have not requested the menu, selected a row, opened a target cursor, or touched `Taming.InternalTarget`, whose true targeting range is only `2`.
+
+My fox did not get a follow tick after the step. It stays at `Point3D(1196,1336,0)`, now dx `1`, dy `4`, outside the 2..3 heel band. The screen now holds two eagles, the deer, the horse, and the llama, plus the stale live JSONL fox row that I must keep overriding as my already-tamed follower.
+
+Mechanical friction learned:
+
+- One north step to `1195,1332` is legal dry Sosaria grass with zero statics and no saved target blocker.
+- Moving one tile closer changes the horse from "visible but menu row out of range" to "close enough for the range-6 context row." That still does not run `ContextMenuRequest`, `ContextMenuResponse`, `TameEntry.OnClick`, `Taming.OnUse`, or the range-2 target gate.
+- Eagle serial `444945` enters the inclusive 18-tile screen at the top edge, so this cannot be compressed as route travel.
+- The fox is following, not guarding, and is now stretched to floored distance `4`.
+
+Next pressure:
+
+Mira ends at `Point3D(1195,1332,0)`, facing north. The controlled fox is at `Point3D(1196,1336,0)`, following but outside the heel band. The visible wildlife set is now Eagle `444945`, Hind `323473`, Horse `200909`, RidableLlama `226037`, Eagle `444927`, and the overridden controlled fox serial `200274`. The next honest action is a real decision: request the horse menu from range, wait the fox back in, inspect the new eagle, or back away. It is not a tame attempt until the visible menu path is actually used.
+
+## Run 197 - The Tame Row Wakes Up
+
+I start exactly where that one north step left me: `Point3D(1195,1332,0)`, facing north, with the horse at `Point3D(1196,1326,0)`. It is only six tiles away by the context-menu rule now. The screen is still crowded: the new eagle at the top edge, the deer, the llama, the old labeled eagle on the east edge, and my fox stretched behind me at dx `1`, dy `4`. I do not move again, and I do not let the fox tick. The horse is the visible thing I have been working toward, so I ask for its context menu.
+
+**Beat 1**
+
+The menu request is accepted.
+
+`PacketHandlers.ContextMenuRequest` finds Horse serial `200909`, confirms we share `Map.Sosaria`, confirms I can see it, and passes `Utility.InUpdateRange`. `ContextMenu` asks the horse for entries. `BaseCreature.GetContextMenuEntries` adds `Tame` because the horse is tamable, uncontrolled, and I am alive. This time `DisplayContextMenu` does not gray the row out: `TameEntry` has range `6`, and I am at dx `1`, dy `-6`.
+
+That is still not a tame. I do not select the row. No `ContextMenuResponse` runs, so `TameEntry.OnClick` does not lock targeting, `Taming.OnUse` does not assign the range-2 target, and `Target.Invoke` does not reject or accept the horse. The fox stays behind me at `Point3D(1196,1336,0)`, still outside the heel band. The same five wild animals remain visible, and zero saved items are in range.
+
+Mechanical friction learned:
+
+- Opening the horse menu is a separate normal-client action from selecting `Tame`.
+- The range-6 context entry is now genuinely enabled for Horse serial `200909`, unlike the earlier disabled horse menus at longer range.
+- The true taming target gate is still `Taming.InternalTarget` range `2`; the current dx `1`, dy `-6` would not satisfy that if I selected the row next.
+- No movement, pet follow tick, skill use, target cursor, taming timer, ownership, follower-count, combat, item, hunger, thirst, quest, discovery, fame, karma, or PvP/PvE state changed.
+
+Next pressure:
+
+The horse context menu is open with a visible enabled `Tame` row. The honest next action is a UI decision: select `Tame` and probably learn the range-2 failure again, close/ignore the menu, or step closer only after dealing with the open menu and the stretched fox. This is not a travel segment.
+
+## Run 198 - The Menu Lied By Six Tiles
+
+I start frozen in the same grass tile, `Point3D(1195,1332,0)`, facing north. The horse menu is already open, and this matters more than the fox being loose behind me. The row says `Tame`. It is not grey anymore. A normal player does not know the hidden skill target is shorter than the context row, so I click the visible `Tame` entry.
+
+**Beat 1**
+
+The row click is real, but it does not start taming.
+
+`PacketHandlers.ContextMenuResponse` clears the stored context menu, finds the same Horse serial `200909`, checks the response index, and accepts the row because `TameEntry` uses range `6`. `TameEntry.OnClick` locks targeting, suppresses the normal "Tame which animal?" prompt, and calls `UseSkill(Taming)`. `Taming.OnUse` creates an `InternalTarget`, but `TameEntry` immediately invokes it on the horse.
+
+That target has range `2`. From my tile the horse is still dx `1`, dy `-6`, so `Target.Invoke` stops before `Taming.OnTarget` and sends `500446`: `That is too far away.` The target is cleared, `NextSkillTime` is reset to now by `InternalTarget.OnTargetFinish`, and the menu is gone. No taming timer starts. No skill check rolls. No skill gain happens. The horse is still wild.
+
+The screen is otherwise the same crowded animal problem: the top-edge eagle, the deer, the horse, the llama, the east-edge eagle, and my controlled fox at dx `1`, dy `4`, still following but outside the heel band. I stop there, because the visible message and the closed menu force a new decision: step closer, wait the fox in, retreat, or inspect something else.
+
+Mechanical friction learned:
+
+- The enabled `Tame` context row is only a range-6 menu gate. It is not proof that the actual taming target can reach.
+- Selecting that row immediately runs the range-2 `Taming.InternalTarget` path against the same animal. From dx `1`, dy `-6`, the result is the normal "That is too far away" message.
+- Because the target fails range before `Taming.OnTarget`, the horse's `MinTameSkill` branch, ownership, follower slots, taming timer, combat anger, skill gain, and pet state are untouched.
+- The row click consumes the open context menu. There is no open target cursor afterward because `Target.Invoke` clears the target during the immediate failed invoke.
+- The fox is still a follower, not a guard, and remains stretched outside the 2..3 FriendsAvoidHeels band.
+
+Next pressure:
+
+Mira ends at `Point3D(1195,1332,0)`, facing north, with no open gump, no open context menu, and the horse still visible six tiles away. The next honest move is a new screen decision: wait the fox back into heel range, take one careful step closer before trying the horse again, or back out of the animal cluster. It is still not a travel segment and still not a tame attempt.
+
+## Run 199 - The Goat At The Edge Breaks The Plan
+
+I start where the failed horse click left me: `Point3D(1195,1332,0)`, facing north. The horse is still only six tiles away, which is close enough for the context menu to lie to me and too far for the real taming target. The fox is stretched behind me at `Point3D(1196,1336,0)`, and the screen already has too many animals in it: the top-edge eagle, the deer, the horse, the llama, and the east-edge eagle. So I do the boring thing first and let my one tame creature get back into place.
+
+**Beat 1**
+
+I wait for the fox to follow.
+
+`BaseAI.Obey` goes through `DoOrderFollow` and `WalkMobileRange`. FriendsAvoidHeels is still using the remembered `FollowersMax` value `7`, so the fox wants the `2..3` tile band. From `Point3D(1196,1336,0)` to me, the floored distance is `4`; `GetDirectionTo` resolves north, and `DoMove/Mobile.Move` accepts `Point3D(1196,1335,0)`. The tile is dry map1 grass `0x3`, z `0`, with zero statics and no saved blocker.
+
+That puts the fox at dx `1`, dy `4` by raw offset but floored distance `3`, inside the remembered heel band. It is still only following. No guard order, combat target, body block, ownership change, follower count change, or protection appears.
+
+**Beat 2**
+
+I press north once, trying to close the real horse range instead of pressing the same bad menu again.
+
+Because I am already facing north, `Mobile.Move` enters `CheckMovement`. The target `Point3D(1195,1331,0)` decodes as dry grass `0x5`, z `0`, with no Impassable/Wet flag and zero statics, and the live save has no mobile or item blocker on that tile. The step succeeds.
+
+The horse is closer at dx `1`, dy `-5`, but still not close enough for `Taming.InternalTarget` range `2`. More importantly, the shifted screen exposes a new goat at the north edge: Goat serial `200925` at `Point3D(1208,1313,0)`, dx `13`, dy `-18`. That stops me. The screen now has goat, eagle, deer, horse, llama, and eagle, with zero visible saved items and no visible running spawner object. My fox did not get another follow tick after the player step, so it sits at `Point3D(1196,1335,0)`, dx `1`, dy `4`, outside the 2..3 band again.
+
+Mechanical friction learned:
+
+- The fox follow wait is a real timer beat, not free protection. It only moves the controlled fox one north tile and restores spacing before I move.
+- The north step to `1195,1331` is legal dry Sosaria grass with zero statics and no saved blocker.
+- Horse serial `200909` is still outside the true taming target range: dx `1`, dy `-5` fails the range-2 `InternalTarget` even though the range-6 context row would be available.
+- Goat serial `200925` enters the visible update rectangle at the top edge after the step. That is a new player-facing animal decision, so this cannot continue as routine movement.
+
+Next pressure:
+
+Mira ends at `Point3D(1195,1331,0)`, facing north. The controlled fox is at `Point3D(1196,1335,0)`, following but stretched back outside the heel band after Mira's step. Visible wildlife now includes the goat at dx `13`, dy `-18`, eagle at dx `1`, dy `-17`, deer at dx `8`, dy `-15`, horse at dx `1`, dy `-5`, llama at dx `13`, dy `-8`, and eagle at dx `18`, dy `-7`. No menu, target cursor, gump, item, corpse, combat, skill roll, ownership change, or discovery is open. The next honest action is another visible-screen decision: wait the fox again, step closer, inspect the new goat/eagle cluster, or back away.
+
+## Run 200 - Still Too Far From The Horse
+
+I start at `Point3D(1195,1331,0)`, facing north. The goat that broke the last run is still on the top edge, the eagle above the horse is still there, the deer and llama are still in the same crowded strip, and the horse is close enough to keep dragging my eyes back to it. But my fox is behind me at `Point3D(1196,1335,0)`, outside the heel band again. I do not open the horse menu from five tiles away and repeat the same hidden range mistake. I let the pet catch up first.
+
+**Beat 1**
+
+I wait for the controlled fox.
+
+`BaseAI.Obey` follows the `Follow` order into `DoOrderFollow`, then `WalkMobileRange`. FriendsAvoidHeels still wants the `2..3` tile band. From `Point3D(1196,1335,0)`, the fox is floored distance `4` from me, so `GetDirectionTo` resolves north and `DoMove/Mobile.Move` accepts `Point3D(1196,1334,0)`. The tile is dry map1 grass `0x3`, z `0`, with zero statics and no saved blocker.
+
+The fox is back inside the band at dx `1`, dy `3`. It is following, not guarding.
+
+**Beat 2**
+
+I press north once.
+
+Because I am already facing north, this is movement, not just a turn. `Mobile.Move` enters `MovementImpl.CheckMovement` and accepts `Point3D(1195,1330,0)`: dry map1 grass `0x3`, z `0`, zero statics, and no saved mobile or item blocker on the target.
+
+The horse is now dx `1`, dy `-4`. That is still outside the true `Taming.InternalTarget` range `2`, even though the context row would be easy to wake up. The goat, top eagle, deer, llama, and east-edge eagle remain visible; zero saved items or visible running spawner objects appear. The live JSONL row for fox serial `200274` would be in the rectangle at its old saved tile, but the simulation already owns and moves that serial, so I keep the override instead of inventing a second fox.
+
+The player step stretches my fox again to floored distance `4`, so I stop walking.
+
+**Beat 3**
+
+I wait for the fox again.
+
+The same follow path runs. `WalkMobileRange` sees the fox outside the desired band, `GetDirectionTo` resolves north, and `DoMove/Mobile.Move` accepts `Point3D(1196,1333,0)`. The tile is dry map1 grass `0x4`, z `0`, with zero statics and no saved blocker. The fox ends at dx `1`, dy `3`, back in the band.
+
+Mechanical friction learned:
+
+- Cautious approach is still a pet-leash rhythm, not a travel segment. Each player step toward the horse stretches the fox; each wait only restores follow spacing.
+- The north step to `1195,1330` is legal dry Sosaria grass with zero statics and no saved blocker.
+- Horse serial `200909` is closer, but dx `1`, dy `-4` still fails the true range-2 `Taming.InternalTarget`. No context menu, row response, target cursor, taming timer, skill roll, ownership, follower-count, mount, combat, fame, karma, quest, or discovery path ran.
+- The goat, eagles, deer, horse, and llama are visible unresolved wildlife. Their current `FightMode.Aggressor` acquisition remains negative because no aggressor/aggressed/faction/ethic state involving me or the fox is committed.
+- The controlled fox is still only following. No Guard, Attack, Combatant, Warmode, body-blocking, or protection state appears.
+
+Next pressure:
+
+Mira ends at `Point3D(1195,1330,0)`, facing north. The controlled fox is at `Point3D(1196,1333,0)`, following and inside the heel band. Visible wildlife now includes the goat at dx `13`, dy `-17`, eagle at dx `1`, dy `-16`, deer at dx `8`, dy `-14`, horse at dx `1`, dy `-4`, llama at dx `13`, dy `-7`, and eagle at dx `18`, dy `-6`. No menu, target cursor, gump, item, corpse, combat, skill roll, ownership change, or discovery is open. The next honest move is still a visible-screen decision: step closer, request another horse menu knowing it will not reach the true target, inspect the goat/eagle cluster, or back away.
+
+## Run 201 - Finally Inside The Real Horse Range
+
+I start at `Point3D(1195,1330,0)`, facing north. The horse is four tiles north by y, so the visible context menu would still lie to me if I asked for `Tame` right now. The fox is close at `Point3D(1196,1333,0)`, and the whole top of the screen is still animal noise: goat, eagle, deer, horse, llama, and the east-edge eagle. I keep moving carefully because every north step stretches the fox again.
+
+**Beat 1**
+
+I press north once.
+
+`Mobile.Move` takes the real movement path because I am already facing north. `MovementImpl.CheckMovement` accepts `Point3D(1195,1329,0)`: map1 grass `0x5`, z `0`, zero statics, no saved mobile blocker, and no saved item blocker. The horse shifts to dx `1`, dy `-3`. That is still outside the true `Taming.InternalTarget` range `2`, even though the range-6 context row would be available.
+
+The fox does not get a free step during my movement. It is now dx `1`, dy `4`, outside the remembered 2..3 heel band. The visible saved animal set is unchanged except for offsets, and the old live fox row is still overridden by my controlled follower state.
+
+**Beat 2**
+
+I wait for the fox.
+
+The controlled fox follows through `BaseAI.Obey -> DoOrderFollow -> WalkMobileRange`. FriendsAvoidHeels still wants the 2..3 band. From `Point3D(1196,1333,0)`, the fox is floored distance `4`, so it takes a north step to `Point3D(1196,1332,0)`. That tile is map1 grass `0x5`, z `0`, with zero statics and no saved blocker. It is back inside the heel band, still only following.
+
+**Beat 3**
+
+I press north again.
+
+`Mobile.Move` accepts `Point3D(1195,1328,0)`: map1 grass `0x3`, z `0`, zero statics, and no saved mobile or item blocker. Now the horse is at dx `1`, dy `-2`. For the first time in this approach, the real `Taming.InternalTarget` range box would reach it if I opened the horse menu and selected `Tame`.
+
+That is not a tame attempt. I do not open the menu yet, and no `ContextMenuRequest`, `ContextMenuResponse`, `TameEntry.OnClick`, `Taming.OnUse`, `Target.Invoke`, skill timer, ownership, follower-count, or mount path runs.
+
+The step also exposes a new top-edge eagle: Eagle serial `226270` at `Point3D(1198,1310,0)`, dx `3`, dy `-18`. The rest of the visible animals remain: goat dx `13`, dy `-15`; eagle dx `1`, dy `-14`; deer dx `8`, dy `-12`; horse dx `1`, dy `-2`; llama dx `13`, dy `-5`; and the east-edge eagle dx `18`, dy `-4`. There are still zero visible saved items and no visible running spawner object. The fox is stretched again at dx `1`, dy `4`.
+
+Mechanical friction learned:
+
+- Two more north steps are legal dry Sosaria grass with zero statics and no saved blockers.
+- Horse serial `200909` is finally inside the true range-2 `Taming.InternalTarget` box from `Point3D(1195,1328,0)`.
+- Being in target range is only a precondition. No horse menu or taming target has been requested this run.
+- The new eagle at the top edge is a fresh visible animal, so I stop before treating the next action as routine.
+- The fox is again outside the heel band after the final player step. It remains Follow-only, not Guard, Attack, body-blocking, or protection.
+
+Next pressure:
+
+Mira ends at `Point3D(1195,1328,0)`, facing north. Horse serial `200909` is finally close enough for the hidden range-2 target, but the fox is stretched behind at `Point3D(1196,1332,0)`, and a new unlabeled eagle has appeared on the top edge. No menu, target cursor, gump, combat, damage, skill roll, ownership change, or discovery is open. The next honest action is a screen decision: wait the fox, inspect the new eagle, or try the now-legitimate horse menu path.
+
+## Run 202 - The Horse Menu Is Real Now
+
+I start at `Point3D(1195,1328,0)`, facing north, with the horse finally close enough to matter for the hidden target range. The screen is not quiet: the new top-edge eagle is still above me, with the goat, another eagle, deer, horse, llama, and east-edge eagle all in the same 18-tile rectangle. But the fox is stretched behind me at `Point3D(1196,1332,0)`, outside the heel band, and I do not want to start another animal interaction with my only pet lagging.
+
+**Beat 1**
+
+I wait for the fox.
+
+`BaseAI.Obey` follows the `Follow` order into `DoOrderFollow`, then `WalkMobileRange`. FriendsAvoidHeels still uses the remembered `FollowersMax` value `7`, so the desired leash is 2..3 tiles. From `Point3D(1196,1332,0)`, the fox is floored distance `4`, so it steps north to `Point3D(1196,1331,0)`. The tile is map1 grass `0x6`, z `0`, with zero statics and no saved blocker. The fox is back inside the band at dx `1`, dy `3`. It is still following, not guarding.
+
+**Beat 2**
+
+Now I ask for the horse's context menu.
+
+The request passes the normal screen gates. The horse is on the same map, visible, and inside the update rectangle at dx `1`, dy `-2`. `BaseCreature.GetContextMenuEntries` adds `Tame` because the horse is tamable, uncontrolled, and I am alive. This time the menu row is not just range-6 close; it is also close enough that the later range-2 target would be reachable if I choose it.
+
+I stop there. The context menu is open with `Tame` visible and enabled, but I do not select it. No `ContextMenuResponse`, `TameEntry.OnClick`, `Taming.OnUse`, `Target.Invoke`, `Taming.OnTarget`, skill timer, skill gain, ownership, follower-count, mount, combat, corpse, loot, quest, discovery, hunger/thirst, fame, karma, or PvP/PvE path runs.
+
+Mechanical friction learned:
+
+- Waiting the fox is an exact pet AI beat. It restores the leash to the 2..3 band, but it does not create Guard, Attack, body-blocking, or protection.
+- The fox follow target `1196,1331` is dry Sosaria grass with zero statics and no saved blocker.
+- Horse serial `200909` now exposes an enabled `Tame` row from inside both the range-6 context gate and the range-2 taming target geometry.
+- Opening a context menu is not selecting a row. The next state is an open UI decision, not taming progress.
+
+Next pressure:
+
+Mira remains at `Point3D(1195,1328,0)`, facing north. The fox is at `Point3D(1196,1331,0)`, following and back inside the heel band. The horse context menu is open with a visible enabled `Tame` row. The surrounding animals remain unresolved visible wildlife, and the old off-screen toad, Urulg, GoblinArcher, and swamp-drake branches are still risk evidence rather than safety. The next honest action is to choose `Tame`, dismiss the menu, or change my mind before touching another key.
+
+## Run 203 - The Horse Does Not Even Start
+
+I start at `Point3D(1195,1328,0)`, facing north, with the horse menu already open. The screen is still packed with animals: the horse at dx `1`, dy `-2`, goat, deer, llama, three eagles, and my fox standing behind me inside the heel band. The menu row says `Tame`, it is not grey, and this time the horse is close enough for the hidden range-2 target. So I click it.
+
+**Beat 1**
+
+The menu disappears, and the real wall is not range anymore. `ContextMenuResponse` clears the stored menu, confirms the same horse, and accepts the enabled range-6 row. `TameEntry.OnClick` locks targeting, suppresses the normal "Tame which animal?" prompt, runs the Taming skill, and immediately invokes the horse through `Taming.InternalTarget`. From here the range-2 target reaches the horse.
+
+Then the skill gate hits. The horse is tamable and uncontrolled, I am alive, the follower slots would fit, and the horse does not need to be subdued. But my Taming is only `0.5`. A normal horse wants `29.1`, and the rare branch would want `49.1`; either way I am nowhere close. `CheckMastery` does not help because it only covers wolf-family cases through a dark wolf familiar. The horse sends the overhead message: `You have no chance of taming this creature.`
+
+That means there is no taming timer. No anger roll, no `m_BeingTamed` entry, no `InternalTimer`, no Druidism gain, no Taming gain, no owner list mutation, no follower-count change, no mount, no combat, no corpse, no loot, and no movement. The fox is still following, not guarding. The horse is still wild.
+
+Mechanical friction learned:
+
+- The range problem is solved only to reveal the skill problem. A visible enabled `Tame` row plus range-2 target access still cannot start taming if `Taming.Value < MinTameSkill`.
+- Horse serial `200909` remains a live saved wild mobile. Its exact normal-versus-rare MinTameSkill branch is still not exported, but both possible branches are above Mira's `0.5` Taming, so the failure is deterministic.
+- `Taming.OnTarget` checks the skill threshold before the anger branch and before creating `m_BeingTamed`, so the failed horse attempt does not provoke the horse and does not start a waitable taming timer.
+- The context menu is consumed. There is no open context menu, no target cursor, no gump, and no active skill timer afterward because `InternalTarget.OnTargetFinish` resets `NextSkillTime` on this failure path.
+
+Next pressure:
+
+Mira remains at `Point3D(1195,1328,0)`, facing north. The controlled fox remains at `Point3D(1196,1331,0)`, following and inside the heel band. The horse is still visible two tiles north and now clearly too difficult, while goat, deer, llama, and three eagles crowd the same screen. The next honest decision is not another immediate horse click; it is whether to back away, inspect another animal, or go find a trainer, road, water, or shelter.
+
+## Run 204 - Backing Out Of The Horse Trap
+
+I start where the failed horse attempt left me: `Point3D(1195,1328,0)`, facing north, no menu open and no target cursor. The horse is still close enough to touch, but the last click proved the wall is not range. My `Taming` is `0.5`; the horse wants `29.1` or the rare `49.1`. The other visible animals are not starter pets either: goat wants `11.1`, eagle wants `17.1`, deer wants `23.1`, and llama wants `29.1`. The screen is an animal cluster, not an opportunity.
+
+**Travel Segment - Beat 1**
+
+I turn south and walk away.
+
+The first south input is only a facing change because `Mobile.Move` does not call `CheckMovement` until my current direction mask already matches the requested direction. After that, twelve accepted south inputs carry me from `1195,1328` to `1195,1340`. This is not new terrain. The same column was already proved in reverse during the horse approach: dry `map1.mul` grass, zero statics on the accepted target tiles, and no saved mobile or item blockers on `x=1195,y=1329..1340`.
+
+I do not claim exact fox AI ticks during compressed travel. The fox is only shadowed under the travel policy from `Point3D(1196,1331,0)` to about `Point3D(1196,1343,0)`, keeping the familiar 2..3 tile band. No Guard, Attack, body-blocking, combat, ownership, follower-count, pet-order, skill, hunger, thirst, quest, region, gump, context menu, or target cursor changes.
+
+The endpoint screen is thinner but not empty. I can still see the horse at dx `1`, dy `-14`, the llama at dx `13`, dy `-17`, and the east-edge eagle at dx `18`, dy `-16`. The old live fox row is still overridden by my controlled follower. There are zero saved visible items and zero visible running spawner objects.
+
+**Travel Segment - Beat 2**
+
+I keep backing south until the animal cluster finally falls off the screen.
+
+From `Point3D(1195,1340,0)`, already facing south, eleven more accepted inputs reach `Point3D(1195,1351,0)`. The route reuses proved dry grass evidence from the earlier north escape and horse approach; the live snapshot has no saved mobile or item blocker on `x=1195,y=1341..1351`. The fox is again approximate, shadowed to about `Point3D(1196,1354,0)` and still only following.
+
+At `Point3D(1195,1351,0)`, the immediate screen finally has zero saved wild mobiles, zero saved visible items, and zero visible running spawner objects. That is not safety. It only means the horse, llama, eagle, goat, deer, toads, crane, monkey, panther, Urulg, GoblinArcher, and the old drake branch are off-screen or carried risk rather than clickable bodies. The client map overlay is now the useful pressure: South moongate is about `107` tiles east-southeast, Ruins about `146` tiles southeast, Mines of Morinia about `174` tiles west, and West moongate about `262` tiles southwest.
+
+Mechanical friction learned:
+
+- A failed horse `Tame` row should change behavior. Re-clicking it is blocked by the same skill gate until real Taming gain or training happens.
+- Travel can be compressed only because the south column was already mechanically probed and the live snapshot showed no route blockers.
+- Follower shadowing during travel is approximate state maintenance, not proof that `BaseAI.Obey` timers fired.
+- The endpoint quiet screen is just a visibility fact. It does not despawn or pacify any earlier creature, and it does not create a road, water source, trainer, shelter, discovery flag, or safe region.
+
+Next pressure:
+
+Mira ends at `Point3D(1195,1351,0)`, facing south. The controlled fox is approximately at `Point3D(1196,1354,0)`, following inside the heel band. No entity is currently visible in the 18-tile client rectangle, but the next move is a real navigation decision: choose whether to angle toward the South moongate/Ruins overlay, head back west toward Mines of Morinia, or continue scouting for water, road, shelter, or a trainer.
+
+## Run 205 - East Until The Monkey Moves Back Onto Screen
+
+I start at `Point3D(1195,1351,0)`, facing south, with no menu, target cursor, gump, corpse, chest, road, water source, sign, or saved wild mobile in the 18-tile screen. Before I move, the client overlay gets corrected: the tempting `South` moongate row at `1300,1372` is not a Sosaria marker. It is in `Moongates.csv` on map `3`, so it is not current-map navigation knowledge. On Sosaria, the nearest real overlay lure east/southeast is `Ruins` at `1303,1449`; `Mines of Morinia` is back west, and `West` moongate is much farther southwest.
+
+**Travel Segment - Beat 1**
+
+I turn east and walk twelve steps.
+
+The first east input is only a facing change. `Mobile.Move` does not run `MovementImpl.CheckMovement` until my current direction mask already matches the requested direction. After that, twelve accepted east inputs carry me from `Point3D(1195,1351,0)` to `Point3D(1207,1351,0)`.
+
+The route is plain Sosaria grass under the server-order `map1.mul` read, with zero statics on the accepted target tiles and no saved mobile or item blockers on the route. I shadow the controlled fox approximately from `Point3D(1196,1354,0)` to about `Point3D(1205,1354,0)`, keeping the follow order coherent without claiming exact pet AI ticks. At the endpoint, the live-state rectangle still has zero saved wild mobiles, zero saved items, and zero visible running spawner object locations.
+
+**Travel Segment - Beat 2**
+
+I keep walking east.
+
+Because I am already facing east, twelve more accepted east inputs carry me from `Point3D(1207,1351,0)` to `Point3D(1219,1351,0)`. The same movement path applies: `MovementReq -> Mobile.Move -> MovementImpl.CheckMovement`, cardinal target tiles only, dry grass, zero statics, and no saved route blockers. The fox is only approximate again, shadowed to about `Point3D(1217,1354,0)`.
+
+The endpoint scan is still quiet: no saved visible wild mobiles, no saved visible items, and no visible running spawner object locations in the client rectangle.
+
+**Travel Segment - Beat 3**
+
+I take the third eastward segment, and the screen finally changes.
+
+Twelve accepted east inputs carry me to `Point3D(1231,1351,0)`, still on dry grass with no blocking statics and no route blockers. The fox shadows to about `Point3D(1229,1354,0)`, inside the 2..3 tile follow band.
+
+Now a saved animal appears in the 18-tile box: Monkey serial `206380`, `a monkey`, at `Point3D(1245,1366,0)`, dx `14`, dy `15`. The monkey is not combat yet. It constructs as `AI_Animal` with `FightMode.Aggressor`, has no special timer, and the current committed state has no aggressor/aggressed/faction/ethic relationship involving me or the fox, so the acquisition gate is negative. But it is visible, inside the client rectangle, inside the broad movement-notice rectangle, and inside the remapped `RangePerception` rectangle. That is enough to stop routine travel.
+
+Mechanical friction learned:
+
+- The earlier South moongate lure was a marker-filter mistake. The `South` moongate row near `1300,1372` is map `3`, not current Sosaria map `1`.
+- The east row from `x=1196` through `x=1231`, `y=1351`, is mechanically walkable dry `map1` grass with no blocking statics or saved live route blockers in the snapshot.
+- Three Travel Segment beats can move the player east only because no unread UI, target cursor, active combat, visible interactable, or active high-risk timer pressure exists before the segment endpoints.
+- The monkey is a normal-screen stop. It does not grant discovery, combat, loot, taming progress, safety, or a route unlock. It only forces the next player decision.
+
+Next pressure:
+
+Mira ends at `Point3D(1231,1351,0)`, facing east. The controlled fox is approximately at `Point3D(1229,1354,0)`, following only. Monkey serial `206380` is visible at `Point3D(1245,1366,0)`, dx `14`, dy `15`; the current classifier is timer-negative, not safe. No item, gump, context menu, target cursor, combat, damage, ownership change, follower-count change, hunger/thirst tick, quest, region, discovery, loot, corpse, fame, karma, or PvP/PvE mutation ran. The next honest action is to inspect, avoid, or route around the monkey before treating eastward movement as routine again.
+
+## Run 206 - I Make The Monkey Real On Screen
+
+I start exactly where the eastward walking stopped: `Point3D(1231,1351,0)`, facing east, with the fox close behind at about `Point3D(1229,1354,0)`. The screen has one real wild body on it, Monkey serial `206380`, at `Point3D(1245,1366,0)`, dx `14`, dy `15`. I do not keep walking just because the current Aggressor check is quiet. I click the animal.
+
+**Beat 1**
+
+`PacketHandlers.LookReq` takes the serial, finds the mobile, and checks the ordinary screen gates. The monkey is visible, `CanSee` passes, and `Utility.InUpdateRange` accepts dx `14`, dy `15` inside the inclusive 18-tile rectangle. The region allows the single-click. `BaseCreature.OnSingleClick` adds no `(tame)` or `(bonded)` line because this monkey is uncontrolled. `Mobile.OnSingleClick` sends only the private overhead label: `a monkey`.
+
+That is all I get. No context menu opens, no target cursor appears, no `Taming.OnUse`, no combat, no corpse, no banana, no pet AI tick, no movement, no hunger or thirst change, no quest, no discovery flag, and no route unlock. The fox does not become a guard dog. The monkey is just named now.
+
+Mechanical friction learned:
+
+- A LookReq click is a label, not an interaction contract. It proves the monkey is a screen-visible mobile and exposes its overhead name, but it does not start taming, fighting, looting, or movement.
+- The monkey still constructs as `AI_Animal` with `FightMode.Aggressor`; the current acquisition gate remains negative because no aggressor/aggressed/faction/ethic state involving me or the fox exists.
+- The endpoint scan is unchanged: one visible saved wild mobile, zero saved visible items, and zero visible running spawner object locations in `x=1213..1249,y=1333..1369`.
+- The future AI timer, wandering, context-menu branch, taming branch, corpse/banana path, and route choice all remain unresolved.
+
+Next pressure:
+
+Mira remains at `Point3D(1231,1351,0)`, facing east. The controlled fox remains approximately at `Point3D(1229,1354,0)`, following only and inside the heel band. Monkey serial `206380` is still visible and now labeled at dx `14`, dy `15`. No UI is open. The next honest decision is to avoid it, open its context menu, or route around it; routine travel is still blocked by the visible animal.
+
+## Run 207 - The Monkey Menu Lies With Gray Ink
+
+I start at `Point3D(1231,1351,0)`, still facing east. The monkey I clicked last run is still there at `Point3D(1245,1366,0)`, dx `14`, dy `15`. The fox is close behind me at about `Point3D(1229,1354,0)`, following only. I already know the animal's name, so I try the next normal thing a player can do without moving: open its context menu.
+
+**Beat 1**
+
+The request is legal, but the useful row is not.
+
+`PacketHandlers.ContextMenuRequest` finds Monkey serial `206380`, checks that it is on my map, visible, and inside `Utility.InUpdateRange`. A `ContextMenu` is built for the target. `BaseCreature.GetContextMenuEntries` adds `Tame` because the monkey is tamable, uncontrolled, and I am alive. `TameEntry` uses localization `6130` and range `6`.
+
+Then the client packet decides what my hand can actually use. `DisplayContextMenu` compares my location to the monkey with that entry range. At dx `14`, dy `15`, range `6` fails, so the visible `Tame` row is gray/disabled. I can see the idea of taming it, but I cannot press that row from here.
+
+That stops me. I do not select a row, and I do not forge a response. No `ContextMenuResponse`, no `TameEntry.OnClick`, no `UseSkill(Taming)`, no target cursor, no `Taming.InternalTarget`, no skill roll, no timer, no ownership change, no follower-count change, no combat, no movement, no corpse, no banana, no loot, and no pet AI tick runs.
+
+Mechanical friction learned:
+
+- A visible animal inside the 18-tile screen can still be too far for its context-menu action.
+- The monkey is easier than the horse on paper: `Monkey.MinTameSkill` is `5.9`. That does not matter while the only `Tame` row is disabled by range `6`.
+- Opening a context menu is a UI state, not progress. The next action is to close/ignore it, move closer, or back away.
+- The monkey remains `AI_Animal/FightMode.Aggressor` with negative current Aggressor acquisition because no aggressor/aggressed/faction/ethic state involving me or the fox exists. That is not safety, just current negative pressure evidence.
+
+Next pressure:
+
+Mira remains at `Point3D(1231,1351,0)`, facing east. The monkey context menu is open on serial `206380` with a visible disabled `Tame` row. The monkey is still visible at dx `14`, dy `15`; the fox remains approximately at `Point3D(1229,1354,0)` inside the heel band, following only. No gump, target cursor, combat, damage, hunger/thirst tick, item, quest, discovery, skill gain, ownership, follower-count, or movement state changed. The next honest action is a UI decision before any travel: close the menu, step closer, or step away.
+
+## Run 208 - Three Steps Toward The Monkey, Then Teeth
+
+I start at `Point3D(1231,1351,0)`, facing east, with the monkey's context menu still hanging open. The row says `Tame`, but it is gray. I cannot pretend I clicked it, and I cannot turn a disabled row into progress. I close the menu in my head by clicking away; no row response goes to the server.
+
+**Beat 1**
+
+I dismiss the open monkey menu.
+
+There is no `ContextMenuResponse`, no selected row index, and no `TameEntry.OnClick`. The only server proof I have is the path I am not taking: `PacketHandlers.ContextMenuResponse` would clear `from.ContextMenu`, verify the stored target, read the row index, and invoke only an enabled entry still within range. I do none of that. The visible UI is gone, but the monkey is still standing there at dx `14`, dy `15`.
+
+**Travel Segment - Beat 2**
+
+I try to close distance southeast.
+
+The first southeast input only turns me from `Direction.East` to `Direction.Down`. Then three accepted southeast movement inputs carry me to `Point3D(1234,1354,0)`. `Mobile.Move` reaches `MovementImpl.CheckMovement` for the three real steps, and the server-order `map1.mul`/`staidx1.mul`/`statics1.mul` read shows the forward and diagonal side-check tiles are dry grass with zero statics:
+
+- `1232,1352`: grass `0x4`, z `0`
+- `1233,1353`: grass `0x3`, z `0`
+- `1234,1354`: grass `0x4`, z `0`
+
+The route has no saved live mobile or item blocker. I do not advance an exact fox AI tick; I only shadow the following fox from about `Point3D(1229,1354,0)` to about `Point3D(1231,1356,0)`, keeping the old heel band without claiming Guard, Attack, body-blocking, or a real `BaseAI.Obey` timer.
+
+Then the screen changes. Panther serial `289483` appears at `Point3D(1252,1371,0)`, dx `18`, dy `17`. The original monkey is still visible at dx `11`, dy `12`; it is closer, but still outside the range-6 menu row. The panther is not a special-timer creature, but it is a much nastier `AI_Animal/FightMode.Aggressor` body than the monkey, and it is now legally on my screen. I stop.
+
+Mechanical friction learned:
+
+- A disabled context menu row can be dismissed locally without sending a legal server response, but that is not taming progress.
+- Approaching the monkey from this angle exposes the panther after only three accepted southeast steps, long before the monkey's `Tame` row becomes usable.
+- The route to `1234,1354` is mechanically walkable dry Sosaria grass with no statics and no saved route blockers.
+- The monkey remains too far for context-menu taming from the new point: dx `11`, dy `12` still fails range `6`.
+- Panther pressure now outranks the monkey experiment. No combat, damage, taming, loot, corpse, discovery, region, hunger/thirst, ownership, follower-count, or pet-order mutation has run.
+
+Next pressure:
+
+Mira ends at `Point3D(1234,1354,0)`, facing southeast. The controlled fox is approximately at `Point3D(1231,1356,0)`, following only and inside the heel band. The visible saved wildlife is Monkey serial `206380` at dx `11`, dy `12` and Panther serial `289483` at dx `18`, dy `17`; zero visible saved items and zero visible running spawner object locations were found. The next honest action is no longer "keep walking toward the monkey." It is react to the panther: inspect it, retreat, or choose a safer line.
+
+## Run 209 - The Cat Gets A Name
+
+I start at `Point3D(1234,1354,0)`, facing southeast, with the monkey still down the slope at dx `11`, dy `12` and the new cat shape on the edge at dx `18`, dy `17`. The monkey is still too far for the `Tame` row; the panther is not a special-timer monster, but it is a wild `AI_Animal/FightMode.Aggressor` feline with enough teeth that I do not keep walking toward it.
+
+**Beat 1**
+
+I single-click the panther.
+
+The click is legal because the panther is inside the inclusive 18-tile update rectangle. `LookReq` finds Panther serial `289483`, checks `CanSee`, checks `Utility.InUpdateRange`, lets the region approve the single-click, then calls the mobile's click path. It is uncontrolled, so there is no `(tame)` or `(bonded)` line from `BaseCreature.OnSingleClick`. The ordinary mobile click prints the overhead label: `a panther`.
+
+That is all. I do not open a context menu, do not choose `Tame`, do not target, do not swing, do not move, do not order the fox, and do not wait for any AI timer. The panther's current Aggressor acquisition still has no committed aggressor/aggressed/faction/ethic state involving me or the fox, and at dx `18`, dy `17` it is outside effective `RangePerception 16`; that is negative current target evidence, not safety. The monkey remains visible and still outside range `6`.
+
+Mechanical friction learned:
+
+- A visible edge animal can be identified with a normal single-click without mutating combat, taming, inventory, discovery, or movement state.
+- Panther serial `289483` is a saved live mobile from the same running animal spawner as the monkey, not scenery or a marker.
+- The panther's constructor has two random stat branches, but both are still a panther and both are far above Mira's current taming reach. This run does not resolve which branch the live save rolled.
+- `FightMode.Aggressor` currently fails target acquisition without an existing aggressor/aggressed/faction/ethic relationship, and `RangePerception 16` misses Mira from the panther's tile. Future private AI timing and wandering remain unresolved.
+
+Next pressure:
+
+Mira remains at `Point3D(1234,1354,0)`, facing southeast. The controlled fox remains approximately at `Point3D(1231,1356,0)`, following only. The screen now has labeled Monkey serial `206380` at dx `11`, dy `12` and labeled Panther serial `289483` at dx `18`, dy `17`, with zero saved visible items. The next honest decision is retreat or pick a safer line; continuing southeast toward the monkey would walk closer to the panther without a new safety proof.
+
+## Run 210 - I Back Out Of The Cat's Edge
+
+I start at `Point3D(1234,1354,0)`, facing southeast. The monkey is still visible at dx `11`, dy `12`, still too far for the range-6 `Tame` row, and the panther I just named is right on the screen edge at dx `18`, dy `17`. The cat is not actively on me, but that is only because the current `FightMode.Aggressor` gate has no aggressor history and its range-16 perception misses me. I do not walk toward it.
+
+**Beat 1**
+
+I press northwest.
+
+This is only a turn. `Mobile.Move` compares the requested direction with my current direction first, and because `Direction.Down` does not match `Direction.Up`, it skips `CheckMovement`. Mira stays at `Point3D(1234,1354,0)` and turns to `Direction.Up`.
+
+The turn still goes through the normal movement acknowledgement/update path and notifies nearby mobiles. That does not make the monkey or panther attack. Both are `FightMode.Aggressor`, so the notice-sound branch that is reserved for actually aggressive monsters does not fire, and neither animal has `ReacquireOnMovement`.
+
+**Beat 2**
+
+I press northwest again, and this time I actually step away.
+
+The reverse of the last southeast approach is already mechanically proved. `Point3D(1233,1353,0)` is dry Sosaria grass, the diagonal side-check tiles `1234,1353` and `1233,1354` are dry grass with zero statics, and the live snapshot has no saved mobile or item blocker on the destination. `MovementReq -> Mobile.Move -> MovementImpl.CheckMovement -> Region.CanMove -> SetLocation/SetDirection -> OnMovement` accepts the step.
+
+The step does what I wanted: the panther falls off the client rectangle by one tile, now dx `19`, dy `18`. I do not claim it left, despawned, stopped, or became safe. It is still recently visible, still within the broader movement-notice rectangle, and its private AI timer and future wandering are not exported. The monkey remains on screen at dx `12`, dy `13`, still outside the range-6 context action. My fox stays at `Point3D(1231,1356,0)` because no exact pet AI tick ran; from the new player point it is still inside the 2..3 follow band at dx `-2`, dy `3`.
+
+I stop here because the visible range changed. The immediate cat pressure is no longer clickable, but the monkey is still visible and the panther is only one tile beyond screen edge, not solved.
+
+Mechanical friction learned:
+
+- A retreat key can be only a facing turn. The server does not test the target tile until the current direction mask matches the requested direction.
+- Facing changes still run the normal movement update/OnMovement notification path, but these specific animals do not use movement reacquire and their `FightMode.Aggressor` setting suppresses the notice-sound branch.
+- The northwest retreat step to `1233,1353` is the safe reverse of the proved southeast grass route.
+- Moving one tile back is enough to drop the panther from `Utility.InUpdateRange`, but it is not a despawn, pacification, AI tick, combat resolution, or safety proof.
+
+Next pressure:
+
+Mira ends at `Point3D(1233,1353,0)`, facing northwest. The controlled fox remains at `Point3D(1231,1356,0)`, following only and inside the heel band. Monkey serial `206380` is still visible at dx `12`, dy `13`; Panther serial `289483` is recently visible just outside the southeast screen edge at dx `19`, dy `18`. There are still zero saved visible items. The next honest action is either keep backing away while accounting for the monkey and fox leash, or choose a different route that does not walk back into the panther.
+
+## Run 211 - One More Step Out Of The Cat Line
+
+I start at `Point3D(1233,1353,0)`, facing northwest. The monkey is still a body on the screen at dx `12`, dy `13`, still too far for the range-6 `Tame` row. The panther is just past the southeast edge at dx `19`, dy `18`. That is better than touching it, but it is not a solved animal. I do not turn back toward the cat.
+
+**Beat 1**
+
+I press northwest again.
+
+This time it is a real step, not a turn. `Mobile.Move` already sees my direction mask as `Direction.Up`, so it runs the normal movement block. The target `Point3D(1232,1352,0)` is the reverse of the dry route I used while approaching the monkey: Run 208 already proved that tile as map1 grass with zero statics, and the two player diagonal side-check tiles `1232,1353` and `1233,1352` were also zero-static grass. The live snapshot has no saved mobile or item standing on the destination.
+
+The step moves me away from the panther and a little away from the monkey. The panther is now dx `20`, dy `19`, outside the client rectangle and outside its effective range-16 perception geometry, though not despawned or pacified. The monkey remains visible at dx `13`, dy `14`, still only labeled screen pressure and still outside range 6. The fox does not get an exact AI tick during my movement; it stays at `Point3D(1231,1356,0)`, now dx `-1`, dy `4`, outside the 2..3 heel band.
+
+I stop because the next decision is no longer "just keep walking." I have a visible monkey still behind the retreat line, a recently visible panther farther off-screen, and my follower stretched enough that the next honest beat is either let the fox catch up or keep moving with a fresh pressure check.
+
+Mechanical friction learned:
+
+- A second northwest key from `Direction.Up` enters the full movement path; the facing-turn friction is gone for this input.
+- The northwest retreat target `1232,1352` is legal because it reuses the Run 208 server-order grass/static proof in reverse.
+- Moving one tile farther does not resolve the monkey or panther. It only changes their visibility geometry.
+- Player movement does not automatically advance the controlled fox's `Follow` AI tick. The fox is now outside the remembered heel band and cannot be treated as guarding or exact protection.
+
+Next pressure:
+
+Mira ends at `Point3D(1232,1352,0)`, facing northwest. The controlled fox remains at `Point3D(1231,1356,0)`, ordered to Follow but outside the heel band at floored distance `4`. Monkey serial `206380` remains visible at dx `13`, dy `14`; Panther serial `289483` is recently visible off-screen at dx `20`, dy `19`. No item, gump, context menu, target cursor, combat, damage, skill gain, hunger/thirst tick, quest, discovery, ownership, follower-count, pet-order, corpse, loot, or safety flag changed.
+
+## Run 212 - Let The Fox Catch Its Breath
+
+I start at `Point3D(1232,1352,0)`, still facing northwest. The monkey is still on screen at dx `13`, dy `14`, too far for the range-6 `Tame` row. The panther is farther past the southeast edge at dx `20`, dy `19`. The thing I actually dragged out of shape last run is my fox: it is four tiles behind me, ordered to Follow, not guarding anything.
+
+**Beat 1**
+
+I wait for the fox instead of pressing another key.
+
+The controlled AI path runs: `AITimer.OnTick -> BaseCreature.OnThink -> BaseAI.Obey -> DoOrderFollow -> WalkMobileRange`. The remembered `FriendsAvoidHeels` band still wants distance `2..3`. From `Point3D(1231,1356,0)` to me, the floored distance is `4`, so `GetDirectionTo` points the fox straight `Direction.North`. `DoMove/Mobile.Move` accepts `Point3D(1231,1355,0)`: `map1.mul` says grass `0x6`, z `0`, and `staidx1/statics1` finds zero statics.
+
+The fox is closer, but my own position has not changed. The monkey is still visible. The panther is still off-screen, not solved.
+
+**Beat 2**
+
+I take one more northwest step.
+
+Because I am already facing `Direction.Up`, this is a real movement input. `Mobile.Move` enters `MovementImpl.CheckMovement`. The target `Point3D(1231,1351,0)` is dry `map1` grass `0x4` with zero statics. The player diagonal side-check tiles, `Point3D(1231,1352,0)` and `Point3D(1232,1351,0)`, are dry grass with zero statics too. No saved mobile or item blocks the destination.
+
+The step shifts the screen without changing the problem into a win. Monkey serial `206380` is still visible at dx `14`, dy `15`, still outside range 6. Panther serial `289483` is now dx `21`, dy `20`, farther outside the client rectangle and outside its range-16 perception geometry, but not despawned, pacified, or AI-resolved. My fox is stretched again, now at dx `0`, dy `4`.
+
+**Beat 3**
+
+I wait for the fox one more time.
+
+The same follow path runs again. `WalkMobileRange` sees floored distance `4`, `GetDirectionTo` again chooses `Direction.North`, and the fox steps from `Point3D(1231,1355,0)` to `Point3D(1231,1354,0)`. The target is dry `map1` grass `0x5`, z `0`, with zero statics and no saved blocker. The fox ends at dx `0`, dy `3`, back inside the heel band.
+
+Mechanical friction learned:
+
+- Controlled pet follow is a timer beat, not passive protection. It moves the fox, but it does not set Guard, Attack, Combatant, body-blocking, ownership, follower count, or a new pet order.
+- One northwest player step from here is still mechanically legal dry grass, but every step away from the monkey/panther line can stretch the fox again.
+- The monkey remains a visible saved wild mobile, not scenery. Its `FightMode.Aggressor` acquisition is currently negative only because no aggressor/aggressed/faction/ethic state involves me or the fox.
+- The panther leaving the client rectangle is not safety. It is just off-screen risk with private AI timing and future wandering unresolved.
+
+Next pressure:
+
+Mira ends at `Point3D(1231,1351,0)`, facing northwest. The controlled fox is at `Point3D(1231,1354,0)`, ordered to Follow and inside the heel band. Monkey serial `206380` remains visible at dx `14`, dy `15`; Panther serial `289483` is recently visible off-screen at dx `21`, dy `20`. There are still zero saved visible items and zero visible running spawner objects. The next honest action is another route decision that keeps distance from the monkey/panther line, not a return southeast.
+
+## Run 213 - I Slide West, Not Back Toward The Cat
+
+I start at `Point3D(1231,1351,0)`, facing northwest, with the fox tucked behind me at `Point3D(1231,1354,0)`. The monkey is still on the screen at dx `14`, dy `15`, labeled and tempting in the stupid way visible animals are tempting. Its `Tame` row was already gray from here, and the panther is farther southeast off-screen at dx `21`, dy `20`. I do not open the monkey menu again. I also do not pull northwest and stretch the fox. West is the cleaner retreat line.
+
+**Beat 1**
+
+I press west.
+
+This is only a turn. `MovementReq(Direction.West)` reaches `Mobile.Move`, but my current direction mask is still `Direction.Up`, so the real movement branch never calls `CheckMovement`. The server acknowledges the movement packet, leaves me at `Point3D(1231,1351,0)`, and changes my facing to `Direction.West`. Nearby `OnMovement` notifications still exist as a system path, but there is no combat assignment, no target cursor, no menu, no taming, and no fox tick.
+
+The screen is unchanged: one visible monkey, no saved visible items, panther still off-screen.
+
+**Beat 2**
+
+I press west again, and this one moves.
+
+`Mobile.Move` now sees the requested direction matches my facing, so it enters `MovementImpl.CheckMovement`. The target `Point3D(1230,1351,0)` is dry `map1` grass `0x6`, z `0`, with zero statics. Cardinal west movement does not need diagonal side-check tiles. The live snapshot has no saved mobile or item on the destination. The step lands.
+
+The monkey shifts to dx `15`, dy `15`. That is still visible, still outside range `6`, and still not a solved animal. The panther shifts to dx `22`, dy `20`, farther outside the client rectangle. The fox stays at `Point3D(1231,1354,0)`, now dx `1`, dy `3`, still inside the heel band without needing a timer beat.
+
+**Beat 3**
+
+I press west a third time.
+
+The second west target, `Point3D(1229,1351,0)`, is also plain dry grass: land `0x4`, z `0`, zero statics, no saved live blocker. `MovementReq -> Mobile.Move -> MovementImpl.CheckMovement -> Region.CanMove -> SetLocation/SetDirection -> OnMovement` accepts it.
+
+That spends the hour. The monkey is still visible at dx `16`, dy `15`, and because its `AI_Animal/FightMode.Aggressor` path has no aggressor/aggressed/faction/ethic state involving me or the fox, the current acquisition result stays negative. That is not safety. It is just why nothing bites during these three beats. The panther is now dx `23`, dy `20`, farther off-screen and outside its effective range-16 perception geometry, but still not gone. The fox remains close at dx `2`, dy `3`.
+
+Mechanical friction learned:
+
+- West from a northwest-facing stance costs a facing beat before it becomes movement.
+- Cardinal movement avoids the player diagonal side-check rule, but the forward tile still has to be proved.
+- The west row at `1230,1351` and `1229,1351` is dry grass with zero statics and no saved route blockers.
+- Moving west keeps the fox inside the heel band without pretending it guarded, body-blocked, attacked, or ran a fresh `BaseAI.Obey` tick.
+- The monkey is still visible screen pressure. West bought distance from the panther, not permission to ignore the monkey.
+
+Next pressure:
+
+Mira ends at `Point3D(1229,1351,0)`, facing west. The controlled fox remains at `Point3D(1231,1354,0)`, ordered to Follow and inside the heel band. Monkey serial `206380` remains visible at dx `16`, dy `15`; Panther serial `289483` is recently visible off-screen at dx `23`, dy `20`. There are still zero saved visible items and zero visible running spawner objects. No gump, context menu, target cursor, taming, combat, damage, loot, corpse, hunger/thirst, quest, discovery, ownership, follower-count, pet-order, PvP/PvE, or region state changed.
+
+## Run 214 - I Do Not Drag The Fox Blind
+
+I start at `Point3D(1229,1351,0)`, facing west. The monkey is still visible at `Point3D(1245,1366,0)`, dx `16`, dy `15`, which means it is still a real thing on the screen even if the old `Tame` row was useless from this distance. The panther is farther southeast and off-screen at dx `23`, dy `20`, but that is only distance, not a solved animal. My fox is tucked at `Point3D(1231,1354,0)`, just inside the follow band.
+
+**Beat 1**
+
+I press west.
+
+Because I am already facing `Direction.West`, this is not a turn. `Mobile.Move` enters `MovementImpl.CheckMovement`, tests the forward tile, and accepts `Point3D(1228,1351,0)`. The server-order map read says dry Sosaria grass `0x6`, z `0`, with zero statics and no saved live mobile or item blocker on the destination. The monkey shifts to dx `17`, dy `15`, still visible and still far outside range `6`. The panther shifts to dx `24`, dy `20`, outside the client rectangle and outside its effective range-16 perception geometry.
+
+The fox did not tick during my movement. It is now at dx `3`, dy `3`, floored distance `4`, outside the 2..3 heel band. I do not keep walking and pretend that is fine.
+
+**Beat 2**
+
+I wait for the fox.
+
+The controlled follow path runs: `AITimer.OnTick -> BaseCreature.OnThink -> BaseAI.Obey -> DoOrderFollow -> WalkMobileRange`. `FriendsAvoidHeels` still makes the desired band 2..3. From `Point3D(1231,1354,0)` to me at `Point3D(1228,1351,0)`, the fox chooses `Direction.Up`. `MovementImpl.CheckMovement` accepts `Point3D(1230,1353,0)`: dry grass `0x5`, z `0`, zero statics on the forward tile, and at least one clear non-player diagonal side tile. The fox ends at dx `2`, dy `2`, inside the band again.
+
+That is still not guarding. No `Guard`, `Attack`, `Combatant`, body-blocking, ownership, follower count, or pet order changes. It is just the pet catching up.
+
+**Beat 3**
+
+I press west again.
+
+The target `Point3D(1227,1351,0)` is another dry grass tile, `0x6`, z `0`, with zero statics and no saved route blocker. The movement path accepts it. The monkey slides to the inclusive edge at dx `18`, dy `15`: still visible, now outside the monkey's effective range-16 perception by x distance, but not gone. The panther is dx `25`, dy `20`, now outside both the client rectangle and the 24-tile movement-notice box, but no despawn, pacification, AI tick, combat, corpse, or safety proof ran.
+
+Mechanical friction learned:
+
+- Westward retreat from this tile is mechanically open grass, but visible animals still control the pace.
+- Controlled pet follow is a separate timer beat. One west step stretched the fox outside the heel band; waiting let the exact follow path move it northwest onto a clear tile.
+- The monkey being on the edge is not a taming opportunity. It still fails the range-6 context row and now also misses range-16 acquisition geometry by x distance.
+- The panther is less immediate only because I keep moving away from it. It is still a saved wild mobile from the running animal spawner, not a resolved threat.
+
+Next pressure:
+
+Mira ends at `Point3D(1227,1351,0)`, facing west. The controlled fox is at `Point3D(1230,1353,0)`, ordered to Follow and inside the heel band. Monkey serial `206380` remains visible at dx `18`, dy `15`; Panther serial `289483` is recently visible off-screen at dx `25`, dy `20`. There are still zero saved visible items and zero visible running spawner objects. No gump, context menu, target cursor, taming, combat, damage, loot, corpse, hunger/thirst, quest, discovery, ownership, follower-count, pet-order, PvP/PvE, or region state changed.
+
+## Run 215 - The Monkey Finally Leaves The Screen
+
+I start at `Point3D(1227,1351,0)`, facing west. The monkey is still barely visible at the far east edge, dx `18`, dy `15`, too far for the old `Tame` row and outside its effective range-16 perception by x distance. The panther is farther southeast and off-screen at dx `25`, dy `20`. My fox is close at `Point3D(1230,1353,0)`, but one more west step will stretch it. I take the step anyway because west is still the only direction that does not walk back toward the animals.
+
+**Beat 1**
+
+I press west.
+
+`MovementReq(Direction.West)` reaches `Mobile.Move`, and because I am already facing west the server enters the full movement branch. `MovementImpl.CheckMovement` accepts `Point3D(1226,1351,0)`: dry Sosaria `map1` grass `0x3`, z `0`, zero statics, and no saved mobile or item blocker on the destination.
+
+The monkey drops off the client rectangle: it is now dx `19`, dy `15`, not visible and not clickable. I do not call that safe. It is still a saved wild mobile from the running animal spawner, only now off-screen. The fox does not tick during my movement and ends at dx `4`, dy `2`, floored distance `4`, outside the 2..3 follow band.
+
+**Beat 2**
+
+I wait for the fox instead of dragging it blind.
+
+The controlled follow path runs: `AITimer.OnTick -> BaseCreature.OnThink -> BaseAI.Obey -> DoOrderFollow -> WalkMobileRange`. With Mira at `Point3D(1226,1351,0)` and the fox at `Point3D(1230,1353,0)`, `GetDirectionTo` resolves `Direction.Up`, so the fox tries the northwest diagonal. `MovementImpl.CheckMovement` accepts `Point3D(1229,1352,0)`: dry grass `0x4`, z `0`, zero statics. The non-player diagonal side tiles `Point3D(1229,1353,0)` and `Point3D(1230,1352,0)` are also dry grass with zero statics, so the one-clear-side rule is satisfied.
+
+The fox ends at dx `3`, dy `1`, floored distance `3`, back in the heel band. This is not Guard, Attack, body-blocking, or proof of the next AI tick. It is just the follower catching up.
+
+**Beat 3**
+
+I press west one more time.
+
+The next west target, `Point3D(1225,1351,0)`, is dry `map1` grass `0x4`, z `0`, with zero statics and no saved route blocker. `Mobile.Move` accepts it.
+
+The final scan is quiet in the narrow client sense: no saved wild mobiles, no saved visible items, and no running spawner object locations inside x `1207..1243`, y `1333..1369`. The monkey is off-screen at dx `20`, dy `15`; the panther is off-screen at dx `27`, dy `20`; neither is despawned, pacified, killed, tamed, or AI-resolved. The fox is now stretched again at dx `4`, dy `1`, floored distance `4`, so the next honest pressure is the leash, not curiosity.
+
+Mechanical friction learned:
+
+- One more west step is enough to push the visible monkey out of `Utility.InUpdateRange`, but visibility loss is not a world-state solution.
+- The fox follow tick from this geometry resolves northwest, not west, because `GetDirectionTo` uses the isometric `rx/ry` direction calculation.
+- Non-player diagonal movement is less strict than player diagonal movement here: one clear side tile is enough, and both side tiles were clear.
+- A quiet 18-tile rectangle can still have off-screen route risk. The saved monkey and panther still exist in the snapshot, just outside the client view.
+
+Next pressure:
+
+Mira ends at `Point3D(1225,1351,0)`, facing west. The controlled fox is at `Point3D(1229,1352,0)`, ordered to Follow but outside the heel band at floored distance `4`. No wild mobile or item is visible in the current 18-tile rectangle. Monkey serial `206380` is recently visible off-screen at dx `20`, dy `15`; Panther serial `289483` is farther off-screen at dx `27`, dy `20`. No gump, context menu, target cursor, taming, combat, damage, loot, corpse, hunger/thirst, quest, discovery, ownership, follower-count, pet-order, PvP/PvE, or region state changed.
+
+## Run 216 - I Let The Leash Set The Pace
+
+I start at `Point3D(1225,1351,0)`, facing west. The screen is quiet, but only in the narrow client sense. The live snapshot rectangle has no saved wild mobile, no saved visible item, and no visible running spawner object in range. The monkey I backed away from is still in the save at `Point3D(1245,1366,0)`, now dx `20`, dy `15`, and the panther is farther out at dx `27`, dy `20`. They are not gone. They are just no longer on the screen.
+
+The thing actually out of shape is my own fox. It is at `Point3D(1229,1352,0)`, ordered to Follow, but it is four tiles away by floored distance. I do not keep walking and drag it blind.
+
+**Beat 1**
+
+I wait for the fox.
+
+The controlled follow path runs again: `AITimer.OnTick -> BaseCreature.OnThink -> BaseAI.Obey -> DoOrderFollow -> WalkMobileRange`. This time the isometric direction math changes. From `Point3D(1229,1352,0)` to me at `Point3D(1225,1351,0)`, `GetDirectionTo` resolves `Direction.West`, not `Direction.Up`. The fox steps to `Point3D(1228,1352,0)`. The tile is dry `map1` grass `0x3`, z `0`, with zero statics and no saved blocker.
+
+The fox is back inside the heel band at dx `3`, dy `1`. Nothing else appears. No wild AI tick, combat, target cursor, menu, item, skill, quest, discovery, hunger, thirst, or pet-order change runs.
+
+**Beat 2**
+
+I press west once.
+
+Because I am already facing `Direction.West`, this is a real movement input. `Mobile.Move` enters `MovementImpl.CheckMovement` and accepts `Point3D(1224,1351,0)`: dry Sosaria grass `0x6`, z `0`, zero statics, no saved mobile or item blocker. The shifted client rectangle is still empty of saved wild mobiles and items. The monkey slides farther out to dx `21`, dy `15`; the panther to dx `28`, dy `20`.
+
+The fox does not tick during my step and is stretched again at dx `4`, dy `1`. That is the cost of moving west safely: I am still buying distance, one leash check at a time.
+
+**Beat 3**
+
+I wait for the fox again.
+
+`DoOrderFollow` repeats the same westward catch-up. From `Point3D(1228,1352,0)` toward me at `Point3D(1224,1351,0)`, `GetDirectionTo` again resolves `Direction.West`, and `DoMove/Mobile.Move` accepts `Point3D(1227,1352,0)`. The target is dry grass `0x3`, z `0`, zero statics, and no live saved blocker.
+
+The fox ends at dx `3`, dy `1`, back inside the 2..3 follow band. That is not guarding or body-blocking. It is just the pet catching up. I stop at the three-beat cap with the screen still quiet, the monkey and panther still unresolved off-screen, and the west route still not a safe road or shelter.
+
+Mechanical friction learned:
+
+- From this geometry, the fox's exact follow tick resolves west because `GetDirectionTo`'s `rx/ry` test lands in the `Direction.West` branch.
+- A normal west step to `Point3D(1224,1351,0)` is mechanically open grass, but it stretches the fox right back outside the follow band.
+- The empty 18-tile rectangle at `1224,1351` is only negative visibility evidence. It is not a despawn, pacification, AI resolution, safe region, road, water source, or discovery.
+- Pet follow waits mutate only pet position and speed state. They do not set Guard, Attack, Combatant, owner state, follower count, or protection.
+
+Next pressure:
+
+Mira ends at `Point3D(1224,1351,0)`, facing west. The controlled fox is at `Point3D(1227,1352,0)`, ordered to Follow and inside the heel band. No wild mobile or item is visible in the current 18-tile rectangle. Monkey serial `206380` is recently visible off-screen at dx `21`, dy `15`; Panther serial `289483` is farther off-screen at dx `28`, dy `20`. No gump, context menu, target cursor, taming, combat, damage, loot, corpse, hunger/thirst, quest, discovery, ownership, follower-count, pet-order, PvP/PvE, or region state changed.
+
+## Run 217 - The West Row Ends At Another Toad
+
+I start at `Point3D(1224,1351,0)`, facing west. The screen is empty except for my own fox at my shoulder. That does not make the jungle safe. It only means the monkey and panther are now off-screen behind me, and the next honest thing to do is keep the route small enough that I can stop when the screen changes.
+
+**Travel Segment 1**
+
+I hold west for twelve accepted steps.
+
+The row stays mechanically boring in the useful way: `MovementReq -> Mobile.Move -> MovementImpl.CheckMovement` accepts `Point3D(1223,1351,0)` through `Point3D(1212,1351,0)`. The server-order `map1.mul` read uses Sosaria file index `1` and the column-major `TileMatrix` block order. Every target is dry grass at z `0`, land `0x3/0x4/0x5/0x6`, with zero statics and no saved mobile or item blocker. I do not pretend the fox's timer fired twelve exact times; I shadow it conservatively along the clear row behind me, ending around `Point3D(1215,1352,0)`, still just behind the heel band.
+
+The endpoint scan at `Point3D(1212,1351,0)` is still empty of saved wild mobiles and items. The Mines of Morinia marker is closer, but a marker is not shelter.
+
+**Travel Segment 2**
+
+I keep west for another twelve accepted steps.
+
+The same route proof carries across `Point3D(1211,1351,0)` through `Point3D(1200,1351,0)`: dry grass, no statics, no saved route blocker. One tile at `Point3D(1203,1351,1)` lifts to z `1`, but it is still grass with no blocking static. The fox is only approximate follower evidence, shadowed back to about `Point3D(1203,1352,0)`.
+
+The scan at `Point3D(1200,1351,0)` still has no saved wild mobile, item, or visible spawner object. That is negative visibility evidence, not a safe road.
+
+**Travel Segment 3**
+
+I press west again, but I only get nine accepted inputs before the screen matters.
+
+The accepted targets `Point3D(1199,1351,0)` through `Point3D(1191,1351,0)` are passable: mostly dry grass, then jungle at `1192` and `1191`. `Point3D(1191,1351,0)` has only `0xD4C` foliage leaves, not an impassable, surface, bridge, or wet blocker. The fox is shadowed to about `Point3D(1194,1352,0)`.
+
+Then the west edge gives me a thing with eyes. Toad serial `288077` is visible at `Point3D(1173,1360,0)`, dx `-18`, dy `9`. Its current `RangePerception 16` acquisition misses by x distance, and the `GiantToad.TeleportTimer` range `10` also misses by x distance, so I do not invent a hit. But it is still a visible timer creature from a running spawner, and that stops route-driving immediately.
+
+Mechanical friction learned:
+
+- The old east row can be used in reverse only while the live rectangle stays empty and the server-order statics stay clear.
+- Three Travel Segment beats moved Mira from `Point3D(1224,1351,0)` to `Point3D(1191,1351,0)` without opening UI, changing inventory, mutating pet ownership, or resolving off-screen animals.
+- Follower shadowing is still approximate; it preserved the fox near `Point3D(1194,1352,0)`, but it is not an exact `BaseAI.Obey` timer and not Guard, Attack, body-blocking, or protection.
+- A visible toad at the inclusive edge is enough to stop, even when the current timer and acquisition geometry are negative.
+
+Next pressure:
+
+Mira ends at `Point3D(1191,1351,0)`, facing west. The controlled fox is approximately at `Point3D(1194,1352,0)`, ordered to Follow and inside the trailing band. Toad serial `288077` is visible at dx `-18`, dy `9`; its current target/timer geometry is negative, but its private timer and future wandering are unresolved. No item, gump, context menu, target cursor, combat, damage, loot, corpse, hunger/thirst, quest, discovery, ownership, follower-count, pet-order, PvP/PvE, or region state changed.
