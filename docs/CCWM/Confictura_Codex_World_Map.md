@@ -6251,3 +6251,1178 @@ Mechanical friction learned:
 Next pressure:
 
 Mira ends at `Point3D(1191,1351,0)`, facing west. The controlled fox is approximately at `Point3D(1194,1352,0)`, ordered to Follow and inside the trailing band. Toad serial `288077` is visible at dx `-18`, dy `9`; its current target/timer geometry is negative, but its private timer and future wandering are unresolved. No item, gump, context menu, target cursor, combat, damage, loot, corpse, hunger/thirst, quest, discovery, ownership, follower-count, pet-order, PvP/PvE, or region state changed.
+
+## Run 218 - I Bend North, Then The West Fills In
+
+I start at `Point3D(1191,1351,0)`, facing west. The toad is not on top of me, but it is still on the west-south edge at `Point3D(1173,1360,0)`. I do not keep driving straight at it just because the first range band is negative. I turn the route north, where the screen has room.
+
+**Beat 1**
+
+I run north ten steps to `Point3D(1191,1341,0)`.
+
+The crossed tiles are plain grass and jungle at z `0..1`. A few visible leaf, mushroom, and vine statics sit on the west line I am preparing to use, but the checked statics on the route are foliage/background only, not impassable, wet, surface, bridge, wall, or door. The toad drops off the screen by y distance. That does not delete it; it just means I have put the current client rectangle above it.
+
+The north edge now shows passive animals instead: a horse at `Point3D(1196,1326,0)` and a llama at `Point3D(1208,1323,0)`. The old saved fox serial would also be up there in the live snapshot, but that serial is already my controlled follower in this continuity, so I do not count it as a new wild fox. I keep the route west, away from the horse and llama.
+
+**Beat 2**
+
+I run west along the northern line from `Point3D(1191,1341,0)` to `Point3D(1171,1341,0)`.
+
+This gets me closer to the Mines marker without closing on the toad below. The fox is only approximate follower evidence during this macro movement, trailing around `Point3D(1174,1342,0)` on Follow. It is not Guard, not Attack, and not protection.
+
+At `Point3D(1171,1341,0)`, the west side fills in. A boar appears at `Point3D(1153,1342,0)`, dx `-18`, dy `1`. A gorilla at `Point3D(1156,1356,0)` and another boar at `Point3D(1156,1357,0)` sit southwest, both still in the potential-threat band. That is enough to stop. The next move is no longer simple west travel; it is a choice about whether to bend north harder, back off, or inspect the animal line.
+
+Mechanical friction learned:
+
+- The north bend from `1191,1351` to `1191,1341` is a visible route correction around the west-south toad, not a hidden mechanic.
+- The northern west line contains jungle foliage, mushrooms, vines, and leaves, but the checked route statics are non-blocking visual clutter.
+- The live-state snapshot still contains the fox's old saved row, but player continuity overrides that serial as Mira's controlled follower.
+- The Mines of Morinia marker is closer, now dx `-149`, dy `31`, but the marker remains navigation knowledge, not proof of shelter or safety.
+
+Next pressure:
+
+Mira ends at `Point3D(1171,1341,0)`, facing west. The controlled fox is approximately at `Point3D(1174,1342,0)`, ordered to Follow. Visible route pressure is now west/southwest: boar serial `288070` at dx `-18`, dy `1`, gorilla serial `288068` at dx `-15`, dy `15`, and boar serial `634017` at dx `-15`, dy `16`. No item, gump, context menu, target cursor, combat, damage, loot, corpse, hunger/thirst, quest, discovery, ownership, follower-count, pet-order, PvP/PvE, or region state changed.
+
+## Run 219 - The North Detour Finds Trouble Too
+
+I start at `Point3D(1171,1341,0)`, facing west. The Mines marker is still pulling me west-southwest, but the actual screen says not to walk straight into the animal line. The boar at `Point3D(1153,1342,0)` is on the west edge, and the gorilla/boar pair is southwest. There are no visible items, no open gump, no target cursor, and no friendly sign or road to make this a route instead of wilderness.
+
+**Beat 1**
+
+I bend north until the boar line drops off the client rectangle.
+
+Mira runs to `Point3D(1171,1323,0)`. I do not audit every grass tile; this is ordinary open-terrain correction away from visible animals. The follower is still on Follow and is treated as practical travel presence, not an exact timer proof. At the new screen center, the live snapshot has no saved visible mobile or item in range. That does not make the place safe. It only gives me a clean screen for the next west attempt.
+
+**Beat 2**
+
+I try west again, staying on the northern line.
+
+The route only gets as far as `Point3D(1145,1323,0)` before the west edge fills in again. A crane sits at `Point3D(1127,1314,0)`, dx `-18`, dy `-9`; that is just visible wildlife. The real stop is the kobold shaman at `Point3D(1127,1324,0)`, dx `-18`, dy `1`, with a goblin at `Point3D(1151,1341,0)`, dx `6`, dy `18`. Both are edge-of-screen danger, not a private AI prediction. I stop before the route turns into closing distance on them.
+
+Mechanical friction learned:
+
+- Bending north is enough to break sight on the boar/gorilla/boar cluster without discovering anything or opening UI.
+- The west route toward the Mines marker now exposes a humanoid/mage threat line at the edge of vision.
+- No hidden teleporter, custom gump gate, item interaction, combat swing, pet command, discovery flag, or inventory mutation explains the stop; the client screen does.
+- The Mines marker is still navigation knowledge only. It has not become a visible mine entrance, shelter, road, or safe region.
+
+Next pressure:
+
+Mira ends at `Point3D(1145,1323,0)`, facing west. The controlled fox is approximately at `Point3D(1148,1324,0)`, ordered to Follow. Visible route pressure is west/south: kobold shaman serial `30224` at dx `-18`, dy `1`, and goblin serial `27177` at dx `6`, dy `18`; crane serial `288065` is passive edge context. The previous boar/gorilla/boar cluster is off-screen to the south and east of this new line, not solved. No item, gump, context menu, target cursor, combat, damage, loot, corpse, hunger/thirst, quest, discovery, ownership, follower-count, pet-order, PvP/PvE, or region state changed.
+
+## Run 220 - I Back Out, Then The North Bypass Shows Teeth
+
+I start at `Point3D(1145,1323,0)`, facing west. The Mines marker is still west-southwest, but the real screen has a kobold shaman on the west edge and a goblin on the south edge. I do not step closer to either of them just to keep a straight line.
+
+**Beat 1**
+
+I backtrack east along the just-learned northern line to `Point3D(1171,1323,0)`.
+
+This is retreat, not exploration. The kobold shaman, goblin, and crane all fall off the client rectangle. Nothing opens, no target cursor appears, and the fox is still only a follower keeping up in practical range.
+
+**Beat 2**
+
+With the west-south pressure off-screen, I run north to `Point3D(1171,1305,0)`.
+
+The new screen is quiet in the live snapshot: no saved mobile, item, sign, road, corpse, chest, shelter, or water source inside the 18-tile rectangle. That gives me a clean moment to try the bypass, not proof of safety.
+
+**Beat 3**
+
+I test west on the northern bypass, stopping at `Point3D(1155,1305,0)`.
+
+The first useful screen change is not a mine entrance. A monkey appears at `Point3D(1137,1300,0)`, dx `-18`, dy `-5`; a panther appears at `Point3D(1138,1295,0)`, dx `-17`, dy `-10`; and a parrot sits at `Point3D(1151,1299,0)`, dx `-4`, dy `-6`. The parrot is just context. The panther is close enough on the west-north edge that I stop before turning this bypass into another blind push.
+
+Mechanical friction learned:
+
+- Retreating east from the kobold/goblin line clears the immediate route pressure without solving it.
+- The northern bypass is client-quiet only until `Point3D(1155,1305,0)`; after that, a panther marks the next westward risk.
+- The Mines of Morinia marker is now dx `-133`, dy `67`. It is still navigation knowledge only, not a visible entrance, road, shelter, or safe region.
+- No hidden teleporter, gump, quest, item interaction, combat swing, pet command, discovery flag, or inventory mutation explains the stop; the client screen does.
+
+Next pressure:
+
+Mira ends at `Point3D(1155,1305,0)`, facing west. The controlled fox is approximately at `Point3D(1158,1306,0)`, ordered to Follow. Visible route pressure is west-north: panther serial `288058` at dx `-17`, dy `-10`; monkey serial `200106` at dx `-18`, dy `-5`; parrot serial `288067` is passive context. The kobold shaman and goblin are off-screen to the southwest now, not solved. No item, gump, context menu, target cursor, combat, damage, loot, corpse, hunger/thirst, quest, discovery, ownership, follower-count, pet-order, PvP/PvE, or region state changed.
+
+## Run 221 - I Climb Above One Panther And Find More
+
+I start at `Point3D(1155,1305,0)`, facing west. The Mines marker still pulls west-southwest, but the visible screen has a panther on the west-north edge. I do not keep pushing into that line.
+
+**Beat 1**
+
+I backtrack east to `Point3D(1171,1305,0)`.
+
+That clears the panther, monkey, and parrot from the client rectangle. Nothing opens, no target cursor appears, no item enters reach, and the fox is still just a follower keeping up in practical range.
+
+**Beat 2**
+
+I run north to `Point3D(1171,1287,0)` to climb above the panther line before trying west again.
+
+The screen is not empty, but it is not an attack decision either. A moose, goat, hawk, eagle, and mountain goat sit east and north in the saved live snapshot. They read as wildlife context, not a reason to fight or open code.
+
+**Beat 3**
+
+I test west to `Point3D(1155,1287,0)`.
+
+The west edge answers fast. Four panthers are now visible: one at `Point3D(1138,1283,0)`, one at `Point3D(1144,1276,0)`, one at `Point3D(1138,1295,0)`, and one at `Point3D(1140,1273,0)`. A monkey and the same parrot are also visible. None of the panthers is on top of me, but the route west would close distance into a predator cluster, so I stop.
+
+Mechanical friction learned:
+
+- The east retreat to `1171,1305` is a clean client-side escape from the first panther edge.
+- The north line at `1171,1287` shows wildlife only; no item, sign, road, shelter, water source, gump, target cursor, or custom shard result appears.
+- The west test at `1155,1287` exposes a panther cluster. That is visible route pressure, not a hidden teleporter, tarot gate, quest gate, or private AI timer.
+- The Mines of Morinia marker is still only overlay knowledge. From the new stop it is dx `-133`, dy `85`, with no visible entrance or road.
+
+Next pressure:
+
+Mira ends at `Point3D(1155,1287,0)`, facing west. The controlled fox is approximately at `Point3D(1158,1288,0)`, ordered to Follow. Visible route pressure is west and northwest: panther serial `288060` at dx `-17`, dy `-4`; panther serial `200891` at dx `-11`, dy `-11`; panther serial `288058` at dx `-17`, dy `8`; and panther serial `200730` at dx `-15`, dy `-14`. Monkey serial `200106` and parrot serial `288067` are visible context. The kobold shaman/goblin line and the older southern animal clusters remain off-screen route risks, not current blockers. No item, gump, context menu, target cursor, combat, damage, loot, corpse, hunger/thirst, quest, discovery, ownership, follower-count, pet-order, PvP/PvE, or region state changed.
+
+## Run 222 - The North Bypass Keeps Throwing Predators At Me
+
+I start at `Point3D(1155,1287,0)`, facing west. The Mines marker is still southwest, but the actual screen is a wall of cats on the west and northwest edge. None of them is biting me yet, so I do not fight; I get distance first.
+
+**Beat 1**
+
+I backtrack east to `Point3D(1171,1287,0)`.
+
+The panthers, monkey, and parrot fall off the client rectangle. The screen becomes the same wildlife pocket I already know: moose, goat, hawk, eagle, and mountain goat. There is still no road, sign, water source, corpse, chest, shelter, gump, or target cursor. This is just enough breathing room to try climbing above the cat line.
+
+**Beat 2**
+
+I run north to `Point3D(1171,1269,0)`.
+
+The move does not hit a wall or custom warning. The east and northeast side fills with wildlife, but one of the shapes is not harmless: a cougar at `Point3D(1186,1264,0)`, dx `15`, dy `-5`. It is only a potential threat from this range, and moving west would put distance between us, so I do not stop to fight it.
+
+**Beat 3**
+
+I test west to `Point3D(1155,1269,0)`.
+
+The route west still does not turn into a mine entrance. It turns into another predator line: panthers at `Point3D(1144,1276,0)`, `Point3D(1140,1273,0)`, and `Point3D(1138,1283,0)`, with a swamp drake at `Point3D(1137,1264,0)` on the west edge. The nearest panther is still outside the immediate 0-10 tile band, but pushing farther west would close distance into them. I stop facing west.
+
+Mechanical friction learned:
+
+- Retreating east from the `1155,1287` panther cluster clears that screen without opening UI or changing character state.
+- The north move to `1171,1269` exposes a cougar to the east/northeast, so farther north is no longer a casual bypass.
+- Testing west from the northern line exposes three panthers and a swamp drake before the Mines marker becomes visible as anything real in-world.
+- The Mines of Morinia marker is now dx `-133`, dy `103`. It is still only world-map overlay knowledge, not a visible entrance, road, shelter, or safe region.
+- No hidden teleporter, tarot gate, quest gate, item interaction, combat swing, pet command, discovery flag, or inventory mutation explains the stop. The client screen does.
+
+Next pressure:
+
+Mira ends at `Point3D(1155,1269,0)`, facing west. The controlled fox is approximately at `Point3D(1158,1270,0)`, ordered to Follow. Visible route pressure is west and southwest: panther serial `200891` at dx `-11`, dy `7`; panther serial `200730` at dx `-15`, dy `4`; panther serial `288060` at dx `-17`, dy `14`; and swamp drake serial `27755` at dx `-18`, dy `-5`. The cougar serial `444834` is now remembered as an east/northeast route risk, not the thing I am walking toward. No item, visible spawner object, gump, context menu, target cursor, combat, damage, loot, corpse, hunger/thirst, quest, discovery, ownership, follower-count, pet-order, PvP/PvE, or region state changed.
+
+## Run 223 - I Stop Forcing The Mines Line
+
+I start at `Point3D(1155,1269,0)`, facing west. The client screen still says the same thing the map marker does not: west is cats and a swamp drake, not a mine entrance. I am not close enough to be bitten, but I am close enough that one more push west turns curiosity into combat.
+
+**Beat 1**
+
+I retreat southeast to the known open pocket at `Point3D(1171,1287,0)`.
+
+The panthers and swamp drake drop off the client rectangle. I do not get a gump, target cursor, discovery message, corpse, chest, road, sign, shelter, or water source. The screen goes back to ordinary wildlife: moose, goat, hawk, eagle, and mountain goat. That is not safety; it is just no immediate reason to fight.
+
+**Beat 2**
+
+I stop trying to force west and run east to `Point3D(1187,1287,0)`.
+
+This is the first clean-feeling route change after several failed Mines pushes. The visible screen is crowded, but with passive animals: goat, horse, moose, hawk, llama, eagle, another llama, fox, more horses, and a mountain goat. I still remember the cougar north/east of the last bend, so I do not drift north into it. I stop here because the next choice is a real one: skirt the herd southeast toward the Ruins marker, keep looping east, or turn back toward the Mines predator bands.
+
+Mechanical friction learned:
+
+- The immediate west/northwest Mines approach is not blocked by a hidden system. It is blocked by what a player sees: repeated predator lines before any mine entrance, road, shelter, or safe region appears.
+- Retreating through `1171,1287` remains a clean client-side escape from the northern panther/swamp-drake screen.
+- The east test to `1187,1287` shows passive wildlife only. There is still no item, gump, target cursor, visible spawner object, discovery, combat, loot, corpse, hunger/thirst change, quest state, follower-count change, or region text.
+- The Mines of Morinia marker is now dx `-165`, dy `85`; the Ruins marker is dx `116`, dy `162`. Both remain world-map overlay knowledge only.
+
+Next pressure:
+
+Mira ends at `Point3D(1187,1287,0)`, facing east. The controlled fox is approximately at `Point3D(1190,1288,0)`, ordered to Follow. The current screen has no visible hostile in the saved live-state snapshot; it has passive animals close enough to route around, including horse serial `200950` at dx `4`, dy `-3`, goat serial `227062` at dx `2`, dy `-1`, and llama serial `227057` at dx `11`, dy `3`. The west panthers and swamp drake are off-screen route risk now, and the cougar is remembered north/east rather than visible. No UI, combat, discovery, item, ownership, pet-order, vitals, hunger, thirst, or inventory state changed.
+
+## Run 224 - I Take The South Bend Instead
+
+I start at `Point3D(1187,1287,0)`, facing east. The herd around me is noisy but not hostile: goat, horse, llama, moose, hawk, eagle, and the fox following me. The Ruins marker is southeast, but I do not cut straight into it just because the map says so. The first southeast line would run into a grey wolf, and the east line would run me toward a cougar and an elder brown bear. I take the quieter south bend.
+
+**Beat 1**
+
+I run south to the old open pocket around `Point3D(1187,1323,0)`.
+
+The screen stays readable. Deer, eagles, and a horse are visible; no hostile is inside the client rectangle, no corpse or chest appears, no sign or road appears, and no gump or target cursor opens. The fox is still just following, not doing anything clever for me.
+
+**Beat 2**
+
+I keep south to `Point3D(1187,1359,0)`.
+
+That gets me below the wolf line without making a fight out of it. A toad sits west at `Point3D(1173,1360,0)`, dx `-14`, dy `1`; I do not walk west into it, but it is not on top of me. The next real problem is terrain: the east side is the familiar visible tree line around `Point3D(1192,1358,0)`, `Point3D(1192,1357,0)`, and `Point3D(1194,1356,0)`. I stop before turning route correction into blind pathing through trees.
+
+Mechanical friction learned:
+
+- The direct southeast route toward the Ruins marker is not clean from `1187,1287`; it exposes grey wolf serial `445033` near `Point3D(1207,1307,0)`.
+- The east-first bypass is worse: cougar serial `200945` and elder brown bear serial `27182` show up close enough around the `1237,1287` line that I will not route through them casually.
+- The south bend to `1187,1359` has no immediate 0-10 threat, item, road, shelter, water source, corpse, chest, gump, target cursor, combat, discovery, pet command, or inventory change.
+- The Mines marker is now nearly due west, dx `-165`, dy `13`, and the Ruins marker is southeast, dx `116`, dy `90`. Both are still overlay knowledge only.
+- The tree line is ordinary visible terrain friction. It does not justify opening C# or inventing a hidden gate.
+
+Next pressure:
+
+Mira ends at `Point3D(1187,1359,0)`, facing south. The controlled fox is approximately nearby and ordered to Follow. Visible route context is a toad west and a tree-blocked east/southeast turn, so the sane next move is finding a gap without drifting west. The grey wolf, cougar, elder brown bear, west panthers, swamp drake, kobold, and goblin are off-screen route risks, not current blockers. No UI, combat, discovery, item, ownership, pet-order, vitals, hunger, thirst, or inventory state changed.
+
+## Run 225 - I Slip Through The Tree Gap And Meet The East Edge
+
+I start at `Point3D(1187,1359,0)`, facing south. The west side still has the toad at `Point3D(1173,1360,0)`, dx `-14`, dy `1`, so I do not turn the Mines marker into a reason to walk west. The east/southeast tree line is the real screen problem. The visible map overlay still says `Ruins` is southeast at dx `116`, dy `90`; `Mines of Morinia` is nearly due west at dx `-165`, dy `13`; and the West moongate is farther southwest. None of those markers is a road, shelter, water, or a thing standing on the grass.
+
+**Beat 1**
+
+I edge east along the clear row, using the gap just below the trees rather than trying to push through the trunks.
+
+The movement is ordinary terrain correction. The avoided blockers are the tree and peach-tree tiles around `1192,1358`, `1192,1357`, and `1194,1356`, and the pear tree at `1210,1360`. The walked row at `y=1359` stays passable grass/jungle with no blocking static on the route. No gump opens, no target cursor appears, no message fires, and the fox remains a following companion rather than protection.
+
+**Beat 2**
+
+I continue east, then turn south at `x=1225`, aiming the bend toward the Ruins marker without cutting back into the old wolf/bear line.
+
+That is where the screen stops me. At `Point3D(1225,1370,0)`, a panda appears on the east edge at `Point3D(1243,1379,0)`, dx `18`, dy `9`, and a toad appears beside that edge at `Point3D(1243,1382,0)`, dx `18`, dy `12`. The panda reads like passive edge context. The toad is still only a potential threat from the far edge, but pressing east or southeast would close the gap into another timer-creature line. I stop instead of pretending the Ruins marker is a safe road.
+
+Mechanical friction learned:
+
+- The south-first scout from the old stop would immediately bring the crane and second toad back onto the screen, so I avoid that line.
+- The east row from `1187,1359` to `1225,1359`, then south to `1225,1370`, is a clean visible-terrain bypass: 49 checked route tiles, zero route blockers.
+- The known tree/pear blockers remain ordinary client terrain, not a hidden shard gate.
+- The Ruins marker is closer now, dx `78`, dy `79`, but it is still only overlay knowledge. The new real screen fact is the panda/toad edge.
+- No hidden teleporter, tarot gate, quest gate, item interaction, combat swing, pet command, discovery flag, region text, or inventory mutation explains the stop. The client screen does.
+
+Next pressure:
+
+Mira ends at `Point3D(1225,1370,0)`, facing south. The controlled fox is approximately at `Point3D(1222,1371,0)`, ordered to Follow. Visible edge pressure is east/southeast: panda serial `206400` at dx `18`, dy `9`, and toad serial `8544` at dx `18`, dy `12`. The old west toad, southwest crane/toad, grey wolf, cougar, elder brown bear, west panthers, swamp drake, kobold, and goblin are off-screen route risks, not active blockers. No UI, context menu, target cursor, combat, discovery, item, ownership, pet-order, vitals, hunger, thirst, or inventory state changed.
+
+## Run 226 - I Slip South And Find An Orc Line
+
+I start at `Point3D(1225,1370,0)`, facing south. The real screen problem is still the east edge: the panda at `Point3D(1243,1379,0)` and the toad at `Point3D(1243,1382,0)`. The Ruins marker is southeast at dx `78`, dy `79`, but walking east or southeast would close toward the toad. I choose the less stupid move: go south first and make the toad fall behind the client box.
+
+**Beat 1**
+
+I run south, but not in a straight blind line. The column at `x=1225` has visible tree trouble, so I slide west around it, pass down the `x=1224` side, then step back to `x=1225` once the trees are behind me. The route lands at `Point3D(1225,1401,0)`.
+
+The checked route is grass and jungle at z `0..1`. The route itself avoids the impassable tree at `Point3D(1225,1387,0)` and the impassable tree at `Point3D(1225,1392,0)`. Other nearby leaves, mushrooms, pampas grass, and tree art are visual clutter unless their tile is actually flagged impassable. No gump opens, no target cursor appears, no message fires, no item enters reach, and the fox remains a follower instead of a shield.
+
+The panda and toad are now off-screen to the north/east. That is not safety; it is just distance. The new screen answer is south: an orc named `Urulg` stands at `Point3D(1226,1417,0)`, dx `1`, dy `16`. It is not in my face, but direct south travel would close on a hostile-looking humanoid. I stop before the route becomes combat by accident.
+
+Mechanical friction learned:
+
+- The south bend is ordinary terrain correction around visible tree blockers, not a hidden shard gate.
+- The straight `x=1225` line is blocked at `Point3D(1225,1387,0)` and `Point3D(1225,1392,0)`; the west-side wiggle around them stays passable.
+- The east-edge panda/toad line drops off-screen by the end of the move, but it remains route memory if I drift back north/east.
+- The Ruins marker is now dx `78`, dy `48`. It is still only overlay knowledge, not a visible road, shelter, water source, or safe region.
+- No hidden teleporter, tarot gate, quest gate, item interaction, combat swing, pet command, discovery flag, region text, or inventory mutation explains the stop. The client screen does.
+
+Next pressure:
+
+Mira ends at `Point3D(1225,1401,0)`, facing south. The controlled fox is approximately at `Point3D(1222,1398,0)`, ordered to Follow. Visible route pressure is south: orc serial `29314`, `Urulg`, at dx `1`, dy `16`. Nearby tree and rock blockers are ordinary jungle terrain; the east-edge panda/toad pair is off-screen route memory, not an active blocker. No UI, context menu, target cursor, combat, discovery, item, ownership, pet-order, vitals, hunger, thirst, or inventory state changed.
+
+## Run 227 - I Bend East And Catch An Archer Edge
+
+I start at `Point3D(1225,1401,0)`, facing south. The orc named `Urulg` is still down the screen at `Point3D(1226,1417,0)`, dx `1`, dy `16`. That is not close enough to force a fight, but walking south or southeast would make it my problem. The Ruins marker is still southeast; the client screen says east is the safer bend.
+
+**Beat 1**
+
+I run east along the open jungle row to `Point3D(1243,1401,0)`.
+
+The route is ordinary movement, not a gate or trick. The stepped row from `1226,1401` through `1243,1401` stays on jungle ground at z `0`. Mushrooms and leaves at `1234,1401`, and tree-and-leaf art at `1241,1401`, are scenery on the route, not blocking statics. No item comes into reach, no gump opens, no target cursor appears, no message fires, and the fox just keeps following.
+
+The orc drops to the southwest edge instead of staying in front of me: dx `-17`, dy `16`. That is better, but not clean. A goblin archer appears on the southern edge at `Point3D(1250,1419,0)`, dx `7`, dy `18`. If I keep pressing south toward the Ruins marker, the archer becomes the next close-range problem. I stop before the map marker talks me into walking into a shot line.
+
+Mechanical friction learned:
+
+- The east bend from `1225,1401` to `1243,1401` is a clear terrain route through jungle, with no blocking route statics.
+- Bending east keeps the orc out of the immediate path, but it does not open a safe road south.
+- The new real screen pressure is goblin archer serial `26444` at the south edge; the Ruins marker is now dx `60`, dy `48`, still overlay knowledge only.
+- No hidden teleporter, tarot gate, quest gate, item interaction, combat swing, pet command, discovery flag, region text, or inventory mutation explains the stop. The client screen does.
+
+Next pressure:
+
+Mira ends at `Point3D(1243,1401,0)`, facing east. The controlled fox is approximately at `Point3D(1240,1398,0)`, ordered to Follow. Visible threat pressure is split: orc serial `29314`, `Urulg`, at dx `-17`, dy `16`, and goblin archer serial `26444` at dx `7`, dy `18`. There are no visible saved items in the client box. The sane next move is to decide whether to keep edging east/northeast away from the archer line, pause and inspect the southern pressure, or retreat west before committing toward the Ruins marker. No UI, context menu, target cursor, combat, discovery, item, ownership, pet-order, vitals, hunger, thirst, or inventory state changed.
+
+## Run 228 - I Climb Away From The Archer, Not Into The Toad
+
+I start at `Point3D(1243,1401,0)`, facing east. The orc is no longer in front of me, but it is still visible on the southwest edge, and the goblin archer is still on the southern edge. The Ruins marker keeps pulling southeast, but that would close the archer line. Going straight east would bring a gorilla line into my face. Going straight north would drag the old toad/panda edge back too fast.
+
+**Beat 1**
+
+I run northeast, but only to `Point3D(1251,1393,0)`.
+
+This is a route correction, not a new gate. The diagonal route is `1244,1400`, `1245,1399`, `1246,1398`, `1247,1397`, `1248,1396`, `1249,1395`, `1250,1394`, then `1251,1393`. The checked player diagonal movement tiles have no land blockers. The five route statics are fallen log, morning glory, and mushroom decoration, all non-impassable. No item comes into reach, no visible spawner object appears, no gump opens, no target cursor appears, no message fires, and the fox is still just following.
+
+The move does what I wanted, but only halfway. The orc and archer drop off-screen. The new screen has the old toad at `Point3D(1243,1382,0)`, dx `-8`, dy `-11`, close enough that one more northeast push would pull it into the 0-10 danger band. A gorilla also appears at `Point3D(1265,1402,0)`, dx `14`, dy `9`, so east or southeast is not a clean escape either. A monkey and two pandas are visible context, not a reason to fight.
+
+Mechanical friction learned:
+
+- The northeast bend from `1243,1401` to `1251,1393` is physically passable: 24 player diagonal forward/side-check tiles, zero land blockers, five non-impassable route statics.
+- A full northeast run would be too greedy. At the next step, the old toad would enter the immediate 0-10 threat band.
+- Bending northeast clears the southern archer and southwest orc from the screen, but it does not open a safe Ruins road.
+- The Ruins marker is now dx `52`, dy `56`; Mines of Morinia is dx `-229`, dy `-21`; both remain overlay knowledge only.
+- No hidden teleporter, tarot gate, quest gate, item interaction, combat swing, pet command, discovery flag, region text, or inventory mutation explains the stop. The client screen does.
+
+Next pressure:
+
+Mira ends at `Point3D(1251,1393,0)`, facing northeast. The controlled fox is approximately at `Point3D(1248,1390,0)`, ordered to Follow. Visible route pressure is split: toad serial `8544` northwest at dx `-8`, dy `-11`, and gorilla serial `206393` southeast at dx `14`, dy `9`. Monkey serial `289478` and pandas serial `206400` and `289468` are visible context. The orc and goblin archer are off-screen route memory now, not current blockers. No UI, context menu, target cursor, combat, discovery, item, ownership, pet-order, vitals, hunger, thirst, or inventory state changed.
+
+## Run 229 - I Break Sideways From The Split
+
+I start at `Point3D(1251,1393,0)`, facing northeast. The screen is not empty enough to keep running. The old toad sits northwest at `Point3D(1243,1382,0)`, close enough that another northeast step would make it immediate. The gorilla sits southeast at `Point3D(1265,1402,0)`, so east and southeast are not clean either. I do not need a script trace for that. It is just what the client is showing me.
+
+**Beat 1**
+
+I stop and read the split instead of pressing into it.
+
+There is no gump, no target cursor, no item, no sign, no road, no corpse, no chest, and no shelter on screen. The monkey and pandas north of me read as wildlife context. The toad and gorilla are the route decision.
+
+**Beat 2**
+
+I run west-southwest to `Point3D(1235,1396,0)`, breaking sideways out of the gorilla line without stepping north toward the toad.
+
+That does what I need: the gorilla falls off the screen, and the southern archer/orc line stays off-screen instead of becoming the next problem. The toad is still visible north-northeast at dx `8`, dy `-14`; the monkey is at dx `14`, dy `-15`; and the closer panda is at dx `8`, dy `-17`. None of them is on top of me, but the next move cannot be blind. The west/southwest side is the same cluttered jungle I already learned, with tree and rock blockers around `1224,1397`, `1224,1402`, `1227,1393`, and `1229,1400`. I stop before turning a route correction into another tree scrape.
+
+Mechanical friction learned:
+
+- The toad/gorilla split at `1251,1393` is solved by a lateral break, not by tarot, a hidden teleporter, or a private helper.
+- The west-southwest break clears gorilla serial `206393` from the client rectangle without pulling toad serial `8544` into the immediate 0-10 band.
+- The Ruins marker is now dx `68`, dy `53`; Mines of Morinia is dx `-213`, dy `-24`; both are still overlay knowledge only.
+- The next friction is ordinary visible jungle terrain plus the north-edge animal line, not a shard-specific no-op or custom gate.
+
+Next pressure:
+
+Mira ends at `Point3D(1235,1396,0)`, facing southwest. The controlled fox is approximately at `Point3D(1238,1397,0)`, ordered to Follow. Visible route pressure is north/northeast: toad serial `8544` at dx `8`, dy `-14`, monkey serial `289478` at dx `14`, dy `-15`, and panda serial `206400` at dx `8`, dy `-17`. The gorilla, orc, goblin archer, and far panda are off-screen route memory now. No UI, context menu, target cursor, combat, discovery, item, ownership, pet-order, vitals, hunger, thirst, or inventory state changed.
+
+## Run 230 - I Thread The Gap And See The Orc Again
+
+I start at `Point3D(1235,1396,0)`, facing southwest. The toad, monkey, and panda are still up north/northeast; none is close enough to force a fight, but turning back that way would be asking for it. The Ruins marker still pulls southeast and the Mines marker still pulls west, but the only thing my client is really showing is jungle clutter and a way to slide away from the toad.
+
+**Beat 1**
+
+I read the screen before moving.
+
+There is no gump, target cursor, sign, road, shelter, water source, chest, corpse, or usable item in the client box. The visible saved world has no item or visible spawner object here. The real choice is whether I can slip around the trees and rocks without pushing south into the old orc/archer line.
+
+**Beat 2**
+
+I run west first, then a little south once I am past the worst of the trees, landing at `Point3D(1219,1399,0)`.
+
+The path is clean enough to feel like normal movement instead of a gate: the checked route from `1235,1396` to `1219,1399` uses 19 stepped tiles, has zero impassable land or static blockers, and only nonblocking jungle decoration on the route. The toad line drops off the screen. That is the good part. The bad part is that Urulg, the orc I was trying not to feed myself to earlier, is visible again on the south edge at `Point3D(1226,1417,0)`, dx `7`, dy `18`. It is not immediate, but direct south travel would make it immediate fast, so I stop.
+
+Mechanical friction learned:
+
+- The west-then-south gap from `1235,1396` to `1219,1399` is ordinary passable jungle, not a hidden shard gate.
+- The nearby blockers around `1224,1397`, `1224,1402`, `1227,1393`, and `1229,1400` are still just trees and rocks to route around.
+- The move gets the toad, monkey, and panda off-screen, but it brings Urulg back as south-edge route pressure.
+- The Ruins marker is now dx `84`, dy `50`; Mines of Morinia is dx `-197`, dy `-27`; West moongate is dx `-167`, dy `171`. These are still overlay markers, not visible roads or safety.
+- No hidden teleporter, tarot gate, quest gate, item interaction, combat swing, pet command, discovery flag, region text, or inventory mutation explains the stop. The client screen does.
+
+Next pressure:
+
+Mira ends at `Point3D(1219,1399,0)`, facing southwest. The controlled fox is approximately at `Point3D(1222,1400,0)`, ordered to Follow. The visible route pressure is south/southeast: orc serial `29314`, `Urulg`, at dx `7`, dy `18`. The toad, monkey, panda, gorilla, and goblin archer are off-screen route memory now. No UI, context menu, target cursor, combat, discovery, item, ownership, pet-order, vitals, hunger, thirst, or inventory state changed.
+
+## Run 231 - I Slip West Until The Old Toad Shows
+
+I start at `Point3D(1219,1399,0)`, facing southwest. Urulg is not close enough to swing at me, but the orc is exactly the kind of thing that turns a south key into a mistake. The screen has no gump, target cursor, sign, road, shelter, corpse, chest, usable item, or saved world item. The fox is still only following. The sane choice is not to push south toward the Ruins marker; it is to slide west and a little north toward the Mines marker while I still have room.
+
+**Beat 1**
+
+I read the screen and treat Urulg as south-edge pressure, not as a combat target.
+
+There is nothing to click. The map overlay is still louder than the ground: Ruins is southeast, Mines of Morinia is west-northwest, and the West moongate is far southwest. None of those markers is a road or shelter on my screen.
+
+**Beat 2**
+
+I run west and northwest through the jungle, stopping at `Point3D(1192,1391,0)` when the old toad line comes back onto the client edge.
+
+This is a cautious squeeze, not a straight road. The route is `1218,1399`, `1217,1398`, `1216,1397`, `1215,1396`, `1214,1395`, then west and northwest through `1213,1395`, `1212,1395`, `1211,1395`, `1210,1394`, `1209,1393`, `1208,1392`, `1207,1392`, `1206,1392`, `1205,1391`, `1204,1391`, `1203,1390`, `1202,1389`, `1201,1388`, `1200,1388`, `1199,1388`, `1198,1389`, `1197,1389`, `1196,1389`, `1195,1389`, `1194,1389`, `1193,1390`, and finally `1192,1391`. The route check covers 27 stepped tiles and 55 route/diagonal side-check tiles. It finds jungle underfoot, no land blockers, and no impassable route statics. The tree, leaves, mushrooms, and fallen log I pass are scenery, not a new gate.
+
+Urulg drops off-screen. That part works. The stop is the northwest edge: a crane appears at `Point3D(1176,1379,0)`, dx `-16`, dy `-12`, and the toad appears at `Point3D(1174,1379,0)`, dx `-18`, dy `-12`. The crane reads as wildlife context. The toad is the old route pressure again, far enough to avoid but close enough that I do not keep macro-running into it.
+
+The new screen also has a small water-looking patch just east of me around `1195-1197,1390-1392`, plus rocks and trees close enough to make the lane feel cramped. I do not use the canteen here. Thirst is still fine, and this water art is not a proven fill source. The empty canteen stays empty.
+
+Mechanical friction learned:
+
+- The west/northwest squeeze from `1219,1399` to `1192,1391` is ordinary passable jungle once I route around visible clutter.
+- The exact path checked 27 stepped tiles and 55 route/diagonal side-check tiles with zero blocking route tiles.
+- The move clears Urulg from the screen but brings the old toad/crane line back on the northwest edge.
+- A nearby water-looking static patch is visible, but it is not a saved item, not a clicked source yet, and not worth overriding the current route/threat decision.
+- The Mines marker is now dx `-170`, dy `-19`; Ruins is dx `111`, dy `58`; West moongate is dx `-140`, dy `179`. These remain overlay navigation only.
+- No hidden teleporter, tarot gate, quest gate, combat swing, pet command, discovery flag, region text, gump, target cursor, item pickup, hunger/thirst mutation, or inventory change explains the stop. The client screen does.
+
+Next pressure:
+
+Mira ends at `Point3D(1192,1391,0)`, facing northwest. The controlled fox is approximately at `Point3D(1195,1393,0)`, ordered to Follow. The visible route pressure is northwest: toad serial `737437` at dx `-18`, dy `-12`, with crane serial `288081` beside it as context. The visible terrain also shows impassable rocks, trees, and water-looking statics close to the lane. Urulg, the toad/monkey/panda line to the east, the gorilla, and the goblin archer are off-screen route memory now. No UI, context menu, target cursor, combat, discovery, item, ownership, pet-order, vitals, hunger, thirst, or inventory state changed.
+
+## Run 232 - The Nearby Water Art Still Will Not Fill The Canteen
+
+I start at `Point3D(1192,1391,0)`, facing northwest, with no gump open and no target cursor. The client screen has the same pressure as the last stop: the toad sits on the northwest edge at `Point3D(1174,1379,0)`, dx `-18`, dy `-12`, with a crane beside it. The fox is close behind me on Follow. There are still no saved visible items, signs, roads, shelters, corpses, chests, vendors, or spawner objects in the live snapshot.
+
+The tempting thing is the water-looking patch just east of me. I have already learned that some shoreline art is fake for the canteen, but this patch is close enough to test without walking toward the toad or the old orc line.
+
+**Beat 1**
+
+I double-click the empty canteen in my backpack.
+
+Nothing targets the ground. The canteen checks nearby water by itself, and the result is the blunt message: `You can only fill this at a water trough, tub, or barrel!`
+
+The reason is mechanical but player-visible enough to matter. `Waterskin.OnDoubleClick` calls `DrinkingFunctions.CheckWater(from, 3, out soaked)`. That helper looks through nearby items and static tiles, but only exact IDs in `CheckWaterTarget` count. The water-looking statics inside this three-tile box include `0x17A6`, `0x17A4`, `0x17A8`, `0x179F`, `0x1797`, `0x17A1`, `0x17A5`, `0x179E`, and `0x17A7`. None is accepted. The canteen stays `empty canteen`, weight `1.0`, and my thirst stays `20`.
+
+I stop there because the game just answered the visible question. The next decision is route choice again, not another canteen click.
+
+Mechanical friction learned:
+
+- The current water-looking patch around `1195-1197,1390-1392` is scenery for the canteen, not a fill source.
+- The canteen does not open a target cursor. It runs a three-tile nearby-water check on double-click.
+- The failure message points to real sources: water trough, tub, or barrel. None is visible on the current screen.
+- No movement, combat, discovery, gump, context menu, target cursor, follower order, vitals, hunger, thirst, or inventory state changed.
+
+Next pressure:
+
+Mira remains at `Point3D(1192,1391,0)`, facing northwest. The controlled fox is still approximately at `Point3D(1195,1393,0)`, ordered to Follow. The toad/crane line remains northwest edge pressure, and the east water art is now tested scenery rather than a possible survival resource. Urulg and the east/northeast animal line remain off-screen route memory. The next client-visible decision is where to move after ruling out the nearby water patch: avoid blind west/northwest into the toad, avoid a careless southeast turn toward Urulg, and pick a cautious bend through the jungle.
+
+## Run 233 - I Reset On The Open Row
+
+I start at `Point3D(1192,1391,0)`, facing northwest, with no gump open and no target cursor. The canteen answer is still sitting in my head: the water-looking patch east of me is scenery for filling purposes. The northwest edge has the toad at `Point3D(1174,1379,0)`, dx `-18`, dy `-12`, with a crane beside it. There are still no saved visible items, roads, signs, shelter, corpses, chests, vendors, or visible spawner objects in the live snapshot.
+
+**Beat 1**
+
+I read the screen before touching the keyboard. West and northwest are not worth it with the toad on that edge. South and southeast are still the old Urulg line. The safer play is not heroic: climb to the clear row I already know, then move east away from the toad and the fake water.
+
+**Beat 2**
+
+I turn north, take the short north leg to `y=1386`, then turn east and run along the open jungle row to `Point3D(1214,1386,0)`.
+
+This is normal movement through clutter, not a shard trick. The checked route is `1192,1390` through `1192,1386`, then `1193,1386` through `1214,1386`. Sosaria is still file index `1`, so the terrain probe reads `map1.mul`, `staidx1.mul`, `statics1.mul`, and `tiledata.mul`. All 27 target tiles are dry jungle at z `0`, with zero blocking route tiles. The eight statics on the route are harmless scenery: fern, tree/leaves art that is not impassable on this tile, blade plant, mushrooms, and pampas grass. I do not need to click the canteen again, and no new gump, target cursor, message, item, region text, combat, discovery, hunger, thirst, ownership, or pet-order state appears.
+
+The stop is a chosen reset point. The toad and crane fall off-screen to the west. The old water patch is now behind me. The row ahead is not proven safe forever: the old east animal line and the old south orc/archer line are both route memory, and the visible jungle still has trees and rocks south/east of the row. But the client box itself is quiet.
+
+Mechanical friction learned:
+
+- The north-then-east reset from `1192,1391` to `1214,1386` is passable dense jungle: 27 checked target tiles, zero blocking route tiles, eight nonblocking route statics.
+- Moving east along the row clears the northwest toad/crane pressure without walking southeast toward Urulg.
+- The tested water art stays behind as scenery. No trough, tub, barrel, or real water source appears on the new screen.
+- The Ruins marker is now dx `89`, dy `63`; Mines of Morinia is dx `-192`, dy `-14`; West moongate is dx `-162`, dy `184`. They are still overlay navigation, not visible roads or safety.
+- No hidden teleporter, tarot gate, quest gate, custom item no-op, combat swing, pet command, discovery flag, region text, gump, target cursor, hunger/thirst mutation, or inventory change explains the stop. The client screen does.
+
+Next pressure:
+
+Mira ends at `Point3D(1214,1386,0)`, facing east. The controlled fox is approximately nearby at `Point3D(1211,1387,0)`, ordered to Follow. No hostile or dangerous saved mobile is visible in the endpoint client box. The south/east jungle still carries known ordinary blockers around `1214,1388`, `1214,1390`, `1215,1385`, `1222,1390`, `1225,1387`, and nearby trees/rocks, so the next move is not blind speed. The next client-visible decision is whether to keep edging east toward the Ruins marker or pause and bend around the remembered east animal and south orc/archer lines.
+
+## Run 234 - I Stop When The Toad Reappears
+
+I start at `Point3D(1214,1386,0)`, facing east. There is no gump, no context menu, no target cursor, and no new message. The client box itself is quiet: no saved visible wild mobile, no visible item, no sign, no road, no corpse, no chest, no shelter, no water source, and no visible spawner object. The fox is still just following. The Ruins marker pulls southeast, but the marker is not a road, and the old animal line is still somewhere ahead.
+
+**Beat 1**
+
+I read the quiet row instead of pretending the overlay is ground truth.
+
+The visible problem is not what is on top of me. It is what the next east push will uncover. The known trees and rocks south of the row make a blind southeast bend ugly, and the old Urulg/archer line is still south route memory. So I choose a short east probe, not a sprint.
+
+**Beat 2**
+
+I run east along the same `y=1386` row and stop at `Point3D(1225,1386,0)`.
+
+The route is `1215,1386` through `1225,1386`. Sosaria still resolves to file index `1`, so the terrain probe reads `map1.mul`, `staidx1.mul`, `statics1.mul`, and `tiledata.mul`. All 11 target tiles are jungle at z `0`, with zero blocking route tiles. The only route statics are tree/leaves art at `1216,1386` and a fern at `1223,1386`; neither blocks this row.
+
+The stop is the east edge. The old toad is visible again at `Point3D(1243,1382,0)`, dx `18`, dy `-4`. A panda is beside it at `Point3D(1243,1379,0)`, dx `18`, dy `-7`. The panda looks like context. The toad is far enough not to force a swing, but close enough that continuing east or northeast would be greedy. I stop before the Ruins marker talks me into closing the gap.
+
+Mechanical friction learned:
+
+- The east row from `1214,1386` to `1225,1386` is passable dense jungle: 11 checked target tiles, zero blocking route tiles, and two nonblocking static clusters.
+- Moving east makes the remembered toad/panda line visible on the east/northeast edge instead of leaving the screen quiet.
+- The Ruins marker is now dx `78`, dy `63`; Mines of Morinia is dx `-203`, dy `-14`; West moongate is dx `-173`, dy `184`. They remain overlay navigation only.
+- No hidden teleporter, tarot gate, quest gate, combat swing, item interaction, pet command, discovery flag, region text, gump, target cursor, hunger/thirst mutation, or inventory change explains the stop. The client screen does.
+
+Next pressure:
+
+Mira ends at `Point3D(1225,1386,0)`, facing east. The controlled fox is approximately at `Point3D(1222,1387,0)`, ordered to Follow. The visible route pressure is east/northeast: toad serial `8544` at dx `18`, dy `-4`, with panda serial `206400` beside it as context. Urulg, the goblin archer, the monkey, and the gorilla are off-screen route memory. No UI, context menu, target cursor, combat, discovery, item, ownership, pet-order, vitals, hunger, thirst, or inventory state changed.
+
+## Run 235 - I Back Off To The Quiet Row
+
+I start at `Point3D(1225,1386,0)`, facing east. The screen is not attacking me, but it is no longer empty: the toad sits at `Point3D(1243,1382,0)`, dx `18`, dy `-4`, and the panda is above it at `Point3D(1243,1379,0)`, dx `18`, dy `-7`. The fox is behind me, still following. The Ruins marker is southeast, but the ground in front of me is an animal edge, not a road.
+
+**Beat 1**
+
+I read the edge and decide not to press east or northeast.
+
+The toad is still potential pressure, not an immediate swing. That makes the right move boring: get space before the marker talks me into a bad line. South has the old Urulg and archer memory. East closes on the toad. West is the proved row I just used.
+
+**Beat 2**
+
+I turn west and run back along `y=1386`, stopping at `Point3D(1207,1386,0)`.
+
+This is retreat, not a new discovery. The row from `1225` back through `1214` and then to `1207` is already proved open jungle/grass, so I do not re-audit every tile. The toad and panda drop off the east edge instead of staying visible. The old west toad line is still too far west to appear here. The endpoint screen has no saved visible wild mobile, no saved visible item, and no visible running spawner object. The fox is only kept in practical follow range, approximately around `Point3D(1204,1387,0)`.
+
+Mechanical friction learned:
+
+- Backing west from the toad/panda edge is a normal client-side escape route, not a hidden gate or code problem.
+- `Point3D(1207,1386,0)` is a breathing spot between the east toad/panda line and the old west toad/crane line, but it is not safety.
+- The Ruins marker is now dx `96`, dy `63`; Mines of Morinia is dx `-185`, dy `-14`; West moongate is dx `-155`, dy `184`. They are still overlay navigation only.
+- No hidden teleporter, tarot gate, quest gate, item interaction, combat swing, pet command, discovery flag, region text, gump, target cursor, hunger/thirst mutation, or inventory change explains the stop. The client screen does.
+
+Next pressure:
+
+Mira ends at `Point3D(1207,1386,0)`, facing west. The controlled fox is approximately at `Point3D(1204,1387,0)`, ordered to Follow. The current client rectangle has no saved visible wild mobile, no saved visible item, and no visible spawner object. The toad/panda line is now off-screen east route memory; the old west toad/crane line is off-screen west route memory. No UI, context menu, target cursor, combat, discovery, item, ownership, pet-order, vitals, hunger, thirst, or inventory state changed. The next client-visible decision is where to go from this quiet row without turning either edge into a close-range problem.
+
+## Run 236 - North Stops At The Wolf Edge
+
+I start at `Point3D(1207,1386,0)`, facing west, with no gump open and no target cursor. The screen itself is quiet: no saved visible wild mobile, no visible item, no road, no sign, no chest, no corpse, no shelter, and no water source. The fox is still the practical follower. The overlay is still pulling in three different directions: Ruins southeast, Mines of Morinia west-northwest, and the West moongate far southwest. None of that is ground truth.
+
+**Beat 1**
+
+I read the quiet row and pick north.
+
+East brings back the toad and panda. West risks the old toad and crane line. South or southeast is the old Urulg and archer memory. North is not safe, but it is the only direction that does not immediately reopen the same pressure.
+
+**Beat 2**
+
+I run north through the grass and jungle, stopping at `Point3D(1207,1325,0)` when a grey wolf appears on the northern edge of the client.
+
+This is not a straight line. Direct north has an impassable rock at `1207,1357` and another at `1207,1328`, so I jog east around both of them: the useful parts are `1207,1386` north to `1207,1358`, east through `1208,1357` to `1208,1354`, back to the north line, then near the end `1207,1331` to `1207,1329`, east through `1208,1328` to `1208,1326`, and back northwest to `1207,1325`.
+
+The terrain check is boring in the useful way: 61 moved steps, zero blocking route tiles, zero statics on the stepped route, no wet land, and only grass with two jungle tiles. One or two land tiles rise to z `1`, but nothing announces a region, teleports me, opens a gump, starts combat, mutates hunger or thirst, or changes the inventory. The fox keeps up as a follower in practical range.
+
+The stop is the new northern screen. A llama, horse, goats, deer, eagles, and a swallow are visible context. The important thing is the grey wolf at `Point3D(1207,1307,0)`, dx `0`, dy `-18`. It is not on top of me, but it is exactly the kind of edge pressure that changes the route decision. I do not keep running into it.
+
+The screen has no saved visible item, no visible spawner object, no trough, no tub, no barrel, and no water static in range. A rock sits close behind at `1207,1328`, with trees and more rocks around the grass lane. That is route-shaping terrain, not a code problem.
+
+Mechanical friction learned:
+
+- The north run from `1207,1386` to `1207,1325` is passable if I sidestep the visible rocks at `1207,1357` and `1207,1328`.
+- The route is 61 moved steps with zero blocking route tiles and zero statics on the stepped path.
+- The northern animal cluster is passive context until the grey wolf appears at the 18-tile edge.
+- The Ruins marker is now dx `96`, dy `124`; Mines of Morinia is dx `-185`, dy `47`; West moongate is dx `-155`, dy `245`. They remain overlay navigation only.
+- No hidden teleporter, tarot gate, quest gate, item interaction, combat swing, pet command, discovery flag, region text, gump, target cursor, hunger/thirst mutation, or inventory change explains the stop. The client screen does.
+
+Next pressure:
+
+Mira ends at `Point3D(1207,1325,0)`, facing northwest after the final sidestep. The controlled fox is approximately at `Point3D(1209,1324,0)`, ordered to Follow. The grey wolf at `Point3D(1207,1307,0)` is potential northern threat, not immediate contact. The passive animals around the grass are context, and the old toad, orc, archer, gorilla, and Ruins-side animal lines are now off-screen route memory. No UI, context menu, target cursor, combat, discovery, item, ownership, pet-order, vitals, hunger, thirst, or inventory state changed. The next client-visible decision is whether to back away from the wolf edge, skirt east or west around it, or stop and prepare for a safer route.
+
+## Run 237 - I Give The Wolf Space, Then The Toad Reappears
+
+I start at `Point3D(1207,1325,0)`, facing north, with no gump, no context menu, and no target cursor. The wolf is still the reason my hand is not on the north key: `Point3D(1207,1307,0)`, dx `0`, dy `-18`. The horse, llama, goat, deer, eagles, and swallow are screen context. There is still no visible item, road, sign, corpse, chest, shelter, trough, tub, barrel, water source, or visible spawner object.
+
+**Beat 1**
+
+I read the edge and choose space over bravado. I do not swing at the wolf, and I do not keep running north just because it is only on the edge. The useful move is back through the gap I already learned, around the rock behind me.
+
+**Beat 2**
+
+I retreat south around the `1207,1328` rock and stop at `Point3D(1207,1344,0)`.
+
+The route is the reverse of the last sidestep: `1208,1326`, `1208,1327`, `1208,1328`, then back to the `1207` line from `1329` down to `1344`. The terrain check is clean: 19 moved steps, grass only, zero blocking route tiles, and zero wet or blocking statics. The wolf drops off-screen. The only saved wild mobile left in view is the horse on the northern edge at dx `-11`, dy `-18`, which is not a reason to stop forever.
+
+**Beat 3**
+
+With the wolf gone, I turn west toward the Mines of Morinia marker instead of drifting south toward the old orc/archer memory. I run the short west probe to `Point3D(1189,1344,0)` and stop when the toad shows again.
+
+The west leg from `1207,1344` to `1189,1344` is also clean terrain: 18 moved steps over grass and jungle, zero blocking route tiles, and zero wet or blocking statics. The problem is not the ground. It is the new edge of the screen: a toad at `Point3D(1173,1360,0)`, dx `-16`, dy `16`. That is potential southwest pressure, close enough that I do not keep charging west/southwest toward the Mines marker. The horse remains passive at `Point3D(1196,1326,0)`, dx `7`, dy `-18`. The fox stays in practical follow range.
+
+Mechanical friction learned:
+
+- Backing off the northern wolf edge is normal movement through a known gap, not a custom gate.
+- The retreat to `Point3D(1207,1344,0)` is 19 checked steps with no route blockers.
+- The west probe to `Point3D(1189,1344,0)` is 18 checked steps with no route blockers.
+- Moving toward Mines of Morinia brings a toad onto the southwest edge before the marker becomes useful ground truth.
+- Mines of Morinia is now dx `-167`, dy `28`; Ruins is dx `114`, dy `105`; West moongate is dx `-137`, dy `226`. They remain overlay navigation only.
+- No hidden teleporter, tarot gate, quest gate, item interaction, combat swing, pet command, discovery flag, region text, gump, target cursor, hunger/thirst mutation, or inventory change explains the stop. The client screen does.
+
+Next pressure:
+
+Mira ends at `Point3D(1189,1344,0)`, facing west. The controlled fox is approximately nearby, ordered to Follow. The toad at `Point3D(1173,1360,0)` is potential southwest threat; the horse at the northern edge is passive context. The old wolf is off-screen north/east route memory, and the old Urulg, goblin archer, gorilla, Ruins-side toad, panda, and monkey lines are still off-screen route memory. No UI, context menu, target cursor, combat, discovery, item, ownership, pet-order, vitals, hunger, thirst, or inventory state changed. The next client-visible decision is whether to back east/northeast from the toad edge, skirt north toward the Mines line, or stop and prepare.
+
+## Run 238 - I Skirt North Of The Toad And Hit A Goblin Edge
+
+I start at `Point3D(1189,1344,0)`, facing west. The screen has a toad on the southwest edge at `Point3D(1173,1360,0)`, dx `-16`, dy `16`, and a horse on the north edge at `Point3D(1196,1326,0)`, dx `7`, dy `-18`. The fox is still only my follower. There is no visible item, no road, no sign, no chest, no corpse, no shelter, no water source, no gump, no context menu, and no target cursor.
+
+**Beat 1**
+
+I do not keep running west-southwest into the toad. I take the boring player move: angle northwest, putting the toad below the screen while still keeping the Mines marker generally ahead.
+
+I stop the first bend at `Point3D(1179,1336,0)`. The toad is gone from the client rectangle by y distance. The horse is still only edge context to the east-northeast, now around dx `17`, dy `-10`. Nothing opens, nothing attacks, and the fox stays close enough on Follow.
+
+**Beat 2**
+
+With the toad off-screen, I try the west line again.
+
+The client answers before this turns into a long run. I stop at `Point3D(1169,1336,0)` when the west edge fills in: a goblin at `Point3D(1151,1341,0)`, dx `-18`, dy `5`, and a boar at `Point3D(1153,1342,0)`, dx `-16`, dy `6`. The goblin is the real route problem. The boar makes the line feel crowded, but I am not pretending either one is already swinging. I just stop before the next west step turns the Mines push into combat.
+
+Mechanical friction learned:
+
+- Skirting northwest from the southwest toad is normal client movement, not a hidden gate or scripted result.
+- The toad drops off-screen when I hold the northern line, but the west route immediately exposes a goblin/boar edge before any mine entrance, road, shelter, or resource appears.
+- Mines of Morinia is now dx `-147`, dy `36`; Ruins is dx `134`, dy `113`; West moongate is dx `-117`, dy `234`. They remain world-map overlay knowledge only.
+- No hidden teleporter, tarot gate, quest gate, item interaction, combat swing, pet command, discovery flag, region text, gump, target cursor, hunger/thirst mutation, or inventory change explains the stop. The client screen does.
+
+Next pressure:
+
+Mira ends at `Point3D(1169,1336,0)`, facing west. The controlled fox is approximately nearby, ordered to Follow. Visible route pressure is now west/southwest: goblin serial `27177` at dx `-18`, dy `5`, and boar serial `288070` at dx `-16`, dy `6`. The toad is off-screen south route memory, the horse is off-screen east/northeast context, and the old wolf, Urulg, archer, gorilla, Ruins-side animals, and northern predator bands remain route memory rather than current blockers. No UI, context menu, target cursor, combat, discovery, item, ownership, pet-order, vitals, hunger, thirst, or inventory state changed. The next client-visible decision is whether to back east from the goblin edge, bend north harder, or deliberately prepare for a fight.
+
+## Run 239 - I Bend North Instead Of Testing The Goblin Line
+
+I start at `Point3D(1169,1336,0)`, facing west. The screen is not safe enough for another west step: the goblin at `Point3D(1151,1341,0)` is dx `-18`, dy `5`, and the boar at `Point3D(1153,1342,0)` is dx `-16`, dy `6`. Neither one is in my face yet, but the next straight push toward Mines of Morinia would close the line. There is still no visible road, sign, corpse, chest, shelter, water source, gump, context menu, target cursor, or item to click.
+
+**Beat 1**
+
+I choose the less heroic move and turn north. This is not a clever mine approach; it is just making y-distance from the goblin and the boar while the ground still reads as ordinary open grass/jungle.
+
+I run the north line to `Point3D(1169,1318,0)`, then stop because the immediate screen finally clears. The goblin and boar are now below the client rectangle by y distance, not solved or killed. No new saved wild mobile, saved visible item, running spawner object, gump, target cursor, region text, discovery, combat, pet order, hunger/thirst, inventory, ownership, or skill state appears. The fox remains practical follower context, not protection.
+
+Mechanical friction learned:
+
+- Backing away from the goblin/boar edge is ordinary client movement. There is no hidden gate, tarot choice, scripted route helper, or C# destination call involved.
+- The west Mines line is still only map pressure. From here Mines of Morinia is dx `-147`, dy `54`; Ruins is dx `134`, dy `131`; West moongate is dx `-117`, dy `252`.
+- A quiet client rectangle is not a safety proof. The goblin and boar are off-screen south/southwest route memory, and the older northern predator band is still a reason not to blindly sweep northwest.
+
+Next pressure:
+
+Mira ends at `Point3D(1169,1318,0)`, facing north. The controlled fox is approximately nearby, ordered to Follow. The current screen has no saved wild mobile, saved visible item, visible running spawner object, road, sign, corpse, chest, shelter, water source, gump, context menu, or target cursor. The next honest decision is whether to use this quieter northern rectangle to scout east/northeast, hold and re-scan before any northwest bend, or deliberately retry the Mines line with the goblin/boar memory still behind it.
+
+## Run 240 - East Scout Brings Back The Wolf Edge
+
+I start at `Point3D(1169,1318,0)`, facing north. The client rectangle is quiet: no saved wild mobile, no visible item, no visible spawner object, no road, no sign, no chest, no corpse, no shelter, no water source, no gump, no context menu, and no target cursor. The fox is still just my follower. Mines of Morinia is west-southwest on the overlay, but the remembered goblin and boar are behind that line. The east/northeast side is the cleaner thing to test.
+
+**Beat 1**
+
+I read the empty screen and choose an east scout. I am not trying to path to a marker yet; I just want to see whether the quiet northern rectangle opens into anything safer than the goblin edge.
+
+**Beat 2**
+
+I run east across ordinary open ground to `Point3D(1189,1318,0)` and stop as soon as the eastern/northern screen fills in.
+
+The stop is not terrain. Nothing blocks, opens, teleports, attacks, or changes the inventory. The new screen shows passive animals first: a deer at `Point3D(1194,1306,0)`, eagles at `Point3D(1198,1310,0)` and `Point3D(1196,1314,0)`, another deer at `Point3D(1203,1316,0)`, and the horse at `Point3D(1196,1326,0)`. The important edge is the grey wolf at `Point3D(1207,1307,0)`, dx `18`, dy `-11`. That is only potential threat range, but it is enough to stop the east push before I make it immediate.
+
+Mechanical friction learned:
+
+- The east scout from `1169,1318` to `1189,1318` is ordinary client movement; no C# destination helper, hidden teleporter, tarot gate, region gate, or terrain audit explains it.
+- The passive animal cluster east of the quiet row is visible context, not a goal.
+- The grey wolf line returns at the far edge before the east scout becomes a safe route.
+- From the new stop, Mines of Morinia is dx `-167`, dy `54`; Ruins is dx `114`, dy `131`; West moongate is dx `-137`, dy `252`. These remain overlay navigation only.
+
+Next pressure:
+
+Mira ends at `Point3D(1189,1318,0)`, facing east. The controlled fox is approximately nearby, ordered to Follow. The grey wolf at the far northeast edge is the current route pressure; the deer, eagles, and horse are passive context. The goblin and boar behind the old west/southwest line remain route memory, not current blockers. No UI, context menu, target cursor, combat, discovery, item, ownership, pet-order, vitals, hunger, thirst, skill, or inventory state changed. The next client-visible decision is whether to back west from the wolf edge, bend south below the animal line, or deliberately prepare before testing the northeast again.
+
+## Run 241 - I Skirt Under The Wolf Edge
+
+I start at `Point3D(1189,1318,0)`, facing east. The screen is busy but not immediately on me: deer at `Point3D(1194,1306,0)` and `Point3D(1203,1316,0)`, eagles at `Point3D(1198,1310,0)` and `Point3D(1196,1314,0)`, and the horse at `Point3D(1196,1326,0)`. The grey wolf is the thing that matters, sitting at `Point3D(1207,1307,0)`, dx `18`, dy `-11`. There is still no visible item, road, sign, corpse, chest, shelter, trough, tub, barrel, water source, gump, context menu, or target cursor.
+
+**Beat 1**
+
+I do not press northeast into the wolf. I also do not pretend the Ruins marker is a trail. The normal player move is to make distance first, then see whether the grass opens below the animal line.
+
+**Beat 2**
+
+I run south to `Point3D(1189,1336,0)`. The wolf falls off the client rectangle. The horse stays visible to the north at dx `7`, dy `-10`, but it is still only passive context. Nothing opens, blocks, attacks, targets, or changes in my pack.
+
+**Beat 3**
+
+With the wolf off-screen, I turn east along the lower grass and stop at `Point3D(1207,1336,0)`.
+
+This new screen is quieter in the one way that matters: no visible hostile is forcing my hand. A llama at `Point3D(1208,1323,0)`, a fox at `Point3D(1209,1324,0)`, an eagle at `Point3D(1213,1324,0)`, the horse at `Point3D(1196,1326,0)`, and a swallow at `Point3D(1221,1319,0)` are visible context. The old grey wolf is now off-screen north, not solved. The goblin, boar, and toad lines are behind me as route memory.
+
+Mechanical friction learned:
+
+- Skirting under the grey wolf edge is ordinary client movement, not a hidden teleporter, tarot gate, custom destination helper, or C# result.
+- The south leg to `1189,1336` clears the wolf without exposing a new hostile in the client rectangle.
+- The east leg to `1207,1336` exposes only passive animals in the saved snapshot.
+- From the new stop, Mines of Morinia is dx `-185`, dy `36`; Ruins is dx `96`, dy `113`; West moongate is dx `-155`, dy `234`. They remain overlay navigation only.
+- No region text, discovery flag, gump, target cursor, combat, pet command, hunger/thirst mutation, ownership change, item interaction, or inventory change explains the stop. The player stopped because the next route choice is open again.
+
+Next pressure:
+
+Mira ends at `Point3D(1207,1336,0)`, facing east. The controlled fox is still treated as a practical follower on Follow. The visible screen has only passive animals and no item, road, sign, corpse, chest, shelter, water source, gump, context menu, or target cursor. The grey wolf is off-screen north route memory, while the goblin, boar, and toad remain west/southwest memory. The next client-visible decision is whether to continue southeast toward the Ruins overlay marker, cut south to keep distance from the northern wolf band, or back west if the route starts to crowd again.
+
+## Run 242 - The Ruins Line Shows A Panther Edge
+
+I start at `Point3D(1207,1336,0)`, facing east. The screen is quiet enough to move: a llama at `Point3D(1208,1323,0)`, a fox follower close enough to count as practical Follow context, an eagle at `Point3D(1213,1324,0)`, the horse back at `Point3D(1196,1326,0)`, and a swallow at `Point3D(1221,1319,0)`. There is still no visible item, road, sign, corpse, chest, shelter, trough, tub, barrel, water source, gump, context menu, or target cursor.
+
+**Beat 1**
+
+I read the screen and choose the southeast pull. That is not trust in the Ruins marker; it is just the cleanest visible direction that does not drift back into the northern wolf band or the old west goblin line.
+
+**Beat 2**
+
+I run southeast over ordinary open ground to `Point3D(1234,1353,0)` and stop as soon as the next screen gives me a reason to think.
+
+The first new things on the southeast edge are a monkey at `Point3D(1245,1366,0)`, dx `11`, dy `13`, and a panther at `Point3D(1252,1371,0)`, dx `18`, dy `18`. The monkey is context. The panther is the decision. It is not biting me yet, but continuing straight toward the Ruins marker would turn a far-edge threat into a near one.
+
+Mechanical friction learned:
+
+- The southeast move from `1207,1336` to `1234,1353` is ordinary client movement. No terrain failure, hidden teleporter, tarot gate, destination helper, region gate, or C# trace explains the stop.
+- The Ruins overlay is closer now, dx `69`, dy `96`, but the visible panther edge outranks the marker.
+- The wider southeast animal pocket is starting to show: the boar east of the new rectangle, plus monkey, panda, toad, and panther memory beyond it, means I should not keep pushing blindly along the marker line.
+- No region text, discovery flag, gump, target cursor, combat, pet command, hunger/thirst mutation, ownership change, item interaction, or inventory change appears.
+
+Next pressure:
+
+Mira ends at `Point3D(1234,1353,0)`, facing southeast. The fox is still treated as a practical follower on Follow. The current screen has a visible monkey and a far-edge panther, with no visible item, road, sign, corpse, chest, shelter, water source, gump, context menu, or target cursor. The next client-visible decision is whether to back west/northwest from the panther edge, bend away while keeping distance, or deliberately prepare before testing any more southeast movement toward Ruins.
+
+## Run 243 - The Owner Pulls Me To Britain
+
+I start at `Point3D(1234,1353,0)`, facing southeast. The monkey is still southeast at `Point3D(1245,1366,0)`, and the panther is still the thing that makes my hands stop at `Point3D(1252,1371,0)`. There is no road, sign, shelter, water source, chest, corpse, gump, context menu, target cursor, or safe-looking route on the screen. The Ruins marker is only a marker, and every honest direction I have tried has turned into another animal edge.
+
+**Beat 1**
+
+Then the wilderness just stops being where I am.
+
+This is not something I do. I do not click a card, say a word, press a gump button, step into a moongate, use a destination helper, or find a hidden teleporter. The shard owner, invisible to me, recognizes that I am only learning how to flinch away from threats and pulls me out. From my side of the client, the jungle and the panther pressure vanish, and the screen snaps to Britain at `Point3D(2999,1060,0)`.
+
+**Beat 2**
+
+I do the only normal thing after a sudden relocation: stand still and read the new screen.
+
+This is not empty wilderness. People have names and jobs here. Alec the town herald is west-southwest at `Point3D(2984,1050,0)`. Peter the cook is southwest at `Point3D(2982,1073,1)`. Mabel, Franklin, and Blythe look like adventurers around the south side. Markos the fishing trainer is south at `Point3D(2992,1076,0)`. Ryba is high to the northwest, and I can see a training dummy west-northwest. The Bank of Britain sign and public bank door are just east at `Point3D(3015,1056,5)` and `Point3D(3017,1055,5)`.
+
+The world map finally agrees with what the screen is showing: Britain is here, not far away. The nearby overlay is dense with useful names instead of lures through hostile ground: Bank of Britain, Defenders of Sosaria, The Cleaver, The Unicorn's Horn, The Hammer and Anvil, The Bard's Tale, The Grand Clock Makers, Rolling Log Goods, The Best Hides of Britain, Strength and Steel, Profuse Provisions, and The Lord's Clothiers.
+
+Mechanical friction learned:
+
+- The move to Britain is explicit out-of-band shard-owner intervention. It is not a normal player route, tarot branch, visible moongate, hidden teleporter discovery, scripted destination helper, or gump response.
+- Mira does not learn why the owner acted. The only player-facing fact is sudden relocation from the panther edge to Britain.
+- Britain at `Point3D(2999,1060,0)` gives immediate safety and learning hooks: a herald, trainer, bank, shop signs, adventurer-looking NPCs, and a training dummy.
+- No vitals, hunger, thirst, inventory, skills, quest flags, discovery flags, pet order, target cursor, gump, context menu, combat, damage, corpse, loot, or ownership state changes.
+
+Next pressure:
+
+Mira ends at `Point3D(2999,1060,0)`, facing southeast but standing still in Britain. The fox is treated as teleported nearby on Follow. The panther, monkey, boar, panda, toad, wolf, goblin, and old wilderness blockers are off-screen route memory only. The next client-visible decision is no longer wilderness survival; it is choosing a safe town interaction: click Alec the town herald, inspect the Bank of Britain door/sign, talk to Markos the fishing trainer, inspect the training dummy, approach Peter the cook, read nearby shop signs, or single-click the adventurers.
+
+## Run 244 - I Ask The Town Crier What This City Knows
+
+I start at `Point3D(2999,1060,0)`, facing the Britain town screen. There is no hostile on me. The visible pressure is not survival now; it is choosing which safe town thing to trust first. Alec the town crier is northwest at `Point3D(2984,1050,5)`, the Bank of Britain sign and public door are east, Markos the fishing trainer is south, Peter the cook is southwest, and a training dummy is west-northwest. The old panther, wolf, goblin, and boar are only off-screen route memory.
+
+**Beat 1**
+
+I choose Alec because he is a named herald, not a shop door. I run northwest across the town paving toward him and stop close enough to talk, around `Point3D(2987,1052,5)`.
+
+Crossing into his range makes him behave like a town crier. A line of crier chatter fires overhead, but it is not a concrete route, quest, or discovery flag from my side of the screen. It is just city noise unless I decide to follow up.
+
+**Beat 2**
+
+The closer screen is busier than the arrival screen. I can now see the Defenders of Sosaria side of town: Taima the warrior guildmaster, training dummies, training targets, several adventurer-looking people, Ryba high to the north, a visible coffer, and doors into the training building. None of it is hostile. The bank marker is still nearby on the world map, but it has fallen outside the immediate client rectangle.
+
+**Beat 3**
+
+I open Alec's visible context menu entry and choose the talk/news option.
+
+A gump opens with the title `THE NEWS FROM THE TOWN CRIER`. It has a close button and six visible categories: `Deeds in the Realm`, `Exploration in the Realm`, `Victories in Battle`, `Gossip in the Realm`, `Recent Deaths`, and `Wanted Murderers`. The body area on the first page is empty, so the real next choice is not movement. It is whether to press one of the visible category buttons or close the gump.
+
+Mechanical friction learned:
+
+- Alec is a normal visible town NPC interaction, not a tarot route, destination helper, hidden teleporter, or owner action.
+- Town heralds talk automatically when a player moves within 10 tiles, then throttle their next shout.
+- The visible context-menu talk/news entry opens the town crier news gump because the shard's logging-events system is enabled.
+- I did not press any gump category button this run. The gump is open and unread beyond its title and category labels.
+- Near Alec, the client rectangle shifts from bank/cook/fishing context to Defenders of Sosaria training context: guildmaster, training mobiles, dummies, coffer, doors, and adventurers.
+- No vitals, hunger, thirst, inventory, skills, quest flags, discovery flags, pet order, target cursor, combat, damage, corpse, loot, ownership, or bank state changed.
+
+Next pressure:
+
+Mira ends near Alec at about `Point3D(2987,1052,5)`, facing northwest, with `THE NEWS FROM THE TOWN CRIER` open. The fox is still practical Follow context. The next client-visible decision is to read the open town-crier gump by choosing a visible category, close it, or ignore it and inspect the nearby Defenders/training/coffer screen.
+
+## Run 245 - The Crier Has No Exploration News
+
+I start at `Point3D(2987,1052,5)`, standing beside Alec with `THE NEWS FROM THE TOWN CRIER` already open. This is not a movement problem yet. The screen behind the gump still has the Defenders of Sosaria sign, Taima the warrior guildmaster, training dummies, a coffer, adventurers, doors, Ryba above the street, and no visible hostile forcing me to break away.
+
+**Beat 1**
+
+I press the visible `Exploration in the Realm` category because it sounds like the one that might explain where a lost crash survivor should go next.
+
+**Beat 2**
+
+The gump redraws instead of moving me anywhere. The exploration tab is selected, the same category buttons are still visible, and the body gives me the useful bad news: Alec has no new exploration tales for Mira. I stop there because the result is information, not a route.
+
+Mechanical friction learned:
+
+- The crier news gump is a custom information gump, but this action uses only the visible category label.
+- The `Exploration in the Realm` page is backed by the shard's `Info/journies.txt` log. In this checkout that log is absent/empty, so the player-facing result is the default no-exploration-news message.
+- Pressing the category closes and reopens the same crier gump on its exploration page. It does not move Mira, discover a place, open a target cursor, change inventory, change skills, or create a route marker.
+- No tarot, destination helper, hidden teleporter, context menu, combat, pet order, bank state, hunger, thirst, damage, loot, or ownership state changed.
+
+Next pressure:
+
+Mira remains at `Point3D(2987,1052,5)`, facing northwest, with `THE NEWS FROM THE TOWN CRIER` open on `Exploration in the Realm`. The page has been read and gave no route help. The next client-visible decision is to choose another visible category, close the gump, or step away from Alec to inspect the Defenders/training/coffer screen.
+
+## Run 246 - The Crier Has No Deeds News
+
+I start at `Point3D(2987,1052,5)`, still beside Alec with `THE NEWS FROM THE TOWN CRIER` open. The gump is the thing in front of me, not the street. Behind it I still know the Defenders of Sosaria sign, training dummies, doors, coffer, guildmaster, adventurer-looking people, and my nearby fox are the current town context. Nothing hostile is forcing me to close the window.
+
+**Beat 1**
+
+I press the visible `Deeds in the Realm` category because exploration was empty and deeds are the next most likely clue category.
+
+**Beat 2**
+
+The gump redraws again. I am still in the same place, with the same category buttons, and now the body reads like a polite dead end: Alec has no new tales of deeds for Mira.
+
+Mechanical friction learned:
+
+- The town-crier category buttons are visible gump controls, not hidden route choices.
+- `Deeds in the Realm` reads the shard's `Info/quests.txt` log through the crier system. In this checkout that log is absent/empty, so the player-facing result is the default no-deeds-news message.
+- Pressing the category closes and reopens the same crier gump on its deeds page. It does not move Mira, create a target cursor, discover a place, start a quest, change inventory, change skills, or change vitals.
+- No tarot, destination helper, hidden teleporter, context menu, combat, pet order, bank state, hunger, thirst, damage, loot, or ownership state changed.
+
+Next pressure:
+
+Mira remains at `Point3D(2987,1052,5)`, facing northwest, with `THE NEWS FROM THE TOWN CRIER` open on `Deeds in the Realm`. The deeds page has been read and gave no route help. The next client-visible decision is to choose another visible crier category, close the gump, or step away from Alec to inspect the Defenders/training/coffer screen.
+
+## Run 247 - The Crier Has No Battle News
+
+I start at `Point3D(2987,1052,5)`, still beside Alec with `THE NEWS FROM THE TOWN CRIER` open on the deeds page. The gump is still the loudest thing on the screen. Behind it, the Defenders of Sosaria sign, Taima the warrior guildmaster, training dummies, doors, a coffer, adventurer-looking people, Ryba, and my nearby fox remain town context rather than threats.
+
+**Beat 1**
+
+I press the visible `Victories in Battle` category because exploration and deeds have both gone nowhere, and battle news might still be useful in a city full of training dummies and guild people.
+
+**Beat 2**
+
+The crier window redraws in place. I am not moved, targeted, rewarded, or sent anywhere. The selected page now reads `Victories In The Realm`, and the body gives me another polite blank: Alec has no new tales of bravery for Mira.
+
+Mechanical friction learned:
+
+- `Victories in Battle` is a visible crier category, not a hidden destination choice.
+- The victories page reads the shard's `Info/battles.txt` log through the crier system. In this checkout that log is absent/empty, so the player-facing result is the default no-battle-news message.
+- Pressing the category closes and reopens the same crier gump on its victories page. It does not move Mira, create a target cursor, discover a place, start a quest, change inventory, change skills, or change vitals.
+- No tarot, destination helper, hidden teleporter, context menu, combat, pet order, bank state, hunger, thirst, damage, loot, or ownership state changed.
+
+Next pressure:
+
+Mira remains at `Point3D(2987,1052,5)`, facing northwest, with `THE NEWS FROM THE TOWN CRIER` open on `Victories in Battle`. The victories page has been read and gave no route help. The next client-visible decision is to choose one of the remaining visible crier categories, close the gump, or step away from Alec to inspect the Defenders/training/coffer screen.
+
+## Run 248 - The Crier Has No Gossip News
+
+I start at `Point3D(2987,1052,5)`, still beside Alec with `THE NEWS FROM THE TOWN CRIER` open on the victories page. The window is still the active thing on the screen. Behind it, the Defenders of Sosaria sign, Taima the warrior guildmaster, training dummies, doors, a coffer, adventurer-looking people, Ryba, and my nearby fox remain town context rather than threats.
+
+**Beat 1**
+
+I press the visible `Gossip in the Realm` category because the useful-sounding news pages have all come back empty, and gossip might still point at a local problem or warning.
+
+**Beat 2**
+
+The crier window redraws in place. I am still beside Alec. No target cursor appears, no one hands me anything, and I do not learn a route. The selected page now reads `Gossip In The Realm`, and the body is another dead end: Alec has no new gossip for Mira.
+
+Mechanical friction learned:
+
+- `Gossip in the Realm` is a visible crier category, not a hidden destination choice.
+- The gossip page reads the shard's `Info/adventures.txt` log through the crier system. In this checkout that log is absent/empty, so the player-facing result is the default no-gossip message.
+- Pressing the category closes and reopens the same crier gump on its gossip page. It does not move Mira, create a target cursor, discover a place, start a quest, change inventory, change skills, or change vitals.
+- No tarot, destination helper, hidden teleporter, context menu, combat, pet order, bank state, hunger, thirst, damage, loot, or ownership state changed.
+
+Next pressure:
+
+Mira remains at `Point3D(2987,1052,5)`, facing northwest, with `THE NEWS FROM THE TOWN CRIER` open on `Gossip in the Realm`. The gossip page has been read and gave no route help. The next client-visible decision is to choose `Recent Deaths`, choose `Wanted Murderers`, close the gump, or step away from Alec to inspect the Defenders/training/coffer screen.
+
+## Run 249 - The Crier Reports No Recent Deaths
+
+I start at `Point3D(2987,1052,5)`, still beside Alec with `THE NEWS FROM THE TOWN CRIER` open on the gossip page. The street behind the window is safe town context: the Defenders of Sosaria sign, Taima the warrior guildmaster, training dummies, doors, a coffer, adventurer-looking people, Ryba, and my nearby fox. Nothing on screen is forcing me to run.
+
+**Beat 1**
+
+I press the visible `Recent Deaths` category because the crier still has one civic report left that might explain danger nearby.
+
+**Beat 2**
+
+The crier window redraws in place. I am not moved, targeted, rewarded, or warned about an active corpse. The selected page now reads `Recent Deaths In The Realm`, and the body is calm instead of useful: Alec says all of Sosaria's citizens are alive and well.
+
+Mechanical friction learned:
+
+- `Recent Deaths` is a visible town-crier category, not a hidden destination choice.
+- The deaths page reads the shard's `Info/deaths.txt` log through the crier system. There is no deaths log content in this checkout, so the player-facing result is the default all-alive message.
+- Pressing the category closes and reopens the same crier gump on its deaths page. It does not move Mira, create a target cursor, discover a place, start a quest, change inventory, change skills, or change vitals.
+- No tarot, destination helper, hidden teleporter, context menu, combat, pet order, bank state, hunger, thirst, damage, loot, or ownership state changed.
+
+Next pressure:
+
+Mira remains at `Point3D(2987,1052,5)`, facing northwest, with `THE NEWS FROM THE TOWN CRIER` open on `Recent Deaths`. The deaths page has been read and gave no route help. The next client-visible decision is to choose `Wanted Murderers`, close the gump, or step away from Alec to inspect the Defenders/training/coffer screen.
+
+## Run 250 - The Crier Reports No Wanted Murderers
+
+I start at `Point3D(2987,1052,5)`, still beside Alec with `THE NEWS FROM THE TOWN CRIER` open on the recent-deaths page. The town screen behind the gump has the same safe clutter: the Defenders of Sosaria sign, Taima the warrior guildmaster, training dummies, doors, a coffer, adventurer-looking people, Ryba, and my nearby fox. No visible hostile is close enough to interrupt the window.
+
+**Beat 1**
+
+I press the visible `Wanted Murderers` category because it is the last unread crier report on the window.
+
+**Beat 2**
+
+The crier window redraws in place again. I am still beside Alec, no target cursor appears, and nothing on the street changes. The selected page now reads `Murderers In The Realm`, and the body is another civic all-clear: Alec says no one is wanted for murder.
+
+Mechanical friction learned:
+
+- `Wanted Murderers` is a visible town-crier category, not a hidden destination choice.
+- The murderers page reads the shard's `Info/murderers.txt` log through the crier system. There is no murderer log content in this checkout, so the player-facing result is the default no-wanted-murderers message.
+- Pressing the category closes and reopens the same crier gump on its murderers page. It does not move Mira, create a target cursor, discover a place, start a quest, change inventory, change skills, or change vitals.
+- No tarot, destination helper, hidden teleporter, context menu, combat, pet order, bank state, hunger, thirst, damage, loot, or ownership state changed.
+
+Next pressure:
+
+Mira remains at `Point3D(2987,1052,5)`, facing northwest, with `THE NEWS FROM THE TOWN CRIER` open on `Wanted Murderers`. Every visible crier category has now been opened and read. The next client-visible decision is to close the gump or step away from Alec to inspect the Defenders/training/coffer screen.
+
+## Run 251 - Leaving The Crier Window For The Defenders Sign
+
+I start at `Point3D(2987,1052,5)`, still beside Alec with `THE NEWS FROM THE TOWN CRIER` open on the wanted-murderers page. The page is read, and every visible crier category has already come back empty. The street behind the window is still calm town clutter: my fox, Alec, the Defenders of Sosaria sign to the north, Taima the warrior guildmaster, training dummies, doors, a coffer, adventurer-looking people, and shop markers on the map overlay.
+
+**Beat 1**
+
+I close the crier gump instead of pressing the same categories again. The window disappears. No target cursor appears, no message interrupts me, and Alec stays behind me as a town crier rather than a route.
+
+**Beat 2**
+
+I walk north through the open town floor toward the nearby `Defenders of Sosaria` marker. This is ordinary city movement, not a hidden route test. My fox is still following close enough to count as nearby, and nothing hostile steps into the screen.
+
+**Beat 3**
+
+I stop near `Point3D(2987,1040,5)`, close enough that the Defenders sign is basically next to me. The screen has shifted from civic news to training context: Taima is off to the west, dummies and a daemon target sit around the yard, two coffers are visible in the buildings, and the Hammer and Anvil / blacksmith area is now also inside view. A cat is nearby, but it is just town wildlife.
+
+Mechanical friction learned:
+
+- Closing the town-crier gump only clears the UI. It does not move Mira, discover a place, create a target cursor, change inventory, change vitals, or change the follower order.
+- The short northward move to the Defenders marker is routine open-town pathing. No terrain, door, teleporter, or custom movement friction showed up.
+- The hidden teleporter object near the western door remains a snapshot clue only. From the player screen, the visible thing is a door/transition edge, not proof of a usable hidden route.
+- No tarot, destination helper, context menu, combat, pet command, bank state, hunger, thirst, damage, loot, or ownership state changed.
+
+Next pressure:
+
+Mira is now near `Point3D(2987,1040,5)`, facing north with no gump open. The next client-visible decision is whether to talk to Taima, try a training dummy or daemon target, inspect a coffer/door, or step north toward the Hammer and Anvil blacksmith area.
+
+## Run 252 - Taima Quotes Sword Training
+
+I start at `Point3D(2987,1040,5)`, standing by the `Defenders of Sosaria` sign with no gump open. This is a training-yard screen, not a road problem: Taima the warrior guildmaster is west of me, dummies and a daemon target are scattered around the yard, coffers and doors are visible in the buildings, and the Hammer and Anvil marker sits north. Nothing on screen is hostile.
+
+**Beat 1**
+
+I run west across the open town floor and stop close to Taima at about `Point3D(2975,1041,5)`. The move is short and plain. My fox keeps up as follow-context, and the west side of the screen adds more adventurer-looking people, archery buttes, and another coffer.
+
+**Beat 2**
+
+I open Taima's context menu instead of guessing at hidden speech words. The menu is useful: she is not just scenery. I can see normal vendor choices, a guild-join choice, and a stack of teachable warrior skills such as arms lore, parry, resisting spells, tactics, sword fighting, blunt weapons, and fencing.
+
+**Beat 3**
+
+I choose the visible sword-training line. No training gump opens and no skill jumps immediately. Taima answers like a trainer: she will teach me if I pay the quoted amount in full, and she says less money means less teaching. My backpack still has no gold, so this is a price quote, not a completed lesson.
+
+Mechanical friction learned:
+
+- Taima is a real warrior guildmaster/vendor/trainer interaction, exposed through the normal context menu rather than a special Defenders sign gump.
+- A teach option starts a payment quote and leaves the lesson pending. It does not grant the skill until gold is paid.
+- The sword-training quote depends on Taima's saved skill value, but the live-state snapshot does not expose that exact skill number. From the player side, the important blocker is simpler: Mira has `0` gold.
+- The short move to Taima did not create a target cursor, open a gump, trigger combat, change vitals, discover a place, move through a hidden teleporter, change hunger/thirst, or change the fox's follow order.
+
+Next pressure:
+
+Mira is now near `Point3D(2975,1041,5)`, facing west beside Taima with no gump open. The newest visible lesson is that guildmaster training wants gold first. The next client-visible decision is to find money, use a visible training dummy/daemon for free practice, inspect a coffer or door, ask Taima to buy/sell/join, or step north toward the blacksmith shop.
+
+## Run 253 - The Coffer Wants Snooping First
+
+I start at `Point3D(2975,1041,5)`, still beside Taima with no gump open. Her paid sword-training quote is fresh in my head, and my backpack still has no gold. The screen is busy but calm: my fox is close, Taima is two steps west, the Defenders sign is behind me, training targets and doors sit around the yard, the Hammer and Anvil marker is north, and a coffer is visible just north of where I am standing.
+
+**Beat 1**
+
+I try the nearby coffer because it looks like the most direct answer to "I need money." I do not get a loot pack, a target cursor, a crime warning, or a pile of coins. The coffer answers with a skill wall instead: I should probably get better at snooping first.
+
+Mechanical friction learned:
+
+- The visible coffer is not a normal free chest. It is a custom thief coffer, so double-clicking it probes the snooping/stealing flow instead of opening a container.
+- From the player side, the first blocker is simple: Mira's Snooping is still effectively untrained, so the coffer refuses even the peek step.
+- The traced mechanic is sharper than the message: a successful snoop can reveal about how much gold is inside, and the later theft step is a separate Stealing action. Mira did not reach either of those steps.
+- No gold moved, no item appeared, no gump opened, no target cursor appeared, no criminal/wanted state changed, no combat started, no skill gain was visible, and the fox's follow order did not change.
+
+Next pressure:
+
+Mira remains at `Point3D(2975,1041,5)`, facing west beside Taima with no UI open. The newest visible lesson is that the obvious coffer-money route is gated by Snooping before it is gated by Stealing. The next client-visible decision is to find a legal money source, look for Snooping or thief training, try free weapon practice on a visible target, use Taima's other context choices, or walk north toward the blacksmith shop.
+
+## Run 254 - I Follow The Bank Marker Instead Of Picking The Coffer Again
+
+I start at `Point3D(2975,1041,5)`, beside Taima with no gump open. The coffer just told me to get better at snooping, and I still have no gold for Taima's sword lesson. The training-yard screen is still calm: fox nearby, guildmaster beside me, Defenders sign behind me, Hammer and Anvil north, training targets and doors in the building slices, and no hostile inside my immediate range.
+
+**Beat 1**
+
+I stop trying to make the coffer be a free chest and run east/southeast through open Britain streets toward the `Bank of Britain` marker on the world map overlay. This is normal town movement, not a hidden route test. I keep the route on the city floor and do not enter any doors along the way.
+
+I reach the bank exterior around `Point3D(3015,1056,5)`. The screen is quieter than the Defenders yard: the `Bank of Britain` sign is right there, the public bank door is just east/northeast, and a trash barrel sits nearby. I can see a bard named Merele at the north edge and a couple of adventurers to the south. The only thing that makes me tense is a ruby elemental-looking humanoid about fifteen tiles south; it is not on top of me, but I do not want to drift that way while trying to find a banker.
+
+Mechanical friction learned:
+
+- The bank marker leads me to the public exterior door/sign, not directly into an open bank box.
+- No banker is visible from the exterior tile yet, so the next normal action is to open or enter the public bank door before trying bank speech or bank-box assumptions.
+- The ruby elemental-looking mobile is a potential south-side route risk, not an immediate blocker to the bank door.
+- No tarot, destination helper, hidden teleporter, gump, target cursor, combat, pet order, inventory, gold, skill, hunger, thirst, damage, discovery flag, criminal state, or bank state changed.
+
+Next pressure:
+
+Mira is at the Bank of Britain exterior near `Point3D(3015,1056,5)`, facing the public bank door with no UI open. The next client-visible decision is to open/enter the bank door, inspect the sign or barrel, or back away from the south-side ruby elemental if it moves closer.
+
+## Run 255 - The Bank Door Drops Me Into A Vault Room
+
+I start at `Point3D(3015,1056,5)`, facing the visible public `Bank of Britain` door with no UI open. The bank sign is under my feet, the door is just east/northeast, and the trash barrel is close by. Merele the bard is still barely on the north edge, Vanya and Franklin are south, and the ruby elemental-looking humanoid is still far enough south to be a route risk instead of a door blocker.
+
+**Beat 1**
+
+I use the visible public bank door. I do not get a banker window, a bank box, a target cursor, or a warning. The client snaps me into a different interior room around `Point3D(3446,3442,0)`.
+
+**Beat 2**
+
+I stop because the new screen is dense with money systems. There are `Bank Vault` chests right next to me, more vaults and trash barrels along the east side, donation boxes and public boards on the west wall, the `Merchant Advertiser`, `Laws of the Land`, and `News From The Nobles`. Susan the minter is north of me, Bridget the bard is west, and several adventurer-looking people are scattered around the room. No hostile is visible, and the ruby elemental from outside is no longer on screen.
+
+Mechanical friction learned:
+
+- The exterior `Bank of Britain` door is a normal visible transition into a shared bank-vault room. It does not directly open Mira's bank box.
+- The interior is not marked by a nearby world-map overlay marker; the useful marker was the outside `Bank of Britain` marker that led to the door.
+- The nearby `Bank Vault` chests are real bank access controls, not decoration: the traced `BankChest` double-click path opens the player's personal bank box when used within four tiles, and otherwise only says it is too far away.
+- I have not opened the vault yet, so the bank-box contents are still player-unknown.
+- No tarot, hidden destination helper, forged gump response, context menu, combat, pet command, inventory, gold, skill, hunger, thirst, damage, discovery flag, criminal state, or bank-box contents changed.
+
+Next pressure:
+
+Mira is now inside the Bank of Britain vault room at `Point3D(3446,3442,0)`, facing east with no gump open. The next client-visible decision is to double-click the nearest `Bank Vault`, talk to or context-click Susan the minter, read one of the public boards, inspect the donation boxes, or leave through the visible doors if the bank route stalls.
+
+## Run 256 - The Vault Opens Empty
+
+I start inside the Bank of Britain vault room at `Point3D(3446,3442,0)`, no gump open, no target cursor, and no hostile visible. The nearest useful thing is obvious: a `Bank Vault` chest sits four tiles west of me at `Point3D(3442,3442,0)`. Susan the minter is north, the public boards and donation boxes are west, and the exit doors are behind me, but the vault is the first thing that looks like it might solve the money problem.
+
+**Beat 1**
+
+I double-click the nearest `Bank Vault`.
+
+It works from this exact spot. I do not get the "too far away" message, and I do not have to talk to Susan first. A standard bank storage container opens, and the overhead message is blunt: `Your bank storage has 0 items, 0 stones`.
+
+**Beat 2**
+
+I look over the open bank box instead of immediately clicking another object through it. There are no visible coins, checks, starter tools, deeds, spare clothes, or hidden rescue supplies in the box. This bank route proves I can access storage, but it does not solve Taima's unpaid training quote or give me legal cash.
+
+Mechanical friction learned:
+
+- The nearest `Bank Vault` is usable from `Point3D(3446,3442,0)` because the chest is exactly four tiles away.
+- A `Bank Vault` opens the player's personal bank box directly. It is not decoration and does not require the minter if I am close enough.
+- The bank box is currently empty from the client view: `0 items, 0 stones`.
+- Opening the vault did not move Mira, close the room, create a target cursor, start a conversation, change gold, change inventory, change skills, change vitals, mark a discovery, flag a crime, or change the fox's follow order.
+
+Next pressure:
+
+Mira remains at `Point3D(3446,3442,0)` in the bank-vault room with the empty bank storage container open. The next client-visible decision is to close or ignore the empty bank box, then try Susan the minter's context/speech options, ask a bank balance question, read the public boards, inspect donation boxes, or leave through the visible doors.
+
+## Run 257 - Susan Confirms The Bank Is Still Empty
+
+I start at `Point3D(3446,3442,0)` in the shared bank-vault room, facing east with the empty bank storage container still open. Susan the minter is north of me, close enough to hear bank speech but not close enough that I want to pretend every context-menu choice is usable from here. No hostile is on screen.
+
+**Beat 1**
+
+I close the empty bank storage container.
+
+Nothing spills out and nothing changes in my pack. The last useful fact from the box remains the same: `0 items, 0 stones`.
+
+**Beat 2**
+
+I say `balance` toward Susan.
+
+She answers from the north side of the room: my current bank balance is `0` gold. That removes the last hopeful loophole from the vault route. The box was not hiding a check, and Susan does not see any stored gold either.
+
+**Beat 3**
+
+I walk north/northwest through the open bank room to stand near Susan at about `Point3D(3444,3435,0)`, facing north.
+
+The move is short interior floor movement. No door, wall, target cursor, gump, warning, discovery, or combat interrupts it. Up close, Susan is the obvious next interaction. The screen now also shows more bank-room clutter: vaults, trash barrels, donation boxes, public boards, vote stones, `Local Guilds`, `Sage Advice`, and the quest boards north and west. None of those are money in my pack.
+
+Mechanical friction learned:
+
+- Saying `balance` to Susan works from the original spot because banker speech is heard within the normal bank-speech range.
+- Susan reports `0` bank gold, matching the empty bank box result.
+- The bank route gives legal storage access, but not starter money for Taima's sword-training quote.
+- Susan is now within close interaction range for the next normal action; I have not opened her context menu, buy list, sell list, talk gump, or bank box from her yet.
+- No tarot, hidden destination helper, forged gump response, item transfer, inventory change, skill change, hunger/thirst change, damage, crime flag, follower order change, or discovery flag changed.
+
+Next pressure:
+
+Mira ends at `Point3D(3444,3435,0)`, facing north beside Susan the minter with no gump open and no target cursor. The next client-visible decision is to context-click Susan, choose a visible Talk/Buy/Sell/Open Bankbox option, read one of the now-visible public boards, inspect donation boxes/vote stones, or leave through the visible doors.
+
+## Run 258 - Susan Explains What A Minter Actually Wants
+
+I start at `Point3D(3444,3435,0)`, facing north beside Susan the minter. No gump or target cursor is open. The bank-vault room is still calm: Susan is three tiles north, my fox is beside me, adventurers and Bridget the bard are scattered around the room, and the nearby clutter includes vault chests, vote stones, donation boxes, public boards, trash barrels, and even a barbaric satchel sitting by an east-side vault. No hostile is inside the screen.
+
+**Beat 1**
+
+I context-click Susan instead of guessing another bank keyword.
+
+The context menu is useful but not magic money. I can see bank/vendor choices: open the bank box, buy, sell, and talk. The bank-box route is already empty, and I have no gold for buying, so `Talk` is the only option that might explain what Susan does.
+
+**Beat 2**
+
+I choose `Talk`.
+
+A small information gump opens with the title `Copper and Silver Coins`. Susan does not open a trade list or hand me anything. There is no target cursor, no bank box, no pack change, and no coin appears.
+
+**Beat 3**
+
+I read the gump before pressing its close button.
+
+The useful player-facing lesson is narrower than the wall of text: Susan is a currency exchanger. She wants old coin stacks and loot-currency piles, not empty hands. She says copper and silver convert at poor rates, jewels and unusual gemstones can become gold, crystals are valuable, and green coins from an ancient sky-fallen castle are also exchangeable. She also sells safes, but that is irrelevant while I have `0` gold.
+
+Mechanical friction learned:
+
+- Susan's visible context menu path confirms she is both banker and vendor: `Open Bankbox`, `Buy`, `Sell`, and `Talk` are available from close range.
+- The `Talk` choice opens a read-only `SpeechGump` titled `Copper and Silver Coins`; it teaches currency-conversion clues but does not create money, a quest flag, a discovery flag, a target cursor, or a bank container.
+- The practical bank/minter lesson is that I need to bring Susan convertible loot first: copper, silver, jewels, gemstones, crystals, gold nuggets, or green xormite-style coins. Nothing in my current backpack qualifies.
+- The visible bank room still has boards, vote stones, donation boxes, vaults, trash barrels, a barbaric satchel, and ordinary doors, but none of them changed during this interaction.
+
+Next pressure:
+
+Mira remains at `Point3D(3444,3435,0)`, facing north beside Susan with the `Copper and Silver Coins` gump open and already read. The next client-visible decision is to close the gump, then either inspect the unusual satchel/boards in the room, try Susan's buy/sell lists despite having no money, or leave the bank to look for convertible coin loot instead of expecting starter gold.
+
+## Run 259 - The Barbaric Satchel Erases Itself
+
+I start at `Point3D(3444,3435,0)`, facing north beside Susan with her `Copper and Silver Coins` gump still open but already read. I am not in combat, no target cursor is up, and the room still looks like a bank-vault clutter pile: Susan north of me, my fox beside me, adventurers around the room, boards and vote stones on the walls, vault chests to the east and south, and the odd `barbaric satchel` sitting on the east-side vault.
+
+**Beat 1**
+
+I close Susan's gump.
+
+Nothing spills out of it. No bank box opens, no trade list appears, no target cursor appears, and no money changes. I am back to the raw room view.
+
+**Beat 2**
+
+I try the visible barbaric satchel because it is the weirdest object in the room and it looks like it might be a container.
+
+It is not a container for me. It does not open. I do not get the barbaric information gump, a loot window, a "too far away" message, a theft warning, or a target cursor. The satchel simply disappears from the client view.
+
+Mechanical friction learned:
+
+- The satchel is player-facing bait unless it belongs to the character. For Mira, the visible world satchel is not loot, not storage, and not a starter gear source.
+- The custom satchel double-click path checks ownership before it checks the normal in-range gump branch. A non-owner touching a weighted satchel makes it delete, which is why the client just loses the object instead of showing a useful window.
+- The owner/in-range branch would have opened a `BARBARIC SATCHEL` explanation and alteration UI, but Mira never reaches that branch from this world-placed satchel.
+- No gold, item, bank content, skill, stat, hunger, thirst, damage, crime flag, discovery flag, pet order, or position changed.
+
+Next pressure:
+
+Mira remains at `Point3D(3444,3435,0)`, facing north beside Susan with no UI open and no target cursor. The suspicious satchel is gone. The next client-visible decision is to read one of the public boards, test Susan's buy/sell lists despite having no gold, inspect donation boxes or vote stones, or leave the bank to look for real currency loot.
+
+## Run 260 - I Read The Sage Board
+
+I start at `Point3D(3444,3435,0)`, facing north beside Susan. No gump is open, no target cursor is up, and the room is still the same calm bank interior: Susan to the north, my fox close by, adventurer-looking people scattered around, vaults and trash barrels to the east, public boards on the north and west walls, vote stones nearby, and ordinary exit doors to the south. The satchel is gone, so I stop treating the bank clutter like it might be a container route.
+
+**Beat 1**
+
+I walk northwest through the open bank floor to stand under the north-wall boards at about `Point3D(3439,3425,0)`, facing north.
+
+This is short interior movement, not exploration. No hostile enters the screen, no door or wall stops me, no target cursor appears, and no discovery or region message fires. From here `Sage Advice` is close enough to use; the quest boards, `Local Guilds`, and the invisible `Dio's Door` teleporter location are nearby, but only the visible board matters to the player.
+
+**Beat 2**
+
+I double-click `Sage Advice`.
+
+The board answers with a `SAGE ADVICE` gump instead of a quest, vendor list, target cursor, or free item. It has a close button in the upper-right, a scrollable body, and no visible choice that would spend money or accept a quest from this first read.
+
+**Beat 3**
+
+I read the gump and do not press anything else.
+
+The useful lesson is expensive artifact hunting. Sages sell artifact encyclopedia advice for thousands of gold, better lore levels cost more, the book lets me choose an artifact, and the torn page gives the first clue and coordinates. The gump also warns that the search can cross lands I may not know, expects a sextant, and may end in gold, a false legend, a fake artifact, or another clue. For Mira right now, with `0` gold and no sextant, this board is knowledge, not a route out of poverty.
+
+Mechanical friction learned:
+
+- The north-wall `Sage Advice` board is a normal double-click board once Mira is within four tiles.
+- Its first response is read-only `BoardGump` information titled `SAGE ADVICE`; it does not start an artifact quest, spend gold, create an artifact book, open a vendor list, create a target cursor, or change inventory.
+- Artifact advice is gated by future money and probably travel tools: the board talks in `5,000` to `10,000` gold terms and says coordinates matter, so this is not a starter-cash answer.
+- No gold, item, bank content, skill, stat, hunger, thirst, damage, crime flag, discovery flag, quest state, pet order, or follower count changed.
+
+Next pressure:
+
+Mira ends at `Point3D(3439,3425,0)`, facing north with the `SAGE ADVICE` gump open and read. The next client-visible decision is to close it, then read another nearby board, context-click a quest board, inspect the visible vote stones, or leave the bank because the sage route needs money she does not have.

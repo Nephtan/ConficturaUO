@@ -1,87 +1,20 @@
 schema:
   schema_version: 2
   policy_schema_version: 2
-  run_number: 217
-  last_updated: "2026-05-20T17:05:44.5886334-05:00"
-  migration:
-    type: "policy_state_rewrite"
-    note: "Instruction/state migration only; the simulated run number was not advanced."
-    historical_log: "docs/CCWM/Confictura_Codex_World_Map.md remains the detailed archive of prior runs."
-    active_state_scope: "current playable continuity for the next client-side run"
+  run_number: 260
+  last_updated: "2026-05-22T13:02:17.7453945-05:00"
+  active_state_scope: "current playable continuity for the next client-side run"
+  historical_log: "docs/CCWM/Confictura_Codex_World_Map.md"
 
 client_side_runtime_policy:
   active_model: "client_visible_player"
   csharp_tracing: "diagnostic_fallback_only"
-  yaml_scope:
-    - "current location, facing, map, region, and route intent"
-    - "vitals, inventory, equipment, skills relevant to the next action"
-    - "open gumps, context menus, target cursors, and player-visible messages"
-    - "follower order and approximate presence"
-    - "visible mobiles/items, recent route memory, world-map markers, and known terrain blockers"
-  do_not_store_as_active_policy:
-    - "old timer-first route blockers"
-    - "exact ambient creature scheduler state"
-    - "exact pet leash step requirements during routine travel"
-    - "tile-by-tile audits for ordinary open-ground movement"
-  diagnostic_trace_allowed_for:
-    - "custom Confictura mechanics"
-    - "failed or gated gumps"
-    - "hidden access gates"
-    - "custom region, teleporter, quest, item, or skill friction"
-    - "unexpected custom-script behavior that the client cannot explain"
-  diagnostic_trace_not_allowed_for:
-    - "routine open-ground movement"
-    - "standard combat swings"
-    - "normal ambient creature wandering"
-    - "ordinary pet follow during travel"
-    - "visible terrain collision with trees, rocks, shorelines, mountains, walls, or doors"
-
-macro_travel_policy:
-  unit: "intention"
-  default_assumption: "ordinary open-terrain movement works unless the visible route suggests dense or blocked terrain"
-  route_statement_required: true
-  terrain_checks:
-    use_when:
-      - "entering dense forest, ruins, dungeons, water, mountains, or door/wall geometry"
-      - "movement fails"
-      - "a visible obstacle matters to the route"
-      - "a custom shard result contradicts the visible client"
-    skip_when:
-      - "crossing already learned or clearly open grass/jungle"
-      - "only facing changes or standard walking are involved"
-  stop_conditions:
-    - "dangerous mobile within 0-10 tiles"
-    - "visible 11-18 tile threat changes the route decision"
-    - "new gump, context menu, target cursor, player message, region text, resource, corpse, chest, sign, road, shelter, or water source appears"
-    - "movement fails or a physical boundary is reached"
-    - "stamina reaches 0"
-    - "combat, damage, death, discovery, teleport, quest, inventory, hunger, thirst, ownership, or pet-order state changes"
-    - "destination or waypoint is reached"
-
-threat_heuristic_scan:
-  model: "client_side_distance_bands"
-  immediate_threat:
-    distance_tiles: "0-10"
-    response: "evade, fight, defend, use visible escape, or stop for a real player decision"
-  potential_threat:
-    distance_tiles: "11-18"
-    response: "route away, inspect cautiously, or avoid closing distance unless deliberately engaging"
-  passive_or_offscreen:
-    response: "remember as route context; do not block routine travel unless the chosen route returns toward it"
-  current_screen_summary:
-    scan_center: { x: 1191, y: 1351, z: 0 }
-    map: "Map.Sosaria"
-    visible_threats:
-      - serial: 288077
-        type: "Server.Mobiles.Toad"
-        name: "a toad"
-        point3d: { x: 1173, y: 1360, z: 0 }
-        dx: -18
-        dy: 9
-        band: "potential_threat"
-        player_read: "visible west-edge animal; route away, inspect, or make a cautious player decision before pushing farther west"
-    visible_items: []
-    visible_running_spawner_objects: []
+  macro_travel_unit: "intention"
+  terrain_checks: "Use only for dense terrain, failed movement, visible obstacles, water, mountains, ruins, dungeons, walls, or unexplained custom friction."
+  threat_heuristics:
+    immediate_threat: "hostile or dangerous mobile within 0-10 tiles"
+    potential_threat: "hostile or dangerous mobile within 11-18 tiles"
+    passive_or_offscreen: "context or route memory only"
 
 account:
   account_id: "placeholder:first_account"
@@ -132,55 +65,73 @@ fate_tarot:
   allow_alien_choice: true
   visit_lodor: false
   visit_savage: false
+  access_gate_check_current_run: "No tarot gump, start-table action, or card choice was attempted; Run 260 began post-tarot in the bank and used only a visible public board."
 
 lifecycle:
-  stage: "post_crash_scouting_after_run217_visible_west_edge_toad"
+  stage: "sage_advice_gump_open_read"
   has_left_start_flow: true
-  last_action: "Run 217 moved west from Point3D(1224,1351,0) to Point3D(1191,1351,0), then stopped when a saved toad became visible on the west edge."
-  current_goal: "Make a client-visible decision about the west-edge toad: inspect it, back away, bend around it, or choose a different route."
-  elapsed_play_time: "historical play through Run 217; see map log for detailed run archive"
-  session_marker: "run_1_first_login"
   login_status: "logged_in_after_character_creation"
   create_status: "created_player_mobile"
-  current_open_gumps: []
+  session_marker: "run_1_first_login"
+  last_action: "Run 260 walked from Susan to the north-wall Sage Advice board, double-clicked it from within use range, and read the SAGE ADVICE artifact-hunting gump."
+  current_goal: "Close the Sage Advice gump, then decide whether another board is worth reading or whether to leave the bank to find real currency loot."
+  elapsed_play_time: "historical play through Run 260; see map log for detailed run archive"
+  current_open_gumps:
+    - type: "Server.Gumps.BoardGump"
+      source_item: "Server.Items.SearchBoard / Sage Advice"
+      source_item_serial: 1075459772
+      title: "SAGE ADVICE"
+      status: "open_read"
+      body_summary: "Sages sell expensive artifact encyclopedia advice; higher lore levels cost more, the torn page gives coordinates/clues, a sextant is useful, results can be gold, fake artifacts, empty legends, or new clues, and only one artifact quest can be pursued at a time."
+      visible_controls:
+        - "upper-right close button"
+        - "scrollable text body"
+      text_entry_fields: []
+      flags: { closable: true, disposable: true, draggable: true, resizable: false }
+      response_sent: null
   current_open_context_menu:
     status: "none"
     target: null
-    response_sent: false
+    visible_entries_last_seen:
+      - "Open Bankbox"
+      - "Buy"
+      - "Sell"
+      - "Talk"
+    response_sent: null
   target_cursor:
     active: false
     source: null
-  latest_player_message: null
-  next_client_visible_decision: "React to the visible west-edge toad before continuing west."
+  latest_player_message: "No overhead message appeared; double-clicking Sage Advice opened the read-only SAGE ADVICE board gump."
+  next_client_visible_decision: "Close the SAGE ADVICE gump, then read another board, inspect vote stones, or leave the bank to look for currency loot."
 
 location:
   map: "Map.Sosaria"
   map_file_index: 1
-  point3d: { x: 1191, y: 1351, z: 0 }
-  facing_direction: "Direction.West"
-  region_name: "none matched in searched region data near the current point"
-  region_type: "default_or_unresolved_region"
-  guarded: "unknown"
-  public_area: "unknown"
+  point3d: { x: 3439, y: 3425, z: 0 }
+  facing_direction: "Direction.North"
+  region_name: "Bank of Britain vault room / shared bank interior"
+  region_type: "bank_or_guarded_town_interior_context"
+  guarded: "likely_guarded_from_visible_bank_town_context"
+  public_area: "true"
   known_blocked_point3d:
     - { x: 1192, y: 1358, z: 0, blocked_by: "impassable tree; route around it as visible terrain" }
     - { x: 1192, y: 1357, z: 0, blocked_by: "impassable tree; route around it as visible terrain" }
     - { x: 1194, y: 1356, z: 0, blocked_by: "impassable peach tree; route around it as visible terrain" }
+    - { x: 1207, y: 1357, z: 0, blocked_by: "impassable rock found on direct north route; route around it as visible terrain" }
     - { x: 1210, y: 1360, z: 0, blocked_by: "impassable pear tree; route around it as visible terrain" }
-    - { x: 1214, y: 1388, z: 0, blocked_by: "impassable tree; route around it as visible terrain" }
-    - { x: 1214, y: 1390, z: 0, blocked_by: "impassable tree; route around it as visible terrain" }
-    - { x: 1215, y: 1385, z: 0, blocked_by: "impassable rock; route around it as visible terrain" }
-    - { x: 1222, y: 1390, z: 0, blocked_by: "impassable rock; route around it as visible terrain" }
-    - { x: 1225, y: 1392, z: 0, blocked_by: "impassable tree; route around it as visible terrain" }
-    - { x: 1227, y: 1393, z: 0, blocked_by: "impassable rocks; route around them as visible terrain" }
-    - { x: 1232, y: 1395, z: 0, blocked_by: "impassable tree side-check; route around it as visible terrain" }
+    - { x: 1207, y: 1328, z: 0, blocked_by: "impassable rock found on direct north route; route around it as visible terrain" }
+    - { x: 1190, y: 1388, z: 0, blocked_by: "impassable tree near the previous northwest lane; route around it as visible terrain" }
+    - { x: 1190, y: 1394, z: 0, blocked_by: "impassable rock near the previous south/southwest lane; route around it as visible terrain" }
+    - { x: 1195, y: 1390, z: 0, blocked_by: "water-looking impassable static behind the current route; tested by canteen and not a fill source" }
+    - { x: 1195, y: 1391, z: 0, blocked_by: "water-looking impassable static behind the current route; tested by canteen and not a fill source" }
+    - { x: 1195, y: 1392, z: 0, blocked_by: "water-looking impassable static behind the current route; tested by canteen and not a fill source" }
 
 perception:
   visual_scan:
-    scan_center: { x: 1191, y: 1351, z: 0 }
+    scan_center: { x: 3439, y: 3425, z: 0 }
     map: "Map.Sosaria"
     radius_tiles: 18
-    scan_confidence: "high for saved visible mobiles/items from live-state snapshot; medium for future live wandering"
+    scan_confidence: "high for saved visible mobiles/items from the canonical live-state snapshot after moving to the north-wall boards; current continuity overrides the stale live-state satchel row because Run 259 made it vanish. No terrain or binary-map check was needed for short interior floor movement."
     sources:
       - "docs/CCWM/live-state/manifest.yaml"
       - "docs/CCWM/live-state/mobiles.jsonl"
@@ -188,46 +139,230 @@ perception:
       - "docs/CCWM/live-state/spawners.jsonl"
       - "docs/CCWM/client-worldmap-markers/Sosaria.csv"
       - "docs/CCWM/client-worldmap-markers/Sosaria-Common.csv"
-      - "docs/CCWM/client-worldmap-markers/Moongates.csv"
     visible_mobiles:
       - serial: 200274
         type: "Server.Mobiles.Fox"
         name: "a fox"
-        point3d: { x: 1194, y: 1352, z: 0 }
-        dx: 3
+        point3d: { x: 3439, y: 3425, z: 0 }
+        dx: 0
+        dy: 0
+        status: "controlled follower by simulation continuity, ordered to Follow, approximate nearby companion only"
+      - serial: 700932
+        type: "Server.Mobiles.AdventurerEast"
+        name: "Darlene"
+        point3d: { x: 3431, y: 3412, z: 0 }
+        dx: -8
+        dy: -13
+        status: "visible adventurer bank-room context, not a threat"
+      - serial: 701076
+        type: "Server.Mobiles.AdventurerWest"
+        name: "Jebidiah"
+        point3d: { x: 3434, y: 3412, z: 0 }
+        dx: -5
+        dy: -13
+        status: "visible adventurer bank-room context, not a threat"
+      - serial: 317372
+        type: "Server.Mobiles.Banker"
+        name: "Isaura"
+        point3d: { x: 3445, y: 3414, z: 0 }
+        dx: 6
+        dy: -11
+        status: "visible banker-family NPC, useful bank context, not a threat"
+      - serial: 317373
+        type: "Server.Mobiles.Banker"
+        name: "Jacy"
+        point3d: { x: 3457, y: 3414, z: 0 }
+        dx: 18
+        dy: -11
+        status: "edge-visible banker-family NPC, not a threat"
+      - serial: 317371
+        type: "Server.Mobiles.Banker"
+        name: "Casilda"
+        point3d: { x: 3437, y: 3415, z: 0 }
+        dx: -2
+        dy: -10
+        status: "visible banker-family NPC, useful bank context, not a threat"
+      - serial: 701037
+        type: "Server.Mobiles.AdventurerEast"
+        name: "Araminta"
+        point3d: { x: 3452, y: 3419, z: 0 }
+        dx: 13
+        dy: -6
+        status: "north-edge adventurer bank-room context, not a threat"
+      - serial: 701098
+        type: "Server.Mobiles.AdventurerWest"
+        name: "Barrett"
+        point3d: { x: 3454, y: 3419, z: 0 }
+        dx: 15
+        dy: -6
+        status: "north-edge adventurer bank-room context, not a threat"
+      - serial: 700906
+        type: "Server.Mobiles.AdventurerSouth"
+        name: "Lionel"
+        point3d: { x: 3435, y: 3429, z: 0 }
+        dx: -4
+        dy: 4
+        status: "visible adventurer bank-room context, not a threat"
+      - serial: 317374
+        type: "Server.Mobiles.Minter"
+        name: "Susan"
+        point3d: { x: 3444, y: 3432, z: 0 }
+        dx: 5
+        dy: 7
+        status: "visible minter/banker-family NPC behind the current board position, useful context, not a threat"
+      - serial: 700935
+        type: "Server.Mobiles.AdventurerNorth"
+        name: "Greger"
+        point3d: { x: 3435, y: 3433, z: 0 }
+        dx: -4
+        dy: 8
+        status: "visible adventurer bank-room context, not a threat"
+      - serial: 38153
+        type: "Server.Mobiles.TradesmanBard"
+        name: "Bridget"
+        point3d: { x: 3434, y: 3437, z: 0 }
+        dx: -5
+        dy: 12
+        status: "visible bard/tradesperson context, not a threat"
+    visible_items:
+      - serial: 1075459772
+        type: "Server.Items.SearchBoard"
+        name: "Sage Advice"
+        point3d: { x: 3439, y: 3421, z: 3 }
+        dx: 0
+        dy: -4
+        status: "visible north-wall advice board currently opened as SAGE ADVICE gump"
+      - serial: 1075459773
+        type: "Server.Items.GuildBoard"
+        name: "Local Guilds"
+        point3d: { x: 3441, y: 3421, z: 3 }
+        dx: 2
+        dy: -4
+        status: "visible north-wall board, optional reading after current gump is closed"
+      - serial: 1075459763
+        type: "Server.Items.StandardQuestBoard"
+        name: "Seeking Brave Adventurers"
+        point3d: { x: 3432, y: 3421, z: 3 }
+        dx: -7
+        dy: -4
+        status: "visible quest board, optional reading or context-menu action after current gump is closed"
+      - serial: 1075459764
+        type: "Server.Items.FishingQuestBoard"
+        name: "Seeking Brave Sailors"
+        point3d: { x: 3434, y: 3421, z: 3 }
+        dx: -5
+        dy: -4
+        status: "visible quest board, optional reading or context-menu action after current gump is closed"
+      - serial: 1073813328
+        type: "Server.Items.VoteStone"
+        name: "Vote Stone cluster"
+        point3d: { x: 3447, y: 3423, z: 0 }
+        dx: 8
+        dy: -2
+        status: "visible vote stone cluster spanning x 3447-3456; optional inspection, not yet touched"
+      - serial: 1075459756
+        type: "Server.Items.AdvertiserVendor"
+        name: "The Merchant Advertiser"
+        point3d: { x: 3431, y: 3424, z: 2 }
+        dx: -8
+        dy: -1
+        status: "visible merchant advertiser on west/northwest side, optional inspection"
+      - serial: 1075459757
+        type: "Server.Items.TrashChest"
+        name: "donation box"
+        point3d: { x: 3431, y: 3426, z: 0 }
+        dx: -8
         dy: 1
-        status: "controlled follower, ordered to Follow, approximate travel position, not guarding or body-blocking"
-      - serial: 288077
-        type: "Server.Mobiles.Toad"
-        name: "a toad"
-        point3d: { x: 1173, y: 1360, z: 0 }
-        dx: -18
-        dy: 9
-        status: "visible west-edge wildlife; potential threat by client-side heuristic"
-    visible_items: []
+        status: "visible donation box beside Status Board, optional inspection"
+      - serial: 1075459758
+        type: "Server.Items.StatusBoard"
+        name: "Status Board"
+        point3d: { x: 3431, y: 3426, z: 2 }
+        dx: -8
+        dy: 1
+        status: "visible public board, optional reading"
+      - serial: 1075459760
+        type: "Server.Items.RulesBoard"
+        name: "Laws of the Land"
+        point3d: { x: 3431, y: 3437, z: 5 }
+        dx: -8
+        dy: 12
+        status: "visible rules board on west wall, optional reading"
+      - serial: 1075459762
+        type: "Server.Items.AdminBoard"
+        name: "News From The Nobles"
+        point3d: { x: 3431, y: 3439, z: 5 }
+        dx: -8
+        dy: 14
+        status: "visible news board on west wall, optional reading"
+      - serial: 1075459783
+        type: "Server.Items.BankChest"
+        name: "Bank Vault"
+        point3d: { x: 3452, y: 3429, z: 0 }
+        dx: 13
+        dy: 4
+        status: "visible bank vault and bank-room utility context"
+      - serial: 1075459779
+        type: "Server.Items.PublicDoor"
+        name: "door"
+        point3d: { x: 3445, y: 3443, z: 0 }
+        dx: 6
+        dy: 18
+        status: "edge-visible south-side exit option"
+    visible_blockers: []
+    recently_changed_items:
+      - serial: 1075461466
+        type: "Server.Items.BarbaricSatchel"
+        name: "barbaric satchel"
+        point3d: { x: 3452, y: 3429, z: 7 }
+        last_seen_dx_dy: { dx: 8, dy: -6 }
+        current_visibility: "vanished_after_Run_259_double_click"
+        result: "no container, no gump, no message, no target cursor, no loot; live-state snapshot still has the row but current playable continuity does not"
+      - serial: 1075459772
+        type: "Server.Items.SearchBoard"
+        name: "Sage Advice"
+        point3d: { x: 3439, y: 3421, z: 3 }
+        last_action: "Run 260 normal double-click from Point3D(3439,3425,0)"
+        result: "opened and read SAGE ADVICE BoardGump"
+    visible_running_spawner_objects: []
+    nearby_invisible_spawner_context:
+      - { serial: "multiple", type: "Server.Mobiles.PremiumSpawner", point3d: { x: 3431, y: 3412, z: 0 }, relation: "saved bank/adventurer NPC spawners in range; invisible to the player and not active blockers" }
+      - { serial: 1075908545, type: "Server.Items.KeywordTeleporter", name: "Dio's Door", point3d: { x: 3437, y: 3421, z: 0 }, relation: "live-state item is visible=false; do not treat as client-visible route proof" }
+    visible_route_static_context:
+      - { route: "3446,3442 -> 3444,3435", status: "Run 257 used short open bank-room movement after closing the empty bank box and asking Susan for balance." }
+      - { route: "3444,3435 -> 3439,3425", status: "Run 260 used short open bank-floor movement to reach Sage Advice within use range; no visible blocker, combat, target cursor, or region change." }
+      - { route: "north-wall boards", status: "visible Sage Advice, Local Guilds, quest boards, merchant advertiser, vote stones, donation boxes, and bankers; no hostile visible inside the current 18-tile screen." }
     recently_visible_route_context:
-      - { name: "a monkey", serial: 206380, point3d: { x: 1245, y: 1366, z: 0 }, relation: "far east/southeast route memory" }
-      - { name: "a panther", serial: 289483, point3d: { x: 1252, y: 1371, z: 0 }, relation: "far east/southeast route memory" }
-      - { name: "a crane", serial: 288081, point3d: { x: 1176, y: 1379, z: 0 }, relation: "southwest route memory" }
-      - { name: "a toad", serial: 737437, point3d: { x: 1174, y: 1379, z: 0 }, relation: "southwest route memory" }
-      - { name: "a panda", serial: 206400, point3d: { x: 1243, y: 1379, z: 0 }, relation: "east/southeast route memory" }
-      - { name: "a toad", serial: 8544, point3d: { x: 1243, y: 1382, z: 0 }, relation: "east/southeast route memory" }
+      - { name: "Bank of Britain exterior door", serial: 1075459158, point3d: { x: 3017, y: 1055, z: 5 }, relation: "visible transition from exterior marker to the shared bank-vault room" }
+      - { name: "ruby elemental-looking humanoid", serial: 37164, point3d: { x: 3021, y: 1071, z: 0 }, relation: "south-side exterior potential threat before entering the bank; now off-screen and not an active blocker" }
+      - { name: "Taima the warrior guildmaster", serial: 318115, point3d: { x: 2973, y: 1041, z: 5 }, relation: "west-side Defenders yard memory after leaving for the bank; paid sword-training quote remains unpaid" }
+      - { name: "nearby coffer", serial: 1075461201, point3d: { x: 2975, y: 1038, z: 31 }, relation: "west-side memory; double-click gave a Snooping-first message and remains a known money-route blocker" }
+      - { name: "Bank of Britain marker", serial: "world-map", point3d: { x: 3015, y: 1056, z: 5 }, relation: "outside marker that led to the bank door; no longer on current interior screen" }
+      - { name: "barbaric satchel", serial: 1075461466, point3d: { x: 3452, y: 3429, z: 7 }, relation: "was visible on the east-side vault; double-clicking it in Run 259 made it vanish silently instead of opening loot or a gump" }
     client_worldmap_markers:
-      - { name: "Ruins", point2d: { x: 1303, y: 1449 }, source: "Sosaria.csv", use: "navigation lure only" }
-      - { name: "Mines of Morinia", point2d: { x: 1022, y: 1372 }, source: "Sosaria.csv", use: "navigation lure only" }
-      - { name: "West", point2d: { x: 1052, y: 1570 }, source: "Moongates.csv", use: "navigation lure only" }
-      - { name: "Chamber of Bane", point2d: { x: 1427, y: 1555 }, source: "Sosaria.csv", use: "navigation lure only" }
-
+      - { name: "none within 120 tiles", point2d: { x: 3439, y: 3425 }, dx: 0, dy: 0, source: "Sosaria.csv/Sosaria-Common.csv", use: "the current bank-vault interior is not separately explained by a nearby overlay marker" }
 route_memory:
-  current_route_intent: "Scout from wilderness toward useful markers while avoiding visible wildlife pressure and obvious terrain blockers."
-  last_route_result: "Westward movement from Point3D(1224,1351,0) reached Point3D(1191,1351,0), then a toad appeared on the west edge."
+  current_route_intent: "Pause under the north-wall Sage Advice board with its SAGE ADVICE gump open and read."
+  last_route_result: "Run 260 moved from Susan to Point3D(3439,3425,0), opened Sage Advice, and learned artifact hunting needs expensive sage advice and travel tools rather than starter cash."
   immediate_options:
-    - "single-click or inspect the visible west-edge toad"
-    - "step or macro travel away from the toad if the screen remains otherwise clear"
-    - "bend north/south around the west-edge animal line after checking visible terrain"
-    - "backtrack east along the known open row"
+    - "close the SAGE ADVICE gump"
+    - "read Local Guilds, the quest boards, Status Board, Laws of the Land, or News From The Nobles"
+    - "inspect the visible vote stones, donation boxes, or Merchant Advertiser only if deliberately looking for utility/friction"
+    - "leave through the visible doors if the bank information route stalls"
   ordinary_collision_policy: "Trees, rocks, shorelines, mountains, and walls are client-side route corrections, not code-trace triggers."
-
+diagnostic_csharp_current_run:
+  reason: "Sage Advice opened a custom board gump; tracing was limited to the visible board response and gump controls/text after the normal double-click."
+  paths_traced:
+    - "docs/CCWM/live-state/manifest.yaml"
+    - "docs/CCWM/live-state/items.jsonl"
+    - "docs/CCWM/live-state/mobiles.jsonl"
+    - "docs/CCWM/live-state/spawners.jsonl"
+    - "docs/CCWM/client-worldmap-markers/Sosaria.csv"
+    - "docs/CCWM/client-worldmap-markers/Sosaria-Common.csv"
+    - "Data/Scripts/Quests/Search/SearchBoard.cs"
+    - "Data/Scripts/Items/Books/BulletinBoards/Gumps/BoardGump.cs"
+  player_visible_result: "Double-clicking Sage Advice within four tiles opened a SAGE ADVICE BoardGump; Mira read it and left it open."
+  learned_gate: "Artifact searching is not a starter-money route: the board only explains future sage advice, gold costs, coordinates, and artifact clues; it does not mutate quest, money, or inventory state."
 vitals_status:
   alive: true
   death_state: "alive"
@@ -255,10 +390,18 @@ skills_leveling:
   best_archetype: "Alien"
   notable_skills:
     Druidism: { base: 1.7, value: 1.7, cap: 100.0, lock: "Up" }
+    Snooping: { base: 0.0, value: 0.0, cap: 100.0, lock: "Up" }
     Taming: { base: 0.5, value: 0.5, cap: 100.0, lock: "Up" }
   other_skills_default: { base: 0.0, value: 0.0, cap: 100.0, lock: "Up" }
   active_skill_timer: null
-  last_skill_friction: "Horse taming was visibly attempted earlier and failed because Taming 0.5 was too low."
+  active_learning_offer:
+    teacher: "Taima the warrior guildmaster"
+    selected_skill: "Swords / Swordsmanship"
+    payment_status: "quoted but unpaid"
+    exact_price: "not retained in state; live-state snapshot does not expose Taima's saved Swords value"
+    visible_result: "Taima says she will teach if paid the quoted amount in full, and less payment gives less teaching."
+    skill_gain_completed: false
+  last_skill_friction: "The nearby coffer's double-click path requires a Snooping peek before any theft flow; Mira's Snooping is 0.0, so the coffer only says to get better at snooping first."
 
 inventory_equipment:
   backpack:
@@ -266,7 +409,7 @@ inventory_equipment:
     movable: false
     contents:
       - { type: "CookedBird", name: "cooked alien meat", amount: 10, hue: "0xB64", fill_factor_each: 10 }
-      - { type: "Waterskin", name: "empty canteen", amount: 1, item_id: "0x4971", weight: 1.0, fill_status: "empty" }
+      - { type: "Waterskin", name: "empty canteen", amount: 1, item_id: "0x4971", weight: 1.0, fill_status: "empty", last_use_result: "Nearby water art failed earlier; message said fill only at water trough, tub, or barrel" }
       - { type: "MedicalRecord", name: "Medical Record", amount: 1, data_patient: "Mira Vale", data_planet: "Alaunrae V", read_status: "opened_read_and_closed" }
   equipped_items_by_layer:
     shirt: { type: "FancyShirt", name: "fancy shirt" }
@@ -275,7 +418,14 @@ inventory_equipment:
     weapon: { type: "Dagger", name: "knife" }
   held_light_source: null
   gold_currency: 0
-  bank: "unknown"
+  last_loot_friction: "Run 259 confirmed the visible barbaric satchel is not loot or storage for Mira: double-clicking it made it vanish silently. Susan still requires convertible loot or gold, and Taima's training quote remains unpaid."
+  bank: "Accessible via nearby Bank Vault or Susan's banker options; visible bank storage was empty and spoken balance is 0 gold."
+  bank_box:
+    status: "closed_after_empty_inspection"
+    visible_contents: []
+    latest_overhead_message: "Your bank storage has 0 items, 0 stones"
+    latest_balance_message: "Susan says Mira's current bank balance is 0 gold."
+    opened_by: "Bank Vault at Point3D(3442,3442,0)"
 
 followers:
   current_count: 1
@@ -284,7 +434,7 @@ followers:
     - serial: 200274
       type: "Server.Mobiles.Fox"
       name: "a fox"
-      point3d: { x: 1194, y: 1352, z: 0 }
+      point3d: { x: 3439, y: 3425, z: 0 }
       approximate: true
       control_slots: 1
       control_order: "Follow"
@@ -293,7 +443,7 @@ followers:
       controlled: true
       bonded: false
       player_use: "companion only; not protection unless combat or body-blocking is deliberately engaged"
-  travel_assumption: "A pet ordered to Follow rubber-bands within practical update range during routine travel."
+  travel_assumption: "A pet ordered to Follow keeps up within practical update range during routine travel."
 
 quests_progression:
   character_discovered_raw: "0#1#0#0#0#0#0#0#0##"
@@ -336,4 +486,4 @@ timers_effects_cooldowns:
 
 verification_policy:
   no_msbuild_required: true
-  reason: "documentation/state policy only"
+  reason: "documentation/state simulation only"
