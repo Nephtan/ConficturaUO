@@ -45,11 +45,11 @@ namespace Server.Items
             switch (version)
             {
                 case 1:
-                {
-                    m_CookingLevel = reader.ReadInt();
+                    {
+                        m_CookingLevel = reader.ReadInt();
 
-                    break;
-                }
+                        break;
+                    }
             }
         }
 
