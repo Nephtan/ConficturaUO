@@ -1,8 +1,8 @@
 schema:
   schema_version: 2
   policy_schema_version: 2
-  run_number: 260
-  last_updated: "2026-05-22T13:02:17.7453945-05:00"
+  run_number: 261
+  last_updated: "2026-05-22T14:02:40.3280228-05:00"
   active_state_scope: "current playable continuity for the next client-side run"
   historical_log: "docs/CCWM/Confictura_Codex_World_Map.md"
 
@@ -65,27 +65,28 @@ fate_tarot:
   allow_alien_choice: true
   visit_lodor: false
   visit_savage: false
-  access_gate_check_current_run: "No tarot gump, start-table action, or card choice was attempted; Run 260 began post-tarot in the bank and used only a visible public board."
+  access_gate_check_current_run: "No tarot gump, start-table action, or card choice was attempted; Run 261 began post-tarot in the bank and used only a visible public board."
 
 lifecycle:
-  stage: "sage_advice_gump_open_read"
+  stage: "local_guilds_gump_open_read"
   has_left_start_flow: true
   login_status: "logged_in_after_character_creation"
   create_status: "created_player_mobile"
   session_marker: "run_1_first_login"
-  last_action: "Run 260 walked from Susan to the north-wall Sage Advice board, double-clicked it from within use range, and read the SAGE ADVICE artifact-hunting gump."
-  current_goal: "Close the Sage Advice gump, then decide whether another board is worth reading or whether to leave the bank to find real currency loot."
-  elapsed_play_time: "historical play through Run 260; see map log for detailed run archive"
+  last_action: "Run 261 closed the read SAGE ADVICE gump, double-clicked the adjacent Local Guilds board from within use range, and read the LOCAL GUILDS membership gump."
+  current_goal: "Close the Local Guilds gump, then decide whether a quest board or bank-room utility object is worth inspecting before leaving to find real currency loot."
+  elapsed_play_time: "historical play through Run 261; see map log for detailed run archive"
   current_open_gumps:
-    - type: "Server.Gumps.BoardGump"
-      source_item: "Server.Items.SearchBoard / Sage Advice"
-      source_item_serial: 1075459772
-      title: "SAGE ADVICE"
+    - type: "Server.Items.GuildBoard.GuildBoardGump"
+      source_item: "Server.Items.GuildBoard / Local Guilds"
+      source_item_serial: 1075459773
+      title: "LOCAL GUILDS"
       status: "open_read"
-      body_summary: "Sages sell expensive artifact encyclopedia advice; higher lore levels cost more, the torn page gives coordinates/clues, a sextant is useful, results can be gold, fake artifacts, empty legends, or new clues, and only one artifact quest can be pursued at a time."
+      body_summary: "Lists local trade/skill guilds and explains that joining requires finding the right guildmaster, choosing Join, and dropping the exact fee; first entry is 2,000 gold, later guild fees double, replacement rings cost 400 gold, and player theft requires the Thieves Guild."
       visible_controls:
         - "upper-right close button"
         - "scrollable text body"
+        - "no visible resign button because Mira is not in a local guild"
       text_entry_fields: []
       flags: { closable: true, disposable: true, draggable: true, resizable: false }
       response_sent: null
@@ -101,8 +102,8 @@ lifecycle:
   target_cursor:
     active: false
     source: null
-  latest_player_message: "No overhead message appeared; double-clicking Sage Advice opened the read-only SAGE ADVICE board gump."
-  next_client_visible_decision: "Close the SAGE ADVICE gump, then read another board, inspect vote stones, or leave the bank to look for currency loot."
+  latest_player_message: "No overhead message appeared; double-clicking Local Guilds opened the read-only LOCAL GUILDS board gump."
+  next_client_visible_decision: "Close the LOCAL GUILDS gump, then read a quest board, inspect vote stones or donation boxes, or leave the bank to look for currency loot."
 
 location:
   map: "Map.Sosaria"
@@ -131,7 +132,7 @@ perception:
     scan_center: { x: 3439, y: 3425, z: 0 }
     map: "Map.Sosaria"
     radius_tiles: 18
-    scan_confidence: "high for saved visible mobiles/items from the canonical live-state snapshot after moving to the north-wall boards; current continuity overrides the stale live-state satchel row because Run 259 made it vanish. No terrain or binary-map check was needed for short interior floor movement."
+    scan_confidence: "high for saved visible mobiles/items from the canonical live-state snapshot at the north-wall boards; Run 261 did not move, and current continuity overrides the stale live-state satchel row because Run 259 made it vanish. No terrain or binary-map check was needed."
     sources:
       - "docs/CCWM/live-state/manifest.yaml"
       - "docs/CCWM/live-state/mobiles.jsonl"
@@ -231,14 +232,14 @@ perception:
         point3d: { x: 3439, y: 3421, z: 3 }
         dx: 0
         dy: -4
-        status: "visible north-wall advice board currently opened as SAGE ADVICE gump"
+        status: "visible north-wall advice board; SAGE ADVICE gump was closed in Run 261"
       - serial: 1075459773
         type: "Server.Items.GuildBoard"
         name: "Local Guilds"
         point3d: { x: 3441, y: 3421, z: 3 }
         dx: 2
         dy: -4
-        status: "visible north-wall board, optional reading after current gump is closed"
+        status: "visible north-wall board currently opened as LOCAL GUILDS gump"
       - serial: 1075459763
         type: "Server.Items.StandardQuestBoard"
         name: "Seeking Brave Adventurers"
@@ -322,8 +323,14 @@ perception:
         type: "Server.Items.SearchBoard"
         name: "Sage Advice"
         point3d: { x: 3439, y: 3421, z: 3 }
-        last_action: "Run 260 normal double-click from Point3D(3439,3425,0)"
-        result: "opened and read SAGE ADVICE BoardGump"
+        last_action: "Run 261 closed the already-read SAGE ADVICE gump"
+        result: "board remains visible; no item, money, quest, or target state changed"
+      - serial: 1075459773
+        type: "Server.Items.GuildBoard"
+        name: "Local Guilds"
+        point3d: { x: 3441, y: 3421, z: 3 }
+        last_action: "Run 261 normal double-click from Point3D(3439,3425,0)"
+        result: "opened and read LOCAL GUILDS GuildBoardGump; no resign button visible for Mira"
     visible_running_spawner_objects: []
     nearby_invisible_spawner_context:
       - { serial: "multiple", type: "Server.Mobiles.PremiumSpawner", point3d: { x: 3431, y: 3412, z: 0 }, relation: "saved bank/adventurer NPC spawners in range; invisible to the player and not active blockers" }
@@ -331,6 +338,7 @@ perception:
     visible_route_static_context:
       - { route: "3446,3442 -> 3444,3435", status: "Run 257 used short open bank-room movement after closing the empty bank box and asking Susan for balance." }
       - { route: "3444,3435 -> 3439,3425", status: "Run 260 used short open bank-floor movement to reach Sage Advice within use range; no visible blocker, combat, target cursor, or region change." }
+      - { route: "3439,3425 stationary", status: "Run 261 stayed under the north-wall boards, closed SAGE ADVICE, and opened/read LOCAL GUILDS; no movement or terrain check." }
       - { route: "north-wall boards", status: "visible Sage Advice, Local Guilds, quest boards, merchant advertiser, vote stones, donation boxes, and bankers; no hostile visible inside the current 18-tile screen." }
     recently_visible_route_context:
       - { name: "Bank of Britain exterior door", serial: 1075459158, point3d: { x: 3017, y: 1055, z: 5 }, relation: "visible transition from exterior marker to the shared bank-vault room" }
@@ -342,16 +350,16 @@ perception:
     client_worldmap_markers:
       - { name: "none within 120 tiles", point2d: { x: 3439, y: 3425 }, dx: 0, dy: 0, source: "Sosaria.csv/Sosaria-Common.csv", use: "the current bank-vault interior is not separately explained by a nearby overlay marker" }
 route_memory:
-  current_route_intent: "Pause under the north-wall Sage Advice board with its SAGE ADVICE gump open and read."
-  last_route_result: "Run 260 moved from Susan to Point3D(3439,3425,0), opened Sage Advice, and learned artifact hunting needs expensive sage advice and travel tools rather than starter cash."
+  current_route_intent: "Pause under the north-wall Local Guilds board with its LOCAL GUILDS gump open and read."
+  last_route_result: "Run 261 stayed at Point3D(3439,3425,0), closed Sage Advice, opened Local Guilds, and learned guild membership also needs gold rather than solving starter cash."
   immediate_options:
-    - "close the SAGE ADVICE gump"
-    - "read Local Guilds, the quest boards, Status Board, Laws of the Land, or News From The Nobles"
+    - "close the LOCAL GUILDS gump"
+    - "read the quest boards, Status Board, Laws of the Land, or News From The Nobles"
     - "inspect the visible vote stones, donation boxes, or Merchant Advertiser only if deliberately looking for utility/friction"
     - "leave through the visible doors if the bank information route stalls"
   ordinary_collision_policy: "Trees, rocks, shorelines, mountains, and walls are client-side route corrections, not code-trace triggers."
 diagnostic_csharp_current_run:
-  reason: "Sage Advice opened a custom board gump; tracing was limited to the visible board response and gump controls/text after the normal double-click."
+  reason: "Local Guilds opened a custom information gump; tracing was limited to the visible board response, gump controls, membership fee text, and the no-resign-button condition after the normal double-click."
   paths_traced:
     - "docs/CCWM/live-state/manifest.yaml"
     - "docs/CCWM/live-state/items.jsonl"
@@ -359,10 +367,9 @@ diagnostic_csharp_current_run:
     - "docs/CCWM/live-state/spawners.jsonl"
     - "docs/CCWM/client-worldmap-markers/Sosaria.csv"
     - "docs/CCWM/client-worldmap-markers/Sosaria-Common.csv"
-    - "Data/Scripts/Quests/Search/SearchBoard.cs"
-    - "Data/Scripts/Items/Books/BulletinBoards/Gumps/BoardGump.cs"
-  player_visible_result: "Double-clicking Sage Advice within four tiles opened a SAGE ADVICE BoardGump; Mira read it and left it open."
-  learned_gate: "Artifact searching is not a starter-money route: the board only explains future sage advice, gold costs, coordinates, and artifact clues; it does not mutate quest, money, or inventory state."
+    - "Data/Scripts/Items/Books/BulletinBoards/GuildBoard.cs"
+  player_visible_result: "Double-clicking Local Guilds within four tiles opened a LOCAL GUILDS GuildBoardGump; Mira read it and left it open."
+  learned_gate: "Local guild membership is gated by finding a guildmaster and paying the exact entry fee; first guild entry costs 2,000 gold, future guild fees double, replacement rings cost 400 gold, and the board does not mutate membership or inventory state for Mira."
 vitals_status:
   alive: true
   death_state: "alive"

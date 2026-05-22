@@ -7426,3 +7426,36 @@ Mechanical friction learned:
 Next pressure:
 
 Mira ends at `Point3D(3439,3425,0)`, facing north with the `SAGE ADVICE` gump open and read. The next client-visible decision is to close it, then read another nearby board, context-click a quest board, inspect the visible vote stones, or leave the bank because the sage route needs money she does not have.
+
+## Run 261 - Local Guilds Want Cash Too
+
+I start at `Point3D(3439,3425,0)`, facing north under the bank's north-wall boards, with the `SAGE ADVICE` gump open and already read. The room is still safe-looking: fox at my feet by continuity, bankers and adventurer types around the room, Susan behind me, quest boards and `Local Guilds` on the same wall, vote stones to the east, donation boxes and other public boards west, and no hostile on the screen.
+
+**Beat 1**
+
+I close `SAGE ADVICE`.
+
+Nothing else opens. No money appears, no target cursor appears, and I am still standing under the boards.
+
+**Beat 2**
+
+I double-click `Local Guilds`, two tiles east and four tiles north of me.
+
+It opens a `LOCAL GUILDS` window, not a guild-join prompt. I do not have to move. The visible controls are just the upper-right close button and the scrollable text body; because I am not in a local guild, there is no visible resign choice for me.
+
+**Beat 3**
+
+I read it and stop.
+
+The board lists the local trade/skill guilds and explains the catch: joining means finding the right guildmaster, choosing `Join`, then dropping the exact entry fee on them. The first entry fee is `2,000` gold, later guilds double in cost, replacement rings cost `400` gold, and theft against other players requires the Thieves Guild. For Mira, this is another useful rule sheet, not a starter-money route.
+
+Mechanical friction learned:
+
+- `Local Guilds` is usable from the current tile because the board is within four tiles.
+- Double-clicking it opens `GuildBoardGump`; it lists guilds and membership rules but does not auto-join, open a vendor list, create a target cursor, or change money, skills, inventory, crime state, or discovery flags.
+- Guild joining is not the same as paid skill training. A guildmaster's visible `Join` action still needs the exact fee, and Mira has `0` gold.
+- The board can expose a resign control only for a player already in a local guild. Mira is not in one, so this read shows no useful button beyond close.
+
+Next pressure:
+
+Mira remains at `Point3D(3439,3425,0)`, facing north with the `LOCAL GUILDS` gump open and read. The next client-visible decision is to close it, then read a quest board, inspect vote stones or donation boxes, or leave the bank because both artifact advice and guild membership require money she does not have.
