@@ -1,4 +1,6 @@
-# System Name: Voting Rewards
+# Legacy Slug: Voting Rewards
+
+This legacy slug is preserved for existing links. The canonical wiki page is [Voting Rewards](Voting_Rewards.md).
 
 ## Overview
 

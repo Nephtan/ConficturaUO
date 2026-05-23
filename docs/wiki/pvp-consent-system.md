@@ -1,4 +1,6 @@
-# System Name: PvP Consent System
+# Legacy Slug: PvP Consent System
+
+This legacy slug is preserved for existing links. The canonical wiki page is [PvP Consent System](PvP_Consent_System.md).
 
 ## Overview
 
