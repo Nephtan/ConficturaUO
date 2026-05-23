@@ -8,11 +8,16 @@ namespace Server.Custom.Confictura.Mobiles
     {
         public static void ApplyProfile(BaseCreature creature, string name, string title, int hits, int minDamage, int maxDamage)
         {
-            creature.Name = name;
-            creature.Title = title;
+            ApplyIdentity(creature, name, title);
             creature.HitsMaxSeed = hits;
             creature.SetHits(hits, hits);
             creature.SetDamage(minDamage, maxDamage);
+        }
+
+        public static void ApplyIdentity(BaseCreature creature, string name, string title)
+        {
+            creature.Name = name;
+            creature.Title = title;
         }
 
         public static void SetResistance(BaseCreature creature, ResistanceType type)

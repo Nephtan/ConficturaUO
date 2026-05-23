@@ -16,6 +16,12 @@ namespace Server.Custom.Confictura.Mobiles
             Godfrey2026Support.AddMortalStrike(this);
         }
 
+        public override void OnAfterSpawn()
+        {
+            base.OnAfterSpawn();
+            Godfrey2026Support.ApplyIdentity(this, "Nero", "the Dark");
+        }
+
         public override void GenerateLoot()
         {
             base.GenerateLoot();
@@ -37,6 +43,7 @@ namespace Server.Custom.Confictura.Mobiles
         {
             base.Deserialize(reader);
             int version = reader.ReadInt();
+            Godfrey2026Support.ApplyIdentity(this, "Nero", "the Dark");
         }
     }
 }

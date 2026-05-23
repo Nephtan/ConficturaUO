@@ -15,9 +15,7 @@ namespace Server.Custom.Confictura.Mobiles
         public RuneKnight()
             : base()
         {
-            // Identity derived from the XML entry
-            Name = "Rune Knight";
-            Title = null; // No title specified in the spawn definition
+            ApplyIdentity();
 
             // Survivability adjustments
             HitsMaxSeed = 2000;
@@ -51,6 +49,18 @@ namespace Server.Custom.Confictura.Mobiles
             pack.DropItem(runeblade);
         }
 
+        private void ApplyIdentity()
+        {
+            Name = "Rune Knight";
+            Title = null; // No title specified in the spawn definition
+        }
+
+        public override void OnAfterSpawn()
+        {
+            base.OnAfterSpawn();
+            ApplyIdentity();
+        }
+
         public RuneKnight(Serial serial)
             : base(serial)
         {
@@ -66,6 +76,7 @@ namespace Server.Custom.Confictura.Mobiles
         {
             base.Deserialize(reader);
             reader.ReadInt(); // version
+            ApplyIdentity();
         }
     }
 }
