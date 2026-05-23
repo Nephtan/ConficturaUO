@@ -229,6 +229,8 @@ namespace Server.Misc
                 else if (reg.IsPartOf("the Cellar")) { Heat = 0; }
 
                 else if (reg.IsPartOf("the Sanctum of Saltmarsh")) { Heat = 3; }
+                else if (reg.IsPartOf("Underground Temple")) { Heat = 5; }
+                else if (reg.IsPartOf("Castle Basement")) { Heat = 5; }
             }
             else if (map == Map.Sosaria)
             {
@@ -242,9 +244,11 @@ namespace Server.Misc
                 else if (reg.IsPartOf("the Fires of Hell")) { Heat = 0; }
                 else if (reg.IsPartOf("the Frozen Dungeon")) { Heat = 0; }
                 else if (reg.IsPartOf("the Mines of Morinia")) { Heat = 0; }
+                else if (reg.IsPartOf("Goblin Caves")) { Heat = 4; }
                 else if (reg.IsPartOf("the Perinian Depths")) { Heat = 0; }
                 else if (reg.IsPartOf("the Ratmen Lair")) { Heat = 0; }
                 else if (reg.IsPartOf("the Dungeon of Time Awaits")) { Heat = 0; }
+                else if (reg.IsPartOf("Forgotten Library")) { Heat = 4; }
                 else if (reg.IsPartOf("Castle Exodus")) { Heat = 0; }
                 else if (reg.IsPartOf("the Cave of Banished Mages")) { Heat = 0; }
                 else if (reg.IsPartOf("the City of the Dead")) { Heat = 1; }
@@ -270,6 +274,15 @@ namespace Server.Misc
                 else if (reg.IsPartOf("Vordo's Castle")) { Heat = 3; }
                 else if (reg.IsPartOf("Vordo's Dungeon")) { Heat = 3; }
                 else if (reg.IsPartOf("Vordo's Castle Grounds")) { Heat = 3; }
+
+                else if (reg.IsPartOf("Tower of Runes")) { Heat = 5; }
+                else if (reg.IsPartOf("Elemental Chaos")) { Heat = 5; }
+                else if (reg.IsPartOf("Dark Dragon Temple")) { Heat = 5; }
+                else if (reg.IsPartOf("Wolfgangs Crypt")) { Heat = 5; }
+                else if (reg.IsPartOf("Lair of Exodus")) { Heat = 5; }
+                else if (reg.IsPartOf("Tree Hollow")) { Heat = 4; }
+                else if (reg.IsPartOf("Castle Dio")) { Heat = 5; }
+                else if (reg.IsPartOf("Buried Ruins")) { Heat = 5; }
             }
             else if (map == Map.SerpentIsland)
             {
@@ -303,6 +316,7 @@ namespace Server.Misc
                 else
                 {
                     if (reg.IsPartOf("the Glacial Scar")) { Heat = 2; }
+                    else if (reg.IsPartOf("The Black Pyramid")) { Heat = 5; }
                     else if (Server.Misc.Worlds.GetRegionName(map, loc) == "the Underworld") { Heat = 3; }
                     else if (reg.IsPartOf(typeof(DungeonRegion))) { Heat = 4; }
                 }
@@ -345,7 +359,7 @@ namespace Server.Misc
             else if (map == Map.Atlantis)
             {
                 if (reg.IsPartOf("the Erase")) { Heat = 0; }
-                else { Heat = 4; }
+                else { Heat = 5; }
             }
 
             return Heat;
