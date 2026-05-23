@@ -14,9 +14,7 @@ namespace Server.Custom.Confictura.Mobiles
         public GraveRobber()
             : base()
         {
-            // Identity
-            Name = "Grave Robber";
-            Title = string.Empty; // Title intentionally blank per spawn definition
+            ApplyIdentity();
 
             // Appearance
             Hue = 0;
@@ -27,6 +25,18 @@ namespace Server.Custom.Confictura.Mobiles
 
             // Damage
             SetDamage(10, 50);
+        }
+
+        private void ApplyIdentity()
+        {
+            Name = "Grave Robber";
+            Title = null; // Title intentionally blank per spawn definition
+        }
+
+        public override void OnAfterSpawn()
+        {
+            base.OnAfterSpawn();
+            ApplyIdentity();
         }
 
         public GraveRobber(Serial serial)
@@ -44,6 +54,7 @@ namespace Server.Custom.Confictura.Mobiles
         {
             base.Deserialize(reader);
             reader.ReadInt(); // version
+            ApplyIdentity();
         }
     }
 }

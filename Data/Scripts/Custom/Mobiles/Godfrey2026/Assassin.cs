@@ -13,6 +13,12 @@ namespace Server.Custom.Confictura.Mobiles
             Godfrey2026Support.AddMortalStrike(this);
         }
 
+        public override void OnAfterSpawn()
+        {
+            base.OnAfterSpawn();
+            Godfrey2026Support.ApplyIdentity(this, "Assassin", null);
+        }
+
         public Assassin(Serial serial)
             : base(serial)
         {
@@ -28,6 +34,7 @@ namespace Server.Custom.Confictura.Mobiles
         {
             base.Deserialize(reader);
             int version = reader.ReadInt();
+            Godfrey2026Support.ApplyIdentity(this, "Assassin", null);
         }
     }
 }
