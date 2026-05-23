@@ -74,6 +74,42 @@ namespace Server
 
         public static Slice Slice;
 
+        private static readonly TimeSpan m_SliceWarningThreshold = TimeSpan.FromSeconds(1.0);
+
+        public static string Timestamp
+        {
+            get { return DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff"); }
+        }
+
+        public static void WriteDiagnostic(string format, params object[] args)
+        {
+            try
+            {
+                Console.WriteLine("[{0}] {1}", Timestamp, String.Format(format, args));
+            }
+            catch { }
+        }
+
+        private static void TimeSlicePhase(string name, Slice callback)
+        {
+            Stopwatch watch = Stopwatch.StartNew();
+
+            callback();
+
+            watch.Stop();
+
+            if (watch.Elapsed >= m_SliceWarningThreshold)
+            {
+                WriteDiagnostic(
+                    "STALL: {0} took {1:F2}s (saving={2}, {3})",
+                    name,
+                    watch.Elapsed.TotalSeconds,
+                    World.Saving,
+                    NetState.ConnectionSummary
+                );
+            }
+        }
+
         public static bool Profiling
         {
             get { return m_Profiling; }
@@ -582,17 +618,17 @@ namespace Server
 
                 while (m_Signal.WaitOne())
                 {
-                    Mobile.ProcessDeltaQueue();
-                    Item.ProcessDeltaQueue();
+                    TimeSlicePhase("Mobile.ProcessDeltaQueue", Mobile.ProcessDeltaQueue);
+                    TimeSlicePhase("Item.ProcessDeltaQueue", Item.ProcessDeltaQueue);
 
-                    Timer.Slice();
-                    messagePump.Slice();
+                    TimeSlicePhase("Timer.Slice", Timer.Slice);
+                    TimeSlicePhase("MessagePump.Slice", messagePump.Slice);
 
-                    NetState.FlushAll();
-                    NetState.ProcessDisposedQueue();
+                    TimeSlicePhase("NetState.FlushAll", NetState.FlushAll);
+                    TimeSlicePhase("NetState.ProcessDisposedQueue", NetState.ProcessDisposedQueue);
 
                     if (Slice != null)
-                        Slice();
+                        TimeSlicePhase("Core.Slice", Slice);
 
                     if ((++sample % sampleInterval) == 0)
                     {

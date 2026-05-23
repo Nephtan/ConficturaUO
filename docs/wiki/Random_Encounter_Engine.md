@@ -1,65 +1,143 @@
 # Random Encounter Engine
 
-## Overview
-The Random Encounter Engine spawns dynamic mobile or item encounters near players based on online population, region type, and probability settings defined in an XML configuration.
+This page documents the random encounter engine as the compiled C# currently behaves. The live encounter tables come from `Data/Scripts/Custom/RandomEncounters/RandomEncounters.xml`; the wiki is not the source of truth for per-region spawn lists.
+
+## Key Scripts
+- `Data/Scripts/Custom/RandomEncounters/EncounterEngine.cs`
+- `Data/Scripts/Custom/RandomEncounters/Timers.cs`
+- `Data/Scripts/Custom/RandomEncounters/SpawnFinder.cs`
+- `Data/Scripts/Custom/RandomEncounters/Helpers.cs`
+- `Data/Scripts/Custom/RandomEncounters/Records.cs`
+- `Data/Scripts/Custom/RandomEncounters/Commands.cs`
+- `Data/Scripts/Custom/RandomEncounters/RandomEncounters.xml`
+- `Data/Scripts/Custom/CharacterLevel/CharacterLevelService.cs`
+
+## Runtime Summary
+- The engine loads `Data/Scripts/Custom/RandomEncounters/RandomEncounters.xml` on initialization.
+- A reinitialize timer checks that file every 15 seconds and reloads the system after the file write time changes.
+- Encounter timers are always created for `DungeonRegion`, `CaveRegion`, `BardDungeonRegion`, `OutDoorRegion`, and `VillageRegion`, even if the XML only defines some of those region types.
+- Spawned mobiles and items receive a `RandomEncountersCreated` XML attachment so the cleanup timer can track them later.
+
+## Current Live Root Settings
+These values are read from the current checked-in `RandomEncounters.xml`:
+
+| Setting | Current value | Effect |
+| --- | --- | --- |
+| `picker` | `all` | Every eligible player in the timer bucket gets an encounter roll. |
+| `language` | `en-US` | Used for numeric parsing. |
+| `skiphidden` | `true` | Hidden players are skipped. |
+| `delay` | `120` | First tick delay, in seconds, for every encounter timer. |
+| `interval` | `150:300:300` | Dungeon, outdoor, village timer intervals in seconds. `DungeonRegion`, `CaveRegion`, and `BardDungeonRegion` all use the first value. |
+| `cleanup` | `300` | Cleanup sweep delay and repeat interval, in seconds. |
+| `cleanupGrace` | `1` | Nearby players can block only one cleanup attempt before deletion is allowed. |
+| `debug` | `true` | Enables verbose console logging. |
+| `debugEffect` | `false` | Disables debug-only spawn placement particles. |
 
 ## Commands
-- `[rand init]` — load the XML configuration and start encounter timers.
-- `[rand stop]` — halt all encounter timers and cleanup.
-- `[rand now <RegionType>]` — immediately check a timer type such as `DungeonRegion`, `OutDoorRegion`, or `VillageRegion`.
-- `[rand import]` — build a configuration template from `Data/Import/Premiums` map files.
+All commands require `Administrator`.
 
-All `rand` subcommands require `Administrator` access.
+| Command | Actual behavior |
+| --- | --- |
+| `[rand init]` | Rebuilds the region hash from XML and restarts encounter timers. |
+| `[rand stop]` | Stops the encounter timers and cleanup timer. |
+| `[rand now <RegionType>]` | Immediately runs one encounter pass for the supplied timer type string. |
+| `[rand import]` | Runs the legacy import helper for premium spawn data. |
 
-## Configuration
-The engine reads `Data/Scripts/Custom/RandomEncounters/RandomEncounters.xml`. Key attributes on the `<RandomEncounters>` root tag:
+## Player Eligibility
+- Only connected `PlayerMobile` instances are considered.
+- Staff are skipped because access level must be exactly `Player`.
+- Dead players are skipped.
+- Hidden players are skipped only when `skiphidden="true"`.
+- A player only enters the candidate set for the timer whose runtime region category matches `Helpers.RegionCategory(player.Region)`.
+- `Helpers.RegionCategory` collapses regions into `VillageRegion`, `SafeRegion`, `CaveRegion`, `BardDungeonRegion`, `DungeonRegion`, or `OutDoorRegion`.
 
-- `picker` (`sqrt` or `all`) – how many players are considered each interval.
-- `language` – culture used to parse numeric values.
-- `skiphidden` – whether hidden players are excluded.
-- `delay` – seconds to wait before the first encounter checks.
-- `interval` – colon‑separated timer values for dungeon, wilderness, and village regions.
-- `cleanup` – seconds before spawned groups are removed.
-- `cleanupGrace` – number of failed cleanup attempts allowed.
-- `debug` / `debugEffect` – optional logging and visual markers.
+## Encounter Lookup And Roll Order
+For each chosen player, the engine computes:
+- Map name from `player.Map.Name`
+- Region name from `player.Region.Name`, falling back to `default` when blank
+- Time bucket from `Helpers.DetermineTimeForMobile`
+- Land bucket from `Helpers.DetermineLandTypeForMobile`
 
-### Facets and Regions
-Inside the root element, define `<Facet name="…">` elements containing `<Region>` entries. Regions specify a `type` such as `OutDoorRegion`, `DungeonRegion`, or `VillageRegion`, and a `name`. If no specific region matches, a region named `default` is used.
+Lookup order is:
+1. Exact region name + exact land type + exact time
+2. Exact region name + exact land type + `AnyTime`
+3. Exact region name + `AnyLand` + `AnyTime`
+4. `default` region + exact land type + exact time
+5. `default` region + exact land type + `AnyTime`
+6. `default` region + `AnyLand` + `AnyTime`
 
-### Encounters
-Within each region, `<Encounter>` elements describe possible spawns. Useful attributes include:
+Encounter selection then works like this:
+- The engine draws `Utility.RandomDouble()`.
+- Encounter sets are ordered by numeric `p` ascending.
+- The first set whose `p` is greater than or equal to the draw is the normal encounter bucket.
+- If that bucket contains multiple encounters with the same `p`, one is chosen uniformly from that bucket.
+- `p="*"` creates an inclusive bucket that is processed separately after the normal roll; every encounter in that bucket can also fire if its level gate passes.
 
-- `p` – probability of the encounter; `*` forces the encounter in addition to any other.
-- `distance` – spawn distance from the player, optionally `min:max`.
-- `landType` – `Water`, `OnRoad`, `OffRoad`, or `AnyLand`.
-- `time` – `Day`, `Night`, `Twilight`, or `AnyTime`.
-- `level` – minimum character level; `level:Class` sets a class requirement (`Fighter`, `Ranger`, `Mage`, `Necromancer`, `Thief`, or `Overall`).
-- `scaleUp` – `true` scales weaker encounters toward the player's strength.
+## Level Gating
+- Encounter `level` values are checked against `Helpers.CalculateLevelForMobile`.
+- For players, that method now delegates to `CharacterLevelService.GetEncounterLevel`.
+- The alias mapping is broader than the old wiki implied:
+  - `Fighter` uses the highest result from martial, archer, assassin, ninja, samurai, knight, death knight, mystic monk, jedi, or syth lanes.
+  - `Ranger` uses the highest result from ranger, druid, archer, or bard lanes.
+  - `Mage` uses the highest result from arcane mage, elementalist, holy man, or researcher lanes.
+  - `Necromancer` uses the highest result from necromancer, witch, or death knight lanes.
+  - `Thief` uses the highest result from thief, assassin, ninja, or jester lanes.
+  - `Overall` uses the player overall level.
+- For non-player mobiles, the helper falls back to the legacy fame/karma/skills/stats formula.
 
-### Mobiles and Items
-`<Mobile>` and `<Item>` tags define actual spawns and may be nested. Attributes:
+## Spawn Placement And Aggro
+- If the player is running, the engine first searches the octant ahead of the player.
+- If that fails, it searches inward on a spiral around the player.
+- Nested elements search outward from their parent object.
+- Spawn checks reject tiles that cross into a different region type or a `HouseRegion`.
+- Water encounters require a wet land tile and `Map.CanFit(...)`.
+- Land encounters reject coastal wet statics and then probe static tile Z values, land tile Z, and player Z.
+- `forceAttack="true"` only sets `Combatant` when the spawned `BaseCreature` treats the player as an enemy and is not using vendor AI.
+- `scaleUp="true"` duplicates the top-level mobile up to two extra times based on `player Fighter level / spawned mobile Overall level`.
 
-- `p` – chance the element appears.
-- `pick` – comma‑separated list to randomly choose from.
-- `n` – quantity or `min:max` range.
-- `effect` – optional visual effect (`Smoke`, `Fire`, `Vortex`, `Swirl`, `Glow`, `Explosion`).
-- `forceAttack` – for mobiles, `true` forces immediate aggression.
+## XML Contract Actually Parsed
+### Root attributes
+- Parsed: `picker`, `language`, `skiphidden`, `delay`, `interval`, `cleanup`, `cleanupGrace`, `debug`, `debugEffect`, `RTFM`
+- `RTFM="false"` aborts initialization on purpose.
 
-Nested mobiles spawn near their parent mobile; nested items are placed inside their parent container.
+### Region and encounter attributes
+- `<Facet name="...">`
+- `<Region type="..." name="...">`
+- `<Encounter p="..." distance="min:max" landType="..." time="..." level="value[:LevelType]" scaleUp="...">`
+- Deprecated `<Encounter water="true">` still works by forcing `landType="Water"`.
 
-## Example
-```
-<RandomEncounters interval="600:600:600" cleanup="300">
-  <Facet name="Lodor">
-    <Region type="OutDoorRegion" name="default">
-      <Encounter p="0.01" distance="7" landType="AnyLand" time="AnyTime">
-        <Mobile pick="Mongbat" n="1"/>
-      </Encounter>
-    </Region>
-  </Facet>
-</RandomEncounters>
-```
-This configuration checks every ten minutes and has a 1% chance to spawn a single Mongbat near a random outdoor player in Lodor.
+### Element attributes
+- `<Mobile>` and `<Item>` parse `p`, `pick`, `n`, `id`, `forceAttack`, and `effect`
+- `effect` may be `Smoke`, `Fire`, `Vortex`, `Swirl`, `Glow`, `Explosion`, or `None`
+- `effect` also accepts a hue suffix such as `Glow:1153`
+- `pick` is split on commas and one type is chosen per spawned element instance
+- `n="min:max"` rolls how many sibling copies of that element are created
 
-## Audience
-Staff
+### Nesting rules
+- `<Mobile>` can contain nested `<Mobile>`, `<Item>`, and `<Prop>`
+- `<Item>` can contain nested `<Item>`, `<Mobile>`, and `<Prop>`, but the code explicitly rejects a nested `<Mobile>` under an `<Item>`
+- A nested item is added to a parent mobile or container when possible; otherwise it is moved into the world
+
+## Current XML Shape
+- The checked-in XML defines facets for `Lodor`, `Sosaria`, `Underworld`, `SerpentIsland`, `SavagedEmpire`, and `Atlantis`.
+- The live file is dungeon-focused. It defines `DungeonRegion`, `CaveRegion`, and a smaller number of `BardDungeonRegion` tables.
+- The current XML does not use `<Prop>`, `p="*"`, `scaleUp="true"`, or deprecated `water="true"` entries.
+
+## Cleanup Rules
+- The cleanup timer starts after `cleanup` seconds and repeats every `cleanup` seconds.
+- Objects younger than the cleanup window are ignored.
+- Encounter items in the world can be deleted.
+- Encounter items held by a mobile are detached from cleanup forever instead of being deleted later.
+- Tamed encounter creatures are detached from cleanup forever.
+- Untamed encounter creatures are only deleted when they have no `Combatant`.
+- If a non-staff client is within 18 tiles, cleanup is delayed until the attachment counter exceeds `cleanupGrace`.
+
+## Known C# Gaps
+- `<Prop>` nodes are recognized during XML traversal, but `AddProp(...)` is a stub that only logs a message. Property mutation for encounter elements is not implemented.
+- `DeleteTimer.MaybeRemove(...)` enumerates `GetClientsInRange(...)` without freeing the pooled enumerable, so cleanup sweeps leak pooled range iterators.
+
+## Practical Editing Guidance
+- Treat `RandomEncounters.xml` as the authoritative encounter table.
+- Match `Map.Name`, region type, and region name strings exactly.
+- Use `name="default"` only for the fallback table of a facet/region-type pair.
+- Do not rely on `<Prop>` tags until the engine code is completed.

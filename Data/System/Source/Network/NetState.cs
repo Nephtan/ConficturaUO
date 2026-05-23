@@ -633,6 +633,53 @@ namespace Server.Network
             get { return m_Instances; }
         }
 
+        public static int AuthenticatedCount
+        {
+            get
+            {
+                int count = 0;
+
+                for (int i = 0; i < m_Instances.Count; ++i)
+                {
+                    if (m_Instances[i].m_Account != null)
+                        ++count;
+                }
+
+                return count;
+            }
+        }
+
+        public static int InGameCount
+        {
+            get
+            {
+                int count = 0;
+
+                for (int i = 0; i < m_Instances.Count; ++i)
+                {
+                    Mobile m = m_Instances[i].m_Mobile;
+
+                    if (m != null && !m.Deleted)
+                        ++count;
+                }
+
+                return count;
+            }
+        }
+
+        public static string ConnectionSummary
+        {
+            get
+            {
+                return String.Format(
+                    "sockets={0}, authenticated={1}, ingame={2}",
+                    m_Instances.Count,
+                    AuthenticatedCount,
+                    InGameCount
+                );
+            }
+        }
+
         private static BufferPool m_ReceiveBufferPool = new BufferPool("Receive", 2048, 2048);
 
         public NetState(Socket socket, MessagePump messagePump)
@@ -998,6 +1045,15 @@ namespace Server.Network
                     }
                 }
             }
+            catch (SocketException ex)
+            {
+                if (ex.SocketErrorCode == SocketError.ConnectionReset)
+                    TraceConnectionReset(ex);
+                else
+                    TraceException(ex);
+
+                Dispose(false);
+            }
             catch (Exception ex)
             {
                 TraceException(ex);
@@ -1267,6 +1323,18 @@ namespace Server.Network
                 Console.WriteLine(ex);
             }
             catch { }
+        }
+
+        private void TraceConnectionReset(SocketException ex)
+        {
+            Core.WriteDiagnostic(
+                "Network: connection reset before receive from {0} ({1}; saving={2}, paused={3}, {4})",
+                this,
+                ex.SocketErrorCode,
+                World.Saving,
+                m_Paused,
+                ConnectionSummary
+            );
         }
 
         private bool m_Disposing;

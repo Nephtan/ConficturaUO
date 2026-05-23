@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Reflection;
+using System;
 using Server.Commands;
 using Server.Items;
 using Server.Mobiles;
-using Server.Network;
-using Server.Targeting;
 
 namespace Server.Commands
 {
@@ -23,13 +18,19 @@ namespace Server.Commands
         [Description("Helps senior staff members set their body to GM style.")]
         public static void GmMe_OnCommand(CommandEventArgs e)
         {
+            if (e == null || e.Mobile == null || e.Mobile.Deleted)
+                return;
+
             Mobile from = e.Mobile;
+            EnsureBackpack(from);
+
             CommandLogging.WriteLine(
                 from,
                 "{0} {1} is assuming a GM body",
                 from.AccessLevel,
                 CommandLogging.Format(from)
             );
+
             from.Blessed = true;
             DisRobe(from, Layer.Shoes);
             DisRobe(from, Layer.Pants);
@@ -45,6 +46,7 @@ namespace Server.Commands
             DisRobe(from, Layer.Cloak);
             DisRobe(from, Layer.OuterTorso);
             DisRobe(from, Layer.OuterLegs);
+
             from.AddItem(new DragonRobe());
             from.AddItem(new ClothHood());
             from.AddItem(new BootsofHermes());
@@ -57,13 +59,28 @@ namespace Server.Commands
             from.RawInt = 100;
         }
 
-        private static void DisRobe(Mobile m_from, Layer layer)
+        private static Container EnsureBackpack(Mobile from)
         {
-            if (m_from.FindItemOnLayer(layer) != null)
+            Container pack = from.Backpack as Container;
+
+            if (pack == null || pack.Deleted)
             {
-                Item item = m_from.FindItemOnLayer(layer);
-                m_from.PlaceInBackpack(item); // Place in a bag first?
+                pack = new Backpack();
+                from.AddItem(pack);
             }
+
+            return pack;
+        }
+
+        private static void DisRobe(Mobile from, Layer layer)
+        {
+            Item item = from.FindItemOnLayer(layer);
+
+            if (item == null || item.Deleted)
+                return;
+
+            if (!from.PlaceInBackpack(item))
+                EnsureBackpack(from).DropItem(item);
         }
     }
 }
