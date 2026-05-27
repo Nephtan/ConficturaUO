@@ -7459,3 +7459,2739 @@ Mechanical friction learned:
 Next pressure:
 
 Mira remains at `Point3D(3439,3425,0)`, facing north with the `LOCAL GUILDS` gump open and read. The next client-visible decision is to close it, then read a quest board, inspect vote stones or donation boxes, or leave the bank because both artifact advice and guild membership require money she does not have.
+
+## Run 262 - I Step Over To The Adventurer Board
+
+I start at `Point3D(3439,3425,0)`, facing north under the bank's north-wall boards, with the `LOCAL GUILDS` window still open and already read. The screen is still a safe-looking bank interior: my fox is treated as following close by, bankers and adventurer-looking people are scattered around, the standard and fishing quest boards are west of me on the same wall, vote stones and bank vaults sit east, donation boxes and public boards sit west and south, and no hostile is on screen.
+
+**Beat 1**
+
+I close `LOCAL GUILDS`.
+
+The board does not turn into a join prompt or payment target. No money, ring, skill change, inventory item, or target cursor appears. I am back to the room view.
+
+**Beat 2**
+
+I walk a few steps west along the open bank floor to stand under the quest boards at about `Point3D(3434,3425,0)`, still facing north.
+
+This is ordinary interior movement. Nothing blocks the floor, no door opens, no region message appears, no hostile enters the screen, and the fox is just assumed to keep up. From here both `Seeking Brave Adventurers` and `Seeking Brave Sailors` are close enough to use.
+
+**Beat 3**
+
+I double-click `Seeking Brave Adventurers`.
+
+It opens a `SEEKING BRAVE ADVENTURERS` board window instead of immediately assigning a bounty. I stop on the new unread gump. The visible controls are the usual board-window close button and a text body; I have not opened the board's context menu or chosen any hire/done path.
+
+Mechanical friction learned:
+
+- `Seeking Brave Adventurers` is not usable from the old `Point3D(3439,3425,0)` spot because it is seven tiles west and four north, but it is usable after stepping to `Point3D(3434,3425,0)`.
+- Normal double-click opens a read-only `BoardGump` titled `SEEKING BRAVE ADVENTURERS`; it does not by itself start a quest, pay gold, create loot, open a target cursor, or mutate the quest log.
+- The actual quest-taking flow is not proven by the double-click text window. I have only opened the information gump, so no hire/done choice should be assumed until I use a visible context-menu path.
+- No gold, item, bank content, skill, stat, hunger, thirst, damage, crime flag, discovery flag, quest state, pet order, or follower count changed.
+
+Next pressure:
+
+Mira ends at `Point3D(3434,3425,0)`, facing north with the `SEEKING BRAVE ADVENTURERS` gump open and unread. The next client-visible decision is to read the new quest-board text before deciding whether to context-click the board for a visible hire/done option, inspect the sailor board, or leave the bank.
+
+## Run 263 - I Read The Adventurer Board, Then Only Open Its Menu
+
+I start at `Point3D(3434,3425,0)`, facing north with `SEEKING BRAVE ADVENTURERS` already open and unread. The bank screen is unchanged enough to trust: my fox is treated as close by, Darlene and Jebidiah stand north, Lionel and Greger are near the floor behind me, Susan and the bankers are still bank-room context, and the north wall has the adventurer board, sailor board, sage board, and guild board. Vote stones sit to the east, donation boxes and public boards sit west and south, and no hostile is visible.
+
+**Beat 1**
+
+I read the `SEEKING BRAVE ADVENTURERS` window instead of pressing anything.
+
+The board is not a job offer yet. It tells me the townsfolk give bounties for kills or retrievals, one quest has to be finished before another, failed quests may require reparations, and fame improves the chance of a better-paying bounty. The useful warning is travel: these quests do not send me to lands I have never been, but they can send me into any dungeon in lands I have traveled. The board also says the quest log is `[quests`, rewards are gold and fame, and karma can move when the quest is done.
+
+**Beat 2**
+
+I close the board window.
+
+Nothing else appears. No quest log opens, no target cursor appears, no item or gold lands in my pack, and no overhead message says I accepted anything. I am just back under the board.
+
+**Beat 3**
+
+I context-click `Seeking Brave Adventurers`.
+
+Now I get the actual decision surface. The context menu gives me a read/talk entry plus the quest action and the completion action the board text described as asking to be `hire`d and returning when `done`. I stop there, because seeing the menu is not the same as choosing a quest. No row has been clicked.
+
+Mechanical friction learned:
+
+- The double-click gump is only instructions. Reading and closing it does not start a standard quest, set a target, open the quest log, pay gold, or change Mira's pack.
+- The real standard-quest flow is exposed by the board context menu after the gump is closed. From the current tile, the board is still close enough for that menu.
+- The menu proves there are separate information, take-quest, and turn-in actions, but no `StandardQuest` state should be assumed until I choose the quest action.
+- The board warns that a normal starter quest can point into any dungeon in a land I have already traveled. Since Mira has only Sosaria discovered, accepting one may still send her into dangerous known-land dungeon travel rather than a safe town errand.
+- No gold, item, bank content, skill, stat, hunger, thirst, damage, crime flag, discovery flag, quest state, pet order, or follower count changed.
+
+Next pressure:
+
+Mira remains at `Point3D(3434,3425,0)`, facing north with no gump open and the `Seeking Brave Adventurers` context menu open. The next client-visible decision is to choose the visible quest action if I am willing to risk a random standard bounty, choose the completion action just to confirm I have no active quest, close the menu and read the sailor board, or leave the bank.
+
+## Run 264 - The Done Row Does Nothing, Then I Read Sailors
+
+I start at `Point3D(3434,3425,0)`, facing north under the bank's north-wall boards. No gump is open, but the `Seeking Brave Adventurers` context menu is still open from the last run. The screen is a calm bank interior: adventurer-looking people and bankers are still in the room, the standard and sailor quest boards are both within reach, donation boxes and public boards sit to the west and south, vote stones sit east, and no hostile is visible.
+
+**Beat 1**
+
+I choose the visible `done` row on `Seeking Brave Adventurers`.
+
+The board gives only an overhead response: `You are not currently on a quest.` It does not open a reputation-payment gump, take money, create a target cursor, or change my pack. The context menu is gone after the click.
+
+**Beat 2**
+
+I double-click the adjacent `Seeking Brave Sailors` board.
+
+It opens a `SEEKING BRAVE SAILORS` board window. The visible controls are the same simple board-window close button and a text body; I do not get a quest just from the double-click.
+
+**Beat 3**
+
+I read the sailor board and stop.
+
+The sailor version is a sea bounty board: pirates, sea creatures, or retrieved items; one quest at a time; reparations if I fail; fame can improve the payout; the quest log is still `[quests`; and the board says these jobs do not send me to seas I have never been. For Mira right now, this is information only. I still have no boat, no gold, no active sailor quest, and no reason to assume the ocean route is safer than the land bounty route.
+
+Mechanical friction learned:
+
+- The standard board's `done` action is safe to test with no active quest. It only says I am not currently on a quest and leaves money, inventory, target cursor, and quest state unchanged.
+- `Seeking Brave Sailors` mirrors the adventurer board's split flow: double-clicking opens read-only instructions, while the actual hire/done choices live behind the context menu.
+- Sailor quests are not a starter-cash shortcut from this bank tile. The board teaches the route, but accepting one would still be a random quest action and likely needs sea access.
+- No gold, item, bank content, skill, stat, hunger, thirst, damage, crime flag, discovery flag, quest state, pet order, or follower count changed.
+
+Next pressure:
+
+Mira remains at `Point3D(3434,3425,0)`, facing north with the `SEEKING BRAVE SAILORS` gump open and read. The next client-visible decision is to close it, context-click the sailor board for its visible hire/done choices, return to the adventurer board and accept a land bounty, inspect the nearby public boards and donation boxes, or leave the bank.
+
+## Run 265 - Sailor Board Menu, Not A Quest Yet
+
+I start at `Point3D(3434,3425,0)`, facing north under the bank's north-wall quest boards. The `SEEKING BRAVE SAILORS` gump is still open and already read. The room still looks safe: adventurers and bankers are scattered around the vault, Susan is behind and east, public boards and donation boxes sit along the west wall, vote stones are east, doors are south, and no hostile is on the screen.
+
+**Beat 1**
+
+I close `SEEKING BRAVE SAILORS`.
+
+The gump disappears without handing me a quest. No target cursor appears, no quest log opens, no item or gold drops into my pack, and the board is still on the north wall.
+
+**Beat 2**
+
+I context-click `Seeking Brave Sailors`.
+
+The actual decision menu appears. I can see the same split the board text implied: a read/talk entry, a `hire` quest entry, and a `done` completion entry. I do not click a row yet, because opening the menu is only exposing choices, not accepting a random sea job.
+
+**Beat 3**
+
+I pause on the menu and think it through.
+
+The `hire` row is the first real mutation path for a sailor quest, but it may produce a random sea target and I still have no boat, no gold, and no active fishing quest. The `done` row is probably harmless the way the adventurer board was, but it would only confirm I am not on a sailor quest. I stop with the menu open instead of pretending I know which job the board would roll.
+
+Mechanical friction learned:
+
+- The sailor board's double-click text is separate from its context-menu action surface.
+- From this tile, `Seeking Brave Sailors` is close enough to context-click after closing the information gump.
+- The visible context menu exposes separate read/talk, `hire`, and `done` choices, but no fishing quest state changes until one of the quest rows is actually selected.
+- No movement, gold, item, bank content, skill, stat, hunger, thirst, damage, crime flag, discovery flag, quest state, target cursor, pet order, or follower count changed.
+
+Next pressure:
+
+Mira remains at `Point3D(3434,3425,0)`, facing north with no gump open and the `Seeking Brave Sailors` context menu open. The next client-visible decision is to choose `hire` if I am willing to accept a random sailor job, choose `done` to test the no-active-sailor-quest response, close the menu and take a land bounty instead, inspect nearby public boards and donation boxes, or leave the bank.
+
+## Run 266 - I Clear The Sailor Menu And Open The Laws
+
+I start at `Point3D(3434,3425,0)`, facing north under the bank's north-wall quest boards, with the `Seeking Brave Sailors` context menu still open. The room is still a bank interior, not a road or dungeon: my fox is treated as following close by, Lionel and Greger are near me, Susan and Bridget are south of the boards, the public boards and donation boxes are along the west wall, vote stones and vaults sit east, and no hostile is visible.
+
+**Beat 1**
+
+I choose the visible `done` row on `Seeking Brave Sailors`.
+
+The board answers exactly like the adventurer board did: `You are not currently on a quest.` No reputation-payment gump opens, no target cursor appears, no gold or item moves, and no fishing quest is created. The sailor context menu is gone after the click.
+
+**Beat 2**
+
+I walk south along the open bank floor toward the west-wall public boards and stop near `Point3D(3434,3435,0)`, facing west toward `Laws of the Land`.
+
+This is short interior movement, not a route puzzle. The north-wall quest boards slide toward the top edge of the screen, the west-wall donation boxes and public boards become the obvious next interactives, and no wall, door, warning, hostile, target cursor, or region change interrupts me.
+
+**Beat 3**
+
+I double-click `Laws of the Land`.
+
+It opens a `LAWS OF THE LAND` board window. I stop on the newly opened text instead of clicking away or using another object. The visible text starts as a rules list, with illegal acts and acts the civilized dislike, but I have not taken the next beat to read and think through it yet.
+
+Mechanical friction learned:
+
+- The sailor board's `done` row is another safe no-active-quest check. With no fishing quest, it only gives the overhead `You are not currently on a quest.` response.
+- I did not choose `hire`, so no random sea quest target, fishing quest cooldown, quest log state, target cursor, gold, item, fame, karma, hunger, thirst, damage, crime flag, discovery flag, pet order, or follower count changed.
+- Short movement from the north-wall quest boards to the west-wall rules board is ordinary open bank-floor travel. No terrain or binary-map check was needed.
+- `Laws of the Land` is usable from the new tile and opens a read-only `BoardGump`; the player-facing next step is reading it, not treating the rules as already assimilated.
+
+Next pressure:
+
+Mira ends near `Point3D(3434,3435,0)`, facing west with the `LAWS OF THE LAND` gump open and unread. The next client-visible decision is to read the rules text before closing it, then decide whether to inspect `News From The Nobles`, the nearby donation boxes, the merchant advertiser, the status board, the quest boards, or the south doors.
+
+## Run 267 - I Read The Laws, Then Open The News Board
+
+I start at `Point3D(3434,3435,0)`, facing west beside the bank's west-wall public boards. `LAWS OF THE LAND` is already open and unread. The room is still quiet bank space: Bridget stands a couple steps away, Greger and Lionel are behind me, Susan is northeast, public boards, donation boxes, trash barrels, vaults, vote stones, and south doors are visible, and no hostile is on screen.
+
+**Beat 1**
+
+I read `LAWS OF THE LAND`.
+
+The rules are blunt. Murder, theft from others, grave robbing, carving human corpses, being a Death Knight, and being a Syth are illegal across much of the land. Begging, necromancy, eating human hearts, killing good-natured creatures, and poison dealing are not called illegal here, but the civilized dislike them. This does not give me gold or a task, but it tells me the world may punish more than just combat death.
+
+**Beat 2**
+
+I close the laws window.
+
+The gump goes away with no reward, target cursor, quest log, crime flag, skill change, discovery flag, item movement, or overhead warning. I am back at the west-wall boards.
+
+**Beat 3**
+
+I double-click `News From The Nobles`.
+
+It opens a news-list gump headed by `Lord British`. The visible text says these are recent messages from throughout the land and asks me to select an article below. Only one article row is visible: `Welcome to Confictura: Legend & Adventure (Original Ruins & Riches Article) - January 19th, 2021`. I stop there instead of pressing the article button, because opening the list is not the same as reading the article body.
+
+Mechanical friction learned:
+
+- `Laws of the Land` is a short read-only rules board. It teaches illegal and socially disliked acts, but closing it does not mutate inventory, stats, quests, target cursor, crime status, or discovery flags.
+- `News From The Nobles` is usable from the same west-wall tile and opens a custom article-list gump, not a plain text board.
+- The news board currently exposes a visible article-selection row before any article body is shown. Pressing that row is the next real UI choice.
+- No movement, gold, item, bank content, skill, stat, hunger, thirst, damage, crime flag, discovery flag, quest state, target cursor, pet order, or follower count changed.
+
+Next pressure:
+
+Mira remains at `Point3D(3434,3435,0)`, facing west with the `News From The Nobles` article-list gump open and unread. The next client-visible decision is to read the visible list deliberately, open the single visible article, close the news board, inspect the nearby donation boxes, Status Board, Merchant Advertiser, or leave through the south doors.
+
+## Run 268 - I Read Lord British's Welcome
+
+I start at `Point3D(3434,3435,0)`, facing west beside the west-wall public boards, with the `News From The Nobles` list already open. The bank room has not turned dangerous while I stare at the parchment: Bridget is still beside me, Greger and Lionel are close, Susan is northeast, boards and donation boxes line the west and north walls, vaults and vote stones sit east, and the south doors are still the visible way out. No hostile is on screen.
+
+**Beat 1**
+
+I read the news list without touching anything.
+
+It is a `Lord British` notice board, not a quest offer. The text says these are recent messages from throughout the land and tells me to select an article. There is only one visible row: `Welcome to Confictura: Legend & Adventure (Original Ruins & Riches Article) - January 19th, 2021`.
+
+**Beat 2**
+
+I press the single visible article row.
+
+The list changes into the article body. The header remains `Lord British`, the article title and date are shown at the top, and a long scrollable message opens underneath. No target cursor, quest gump, reward, bank box, combat warning, or movement result appears.
+
+**Beat 3**
+
+I read the welcome article.
+
+The useful part is not lore flavor. The article tells me the game expects in-world learning, not a checklist. Food, drink, equipment, and carrying capacity matter. Towns and merchants are useful because loot can be odd objects, not only coins. The bank and other public areas are shared hub spaces that return me to the town door I entered from when I leave. Sosaria's dungeons are the normal baseline difficulty, but dungeons still mean traps, resource drain, loot weight, and monsters. That makes the bank-room boards more like survival orientation than a quest chain.
+
+Mechanical friction learned:
+
+- `News From The Nobles` is a two-step gump: the visible article list must be selected before the article body exists on screen.
+- Selecting the row only opens a `BoardMessage` article view. It does not start a quest, grant gold, move items, set a discovery flag, open a target cursor, or change crime, hunger, thirst, stats, skills, followers, bank balance, or position.
+- The article view has a visible close/return control. Using that control is the next UI action if I want to return to the list before inspecting other bank objects.
+- No movement or terrain check was needed; this run stayed in stationary public-board UI.
+
+Next pressure:
+
+Mira remains at `Point3D(3434,3435,0)`, facing west with the Lord British welcome article open and read. The next client-visible decision is to close/return from the article, then either leave the news board alone, inspect the nearby donation boxes, Status Board, Merchant Advertiser, vote stones, or head out through the south doors.
+
+## Run 269 - I Back Out Of The News Board
+
+I start at `Point3D(3434,3435,0)`, facing west beside the bank's west-wall public boards. The Lord British welcome article is still open and already read. Nothing in the room has pressed me while I read: my fox is close by, Bridget is just south of me, Greger and Lionel are nearby, Susan is northeast, the donation boxes, trash barrel, laws board, news board, vaults, vote stones, and south doors are still visible, and no hostile is on the screen.
+
+**Beat 1**
+
+I use the visible close/return control on the article.
+
+The article body disappears, but I am not done with the news board yet. It drops me back to the `Lord British` article list: the same recent-messages heading and the single `Welcome to Confictura: Legend & Adventure (Original Ruins & Riches Article) - January 19th, 2021` row are visible again. No reward, target cursor, quest log, bank box, or movement result appears.
+
+**Beat 2**
+
+I close the article list instead of choosing the same row again.
+
+The news gump is gone. I am back to the bank room view, still beside the west-wall boards, with no context menu and no target cursor.
+
+**Beat 3**
+
+I walk north along the open bank floor toward the upper west-wall boards and stop around `Point3D(3434,3428,0)`, facing north.
+
+This is short interior movement, not a terrain problem. The Status Board and the upper donation box are now close enough to be the next obvious touchable objects, and the Merchant Advertiser is also close. The north-wall quest boards slide back into clearer view, and another adventurer at the far north edge of the room becomes visible. No hostile, blocked tile, door transition, overhead warning, stamina drop, pet order change, or gump interrupts the movement.
+
+Mechanical friction learned:
+
+- The `BoardMessage` article close/return path does not directly close the news system; it returns to the article list first.
+- Closing the returned article list with no article row selected leaves the character state alone: no quest, gold, item, target cursor, discovery flag, crime flag, stat, skill, hunger, thirst, bank, follower, or position mutation beyond the later voluntary walk.
+- The Status Board is not a from-anywhere wall sign. I had to step closer before treating it as a normal next interaction.
+- The move from the news board to the Status Board approach tile is ordinary open bank-floor travel; no terrain or binary-map check was needed.
+
+Next pressure:
+
+Mira ends near `Point3D(3434,3428,0)`, facing north with no gump or context menu open. The next client-visible decision is to double-click the nearby `Status Board`, inspect the adjacent donation box or Merchant Advertiser, return to the quest boards, or leave through the visible south doors.
+
+## Run 270 - I Check The Status Board
+
+I start near `Point3D(3434,3428,0)`, facing north in the Bank of Britain vault room. The screen is still public bank space: my fox is close, Lionel and Greger are nearby, Susan is east-southeast, Bridget is south, Jebidiah and Araminta are toward the north edge, and the nearby objects are the `Status Board`, a donation box, and `The Merchant Advertiser`. No hostile is on screen.
+
+**Beat 1**
+
+I double-click the nearby `Status Board`.
+
+A large status window opens. It is not a quest board, not a bank box, and not a vendor. The top strip shows the shard name plus live server counters for online clients, accounts, uptime, and RAM in use. Under that is a roster table with columns for name, guild, stats, skills, karma, fame, and kills.
+
+**Beat 2**
+
+I read the status window instead of clicking its tiny page arrows.
+
+This is mostly a public who-is-online sheet. The player row is useful as a mirror: it shows Mira's beginner stat total, skill total, karma, fame, and kills, but it does not offer a job, reward, travel link, training price, storage, or target cursor. If there are enough clients, the arrow controls page through more names; that is not a survival action right now.
+
+Mechanical friction learned:
+
+- `Status Board` is range-gated like a normal wall object. From the current tile it is close enough, so double-clicking opens `StatusGump` instead of giving a too-far message.
+- `StatusGump` is a live status/roster surface built from connected clients. It filters hidden higher-access characters from a normal player view and pages the list only when there are more rows to show.
+- Reading it does not mutate money, bank contents, inventory, skills, stats, hunger, thirst, fame, karma, kills, quests, discovery flags, target cursor, crime state, pet order, or position.
+- No movement, macro route, combat, terrain check, or map transition happened.
+
+Next pressure:
+
+Mira remains at `Point3D(3434,3428,0)`, facing north with the `Status Board` window open and read. The next client-visible decision is to close it, inspect the adjacent donation box or Merchant Advertiser, return to the quest boards, or leave through the south doors.
+
+## Run 271 - The Donation Box Has A Shorter Reach
+
+I start at `Point3D(3434,3428,0)`, facing north with the `Status Board` roster still open and already read. The bank room is still calm: my fox is close by, Lionel and Greger are near me, Susan and the bankers are off to the east and north, Bridget is south, and the west-wall objects in arm's reach are the Status Board, the upper donation box, and `The Merchant Advertiser`. No hostile is on the screen.
+
+**Beat 1**
+
+I close the `Status Board` window.
+
+That leaves me looking at the bank again. No page arrow is used, no row is selected, no target cursor appears, and the roster does not change my pack, money, skills, stats, bank, quest state, or pet order.
+
+**Beat 2**
+
+I double-click the nearby donation box from where I am standing.
+
+It only answers with the normal too-far message. The box is visibly near the Status Board, but it is still a container, and containers are fussier about reach than that board was. I do not get a container window, loot, a reward, a target cursor, or a donation prompt.
+
+**Beat 3**
+
+I take a short step northwest to about `Point3D(3433,3427,0)`, facing the donation box.
+
+This is just a bank-floor correction after the reach check, not a route. The donation box is now close enough to try again next, while the Merchant Advertiser, quest boards, bankers, adventurers, and south doors remain visible route choices. Nothing attacks, no gump opens, and no terrain check is needed.
+
+Mechanical friction learned:
+
+- Closing the Status Board is a pure UI action. It leaves no gump, context menu, target cursor, money, item, bank, quest, discovery, crime, hunger, thirst, skill, stat, fame, karma, kill, position, or pet-order change.
+- The donation box is a `TrashChest`, not a special reward chest. Its object properties call it a donation box and say it empties every 24 hours.
+- Unlike the Status Board's four-tile use reach, the donation box follows normal container reach. From `Point3D(3434,3428,0)` to the box at `Point3D(3431,3426,0)`, the double-click is too far away and opens nothing.
+- Stepping northwest to `Point3D(3433,3427,0)` is enough ordinary bank-floor correction to put the upper donation box inside normal container reach.
+- No movement beyond that correction, macro route, combat, terrain check, map transition, gold, loot, bank content, quest state, target cursor, follower change, or discovery flag happened.
+
+Next pressure:
+
+Mira ends near `Point3D(3433,3427,0)`, facing the upper donation box with no gump, context menu, or target cursor open. The next client-visible decision is to double-click the donation box again from inside range, inspect `The Merchant Advertiser`, return to the quest boards, cross toward the vote stones, or leave through the south doors.
+
+## Run 272 - The Donation Box Finally Opens
+
+I start at `Point3D(3433,3427,0)`, facing northwest beside the upper donation box. The previous too-far click has already been corrected by one bank-floor step. The room is still safe-looking: my fox is treated as close by, Lionel is only a couple of steps southeast, Greger is farther south, Susan and the bankers are visible to the east and north, Bridget is south, the north-wall quest boards and west-wall public boards are still in view, and the vote stones and south doors remain route choices. No hostile is on screen.
+
+**Beat 1**
+
+I double-click the upper donation box again from beside it.
+
+This time it opens like a normal container instead of answering with the too-far message. I get a plain donation-box container window, not a reward gump, vendor list, quest prompt, bank box, target cursor, or travel choice. I do not drag anything into it or take anything out; the new visible state is simply an open public donation container that needs inspection before I move on.
+
+Mechanical friction learned:
+
+- Standing at `Point3D(3433,3427,0)` is close enough for the upper donation box at `Point3D(3431,3426,0)`.
+- The donation box behaves as a normal `TrashChest` container once the two-tile container reach check passes.
+- Opening it does not pay gold, start a quest, change bank contents, mutate inventory, alter hunger or thirst, change stats or skills, set a discovery flag, open a target cursor, change pet order, or move Mira.
+- The box is not a loot chest route by itself. Its visible property text says it empties every 24 hours, so putting items into it is disposal/donation behavior unless another visible player reason appears.
+- No movement, macro route, combat, terrain check, map transition, or hostile threat happened.
+
+Next pressure:
+
+Mira remains at `Point3D(3433,3427,0)`, facing northwest with the upper donation-box container window open. The next client-visible decision is to inspect the open container contents and close it or deliberately donate something, then decide whether to inspect `The Merchant Advertiser`, return to the quest boards, cross toward the vote stones, or leave through the south doors.
+
+## Run 273 - The Merchant Board Is Only A Directory So Far
+
+I start at `Point3D(3433,3427,0)`, facing northwest beside the upper donation box. Its plain container window is still open from the last click. The bank room has not turned dangerous: my fox is still treated as close by, Lionel is only a couple of steps southeast, Greger is farther south, Susan and the bankers are visible to the east and north, Bridget is south, and the quest boards, public boards, vote stones, bank vaults, and south doors remain in sight. No hostile is on screen.
+
+**Beat 1**
+
+I look through the open donation box before touching anything else.
+
+There is nothing useful in it. I do not see loot, gold, a hidden reward list, a prompt, or a target cursor. It is just an empty public container window.
+
+**Beat 2**
+
+I close the donation-box container instead of donating my food, canteen, or medical record.
+
+The bank room view is clean again. My pack, bank balance, hunger, thirst, skills, stats, quest state, follower order, and position stay the same.
+
+**Beat 3**
+
+I double-click `The Merchant Advertiser` from the same tile.
+
+A vendor directory opens. It is a broad window with `Shop Name`, `Owner`, and `Location` columns, a footer that says there are 21 vendors in the world, and page arrows at the top. This first page is not a shop, a vendor buy list, a bank box, a quest, or a travel confirmation. I do not click anything yet, because the rows look like labels and the only obvious controls are the page arrows and close box.
+
+Mechanical friction learned:
+
+- The upper donation box had no visible contents this run. Closing it does not move or mutate anything.
+- `The Merchant Advertiser` opens a `Home Vendors` directory from a normal double-click. It lists shop name, owner, and location, and it has page controls when more than twelve vendors exist.
+- The current directory page does not show visible row buttons. Even though the custom response code has a hidden branch for vendor-row IDs, a normal player cannot use that branch unless the gump exposes a visible control. I stop at the open gump instead of inventing a row selection.
+- No movement, macro route, combat, terrain check, map transition, gold, loot, bank content, quest state, target cursor, follower change, or discovery flag happened.
+
+Next pressure:
+
+Mira remains at `Point3D(3433,3427,0)`, facing northwest with the Merchant Advertiser vendor-directory gump open and not yet read through. The next client-visible decision is to read the first page, use the visible next-page arrow, or close the directory and move on to the quest boards, vote stones, or south doors.
+
+## Run 274 - The Vendor Directory Ends At Page Two
+
+I start at `Point3D(3433,3427,0)`, facing northwest with the `Home Vendors` directory still open. The bank room behind the gump is unchanged: my fox is treated as close, Lionel is nearby, Susan and the bankers are off to the east and north, Bridget is south, and the quest boards, public boards, vote stones, bank vaults, and south doors are still the visible room choices. No hostile is on screen.
+
+**Beat 1**
+
+I read the first Merchant Advertiser page instead of poking hidden row IDs.
+
+The page is only a directory. It shows twelve vendor rows under `Shop Name`, `Owner`, and `Location`, with a footer saying there are 21 vendors in the world. The rows do not open buy packs while I read them, and they do not look like buttons. Most of the shop labels are not useful enough to be a shopping plan by themselves, and the location text feels like far-away sextant shorthand rather than a walkable route from this bank room.
+
+**Beat 2**
+
+I press the visible next-page arrow at the top of the directory.
+
+The gump redraws to the second page. No target cursor appears, no vendor pack opens, no confirmation asks where I want to travel, and I do not move.
+
+**Beat 3**
+
+I read the second page and stop.
+
+This is the last page. It has the remaining nine vendor rows, a working previous-page arrow, and a dead next-page marker. A couple of shop names are clearer, like furniture or artifacts, but the window still does not expose a buy list, price list, row-select button, travel confirmation, or safe walking route. I leave it open because closing it is the next real decision, not something to rush past.
+
+Mechanical friction learned:
+
+- The visible Merchant Advertiser controls are close, previous page, and next page. Page rows are labels, not exposed row buttons.
+- Page 1 shows twelve rows; pressing the visible next arrow opens page 2. Page 2 shows the final nine rows and disables the next arrow.
+- The directory can advertise where player vendors exist, but it does not prove those locations are reachable, safe, discovered, or useful to a broke new character.
+- The custom response path contains a teleport branch for row IDs, but the gump does not expose visible row buttons. A normal player still cannot use that branch.
+- The location column can be misleading for normal shopping decisions. The gump calculates special-region names for some vendors, but many rows collapse to repeated far-corner-style coordinates instead of an obvious local route.
+- No movement, macro route, combat, terrain check, map transition, gold, loot, bank content, quest state, target cursor, follower change, or discovery flag happened.
+
+Next pressure:
+
+Mira remains at `Point3D(3433,3427,0)`, facing northwest with the Merchant Advertiser directory open on page 2 and read. The next client-visible decision is to close it, use the previous-page arrow, or stop using bank-room noticeboards and move on to the vote stones, quest boards, bank vaults, or south doors.
+
+## Run 275 - I Read The Vote Stone Before Clicking It
+
+I start at `Point3D(3433,3427,0)`, facing northwest with the Merchant Advertiser directory open on its second and final page. The bank room behind it is still safe-looking: my fox is treated as close by, Lionel is nearby, Susan and the bankers are off east and north, Bridget is south, the quest boards and public boards are still behind me, and the vote stones are visible across the room. No hostile is on screen.
+
+**Beat 1**
+
+I close the `Home Vendors` directory.
+
+That ends the vendor-directory loop cleanly. I do not press the previous-page arrow again, and I do not pretend the label rows are buttons. No buy pack, target cursor, travel prompt, item movement, or vendor teleport appears.
+
+**Beat 2**
+
+I run east and a little north across the open bank floor to the vote-stone row, stopping around `Point3D(3447,3424,0)` facing north.
+
+This is normal interior movement. The vote stones are now directly in front of me, with more bankers and adventurer-looking people visible around the east side of the vault room. Bank vaults, trash barrels, dark wood doors, and the east-side public doors are also in view. The old barbaric-satchel spot is in the stale live snapshot, but I already made that satchel vanish earlier, so I do not treat it as a usable object now. Nothing blocks the floor, no region transition fires, no hostile enters the screen, and my fox is assumed to follow.
+
+**Beat 3**
+
+I inspect the nearest `Vote Stone` instead of double-clicking it.
+
+The object properties make the purpose clear: using it launches a browser to cast a vote for `Confictura: Legend & Adventure`, and a configured vote-site URL is shown when the stone is valid. That is not a shop, bank box, quest, local map route, or in-world reward prompt. I stop before double-clicking, because the next click would be an external browser/cooldown action rather than another readable in-game board.
+
+Mechanical friction learned:
+
+- Closing the Merchant Advertiser is a pure UI action and leaves no gump, context menu, target cursor, vendor list, travel confirmation, item, gold, quest, bank, or discovery change.
+- The short route from the donation-box tile to the vote-stone row is open bank-floor travel. No terrain or binary-map check was needed.
+- `Vote Stone` object properties are enough to warn a normal player what the object does before activating it.
+- The vote-stone double-click path is custom: it casts a vote request, and if the site is valid and the cooldown allows it, the player receives a thank-you message, the browser opens to the vote URL, and an account last-vote tag is written. If it is too early, the visible result is a cooldown message instead.
+- I only inspected the stone this run, so no browser launched, no cooldown tag was intentionally consumed, and no gold, item, bank content, skill, stat, hunger, thirst, quest, target cursor, pet order, crime flag, or discovery flag changed.
+
+Next pressure:
+
+Mira ends near `Point3D(3447,3424,0)`, facing north with no gump, context menu, or target cursor open. The next client-visible decision is to double-click a vote stone and accept the browser/cooldown flow, inspect the nearby bank vaults or dark wood doors, return to the boards, or leave through the visible public doors.
+
+## Run 276 - I Leave Before The Vote Stone Opens A Browser
+
+I start at `Point3D(3447,3424,0)`, facing north at the east-side vote stones in the shared Bank of Britain vault room. No gump, context menu, or target cursor is open. The nearest readable stone already told me the next double-click is an external voting/browser action, not bank survival. Bankers, adventurer-looking people, vaults, trash barrels, dark wood doors, and the east public doors are still visible; no hostile is inside the room.
+
+**Beat 1**
+
+I decide not to use the `Vote Stone`.
+
+There is no in-world reason to spend the browser/cooldown flow while I still have no gold, no training, and no route plan. The stone stays in front of me, and nothing changes because I do not double-click it.
+
+**Beat 2**
+
+I run east along the open bank floor to the visible public doors and use the nearest one.
+
+The route is ordinary interior floor. No wall, vault, banker, trash barrel, vote stone, gump, target cursor, hostile, or terrain snag interrupts me. The door acts like the public bank transition instead of a hinged room door.
+
+**Beat 3**
+
+The door drops me back outside at the Bank of Britain marker around `Point3D(3015,1056,5)`, facing east.
+
+The street screen is not empty. The `Bank of Britain` sign is under me, the bank door is just east/northeast, and a trash barrel is close by. Merele the bard is barely on the north edge, Vanya and Franklin are south, and the ruby elemental-looking humanoid is back in view about fifteen tiles south-southeast. It is not on top of me, but it is close enough that I stop instead of drifting south into it.
+
+Mechanical friction learned:
+
+- Leaving the bank through a visible `PublicDoor` uses the stored public-door return from when I entered the bank. It clears that stored return and teleports me back to the exterior Bank of Britain spot instead of opening a container, gump, shop, target cursor, or ordinary hinged door.
+- The interior door's saved destination field is not the player-facing exit destination here. The player-facing behavior is "return to the town door I came through."
+- The world-map overlay is useful again outside: `Bank of Britain` is underfoot, `Britain` is west, and nearby shop markers surround the street. Those markers are navigation labels, not proof of safety inside any building.
+- The ruby elemental south of the bank returns to potential-threat status within the 11-18 tile band. It does not block standing at the bank, but it changes the next route decision.
+- No browser launched, no vote cooldown was consumed, no money, item, bank content, skill, stat, hunger, thirst, quest, target cursor, follower order, crime flag, or discovery flag changed.
+
+Next pressure:
+
+Mira ends outside the Bank of Britain at `Point3D(3015,1056,5)`, facing east with no gump, context menu, or target cursor open. The next client-visible decision is to route away from the ruby elemental, inspect the nearby trash barrel or bank sign, re-enter the bank, or use the world-map markers to choose a safer town stop such as Defenders of Sosaria, The Cleaver, The Bard's Tale, or Profuse Provisions.
+
+## Run 277 - I Put The Bank Behind Me And Reach The Cleaver
+
+I start outside the Bank of Britain at `Point3D(3015,1056,5)`, facing east with no gump, context menu, or target cursor open. The bank sign is under me, the public bank door is just east, and a trash barrel is close by. Merele the bard is barely on the north edge, Vanya and Franklin are south, and the ruby elemental-looking humanoid is still south-southeast in the potential-threat band. It is not close enough to force a fight, but it is close enough that I do not wander south.
+
+**Beat 1**
+
+I run west and a little south through Britain toward the world-map marker for `The Cleaver`, keeping the ruby elemental behind me instead of cutting toward the southern provision marker.
+
+This is macro travel by intent, not a tile audit. The route is town street and open frontage, and nothing visible suggests water, mountain, wall, dungeon, or dense trees. The fox is assumed to follow. The ruby elemental falls off behind me instead of entering the ten-tile danger band, no new hostile appears, and I stop around `Point3D(2968,1062,0)`, facing the shop frontage.
+
+**Beat 2**
+
+I take in the new screen before touching a vendor.
+
+`The Cleaver` sign is under me, a dark wood door is just southwest, and a light wood gate and coffer sit farther west. Gareth the butcher is visible to the west, with a cow nearby, and Peter the cook, Natane the town guard, a town herald, birds, adventurer-looking people, and training-yard objects fill the edges of the screen. That reads like a town food/shop corner, not a wild fight. The coffer is tempting, but I do not touch it while broke and untrained.
+
+**Beat 3**
+
+I double-click the nearest dark wood door at the Cleaver frontage.
+
+It behaves like an ordinary door so far. No shop list, vendor pack, bank box, quest, target cursor, trap, crime warning, or teleport appears. I leave the doorway as the next physical decision instead of pretending I have already talked to Gareth or looted the coffer.
+
+Mechanical friction learned:
+
+- Moving west from the bank is the safer town route because it increases distance from the ruby elemental instead of closing toward the south-side marker cluster.
+- `The Cleaver` marker resolves into visible food-shop context only after I get there: a sign, door, gate, coffer, butcher, cook, livestock, guard, and town pedestrians.
+- World-map markers remain navigation hints. The marker did not prove the shop interior, prices, vendor options, or safety until the screen actually showed the local objects and mobiles.
+- The nearby Cleaver door is just an ordinary visible door at this point. Opening it does not by itself open buy/sell UI, move me inside, start a quest, reveal loot, or change crime state.
+- No gold, item, bank content, skill, stat, hunger, thirst, damage, quest state, discovery flag, target cursor, pet order, follower count, or criminal flag changed.
+
+Next pressure:
+
+Mira ends at `Point3D(2968,1062,0)`, facing southwest at `The Cleaver` frontage with no gump, context menu, or target cursor open and the nearest door opened. The next client-visible decision is to step through the doorway toward Gareth the butcher, context-click or talk to the visible food vendors once in range, inspect the coffer or gate, or backtrack toward Defenders of Sosaria or the bank.
+
+## Run 278 - Gareth Will Not Buy My Starter Pack
+
+I start at `Point3D(2968,1062,0)`, facing southwest at `The Cleaver` frontage. No gump, context menu, or target cursor is open, and the nearby dark wood door is already open. The sign is still under me, Gareth the butcher is west of me, the coffer and light wood gate are between the shop front and the animals, a cow and a guard are visible, and the bank-side ruby elemental is off-screen behind me. Nothing on this screen is trying to kill me.
+
+**Beat 1**
+
+I step through the opened doorway and move west along the shop frontage until Gareth is close enough to deal with, stopping around `Point3D(2961,1062,0)` and facing west.
+
+This is not a new journey. It is a short move through the already-open door toward the visible butcher. The fox keeps with me, the coffer is now just north of my shoulder, the cow is a few steps southeast, and the guard is south. Peter the cook and the bank-side street have slipped off the screen. No wall, warning, hostile, target cursor, gump, or teleport interrupts the move.
+
+**Beat 2**
+
+I context-click Gareth instead of yelling random vendor words across the room.
+
+The menu proves he is a real vendor surface, not just scenery. The visible choices include the normal buy and sell rows. I do not treat opening the menu as a trade by itself; no price list, backpack list, gold change, target cursor, or speech result has happened yet.
+
+**Beat 3**
+
+I choose the visible sell row first, because I have no gold and need to know whether my starting pack is worth anything.
+
+Gareth answers, `You have nothing I would be interested in.` That is the whole result. My cooked alien meat, empty canteen, medical record, worn clothing, boots, and knife do not turn into cash here. No sell list opens, no item moves, no gold appears, no crime flag triggers, and no buy window opens from the sell attempt.
+
+Mechanical friction learned:
+
+- Gareth is a `Butcher` vendor, so the visible context menu can expose buy and sell actions once I stand close enough.
+- The sell path checks my backpack for movable standard loot matching the butcher's sell list. My current starter inventory does not match it, so the vendor only gives the no-interest speech.
+- The nearby coffer remains a separate theft/snooping temptation, not the butcher's trade stock.
+- This did not change money, items, equipment, bank contents, skills, stats, hunger, thirst, damage, quest state, discovery flags, target cursor, pet order, follower count, or criminal status.
+
+Next pressure:
+
+Mira ends at `Point3D(2961,1062,0)`, facing west beside Gareth the butcher with no gump, context menu, or target cursor open. The next client-visible decision is to context-click Gareth again and inspect buy prices with zero gold, leave the shop for another visible Britain marker, test the nearby gate or wanted sign, or deliberately risk the coffer knowing the snooping blocker already exists.
+
+## Run 279 - Gareth Sells Meat I Cannot Afford
+
+I start at `Point3D(2961,1062,0)`, facing west beside Gareth the butcher. No gump, context menu, or target cursor is open. The screen is still The Cleaver frontage: Gareth is two steps west, the coffer is just north, the light wood gate is southeast, the cow and Natane the guard are close, birds and adventurer-looking people sit on the edges, and the bank-side ruby elemental is still off-screen behind me. Nothing here is acting hostile.
+
+**Beat 1**
+
+I context-click Gareth again and choose the visible buy row.
+
+This time the client opens the normal vendor buy window instead of the dead-end sell response. Gareth gives the usual shop greeting and the list is a butcher's shelf, not a gift table. It is meat and butcher tools with prices and quantities, and my gold readout is still zero.
+
+**Beat 2**
+
+I read the buy window instead of clicking a row.
+
+The useful lesson is immediate: even the cheap meat is money-gated. Raw ribs are a visible 16-gold kind of item here, and chance-stock rows such as bacon, ham, sausage, raw meat pieces, or knives do not help a broke starter. My cooked alien meat already works as food, so buying more meat would not solve the actual blocker anyway.
+
+**Beat 3**
+
+I close the buy window without buying anything.
+
+No item jumps into my pack, no gold is deducted, no target cursor appears, and Gareth does not convert the window into a training or quest prompt. I am back beside him with the coffer, gate, and wanted sign still tempting me from the same screen.
+
+Mechanical friction learned:
+
+- Gareth's visible vendor surface has both rows: sell is useless for Mira's starter inventory, while buy does open the standard shop list.
+- Zero gold does not prevent opening the buy window. It only makes every listed item unaffordable.
+- The butcher's stock is survival-adjacent but not a cash route. Buying food or butcher tools requires money first, and Mira already has cooked alien meat.
+- The coffer remains a separate snooping/theft temptation, not Gareth's trade stock.
+- No movement, gold, item, bank content, skill, stat, hunger, thirst, damage, quest state, discovery flag, target cursor, pet order, follower count, or criminal flag changed.
+
+Next pressure:
+
+Mira remains at `Point3D(2961,1062,0)`, facing west beside Gareth with no gump, context menu, vendor window, or target cursor open. The next client-visible decision is to leave The Cleaver for another Britain marker that might produce cash or training value, read the wanted sign, test the gate, or deliberately risk the coffer despite the known Snooping-first blocker.
+
+## Run 280 - The Wanted Sign Is Just a Name
+
+I start at `Point3D(2961,1062,0)`, facing west beside Gareth at The Cleaver. No gump, context menu, vendor window, or target cursor is open. Gareth is no longer useful to a broke starter, the coffer is still a Snooping trap, and the wanted sign on the east edge of the screen is the one visible thing that looks like it might point to money.
+
+**Beat 1**
+
+I leave Gareth and jog southeast through the open town frontage toward the wanted sign, stopping near `Point3D(2980,1072,1)`.
+
+The short route does not turn into a fight or maze. The fox keeps with me. The Cleaver slides behind me, the sign is now beside me, Peter the cook is close enough to talk to, three adventurer-looking people are gathered around the tavern-side porch, Markos is farther east, and The Unicorn's Horn sign and public door are south. I do not see a hostile in the 18-tile screen.
+
+**Beat 2**
+
+I single-click and then double-click the wanted sign, trying to read more than the object label.
+
+The only readable thing is the name: `Wanted! Blackbart Roberts`. No parchment, bounty board, quest offer, target cursor, gump, payment hint, map marker, or criminal warning appears. Mechanically it behaves like a named static sign, not an interactive bounty system.
+
+**Beat 3**
+
+Since Peter the cook is standing right next to the sign, I context-click him instead of wandering away.
+
+His context menu opens and gives me the citizen speech/talk row. I stop there because choosing the row is the next visible decision; it could be just a rumor or it could open one of the citizen service gumps, and I have not clicked it yet.
+
+Mechanical friction learned:
+
+- The Britain wanted sign is only useful as screen text at this point. Double-clicking it does not expose a bounty flow.
+- The actual Blackbart Roberts mobile exists elsewhere, but the sign does not reveal a route, quest state, or reward to a normal client click.
+- Peter is not a standard vendor surface like Gareth. He is a citizen/cook surface with a talk-style context row, so his result should be tested separately from shop buying and selling.
+- No gold, item, bank content, skill, stat, hunger, thirst, damage, quest state, discovery flag, target cursor, pet order, follower count, or criminal flag changed.
+
+Next pressure:
+
+Mira ends near `Point3D(2980,1072,1)`, facing east beside the wanted sign with Peter's context menu open. The next client-visible decision is to choose Peter's speech/talk row, close the menu and test The Unicorn's Horn public door, or move east/north toward another Britain marker.
+
+## Run 281 - I Use The Tavern Door Instead Of Peter's Row
+
+I start at `Point3D(2980,1072,1)`, facing east beside the wanted sign, with Peter the cook's context menu still open. The row is visible, but choosing it could be a random citizen rumor or one of the cook-service gumps, and I already have a clearer thing on screen: `The Unicorn's Horn` sign and its public door south of me. Nothing hostile is in the client box.
+
+**Beat 1**
+
+I click away from Peter's context menu.
+
+That is a real choice. I do not choose his speech row, so there is no rumor, no cook-service window, no crate offer, no backpack inspection, no target cursor, and no trade. Peter remains a nearby cook, but his talk result is still untested.
+
+**Beat 2**
+
+I run south along the open town frontage to the visible `The Unicorn's Horn` public door, stopping around `Point3D(2981,1089,5)` and facing south.
+
+The move is short and clean. The wanted sign and Peter slide behind me, the tavern sign is now the obvious marker, Alexander and Merrick are farther south/east town context, and no hostile enters the 18-tile screen. The fox is assumed to follow.
+
+**Beat 3**
+
+I double-click the public door for `the Unicorn's Horn Tavern`.
+
+It is not an ordinary hinged door. It takes me into the shared tavern interior at `Point3D(3721,3495,0)` on `Map.Sosaria`, inside `the Tavern` public region. The first thing I see is a crowded room, not a wilderness route: patrons and waiters are all around, the exit doors are beside me, dice, tarot cards, a chessboard, high-low cards, tarot poker cards, trash barrels, a dark wood door, and a barbaric satchel are visible. I stop because this new room has several readable or usable objects and named people within range.
+
+Mechanical friction learned:
+
+- Closing Peter's context menu invokes no hidden talk path. His citizen/cook row remains unresolved because I did not select it.
+- The short route from the wanted sign to The Unicorn's Horn is ordinary open Britain frontage. No terrain check was needed, and no visible threat interrupted the run.
+- The exterior `the Unicorn's Horn Tavern` object is a `PublicDoor` that sends the player to the tavern public region at `Point3D(3721,3495,0)` and stores the outside return point.
+- The interior tavern exit doors show placeholder destinations in the live snapshot, but the public-door code will use the stored return while Mira is inside a `PublicRegion`; the visible next use should be treated as "leave back to the town door," not travel to `0,0`.
+- Public-door travel teleports pets with the player. No gold, item, bank content, skill, stat, hunger, thirst, damage, crime flag, quest state, discovery flag, target cursor, pet order, follower count, or Peter talk result changed.
+
+Next pressure:
+
+Mira ends at `Point3D(3721,3495,0)`, facing south inside The Unicorn's Horn tavern with no gump, context menu, or target cursor open. The next client-visible decision is to read the crowded tavern screen before choosing an exit door, talking to a waiter or patron, inspecting the games, or touching the visible satchel.
+
+## Run 282 - Sidney Opens A Tavern Buy Window
+
+I start at `Point3D(3721,3495,0)`, facing south inside The Unicorn's Horn tavern. No gump, context menu, or target cursor is open. The exit doors are one step east, Sidney the waiter is northwest of me, Thomas and Sine are close to the south, and the rest of the room is packed with passive patrons, dice, tarot cards, card games, trash barrels, a dark wood door, and another barbaric satchel. Nothing on the screen looks hostile.
+
+**Beat 1**
+
+I read the room instead of running back outside.
+
+This is not a safehouse with one obvious service counter. It is a crowded public tavern with several temptations. The satchel is interesting, but the last one vanished when I clicked it without owning it, so I leave that alone for now. The games are also visible, but I have zero gold and do not know which ones cost money. Sidney is the closest service-looking NPC, so I test him first.
+
+**Beat 2**
+
+I context-click Sidney.
+
+His menu opens like a real vendor surface, not like Peter's single citizen-talk row. The visible choices are the normal buy and sell rows. I do not treat opening the menu as trade, because no list, backpack scan, gold change, or item movement has happened yet.
+
+**Beat 3**
+
+I choose the visible buy row.
+
+The client opens the standard vendor buy window for Sidney. I stop with the window open instead of clicking a stock row: the list has item names, prices, quantities, and my gold is still zero. This confirms the tavern waiter can show a food-and-drink shop surface, but I have not bought anything, sold anything, or read the full list closely enough to choose a row.
+
+Mechanical friction learned:
+
+- Sidney the waiter is a `BaseVendor` waiter, not just scenery or a rumor patron.
+- The visible context menu exposes normal buy and sell rows from the vendor system.
+- Choosing buy opens a standard vendor buy window even when Mira has 0 gold.
+- No purchase happened, no sell attempt happened, no item moved, no gold changed, no target cursor appeared, and no hunger, thirst, damage, skill, crime, quest, discovery, pet order, follower count, or region state changed.
+
+Next pressure:
+
+Mira remains at `Point3D(3721,3495,0)`, facing south inside The Unicorn's Horn tavern, with Sidney's standard vendor buy window open and unread. The next client-visible decision is to read the buy list, close it, or use the sell row after closing/returning to Sidney's menu.
+
+## Run 283 - Sidney Will Not Buy My Pack
+
+I start at `Point3D(3721,3495,0)`, facing south inside The Unicorn's Horn tavern with Sidney's vendor buy window still open. The room around the window has not become dangerous: Sidney is northwest of me, Thomas and Sine are close to the south, the public exit doors are one step east, the room is full of passive patrons, and the visible dice, tarot cards, card games, trash barrels, dark wood door, and suspicious satchel are still just background until I choose one.
+
+**Beat 1**
+
+I read Sidney's buy list instead of clicking a stock row.
+
+It is exactly what a broke person does not need: tavern food and drink with prices and quantities. I can see cheap staples such as bread and ale-priced drink rows, with other bottles, pitchers, bowls, meat, cheese, and pie-style food in the same shop surface. The key fact is not the full menu. My gold is still zero, and every visible row costs more than zero.
+
+**Beat 2**
+
+I close the buy window without buying anything.
+
+No food, drink, bottle, pitcher, bowl, or receipt lands in my backpack. No gold is removed, no target cursor opens, and no training or quest prompt replaces the shop list. I am back to the tavern screen with Sidney still close enough to test.
+
+**Beat 3**
+
+I context-click Sidney again and choose the visible sell row.
+
+That does not open a sell list. Sidney only gives the vendor refusal: `You have nothing I would be interested in.` My cooked alien meat, empty canteen, medical record, worn clothes, boots, and knife still do not become cash. The context menu closes, and I am left standing in the same crowded tavern with no gump, buy window, sell list, or target cursor open.
+
+Mechanical friction learned:
+
+- Sidney's buy list is a real waiter stock surface, but it is money-gated at the row level. Zero gold still allows reading the menu, not buying from it.
+- The visible sell row is a dead end for Mira's current starter pack. The waiter does not expose a sell list for anything she carries.
+- The tavern did not solve starter cash. The remaining visible tavern leads are the game objects, the suspicious satchel, other patrons/waiters, the dark wood door, trash barrels, or the public exit back outside.
+- No movement, gold, item, bank content, skill, stat, hunger, thirst, damage, crime flag, quest state, discovery flag, target cursor, pet order, follower count, or region state changed.
+
+Next pressure:
+
+Mira remains at `Point3D(3721,3495,0)`, facing south inside The Unicorn's Horn tavern with no gump, context menu, vendor window, sell list, or target cursor open. The next client-visible decision is to inspect another visible tavern object or NPC, try the suspicious satchel deliberately, or use the public exit door to return to Britain.
+
+## Run 284 - The Card Table Opens Before It Costs Me
+
+I start at `Point3D(3721,3495,0)`, facing south inside The Unicorn's Horn tavern. No gump, context menu, vendor window, sell list, or target cursor is open. Sidney has already failed as a starter-cash route, the exit doors are still one step east, the room is crowded with passive patrons, and the visible game tables, dark wood door, trash barrel, and suspicious satchel are the remaining tavern leads. I do not touch the satchel first because I have already watched one of those erase itself.
+
+**Beat 1**
+
+I choose the visible High-Low card table at the south edge of the tavern instead of asking another waiter the same buy/sell question.
+
+That is a normal player choice, not a hidden route. The game object is visible, it has a readable name, and gambling is at least plausibly related to money. The nearby patrons and Sidney remain passive, and nothing on the screen looks like a hostile.
+
+**Beat 2**
+
+I walk south through the tavern floor to the card table, stopping around `Point3D(3719,3511,0)` just north of the `High-Low Card Game`.
+
+This is a short interior move, not a wilderness route. I pass closer to the trash barrel, dark wood door, barbaric satchel, tarot poker cards, dice, chessboard, and more patrons. No one blocks me, no target cursor appears, no door or teleport fires, and the fox keeps with me.
+
+**Beat 3**
+
+I double-click the `High-Low Card Game`.
+
+The game opens a gump before it takes money. I stop there and read the surface instead of pressing a random button. The title says `High-Low Card Game`; the panel shows blank cards, a current bet of 100, credits at 0, last pay at 0, a pay table, and visible controls for `Play`, `Cash Out`, `ATM`, bet arrows, help, and close. No gold is spent just by opening it, but the screen is clearly telling me this is a cash/credit machine.
+
+Mechanical friction learned:
+
+- The High-Low table is not scenery. Double-clicking it from close range opens a real game gump.
+- Opening the gump is not the same as playing. The visible `Play` and `ATM` buttons are still unpressed, so no bet, bank withdrawal, payout, or insufficient-funds message has happened yet.
+- The first visible money pressure is inside the gump: current bet 100, credits 0, and an ATM control that points back to bank balance rather than free starter cash.
+- The known satchel lesson remains active. A world-placed barbaric satchel is a bad first touch for Mira, so I avoided repeating that deletion while another visible lead existed.
+- No gold, item, bank content, skill, stat, hunger, thirst, damage, crime flag, quest state, discovery flag, target cursor, pet order, follower count, or region state changed.
+
+Next pressure:
+
+Mira ends at `Point3D(3719,3511,0)`, facing south beside the High-Low table with the `High-Low Card Game` gump open and unread controls visible. The next client-visible decision is to read the gump fully, press help, try `Play` with 0 credits, try `ATM` against a 0-gold bank balance, cash out/close, or step away from the table.
+
+## Run 285 - The High-Low Help Panel Says This Is Bank-Funded
+
+I start at `Point3D(3719,3511,0)`, facing south beside the south `High-Low Card Game` table in The Unicorn's Horn. The game gump is already open. The room behind it is still passive tavern noise: Hiro and Akasma are close, Sidney is at the north edge of the screen, the fox is with me by continuity, and the nearby trash barrel, dark wood door, suspicious satchel, tarot-poker deck, dice, chessboard, and exit doors are all still visible but unchosen.
+
+**Beat 1**
+
+I read the open High-Low panel before pressing anything.
+
+The first surface is all machine math. It shows the title, blank card backs, `Current bet: 100`, `Credits: 0`, `Last Pay: 0`, a guess/win pay table, and visible controls for `Play`, `Cash Out`, `ATM`, bet arrows, help, and close. That means the table opened for free, but it did not give me playable credit.
+
+**Beat 2**
+
+I click the visible help arrow instead of trying `Play` or `ATM` blind.
+
+The same gump redraws with a help panel attached on the right. No card flips, no bet starts, no target cursor appears, and no gold or bank message fires. This is still an information click, not gambling.
+
+**Beat 3**
+
+I read the help panel.
+
+The rules are straightforward enough to matter: guess the next card, more consecutive guesses pay more, aces are high, ties go to the house, and being idle for more than five minutes can let someone else take the game away. The controls explain the small bet arrows, the later high/low guess arrows after pressing `Play`, and the important money line: the `ATM` withdraws gold directly from the bank. Since my known bank balance is 0, the table is not a starter-cash loophole unless I press buttons just to confirm the visible shortage. I stop with the help panel open because the next click is a real choice: close/cash out, try the empty-bank `ATM`, or press `Play` with zero credits.
+
+Mechanical friction learned:
+
+- High-Low exposes its instructions through a visible help arrow on the gump; using it is a normal client action and does not spend gold.
+- The help text confirms the money path is bank-funded: `ATM` means bank withdrawal, not free tavern credit.
+- The game has an idle warning. Sitting on the open gump is not permanent ownership of the table.
+- No bet, payout, ATM withdrawal, bank change, gold change, item movement, target cursor, combat, hunger, thirst, skill, stat, crime flag, quest state, discovery flag, pet order, follower count, region change, or movement happened.
+
+Next pressure:
+
+Mira remains at `Point3D(3719,3511,0)`, facing south beside the High-Low table with the `High-Low Card Game` help panel open and read. The next client-visible decision is to close/cash out and leave the table, press `ATM` despite the known 0 bank balance, or press `Play` with 0 credits to see the machine's refusal.
+
+## Run 286 - High-Low Refuses Empty Credit
+
+I start at `Point3D(3719,3511,0)`, facing south beside the south `High-Low Card Game` in The Unicorn's Horn. The help panel is still open and read. The room behind the gump is unchanged tavern clutter: Hiro and Akasma are close, Sidney is at the northern edge of the screen, the fox is still with me by continuity, and the nearby trash barrel, dark wood door, satchel, tarot-poker deck, dice, chessboard, and exit doors are all visible but unchosen. No one on-screen looks hostile.
+
+**Beat 1**
+
+I press the visible `ATM` button.
+
+The machine does not invent money. The gump redraws with the refusal `Insufficient funds for ATM withdrawal.` Credits stay at 0, my carried gold stays 0, and nothing is pulled from the known-empty bank.
+
+**Beat 2**
+
+I read the refreshed panel instead of pressing another control instantly.
+
+It is still the same High-Low screen with the help panel open, the same `Current bet: 100`, `Credits: 0`, `Last Pay: 0`, and the same visible `Play`, `Cash Out`, `ATM`, bet-arrow, help, and close controls. The only new thing is the ATM refusal line.
+
+**Beat 3**
+
+I press the visible `Play` button with 0 credits.
+
+That also refuses cleanly. No cards flip, no high/low arrows become the next choice, and no round starts. The gump redraws with `Insufficient funds to play!` while the help panel remains open and the credits still show 0. This table is now confirmed as a cash sink, not a starter-cash source.
+
+Mechanical friction learned:
+
+- The High-Low `ATM` button is bank-funded and needs actual bank gold. With Mira's known 0 bank balance, it only shows `Insufficient funds for ATM withdrawal.`
+- The `Play` button is not free. With no casino token, no backpack gold, no existing credit, and no cash check, it shows `Insufficient funds to play!`
+- Testing both visible money buttons did not cash out, close the gump, start a hand, flip cards, open a target cursor, move the character, or change bank, gold, inventory, skills, stats, hunger, thirst, crime, quest, discovery, pet order, follower count, or region state.
+
+Next pressure:
+
+Mira remains at `Point3D(3719,3511,0)`, facing south beside the High-Low table with the `High-Low Card Game` help panel open, read, and showing `Insufficient funds to play!` The next client-visible decision is to stop wasting clicks here by using `Cash Out`/close and leaving the table, or deliberately try a different visible tavern object such as dice, tarot poker, the chessboard, the trash barrel, the dark wood door, or the risky satchel.
+
+## Run 287 - I Cash Out of Nothing and Leave
+
+I start at `Point3D(3719,3511,0)`, facing south beside the south `High-Low Card Game` in The Unicorn's Horn. The help panel is still open and already read, and the table is showing `Insufficient funds to play!` The nearby patrons, Sidney, the dice, tarot-poker deck, chessboard, trash barrel, dark wood door, satchel, and exit doors are all just visible tavern clutter now. No one on-screen looks hostile.
+
+**Beat 1**
+
+I press the visible `Cash Out` button.
+
+There is nothing to collect. The High-Low gump closes instead of paying me, no new gump replaces it, and no card, target cursor, gold pile, bank message, or backpack item appears. That is enough; the table has had every fair zero-money chance.
+
+**Beat 2**
+
+I run north through the open tavern floor toward the public exit doors.
+
+This is ordinary indoor movement. I skirt past the passive patrons and the bar clutter, keeping away from the satchel and the other games. No one body-blocks me, no hostile enters the screen, no terrain catches me, and the fox keeps up.
+
+**Beat 3**
+
+I double-click the visible public exit door by the north wall.
+
+The tavern snaps away and I am back outside at the saved Unicorn's Horn entrance, around `Point3D(2981,1089,5)` in the City of Britain. The fox comes with me. The exterior screen is busier than useful: Peter the cook and several adventurers are still up by the wanted sign, town citizens and tinker shop people are nearby, the `Wanted! Blackbart Roberts` sign is visible again, and the Grand Clock Makers door, basement trapdoor, and a coffer sit southeast. No gump, context menu, target cursor, payout, item movement, skill gain, stat change, crime flag, quest flag, or discovery flag appears.
+
+Mechanical friction learned:
+
+- `Cash Out` is only an exit when credits are 0. It closes the High-Low surface but does not create money.
+- The Unicorn's Horn interior exit is a normal visible public-door return, not a new travel choice. It spends the stored tavern-entry return and puts me back on the Britain street.
+- Leaving the tavern restores the earlier outside problem: Peter/sign/tinker-shop leads are visible, but no starter-cash route has opened.
+
+Next pressure:
+
+Mira ends at `Point3D(2981,1089,5)`, facing north outside The Unicorn's Horn with no gump, context menu, vendor window, sell list, or target cursor open. The next client-visible decision is whether to resolve Peter's still-untried service/talk row, inspect the Grand Clock Makers frontage and basement trapdoor, or walk back toward a known Britain route such as the bank or other shops.
+
+## Run 288 - Peter Is Only A Rumor
+
+I start at `Point3D(2981,1089,5)`, facing north outside The Unicorn's Horn. There is no open gump, context menu, vendor window, sell list, or target cursor. The screen is safe town noise: Peter the cook and the wanted sign are north by the porch, Mabel, Nyle, Blythe, Markos, Xylene, birds, and town citizens are passive, the tavern door is behind me, and the Grand Clock Makers frontage is southeast. No hostile is in the 18-tile box.
+
+**Beat 1**
+
+I run north along the same open Britain frontage back to the wanted sign and Peter, stopping near `Point3D(2980,1072,1)` and facing him.
+
+This is short town movement, not a route problem. The Unicorn's Horn sign slides south, The Cleaver and its cow re-enter the screen to the west, the wanted sign is beside me, and no wall, door, hostile, target cursor, stamina failure, or region change interrupts the move. The fox is just assumed to keep up.
+
+**Beat 2**
+
+I context-click Peter and choose the visible speech/talk row this time.
+
+The row is not a hidden shop. Peter just talks overhead: `I heard many tales of adventurers going to the Flooded Temple and seeing the 'Evil Kryss of Gayrone the Explorer'.`
+
+**Beat 3**
+
+I stop and read that as a clue instead of pretending it is a quest.
+
+No service gump opens, no trade window appears, no food crate offer is shown, no target cursor appears, and nothing moves into my pack. It is useful world chatter, but it does not solve the immediate 0-gold problem and it does not prove a safe route to the Flooded Temple from this street.
+
+Mechanical friction learned:
+
+- Peter's visible citizen row resolves to an overhead rumor on this saved character, not a vendor buy/sell list or cook-service gump.
+- The rumor names the Flooded Temple and an artifact, but it does not start a quest, create a marker on the current Sosaria screen, pay gold, or change the backpack.
+- Peter is therefore not a starter-cash route from the Unicorn's Horn frontage. The remaining nearby visible leads are still town surfaces: The Cleaver, The Unicorn's Horn, the Bank route, Grand Clock Makers, and other shop/NPC markers.
+- No gold, item, bank content, skill, stat, hunger, thirst, damage, crime flag, discovery flag, quest state, target cursor, open UI, pet order, follower count, or region state changed.
+
+Next pressure:
+
+Mira ends near `Point3D(2980,1072,1)`, facing east by Peter and the `Wanted! Blackbart Roberts` sign with no gump, context menu, vendor window, sell list, or target cursor open. The next client-visible decision is to decide whether Peter's Flooded Temple rumor is only long-term dungeon gossip for now, then inspect the closer town leads: Markos the fishing trainer, the Grand Clock Makers/tinker frontage, The Cleaver frontage, or the known Bank of Britain route.
+
+## Run 289 - I Only Open Markos's Menu
+
+I start near `Point3D(2980,1072,1)`, facing east by Peter and the `Wanted! Blackbart Roberts` sign. There is no open gump, context menu, vendor window, sell list, or target cursor. Peter's Flooded Temple line is useful gossip, not food or money, so I look at the closer visible lead: Markos is east by the street, while the tavern and Cleaver are already tested and the Grand Clock Makers is still a little southeast. The screen is still ordinary town noise: Peter, Mabel, Nyle, Blythe, Xylene, birds, Alexander, Merrick, the wanted sign, the tavern sign, and the tavern door are all visible or close, and nothing looks hostile.
+
+**Beat 1**
+
+I treat Peter's rumor as long-term dungeon chatter for now and choose Markos as the next town surface to test.
+
+That is only a choice of route, not a new quest. No UI appears and nothing in my pack changes.
+
+**Beat 2**
+
+I run east and a little south through the open Britain frontage, stopping one step west of Markos near `Point3D(2991,1076,0)` and facing east.
+
+This is short street movement. The wanted sign and Peter slide behind me, Markos is now beside me, and the passive citizens and birds remain background. No wall, door, hostile, stamina failure, target cursor, discovery message, or region change interrupts the move. The fox is assumed to keep up.
+
+**Beat 3**
+
+I context-click Markos and only read the menu.
+
+The visible useful row is the same kind of citizen speech/talk row I used on Peter. I do not click it yet. Opening the menu is not a lesson, not a purchase, not a quest, and not a fishing action; it is just the next choice surface. No gump, buy list, sell list, training quote, target cursor, item, gold, skill gain, or overhead speech appears yet.
+
+Mechanical friction learned:
+
+- Markos is close enough to reach by ordinary town movement from the wanted sign, with no visible threat or blocker on the route.
+- His surface is a context menu, not an automatic vendor or training window. The player-visible next action is choosing the speech/talk row or closing the menu.
+- Seeing a fishing-trainer-looking NPC with a pole does not grant a fishing pole, training, cash, or a quest by proximity alone.
+- No gold, item, bank content, skill, stat, hunger, thirst, damage, crime flag, discovery flag, quest state, target cursor, pet order, follower count, or region state changed.
+
+Next pressure:
+
+Mira ends near `Point3D(2991,1076,0)`, facing east beside Markos with no gump open and Markos's context menu open. The next client-visible decision is to choose the visible speech/talk row, close the menu and head toward the Grand Clock Makers/tinker frontage, or leave Markos alone and return toward the known Bank of Britain route.
+
+## Run 290 - Markos Talks, Then I Reach the Clock Shop
+
+I start at `Point3D(2991,1076,0)`, facing east beside Markos. His context menu is already open, and the only useful row I can see is the citizen speech/talk row. There is no gump, vendor window, sell list, target cursor, combat pressure, or visible hostile. The street is still town-safe: Peter and the wanted sign are behind me, Alexander and Merrick are south, the tavern is southwest, and the Grand Clock Makers marker is the next untested lead to the south-southeast.
+
+**Beat 1**
+
+I choose Markos's visible speech/talk row.
+
+Markos does not teach me fishing, hand me a pole, sell anything, or open a service gump. He just talks overhead: `I overheard someone tell of dark elves summoning demons in dungeon destard.`
+
+**Beat 2**
+
+I read it as another long-term dungeon rumor.
+
+That line is darker than Peter's artifact gossip, but it is still not an immediate route from this screen. It does not add a marker, start a quest, change a discovery flag, pay gold, move an item, start a target cursor, or change the fox's order.
+
+**Beat 3**
+
+I run south-southeast through the open Britain frontage toward the `The Grand Clock Makers` marker.
+
+The route is short town movement, not a wilderness problem. I pass the tavern-side street noise and stop around the clock shop frontage near `Point3D(2996,1101,5)`. The fox keeps with me. No wall, locked door, hostile, stamina failure, discovery message, target cursor, region snap, or unexpected terrain block interrupts the run.
+
+The new screen has more useful surfaces than Markos did. `The Grand Clock Makers` sign is here, a dark wood door is just south, a basement trapdoor is west-southwest, and two visible coffers sit nearby. Melinda the tinker and Rosanne the tinker guildmaster are inside/at the shop frontage; Suki the provisioner and `Profuse Provisions` are east, Taylor the fishing trainer is east, Donata the logger is west, and Paulin the town guard is south. I do not see a hostile in the 18-tile screen.
+
+Mechanical friction learned:
+
+- Markos's saved citizen row resolves to a zero-service overhead rumor, not a fishing lesson, vendor, cash route, item grant, or quest surface.
+- The rumor names dungeon Destard and dark elves/demons, but it does not create any current-screen route, discovery flag, or visible safety proof.
+- The Grand Clock Makers frontage is now the active client-visible choice cluster: sign, dark wood door, basement trapdoor, coffers, tinker, and tinker guildmaster.
+- No gold, item, bank content, skill, stat, hunger, thirst, damage, crime flag, discovery flag, quest state, target cursor, pet order, follower count, or map changed.
+
+Next pressure:
+
+Mira ends near `Point3D(2996,1101,5)`, facing south/southeast at the Grand Clock Makers frontage with no gump, context menu, vendor window, sell list, or target cursor open. The next client-visible decision is whether to context-click Rosanne or Melinda, single-click/read the shop sign, try the visible dark wood door, inspect the basement trapdoor, or leave the coffers alone until there is a reason to risk container friction.
+
+## Run 291 - Melinda Turns Into A Target Cursor
+
+I start at `Point3D(2996,1101,5)`, facing south/southeast on the `The Grand Clock Makers` sign. There is no open gump, context menu, vendor list, sell list, or target cursor. The current screen is safe town density: Melinda the tinker is northwest at about dx `-7`, dy `-5`, Rosanne the tinker guildmaster is west, Suki and `Profuse Provisions` sit east/southeast, Paulin the town guard is south, and the same dark wood door, basement trapdoor, and coffers are still visible. I do not see a hostile in the 18-tile screen.
+
+**Beat 1**
+
+I context-click Melinda from the frontage and actually read the menu instead of pretending proximity is a shop.
+
+The menu is a real vendor surface. I can see buy/sell choices, and the tinker-specific service row is close enough from here because Melinda is still inside its generous range. That repair-looking row is the one that matters for a broke crash survivor, so I do not touch Rosanne, the trapdoor, or the coffers yet.
+
+**Beat 2**
+
+I choose Melinda's repair/identify service row.
+
+The context menu closes and Melinda talks to me: `You want to hire me to repair what at 10 gold per durability? Or maybe identify an item for 200 gold?`
+
+**Beat 3**
+
+I stop with the target cursor up.
+
+That cursor is not a free identify, not a purchase, and not a repaired knife. It is the next input waiting on my screen. With 0 gold, the prompt already smells money-gated, and I do not blindly target the starter knife or a coffer just to make something happen.
+
+Mechanical friction learned:
+
+- Melinda is a normal tinker vendor surface from the clock-shop frontage: buy/sell rows exist, but they still lead into the same 0-gold problem unless I find money or sellable goods.
+- Her tinker service row opens a target cursor and quotes `10 gold per durability` for repair or `200 gold` for identify.
+- The service is not a starter-cash route. It consumes a later target choice and likely payment; it does not create gold, items, skill gain, quest state, or discovery flags by itself.
+- The Grand Clock Makers door, Rosanne, the basement trapdoor, Suki, and the coffers remain untested.
+
+Next pressure:
+
+Mira ends at `Point3D(2996,1101,5)`, still at the Grand Clock Makers frontage with Melinda's repair/identify target cursor active. The next client-visible decision is to cancel the cursor, target a known item and accept the likely 0-gold rejection, or leave the tinker service unresolved and test a different visible surface such as Rosanne, the door, the trapdoor, or Suki.
+
+## Run 292 - The Knife Is Not Tinker Work
+
+I start at `Point3D(2996,1101,5)`, facing south/southeast on the `The Grand Clock Makers` sign. Melinda's repair/identify target cursor is still up from the last click. The screen is still a safe Britain shop frontage: Melinda is northwest, Rosanne the tinker guildmaster is west, Suki and `Profuse Provisions` are east/southeast, Paulin the guard is south, and the dark wood door, basement trapdoor, two coffers, tavern sign, and provisioner sign are all visible. I do not see a hostile in the 18-tile screen.
+
+**Beat 1**
+
+I target the equipped starter knife with Melinda's cursor.
+
+Melinda does not identify it, repair it, appraise it, or turn the prompt into a price quote. She just says: `I cannot repair that.`
+
+That clears the target cursor. The knife stays equipped, my gold stays at 0, and nothing in the backpack changes.
+
+**Beat 2**
+
+With the cursor gone, I context-click Rosanne the tinker guildmaster and read the menu.
+
+The useful rows are not the same as Melinda's repair row. Rosanne shows vendor buy/sell rows and training rows for tinker-related skills. The guild join row is visible but too far away from where I am standing, and the weapon-engraver recharge row is also useless from here without the right tool and range. I do not choose a training row yet because the menu itself is now the current decision surface.
+
+Mechanical friction learned:
+
+- Melinda's prompt mentions identify, but targeting the starter knife only returns `I cannot repair that.` The service does not identify ordinary starter gear and does not repair a normal dagger/knife.
+- The tinker service target cursor resolves after the failed target and leaves no gump, no target cursor, no item movement, no gold movement, no skill gain, and no discovery flag.
+- Rosanne is a different surface from Melinda: she exposes buy/sell and tinker-skill teaching rows, while guild joining and engraver recharge are visible but not immediately usable from the current spot.
+- No gold, item, bank content, skill, stat, hunger, thirst, damage, crime flag, discovery flag, quest state, pet order, follower count, or map changed.
+
+Next pressure:
+
+Mira ends at `Point3D(2996,1101,5)`, still on the Grand Clock Makers frontage with Rosanne's context menu open. The next client-visible decision is to choose one of Rosanne's enabled skill-training rows, use buy/sell, move closer for the guild/recharge rows, close the menu, or leave Rosanne for the door, trapdoor, Suki, or the visible coffers.
+
+## Run 293 - Rosanne Wants Paid First
+
+I start at `Point3D(2996,1101,5)`, facing south/southeast on the `The Grand Clock Makers` sign with Rosanne's context menu still open. The useful visible choice is the tinker guildmaster's training surface, not the out-of-range guild row or the disabled weapon-engraver row. The screen is still quiet Britain shop-frontage noise: Melinda is northwest, Rosanne is west, Suki and `Profuse Provisions` are east/southeast, Paulin the guard is south, and the dark wood door, basement trapdoor, coffers, tavern sign, and provisioner sign are all still visible. I do not see a hostile in the 18-tile screen.
+
+**Beat 1**
+
+I choose Rosanne's visible `Tinkering` training row.
+
+The context menu closes. Rosanne does not open a lesson gump and does not raise the skill immediately. She quotes the usual teaching deal instead: she will teach what she knows if I pay the full amount, and less payment means less teaching.
+
+I have 0 gold, so the lesson stops as a payment problem on the screen. No item moves, no gold moves, no skill changes, no vendor window opens, no target cursor appears, and no discovery or quest flag fires.
+
+Mechanical friction learned:
+
+- Rosanne's enabled tinker-skill rows are teaching offers, not free training.
+- Choosing `Tinkering` marks a pending lesson and requires handing her gold before any skill gain happens.
+- With 0 gold, the visible result is only a price quote and the "less payment teaches less" warning.
+- The dark wood door, basement trapdoor, Suki, Melinda's buy/sell rows, Rosanne's sell row, and the visible coffers remain untested.
+
+Next pressure:
+
+Mira ends at `Point3D(2996,1101,5)`, still at the Grand Clock Makers frontage with no context menu, gump, vendor window, sell list, or target cursor open. Rosanne has a pending `Tinkering` teaching offer, but Mira has 0 gold. The next client-visible decision is to context-click Rosanne again for sell/buy, leave for Suki or another cash lead, try the door or trapdoor, or abandon the lesson until there is money.
+
+## Run 294 - I Walk Over To Suki
+
+I start at `Point3D(2996,1101,5)`, facing south/southeast on the Grand Clock Makers frontage. Rosanne's Tinkering lesson is still just a payment problem. There is no gump, no target cursor, and no vendor window open. Suki the provisioner is visible east/southeast by `Profuse Provisions`, close enough to be a real next lead but not close enough for a clean vendor click from here.
+
+**Beat 1**
+
+I leave Rosanne's unpaid lesson alone and run east-southeast through the open shop frontage toward Suki.
+
+This is ordinary Britain street movement. I stop beside Suki around `Point3D(3008,1104,0)`, facing east. The clock-shop sign, dark wood door, basement trapdoor, and one coffer slide behind me; `Profuse Provisions`, another coffer, a dark wood door, and the `Premier Gems` marker are now the near screen. Paulin the guard is still in view, Taylor is just northwest of Suki, and I can see a dog, a cat, citizens, and an adventurer-looking passerby east of the shop. None of them pushes into combat.
+
+**Beat 2**
+
+I context-click Suki and read the menu.
+
+Suki is not an automatic cash payout. Her visible surface is a provisioner context menu: buy and sell rows, an unusual-item/value row, a speech/help row, and likely Camping or Mercantile teaching rows. I do not choose the sell row yet, because the menu itself is now the choice surface and I still need to decide whether to risk selling the empty canteen or listen to the survival-gear talk first.
+
+Mechanical friction learned:
+
+- Reaching Suki from the clock shop is a short safe-town move, not a terrain or threat problem.
+- Suki's provisioner menu is richer than the earlier rumor citizens: it exposes buy/sell, item examination, speech/help, and teaching-style rows.
+- The sell row has not been pressed yet. No sell list, sale confirmation, item movement, gold movement, skill gain, target cursor, gump, quest flag, discovery flag, damage, crime flag, or pet-order change happened.
+- Code tracing suggests a provisioner may buy an empty `Waterskin` only if that vendor's generated buy list includes that type; the player-visible test is still selecting the sell row and seeing whether the canteen appears.
+
+Next pressure:
+
+Mira ends at `Point3D(3008,1104,0)`, facing east beside Suki with Suki's context menu open. The next client-visible decision is to choose `Sell`, choose the speech/help row, use the unusual-item/value row, buy nothing with 0 gold, pick a paid teaching row, or close the menu and move on.
+
+## Run 295 - Suki Explains Survival Gear
+
+I start at `Point3D(3008,1104,0)`, facing east beside Suki with her provisioner context menu already open and read. The screen is still a safe Britain shop frontage: my fox is treated as close, Suki stands one tile east, Taylor is northwest, Paulin the guard is south, `Profuse Provisions` and its coffer/door are just below me, `Premier Gems` is east/southeast, and the animals, citizens, jeweler, and adventurer-looking passerby are all passive context. No hostile is inside the 18-tile screen.
+
+**Beat 1**
+
+I leave the random sell row alone and choose Suki's visible speech/help row.
+
+The context menu closes. Suki gives the normal vendor greeting and opens a gump titled `The Right Survival Gear`. This is not a buy list, sell list, price prompt, or target cursor. It is a scrollable help window with a close button, so I stop treating the menu as the active surface.
+
+**Beat 2**
+
+I read `The Right Survival Gear`.
+
+The useful lesson is practical, not a quest. Light sources burn out. Ten-foot poles passively check traps in my pack. Bedrolls, campfires, and tents are the survival chain; small tents buy a short emergency pause outside, while camping tents are the long-run storage/rest tool and can even work underground when skilled enough. Suki also explains merchant crates for home crafting sales and says unusual decorative items can be valued by asking a provisioner, then sold to the merchant type she names.
+
+Mechanical friction learned:
+
+- Suki's speech/help row is deterministic and opens a `SpeechGump`; it does not sell, buy, appraise, teach, or move inventory by itself.
+- The gump confirms provisioners are survival-route teachers: light, trap checking, camping, tents, merchant crates, and unusual-item appraisal all belong to this surface.
+- The `Sell` row is still untested. I did not learn whether Suki's generated sell table contains the empty canteen, and I did not risk selling starter water storage.
+- No movement, gold, item, bank content, skill, stat, hunger, thirst, damage, crime flag, discovery flag, quest state, target cursor, pet order, follower count, or map changed.
+
+Next pressure:
+
+Mira remains at `Point3D(3008,1104,0)`, facing east beside Suki with `The Right Survival Gear` open and read. The next client-visible decision is to close the help gump, then either reopen Suki's menu for `Sell` or unusual-item appraisal, avoid paid teaching with 0 gold, test the Profuse Provisions door, or move east/southeast toward `Premier Gems`.
+
+## Run 296 - Suki Will Not Price My Medical Record
+
+I start at `Point3D(3008,1104,0)`, facing east beside Suki with `The Right Survival Gear` still open and already read. The screen is unchanged town frontage: my fox is treated as close, Suki is one tile east, Taylor is northwest, Paulin the guard is south, `Profuse Provisions` and its coffer/door are below me, and `Premier Gems` is east/southeast with Elana at the edge of the screen. The animals, citizens, guard, and passerby are passive context. No hostile is inside the 18-tile screen.
+
+**Beat 1**
+
+I close `The Right Survival Gear`.
+
+The help gump disappears. Nothing else fires: no vendor list, no sell list, no target cursor, no skill, no gold, no item movement, no route marker, and no discovery flag.
+
+**Beat 2**
+
+I context-click Suki again and choose the unusual-item/value row she just taught me about.
+
+Suki asks which unusual item she should examine for `25 gold`, and the cursor changes to a target cursor. This is not a price quote yet and not a free appraisal; it is the screen waiting for me to target something.
+
+**Beat 3**
+
+I target the `Medical Record` in my backpack.
+
+Suki refuses it as appraisal stock: `I cannot put a value on that.` The target cursor clears. The record stays in my pack, my gold stays at `0`, and no sell list, buy list, quest, discovery, skill gain, or inventory change appears.
+
+Mechanical friction learned:
+
+- Suki's unusual-item row is a target-cursor service, separate from her help gump and separate from `Sell`.
+- The service quote is `25 gold`, but non-relic targets fail before payment matters; the Medical Record is not something this provisioner values.
+- The Medical Record remains lore/identity proof and a readable tech item, not a starter-cash object.
+- The `Sell` row is still untested. The empty canteen may only matter if Suki's current generated buy list includes `Waterskin`; the visible test is still opening `Sell`, not assuming a sale.
+- No movement, gold, item, bank content, skill, stat, hunger, thirst, damage, crime flag, discovery flag, quest state, pet order, follower count, or map changed.
+
+Next pressure:
+
+Mira remains at `Point3D(3008,1104,0)`, facing east beside Suki with no gump, context menu, vendor window, sell list, or target cursor open. The next client-visible decision is to reopen Suki for `Sell`, test the visible Profuse Provisions door, step east/southeast toward `Premier Gems`, or leave the shopfront cluster for a different cash lead.
+
+## Run 297 - Suki Would Buy The Empty Canteen For One Gold
+
+I start at `Point3D(3008,1104,0)`, facing east beside Suki with no gump, context menu, vendor window, sell list, or target cursor open. The screen is still safe Britain shop frontage: Suki stands one tile east, Taylor is northwest, Paulin the guard is south, `Profuse Provisions` and its coffer/door are below me, and `Premier Gems` plus Elana are east/southeast. The visible animals, citizens, guard, trainer, jeweler, and passerby are passive context. No hostile is inside the 18-tile screen.
+
+**Beat 1**
+
+I context-click Suki again and go straight for the visible `Sell` row.
+
+The context menu closes and a vendor sell list opens. It is not asking for a target and it is not the unusual-item appraisal service. The only useful starter item it exposes is my `empty canteen`, and the price is bad: `1` gold.
+
+**Beat 2**
+
+I read the sell list and do not accept the sale yet.
+
+Selling the canteen would turn the first real cash lead into only `1` gold while also giving up my water container. I leave the sell list open instead of pressing through the sale.
+
+Mechanical friction learned:
+
+- Suki's `Sell` row is the normal vendor sell surface. It searches my backpack for item types in her generated buy list, then opens a sell list if anything matches.
+- In this visible attempt, the generated provisioner buy list includes `Waterskin`, so the empty canteen appears as sellable.
+- The canteen's base buyback price is `2`, but the player-facing sell offer is halved to `1` gold.
+- The cooked alien meat and Medical Record do not appear as current provisioner sell-list cash; the Medical Record already failed the separate appraisal cursor.
+- No sale has been confirmed. The canteen, cooked alien meat, Medical Record, equipped knife, clothing, gold total, skills, stats, follower order, quest state, discovery flags, and map position are unchanged.
+
+Next pressure:
+
+Mira remains at `Point3D(3008,1104,0)`, facing east beside Suki with Suki's vendor sell list open and read. The next client-visible decision is to sell the empty canteen for `1` gold, cancel the sell list and keep the canteen, test the Profuse Provisions door, or walk east/southeast toward `Premier Gems`.
+
+## Run 298 - One Gold Costs The Canteen
+
+I start at `Point3D(3008,1104,0)`, facing east beside Suki with the vendor sell list still open and already read. The screen is the same safe Britain shop-front cluster: Suki is one tile east, Taylor is northwest, Paulin the guard is south, `Profuse Provisions` and its door are below me, `Premier Gems` and Elana sit east/southeast, and the visible dogs, cat, citizens, trainer, guard, jeweler, and passerby are all passive context. No hostile is inside the 18-tile screen.
+
+**Beat 1**
+
+I stop trying to keep the dead canteen as a hope object. I select the visible `empty canteen` row and press the sell/accept control.
+
+The sell list closes. There is no target cursor, no buy window, no speech lesson, and no second confirmation gump. I hear the gold-drop result: the canteen is gone from my backpack, and the first real cash appears as `1` gold. That is not enough to make Suki's `25 gold` appraisal useful, and it probably will not satisfy any full training quote, but it is no longer zero.
+
+Mechanical friction learned:
+
+- This was the normal visible vendor sell-list flow, not Suki's unusual-item appraisal cursor and not a dropped-item barter.
+- The sold canteen met the vendor sell checks: it was in my backpack, movable, standard loot, and on the provisioner's sell table.
+- `GenericSellInfo` is not resellable here, so the canteen is consumed/deleted instead of moving into Suki's resale pack.
+- The only payout is the listed `1` gold. The sale adds gold to my backpack and plays the gold-drop sound, but it does not open a new gump, grant a skill, set a quest flag, or discover a route.
+
+Next pressure:
+
+Mira remains at `Point3D(3008,1104,0)`, facing east beside Suki with no gump, context menu, vendor window, sell list, or target cursor open. The next client-visible decision is to test whether `1` gold changes any paid lesson or appraisal, try the Profuse Provisions or Premier Gems door, talk to Elana at `Premier Gems`, or leave the shopfront cluster for a better cash lead. The survival cost is real: Mira has food and a Medical Record, but no water container.
+
+## Run 299 - Elana Quotes Merchant Lessons
+
+I start at `Point3D(3008,1104,0)`, facing east beside Suki with no gump, context menu, vendor window, sell list, or target cursor open. The screen is still Britain shopfront safety: Suki is one tile east, Taylor is northwest, Paulin the guard is south, the Profuse Provisions door and coffer are below me, and `Premier Gems` plus Elana are visible east/southeast. The visible dogs, cat, citizens, trainer, guard, jeweler, and passerby are passive. No hostile is inside the 18-tile screen.
+
+**Beat 1**
+
+I run east/southeast along the open shopfront toward the `Premier Gems` marker instead of spending the single gold at Suki or Rosanne.
+
+The move is ordinary town footing. I stop near `Point3D(3024,1106,0)`, facing east with Elana two tiles away. My fox is treated as following close enough for the client-side run. The new screen keeps `Premier Gems` and its door beside me, with a coffer inside/near the shop. `The Lord's Clothiers` comes into view northeast with Kachine the weaver, Malcolm the tailor, clothier tools, and another door. No hostile appears.
+
+**Beat 2**
+
+I context-click Elana and read the visible jeweler menu.
+
+This is a real vendor surface, not a rumor citizen. The menu exposes buying, selling, a jeweler service row, and a Mercantile teaching row. I do not open buy or sell yet, and I do not touch the nearby coffer.
+
+**Beat 3**
+
+I choose the visible `Mercantile` teaching row.
+
+The context menu closes. Elana quotes a paid lesson and gives the familiar warning that full payment teaches all she can, while less payment teaches less. I do not hand over the `1` gold yet, so there is no skill gain, no inventory change, no vendor list, no target cursor, no quest flag, and no discovery flag.
+
+Mechanical friction learned:
+
+- The nearby jeweler is a practical next lead, but not immediate cash by merely talking.
+- Elana can teach Mercantile because vendors can teach skills they know well enough; the first click only sets up a paid learning offer.
+- With only `1` gold, the lesson is now a choice: pay a tiny partial lesson, keep the coin, try Elana's buy/sell surface, try the Premier Gems door, or move on.
+- The jeweler service row was visible, but I did not select it, so no identify target cursor opened and no item was tested.
+- No terrain, combat, pet, door, coffer, hunger, thirst, damage, crime, bank, discovery, or tarot state changed.
+
+Next pressure:
+
+Mira ends at `Point3D(3024,1106,0)`, facing east near Elana at `Premier Gems`, with no gump, context menu, vendor window, or target cursor open. Elana's Mercantile lesson quote is pending in the player sense: the next client-visible decision is to drop the single gold for a tiny Mercantile lesson, reopen Elana for buy/sell or the jeweler service row, try the Premier Gems door, ignore the coffer, or continue northeast toward `The Lord's Clothiers`.
+
+## Run 300 - Elana Cannot Identify My Record
+
+I start at `Point3D(3024,1106,0)`, facing east beside `Premier Gems`. Elana is still two tiles east of me. The shopfront screen is safe: my fox is treated as close, the nearby dogs and cat are just town animals, Seward and Claire look like passersby, and Kachine and Malcolm are visible near `The Lord's Clothiers` to the northeast. The visible coffers and doors stay tempting but untested. No hostile is on the screen.
+
+**Beat 1**
+
+I context-click Elana again and go back to the visible jeweler service row instead of dropping my only gold on the Mercantile lesson.
+
+The context menu is the same kind of vendor surface as before: buy, sell, the jeweler's identify/service row, and Mercantile teaching. I choose the service row. Elana immediately asks whether I want her to identify an item for `200` gold, and the cursor changes into a target cursor. This is not a vendor buy list, not a sell list, and not a teaching payment.
+
+**Beat 2**
+
+I read the prompt and target the `Medical Record` in my backpack, because it is still the strangest thing I own and Suki already refused to appraise it.
+
+Elana refuses it too, but in a different way: `That does not need my services.` The target cursor clears. She does not take the `1` gold, does not identify anything, does not move the Medical Record, and does not open another window.
+
+Mechanical friction learned:
+
+- Elana's jeweler service row is an identify-item target cursor with a visible `200` gold quote.
+- The target must be a shard identification item that belongs to a jeweler's service surface; ordinary starter objects do not even reach the payment check.
+- The Medical Record is not jeweler-identifiable. It stays in the backpack as identity/lore evidence, not cash and not a paid identify lead.
+- Elana's earlier Mercantile teaching quote remains unpaid. I still have `1` gold, `0.0` Mercantile, no vendor buy/sell window, no open gump, and no target cursor.
+- No movement, terrain, combat, pet, door, coffer, hunger, thirst, damage, crime, bank, discovery, or tarot state changed.
+
+Next pressure:
+
+Mira remains at `Point3D(3024,1106,0)`, facing east near Elana at `Premier Gems`. The next client-visible decision is to spend the single gold on the pending Mercantile lesson, reopen Elana for buy or sell, try the Premier Gems door, ignore the coffer, or move northeast toward `The Lord's Clothiers`, Kachine, and Malcolm.
+
+## Run 301 - Jewels Will Not Buy Rations
+
+I start at `Point3D(3024,1106,0)`, facing east beside `Premier Gems` with Elana two tiles away. The screen is still Britain safety: my fox is treated as close, the dogs and cat are town animals, Seward and Claire are passersby, and Kachine the weaver plus Malcolm the tailor are visible northeast near `The Lord's Clothiers`. The coffers, shop doors, clothier trapdoor, loom, and spinning wheel are visible but untested. No hostile is on the screen.
+
+**Beat 1**
+
+I context-click Elana again and choose `Sell` instead of burning my only coin on the old Mercantile quote.
+
+The context menu closes, but no sell list opens. Elana says, `You have nothing I would be interested in.` My backpack is unchanged: `1` gold, `10` cooked alien meat, and the `Medical Record`. The jeweler does not treat the meat or record as jewelry stock, and the sold canteen is already gone.
+
+**Beat 2**
+
+I leave the jeweler dead end and run east/northeast across the open shopfront toward the clothier marker.
+
+The move is ordinary town footing, not a maze or threat problem. I stop near `Point3D(3033,1103,0)`, facing east, one tile west of Kachine. My fox is assumed to keep up. The screen tightens around the clothier cluster: Kachine is beside me, Malcolm is a few steps northeast, a coffer sits by the clothier side, and the spinning wheel, looms, basement trapdoor, door, and `The Lord's Clothiers` marker are all in view. Elana and `Premier Gems` remain behind me to the west/southwest. No hostile enters range.
+
+**Beat 3**
+
+I context-click Kachine and read the visible weaver menu.
+
+This is another real vendor surface, but with clothier-specific friction. The visible choices include buy, sell, a speech/help row about altering cloaks and robes, a service row that asks for robe/cloak tailoring, hat repair, or item identification, and Tailoring teaching. I do not press a row yet, because the menu itself is the new decision point.
+
+Mechanical friction learned:
+
+- Elana's `Sell` row is not a cash path for cooked alien meat or the Medical Record. It fails visibly with the no-interest line and opens no sell list.
+- The jeweler sell surface is jewelry/crystal/artifact-shaped, not a general pawnshop.
+- Kachine the weaver is the next clothier-system lead. Her menu points at clothing alteration, hat repair, identify service, Tailoring teaching, buy/sell, and an information gump.
+- The clothier-side coffer, basement trapdoor, door, loom, spinning wheel, Malcolm, Kachine's actual rows, and Kachine's buy/sell lists remain untested.
+- No gold, item, skill, stat, hunger, thirst, damage, crime flag, discovery flag, quest state, target cursor, vendor window, pet order, follower count, or map changed.
+
+Next pressure:
+
+Mira ends at `Point3D(3033,1103,0)`, facing east beside Kachine, with Kachine's context menu open and read. The next client-visible decision is to choose Kachine's speech/help row, buy, sell, service row, or Tailoring lesson; close the menu and try Malcolm; test the clothier door or basement trapdoor; or ignore the coffer.
+
+## Run 302 - Kachine Explains Robe Altering
+
+I start at `Point3D(3033,1103,0)`, facing east beside Kachine with her context menu already open and read. The screen is the same safe clothier frontage: Kachine is one tile east, Malcolm is a few steps northeast, Claire and Seward look like passersby, Elana is behind me to the west/southwest, and the nearby dogs, cat, and citizens are passive. The visible coffer, spinning wheel, looms, basement trapdoor, clothier door, and `The Lord's Clothiers` marker are still tempting but untested. No hostile is on the screen.
+
+**Beat 1**
+
+I choose Kachine's visible speech/help row about altering cloaks and robes.
+
+The context menu closes. Kachine greets me and opens a custom speech gump titled `Altering Cloaks And Robes`. It is not a vendor buy list, not a sell list, not a teaching payment, and not a target cursor.
+
+**Beat 2**
+
+I read the gump instead of pressing through it.
+
+The message is practical: if I dislike the look of a cloak or robe, a tailor/weaver can alter it back toward a normal-looking cloak or robe; odd garments may be serviceable even if they do not look like standard shop stock. Hoods and cowls can be double-clicked while worn to change color from equipped robes or cloaks, which is mainly outfit coordination, not survival cash.
+
+Mechanical friction learned:
+
+- Kachine's speech/help row is an information gump, not a service execution.
+- The robe/cloak alteration lead still requires using the separate clothier service row, then targeting an eligible cloak, robe, hat, or tailor-identifiable item.
+- My current gear is a fancy shirt, long pants, boots, and a knife. I have no visible cloak, robe, hood, cowl, hat, or tailor-identifiable item to use with that service right now.
+- The single gold, cooked alien meat, Medical Record, equipment, skills, stats, hunger, thirst, crime state, follower order, quest state, discovery flags, map position, clothier coffer, basement trapdoor, clothier door, Malcolm, and Kachine's buy/sell/service/teaching rows are unchanged.
+
+Next pressure:
+
+Mira remains at `Point3D(3033,1103,0)`, facing east beside Kachine, with the `Altering Cloaks And Robes` speech gump open and read. The next client-visible decision is to close/OK the gump, then either test Kachine's buy/sell/service/Tailoring rows, talk to Malcolm, try the clothier door or basement trapdoor, or keep ignoring the coffer.
+
+## Run 303 - Kachine Does Not Want My Starter Kit
+
+I start at `Point3D(3033,1103,0)`, facing east beside Kachine with the `Altering Cloaks And Robes` speech gump still open and already read. The clothier frontage is calm: Kachine is one tile east, Malcolm is a few steps northeast, Claire and Seward look like passersby, Elana is behind me to the west/southwest, and the nearby dogs, cat, citizens, coffer, spinning wheel, looms, basement trapdoor, clothier door, and `The Lord's Clothiers` sign are all visible context. No hostile is on the screen.
+
+**Beat 1**
+
+I press the visible close/OK control on the speech gump.
+
+The gump closes cleanly. I am back on the same Britain shopfront screen with no target cursor and no vendor list. Nothing in my backpack, equipment, skills, follower state, quest state, discovery flags, gold, hunger, thirst, or position changes.
+
+**Beat 2**
+
+I context-click Kachine again and choose her visible `Sell` row.
+
+The context menu closes, but no sell list opens. Kachine gives the same kind of dead-end vendor line Elana gave earlier: `You have nothing I would be interested in.` My `1` gold, `10` cooked alien meat, and `Medical Record` stay in the backpack. The weaver is not a pawnshop for alien rations or paperwork.
+
+**Beat 3**
+
+I do not touch the nearby coffer. I context-click Malcolm, the tailor standing a few steps northeast, and read his visible menu.
+
+Malcolm is another clothier vendor surface. The menu exposes buy, sell, the same speech/help lead about altering cloaks and robes, the clothing repair/alter/identify service row, and Tailoring teaching. I stop with the menu open instead of picking a second clothier row blind.
+
+Mechanical friction learned:
+
+- Kachine's `Sell` row is a normal vendor sell check, not an appraisal. It looks inside my backpack for item types the weaver buys.
+- My current backpack has gold, cooked alien meat, and the Medical Record. None match the visible cloth/weaver cash path, so no sell list opens.
+- The weaver's sell table is cloth-and-tailor shaped: yarn, scissors, dyes, dye tubs, and paint canvas when those buyback rolls are active. Starter food and the Medical Record are outside that lane.
+- Malcolm appears to offer the same broad tailor interaction family as Kachine, but I have not selected any of his rows yet.
+- No movement, combat, terrain friction, pet order, door, trapdoor, coffer, target cursor, vendor window, skill gain, payment, discovery flag, or tarot state changed.
+
+Next pressure:
+
+Mira remains at `Point3D(3033,1103,0)`, facing east near Kachine and Malcolm, with Malcolm's tailor context menu open and read. The next client-visible decision is to choose Malcolm's buy, sell, speech/help, service, or Tailoring row; close the menu and try the clothier door or basement trapdoor; or leave the coffer alone and move on.
+
+## Run 304 - Malcolm Will Not Tailor My Shirt
+
+I start at `Point3D(3033,1103,0)`, facing east beside Kachine, with Malcolm's tailor context menu already open and read. The same clothier frontage fills the screen: my fox is close, Kachine is beside me, Malcolm is four steps northeast, Claire and Seward look like passersby, Elana is behind me near `Premier Gems`, and the dogs, cat, citizens, coffer, spinning wheel, looms, basement trapdoor, clothier door, and `The Lord's Clothiers` marker are all visible. No hostile is on the screen.
+
+**Beat 1**
+
+I choose Malcolm's visible tailor service row instead of buying random shop stock or spending my only coin on a lesson.
+
+The context menu closes. Malcolm gives the working quote out loud: robe or cloak alteration costs `5` gold, hat repair costs `10` gold per durability, and item identification costs `200` gold. A target cursor opens. This is not a buy list, sell list, or teaching payment.
+
+**Beat 2**
+
+I read the quote and target my equipped fancy shirt, because it is the only clothing I am actually wearing that sounds even close to a tailor job.
+
+Malcolm refuses it with `That does not need my services.` The target cursor clears. He does not take my `1` gold, does not alter the shirt, does not repair anything, does not identify anything, and does not open another window.
+
+Mechanical friction learned:
+
+- Malcolm's service row is the same visible tailor service family Kachine hinted at: robe/cloak normalization, hat repair, or tailor-identification.
+- A normal `FancyShirt` is not in the service lane. The service wants robe/outer-torso, cloak, hat, or a tailor-compatible unidentified item, not ordinary starter shirt clothing.
+- The service quotes are far above my cash except for the `5` gold robe/cloak alteration, and I still only have `1` gold.
+- Malcolm's buy, sell, speech/help, Tailoring lesson, the clothier door, basement trapdoor, and nearby coffer remain untested.
+- No movement, combat, terrain friction, pet order, vendor window, payment, item movement, skill gain, quest state, discovery flag, or tarot state changed.
+
+Next pressure:
+
+Mira remains at `Point3D(3033,1103,0)`, facing east beside Kachine and Malcolm, with no open gump, no open context menu, no vendor window, and no target cursor. The next client-visible decision is to context-click Malcolm again for buy, sell, speech/help, or Tailoring; try Kachine's untested buy/service/teaching rows; close out the clothier cluster by trying the door or basement trapdoor; or keep ignoring the coffer and move on.
+
+## Run 305 - Malcolm Does Not Want My Pack
+
+I start at `Point3D(3033,1103,0)`, facing east beside Kachine and a few steps from Malcolm. No gump, context menu, vendor window, or target cursor is open. The same safe Britain clothier frontage is visible: my fox is close, Kachine stands one tile east, Malcolm is northeast, Claire and Seward look like passersby, Elana and `Premier Gems` are behind me, and the clothier coffer, spinning wheel, looms, basement trapdoor, side door, and `The Lord's Clothiers` sign are all still on-screen. No hostile is in the 18-tile view.
+
+**Beat 1**
+
+I context-click Malcolm again and choose `Sell`, checking whether the tailor is any better than Kachine or Elana as a cash path.
+
+The context menu closes. No sell list opens. Malcolm says, `You have nothing I would be interested in.` My backpack is still only `1` gold, `10` cooked alien meat, and the `Medical Record`; the equipped fancy shirt, long pants, boots, and knife stay worn and are not part of this backpack sell check.
+
+**Beat 2**
+
+Before leaving him, I context-click Malcolm again and choose the visible speech/help row.
+
+The menu closes and Malcolm opens the same custom gump title Kachine used: `Altering Cloaks And Robes`. This is not a vendor buy list, not a sell list, not a Tailoring lesson, and not the service target cursor.
+
+**Beat 3**
+
+I read the gump instead of pressing past it.
+
+The message is clothing-service advice only: tailors can make odd-looking robes or cloaks look normal again, and hoods or cowls can copy color from something equipped, such as a robe. That confirms Malcolm's help row is informational. It does not alter my shirt, sell anything, teach Tailoring, set a discovery flag, or open a target cursor.
+
+Mechanical friction learned:
+
+- Malcolm's `Sell` row is a normal vendor sell check against the backpack. It is not a pawnshop for alien meat or paperwork.
+- The tailor sell lane can care about cloth, clothing, sewing tools, dyes, rare robes, and similar tailor stock, but this attempt had none of that in the backpack.
+- Equipped clothing is not automatically offered to the vendor sell list. My starter fancy shirt may be a tailor-shaped object in general, but it stayed equipped and was not part of this no-interest sell check.
+- Malcolm's speech/help row duplicates Kachine's robe/cloak information gump. It teaches player knowledge only; the actual paid service is still the separate target-cursor row.
+- No movement, combat, terrain friction, pet order, vendor window, payment, item movement, skill gain, quest state, discovery flag, hunger/thirst change, or tarot state changed.
+
+Next pressure:
+
+Mira remains at `Point3D(3033,1103,0)`, facing east beside Kachine and Malcolm, with Malcolm's `Altering Cloaks And Robes` speech gump open and read. The next client-visible decision is to close/OK the gump, then either test Malcolm's buy or Tailoring row, try Kachine's untested buy/service/Tailoring rows, test the clothier side door or basement trapdoor, or leave the coffer alone and move on.
+
+## Run 306 - Malcolm's Clothes Are Not One-Gold Clothes
+
+I start at `Point3D(3033,1103,0)`, facing east beside Kachine and Malcolm with Malcolm's `Altering Cloaks And Robes` gump still open and already read. The screen has not moved: my fox is close by, Kachine is one step east, Malcolm is a few steps northeast, Claire and Seward look like harmless passersby, Elana is behind me near `Premier Gems`, and the clothier coffer, spinning wheel, looms, basement trapdoor, side door, and `The Lord's Clothiers` sign are still visible. No hostile is in the 18-tile view.
+
+**Beat 1**
+
+I press the visible close/OK control on Malcolm's robe-and-cloak information gump.
+
+The gump closes. I am back on the same shopfront screen with no target cursor and no vendor list yet. Nothing in my pack, equipment, skills, follower state, quest state, discovery flags, gold, hunger, thirst, crime state, or position changes.
+
+**Beat 2**
+
+I context-click Malcolm again and choose his visible `Buy` row.
+
+The context menu closes and a vendor buy window opens. This is the first Malcolm row that shows actual shop stock instead of advice, a refusal line, or a target cursor.
+
+**Beat 3**
+
+I read the buy window without buying anything.
+
+The useful news is also the bad news: Malcolm's list is tailor-shaped, and the cheap end is still above my money. I can treat uncut cloth at `3` gold, scissors at `11` gold, and bolts of cloth at `100` gold as real clothier prices; any shirts, pants, robes, dye gear, sewing kit, or study-book stock that appears is also outside my `1` gold reach. I do not click a quantity or confirm a purchase.
+
+Mechanical friction learned:
+
+- Malcolm's `Buy` row is a normal vendor buy surface. It opens the buy list and sends the shop inventory; it does not spend gold by itself.
+- The reliable tailor stock floor already blocks me: `1` gold cannot buy uncut cloth at `3`, scissors at `11`, or a bolt at `100`.
+- The `Buy` row is useful for price knowledge, not an immediate survival upgrade with my current cash.
+- No movement, combat, terrain friction, pet order, payment, item movement, skill gain, quest state, discovery flag, hunger/thirst change, tarot state, door, trapdoor, or coffer interaction occurred.
+
+Next pressure:
+
+Mira remains at `Point3D(3033,1103,0)`, facing east beside Kachine and Malcolm, with Malcolm's vendor buy window open and read. The next client-visible decision is to close/cancel the buy window, try Malcolm's Tailoring lesson row, return to Kachine's untested buy/service/teaching rows, test the clothier side door or basement trapdoor, or keep ignoring the coffer and move on.
+
+## Run 307 - Malcolm Wants Payment Before Tailoring
+
+I start at `Point3D(3033,1103,0)`, facing east beside Kachine and Malcolm with Malcolm's vendor buy window still open and already read. The screen is the same safe Britain clothier frontage: my fox is close, Kachine is one step east, Malcolm is a few steps northeast, Claire and Seward look like passersby, Elana is behind me near `Premier Gems`, and the clothier coffer, spinning wheel, looms, basement trapdoor, side door, and `The Lord's Clothiers` marker are still visible. No hostile is in the 18-tile view.
+
+**Beat 1**
+
+I close/cancel Malcolm's buy window instead of clicking a quantity.
+
+The buy list disappears. I am back on the shopfront with no vendor window, no target cursor, and no item movement. My `1` gold is still in the backpack. The remembered price floor is unchanged: the cheap tailor shelf starts above me at `3` gold for uncut cloth.
+
+**Beat 2**
+
+I context-click Malcolm again and choose his visible `Tailoring` teaching row.
+
+The context menu closes. Malcolm does not open a gump or hand over skill for free. He gives the standard teacher pitch: he will teach all he knows if paid in full, and less payment teaches less. That means this row is a gold handoff path, not a free lesson button.
+
+**Beat 3**
+
+I read the offer and keep my only coin for the moment.
+
+I do not drag the `1` gold onto Malcolm. Nothing is purchased and my Tailoring skill does not move. The important part is the client state: I now have a pending Tailoring lesson offer from Malcolm, but using it means sacrificing actual cash, even if the shard would accept a smaller payment for a smaller lesson.
+
+Mechanical friction learned:
+
+- Malcolm's `Tailoring` row is visible from the normal vendor context menu because he has Tailoring above the teach threshold.
+- Selecting it sets up a paid teaching offer. The actual skill increase only happens after handing gold to Malcolm.
+- A partial payment is mechanically meaningful, but my whole cash stack is only `1` gold, so this is now a decision rather than a free progression step.
+- Malcolm's buy, sell, speech/help, and service rows are all understood enough to move on unless I deliberately spend gold or test doors/trapdoors.
+- No movement, combat, terrain friction, pet order, purchase, payment, item movement, skill gain, quest state, discovery flag, hunger/thirst change, tarot state, door, trapdoor, or coffer interaction occurred.
+
+Next pressure:
+
+Mira remains at `Point3D(3033,1103,0)`, facing east beside Kachine and Malcolm, with no open gump, no open context menu, no vendor window, and no target cursor. Malcolm's Tailoring payment offer is pending in the player/vendor teaching state. The next client-visible decision is to pay Malcolm some or all of the `1` gold for a tiny Tailoring lesson, test Kachine's still-untested buy/service/teaching rows, try the clothier side door or basement trapdoor, or leave the coffer alone and move on.
+
+## Run 308 - One Coin Buys One Stitch of Skill
+
+I start at `Point3D(3033,1103,0)`, facing east beside Kachine and Malcolm with no open gump, no context menu, no vendor window, and no target cursor. Malcolm's Tailoring lesson offer is still the active client-visible choice. The same safe Britain clothier frontage fills the screen: my fox is beside me, Kachine is one step east, Malcolm is a few steps northeast, Claire and Seward look like passersby, Elana is behind me near `Premier Gems`, and the clothier coffer, spinning wheel, looms, basement trapdoor, side door, and `The Lord's Clothiers` marker are still visible. No hostile is in the 18-tile view.
+
+**Beat 1**
+
+I drag my single `1` gold stack from the backpack onto Malcolm to accept the partial Tailoring lesson.
+
+He takes it. The lesson resolves with the teacher line and the skill-gain notice: Malcolm shows me something of how this is done, and my skill level increases. Since I only paid one coin, the visible result is tiny: Tailoring moves from `0.0` to `0.1`, the gold stack disappears, and the teaching offer clears.
+
+**Beat 2**
+
+I stop to read the result and check the practical fallout.
+
+My backpack now holds only cooked alien meat and the Medical Record. I have no gold left for Malcolm's cloth, scissors, service fee, identify fee, or more training. Position, facing, pet order, hunger, thirst, combat state, crime state, quest state, discovery flags, doors, trapdoor, coffer, vendor windows, context menus, gumps, and target cursor do not change.
+
+Mechanical friction learned:
+
+- Malcolm's visible `Tailoring` row is a two-step teacher flow: choose the row, then hand gold to the teacher.
+- Partial payment works. A `1` gold handoff gives only `0.1` Tailoring, then clears the pending learning state.
+- Spending the only coin removes the immediate buy/training/service options that require cash. The nearby Kachine rows, clothier door, basement trapdoor, and shopfront route remain the visible next tests.
+
+Next pressure:
+
+Mira remains at `Point3D(3033,1103,0)`, facing east beside Kachine and Malcolm, with no open gump, no open context menu, no vendor window, no target cursor, `0` gold, and `0.1` Tailoring. The next client-visible decision is to test Kachine's still-untested buy/service/teaching rows despite being broke, try the clothier side door or basement trapdoor, ignore the coffer, or leave the shopfront to look for another cash or water lead.
+
+## Run 309 - Kachine Has Cloth But No Free Cloth
+
+I start at `Point3D(3033,1103,0)`, facing east beside Kachine and Malcolm with no open gump, context menu, vendor window, or target cursor. The same Britain clothier frontage is on screen: my fox is still with me, Kachine is one step east, Malcolm is a few steps northeast, Claire and Seward look harmless, Elana is behind me near `Premier Gems`, and the clothier coffer, spinning wheel, looms, basement trapdoor, side door, and `The Lord's Clothiers` sign are visible. No hostile is in the 18-tile view.
+
+**Beat 1**
+
+I context-click Kachine again instead of leaving the shopfront.
+
+The menu is no longer just the old weaver choices. Because Malcolm's one-coin lesson left me with `0.1` Tailoring, Kachine now exposes a bulk-order row along with the normal `Buy`, `Sell`, robe/cloak help, clothing service, and `Tailoring` teaching rows. I read that as a real new job-looking option, but I do not click it yet.
+
+**Beat 2**
+
+I choose Kachine's visible `Buy` row first, using the shop list as price reconnaissance even though I have `0` gold.
+
+The context menu closes and a vendor buy window opens. Nothing is bought just by opening it.
+
+**Beat 3**
+
+I read the buy window and leave it open.
+
+Kachine's list confirms the broke-player problem from the clothier side. The reliable cloth shelf starts at `3` gold for uncut cloth and `100` gold for a bolt of cloth, and the weaver tool row includes scissors at `11` gold. Other weaver stock can include dyes or a dye tub at `8`, yarn at `18`, a tailoring study book at `7500`, or a canvas at `500`, but those are all fantasy prices while my backpack has no coin at all. I do not choose a quantity or confirm a purchase.
+
+Mechanical friction learned:
+
+- Kachine's `Buy` row is inspection-safe; opening it does not spend gold.
+- `0` gold blocks every visible useful weaver purchase, including the cheap cloth at `3` gold.
+- The new bulk-order row is a visible consequence of having any Tailoring skill. It is not tested yet, because I stopped with Kachine's buy list open and read.
+- No movement, combat, terrain friction, pet order, payment, item movement, skill gain, quest state, discovery flag, hunger/thirst change, tarot state, door, trapdoor, coffer, or target cursor changed.
+
+Next pressure:
+
+Mira remains at `Point3D(3033,1103,0)`, facing east beside Kachine and Malcolm, with Kachine's vendor buy window open and read, no context menu, no target cursor, `0` gold, and `0.1` Tailoring. The next client-visible decision is to close/cancel the buy window, then decide whether to test Kachine's newly visible bulk-order row, try her service or teaching row, test the clothier door or basement trapdoor, ignore the coffer, or leave for another cash or water lead.
+
+## Run 310 - Kachine Offers Work Before Cloth
+
+I start at `Point3D(3033,1103,0)`, facing east beside Kachine with her buy window still open and already read. The same Britain clothier frontage is on-screen: my fox is with me, Kachine is one step east, Malcolm is a few steps northeast, Claire and Seward look harmless, Elana is behind me near `Premier Gems`, and the coffer, spinning wheel, looms, basement trapdoor, side door, and `The Lord's Clothiers` sign remain visible. No hostile is in the 18-tile view.
+
+**Beat 1**
+
+I close/cancel Kachine's buy window instead of clicking a quantity I cannot pay for.
+
+The vendor list disappears. I am back on the shopfront with no vendor window, no target cursor, and no item movement. My pack is still just cooked alien meat and the Medical Record, with `0` gold.
+
+**Beat 2**
+
+I context-click Kachine again and choose the newly visible bulk-order row.
+
+This is not a free cloth shelf and not a teaching pitch. Kachine answers that I can get an order now, then opens a bulk-order accept gump.
+
+**Beat 3**
+
+I read the gump and stop before pressing either button.
+
+The window is a small tailoring work offer: title `A bulk order`, a request line thanking me and asking for help, `Amount to make`, `Item requested`, and the two visible choices `Ok` and `CANCEL`. At `0.1` Tailoring this is low-end cloth work, not leather, special material, or exceptional work. I do not accept it yet, so no deed is placed in my backpack and nothing is crafted, paid, bought, sold, moved, stolen, or trained.
+
+Mechanical friction learned:
+
+- Kachine's bulk-order row is usable with any positive Tailoring skill.
+- Clicking the row is inspection-safe enough to reveal the job offer; it does not spend gold.
+- The offer is a gump decision. `Ok` should place the deed in the backpack if there is room, while `CANCEL` should walk away from the offer.
+- The row is still not a cash source by itself. It creates a work obligation I probably cannot finish without cloth, tools, or money.
+- No movement, combat, terrain friction, pet order, purchase, payment, item movement, skill gain, quest state, discovery flag, hunger/thirst change, tarot state, door, trapdoor, coffer, or target cursor changed.
+
+Next pressure:
+
+Mira remains at `Point3D(3033,1103,0)`, facing east beside Kachine and Malcolm, with Kachine's small tailoring bulk-order accept gump open and read. The next client-visible decision is whether to press `Ok` and carry the deed anyway, press `CANCEL`, or close the gump before testing Kachine's service/teaching rows, the clothier door, the trapdoor, or another cash/water lead.
+
+## Run 311 - The Deed Fits, The Cloth Does Not
+
+I start at `Point3D(3033,1103,0)`, facing east beside Kachine, with her small tailoring bulk-order accept gump still open and already read. The same Britain clothier frontage fills the screen: my fox is with me, Kachine is one step east, Malcolm is a few steps northeast, Claire and Seward look harmless, Elana is behind me near `Premier Gems`, and the coffer, spinning wheel, looms, basement trapdoor, side door, and `The Lord's Clothiers` sign are all still visible. No hostile is in the 18-tile view.
+
+**Beat 1**
+
+I press `Ok` instead of walking away from the only job offer I have found.
+
+The gump closes and the order becomes an actual backpack item. The client tells me the bulk order deed has been placed in my backpack. It does not hand me cloth, scissors, gold, or skill. My pack is now cooked alien meat, the Medical Record, and a small tailor bulk-order deed; my cash is still `0`.
+
+**Beat 2**
+
+I open the backpack deed and read it before trying to combine anything.
+
+The deed opens its own `A bulk order` window. It repeats the same live request from Kachine's offer, shows `Amount to make`, `Amount finished: 0`, and `Item requested`, then gives me `Combine this deed with the item requested` and `EXIT`. That means the job is now portable, but it is still not solvable from my current pack. I have no cloth, no scissors, no sewing kit, and no money to buy the cheap `3` gold cloth from the same shop. I do not press `Combine`, so no target cursor opens.
+
+Mechanical friction learned:
+
+- Accepting the visible small BOD gump is free if the backpack has room, and it places a blessed bulk-order deed in the backpack.
+- The accept button is not a reward payout. It creates a work ticket; payment and rewards require filling and turning in the deed later.
+- Double-clicking the deed from the backpack opens the readable order gump. The next real action on that gump is `Combine`, which would need the requested crafted item in the backpack.
+- At `0.1` Tailoring and `0` gold, this is useful route knowledge rather than an immediate cash path. I still need materials, tools, or money before the order can matter.
+- No movement, combat, terrain friction, pet order, purchase, payment, sell list, skill gain, quest state, discovery flag, hunger/thirst change, tarot state, door, trapdoor, coffer, or repeat bulk-order timer test occurred.
+
+Next pressure:
+
+Mira remains at `Point3D(3033,1103,0)`, facing east beside Kachine and Malcolm, with the accepted small tailor bulk-order deed gump open and read. The next client-visible decision is to press `EXIT`, avoid `Combine` until there is cloth, then test Kachine's service/teaching rows, try the clothier door or trapdoor, or leave the shopfront for another cash/material lead.
+
+## Run 312 - Kachine Teaches Only After Coin
+
+I start at `Point3D(3033,1103,0)`, facing east beside Kachine, with the accepted small tailor bulk-order deed gump still open and already read. The same safe-looking Britain clothier frontage is on screen: my fox is beside me, Kachine is one step east, Malcolm is northeast, Claire and Seward look like passersby, Elana is behind me near `Premier Gems`, and the coffer, spinning wheel, looms, basement trapdoor, side door, and `The Lord's Clothiers` sign are still visible. No hostile is in the 18-tile view.
+
+**Beat 1**
+
+I press `EXIT` on the deed gump.
+
+The deed window closes cleanly. I do not press `Combine`, so no target cursor appears and the deed stays as a backpack item instead of becoming an active combine attempt. My pack is still cooked alien meat, the Medical Record, and the blessed small tailor bulk-order deed.
+
+**Beat 2**
+
+I context-click Kachine again instead of walking away.
+
+Her familiar menu is still reachable from one tile away. The important visible rows are the bulk-order row, `Buy`, `Sell`, robe/cloak help, clothing service, and `Tailoring` teaching. Since the deed route is blocked by tools and cloth, I aim at the teaching row rather than opening the shop list again.
+
+**Beat 3**
+
+I choose Kachine's visible `Tailoring` row.
+
+The menu closes and Kachine gives the normal teacher quote: she will teach all she knows if paid the amount in full, and less gold teaches less. The exact number is visible in the client message at the moment, but I have `0` gold, so there is nothing useful to drag onto her. No skill moves, no item moves, no vendor window opens, and no target cursor appears. This is a pending payment offer, not a free starter lesson.
+
+Mechanical friction learned:
+
+- The `EXIT` control on the accepted small BOD deed only closes the readable deed window. It does not delete the deed, combine an item, pay a reward, or open a target cursor.
+- Kachine's `Tailoring` row is the same teacher flow Malcolm used: click the row, receive a price quote, then pay gold by dropping it onto the teacher.
+- With `0` gold, the teaching quote is informational only. Partial teaching would require at least one coin, and full teaching would require the quoted amount.
+- Kachine's service row, the clothier door, the basement trapdoor, and both visible coffers remain untested. The deed still cannot be filled without cloth, tools, and a matching crafted item.
+- No movement, combat, terrain friction, pet order, purchase, sale, payment, item movement, skill gain, quest state, discovery flag, hunger/thirst change, tarot state, door, trapdoor, coffer, or repeat bulk-order timer test occurred.
+
+Next pressure:
+
+Mira remains at `Point3D(3033,1103,0)`, facing east beside Kachine and Malcolm, with no open gump, no context menu, no vendor window, no target cursor, `0` gold, `0.1` Tailoring, and Kachine's unpaid Tailoring lesson offer pending. The next client-visible decision is to ignore the impossible lesson until she finds coin, test Kachine's service row, try the clothier door or basement trapdoor, avoid the visible coffers unless deliberately testing theft friction, or leave the shopfront for another cash/material lead.
+
+## Run 313 - Kachine Also Wants a Target
+
+I start at `Point3D(3033,1103,0)`, facing east beside Kachine and Malcolm with no open gump, context menu, vendor window, or target cursor. I am still broke: cooked alien meat, the Medical Record, the blessed small tailor bulk-order deed, starter clothes, boots, and knife, but `0` gold. The screen is still the Britain clothier frontage. Kachine is one step east, Malcolm is northeast, Elana is behind me near `Premier Gems`, my fox is beside me by continuity, and the visible shop props are the coffer, spinning wheel, looms, basement trapdoor, side door, and `The Lord's Clothiers` sign. Claire, Seward, citizens, cats, and dogs look like town traffic, not threats.
+
+**Beat 1**
+
+I context-click Kachine again and read the menu instead of walking away.
+
+The same normal rows are visible: bulk order, `Buy`, `Sell`, robe/cloak help, clothing service, and `Tailoring`. The Tailoring quote is useless while I have no coin, and the deed route is still blocked by cloth and tools, so the only untested vendor row that does not immediately require a purchase window is service.
+
+**Beat 2**
+
+I choose Kachine's visible clothing service row.
+
+The menu closes. Kachine gives the same practical service quote Malcolm used: robe or cloak normalization costs `5` gold, hat repair costs `10` gold per durability, and identify costs `200` gold. Then the client gives me a target cursor. Nothing is paid, bought, repaired, identified, moved, trained, discovered, stolen, or crafted just by opening the service target.
+
+**Beat 3**
+
+I stop and read the prompt instead of clicking randomly into the backpack.
+
+This is now a target-choice problem, not a travel problem. I do not visibly own a robe, cloak, hat, or tailor-identifiable unidentified item, and I have `0` gold even if I did. The Medical Record has already failed other appraisal/identify-style attempts, and the fancy shirt already failed Malcolm's tailor service. I leave the cursor unresolved because the client is waiting for an item target or a cancel.
+
+Mechanical friction learned:
+
+- Kachine's service row is not a free cloth or repair path. It opens a target cursor after quoting prices.
+- The visible prices are `5` gold for robe/cloak normalization, `10` gold per hat durability, and `200` gold for identification.
+- With `0` gold and no obvious robe, cloak, hat, or tailor-identifiable item, the service row adds no immediate progress.
+- No movement, combat, terrain friction, pet order, purchase, sale, payment, item movement, skill gain, quest state, discovery flag, hunger/thirst change, tarot state, door, trapdoor, coffer, or bulk-order timer test occurred.
+
+Next pressure:
+
+Mira remains at `Point3D(3033,1103,0)`, facing east beside Kachine and Malcolm, with Kachine's service target cursor active. The next client-visible decision is to cancel the cursor or deliberately target a visible item, then decide whether to try the clothier door/trapdoor, avoid the coffers, or leave the shopfront for another cash/material lead.
+
+## Run 314 - The Shirt Is Not a Robe
+
+I start at `Point3D(3033,1103,0)`, facing east beside Kachine and Malcolm, with Kachine's service target cursor still active from the last run. The screen has not moved: my fox is beside me by continuity, Kachine is one step east, Malcolm is northeast, Elana is behind me near `Premier Gems`, and the same clothier coffer, spinning wheel, looms, basement trapdoor, side door, and `The Lord's Clothiers` sign are visible. Claire, Seward, citizens, cats, and dogs still look like safe town traffic, not a fight.
+
+**Beat 1**
+
+I use the active service cursor on the one equipped clothing item that is actually mine and visible in the paperdoll: the fancy shirt.
+
+Kachine answers the way Malcolm did earlier: `That does not need my services.` The target cursor clears. No payment is taken, no item changes, no identification happens, and no new gump opens.
+
+**Beat 2**
+
+I stop and read the result instead of immediately clicking the trapdoor or a coffer.
+
+That matters because the service row is now resolved as a dead end for starter clothing. Kachine is not asking for a second target, and I am back to an ordinary shopfront decision with `0` gold, `0.1` Tailoring, a blessed small tailor bulk-order deed I cannot fill, cooked alien meat, the Medical Record, starter clothes, boots, and the knife.
+
+Mechanical friction learned:
+
+- Kachine's service target rejects the starter fancy shirt with `That does not need my services.`
+- The weaver service path is narrower than the menu text sounds: it helps specific robe/cloak, hat-repair, or tailor-identification targets, not arbitrary starter clothing.
+- Resolving the target cursor does not spend gold, move an item, train Tailoring, open a vendor window, change hunger/thirst, alter quest or discovery flags, or start a crime/theft flow.
+- The clothier door, basement trapdoor, and nearby coffers are still visible and untested.
+
+Next pressure:
+
+Mira remains at `Point3D(3033,1103,0)`, facing east beside Kachine and Malcolm, with no open gump, no context menu, no vendor window, and no target cursor. The next client-visible decision is now clean: try the clothier side door or basement trapdoor, avoid or deliberately test the coffers, or leave the shopfront for a cash/material lead.
+
+## Run 315 - The Trapdoor Really Drops
+
+I start at `Point3D(3033,1103,0)`, facing east beside Kachine and Malcolm with no open gump, context menu, vendor window, or target cursor. The same clothier screen is still in front of me: Kachine, Malcolm, Elana behind me, my fox, town animals and citizens, two visible coffers I am still not treating as free loot, the spinning wheel, looms, the clothier side door, and the basement trapdoor. Nobody on-screen looks hostile.
+
+**Beat 1**
+
+I walk north along the shop-floor edge until the trapdoor is close enough to use.
+
+I do not step into the coffer, loom, or spinning wheel. This is just a short visible reposition from the vendor spot to the west/southwest side of the trapdoor, around `Point3D(3033,1098,0)`. No menu opens, no creature reacts, and the fox keeps up.
+
+**Beat 2**
+
+I double-click the visible basement trapdoor.
+
+It is not a chest. It works like a public transition: the screen jumps, a door/teleport sound plays, and I land at `Point3D(4100,3534,20)` in `the Basement`. My fox comes with me. I still have `0` gold, cooked alien meat, the Medical Record, the blessed small tailor bulk-order deed, starter clothes, boots, and the knife.
+
+**Beat 3**
+
+I stop and read the new screen instead of immediately clicking another door.
+
+The basement is a public indoor workshop/social space, not a dark monster room from the first glance. I can see nearby public doors north of me, another high door to the east, lower cloth-area doorways farther southeast, looms, a spinning wheel, a stretched hide, Barclay the leather tradesman, a few passive-looking patrons, and a weird `barbaric satchel` at the south edge of view. There is no hostile inside the 18-tile screen.
+
+Mechanical friction learned:
+
+- The clothier basement trapdoor is a visible transition, not loot, and it only works after I move within normal use range.
+- The clothier branch sends me to the Basement entry at `Point3D(4100,3534,20)`.
+- The trapdoor stores a return anchor at the tile I used it from, so the nearby public doors may be the way back out, but I have not tested them yet.
+- The Basement immediately exposes more crafting/social leads, especially Barclay and the visible cloth/leather props, but none of that puts money or cloth into my backpack just by arriving.
+- No combat, payment, item movement, skill gain, hunger/thirst change, quest flag, discovery flag, crime state, vendor window, gump, or target cursor occurred.
+
+Next pressure:
+
+Mira is now at `Point3D(4100,3534,20)` in `the Basement`, facing east with the fox still following and no open UI. The next client-visible decision is to try one of the nearby public doors, approach Barclay or the crafting props, inspect the visible barbaric satchel, or walk toward the lower cloth doorway.
+
+## Run 316 - The Basement Door Remembers The Hatch
+
+I start at `Point3D(4100,3534,20)` in `the Basement`, facing east with no gump, context menu, vendor window, or target cursor. The fox is still with me by continuity. The room is still a public workshop/social basement from the first glance: two doors are just north of me, Barclay and a stretched hide are east on the lower floor, looms and a spinning wheel sit nearby, passive patrons are farther south, and the barbaric satchel is still only an odd thing at the south edge of sight. Nothing on screen looks hostile.
+
+**Beat 1**
+
+I stop long enough to decide whether this place has an obvious exit before going deeper.
+
+The closest thing that looks like an exit is the plain public door two tiles north. Barclay is still tempting, but I do not want to strand myself in a basement before proving the way back. I do not touch the satchel, lower cloth doorway, or props.
+
+**Beat 2**
+
+I double-click the north public door beside the entry.
+
+The door does not open a menu. It gives the same kind of door/teleport snap and drops me back at `Point3D(3033,1098,0)` beside The Lord's Clothiers trapdoor and spinning wheel. The fox comes with me. I am back in the Britain clothier screen with Kachine south/east, Malcolm southeast, Elana farther south/west, the coffer still close enough to be suspicious, the clothier side door still east, and ordinary town people and animals around. No hostile appears.
+
+**Beat 3**
+
+I stop and read the returned screen instead of immediately diving back down.
+
+This proved the basement entry is not a one-way trap. The return uses the remembered hatch spot, then that remembered public-door return is gone. If I want to go back to Barclay and the basement props, I can use the trapdoor again, but this tile is now just the ordinary clothier shopfront with no open UI.
+
+Mechanical friction learned:
+
+- The nearby Basement public door is a real exit when the character has a stored public-door return from the trapdoor.
+- The exit returns to the exact remembered clothier-side use point, `Point3D(3033,1098,0)`, near the original hatch.
+- Using the exit clears the stored return anchor. Re-entering the basement will need the visible trapdoor again.
+- The public door does not open a gump, vendor window, context menu, target cursor, quest state, discovery flag, crime flag, payment, loot, item move, skill gain, hunger/thirst change, or combat state.
+- Barclay, the basement crafting props, lower basement doorway, and barbaric satchel remain untested because I chose the exit first.
+
+Next pressure:
+
+Mira is back at `Point3D(3033,1098,0)` beside The Lord's Clothiers trapdoor, facing east with no open UI and no target cursor. The next client-visible decision is to re-enter the basement for Barclay and the crafting props, try the clothier side door, walk back to Kachine/Malcolm, leave the shopfront for another money lead, or deliberately test a nearby coffer/theft path.
+
+## Run 317 - The Clothier Side Door Opens
+
+I start at `Point3D(3033,1098,0)` beside The Lord's Clothiers trapdoor, facing east with no gump, context menu, vendor window, or target cursor open. The fox is with me by continuity. The screen is still safe-looking Britain shopfront: Kachine and Malcolm are southeast, Elana is farther southwest near Premier Gems, dogs/cats/townsfolk are just town traffic, and the close temptations are the spinning wheel, looms, coffer, trapdoor, and untried clothier side door. No hostile is on the screen.
+
+**Beat 1**
+
+I walk east/southeast around the spinning wheel and trapdoor until the clothier side door is within reach.
+
+This is a short shop-floor reposition, not a road run. I stop around `Point3D(3037,1099,0)`, close enough to use the door without stepping into the coffer or bouncing off the props. Malcolm is now practically beside me, Kachine is just south/west, and the fox keeps up.
+
+**Beat 2**
+
+I double-click the visible DarkWoodDoor.
+
+It behaves like a normal door. No menu opens, no locked message appears, and no target cursor or vendor window appears. The door swings open with ordinary door feedback, leaving the doorway as the new visible choice.
+
+**Beat 3**
+
+I stop and look at the open doorway before committing through it.
+
+The important thing is that this side door is not another hidden toll, card gate, basement jump, or theft prompt. I still have `0` gold, cooked alien meat, the Medical Record, the blessed small tailor bulk-order deed, starter clothes, boots, and the knife. Hunger and thirst still feel full, nothing attacks, and the coffer stays ignored.
+
+Mechanical friction learned:
+
+- The clothier side door is reachable by a short normal reposition from the trapdoor side.
+- The visible DarkWoodDoor opens normally once Mira is within use range.
+- Opening it does not charge gold, train a skill, change inventory, open a gump, open a context menu, create a target cursor, trigger a crime flag, move to the Basement, or change any discovery flag.
+- The next unknown is not the door itself, but whether stepping through the open doorway exposes anything useful or just more shop geometry.
+
+Next pressure:
+
+Mira is at `Point3D(3037,1099,0)`, facing east beside the now-open clothier side door, with no open UI and no target cursor. The next client-visible decision is to step through the open doorway, back away to the trapdoor and basement route, talk to Malcolm/Kachine again, leave the shopfront for a cash/material lead, or deliberately test the nearby coffer/theft path.
+
+## Run 318 - Through the Clothier Doorway
+
+I start at `Point3D(3037,1099,0)`, facing east beside the opened DarkWoodDoor at The Lord's Clothiers. There is no gump, vendor window, context menu, or target cursor. Malcolm is almost beside me, Kachine is a few steps back, the fox is with me by follow continuity, and the only close objects that matter are the open side doorway, the trapdoor behind me, the loom and spinning wheel, and the coffer I am still not treating as free loot. The townsfolk, dogs, and cats on screen look passive.
+
+**Beat 1**
+
+I step through the already-open side doorway instead of clicking another vendor or touching the coffer.
+
+This is just threshold movement, not a teleport. I end up at about `Point3D(3039,1098,0)`, still in the same Britain clothier screen. No menu opens, no locked message appears, and nothing asks for a target. The sign for `The Lord's Clothiers` is right above me, Malcolm and Kachine are still behind me, Premier Gems remains off to the west/southwest, and the trapdoor is still visible behind the shop props.
+
+**Beat 2**
+
+I stop and read the screen from the doorway before turning this into a longer town run.
+
+The door did not reveal a hidden vendor, chest, toll, region jump, or tutorial gump. The useful new thing is positioning: I am no longer stuck deciding whether the door works. From here the world-map overlay points to nearby town leads: Premier Gems is still close but already mostly exhausted, Profuse Provisions sits west/southwest as a possible food/vendor cash test, Rolling Log Goods and the bank sit north, and the Basement route remains one trapdoor behind me.
+
+Mechanical friction learned:
+
+- Stepping through the opened clothier side door is ordinary local movement, not a scripted transition.
+- The doorway does not open a gump, vendor window, context menu, target cursor, lock message, crime warning, combat state, payment prompt, item move, skill change, hunger/thirst change, or discovery flag.
+- The live screen still shows only passive town traffic and shop objects within range; no hostile forces a survival beat.
+- The next real choice is route selection, not door handling: head west/southwest toward Profuse Provisions to test whether a provisioner will buy or help with starter food, return to the Basement for Barclay/crafting props, or leave the shop cluster for another marked Britain lead.
+
+Next pressure:
+
+Mira is at about `Point3D(3039,1098,0)`, facing east/northeast at The Lord's Clothiers threshold, with no open UI and no target cursor. The next client-visible decision is to choose a route: west/southwest toward Profuse Provisions, back through the shop to the basement trapdoor and Barclay, north toward bank/lumber leads, or deliberately test theft friction on a coffer.
+
+## Run 319 - Profuse Provisions Has A Door First
+
+I start at about `Point3D(3039,1098,0)`, just outside The Lord's Clothiers side doorway. No gump, vendor window, context menu, or target cursor is open. The fox is with me by follow continuity. Malcolm and Kachine are behind me, Premier Gems is off west/southwest, the clothier trapdoor is still behind the shop props, and the nearby coffer stays ignored. The overlay points to Profuse Provisions farther west/southwest, and nothing on the screen looks hostile.
+
+**Beat 1**
+
+I run west/southwest through the open Britain shopfront/street gap toward the Profuse Provisions marker.
+
+This is ordinary town movement, not a dungeon route. I pass the passive dog, adventurer traffic, Premier Gems edge, and jeweler frontage without stopping. The provisioner sign and door come into view, and Suki the provisioner is visible inside the shop. A town guard is also visible southwest of the shopfront, which makes the nearby coffers feel even less like free starter loot.
+
+**Beat 2**
+
+I stop at the Profuse Provisions doorway, around `Point3D(3012,1110,0)`, and double-click the visible DarkWoodDoor at `Point3D(3011,1110,0)`.
+
+The door behaves like a normal shop door. It swings open with no locked message, toll, gump, vendor window, context menu, target cursor, item movement, crime warning, teleport, or discovery flag. This is a door, not the provisioner interaction.
+
+**Beat 3**
+
+I step through the open doorway and stop just inside, around `Point3D(3010,1110,0)`, facing toward Suki.
+
+Now the useful screen is the shop interior threshold. Suki is only a few tiles north, the `Profuse Provisions` sign is right beside me, a strange `oak shelf` public-door object and at least one coffer are visible inside, Premier Gems is still visible east, and a guard and townsfolk are nearby outside. I do not context-click Suki yet. I do not open the coffer or touch the oak shelf. The next action should be the provisioner menu, not pretending the shop itself paid me.
+
+Mechanical friction learned:
+
+- The west/southwest route from The Lord's Clothiers to Profuse Provisions is routine Britain town movement. No hostile entered the 0-10 tile threat range, and no terrain failure or custom route gate appeared.
+- Profuse Provisions is a real visible shop target: sign at `Point3D(3009,1111,0)`, Suki the provisioner at `Point3D(3009,1104,0)`, and a DarkWoodDoor at `Point3D(3011,1110,0)`.
+- Opening and crossing the provisioner door does not itself open the buy/sell surface, move items, create gold, set a target cursor, or change quest/discovery state.
+- The visible coffer and `oak shelf` inside Profuse Provisions are separate interactives. They are not assumed safe loot or a food source just because I reached the shop.
+
+Next pressure:
+
+Mira is inside the Profuse Provisions threshold at about `Point3D(3010,1110,0)`, facing north toward Suki, with no open UI and no target cursor. The next client-visible decision is to context-click Suki for a normal provisioner interaction, or deliberately inspect the visible oak shelf/coffer only if I am choosing that risk instead of the vendor path.
+
+## Run 320 - Suki Does Not Want My Starter Pack
+
+I start just inside Profuse Provisions at about `Point3D(3010,1110,0)`, facing north with no gump, vendor window, context menu, or target cursor open. Suki is six tiles north. Taylor, Elana, guards, citizens, dogs, and a cat are all normal town traffic around the shop. The same coffer and oak shelf are close enough to tempt me, but the guard outside still makes the coffer feel like trouble, not food.
+
+**Beat 1**
+
+I single-click/context-click Suki and read the menu before pressing anything.
+
+This is the normal vendor surface, not a hidden helper. The visible choices are the usual provisioner things: buy, sell, a talk/info row, and a paid examine/unusual-item service. Since I have `0` gold, buy is a window-shopping trap. Since the goal is to find starter cash, I aim at Sell.
+
+**Beat 2**
+
+I choose the visible Sell row.
+
+Suki does not open a sell list. She simply says, `You have nothing I would be interested in.` The context menu closes. No vendor window stays open, no target cursor appears, and no item leaves my backpack.
+
+**Beat 3**
+
+I stop and read that result instead of immediately poking the coffer.
+
+That closes the clean provisioner-cash test. My cooked alien meat, Medical Record, and blessed tailor bulk-order deed are still in the backpack; gold is still `0`; hunger and thirst are still full; and the fox is still with me. Suki may still be useful for buying survival gear later, reading her talk page, or examining an unusual item if I ever have gold, but her Sell row is not the starter payday.
+
+Mechanical friction learned:
+
+- Suki's provisioner context menu exposes normal Buy/Sell rows, a Talk/info row, and an unusual-item examine service.
+- Choosing Sell with the current starter backpack does not open a sell list. Suki says `You have nothing I would be interested in.`
+- The provisioner buy stock includes survival goods such as bags, torches, food, waterskins, books, tents, games, and a mercantile/camping study-book chance, but `0` gold keeps that path informational for now.
+- The current starter inventory remains unchanged: cooked alien meat, Medical Record, blessed small tailor bulk-order deed, starter clothes, boots, and knife.
+- The visible coffer and oak shelf remain separate risks/unknowns. Suki's rejected Sell row does not make them safe, free, or part of the vendor flow.
+
+Next pressure:
+
+Mira is still inside Profuse Provisions at about `Point3D(3010,1110,0)`, facing north toward Suki, with no open UI and no target cursor. The clean next choices are to open Suki's Talk/info page, use the paid examine service only after finding gold, leave for another cash lead, or deliberately test the oak shelf/coffer risk.
+
+## Run 321 - Suki Talks Survival, Not Cash
+
+I start inside Profuse Provisions at about `Point3D(3010,1110,0)`, facing north. Suki is still six tiles north, the fox is beside me by follow continuity, and there is no open gump, vendor window, context menu, or target cursor. The coffer and oak shelf are still close enough to click, but the guard outside and Suki's shop floor keep those in the "deliberate risk" bucket. Taylor, Elana, citizens, dogs, and a cat remain passive town context, not threats.
+
+**Beat 1**
+
+I context-click Suki again and read the menu instead of going straight for the coffer.
+
+This is the same normal provisioner surface I saw before. Buy and Sell are there, the paid unusual-item examine row is there, and the Talk/info row is still visible. Since Sell already failed and Buy needs gold, I choose the row that costs nothing and actually teaches something.
+
+**Beat 2**
+
+I choose Suki's visible Talk/info row.
+
+A `SpeechGump` opens titled `The Right Survival Gear`. Suki does not hand me food, coins, or gear. No target cursor appears. The shop floor stays the same behind the paper, and the close button is the only obvious control.
+
+**Beat 3**
+
+I read the gump instead of pressing through it.
+
+The useful parts are practical: light sources burn out; a `10-foot pole` can passively check many invisible traps if I can buy or find one; bedrolls, campfires, small tents, and better camping tents are survival tools; strong Camping can turn tents into longer-term safety, food, water, and bank organization; merchant crates are a home/crafting money route; and Suki can sometimes appraise odd decorative/value items and name a buyer. That is information, not a payout.
+
+Mechanical friction learned:
+
+- Suki's Talk/info row is accessible from the visible context menu and opens an information gump titled `The Right Survival Gear`.
+- The gump is closable, draggable, not resizable, and has a scrollable body plus a close button.
+- Reading it does not change gold, inventory, skills, hunger, thirst, combat state, criminal state, discovery flags, target cursor, vendor window, or location.
+- The Talk text reinforces that the paid examine service is for unusual decorative/value items, and that survival tools still require finding or buying gear.
+- The coffer and oak shelf remain separate unresolved clicks. The survival talk does not make them safe, free, or part of Suki's vendor flow.
+
+Next pressure:
+
+Mira is still at about `Point3D(3010,1110,0)`, facing north inside Profuse Provisions, with Suki's `The Right Survival Gear` gump open and read. The next client-visible decision is to close the gump and choose a lead: search for a way to get a 10-foot pole/tent money, leave for another marked town service, re-enter the Basement for Barclay/crafting clues, or deliberately test the oak shelf/coffer risk.
+
+## Run 322 - The Empty Shelf Is A Door
+
+I start inside Profuse Provisions at about `Point3D(3010,1110,0)`, facing north with Suki's `The Right Survival Gear` gump still open and already read. The screen behind it is still a safe-looking Britain shop: Suki is a few steps north, the fox is beside me by follow continuity, Taylor and Elana are nearby town service people, Paulin and Gabrielle are guards, citizens and pets are passive, and no hostile is on the current screen. The close coffer still looks like theft bait, but the `oak shelf` is a visible oddity and Suki's talk made it clear the vendor path did not hand me cash.
+
+**Beat 1**
+
+I close Suki's survival gump.
+
+The paper disappears. No vendor list opens, no target cursor appears, and no food, gold, light, pole, bedroll, tent, skill, hunger, thirst, crime flag, or discovery flag changes. I am just back in the shop.
+
+**Beat 2**
+
+I step a couple of tiles west/north inside the shop to get within use range of the `oak shelf`, stopping around `Point3D(3008,1109,0)`.
+
+This is short shop-floor movement around the coffer, not a pathing problem. I do not open the coffer, do not talk to Suki again, and do not touch the door outside. The shelf is now close enough to use.
+
+**Beat 3**
+
+I double-click the visible `oak shelf`.
+
+It is not a food shelf or a container. It acts like a public-door transition: the client plays the door/teleport flow, brings the fox with me, and drops me into the Thieves Guild at about `Point3D(3425,3187,17)`. I stop immediately because the screen changed from a provisioner shop to a hidden guild interior.
+
+The new screen is dense but not immediately violent. I can see an exit `oak shelf` almost beside me, a `Bank Vault`, practice lockboxes from easy through hard, a training dummy, a pickpocket dip, strong wood doors, a secret-looking dungeon door, a `Stealing the Past` board, games on tables, Iain the thief, Lore the thief guildmaster, Zarek the waiter, tavern patrons, Stefano, Ragnar the alchemist, and a greater-strength cauldron. No gump or target cursor is open.
+
+Mechanical friction learned:
+
+- The Profuse Provisions `oak shelf` is a visible `PublicDoor`, not loot, storage, or ordinary decoration.
+- From the original shop threshold tile it is too far to use cleanly, so the normal player has to step closer first.
+- Double-clicking it stores a public-door return anchor at the use tile and teleports to the Thieves Guild destination at `Point3D(3425,3187,17)`.
+- The shelf route does not require gold, guild membership, a tarot card, a discovery flag, a target cursor, or a private helper call.
+- The transition itself does not award money, open a vendor window, open a gump, train a skill, change inventory, set a quest, flag a crime, alter hunger/thirst, or spend resources.
+- The new guild screen exposes theft-training surfaces and NPCs, but seeing them is not the same as joining the guild, starting a job, opening the bank vault, or stealing from anything.
+
+Next pressure:
+
+Mira is now at about `Point3D(3425,3187,17)` in the Thieves Guild, facing west with no open UI and no target cursor. The next client-visible decision is to read the new room before touching anything: talk to Lore or Iain, read `Stealing the Past`, test the Bank Vault, inspect the practice lockboxes or pickpocket dip, open the nearby doors, or use the exit shelf to return to Profuse Provisions.
+
+## Run 323 - Iain Opens A Thief Lesson
+
+I start at about `Point3D(3425,3187,17)` inside the Thieves Guild, still facing the new room with no gump, vendor window, context menu, or target cursor open. The fox is beside me. Iain is only a few steps southeast, Lore is farther west, and the screen is crowded with thief tools: the exit `oak shelf`, a `Bank Vault`, practice lockboxes, a training dummy, a pickpocket dip, strong wood doors, a secret-looking dungeon door, the `Stealing the Past` board, and tavern/game clutter. None of the visible people are acting hostile.
+
+**Beat 1**
+
+I stop and read the room before moving deeper.
+
+The guild is dense, but it is not an ambush screen. Iain and Lore look like the cleanest social leads. The board and training props look useful, but the board is across the room and the lockboxes/dip are training surfaces, not food or cash. The Bank Vault is right beside me, but prior bank checks were empty, so I do not spend the first guild action there.
+
+**Beat 2**
+
+I context-click Iain and read the menu.
+
+He is a normal thief vendor, not a hidden teleport. The visible choices are the standard buy/sell rows, a talk/info row for `The Art Of Thievery`, and a paid service to unlock a box. With `0` gold, the paid unlock row is not the first thing to press. Buy is window shopping. Sell is possible later, but I still have only starter items and one blessed tailoring deed. The free talk row is the safest next press.
+
+**Beat 3**
+
+I choose Iain's visible talk/info row.
+
+A `SpeechGump` opens titled `The Art Of Thievery`. It is closable and draggable, with a scrollable body and a close button. I stop there because the new paper is the screen now; reading it comes before touching Lore, the board, the vault, the lockboxes, or the exit shelf.
+
+Mechanical friction learned:
+
+- Iain is a thief vendor with normal Buy/Sell rows plus a free talk/info row and a paid box-unlock service.
+- Choosing the talk row opens `The Art Of Thievery`; it does not open a buy list, sell list, target cursor, or job note.
+- No gold, inventory, hunger, thirst, skill, guild membership, criminal state, combat state, discovery flag, location, or follower state changed.
+- The paid unlock-box route remains untested and would require choosing that visible service before targeting anything; I did not spend or target.
+- Lore, `Stealing the Past`, the Bank Vault, the practice lockboxes, the pickpocket dip, doors, games, and the exit shelf remain visible but untouched.
+
+Next pressure:
+
+Mira is still at about `Point3D(3425,3187,17)` in the Thieves Guild with Iain's `The Art Of Thievery` gump open and unread. The next client-visible decision is to read that visible gump, then decide whether to close it and test Lore, the free/paid thief services, the board, the vault, the training props, or the exit shelf.
+
+## Run 324 - Iain's Lesson Points At Thief Work
+
+I start in the same spot inside the Thieves Guild, at about `Point3D(3425,3187,17)`, with the fox beside me and Iain's `The Art Of Thievery` paper still covering the screen. Nothing is attacking me. The room behind the paper still has Lore, Iain, the Bank Vault, lockboxes, the pickpocket dip, the `Stealing the Past` board, doors, tavern people, and the exit shelf, but the open gump is the thing I have to deal with first.
+
+**Beat 1**
+
+I read Iain's lesson instead of pressing blindly past it.
+
+It is not a payout, a job contract, or a vendor list. It is thief advice. Iain says a thief can be hired to open stubborn locked boxes, that dungeon stealing has its own profit route, that stealth training starts after getting hiding to `30.0`, and that traps and trap-removal matter. The town route is more dangerous than a shop counter: snoop merchants or coffers to see whether gold is present, then steal, with guards as the obvious punishment if I am caught. The most actionable line is that the thief guildmaster can give shady jobs even to non-members.
+
+**Beat 2**
+
+I close the `The Art Of Thievery` gump.
+
+The paper goes away. I do not get gold, a job note, a target cursor, a buy list, a sell list, a skill gain, guild membership, a criminal flag, or a discovery flag. Iain's talk was a lesson only. With the screen clear again, Lore is the strongest social lead because the lesson explicitly pointed at the guildmaster, but I stop before moving or choosing a new context-menu row.
+
+Mechanical friction learned:
+
+- Iain's free talk row is informational only; reading and closing it does not mutate the character.
+- The thief-cash path is not "take from shop shelf." The visible advice points toward snooping, stealing, traps, guards, dungeon theft, and guildmaster jobs.
+- Iain's paid unlock-box service remains separate from the talk lesson and still untested.
+- Lore, `Stealing the Past`, the Bank Vault, practice lockboxes, pickpocket dip, doors, games, cauldron, and the exit shelf remain visible but untouched this run.
+
+Next pressure:
+
+Mira is still around `Point3D(3425,3187,17)` in the Thieves Guild, facing west, with no open gump, no context menu, no vendor window, and no target cursor. The next client-visible decision is to pick a thief lead: move close enough to Lore and read her context menu, inspect the `Stealing the Past` board, test the Bank Vault, try the practice props, return to Iain's paid service later, or leave through the oak shelf.
+
+## Run 325 - Lore Hands Me A Secret Note
+
+I start beside the Thieves Guild arrival shelf at about `Point3D(3425,3187,17)`, facing west with the fox still following and no paper, vendor list, context menu, or target cursor open. Lore is visible across the lockboxes, Iain is still east of her, the Bank Vault is beside me, and the room has practice boxes, a pickpocket dip, doors, tavern people, games, and the `Stealing the Past` board. None of the visible people act hostile, so I follow Iain's lead about guildmaster jobs.
+
+**Beat 1**
+
+I walk west and a little south across the open guild floor toward Lore, stopping next to her around `Point3D(3419,3189,0)`.
+
+This is ordinary interior movement. I pass the practice lockboxes and training clutter without using them. The move reveals more of the west and south side of the guild: Saxon the provisioner, Ciro the drunken pirate vendor, Goldie, extra strong wood doors, a trash barrel, a checkerboard, dice, a chessboard, a blackjack table, and a barbaric satchel. They look like room context and vendor/game clutter, not immediate threats.
+
+**Beat 2**
+
+I context-click Lore and read her menu before choosing anything.
+
+Lore exposes the normal vendor rows plus thief-guild controls: Buy, Sell, a visible job row, and Join. Buy is likely guildmaster stock and I still have `0` gold. Join is not free; guildmasters quote a joining price when asked, and this alien-start character would pay the space-origin markup. The job row is the one Iain just told me about, so I choose that visible row.
+
+**Beat 3**
+
+Lore says, "Here is something I think you can handle." A `secret note` appears in my backpack.
+
+No target cursor opens, no vendor window opens, and Lore does not make me pay or join first. I stop there because the new note is the next visible object to read, and the exact job text is the point of opening it rather than guessing from the room.
+
+Mechanical friction learned:
+
+- Lore's job row is visible to an alive, unblessed player and is not gated by current Thieves Guild membership.
+- Choosing the job row creates a `secret note` in the backpack and plays the handoff/sound flow.
+- If I already had a thief job note, Lore would give me a copy instead of rolling a second job.
+- The job note itself is still unread; opening it is the next visible step.
+- Lore's Join row remains separate from jobs. It would ask for a guild fee, and this character still has `0` gold.
+- The `Stealing the Past` board, Bank Vault, lockboxes, pickpocket dip, doors, games, trash barrel, satchel, and exit shelf remain visible but untouched.
+
+Next pressure:
+
+Mira is now around `Point3D(3419,3189,0)`, next to Lore in the Thieves Guild and facing toward the guildmaster interaction. No gump, vendor window, context menu, or target cursor is open. The backpack now contains a new unread `secret note` coded for Mira. The next client-visible decision is to open and read that note before choosing a route, joining the guild, reading the board, or testing the training props.
+
+## Run 326 - The Secret Note Opens, But I Need The Actual Line
+
+I start beside Lore at about `Point3D(3419,3189,0)` in the Thieves Guild. The fox is close by, Lore is one tile west, Iain is east, and the same guild room clutter is still on screen: practice lockboxes, a pickpocket dip, a training dummy, the Bank Vault, strong wood doors, a secret-looking door, tavern people, games, Saxon, Ciro, and `Stealing the Past`. Nobody is threatening me, and no gump, context menu, vendor window, or target cursor is open.
+
+**Beat 1**
+
+I open my backpack and double-click the new `secret note` instead of touching the vault, doors, board, or training props.
+
+The note is in my backpack and coded for me, so it opens a paper-style note gump. No target cursor appears, no item moves, no gold appears, and I do not get dragged into a route or theft action. This is the job instructions surface, not the job completion step.
+
+**Beat 2**
+
+I read the note window and stop on it.
+
+The safe part of the paper is clear: keep the note while working the job; a dungeon theft means finding the pedestal bag or box and using it; a town merchant theft means finding the right coffer and using Stealing on it; getting caught can make me criminal and bring guards down on me; after I have the item, the note tells me where to deliver it; and if I lose the note, the thief guildmaster can give me a copy. The top assignment line is the important random part: who wants the item, what to steal, where it is, where to drop it, and how much gold pays out. That exact line is not something I can invent from the room, so I do not choose a coffer, dungeon, route, or delivery container yet.
+
+Mechanical friction learned:
+
+- Double-clicking the owned `secret note` opens a closable, draggable, scrollable note gump when the note is in the backpack and no thief-job cooldown blocks reading.
+- The note itself teaches the two theft surfaces: dungeon pedestal bag/box versus town merchant coffer.
+- The theft action is still separate. Opening the note does not use Stealing, open a target cursor, award the job item, pay gold, join the guild, change inventory, change skills, flag criminal, or move Mira.
+- The exact randomized assignment line is required before normal route planning. The continuity state has the note item but not the saved `NoteStory`, so I stop rather than guessing a target.
+
+Next pressure:
+
+Mira is still around `Point3D(3419,3189,0)`, facing Lore in the Thieves Guild, with the secret note gump open and read for its generic rules. The next client-visible decision is to capture the exact assignment line from the visible note before closing it or choosing a route toward a coffer, dungeon pedestal, delivery stump, hay crate, board, vault, practice prop, or exit shelf.
+
+## Run 327 - I Cannot Steal From A Missing Line
+
+I start exactly where I stopped: beside Lore at about `Point3D(3419,3189,0)` in the Thieves Guild, facing west, with the fox on follow and the secret-note paper still open. The room behind the paper is unchanged. Lore is one tile west, Iain is east, the practice lockboxes and pickpocket dip are close, the Bank Vault and exit shelf are east, and the `Stealing the Past` board and tavern clutter sit farther south. None of those are more urgent than the open job note.
+
+**Beat 1**
+
+I try to read the top assignment line instead of closing the paper or guessing a target.
+
+That is the only normal next action, but it does not give me a usable route in this saved continuity. The note window is still open and the fixed instructions are already known, but the actual first sentence that should name the patron, item, theft place, delivery container, delivery town, and payout was not captured anywhere in the playable state I have. I do not pretend the nearby coffer, board, vault, or secret door is the job. I do not start a thief route from the code's possible random branches.
+
+Mechanical friction learned:
+
+- The note gump is still the active screen object. Closing it, touching a coffer, entering a dungeon door, reading the board, or asking Lore to join would all be new choices made without the visible job line.
+- The missing assignment line is not derivable from the room. `SetupNote` rolls many random components, saves them into `NoteStory`, and then the gump displays that saved string before the fixed instructions.
+- The live CCWM artifact has the static world snapshot and the current YAML continuity, but it does not contain Mira's generated backpack note story. The normal player could read it from the client; this automation cannot recover it after it was omitted from state.
+- No movement, target cursor, vendor window, combat state, theft roll, payout, inventory change, skill change, criminal flag, guild membership, discovery flag, hunger/thirst change, or follower change happens.
+
+Next pressure:
+
+Mira is still around `Point3D(3419,3189,0)`, facing Lore in the Thieves Guild, with the secret note gump open. The next client-visible decision is unchanged but sharper: manually capture the exact first assignment sentence from the visible note, or accept that this synthetic thief-job branch cannot be routed honestly from the saved state.
+
+## Run 328 - The Thief Board Wants A Real Guild Thief
+
+I start in the same tight spot beside Lore at about `Point3D(3419,3189,0)`, facing west, with the fox still on follow and the secret-note paper still open. The paper has already taught the generic theft rules, but the actual job sentence is still missing from the saved client continuity. I do not make up a coffer, dungeon, patron, delivery box, or payout from code possibilities.
+
+**Beat 1**
+
+I close the secret-note paper and abandon this synthetic job branch for now.
+
+The note stays in my backpack, but the screen is clear again: no gump, no vendor window, no context menu, and no target cursor. Lore is still one tile west. Iain is east. The lockboxes, pickpocket dip, Bank Vault, exit shelf, doors, tavern people, and `Stealing the Past` board are still visible room leads. Nobody is close and dangerous.
+
+**Beat 2**
+
+I try the visible `Stealing the Past` board instead of pretending the note told me where to steal.
+
+The board does not open for me. The client gets the plain message that it seems to be written in thieves' cant. That is a real gate, not a navigation hint: I am reading a thief board without actually being in the Thieves Guild.
+
+**Beat 3**
+
+I turn back to Lore, context-click her again, and choose the visible `Join` row.
+
+Lore does not enroll me or open a payment gump. She quotes the joining price. For this alien-start character, the normal `2,000` gold guild price is multiplied by the space-origin markup, so the visible demand is `8,000` gold. I have `0` gold. Nothing is dragged to her, no ring appears, and the board remains unreadable.
+
+Mechanical friction learned:
+
+- Closing the note is just closing the paper. It does not cancel the item, pick a route, start a theft target, change skills, pay gold, flag criminal, or move me.
+- `Stealing the Past` is gated by actual `NpcGuild.ThievesGuild` membership. A non-member gets the thieves' cant message before any useful board text appears.
+- Lore's `Join` row is visible and safe to ask about, but it only quotes the joining fee. The actual join requires dropping the exact fee on the guildmaster.
+- Mira's alien-start skill state makes the first guild fee `8,000` gold instead of `2,000`, and the current backpack/bank situation still has `0` gold.
+- The secret note remains a dead-end lead until the exact randomized assignment sentence is manually captured.
+
+Next pressure:
+
+Mira is still around `Point3D(3419,3189,0)` in the Thieves Guild, facing Lore, with no open UI and no target cursor. The honest thief path now has two visible blockers: the job note lacks its captured assignment line, and the guild board needs paid Thieves Guild membership. The next client-visible decision is to either find a starter-money route elsewhere, test another visible guild object such as the Bank Vault or practice props, or leave through the oak shelf.
+
+## Run 329 - The Guild Vault Is Still My Empty Bank
+
+I start beside Lore at about `Point3D(3419,3189,0)`, facing west in the Thieves Guild with the fox still on follow and no gump, vendor window, context menu, or target cursor open. The visible room has the same passive people and thief props: Lore one tile west, Iain east, a line of practice lockboxes, the pickpocket dip, the training dummy, the Bank Vault, the exit shelf, strong wood doors, the secret-looking door, tavern people, games, and Saxon at the west edge. Nothing on screen is close and dangerous.
+
+**Beat 1**
+
+I walk east along the open guild floor toward the `Bank Vault`, stopping around `Point3D(3421,3189,0)`.
+
+This is short interior movement, not a maze or terrain problem. I do not open the lockboxes, train on the dummy, touch the dip, talk to Iain, or use the exit shelf. From here the vault is within use range.
+
+**Beat 2**
+
+I double-click the visible `Bank Vault`.
+
+It opens my personal bank box, not a guild treasure chest. The box is still empty. No coins appear, no storage item is waiting there, and no new bank-balance message or payment prompt appears.
+
+**Beat 3**
+
+I close the empty bank box.
+
+The screen returns to the guild room with no open UI and no target cursor. The vault did not solve the `8,000` gold join fee, did not mutate inventory, did not train a skill, did not flag a crime, did not change the note job, and did not unlock `Stealing the Past`.
+
+Mechanical friction learned:
+
+- The guild `Bank Vault` uses the same personal bank access as the Britain bank vault. It is not loot, a shared guild fund, or a hidden starter-money chest.
+- From Lore's tile the vault is too far to use cleanly, so a normal player has to step east into the four-tile use range before double-clicking it.
+- Opening the vault only exposes Mira's bank box. Because the bank was already empty and nothing has been deposited since, the visible result is still an empty container.
+- The thief route remains blocked by three separate facts: the job note's exact assignment line is absent from saved continuity, the board requires Thieves Guild membership, and joining still needs `8,000` gold.
+
+Next pressure:
+
+Mira is now around `Point3D(3421,3189,0)` in the Thieves Guild, facing east near the lockboxes and training dummy, with no open UI and no target cursor. The next client-visible decision is to test a visible training prop such as the pickpocket dip or practice lockboxes, ask Iain or Saxon for a possible money/service lead, leave through the oak shelf, or finally abandon the guild route until real starter money appears.
+
+## Run 330 - The Easy Lockbox Is Not A Free Lesson
+
+I start near the Thieves Guild Bank Vault at about `Point3D(3421,3189,0)`, facing east with the fox still following and no gump, vendor list, context menu, container window, or target cursor open. The same passive guild room is on screen: Lore west of me, Iain east, Saxon at the west edge, the tavern crowd south, the exit shelf and bank vault east, and the thief props in the middle. Nothing looks close and dangerous.
+
+**Beat 1**
+
+I step west and a little north along the open guild floor to the easiest practice lockbox, stopping around `Point3D(3417,3188,0)`.
+
+This is not a route problem. I am close enough to the row of lockboxes now, with the easy box just northwest of me and the normal, difficult, challenging, and hard boxes lined up beside it.
+
+**Beat 2**
+
+I double-click the easy practice lockbox.
+
+The box does not open and does not start training by itself. It gives the locked-container message: it appears to be locked. No target cursor appears, no lockpicking attempt starts, no skill message appears, no loot window opens, and nothing moves into my backpack. Looking back at my pack matters now: I still do not have a lockpick, so this prop is not usable just by clicking it.
+
+Mechanical friction learned:
+
+- The practice lockboxes are real locked containers, not gumps or free skill buttons.
+- The easy box starts locked, immovable, and marked as the lowest lockpicking trainer in the row.
+- Opening a locked container as a player only reports that it appears to be locked.
+- A separate lockpick item is what would ask what I want to pick and create the target cursor. Mira does not have one.
+- The pickpocket dip remains the only nearby thief-training prop that can be used without a tool, but that route is a live Stealing skill check and not a money source by itself.
+
+Next pressure:
+
+Mira is now around `Point3D(3417,3188,0)` beside the easy practice lockbox, facing toward it, with no open UI and no target cursor. The next client-visible decision is to find or buy lockpicks, ask Iain whether his service or stock solves the lockbox problem, try the pickpocket dip as pure Stealing practice, or leave through the oak shelf because the guild still has no starter-money answer.
+
+## Run 331 - Iain Wants A Thousand Before He Touches The Box
+
+I start beside the easy practice lockbox at about `Point3D(3417,3188,0)`, facing the locked trainer with no gump, vendor window, context menu, or target cursor open. Lore is close behind me, Iain is east, the Bank Vault and exit shelf sit near him, the lockbox row and pickpocket dip are still in reach, and the tavern people and games are farther south. Nobody on screen looks hostile, so I follow the only visible lead that might solve a lockbox without owning a lockpick.
+
+**Beat 1**
+
+I walk east and a little south along the open guild floor to Iain, stopping around `Point3D(3427,3189,0)`.
+
+This is just a short interior move. I pass the lockboxes, vault, and shelf without clicking them. Saxon falls off the west edge of the screen, Iain becomes the center of attention, and nothing attacks, blocks me, opens a gump, changes region, or drains stamina.
+
+**Beat 2**
+
+I context-click Iain and choose the visible paid box-unlock service row.
+
+Iain does not hand me a lockpick, open a buy list, or unlock anything immediately. He says that if I want him to unlock a box, it will cost `1000` gold, then the client gives me a target cursor. I stop there because the cursor is now the active screen state. Targeting the easy lockbox would be a new choice, and I still have `0` gold.
+
+Mechanical friction learned:
+
+- Iain's service is not free training and not a hidden lockpick source. The visible service row creates a target cursor after quoting a `1000` gold unlock fee.
+- The service has not spent money or changed the lockbox yet. No box was targeted this run.
+- The vendor's possible `Buy` list is a separate row. I did not open it, and I do not assume whether a lockpick is currently in Iain's randomized stock.
+- The easy practice lockbox remains useful only if I either get a lockpick or deliberately target it under Iain's paid service to observe the payment failure.
+- No inventory, bank contents, gold, skill, guild membership, quest state, crime flag, discovery flag, hunger/thirst, combat state, follower order, or route transition changed.
+
+Next pressure:
+
+Mira is now around `Point3D(3427,3189,0)`, beside Iain in the Thieves Guild, with his box-unlock target cursor active and the quote still fresh: `1000` gold to unlock a box. The next client-visible decision is to target the easy practice lockbox anyway and see the payment gate, or cancel the cursor before doing anything else.
+
+## Run 332 - Iain Still Needs Gold
+
+I start beside Iain at about `Point3D(3427,3189,0)` in the Thieves Guild, with no gump or vendor list open but with Iain's paid box-unlock target cursor still active. The easy practice lockbox is visible west of me in the lockbox row. Lore, the Bank Vault, the exit shelf, the pickpocket dip, the training dummy, doors, tavern people, games, Stefano, Ragnar, Chanah, Ciro, and the cauldron are all room context. Nobody on screen looks hostile, and the cursor is the thing I must resolve before doing anything else.
+
+**Beat 1**
+
+I target the visible easy practice lockbox under Iain's unlock-service cursor.
+
+That does not unlock the box. Iain repeats the price in a sharper way: it would cost `1000` gold to have that unlocked. The client also tells me I do not have enough gold. The cursor clears after the target, and the easy lockbox stays a locked trainer. No lockpick appears, no vendor window opens, no container opens, and no skill check starts.
+
+Mechanical friction learned:
+
+- Iain's paid service accepts the practice lockbox as the right kind of target, but payment is checked from my backpack before anything changes.
+- With `0` gold, the service fails cleanly: I get the `1000` gold cost line and the "not enough gold" message.
+- The failed service does not spend money, change inventory, unlock the box, remove traps, change skills, change guild membership, flag a crime, change discovery flags, move me, open a gump, or open a vendor list.
+- The easy lockbox remains blocked unless I find a lockpick or real money.
+
+Next pressure:
+
+Mira is still around `Point3D(3427,3189,0)`, beside Iain in the Thieves Guild, with the target cursor gone and no open UI. The immediate paid-service question is answered: Iain can target the box, but Mira cannot pay. The next client-visible decision is to inspect Iain's `Buy` stock for lockpicks despite having `0` gold, try the pickpocket dip as pure Stealing practice, leave through the oak shelf, or abandon this guild route until starter money appears.
+
+## Run 333 - Iain's Stock Is Still A Money Problem
+
+I start beside Iain at about `Point3D(3427,3189,0)` in the Thieves Guild. The fox is still on follow, Iain is one tile east, Lore is west, the Bank Vault and oak shelf are behind me, and the lockbox row, pickpocket dip, training dummy, doors, tavern tables, games, Stefano, Ragnar, Chanah, Ciro, Goldie, and the strength-liquid cauldron are all still room context. Nobody on screen is close and dangerous, and there is no target cursor left from Iain's failed unlock service.
+
+**Beat 1**
+
+I context-click Iain again, this time looking for the normal shop row instead of his paid box-unlock service.
+
+The menu is the same kind of vendor menu I saw before: `Buy`, `Sell`, the thievery talk row, and the paid unlock service. I do not touch the service row again because the `1000` gold gate has already failed against my empty pack.
+
+**Beat 2**
+
+I choose `Buy`.
+
+Iain does not hand me a lockpick directly. A vendor buy window opens and he gives the standard shop greeting to look around. This is a shop list now, not a target cursor and not a training gump.
+
+**Beat 3**
+
+I stop on the open buy window instead of clicking a row.
+
+The important thing on the screen is that everything in Iain's stock still has a price and I still have `0` gold. His thief stock can include cheap training books and thief tools, and a lockpick is only useful if this current restock actually shows one and I can pay for it. I do not buy, drag, steal, close the window, or assume a hidden free lockpick just because the practice boxes are nearby.
+
+Mechanical friction learned:
+
+- Iain's `Buy` row is a separate normal vendor path from the paid box-unlock service.
+- Opening `Buy` creates a vendor buy window and the usual "have a look around" vendor greeting; it does not create a target cursor, unlock a box, train Lockpicking, or move an item into my backpack.
+- The thief stock path can offer `Learn Stealing Book` and `Learn Traps` for `5` gold, and a `Lockpick` row is a randomized `12` gold stock entry rather than guaranteed visible loot.
+- With `0` gold, even a visible lockpick row would be another money gate, not a solved lockbox route.
+- No inventory, bank contents, skill value, guild membership, quest state, crime flag, discovery flag, hunger/thirst, combat state, follower order, or location changed.
+
+Next pressure:
+
+Mira is still around `Point3D(3427,3189,0)`, beside Iain in the Thieves Guild, with Iain's buy window open and no target cursor. The next client-visible decision is to read or scroll the current shop list for a lockpick row, then close it because Mira has `0` gold, or back out and try a non-purchase route such as the pickpocket dip, the oak shelf exit, Saxon, Ragnar, Chanah, or the secret-looking door.
+
+## Run 334 - I Back Out Of Iain's Prices
+
+I start beside Iain at about `Point3D(3427,3189,0)` in the Thieves Guild with his buy window still open. The fox is still following, Iain is one tile east, Lore is west, the Bank Vault and oak shelf are behind me, and the lockbox row plus the pickpocket dip are still visible. Nobody on screen looks hostile or close enough to force a fight, and the open shop window is the thing I have to resolve before moving on.
+
+**Beat 1**
+
+I read and scroll Iain's buy list instead of selecting anything.
+
+The list behaves like a normal shop list: item rows, prices, amounts, and the buy/cancel controls. Nothing on it is a free "take a lockpick" handoff. The cheap thief-learning rows are still purchases, and a lockpick row, if this restock shows one, is still a priced row. With `0` gold, clicking a row would only turn the missing-money problem into a failed purchase, so I leave the stock alone.
+
+**Beat 2**
+
+I close the vendor buy window.
+
+No item moves, no gold is spent, no target cursor appears, no lockbox unlocks, and no skill check starts. Iain's shop is now just a remembered price gate, not an open UI blocking the screen.
+
+**Beat 3**
+
+I walk west along the open guild floor, passing the bank vault and lockbox row, and stop beside the pickpocket dip around `Point3D(3417,3190,0)`.
+
+This is short interior movement, not a maze or terrain problem. Lore is now close to my northeast, Iain is still visible back east, Saxon is visible farther west, and the tavern crowd is south. The pickpocket dip is within arm's reach, but I do not double-click it yet because that would start the actual Stealing practice roll.
+
+Mechanical friction learned:
+
+- Iain's open buy list does not solve the missing-lockpick problem for a broke character.
+- The buy window and the paid box-unlock service are separate routes, but both still require money.
+- Closing the buy window leaves Mira free to use visible room objects again; it does not change inventory, bank contents, skills, guild membership, crime state, discovery flags, hunger/thirst, combat state, follower order, or the active quest note.
+- The pickpocket dip is the next no-money thief prop in reach. It is training pressure, not a starter-gold route, and the skill attempt has not been made yet.
+
+Next pressure:
+
+Mira is now around `Point3D(3417,3190,0)`, facing the pickpocket dip in the Thieves Guild, with no open UI and no target cursor. The next client-visible decision is to double-click the dip for a Stealing practice attempt, or abandon the guild's no-money training loop and try Saxon, the oak shelf exit, the secret-looking door, or another visible vendor lead.
+
+## Run 335 - The Dip Finally Gets Used
+
+I start beside the pickpocket dip at about `Point3D(3417,3190,0)` in the Thieves Guild. The fox is still on follow, Lore is one step northeast, Iain is still visible east, Saxon is west, and the tavern crowd is south. The lockbox row, bank vault, exit shelf, doors, games, a trash barrel, and a barbaric satchel are all room clutter. Nobody on screen looks hostile, and there is no gump, vendor list, context menu, or target cursor in the way.
+
+**Beat 1**
+
+I double-click the pickpocket dip.
+
+The first try is clumsy. I turn toward the dip, hear the use sound, and bump it hard enough that it starts swinging. The client tells me I carelessly bump the dip and start it swinging. This is not loot and not money. It is just a Stealing practice roll.
+
+**Beat 2**
+
+I wait for the dip to stop swinging.
+
+There is no reason to click through the cooldown. The dip visibly settles after the short swing, and no hostile, gump, target cursor, inventory move, vendor window, or route change appears while I wait.
+
+**Beat 3**
+
+I double-click the dip again.
+
+This time I avoid disturbing it while searching. The second message is the success line, not a payout line. The only useful change is training: Stealing finally moves off zero, to about `0.5` after the two checks. I am still broke, still not in the Thieves Guild, still holding the unresolved secret note, and still one tile from the same dip.
+
+Mechanical friction learned:
+
+- The pickpocket dip is usable from one tile away and does not need a lockpick, gold, guild membership, a target cursor, or a gump.
+- A failed dip attempt starts a visible short swing state. While it swings, the next honest action is to wait instead of pretending another use went through.
+- The dip trains Stealing up to the shard's pickpocket-dip cap, but it does not create loot, pay starter gold, unlock lockboxes, advance the thief note, change guild membership, flag a crime, move me, or reveal a route.
+- The nearby lockbox and Iain routes remain money/tool blocked. The barbaric satchel and Saxon are visible west-side leads, but I did not walk to or inspect either one this run.
+
+Next pressure:
+
+Mira is still around `Point3D(3417,3190,0)`, facing the pickpocket dip in the Thieves Guild, with no open UI and no target cursor. The immediate choice is whether to keep grinding the dip for Stealing, inspect the visible Saxon/satchel/trash-barrel side of the room, leave by the oak shelf, or test the secret-looking door.
+
+## Run 336 - The Satchel Was Not Mine
+
+I start beside the pickpocket dip at about `Point3D(3417,3190,0)` in the Thieves Guild. The fox is still following. Lore is close northeast, Saxon is visible west by the trash barrel, the odd barbaric satchel is southwest on the furniture, and the tavern room opens farther south. Iain and the exit shelf are behind me to the east. Nothing on screen is hostile, and no gump, context menu, vendor list, or target cursor is open.
+
+**Beat 1**
+
+I walk west and south across the open guild floor toward the west-side clutter, stopping around `Point3D(3404,3201,0)` near Saxon, the trash barrel, and the barbaric satchel.
+
+This is a short interior route. I do not open doors, use the secret dungeon door, talk to Saxon, click the trash barrel, or go back to the pickpocket dip. The new thing at arm's reach is the satchel.
+
+**Beat 2**
+
+I double-click the barbaric satchel.
+
+It does not open like a backpack. It does not give me a container, a gump, a starter kit, money, a tool, or a target cursor. The satchel just disappears from the floor. That is strange enough that I stop instead of clicking the trash barrel or Saxon immediately afterward.
+
+Mechanical friction learned:
+
+- The west-side barbaric satchel is not a free container or loot lead for Mira.
+- The satchel behavior is owner-gated. If the player using it is not the recorded owner and the satchel has weight, the double-click path deletes it before the normal owner gump can open.
+- The actual barbaric satchel gump is for an owned/playstyle satchel that changes equipment appearance; this loose world satchel did not become mine and did not mutate any equipped item.
+- Saxon, the trash barrel, the nearby secret-looking doors, and the forged census records farther south remain visible leads, but I did not touch them after the satchel vanished.
+
+Next pressure:
+
+Mira is now around `Point3D(3404,3201,0)` on the west/south side of the Thieves Guild, facing the spot where the barbaric satchel vanished, with no open UI and no target cursor. The next client-visible decision is to inspect Saxon, the trash barrel, or the nearby secret doors, or return to safer known leads such as the pickpocket dip.
+
+## Run 337 - Saxon Talks Gear, Not Money
+
+I start on the west side of the Thieves Guild around `Point3D(3404,3201,0)`. Saxon the provisioner is just north of me by the trash barrel, the fox is still on follow, and the vanished satchel spot is behind my shoulder. Lore, the lockboxes, the pickpocket dip, the tavern crowd, and the secret-looking doors are all still on the same screen. Nothing is hostile, and there is no target cursor or open window blocking me.
+
+**Beat 1**
+
+I context-click Saxon instead of poking the trash barrel.
+
+His menu is ordinary vendor pressure: `Buy`, `Sell`, a repair/service-looking row, and a talk/info row for survival gear. I do not choose `Buy` because I am still broke, and I do not assume the trash barrel is loot just because it looks like a container.
+
+**Beat 2**
+
+I choose Saxon's talk/info row.
+
+A gump opens titled `The Right Survival Gear`. Saxon is not handing over gold, lockpicks, a starter pack, or a thief-note route. This is the same kind of provisioner lesson I saw from Suki, just from the guild-side vendor.
+
+**Beat 3**
+
+I read the visible gump text and stop with it open.
+
+The lesson is practical but not a payout: lights burn out, 10-foot poles passively check traps, bedrolls and campfires are rest tools, tents are emergency outdoor shelter, camping tents scale with Camping and can organize bank items underground, merchant crates are for crafters selling from a home, and strange decorative items may need the right merchant for appraisal. That keeps Saxon useful as a gear/advice lead, but it does not solve the immediate `0` gold problem.
+
+Mechanical friction learned:
+
+- Saxon's closest free interaction is an information gump, not starter money.
+- Provisioner `Buy`, `Sell`, and repair/service rows remain visible commerce/service routes, so `0` gold still matters before trying them.
+- The survival-gear gump is closable, draggable, scrollable text with no choice buttons beyond closing.
+- No inventory, bank contents, skills, guild membership, crime flag, discovery flag, hunger/thirst, combat state, follower order, or location changed.
+
+Next pressure:
+
+Mira is still around `Point3D(3404,3201,0)` in the Thieves Guild, facing Saxon with `The Right Survival Gear` open and no target cursor. The next client-visible decision is to close or scroll Saxon's gump, then choose between the trash barrel, the nearby doors, the pickpocket dip grind, or the oak shelf exit.
+
+## Run 338 - The Trash Barrel Opens Like Trash
+
+I start on the west side of the Thieves Guild around `Point3D(3404,3201,0)`, still looking at Saxon's `The Right Survival Gear` gump. The fox is following, Saxon is north by the trash barrel, Lore and the lockbox row are northeast, the tavern crowd is east and south, and the secret-looking doors are still in sight. Nobody on screen is hostile. The open gump is the screen problem, not travel.
+
+**Beat 1**
+
+I close Saxon's survival-gear gump.
+
+Nothing follows me out of the gump: no item handoff, no target cursor, no vendor list, no payment prompt, and no new message. I am just back in the room with the same `0` gold problem.
+
+**Beat 2**
+
+I walk a few steps north to the trash barrel, stopping around `Point3D(3405,3198,0)`.
+
+This is open interior floor. Saxon is now close on my northwest side, the trash barrel is within reach, and the fox pads along. The lockboxes and pickpocket dip stay visible northeast, but they are not the thing under my cursor.
+
+**Beat 3**
+
+I double-click the trash barrel.
+
+It opens as a normal container-style disposal window, not a stash. I do not drag any of my starter items into it because the whole point of a trash barrel is deletion pressure, and I still own almost nothing. No gold, lockpick, job clue, skill check, guild membership, discovery flag, combat state, route transition, hunger/thirst change, or follower change appears.
+
+Mechanical friction learned:
+
+- A trash barrel must be used from close range like a container; from the new spot it is within reach.
+- Opening it is not a starter-loot route. It is a disposal container, and dropping items into it would start the deletion path rather than solve Mira's money/tool shortage.
+- The useful thief leads are unchanged: the pickpocket dip trains only Stealing, lockboxes still need a lockpick or paid service, Lore's join fee is still `8,000` gold, and Saxon's free row was only gear advice.
+
+Next pressure:
+
+Mira is now around `Point3D(3405,3198,0)` in the Thieves Guild with the trash barrel container display open and no target cursor. The next client-visible decision is to close the barrel and choose a real route: return to the pickpocket dip, try the nearby doors, inspect another vendor/NPC, or use the oak shelf exit.
+
+## Run 339 - I Open The Nearest Door
+
+I start at about `Point3D(3405,3198,0)` in the Thieves Guild with the trash barrel container display still open. Saxon is just northwest by the barrel, Lore and the lockbox row are northeast, the pickpocket dip is still visible, and the nearest strong-wood door is a few steps east. Nobody on screen is acting hostile. The open barrel window is still the first thing I have to clear.
+
+**Beat 1**
+
+I close the trash barrel display.
+
+Nothing spills out of it. No item moves, no target cursor appears, no message tells me I found a tool, and I am not dropping any of my starter things into a deletion-looking container.
+
+**Beat 2**
+
+I walk east across the open guild floor, stopping around `Point3D(3407,3198,0)`, two tiles from the nearest `StrongWoodDoor`.
+
+This is just room movement. The fox keeps up, Saxon falls behind my left shoulder, the pickpocket dip and lockboxes stay visible northeast, and the secret-looking dungeon door is now close enough to make me nervous but not the one I am clicking.
+
+**Beat 3**
+
+I double-click the nearest strong-wood door.
+
+It works like an ordinary door from this range. I get the door action instead of a locked message, gump, target cursor, vendor window, or teleport. The useful result is simple: the west-side room has a door I can open, but opening it does not solve the money, lockpick, guild-fee, or thief-note problem by itself.
+
+Mechanical friction learned:
+
+- The trash barrel remains only disposal pressure after closing; there is no delayed loot or prompt.
+- The nearby `StrongWoodDoor` needs close range. From `Point3D(3407,3198,0)`, the door at `Point3D(3409,3198,0)` is within the normal two-tile use range.
+- This door is not a public-door teleporter, quest object, or money route. It just opens the local guild interior path and leaves the secret-looking door as the next obvious risky object.
+- No gold, item, bank content, skill, stat, hunger, thirst, damage, crime flag, discovery flag, quest state, target cursor, pet order, follower count, or region changed.
+
+Next pressure:
+
+Mira ends around `Point3D(3407,3198,0)`, facing east beside the now-open strong-wood door, with no open UI and no target cursor. The next client-visible decision is to step through the opened doorway, test the nearby secret dungeon door, back out toward the pickpocket dip, talk to another tavern/vendor NPC, or leave by the oak shelf.
+
+## Run 340 - I Nudge The Secret Door Open
+
+I start around `Point3D(3407,3198,0)` in the Thieves Guild, no gump open and no target cursor, with the strong-wood door in front of me already open. Saxon is behind me near the trash barrel, Lore and the lockboxes are northeast, the pickpocket dip is still visible, tavern people are ahead and south, and nobody on screen is acting hostile. The secret-looking dungeon door is close enough to be the obvious risk.
+
+**Beat 1**
+
+I step through the opened strong-wood doorway and stop just past it, around `Point3D(3410,3198,0)`.
+
+It is only a local doorway. Iain and a waiter become edge-visible farther east, the tavern crowd is clearer, and the secret dungeon door is now within reach. The fox follows; no message, target cursor, gump, region change, or hostile reaction interrupts the move.
+
+**Beat 2**
+
+I double-click the nearby `SecretDungeonDoor`.
+
+It opens like a close-range door, not like a teleporter or quest object. There is no lock message, no payment prompt, no dungeon-warning gump, no target cursor, and no sudden travel. The scary part is the shape of the doorway, not a mechanical demand the client exposes yet.
+
+**Beat 3**
+
+I stop at the opened secret-looking doorway instead of charging through it.
+
+The room behind me still has known safe practice surfaces and vendors; the passage in front of me is a possible deeper route with no visible reward on the current screen. With `0` gold, no lockpick, and a job note whose exact assignment line is still unresolved, stepping through is now a deliberate risk decision rather than an automatic next click.
+
+Mechanical friction learned:
+
+- The opened strong-wood door only connects local guild floor space. Walking through it does not change region, inventory, skills, follower state, discovery flags, or money.
+- The nearby `SecretDungeonDoor` is usable from about `Point3D(3410,3198,0)` and opens as a normal close-range door. It does not by itself reveal a hidden access check, quest prompt, teleport, loot container, or dungeon-entry warning.
+- Opening the secret-looking door still does not solve the starter money/tool loop: Lore's join fee remains `8,000` gold, Iain's service still needs `1,000` gold, and the lockboxes still need a lockpick or paid help.
+- No gold, item, bank content, skill, stat, hunger, thirst, damage, crime flag, discovery flag, quest state, target cursor, pet order, follower count, or map changed.
+
+Next pressure:
+
+Mira ends around `Point3D(3410,3198,0)`, facing east/southeast beside the now-open `SecretDungeonDoor`, with no open UI and no target cursor. The next client-visible decision is to step through the opened secret-looking doorway, back away to the pickpocket dip and lockbox row, inspect the tavern/vendor crowd, or leave by the oak shelf.
+
+## Run 341 - The Secret Door Only Leads To Tavern Advice
+
+I start at about `Point3D(3410,3198,0)` in the Thieves Guild with no gump open and no target cursor. The secret-looking door is already open beside me. Saxon is behind me near the trash barrel, Lore and the lockboxes are north, tavern people are ahead, and nobody on screen is hostile.
+
+**Beat 1**
+
+I step through the opened `SecretDungeonDoor` and stop on the tavern side around `Point3D(3414,3199,0)`.
+
+Nothing snaps shut on me. This is just more guild floor: Bolton and Abra are almost shoulder-close, Chanah the barkeeper is a few steps south, table games and the `Stealing the Past` board are in reach, and the fox keeps up. No target cursor, warning gump, teleport, loot, money, skill gain, crime flag, discovery flag, or combat state appears.
+
+**Beat 2**
+
+I context-click Chanah and choose the visible talk/info row.
+
+A speech gump opens titled `Best To Travel With Friends`. Chanah is not handing over a companion, lockpick, gold, or job clue. The gump is barkeeper advice, not a reward screen.
+
+**Beat 3**
+
+I read the visible gump and stop with it open.
+
+The lesson is about henchmen: barkeepers, tavern keepers, and innkeepers can sell fighter, archer, or wizard help; each helper is tied to a henchman item; they need treasure or gold to stay with me; and they fight, but they do not pick locks or remove traps. The line that matters for my broke thief problem is ugly: `5` gold buys only `1` minute of service, and I still have `0` gold.
+
+Mechanical friction learned:
+
+- The opened secret-looking door is a local doorway into the tavern side, not a dungeon warning, teleport, or payout.
+- Chanah's free talk row opens `Best To Travel With Friends`, an information gump about henchmen.
+- Henchmen are a paid support route, not starter help. With `0` gold and no saleable treasure, the barkeeper does not solve the lockpick, join-fee, or thief-note route.
+- No gold, item, bank content, skill, stat, hunger, thirst, damage, crime flag, discovery flag, quest state, target cursor, pet order, follower count, or map changed.
+
+Next pressure:
+
+Mira ends around `Point3D(3414,3199,0)`, facing Chanah with `Best To Travel With Friends` open and no target cursor. The next client-visible decision is to close or scroll Chanah's gump, then choose between the nearby `Forged Census Records`, the farther secret-looking door, the pickpocket dip, the lockbox row, another tavern NPC, or the oak shelf exit.
+
+## Run 342 - The Forged Records Want Money Too
+
+I start around `Point3D(3414,3199,0)` in the Thieves Guild with Chanah's `Best To Travel With Friends` gump still open and already read. The tavern side is crowded but calm: Bolton and Abra are close, Chanah is a few steps south, Ciro and Goldie are farther in the room, and the forged census records sit on a table to the south. Nobody on screen is hostile.
+
+**Beat 1**
+
+I close Chanah's henchman gump.
+
+No helper appears, no target cursor opens, and no delayed message turns the barkeeper lesson into a reward. I am just back on the guild floor with `0` gold.
+
+**Beat 2**
+
+I walk southeast/south across the tavern floor to the records table, stopping beside the `Forged Census Records` around `Point3D(3420,3211,0)`.
+
+This is short interior movement through the visible tavern crowd. Ciro, Goldie, diti, Condon, Carmel, Hesper, and Tanek are still passive context. The fox follows close enough to stay with me.
+
+**Beat 3**
+
+I double-click the `Forged Census Records` and read the gump that opens.
+
+This is not a thief-job clue or free paperwork. It is a name-change form: the thieves guild says my name is on its forged list, gives me a text field, and says a new fantasy-appropriate name can be no longer than `16` characters. The ugly part is the price: it wants `2,000` gold, and I still have `0`.
+
+Mechanical friction learned:
+
+- The forged records open a custom census/name-change gump, not a loot container, job route, guild hint, or discovery route.
+- The visible form has a text entry, a submit button, and a close/cancel button.
+- The rename route is blocked by `2,000` gold before it matters whether I can think of an acceptable name.
+- No name, gold, inventory, skill, stat, hunger, thirst, combat state, crime flag, guild membership, discovery flag, target cursor, follower order, or map changed.
+
+Next pressure:
+
+Mira ends around `Point3D(3420,3211,0)`, facing the records with the forged census/name-change gump open and read. The next client-visible decision is to close the records gump or deliberately type a new name despite having `0` gold, then choose between the nearby southern secret door, Carmel/other tavern NPCs, the game tables, the pickpocket dip route back north, or the oak shelf exit.
+
+## Run 343 - I Close The Records And Size Up Carmel
+
+I start around `Point3D(3420,3211,0)` in the Thieves Guild with the `Forged Census Records` rename gump still open and already read. It wants `2,000` gold for a name change, and I still have `0`. Carmel the assassin guildmaster is a few steps south; the southern secret-looking door is west-southwest; the tavern crowd is calm.
+
+**Beat 1**
+
+I close the forged-records gump.
+
+The floor comes back without a delayed rename, payment prompt, target cursor, item handoff, clue, discovery, or thief-job update. The records are still just paid paperwork.
+
+**Beat 2**
+
+I sidestep south around the record table toward Carmel, stopping close enough to reach her context menu, around `Point3D(3420,3213,0)`.
+
+This is only short interior movement. Ciro, Goldie, Carmel, Hesper, Tanek, diti, Condon, and the table games remain passive screen context. The fox keeps up. No hostile reaction, region shift, combat state, or route transition interrupts me.
+
+**Beat 3**
+
+I context-click Carmel and read the menu instead of choosing a row yet.
+
+The useful thing is that Carmel is not a free supply handoff. I see guildmaster-style choices: `Buy` and `Sell` are present but not useful while I am not in her guild, `Join` is a visible guild commitment route, `Hire`/bribe is visible but clearly money-facing, and `Talk` is the safe information row. I stop here because picking one of those rows is the next decision, not something I should do accidentally.
+
+Mechanical friction learned:
+
+- The forged records close cleanly and still do not change name, gold, inventory, skills, guild state, discovery flags, target cursor, or route.
+- Carmel is close enough from the records side to inspect through the normal context menu after a tiny step south.
+- Assassin guildmaster `Buy`/`Sell` is gated by guild access; the visible useful rows are conversation, join, or paid bribe/hire pressure.
+- No gold, item, bank content, skill, stat, hunger, thirst, damage, crime flag, guild membership, discovery flag, quest state, target cursor, pet order, follower count, or map changed.
+
+Next pressure:
+
+Mira ends around `Point3D(3420,3213,0)`, facing Carmel with Carmel's context menu open and no target cursor. The next client-visible decision is to choose `Talk`, `Join`, or `Hire`/bribe from Carmel's menu, close the menu and test the nearby southern secret door, or backtrack toward the thief-practice surfaces and oak shelf.
+
+## Run 344 - Carmel Talks Like This Costs Later
+
+I start around `Point3D(3420,3213,0)` in the Thieves Guild with Carmel's context menu already open and read. She is two steps south. The room is still packed with passive tavern and guild people: Ciro and Goldie behind me, Hesper and Tanek southeast, diti to the northeast edge, Condon west, and the southern secret-looking door a few tiles to the west. Nobody on screen is hostile, and no world-map marker is close enough to matter.
+
+**Beat 1**
+
+I choose Carmel's visible `Talk` row.
+
+The context menu disappears and a speech gump opens titled `Death and Taxes`. This is not a buy window, a join confirmation, a target cursor, or a payment prompt.
+
+**Beat 2**
+
+I read the gump and stop with it open.
+
+Carmel's pitch is useful but not helpful in the broke-thief way I was hoping for. She says this is the assassins' guild, that Xardok on a secluded Sosaria island handles assignments, and that she sells items useful to assassins. The money line is worse: if I have a murder problem, she can bribe guards for `50,000` gold, with guild members paying half. I have `0` gold and no murders, so this teaches a future crime-management route, not a starter route.
+
+Mechanical friction learned:
+
+- Carmel's `Talk` row opens a scrollable `Death and Taxes` speech gump with a single close button.
+- The assassin talk gives navigation and guild context: Xardok is the assignment contact, not Carmel.
+- The visible bribe price is `50,000` gold before any half-price guild discount, so Carmel is not a cash/tool solution for a fresh broke character.
+- No name, gold, item, bank content, skill, stat, hunger, thirst, damage, crime flag, guild membership, discovery flag, quest state, target cursor, vendor window, pet order, follower count, location, or map changed.
+
+Next pressure:
+
+Mira ends around `Point3D(3420,3213,0)`, facing Carmel with `Death and Taxes` open and read. The next client-visible decision is to close the gump, then choose whether to test the southern secret door, talk to another tavern NPC, backtrack to the thief-practice surfaces, or use the oak shelf route out.
+
+## Run 345 - The Southern Secret Door Is Just A Door
+
+I start around `Point3D(3420,3213,0)` in the Thieves Guild with Carmel's `Death and Taxes` gump still open and already read. The room is still calm: Carmel is close, Ciro and Goldie are behind me, Hesper and Tanek are southeast, Condon is west, and the southern secret-looking door sits a short walk to the west. Nobody on screen is hostile, and the world-map overlay gives me no nearby marker to chase from inside this hidden guild room.
+
+**Beat 1**
+
+I close Carmel's speech gump.
+
+The tavern floor comes back. There is no delayed assassin assignment, vendor window, target cursor, payment prompt, guild join, bribe, murder-count change, item, gold, discovery, or route jump.
+
+**Beat 2**
+
+I walk west along the open tavern floor until I am beside the southern `SecretDungeonDoor`, stopping around `Point3D(3416,3213,0)`.
+
+This is only a few steps through the visible interior. The fox keeps up, the tavern people stay passive, and nothing dangerous moves into my face.
+
+**Beat 3**
+
+I double-click the southern `SecretDungeonDoor`.
+
+It opens like the earlier secret-looking door did. No gump opens, no warning fires, no target cursor appears, and no teleport drags me somewhere else. It is not a free cache, not a starter-money route, and not an assignment lead. I stop before stepping through because the next real client choice is whether to cross that doorway or turn back toward the tavern and thief-practice leads.
+
+Mechanical friction learned:
+
+- Carmel's `Death and Taxes` gump closes cleanly and still does not become an assignment, bribe, shop, or join flow.
+- The southern `SecretDungeonDoor` has to be approached before use; from the records/Carmel side it is visible but not a from-six-tiles-away interaction.
+- Once used from beside it, the door opens as ordinary local interior movement. It does not produce loot, money, a lockpick, a thief clue, a guild state change, a discovery flag, a target cursor, a gump, a vendor window, combat, damage, hunger, thirst, or follower change.
+
+Next pressure:
+
+Mira ends around `Point3D(3416,3213,0)`, facing west beside the now-open southern `SecretDungeonDoor`. The next client-visible decision is to step through the doorway and see what is beyond it, or leave it open and choose another visible tavern/thief-guild lead.
+
+## Run 346 - I Cross To Condon's Menu
+
+I start around `Point3D(3416,3213,0)`, facing west beside the already-open southern `SecretDungeonDoor`. The screen is still an interior tavern/guild room, not a wilderness route: Condon is visible to the west, Carmel is east, Chanah and Ciro are north/northeast, the west-side doors and the old vanished-satchel spot are in route memory, and no hostile is close enough to force a fight or flee decision. The world-map overlay still gives me no nearby marker from inside this hidden room.
+
+**Beat 1**
+
+I step through the opened southern `SecretDungeonDoor`.
+
+Nothing catches me. I do not get pulled into a dungeon instance, warned by a gate, shown a gump, or given a target cursor. It is just the west side of the same interior.
+
+**Beat 2**
+
+I walk west and slightly south across the open floor to stand close enough to Condon, stopping around `Point3D(3406,3214,0)`.
+
+This is short indoor movement. Condon is now two tiles west, Carmel is farther back east, Chanah and Ciro remain north/northeast, and Saxon is only edge-visible far north by the trash barrel. The fox keeps up. No door, wall, hostile, region change, damage, or stamina problem interrupts the walk.
+
+**Beat 3**
+
+I context-click Condon and read the menu.
+
+Condon is not a loose reward or a free mage starter kit. The menu is vendor-shaped: `Buy`, `Sell`, a free `Talk` row, and a mage service row are the visible pressure. With `0` gold and no magic wand in my pack, the money/service rows are not the safe first click. I stop on the menu because choosing `Talk`, buying, selling, or testing the service row is the next actual UI decision.
+
+Mechanical friction learned:
+
+- Crossing the opened southern `SecretDungeonDoor` is ordinary local movement, not a teleport, cache, warning, assignment, target cursor, or discovery.
+- Condon is reachable from the west side after a short walk and opens a normal mage/vendor context menu.
+- The visible Condon menu is not a cash route by itself. `Buy` needs money, `Sell` needs something the vendor accepts, and the mage service row is item/payment-facing. `Talk` is the clean next information row.
+- No gold, item, bank content, skill, stat, hunger, thirst, damage, crime flag, murder count, guild membership, discovery flag, quest state, target cursor, vendor window, gump, pet order, follower count, location map, or route anchor changed.
+
+Next pressure:
+
+Mira ends around `Point3D(3406,3214,0)`, facing west toward Condon with Condon's context menu open and no target cursor. The next client-visible decision is to choose `Talk`, test `Sell`, open `Buy` despite having `0` gold, try the mage service row, close the menu and use the nearby west doors, or backtrack toward thief-practice leads.
+
+## Run 347 - Condon Teaches Wizard Chores
+
+I start around `Point3D(3406,3214,0)`, facing west at Condon with his context menu already open. This is still the same hidden guild/tavern interior: Condon is two tiles away, Carmel is east, Chanah and Ciro are north/northeast, Saxon and the trash barrel sit at the north edge of the screen, and the opened southern secret-looking door is behind me to the east. No hostile creature is on screen, the fox is still with me, and the world map still gives me no nearby marker for this interior.
+
+**Beat 1**
+
+I choose Condon's visible `Talk` row.
+
+The context menu closes and a speech gump opens titled `The Mystical Art Of Wizardry`. It is not a buy list, a sell list, a wand target cursor, or a payment prompt.
+
+**Beat 2**
+
+I read the gump and stop with it open.
+
+Condon is useful as a warning label, not as a broke starter rescue. He says mage service is wand charging: `100` gold per spell circle for 5 more charges. I have `0` gold and no wand, so that row is still a future service, not an answer. The practical parts are spell advice: `create food` also makes water, `remove trap` makes an orb that passively checks traps, `telekinesis` can move loose out-of-reach objects into the backpack, and `reveal` can expose traps and hidden treasure containers. He also says custom spell bars live behind Help, and that elementalism and magery conflict unless a cave crystal is used to forget one path.
+
+Mechanical friction learned:
+
+- Condon's `Talk` row opens `The Mystical Art Of Wizardry` speech gump with a close button.
+- The mage service is not free: wand charging costs `100` gold per spell circle and also requires a magic wand target.
+- The gump teaches future magic utility routes, especially food/water, trap detection, telekinesis, reveal, and spell bars, but it gives no starter cash, wand, reagents, spellbook, or destination.
+- No gold, item, bank content, skill, stat, hunger, thirst, damage, crime flag, murder count, guild membership, discovery flag, quest state, target cursor, vendor window, pet order, follower count, location map, or route anchor changed.
+
+Next pressure:
+
+Mira ends around `Point3D(3406,3214,0)`, facing west toward Condon with `The Mystical Art Of Wizardry` gump open and read. The next client-visible decision is to close the gump, then choose whether to test Condon's `Buy`/`Sell`/wand service rows, use the nearby west doors, backtrack toward thief-practice leads, or leave through the oak shelf route.
+
+## Run 348 - Condon Does Not Want My Pack
+
+I start around `Point3D(3406,3214,0)`, facing west toward Condon with `The Mystical Art Of Wizardry` still open and already read. Condon is two tiles west, Carmel is far enough east to ignore for the moment, Chanah and Ciro are north/northeast, Saxon and the trash barrel sit at the north edge, and the west-side doors are still the nearest physical exits. The fox is with me. Nobody on screen is hostile, and the world-map overlay still does not give this hidden guild room a useful nearby marker; the closest marker I can place is far outside the client view.
+
+**Beat 1**
+
+I close the wizardry gump.
+
+The room view comes back cleanly. No delayed wand offer, spellbook, reagent, gold, target cursor, vendor window, or route jump appears.
+
+**Beat 2**
+
+I context-click Condon again and read the familiar vendor menu.
+
+It is still the same pressure surface: `Buy`, `Sell`, `Talk`, and the wand-charging service row. Since I have `0` gold, the only possible broke-player cash check is `Sell`.
+
+**Beat 3**
+
+I choose `Sell`.
+
+Condon does not open a sell list. He just says, `You have nothing I would be interested in.` My cooked alien meat, medical record, tailor deed, and thief note do not become mage-shop money. Nothing leaves the backpack and no payment appears.
+
+Mechanical friction learned:
+
+- Closing `The Mystical Art Of Wizardry` produces no delayed reward, tool, target cursor, or route.
+- Condon's `Sell` row is not a starter-cash route for Mira's current backpack.
+- The mage vendor only becomes a sell window if the backpack contains items from his buy list. Mira's known pack contents do not match it.
+- No gold, item, bank content, skill, stat, hunger, thirst, damage, crime flag, murder count, guild membership, discovery flag, quest state, target cursor, vendor window, pet order, follower count, location, map, or route anchor changed.
+
+Next pressure:
+
+Mira remains around `Point3D(3406,3214,0)`, facing west toward Condon with no gump, context menu, vendor window, or target cursor open. The next client-visible decision is to test Condon's `Buy` list despite having `0` gold, test the wand service row and cancel/target honestly, use the nearby west-side doors, backtrack toward thief-practice leads, or leave through the oak shelf route.

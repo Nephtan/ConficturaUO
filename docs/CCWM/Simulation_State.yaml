@@ -1,8 +1,8 @@
 schema:
   schema_version: 2
   policy_schema_version: 2
-  run_number: 261
-  last_updated: "2026-05-22T14:02:40.3280228-05:00"
+  run_number: 348
+  last_updated: "2026-05-27T17:03:55.3694640-05:00"
   active_state_scope: "current playable continuity for the next client-side run"
   historical_log: "docs/CCWM/Confictura_Codex_World_Map.md"
 
@@ -42,6 +42,7 @@ identity:
   name: "Mira Vale"
   access_level: "Player"
   player: true
+  npc_guild: "None"
   young: false
   female: true
   race: "Human"
@@ -65,314 +66,341 @@ fate_tarot:
   allow_alien_choice: true
   visit_lodor: false
   visit_savage: false
-  access_gate_check_current_run: "No tarot gump, start-table action, or card choice was attempted; Run 261 began post-tarot in the bank and used only a visible public board."
+  access_gate_check_current_run: "Run 348 began post-tarot inside the Thieves Guild. No tarot/start-table/card action was attempted; Lodoria/Savage gates remain unchanged. Mira closed Condon's already-read speech gump, reopened his visible context menu, and chose Sell."
 
 lifecycle:
-  stage: "local_guilds_gump_open_read"
+  stage: "condon_sell_refused_no_ui_open"
   has_left_start_flow: true
   login_status: "logged_in_after_character_creation"
   create_status: "created_player_mobile"
   session_marker: "run_1_first_login"
-  last_action: "Run 261 closed the read SAGE ADVICE gump, double-clicked the adjacent Local Guilds board from within use range, and read the LOCAL GUILDS membership gump."
-  current_goal: "Close the Local Guilds gump, then decide whether a quest board or bank-room utility object is worth inspecting before leaving to find real currency loot."
-  elapsed_play_time: "historical play through Run 261; see map log for detailed run archive"
-  current_open_gumps:
-    - type: "Server.Items.GuildBoard.GuildBoardGump"
-      source_item: "Server.Items.GuildBoard / Local Guilds"
-      source_item_serial: 1075459773
-      title: "LOCAL GUILDS"
-      status: "open_read"
-      body_summary: "Lists local trade/skill guilds and explains that joining requires finding the right guildmaster, choosing Join, and dropping the exact fee; first entry is 2,000 gold, later guild fees double, replacement rings cost 400 gold, and player theft requires the Thieves Guild."
-      visible_controls:
-        - "upper-right close button"
-        - "scrollable text body"
-        - "no visible resign button because Mira is not in a local guild"
-      text_entry_fields: []
-      flags: { closable: true, disposable: true, draggable: true, resizable: false }
-      response_sent: null
+  last_action: "Run 348 closed Condon's already-read The Mystical Art Of Wizardry gump, context-clicked Condon again, and chose the visible Sell row. Condon only said Mira has nothing he is interested in; no sell window opened."
+  current_goal: "Choose whether to test Condon's Buy list despite 0 gold, test the wand service row honestly, use west-side doors, backtrack toward thief-practice leads, or leave through the oak shelf route."
+  elapsed_play_time: "historical play through Run 348; see map log for detailed run archive"
+  current_open_gumps: []
+  current_open_vendor_window:
+    status: "closed"
+    type: "vendor_sell"
+    vendor: "Condon"
+    vendor_serial: 317556
+    title: null
+    read_status: "sell_row_refused_no_window"
+    visible_summary: "Run 348 chose Condon's Sell row after closing his speech gump. No sell list opened; Condon said Mira has nothing he is interested in."
+    visible_controls: []
+    selected_items: []
+    purchase_attempted: false
   current_open_context_menu:
-    status: "none"
-    target: null
-    visible_entries_last_seen:
-      - "Open Bankbox"
+    status: "closed_after_sell"
+    target: "Condon"
+    target_serial: 317556
+    target_type: "Server.Mobiles.Mage"
+    read_status: "visible_menu_read"
+    visible_choices:
       - "Buy"
       - "Sell"
       - "Talk"
-    response_sent: null
+      - "mage service/repair row"
+    last_choice: "Sell"
   target_cursor:
     active: false
     source: null
-  latest_player_message: "No overhead message appeared; double-clicking Local Guilds opened the read-only LOCAL GUILDS board gump."
-  next_client_visible_decision: "Close the LOCAL GUILDS gump, then read a quest board, inspect vote stones or donation boxes, or leave the bank to look for currency loot."
+    prompt: null
+    visible_choice: null
+    last_cleared_source: "none this run; previous cleared source was Iain paid box-unlock service"
+    last_result: "Run 348 chose Condon's Sell row; no target cursor appeared."
+  latest_player_message: "Condon says, 'You have nothing I would be interested in.'"
+  next_client_visible_decision: "Test Condon's Buy list despite 0 gold, test the wand service row and cancel/target honestly, use west-side doors, backtrack toward thief-practice leads, or leave through the oak shelf route."
 
 location:
   map: "Map.Sosaria"
   map_file_index: 1
-  point3d: { x: 3439, y: 3425, z: 0 }
-  facing_direction: "Direction.North"
-  region_name: "Bank of Britain vault room / shared bank interior"
-  region_type: "bank_or_guarded_town_interior_context"
-  guarded: "likely_guarded_from_visible_bank_town_context"
-  public_area: "true"
+  point3d: { x: 3406, y: 3214, z: 0 }
+  facing_direction: "west toward Condon after his Sell row refused Mira's current backpack; no gump, context menu, vendor window, or target cursor remains"
+  region_name: "the Thieves Guild"
+  region_type: "public guild/interior"
+  guarded: "shady public guild interior; no town guard visible on the current 18-tile screen, but no hostile or dangerous mobile is immediate"
+  public_area: true
+  visible_blockers:
+    - { type: "TrashBarrel", name: "TrashBarrel", point3d: { x: 3405, y: 3196, z: 2 }, status: "closed in Run 339 after opening as a disposal/container window; not a visible loot/payout route and no item was dropped into it" }
+    - { type: "StrongWoodDoor", name: "StrongWoodDoor", point3d: { x: 3409, y: 3198, z: 0 }, status: "opened in Run 339 and stepped through in Run 340; ordinary local door, not a gump, lock, or teleport" }
+    - { type: "PublicDoor", name: "oak shelf", point3d: { x: 3425, y: 3186, z: 22 }, status: "off-screen north/northeast route memory from the records table; expected public-door return path, not yet used from this side" }
+    - { type: "BankChest", name: "Bank Vault", point3d: { x: 3425, y: 3188, z: 3 }, status: "off-screen north/northeast route memory from the records table; opened from within range in Run 329 and showed Mira's empty personal bank box" }
+    - { type: "PickBoxEasy", name: "practice lockbox (easy)", point3d: { x: 3416, y: 3187, z: 8 }, status: "off-screen north route memory from the records table; targeted under Iain's paid service in Run 332 and not unlocked because Mira has 0 gold against the 1,000 gold cost" }
+    - { type: "PickBoxHard", name: "practice lockbox (hard)", point3d: { x: 3420, y: 3187, z: 8 }, status: "off-screen north route memory from the records table; harder lockpicking training surface not touched" }
+    - { type: "PickpocketDip", name: "pickpocket dip", point3d: { x: 3416, y: 3190, z: 0 }, status: "off-screen north route memory from the records table; Run 335 used it twice, first failing and starting the visible swing, then succeeding after waiting for it to settle" }
+    - { type: "StealingBoard", name: "Stealing the Past", point3d: { x: 3415, y: 3203, z: 7 }, status: "clicked from visible screen; non-member gate says it is written in thieves' cant" }
+    - { type: "GuildJoinFee", name: "Lore Join", point3d: { x: 3418, y: 3189, z: 0 }, status: "off-screen north route memory from the records table; Join row quotes 8,000 gold for Mira's alien-start state and Mira has 0 gold" }
+    - { type: "SecretDungeonDoor", name: "SecretDungeonDoor", point3d: { x: 3412, y: 3199, z: 0 }, status: "opened in Run 340 and stepped through in Run 341; ordinary local doorway into the tavern side, not a gump, lock, warning, payout, or teleport" }
+    - { type: "SpeechGump", name: "Best To Travel With Friends", point3d: { x: 3415, y: 3203, z: 0 }, status: "closed in Run 342 after reading; information-rich henchman advice, not a payout or free follower" }
+    - { type: "CensusGump", name: "Forged Census Records", point3d: { x: 3420, y: 3212, z: 6 }, status: "opened and read in Run 342, then closed in Run 343; paid rename form with a text entry, 16-character limit, and 2,000 gold cost while Mira has 0 gold" }
+    - { type: "SecretDungeonDoor", name: "SecretDungeonDoor", point3d: { x: 3414, y: 3213, z: 0 }, status: "opened in Run 345 from within reach and crossed in Run 346; ordinary local doorway, not a gump, lock, warning, payout, or teleport" }
+    - { type: "SpeechGump", name: "Death and Taxes", point3d: { x: 3420, y: 3215, z: 0 }, status: "opened and read in Run 344 from Carmel's Talk row, then closed in Run 345; assassin-guild information with Xardok assignment lead and 50,000 gold bribe pressure, not a payout or starter tool" }
+    - { type: "BarbaricSatchel", name: "barbaric satchel", point3d: { x: 3402, y: 3202, z: 8 }, status: "double-clicked in Run 336; vanished without opening because Mira was not its owner" }
+    - { type: "SpeechGump", name: "The Mystical Art Of Wizardry", point3d: { x: 3404, y: 3214, z: 0 }, status: "opened and read in Run 347 from Condon's Talk row, then closed in Run 348; advice gump with a close button, not a buy window, target cursor, payment prompt, item handoff, or route" }
   known_blocked_point3d:
-    - { x: 1192, y: 1358, z: 0, blocked_by: "impassable tree; route around it as visible terrain" }
-    - { x: 1192, y: 1357, z: 0, blocked_by: "impassable tree; route around it as visible terrain" }
-    - { x: 1194, y: 1356, z: 0, blocked_by: "impassable peach tree; route around it as visible terrain" }
-    - { x: 1207, y: 1357, z: 0, blocked_by: "impassable rock found on direct north route; route around it as visible terrain" }
-    - { x: 1210, y: 1360, z: 0, blocked_by: "impassable pear tree; route around it as visible terrain" }
-    - { x: 1207, y: 1328, z: 0, blocked_by: "impassable rock found on direct north route; route around it as visible terrain" }
-    - { x: 1190, y: 1388, z: 0, blocked_by: "impassable tree near the previous northwest lane; route around it as visible terrain" }
-    - { x: 1190, y: 1394, z: 0, blocked_by: "impassable rock near the previous south/southwest lane; route around it as visible terrain" }
-    - { x: 1195, y: 1390, z: 0, blocked_by: "water-looking impassable static behind the current route; tested by canteen and not a fill source" }
-    - { x: 1195, y: 1391, z: 0, blocked_by: "water-looking impassable static behind the current route; tested by canteen and not a fill source" }
-    - { x: 1195, y: 1392, z: 0, blocked_by: "water-looking impassable static behind the current route; tested by canteen and not a fill source" }
+    summary: "No movement blocker. The TrashBarrel is a closed disposal/container lead, not visible starter loot. The west-side StrongWoodDoor and both tested SecretDungeonDoors opened normally; the first secret door led into the tavern side, and the southern secret door was crossed in Run 346 as ordinary local movement. Chanah's free talk gump teaches paid henchmen, not starter help. The Forged Census Records are a paid 2,000 gold rename form, not a thief clue or payout, and were closed in Run 343. Carmel's Talk row opened Death and Taxes in Run 344 and the gump was closed in Run 345; it teaches assassin guild/Xardok/bribe context, not a free tool, money handoff, or current assignment. Condon's Talk row opened The Mystical Art Of Wizardry in Run 347; it teaches magic utility and confirms wand charging costs 100 gold per spell circle, but gives no cash, wand, spellbook, target cursor, route, or starter item. Run 348 closed that gump and chose Condon's Sell row; he said Mira has nothing he is interested in and opened no sell list. The vanished barbaric satchel is not a loot/container route. The pickpocket dip is usable and trains Stealing but gives no loot or money. Iain's stock, Iain's 1,000 gold unlock service, Lore's 8,000 gold Join fee, the empty bank, missing note assignment, no lockpick, Condon's sell refusal, and Stealing the Past membership gate still block the thief-money loop."
+  stored_public_door_return:
+    status: "active_from_profuse_provisions_oak_shelf"
+    stored_anchor: { x: 3008, y: 1109, z: 0, map: "Sosaria", zone: "the Thieves Guild" }
+    evidence: "Run 322 double-clicked the Profuse Provisions oak shelf from about Point3D(3008,1109,0); PublicDoor stores the use tile before teleporting to the Thieves Guild."
 
 perception:
   visual_scan:
-    scan_center: { x: 3439, y: 3425, z: 0 }
+    scan_center: { x: 3406, y: 3214, z: 0 }
     map: "Map.Sosaria"
     radius_tiles: 18
-    scan_confidence: "high for saved visible mobiles/items from the canonical live-state snapshot at the north-wall boards; Run 261 did not move, and current continuity overrides the stale live-state satchel row because Run 259 made it vanish. No terrain or binary-map check was needed."
+    scan_confidence: "high for committed live-state mobiles/items around the west-side Condon position after Run 348 closed Condon's speech gump and chose Sell. State overrides still apply for the Run 336 satchel click and tested door toggles: the live snapshot lists the satchel and some doors in saved positions, but playable continuity treats the satchel as deleted/vanished, the west-side used doors as opened route memory, and the southern SecretDungeonDoor as crossed/open route memory. No hostile or dangerous mobile is immediate. No gump, context menu, vendor window, target cursor, combat state, or route transition is open."
     sources:
       - "docs/CCWM/live-state/manifest.yaml"
+      - "docs/CCWM/live-state/spawners.jsonl"
       - "docs/CCWM/live-state/mobiles.jsonl"
       - "docs/CCWM/live-state/items.jsonl"
-      - "docs/CCWM/live-state/spawners.jsonl"
       - "docs/CCWM/client-worldmap-markers/Sosaria.csv"
       - "docs/CCWM/client-worldmap-markers/Sosaria-Common.csv"
+      - "Data/Scripts/Items/Doors/BaseDoor.cs"
+      - "Data/Scripts/Items/Doors/SecretDoors.cs"
+      - "Data/Scripts/Mobiles/Civilized/Vendors/Mage.cs"
+      - "Data/Scripts/Mobiles/Base/BaseVendor.cs"
+      - "Data/Scripts/Mobiles/Base/StoreSalesList.cs"
     visible_mobiles:
-      - serial: 200274
-        type: "Server.Mobiles.Fox"
-        name: "a fox"
-        point3d: { x: 3439, y: 3425, z: 0 }
-        dx: 0
-        dy: 0
-        status: "controlled follower by simulation continuity, ordered to Follow, approximate nearby companion only"
-      - serial: 700932
-        type: "Server.Mobiles.AdventurerEast"
-        name: "Darlene"
-        point3d: { x: 3431, y: 3412, z: 0 }
-        dx: -8
-        dy: -13
-        status: "visible adventurer bank-room context, not a threat"
-      - serial: 701076
-        type: "Server.Mobiles.AdventurerWest"
-        name: "Jebidiah"
-        point3d: { x: 3434, y: 3412, z: 0 }
-        dx: -5
-        dy: -13
-        status: "visible adventurer bank-room context, not a threat"
-      - serial: 317372
-        type: "Server.Mobiles.Banker"
-        name: "Isaura"
-        point3d: { x: 3445, y: 3414, z: 0 }
-        dx: 6
-        dy: -11
-        status: "visible banker-family NPC, useful bank context, not a threat"
-      - serial: 317373
-        type: "Server.Mobiles.Banker"
-        name: "Jacy"
-        point3d: { x: 3457, y: 3414, z: 0 }
-        dx: 18
-        dy: -11
-        status: "edge-visible banker-family NPC, not a threat"
-      - serial: 317371
-        type: "Server.Mobiles.Banker"
-        name: "Casilda"
-        point3d: { x: 3437, y: 3415, z: 0 }
-        dx: -2
-        dy: -10
-        status: "visible banker-family NPC, useful bank context, not a threat"
-      - serial: 701037
-        type: "Server.Mobiles.AdventurerEast"
-        name: "Araminta"
-        point3d: { x: 3452, y: 3419, z: 0 }
-        dx: 13
-        dy: -6
-        status: "north-edge adventurer bank-room context, not a threat"
-      - serial: 701098
-        type: "Server.Mobiles.AdventurerWest"
-        name: "Barrett"
-        point3d: { x: 3454, y: 3419, z: 0 }
-        dx: 15
-        dy: -6
-        status: "north-edge adventurer bank-room context, not a threat"
-      - serial: 700906
-        type: "Server.Mobiles.AdventurerSouth"
-        name: "Lionel"
-        point3d: { x: 3435, y: 3429, z: 0 }
-        dx: -4
-        dy: 4
-        status: "visible adventurer bank-room context, not a threat"
-      - serial: 317374
-        type: "Server.Mobiles.Minter"
-        name: "Susan"
-        point3d: { x: 3444, y: 3432, z: 0 }
-        dx: 5
-        dy: 7
-        status: "visible minter/banker-family NPC behind the current board position, useful context, not a threat"
-      - serial: 700935
-        type: "Server.Mobiles.AdventurerNorth"
-        name: "Greger"
-        point3d: { x: 3435, y: 3433, z: 0 }
-        dx: -4
-        dy: 8
-        status: "visible adventurer bank-room context, not a threat"
-      - serial: 38153
-        type: "Server.Mobiles.TradesmanBard"
-        name: "Bridget"
-        point3d: { x: 3434, y: 3437, z: 0 }
-        dx: -5
-        dy: 12
-        status: "visible bard/tradesperson context, not a threat"
+      - { serial: 200274, type: "Server.Mobiles.Fox", name: "a fox", point3d: { x: 3406, y: 3214, z: 0 }, dx: 0, dy: 0, approximate: true, status: "controlled follower by simulation continuity; assumed to have kept up during the short west-side walk to Condon" }
+      - { serial: 317556, type: "Server.Mobiles.Mage", name: "Condon", point3d: { x: 3404, y: 3214, z: 0 }, dx: -2, dy: 0, status: "nearby passive mage/vendor; Talk row opened The Mystical Art Of Wizardry, which was closed in Run 348; Sell row now refused Mira's current backpack with no sell window" }
+      - { serial: 317545, type: "Server.Mobiles.AssassinGuildmaster", name: "Carmel", point3d: { x: 3420, y: 3215, z: 0 }, dx: 14, dy: 1, status: "visible passive assassin guildmaster east; Death and Taxes was closed in Run 345" }
+      - { serial: 317554, type: "Server.Mobiles.Barkeeper", name: "Chanah", point3d: { x: 3415, y: 3203, z: 0 }, dx: 9, dy: -11, status: "visible passive barkeeper north/northeast; Run 342 closed her already-read Best To Travel With Friends gump" }
+      - { serial: 317561, type: "Server.Mobiles.DrunkenPirate", name: "Ciro", point3d: { x: 3418, y: 3206, z: 0 }, dx: 12, dy: -8, status: "visible passive drunken pirate/vendor context; no immediate threat behavior" }
+      - { serial: 317557, type: "Server.Mobiles.Provisioner", name: "Saxon", point3d: { x: 3403, y: 3196, z: 0 }, dx: -3, dy: -18, status: "edge-visible passive provisioner/vendor north; Run 337 Talk gump was closed in Run 338" }
+      - { serial: 701193, type: "Server.Mobiles.TavernPatronSouth", name: "Bolton", point3d: { x: 3415, y: 3199, z: 0 }, dx: 9, dy: -15, status: "passive tavern patron context north/northeast" }
+      - { serial: 700760, type: "Server.Mobiles.TavernPatronSouth", name: "Abra", point3d: { x: 3417, y: 3199, z: 0 }, dx: 11, dy: -15, status: "passive tavern patron context north/northeast" }
+      - { serial: 700672, type: "Server.Mobiles.TavernPatronNorth", name: "Goldie", point3d: { x: 3424, y: 3206, z: 0 }, dx: 18, dy: -8, status: "edge-visible passive tavern patron context" }
+      - { serial: 700911, type: "Server.Mobiles.TavernPatronSouth", name: "Balea", point3d: { x: 3424, y: 3202, z: 0 }, dx: 18, dy: -12, status: "edge-visible passive tavern patron context" }
     visible_items:
-      - serial: 1075459772
-        type: "Server.Items.SearchBoard"
-        name: "Sage Advice"
-        point3d: { x: 3439, y: 3421, z: 3 }
-        dx: 0
-        dy: -4
-        status: "visible north-wall advice board; SAGE ADVICE gump was closed in Run 261"
-      - serial: 1075459773
-        type: "Server.Items.GuildBoard"
-        name: "Local Guilds"
-        point3d: { x: 3441, y: 3421, z: 3 }
-        dx: 2
-        dy: -4
-        status: "visible north-wall board currently opened as LOCAL GUILDS gump"
-      - serial: 1075459763
-        type: "Server.Items.StandardQuestBoard"
-        name: "Seeking Brave Adventurers"
-        point3d: { x: 3432, y: 3421, z: 3 }
-        dx: -7
-        dy: -4
-        status: "visible quest board, optional reading or context-menu action after current gump is closed"
-      - serial: 1075459764
-        type: "Server.Items.FishingQuestBoard"
-        name: "Seeking Brave Sailors"
-        point3d: { x: 3434, y: 3421, z: 3 }
-        dx: -5
-        dy: -4
-        status: "visible quest board, optional reading or context-menu action after current gump is closed"
-      - serial: 1073813328
-        type: "Server.Items.VoteStone"
-        name: "Vote Stone cluster"
-        point3d: { x: 3447, y: 3423, z: 0 }
-        dx: 8
-        dy: -2
-        status: "visible vote stone cluster spanning x 3447-3456; optional inspection, not yet touched"
-      - serial: 1075459756
-        type: "Server.Items.AdvertiserVendor"
-        name: "The Merchant Advertiser"
-        point3d: { x: 3431, y: 3424, z: 2 }
-        dx: -8
-        dy: -1
-        status: "visible merchant advertiser on west/northwest side, optional inspection"
-      - serial: 1075459757
-        type: "Server.Items.TrashChest"
-        name: "donation box"
-        point3d: { x: 3431, y: 3426, z: 0 }
-        dx: -8
-        dy: 1
-        status: "visible donation box beside Status Board, optional inspection"
-      - serial: 1075459758
-        type: "Server.Items.StatusBoard"
-        name: "Status Board"
-        point3d: { x: 3431, y: 3426, z: 2 }
-        dx: -8
-        dy: 1
-        status: "visible public board, optional reading"
-      - serial: 1075459760
-        type: "Server.Items.RulesBoard"
-        name: "Laws of the Land"
-        point3d: { x: 3431, y: 3437, z: 5 }
-        dx: -8
-        dy: 12
-        status: "visible rules board on west wall, optional reading"
-      - serial: 1075459762
-        type: "Server.Items.AdminBoard"
-        name: "News From The Nobles"
-        point3d: { x: 3431, y: 3439, z: 5 }
-        dx: -8
-        dy: 14
-        status: "visible news board on west wall, optional reading"
-      - serial: 1075459783
-        type: "Server.Items.BankChest"
-        name: "Bank Vault"
-        point3d: { x: 3452, y: 3429, z: 0 }
-        dx: 13
-        dy: 4
-        status: "visible bank vault and bank-room utility context"
-      - serial: 1075459779
-        type: "Server.Items.PublicDoor"
-        name: "door"
-        point3d: { x: 3445, y: 3443, z: 0 }
-        dx: 6
-        dy: 18
-        status: "edge-visible south-side exit option"
-    visible_blockers: []
-    recently_changed_items:
-      - serial: 1075461466
-        type: "Server.Items.BarbaricSatchel"
-        name: "barbaric satchel"
-        point3d: { x: 3452, y: 3429, z: 7 }
-        last_seen_dx_dy: { dx: 8, dy: -6 }
-        current_visibility: "vanished_after_Run_259_double_click"
-        result: "no container, no gump, no message, no target cursor, no loot; live-state snapshot still has the row but current playable continuity does not"
-      - serial: 1075459772
-        type: "Server.Items.SearchBoard"
-        name: "Sage Advice"
-        point3d: { x: 3439, y: 3421, z: 3 }
-        last_action: "Run 261 closed the already-read SAGE ADVICE gump"
-        result: "board remains visible; no item, money, quest, or target state changed"
-      - serial: 1075459773
-        type: "Server.Items.GuildBoard"
-        name: "Local Guilds"
-        point3d: { x: 3441, y: 3421, z: 3 }
-        last_action: "Run 261 normal double-click from Point3D(3439,3425,0)"
-        result: "opened and read LOCAL GUILDS GuildBoardGump; no resign button visible for Mira"
+      - { serial: 1075459656, type: "Server.Items.StrongWoodDoor", name: "StrongWoodDoor", point3d: { x: 3406, y: 3208, z: 0 }, dx: 0, dy: -6, status: "visible west-side door; not touched this run" }
+      - { serial: 1075459661, type: "Server.Items.SecretDungeonDoor", name: "SecretDungeonDoor", point3d: { x: 3414, y: 3213, z: 0 }, dx: 8, dy: -1, status: "opened in Run 345 and crossed in Run 346 as ordinary local doorway; no gump, target cursor, warning, payout, or teleport" }
+      - { serial: 1075459655, type: "Server.Items.StrongWoodDoor", name: "StrongWoodDoor", point3d: { x: 3406, y: 3204, z: 0 }, dx: 0, dy: -10, status: "visible west-side door; not touched" }
+      - { serial: 1075461472, type: "Server.Items.BarbaricSatchel", name: "barbaric satchel", point3d: { x: 3402, y: 3202, z: 8 }, dx: -4, dy: -12, status: "live snapshot lists it, but playable continuity treats it as vanished in Run 336" }
+      - { serial: 1075457591, type: "Server.Items.CensusRecords", name: "Forged Census Records", point3d: { x: 3420, y: 3212, z: 6 }, dx: 14, dy: -2, status: "double-clicked in Run 342 and closed in Run 343; read as a 2,000 gold census/name-change gump" }
+      - { serial: 1075459649, type: "Server.Items.TrashBarrel", name: "TrashBarrel", point3d: { x: 3405, y: 3196, z: 2 }, dx: -1, dy: -18, status: "edge-visible north; closed in Run 339 and not a loot route" }
+      - { serial: 1075459657, type: "Server.Items.StrongWoodDoor", name: "StrongWoodDoor", point3d: { x: 3409, y: 3198, z: 0 }, dx: 3, dy: -16, status: "opened in Run 339 and stepped through in Run 340; ordinary local door" }
+      - { serial: 1075459662, type: "Server.Items.StealingBoard", name: "Stealing the Past", point3d: { x: 3415, y: 3203, z: 7 }, dx: 9, dy: -11, status: "clicked once; non-member gate says it is written in thieves' cant and no board gump opens" }
+      - { serial: 1075459658, type: "Server.Items.SecretDungeonDoor", name: "SecretDungeonDoor", point3d: { x: 3412, y: 3199, z: 0 }, dx: 6, dy: -15, status: "opened in Run 340 and stepped through in Run 341 like an ordinary local doorway" }
+      - { serial: 1075459702, type: "Server.Items.Dices", name: "Dices", point3d: { x: 3417, y: 3204, z: 6 }, dx: 11, dy: -10, status: "visible game item; not touched" }
+      - { serial: 1075459660, type: "Server.Items.StrongWoodDoor", name: "StrongWoodDoor", point3d: { x: 3414, y: 3198, z: 0 }, dx: 8, dy: -16, status: "visible north door; not touched" }
+      - { serial: 1075459672, type: "Server.Items.CheckerBoard", name: "CheckerBoard", point3d: { x: 3417, y: 3201, z: 6 }, dx: 11, dy: -13, status: "visible table-game object; not touched" }
     visible_running_spawner_objects: []
-    nearby_invisible_spawner_context:
-      - { serial: "multiple", type: "Server.Mobiles.PremiumSpawner", point3d: { x: 3431, y: 3412, z: 0 }, relation: "saved bank/adventurer NPC spawners in range; invisible to the player and not active blockers" }
-      - { serial: 1075908545, type: "Server.Items.KeywordTeleporter", name: "Dio's Door", point3d: { x: 3437, y: 3421, z: 0 }, relation: "live-state item is visible=false; do not treat as client-visible route proof" }
-    visible_route_static_context:
-      - { route: "3446,3442 -> 3444,3435", status: "Run 257 used short open bank-room movement after closing the empty bank box and asking Susan for balance." }
-      - { route: "3444,3435 -> 3439,3425", status: "Run 260 used short open bank-floor movement to reach Sage Advice within use range; no visible blocker, combat, target cursor, or region change." }
-      - { route: "3439,3425 stationary", status: "Run 261 stayed under the north-wall boards, closed SAGE ADVICE, and opened/read LOCAL GUILDS; no movement or terrain check." }
-      - { route: "north-wall boards", status: "visible Sage Advice, Local Guilds, quest boards, merchant advertiser, vote stones, donation boxes, and bankers; no hostile visible inside the current 18-tile screen." }
-    recently_visible_route_context:
-      - { name: "Bank of Britain exterior door", serial: 1075459158, point3d: { x: 3017, y: 1055, z: 5 }, relation: "visible transition from exterior marker to the shared bank-vault room" }
-      - { name: "ruby elemental-looking humanoid", serial: 37164, point3d: { x: 3021, y: 1071, z: 0 }, relation: "south-side exterior potential threat before entering the bank; now off-screen and not an active blocker" }
-      - { name: "Taima the warrior guildmaster", serial: 318115, point3d: { x: 2973, y: 1041, z: 5 }, relation: "west-side Defenders yard memory after leaving for the bank; paid sword-training quote remains unpaid" }
-      - { name: "nearby coffer", serial: 1075461201, point3d: { x: 2975, y: 1038, z: 31 }, relation: "west-side memory; double-click gave a Snooping-first message and remains a known money-route blocker" }
-      - { name: "Bank of Britain marker", serial: "world-map", point3d: { x: 3015, y: 1056, z: 5 }, relation: "outside marker that led to the bank door; no longer on current interior screen" }
-      - { name: "barbaric satchel", serial: 1075461466, point3d: { x: 3452, y: 3429, z: 7 }, relation: "was visible on the east-side vault; double-clicking it in Run 259 made it vanish silently instead of opening loot or a gump" }
     client_worldmap_markers:
-      - { name: "none within 120 tiles", point2d: { x: 3439, y: 3425 }, dx: 0, dy: 0, source: "Sosaria.csv/Sosaria-Common.csv", use: "the current bank-vault interior is not separately explained by a nearby overlay marker" }
+      - { name: "Montor Graveyard", point2d: { x: 3243, y: 2785 }, dx: -163, dy: -429, distance_tiles: 459, source: "Sosaria.csv/Sosaria-Common.csv", use: "nearest overlay marker found within 500 tiles; far outside client sight and not useful for this interior decision" }
+    recently_changed_interactions:
+      - target_serial: 317556
+        target_type: "Server.Mobiles.Mage"
+        target_name: "Condon"
+        last_action: "Run 348 closed Condon's already-read The Mystical Art Of Wizardry gump, context-clicked him again, and chose the visible Sell row."
+        result: "The speech gump closed cleanly. Condon's menu reopened, Sell was chosen, and he only said Mira has nothing he is interested in. No sell list, target cursor, payment prompt, gold, item movement, skill change, guild membership, discovery flag, crime flag, combat state, hunger/thirst change, map change, inventory change, or follower change followed."
+      - target_serial: 317556
+        target_type: "Server.Mobiles.Mage"
+        target_name: "Condon"
+        last_action: "Run 347 chose Condon's visible Talk row from the already-read context menu and read the speech gump."
+        result: "The context menu closed and The Mystical Art Of Wizardry speech gump opened. It teaches wand charging at 100 gold per spell circle, Create Food water, Remove Trap trap-check orb, Telekinesis, Reveal, custom spell bars, and magery/elementalism conflict. No buy/sell window, wand target cursor, payment prompt, gold, item, skill, guild membership, discovery flag, crime flag, combat state, hunger/thirst change, map change, inventory change, or follower change followed."
+      - target_serial: 1075459661
+        target_type: "Server.Items.SecretDungeonDoor"
+        target_name: "SecretDungeonDoor"
+        last_action: "Run 346 stepped through the already-open southern SecretDungeonDoor from about Point3D(3416,3213,0)."
+        result: "Crossing the doorway was ordinary local interior movement toward the west side. No route teleport, map change, region message, warning, gump, target cursor, loot, money, discovery flag, combat state, hunger/thirst change, inventory change, or follower change followed."
+      - target_serial: 1075459661
+        target_type: "Server.Items.SecretDungeonDoor"
+        target_name: "SecretDungeonDoor"
+        last_action: "Run 345 walked west to about Point3D(3416,3213,0) and double-clicked the southern SecretDungeonDoor at Point3D(3414,3213,0)."
+        result: "The door opened like an ordinary local doorway once Mira was within reach. No locked message, gump, warning, target cursor, vendor window, route teleport, gold, lockpick, thief clue, skill check, guild membership, crime flag, discovery flag, hunger/thirst change, combat state, inventory change, or follower change followed."
+      - target_serial: 317545
+        target_type: "Server.Mobiles.AssassinGuildmaster"
+        target_name: "Carmel"
+        last_action: "Run 345 closed Carmel's already-read Death and Taxes speech gump."
+        result: "Closing the gump returned to the tavern floor with no delayed assassin assignment, bribe prompt, vendor window, target cursor, join state, payment, item, discovery flag, combat state, hunger/thirst change, inventory change, or follower change."
+      - target_serial: 317545
+        target_type: "Server.Mobiles.AssassinGuildmaster"
+        target_name: "Carmel"
+        last_action: "Run 344 chose Carmel's visible Talk row from the already-read context menu."
+        result: "Carmel opened the Death and Taxes speech gump and the menu closed. The gump gives assassin guild context, points assignments toward Xardok on a secluded Sosaria island, mentions assassin supplies for sale, and exposes 50,000 gold bribe pressure for murder counts. No join, hire/bribe, buy/sell, target cursor, vendor window, payment, item, skill, guild membership, crime flag, murder count, discovery flag, combat state, hunger/thirst change, map change, inventory change, or follower change followed."
+      - target_serial: 1075457591
+        target_type: "Server.Items.CensusRecords"
+        target_name: "Forged Census Records"
+        last_action: "Run 343 closed the already-read Forged Census Records gump before stepping toward Carmel."
+        result: "Closing the CensusGump produced no delayed rename, payment prompt, item, skill, target cursor, crime flag, guild membership, discovery flag, combat state, hunger/thirst change, map change, inventory change, or follower change. It remains a 2,000 gold rename service, not a starter-money, thief-job, guild hint, discovery, or tool route."
+      - target_serial: 317554
+        target_type: "Server.Mobiles.Barkeeper"
+        target_name: "Chanah"
+        last_action: "Run 342 closed Chanah's already-read Best To Travel With Friends gump before moving to the records."
+        result: "Closing the gump produced no delayed helper, gold, item, target cursor, vendor window, skill change, guild membership, crime flag, discovery flag, combat state, hunger/thirst change, inventory change, or route change. The Run 341 lesson remains paid henchman advice only."
+      - target_serial: 1075459658
+        target_type: "Server.Items.SecretDungeonDoor"
+        target_name: "SecretDungeonDoor"
+        last_action: "Run 341 stepped through the already-open SecretDungeonDoor from about Point3D(3410,3198,0) to the tavern side around Point3D(3414,3199,0)."
+        result: "Crossing the door was ordinary local interior movement into the tavern side. No teleport, warning, gump, target cursor, loot, money, discovery flag, combat state, hunger/thirst change, inventory change, or follower change followed."
+      - target_serial: 1075459658
+        target_type: "Server.Items.SecretDungeonDoor"
+        target_name: "SecretDungeonDoor"
+        last_action: "Run 340 stepped through the already-open StrongWoodDoor to about Point3D(3410,3198,0), then double-clicked the nearby SecretDungeonDoor at Point3D(3412,3199,0)."
+        result: "The secret-looking door opened like an ordinary local door from within two tiles. No locked message, gump, target cursor, vendor window, route teleport, gold, lockpick, job clue, skill check, guild membership, crime flag, discovery flag, hunger/thirst change, combat state, inventory change, or follower change followed."
+      - target_serial: 1075459657
+        target_type: "Server.Items.StrongWoodDoor"
+        target_name: "StrongWoodDoor"
+        last_action: "Run 340 stepped through the StrongWoodDoor that Run 339 opened at Point3D(3409,3198,0)."
+        result: "Crossing the local doorway moved Mira to about Point3D(3410,3198,0). No region transition, locked message, gump, target cursor, vendor window, route teleport, gold, lockpick, job clue, skill check, guild membership, crime flag, discovery flag, hunger/thirst change, combat state, inventory change, or follower change followed."
+      - target_serial: 1075459649
+        target_type: "Server.Items.TrashBarrel"
+        target_name: "TrashBarrel"
+        last_action: "Run 339 closed the still-open TrashBarrel display before moving east to the door."
+        result: "Closing the display produced no delayed loot, money, lockpick, starter stash, quest clue, target cursor, vendor window, skill check, guild membership, crime flag, discovery flag, hunger/thirst change, combat state, movement transition, inventory change, or follower change."
+      - target_serial: 317557
+        target_type: "Server.Mobiles.Provisioner"
+        target_name: "Saxon"
+        last_action: "Run 337 context-clicked nearby Saxon and chose the visible Talk / The Right Survival Gear row."
+        result: "A SpeechGump titled The Right Survival Gear opened and was read/sketched. It taught provisioner survival leads but gave no gold, item, vendor purchase, sale, repair target, target cursor, inventory change, skill change, guild membership, discovery flag, crime flag, hunger/thirst change, combat state, movement, or route transition. The gump was closed in Run 338 before touching the TrashBarrel."
+      - target_serial: 1075461472
+        target_type: "Server.Items.BarbaricSatchel"
+        target_name: "barbaric satchel"
+        last_action: "Run 336 walked west/south from the pickpocket dip to the visible satchel near Saxon and double-clicked it."
+        result: "The satchel did not open or become inventory. It vanished from the floor with no gump, target cursor, message, gold, item, equipment change, skill change, crime flag, discovery flag, hunger/thirst change, combat state, or route transition."
+      - target_serial: 1075459670
+        target_type: "Server.Items.PickpocketDip"
+        target_name: "pickpocket dip"
+        last_action: "Run 335 double-clicked the adjacent dip, waited through the visible swing after a failed attempt, and double-clicked it again."
+        result: "First attempt produced the careless-bump swing message; after the short visible wait, the second attempt produced the success message. Stealing rose from 0.0 to about 0.5. No gold, loot, lockbox unlock, guild membership, target cursor, gump, route change, crime flag, discovery flag, hunger/thirst change, combat state, or inventory movement followed."
+      - target_serial: 317558
+        target_type: "Server.Mobiles.Thief"
+        target_name: "Iain"
+        last_action: "Run 334 read and scrolled Iain's already-open Buy window, selected nothing, and closed it."
+        result: "The visible shop stock remained priced merchandise rather than a free lockpick or training handoff. Mira has 0 gold, so no row was selected, no purchase failed, no item moved, no target cursor opened, and the window is now closed."
+      - target_serial: 317558
+        target_type: "Server.Mobiles.Thief"
+        target_name: "Iain"
+        last_action: "Run 333 context-clicked Iain and chose the visible Buy row."
+        result: "Iain opened a vendor buy window and gave the standard shop greeting. Mira selected no stock and bought nothing because she still has 0 gold. No target cursor, lockpick handoff, unlock, training, inventory movement, payment, crime flag, guild membership, discovery flag, combat state, hunger/thirst change, movement, or route change occurred."
+      - target_serial: 317558
+        target_type: "Server.Mobiles.Thief"
+        target_name: "Iain"
+        last_action: "Run 332 targeted the visible easy practice lockbox under Iain's paid box-unlock service cursor."
+        result: "Iain accepted the box as the service target but said it would cost 1,000 gold to unlock; the client said Mira does not have enough gold. The target cursor cleared. No payment, unlock, skill gain, vendor stock view, lockpick purchase, inventory change, crime flag, guild membership, discovery flag, combat state, hunger/thirst change, or route change occurred."
+      - target_serial: 1075459663
+        target_type: "Server.Items.PickBoxEasy"
+        target_name: "practice lockbox (easy)"
+        last_action: "Run 332 targeted the visible easy practice lockbox under Iain's paid unlock-service cursor after Run 330 confirmed direct double-click only reports it locked without a lockpick."
+        result: "The box still did not open. Iain's service accepted it as a lockable target but refused to unlock because Mira has 0 gold against the 1,000 gold price. The target cursor cleared; no lockpicking attempt, skill message, loot window, inventory movement, payment, guild membership, criminal flag, combat state, discovery flag, hunger/thirst change, or route change followed."
+      - target_serial: 1075459750
+        target_type: "Server.Items.BankChest"
+        target_name: "Bank Vault"
+        last_action: "Run 329 walked east into range from Lore, double-clicked the visible Bank Vault, inspected the opened personal bank box, and closed it."
+        result: "The vault opened only Mira's personal bank box. It was still empty, gave no cash, no storage item, no payment prompt, no target cursor, no vendor window, no training, no crime flag, no guild membership, no discovery flag, and no route change."
+      - target_serial: 317559
+        target_type: "Server.Mobiles.ThiefGuildmaster"
+        target_name: "Lore"
+        last_action: "Run 328 context-clicked Lore after closing the stale note and chose the visible Join row."
+        result: "Lore quoted the joining price instead of enrolling Mira. The code-backed price is 8,000 gold for this alien-start character, and Mira has 0 gold. No gump, target cursor, payment, guild ring, NpcGuild change, inventory movement, skill change, criminal flag, combat state, discovery flag, hunger/thirst change, or movement followed."
+      - target_serial: 1075459662
+        target_type: "Server.Items.StealingBoard"
+        target_name: "Stealing the Past"
+        last_action: "Run 328 clicked the visible board as a non-member after abandoning the missing-note route."
+        result: "The board did not open. The visible message said it seems to be written in thieves' cant, confirming the board is gated by Thieves Guild membership before it becomes useful route text."
+      - target_serial: "inventory:secret_note"
+        target_type: "Server.Items.ThiefNote"
+        target_name: "secret note"
+        last_action: "Run 328 closed the already-read note gump because the exact assignment line is absent from saved continuity."
+        result: "The note remains in Mira's backpack with generic theft rules known and the randomized NoteStory assignment still unresolved. No target cursor, route, theft roll, payout, skill change, guild membership, criminal flag, discovery flag, or inventory movement occurred."
+      - target_serial: 317559
+        target_type: "Server.Mobiles.ThiefGuildmaster"
+        target_name: "Lore"
+        last_action: "Run 325 walked close enough to Lore, read her visible context menu, and chose the visible thief job row."
+        result: "Lore said 'Here is something I think you can handle.' A new unread secret note was added to Mira's backpack. No gump, vendor window, target cursor, payment, guild membership, crime flag, combat state, hunger/thirst change, skill change, discovery flag, or route change followed."
+      - target_serial: 317558
+        target_type: "Server.Mobiles.Thief"
+        target_name: "Iain"
+        last_action: "Run 324 read and closed the SpeechGump opened by Iain's free talk/info row."
+        result: "The lesson taught player-facing thief leads: box unlocking, dungeon theft, stealth/hiding practice, traps, snooping merchants/coffers, guards as theft risk, thief guildmaster jobs, and hidden sneak attacks. Closing it produced no vendor list, sell list, target cursor, job note, payment, inventory change, skill change, guild membership change, crime flag, combat state, hunger/thirst change, discovery flag, or movement."
+      - target_serial: 1075459033
+        target_type: "Server.Items.PublicDoor"
+        target_name: "oak shelf"
+        last_action: "Run 322 closed Suki's read gump, stepped near the Profuse Provisions oak shelf, and double-clicked it from about Point3D(3008,1109,0)."
+        result: "The shelf acted as a public-door transition to the Thieves Guild at Point3D(3425,3187,17), brought the fox along, stored the return anchor, and opened no gump, vendor window, context menu, target cursor, payment, crime flag, combat state, inventory change, hunger/thirst change, skill change, or discovery flag."
+      - target_serial: 59762
+        target_type: "Server.Mobiles.Provisioner"
+        target_name: "Suki"
+        last_action: "Run 321 context-clicked Suki, chose the visible Talk/info row, opened 'The Right Survival Gear,' and read the gump."
+        result: "The survival gump was closed in Run 322 before leaving the shop; it taught gear priorities but did not pay, sell, target, or mutate state."
+      - target_serial: 1075459047
+        target_type: "Server.Items.DarkWoodDoor"
+        target_name: "DarkWoodDoor"
+        last_action: "Run 319 opened the Profuse Provisions door at Point3D(3011,1110,0), then stepped through to about Point3D(3010,1110,0)."
+        result: "The door was ordinary shop movement and is now off-screen route memory after the shelf teleport."
+    recently_visible_route_context:
+      - { name: "vanished barbaric satchel spot", serial: 1075461472, point3d: { x: 3402, y: 3202, z: 8 }, relation: "Run 336 double-clicked the visible satchel and it vanished because Mira was not its owner; no gump, loot, pack item, or equipment change followed" }
+      - { name: "Saxon", serial: 317557, point3d: { x: 3403, y: 3196, z: 0 }, relation: "nearby provisioner/vendor behind west-northwest; Run 337 opened and read his The Right Survival Gear talk gump, which was closed in Run 338 before touching the TrashBarrel" }
+      - { name: "TrashBarrel", serial: 1075459649, point3d: { x: 3405, y: 3196, z: 2 }, relation: "closed in Run 339; no loot, money, lockpick, or quest clue observed, and no item was dropped into it" }
+      - { name: "opened StrongWoodDoor", serial: 1075459657, point3d: { x: 3409, y: 3198, z: 0 }, relation: "opened in Run 339 and stepped through in Run 340; ordinary local door, not a locked gate, gump, target cursor, or teleport" }
+      - { name: "opened SecretDungeonDoor", serial: 1075459658, point3d: { x: 3412, y: 3199, z: 0 }, relation: "opened in Run 340 and stepped through in Run 341; ordinary close-range doorway into the tavern side, not a warning, payout, target cursor, gump, or teleport" }
+      - { name: "Chanah", serial: 317554, point3d: { x: 3415, y: 3203, z: 0 }, relation: "nearby barkeeper behind/northwest; Run 341 visible Talk/info row opened Best To Travel With Friends and Run 342 closed the already-read paid-henchman advice gump" }
+      - { name: "Forged Census Records", serial: 1075457591, point3d: { x: 3420, y: 3212, z: 6 }, relation: "Run 342 opened/read it as a paid 2,000 gold rename form with text entry; Run 343 closed it without a delayed reward, clue, target cursor, or route" }
+      - { name: "Carmel", serial: 317545, point3d: { x: 3420, y: 3215, z: 0 }, relation: "nearby assassin guildmaster; Run 344 chose Talk and opened/read Death and Taxes, and Run 345 closed it without assignment, payout, tool, target cursor, or guild membership" }
+      - { name: "Condon", serial: 317556, point3d: { x: 3404, y: 3214, z: 0 }, relation: "nearby passive mage/vendor; Run 347 chose Talk and opened/read The Mystical Art Of Wizardry, then Run 348 closed it and confirmed Sell refuses Mira's current backpack with no sell window" }
+      - { name: "southern SecretDungeonDoor", serial: 1075459661, point3d: { x: 3414, y: 3213, z: 0 }, relation: "opened in Run 345 and crossed in Run 346; ordinary local doorway, not a gump, payout, target cursor, warning, or teleport" }
+      - { name: "pickpocket dip", serial: 1075459670, point3d: { x: 3416, y: 3190, z: 0 }, relation: "off-screen north route memory from the records table; Run 335 proved it starts visible practice rolls, can swing after failure, and trains without paying or looting" }
+      - { name: "practice lockbox (easy)", serial: 1075459663, point3d: { x: 3416, y: 3187, z: 8 }, relation: "off-screen north route memory from the records table; direct double-click needs a lockpick, Iain's paid unlock service refuses without 1,000 gold, and Iain's Buy list did not solve the money gate" }
+      - { name: "Bank Vault", serial: 1075459750, point3d: { x: 3425, y: 3188, z: 3 }, relation: "off-screen north/northeast route memory from the records table; opens Mira's personal bank box, which is empty" }
+      - { name: "Thieves Guild oak shelf exit", serial: 1075459711, point3d: { x: 3425, y: 3186, z: 22 }, relation: "off-screen north/northeast route memory from the records table; likely returns to the Profuse Provisions shelf-use anchor if double-clicked" }
+      - { name: "Lore", serial: 317559, point3d: { x: 3418, y: 3189, z: 0 }, relation: "off-screen north route memory from the records table; job row handed Mira the unresolved secret note, and Join quotes 8,000 gold" }
+      - { name: "Iain", serial: 317558, point3d: { x: 3428, y: 3189, z: 0 }, relation: "off-screen north/northeast route memory from the records table; Buy window was read and closed in Run 334, paid unlock service needs 1,000 gold, and Mira has 0" }
+      - { name: "Stealing the Past", serial: 1075459662, point3d: { x: 3415, y: 3203, z: 7 }, relation: "visible board clicked once; it only shows thieves' cant to a non-member" }
+      - { name: "practice lockboxes and pickpocket dip", point3d: { x: 3416, y: 3187, z: 8 }, relation: "off-screen north theft/lockpicking training surfaces; easy lockbox tested and needs a lockpick, pickpocket dip now confirmed as Stealing practice only" }
+      - { name: "Ciro", serial: 317561, point3d: { x: 3418, y: 3206, z: 0 }, relation: "visible drunken pirate vendor/tavern context near the records and Carmel; not clicked" }
+      - { name: "Profuse Provisions oak shelf", serial: 1075459033, point3d: { x: 3006, y: 1108, z: 0 }, relation: "off-screen source transition; stores return anchor near Point3D(3008,1109,0)" }
+      - { name: "Profuse Provisions coffer", serial: 1075461233, point3d: { x: 3008, y: 1107, z: 6 }, relation: "off-screen shop coffer remained untouched; theft risk not resolved" }
+
 route_memory:
-  current_route_intent: "Pause under the north-wall Local Guilds board with its LOCAL GUILDS gump open and read."
-  last_route_result: "Run 261 stayed at Point3D(3439,3425,0), closed Sage Advice, opened Local Guilds, and learned guild membership also needs gold rather than solving starter cash."
+  current_route_intent: "Choose whether to test Condon's Buy list despite 0 gold, test the wand service row honestly, use nearby doors, backtrack to thief-practice surfaces, or leave through the oak shelf exit."
+  last_route_result: "Run 348 did not move. Mira closed Condon's speech gump, reopened his context menu, chose Sell, and got only the message that she has nothing he is interested in."
+  macro_travel_route_summary: "No macro travel in Run 348; Mira stayed at Point3D(3406,3214,0), closed Condon's gump, and tested Sell from his visible menu."
   immediate_options:
-    - "close the LOCAL GUILDS gump"
-    - "read the quest boards, Status Board, Laws of the Land, or News From The Nobles"
-    - "inspect the visible vote stones, donation boxes, or Merchant Advertiser only if deliberately looking for utility/friction"
-    - "leave through the visible doors if the bank information route stalls"
-  ordinary_collision_policy: "Trees, rocks, shorelines, mountains, and walls are client-side route corrections, not code-trace triggers."
+    - "seek a starter-money route because Lore's Thieves Guild join fee is 8,000 gold and Mira has 0"
+    - "do not keep testing the Bank Vault for money; it opened Mira's empty personal bank box"
+    - "do not keep double-clicking practice lockboxes without a lockpick; the easy box only reports that it appears locked"
+    - "Iain's paid unlock service has now been tested against the easy lockbox and fails at the 1,000 gold gate because Mira has 0 gold"
+    - "Iain's Buy window was read and closed; no purchase is possible while Mira has 0 gold"
+    - "keep using the adjacent pickpocket dip only as deliberate Stealing practice, not as a money route"
+    - "use the nearby exit oak shelf if returning to Profuse Provisions becomes the next route"
+    - "manually capture the exact randomized first assignment sentence from the secret note if the real client screen is available"
+    - "avoid planning any thief-note coffer/dungeon/delivery route until that exact assignment line is known"
+    - "Iain's Buy window is already closed, so another context menu, route object, or training prop can be used"
+    - "do not treat the vanished barbaric satchel as loot or a usable container; it was owner-gated and disappeared"
+    - "do not treat the TrashBarrel as loot; opening it only exposed disposal/container pressure and Run 339 closed it without dropping anything"
+    - "the nearby StrongWoodDoor and SecretDungeonDoor are open now; treat both as local doorway decisions, not payouts or teleports"
+    - "ignore Stealing the Past for route planning until Mira joins the Thieves Guild"
+    - "Chanah's Best To Travel With Friends gump was closed in Run 342 after being read; do not revisit it as starter help"
+    - "do not treat henchmen as free starter help; Chanah's gump says they require treasure or gold and Mira has 0"
+    - "the Forged Census Records gump was closed in Run 343; do not treat the records as a thief-job clue, payout, or discovery route because it is a 2,000 gold rename service"
+    - "the southern SecretDungeonDoor was crossed in Run 346; treat it as a local doorway for backtracking, not a route or payout"
+    - "do not treat Carmel's talk as starter help; it is assassin-guild context, Xardok assignment direction, and 50,000 gold bribe pressure"
+    - "do not treat Carmel's Buy/Sell rows as usable stock access while Mira is not an Assassin Guild member"
+    - "Condon's Sell row has now been tested and says Mira has nothing he is interested in; it is not a current starter-cash route"
+    - "Condon's wand-charging service costs 100 gold per spell circle and requires a magic wand target; Mira has 0 gold and no wand"
+  ordinary_collision_policy: "Trees, rocks, shorelines, mountains, walls, and ordinary door frames are client-side route corrections, not code-trace triggers."
+
 diagnostic_csharp_current_run:
-  reason: "Local Guilds opened a custom information gump; tracing was limited to the visible board response, gump controls, membership fee text, and the no-resign-button condition after the normal double-click."
+  reason: "Run 348 used the live-state files for current screen context and traced Condon's Mage/BaseVendor sell path only because a normal Sell action produced a shard-specific refusal instead of a sell list. No code was traced for routine movement, passive NPCs, pet follow, terrain, private timers, or ambient AI."
   paths_traced:
     - "docs/CCWM/live-state/manifest.yaml"
-    - "docs/CCWM/live-state/items.jsonl"
     - "docs/CCWM/live-state/mobiles.jsonl"
+    - "docs/CCWM/live-state/items.jsonl"
     - "docs/CCWM/live-state/spawners.jsonl"
     - "docs/CCWM/client-worldmap-markers/Sosaria.csv"
     - "docs/CCWM/client-worldmap-markers/Sosaria-Common.csv"
-    - "Data/Scripts/Items/Books/BulletinBoards/GuildBoard.cs"
-  player_visible_result: "Double-clicking Local Guilds within four tiles opened a LOCAL GUILDS GuildBoardGump; Mira read it and left it open."
-  learned_gate: "Local guild membership is gated by finding a guildmaster and paying the exact entry fee; first guild entry costs 2,000 gold, future guild fees double, replacement rings cost 400 gold, and the board does not mutate membership or inventory state for Mira."
+    - "Data/Scripts/Mobiles/Civilized/Vendors/Mage.cs"
+    - "Data/Scripts/Mobiles/Base/BaseVendor.cs"
+    - "Data/Scripts/Mobiles/Base/StoreSalesList.cs"
+  player_visible_result: "Mira closed Condon's already-read speech gump, reopened his context menu, and chose Sell. Condon said she has nothing he is interested in; no sell window opened and no backpack item moved."
+  learned_gate: "Condon's sell route only helps if Mira carries items on a mage vendor's buy list. Her current known backpack contents do not match, so this is not a starter-money route."
+
 vitals_status:
   alive: true
   death_state: "alive"
+  blessed: false
   hidden: false
   criminal: false
   wanted: 0
@@ -385,30 +413,28 @@ vitals_status:
   stam: { current: 40, max: 40 }
   mana: { current: 40, max: 40 }
   raw_stats: { str: 50, dex: 20, int: 20 }
-  stat_cap: 250
   fame: 0
   karma: 0
   kills: 0
 
 skills_leveling:
   profession_label: "warrior"
+  skill_start: 40000
   skills_cap: 40000
   computed_overall_level: 10
   best_archetype: "Alien"
   notable_skills:
     Druidism: { base: 1.7, value: 1.7, cap: 100.0, lock: "Up" }
+    Lockpicking: { base: 0.0, value: 0.0, cap: 100.0, lock: "Up", current_training_status: "easy practice lockbox visible; direct use needs a lockpick, Iain's paid unlock service refuses without 1,000 gold, and Iain's Buy window was closed after confirming no purchase is possible with 0 gold" }
+    Mercantile: { base: 0.0, value: 0.0, cap: 100.0, lock: "Up" }
     Snooping: { base: 0.0, value: 0.0, cap: 100.0, lock: "Up" }
+    Stealing: { base: 0.5, value: 0.5, cap: 100.0, lock: "Up", current_training_status: "pickpocket dip remains visible northeast and was tested twice in Run 335; first attempt failed and swung, second succeeded, giving early no-money training but no loot" }
+    Tailoring: { base: 0.1, value: 0.1, cap: 100.0, lock: "Up" }
     Taming: { base: 0.5, value: 0.5, cap: 100.0, lock: "Up" }
   other_skills_default: { base: 0.0, value: 0.0, cap: 100.0, lock: "Up" }
   active_skill_timer: null
-  active_learning_offer:
-    teacher: "Taima the warrior guildmaster"
-    selected_skill: "Swords / Swordsmanship"
-    payment_status: "quoted but unpaid"
-    exact_price: "not retained in state; live-state snapshot does not expose Taima's saved Swords value"
-    visible_result: "Taima says she will teach if paid the quoted amount in full, and less payment gives less teaching."
-    skill_gain_completed: false
-  last_skill_friction: "The nearby coffer's double-click path requires a Snooping peek before any theft flow; Mira's Snooping is 0.0, so the coffer only says to get better at snooping first."
+  active_learning_offer: null
+  last_skill_friction: "Pickpocket dip practice works without money and moved Stealing off zero, but it is only training and pays nothing. Kachine's BOD deed route remains blocked by no cloth, no scissors/sewing kit, and 0 gold. Kachine's Tailoring row is a paid lesson, and Kachine's service row rejects the starter fancy shirt."
 
 inventory_equipment:
   backpack:
@@ -416,23 +442,25 @@ inventory_equipment:
     movable: false
     contents:
       - { type: "CookedBird", name: "cooked alien meat", amount: 10, hue: "0xB64", fill_factor_each: 10 }
-      - { type: "Waterskin", name: "empty canteen", amount: 1, item_id: "0x4971", weight: 1.0, fill_status: "empty", last_use_result: "Nearby water art failed earlier; message said fill only at water trough, tub, or barrel" }
-      - { type: "MedicalRecord", name: "Medical Record", amount: 1, data_patient: "Mira Vale", data_planet: "Alaunrae V", read_status: "opened_read_and_closed" }
+      - { type: "MedicalRecord", name: "Medical Record", amount: 1, data_patient: "Mira Vale", data_planet: "Alaunrae V", read_status: "opened_read_and_closed", last_appraisal_result: "Suki said she could not put a value on it; Elana said it did not need her identify services" }
+      - { type: "Server.Engines.BulkOrders.SmallTailorBOD", name: "a bulk order deed", amount: 1, hue: "0x483", loot_type: "Blessed", weight: 1.0, amount_finished: 0, amount_to_make: "visible when the deed gump is reopened; exact randomized value not captured in static snapshot", item_requested: "visible low-end cloth tailoring item when the deed gump is reopened; exact randomized item not captured in static snapshot", read_status: "accepted_from_Kachine_read_and_closed", current_gump_open: false }
+      - { type: "Server.Items.ThiefNote", name: "secret note", amount: 1, owner: "Mira Vale", read_status: "gump_closed_generic_rules_read_assignment_unresolved", current_gump_open: false, visible_status: "paper-style note gump was closed in Run 328; generic rules are known, but exact randomized NoteStory assignment line is unresolved in saved continuity" }
+    known_missing_tools:
+      - { type: "Server.Items.Lockpick", status: "not present in the known backpack contents; Run 330 confirmed practice lockboxes need one before a lockpicking target cursor appears, and Run 334 closed Iain's Buy window without purchasing anything" }
   equipped_items_by_layer:
-    shirt: { type: "FancyShirt", name: "fancy shirt" }
+    shirt: { type: "FancyShirt", name: "fancy shirt", last_service_result: "Kachine's Run 314 service cursor and Malcolm's earlier tailor service both said 'That does not need my services.'" }
     shoes: { type: "Boots", name: "boots" }
     pants: { type: "LongPants", name: "long pants" }
     weapon: { type: "Dagger", name: "knife" }
   held_light_source: null
   gold_currency: 0
-  last_loot_friction: "Run 259 confirmed the visible barbaric satchel is not loot or storage for Mira: double-clicking it made it vanish silently. Susan still requires convertible loot or gold, and Taima's training quote remains unpaid."
-  bank: "Accessible via nearby Bank Vault or Susan's banker options; visible bank storage was empty and spoken balance is 0 gold."
+  last_loot_friction: "Prior Britain cash leads are still closed: bank balance/storage 0, Suki's Sell row rejects the current starter backpack, Suki's Talk/info row gives guidance but no payout, and the Profuse Provisions oak shelf proved to be a route to the Thieves Guild rather than storage or cash. Run 329 confirmed the Thieves Guild Bank Vault opens the same empty personal bank box. Run 330 confirmed the easy practice lockbox needs a lockpick and does not open or train by direct click. Run 332 confirmed Iain's unlock service accepts the easy lockbox but refuses without the 1,000 gold payment while Mira has 0 gold. Run 334 read and closed Iain's Buy window without purchase; stock is priced merchandise and a lockpick row, if present in this restock, still requires gold. Run 335 confirmed the pickpocket dip trains Stealing but gives no gold or loot. Run 336 confirmed the loose barbaric satchel is owner-gated and vanishes instead of becoming loot. Run 337 confirmed Saxon's free provisioner talk opens advice text, not gold or items. Run 338 confirmed the nearby TrashBarrel opens as a disposal/container window, not starter loot, and no item was dropped into it. Run 339 closed the barrel and opened the nearest StrongWoodDoor; it was only a local doorway, not loot, a lockpick, a payment prompt, or a teleport. Run 340 stepped through that local doorway and opened the nearby SecretDungeonDoor; it also produced no loot, prompt, warning, or teleport. Run 341 stepped through the secret-looking door into the tavern side and opened Chanah's henchman advice gump; it taught paid support at 5 gold per minute, not a free follower or payout. Run 342 opened the Forged Census Records and found a 2,000 gold rename form, not money, a thief clue, or a tool. Run 343 closed the records and opened Carmel's context menu, which is a guildmaster choice point with Buy/Sell gated and Join/Hire/Talk. Run 344 chose Talk and opened Death and Taxes, which is assassin-guild information plus 50,000 gold bribe pressure, not a free supply or money route. Run 345 closed that gump and opened the southern SecretDungeonDoor; it is only a local doorway, not loot, a lockpick, cash, a thief clue, a target prompt, or a teleport. Run 346 crossed that door and opened Condon's mage/vendor context menu. Run 347 chose Condon's Talk row; The Mystical Art Of Wizardry teaches magic utility and confirms paid wand charging, but produced no cash, wand, spellbook, reagent, tool, target cursor, vendor window, route, or assignment. Run 348 closed the gump and chose Condon's Sell row; Condon said Mira has nothing he is interested in and opened no sell list. Lore's job note lacks the exact assignment line, Stealing the Past requires Thieves Guild membership, and Lore quotes an unpaid 8,000 gold join fee. Shop/guild coffers remain theft risks, not free loot."
+  bank: "The Bank Vault inside the Thieves Guild was opened in Run 329 from within range. It showed Mira's personal bank box, still empty, then was closed."
   bank_box:
-    status: "closed_after_empty_inspection"
+    status: "closed_after_thieves_guild_empty_inspection"
     visible_contents: []
     latest_overhead_message: "Your bank storage has 0 items, 0 stones"
-    latest_balance_message: "Susan says Mira's current bank balance is 0 gold."
-    opened_by: "Bank Vault at Point3D(3442,3442,0)"
+    latest_balance_message: "Susan previously said Mira's current bank balance is 0 gold; Run 329 opened only the empty box and produced no new balance message."
 
 followers:
   current_count: 1
@@ -441,7 +469,7 @@ followers:
     - serial: 200274
       type: "Server.Mobiles.Fox"
       name: "a fox"
-      point3d: { x: 3439, y: 3425, z: 0 }
+      point3d: { x: 3406, y: 3214, z: 0 }
       approximate: true
       control_slots: 1
       control_order: "Follow"
@@ -449,8 +477,8 @@ followers:
       control_master: "Mira Vale"
       controlled: true
       bonded: false
-      player_use: "companion only; not protection unless combat or body-blocking is deliberately engaged"
-  travel_assumption: "A pet ordered to Follow keeps up within practical update range during routine travel."
+      player_use: "companion only; remained with Mira at Condon during the no-movement gump close and Sell refusal, and is not protection unless combat or body-blocking is deliberately engaged"
+  travel_assumption: "A pet ordered to Follow keeps up within practical update range during routine travel and is teleported with the player by public-door transitions."
 
 quests_progression:
   character_discovered_raw: "0#1#0#0#0#0#0#0#0##"
@@ -464,14 +492,19 @@ quests_progression:
     unknown_7: false
     unknown_8: false
     unknown_9: false
-  current_quest_object: null
+  current_quest_object: { type: "Server.Items.ThiefNote", name: "secret note", source: "Lore thief job row", status: "closed NoteGump; generic theft rules read; exact randomized NoteStory line still absent from saved continuity and must be manually captured before route planning" }
+  current_fishing_quest_object: null
   completed_quests: []
   acquired_recipes: []
+  recent_rumors:
+    - { speaker: "Peter", text: "I heard many tales of adventurers going to the Flooded Temple and seeing the 'Evil Kryss of Gayrone the Explorer'.", status: "long-term gossip only" }
+    - { speaker: "Markos", text: "I overheard someone tell of dark elves summoning demons in dungeon destard.", status: "long-term danger/dungeon gossip only" }
 
 playstyle_settings:
   CharacterMOTD: 0
   CharacterWanted: 0
   CharacterLoot: 0
+  CharacterPublicDoor: "3008#1109#0#Sosaria#the Thieves Guild"
   NONPK_PvP_consent_state: "neutral/null; still eligible for player-facing PvP choice flow"
   WeaponBarOpen: "unknown"
 
