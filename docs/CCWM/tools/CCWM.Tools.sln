@@ -1,0 +1,34 @@
+
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34701.34
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Server", "..\..\..\Data\System\Source\Server.csproj", "{3DE1790D-3216-4A5A-9341-73ADFD552B97}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CCWMLiveStateExporter", "live-state-exporter\CCWMLiveStateExporter.csproj", "{5A5C0B29-3FE0-4867-B2F1-7D01B681D51A}"
+	ProjectSection(ProjectDependencies) = postProject
+		{3DE1790D-3216-4A5A-9341-73ADFD552B97} = {3DE1790D-3216-4A5A-9341-73ADFD552B97}
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3DE1790D-3216-4A5A-9341-73ADFD552B97}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{3DE1790D-3216-4A5A-9341-73ADFD552B97}.Debug|Any CPU.Build.0 = Debug|x86
+		{3DE1790D-3216-4A5A-9341-73ADFD552B97}.Release|Any CPU.ActiveCfg = Release|x86
+		{3DE1790D-3216-4A5A-9341-73ADFD552B97}.Release|Any CPU.Build.0 = Release|x86
+		{5A5C0B29-3FE0-4867-B2F1-7D01B681D51A}.Debug|Any CPU.ActiveCfg = Debug|AnyCPU
+		{5A5C0B29-3FE0-4867-B2F1-7D01B681D51A}.Debug|Any CPU.Build.0 = Debug|AnyCPU
+		{5A5C0B29-3FE0-4867-B2F1-7D01B681D51A}.Release|Any CPU.ActiveCfg = Release|AnyCPU
+		{5A5C0B29-3FE0-4867-B2F1-7D01B681D51A}.Release|Any CPU.Build.0 = Release|AnyCPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {337308DF-3156-43C6-8E4E-585C0B14CE75}
+	EndGlobalSection
+EndGlobal

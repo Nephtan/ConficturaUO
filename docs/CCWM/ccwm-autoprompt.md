@@ -4,6 +4,8 @@ CRITICAL RULE: Simulate only what a normal player can do through visible game fl
 
 PHASE 0: LOAD CURRENT PLAYER STATE
 
+Run `python docs/CCWM/tools/ccwm_verify.py` before acting. Treat failures as blocking until resolved. Treat warnings as visible risk that must be acknowledged, especially stale live-state snapshots and current dirty run/state files.
+
 Read `docs/CCWM/Simulation_State.yaml` before acting.
 
 If the state file does not exist, initialize a minimal first-time account/character state from visible client flow and necessary access gates:
@@ -42,6 +44,7 @@ PHASE 1.5: CLIENT VISION AND WORLD-MAP CONTEXT
 You are a human looking at a client screen. The standard client update range is roughly 18 tiles. Before choosing the next action, scan the current screen and obvious route context.
 
 - First load `docs/CCWM/live-state/manifest.yaml` and the JSONL snapshots beside it. Treat `docs/CCWM/live-state/` as the canonical live save state until it is manually refreshed.
+- Do not refresh live state automatically. The exporter is offline CCWM tooling under `docs/CCWM/tools/live-state-exporter/`, not a server script under `Data/Scripts`.
 - Use `spawners.jsonl`, `mobiles.jsonl`, `items.jsonl`, and relevant `scans/*.yaml` entries before consulting static spawn, decoration, region, or binary map data.
 - Load `docs/CCWM/client-worldmap-markers/` as the player's visible world-map overlay. Filter markers to the current map and record relevant nearby markers separately from screen-visible entities.
 - Treat markers as navigation knowledge, not in-world proof of shelter, roads, discovery, safety, or anything inside the 18-tile screen.
@@ -130,6 +133,8 @@ PHASE 4: ASSIMILATION AND SAVING
 4. Delete or avoid active state fields that command future runs to resolve private timers, exact ambient AI, exact pet leash ticks, or old route-blocker classifications before normal play.
 5. If a route becomes newly available because of discovery, record the exact discovered flag and the visible/code gate that made it available.
 6. Do not stage or commit during automated CCWM runs unless the user explicitly asks for a repository commit.
+7. Run `python docs/CCWM/tools/ccwm_index.py` after log/state changes so `generated/Run_Index.md` and `generated/Knowledge_Index.yaml` stay derived from the current sources.
+8. Run `python docs/CCWM/tools/ccwm_verify.py` and report any failures or warnings in the final Simulation Log.
 
 OUTPUT
 

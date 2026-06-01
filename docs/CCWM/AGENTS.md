@@ -10,11 +10,13 @@ Do not treat these files as a generic wiki. Future CCWM runs should read like a 
 
 ## CCWM Run Workflow
 
-Before any simulated CCWM run, read `ccwm-autoprompt.md` and load `Simulation_State.yaml`. If the state file is missing, initialize only the minimum current playable state needed to begin from visible client flow.
+Before any simulated CCWM run, run `python docs/CCWM/tools/ccwm_verify.py`, read `ccwm-autoprompt.md`, and load `Simulation_State.yaml`. If the state file is missing, initialize only the minimum current playable state needed to begin from visible client flow.
 
 Treat missing fields as unknown, not false. Unknowns block play only when a normal player could not continue without resolving them, such as an open gump, target cursor, dead/alive status, inventory availability, or a visible blocker. Do not stop normal travel to resolve private server timers, ambient creature wandering, or exact pet pathing.
 
 Keep `Simulation_State.yaml` authoritative for the next run, but keep it lean. Preserve current location, facing, vitals, inventory, open UI, follower order/presence, visible entities, relevant markers, known terrain blockers, route intent, and any recent client-visible friction. Do not preserve old blocker policies or historical trace lists as active instructions.
+
+After a simulated run, verify that the appended log, updated state, and generated indexes agree before finishing. Use `python docs/CCWM/tools/ccwm_index.py` to refresh derived indexes and then rerun `python docs/CCWM/tools/ccwm_verify.py`.
 
 ## Player-Visible Simulation Rules
 
@@ -35,6 +37,8 @@ When writing the map log, record mechanical friction plainly: unavailable cards,
 
 Treat `live-state/manifest.yaml` plus the JSONL/YAML files it references as the canonical saved live-state snapshot until a manual refresh is explicitly requested. Do not re-export live state as routine automation, and do not hand-edit exported snapshot files unless the direct task explicitly asks for that.
 
+The live-state exporter is CCWM-only offline tooling. Keep `CCWMLiveStateExporter` under `docs/CCWM/tools/live-state-exporter/`; do not place it under `Data/Scripts`, add it to `Data/Scripts/Scripts.csproj`, or register it with RunUO `Initialize`/command handlers.
+
 Use `spawners.jsonl`, `mobiles.jsonl`, `items.jsonl`, and relevant `live-state/scans/*.yaml` entries before falling back to static spawn, region, decoration, or binary map data. A live `PremiumSpawner` with spawned refs represents saved entities already present in the snapshot, not merely a hypothetical definition.
 
 Load `client-worldmap-markers/` as the player's visible world-map overlay. Marker CSV rows use `x,y,map,name,type_or_icon,color,zoom_or_layer`; filter by the current map and include the matching map file plus any matching `-Common` file. Markers are navigation knowledge, not in-world entities, discovery flags, region triggers, roads, shelter, safety, or proof that anything is inside the 18-tile update range.
@@ -51,6 +55,6 @@ When correcting a prior CCWM mistake, record the correction in the map log only 
 
 ## Verification
 
-For instruction-only edits in this folder, verify with `git diff -- docs/CCWM/AGENTS.md docs/CCWM/ccwm-autoprompt.md docs/CCWM/Simulation_State.yaml`, `git diff --check`, and a YAML parse of `Simulation_State.yaml`. No MSBuild run is required unless C# code changes are part of the task.
+For instruction-only edits in this folder, verify with `python docs/CCWM/tools/ccwm_verify.py`, `git diff -- docs/CCWM/AGENTS.md docs/CCWM/ccwm-autoprompt.md docs/CCWM/Simulation_State.yaml`, `git diff --check`, and a YAML parse or CCWM verifier pass for `Simulation_State.yaml`. No MSBuild run is required unless C# code changes are part of the task.
 
 For CCWM simulation-run updates, verify that `Simulation_State.yaml` and `Confictura_Codex_World_Map.md` agree on the final location, run number, visible state, current UI, follower state, and next client-visible decision before finishing.
