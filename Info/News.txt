@@ -1,3 +1,171 @@
+[*]May 8th, 2026, 3:30pm Central Time
+Nephtan
+Announcements:
+
+A new update is available through the recently announced launcher.
+
+- The launcher update includes a ClassicUO update.
+- This update fixes issues where books and some text could disappear in places.
+
+Please update through the launcher before continuing your adventures.
+
+[*]May 2nd, 2026, 12:41pm Central Time
+Nephtan
+Announcements:
+
+Character Level and dungeon danger have been reworked.
+
+- Confictura now uses a unified 1-100 Character Level system. This is not a new grind; it reflects existing skill power, stat progress, reputation, and build identity.
+- Your displayed level may shift as the new calculation takes effect. No progress is being removed by the new math.
+- Dynamic random encounters are now live in dungeon, cave, and bard-dungeon regions.
+- These encounters are temporary, themed ambushes that appear in addition to hand-placed dungeon spawns.
+- Wilderness and towns are not part of this dungeon encounter system.
+- Hidden players are currently skipped by the encounter checks.
+
+If an encounter seems wildly out of band for your level, report your Character Level, dungeon, rough location, and the creature names involved.
+
+[*]April 26th, 2026, 2:29pm Central Time
+Nephtan
+Announcements:
+
+The first live Monster AI target-selection test is active on the main shard.
+
+- This is a focused test of how selected monsters choose targets when multiple players or creatures are involved.
+- Random Ratman and Lizardman nests have been seeded across Sosaria and Lodoria.
+- Headless Ones, Ratmen, Lizardmen, Ratman Archers, and Lizardman Archers are the primary test subjects.
+- Ratman Mages and Reptalars may appear as support spawns in those nests.
+
+Please report strange aggro behavior, sudden target thrashing, mobs dropping targets for no clear reason, or cases where a monster appears stuck on the wrong target. Movement and spacing are not the focus of this pass.
+
+[*]April 22nd, 2026, 5:44pm Central Time
+Nephtan
+Announcements:
+
+The new Confictura launcher is live.
+
+- The download link has been updated on the website and Discord.
+- The launcher will help keep the game client current when map updates and new content require client files.
+
+Players should use the launcher going forward so client updates are less disruptive.
+
+[*]April 22nd, 2026, 5:41pm Central Time
+Nephtan
+Announcements:
+
+Roaming Champion Spawns are now active.
+
+- Each facet has one active roaming champion altar.
+- Supported facets include Sosaria, Lodoria, Ambrosia, Bottle World, Isles of Dread, Savaged Empire, Serpent Island, Umber Veil, and the Underworld.
+- Current roaming themes include Unholy Terror, Vermin Horde, Abyss, and Arachnid.
+- Once defeated, the altar goes dark instead of reactivating in place.
+- After a 20 to 24 hour timer, the champion spawn returns in a new random location.
+- These spawns can appear in dangerous and inconvenient places, including towns or near player housing.
+
+Keep your runebooks ready and watch the world around you.
+
+[*]April 7th, 2026, 2:38pm Central Time
+Storyteller
+Announcements:
+
+Clues are being prepared for this month's live event.
+
+Check the event posting in Discord for the current clue thread and event details.
+
+[*]February 28th, 2026, 4:00pm Central Time
+Storyteller
+Announcements:
+
+A red moongate has been placed in the Bank to take players directly to the live event meetup location.
+
+[*]February 28th, 2026, 8:16am Central Time
+Storyteller
+Announcements:
+
+Tonight's live event will meet at the player market.
+
+- Please open your journals during the event.
+- World broadcasts and Discord posts will be used so players can follow along.
+- Questions may be sent by private message in Discord.
+
+[*]February 26th, 2026, 12:59pm Central Time
+Storyteller
+Announcements:
+
+A Hide & Seek live event is scheduled for Saturday, February 28th.
+
+Check the Hide & Seek event posting for details, and watch for information about the next monthly live event.
+
+[*]September 14th, 2025, 10:13am Central Time
+Nephtan
+Announcements:
+
+Confictura received a broad player-facing update covering city systems, housing, content groundwork, and player mechanics from August 24th through September 14th.
+
+- Player city systems received improvements to NPC placement, voting and management stones, vendor behavior, and city banning controls.
+- New creature and NPC groundwork was added for upcoming Dio-area content, including pirates, minotaurs, mana golems, cursed adventurers, cultists, fire creatures, earth spirits, and other encounters.
+- Clone and offline-player handling was refined.
+- Region work continued for new dungeon areas.
+- Housing boundaries, signs, and classic/customizable home behavior received several refinement passes.
+- Player mechanics received skill and character-related updates, and Pegasus riding behavior was improved.
+
+Some listed creatures and areas were announced as groundwork to be fully implemented as Dio's new areas are completed.
+
+[*]March 21st, 2025, 7:14pm Central Time
+Nephtan
+Announcements:
+
+Brother Samuel has appeared at a humble abbey east of Britain, past the graveyard wall.
+
+- Players burdened by criminal sins may petition Brother Samuel for a holy quest.
+- Completing the task may earn a full pardon.
+- Players without sin may still seek divine insight about unresolved quests.
+- Brother Samuel appears once per day.
+
+Approach quietly and respectfully.
+
+[*]March 27th, 2024, 9:35am Central Time
+Nephtan
+Announcements:
+
+Confictura received several gameplay and quality-of-life improvements.
+
+- Housing-system groundwork was added for future dynamic rental handling of Island Homes, Sky Castles, and Dungeon Homes.
+- Dough is now stackable, making baking and cooking inventory management easier.
+- Pet interactions were adjusted to reduce accidental aggro between pets owned by the same master, especially from area attacks.
+- Player city deeds can now be refunded by returning them to the city manager.
+- Monster Splatter behavior was adjusted to interact properly with PvE/PvP rules when collected and used by players.
+
+[*]March 20th, 2024, 8:48am Central Time
+Nephtan
+Announcements:
+
+Shard update highlights are live.
+
+- Clone companions now benefit the offline player they belong to, with paid gold going directly to that player.
+- Citizens should no longer teleport back home unexpectedly.
+- A Begging Study Book is now available from Thief Vendors.
+- Worn-out tent text was cleaned up.
+- The [afk command now plays a snoring sound every 30 seconds.
+
+[*]March 13th, 2024, 10:18am Central Time
+Nephtan
+Announcements:
+
+The March 13th client and server update is live.
+
+- New wildlife has been introduced.
+- Item names received clarity and flavor improvements.
+- Spell and skill behavior received updates.
+- The Artist NPC can now reward players with gold interactions.
+- ClassicUO, Razor, and ClassicAssist received major client-side updates.
+- More than 120 buff icons were added for clearer character-status feedback.
+- World and server settings were tuned for smoother play.
+- Counselor support was introduced as part of the community support structure.
+
+Thank you for updating your client and helping keep the transition smooth.
+
+For the full development chronicle, see DEVELOPMENT_HISTORY.md.
+
 [*]March 11th, 2024, 10:15am CST
 Nephtan
 Announcements:
