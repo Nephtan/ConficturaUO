@@ -70,7 +70,7 @@ The public announcement record is quieter after March 2024, but not inactive. Gi
 
 This period is best understood as operational continuity. The shard stayed online, recovered from crashes and infrastructure moves, and accumulated smaller fixes without the same density of new public systems seen in spring 2023 or spring 2024.
 
-## March-October 2025: Documentation, City Work, Housing Boundaries, And New Creature Content
+## March-November 2025: Documentation, City Work, Housing Boundaries, And New Creature Content
 
 The March 2025 Discord log introduced Brother Samuel at an abbey east of Britain: a daily-appearing priest tied to criminal pardon quests and divine quest hints. Around the same broad period, git shows focused stability fixes such as a Research Magic null reference, lawn tool improvements, and house remodeling confirmation.
 
@@ -82,11 +82,13 @@ The same period launched an extensive documentation push. System audits and wiki
 
 Creature and world content also expanded. September commits and announcements added or prepared new mobiles such as pirates, Captain Swag, Maze Minotaurs, Mana Golems, Dio-themed creatures, Cursed Adventurers, Dark Cultists, The Mad Duke, Fire King, Fire Angel, Fire Spirit, Geode, and Grumpy Earth Spirit. The September 14 announcement explicitly framed some of that content as groundwork for Dio's new areas, so its exact live availability should be treated cautiously.
 
-Late September and October added Garden Golem testing, map freeze work for Dio's areas, spawn fixes, UOArchitect support files, Book of the Dead enhancements, and crafting UI experiments. Some craft-search work was later reverted, showing that not every experiment remained part of the live player surface.
+Late September and October expanded Dio's content wave beyond the first announced set. Additional custom mobiles, spawn entries, map danger data, Dragon Hydra and Honor Guard spawn fixes, Garden Golem testing, map freeze work for Dio's areas, UOArchitect support files, Book of the Dead enhancements, artifact boot synchronization, and crafting UI experiments all appeared in git. Some craft-search work was later reverted, showing that not every experiment remained part of the live player surface.
 
-## January-May 2026: Runtime Hardening, Roaming Champions, AI Testing, And Dynamic Dungeons
+November 2025 was quieter in public announcements but still player-relevant in the repository: skill handling, spell bars, and Research Magic functions received follow-up adjustments. In the chronicle, this period is best treated as post-content stabilization rather than a separate launch.
 
-Early 2026 continued cleanup and synchronization work. The repository reverted the craft-search experiment, synced test and live shard changes, allowed GameMasters to save XMLEdit dialogs, adjusted Phoenix and OrbServer behavior, rebuilt under .NET Framework 4.8, and hardened crash/restart handling. Player clone AI gained support for multiple magic systems, and OmniAI fixes corrected spell type and lifecycle issues.
+## January-June 2026: Runtime Hardening, Roaming Champions, AI Testing, Dynamic Dungeons, And Current-State Mapping
+
+Early 2026 continued cleanup and synchronization work. The repository reverted the craft-search experiment, synced test and live shard changes, adjusted Quest Tome, Phoenix, and OrbServer behavior, rebuilt under .NET Framework 4.8, and hardened crash/restart handling. Player clone AI gained support for multiple magic systems, and OmniAI fixes corrected spell type and lifecycle issues.
 
 Champion spawns were substantially reorganized in April 2026. The system moved out of legacy maintenance space, its content was cleaned up, and its configuration support was hardened so placed champion encounters could retain their intended behavior.
 
@@ -96,9 +98,11 @@ That same day, a new launcher was announced as live, intended to keep clients up
 
 On April 26, the first live monster AI overhaul test began. This was explicitly not a global AI replacement. It tested target selection on selected stock hostile creatures, especially Headless Ones, Ratmen, Lizardmen, Ratman Archers, and Lizardman Archers. Ratman and Lizardman nests were seeded across Sosaria and Lodoria to give players concrete fights to observe.
 
-On May 2, 2026, Confictura's character level and dungeon danger model changed significantly. A unified 1-100 Character Level system became live, summarizing skill power, stats, reputation, and build identity rather than treating raw totals as the whole character. Dynamic random encounters became live across dungeon, cave, and bard-dungeon regions, adding temporary ambushes on top of hand-placed spawns. The announcement was careful about scope: wilderness and towns were not part of this system, enemies were not arbitrarily stat-scaled, and the internal archetype scoring did not lock players into classes.
+On May 2, 2026, Confictura's character level and dungeon danger model changed significantly. A unified 1-100 Character Level system became live, summarizing skill power, stats, reputation, and build identity rather than treating raw totals as the whole character. Dynamic random encounters became live across dungeon, cave, and bard-dungeon regions, adding temporary ambushes on top of hand-placed spawns. The announcement was careful about scope: wilderness and towns were not part of this system, enemies were not arbitrarily stat-scaled, and the internal archetype scoring did not lock players into classes. Follow-up commits tuned encounter gates, test configuration, archer spacing, skirmisher behavior, and dungeon difficulty regions.
 
-The May 2026 git history also shows Godfrey 2026 premium mobiles, random-encounter tuning, dungeon difficulty region updates, custom mobile title fixes, and a major wave of wiki and world-map tooling. Some of that work is documentation, diagnostics, or simulation support rather than direct player-facing live content, but it shows the shard moving toward a more coherent, inspectable world model.
+The May 2026 git history also shows Godfrey 2026 premium mobiles, custom mobile title fixes, and a major wave of system documentation. The wiki index grew to cover player commands, PvP consent, offline skill training, monster nests, player government, housing, champion spawns, random encounters, boats, trades, magic schools, crafting, vendors, help systems, and staff-facing support tools. That documentation push did not itself add all of those systems, but it made the current shard far more explainable to players, staff, and returning maintainers.
+
+May and early June also introduced the Confictura Codex World Map effort. This is a simulated-player continuity and mapping project rather than an in-game release: it records observed routes, maintains current playable state, stores exported live-state snapshots, and produces client world-map marker files and derived navigation aids. It matters historically because it marks a shift from only documenting code and announcements toward reconstructing how a normal player experiences the shard world.
 
 Live community events continued during this period as well, including a February 2026 Hide & Seek event, March event announcements, and April clue-loading for that month's live event.
 
@@ -124,6 +128,10 @@ Combat work ranged from spell damage tuning and Research/Elementalism adjustment
 
 The changelog is full of practical fixes: connection and DNS recovery, client packages, ClassicUO/Razor updates, auto-loot bags, stable capacity checks, house decay relief, boat and sailing freeze fixes, corpse decay changes, better feedback when placing house addons, client launch/update support, crash guard work, and .NET Framework 4.8 rebuilds.
 
+### Knowledge, Documentation, And World Mapping
+
+By 2025 and 2026, Confictura's current form was no longer defined only by live systems. The shard gained a large wiki, system audit, repository README, and CCWM mapping layer that made its unusual systems easier to understand, preserve, and revisit. That work is mostly not live gameplay, but it matters to players and staff because it turns a sprawling inherited world into something navigable.
+
 ### Events And Community
 
 The shard has repeatedly used Discord, in-game news, the Town Crier, seasonal gifts, dungeon outings, invasions, live events, and player testing calls to make development participatory. Some systems, such as champion spawns and AI target selection, were explicitly rolled out as tests where player reports shaped follow-up work.
@@ -131,7 +139,7 @@ The shard has repeatedly used Discord, in-game news, the Town Crier, seasonal gi
 ## How This History Was Reconstructed
 
 - The GitHub-era timeline was reconstructed from the full git history using chronological commit subjects, file stats, changed-file lists, and tag metadata.
-- The pre-GitHub and live-announcement timeline was reconstructed from `discord_announcements_log.json`, whose export covers announcements from February 15, 2023 through May 31, 2026.
+- The pre-GitHub and live-announcement timeline was reconstructed from `discord_announcements_log.json`, whose message records cover announcements from February 15, 2023 through May 8, 2026.
 - Existing `Info/News.txt` was reviewed as the older in-game news archive, including entries back to January 5, 2023.
 - README, wiki, settings, scripts, and source files were used only to clarify current behavior where announcements or commit subjects were too terse.
 - Small technical commits were grouped into player-facing themes. This document intentionally does not list every commit, internal file path, or implementation-only change.
@@ -141,4 +149,4 @@ The shard has repeatedly used Discord, in-game news, the Town Crier, seasonal gi
 - The exact date and contents of the original Ruins & Riches import are not recoverable from the available git history. The current repository's first git commit is August 31, 2023, while the in-game and Discord records show the shard was already live earlier in 2023.
 - The announcement log begins on February 15, 2023. Existing news reaches January 5, 2023, but any earlier private development remains undated here.
 - Some announcements describe test-shard work or content prepared for later areas. Where that distinction is visible, this chronicle treats it as groundwork rather than assuming immediate live availability.
-- The 2025-2026 documentation and world-map tooling history is extensive. Only the parts with clear player-facing meaning are summarized here.
+- The 2025-2026 documentation and world-map tooling history is extensive. Only the parts with clear player-facing meaning are summarized here; the CCWM material is described as mapping and continuity work, not as a live gameplay feature.
