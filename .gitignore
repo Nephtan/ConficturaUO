@@ -33,3 +33,4 @@ __pycache__/
 /docs/CCWM/tools/live-state-exporter/bin/
 /docs/CCWM/tools/live-state-exporter/obj/
 /docs/CCWM/tools/live-state-exporter/tmp-export/
+discord_announcements_log.json
