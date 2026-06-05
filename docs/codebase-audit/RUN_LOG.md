@@ -1827,3 +1827,211 @@ Scope: Deterministic phase runner log for the Confictura codebase audit and reor
 - Command: `git status --short`
 - Result: No output; worktree clean after Phase 12 content commit and before Phase 12 metadata update.
 - Output path: `docs/codebase-audit/RUN_LOG.md`
+
+### 2026-06-05T18:39:00.0000000-05:00
+
+- Affected phase: Phase 13
+- Cwd: `D:\ConficturaUO`
+- Command: `git status --short`
+- Result: No output; worktree clean before Phase 13 edits.
+- Output path: `docs/codebase-audit/RUN_LOG.md`
+
+### 2026-06-05T18:39:00.0000000-05:00
+
+- Affected phase: Phase 13
+- Cwd: `D:\ConficturaUO`
+- Command: `git rev-parse --short HEAD`
+- Result: Returned `f181e068`, the Phase 12 metadata commit.
+- Output path: `docs/codebase-audit/PHASE_STATUS.md`
+
+### 2026-06-05T18:39:00.0000000-05:00
+
+- Affected phase: Phase 13
+- Cwd: `D:\ConficturaUO`
+- Command: `rg --files -g AGENTS.md`
+- Result: Re-read instruction scopes before Phase 13 edits; only root instructions apply under `docs/codebase-audit/`.
+- Output path: `docs/codebase-audit/RUN_LOG.md`
+
+### 2026-06-05T18:39:00.0000000-05:00
+
+- Affected phase: Phase 13
+- Cwd: `D:\ConficturaUO`
+- Command: `Get-Content -LiteralPath docs/codebase-audit-phases/phase-13-repair-backlog.md`
+- Result: Confirmed required inputs, outputs, backlog item template, priority rules, category buckets, ready/blocked criteria, batch planning, verification matrix, checklist, and exit criteria.
+- Output path: `docs/codebase-audit/outputs/phase-13-summary.md`
+
+### 2026-06-05T18:41:00.0000000-05:00
+
+- Affected phase: Phase 13
+- Cwd: `D:\ConficturaUO`
+- Command: `& .\docs\codebase-audit\tools\New-RepairBacklog.ps1`
+- Result: Generated 6,815 backlog rows, 3 accepted-risk rows, 21 deferred-work rows, 7 batch-plan rows, 10 verification-matrix rows, and Phase 13 summary.
+- Output path: `docs/codebase-audit/outputs/phase-13-summary.md`
+
+### 2026-06-05T18:41:00.0000000-05:00
+
+- Affected phase: Phase 13
+- Cwd: `D:\ConficturaUO`
+- Command: `Import-Csv -LiteralPath docs/codebase-audit/outputs/repair-backlog.csv | Group-Object Priority | Sort-Object Name | Select-Object Name,Count | Format-Table -AutoSize`
+- Result: Priority counts were P0=375, P1=4,699, P2=1,429, P3=298, P4=14.
+- Output path: `docs/codebase-audit/outputs/repair-backlog.csv`
+
+### 2026-06-05T18:41:00.0000000-05:00
+
+- Affected phase: Phase 13
+- Cwd: `D:\ConficturaUO`
+- Command: `Import-Csv -LiteralPath docs/codebase-audit/outputs/repair-backlog.csv | Group-Object Category | Sort-Object Count -Descending | Select-Object Name,Count -First 20 | Format-Table -AutoSize`
+- Result: Category counts matched the Phase 13 summary, with largest buckets Save compatibility=1,625, Runtime hooks=1,548, Gump guards=938, Legacy compatibility=659, and Command access=499.
+- Output path: `docs/codebase-audit/outputs/repair-backlog.csv`
+
+### 2026-06-05T18:41:00.0000000-05:00
+
+- Affected phase: Phase 13
+- Cwd: `D:\ConficturaUO`
+- Command: `Import-Csv -LiteralPath docs/codebase-audit/outputs/accepted-risk-register.csv | Format-List`
+- Result: Accepted-risk register contains 3 audit-stage-only risks carried from Phase 10, each with rationale and review trigger.
+- Output path: `docs/codebase-audit/outputs/accepted-risk-register.csv`
+
+### 2026-06-05T18:41:00.0000000-05:00
+
+- Affected phase: Phase 13
+- Cwd: `D:\ConficturaUO`
+- Command: `Import-Csv -LiteralPath docs/codebase-audit/outputs/verification-matrix.csv | Format-Table -AutoSize`
+- Result: Verification matrix covers docs, project includes, save compatibility, runtime hooks, packet handlers, gumps, pooled enumerables, reorganization, inline comments, and economy/reward loops.
+- Output path: `docs/codebase-audit/outputs/verification-matrix.csv`
+
+### 2026-06-05T18:42:00.0000000-05:00
+
+- Affected phase: Phase 13
+- Cwd: `D:\ConficturaUO`
+- Command: `Get-ChildItem -LiteralPath docs/codebase-audit -Recurse -File | Select-String -Pattern '[ \t]+$'`
+- Result: No output; no trailing whitespace matches found in audit files.
+- Output path: `docs/codebase-audit/RUN_LOG.md`
+
+### 2026-06-05T18:42:00.0000000-05:00
+
+- Affected phase: Phase 13
+- Cwd: `D:\ConficturaUO`
+- Command: `git diff --check -- docs/codebase-audit/PHASE_STATUS.md docs/codebase-audit/RUN_LOG.md docs/codebase-audit/outputs/README.md docs/codebase-audit/tools/New-RepairBacklog.ps1`
+- Result: No whitespace errors; Git reported expected LF-to-CRLF checkout warnings for touched text files.
+- Output path: `docs/codebase-audit/RUN_LOG.md`
+
+### 2026-06-05T18:42:00.0000000-05:00
+
+- Affected phase: Phase 13
+- Cwd: `D:\ConficturaUO`
+- Command: `(Import-Csv -LiteralPath docs/codebase-audit/outputs/repair-backlog.csv | Measure-Object).Count`
+- Result: Returned `6815`, matching the Phase 13 summary.
+- Output path: `docs/codebase-audit/outputs/repair-backlog.csv`
+
+### 2026-06-05T18:42:00.0000000-05:00
+
+- Affected phase: Phase 13
+- Cwd: `D:\ConficturaUO`
+- Command: `(Import-Csv -LiteralPath docs/codebase-audit/outputs/risk-track-findings.csv | Measure-Object).Count`
+- Result: Returned `6801`; Phase 13 backlog includes every Phase 10 finding plus 14 Phase 12 organization deferrals.
+- Output path: `docs/codebase-audit/outputs/risk-track-findings.csv`
+
+### 2026-06-05T18:42:00.0000000-05:00
+
+- Affected phase: Phase 13
+- Cwd: `D:\ConficturaUO`
+- Command: `(Import-Csv -LiteralPath docs/codebase-audit/outputs/repair-backlog.csv | Where-Object { [string]::IsNullOrWhiteSpace($_.Evidence) -or [string]::IsNullOrWhiteSpace($_.RecommendedFix) -or [string]::IsNullOrWhiteSpace($_.Verification) } | Measure-Object).Count`
+- Result: Returned `0`; every backlog row has evidence, recommendation, and verification fields.
+- Output path: `docs/codebase-audit/outputs/repair-backlog.csv`
+
+### 2026-06-05T18:42:00.0000000-05:00
+
+- Affected phase: Phase 13
+- Cwd: `D:\ConficturaUO`
+- Command: `(Import-Csv -LiteralPath docs/codebase-audit/outputs/accepted-risk-register.csv | Measure-Object).Count`
+- Result: Returned `3`, matching the Phase 13 summary.
+- Output path: `docs/codebase-audit/outputs/accepted-risk-register.csv`
+
+### 2026-06-05T18:42:00.0000000-05:00
+
+- Affected phase: Phase 13
+- Cwd: `D:\ConficturaUO`
+- Command: `(Import-Csv -LiteralPath docs/codebase-audit/outputs/deferred-work-register.csv | Measure-Object).Count`
+- Result: Returned `21`, matching the Phase 13 summary.
+- Output path: `docs/codebase-audit/outputs/deferred-work-register.csv`
+
+### 2026-06-05T18:42:00.0000000-05:00
+
+- Affected phase: Phase 13
+- Cwd: `D:\ConficturaUO`
+- Command: `(Import-Csv -LiteralPath docs/codebase-audit/outputs/verification-matrix.csv | Measure-Object).Count`
+- Result: Returned `10`, matching the Phase 13 summary.
+- Output path: `docs/codebase-audit/outputs/verification-matrix.csv`
+
+### 2026-06-05T18:42:00.0000000-05:00
+
+- Affected phase: Phase 13
+- Cwd: `D:\ConficturaUO`
+- Command: `git status --short --ignored=matching docs/codebase-audit`
+- Result: Showed modified audit metadata/index files, untracked Phase 13 generator, and ignored Phase 13 outputs; no source, project, or serialized files changed.
+- Output path: `docs/codebase-audit/RUN_LOG.md`
+
+### 2026-06-05T18:45:47.2460327-05:00
+
+- Affected phase: Phase 13
+- Cwd: `D:\ConficturaUO`
+- Command: `Get-ChildItem -LiteralPath docs/codebase-audit -Recurse -File | Select-String -Pattern '[ \t]+$'`
+- Result: No trailing whitespace found in audit files.
+- Output path: `docs/codebase-audit/RUN_LOG.md`
+
+### 2026-06-05T18:45:47.2460327-05:00
+
+- Affected phase: Phase 13
+- Cwd: `D:\ConficturaUO`
+- Command: `git diff --check -- docs/codebase-audit/PHASE_STATUS.md docs/codebase-audit/RUN_LOG.md docs/codebase-audit/outputs/README.md docs/codebase-audit/tools/New-RepairBacklog.ps1`
+- Result: No whitespace errors; Git reported expected LF-to-CRLF checkout warnings for touched text files.
+- Output path: `docs/codebase-audit/RUN_LOG.md`
+
+### 2026-06-05T18:45:47.2460327-05:00
+
+- Affected phase: Phase 13
+- Cwd: `D:\ConficturaUO`
+- Command: `git status --short --ignored=matching docs/codebase-audit`
+- Result: Confirmed only Phase 13 audit metadata, generator, and ignored generated outputs were pending.
+- Output path: `docs/codebase-audit/RUN_LOG.md`
+
+### 2026-06-05T18:45:47.2460327-05:00
+
+- Affected phase: Phase 13
+- Cwd: `D:\ConficturaUO`
+- Command: `Get-Content -LiteralPath docs/codebase-audit/RUN_LOG.md -Tail 60`
+- Result: Reviewed recent Phase 13 run-log entries before staging.
+- Output path: `docs/codebase-audit/RUN_LOG.md`
+
+### 2026-06-05T18:46:23.3562711-05:00
+
+- Affected phase: Phase 13
+- Cwd: `D:\ConficturaUO`
+- Command: `git add -f -- docs/codebase-audit/PHASE_STATUS.md docs/codebase-audit/RUN_LOG.md docs/codebase-audit/outputs/README.md docs/codebase-audit/tools/New-RepairBacklog.ps1 docs/codebase-audit/outputs/repair-backlog.csv docs/codebase-audit/outputs/phase-13-repair-backlog.csv docs/codebase-audit/outputs/accepted-risk-register.csv docs/codebase-audit/outputs/phase-13-accepted-risk-register.csv docs/codebase-audit/outputs/deferred-work-register.csv docs/codebase-audit/outputs/phase-13-deferred-work-register.csv docs/codebase-audit/outputs/phase-13-batch-plan.csv docs/codebase-audit/outputs/verification-matrix.csv docs/codebase-audit/outputs/phase-13-verification-matrix.csv docs/codebase-audit/outputs/phase-13-summary.md`
+- Result: Staged Phase 13 metadata, generator, and ignored generated outputs; Git reported expected LF-to-CRLF checkout warnings.
+- Output path: `docs/codebase-audit/RUN_LOG.md`
+
+### 2026-06-05T18:46:23.3562711-05:00
+
+- Affected phase: Phase 13
+- Cwd: `D:\ConficturaUO`
+- Command: `git diff --cached --check`
+- Result: Passed with no whitespace errors.
+- Output path: `docs/codebase-audit/RUN_LOG.md`
+
+### 2026-06-05T18:46:23.3562711-05:00
+
+- Affected phase: Phase 13
+- Cwd: `D:\ConficturaUO`
+- Command: `git diff --cached --name-only`
+- Result: Confirmed staged files are limited to Phase 13 audit metadata, outputs, and `New-RepairBacklog.ps1`.
+- Output path: `docs/codebase-audit/RUN_LOG.md`
+
+### 2026-06-05T18:46:23.3562711-05:00
+
+- Affected phase: Phase 13
+- Cwd: `D:\ConficturaUO`
+- Command: `git status --short`
+- Result: Confirmed only the staged Phase 13 batch was pending.
+- Output path: `docs/codebase-audit/RUN_LOG.md`

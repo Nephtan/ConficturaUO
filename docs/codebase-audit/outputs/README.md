@@ -133,10 +133,17 @@ Raw command output may remain temporary when it is easy to regenerate. Curated t
 | `phase-12-namespace-plan.csv` | Phase 12 | Namespace and serialized type rename policy by move proposal. | Complete |
 | `phase-12-documentation-move-plan.csv` | Phase 12 | Documentation update requirements for proposed moves. | Complete |
 | `phase-12-summary.md` | Phase 12 | Summarize Phase 12 inputs, outputs, counts, and exit criteria. | Complete |
-| `repair-backlog.*` | Phase 13 | Convert findings into prioritized actionable repair items. | NotStarted |
-| `accepted-risk-register.*` | Phase 13 | Record explicitly accepted risks with evidence and rationale. | NotStarted |
-| `verification-matrix.*` | Phase 13 or 14 | Map change categories and backlog items to required verification. | NotStarted |
+| `repair-backlog.csv` | Phase 13 | Canonical prioritized repair backlog. | Complete |
+| `phase-13-repair-backlog.csv` | Phase 13 | Phase-scoped repair backlog copy. | Complete |
+| `accepted-risk-register.csv` | Phase 13 | Canonical accepted-risk register with evidence and review triggers. | Complete |
+| `phase-13-accepted-risk-register.csv` | Phase 13 | Phase-scoped accepted-risk register copy. | Complete |
+| `deferred-work-register.csv` | Phase 13 | Canonical deferred work register for comments and organization moves. | Complete |
+| `phase-13-deferred-work-register.csv` | Phase 13 | Phase-scoped deferred work register copy. | Complete |
+| `phase-13-batch-plan.csv` | Phase 13 | Small-batch implementation plan. | Complete |
+| `verification-matrix.csv` | Phase 13 | Canonical category verification matrix. | Complete |
+| `phase-13-verification-matrix.csv` | Phase 13 | Phase-scoped verification matrix copy. | Complete |
+| `phase-13-summary.md` | Phase 13 | Summarize Phase 13 inputs, outputs, priorities, statuses, categories, and exit criteria. | Complete |
 
 ## Initial State
 
-The Phase 0 baseline output, Phase 1 reproducible inventory outputs, Phase 2 project truth outputs, Phase 3 runtime inventory outputs, Phase 4 system cards, Phase 5 runtime hook map outputs, Phase 6 serialization/save-compatibility outputs, Phase 7 documentation truth outputs, Phase 8 dependency graph outputs, Phase 9 synergy/conflict outputs, Phase 10 risk-specific review outputs, Phase 11 inline code documentation outputs, and Phase 12 reorganization design outputs have been generated. Continue through the phase gates in order, starting with Phase 13 repair backlog after the Phase 12 batch is committed.
+The Phase 0 baseline output, Phase 1 reproducible inventory outputs, Phase 2 project truth outputs, Phase 3 runtime inventory outputs, Phase 4 system cards, Phase 5 runtime hook map outputs, Phase 6 serialization/save-compatibility outputs, Phase 7 documentation truth outputs, Phase 8 dependency graph outputs, Phase 9 synergy/conflict outputs, Phase 10 risk-specific review outputs, Phase 11 inline code documentation outputs, Phase 12 reorganization design outputs, and Phase 13 repair backlog outputs have been generated. Continue through the phase gates in order, starting with Phase 14 verification and commit workflow after the Phase 13 batch is committed.
