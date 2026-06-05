@@ -2,11 +2,11 @@
 
 Initialized: 2026-06-05T16:15:59.8020730-05:00
 
-Last updated: 2026-06-05T16:41:00.0000000-05:00
+Last updated: 2026-06-05T16:45:00.0000000-05:00
 
 Branch: `SAR`
 
-Current HEAD: `37828cd7 docs: record audit phase 0 commit`
+Current HEAD: `78341d10 docs: add reproducible audit inventories`
 
 Scope: Phase 0 baseline and guardrails. No source files, project files, serialized types, or runtime hooks were changed.
 
@@ -251,3 +251,27 @@ Scope: Phase 0 baseline and guardrails. No source files, project files, serializ
 - Command: `Get-Content -LiteralPath docs/codebase-audit/outputs/phase-01-unincluded-source-files.csv -TotalCount 8`
 - Result: Spot check confirmed unincluded source rows are real source files under `Data/Scripts`.
 - Output path: `docs/codebase-audit/outputs/phase-01-unincluded-source-files.csv`
+
+### 2026-06-05T16:44:00.0000000-05:00
+
+- Affected phase: Phase 1
+- Cwd: `D:\ConficturaUO`
+- Command: `git diff --cached --check`
+- Result: No output; staged Phase 1 batch passed whitespace verification.
+- Output path: `docs/codebase-audit/RUN_LOG.md`
+
+### 2026-06-05T16:44:00.0000000-05:00
+
+- Affected phase: Phase 1
+- Cwd: `D:\ConficturaUO`
+- Command: `git diff --cached --name-only`
+- Result: Staged files were the Phase 1 generator, Phase 1 generated outputs, `PHASE_STATUS.md`, `RUN_LOG.md`, and `outputs/README.md`.
+- Output path: `docs/codebase-audit/RUN_LOG.md`
+
+### 2026-06-05T16:44:00.0000000-05:00
+
+- Affected phase: Phase 1
+- Cwd: `D:\ConficturaUO`
+- Command: `git commit -m "docs: add reproducible audit inventories"`
+- Result: Created commit `78341d10 docs: add reproducible audit inventories`.
+- Output path: `docs/codebase-audit/PHASE_STATUS.md`
