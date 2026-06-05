@@ -49,6 +49,13 @@ Raw command output may remain temporary when it is easy to regenerate. Curated t
 | `intentional-noncompiled-source.csv` | Phase 2 | Canonical intentional/generated/backup non-compiled source list. | Complete |
 | `project-cleanup-backlog.csv` | Phase 2 | Canonical project cleanup backlog. | Complete |
 | `solution-configurations.csv` | Phase 2 | Canonical solution configuration map. | Complete |
+| `cross-tree-runtime-inventory.csv` | Phase 3 | Canonical runtime role, owner, entry point, serialization, gump, and config inventory for audited source files. | Complete |
+| `phase-03-cross-tree-runtime-inventory.csv` | Phase 3 | Phase-scoped copy of the runtime inventory. | Complete |
+| `phase-03-root-role-summary.csv` | Phase 3 | Root-level counts for initialization, commands, events, packets, serialization, gumps, and unknowns. | Complete |
+| `phase-03-unknown-owner-list.csv` | Phase 3 | Files with `Unknown` role or owner and a required follow-up. | Complete |
+| `phase-03-high-risk-root-summary.csv` | Phase 3 | Machine-readable high-risk root summary. | Complete |
+| `phase-03-high-risk-root-summary.md` | Phase 3 | Human-readable high-risk root summary. | Complete |
+| `phase-03-summary.md` | Phase 3 | Summarize runtime inventory inputs, outputs, root counts, and exit criteria. | Complete |
 | `cross-tree-runtime-inventory.*` | Phase 3 | Assign runtime role, owner, entry points, hooks, serialization, gumps, and config usage for source files. | NotStarted |
 | `system-cards/` | Phase 4 | Store one canonical engineering card per major system. | NotStarted |
 | `runtime-hook-map.*` | Phase 5 | Map commands, events, packets, timers, gumps, regions, speech, movement, login/logout, and world hooks. | NotStarted |
@@ -65,4 +72,4 @@ Raw command output may remain temporary when it is easy to regenerate. Curated t
 
 ## Initial State
 
-The Phase 0 baseline output, Phase 1 reproducible inventory outputs, and Phase 2 project truth outputs have been generated. Continue through the phase gates in order, starting with Phase 3 cross-tree runtime inventory after the Phase 2 batch is committed.
+The Phase 0 baseline output, Phase 1 reproducible inventory outputs, Phase 2 project truth outputs, and Phase 3 runtime inventory outputs have been generated. Continue through the phase gates in order, starting with Phase 4 system cards after the Phase 3 batch is committed.
