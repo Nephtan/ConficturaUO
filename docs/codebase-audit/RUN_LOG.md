@@ -1315,3 +1315,171 @@ Scope: Deterministic phase runner log for the Confictura codebase audit and reor
 - Command: `git status --short`
 - Result: No output; worktree clean after Phase 9 content commit and before Phase 9 metadata update.
 - Output path: `docs/codebase-audit/RUN_LOG.md`
+
+### 2026-06-05T18:11:00.0000000-05:00
+
+- Affected phase: Phase 10
+- Cwd: `D:\ConficturaUO`
+- Command: `git status --short`
+- Result: No output; worktree clean before Phase 10 edits.
+- Output path: `docs/codebase-audit/RUN_LOG.md`
+
+### 2026-06-05T18:11:00.0000000-05:00
+
+- Affected phase: Phase 10
+- Cwd: `D:\ConficturaUO`
+- Command: `git rev-parse --short HEAD`
+- Result: Returned `143b1305`, the Phase 9 metadata commit.
+- Output path: `docs/codebase-audit/PHASE_STATUS.md`
+
+### 2026-06-05T18:11:00.0000000-05:00
+
+- Affected phase: Phase 10
+- Cwd: `D:\ConficturaUO`
+- Command: `rg --files -g AGENTS.md`
+- Result: Re-read instruction scopes before Phase 10 edits; only root instructions apply under `docs/codebase-audit/`.
+- Output path: `docs/codebase-audit/RUN_LOG.md`
+
+### 2026-06-05T18:11:00.0000000-05:00
+
+- Affected phase: Phase 10
+- Cwd: `D:\ConficturaUO`
+- Command: `Get-Content -LiteralPath docs/codebase-audit-phases/phase-10-risk-specific-code-review-tracks.md`
+- Result: Confirmed required inputs, outputs, finding template, 14 review tracks, review checklist, and exit criteria.
+- Output path: `docs/codebase-audit/outputs/phase-10-summary.md`
+
+### 2026-06-05T18:18:00.0000000-05:00
+
+- Affected phase: Phase 10
+- Cwd: `D:\ConficturaUO`
+- Command: `& .\docs\codebase-audit\tools\New-RiskSpecificReviewTracks.ps1`
+- Result: Generated 6,801 findings, 14 non-issue records, 6,801 repair follow-ups, 3 audit-stage accepted-risk notes, 3,738 candidate comment targets, 652 pooled-enumerable source-scan rows, and 15 coverage rows.
+- Output path: `docs/codebase-audit/outputs/phase-10-summary.md`
+
+### 2026-06-05T18:18:00.0000000-05:00
+
+- Affected phase: Phase 10
+- Cwd: `D:\ConficturaUO`
+- Command: `Import-Csv -LiteralPath docs/codebase-audit/outputs/phase-10-track-coverage.csv | Format-Table -AutoSize`
+- Result: Spot check showed every named Phase 10 track has `Complete` coverage; the overall accepted-risk row records audit-stage caveats.
+- Output path: `docs/codebase-audit/outputs/phase-10-track-coverage.csv`
+
+### 2026-06-05T18:18:00.0000000-05:00
+
+- Affected phase: Phase 10
+- Cwd: `D:\ConficturaUO`
+- Command: `Import-Csv -LiteralPath docs/codebase-audit/outputs/risk-track-findings.csv | Group-Object Severity | Sort-Object Name | Select-Object Name,Count | Format-Table -AutoSize`
+- Result: Severity counts were P0=375, P1=4,699, P2=1,429, P3=298.
+- Output path: `docs/codebase-audit/outputs/risk-track-findings.csv`
+
+### 2026-06-05T18:18:00.0000000-05:00
+
+- Affected phase: Phase 10
+- Cwd: `D:\ConficturaUO`
+- Command: `Import-Csv -LiteralPath docs/codebase-audit/outputs/risk-track-findings.csv | Group-Object Track | Sort-Object Name | Select-Object Name,Count | Format-Table -AutoSize`
+- Result: Track counts matched the Phase 10 summary, including build drift 61, serialization 1,625, global hooks 1,548, packets 17, gumps 938, commands 499, pooled enumerables 408, regions/maps 112, PlayerMobile coupling 394, economy 26, staff tooling 124, legacy 659, XML/config 232, and docs contradictions 158.
+- Output path: `docs/codebase-audit/outputs/risk-track-findings.csv`
+
+### 2026-06-05T18:19:00.0000000-05:00
+
+- Affected phase: Phase 10
+- Cwd: `D:\ConficturaUO`
+- Command: `Get-ChildItem -LiteralPath docs/codebase-audit -Recurse -File | Select-String -Pattern '[ \t]+$'`
+- Result: No output; no trailing whitespace matches found in audit files.
+- Output path: `docs/codebase-audit/RUN_LOG.md`
+
+### 2026-06-05T18:19:00.0000000-05:00
+
+- Affected phase: Phase 10
+- Cwd: `D:\ConficturaUO`
+- Command: `git diff --check -- docs/codebase-audit/PHASE_STATUS.md docs/codebase-audit/RUN_LOG.md docs/codebase-audit/outputs/README.md docs/codebase-audit/tools/New-RiskSpecificReviewTracks.ps1`
+- Result: No whitespace errors; Git reported expected LF-to-CRLF checkout warnings for touched text files.
+- Output path: `docs/codebase-audit/RUN_LOG.md`
+
+### 2026-06-05T18:19:00.0000000-05:00
+
+- Affected phase: Phase 10
+- Cwd: `D:\ConficturaUO`
+- Command: `(Import-Csv -LiteralPath docs/codebase-audit/outputs/risk-track-findings.csv | Measure-Object).Count`
+- Result: Returned `6801`, matching the Phase 10 summary.
+- Output path: `docs/codebase-audit/outputs/risk-track-findings.csv`
+
+### 2026-06-05T18:19:00.0000000-05:00
+
+- Affected phase: Phase 10
+- Cwd: `D:\ConficturaUO`
+- Command: `(Import-Csv -LiteralPath docs/codebase-audit/outputs/phase-10-repair-backlog-items.csv | Measure-Object).Count`
+- Result: Returned `6801`, matching the Phase 10 summary.
+- Output path: `docs/codebase-audit/outputs/phase-10-repair-backlog-items.csv`
+
+### 2026-06-05T18:19:00.0000000-05:00
+
+- Affected phase: Phase 10
+- Cwd: `D:\ConficturaUO`
+- Command: `(Import-Csv -LiteralPath docs/codebase-audit/outputs/phase-10-non-issue-records.csv | Measure-Object).Count`
+- Result: Returned `14`, matching the Phase 10 summary.
+- Output path: `docs/codebase-audit/outputs/phase-10-non-issue-records.csv`
+
+### 2026-06-05T18:19:00.0000000-05:00
+
+- Affected phase: Phase 10
+- Cwd: `D:\ConficturaUO`
+- Command: `(Import-Csv -LiteralPath docs/codebase-audit/outputs/phase-10-accepted-risk-notes.csv | Measure-Object).Count`
+- Result: Returned `3`, matching the Phase 10 summary.
+- Output path: `docs/codebase-audit/outputs/phase-10-accepted-risk-notes.csv`
+
+### 2026-06-05T18:19:00.0000000-05:00
+
+- Affected phase: Phase 10
+- Cwd: `D:\ConficturaUO`
+- Command: `(Import-Csv -LiteralPath docs/codebase-audit/outputs/phase-10-comment-target-additions.csv | Measure-Object).Count`
+- Result: Returned `3738`, matching the Phase 10 summary.
+- Output path: `docs/codebase-audit/outputs/phase-10-comment-target-additions.csv`
+
+### 2026-06-05T18:19:00.0000000-05:00
+
+- Affected phase: Phase 10
+- Cwd: `D:\ConficturaUO`
+- Command: `(Import-Csv -LiteralPath docs/codebase-audit/outputs/phase-10-pooled-enumerable-review.csv | Measure-Object).Count`
+- Result: Returned `652`, matching the Phase 10 summary.
+- Output path: `docs/codebase-audit/outputs/phase-10-pooled-enumerable-review.csv`
+
+### 2026-06-05T18:19:00.0000000-05:00
+
+- Affected phase: Phase 10
+- Cwd: `D:\ConficturaUO`
+- Command: `(Import-Csv -LiteralPath docs/codebase-audit/outputs/phase-10-track-coverage.csv | Where-Object { $_.Status -ne 'Complete' } | Measure-Object).Count`
+- Result: Returned `0`; all Phase 10 coverage rows are complete.
+- Output path: `docs/codebase-audit/outputs/phase-10-track-coverage.csv`
+
+### 2026-06-05T18:19:00.0000000-05:00
+
+- Affected phase: Phase 10
+- Cwd: `D:\ConficturaUO`
+- Command: `git status --short --ignored=matching docs/codebase-audit`
+- Result: Showed modified audit metadata/index files, untracked Phase 10 generator, and ignored Phase 10 outputs; no source, project, wiki page, or serialized files changed.
+- Output path: `docs/codebase-audit/RUN_LOG.md`
+
+### 2026-06-05T18:20:00.0000000-05:00
+
+- Affected phase: Phase 10
+- Cwd: `D:\ConficturaUO`
+- Command: `git add -f -- docs/codebase-audit/PHASE_STATUS.md docs/codebase-audit/RUN_LOG.md docs/codebase-audit/outputs/README.md docs/codebase-audit/tools/New-RiskSpecificReviewTracks.ps1 docs/codebase-audit/outputs/risk-track-findings.csv docs/codebase-audit/outputs/phase-10-risk-track-findings.csv docs/codebase-audit/outputs/phase-10-non-issue-records.csv docs/codebase-audit/outputs/phase-10-repair-backlog-items.csv docs/codebase-audit/outputs/phase-10-accepted-risk-notes.csv docs/codebase-audit/outputs/phase-10-comment-target-additions.csv docs/codebase-audit/outputs/phase-10-pooled-enumerable-review.csv docs/codebase-audit/outputs/phase-10-track-coverage.csv docs/codebase-audit/outputs/phase-10-summary.md`
+- Result: Staged only Phase 10 audit metadata, generator, and generated outputs; Git reported expected LF-to-CRLF checkout warnings.
+- Output path: `docs/codebase-audit/RUN_LOG.md`
+
+### 2026-06-05T18:20:00.0000000-05:00
+
+- Affected phase: Phase 10
+- Cwd: `D:\ConficturaUO`
+- Command: `git diff --cached --check`
+- Result: No output; staged Phase 10 batch passed whitespace verification.
+- Output path: `docs/codebase-audit/RUN_LOG.md`
+
+### 2026-06-05T18:20:00.0000000-05:00
+
+- Affected phase: Phase 10
+- Cwd: `D:\ConficturaUO`
+- Command: `git diff --cached --name-only`
+- Result: Staged files were the Phase 10 risk-track generator, canonical findings, phase findings, non-issues, repair backlog items, accepted-risk notes, comment target additions, pooled-enumerable review, track coverage, summary, `PHASE_STATUS.md`, `RUN_LOG.md`, and `outputs/README.md`.
+- Output path: `docs/codebase-audit/RUN_LOG.md`
