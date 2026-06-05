@@ -122,11 +122,21 @@ Raw command output may remain temporary when it is easy to regenerate. Curated t
 | `phase-11-source-comment-edits.csv` | Phase 11 | Source comment edits applied in this phase. | Complete |
 | `phase-11-verification-notes.md` | Phase 11 | Verification notes, source comment evidence, rejection policy, and build caveat. | Complete |
 | `phase-11-summary.md` | Phase 11 | Summarize Phase 11 inputs, outputs, decisions, and exit criteria. | Complete |
-| `reorganization-design.*` | Phase 12 | Propose target layout, moves, keep-in-place decisions, project updates, docs updates, save risk, and rollback plans. | NotStarted |
+| `reorganization-design.csv` | Phase 12 | Canonical design principles and hard gates for reorganization. | Complete |
+| `reorganization-design.md` | Phase 12 | Human-readable reorganization design narrative. | Complete |
+| `phase-12-target-layout-proposal.csv` | Phase 12 | Proposed Custom target folders and ownership rules. | Complete |
+| `phase-12-move-proposal-table.csv` | Phase 12 | Design-only move proposals with save risk, project updates, docs updates, verification, and rollback plans. | Complete |
+| `phase-12-keep-in-place-decisions.csv` | Phase 12 | Existing roots and systems that should remain in place. | Complete |
+| `phase-12-third-party-containment-plan.csv` | Phase 12 | Imported package containment rules. | Complete |
+| `phase-12-save-compatibility-notes.csv` | Phase 12 | Save risk and migration gates for proposed moves. | Complete |
+| `phase-12-project-update-plan.csv` | Phase 12 | `Scripts.csproj` update expectations for proposed moves. | Complete |
+| `phase-12-namespace-plan.csv` | Phase 12 | Namespace and serialized type rename policy by move proposal. | Complete |
+| `phase-12-documentation-move-plan.csv` | Phase 12 | Documentation update requirements for proposed moves. | Complete |
+| `phase-12-summary.md` | Phase 12 | Summarize Phase 12 inputs, outputs, counts, and exit criteria. | Complete |
 | `repair-backlog.*` | Phase 13 | Convert findings into prioritized actionable repair items. | NotStarted |
 | `accepted-risk-register.*` | Phase 13 | Record explicitly accepted risks with evidence and rationale. | NotStarted |
 | `verification-matrix.*` | Phase 13 or 14 | Map change categories and backlog items to required verification. | NotStarted |
 
 ## Initial State
 
-The Phase 0 baseline output, Phase 1 reproducible inventory outputs, Phase 2 project truth outputs, Phase 3 runtime inventory outputs, Phase 4 system cards, Phase 5 runtime hook map outputs, Phase 6 serialization/save-compatibility outputs, Phase 7 documentation truth outputs, Phase 8 dependency graph outputs, Phase 9 synergy/conflict outputs, Phase 10 risk-specific review outputs, and Phase 11 inline code documentation outputs have been generated. Continue through the phase gates in order, starting with Phase 12 reorganization design after the Phase 11 batch is committed.
+The Phase 0 baseline output, Phase 1 reproducible inventory outputs, Phase 2 project truth outputs, Phase 3 runtime inventory outputs, Phase 4 system cards, Phase 5 runtime hook map outputs, Phase 6 serialization/save-compatibility outputs, Phase 7 documentation truth outputs, Phase 8 dependency graph outputs, Phase 9 synergy/conflict outputs, Phase 10 risk-specific review outputs, Phase 11 inline code documentation outputs, and Phase 12 reorganization design outputs have been generated. Continue through the phase gates in order, starting with Phase 13 repair backlog after the Phase 12 batch is committed.

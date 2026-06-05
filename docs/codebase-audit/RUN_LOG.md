@@ -1675,3 +1675,139 @@ Scope: Deterministic phase runner log for the Confictura codebase audit and reor
 - Command: `git status --short`
 - Result: No output; worktree clean after Phase 11 content commit and before Phase 11 metadata update.
 - Output path: `docs/codebase-audit/RUN_LOG.md`
+
+### 2026-06-05T18:31:00.0000000-05:00
+
+- Affected phase: Phase 12
+- Cwd: `D:\ConficturaUO`
+- Command: `git status --short`
+- Result: No output; worktree clean before Phase 12 edits.
+- Output path: `docs/codebase-audit/RUN_LOG.md`
+
+### 2026-06-05T18:31:00.0000000-05:00
+
+- Affected phase: Phase 12
+- Cwd: `D:\ConficturaUO`
+- Command: `git rev-parse --short HEAD`
+- Result: Returned `aa14f132`, the Phase 11 metadata commit.
+- Output path: `docs/codebase-audit/PHASE_STATUS.md`
+
+### 2026-06-05T18:31:00.0000000-05:00
+
+- Affected phase: Phase 12
+- Cwd: `D:\ConficturaUO`
+- Command: `rg --files -g AGENTS.md`
+- Result: Re-read instruction scopes before Phase 12 edits; only root instructions apply under `docs/codebase-audit/`.
+- Output path: `docs/codebase-audit/RUN_LOG.md`
+
+### 2026-06-05T18:31:00.0000000-05:00
+
+- Affected phase: Phase 12
+- Cwd: `D:\ConficturaUO`
+- Command: `Get-Content -LiteralPath docs/codebase-audit-phases/phase-12-reorganization-design.md`
+- Result: Confirmed required inputs, outputs, organization principles, target layout, existing root preservation, move proposal table fields, third-party containment, namespace plan, documentation move plan, checklist, and exit criteria.
+- Output path: `docs/codebase-audit/outputs/phase-12-summary.md`
+
+### 2026-06-05T18:34:00.0000000-05:00
+
+- Affected phase: Phase 12
+- Cwd: `D:\ConficturaUO`
+- Command: `& .\docs\codebase-audit\tools\New-ReorganizationDesign.ps1`
+- Result: Generated 16 target layout rows, 14 design-only move proposals, 9 keep-in-place decisions, third-party containment, save-compatibility, project-update, namespace, documentation move, design, and summary outputs.
+- Output path: `docs/codebase-audit/outputs/phase-12-summary.md`
+
+### 2026-06-05T18:34:00.0000000-05:00
+
+- Affected phase: Phase 12
+- Cwd: `D:\ConficturaUO`
+- Command: `Import-Csv -LiteralPath docs/codebase-audit/outputs/phase-12-move-proposal-table.csv | Where-Object { $_.System -in @('XMLSpawner','Homestead','Government','PlayerMobile Core','Random Encounters','PvP Consent') } | Format-List`
+- Result: Spot checks showed high-risk move proposals are `DesignOnlyNotExecuted`, forbid namespace/type rename without migration, and include project/docs/verification/rollback plans.
+- Output path: `docs/codebase-audit/outputs/phase-12-move-proposal-table.csv`
+
+### 2026-06-05T18:35:00.0000000-05:00
+
+- Affected phase: Phase 12
+- Cwd: `D:\ConficturaUO`
+- Command: `Import-Csv -LiteralPath docs/codebase-audit/outputs/phase-12-move-proposal-table.csv | ForEach-Object { $path = $_.CurrentPath -replace '/', '\\'; [pscustomobject]@{ System=$_.System; CurrentPath=$_.CurrentPath; Exists=(Test-Path -LiteralPath $path) } } | Format-Table -AutoSize`
+- Result: All 14 move proposal current paths exist after correcting `Monster Nests` to `Data/Scripts/Custom/MonsterNest`.
+- Output path: `docs/codebase-audit/outputs/phase-12-move-proposal-table.csv`
+
+### 2026-06-05T18:36:00.0000000-05:00
+
+- Affected phase: Phase 12
+- Cwd: `D:\ConficturaUO`
+- Command: `Get-ChildItem -LiteralPath docs/codebase-audit -Recurse -File | Select-String -Pattern '[ \t]+$'`
+- Result: No output; no trailing whitespace matches found in audit files.
+- Output path: `docs/codebase-audit/RUN_LOG.md`
+
+### 2026-06-05T18:36:00.0000000-05:00
+
+- Affected phase: Phase 12
+- Cwd: `D:\ConficturaUO`
+- Command: `git diff --check -- docs/codebase-audit/PHASE_STATUS.md docs/codebase-audit/RUN_LOG.md docs/codebase-audit/outputs/README.md docs/codebase-audit/tools/New-ReorganizationDesign.ps1`
+- Result: No whitespace errors; Git reported expected LF-to-CRLF checkout warnings for touched text files.
+- Output path: `docs/codebase-audit/RUN_LOG.md`
+
+### 2026-06-05T18:36:00.0000000-05:00
+
+- Affected phase: Phase 12
+- Cwd: `D:\ConficturaUO`
+- Command: `(Import-Csv -LiteralPath docs/codebase-audit/outputs/phase-12-move-proposal-table.csv | Measure-Object).Count`
+- Result: Returned `14`, matching the Phase 12 summary.
+- Output path: `docs/codebase-audit/outputs/phase-12-move-proposal-table.csv`
+
+### 2026-06-05T18:36:00.0000000-05:00
+
+- Affected phase: Phase 12
+- Cwd: `D:\ConficturaUO`
+- Command: `(Import-Csv -LiteralPath docs/codebase-audit/outputs/phase-12-target-layout-proposal.csv | Measure-Object).Count`
+- Result: Returned `16`, matching the Phase 12 summary.
+- Output path: `docs/codebase-audit/outputs/phase-12-target-layout-proposal.csv`
+
+### 2026-06-05T18:36:00.0000000-05:00
+
+- Affected phase: Phase 12
+- Cwd: `D:\ConficturaUO`
+- Command: `(Import-Csv -LiteralPath docs/codebase-audit/outputs/phase-12-keep-in-place-decisions.csv | Measure-Object).Count`
+- Result: Returned `9`, matching the Phase 12 summary.
+- Output path: `docs/codebase-audit/outputs/phase-12-keep-in-place-decisions.csv`
+
+### 2026-06-05T18:36:00.0000000-05:00
+
+- Affected phase: Phase 12
+- Cwd: `D:\ConficturaUO`
+- Command: `(Import-Csv -LiteralPath docs/codebase-audit/outputs/phase-12-move-proposal-table.csv | Where-Object { $_.Phase12Status -ne 'DesignOnlyNotExecuted' } | Measure-Object).Count`
+- Result: Returned `0`; no Phase 12 move proposal was executed.
+- Output path: `docs/codebase-audit/outputs/phase-12-move-proposal-table.csv`
+
+### 2026-06-05T18:36:00.0000000-05:00
+
+- Affected phase: Phase 12
+- Cwd: `D:\ConficturaUO`
+- Command: `git status --short --ignored=matching docs/codebase-audit`
+- Result: Showed modified audit metadata/index files, untracked Phase 12 generator, and ignored Phase 12 outputs; no source, project, or serialized files were moved.
+- Output path: `docs/codebase-audit/RUN_LOG.md`
+
+### 2026-06-05T18:37:00.0000000-05:00
+
+- Affected phase: Phase 12
+- Cwd: `D:\ConficturaUO`
+- Command: `git add -f -- docs/codebase-audit/PHASE_STATUS.md docs/codebase-audit/RUN_LOG.md docs/codebase-audit/outputs/README.md docs/codebase-audit/tools/New-ReorganizationDesign.ps1 docs/codebase-audit/outputs/reorganization-design.csv docs/codebase-audit/outputs/reorganization-design.md docs/codebase-audit/outputs/phase-12-target-layout-proposal.csv docs/codebase-audit/outputs/phase-12-move-proposal-table.csv docs/codebase-audit/outputs/phase-12-keep-in-place-decisions.csv docs/codebase-audit/outputs/phase-12-third-party-containment-plan.csv docs/codebase-audit/outputs/phase-12-save-compatibility-notes.csv docs/codebase-audit/outputs/phase-12-project-update-plan.csv docs/codebase-audit/outputs/phase-12-namespace-plan.csv docs/codebase-audit/outputs/phase-12-documentation-move-plan.csv docs/codebase-audit/outputs/phase-12-summary.md`
+- Result: Staged only Phase 12 audit metadata, generator, and generated design outputs; Git reported expected LF-to-CRLF checkout warnings.
+- Output path: `docs/codebase-audit/RUN_LOG.md`
+
+### 2026-06-05T18:37:00.0000000-05:00
+
+- Affected phase: Phase 12
+- Cwd: `D:\ConficturaUO`
+- Command: `git diff --cached --check`
+- Result: No output; staged Phase 12 batch passed whitespace verification.
+- Output path: `docs/codebase-audit/RUN_LOG.md`
+
+### 2026-06-05T18:37:00.0000000-05:00
+
+- Affected phase: Phase 12
+- Cwd: `D:\ConficturaUO`
+- Command: `git diff --cached --name-only`
+- Result: Staged files were the Phase 12 design generator, canonical design outputs, layout, move, keep, third-party, save, project, namespace, documentation, and summary outputs, `PHASE_STATUS.md`, `RUN_LOG.md`, and `outputs/README.md`.
+- Output path: `docs/codebase-audit/RUN_LOG.md`
