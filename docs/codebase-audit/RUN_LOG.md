@@ -2,11 +2,11 @@
 
 Initialized: 2026-06-05T16:15:59.8020730-05:00
 
-Last updated: 2026-06-05T17:11:00.0000000-05:00
+Last updated: 2026-06-05T17:26:00.0000000-05:00
 
 Branch: `SAR`
 
-Current HEAD: `c5bba2fa docs: add runtime hook map`
+Current HEAD: `f7e6e254 docs: record audit phase 5 commit`
 
 Scope: Deterministic phase runner log for the Confictura codebase audit and reorganization program. No source files, project files, serialized types, or runtime hooks have been changed by the audit batches so far.
 
@@ -642,4 +642,156 @@ Scope: Deterministic phase runner log for the Confictura codebase audit and reor
 - Cwd: `D:\ConficturaUO`
 - Command: `git status --short`
 - Result: No output; worktree clean after Phase 5 content commit and before Phase 5 metadata update.
+- Output path: `docs/codebase-audit/RUN_LOG.md`
+
+### 2026-06-05T17:11:00.0000000-05:00
+
+- Affected phase: Phase 5
+- Cwd: `D:\ConficturaUO`
+- Command: `git commit -m "docs: record audit phase 5 commit"`
+- Result: Created commit `f7e6e254 docs: record audit phase 5 commit`.
+- Output path: `docs/codebase-audit/PHASE_STATUS.md`
+
+### 2026-06-05T17:12:00.0000000-05:00
+
+- Affected phase: Phase 6
+- Cwd: `D:\ConficturaUO`
+- Command: `git status --short`
+- Result: No output; worktree clean before Phase 6 edits.
+- Output path: `docs/codebase-audit/RUN_LOG.md`
+
+### 2026-06-05T17:12:00.0000000-05:00
+
+- Affected phase: Phase 6
+- Cwd: `D:\ConficturaUO`
+- Command: `rg --files -g AGENTS.md`
+- Result: Rechecked instruction scopes before Phase 6 edits; Phase 6 edits are limited to `docs/codebase-audit/`, so only root instructions apply.
+- Output path: `docs/codebase-audit/PHASE_STATUS.md`
+
+### 2026-06-05T17:12:00.0000000-05:00
+
+- Affected phase: Phase 6
+- Cwd: `D:\ConficturaUO`
+- Command: `Get-Content -Raw -LiteralPath CODEBASE_SYSTEMS_AUDIT_AND_REORG_PLAN.md`
+- Result: Root audit plan re-read; Phase 6 is required before source moves or serializer edits in high-risk systems.
+- Output path: `docs/codebase-audit/outputs/phase-06-summary.md`
+
+### 2026-06-05T17:12:00.0000000-05:00
+
+- Affected phase: Phase 6
+- Cwd: `D:\ConficturaUO`
+- Command: `Get-Content -Raw -LiteralPath docs/codebase-audit-phases/phase-06-serialization-and-save-compatibility.md`
+- Result: Phase 6 plan re-read; required inputs, outputs, subphase gates, and exit criteria used for serializer register generation.
+- Output path: `docs/codebase-audit/outputs/phase-06-summary.md`
+
+### 2026-06-05T17:13:00.0000000-05:00
+
+- Affected phase: Phase 6
+- Cwd: `D:\ConficturaUO`
+- Command: `Get-Content -LiteralPath docs/codebase-audit/outputs/phase-01-serialization-marker-inventory.csv -TotalCount 5`; `Get-Content -LiteralPath docs/codebase-audit/outputs/cross-tree-runtime-inventory.csv -TotalCount 3`; `Get-Content -LiteralPath docs/codebase-audit/outputs/system-owner-map.csv -TotalCount 3`; `Get-Content -LiteralPath docs/codebase-audit/outputs/project-truth-register.csv -TotalCount 3`
+- Result: Prior output schemas inspected before writing the Phase 6 generator.
+- Output path: `docs/codebase-audit/tools/New-SerializationRegister.ps1`
+
+### 2026-06-05T17:23:00.0000000-05:00
+
+- Affected phase: Phase 6
+- Cwd: `D:\ConficturaUO`
+- Command: `.\docs\codebase-audit\tools\New-SerializationRegister.ps1`
+- Result: Initial generator attempts exposed PowerShell generic-list conversion, string-formatting, and `$Matches` collision bugs. The tool was corrected and rerun until outputs generated successfully.
+- Output path: `docs/codebase-audit/tools/New-SerializationRegister.ps1`
+
+### 2026-06-05T17:25:38.2804381-05:00
+
+- Affected phase: Phase 6
+- Cwd: `D:\ConficturaUO`
+- Command: `.\docs\codebase-audit\tools\New-SerializationRegister.ps1`
+- Result: Completed successfully. Generated 9,158 serializer rows, 3,953 high-risk rows, 9,158 move-risk rows, 3,105 comment-target rows, and 1,625 save-compatibility backlog rows.
+- Output path: `docs/codebase-audit/outputs/phase-06-summary.md`
+
+### 2026-06-05T17:25:00.0000000-05:00
+
+- Affected phase: Phase 6
+- Cwd: `D:\ConficturaUO`
+- Command: `Get-Content -LiteralPath docs/codebase-audit/outputs/phase-06-summary.md`
+- Result: Summary reviewed; generated outputs, version handling counts, field alignment counts, move/rename risk counts, and exit criteria are present.
+- Output path: `docs/codebase-audit/outputs/phase-06-summary.md`
+
+### 2026-06-05T17:25:00.0000000-05:00
+
+- Affected phase: Phase 6
+- Cwd: `D:\ConficturaUO`
+- Command: `Import-Csv -LiteralPath docs/codebase-audit/outputs/serialization-register.csv | Where-Object { $_.TypeName -eq 'PlayerMobile' } | Select-Object -First 1 | Format-List File,Class,HasSerialConstructor,CurrentVersion,VersionHandling,MoveRenameRisk,ReviewStatus,ReviewReasons`
+- Result: `PlayerMobile` spot-check shows detected Serial constructor, current version `37`, `SwitchGotoCase` handling, `DoNotMove` risk, and `NeedsSourceReview` for manual save-map review.
+- Output path: `docs/codebase-audit/outputs/serialization-register.csv`
+
+### 2026-06-05T17:25:00.0000000-05:00
+
+- Affected phase: Phase 6
+- Cwd: `D:\ConficturaUO`
+- Command: `Import-Csv -LiteralPath docs/codebase-audit/outputs/phase-06-save-compatibility-repair-backlog.csv | Group-Object Category | Sort-Object Name | Format-Table -AutoSize`
+- Result: Backlog category counts reviewed: 54 base-call order, 113 missing Serial constructor, 68 missing serializer pair, 27 serialized project-truth, 1,113 version-handling, and 250 write/read alignment items.
+- Output path: `docs/codebase-audit/outputs/phase-06-save-compatibility-repair-backlog.csv`
+
+### 2026-06-05T17:26:00.0000000-05:00
+
+- Affected phase: Phase 6
+- Cwd: `D:\ConficturaUO`
+- Command: `Get-ChildItem -LiteralPath docs/codebase-audit -Recurse -File | Select-String -Pattern '[ \t]+$'`
+- Result: No output; no trailing whitespace matches found in audit files.
+- Output path: `docs/codebase-audit/RUN_LOG.md`
+
+### 2026-06-05T17:26:00.0000000-05:00
+
+- Affected phase: Phase 6
+- Cwd: `D:\ConficturaUO`
+- Command: `git diff --check -- docs/codebase-audit/PHASE_STATUS.md docs/codebase-audit/RUN_LOG.md docs/codebase-audit/outputs/README.md docs/codebase-audit/tools/New-SerializationRegister.ps1`
+- Result: No whitespace errors; Git reported expected LF-to-CRLF checkout warnings for touched text files.
+- Output path: `docs/codebase-audit/RUN_LOG.md`
+
+### 2026-06-05T17:26:00.0000000-05:00
+
+- Affected phase: Phase 6
+- Cwd: `D:\ConficturaUO`
+- Command: `(Import-Csv -LiteralPath docs/codebase-audit/outputs/serialization-register.csv | Measure-Object).Count`
+- Result: Returned `9158`, matching the Phase 6 summary.
+- Output path: `docs/codebase-audit/outputs/serialization-register.csv`
+
+### 2026-06-05T17:26:00.0000000-05:00
+
+- Affected phase: Phase 6
+- Cwd: `D:\ConficturaUO`
+- Command: `(Import-Csv -LiteralPath docs/codebase-audit/outputs/phase-06-save-compatibility-repair-backlog.csv | Measure-Object).Count`
+- Result: Returned `1625`, matching the Phase 6 summary.
+- Output path: `docs/codebase-audit/outputs/phase-06-save-compatibility-repair-backlog.csv`
+
+### 2026-06-05T17:26:00.0000000-05:00
+
+- Affected phase: Phase 6
+- Cwd: `D:\ConficturaUO`
+- Command: `git status --short --ignored=matching docs/codebase-audit`
+- Result: Showed modified audit metadata/index files, untracked Phase 6 generator, and ignored Phase 6 outputs; no source, project, or serialized files changed.
+- Output path: `docs/codebase-audit/RUN_LOG.md`
+
+### 2026-06-05T17:27:00.0000000-05:00
+
+- Affected phase: Phase 6
+- Cwd: `D:\ConficturaUO`
+- Command: `git add -f -- docs/codebase-audit/PHASE_STATUS.md docs/codebase-audit/RUN_LOG.md docs/codebase-audit/outputs/README.md docs/codebase-audit/tools/New-SerializationRegister.ps1 docs/codebase-audit/outputs/serialization-register.csv docs/codebase-audit/outputs/phase-06-serialization-register.csv docs/codebase-audit/outputs/phase-06-high-risk-serializer-list.csv docs/codebase-audit/outputs/phase-06-move-rename-risk-list.csv docs/codebase-audit/outputs/phase-06-serializer-comment-target-list.csv docs/codebase-audit/outputs/phase-06-save-compatibility-repair-backlog.csv docs/codebase-audit/outputs/phase-06-summary.md`
+- Result: Staged only Phase 6 audit metadata, generator, and generated outputs; Git reported expected LF-to-CRLF checkout warnings.
+- Output path: `docs/codebase-audit/RUN_LOG.md`
+
+### 2026-06-05T17:27:00.0000000-05:00
+
+- Affected phase: Phase 6
+- Cwd: `D:\ConficturaUO`
+- Command: `git diff --cached --check`
+- Result: No output; staged Phase 6 batch passed whitespace verification.
+- Output path: `docs/codebase-audit/RUN_LOG.md`
+
+### 2026-06-05T17:27:00.0000000-05:00
+
+- Affected phase: Phase 6
+- Cwd: `D:\ConficturaUO`
+- Command: `git diff --cached --name-only`
+- Result: Staged files were the Phase 6 serializer generator, serializer registers, high-risk list, move/rename risk list, comment target list, save-compatibility backlog, summary, `PHASE_STATUS.md`, `RUN_LOG.md`, and `outputs/README.md`.
 - Output path: `docs/codebase-audit/RUN_LOG.md`
