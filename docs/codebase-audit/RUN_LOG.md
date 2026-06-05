@@ -2,13 +2,13 @@
 
 Initialized: 2026-06-05T16:15:59.8020730-05:00
 
-Last updated: 2026-06-05T17:03:00.0000000-05:00
+Last updated: 2026-06-05T17:08:00.0000000-05:00
 
 Branch: `SAR`
 
-Current HEAD: `9d0383eb docs: add high-risk system cards`
+Current HEAD: `c81b6440 docs: record audit phase 4 commit`
 
-Scope: Phase 0 baseline and guardrails. No source files, project files, serialized types, or runtime hooks were changed.
+Scope: Deterministic phase runner log for the Confictura codebase audit and reorganization program. No source files, project files, serialized types, or runtime hooks have been changed by the audit batches so far.
 
 ## Worktree Baseline
 
@@ -515,3 +515,115 @@ Scope: Phase 0 baseline and guardrails. No source files, project files, serializ
 - Command: `git commit -m "docs: add high-risk system cards"`
 - Result: Created commit `9d0383eb docs: add high-risk system cards`.
 - Output path: `docs/codebase-audit/PHASE_STATUS.md`
+
+### 2026-06-05T17:03:00.0000000-05:00
+
+- Affected phase: Phase 4
+- Cwd: `D:\ConficturaUO`
+- Command: `git commit -m "docs: record audit phase 4 commit"`
+- Result: Created commit `c81b6440 docs: record audit phase 4 commit`.
+- Output path: `docs/codebase-audit/PHASE_STATUS.md`
+
+### 2026-06-05T17:07:00.0000000-05:00
+
+- Affected phase: Phase 5
+- Cwd: `D:\ConficturaUO`
+- Command: `git status --short`
+- Result: Resume-time status showed `?? docs/codebase-audit/tools/New-RuntimeHookMap.ps1`; classified as audit-owned Phase 5 work in progress. Phase 5 generated outputs are hidden by the local ignore and will be force-staged with the focused batch.
+- Output path: `docs/codebase-audit/RUN_LOG.md`
+
+### 2026-06-05T17:07:00.0000000-05:00
+
+- Affected phase: Phase 5
+- Cwd: `D:\ConficturaUO`
+- Command: `rg --files -g AGENTS.md`
+- Result: Rechecked instruction scopes before Phase 5 metadata edits; nested `AGENTS.md` files are under source/gump trees, while Phase 5 edits are limited to `docs/codebase-audit/`.
+- Output path: `docs/codebase-audit/PHASE_STATUS.md`
+
+### 2026-06-05T17:07:00.0000000-05:00
+
+- Affected phase: Phase 5
+- Cwd: `D:\ConficturaUO`
+- Command: `Get-Content -Raw -LiteralPath docs/codebase-audit-phases/phase-05-runtime-hook-map.md`
+- Result: Phase 5 plan re-read; required inputs, required outputs, subphase gates, and exit criteria used for hook map generation.
+- Output path: `docs/codebase-audit/outputs/phase-05-summary.md`
+
+### 2026-06-05T17:07:19.2703856-05:00
+
+- Affected phase: Phase 5
+- Cwd: `D:\ConficturaUO`
+- Command: `.\docs\codebase-audit\tools\New-RuntimeHookMap.ps1`
+- Result: Completed successfully. Generated 6,604 hook rows, 2,979 global/high-risk rows, 499 command rows, 17 packet rows, 4,066 gump rows, and 1,043 timer/world-hook rows.
+- Output path: `docs/codebase-audit/outputs/phase-05-summary.md`
+
+### 2026-06-05T17:07:00.0000000-05:00
+
+- Affected phase: Phase 5
+- Cwd: `D:\ConficturaUO`
+- Command: `(Import-Csv -LiteralPath docs/codebase-audit/outputs/runtime-hook-map.csv | Measure-Object).Count`
+- Result: Returned `6604`, matching the Phase 5 summary.
+- Output path: `docs/codebase-audit/outputs/runtime-hook-map.csv`
+
+### 2026-06-05T17:07:00.0000000-05:00
+
+- Affected phase: Phase 5
+- Cwd: `D:\ConficturaUO`
+- Command: `(Import-Csv -LiteralPath docs/codebase-audit/outputs/phase-05-packet-handler-register.csv | Measure-Object).Count`
+- Result: Returned `17`, matching the Phase 5 summary and treating packet handlers as critical network entry points.
+- Output path: `docs/codebase-audit/outputs/phase-05-packet-handler-register.csv`
+
+### 2026-06-05T17:07:00.0000000-05:00
+
+- Affected phase: Phase 5
+- Cwd: `D:\ConficturaUO`
+- Command: `Get-Content -LiteralPath docs/codebase-audit/outputs/phase-05-summary.md`
+- Result: Summary reviewed; outputs, hook type counts, risk counts, and exit criteria are present. Guard fields are conservative marker scans and `NeedsSourceReview` rows are deferred to manual review phases.
+- Output path: `docs/codebase-audit/outputs/phase-05-summary.md`
+
+### 2026-06-05T17:08:00.0000000-05:00
+
+- Affected phase: Phase 5
+- Cwd: `D:\ConficturaUO`
+- Command: `Get-ChildItem -LiteralPath docs/codebase-audit -Recurse -File | Select-String -Pattern '[ \t]+$'`
+- Result: No output; no trailing whitespace matches found in audit files.
+- Output path: `docs/codebase-audit/RUN_LOG.md`
+
+### 2026-06-05T17:08:00.0000000-05:00
+
+- Affected phase: Phase 5
+- Cwd: `D:\ConficturaUO`
+- Command: `git diff --check -- docs/codebase-audit/PHASE_STATUS.md docs/codebase-audit/RUN_LOG.md docs/codebase-audit/outputs/README.md docs/codebase-audit/tools/New-RuntimeHookMap.ps1`
+- Result: No whitespace errors; Git reported expected LF-to-CRLF checkout warnings for touched text files.
+- Output path: `docs/codebase-audit/RUN_LOG.md`
+
+### 2026-06-05T17:08:00.0000000-05:00
+
+- Affected phase: Phase 5
+- Cwd: `D:\ConficturaUO`
+- Command: `git status --short --ignored=matching docs/codebase-audit`
+- Result: Showed modified audit status/log/index files, untracked Phase 5 generator, and ignored Phase 5 outputs; no source, project, or serialized files changed.
+- Output path: `docs/codebase-audit/RUN_LOG.md`
+
+### 2026-06-05T17:08:00.0000000-05:00
+
+- Affected phase: Phase 5
+- Cwd: `D:\ConficturaUO`
+- Command: `git add -f -- docs/codebase-audit/PHASE_STATUS.md docs/codebase-audit/RUN_LOG.md docs/codebase-audit/outputs/README.md docs/codebase-audit/tools/New-RuntimeHookMap.ps1 docs/codebase-audit/outputs/runtime-hook-map.csv docs/codebase-audit/outputs/phase-05-runtime-hook-map.csv docs/codebase-audit/outputs/phase-05-global-hook-risk-list.csv docs/codebase-audit/outputs/phase-05-command-surface-register.csv docs/codebase-audit/outputs/phase-05-packet-handler-register.csv docs/codebase-audit/outputs/phase-05-gump-response-risk-register.csv docs/codebase-audit/outputs/phase-05-timer-world-hook-register.csv docs/codebase-audit/outputs/phase-05-summary.md`
+- Result: Staged only the Phase 5 audit metadata, generator, and generated outputs; Git reported expected LF-to-CRLF checkout warnings.
+- Output path: `docs/codebase-audit/RUN_LOG.md`
+
+### 2026-06-05T17:08:00.0000000-05:00
+
+- Affected phase: Phase 5
+- Cwd: `D:\ConficturaUO`
+- Command: `git diff --cached --check`
+- Result: No output; staged Phase 5 batch passed whitespace verification.
+- Output path: `docs/codebase-audit/RUN_LOG.md`
+
+### 2026-06-05T17:08:00.0000000-05:00
+
+- Affected phase: Phase 5
+- Cwd: `D:\ConficturaUO`
+- Command: `git diff --cached --name-only`
+- Result: Staged files were the Phase 5 generator, runtime hook map outputs, focused registers, summary, `PHASE_STATUS.md`, `RUN_LOG.md`, and `outputs/README.md`.
+- Output path: `docs/codebase-audit/RUN_LOG.md`
