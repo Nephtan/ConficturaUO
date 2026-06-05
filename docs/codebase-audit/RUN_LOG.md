@@ -1139,3 +1139,163 @@ Scope: Deterministic phase runner log for the Confictura codebase audit and reor
 - Command: `git status --short`
 - Result: No output; worktree clean after Phase 8 content commit and before Phase 8 metadata update.
 - Output path: `docs/codebase-audit/RUN_LOG.md`
+
+### 2026-06-05T18:01:00.0000000-05:00
+
+- Affected phase: Phase 9
+- Cwd: `D:\ConficturaUO`
+- Command: `git status --short`
+- Result: No output; worktree clean before Phase 9 edits.
+- Output path: `docs/codebase-audit/RUN_LOG.md`
+
+### 2026-06-05T18:01:00.0000000-05:00
+
+- Affected phase: Phase 9
+- Cwd: `D:\ConficturaUO`
+- Command: `git rev-parse --short HEAD`
+- Result: Returned `8e716592`, the Phase 8 metadata commit.
+- Output path: `docs/codebase-audit/PHASE_STATUS.md`
+
+### 2026-06-05T18:01:00.0000000-05:00
+
+- Affected phase: Phase 9
+- Cwd: `D:\ConficturaUO`
+- Command: `rg --files -g AGENTS.md`
+- Result: Re-read instruction scopes before Phase 9 edits; only root instructions apply under `docs/codebase-audit/`.
+- Output path: `docs/codebase-audit/RUN_LOG.md`
+
+### 2026-06-05T18:02:00.0000000-05:00
+
+- Affected phase: Phase 9
+- Cwd: `D:\ConficturaUO`
+- Command: `Get-Content -LiteralPath docs/codebase-audit-phases/phase-09-synergy-and-conflict-matrix.md`
+- Result: Confirmed required inputs, outputs, labels, domain buckets, pairwise review rules, balance review, player-objective review, checklist, and exit criteria.
+- Output path: `docs/codebase-audit/outputs/phase-09-summary.md`
+
+### 2026-06-05T18:07:00.0000000-05:00
+
+- Affected phase: Phase 9
+- Cwd: `D:\ConficturaUO`
+- Command: `& .\docs\codebase-audit\tools\New-SynergyConflictMatrix.ps1`
+- Result: Generated 351 matrix rows, 26 balance-risk rows, 158 documentation-risk rows, 32 staff-dependency rows, 22 preservation rows, 27 domain rows, and 27 player-objective rows.
+- Output path: `docs/codebase-audit/outputs/phase-09-summary.md`
+
+### 2026-06-05T18:07:00.0000000-05:00
+
+- Affected phase: Phase 9
+- Cwd: `D:\ConficturaUO`
+- Command: `Import-Csv -LiteralPath docs/codebase-audit/outputs/phase-09-synergy-conflict-matrix.csv | Where-Object { ($_.SystemA -eq 'Character Level' -and $_.SystemB -eq 'Random Encounters') -or ($_.SystemA -eq 'Random Encounters' -and $_.SystemB -eq 'Character Level') } | Format-List`
+- Result: Spot check returned labels `DependsOn;DocRisk;Supports`, hard `DirectReference` evidence from Random Encounters to Character Level, and preservation recommendation.
+- Output path: `docs/codebase-audit/outputs/phase-09-synergy-conflict-matrix.csv`
+
+### 2026-06-05T18:07:00.0000000-05:00
+
+- Affected phase: Phase 9
+- Cwd: `D:\ConficturaUO`
+- Command: `Import-Csv -LiteralPath docs/codebase-audit/outputs/phase-09-synergy-conflict-matrix.csv | Where-Object { ($_.SystemA -eq 'PvP Consent' -and $_.SystemB -eq 'Government') -or ($_.SystemA -eq 'Government' -and $_.SystemB -eq 'PvP Consent') } | Format-List`
+- Result: Spot check returned labels `BalanceRisk;Conflicts;DocRisk;Overrides` and the consent-versus-government policy recommendation.
+- Output path: `docs/codebase-audit/outputs/phase-09-synergy-conflict-matrix.csv`
+
+### 2026-06-05T18:07:00.0000000-05:00
+
+- Affected phase: Phase 9
+- Cwd: `D:\ConficturaUO`
+- Command: `Import-Csv -LiteralPath docs/codebase-audit/outputs/phase-09-synergy-conflict-matrix.csv | Where-Object { ($_.SystemA -eq 'Spell Framework' -and $_.SystemB -eq 'Magic Schools') -or ($_.SystemA -eq 'Magic Schools' -and $_.SystemB -eq 'Spell Framework') } | Format-List`
+- Result: Spot check returned labels `BalanceRisk;DependsOn;DocRisk;Supports` and hard direct-reference evidence from magic school files to spell framework symbols.
+- Output path: `docs/codebase-audit/outputs/phase-09-synergy-conflict-matrix.csv`
+
+### 2026-06-05T18:08:00.0000000-05:00
+
+- Affected phase: Phase 9
+- Cwd: `D:\ConficturaUO`
+- Command: `Get-ChildItem -LiteralPath docs/codebase-audit -Recurse -File | Select-String -Pattern '[ \t]+$'`
+- Result: No output; no trailing whitespace matches found in audit files.
+- Output path: `docs/codebase-audit/RUN_LOG.md`
+
+### 2026-06-05T18:08:00.0000000-05:00
+
+- Affected phase: Phase 9
+- Cwd: `D:\ConficturaUO`
+- Command: `git diff --check -- docs/codebase-audit/PHASE_STATUS.md docs/codebase-audit/RUN_LOG.md docs/codebase-audit/outputs/README.md docs/codebase-audit/tools/New-SynergyConflictMatrix.ps1`
+- Result: No whitespace errors; Git reported expected LF-to-CRLF checkout warnings for touched text files.
+- Output path: `docs/codebase-audit/RUN_LOG.md`
+
+### 2026-06-05T18:08:00.0000000-05:00
+
+- Affected phase: Phase 9
+- Cwd: `D:\ConficturaUO`
+- Command: `(Import-Csv -LiteralPath docs/codebase-audit/outputs/synergy-conflict-matrix.csv | Measure-Object).Count`
+- Result: Returned `351`, matching the Phase 9 summary.
+- Output path: `docs/codebase-audit/outputs/synergy-conflict-matrix.csv`
+
+### 2026-06-05T18:08:00.0000000-05:00
+
+- Affected phase: Phase 9
+- Cwd: `D:\ConficturaUO`
+- Command: `(Import-Csv -LiteralPath docs/codebase-audit/outputs/phase-09-balance-risk-list.csv | Measure-Object).Count`
+- Result: Returned `26`, matching the Phase 9 summary.
+- Output path: `docs/codebase-audit/outputs/phase-09-balance-risk-list.csv`
+
+### 2026-06-05T18:08:00.0000000-05:00
+
+- Affected phase: Phase 9
+- Cwd: `D:\ConficturaUO`
+- Command: `(Import-Csv -LiteralPath docs/codebase-audit/outputs/phase-09-documentation-risk-list.csv | Measure-Object).Count`
+- Result: Returned `158`, matching the Phase 9 summary.
+- Output path: `docs/codebase-audit/outputs/phase-09-documentation-risk-list.csv`
+
+### 2026-06-05T18:08:00.0000000-05:00
+
+- Affected phase: Phase 9
+- Cwd: `D:\ConficturaUO`
+- Command: `(Import-Csv -LiteralPath docs/codebase-audit/outputs/phase-09-staff-dependency-list.csv | Measure-Object).Count`
+- Result: Returned `32`, matching the Phase 9 summary.
+- Output path: `docs/codebase-audit/outputs/phase-09-staff-dependency-list.csv`
+
+### 2026-06-05T18:08:00.0000000-05:00
+
+- Affected phase: Phase 9
+- Cwd: `D:\ConficturaUO`
+- Command: `(Import-Csv -LiteralPath docs/codebase-audit/outputs/phase-09-preservation-notes.csv | Measure-Object).Count`
+- Result: Returned `22`, matching the Phase 9 summary.
+- Output path: `docs/codebase-audit/outputs/phase-09-preservation-notes.csv`
+
+### 2026-06-05T18:08:00.0000000-05:00
+
+- Affected phase: Phase 9
+- Cwd: `D:\ConficturaUO`
+- Command: `(Import-Csv -LiteralPath docs/codebase-audit/outputs/phase-09-player-objective-review.csv | Measure-Object).Count`
+- Result: Returned `27`, matching the Phase 9 summary.
+- Output path: `docs/codebase-audit/outputs/phase-09-player-objective-review.csv`
+
+### 2026-06-05T18:09:00.0000000-05:00
+
+- Affected phase: Phase 9
+- Cwd: `D:\ConficturaUO`
+- Command: `git status --short --ignored=matching docs/codebase-audit`
+- Result: Showed modified audit metadata/index files, untracked Phase 9 generator, and ignored Phase 9 outputs; no source, project, wiki page, or serialized files changed.
+- Output path: `docs/codebase-audit/RUN_LOG.md`
+
+### 2026-06-05T18:09:00.0000000-05:00
+
+- Affected phase: Phase 9
+- Cwd: `D:\ConficturaUO`
+- Command: `git add -f -- docs/codebase-audit/PHASE_STATUS.md docs/codebase-audit/RUN_LOG.md docs/codebase-audit/outputs/README.md docs/codebase-audit/tools/New-SynergyConflictMatrix.ps1 docs/codebase-audit/outputs/synergy-conflict-matrix.csv docs/codebase-audit/outputs/phase-09-synergy-conflict-matrix.csv docs/codebase-audit/outputs/phase-09-domain-buckets.csv docs/codebase-audit/outputs/phase-09-balance-risk-list.csv docs/codebase-audit/outputs/phase-09-documentation-risk-list.csv docs/codebase-audit/outputs/phase-09-staff-dependency-list.csv docs/codebase-audit/outputs/phase-09-preservation-notes.csv docs/codebase-audit/outputs/phase-09-player-objective-review.csv docs/codebase-audit/outputs/phase-09-summary.md`
+- Result: Staged only Phase 9 audit metadata, generator, and generated outputs; Git reported expected LF-to-CRLF checkout warnings.
+- Output path: `docs/codebase-audit/RUN_LOG.md`
+
+### 2026-06-05T18:09:00.0000000-05:00
+
+- Affected phase: Phase 9
+- Cwd: `D:\ConficturaUO`
+- Command: `git diff --cached --check`
+- Result: No output; staged Phase 9 batch passed whitespace verification.
+- Output path: `docs/codebase-audit/RUN_LOG.md`
+
+### 2026-06-05T18:09:00.0000000-05:00
+
+- Affected phase: Phase 9
+- Cwd: `D:\ConficturaUO`
+- Command: `git diff --cached --name-only`
+- Result: Staged files were the Phase 9 synergy/conflict generator, canonical matrix, phase matrix, domain, balance, documentation, staff, preservation, player-objective, summary outputs, `PHASE_STATUS.md`, `RUN_LOG.md`, and `outputs/README.md`.
+- Output path: `docs/codebase-audit/RUN_LOG.md`
