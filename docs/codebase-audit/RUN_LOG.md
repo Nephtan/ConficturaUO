@@ -2,11 +2,11 @@
 
 Initialized: 2026-06-05T16:15:59.8020730-05:00
 
-Last updated: 2026-06-05T17:40:00.0000000-05:00
+Last updated: 2026-06-05T17:54:00.0000000-05:00
 
 Branch: `SAR`
 
-Current HEAD: `151fe5a9 docs: add documentation truth audit`
+Current HEAD: `f3f481ec docs: record audit phase 7 commit`
 
 Scope: Deterministic phase runner log for the Confictura codebase audit and reorganization program. No source files, project files, serialized types, or runtime hooks have been changed by the audit batches so far.
 
@@ -970,4 +970,156 @@ Scope: Deterministic phase runner log for the Confictura codebase audit and reor
 - Cwd: `D:\ConficturaUO`
 - Command: `git status --short`
 - Result: No output; worktree clean after Phase 7 content commit and before Phase 7 metadata update.
+- Output path: `docs/codebase-audit/RUN_LOG.md`
+
+### 2026-06-05T17:40:00.0000000-05:00
+
+- Affected phase: Phase 7
+- Cwd: `D:\ConficturaUO`
+- Command: `git commit -m "docs: record audit phase 7 commit"`
+- Result: Created commit `f3f481ec docs: record audit phase 7 commit`.
+- Output path: `docs/codebase-audit/PHASE_STATUS.md`
+
+### 2026-06-05T17:41:00.0000000-05:00
+
+- Affected phase: Phase 8
+- Cwd: `D:\ConficturaUO`
+- Command: `git status --short`
+- Result: No output; worktree clean before Phase 8 edits.
+- Output path: `docs/codebase-audit/RUN_LOG.md`
+
+### 2026-06-05T17:41:00.0000000-05:00
+
+- Affected phase: Phase 8
+- Cwd: `D:\ConficturaUO`
+- Command: `rg --files -g AGENTS.md`
+- Result: Rechecked instruction scopes before Phase 8 edits; Phase 8 edits are limited to `docs/codebase-audit/`, so only root instructions apply.
+- Output path: `docs/codebase-audit/PHASE_STATUS.md`
+
+### 2026-06-05T17:41:00.0000000-05:00
+
+- Affected phase: Phase 8
+- Cwd: `D:\ConficturaUO`
+- Command: `Get-Content -Raw -LiteralPath CODEBASE_SYSTEMS_AUDIT_AND_REORG_PLAN.md`
+- Result: Root audit plan re-read; dependency graph edges must distinguish source-verified, docs-only, speculative, and conflict relationships.
+- Output path: `docs/codebase-audit/outputs/phase-08-summary.md`
+
+### 2026-06-05T17:41:00.0000000-05:00
+
+- Affected phase: Phase 8
+- Cwd: `D:\ConficturaUO`
+- Command: `Get-Content -Raw -LiteralPath docs/codebase-audit-phases/phase-08-dependency-graph.md`
+- Result: Phase 8 plan re-read; required inputs, outputs, subphase gates, and exit criteria used for dependency graph generation.
+- Output path: `docs/codebase-audit/outputs/phase-08-summary.md`
+
+### 2026-06-05T17:42:00.0000000-05:00
+
+- Affected phase: Phase 8
+- Cwd: `D:\ConficturaUO`
+- Command: `Get-Content -LiteralPath docs/codebase-audit/outputs/phase-01-config-reference-inventory.csv -TotalCount 5`; `Get-Content -LiteralPath docs/codebase-audit/outputs/phase-04-system-card-index.csv -TotalCount 5`; `Get-Content -LiteralPath docs/codebase-audit/outputs/system-owner-map.csv -TotalCount 5`; `Get-Content -LiteralPath docs/codebase-audit/outputs/runtime-hook-map.csv -TotalCount 5`; `Get-Content -LiteralPath docs/codebase-audit/outputs/serialization-register.csv -TotalCount 3`
+- Result: Input schemas inspected before writing the Phase 8 generator.
+- Output path: `docs/codebase-audit/tools/New-DependencyGraph.ps1`
+
+### 2026-06-05T17:47:00.0000000-05:00
+
+- Affected phase: Phase 8
+- Cwd: `D:\ConficturaUO`
+- Command: `.\docs\codebase-audit\tools\New-DependencyGraph.ps1`
+- Result: Initial run timed out during direct source-reference scanning. The generator was optimized to precheck file content before line-level marker scans.
+- Output path: `docs/codebase-audit/tools/New-DependencyGraph.ps1`
+
+### 2026-06-05T17:51:45.7240107-05:00
+
+- Affected phase: Phase 8
+- Cwd: `D:\ConficturaUO`
+- Command: `.\docs\codebase-audit\tools\New-DependencyGraph.ps1`
+- Result: Completed successfully. Generated 30,063 dependency edges, 29,933 hard edges, 130 soft/speculative edges, 1,248 conflict/manual-review edges, and 27 standalone proof rows.
+- Output path: `docs/codebase-audit/outputs/phase-08-summary.md`
+
+### 2026-06-05T17:52:00.0000000-05:00
+
+- Affected phase: Phase 8
+- Cwd: `D:\ConficturaUO`
+- Command: `Import-Csv -LiteralPath docs/codebase-audit/outputs/dependency-graph.csv | Where-Object { ($_.SourceSystem -eq 'Random Encounters' -and $_.TargetSystem -eq 'Character Level') -or ($_.SourceSystem -eq 'Character Level' -and $_.TargetSystem -eq 'Random Encounters') }`
+- Result: Required graph-area spot-check found `Random Encounters -> Character Level` direct reference edge from `Data/Scripts/Custom/RandomEncounters/Helpers.cs`.
+- Output path: `docs/codebase-audit/outputs/dependency-graph.csv`
+
+### 2026-06-05T17:52:00.0000000-05:00
+
+- Affected phase: Phase 8
+- Cwd: `D:\ConficturaUO`
+- Command: `Import-Csv -LiteralPath docs/codebase-audit/outputs/phase-08-standalone-proof-list.csv`
+- Result: Standalone proof list reviewed; all 27 system-card systems have generated edge evidence and are marked `NotStandalone`.
+- Output path: `docs/codebase-audit/outputs/phase-08-standalone-proof-list.csv`
+
+### 2026-06-05T17:53:00.0000000-05:00
+
+- Affected phase: Phase 8
+- Cwd: `D:\ConficturaUO`
+- Command: `Get-Content -LiteralPath docs/codebase-audit/outputs/phase-08-summary.md -Tail 12`
+- Result: Summary reviewed; docs-only/speculative edges are separated from hard edges and no system-card system lacks generated incoming/outgoing evidence.
+- Output path: `docs/codebase-audit/outputs/phase-08-summary.md`
+
+### 2026-06-05T17:54:00.0000000-05:00
+
+- Affected phase: Phase 8
+- Cwd: `D:\ConficturaUO`
+- Command: `Get-ChildItem -LiteralPath docs/codebase-audit -Recurse -File | Select-String -Pattern '[ \t]+$'`
+- Result: No output; no trailing whitespace matches found in audit files.
+- Output path: `docs/codebase-audit/RUN_LOG.md`
+
+### 2026-06-05T17:54:00.0000000-05:00
+
+- Affected phase: Phase 8
+- Cwd: `D:\ConficturaUO`
+- Command: `git diff --check -- docs/codebase-audit/PHASE_STATUS.md docs/codebase-audit/RUN_LOG.md docs/codebase-audit/outputs/README.md docs/codebase-audit/tools/New-DependencyGraph.ps1`
+- Result: No whitespace errors; Git reported expected LF-to-CRLF checkout warnings for touched text files.
+- Output path: `docs/codebase-audit/RUN_LOG.md`
+
+### 2026-06-05T17:54:00.0000000-05:00
+
+- Affected phase: Phase 8
+- Cwd: `D:\ConficturaUO`
+- Command: `(Import-Csv -LiteralPath docs/codebase-audit/outputs/dependency-graph.csv | Measure-Object).Count`
+- Result: Returned `30063`, matching the Phase 8 summary.
+- Output path: `docs/codebase-audit/outputs/dependency-graph.csv`
+
+### 2026-06-05T17:54:00.0000000-05:00
+
+- Affected phase: Phase 8
+- Cwd: `D:\ConficturaUO`
+- Command: `(Import-Csv -LiteralPath docs/codebase-audit/outputs/phase-08-standalone-proof-list.csv | Measure-Object).Count`
+- Result: Returned `27`, matching the Phase 8 summary.
+- Output path: `docs/codebase-audit/outputs/phase-08-standalone-proof-list.csv`
+
+### 2026-06-05T17:54:00.0000000-05:00
+
+- Affected phase: Phase 8
+- Cwd: `D:\ConficturaUO`
+- Command: `git status --short --ignored=matching docs/codebase-audit`
+- Result: Showed modified audit metadata/index files, untracked Phase 8 generator, and ignored Phase 8 outputs; no source, project, wiki page, or serialized files changed.
+- Output path: `docs/codebase-audit/RUN_LOG.md`
+
+### 2026-06-05T17:55:00.0000000-05:00
+
+- Affected phase: Phase 8
+- Cwd: `D:\ConficturaUO`
+- Command: `git add -f -- docs/codebase-audit/PHASE_STATUS.md docs/codebase-audit/RUN_LOG.md docs/codebase-audit/outputs/README.md docs/codebase-audit/tools/New-DependencyGraph.ps1 docs/codebase-audit/outputs/dependency-graph.csv docs/codebase-audit/outputs/phase-08-dependency-graph.csv docs/codebase-audit/outputs/phase-08-hard-dependency-list.csv docs/codebase-audit/outputs/phase-08-soft-dependency-list.csv docs/codebase-audit/outputs/phase-08-conflict-edge-list.csv docs/codebase-audit/outputs/phase-08-standalone-proof-list.csv docs/codebase-audit/outputs/phase-08-summary.md`
+- Result: Staged only Phase 8 audit metadata, generator, and generated outputs; Git reported expected LF-to-CRLF checkout warnings.
+- Output path: `docs/codebase-audit/RUN_LOG.md`
+
+### 2026-06-05T17:55:00.0000000-05:00
+
+- Affected phase: Phase 8
+- Cwd: `D:\ConficturaUO`
+- Command: `git diff --cached --check`
+- Result: No output; staged Phase 8 batch passed whitespace verification.
+- Output path: `docs/codebase-audit/RUN_LOG.md`
+
+### 2026-06-05T17:55:00.0000000-05:00
+
+- Affected phase: Phase 8
+- Cwd: `D:\ConficturaUO`
+- Command: `git diff --cached --name-only`
+- Result: Staged files were the Phase 8 dependency graph generator, canonical graph, phase graph, hard/soft/conflict/standalone outputs, summary, `PHASE_STATUS.md`, `RUN_LOG.md`, and `outputs/README.md`.
 - Output path: `docs/codebase-audit/RUN_LOG.md`

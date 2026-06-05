@@ -89,7 +89,14 @@ Raw command output may remain temporary when it is easy to regenerate. Curated t
 | `phase-07-source-trace-coverage-report.csv` | Phase 7 | Source-trace coverage grouped by wiki index category. | Complete |
 | `phase-07-summary.md` | Phase 7 | Summarize Phase 7 inputs, generated outputs, coverage counts, and exit criteria. | Complete |
 | `documentation-truth-table.*` | Phase 7 | Classify docs as canonical, alias, stale, partial, or verified with source traces. | Complete |
-| `dependency-graph.*` | Phase 8 | Record source-verified hard, soft, speculative, docs-only, and conflict edges between systems. | NotStarted |
+| `dependency-graph.csv` | Phase 8 | Canonical dependency graph across source references, runtime hooks, serialization, project includes, config, docs-only links, and conflicts. | Complete |
+| `phase-08-dependency-graph.csv` | Phase 8 | Phase-scoped copy of the dependency graph. | Complete |
+| `phase-08-hard-dependency-list.csv` | Phase 8 | Hard source, runtime, serialization, project, and config dependency edges. | Complete |
+| `phase-08-soft-dependency-list.csv` | Phase 8 | Soft or speculative documentation/config relationships. | Complete |
+| `phase-08-conflict-edge-list.csv` | Phase 8 | Conflict, mismatch, duplicate, or manual-review dependency edges. | Complete |
+| `phase-08-standalone-proof-list.csv` | Phase 8 | Negative-evidence standalone proof table for system-card systems. | Complete |
+| `phase-08-summary.md` | Phase 8 | Summarize Phase 8 inputs, outputs, edge counts, strength counts, and exit criteria. | Complete |
+| `dependency-graph.*` | Phase 8 | Record source-verified hard, soft, speculative, docs-only, and conflict edges between systems. | Complete |
 | `synergy-conflict-matrix.*` | Phase 9 | Classify gameplay, balance, maintenance, and documentation relationships between systems. | NotStarted |
 | `risk-track-findings.*` | Phase 10 | Store findings, non-issues, accepted risks, and follow-up work from specialized review tracks. | NotStarted |
 | `comment-target-register.*` | Phase 11 | Track approved and rejected inline source-comment targets. | NotStarted |
@@ -100,4 +107,4 @@ Raw command output may remain temporary when it is easy to regenerate. Curated t
 
 ## Initial State
 
-The Phase 0 baseline output, Phase 1 reproducible inventory outputs, Phase 2 project truth outputs, Phase 3 runtime inventory outputs, Phase 4 system cards, Phase 5 runtime hook map outputs, Phase 6 serialization/save-compatibility outputs, and Phase 7 documentation truth outputs have been generated. Continue through the phase gates in order, starting with Phase 8 dependency graph after the Phase 7 batch is committed.
+The Phase 0 baseline output, Phase 1 reproducible inventory outputs, Phase 2 project truth outputs, Phase 3 runtime inventory outputs, Phase 4 system cards, Phase 5 runtime hook map outputs, Phase 6 serialization/save-compatibility outputs, Phase 7 documentation truth outputs, and Phase 8 dependency graph outputs have been generated. Continue through the phase gates in order, starting with Phase 9 synergy and conflict matrix after the Phase 8 batch is committed.
