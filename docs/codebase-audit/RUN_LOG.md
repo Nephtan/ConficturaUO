@@ -2,181 +2,156 @@
 
 Initialized: 2026-06-05T16:15:59.8020730-05:00
 
+Last updated: 2026-06-05T16:27:58.9513512-05:00
+
 Branch: `SAR`
 
-Current HEAD: `b52f9c54 docs: complete development history coverage`
+Current HEAD at Phase 0 baseline: `86659bba First commit of the Systems Audit and Reorganization branch.`
 
-Scope: Initial phase runner state creation. No source files were edited.
+Scope: Phase 0 baseline and guardrails. No source files, project files, serialized types, or runtime hooks were changed.
 
 ## Worktree Baseline
 
-Initial `git status --short` was dirty before these state files were created.
+`git status --short` returned no output before Phase 0 edits, so there were no pre-existing user-owned, audit-related, generated, or unknown changes to classify for this batch.
 
 | Path | Status | Classification | Action |
 | --- | --- | --- | --- |
-| `AGENTS.md` | Modified | Pre-existing user-owned instruction change | Leave untouched |
-| `CODEBASE_SYSTEMS_AUDIT_AND_REORG_PLAN.md` | Added | Pre-existing audit-related plan file | Read only |
-| `docs/codebase-audit-phases/phase-00-baseline-and-guardrails.md` | Added | Pre-existing audit-related phase file | Read only |
-| `docs/codebase-audit-phases/phase-01-reproducible-inventory-scripts.md` | Added | Pre-existing audit-related phase file | Read only |
-| `docs/codebase-audit-phases/phase-02-build-and-project-truth.md` | Added | Pre-existing audit-related phase file | Read only |
-| `docs/codebase-audit-phases/phase-03-cross-tree-runtime-inventory.md` | Added | Pre-existing audit-related phase file | Read only |
-| `docs/codebase-audit-phases/phase-04-system-cards.md` | Added | Pre-existing audit-related phase file | Read only |
-| `docs/codebase-audit-phases/phase-05-runtime-hook-map.md` | Added | Pre-existing audit-related phase file | Read only |
-| `docs/codebase-audit-phases/phase-06-serialization-and-save-compatibility.md` | Added | Pre-existing audit-related phase file | Read only |
-| `docs/codebase-audit-phases/phase-07-documentation-truth-audit.md` | Added | Pre-existing audit-related phase file | Read only |
-| `docs/codebase-audit-phases/phase-08-dependency-graph.md` | Added | Pre-existing audit-related phase file | Read only |
-| `docs/codebase-audit-phases/phase-09-synergy-and-conflict-matrix.md` | Added | Pre-existing audit-related phase file | Read only |
-| `docs/codebase-audit-phases/phase-10-risk-specific-code-review-tracks.md` | Added | Pre-existing audit-related phase file | Read only |
-| `docs/codebase-audit-phases/phase-11-inline-code-documentation.md` | Added | Pre-existing audit-related phase file | Read only |
-| `docs/codebase-audit-phases/phase-12-reorganization-design.md` | Added | Pre-existing audit-related phase file | Read only |
-| `docs/codebase-audit-phases/phase-13-repair-backlog.md` | Added | Pre-existing audit-related phase file | Read only |
-| `docs/codebase-audit-phases/phase-14-verification-and-commit-workflow.md` | Added | Pre-existing audit-related phase file | Read only |
+| None | Clean | Not applicable | Proceed with Phase 0 audit-state edits only |
 
 ## Command Log
 
 ### 2026-06-05T16:15:59.8020730-05:00
 
-- Affected phase: Phase 0 initialization
+- Affected phase: Phase 0
 - Cwd: `D:\ConficturaUO`
 - Command: `git status --short`
-- Result: Dirty worktree recorded; pre-existing `AGENTS.md` modification and audit plan/phase additions do not overlap requested state files.
+- Result: No output; worktree clean before Phase 0 edits.
+- Output path: `docs/codebase-audit/outputs/phase-00-baseline.md`
 
 ### 2026-06-05T16:15:59.8020730-05:00
 
-- Affected phase: Phase 0 initialization
-- Cwd: `D:\ConficturaUO`
-- Command: `rg --files -g AGENTS.md`
-- Result: Root and nested instruction files located. No `docs/codebase-audit/AGENTS.md` was present, so root instructions govern the created files.
-
-### 2026-06-05T16:15:59.8020730-05:00
-
-- Affected phase: Phase 0 initialization
-- Cwd: `D:\ConficturaUO`
-- Command: `rg --files CODEBASE_SYSTEMS_AUDIT_AND_REORG_PLAN.md docs/codebase-audit-phases`
-- Result: Found root plan file and phase files `phase-00` through `phase-14` under `docs/codebase-audit-phases/`.
-
-### 2026-06-05T16:15:59.8020730-05:00
-
-- Affected phase: Phase 0 initialization
-- Cwd: `D:\ConficturaUO`
-- Command: `Get-Content -Raw -LiteralPath CODEBASE_SYSTEMS_AUDIT_AND_REORG_PLAN.md`
-- Result: Root audit and reorganization plan read.
-
-### 2026-06-05T16:15:59.8020730-05:00
-
-- Affected phase: Phase 0 initialization
-- Cwd: `D:\ConficturaUO`
-- Command: `Get-ChildItem -LiteralPath docs/codebase-audit-phases -Filter *.md | Sort-Object Name | ForEach-Object { '{0}`t{1}' -f $_.FullName, (Get-Content -LiteralPath $_.FullName | Measure-Object -Line).Lines }`
-- Result: Confirmed line counts for all 15 phase files.
-
-### 2026-06-05T16:15:59.8020730-05:00
-
-- Affected phase: Phase 0 initialization
-- Cwd: `D:\ConficturaUO`
-- Command: `Get-ChildItem -LiteralPath docs/codebase-audit-phases -Filter *.md | Sort-Object Name | Select-Object -ExpandProperty FullName`
-- Result: Listed all phase files in order.
-
-### 2026-06-05T16:15:59.8020730-05:00
-
-- Affected phase: Phase 0 initialization
-- Cwd: `D:\ConficturaUO`
-- Command: `Get-ChildItem -LiteralPath docs/codebase-audit-phases -Filter 'phase-0[0-7]-*.md' | Sort-Object Name | ForEach-Object { '### ' + $_.Name; Get-Content -Raw -LiteralPath $_.FullName }`
-- Result: No files matched because PowerShell `-Filter` did not treat the bracket range as intended.
-
-### 2026-06-05T16:15:59.8020730-05:00
-
-- Affected phase: Phase 0 initialization
-- Cwd: `D:\ConficturaUO`
-- Command: `Get-ChildItem -LiteralPath docs/codebase-audit-phases -Filter 'phase-0[8-9]-*.md' | Sort-Object Name | ForEach-Object { '### ' + $_.Name; Get-Content -Raw -LiteralPath $_.FullName }`
-- Result: No files matched because PowerShell `-Filter` did not treat the bracket range as intended.
-
-### 2026-06-05T16:15:59.8020730-05:00
-
-- Affected phase: Phase 0 initialization
-- Cwd: `D:\ConficturaUO`
-- Command: `Get-ChildItem -LiteralPath docs/codebase-audit-phases -Filter 'phase-1[0-4]-*.md' | Sort-Object Name | ForEach-Object { '### ' + $_.Name; Get-Content -Raw -LiteralPath $_.FullName }`
-- Result: No files matched because PowerShell `-Filter` did not treat the bracket range as intended.
-
-### 2026-06-05T16:15:59.8020730-05:00
-
-- Affected phase: Phase 0 initialization
-- Cwd: `D:\ConficturaUO`
-- Command: `Get-ChildItem -LiteralPath docs/codebase-audit-phases -Filter *.md | Where-Object { $_.Name -match '^phase-0[0-7]-' } | Sort-Object Name | ForEach-Object { '### ' + $_.Name; Get-Content -Raw -LiteralPath $_.FullName }`
-- Result: Read phase files `phase-00` through `phase-07`.
-
-### 2026-06-05T16:15:59.8020730-05:00
-
-- Affected phase: Phase 0 initialization
-- Cwd: `D:\ConficturaUO`
-- Command: `Get-ChildItem -LiteralPath docs/codebase-audit-phases -Filter *.md | Where-Object { $_.Name -match '^phase-0[8-9]-' } | Sort-Object Name | ForEach-Object { '### ' + $_.Name; Get-Content -Raw -LiteralPath $_.FullName }`
-- Result: Read phase files `phase-08` and `phase-09`.
-
-### 2026-06-05T16:15:59.8020730-05:00
-
-- Affected phase: Phase 0 initialization
-- Cwd: `D:\ConficturaUO`
-- Command: `Get-ChildItem -LiteralPath docs/codebase-audit-phases -Filter *.md | Where-Object { $_.Name -match '^phase-1[0-4]-' } | Sort-Object Name | ForEach-Object { '### ' + $_.Name; Get-Content -Raw -LiteralPath $_.FullName }`
-- Result: Read phase files `phase-10` through `phase-14`.
-
-### 2026-06-05T16:15:59.8020730-05:00
-
-- Affected phase: Phase 0 initialization
+- Affected phase: Phase 0
 - Cwd: `D:\ConficturaUO`
 - Command: `git branch --show-current`
 - Result: Current branch is `SAR`.
+- Output path: `docs/codebase-audit/outputs/phase-00-baseline.md`
+
+### 2026-06-05T16:23:24.0000000-05:00
+
+- Affected phase: Phase 0
+- Cwd: `D:\ConficturaUO`
+- Command: `git log --oneline -5`
+- Result: Recent commits recorded: `86659bba`, `b52f9c54`, `721c8591`, `bdd893f5`, `5b5936fe`.
+- Output path: `docs/codebase-audit/outputs/phase-00-baseline.md`
 
 ### 2026-06-05T16:15:59.8020730-05:00
 
-- Affected phase: Phase 0 initialization
+- Affected phase: Phase 0
 - Cwd: `D:\ConficturaUO`
-- Command: `git log -1 --oneline`
-- Result: Current HEAD is `b52f9c54 docs: complete development history coverage`.
+- Command: `rg --files -g AGENTS.md`
+- Result: Root and nested instruction files located. No nested instruction file applies to `docs/codebase-audit/`, so root `AGENTS.md` governs this batch.
+- Output path: `docs/codebase-audit/outputs/phase-00-baseline.md`
+
+### 2026-06-05T16:28:30.0000000-05:00
+
+- Affected phase: Phase 0
+- Cwd: `D:\ConficturaUO`
+- Command: `Get-Content -Raw -LiteralPath AGENTS.md`
+- Result: Root instructions read from disk; audit phase-runner, save-compatibility, project-file, source-root, documentation, and git rules confirmed.
+- Output path: `docs/codebase-audit/outputs/phase-00-baseline.md`
 
 ### 2026-06-05T16:15:59.8020730-05:00
 
-- Affected phase: Phase 0 initialization
+- Affected phase: Phase 0
 - Cwd: `D:\ConficturaUO`
-- Command: `Test-Path -LiteralPath ConficturaUO.sln; Test-Path -LiteralPath Data/System/Source/Server.csproj; Test-Path -LiteralPath Data/Scripts/Scripts.csproj`
-- Result: All three expected solution/project files exist.
+- Command: `rg --files CODEBASE_SYSTEMS_AUDIT_AND_REORG_PLAN.md docs/codebase-audit-phases`
+- Result: Found root audit plan and detailed phase files `phase-00` through `phase-14`.
+- Output path: `docs/codebase-audit/outputs/phase-00-baseline.md`
 
-### 2026-06-05T16:15:59.8020730-05:00
+### 2026-06-05T16:20:00.0000000-05:00
 
-- Affected phase: Phase 0 initialization
+- Affected phase: Phase 0
 - Cwd: `D:\ConficturaUO`
-- Command: `New-Item -ItemType Directory -Force -Path docs/codebase-audit/outputs`
-- Result: Created or confirmed `docs/codebase-audit/outputs/`.
+- Command: `Get-Content -Raw -LiteralPath CODEBASE_SYSTEMS_AUDIT_AND_REORG_PLAN.md`
+- Result: Root audit and reorganization plan read.
+- Output path: `docs/codebase-audit/outputs/phase-00-baseline.md`
 
-### 2026-06-05T16:15:59.8020730-05:00
+### 2026-06-05T16:20:00.0000000-05:00
 
-- Affected phase: Phase 0 initialization
+- Affected phase: Phase 0
 - Cwd: `D:\ConficturaUO`
-- Command: `apply_patch`
-- Result: Added `docs/codebase-audit/PHASE_STATUS.md`, `docs/codebase-audit/RUN_LOG.md`, and `docs/codebase-audit/outputs/README.md`.
+- Command: `Get-Content -Raw -LiteralPath docs/codebase-audit-phases/phase-00-baseline-and-guardrails.md`
+- Result: Phase 0 detailed plan read; required inputs, outputs, subphases, and exit criteria recorded in the Phase 0 output.
+- Output path: `docs/codebase-audit/outputs/phase-00-baseline.md`
 
-### 2026-06-05T16:19:22.4429845-05:00
+### 2026-06-05T16:20:00.0000000-05:00
 
-- Affected phase: Phase 0 initialization
+- Affected phase: Phase 0
 - Cwd: `D:\ConficturaUO`
-- Command: `Test-Path -LiteralPath docs/codebase-audit/PHASE_STATUS.md; Test-Path -LiteralPath docs/codebase-audit/RUN_LOG.md; Test-Path -LiteralPath docs/codebase-audit/outputs/README.md`
-- Result: All three requested files exist.
+- Command: `Get-Content -Raw -LiteralPath docs/codebase-audit-phases/phase-01-reproducible-inventory-scripts.md` through `docs/codebase-audit-phases/phase-14-verification-and-commit-workflow.md`
+- Result: Phase plans 1 through 14 read before starting Phase 0 edits, preserving the requested phase order and dependency chain.
+- Output path: `docs/codebase-audit/PHASE_STATUS.md`
 
-### 2026-06-05T16:19:22.4429845-05:00
+### 2026-06-05T16:23:24.0000000-05:00
 
-- Affected phase: Phase 0 initialization
+- Affected phase: Phase 0
 - Cwd: `D:\ConficturaUO`
-- Command: `(Select-String -LiteralPath docs/codebase-audit/PHASE_STATUS.md -Pattern '^\| Phase [0-9]' | Measure-Object).Count`
-- Result: `PHASE_STATUS.md` contains 15 phase rows.
+- Command: `where.exe msbuild`
+- Result: No `msbuild` found on `PATH`.
+- Output path: `docs/codebase-audit/outputs/phase-00-baseline.md`
 
-### 2026-06-05T16:19:22.4429845-05:00
+### 2026-06-05T16:26:20.0000000-05:00
 
-- Affected phase: Phase 0 initialization
+- Affected phase: Phase 0
 - Cwd: `D:\ConficturaUO`
-- Command: `Get-ChildItem -LiteralPath docs/codebase-audit -Recurse -File | Select-String -Pattern '[ \t]+$'`
-- Result: No trailing whitespace matches found in the new audit state files.
+- Command: `$vswhere = Join-Path ${env:ProgramFiles(x86)} 'Microsoft Visual Studio\Installer\vswhere.exe'; if (Test-Path -LiteralPath $vswhere) { & $vswhere -latest -requires Microsoft.Component.MSBuild -find 'MSBuild\**\Bin\MSBuild.exe' } else { 'vswhere not found: ' + $vswhere }`
+- Result: Visual Studio MSBuild found at `C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\MSBuild.exe`.
+- Output path: `docs/codebase-audit/outputs/phase-00-baseline.md`
 
-### 2026-06-05T16:19:22.4429845-05:00
+### 2026-06-05T16:26:20.0000000-05:00
 
-- Affected phase: Phase 0 initialization
+- Affected phase: Phase 0
 - Cwd: `D:\ConficturaUO`
-- Command: `git status --short`
-- Result: Pre-existing `AGENTS.md` modification and staged audit plan/phase additions remain; new `docs/codebase-audit/` files are untracked.
+- Command: `Get-Content -LiteralPath ConficturaUO.sln -TotalCount 70`
+- Result: Solution includes `Server`, `Scripts`, and `Solution Items`; `Scripts` declares a project dependency on `Server`; solution configurations and project mappings recorded.
+- Output path: `docs/codebase-audit/outputs/phase-00-baseline.md`
+
+### 2026-06-05T16:26:20.0000000-05:00
+
+- Affected phase: Phase 0
+- Cwd: `D:\ConficturaUO`
+- Command: `Get-Content -LiteralPath Data/System/Source/Server.csproj -TotalCount 55`
+- Result: `Server.csproj` targets .NET Framework v4.8, builds executable `ConficturaServer`, uses x86 platform target, and writes Debug output to the repository root.
+- Output path: `docs/codebase-audit/outputs/phase-00-baseline.md`
+
+### 2026-06-05T16:26:20.0000000-05:00
+
+- Affected phase: Phase 0
+- Cwd: `D:\ConficturaUO`
+- Command: `Get-Content -LiteralPath Data/Scripts/Scripts.csproj -TotalCount 45`
+- Result: `Scripts.csproj` targets .NET Framework v4.8, builds library `ClassLibrary`, defaults to AnyCPU, and writes Debug output to `Data/Scripts/`.
+- Output path: `docs/codebase-audit/outputs/phase-00-baseline.md`
+
+### 2026-06-05T16:23:24.0000000-05:00
+
+- Affected phase: Phase 0
+- Cwd: `D:\ConficturaUO`
+- Command: `Select-String -LiteralPath Data/System/Source/Server.csproj,Data/Scripts/Scripts.csproj -Pattern '<TargetFrameworkVersion>', '<PlatformTarget>', '<OutputPath>', '<AssemblyName>', '<ProjectReference'`
+- Result: Confirmed `Scripts.csproj` contains a `ProjectReference` to `..\System\Source\Server.csproj`.
+- Output path: `docs/codebase-audit/outputs/phase-00-baseline.md`
+
+### 2026-06-05T16:26:20.0000000-05:00
+
+- Affected phase: Phase 0
+- Cwd: `D:\ConficturaUO`
+- Command: `git status --short --untracked-files=all`
+- Result: No output before Phase 0 edits; ignored output file policy checked separately.
+- Output path: `docs/codebase-audit/RUN_LOG.md`
+
+### 2026-06-05T16:26:20.0000000-05:00
+
+- Affected phase: Phase 0
+- Cwd: `D:\ConficturaUO`
+- Command: `git check-ignore -v docs/codebase-audit/outputs/README.md`
+- Result: `docs/codebase-audit/outputs/` is ignored by `.git/info/exclude`; phase outputs must be force-staged when they are intended audit artifacts.
+- Output path: `docs/codebase-audit/RUN_LOG.md`
