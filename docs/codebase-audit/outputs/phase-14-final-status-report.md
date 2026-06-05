@@ -3,8 +3,8 @@
 | Field | Value |
 | --- | --- |
 | Generation HEAD | `f13d86de` |
-| Phase 14 content commit | Pending commit at generation time |
-| Phase 14 metadata commit | Pending commit at generation time |
+| Phase 14 content commit | `cbf808f6 docs: add final audit verification workflow` |
+| Phase 14 metadata commit | Pending final status-record commit |
 | Worktree status at generation | `See phase-14-worktree-status.md` |
 | Build verification | Not rerun for Phase 14 docs-only/generated-data batch; prior source-comment build attempt is recorded as blocked by known Phase 2 project include drift. |
 
@@ -18,7 +18,7 @@
 
 ## Verification Performed
 
-The run log records exact commands and results. The intended final verification set is listed in `phase-14-verification-plan.csv` and summarized in `phase-14-verification-notes.md`.
+The run log records exact commands and results. The final verification set is listed in `phase-14-verification-plan.csv` and summarized in `phase-14-verification-notes.md`. The Phase 14 content batch passed trailing-whitespace, `git diff --check`, staged diff, and focused file-list checks before commit.
 
 ## Verification Not Performed
 
