@@ -2,11 +2,11 @@
 
 Initialized: 2026-06-05T16:15:59.8020730-05:00
 
-Last updated: 2026-06-05T17:08:00.0000000-05:00
+Last updated: 2026-06-05T17:11:00.0000000-05:00
 
 Branch: `SAR`
 
-Current HEAD: `c81b6440 docs: record audit phase 4 commit`
+Current HEAD: `c5bba2fa docs: add runtime hook map`
 
 Scope: Deterministic phase runner log for the Confictura codebase audit and reorganization program. No source files, project files, serialized types, or runtime hooks have been changed by the audit batches so far.
 
@@ -626,4 +626,20 @@ Scope: Deterministic phase runner log for the Confictura codebase audit and reor
 - Cwd: `D:\ConficturaUO`
 - Command: `git diff --cached --name-only`
 - Result: Staged files were the Phase 5 generator, runtime hook map outputs, focused registers, summary, `PHASE_STATUS.md`, `RUN_LOG.md`, and `outputs/README.md`.
+- Output path: `docs/codebase-audit/RUN_LOG.md`
+
+### 2026-06-05T17:10:00.0000000-05:00
+
+- Affected phase: Phase 5
+- Cwd: `D:\ConficturaUO`
+- Command: `git commit -m "docs: add runtime hook map"`
+- Result: Created commit `c5bba2fa docs: add runtime hook map`.
+- Output path: `docs/codebase-audit/PHASE_STATUS.md`
+
+### 2026-06-05T17:10:00.0000000-05:00
+
+- Affected phase: Phase 5
+- Cwd: `D:\ConficturaUO`
+- Command: `git status --short`
+- Result: No output; worktree clean after Phase 5 content commit and before Phase 5 metadata update.
 - Output path: `docs/codebase-audit/RUN_LOG.md`
