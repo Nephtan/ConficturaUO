@@ -4541,6 +4541,9 @@ namespace Server.Mobiles
             base.Deserialize(reader);
             int version = reader.ReadInt();
 
+            // Save format: this fall-through mirrors Serialize below; PlayerMobile is a
+            // cross-system state hub, so preserve field order unless a migration covers
+            // every dependent system.
             switch (version)
             {
                 case 37:

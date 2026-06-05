@@ -114,6 +114,8 @@ namespace Server.Misc
         // It takes in two parameters: the mobile to calculate the level for, and the type of level to calculate
         public static double CalculateLevelForMobile(Mobile m, LevelType levelType)
         {
+            // Player encounters intentionally use CharacterLevelService; spawned mobiles
+            // keep legacy level math for old encounter tables and scale comparisons.
             if (m is PlayerMobile)
                 return CharacterLevelService.GetEncounterLevel(m, levelType);
 

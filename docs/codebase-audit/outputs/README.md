@@ -115,7 +115,13 @@ Raw command output may remain temporary when it is easy to regenerate. Curated t
 | `phase-10-pooled-enumerable-review.csv` | Phase 10 | Source-scan rows for range scans and pooled enumerable ownership. | Complete |
 | `phase-10-track-coverage.csv` | Phase 10 | Per-track reviewed row, finding, backlog, non-issue, accepted-risk, and comment-target counts. | Complete |
 | `phase-10-summary.md` | Phase 10 | Summarize Phase 10 inputs, outputs, severity counts, track counts, and exit criteria. | Complete |
-| `comment-target-register.*` | Phase 11 | Track approved and rejected inline source-comment targets. | NotStarted |
+| `comment-target-register.csv` | Phase 11 | Canonical reviewed comment target register with approval, rejection, and deferral decisions. | Complete |
+| `phase-11-reviewed-comment-targets.csv` | Phase 11 | Phase-scoped reviewed target list. | Complete |
+| `phase-11-approved-comment-targets.csv` | Phase 11 | Approved targets whose comments were applied in source. | Complete |
+| `phase-11-rejected-comment-list.csv` | Phase 11 | Rejected or deferred comment targets with reasons. | Complete |
+| `phase-11-source-comment-edits.csv` | Phase 11 | Source comment edits applied in this phase. | Complete |
+| `phase-11-verification-notes.md` | Phase 11 | Verification notes, source comment evidence, rejection policy, and build caveat. | Complete |
+| `phase-11-summary.md` | Phase 11 | Summarize Phase 11 inputs, outputs, decisions, and exit criteria. | Complete |
 | `reorganization-design.*` | Phase 12 | Propose target layout, moves, keep-in-place decisions, project updates, docs updates, save risk, and rollback plans. | NotStarted |
 | `repair-backlog.*` | Phase 13 | Convert findings into prioritized actionable repair items. | NotStarted |
 | `accepted-risk-register.*` | Phase 13 | Record explicitly accepted risks with evidence and rationale. | NotStarted |
@@ -123,4 +129,4 @@ Raw command output may remain temporary when it is easy to regenerate. Curated t
 
 ## Initial State
 
-The Phase 0 baseline output, Phase 1 reproducible inventory outputs, Phase 2 project truth outputs, Phase 3 runtime inventory outputs, Phase 4 system cards, Phase 5 runtime hook map outputs, Phase 6 serialization/save-compatibility outputs, Phase 7 documentation truth outputs, Phase 8 dependency graph outputs, Phase 9 synergy/conflict outputs, and Phase 10 risk-specific review outputs have been generated. Continue through the phase gates in order, starting with Phase 11 inline code documentation after the Phase 10 batch is committed.
+The Phase 0 baseline output, Phase 1 reproducible inventory outputs, Phase 2 project truth outputs, Phase 3 runtime inventory outputs, Phase 4 system cards, Phase 5 runtime hook map outputs, Phase 6 serialization/save-compatibility outputs, Phase 7 documentation truth outputs, Phase 8 dependency graph outputs, Phase 9 synergy/conflict outputs, Phase 10 risk-specific review outputs, and Phase 11 inline code documentation outputs have been generated. Continue through the phase gates in order, starting with Phase 12 reorganization design after the Phase 11 batch is committed.

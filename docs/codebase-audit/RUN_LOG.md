@@ -1499,3 +1499,163 @@ Scope: Deterministic phase runner log for the Confictura codebase audit and reor
 - Command: `git status --short`
 - Result: No output; worktree clean after Phase 10 content commit and before Phase 10 metadata update.
 - Output path: `docs/codebase-audit/RUN_LOG.md`
+
+### 2026-06-05T18:22:00.0000000-05:00
+
+- Affected phase: Phase 11
+- Cwd: `D:\ConficturaUO`
+- Command: `git status --short`
+- Result: No output; worktree clean before Phase 11 edits.
+- Output path: `docs/codebase-audit/RUN_LOG.md`
+
+### 2026-06-05T18:22:00.0000000-05:00
+
+- Affected phase: Phase 11
+- Cwd: `D:\ConficturaUO`
+- Command: `git rev-parse --short HEAD`
+- Result: Returned `cfdac941`, the Phase 10 metadata commit.
+- Output path: `docs/codebase-audit/PHASE_STATUS.md`
+
+### 2026-06-05T18:22:00.0000000-05:00
+
+- Affected phase: Phase 11
+- Cwd: `D:\ConficturaUO`
+- Command: `rg --files -g AGENTS.md`
+- Result: Re-read instruction scopes before Phase 11 edits; root instructions apply to the edited source files, with no more-specific `AGENTS.md` in their directories.
+- Output path: `docs/codebase-audit/RUN_LOG.md`
+
+### 2026-06-05T18:22:00.0000000-05:00
+
+- Affected phase: Phase 11
+- Cwd: `D:\ConficturaUO`
+- Command: `Get-Content -LiteralPath docs/codebase-audit-phases/phase-11-inline-code-documentation.md`
+- Result: Confirmed required inputs, outputs, comment target table, seven subphases, review checklist, and exit criteria.
+- Output path: `docs/codebase-audit/outputs/phase-11-summary.md`
+
+### 2026-06-05T18:24:00.0000000-05:00
+
+- Affected phase: Phase 11
+- Cwd: `D:\ConficturaUO`
+- Command: `apply_patch`
+- Result: Added two source comments: one warning that `PlayerMobile.Deserialize` version fall-through mirrors `Serialize`, and one explaining why Random Encounters uses `CharacterLevelService` for players while preserving legacy mobile level math.
+- Output path: `Data/Scripts/Mobiles/Base/PlayerMobile.cs`; `Data/Scripts/Custom/RandomEncounters/Helpers.cs`
+
+### 2026-06-05T18:26:00.0000000-05:00
+
+- Affected phase: Phase 11
+- Cwd: `D:\ConficturaUO`
+- Command: `& .\docs\codebase-audit\tools\New-CommentTargetRegister.ps1`
+- Result: Generated 3,739 reviewed comment targets, 2 approved/applied targets, 3,737 rejected or deferred targets, and 2 source comment edit records.
+- Output path: `docs/codebase-audit/outputs/phase-11-summary.md`
+
+### 2026-06-05T18:26:00.0000000-05:00
+
+- Affected phase: Phase 11
+- Cwd: `D:\ConficturaUO`
+- Command: `Import-Csv -LiteralPath docs/codebase-audit/outputs/phase-11-approved-comment-targets.csv | Format-List`
+- Result: Spot check showed approved applied targets for `Data/Scripts/Mobiles/Base/PlayerMobile.cs` line 4544 and `Data/Scripts/Custom/RandomEncounters/Helpers.cs` line 117.
+- Output path: `docs/codebase-audit/outputs/phase-11-approved-comment-targets.csv`
+
+### 2026-06-05T18:26:00.0000000-05:00
+
+- Affected phase: Phase 11
+- Cwd: `D:\ConficturaUO`
+- Command: `Import-Csv -LiteralPath docs/codebase-audit/outputs/comment-target-register.csv | Group-Object Decision | Sort-Object Count -Descending | Select-Object Count,Name | Format-Table -AutoSize`
+- Result: Decision counts were `ApprovedApplied=2`, `DeferredGenericSerializationDraft=3104`, `DeferredRepairNeeded=408`, `DeferredGenericHookDraft=206`, `DeferredNeedsSourceReview=16`, and `RejectedExistingComment=3`.
+- Output path: `docs/codebase-audit/outputs/comment-target-register.csv`
+
+### 2026-06-05T18:27:00.0000000-05:00
+
+- Affected phase: Phase 11
+- Cwd: `D:\ConficturaUO`
+- Command: `Get-ChildItem -LiteralPath docs/codebase-audit -Recurse -File | Select-String -Pattern '[ \t]+$'`
+- Result: No output; no trailing whitespace matches found in audit files.
+- Output path: `docs/codebase-audit/RUN_LOG.md`
+
+### 2026-06-05T18:27:00.0000000-05:00
+
+- Affected phase: Phase 11
+- Cwd: `D:\ConficturaUO`
+- Command: `git diff --check -- Data/Scripts/Mobiles/Base/PlayerMobile.cs Data/Scripts/Custom/RandomEncounters/Helpers.cs docs/codebase-audit/tools/New-CommentTargetRegister.ps1 docs/codebase-audit/outputs/README.md docs/codebase-audit/PHASE_STATUS.md docs/codebase-audit/RUN_LOG.md`
+- Result: No whitespace errors; Git reported expected LF-to-CRLF checkout warnings for touched source files.
+- Output path: `docs/codebase-audit/RUN_LOG.md`
+
+### 2026-06-05T18:27:00.0000000-05:00
+
+- Affected phase: Phase 11
+- Cwd: `D:\ConficturaUO`
+- Command: `(Import-Csv -LiteralPath docs/codebase-audit/outputs/comment-target-register.csv | Measure-Object).Count`
+- Result: Returned `3739`, matching the Phase 11 summary.
+- Output path: `docs/codebase-audit/outputs/comment-target-register.csv`
+
+### 2026-06-05T18:27:00.0000000-05:00
+
+- Affected phase: Phase 11
+- Cwd: `D:\ConficturaUO`
+- Command: `(Import-Csv -LiteralPath docs/codebase-audit/outputs/phase-11-approved-comment-targets.csv | Measure-Object).Count`
+- Result: Returned `2`, matching the Phase 11 summary.
+- Output path: `docs/codebase-audit/outputs/phase-11-approved-comment-targets.csv`
+
+### 2026-06-05T18:27:00.0000000-05:00
+
+- Affected phase: Phase 11
+- Cwd: `D:\ConficturaUO`
+- Command: `(Import-Csv -LiteralPath docs/codebase-audit/outputs/phase-11-source-comment-edits.csv | Measure-Object).Count`
+- Result: Returned `2`, matching the Phase 11 summary.
+- Output path: `docs/codebase-audit/outputs/phase-11-source-comment-edits.csv`
+
+### 2026-06-05T18:28:00.0000000-05:00
+
+- Affected phase: Phase 11
+- Cwd: `D:\ConficturaUO`
+- Command: `msbuild ConficturaUO.sln /p:Configuration=Debug /p:Platform="Any CPU" /v:minimal`
+- Result: Failed because `msbuild` is not on PATH in this shell.
+- Output path: `docs/codebase-audit/outputs/phase-11-verification-notes.md`
+
+### 2026-06-05T18:28:00.0000000-05:00
+
+- Affected phase: Phase 11
+- Cwd: `D:\ConficturaUO`
+- Command: `& 'C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\MSBuild.exe' ConficturaUO.sln /p:Configuration=Debug /p:Platform="Any CPU" /v:minimal`
+- Result: Failed with the known Phase 2 `Scripts.csproj` missing compile target errors after building `ConficturaServer.exe`; this does not prove the comment-only source edits compile until project truth drift is repaired.
+- Output path: `docs/codebase-audit/outputs/phase-11-verification-notes.md`
+
+### 2026-06-05T18:28:00.0000000-05:00
+
+- Affected phase: Phase 11
+- Cwd: `D:\ConficturaUO`
+- Command: `git restore -- ConficturaServer.exe ConficturaServer.exe.config ConficturaServer.pdb`
+- Result: Restored generated build artifacts touched by the MSBuild verification attempt.
+- Output path: `docs/codebase-audit/RUN_LOG.md`
+
+### 2026-06-05T18:29:00.0000000-05:00
+
+- Affected phase: Phase 11
+- Cwd: `D:\ConficturaUO`
+- Command: `git status --short`
+- Result: Remaining changes were the two approved source-comment edits, Phase 11 audit metadata, generator, and generated outputs; generated build artifacts were restored.
+- Output path: `docs/codebase-audit/RUN_LOG.md`
+
+### 2026-06-05T18:29:00.0000000-05:00
+
+- Affected phase: Phase 11
+- Cwd: `D:\ConficturaUO`
+- Command: `git add -f -- Data/Scripts/Mobiles/Base/PlayerMobile.cs Data/Scripts/Custom/RandomEncounters/Helpers.cs docs/codebase-audit/PHASE_STATUS.md docs/codebase-audit/RUN_LOG.md docs/codebase-audit/outputs/README.md docs/codebase-audit/tools/New-CommentTargetRegister.ps1 docs/codebase-audit/outputs/comment-target-register.csv docs/codebase-audit/outputs/phase-11-reviewed-comment-targets.csv docs/codebase-audit/outputs/phase-11-approved-comment-targets.csv docs/codebase-audit/outputs/phase-11-rejected-comment-list.csv docs/codebase-audit/outputs/phase-11-source-comment-edits.csv docs/codebase-audit/outputs/phase-11-verification-notes.md docs/codebase-audit/outputs/phase-11-summary.md`
+- Result: Staged only Phase 11 source comments, audit metadata, generator, and generated outputs; Git reported expected LF-to-CRLF checkout warnings.
+- Output path: `docs/codebase-audit/RUN_LOG.md`
+
+### 2026-06-05T18:29:00.0000000-05:00
+
+- Affected phase: Phase 11
+- Cwd: `D:\ConficturaUO`
+- Command: `git diff --cached --check`
+- Result: No output; staged Phase 11 batch passed whitespace verification.
+- Output path: `docs/codebase-audit/RUN_LOG.md`
+
+### 2026-06-05T18:29:00.0000000-05:00
+
+- Affected phase: Phase 11
+- Cwd: `D:\ConficturaUO`
+- Command: `git diff --cached --name-only`
+- Result: Staged files were the two approved source-comment edits, Phase 11 comment-target generator, canonical comment target register, reviewed/approved/rejected/source-edit outputs, summary, verification notes, `PHASE_STATUS.md`, `RUN_LOG.md`, and `outputs/README.md`.
+- Output path: `docs/codebase-audit/RUN_LOG.md`
