@@ -2,11 +2,11 @@
 
 Initialized: 2026-06-05T16:15:59.8020730-05:00
 
-Last updated: 2026-06-05T16:38:00.0000000-05:00
+Last updated: 2026-06-05T16:41:00.0000000-05:00
 
 Branch: `SAR`
 
-Current HEAD: `87d75e24 docs: complete audit phase 0 baseline`
+Current HEAD: `37828cd7 docs: record audit phase 0 commit`
 
 Scope: Phase 0 baseline and guardrails. No source files, project files, serialized types, or runtime hooks were changed.
 
@@ -179,3 +179,75 @@ Scope: Phase 0 baseline and guardrails. No source files, project files, serializ
 - Command: `git commit -m "docs: complete audit phase 0 baseline"`
 - Result: Created commit `87d75e24 docs: complete audit phase 0 baseline`.
 - Output path: `docs/codebase-audit/PHASE_STATUS.md`
+
+### 2026-06-05T16:38:00.0000000-05:00
+
+- Affected phase: Phase 0
+- Cwd: `D:\ConficturaUO`
+- Command: `git commit -m "docs: record audit phase 0 commit"`
+- Result: Created commit `37828cd7 docs: record audit phase 0 commit`.
+- Output path: `docs/codebase-audit/PHASE_STATUS.md`
+
+### 2026-06-05T16:38:20.0000000-05:00
+
+- Affected phase: Phase 1
+- Cwd: `D:\ConficturaUO`
+- Command: `git status --short`
+- Result: No output; worktree clean before Phase 1 edits.
+- Output path: `docs/codebase-audit/outputs/phase-01-summary.md`
+
+### 2026-06-05T16:38:20.0000000-05:00
+
+- Affected phase: Phase 1
+- Cwd: `D:\ConficturaUO`
+- Command: `rg --files -g AGENTS.md`
+- Result: Instruction files rechecked before Phase 1 edits. No deeper instruction file applies to `docs/codebase-audit/tools/` or `docs/codebase-audit/outputs/`.
+- Output path: `docs/codebase-audit/outputs/phase-01-summary.md`
+
+### 2026-06-05T16:38:20.0000000-05:00
+
+- Affected phase: Phase 1
+- Cwd: `D:\ConficturaUO`
+- Command: `Get-Content -Raw -LiteralPath CODEBASE_SYSTEMS_AUDIT_AND_REORG_PLAN.md`
+- Result: Root audit plan re-read before Phase 1 edits.
+- Output path: `docs/codebase-audit/RUN_LOG.md`
+
+### 2026-06-05T16:38:20.0000000-05:00
+
+- Affected phase: Phase 1
+- Cwd: `D:\ConficturaUO`
+- Command: `Get-Content -Raw -LiteralPath docs/codebase-audit-phases/phase-01-reproducible-inventory-scripts.md`
+- Result: Phase 1 plan re-read; required inputs, outputs, and exit criteria used for the generator and summary.
+- Output path: `docs/codebase-audit/outputs/phase-01-summary.md`
+
+### 2026-06-05T16:38:36.9628575-05:00
+
+- Affected phase: Phase 1
+- Cwd: `D:\ConficturaUO`
+- Command: `.\docs\codebase-audit\tools\Invoke-CodebaseAuditInventory.ps1`
+- Result: Completed successfully. Generated 17 outputs; counted 6,700 audited source files, 6,571 script compile includes, 82 missing compile targets, 92 unincluded script sources, 6,604 runtime marker hits, 5,342 serializer-marker files, and 141 markdown docs.
+- Output path: `docs/codebase-audit/outputs/phase-01-summary.md`
+
+### 2026-06-05T16:40:00.0000000-05:00
+
+- Affected phase: Phase 1
+- Cwd: `D:\ConficturaUO`
+- Command: `Get-Content -LiteralPath docs/codebase-audit/outputs/phase-01-summary.md`
+- Result: Summary reviewed; generated outputs and reproduction command recorded.
+- Output path: `docs/codebase-audit/outputs/phase-01-summary.md`
+
+### 2026-06-05T16:40:00.0000000-05:00
+
+- Affected phase: Phase 1
+- Cwd: `D:\ConficturaUO`
+- Command: `Get-Content -LiteralPath docs/codebase-audit/outputs/phase-01-missing-compile-targets.csv -TotalCount 8`
+- Result: Spot check confirmed missing compile target rows use decoded paths and literal existence results.
+- Output path: `docs/codebase-audit/outputs/phase-01-missing-compile-targets.csv`
+
+### 2026-06-05T16:40:00.0000000-05:00
+
+- Affected phase: Phase 1
+- Cwd: `D:\ConficturaUO`
+- Command: `Get-Content -LiteralPath docs/codebase-audit/outputs/phase-01-unincluded-source-files.csv -TotalCount 8`
+- Result: Spot check confirmed unincluded source rows are real source files under `Data/Scripts`.
+- Output path: `docs/codebase-audit/outputs/phase-01-unincluded-source-files.csv`

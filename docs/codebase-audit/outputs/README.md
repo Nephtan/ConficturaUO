@@ -18,6 +18,23 @@ Raw command output may remain temporary when it is easy to regenerate. Curated t
 | Output | Phase | Purpose | Initial Status |
 | --- | --- | --- | --- |
 | `phase-00-baseline.md` | Phase 0 | Record worktree baseline, instruction scopes, build surface, source roots, risk boundaries, and the no-reorganization decision. | Complete |
+| `phase-01-summary.md` | Phase 1 | Summarize reproducible inventory generation, row counts, storage policy, and reproduction command. | Complete |
+| `phase-01-source-files.csv` | Phase 1 | List audited `.cs` files excluding generated output folders. | Complete |
+| `phase-01-project-files.csv` | Phase 1 | List solution and project files discovered by the inventory script. | Complete |
+| `phase-01-config-files.csv` | Phase 1 | List XML/config/data files under `Data`, excluding generated output folders. | Complete |
+| `phase-01-agents.csv` | Phase 1 | List instruction files and their directory scopes. | Complete |
+| `phase-01-project-includes.csv` | Phase 1 | Decode and resolve every `Scripts.csproj` `Compile Include` with literal path checks. | Complete |
+| `phase-01-missing-compile-targets.csv` | Phase 1 | List compile includes whose resolved file is missing. | Complete |
+| `phase-01-unincluded-source-files.csv` | Phase 1 | List real script source files absent from `Scripts.csproj`. | Complete |
+| `phase-01-namespace-type-inventory.csv` | Phase 1 | Record namespace and declared type markers for audited source files. | Complete |
+| `phase-01-runtime-marker-inventory.csv` | Phase 1 | Record runtime entry marker hits for initialization, commands, hooks, timers, gumps, and regions. | Complete |
+| `phase-01-command-registration-inventory.csv` | Phase 1 | Record command registration marker hits. | Complete |
+| `phase-01-event-packet-hook-inventory.csv` | Phase 1 | Record event, packet, timer, and world hook marker hits. | Complete |
+| `phase-01-serialization-marker-inventory.csv` | Phase 1 | Summarize serializer markers by source file. | Complete |
+| `phase-01-gump-inventory.csv` | Phase 1 | Record gump open and response marker hits. | Complete |
+| `phase-01-config-reference-inventory.csv` | Phase 1 | Record source string references to XML/config/text/json data files. | Complete |
+| `phase-01-documentation-inventory.csv` | Phase 1 | Record markdown source-trace, code-verified, needs-rework, slug, and link markers. | Complete |
+| `phase-01-duplicate-doc-slugs.csv` | Phase 1 | Record duplicate normalized documentation slugs. | Complete |
 | `project-truth-register.*` | Phase 2 | Compare real source files with `Scripts.csproj` compile entries. | NotStarted |
 | `cross-tree-runtime-inventory.*` | Phase 3 | Assign runtime role, owner, entry points, hooks, serialization, gumps, and config usage for source files. | NotStarted |
 | `system-cards/` | Phase 4 | Store one canonical engineering card per major system. | NotStarted |
@@ -35,4 +52,4 @@ Raw command output may remain temporary when it is easy to regenerate. Curated t
 
 ## Initial State
 
-The Phase 0 baseline output has been generated. Continue through the phase gates in order, starting with Phase 1 reproducible inventory scripts after the Phase 0 batch is committed.
+The Phase 0 baseline output and Phase 1 reproducible inventory outputs have been generated. Continue through the phase gates in order, starting with Phase 2 build and project truth after the Phase 1 batch is committed.
