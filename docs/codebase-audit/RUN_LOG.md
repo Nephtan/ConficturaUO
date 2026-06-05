@@ -2,11 +2,11 @@
 
 Initialized: 2026-06-05T16:15:59.8020730-05:00
 
-Last updated: 2026-06-05T17:29:00.0000000-05:00
+Last updated: 2026-06-05T17:37:00.0000000-05:00
 
 Branch: `SAR`
 
-Current HEAD: `63be46b2 docs: add serialization save compatibility register`
+Current HEAD: `50d95eb4 docs: record audit phase 6 commit`
 
 Scope: Deterministic phase runner log for the Confictura codebase audit and reorganization program. No source files, project files, serialized types, or runtime hooks have been changed by the audit batches so far.
 
@@ -810,4 +810,148 @@ Scope: Deterministic phase runner log for the Confictura codebase audit and reor
 - Cwd: `D:\ConficturaUO`
 - Command: `git status --short`
 - Result: No output; worktree clean after Phase 6 content commit and before Phase 6 metadata update.
+- Output path: `docs/codebase-audit/RUN_LOG.md`
+
+### 2026-06-05T17:29:00.0000000-05:00
+
+- Affected phase: Phase 6
+- Cwd: `D:\ConficturaUO`
+- Command: `git commit -m "docs: record audit phase 6 commit"`
+- Result: Created commit `50d95eb4 docs: record audit phase 6 commit`.
+- Output path: `docs/codebase-audit/PHASE_STATUS.md`
+
+### 2026-06-05T17:30:00.0000000-05:00
+
+- Affected phase: Phase 7
+- Cwd: `D:\ConficturaUO`
+- Command: `git status --short`
+- Result: No output; worktree clean before Phase 7 edits.
+- Output path: `docs/codebase-audit/RUN_LOG.md`
+
+### 2026-06-05T17:30:00.0000000-05:00
+
+- Affected phase: Phase 7
+- Cwd: `D:\ConficturaUO`
+- Command: `rg --files -g AGENTS.md`
+- Result: Rechecked instruction scopes before Phase 7 edits; Phase 7 edits are limited to `docs/codebase-audit/`, so only root instructions apply.
+- Output path: `docs/codebase-audit/PHASE_STATUS.md`
+
+### 2026-06-05T17:30:00.0000000-05:00
+
+- Affected phase: Phase 7
+- Cwd: `D:\ConficturaUO`
+- Command: `Get-Content -Raw -LiteralPath CODEBASE_SYSTEMS_AUDIT_AND_REORG_PLAN.md`
+- Result: Root audit plan re-read; documentation is treated as evidence until source-traced.
+- Output path: `docs/codebase-audit/outputs/phase-07-summary.md`
+
+### 2026-06-05T17:30:00.0000000-05:00
+
+- Affected phase: Phase 7
+- Cwd: `D:\ConficturaUO`
+- Command: `Get-Content -Raw -LiteralPath docs/codebase-audit-phases/phase-07-documentation-truth-audit.md`
+- Result: Phase 7 plan re-read; required inputs, outputs, subphase gates, and exit criteria used for documentation truth generation.
+- Output path: `docs/codebase-audit/outputs/phase-07-summary.md`
+
+### 2026-06-05T17:31:00.0000000-05:00
+
+- Affected phase: Phase 7
+- Cwd: `D:\ConficturaUO`
+- Command: `Test-Path -LiteralPath docs/wiki/INDEX.md`; `Test-Path -LiteralPath docs/SystemAudit.md`; `rg -n "backlog|Backlog|Needs Rework|TODO|Source Trace" docs -g "*.md"`
+- Result: Wiki index and SystemAudit exist; wiki backlog located at `docs/wiki/wikibacklog.md`; Source Trace appears only in `docs/wiki/PvP_Consent_System.md`.
+- Output path: `docs/codebase-audit/outputs/phase-07-summary.md`
+
+### 2026-06-05T17:35:57.1061209-05:00
+
+- Affected phase: Phase 7
+- Cwd: `D:\ConficturaUO`
+- Command: `.\docs\codebase-audit\tools\New-DocumentationTruthAudit.ps1`
+- Result: Completed successfully after tightening alias classification and source-path extraction. Generated 122 documentation rows, 105 canonical rows, 2 alias rows, 115 backlog rows, and 8 coverage rows.
+- Output path: `docs/codebase-audit/outputs/phase-07-summary.md`
+
+### 2026-06-05T17:36:00.0000000-05:00
+
+- Affected phase: Phase 7
+- Cwd: `D:\ConficturaUO`
+- Command: `Import-Csv -LiteralPath docs/codebase-audit/outputs/documentation-truth-table.csv | Where-Object { $_.DocPath -eq 'docs/wiki/PvP_Consent_System.md' } | Format-List DocPath,CanonicalPage,SourceTracePresent,RuntimeHooksCovered,SerializationCovered,CoverageStatus`
+- Result: PvP Consent spot-check is canonical, has source trace, maps runtime hooks and serialized classes from Phase 5/6 registers, and is `SourceTracePresent`.
+- Output path: `docs/codebase-audit/outputs/documentation-truth-table.csv`
+
+### 2026-06-05T17:36:00.0000000-05:00
+
+- Affected phase: Phase 7
+- Cwd: `D:\ConficturaUO`
+- Command: `Import-Csv -LiteralPath docs/codebase-audit/outputs/documentation-truth-table.csv | Where-Object { $_.DocPath -eq 'docs/wiki/Access_Level_Stone.md' } | Format-List DocPath,VerifiedSourceFiles,MissingSourceFiles,StaleClaims,MissingClaims`
+- Result: Access Level Stone spot-check confirms the source-path extractor no longer reports a false partial missing path; page remains backlogged for missing Source Trace.
+- Output path: `docs/codebase-audit/outputs/documentation-truth-table.csv`
+
+### 2026-06-05T17:36:00.0000000-05:00
+
+- Affected phase: Phase 7
+- Cwd: `D:\ConficturaUO`
+- Command: `Import-Csv -LiteralPath docs/codebase-audit/outputs/documentation-truth-table.csv | Group-Object CoverageStatus | Sort-Object Name | Format-Table -AutoSize`
+- Result: Coverage status counts reviewed: 1 source-traced page, 6 existing-backlog pages, 102 pages needing generated backlog, and 13 support docs.
+- Output path: `docs/codebase-audit/outputs/documentation-truth-table.csv`
+
+### 2026-06-05T17:37:00.0000000-05:00
+
+- Affected phase: Phase 7
+- Cwd: `D:\ConficturaUO`
+- Command: `Get-ChildItem -LiteralPath docs/codebase-audit -Recurse -File | Select-String -Pattern '[ \t]+$'`
+- Result: No output; no trailing whitespace matches found in audit files.
+- Output path: `docs/codebase-audit/RUN_LOG.md`
+
+### 2026-06-05T17:37:00.0000000-05:00
+
+- Affected phase: Phase 7
+- Cwd: `D:\ConficturaUO`
+- Command: `git diff --check -- docs/codebase-audit/PHASE_STATUS.md docs/codebase-audit/RUN_LOG.md docs/codebase-audit/outputs/README.md docs/codebase-audit/tools/New-DocumentationTruthAudit.ps1`
+- Result: No whitespace errors; Git reported expected LF-to-CRLF checkout warnings for touched text files.
+- Output path: `docs/codebase-audit/RUN_LOG.md`
+
+### 2026-06-05T17:37:00.0000000-05:00
+
+- Affected phase: Phase 7
+- Cwd: `D:\ConficturaUO`
+- Command: `(Import-Csv -LiteralPath docs/codebase-audit/outputs/documentation-truth-table.csv | Measure-Object).Count`
+- Result: Returned `122`, matching the Phase 7 summary.
+- Output path: `docs/codebase-audit/outputs/documentation-truth-table.csv`
+
+### 2026-06-05T17:37:00.0000000-05:00
+
+- Affected phase: Phase 7
+- Cwd: `D:\ConficturaUO`
+- Command: `(Import-Csv -LiteralPath docs/codebase-audit/outputs/phase-07-stale-claim-backlog.csv | Measure-Object).Count`
+- Result: Returned `115`, matching the Phase 7 summary.
+- Output path: `docs/codebase-audit/outputs/phase-07-stale-claim-backlog.csv`
+
+### 2026-06-05T17:37:00.0000000-05:00
+
+- Affected phase: Phase 7
+- Cwd: `D:\ConficturaUO`
+- Command: `git status --short --ignored=matching docs/codebase-audit`
+- Result: Showed modified audit metadata/index files, untracked Phase 7 generator, and ignored Phase 7 outputs; no wiki pages, source files, project files, or serialized files changed.
+- Output path: `docs/codebase-audit/RUN_LOG.md`
+
+### 2026-06-05T17:38:00.0000000-05:00
+
+- Affected phase: Phase 7
+- Cwd: `D:\ConficturaUO`
+- Command: `git add -f -- docs/codebase-audit/PHASE_STATUS.md docs/codebase-audit/RUN_LOG.md docs/codebase-audit/outputs/README.md docs/codebase-audit/tools/New-DocumentationTruthAudit.ps1 docs/codebase-audit/outputs/documentation-truth-table.csv docs/codebase-audit/outputs/phase-07-documentation-truth-table.csv docs/codebase-audit/outputs/phase-07-canonical-page-map.csv docs/codebase-audit/outputs/phase-07-alias-legacy-slug-map.csv docs/codebase-audit/outputs/phase-07-stale-claim-backlog.csv docs/codebase-audit/outputs/phase-07-source-trace-coverage-report.csv docs/codebase-audit/outputs/phase-07-summary.md`
+- Result: Staged only Phase 7 audit metadata, generator, and generated outputs; Git reported expected LF-to-CRLF checkout warnings.
+- Output path: `docs/codebase-audit/RUN_LOG.md`
+
+### 2026-06-05T17:38:00.0000000-05:00
+
+- Affected phase: Phase 7
+- Cwd: `D:\ConficturaUO`
+- Command: `git diff --cached --check`
+- Result: No output; staged Phase 7 batch passed whitespace verification.
+- Output path: `docs/codebase-audit/RUN_LOG.md`
+
+### 2026-06-05T17:38:00.0000000-05:00
+
+- Affected phase: Phase 7
+- Cwd: `D:\ConficturaUO`
+- Command: `git diff --cached --name-only`
+- Result: Staged files were the Phase 7 documentation truth generator, truth table, canonical map, alias map, stale-claim backlog, source-trace coverage report, summary, `PHASE_STATUS.md`, `RUN_LOG.md`, and `outputs/README.md`.
 - Output path: `docs/codebase-audit/RUN_LOG.md`
