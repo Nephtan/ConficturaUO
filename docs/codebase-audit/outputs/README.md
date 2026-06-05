@@ -35,7 +35,20 @@ Raw command output may remain temporary when it is easy to regenerate. Curated t
 | `phase-01-config-reference-inventory.csv` | Phase 1 | Record source string references to XML/config/text/json data files. | Complete |
 | `phase-01-documentation-inventory.csv` | Phase 1 | Record markdown source-trace, code-verified, needs-rework, slug, and link markers. | Complete |
 | `phase-01-duplicate-doc-slugs.csv` | Phase 1 | Record duplicate normalized documentation slugs. | Complete |
-| `project-truth-register.*` | Phase 2 | Compare real source files with `Scripts.csproj` compile entries. | NotStarted |
+| `phase-02-summary.md` | Phase 2 | Summarize project truth counts, outputs, and build verification status. | Complete |
+| `phase-02-project-truth-register.csv` | Phase 2 | Record one row per Scripts project include and one row per script source file. | Complete |
+| `phase-02-missing-compile-targets-classified.csv` | Phase 2 | Classify missing `Scripts.csproj` compile targets. | Complete |
+| `phase-02-unincluded-source-classified.csv` | Phase 2 | Classify real script source files absent from `Scripts.csproj`. | Complete |
+| `phase-02-intentional-noncompiled-source.csv` | Phase 2 | Record any files classified as generated, backup, old, or intentional non-compiled source. | Complete |
+| `phase-02-project-cleanup-backlog.csv` | Phase 2 | Group project truth discrepancies into repair backlog items. | Complete |
+| `phase-02-solution-configurations.csv` | Phase 2 | Map solution configurations to `Server` and `Scripts` project configurations. | Complete |
+| `phase-02-build-verification.md` | Phase 2 | Record direct project and maintained solution MSBuild verification results. | Complete |
+| `project-truth-register.csv` | Phase 2 | Canonical project truth register copied from the Phase 2 register output. | Complete |
+| `missing-compile-targets.csv` | Phase 2 | Canonical missing compile target list. | Complete |
+| `unincluded-source-files.csv` | Phase 2 | Canonical unincluded script source list. | Complete |
+| `intentional-noncompiled-source.csv` | Phase 2 | Canonical intentional/generated/backup non-compiled source list. | Complete |
+| `project-cleanup-backlog.csv` | Phase 2 | Canonical project cleanup backlog. | Complete |
+| `solution-configurations.csv` | Phase 2 | Canonical solution configuration map. | Complete |
 | `cross-tree-runtime-inventory.*` | Phase 3 | Assign runtime role, owner, entry points, hooks, serialization, gumps, and config usage for source files. | NotStarted |
 | `system-cards/` | Phase 4 | Store one canonical engineering card per major system. | NotStarted |
 | `runtime-hook-map.*` | Phase 5 | Map commands, events, packets, timers, gumps, regions, speech, movement, login/logout, and world hooks. | NotStarted |
@@ -52,4 +65,4 @@ Raw command output may remain temporary when it is easy to regenerate. Curated t
 
 ## Initial State
 
-The Phase 0 baseline output and Phase 1 reproducible inventory outputs have been generated. Continue through the phase gates in order, starting with Phase 2 build and project truth after the Phase 1 batch is committed.
+The Phase 0 baseline output, Phase 1 reproducible inventory outputs, and Phase 2 project truth outputs have been generated. Continue through the phase gates in order, starting with Phase 3 cross-tree runtime inventory after the Phase 2 batch is committed.
