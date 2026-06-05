@@ -57,7 +57,13 @@ Raw command output may remain temporary when it is easy to regenerate. Curated t
 | `phase-03-high-risk-root-summary.md` | Phase 3 | Human-readable high-risk root summary. | Complete |
 | `phase-03-summary.md` | Phase 3 | Summarize runtime inventory inputs, outputs, root counts, and exit criteria. | Complete |
 | `cross-tree-runtime-inventory.*` | Phase 3 | Assign runtime role, owner, entry points, hooks, serialization, gumps, and config usage for source files. | NotStarted |
-| `system-cards/` | Phase 4 | Store one canonical engineering card per major system. | NotStarted |
+| `system-cards/` | Phase 4 | Store one canonical engineering card per seeded high-risk system. | Complete |
+| `phase-04-summary.md` | Phase 4 | Summarize generated system cards, owner map, backlog, priority list, and verification states. | Complete |
+| `phase-04-system-card-index.csv` | Phase 4 | Record one metadata row per generated system card. | Complete |
+| `phase-04-system-owner-map.csv` | Phase 4 | Map matched files to generated system cards. | Complete |
+| `system-owner-map.csv` | Phase 4 | Canonical system owner map generated from Phase 4 cards. | Complete |
+| `phase-04-system-card-backlog.csv` | Phase 4 | Track follow-up work for partial or blocked system cards. | Complete |
+| `phase-04-high-risk-system-priority-list.csv` | Phase 4 | Record high-risk system card review order and risk basis. | Complete |
 | `runtime-hook-map.*` | Phase 5 | Map commands, events, packets, timers, gumps, regions, speech, movement, login/logout, and world hooks. | NotStarted |
 | `serialization-register.*` | Phase 6 | Record save format, versioning, write/read order, and move/rename risk for serialized types. | NotStarted |
 | `documentation-truth-table.*` | Phase 7 | Classify docs as canonical, alias, stale, partial, or verified with source traces. | NotStarted |
@@ -72,4 +78,4 @@ Raw command output may remain temporary when it is easy to regenerate. Curated t
 
 ## Initial State
 
-The Phase 0 baseline output, Phase 1 reproducible inventory outputs, Phase 2 project truth outputs, and Phase 3 runtime inventory outputs have been generated. Continue through the phase gates in order, starting with Phase 4 system cards after the Phase 3 batch is committed.
+The Phase 0 baseline output, Phase 1 reproducible inventory outputs, Phase 2 project truth outputs, Phase 3 runtime inventory outputs, and Phase 4 system cards have been generated. Continue through the phase gates in order, starting with Phase 5 runtime hook map after the Phase 4 batch is committed.
