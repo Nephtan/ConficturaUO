@@ -2939,3 +2939,67 @@ Scope: Deterministic phase runner log for the Confictura codebase audit and reor
 - Command: `git diff --cached --name-only`
 - Result: Confirmed staged files were limited to `Main.cs`, `ScriptCompiler.cs`, run log, output index, compile-only verification output, and updated post-audit baseline notes.
 - Output path: `docs/codebase-audit/RUN_LOG.md`
+
+### 2026-06-06T14:50:28.7959583-05:00
+
+- Affected phase: Post-audit `POST-BATCH-A` packet-handler review
+- Cwd: `D:\ConficturaUO`
+- Command: `git status --short`
+- Result: Clean at the start of the batch.
+- Output path: `docs/codebase-audit/PHASE_STATUS.md`
+
+### 2026-06-06T14:50:28.7959583-05:00
+
+- Affected phase: Post-audit `POST-BATCH-A` packet-handler review
+- Cwd: `D:\ConficturaUO`
+- Command: `rg --files -g AGENTS.md`
+- Result: Confirmed applicable root and audit-scoped instruction files before edits; packet-handler source files in this batch are governed by the root `AGENTS.md`, and audit outputs are governed by `docs/codebase-audit/AGENTS.md`.
+- Output path: `docs/codebase-audit/outputs/post-batch-a-packet-handler-review.csv`
+
+### 2026-06-06T14:50:28.7959583-05:00
+
+- Affected phase: Post-audit `POST-BATCH-A` packet-handler review
+- Cwd: `D:\ConficturaUO`
+- Command: Source review of `phase-05-packet-handler-register.csv` rows against packet-handler source files.
+- Result: Reviewed all 17 P0 packet-handler rows. Source-confirmed fixes were limited to XMLSpawner `UseReq`, XMLSpawner book content edit guards, and Monopoly gump-response fallback reader position.
+- Output path: `docs/codebase-audit/outputs/post-batch-a-packet-handler-review.csv`
+
+### 2026-06-06T14:50:28.7959583-05:00
+
+- Affected phase: Post-audit `POST-BATCH-A` packet-handler review
+- Cwd: `D:\ConficturaUO`
+- Command: `Import-Csv -LiteralPath docs\codebase-audit\outputs\post-batch-a-packet-handler-review.csv | Measure-Object`
+- Result: Parsed 17 review rows, matching the Phase 5 packet-handler register count.
+- Output path: `docs/codebase-audit/outputs/post-batch-a-packet-handler-review.csv`
+
+### 2026-06-06T14:50:28.7959583-05:00
+
+- Affected phase: Post-audit `POST-BATCH-A` packet-handler review
+- Cwd: `D:\ConficturaUO`
+- Command: `& .\docs\codebase-audit\tools\New-RuntimeHookMap.ps1`
+- Result: Passed; generated 6,604 hook rows and 17 packet rows. The only generated file content churn was a Phase 5 summary timestamp, which was restored and not committed.
+- Output path: `docs/codebase-audit/outputs/runtime-hook-map.csv`
+
+### 2026-06-06T14:50:28.7959583-05:00
+
+- Affected phase: Post-audit `POST-BATCH-A` packet-handler review
+- Cwd: `D:\ConficturaUO`
+- Command: `& 'C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\MSBuild.exe' Data/System/Source/Server.csproj /p:Configuration=Debug /p:Platform=x86 /v:minimal`
+- Result: Passed; MSBuild produced `D:\ConficturaUO\ConficturaServer.exe`.
+- Output path: `Data/System/Source/Server.csproj`
+
+### 2026-06-06T14:50:28.7959583-05:00
+
+- Affected phase: Post-audit `POST-BATCH-A` packet-handler review
+- Cwd: `D:\ConficturaUO`
+- Command: `.\ConficturaServer.exe -compileonly -nocache`
+- Result: Passed with exit code 0. Output included `Scripts: Compile-only verification completed successfully.` and no `Listening:` lines.
+- Output path: `docs/codebase-audit/outputs/post-audit-next-steps.md`
+
+### 2026-06-06T14:50:28.7959583-05:00
+
+- Affected phase: Post-audit `POST-BATCH-A` packet-handler review
+- Cwd: `D:\ConficturaUO`
+- Command: Restore generated artifacts: `git restore -- ConficturaServer.exe ConficturaServer.exe.config ConficturaServer.pdb`; restore `Data\Data.bin` and `Data\Data.hash` from temporary backups.
+- Result: Generated executable/config/PDB and script cache files restored; `git status --short` no longer listed generated build/runtime artifacts.
+- Output path: `docs/codebase-audit/RUN_LOG.md`

@@ -8,6 +8,7 @@ The audit phase runner completed Phases 0 through 14 and the worktree was clean 
 
 - `db0eef4f docs: document live runtime script compile model`
 - `9dce70de docs: record source build baseline`
+- `09b7b7e5 feat: add compile-only script verification`
 
 `Server.csproj` Debug/x86 build passed in the source-build baseline. Runtime script inventory found 6,581 live-visible `.cs` files under `Data/Scripts`, excluding `bin` and `obj`.
 
@@ -44,12 +45,23 @@ P0 runtime-risk categories are:
 
 Completed: `POST-BATCH-000` added and verified `.\ConficturaServer.exe -compileonly -nocache`.
 
+Completed runtime-risk batch: `POST-BATCH-A` source-reviewed the 17 P0 packet handler rows in `post-batch-a-packet-handler-review.csv`. The batch applies only source-confirmed packet-handler fixes:
+
+- XMLSpawner `UseReq` now preserves the core action throttle update and Counselor bypass threshold while keeping attachment hooks.
+- XMLSpawner book content override now enforces writable, range, and accessibility checks before accepting page edits.
+- Monopoly gump response fallback now restores the packet reader position before delegating unmatched responses to the previous/core handler.
+
+Verification passed for this batch:
+
+- `New-RuntimeHookMap.ps1` completed with 17 packet rows.
+- `Server.csproj` Debug/x86 build passed.
+- `.\ConficturaServer.exe -compileonly -nocache` exited 0 with compile-only success and no listener output.
+
 Next:
 
-1. Proceed to `POST-BATCH-A`: review the 17 P0 packet handler rows.
-2. Use `Server.csproj` build plus `-compileonly -nocache` as the verification gate for source batches.
-3. If compile-only reports future errors, repair those exact runtime compile blockers before backlog risk work.
-4. After packet handlers, proceed to P0 save compatibility triage.
+1. If compile-only reports future errors, repair those exact runtime compile blockers before backlog risk work.
+2. Proceed to `POST-BATCH-B`: P0 save compatibility triage.
+3. Do not change serialized layout, type names, namespaces, or file locations without a migration plan and explicit approval.
 
 ## Reorganization Status
 

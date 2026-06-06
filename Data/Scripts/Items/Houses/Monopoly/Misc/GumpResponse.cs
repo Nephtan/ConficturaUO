@@ -25,6 +25,7 @@ namespace Knives.TownHouses
 
         public static void DisplayGumpResponse(NetState state, PacketReader pvSrc)
         {
+            int packetStart = pvSrc.Seek(0, System.IO.SeekOrigin.Current);
             int serial = pvSrc.ReadInt32();
             int typeID = pvSrc.ReadInt32();
             int buttonID = pvSrc.ReadInt32();
@@ -90,6 +91,8 @@ namespace Knives.TownHouses
                     return;
                 }
             }
+
+            pvSrc.Seek(packetStart, System.IO.SeekOrigin.Begin);
 
             if (m_Successor != null)
             {
