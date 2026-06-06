@@ -4,7 +4,7 @@
 | --- | --- |
 | Generation HEAD | `f13d86de` |
 | Phase 14 content commit | `cbf808f6 docs: add final audit verification workflow` |
-| Phase 14 metadata commit | Pending final status-record commit |
+| Phase 14 metadata commit | Finalized by the commit containing this report; see `git log --oneline -n 1` after checkout. |
 | Worktree status at generation | `See phase-14-worktree-status.md` |
 | Build verification | Not rerun for Phase 14 docs-only/generated-data batch; prior source-comment build attempt is recorded as blocked by known Phase 2 project include drift. |
 
