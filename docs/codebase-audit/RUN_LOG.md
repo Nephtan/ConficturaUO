@@ -3003,3 +3003,59 @@ Scope: Deterministic phase runner log for the Confictura codebase audit and reor
 - Command: Restore generated artifacts: `git restore -- ConficturaServer.exe ConficturaServer.exe.config ConficturaServer.pdb`; restore `Data\Data.bin` and `Data\Data.hash` from temporary backups.
 - Result: Generated executable/config/PDB and script cache files restored; `git status --short` no longer listed generated build/runtime artifacts.
 - Output path: `docs/codebase-audit/RUN_LOG.md`
+
+### 2026-06-06T16:42:02.3829332-05:00
+
+- Affected phase: Post-audit active backlog reconciliation and `POST-BATCH-B` save-compatibility triage
+- Cwd: `D:\ConficturaUO`
+- Command: `git status --short`
+- Result: Clean at the start of the reconciliation and initial save-triage batch.
+- Output path: `docs/codebase-audit/PHASE_STATUS.md`
+
+### 2026-06-06T16:42:02.3829332-05:00
+
+- Affected phase: Post-audit active backlog reconciliation and `POST-BATCH-B` save-compatibility triage
+- Cwd: `D:\ConficturaUO`
+- Command: `rg --files -g AGENTS.md`
+- Result: Confirmed applicable root and audit-scoped instruction files before editing audit artifacts.
+- Output path: `docs/codebase-audit/AGENTS.md`
+
+### 2026-06-06T16:42:02.3829332-05:00
+
+- Affected phase: Post-audit active backlog reconciliation
+- Cwd: `D:\ConficturaUO`
+- Command: Generate `post-audit-active-backlog-status.csv` from `repair-backlog.csv` and `post-batch-a-packet-handler-review.csv`.
+- Result: Wrote 17 active packet-handler disposition rows: 3 `Fixed` and 14 `ReviewedNoChange`; `repair-backlog.csv` remains historical Phase 13 generated evidence.
+- Output path: `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
+
+### 2026-06-06T16:42:02.3829332-05:00
+
+- Affected phase: Post-audit `POST-BATCH-B` save-compatibility triage
+- Cwd: `D:\ConficturaUO`
+- Command: Source review of the 19 `ServerCore` critical save-compatibility rows from `phase-06-save-compatibility-repair-backlog.csv`.
+- Result: Classified 19 high-blast-radius rows without source edits: 7 `FalsePositive`, 6 `IntentionalLegacy`, and 6 `SafeNoChange`.
+- Output path: `docs/codebase-audit/outputs/post-batch-b-save-compatibility-triage.csv`
+
+### 2026-06-06T16:42:02.3829332-05:00
+
+- Affected phase: Post-audit `POST-BATCH-B` save-compatibility triage
+- Cwd: `D:\ConficturaUO`
+- Command: Generate `post-batch-b-save-compatibility-triage.csv` from `phase-06-save-compatibility-repair-backlog.csv`, `serialization-register.csv`, `repair-backlog.csv`, and reviewed source evidence.
+- Result: Wrote 304 scoped P0 critical save-compatibility rows: 19 `Reviewed` with decisions and 285 `Queued` for later source review; no source or serialized-layout edits were approved.
+- Output path: `docs/codebase-audit/outputs/post-batch-b-save-compatibility-triage.csv`
+
+### 2026-06-06T16:42:02.3829332-05:00
+
+- Affected phase: Post-audit active backlog reconciliation and `POST-BATCH-B` save-compatibility triage
+- Cwd: `D:\ConficturaUO`
+- Command: `Import-Csv` verification of `post-audit-active-backlog-status.csv` and `post-batch-b-save-compatibility-triage.csv`.
+- Result: Parsed 17 active backlog overlay rows with 3 `Fixed` and 14 `ReviewedNoChange`; parsed 304 save-triage rows with 19 `Reviewed`, 285 `Queued`, 0 reviewed rows missing decisions, 0 queued rows carrying decisions, and 0 missing backlog IDs.
+- Output path: `docs/codebase-audit/outputs/post-batch-b-save-compatibility-triage.csv`
+
+### 2026-06-06T16:42:02.3829332-05:00
+
+- Affected phase: Post-audit active backlog reconciliation and `POST-BATCH-B` save-compatibility triage
+- Cwd: `D:\ConficturaUO`
+- Command: `git diff --check`
+- Result: Passed with no whitespace errors for tracked audit artifact edits; Git emitted expected `core.autocrlf=true` line-ending warnings.
+- Output path: `docs/codebase-audit/RUN_LOG.md`
