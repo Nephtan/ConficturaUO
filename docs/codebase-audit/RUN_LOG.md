@@ -2683,3 +2683,91 @@ Scope: Deterministic phase runner log for the Confictura codebase audit and reor
 - Command: `git diff --cached --name-only`
 - Result: Confirmed staged files were limited to root instructions, audit-scope instructions, audit status/log files, and intended audit outputs.
 - Output path: `docs/codebase-audit/RUN_LOG.md`
+
+### 2026-06-06T14:05:54.8534809-05:00
+
+- Affected phase: Post-audit source build baseline
+- Cwd: `D:\ConficturaUO`
+- Command: `& 'C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\MSBuild.exe' Data/System/Source/Server.csproj /p:Configuration=Debug /p:Platform=x86 /v:minimal`
+- Result: Passed. MSBuild reported `Server -> D:\ConficturaUO\ConficturaServer.exe`.
+- Output path: `docs/codebase-audit/outputs/source-build-and-runtime-compile-baseline.md`
+
+### 2026-06-06T14:05:54.8534809-05:00
+
+- Affected phase: Post-audit source build baseline
+- Cwd: `D:\ConficturaUO`
+- Command: `git status --short`
+- Result: Confirmed the source build updated tracked generated artifacts `ConficturaServer.exe`, `ConficturaServer.exe.config`, and `ConficturaServer.pdb`.
+- Output path: `docs/codebase-audit/outputs/source-build-and-runtime-compile-baseline.md`
+
+### 2026-06-06T14:05:54.8534809-05:00
+
+- Affected phase: Post-audit runtime script inventory
+- Cwd: `D:\ConficturaUO`
+- Command: `Get-ChildItem -LiteralPath Data\Scripts -Recurse -File -Filter *.cs` with `bin`/`obj` exclusion, exported to CSV.
+- Result: Generated `runtime-script-compile-inventory.csv` with 6,581 runtime-visible script source rows.
+- Output path: `docs/codebase-audit/outputs/runtime-script-compile-inventory.csv`
+
+### 2026-06-06T14:05:54.8534809-05:00
+
+- Affected phase: Post-audit runtime startup smoke
+- Cwd: `D:\ConficturaUO`
+- Command: `.\ConficturaServer.exe -service -nocache`
+- Result: Not run. Startup smoke was recorded as unavailable because this checkout contains a `Saves` tree and no safe no-load/no-listen startup flag was source-verified.
+- Output path: `docs/codebase-audit/outputs/source-build-and-runtime-compile-baseline.md`
+
+### 2026-06-06T14:06:44.1367867-05:00
+
+- Affected phase: Post-audit source build baseline
+- Cwd: `D:\ConficturaUO`
+- Command: `git restore -- ConficturaServer.exe ConficturaServer.exe.config ConficturaServer.pdb`
+- Result: Restored tracked generated server artifacts produced by the source build.
+- Output path: `docs/codebase-audit/outputs/source-build-and-runtime-compile-baseline.md`
+
+### 2026-06-06T14:06:44.1367867-05:00
+
+- Affected phase: Post-audit source build baseline
+- Cwd: `D:\ConficturaUO`
+- Command: `git status --short`
+- Result: Confirmed tracked generated server artifacts were restored; remaining visible changes were audit docs/output index updates.
+- Output path: `docs/codebase-audit/RUN_LOG.md`
+
+### 2026-06-06T14:06:44.1367867-05:00
+
+- Affected phase: Post-audit runtime script inventory
+- Cwd: `D:\ConficturaUO`
+- Command: `(Import-Csv -LiteralPath docs/codebase-audit/outputs/runtime-script-compile-inventory.csv).Count`
+- Result: Confirmed the generated runtime script inventory contains 6,581 rows.
+- Output path: `docs/codebase-audit/outputs/runtime-script-compile-inventory.csv`
+
+### 2026-06-06T14:06:44.1367867-05:00
+
+- Affected phase: Post-audit source build baseline
+- Cwd: `D:\ConficturaUO`
+- Command: `git diff --check`
+- Result: Passed with no whitespace errors for tracked baseline docs/index edits; Git emitted expected `core.autocrlf=true` line-ending warnings.
+- Output path: `docs/codebase-audit/RUN_LOG.md`
+
+### 2026-06-06T14:06:44.1367867-05:00
+
+- Affected phase: Post-audit source build baseline
+- Cwd: `D:\ConficturaUO`
+- Command: `git status --short --ignored docs/codebase-audit/outputs/runtime-script-compile-inventory.csv docs/codebase-audit/outputs/source-build-and-runtime-compile-baseline.md`
+- Result: Confirmed the new baseline output files are ignored by the output directory policy and require force-staging.
+- Output path: `docs/codebase-audit/outputs/README.md`
+
+### 2026-06-06T14:06:44.1367867-05:00
+
+- Affected phase: Post-audit source build baseline
+- Cwd: `D:\ConficturaUO`
+- Command: `git diff --cached --check`
+- Result: Passed with no whitespace errors.
+- Output path: `docs/codebase-audit/RUN_LOG.md`
+
+### 2026-06-06T14:06:44.1367867-05:00
+
+- Affected phase: Post-audit source build baseline
+- Cwd: `D:\ConficturaUO`
+- Command: `git diff --cached --name-only`
+- Result: Confirmed staged files were limited to `RUN_LOG.md`, output index, runtime script inventory, and source-build/runtime-compile baseline note.
+- Output path: `docs/codebase-audit/RUN_LOG.md`
