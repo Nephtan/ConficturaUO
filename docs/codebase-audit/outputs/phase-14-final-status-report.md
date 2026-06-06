@@ -4,9 +4,10 @@
 | --- | --- |
 | Generation HEAD | `f13d86de` |
 | Phase 14 content commit | `cbf808f6 docs: add final audit verification workflow` |
-| Phase 14 metadata commit | Finalized by the commit containing this report; see `git log --oneline -n 1` after checkout. |
+| Phase 14 metadata commit | `aeb6e947 docs: record audit phase 14 commit` |
+| Phase 14 closeout commit | `4120e1be docs: finalize audit phase 14 status` |
 | Worktree status at generation | `See phase-14-worktree-status.md` |
-| Build verification | Not rerun for Phase 14 docs-only/generated-data batch; prior source-comment build attempt is recorded as blocked by known Phase 2 project include drift. |
+| Build verification | Not rerun for Phase 14 docs-only/generated-data batch; prior Visual Studio project-hygiene build attempt is recorded as blocked by known Phase 2 project include drift. |
 
 ## Files Changed By Phase 14
 
@@ -22,7 +23,7 @@ The run log records exact commands and results. The final verification set is li
 
 ## Verification Not Performed
 
-No new MSBuild run is required for Phase 14 because it is documentation/generated audit data only. The final audit report must not claim build success while the known Phase 2 `Scripts.csproj` missing compile targets remain unresolved.
+No new MSBuild run was required for Phase 14 because it was documentation/generated audit data only. The final audit report must not claim Visual Studio project-hygiene build success while the known Phase 2 `Scripts.csproj` missing compile targets remain unresolved. Later live-runtime verification must use the source-build plus startup script compile model recorded in `live-build-and-runtime-script-compile-model.md`.
 
 ## Unrelated Pre-existing Changes
 

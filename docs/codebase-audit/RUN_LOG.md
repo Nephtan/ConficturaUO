@@ -2587,3 +2587,99 @@ Scope: Deterministic phase runner log for the Confictura codebase audit and reor
 - Command: `git log --oneline -n 4`
 - Result: Confirmed `aeb6e947 docs: record audit phase 14 commit` followed `cbf808f6 docs: add final audit verification workflow`.
 - Output path: `docs/codebase-audit/outputs/phase-14-final-status-report.md`
+
+### 2026-06-06T13:58:21.5320530-05:00
+
+- Affected phase: Post-audit live build context update
+- Cwd: `D:\ConficturaUO`
+- Command: `git status --short`
+- Result: Worktree was clean before applying the live build context documentation update.
+- Output path: `docs/codebase-audit/RUN_LOG.md`
+
+### 2026-06-06T13:58:21.5320530-05:00
+
+- Affected phase: Post-audit live build context update
+- Cwd: `D:\ConficturaUO`
+- Command: `rg --files -g AGENTS.md`
+- Result: Confirmed root `AGENTS.md` applies and no existing `docs/codebase-audit/AGENTS.md` scope existed before this batch; nested gump/system instruction files were unrelated to the edited docs/audit paths.
+- Output path: `docs/codebase-audit/AGENTS.md`
+
+### 2026-06-06T13:58:21.5320530-05:00
+
+- Affected phase: Phase 14 housekeeping
+- Cwd: `D:\ConficturaUO`
+- Command: `git rev-parse --short HEAD`
+- Result: Confirmed current audit closeout HEAD was `4120e1be`.
+- Output path: `docs/codebase-audit/PHASE_STATUS.md`
+
+### 2026-06-06T13:58:21.5320530-05:00
+
+- Affected phase: Phase 14 housekeeping
+- Cwd: `D:\ConficturaUO`
+- Command: `git log --pretty=format:"%h|%cI|%s" -n 8`
+- Result: Confirmed final Phase 14 commits `cbf808f6`, `aeb6e947`, and `4120e1be` for the refreshed commit history.
+- Output path: `docs/codebase-audit/outputs/phase-14-commit-history.csv`
+
+### 2026-06-06T13:58:21.5320530-05:00
+
+- Affected phase: Post-audit live build context update
+- Cwd: `D:\ConficturaUO`
+- Command: `Select-String` source checks in `Data/System/Source/Main.cs` and `Data/System/Source/ScriptCompiler.cs`
+- Result: Confirmed startup loops on `ScriptCompiler.Compile`, script initialization happens after compile, script discovery starts at `Data/Scripts`, discovery recurses directories, and CodeDOM compiles gathered `.cs` files.
+- Output path: `docs/codebase-audit/outputs/live-build-and-runtime-script-compile-model.md`
+
+### 2026-06-06T13:58:21.5320530-05:00
+
+- Affected phase: Post-audit live build context update
+- Cwd: `D:\ConficturaUO`
+- Command: `manual documentation edits`
+- Result: Updated root `AGENTS.md`, added `docs/codebase-audit/AGENTS.md`, added live runtime compile model output, reclassified Phase 2 build verification as IDE/project hygiene, refreshed Phase 14 closeout metadata, and corrected the stale runtime-inventory output row.
+- Output path: `AGENTS.md`; `docs/codebase-audit/AGENTS.md`; `docs/codebase-audit/outputs/live-build-and-runtime-script-compile-model.md`
+
+### 2026-06-06T13:58:21.5320530-05:00
+
+- Affected phase: Post-audit live build context update
+- Cwd: `D:\ConficturaUO`
+- Command: `rg --files -g AGENTS.md`
+- Result: Confirmed the new `docs/codebase-audit/AGENTS.md` scope is discoverable alongside the root and nested instruction files.
+- Output path: `docs/codebase-audit/AGENTS.md`
+
+### 2026-06-06T13:58:21.5320530-05:00
+
+- Affected phase: Post-audit live build context update
+- Cwd: `D:\ConficturaUO`
+- Command: `git diff --check`
+- Result: Passed with no whitespace errors for tracked docs/instruction edits; Git emitted expected `core.autocrlf=true` line-ending warnings.
+- Output path: `docs/codebase-audit/RUN_LOG.md`
+
+### 2026-06-06T13:58:21.5320530-05:00
+
+- Affected phase: Post-audit live build context update
+- Cwd: `D:\ConficturaUO`
+- Command: `git add -- AGENTS.md docs/codebase-audit/PHASE_STATUS.md docs/codebase-audit/RUN_LOG.md docs/codebase-audit/AGENTS.md`
+- Result: Staged root and audit-scope instruction/status/log files; Git emitted expected `core.autocrlf=true` line-ending warnings.
+- Output path: `docs/codebase-audit/RUN_LOG.md`
+
+### 2026-06-06T13:58:21.5320530-05:00
+
+- Affected phase: Post-audit live build context update
+- Cwd: `D:\ConficturaUO`
+- Command: `git add -f -- docs/codebase-audit/outputs/README.md docs/codebase-audit/outputs/phase-02-build-verification.md docs/codebase-audit/outputs/phase-14-commit-history.csv docs/codebase-audit/outputs/phase-14-final-status-report.md docs/codebase-audit/outputs/live-build-and-runtime-script-compile-model.md`
+- Result: Force-staged intended ignored audit output files.
+- Output path: `docs/codebase-audit/outputs/README.md`
+
+### 2026-06-06T13:58:21.5320530-05:00
+
+- Affected phase: Post-audit live build context update
+- Cwd: `D:\ConficturaUO`
+- Command: `git diff --cached --check`
+- Result: Passed with no whitespace errors.
+- Output path: `docs/codebase-audit/RUN_LOG.md`
+
+### 2026-06-06T13:58:21.5320530-05:00
+
+- Affected phase: Post-audit live build context update
+- Cwd: `D:\ConficturaUO`
+- Command: `git diff --cached --name-only`
+- Result: Confirmed staged files were limited to root instructions, audit-scope instructions, audit status/log files, and intended audit outputs.
+- Output path: `docs/codebase-audit/RUN_LOG.md`

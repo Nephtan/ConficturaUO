@@ -19,7 +19,9 @@ The BaseOutputPath/OutputPath property is not set for project 'Server.csproj'.
 Configuration='Debug' Platform='AnyCPU'.
 ```
 
-Interpretation: for this checkout and MSBuild version, the maintained solution configuration is the valid way to build both projects because it maps `Server` to x86 and `Scripts` to Any CPU.
+Original interpretation: for this checkout and MSBuild version, the solution configuration is the valid way to build both Visual Studio projects because it maps `Server` to x86 and `Scripts` to Any CPU.
+
+Post-audit live workflow interpretation: this is an IDE/project-hygiene failure for the optional scripts project path. It is not evidence that the live server startup compiler failed.
 
 ## Maintained Solution Build Failure
 
@@ -42,4 +44,6 @@ CSC : error CS2001: Source file 'D:\ConficturaUO\Data\Scripts\Trades\Core\CraftG
 
 ## Verification Status
 
-Build verification did not pass. The failure is explained and backlogged by Phase 2 project truth outputs. No `Scripts.csproj` repair was made in this phase; repairs must be performed in focused project-file batches with project truth regeneration and MSBuild verification.
+Visual Studio project-hygiene verification did not pass. The failure is explained and backlogged by Phase 2 project truth outputs. No `Scripts.csproj` repair was made in this phase; repairs must be performed in focused project-file batches with project truth regeneration and optional IDE/project build verification.
+
+This file does not record live runtime script compile verification. Live runtime verification now requires a `Server.csproj` build followed by a time-boxed startup compile smoke with the built executable, as described in `live-build-and-runtime-script-compile-model.md`.

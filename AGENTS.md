@@ -2,7 +2,7 @@
 
 This file is the root-level agent instruction file for this repository. It applies to the entire repository unless a more deeply nested `AGENTS.md` applies to a specific path.
 
-Use these instructions for normal Confictura development and for the codebase systems audit/reorganization program. Direct user instructions still control the current task, but do not violate the safety, save-compatibility, project-file, or verification rules below.
+Use these instructions for normal Confictura development and for the codebase systems audit/reorganization program. Direct user instructions still control the current task, but do not violate the safety, save-compatibility, runtime script compile, project-file, or verification rules below.
 
 ## Primary Objective
 
@@ -29,22 +29,60 @@ Common work includes:
 
 - **Framework:** .NET Framework 4.8.
 - **IDE/Build Tools:** Use Visual Studio 2022 with .NET Framework build tools. Visual Studio Community 2022 is sufficient, but other Visual Studio 2022 editions should work.
-- **Core Dependency:** `Data/Scripts/Scripts.csproj` depends on `Data/System/Source/Server.csproj`.
-- **Maintained Build Entry Point:** `ConficturaUO.sln` is the maintained Visual Studio/MSBuild workflow.
+- **Primary Operational Build:** Build `Data/System/Source/Server.csproj` to produce the running server executable.
+- **Runtime Script Compile:** The built server executable compiles scripts at startup through `ScriptCompiler`, recursively gathering `Data/Scripts/**/*.cs`, then initializes scripts and starts listening for connections.
+- **Project Hygiene Workflow:** `ConficturaUO.sln` and `Data/Scripts/Scripts.csproj` remain useful for Visual Studio navigation, solution builds, and project hygiene, but they do not define what scripts the live server compiles.
+- **Project Dependency:** `Data/Scripts/Scripts.csproj` depends on `Data/System/Source/Server.csproj` when the optional scripts project is built.
 - **Legacy Manual Compile Reference:** `Data/System/Source/README` may mention an old direct `csc` build producing `World.exe`. Treat that executable name as stale documentation. The maintained server artifact is `ConficturaServer.exe`.
 
 ## Known Build Workflows
 
-Use the narrowest build that proves the touched change. If MSBuild is unavailable in the current environment, record that build verification was unavailable, record the static checks that were completed, and do not claim build success.
+Use the narrowest verification that proves the touched change. If MSBuild or safe local startup tooling is unavailable in the current environment, record that verification was unavailable, record the static checks that were completed, and do not claim build or runtime script compile success.
 
-### Full solution builds
+### Operational server builds
 
 Run from a Visual Studio Developer PowerShell/Command Prompt:
+
+```powershell
+msbuild Data/System/Source/Server.csproj /p:Configuration=Debug /p:Platform=x86
+msbuild Data/System/Source/Server.csproj /p:Configuration=Release /p:Platform=x86
+```
+
+Notes:
+
+- `Server.csproj` builds `ConficturaServer.exe`.
+- `Debug|x86` server output goes to the repository root.
+- `Release|x86` server output goes to `Data/System/Source/bin/Release/`.
+- A successful server project build proves the source executable compiles. It does not prove runtime scripts compile.
+
+### Runtime script compile smoke
+
+For script changes, or any change that may affect startup behavior, run the built server executable locally with a time limit and capture the startup compiler output:
+
+```powershell
+.\ConficturaServer.exe -service -nocache
+.\Data\System\Source\bin\Release\ConficturaServer.exe -service -nocache
+```
+
+Notes:
+
+- Use the path that matches the server build configuration under test.
+- `-nocache` forces a script compile instead of trusting an existing script cache.
+- `-service` avoids the interactive retry prompt on script compile failure.
+- Do not run a startup smoke against live production data or an occupied production port.
+- Terminate the local process after the verification milestone is reached, such as script compile failure, script initialization failure, or server started/listening confirmation.
+- Restore or leave untracked any generated executables, logs, caches, or data files according to the task; do not commit generated runtime output unless explicitly intended.
+
+### Optional Visual Studio project hygiene
+
+These commands are useful when maintaining the solution or `Scripts.csproj`, but they are not live runtime proof:
 
 ```powershell
 msbuild ConficturaUO.sln /p:Configuration=Debug /p:Platform="Any CPU"
 msbuild ConficturaUO.sln /p:Configuration=Release /p:Platform="Any CPU"
 msbuild ConficturaUO.sln /p:Configuration=Release /p:Platform=x86
+msbuild Data/Scripts/Scripts.csproj /p:Configuration=Debug /p:Platform=AnyCPU
+msbuild Data/Scripts/Scripts.csproj /p:Configuration=Release /p:Platform=AnyCPU
 ```
 
 Notes:
@@ -52,39 +90,26 @@ Notes:
 - The solution includes `Data/System/Source/Server.csproj` and `Data/Scripts/Scripts.csproj`.
 - `Scripts` depends on `Server`.
 - In full solution configurations, the solution maps `Server` to `x86` and `Scripts` to `Any CPU`.
-- `Debug|x86` currently builds only the `Server` project; do not use it as proof that scripts compile.
-
-### Narrow project builds
-
-```powershell
-msbuild Data/System/Source/Server.csproj /p:Configuration=Debug /p:Platform=x86
-msbuild Data/System/Source/Server.csproj /p:Configuration=Release /p:Platform=x86
-msbuild Data/Scripts/Scripts.csproj /p:Configuration=Debug /p:Platform=AnyCPU
-msbuild Data/Scripts/Scripts.csproj /p:Configuration=Release /p:Platform=AnyCPU
-```
-
-Notes:
-
-- Building `Scripts.csproj` also pulls in `Server.csproj` through the project reference.
-- `Server.csproj` builds `ConficturaServer.exe`.
 - `Scripts.csproj` builds `ClassLibrary.dll`.
-- `Debug|x86` server output goes to the repository root.
-- `Release|x86` server output goes to `Data/System/Source/bin/Release/`.
-- `Debug|AnyCPU` scripts output goes to `Data/Scripts/`.
-- `Release|AnyCPU` scripts output goes to `Data/Scripts/bin/Release/`.
+- A `Scripts.csproj` or solution build can prove Visual Studio project hygiene. It does not define what the live server compiles at startup.
 
-## Project File Rules
+## Runtime Script Compile And Project File Rules
 
-`Data/Scripts/Scripts.csproj` is an explicit source list.
+Runtime script compile truth comes from `ScriptCompiler.GetScripts("*.cs")`, which recursively gathers `.cs` files under `Data/Scripts`.
 
-- Any new, moved, renamed, or restored `.cs` file under `Data/Scripts` is incomplete until `Scripts.csproj` has the correct `Compile Include` entry.
-- Do not assume a `.cs` file is compiled merely because it exists on disk.
+- Any new, moved, renamed, or restored `.cs` file under `Data/Scripts` is live-runtime-visible and must be production-ready unless it is intentionally kept outside the runtime script tree or given a non-compiled extension.
+- Do not assume a `Scripts.csproj` `Compile Include` controls runtime script compilation.
+- Do not assume a `.cs` file is absent from live runtime merely because it is absent from `Scripts.csproj`.
+- Exclude `bin` and `obj` from runtime/project truth inventories unless a phase explicitly reviews generated outputs.
+
+`Data/Scripts/Scripts.csproj` is an explicit Visual Studio project source list.
+
 - Do not assume a `Compile Include` is valid merely because it exists in the project file.
 - Preserve the surrounding project-file path style and ordering when editing includes.
 - Use literal path checks, not wildcard interpretation, when paths contain bracketed package names.
 - URI-decode escaped path segments such as `%27` when comparing project entries to the filesystem.
-- Exclude `bin` and `obj` from source/project truth inventories unless a phase explicitly reviews generated outputs.
-- For `.csproj` changes, re-run the project/source truth check and run the narrowest build covering the touched project.
+- For `.csproj` changes, re-run the project/source truth check and run the narrowest Visual Studio project hygiene build that covers the touched project.
+- Label solution or `Scripts.csproj` results as IDE/project verification, not live runtime script compile verification.
 
 ## Source Roots In Audit Scope
 
@@ -165,7 +190,7 @@ For every `Item`, `Mobile`, or other RunUO object that overrides serialization:
 - Even classes with no custom fields should still write and read a version integer after the base call.
 - Preserve the local versioning style. Prefer the established RunUO `switch`/`goto case` fall-through pattern where it already exists; preserve `if (version >= N)` gates where that is the local pattern.
 - Do not move, rename, reorder, or change serialized classes, namespaces, fields, or read/write order without a migration plan and explicit approval.
-- Moving a file without changing namespace/type is lower risk than renaming a type, but still requires project truth, serialization register review, docs update, and build verification.
+- Moving a file without changing namespace/type is lower risk than renaming a type, but still requires runtime compile visibility review, serialization register review, docs update, and verification. Update `Scripts.csproj` too when preserving Visual Studio project hygiene.
 
 Example versioned upgrade pattern:
 
@@ -323,7 +348,7 @@ For each phase:
 
 - **Phase 0:** Baseline only. No source reorganization. Capture worktree, branch, recent commits, instruction scopes, build surface, source roots, and high-risk boundaries.
 - **Phase 1:** Inventory commands/scripts must be reproducible from a clean checkout. Prefer `rg`, PowerShell XML parsing, structured project parsing, and literal path checks.
-- **Phase 2:** Project truth must explain every missing compile target and unlisted source before broad source moves. Project repairs require rerunning the truth parser and the narrowest relevant build.
+- **Phase 2:** Project truth must explain every missing Visual Studio compile target and unlisted source before broad source moves. Treat this as IDE/project hygiene unless a server startup script compile proves a live runtime failure. Project repairs require rerunning the truth parser and the narrowest relevant project hygiene build.
 - **Phase 3:** Every `.cs` file gets a provisional runtime role and system owner, or an explicit `Unknown` marker with follow-up.
 - **Phase 4:** High-risk systems get system cards before low-risk content. Classification must be evidence-based; standalone status requires proof of no hooks, shared state, shared policy, or hard dependencies.
 - **Phase 5:** Runtime hooks, commands, packet handlers, timers, gumps, regions, speech, movement, login/logout, and world save/load paths must be mapped before moving or normalizing code.
@@ -367,7 +392,7 @@ Do not treat folder cleanup as the end product. The end product is source-verifi
 - Do not rename namespaces or serialized classes without explicit migration approval.
 - Do not force stable framework code out of `Items`, `Mobiles`, `Magic`, `System`, `Trades`, or `Quests` just to place everything under `Custom`.
 - Imported packages may be isolated or documented without being restyled.
-- Every move must update `Scripts.csproj`, source traces, dependency evidence, and verification notes.
+- Every move must update runtime compile visibility notes, source traces, dependency evidence, verification notes, and `Scripts.csproj` when preserving Visual Studio project hygiene.
 - Every move requires a rollback plan.
 
 Candidate custom organization, when Phase 12 approves a move:
@@ -393,7 +418,8 @@ Candidate custom organization, when Phase 12 approves a move:
 
 Treat these as high-risk until source-verified:
 
-- Project include drift in `Scripts.csproj`.
+- Runtime-visible `.cs` files under `Data/Scripts` that do not compile during server startup.
+- Project include drift in `Scripts.csproj` as Visual Studio project hygiene, not live runtime proof.
 - XMLSpawner commands, packet handlers, speech hooks, movement hooks, world save/load hooks, and attachment persistence.
 - Spell registry capacity and high-ID spell families.
 - Character Level and Random Encounters coupling.
@@ -421,15 +447,17 @@ There is no single test command for the whole repository. Verification depends o
 
 - Re-run the project truth parser or equivalent project/source comparison.
 - Confirm intended missing/unlisted deltas changed.
-- Run the narrowest build covering the changed project.
+- Run the narrowest Visual Studio project hygiene build covering the changed project.
+- Do not claim live runtime script compile success from `Scripts.csproj` or solution builds.
 
 ### Source-code changes
 
 - Run relevant static searches for the touched area.
 - Run serializer checks if persistence was touched.
 - Run hook scans if runtime wiring was touched.
-- Run narrow MSBuild target.
-- Run a broader solution build when shared framework behavior changed.
+- Run the narrowest `Server.csproj` build available when source executable behavior is touched.
+- Run a time-boxed server startup script compile smoke for script changes.
+- Run optional solution or `Scripts.csproj` builds only as IDE/project hygiene checks.
 
 ### Serialization-affecting changes
 
@@ -443,10 +471,11 @@ There is no single test command for the whole repository. Verification depends o
 ### Reorganization/file moves
 
 - Confirm no namespace/type rename unless explicitly approved.
-- Update `Scripts.csproj`.
+- Confirm runtime compile visibility for moved `.cs` files under `Data/Scripts`.
+- Update `Scripts.csproj` when preserving Visual Studio project hygiene.
 - Update docs source traces and dependency graph evidence.
 - Re-run project truth.
-- Build.
+- Build `Server.csproj`, run startup script compile smoke when scripts moved, and label optional solution or `Scripts.csproj` builds as project hygiene.
 
 ## Git And Version Control
 
