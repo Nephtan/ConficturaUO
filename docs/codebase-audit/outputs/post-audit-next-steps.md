@@ -11,7 +11,7 @@ The audit phase runner completed Phases 0 through 14 and the worktree was clean 
 
 `Server.csproj` Debug/x86 build passed in the source-build baseline. Runtime script inventory found 6,581 live-visible `.cs` files under `Data/Scripts`, excluding `bin` and `obj`.
 
-The old full-startup smoke remains unsafe for this checkout because the server startup path compiles scripts, then loads `Saves`, invokes script `Initialize`, creates `MessagePump`, initializes `NetState`, and binds listeners. A safe compile-only verification path is required before runtime script compile can be used as a routine gate.
+The old full-startup smoke remains unsafe for this checkout because the server startup path compiles scripts, then loads `Saves`, invokes script `Initialize`, creates `MessagePump`, initializes `NetState`, and binds listeners. `compile-only-verification-baseline.md` now records a safe runtime script compile verification path.
 
 ## Backlog Position
 
@@ -42,11 +42,14 @@ P0 runtime-risk categories are:
 
 ## Immediate Implementation Sequence
 
-1. Add a `-compileonly` CLI flag to `Data/System/Source/Main.cs`.
-2. Verify that `-compileonly -nocache` runs `ScriptCompiler.Compile(m_Debug, m_Cache)` and exits before `Configure`, `Region.Load`, `World.Load`, `Initialize`, timers, `MessagePump`, `NetState`, or listeners.
-3. Record the source build and compile-only runtime script verification.
-4. If compile-only reports errors, repair those exact runtime compile blockers before backlog risk work.
-5. If compile-only passes, proceed to packet handler review, then P0 save compatibility triage.
+Completed: `POST-BATCH-000` added and verified `.\ConficturaServer.exe -compileonly -nocache`.
+
+Next:
+
+1. Proceed to `POST-BATCH-A`: review the 17 P0 packet handler rows.
+2. Use `Server.csproj` build plus `-compileonly -nocache` as the verification gate for source batches.
+3. If compile-only reports future errors, repair those exact runtime compile blockers before backlog risk work.
+4. After packet handlers, proceed to P0 save compatibility triage.
 
 ## Reorganization Status
 

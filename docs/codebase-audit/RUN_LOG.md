@@ -2819,3 +2819,123 @@ Scope: Deterministic phase runner log for the Confictura codebase audit and reor
 - Command: `git status --short --ignored docs/codebase-audit/outputs/post-audit-next-steps.md docs/codebase-audit/outputs/post-audit-batch-plan.csv`
 - Result: Confirmed new post-audit output files are ignored by the output directory policy and require force-staging.
 - Output path: `docs/codebase-audit/outputs/README.md`
+
+### 2026-06-06T14:24:35.6662555-05:00
+
+- Affected phase: Post-audit compile-only verification
+- Cwd: `D:\ConficturaUO`
+- Command: `manual source edits`
+- Result: Added `-compileonly` argument parsing and early return after successful script compilation in `Main.cs`.
+- Output path: `Data/System/Source/Main.cs`
+
+### 2026-06-06T14:24:35.6662555-05:00
+
+- Affected phase: Post-audit compile-only verification
+- Cwd: `D:\ConficturaUO`
+- Command: `Copy-Item` backup of `Data/Data*.bin` and `Data/Data.hash`
+- Result: Backed up `Data.bin` and `Data.hash` to `%TEMP%\confictura-compileonly-backup-20260606T141855`.
+- Output path: `docs/codebase-audit/outputs/compile-only-verification-baseline.md`
+
+### 2026-06-06T14:24:35.6662555-05:00
+
+- Affected phase: Post-audit compile-only verification
+- Cwd: `D:\ConficturaUO`
+- Command: `& 'C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\MSBuild.exe' Data/System/Source/Server.csproj /p:Configuration=Debug /p:Platform=x86 /v:minimal`
+- Result: Passed. MSBuild reported `Server -> D:\ConficturaUO\ConficturaServer.exe`.
+- Output path: `docs/codebase-audit/outputs/compile-only-verification-baseline.md`
+
+### 2026-06-06T14:24:35.6662555-05:00
+
+- Affected phase: Post-audit compile-only verification
+- Cwd: `D:\ConficturaUO`
+- Command: `.\ConficturaServer.exe -compileonly -nocache`
+- Result: First run failed with duplicate `TargetFrameworkAttribute` from generated `Data/Scripts/obj/Debug/.NETFramework,Version=v4.8.AssemblyAttributes.cs`; no `Listening:` output was emitted.
+- Output path: `docs/codebase-audit/outputs/compile-only-verification-baseline.md`
+
+### 2026-06-06T14:24:35.6662555-05:00
+
+- Affected phase: Post-audit compile-only verification
+- Cwd: `D:\ConficturaUO`
+- Command: `manual source edits`
+- Result: Updated `ScriptCompiler.GetScripts` to skip exact `bin` and `obj` directories during runtime script discovery.
+- Output path: `Data/System/Source/ScriptCompiler.cs`
+
+### 2026-06-06T14:24:35.6662555-05:00
+
+- Affected phase: Post-audit compile-only verification
+- Cwd: `D:\ConficturaUO`
+- Command: `& 'C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\MSBuild.exe' Data/System/Source/Server.csproj /p:Configuration=Debug /p:Platform=x86 /v:minimal`
+- Result: Passed after the generated-folder runtime compiler fix.
+- Output path: `docs/codebase-audit/outputs/compile-only-verification-baseline.md`
+
+### 2026-06-06T14:24:35.6662555-05:00
+
+- Affected phase: Post-audit compile-only verification
+- Cwd: `D:\ConficturaUO`
+- Command: `.\ConficturaServer.exe -compileonly -nocache`
+- Result: Passed with exit code 0. Output included `Scripts: Compile-only verification completed successfully.` and no `Listening:` lines.
+- Output path: `docs/codebase-audit/outputs/compile-only-verification-baseline.md`
+
+### 2026-06-06T14:24:35.6662555-05:00
+
+- Affected phase: Post-audit compile-only verification
+- Cwd: `D:\ConficturaUO`
+- Command: `Copy-Item` restore of backed-up `Data/Data.bin` and `Data/Data.hash`
+- Result: Restored script cache artifacts from the pre-verification backup.
+- Output path: `docs/codebase-audit/outputs/compile-only-verification-baseline.md`
+
+### 2026-06-06T14:24:35.6662555-05:00
+
+- Affected phase: Post-audit compile-only verification
+- Cwd: `D:\ConficturaUO`
+- Command: `git restore -- ConficturaServer.exe ConficturaServer.exe.config ConficturaServer.pdb`
+- Result: Restored tracked generated server artifacts produced by the source builds.
+- Output path: `docs/codebase-audit/outputs/compile-only-verification-baseline.md`
+
+### 2026-06-06T14:24:35.6662555-05:00
+
+- Affected phase: Post-audit compile-only verification
+- Cwd: `D:\ConficturaUO`
+- Command: `git status --short`
+- Result: Confirmed only `Data/System/Source/Main.cs` and `Data/System/Source/ScriptCompiler.cs` remained modified before recording verification outputs.
+- Output path: `docs/codebase-audit/RUN_LOG.md`
+
+### 2026-06-06T14:24:35.6662555-05:00
+
+- Affected phase: Post-audit compile-only verification
+- Cwd: `D:\ConficturaUO`
+- Command: `git diff --check`
+- Result: Passed with no whitespace errors for source and audit-output edits; Git emitted expected `core.autocrlf=true` line-ending warnings.
+- Output path: `docs/codebase-audit/RUN_LOG.md`
+
+### 2026-06-06T14:24:35.6662555-05:00
+
+- Affected phase: Post-audit compile-only verification
+- Cwd: `D:\ConficturaUO`
+- Command: `rg -n -F -- "-compileonly" Data/System/Source/Main.cs docs/codebase-audit/outputs/compile-only-verification-baseline.md docs/codebase-audit/outputs/post-audit-next-steps.md`
+- Result: Confirmed `-compileonly` is present in argument parsing, argument display, and audit verification outputs.
+- Output path: `Data/System/Source/Main.cs`
+
+### 2026-06-06T14:24:35.6662555-05:00
+
+- Affected phase: Post-audit compile-only verification
+- Cwd: `D:\ConficturaUO`
+- Command: `rg -n -F "Project output folders" Data/System/Source/ScriptCompiler.cs`
+- Result: Confirmed the runtime compiler documents why generated project output folders are skipped.
+- Output path: `Data/System/Source/ScriptCompiler.cs`
+
+### 2026-06-06T14:24:35.6662555-05:00
+
+- Affected phase: Post-audit compile-only verification
+- Cwd: `D:\ConficturaUO`
+- Command: `git diff --cached --check`
+- Result: Passed with no whitespace errors.
+- Output path: `docs/codebase-audit/RUN_LOG.md`
+
+### 2026-06-06T14:24:35.6662555-05:00
+
+- Affected phase: Post-audit compile-only verification
+- Cwd: `D:\ConficturaUO`
+- Command: `git diff --cached --name-only`
+- Result: Confirmed staged files were limited to `Main.cs`, `ScriptCompiler.cs`, run log, output index, compile-only verification output, and updated post-audit baseline notes.
+- Output path: `docs/codebase-audit/RUN_LOG.md`
