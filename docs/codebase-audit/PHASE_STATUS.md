@@ -2,11 +2,13 @@
 
 Initialized: 2026-06-05T16:15:59.8020730-05:00
 
-Last updated: 2026-06-06T13:58:21.5320530-05:00
+Last updated: 2026-06-06T14:18:55.2116400-05:00
 
 Branch: `SAR`
 
 Audit closeout HEAD: `4120e1be docs: finalize audit phase 14 status`
+
+Post-audit live-runtime baseline HEAD: `9dce70de docs: record source build baseline`
 
 Scope: Deterministic phase runner state for the Confictura codebase audit and reorganization program.
 
