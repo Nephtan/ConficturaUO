@@ -3954,3 +3954,19 @@ Scope: Deterministic phase runner log for the Confictura codebase audit and reor
 - Command: Update `post-batch-b-save-compatibility-triage.csv`, append reviewed save-compatibility rows to `post-audit-active-backlog-status.csv`, and update status/readme/next-step artifacts.
 - Result: `post-batch-b-save-compatibility-triage.csv` now has 304 total rows, 265 reviewed rows, 39 queued rows, and 4 `POST-BATCH-B-16A` rows; active backlog overlay now has 263 rows, including 246 active save-compatibility dispositions.
 - Output path: `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
+
+### 2026-06-07T12:49:12.5066183-05:00
+
+- Affected phase: Post-audit `POST-BATCH-B-17A` `Custom:Government System` serializer save-compatibility triage
+- Cwd: `D:\ConficturaUO`
+- Command: Source review of `CityResurrectionStone.cs:131-137`, `CityResurrectionStone.cs:237-242`, `CityResurrectionStone.cs:278-320`, `LandLord.cs:148-165`, `MallToken.cs:103-122`, `ResourceBox.cs:210-248`, and `CityLandLord.cs:262-290`.
+- Result: Reviewed 5 `Custom:Government System` rows. Classified 4 rows as `SafeNoChange` and 1 row as `ConfirmedIssue`; no source files changed.
+- Output path: `docs/codebase-audit/outputs/post-batch-b-save-compatibility-triage.csv`
+
+### 2026-06-07T12:49:12.5066183-05:00
+
+- Affected phase: Post-audit `POST-BATCH-B-17A` `Custom:Government System` serializer save-compatibility triage
+- Cwd: `D:\ConficturaUO`
+- Command: Update `post-batch-b-save-compatibility-triage.csv`, append reviewed save-compatibility rows to `post-audit-active-backlog-status.csv`, and update status/readme/next-step artifacts.
+- Result: `post-batch-b-save-compatibility-triage.csv` now has 304 total rows, 270 reviewed rows, 34 queued rows, and 5 `POST-BATCH-B-17A` rows; active backlog overlay now has 268 rows, including 251 active save-compatibility dispositions.
+- Output path: `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
