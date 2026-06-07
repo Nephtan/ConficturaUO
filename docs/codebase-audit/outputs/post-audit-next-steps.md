@@ -1,6 +1,6 @@
 # Post-Audit Next Steps
 
-Generated: 2026-06-07T13:29:11.7318672-05:00
+Generated: 2026-06-07T13:33:13.4111031-05:00
 
 ## Current State
 
@@ -46,6 +46,7 @@ The audit phase runner completed Phases 0 through 14 and the worktree was clean 
 - `c245cdac docs: triage book serializers`
 - `40d81975 docs: triage clothing serializers`
 - `e6f1d1cf docs: triage container serializer`
+- `c36085d8 docs: triage deed serializer`
 
 `Server.csproj` Debug/x86 build passed in the source-build baseline. Runtime script inventory found 6,581 live-visible `.cs` files under `Data/Scripts`, excluding `bin` and `obj`.
 
@@ -100,15 +101,15 @@ Active backlog reconciliation:
 
 - `post-audit-active-backlog-status.csv` maps `RB-03235` through `RB-03251` to the packet-handler review artifact.
 - Active packet-handler disposition is 3 `Fixed` rows and 14 `ReviewedNoChange` rows.
-- `post-audit-active-backlog-status.csv` also maps 273 reviewed save-compatibility rows from `POST-BATCH-B-27A` and prior `POST-BATCH-B` subbatches to the save triage artifact.
+- `post-audit-active-backlog-status.csv` also maps 277 reviewed save-compatibility rows from `POST-BATCH-B-28A` and prior `POST-BATCH-B` subbatches to the save triage artifact.
 - The canonical Phase 13 `repair-backlog.csv` remains unchanged as historical generated evidence.
 
 Started: `POST-BATCH-B` P0 save compatibility triage in `post-batch-b-save-compatibility-triage.csv`.
 
 - The triage file scopes all 304 P0 critical save-compatibility rows.
-- Source-reviewed decisions cover 292 rows across completed `POST-BATCH-B` groups through `Items:Deeds`.
-- Current reviewed decisions are 1 `ConfirmedIssue`, 51 `FalsePositive`, 53 `IntentionalLegacy`, 187 `SafeNoChange`.
-- The remaining 12 rows are queued for later source review and do not approve source edits.
+- Source-reviewed decisions cover 296 rows across completed `POST-BATCH-B` groups through `Items:Food`.
+- Current reviewed decisions are 1 `ConfirmedIssue`, 52 `FalsePositive`, 55 `IntentionalLegacy`, 188 `SafeNoChange`.
+- The remaining 8 rows are queued for later source review and do not approve source edits.
 - No serialized type name, namespace, field order, version, or file-location change is approved by this triage batch.
 
 Completed review-only subbatch: `POST-BATCH-B-02A` reviewed XMLSpawner central persistence rows in `BaseXmlSpawner.cs`, `XmlAttachment.cs`, `XmlSpawner2.cs`, and `XmlQuestPoints.cs`.
@@ -379,7 +380,7 @@ Completed review-only subbatch: `POST-BATCH-B-27A` reviewed `Items:Deeds` serial
 
 Next:
 
-1. Continue `POST-BATCH-B` with remaining queued systems grouped by system and file, starting with `Items:Food`.
+1. Continue `POST-BATCH-B` with remaining queued systems grouped by system and file, starting with `Items:Weapons`.
 2. Do not change serialized layout, type names, namespaces, or file locations without a migration plan and explicit approval.
 3. Keep each remaining review-only commit scoped to one system group, or one file when a group is large.
 
