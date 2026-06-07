@@ -3147,3 +3147,35 @@ Scope: Deterministic phase runner log for the Confictura codebase audit and reor
 - Command: `git diff --name-only`; `git diff --check`
 - Result: Changed-file scope was limited to five audit artifacts before this run-log update; whitespace check passed with expected `core.autocrlf=true` line-ending warnings. No source files changed, so no source build or compile-only smoke was run for this review-only batch.
 - Output path: `docs/codebase-audit/RUN_LOG.md`
+
+### 2026-06-06T22:07:09.5100825-05:00
+
+- Affected phase: Post-audit `POST-BATCH-B-02C` `System:Obsolete` serializer save-compatibility triage
+- Cwd: `D:\ConficturaUO`
+- Command: `git status --short`; `rg --files -g AGENTS.md`; read root and audit-scoped `AGENTS.md` instructions.
+- Result: Worktree was clean before editing; applicable audit instruction scope was confirmed before updating audit artifacts.
+- Output path: `docs/codebase-audit/AGENTS.md`
+
+### 2026-06-06T22:07:09.5100825-05:00
+
+- Affected phase: Post-audit `POST-BATCH-B-02C` `System:Obsolete` serializer save-compatibility triage
+- Cwd: `D:\ConficturaUO`
+- Command: Source review of 28 queued `System:Obsolete` serializer rows in `post-batch-b-save-compatibility-triage.csv`.
+- Result: Reviewed obsolete pigment, faction, ethics, town, election, voter, candidate, order, reaction, reflector, and persistence serializers in `Data/Scripts/System/Obsolete/Obsolete.cs`; classified 12 rows as `FalsePositive`, 11 rows as `SafeNoChange`, and 5 rows as `IntentionalLegacy`; no source or serialized-layout edits were approved.
+- Output path: `docs/codebase-audit/outputs/post-batch-b-save-compatibility-triage.csv`
+
+### 2026-06-06T22:07:09.5100825-05:00
+
+- Affected phase: Post-audit `POST-BATCH-B-02C` `System:Obsolete` serializer save-compatibility triage
+- Cwd: `D:\ConficturaUO`
+- Command: Update `post-batch-b-save-compatibility-triage.csv`, append reviewed save-compatibility rows to `post-audit-active-backlog-status.csv`, and update status/readme/next-step artifacts.
+- Result: `post-batch-b-save-compatibility-triage.csv` now has 304 total rows, 77 reviewed rows, 227 queued rows, 0 reviewed rows missing decisions/evidence/actions, and 0 queued rows carrying decisions; active backlog overlay now has 75 rows, including 28 save-compatibility rows for `POST-BATCH-B-02C`.
+- Output path: `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
+
+### 2026-06-06T22:07:09.5100825-05:00
+
+- Affected phase: Post-audit `POST-BATCH-B-02C` `System:Obsolete` serializer save-compatibility triage
+- Cwd: `D:\ConficturaUO`
+- Command: `Import-Csv` verification of `post-batch-b-save-compatibility-triage.csv` and `post-audit-active-backlog-status.csv`; `git diff --name-only -- Data`; `git diff --check`.
+- Result: Parsed 304 save-triage rows with 77 `Reviewed`, 227 `Queued`, 28 `POST-BATCH-B-02C` rows, 12 `FalsePositive`, 5 `IntentionalLegacy`, and 11 `SafeNoChange`; active overlay has one row for each 58 active `POST-BATCH-B-02*` save disposition and 75 rows total; no `Data` files changed; whitespace check passed with expected `core.autocrlf=true` line-ending warnings.
+- Output path: `docs/codebase-audit/outputs/post-batch-b-save-compatibility-triage.csv`
