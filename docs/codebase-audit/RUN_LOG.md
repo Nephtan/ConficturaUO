@@ -3682,3 +3682,27 @@ Scope: Deterministic phase runner log for the Confictura codebase audit and reor
 - Command: `Import-Csv` verification of `post-batch-b-save-compatibility-triage.csv` and `post-audit-active-backlog-status.csv`; `git diff --name-only -- Data`; `git diff --check`.
 - Result: Parsed 304 save-triage rows with 181 `Reviewed`, 123 `Queued`, 6 `POST-BATCH-B-05B` rows, 5 `FalsePositive`, and 1 `IntentionalLegacy`; active overlay has one row for each 162 active `POST-BATCH-B-02*`, `POST-BATCH-B-03*`, `POST-BATCH-B-04*`, and `POST-BATCH-B-05*` save disposition and 179 rows total; no `Data` files changed; whitespace check passed with expected `core.autocrlf=true` line-ending warnings.
 - Output path: `docs/codebase-audit/outputs/post-batch-b-save-compatibility-triage.csv`
+
+### 2026-06-06T23:29:44.4932595-05:00
+
+- Affected phase: Post-audit `POST-BATCH-B-05C` `System:Misc/Spawning.cs` serializer save-compatibility triage
+- Cwd: `D:\ConficturaUO`
+- Command: Source review of `Spawning.cs:4792-5163` and `Spawning.cs:6245-6375`.
+- Result: `PremiumSpawner` and `Spawner` write version 4 and deserialize through versions 4, 3/2, 1, and 0 with legacy default handling. Classified both rows as `IntentionalLegacy`. No source files changed.
+- Output path: `docs/codebase-audit/outputs/post-batch-b-save-compatibility-triage.csv`
+
+### 2026-06-06T23:29:44.4932595-05:00
+
+- Affected phase: Post-audit `POST-BATCH-B-05C` `System:Misc/Spawning.cs` serializer save-compatibility triage
+- Cwd: `D:\ConficturaUO`
+- Command: Update `post-batch-b-save-compatibility-triage.csv`, append reviewed save-compatibility rows to `post-audit-active-backlog-status.csv`, and update status/readme/next-step artifacts.
+- Result: `post-batch-b-save-compatibility-triage.csv` now has 304 total rows, 183 reviewed rows, 121 queued rows, and 2 `POST-BATCH-B-05C` rows, all `IntentionalLegacy`; active backlog overlay now has 181 rows, including 164 active save-compatibility dispositions.
+- Output path: `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
+
+### 2026-06-06T23:31:47.1559311-05:00
+
+- Affected phase: Post-audit `POST-BATCH-B-05C` `System:Misc/Spawning.cs` serializer save-compatibility triage
+- Cwd: `D:\ConficturaUO`
+- Command: `Import-Csv` verification of `post-batch-b-save-compatibility-triage.csv` and `post-audit-active-backlog-status.csv`; `git diff --name-only -- Data`; `git diff --check`.
+- Result: Parsed 304 save-triage rows with 183 `Reviewed`, 121 `Queued`, 2 `POST-BATCH-B-05C` rows, and 2 `IntentionalLegacy`; `System:Misc` has 0 queued rows; active overlay has one row for each 164 active `POST-BATCH-B-02*`, `POST-BATCH-B-03*`, `POST-BATCH-B-04*`, and `POST-BATCH-B-05*` save disposition and 181 rows total; no `Data` files changed; whitespace check passed with expected `core.autocrlf=true` line-ending warnings.
+- Output path: `docs/codebase-audit/outputs/post-batch-b-save-compatibility-triage.csv`
