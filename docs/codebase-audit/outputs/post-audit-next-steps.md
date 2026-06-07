@@ -1,6 +1,6 @@
 # Post-Audit Next Steps
 
-Generated: 2026-06-06T23:20:03.8668234-05:00
+Generated: 2026-06-06T23:23:14.4900504-05:00
 
 ## Current State
 
@@ -225,6 +225,12 @@ Completed review-only subbatch: `POST-BATCH-B-04C` reviewed Homestead crop seria
 - 11 rows were reviewed with no source edits.
 - 11 rows were classified `SafeNoChange` where source review confirmed crop field/order alignment or version-only plant wrapper serializers.
 - Homestead save-compatibility triage is complete with 18 reviewed rows and no source edits.
+- No row was classified `ConfirmedIssue`, `NeedsMigrationPlan`, or `NeedsHumanDecision`.
+
+Completed review-only subbatch: `POST-BATCH-B-05A` reviewed `System:Misc` helper serializers in `AOS.cs`, `ShardPoller.cs`, and `TextDefinition.cs`.
+
+- 6 rows were reviewed with no source edits.
+- 6 rows were classified `FalsePositive` because source review confirmed helper serializer/reader-constructor patterns where base serializer override checks do not apply.
 - No row was classified `ConfirmedIssue`, `NeedsMigrationPlan`, or `NeedsHumanDecision`.
 
 Next:
