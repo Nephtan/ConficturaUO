@@ -80,14 +80,14 @@ Active backlog reconciliation:
 
 - `post-audit-active-backlog-status.csv` maps `RB-03235` through `RB-03251` to the packet-handler review artifact.
 - Active packet-handler disposition is 3 `Fixed` rows and 14 `ReviewedNoChange` rows.
-- `post-audit-active-backlog-status.csv` also maps 189 reviewed save-compatibility rows from `POST-BATCH-B-02A`, `POST-BATCH-B-02B`, `POST-BATCH-B-02C`, `POST-BATCH-B-03A` through `POST-BATCH-B-03P`, `POST-BATCH-B-04A` through `POST-BATCH-B-04C`, `POST-BATCH-B-05A` through `POST-BATCH-B-05C`, `POST-BATCH-B-06A`, and blocker batch `POST-BATCH-B-07A` to the save triage artifact.
+- `post-audit-active-backlog-status.csv` also maps 189 reviewed save-compatibility rows from `POST-BATCH-B-02A`, `POST-BATCH-B-02B`, `POST-BATCH-B-02C`, `POST-BATCH-B-03A` through `POST-BATCH-B-03P`, `POST-BATCH-B-04A` through `POST-BATCH-B-04C`, `POST-BATCH-B-05A` through `POST-BATCH-B-05C`, `POST-BATCH-B-06A`, `POST-BATCH-B-07A`, and transient-item decision batch `POST-BATCH-B-07B` to the save triage artifact.
 - The canonical Phase 13 `repair-backlog.csv` remains unchanged as historical generated evidence.
 
 Started: `POST-BATCH-B` P0 save compatibility triage in `post-batch-b-save-compatibility-triage.csv`.
 
 - The triage file scopes all 304 P0 critical save-compatibility rows.
 - Source-reviewed decisions cover the 19 `ServerCore` high-blast-radius rows, 30 XMLSpawner rows, 28 `System:Obsolete` rows, 74 `Custom:Mobiles` rows, 18 Homestead rows, 14 `System:Misc` rows, 13 `Items:Trades` rows, and 12 `Items:Misc` rows.
-- Current reviewed decisions are 38 `FalsePositive`, 34 `IntentionalLegacy`, 133 `SafeNoChange`, 2 `NeedsHumanDecision`, and 1 `NeedsMigrationPlan`.
+- Current reviewed decisions are 38 `FalsePositive`, 34 `IntentionalLegacy`, and 136 `SafeNoChange`.
 - The remaining 96 rows are queued for later source review and do not approve source edits.
 - No serialized type name, namespace, field order, version, or file-location change is approved by this triage batch.
 
@@ -256,21 +256,21 @@ Completed review-only subbatch: `POST-BATCH-B-06A` reviewed `Items:Trades` seria
 - `Items:Trades` save-compatibility triage is complete with 13 reviewed rows and no source edits.
 - No row was classified `ConfirmedIssue`, `NeedsMigrationPlan`, or `NeedsHumanDecision`.
 
-Blocked review-only subbatch: `POST-BATCH-B-07A` reviewed `Items:Misc` serializers.
+Completed review-only subbatch: `POST-BATCH-B-07A` reviewed `Items:Misc` serializers.
 
 - 12 rows were reviewed with no source edits.
 - 5 rows were classified `SafeNoChange`, 3 rows were classified `IntentionalLegacy`, and 1 row was classified `FalsePositive`.
-- 1 row was classified `NeedsMigrationPlan`: `SERIAL-0964` / `AcidSlime` has empty `Serialize` and `Deserialize` overrides on an `Item` subclass, so adding standard base/version serialization would change save payloads for any existing zero-payload AcidSlime saves.
-- 2 rows were classified `NeedsHumanDecision`: `SERIAL-0973` / `FirebombField` and `SERIAL-1006` / `PoolOfAcid` explicitly comment that these transient `Item` subclasses should not be serialized, while their overrides omit `base.Serialize` and `base.Deserialize`.
-- Exact decision needed: decide whether these transient hazard-field items are accepted no-payload save exceptions, must be deleted or excluded before saves, or require a versioned migration plan before source changes.
-- Attempted checks: source review of `AcidSlime.cs:103-108`, `Firebomb.cs:241-249`, and `PoolOfAcid.cs:102-110`; no source edits were made.
-- Next safe action: get save-policy approval before patching any of these rows; after that, continue `POST-BATCH-B` with `Items:Houses`.
+- `SERIAL-0964` / `AcidSlime`, `SERIAL-0973` / `FirebombField`, and `SERIAL-1006` / `PoolOfAcid` were initially blocked pending save-policy review because they are transient `Item` subclasses with empty or no-payload serializer overrides.
+- `POST-BATCH-B-07B` applies the human decision: these three classes are approved transient no-payload hazard-effect exceptions that should not survive world save/load.
+- The three transient rows are now classified `SafeNoChange`, not `FalsePositive`, because the serializer finding was real but accepted by policy.
+- `Items:Misc` save-compatibility triage is complete with 12 reviewed rows and no source edits.
+- No row remains classified `ConfirmedIssue`, `NeedsMigrationPlan`, or `NeedsHumanDecision`.
 
 Next:
 
-1. Resolve the `POST-BATCH-B-07A` transient-item save-policy decision before source fixes or further autonomous save triage.
+1. Continue `POST-BATCH-B` with `Items:Houses`, keeping review-only commits scoped by system group or one file when the system group is large.
 2. Do not change serialized layout, type names, namespaces, or file locations without a migration plan and explicit approval.
-3. After approval, continue `POST-BATCH-B` with `Items:Houses`, keeping review-only commits scoped by system group or one file when the system group is large.
+3. After `Items:Houses`, continue with `Trades:Bulk Orders`, `Items:Magical`, `Items:Special`, `Mobiles:Base`, then remaining queued systems grouped by system and file.
 
 ## Reorganization Status
 
