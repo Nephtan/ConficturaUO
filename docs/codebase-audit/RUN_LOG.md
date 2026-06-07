@@ -3099,3 +3099,51 @@ Scope: Deterministic phase runner log for the Confictura codebase audit and reor
 - Command: `git diff --name-only`; `git diff --check`
 - Result: Changed-file scope was limited to six audit artifacts under `docs/codebase-audit`; whitespace check passed with expected `core.autocrlf=true` line-ending warnings. No source files changed, so no source build or compile-only smoke was run for this review-only batch.
 - Output path: `docs/codebase-audit/RUN_LOG.md`
+
+### 2026-06-06T21:22:59.8315240-05:00
+
+- Affected phase: Post-audit `POST-BATCH-B-02B` XMLSpawner remaining serializer save-compatibility triage
+- Cwd: `D:\ConficturaUO`
+- Command: `git status --short`
+- Result: Clean at the start of the review-only subbatch.
+- Output path: `docs/codebase-audit/PHASE_STATUS.md`
+
+### 2026-06-06T21:22:59.8315240-05:00
+
+- Affected phase: Post-audit `POST-BATCH-B-02B` XMLSpawner remaining serializer save-compatibility triage
+- Cwd: `D:\ConficturaUO`
+- Command: `rg --files -g AGENTS.md`; read `docs/codebase-audit/AGENTS.md`
+- Result: Confirmed applicable root and audit-scoped instruction files before editing audit artifacts.
+- Output path: `docs/codebase-audit/AGENTS.md`
+
+### 2026-06-06T21:22:59.8315240-05:00
+
+- Affected phase: Post-audit `POST-BATCH-B-02B` XMLSpawner remaining serializer save-compatibility triage
+- Cwd: `D:\ConficturaUO`
+- Command: Source review of 20 queued XMLSpawner serializer rows in `post-batch-b-save-compatibility-triage.csv`.
+- Result: Reviewed XMLSpawner attachment, item, mobile, challenge, region, and quest serializers; classified 15 rows as `SafeNoChange` and 5 rows as `IntentionalLegacy`; no source or serialized-layout edits were approved.
+- Output path: `docs/codebase-audit/outputs/post-batch-b-save-compatibility-triage.csv`
+
+### 2026-06-06T21:22:59.8315240-05:00
+
+- Affected phase: Post-audit `POST-BATCH-B-02B` XMLSpawner remaining serializer save-compatibility triage
+- Cwd: `D:\ConficturaUO`
+- Command: Update `post-batch-b-save-compatibility-triage.csv`, append reviewed save-compatibility rows to `post-audit-active-backlog-status.csv`, and update status/readme/next-step artifacts.
+- Result: `post-batch-b-save-compatibility-triage.csv` now has 304 total rows, 49 reviewed rows, 255 queued rows, 0 reviewed rows missing decisions/evidence/actions, and 0 queued rows carrying decisions; active backlog overlay now has 47 rows, including 20 save-compatibility rows for `POST-BATCH-B-02B`.
+- Output path: `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
+
+### 2026-06-06T21:22:59.8315240-05:00
+
+- Affected phase: Post-audit `POST-BATCH-B-02B` XMLSpawner remaining serializer save-compatibility triage
+- Cwd: `D:\ConficturaUO`
+- Command: `Import-Csv` verification of `post-batch-b-save-compatibility-triage.csv` and `post-audit-active-backlog-status.csv`.
+- Result: Parsed 304 save-triage rows with 49 `Reviewed`, 255 `Queued`, 20 `POST-BATCH-B-02B` rows, 15 `SafeNoChange`, and 5 `IntentionalLegacy`; parsed 47 active backlog overlay rows with 17 packet rows, 10 `POST-BATCH-B-02A` rows, and 20 `POST-BATCH-B-02B` rows.
+- Output path: `docs/codebase-audit/outputs/post-batch-b-save-compatibility-triage.csv`
+
+### 2026-06-06T21:22:59.8315240-05:00
+
+- Affected phase: Post-audit `POST-BATCH-B-02B` XMLSpawner remaining serializer save-compatibility triage
+- Cwd: `D:\ConficturaUO`
+- Command: `git diff --name-only`; `git diff --check`
+- Result: Changed-file scope was limited to five audit artifacts before this run-log update; whitespace check passed with expected `core.autocrlf=true` line-ending warnings. No source files changed, so no source build or compile-only smoke was run for this review-only batch.
+- Output path: `docs/codebase-audit/RUN_LOG.md`

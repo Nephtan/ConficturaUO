@@ -2,7 +2,7 @@
 
 Initialized: 2026-06-05T16:15:59.8020730-05:00
 
-Last updated: 2026-06-06T20:37:00.9767061-05:00
+Last updated: 2026-06-06T21:22:59.8315240-05:00
 
 Branch: `SAR`
 
@@ -14,13 +14,13 @@ Post-audit compile-only implementation HEAD: `09b7b7e5 feat: add compile-only sc
 
 Post-audit latest implemented source batch: `3259f43b fix: harden packet handler paths`
 
-Post-audit latest audit-state batch: `ef8d35b9 docs: reconcile post-audit backlog state`
+Post-audit latest committed audit-state batch before the current review: `5396b5d1 docs: triage XMLSpawner save compatibility`
 
 Post-audit latest runtime-risk batch: `POST-BATCH-A` packet-handler review and focused source fixes, recorded in `outputs/post-batch-a-packet-handler-review.csv`; runtime hook map, `Server.csproj` Debug/x86 build, and `.\ConficturaServer.exe -compileonly -nocache` verification passed before commit.
 
-Post-audit active backlog overlay: `outputs/post-audit-active-backlog-status.csv` preserves historical `repair-backlog.csv` while recording 17 packet-handler dispositions and 10 `POST-BATCH-B-02A` save-compatibility dispositions.
+Post-audit active backlog overlay: `outputs/post-audit-active-backlog-status.csv` preserves historical `repair-backlog.csv` while recording 17 packet-handler dispositions and 30 reviewed save-compatibility dispositions across `POST-BATCH-B-02A` and `POST-BATCH-B-02B`.
 
-Post-audit save compatibility triage started: `outputs/post-batch-b-save-compatibility-triage.csv` scopes all 304 P0 critical save-compatibility rows, records source-reviewed decisions for 19 `ServerCore` rows and 10 `POST-BATCH-B-02A` XMLSpawner central persistence rows, queues 275 remaining rows for later `POST-BATCH-B` review, and approves no source or serialized-layout edits.
+Post-audit save compatibility triage started: `outputs/post-batch-b-save-compatibility-triage.csv` scopes all 304 P0 critical save-compatibility rows, records source-reviewed decisions for 19 `ServerCore` rows plus 30 XMLSpawner rows across `POST-BATCH-B-02A` and `POST-BATCH-B-02B`, queues 255 remaining rows for later `POST-BATCH-B` review, and approves no source or serialized-layout edits.
 
 Scope: Deterministic phase runner state for the Confictura codebase audit and reorganization program.
 
