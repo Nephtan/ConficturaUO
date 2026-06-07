@@ -2,7 +2,7 @@
 
 Initialized: 2026-06-05T16:15:59.8020730-05:00
 
-Last updated: 2026-06-07T11:53:50.3593009-05:00
+Last updated: 2026-06-07T12:04:24.6776910-05:00
 
 Branch: `SAR`
 
@@ -14,15 +14,15 @@ Post-audit compile-only implementation HEAD: `09b7b7e5 feat: add compile-only sc
 
 Post-audit latest implemented source batch: `3259f43b fix: harden packet handler paths`
 
-Post-audit latest committed audit-state batch before the current review: `67d0981f docs: record items misc save blockers`
+Post-audit latest committed audit-state batch before the current review: `cd5d7a22 docs: accept transient item save exceptions`
 
 Post-audit latest runtime-risk batch: `POST-BATCH-A` packet-handler review and focused source fixes, recorded in `outputs/post-batch-a-packet-handler-review.csv`; runtime hook map, `Server.csproj` Debug/x86 build, and `.\ConficturaServer.exe -compileonly -nocache` verification passed before commit.
 
-Post-audit active backlog overlay: `outputs/post-audit-active-backlog-status.csv` preserves historical `repair-backlog.csv` while recording 17 packet-handler dispositions and 189 reviewed save-compatibility dispositions across `POST-BATCH-B-02A`, `POST-BATCH-B-02B`, `POST-BATCH-B-02C`, `POST-BATCH-B-03A` through `POST-BATCH-B-03P`, `POST-BATCH-B-04A` through `POST-BATCH-B-04C`, `POST-BATCH-B-05A` through `POST-BATCH-B-05C`, `POST-BATCH-B-06A`, `POST-BATCH-B-07A`, and `POST-BATCH-B-07B`.
+Post-audit active backlog overlay: `outputs/post-audit-active-backlog-status.csv` preserves historical `repair-backlog.csv` while recording 17 packet-handler dispositions and 201 reviewed save-compatibility dispositions across `POST-BATCH-B-02A`, `POST-BATCH-B-02B`, `POST-BATCH-B-02C`, `POST-BATCH-B-03A` through `POST-BATCH-B-03P`, `POST-BATCH-B-04A` through `POST-BATCH-B-04C`, `POST-BATCH-B-05A` through `POST-BATCH-B-05C`, `POST-BATCH-B-06A`, `POST-BATCH-B-07A`, `POST-BATCH-B-07B`, and `POST-BATCH-B-08A`.
 
-Post-audit save compatibility triage started: `outputs/post-batch-b-save-compatibility-triage.csv` scopes all 304 P0 critical save-compatibility rows, records source-reviewed decisions for 19 `ServerCore` rows, 30 XMLSpawner rows, 28 `System:Obsolete` rows, 74 `Custom:Mobiles` rows, 18 Homestead rows, 14 `System:Misc` rows, 13 `Items:Trades` rows, and 12 `Items:Misc` rows, queues 96 remaining rows for later `POST-BATCH-B` review, and approves no source or serialized-layout edits.
+Post-audit save compatibility triage started: `outputs/post-batch-b-save-compatibility-triage.csv` scopes all 304 P0 critical save-compatibility rows, records source-reviewed decisions for 19 `ServerCore` rows, 30 XMLSpawner rows, 28 `System:Obsolete` rows, 74 `Custom:Mobiles` rows, 18 Homestead rows, 14 `System:Misc` rows, 13 `Items:Trades` rows, 12 `Items:Misc` rows, and 12 `Items:Houses` rows, queues 84 remaining rows for later `POST-BATCH-B` review, and approves no source or serialized-layout edits.
 
-Post-audit transient-item decision: `POST-BATCH-B-07B` accepts `AcidSlime`, `FirebombField`, and `PoolOfAcid` as transient no-payload hazard-effect exceptions that should not survive world save/load. No source or serialized-layout edit is approved by this decision.
+Post-audit latest save-triage subbatch: `POST-BATCH-B-08A` reviewed `Items:Houses` serializers and classified 9 rows as `SafeNoChange`, 2 rows as `FalsePositive`, and 1 row as `IntentionalLegacy`. No source or serialized-layout edit is approved by this review.
 
 Scope: Deterministic phase runner state for the Confictura codebase audit and reorganization program.
 

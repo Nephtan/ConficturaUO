@@ -3778,3 +3778,27 @@ Scope: Deterministic phase runner log for the Confictura codebase audit and reor
 - Command: `Import-Csv` verification of `post-batch-b-save-compatibility-triage.csv` and `post-audit-active-backlog-status.csv`; `git diff --name-only -- Data`; `git diff --check`.
 - Result: Parsed 304 save-triage rows with 208 `Reviewed`, 96 `Queued`, 3 `POST-BATCH-B-07B` rows, and 3 `SafeNoChange`; there are 0 `NeedsHumanDecision` rows and 0 `NeedsMigrationPlan` rows; active overlay has one row for each 189 active `POST-BATCH-B-02*`, `POST-BATCH-B-03*`, `POST-BATCH-B-04*`, `POST-BATCH-B-05*`, `POST-BATCH-B-06*`, and `POST-BATCH-B-07*` save disposition and 206 rows total; no `Data` files changed; whitespace check passed with expected `core.autocrlf=true` line-ending warnings.
 - Output path: `docs/codebase-audit/outputs/post-batch-b-save-compatibility-triage.csv`
+
+### 2026-06-07T12:04:24.6776910-05:00
+
+- Affected phase: Post-audit `POST-BATCH-B-08A` `Items:Houses` serializer save-compatibility triage
+- Cwd: `D:\ConficturaUO`
+- Command: Source review of `BaseHouse.cs:2921-3162`, `BaseHouse.cs:4084-4094`, `HouseFoundation.cs:853-933`, `HouseFoundation.cs:2077-2128`, `TownHouse.cs:304-340`, `LawnGate.cs:140-173`, `LawnItem.cs:194-244`, `ShantyDoor.cs:182-215`, and `ShantyItem.cs:194-244`.
+- Result: Reviewed 12 `Items:Houses` rows. Classified 9 rows as `SafeNoChange`, 2 helper base-call rows as `FalsePositive`, and 1 `TownHouse` row as `IntentionalLegacy`. No source files changed.
+- Output path: `docs/codebase-audit/outputs/post-batch-b-save-compatibility-triage.csv`
+
+### 2026-06-07T12:04:24.6776910-05:00
+
+- Affected phase: Post-audit `POST-BATCH-B-08A` `Items:Houses` serializer save-compatibility triage
+- Cwd: `D:\ConficturaUO`
+- Command: Update `post-batch-b-save-compatibility-triage.csv`, append reviewed save-compatibility rows to `post-audit-active-backlog-status.csv`, and update status/readme/next-step artifacts.
+- Result: `post-batch-b-save-compatibility-triage.csv` now has 304 total rows, 220 reviewed rows, 84 queued rows, and 12 `POST-BATCH-B-08A` rows; active backlog overlay now has 218 rows, including 201 active save-compatibility dispositions.
+- Output path: `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
+
+### 2026-06-07T12:08:00.9791145-05:00
+
+- Affected phase: Post-audit `POST-BATCH-B-08A` `Items:Houses` serializer save-compatibility triage
+- Cwd: `D:\ConficturaUO`
+- Command: `git status --short`; `rg --files -g AGENTS.md`; `Import-Csv` verification of `post-batch-b-save-compatibility-triage.csv` and `post-audit-active-backlog-status.csv`; `git diff --name-only -- Data`; `git diff --check`.
+- Result: Parsed 304 save-triage rows with 220 `Reviewed`, 84 `Queued`, 12 `POST-BATCH-B-08A` rows, 2 `FalsePositive`, 1 `IntentionalLegacy`, and 9 `SafeNoChange`; there are 0 `NeedsHumanDecision` rows and 0 `NeedsMigrationPlan` rows; active overlay has one row for each 201 non-`ServerCore` active save disposition and 218 rows total; no `Data` files changed; whitespace check passed with expected `core.autocrlf=true` line-ending warnings.
+- Output path: `docs/codebase-audit/outputs/post-batch-b-save-compatibility-triage.csv`
