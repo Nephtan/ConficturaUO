@@ -3874,3 +3874,19 @@ Scope: Deterministic phase runner log for the Confictura codebase audit and reor
 - Command: `git status --short`; `rg --files -g AGENTS.md`; `Import-Csv` verification of `post-batch-b-save-compatibility-triage.csv` and `post-audit-active-backlog-status.csv`; `git diff --name-only -- Data`; `git diff --check`.
 - Result: Parsed 304 save-triage rows with 250 `Reviewed`, 54 `Queued`, 8 `POST-BATCH-B-11A` rows, 1 `FalsePositive`, 3 `IntentionalLegacy`, and 4 `SafeNoChange`; there are 0 `NeedsHumanDecision` rows and 0 `NeedsMigrationPlan` rows; active overlay has one row for each 231 non-`ServerCore` active save disposition and 248 rows total; no `Data` files changed; whitespace check passed with expected `core.autocrlf=true` line-ending warnings.
 - Output path: `docs/codebase-audit/outputs/post-batch-b-save-compatibility-triage.csv`
+
+### 2026-06-07T12:32:48.7538883-05:00
+
+- Affected phase: Post-audit `POST-BATCH-B-12A` `Mobiles:Base` serializer save-compatibility triage
+- Cwd: `D:\ConficturaUO`
+- Command: Source review of `BaseCreature.cs:6497-6625`, `BaseCreature.cs:6655-6755`, `BaseVendor.cs:3126-3190`, `PlayerBarkeeper.cs:108-128`, `PlayerMobile.cs:4539-4935`, `PlayerMobile.cs:5004-5221`, and `VendorInventory.cs:99-140`.
+- Result: Reviewed 7 `Mobiles:Base` rows. Classified 3 rows as `SafeNoChange`, 2 high-blast-radius mobile rows as `IntentionalLegacy`, and 2 helper base-call rows as `FalsePositive`. No source files changed.
+- Output path: `docs/codebase-audit/outputs/post-batch-b-save-compatibility-triage.csv`
+
+### 2026-06-07T12:32:48.7538883-05:00
+
+- Affected phase: Post-audit `POST-BATCH-B-12A` `Mobiles:Base` serializer save-compatibility triage
+- Cwd: `D:\ConficturaUO`
+- Command: Update `post-batch-b-save-compatibility-triage.csv`, append reviewed save-compatibility rows to `post-audit-active-backlog-status.csv`, and update status/readme/next-step artifacts.
+- Result: `post-batch-b-save-compatibility-triage.csv` now has 304 total rows, 257 reviewed rows, 47 queued rows, and 7 `POST-BATCH-B-12A` rows; active backlog overlay now has 255 rows, including 238 active save-compatibility dispositions.
+- Output path: `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`

@@ -1,6 +1,6 @@
 # Post-Audit Next Steps
 
-Generated: 2026-06-06T23:29:44.4932595-05:00
+Generated: 2026-06-07T12:32:48.7538883-05:00
 
 ## Current State
 
@@ -30,6 +30,7 @@ The audit phase runner completed Phases 0 through 14 and the worktree was clean 
 - `fa85d6e7 docs: triage house serializers`
 - `8890cfdc docs: triage bulk order serializers`
 - `6565ed8d docs: triage magical item serializers`
+- `be567028 docs: triage special item serializers`
 
 `Server.csproj` Debug/x86 build passed in the source-build baseline. Runtime script inventory found 6,581 live-visible `.cs` files under `Data/Scripts`, excluding `bin` and `obj`.
 
@@ -84,15 +85,15 @@ Active backlog reconciliation:
 
 - `post-audit-active-backlog-status.csv` maps `RB-03235` through `RB-03251` to the packet-handler review artifact.
 - Active packet-handler disposition is 3 `Fixed` rows and 14 `ReviewedNoChange` rows.
-- `post-audit-active-backlog-status.csv` also maps 231 reviewed save-compatibility rows from `POST-BATCH-B-02A`, `POST-BATCH-B-02B`, `POST-BATCH-B-02C`, `POST-BATCH-B-03A` through `POST-BATCH-B-03P`, `POST-BATCH-B-04A` through `POST-BATCH-B-04C`, `POST-BATCH-B-05A` through `POST-BATCH-B-05C`, `POST-BATCH-B-06A`, `POST-BATCH-B-07A`, transient-item decision batch `POST-BATCH-B-07B`, `POST-BATCH-B-08A`, `POST-BATCH-B-09A`, `POST-BATCH-B-10A`, and `POST-BATCH-B-11A` to the save triage artifact.
+- `post-audit-active-backlog-status.csv` also maps 238 reviewed save-compatibility rows from `POST-BATCH-B-02A`, `POST-BATCH-B-02B`, `POST-BATCH-B-02C`, `POST-BATCH-B-03A` through `POST-BATCH-B-03P`, `POST-BATCH-B-04A` through `POST-BATCH-B-04C`, `POST-BATCH-B-05A` through `POST-BATCH-B-05C`, `POST-BATCH-B-06A`, `POST-BATCH-B-07A`, transient-item decision batch `POST-BATCH-B-07B`, `POST-BATCH-B-08A`, `POST-BATCH-B-09A`, `POST-BATCH-B-10A`, `POST-BATCH-B-11A`, and `POST-BATCH-B-12A` to the save triage artifact.
 - The canonical Phase 13 `repair-backlog.csv` remains unchanged as historical generated evidence.
 
 Started: `POST-BATCH-B` P0 save compatibility triage in `post-batch-b-save-compatibility-triage.csv`.
 
 - The triage file scopes all 304 P0 critical save-compatibility rows.
-- Source-reviewed decisions cover the 19 `ServerCore` high-blast-radius rows, 30 XMLSpawner rows, 28 `System:Obsolete` rows, 74 `Custom:Mobiles` rows, 18 Homestead rows, 14 `System:Misc` rows, 13 `Items:Trades` rows, 12 `Items:Misc` rows, 12 `Items:Houses` rows, 11 `Trades:Bulk Orders` rows, 11 `Items:Magical` rows, and 8 `Items:Special` rows.
-- Current reviewed decisions are 46 `FalsePositive`, 40 `IntentionalLegacy`, and 164 `SafeNoChange`.
-- The remaining 54 rows are queued for later source review and do not approve source edits.
+- Source-reviewed decisions cover the 19 `ServerCore` high-blast-radius rows, 30 XMLSpawner rows, 28 `System:Obsolete` rows, 74 `Custom:Mobiles` rows, 18 Homestead rows, 14 `System:Misc` rows, 13 `Items:Trades` rows, 12 `Items:Misc` rows, 12 `Items:Houses` rows, 11 `Trades:Bulk Orders` rows, 11 `Items:Magical` rows, 8 `Items:Special` rows, and 7 `Mobiles:Base` rows.
+- Current reviewed decisions are 48 `FalsePositive`, 42 `IntentionalLegacy`, and 167 `SafeNoChange`.
+- The remaining 47 rows are queued for later source review and do not approve source edits.
 - No serialized type name, namespace, field order, version, or file-location change is approved by this triage batch.
 
 Completed review-only subbatch: `POST-BATCH-B-02A` reviewed XMLSpawner central persistence rows in `BaseXmlSpawner.cs`, `XmlAttachment.cs`, `XmlSpawner2.cs`, and `XmlQuestPoints.cs`.
@@ -306,9 +307,9 @@ Completed review-only subbatch: `POST-BATCH-B-11A` reviewed `Items:Special` seri
 
 Next:
 
-1. Continue `POST-BATCH-B` with `Mobiles:Base`, keeping review-only commits scoped by system group or one file when the system group is large.
+1. Continue `POST-BATCH-B` with remaining queued systems grouped by system and file, starting with `Custom:Book Publisher [2.0]`.
 2. Do not change serialized layout, type names, namespaces, or file locations without a migration plan and explicit approval.
-3. After `Mobiles:Base`, continue with remaining queued systems grouped by system and file.
+3. Keep each remaining review-only commit scoped to one system group, or one file when a group is large.
 
 ## Reorganization Status
 
