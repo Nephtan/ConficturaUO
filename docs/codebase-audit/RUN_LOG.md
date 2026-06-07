@@ -4050,3 +4050,19 @@ Scope: Deterministic phase runner log for the Confictura codebase audit and reor
 - Command: Update `post-batch-b-save-compatibility-triage.csv`, append reviewed save-compatibility rows to `post-audit-active-backlog-status.csv`, and update status/readme/next-step artifacts.
 - Result: `post-batch-b-save-compatibility-triage.csv` now has 304 total rows, 280 reviewed rows, 24 queued rows, and 3 `POST-BATCH-B-22A` rows; active backlog overlay now has 278 rows, including 261 active save-compatibility dispositions.
 - Output path: `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
+
+### 2026-06-07T13:11:10.2426654-05:00
+
+- Affected phase: Post-audit `POST-BATCH-B-23A` `Items:Boats` serializer save-compatibility triage
+- Cwd: `D:\ConficturaUO`
+- Command: Source review of `BaseDockedBoat.cs:71-102`.
+- Result: Reviewed 1 `Items:Boats` row. Classified the row as `IntentionalLegacy`; no source files changed.
+- Output path: `docs/codebase-audit/outputs/post-batch-b-save-compatibility-triage.csv`
+
+### 2026-06-07T13:11:10.2426654-05:00
+
+- Affected phase: Post-audit `POST-BATCH-B-23A` `Items:Boats` serializer save-compatibility triage
+- Cwd: `D:\ConficturaUO`
+- Command: Update `post-batch-b-save-compatibility-triage.csv`, append reviewed save-compatibility row to `post-audit-active-backlog-status.csv`, and update status/readme/next-step artifacts.
+- Result: `post-batch-b-save-compatibility-triage.csv` now has 304 total rows, 281 reviewed rows, 23 queued rows, and 1 `POST-BATCH-B-23A` row; active backlog overlay now has 279 rows, including 262 active save-compatibility dispositions.
+- Output path: `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`

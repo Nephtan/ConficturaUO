@@ -160,7 +160,7 @@ Raw command output may remain temporary when it is easy to regenerate. Curated t
 | `post-audit-batch-plan.csv` | Post-audit | Runtime-first repair batch order after live server compile context was supplied. | Complete |
 | `compile-only-verification-baseline.md` | Post-audit | Record the safe runtime script compile verification flag, generated-folder runtime compiler fix, and successful compile-only run. | Complete |
 | `post-audit-active-backlog-status.csv` | Post-audit | Overlay active post-audit dispositions for historical repair backlog rows without rewriting generated Phase 13 evidence. | Complete |
-| `post-batch-b-save-compatibility-triage.csv` | Post-audit | Scope the 304 P0 critical save-compatibility rows and record source-reviewed decisions as `POST-BATCH-B` proceeds; 280 rows are reviewed after `Items:Armor` batch `POST-BATCH-B-22A`. | InProgress |
+| `post-batch-b-save-compatibility-triage.csv` | Post-audit | Scope the 304 P0 critical save-compatibility rows and record source-reviewed decisions as `POST-BATCH-B` proceeds; 281 rows are reviewed after `Items:Boats` batch `POST-BATCH-B-23A`. | InProgress |
 
 ## Initial State
 
