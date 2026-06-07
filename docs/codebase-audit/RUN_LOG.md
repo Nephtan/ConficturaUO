@@ -3938,3 +3938,19 @@ Scope: Deterministic phase runner log for the Confictura codebase audit and reor
 - Command: Update `post-batch-b-save-compatibility-triage.csv`, append reviewed save-compatibility rows to `post-audit-active-backlog-status.csv`, and update status/readme/next-step artifacts.
 - Result: `post-batch-b-save-compatibility-triage.csv` now has 304 total rows, 261 reviewed rows, 43 queued rows, and 2 `POST-BATCH-B-15A` rows; active backlog overlay now has 259 rows, including 242 active save-compatibility dispositions.
 - Output path: `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
+
+### 2026-06-07T12:45:34.7412525-05:00
+
+- Affected phase: Post-audit `POST-BATCH-B-16A` `Custom:CloneOfflinePlayerCharacters` serializer save-compatibility triage
+- Cwd: `D:\ConficturaUO`
+- Command: Source review of `BackpackClone.cs:46-55`, `CharacterClone.cs:272-288`, `EtherealMountClone.cs:36-45`, and `MountClone.cs:45-54`.
+- Result: Reviewed 4 `Custom:CloneOfflinePlayerCharacters` rows. Classified all 4 rows as `SafeNoChange`; no source files changed.
+- Output path: `docs/codebase-audit/outputs/post-batch-b-save-compatibility-triage.csv`
+
+### 2026-06-07T12:45:34.7412525-05:00
+
+- Affected phase: Post-audit `POST-BATCH-B-16A` `Custom:CloneOfflinePlayerCharacters` serializer save-compatibility triage
+- Cwd: `D:\ConficturaUO`
+- Command: Update `post-batch-b-save-compatibility-triage.csv`, append reviewed save-compatibility rows to `post-audit-active-backlog-status.csv`, and update status/readme/next-step artifacts.
+- Result: `post-batch-b-save-compatibility-triage.csv` now has 304 total rows, 265 reviewed rows, 39 queued rows, and 4 `POST-BATCH-B-16A` rows; active backlog overlay now has 263 rows, including 246 active save-compatibility dispositions.
+- Output path: `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
