@@ -3059,3 +3059,43 @@ Scope: Deterministic phase runner log for the Confictura codebase audit and reor
 - Command: `git diff --check`
 - Result: Passed with no whitespace errors for tracked audit artifact edits; Git emitted expected `core.autocrlf=true` line-ending warnings.
 - Output path: `docs/codebase-audit/RUN_LOG.md`
+
+### 2026-06-06T20:37:00.9767061-05:00
+
+- Affected phase: Post-audit `POST-BATCH-B-02A` XMLSpawner central persistence save-compatibility triage
+- Cwd: `D:\ConficturaUO`
+- Command: `git status --short`
+- Result: Clean at the start of the review-only subbatch.
+- Output path: `docs/codebase-audit/PHASE_STATUS.md`
+
+### 2026-06-06T20:37:00.9767061-05:00
+
+- Affected phase: Post-audit `POST-BATCH-B-02A` XMLSpawner central persistence save-compatibility triage
+- Cwd: `D:\ConficturaUO`
+- Command: `rg --files -g AGENTS.md`
+- Result: Confirmed applicable root and audit-scoped instruction files before editing audit artifacts.
+- Output path: `docs/codebase-audit/AGENTS.md`
+
+### 2026-06-06T20:37:00.9767061-05:00
+
+- Affected phase: Post-audit `POST-BATCH-B-02A` XMLSpawner central persistence save-compatibility triage
+- Cwd: `D:\ConficturaUO`
+- Command: Source review of 10 queued XMLSpawner central persistence rows in `post-batch-b-save-compatibility-triage.csv`.
+- Result: Reviewed `BaseXmlSpawner.cs`, `XmlAttachment.cs`, `XmlSpawner2.cs`, and `XmlQuestPoints.cs`; classified 6 rows as `FalsePositive` and 4 rows as `SafeNoChange`; no source or serialized-layout edits were approved.
+- Output path: `docs/codebase-audit/outputs/post-batch-b-save-compatibility-triage.csv`
+
+### 2026-06-06T20:37:00.9767061-05:00
+
+- Affected phase: Post-audit `POST-BATCH-B-02A` XMLSpawner central persistence save-compatibility triage
+- Cwd: `D:\ConficturaUO`
+- Command: Update `post-batch-b-save-compatibility-triage.csv` and append reviewed save-compatibility rows to `post-audit-active-backlog-status.csv`.
+- Result: `post-batch-b-save-compatibility-triage.csv` now has 304 total rows, 29 reviewed rows, 275 queued rows, 0 reviewed rows without decisions, and 0 queued rows carrying decisions; active backlog overlay now has 27 rows, including 10 save-compatibility rows for `POST-BATCH-B-02A`.
+- Output path: `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
+
+### 2026-06-06T20:37:00.9767061-05:00
+
+- Affected phase: Post-audit `POST-BATCH-B-02A` XMLSpawner central persistence save-compatibility triage
+- Cwd: `D:\ConficturaUO`
+- Command: `git diff --name-only`; `git diff --check`
+- Result: Changed-file scope was limited to six audit artifacts under `docs/codebase-audit`; whitespace check passed with expected `core.autocrlf=true` line-ending warnings. No source files changed, so no source build or compile-only smoke was run for this review-only batch.
+- Output path: `docs/codebase-audit/RUN_LOG.md`

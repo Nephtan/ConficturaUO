@@ -1,6 +1,6 @@
 # Post-Audit Next Steps
 
-Generated: 2026-06-06T16:42:02.3829332-05:00
+Generated: 2026-06-06T20:37:00.9767061-05:00
 
 ## Current State
 
@@ -10,6 +10,7 @@ The audit phase runner completed Phases 0 through 14 and the worktree was clean 
 - `9dce70de docs: record source build baseline`
 - `09b7b7e5 feat: add compile-only script verification`
 - `3259f43b fix: harden packet handler paths`
+- `ef8d35b9 docs: reconcile post-audit backlog state`
 
 `Server.csproj` Debug/x86 build passed in the source-build baseline. Runtime script inventory found 6,581 live-visible `.cs` files under `Data/Scripts`, excluding `bin` and `obj`.
 
@@ -64,20 +65,28 @@ Active backlog reconciliation:
 
 - `post-audit-active-backlog-status.csv` maps `RB-03235` through `RB-03251` to the packet-handler review artifact.
 - Active packet-handler disposition is 3 `Fixed` rows and 14 `ReviewedNoChange` rows.
+- `post-audit-active-backlog-status.csv` also maps 10 reviewed `POST-BATCH-B-02A` save-compatibility rows to the save triage artifact.
 - The canonical Phase 13 `repair-backlog.csv` remains unchanged as historical generated evidence.
 
 Started: `POST-BATCH-B` P0 save compatibility triage in `post-batch-b-save-compatibility-triage.csv`.
 
 - The triage file scopes all 304 P0 critical save-compatibility rows.
-- Initial source-reviewed decisions cover the 19 `ServerCore` high-blast-radius rows.
-- Current reviewed decisions are 7 `FalsePositive`, 6 `IntentionalLegacy`, and 6 `SafeNoChange`.
-- The remaining 285 rows are queued for later source review and do not approve source edits.
+- Source-reviewed decisions cover the 19 `ServerCore` high-blast-radius rows and 10 `POST-BATCH-B-02A` XMLSpawner central persistence rows.
+- Current reviewed decisions are 13 `FalsePositive`, 6 `IntentionalLegacy`, and 10 `SafeNoChange`.
+- The remaining 275 rows are queued for later source review and do not approve source edits.
 - No serialized type name, namespace, field order, version, or file-location change is approved by this triage batch.
+
+Completed review-only subbatch: `POST-BATCH-B-02A` reviewed XMLSpawner central persistence rows in `BaseXmlSpawner.cs`, `XmlAttachment.cs`, `XmlSpawner2.cs`, and `XmlQuestPoints.cs`.
+
+- 10 rows were reviewed with no source edits.
+- 6 rows were classified `FalsePositive` where the generated risk came from helper/interface serializers with no applicable base serializer requirement.
+- 4 rows were classified `SafeNoChange` where source review confirmed current write/read alignment.
+- No row was classified `ConfirmedIssue`, `NeedsMigrationPlan`, or `NeedsHumanDecision`.
 
 Next:
 
 1. If compile-only reports future errors, repair those exact runtime compile blockers before backlog risk work.
-2. Continue `POST-BATCH-B` with XMLSpawner and obsolete/system serializers, then cross-system persistence, `Custom:Mobiles`, and remaining P0 critical save rows.
+2. Continue `POST-BATCH-B` with `POST-BATCH-B-02B`: remaining XMLSpawner attachment, item, mobile, challenge, quest, and XmlSpawner serializer rows.
 3. Do not change serialized layout, type names, namespaces, or file locations without a migration plan and explicit approval.
 
 ## Reorganization Status
