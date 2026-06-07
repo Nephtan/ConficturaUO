@@ -1,6 +1,6 @@
 # Post-Audit Next Steps
 
-Generated: 2026-06-07T13:14:26.7946669-05:00
+Generated: 2026-06-07T13:17:03.7614640-05:00
 
 ## Current State
 
@@ -43,6 +43,7 @@ The audit phase runner completed Phases 0 through 14 and the worktree was clean 
 - `e6061f4e docs: triage voting serializers`
 - `cbf43c56 docs: triage armor serializers`
 - `51cbb89d docs: triage boat serializer`
+- `c245cdac docs: triage book serializers`
 
 `Server.csproj` Debug/x86 build passed in the source-build baseline. Runtime script inventory found 6,581 live-visible `.cs` files under `Data/Scripts`, excluding `bin` and `obj`.
 
@@ -97,15 +98,15 @@ Active backlog reconciliation:
 
 - `post-audit-active-backlog-status.csv` maps `RB-03235` through `RB-03251` to the packet-handler review artifact.
 - Active packet-handler disposition is 3 `Fixed` rows and 14 `ReviewedNoChange` rows.
-- `post-audit-active-backlog-status.csv` also maps 266 reviewed save-compatibility rows from `POST-BATCH-B-24A` and prior `POST-BATCH-B` subbatches to the save triage artifact.
+- `post-audit-active-backlog-status.csv` also maps 271 reviewed save-compatibility rows from `POST-BATCH-B-25A` and prior `POST-BATCH-B` subbatches to the save triage artifact.
 - The canonical Phase 13 `repair-backlog.csv` remains unchanged as historical generated evidence.
 
 Started: `POST-BATCH-B` P0 save compatibility triage in `post-batch-b-save-compatibility-triage.csv`.
 
 - The triage file scopes all 304 P0 critical save-compatibility rows.
-- Source-reviewed decisions cover the 19 `ServerCore` high-blast-radius rows, 30 XMLSpawner rows, 28 `System:Obsolete` rows, 74 `Custom:Mobiles` rows, 18 Homestead rows, 14 `System:Misc` rows, 13 `Items:Trades` rows, 12 `Items:Misc` rows, 12 `Items:Houses` rows, 11 `Trades:Bulk Orders` rows, 11 `Items:Magical` rows, 8 `Items:Special` rows, 7 `Mobiles:Base` rows, 1 `Custom:Book Publisher [2.0]` row, 1 `Custom:CEO's GM Hiding Stone [2.0]` row, 2 `Custom:Champions` rows, 4 `Custom:CloneOfflinePlayerCharacters` rows, 5 `Custom:Government System` rows, 1 `Custom:PandorasGiftBox` row, and 1 `Custom:Skill Stone` row, 1 `Custom:Staff Toolbar [2.0]` row, and 4 `Custom:Voting` rows, and 3 `Items:Armor` rows, and 1 `Items:Boats` row, and 4 `Items:Books` rows.
-- Current reviewed decisions are 1 `ConfirmedIssue`, 51 `FalsePositive`, 50 `IntentionalLegacy`, and 183 `SafeNoChange`.
-- The remaining 19 rows are queued for later source review and do not approve source edits.
+- Source-reviewed decisions cover the 19 `ServerCore` high-blast-radius rows, 30 XMLSpawner rows, 28 `System:Obsolete` rows, 74 `Custom:Mobiles` rows, 18 Homestead rows, 14 `System:Misc` rows, 13 `Items:Trades` rows, 12 `Items:Misc` rows, 12 `Items:Houses` rows, 11 `Trades:Bulk Orders` rows, 11 `Items:Magical` rows, 8 `Items:Special` rows, 7 `Mobiles:Base` rows, 1 `Custom:Book Publisher [2.0]` row, 1 `Custom:CEO's GM Hiding Stone [2.0]` row, 2 `Custom:Champions` rows, 4 `Custom:CloneOfflinePlayerCharacters` rows, 5 `Custom:Government System` rows, 1 `Custom:PandorasGiftBox` row, and 1 `Custom:Skill Stone` row, 1 `Custom:Staff Toolbar [2.0]` row, and 4 `Custom:Voting` rows, and 3 `Items:Armor` rows, and 1 `Items:Boats` row, and 4 `Items:Books` rows, and 5 `Items:Clothing` rows.
+- Current reviewed decisions are 1 `ConfirmedIssue`, 51 `FalsePositive`, 52 `IntentionalLegacy`, and 186 `SafeNoChange`.
+- The remaining 14 rows are queued for later source review and do not approve source edits.
 - No serialized type name, namespace, field order, version, or file-location change is approved by this triage batch.
 
 Completed review-only subbatch: `POST-BATCH-B-02A` reviewed XMLSpawner central persistence rows in `BaseXmlSpawner.cs`, `XmlAttachment.cs`, `XmlSpawner2.cs`, and `XmlQuestPoints.cs`.
@@ -354,9 +355,17 @@ Completed review-only subbatch: `POST-BATCH-B-24A` reviewed `Items:Books` serial
 - 2 rows were classified `FalsePositive` because `BookPageInfo` is an embedded helper record with a paired `GenericReader` constructor.
 - No row was classified `ConfirmedIssue`, `NeedsMigrationPlan`, or `NeedsHumanDecision`.
 
+
+Completed review-only subbatch: `POST-BATCH-B-25A` reviewed `Items:Clothing` serializers.
+
+- 5 rows were reviewed with no source edits.
+- 3 rows were classified `SafeNoChange` where source review confirmed aligned arcane sentinel and optional charge payloads.
+- 2 rows were classified `IntentionalLegacy` because current clothing/base-shoe formats are aligned while older save shapes remain intentionally consumed.
+- No row was classified `ConfirmedIssue`, `NeedsMigrationPlan`, or `NeedsHumanDecision`.
+
 Next:
 
-1. Continue `POST-BATCH-B` with remaining queued systems grouped by system and file, starting with `Items:Clothing`.
+1. Continue `POST-BATCH-B` with remaining queued systems grouped by system and file, starting with `Items:Containers`.
 2. Do not change serialized layout, type names, namespaces, or file locations without a migration plan and explicit approval.
 3. Keep each remaining review-only commit scoped to one system group, or one file when a group is large.
 

@@ -4082,3 +4082,19 @@ Scope: Deterministic phase runner log for the Confictura codebase audit and reor
 - Command: Update `post-batch-b-save-compatibility-triage.csv`, append reviewed save-compatibility rows to `post-audit-active-backlog-status.csv`, and update status/readme/next-step artifacts.
 - Result: `post-batch-b-save-compatibility-triage.csv` now has 304 total rows, 285 reviewed rows, 19 queued rows, and 4 `POST-BATCH-B-24A` rows; active backlog overlay now has 283 rows, including 266 active save-compatibility dispositions.
 - Output path: `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
+
+### 2026-06-07T13:17:03.7614640-05:00
+
+- Affected phase: Post-audit `POST-BATCH-B-25A` `Items:Clothing` serializer save-compatibility triage
+- Cwd: `D:\ConficturaUO`
+- Command: Source review of `BaseClothing.cs:1009-1155`, `Cloaks.cs:123-160`, `OuterTorso.cs:585-622`, and `Shoes.cs:25-50,259-296`.
+- Result: Reviewed 5 `Items:Clothing` rows. Classified 3 rows as `SafeNoChange` and 2 rows as `IntentionalLegacy`; no source files changed.
+- Output path: `docs/codebase-audit/outputs/post-batch-b-save-compatibility-triage.csv`
+
+### 2026-06-07T13:17:03.7614640-05:00
+
+- Affected phase: Post-audit `POST-BATCH-B-25A` `Items:Clothing` serializer save-compatibility triage
+- Cwd: `D:\ConficturaUO`
+- Command: Update `post-batch-b-save-compatibility-triage.csv`, append reviewed save-compatibility rows to `post-audit-active-backlog-status.csv`, and update status/readme/next-step artifacts.
+- Result: `post-batch-b-save-compatibility-triage.csv` now has 304 total rows, 290 reviewed rows, 14 queued rows, and 5 `POST-BATCH-B-25A` rows; active backlog overlay now has 288 rows, including 271 active save-compatibility dispositions.
+- Output path: `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
