@@ -1,6 +1,6 @@
 # Post-Audit Next Steps
 
-Generated: 2026-06-07T13:24:13.0985293-05:00
+Generated: 2026-06-07T13:29:11.7318672-05:00
 
 ## Current State
 
@@ -45,6 +45,7 @@ The audit phase runner completed Phases 0 through 14 and the worktree was clean 
 - `51cbb89d docs: triage boat serializer`
 - `c245cdac docs: triage book serializers`
 - `40d81975 docs: triage clothing serializers`
+- `e6f1d1cf docs: triage container serializer`
 
 `Server.csproj` Debug/x86 build passed in the source-build baseline. Runtime script inventory found 6,581 live-visible `.cs` files under `Data/Scripts`, excluding `bin` and `obj`.
 
@@ -99,15 +100,15 @@ Active backlog reconciliation:
 
 - `post-audit-active-backlog-status.csv` maps `RB-03235` through `RB-03251` to the packet-handler review artifact.
 - Active packet-handler disposition is 3 `Fixed` rows and 14 `ReviewedNoChange` rows.
-- `post-audit-active-backlog-status.csv` also maps 272 reviewed save-compatibility rows from `POST-BATCH-B-26A` and prior `POST-BATCH-B` subbatches to the save triage artifact.
+- `post-audit-active-backlog-status.csv` also maps 273 reviewed save-compatibility rows from `POST-BATCH-B-27A` and prior `POST-BATCH-B` subbatches to the save triage artifact.
 - The canonical Phase 13 `repair-backlog.csv` remains unchanged as historical generated evidence.
 
 Started: `POST-BATCH-B` P0 save compatibility triage in `post-batch-b-save-compatibility-triage.csv`.
 
 - The triage file scopes all 304 P0 critical save-compatibility rows.
-- Source-reviewed decisions cover the 19 `ServerCore` high-blast-radius rows, 30 XMLSpawner rows, 28 `System:Obsolete` rows, 74 `Custom:Mobiles` rows, 18 Homestead rows, 14 `System:Misc` rows, 13 `Items:Trades` rows, 12 `Items:Misc` rows, 12 `Items:Houses` rows, 11 `Trades:Bulk Orders` rows, 11 `Items:Magical` rows, 8 `Items:Special` rows, 7 `Mobiles:Base` rows, 1 `Custom:Book Publisher [2.0]` row, 1 `Custom:CEO's GM Hiding Stone [2.0]` row, 2 `Custom:Champions` rows, 4 `Custom:CloneOfflinePlayerCharacters` rows, 5 `Custom:Government System` rows, 1 `Custom:PandorasGiftBox` row, and 1 `Custom:Skill Stone` row, 1 `Custom:Staff Toolbar [2.0]` row, and 4 `Custom:Voting` rows, and 3 `Items:Armor` rows, and 1 `Items:Boats` row, and 4 `Items:Books` rows, and 5 `Items:Clothing` rows, and 1 `Items:Containers` row.
-- Current reviewed decisions are 1 `ConfirmedIssue`, 51 `FalsePositive`, 52 `IntentionalLegacy`, 187 `SafeNoChange`.
-- The remaining 13 rows are queued for later source review and do not approve source edits.
+- Source-reviewed decisions cover 292 rows across completed `POST-BATCH-B` groups through `Items:Deeds`.
+- Current reviewed decisions are 1 `ConfirmedIssue`, 51 `FalsePositive`, 53 `IntentionalLegacy`, 187 `SafeNoChange`.
+- The remaining 12 rows are queued for later source review and do not approve source edits.
 - No serialized type name, namespace, field order, version, or file-location change is approved by this triage batch.
 
 Completed review-only subbatch: `POST-BATCH-B-02A` reviewed XMLSpawner central persistence rows in `BaseXmlSpawner.cs`, `XmlAttachment.cs`, `XmlSpawner2.cs`, and `XmlQuestPoints.cs`.
@@ -370,9 +371,15 @@ Completed review-only subbatch: `POST-BATCH-B-26A` reviewed `Items:Containers` s
 - 1 row was classified `SafeNoChange` because `FillableContainer` current version 1 writes content type plus a bool-gated respawn delta and deserializes the same conditional payload with a version 0 fall-through.
 - No row was classified `ConfirmedIssue`, `NeedsMigrationPlan`, or `NeedsHumanDecision`.
 
+Completed review-only subbatch: `POST-BATCH-B-27A` reviewed `Items:Deeds` serializers.
+
+- 1 row was reviewed with no source edits.
+- 1 row was classified `IntentionalLegacy` because current version 1 writes exceptional, crafter, and resource fields in order while the version 0 branch consumes an older extra integer before the resource.
+- No row was classified `ConfirmedIssue`, `NeedsMigrationPlan`, or `NeedsHumanDecision`.
+
 Next:
 
-1. Continue `POST-BATCH-B` with remaining queued systems grouped by system and file, starting with `Items:Deeds`.
+1. Continue `POST-BATCH-B` with remaining queued systems grouped by system and file, starting with `Items:Food`.
 2. Do not change serialized layout, type names, namespaces, or file locations without a migration plan and explicit approval.
 3. Keep each remaining review-only commit scoped to one system group, or one file when a group is large.
 
