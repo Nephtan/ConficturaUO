@@ -2,7 +2,7 @@
 
 Initialized: 2026-06-05T16:15:59.8020730-05:00
 
-Last updated: 2026-06-07T13:04:45.9390281-05:00
+Last updated: 2026-06-07T13:08:13.8438738-05:00
 
 Branch: `SAR`
 
@@ -14,15 +14,15 @@ Post-audit compile-only implementation HEAD: `09b7b7e5 feat: add compile-only sc
 
 Post-audit latest implemented source batch: `3259f43b fix: harden packet handler paths`
 
-Post-audit latest committed audit-state batch before the current review: `011c244c docs: triage staff toolbar serializer`
+Post-audit latest committed audit-state batch before the current review: `e6061f4e docs: triage voting serializers`
 
 Post-audit latest runtime-risk batch: `POST-BATCH-A` packet-handler review and focused source fixes, recorded in `outputs/post-batch-a-packet-handler-review.csv`; runtime hook map, `Server.csproj` Debug/x86 build, and `.\ConficturaServer.exe -compileonly -nocache` verification passed before commit.
 
-Post-audit active backlog overlay: `outputs/post-audit-active-backlog-status.csv` preserves historical `repair-backlog.csv` while recording 17 packet-handler dispositions and 258 reviewed save-compatibility dispositions across `POST-BATCH-B-21A` and prior `POST-BATCH-B` subbatches.
+Post-audit active backlog overlay: `outputs/post-audit-active-backlog-status.csv` preserves historical `repair-backlog.csv` while recording 17 packet-handler dispositions and 261 reviewed save-compatibility dispositions across `POST-BATCH-B-22A` and prior `POST-BATCH-B` subbatches.
 
-Post-audit save compatibility triage started: `outputs/post-batch-b-save-compatibility-triage.csv` scopes all 304 P0 critical save-compatibility rows, records source-reviewed decisions for 19 `ServerCore` rows, 30 XMLSpawner rows, 28 `System:Obsolete` rows, 74 `Custom:Mobiles` rows, 18 Homestead rows, 14 `System:Misc` rows, 13 `Items:Trades` rows, 12 `Items:Misc` rows, 12 `Items:Houses` rows, 11 `Trades:Bulk Orders` rows, 11 `Items:Magical` rows, 8 `Items:Special` rows, 7 `Mobiles:Base` rows, 1 `Custom:Book Publisher [2.0]` row, 1 `Custom:CEO's GM Hiding Stone [2.0]` row, 2 `Custom:Champions` rows, 4 `Custom:CloneOfflinePlayerCharacters` rows, 5 `Custom:Government System` rows, 1 `Custom:PandorasGiftBox` row, and 1 `Custom:Skill Stone` row, 1 `Custom:Staff Toolbar [2.0]` row, 4 `Custom:Voting` rows, queues 27 remaining rows for later `POST-BATCH-B` review, and approves no source or serialized-layout edits.
+Post-audit save compatibility triage started: `outputs/post-batch-b-save-compatibility-triage.csv` scopes all 304 P0 critical save-compatibility rows, records source-reviewed decisions for 19 `ServerCore` rows, 30 XMLSpawner rows, 28 `System:Obsolete` rows, 74 `Custom:Mobiles` rows, 18 Homestead rows, 14 `System:Misc` rows, 13 `Items:Trades` rows, 12 `Items:Misc` rows, 12 `Items:Houses` rows, 11 `Trades:Bulk Orders` rows, 11 `Items:Magical` rows, 8 `Items:Special` rows, 7 `Mobiles:Base` rows, 1 `Custom:Book Publisher [2.0]` row, 1 `Custom:CEO's GM Hiding Stone [2.0]` row, 2 `Custom:Champions` rows, 4 `Custom:CloneOfflinePlayerCharacters` rows, 5 `Custom:Government System` rows, 1 `Custom:PandorasGiftBox` row, and 1 `Custom:Skill Stone` row, 1 `Custom:Staff Toolbar [2.0]` row, 4 `Custom:Voting` rows, 3 `Items:Armor` rows, queues 24 remaining rows for later `POST-BATCH-B` review, and approves no source or serialized-layout edits.
 
-Post-audit latest save-triage subbatch: `POST-BATCH-B-21A` reviewed `Custom:Voting` serializers and classified 3 rows as `SafeNoChange` and 1 row as `FalsePositive`. No source or serialized-layout edit is approved by this review.
+Post-audit latest save-triage subbatch: `POST-BATCH-B-22A` reviewed `Items:Armor` serializers and classified 2 rows as `IntentionalLegacy` and 1 row as `SafeNoChange`. No source or serialized-layout edit is approved by this review.
 
 Scope: Deterministic phase runner state for the Confictura codebase audit and reorganization program.
 
