@@ -2,7 +2,7 @@
 
 Initialized: 2026-06-05T16:15:59.8020730-05:00
 
-Last updated: 2026-06-07T13:33:13.4111031-05:00
+Last updated: 2026-06-07T13:35:28.9172195-05:00
 
 Branch: `SAR`
 
@@ -14,15 +14,15 @@ Post-audit compile-only implementation HEAD: `09b7b7e5 feat: add compile-only sc
 
 Post-audit latest implemented source batch: `3259f43b fix: harden packet handler paths`
 
-Post-audit latest committed audit-state batch before the current review: `c36085d8 docs: triage deed serializer`
+Post-audit latest committed audit-state batch before the current review: `ff886d27 docs: triage food serializers`
 
 Post-audit latest runtime-risk batch: `POST-BATCH-A` packet-handler review and focused source fixes, recorded in `outputs/post-batch-a-packet-handler-review.csv`; runtime hook map, `Server.csproj` Debug/x86 build, and `.\ConficturaServer.exe -compileonly -nocache` verification passed before commit.
 
-Post-audit active backlog overlay: `outputs/post-audit-active-backlog-status.csv` preserves historical `repair-backlog.csv` while recording 17 packet-handler dispositions and 277 reviewed save-compatibility dispositions across `POST-BATCH-B-28A` and prior `POST-BATCH-B` subbatches.
+Post-audit active backlog overlay: `outputs/post-audit-active-backlog-status.csv` preserves historical `repair-backlog.csv` while recording 17 packet-handler dispositions and 279 reviewed save-compatibility dispositions across `POST-BATCH-B-29A` and prior `POST-BATCH-B` subbatches.
 
-Post-audit save compatibility triage started: `outputs/post-batch-b-save-compatibility-triage.csv` scopes all 304 P0 critical save-compatibility rows, records source-reviewed decisions for 1 `Custom:Book Publisher [2.0]` row, 1 `Custom:CEO's GM Hiding Stone [2.0]` row, 2 `Custom:Champions` rows, 4 `Custom:CloneOfflinePlayerCharacters` rows, 5 `Custom:Government System` rows, 74 `Custom:Mobiles` rows, 1 `Custom:PandorasGiftBox` row, 1 `Custom:Skill Stone` row, 1 `Custom:Staff Toolbar [2.0]` row, 18 `Custom:Vhaerun's CRL Homestead System [2.0]` rows, 4 `Custom:Voting` rows, 30 `Custom:XMLSpawner` rows, 3 `Items:Armor` rows, 1 `Items:Boats` row, 4 `Items:Books` rows, 5 `Items:Clothing` rows, 1 `Items:Containers` row, 1 `Items:Deeds` row, 4 `Items:Food` rows, 12 `Items:Houses` rows, 11 `Items:Magical` rows, 12 `Items:Misc` rows, 8 `Items:Special` rows, 13 `Items:Trades` rows, 7 `Mobiles:Base` rows, 19 `ServerCore` rows, 14 `System:Misc` rows, 28 `System:Obsolete` rows, 11 `Trades:Bulk Orders` rows, queues 8 remaining rows for later `POST-BATCH-B` review, and approves no source or serialized-layout edits.
+Post-audit save compatibility triage started: `outputs/post-batch-b-save-compatibility-triage.csv` scopes all 304 P0 critical save-compatibility rows, records source-reviewed decisions for 1 `Custom:Book Publisher [2.0]` row, 1 `Custom:CEO's GM Hiding Stone [2.0]` row, 2 `Custom:Champions` rows, 4 `Custom:CloneOfflinePlayerCharacters` rows, 5 `Custom:Government System` rows, 74 `Custom:Mobiles` rows, 1 `Custom:PandorasGiftBox` row, 1 `Custom:Skill Stone` row, 1 `Custom:Staff Toolbar [2.0]` row, 18 `Custom:Vhaerun's CRL Homestead System [2.0]` rows, 4 `Custom:Voting` rows, 30 `Custom:XMLSpawner` rows, 3 `Items:Armor` rows, 1 `Items:Boats` row, 4 `Items:Books` rows, 5 `Items:Clothing` rows, 1 `Items:Containers` row, 1 `Items:Deeds` row, 4 `Items:Food` rows, 12 `Items:Houses` rows, 11 `Items:Magical` rows, 12 `Items:Misc` rows, 8 `Items:Special` rows, 13 `Items:Trades` rows, 2 `Items:Weapons` rows, 7 `Mobiles:Base` rows, 19 `ServerCore` rows, 14 `System:Misc` rows, 28 `System:Obsolete` rows, 11 `Trades:Bulk Orders` rows, queues 6 remaining rows for later `POST-BATCH-B` review, and approves no source or serialized-layout edits.
 
-Post-audit latest save-triage subbatch: `POST-BATCH-B-28A` reviewed `Items:Food` serializers and classified 1 row as `FalsePositive`, 2 rows as `IntentionalLegacy`, 1 row as `SafeNoChange`. No source or serialized-layout edit is approved by this review.
+Post-audit latest save-triage subbatch: `POST-BATCH-B-29A` reviewed `Items:Weapons` serializers and classified 2 rows as `IntentionalLegacy`. No source or serialized-layout edit is approved by this review.
 
 Scope: Deterministic phase runner state for the Confictura codebase audit and reorganization program.
 
