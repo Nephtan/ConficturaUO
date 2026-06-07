@@ -4159,3 +4159,18 @@ Scope: Deterministic phase runner log for the Confictura codebase audit and reor
 - Command: Update `post-batch-b-save-compatibility-triage.csv`, append reviewed save-compatibility rows to `post-audit-active-backlog-status.csv`, and update status/readme/next-step artifacts.
 - Result: `post-batch-b-save-compatibility-triage.csv` now has 304 total rows, 298 reviewed rows, 6 queued rows, and 2 `POST-BATCH-B-29A` rows; active backlog overlay now has 296 rows, including 279 active save-compatibility dispositions.
 - Output path: `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
+### 2026-06-07T13:37:53.0802751-05:00
+
+- Affected phase: Post-audit `POST-BATCH-B-30A` `Magic:Druidism` serializer save-compatibility triage
+- Cwd: `D:\ConficturaUO`
+- Command: Source review of `BlendWithForrestSpell.cs:123-147` and `GraspingRootsSpell.cs:116-127`.
+- Result: Reviewed 2 `Magic:Druidism` rows. Classified both rows as `NeedsHumanDecision` because current effect serializers write payload that current deserializers do not consume; no source files changed.
+- Output path: `docs/codebase-audit/outputs/post-batch-b-save-compatibility-triage.csv`
+
+### 2026-06-07T13:37:53.0802751-05:00
+
+- Affected phase: Post-audit `POST-BATCH-B-30A` `Magic:Druidism` serializer save-compatibility triage
+- Cwd: `D:\ConficturaUO`
+- Command: Update `post-batch-b-save-compatibility-triage.csv`, append reviewed save-compatibility rows to `post-audit-active-backlog-status.csv`, and update status/readme/next-step artifacts with exact blocker evidence and next safe action.
+- Result: `post-batch-b-save-compatibility-triage.csv` now has 304 total rows, 300 reviewed rows, 4 queued rows, and 2 `POST-BATCH-B-30A` rows; active backlog overlay now has 298 rows, including 281 active save-compatibility dispositions. Human decision required for `SERIAL-1298` and `SERIAL-1300` before source edits or further POST-BATCH-B review.
+- Output path: `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`

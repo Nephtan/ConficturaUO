@@ -1,6 +1,6 @@
 # Post-Audit Next Steps
 
-Generated: 2026-06-07T13:35:28.9172195-05:00
+Generated: 2026-06-07T13:37:53.0802751-05:00
 
 ## Current State
 
@@ -48,6 +48,7 @@ The audit phase runner completed Phases 0 through 14 and the worktree was clean 
 - `e6f1d1cf docs: triage container serializer`
 - `c36085d8 docs: triage deed serializer`
 - `ff886d27 docs: triage food serializers`
+- `1db981db docs: triage weapon serializers`
 
 `Server.csproj` Debug/x86 build passed in the source-build baseline. Runtime script inventory found 6,581 live-visible `.cs` files under `Data/Scripts`, excluding `bin` and `obj`.
 
@@ -102,15 +103,15 @@ Active backlog reconciliation:
 
 - `post-audit-active-backlog-status.csv` maps `RB-03235` through `RB-03251` to the packet-handler review artifact.
 - Active packet-handler disposition is 3 `Fixed` rows and 14 `ReviewedNoChange` rows.
-- `post-audit-active-backlog-status.csv` also maps 279 reviewed save-compatibility rows from `POST-BATCH-B-29A` and prior `POST-BATCH-B` subbatches to the save triage artifact.
+- `post-audit-active-backlog-status.csv` also maps 281 reviewed save-compatibility rows from `POST-BATCH-B-30A` and prior `POST-BATCH-B` subbatches to the save triage artifact.
 - The canonical Phase 13 `repair-backlog.csv` remains unchanged as historical generated evidence.
 
 Started: `POST-BATCH-B` P0 save compatibility triage in `post-batch-b-save-compatibility-triage.csv`.
 
 - The triage file scopes all 304 P0 critical save-compatibility rows.
-- Source-reviewed decisions cover 298 rows across completed `POST-BATCH-B` groups through `Items:Weapons`.
-- Current reviewed decisions are 1 `ConfirmedIssue`, 52 `FalsePositive`, 57 `IntentionalLegacy`, 188 `SafeNoChange`.
-- The remaining 6 rows are queued for later source review and do not approve source edits.
+- Source-reviewed decisions cover 300 rows across completed `POST-BATCH-B` groups through `Magic:Druidism`.
+- Current reviewed decisions are 1 `ConfirmedIssue`, 52 `FalsePositive`, 57 `IntentionalLegacy`, 2 `NeedsHumanDecision`, 188 `SafeNoChange`.
+- The remaining 4 rows are queued for later source review and do not approve source edits.
 - No serialized type name, namespace, field order, version, or file-location change is approved by this triage batch.
 
 Completed review-only subbatch: `POST-BATCH-B-02A` reviewed XMLSpawner central persistence rows in `BaseXmlSpawner.cs`, `XmlAttachment.cs`, `XmlSpawner2.cs`, and `XmlQuestPoints.cs`.
@@ -379,9 +380,31 @@ Completed review-only subbatch: `POST-BATCH-B-27A` reviewed `Items:Deeds` serial
 - 1 row was classified `IntentionalLegacy` because current version 1 writes exceptional, crafter, and resource fields in order while the version 0 branch consumes an older extra integer before the resource.
 - No row was classified `ConfirmedIssue`, `NeedsMigrationPlan`, or `NeedsHumanDecision`.
 
+Completed review-only subbatch: `POST-BATCH-B-28A` reviewed `Items:Food` serializers.
+
+- 4 rows were reviewed with no source edits.
+- 1 row was classified `FalsePositive` because `BaseBeverage.Deserialize` delegates to `InternalDeserialize(reader, true)`, where the base call and read payload are present.
+- 1 row was classified `SafeNoChange` because `BaseBeverage` version 1 writes poisoner, poison, content, and quantity and reads the same payload through `InternalDeserialize`.
+- 2 rows were classified `IntentionalLegacy` because `Pitcher` and `Food` current formats are aligned while older save branches remain intentionally consumed.
+- No row was classified `ConfirmedIssue`, `NeedsMigrationPlan`, or `NeedsHumanDecision`.
+
+Completed review-only subbatch: `POST-BATCH-B-29A` reviewed `Items:Weapons` serializers.
+
+- 2 rows were reviewed with no source edits.
+- 2 rows were classified `IntentionalLegacy` because `BaseWeapon` and `BaseRanged` current save formats are aligned while older version branches remain intentionally consumed.
+- No row was classified `ConfirmedIssue`, `NeedsMigrationPlan`, or `NeedsHumanDecision`.
+
+Blocked review-only subbatch: `POST-BATCH-B-30A` reviewed `Magic:Druidism` transient spell-effect serializers.
+
+- 2 rows were reviewed with no source edits.
+- `SERIAL-1298` writes version 1, remaining duration, owner, and squelch state in `BlendWithForrestSpell.InternalItem.Serialize`, but `Deserialize` reads version, then owner and squelch state without consuming the duration value before deleting the item.
+- `SERIAL-1300` writes version 1 and remaining duration in `GraspingRootsSpell.InternalItem.Serialize`, but `Deserialize` reads only the version.
+- Decision needed: approve these internal Druidism items as transient no-save/no-payload exceptions, or approve a save-compatibility policy to consume/discard the currently written duration payload during deserialize before deleting or restoring behavior.
+- Next safe action: do not edit source until the transient-effect save policy is chosen.
+
 Next:
 
-1. Continue `POST-BATCH-B` with remaining queued systems grouped by system and file, starting with `Magic:Druidism`.
+1. Stop pending human decision for `SERIAL-1298` and `SERIAL-1300` Druidism transient-effect save policy.
 2. Do not change serialized layout, type names, namespaces, or file locations without a migration plan and explicit approval.
 3. Keep each remaining review-only commit scoped to one system group, or one file when a group is large.
 
