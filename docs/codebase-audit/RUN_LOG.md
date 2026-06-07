@@ -3826,3 +3826,27 @@ Scope: Deterministic phase runner log for the Confictura codebase audit and reor
 - Command: `git status --short`; `rg --files -g AGENTS.md`; `Import-Csv` verification of `post-batch-b-save-compatibility-triage.csv` and `post-audit-active-backlog-status.csv`; `git diff --name-only -- Data`; `git diff --check`.
 - Result: Parsed 304 save-triage rows with 231 `Reviewed`, 73 `Queued`, 11 `POST-BATCH-B-09A` rows, 5 `FalsePositive`, and 6 `SafeNoChange`; there are 0 `NeedsHumanDecision` rows and 0 `NeedsMigrationPlan` rows; active overlay has one row for each 212 non-`ServerCore` active save disposition and 229 rows total; no `Data` files changed; whitespace check passed with expected `core.autocrlf=true` line-ending warnings.
 - Output path: `docs/codebase-audit/outputs/post-batch-b-save-compatibility-triage.csv`
+
+### 2026-06-07T12:17:37.7351987-05:00
+
+- Affected phase: Post-audit `POST-BATCH-B-10A` `Items:Magical` serializer save-compatibility triage
+- Cwd: `D:\ConficturaUO`
+- Command: Source review of `Artifact_LuckyNecklace.cs:20-30`, `GiftLeatherGloves.cs:77-117`, `GiftCloaks.cs:122-165`, `GiftOuterTorso.cs:188-222`, `GiftShoes.cs:16-44`, `GiftShoes.cs:212-246`, `LevelLeatherGloves.cs:77-117`, `LevelCloaks.cs:122-165`, `LevelOuterTorso.cs:188-222`, `LevelShoes.cs:16-44`, and `LevelShoes.cs:212-246`.
+- Result: Reviewed 11 `Items:Magical` rows. Classified 9 rows as `SafeNoChange` and 2 shoe-base resource-compatibility rows as `IntentionalLegacy`. No source files changed.
+- Output path: `docs/codebase-audit/outputs/post-batch-b-save-compatibility-triage.csv`
+
+### 2026-06-07T12:17:37.7351987-05:00
+
+- Affected phase: Post-audit `POST-BATCH-B-10A` `Items:Magical` serializer save-compatibility triage
+- Cwd: `D:\ConficturaUO`
+- Command: Update `post-batch-b-save-compatibility-triage.csv`, append reviewed save-compatibility rows to `post-audit-active-backlog-status.csv`, and update status/readme/next-step artifacts.
+- Result: `post-batch-b-save-compatibility-triage.csv` now has 304 total rows, 242 reviewed rows, 62 queued rows, and 11 `POST-BATCH-B-10A` rows; active backlog overlay now has 240 rows, including 223 active save-compatibility dispositions.
+- Output path: `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
+
+### 2026-06-07T12:19:56.3608597-05:00
+
+- Affected phase: Post-audit `POST-BATCH-B-10A` `Items:Magical` serializer save-compatibility triage
+- Cwd: `D:\ConficturaUO`
+- Command: `git status --short`; `rg --files -g AGENTS.md`; `Import-Csv` verification of `post-batch-b-save-compatibility-triage.csv` and `post-audit-active-backlog-status.csv`; `git diff --name-only -- Data`; `git diff --check`.
+- Result: Parsed 304 save-triage rows with 242 `Reviewed`, 62 `Queued`, 11 `POST-BATCH-B-10A` rows, 2 `IntentionalLegacy`, and 9 `SafeNoChange`; there are 0 `NeedsHumanDecision` rows and 0 `NeedsMigrationPlan` rows; active overlay has one row for each 223 non-`ServerCore` active save disposition and 240 rows total; no `Data` files changed; whitespace check passed with expected `core.autocrlf=true` line-ending warnings.
+- Output path: `docs/codebase-audit/outputs/post-batch-b-save-compatibility-triage.csv`

@@ -28,6 +28,7 @@ The audit phase runner completed Phases 0 through 14 and the worktree was clean 
 - `91a7eed3 docs: triage serpent mobile serializers`
 - `cd5d7a22 docs: accept transient item save exceptions`
 - `fa85d6e7 docs: triage house serializers`
+- `8890cfdc docs: triage bulk order serializers`
 
 `Server.csproj` Debug/x86 build passed in the source-build baseline. Runtime script inventory found 6,581 live-visible `.cs` files under `Data/Scripts`, excluding `bin` and `obj`.
 
@@ -82,15 +83,15 @@ Active backlog reconciliation:
 
 - `post-audit-active-backlog-status.csv` maps `RB-03235` through `RB-03251` to the packet-handler review artifact.
 - Active packet-handler disposition is 3 `Fixed` rows and 14 `ReviewedNoChange` rows.
-- `post-audit-active-backlog-status.csv` also maps 212 reviewed save-compatibility rows from `POST-BATCH-B-02A`, `POST-BATCH-B-02B`, `POST-BATCH-B-02C`, `POST-BATCH-B-03A` through `POST-BATCH-B-03P`, `POST-BATCH-B-04A` through `POST-BATCH-B-04C`, `POST-BATCH-B-05A` through `POST-BATCH-B-05C`, `POST-BATCH-B-06A`, `POST-BATCH-B-07A`, transient-item decision batch `POST-BATCH-B-07B`, `POST-BATCH-B-08A`, and `POST-BATCH-B-09A` to the save triage artifact.
+- `post-audit-active-backlog-status.csv` also maps 223 reviewed save-compatibility rows from `POST-BATCH-B-02A`, `POST-BATCH-B-02B`, `POST-BATCH-B-02C`, `POST-BATCH-B-03A` through `POST-BATCH-B-03P`, `POST-BATCH-B-04A` through `POST-BATCH-B-04C`, `POST-BATCH-B-05A` through `POST-BATCH-B-05C`, `POST-BATCH-B-06A`, `POST-BATCH-B-07A`, transient-item decision batch `POST-BATCH-B-07B`, `POST-BATCH-B-08A`, `POST-BATCH-B-09A`, and `POST-BATCH-B-10A` to the save triage artifact.
 - The canonical Phase 13 `repair-backlog.csv` remains unchanged as historical generated evidence.
 
 Started: `POST-BATCH-B` P0 save compatibility triage in `post-batch-b-save-compatibility-triage.csv`.
 
 - The triage file scopes all 304 P0 critical save-compatibility rows.
-- Source-reviewed decisions cover the 19 `ServerCore` high-blast-radius rows, 30 XMLSpawner rows, 28 `System:Obsolete` rows, 74 `Custom:Mobiles` rows, 18 Homestead rows, 14 `System:Misc` rows, 13 `Items:Trades` rows, 12 `Items:Misc` rows, 12 `Items:Houses` rows, and 11 `Trades:Bulk Orders` rows.
-- Current reviewed decisions are 45 `FalsePositive`, 35 `IntentionalLegacy`, and 151 `SafeNoChange`.
-- The remaining 73 rows are queued for later source review and do not approve source edits.
+- Source-reviewed decisions cover the 19 `ServerCore` high-blast-radius rows, 30 XMLSpawner rows, 28 `System:Obsolete` rows, 74 `Custom:Mobiles` rows, 18 Homestead rows, 14 `System:Misc` rows, 13 `Items:Trades` rows, 12 `Items:Misc` rows, 12 `Items:Houses` rows, 11 `Trades:Bulk Orders` rows, and 11 `Items:Magical` rows.
+- Current reviewed decisions are 45 `FalsePositive`, 37 `IntentionalLegacy`, and 160 `SafeNoChange`.
+- The remaining 62 rows are queued for later source review and do not approve source edits.
 - No serialized type name, namespace, field order, version, or file-location change is approved by this triage batch.
 
 Completed review-only subbatch: `POST-BATCH-B-02A` reviewed XMLSpawner central persistence rows in `BaseXmlSpawner.cs`, `XmlAttachment.cs`, `XmlSpawner2.cs`, and `XmlQuestPoints.cs`.
@@ -285,11 +286,19 @@ Completed review-only subbatch: `POST-BATCH-B-09A` reviewed `Trades:Bulk Orders`
 - `Trades:Bulk Orders` save-compatibility triage is complete with 11 reviewed rows and no source edits.
 - No row was classified `ConfirmedIssue`, `NeedsMigrationPlan`, or `NeedsHumanDecision`.
 
+Completed review-only subbatch: `POST-BATCH-B-10A` reviewed `Items:Magical` serializers.
+
+- 11 rows were reviewed with no source edits.
+- 9 rows were classified `SafeNoChange` where source review confirmed version-only serializers or arcane-charge bool sentinel write/read alignment.
+- 2 rows were classified `IntentionalLegacy` because `BaseGiftShoes` and `BaseLevelShoes` current version 2 writes no resource payload while older version branches still consume legacy resource data.
+- `Items:Magical` save-compatibility triage is complete with 11 reviewed rows and no source edits.
+- No row was classified `ConfirmedIssue`, `NeedsMigrationPlan`, or `NeedsHumanDecision`.
+
 Next:
 
-1. Continue `POST-BATCH-B` with `Items:Magical`, keeping review-only commits scoped by system group or one file when the system group is large.
+1. Continue `POST-BATCH-B` with `Items:Special`, keeping review-only commits scoped by system group or one file when the system group is large.
 2. Do not change serialized layout, type names, namespaces, or file locations without a migration plan and explicit approval.
-3. After `Items:Magical`, continue with `Items:Special`, `Mobiles:Base`, then remaining queued systems grouped by system and file.
+3. After `Items:Special`, continue with `Mobiles:Base`, then remaining queued systems grouped by system and file.
 
 ## Reorganization Status
 
