@@ -1,6 +1,6 @@
 # Post-Audit Next Steps
 
-Generated: 2026-06-06T23:13:48.6090525-05:00
+Generated: 2026-06-06T23:17:11.3106522-05:00
 
 ## Current State
 
@@ -212,6 +212,12 @@ Completed review-only subbatch: `POST-BATCH-B-04A` reviewed Homestead wine-grape
 
 - 2 rows were reviewed with no source edits.
 - 2 rows were classified `IntentionalLegacy` because current version 1 write/read is aligned while version 0 branches consume old info-id save shapes.
+- No row was classified `ConfirmedIssue`, `NeedsMigrationPlan`, or `NeedsHumanDecision`.
+
+Completed review-only subbatch: `POST-BATCH-B-04B` reviewed Homestead craft beverage and juice serializers.
+
+- 5 rows were reviewed with no source edits.
+- 5 rows were classified `IntentionalLegacy` because current version 2 write/read is aligned while older version branches consume legacy poison/fill/crafter/quality/variety save shapes.
 - No row was classified `ConfirmedIssue`, `NeedsMigrationPlan`, or `NeedsHumanDecision`.
 
 Next:

@@ -3586,3 +3586,27 @@ Scope: Deterministic phase runner log for the Confictura codebase audit and reor
 - Command: `Import-Csv` verification of `post-batch-b-save-compatibility-triage.csv` and `post-audit-active-backlog-status.csv`; `git diff --name-only -- Data`; `git diff --check`.
 - Result: Parsed 304 save-triage rows with 153 `Reviewed`, 151 `Queued`, 2 `POST-BATCH-B-04A` rows, and 2 `IntentionalLegacy`; active overlay has one row for each 134 active `POST-BATCH-B-02*`, `POST-BATCH-B-03*`, and `POST-BATCH-B-04*` save disposition and 151 rows total; no `Data` files changed; whitespace check passed with expected `core.autocrlf=true` line-ending warnings.
 - Output path: `docs/codebase-audit/outputs/post-batch-b-save-compatibility-triage.csv`
+
+### 2026-06-06T23:17:11.3106522-05:00
+
+- Affected phase: Post-audit `POST-BATCH-B-04B` Homestead craft beverage and juice serializer save-compatibility triage
+- Cwd: `D:\ConficturaUO`
+- Command: Source review of `BaseCraftWine.cs`, `BaseCraftAle.cs`, `BaseCraftCider.cs`, `BaseCraftMead.cs`, and `BaseCraftJuice.cs` serializer blocks.
+- Result: Current version 2 writes flags and optional crafter/quality/variety values, then writes legacy poisoner/poison/fill data; deserialization reads version 2 and falls through to version 1 and 0 branches. Classified all 5 rows as `IntentionalLegacy`. No source files changed.
+- Output path: `docs/codebase-audit/outputs/post-batch-b-save-compatibility-triage.csv`
+
+### 2026-06-06T23:17:11.3106522-05:00
+
+- Affected phase: Post-audit `POST-BATCH-B-04B` Homestead craft beverage and juice serializer save-compatibility triage
+- Cwd: `D:\ConficturaUO`
+- Command: Update `post-batch-b-save-compatibility-triage.csv`, append reviewed save-compatibility rows to `post-audit-active-backlog-status.csv`, and update status/readme/next-step artifacts.
+- Result: `post-batch-b-save-compatibility-triage.csv` now has 304 total rows, 158 reviewed rows, 146 queued rows, and 5 `POST-BATCH-B-04B` rows, all `IntentionalLegacy`; active backlog overlay now has 156 rows, including 139 active save-compatibility dispositions.
+- Output path: `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
+
+### 2026-06-06T23:17:48.9700678-05:00
+
+- Affected phase: Post-audit `POST-BATCH-B-04B` Homestead craft beverage and juice serializer save-compatibility triage
+- Cwd: `D:\ConficturaUO`
+- Command: `Import-Csv` verification of `post-batch-b-save-compatibility-triage.csv` and `post-audit-active-backlog-status.csv`; `git diff --name-only -- Data`; `git diff --check`.
+- Result: Parsed 304 save-triage rows with 158 `Reviewed`, 146 `Queued`, 5 `POST-BATCH-B-04B` rows, and 5 `IntentionalLegacy`; active overlay has one row for each 139 active `POST-BATCH-B-02*`, `POST-BATCH-B-03*`, and `POST-BATCH-B-04*` save disposition and 156 rows total; no `Data` files changed; whitespace check passed with expected `core.autocrlf=true` line-ending warnings.
+- Output path: `docs/codebase-audit/outputs/post-batch-b-save-compatibility-triage.csv`
