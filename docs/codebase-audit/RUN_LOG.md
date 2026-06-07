@@ -3251,3 +3251,27 @@ Scope: Deterministic phase runner log for the Confictura codebase audit and reor
 - Command: `Import-Csv` verification of `post-batch-b-save-compatibility-triage.csv` and `post-audit-active-backlog-status.csv`; `git diff --name-only -- Data`; `git diff --check`.
 - Result: Parsed 304 save-triage rows with 88 `Reviewed`, 216 `Queued`, 3 `POST-BATCH-B-03C` rows, and 3 `SafeNoChange`; active overlay has one row for each 69 active `POST-BATCH-B-02*` and `POST-BATCH-B-03*` save disposition and 86 rows total; no `Data` files changed; whitespace check passed with expected `core.autocrlf=true` line-ending warnings.
 - Output path: `docs/codebase-audit/outputs/post-batch-b-save-compatibility-triage.csv`
+
+### 2026-06-06T22:20:46.5157459-05:00
+
+- Affected phase: Post-audit `POST-BATCH-B-03D` `Custom:Mobiles/Daemons` serializer save-compatibility triage
+- Cwd: `D:\ConficturaUO`
+- Command: `git status --short`; `rg --files -g AGENTS.md`; source review of 4 queued `Custom:Mobiles/Daemons` serializer rows.
+- Result: Reviewed `FallenAngel`, `GuardianOfTheUnderworld`, `PlagueGod`, and `TombPest`; each calls base serialize/deserialize, writes version 0, reads version 0, and has no custom serialized fields; classified all 4 rows as `SafeNoChange`; no source or serialized-layout edits were approved.
+- Output path: `docs/codebase-audit/outputs/post-batch-b-save-compatibility-triage.csv`
+
+### 2026-06-06T22:20:46.5157459-05:00
+
+- Affected phase: Post-audit `POST-BATCH-B-03D` `Custom:Mobiles/Daemons` serializer save-compatibility triage
+- Cwd: `D:\ConficturaUO`
+- Command: Update `post-batch-b-save-compatibility-triage.csv`, append reviewed save-compatibility rows to `post-audit-active-backlog-status.csv`, and update status/readme/next-step artifacts.
+- Result: `post-batch-b-save-compatibility-triage.csv` now has 304 total rows, 92 reviewed rows, 212 queued rows, and 4 `POST-BATCH-B-03D` rows, all `SafeNoChange`; active backlog overlay now has 90 rows, including 73 active save-compatibility dispositions.
+- Output path: `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
+
+### 2026-06-06T22:20:46.5157459-05:00
+
+- Affected phase: Post-audit `POST-BATCH-B-03D` `Custom:Mobiles/Daemons` serializer save-compatibility triage
+- Cwd: `D:\ConficturaUO`
+- Command: `Import-Csv` verification of `post-batch-b-save-compatibility-triage.csv` and `post-audit-active-backlog-status.csv`; `git diff --name-only -- Data`; `git diff --check`.
+- Result: Parsed 304 save-triage rows with 92 `Reviewed`, 212 `Queued`, 4 `POST-BATCH-B-03D` rows, and 4 `SafeNoChange`; active overlay has one row for each 73 active `POST-BATCH-B-02*` and `POST-BATCH-B-03*` save disposition and 90 rows total; no `Data` files changed; whitespace check passed with expected `core.autocrlf=true` line-ending warnings.
+- Output path: `docs/codebase-audit/outputs/post-batch-b-save-compatibility-triage.csv`
