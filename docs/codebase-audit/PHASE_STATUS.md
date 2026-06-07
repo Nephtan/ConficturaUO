@@ -2,7 +2,7 @@
 
 Initialized: 2026-06-05T16:15:59.8020730-05:00
 
-Last updated: 2026-06-07T12:40:02.8210795-05:00
+Last updated: 2026-06-07T12:42:46.0693251-05:00
 
 Branch: `SAR`
 
@@ -14,15 +14,15 @@ Post-audit compile-only implementation HEAD: `09b7b7e5 feat: add compile-only sc
 
 Post-audit latest implemented source batch: `3259f43b fix: harden packet handler paths`
 
-Post-audit latest committed audit-state batch before the current review: `83e3adfc docs: triage book publisher serializer`
+Post-audit latest committed audit-state batch before the current review: `5fa81ec4 docs: triage gm hiding stone serializer`
 
 Post-audit latest runtime-risk batch: `POST-BATCH-A` packet-handler review and focused source fixes, recorded in `outputs/post-batch-a-packet-handler-review.csv`; runtime hook map, `Server.csproj` Debug/x86 build, and `.\ConficturaServer.exe -compileonly -nocache` verification passed before commit.
 
-Post-audit active backlog overlay: `outputs/post-audit-active-backlog-status.csv` preserves historical `repair-backlog.csv` while recording 17 packet-handler dispositions and 240 reviewed save-compatibility dispositions across `POST-BATCH-B-02A`, `POST-BATCH-B-02B`, `POST-BATCH-B-02C`, `POST-BATCH-B-03A` through `POST-BATCH-B-03P`, `POST-BATCH-B-04A` through `POST-BATCH-B-04C`, `POST-BATCH-B-05A` through `POST-BATCH-B-05C`, `POST-BATCH-B-06A`, `POST-BATCH-B-07A`, `POST-BATCH-B-07B`, `POST-BATCH-B-08A`, `POST-BATCH-B-09A`, `POST-BATCH-B-10A`, `POST-BATCH-B-11A`, `POST-BATCH-B-12A`, `POST-BATCH-B-13A`, and `POST-BATCH-B-14A`.
+Post-audit active backlog overlay: `outputs/post-audit-active-backlog-status.csv` preserves historical `repair-backlog.csv` while recording 17 packet-handler dispositions and 242 reviewed save-compatibility dispositions across `POST-BATCH-B-02A`, `POST-BATCH-B-02B`, `POST-BATCH-B-02C`, `POST-BATCH-B-03A` through `POST-BATCH-B-03P`, `POST-BATCH-B-04A` through `POST-BATCH-B-04C`, `POST-BATCH-B-05A` through `POST-BATCH-B-05C`, `POST-BATCH-B-06A`, `POST-BATCH-B-07A`, `POST-BATCH-B-07B`, `POST-BATCH-B-08A`, `POST-BATCH-B-09A`, `POST-BATCH-B-10A`, `POST-BATCH-B-11A`, `POST-BATCH-B-12A`, `POST-BATCH-B-13A`, `POST-BATCH-B-14A`, and `POST-BATCH-B-15A`.
 
-Post-audit save compatibility triage started: `outputs/post-batch-b-save-compatibility-triage.csv` scopes all 304 P0 critical save-compatibility rows, records source-reviewed decisions for 19 `ServerCore` rows, 30 XMLSpawner rows, 28 `System:Obsolete` rows, 74 `Custom:Mobiles` rows, 18 Homestead rows, 14 `System:Misc` rows, 13 `Items:Trades` rows, 12 `Items:Misc` rows, 12 `Items:Houses` rows, 11 `Trades:Bulk Orders` rows, 11 `Items:Magical` rows, 8 `Items:Special` rows, 7 `Mobiles:Base` rows, 1 `Custom:Book Publisher [2.0]` row, and 1 `Custom:CEO's GM Hiding Stone [2.0]` row, queues 45 remaining rows for later `POST-BATCH-B` review, and approves no source or serialized-layout edits.
+Post-audit save compatibility triage started: `outputs/post-batch-b-save-compatibility-triage.csv` scopes all 304 P0 critical save-compatibility rows, records source-reviewed decisions for 19 `ServerCore` rows, 30 XMLSpawner rows, 28 `System:Obsolete` rows, 74 `Custom:Mobiles` rows, 18 Homestead rows, 14 `System:Misc` rows, 13 `Items:Trades` rows, 12 `Items:Misc` rows, 12 `Items:Houses` rows, 11 `Trades:Bulk Orders` rows, 11 `Items:Magical` rows, 8 `Items:Special` rows, 7 `Mobiles:Base` rows, 1 `Custom:Book Publisher [2.0]` row, 1 `Custom:CEO's GM Hiding Stone [2.0]` row, and 2 `Custom:Champions` rows, queues 43 remaining rows for later `POST-BATCH-B` review, and approves no source or serialized-layout edits.
 
-Post-audit latest save-triage subbatch: `POST-BATCH-B-14A` reviewed `Custom:CEO's GM Hiding Stone [2.0]` serializers and classified 1 row as `IntentionalLegacy`. No source or serialized-layout edit is approved by this review.
+Post-audit latest save-triage subbatch: `POST-BATCH-B-15A` reviewed `Custom:Champions` serializers and classified 1 row as `SafeNoChange` and 1 row as `IntentionalLegacy`. No source or serialized-layout edit is approved by this review.
 
 Scope: Deterministic phase runner state for the Confictura codebase audit and reorganization program.
 
