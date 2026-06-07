@@ -3610,3 +3610,27 @@ Scope: Deterministic phase runner log for the Confictura codebase audit and reor
 - Command: `Import-Csv` verification of `post-batch-b-save-compatibility-triage.csv` and `post-audit-active-backlog-status.csv`; `git diff --name-only -- Data`; `git diff --check`.
 - Result: Parsed 304 save-triage rows with 158 `Reviewed`, 146 `Queued`, 5 `POST-BATCH-B-04B` rows, and 5 `IntentionalLegacy`; active overlay has one row for each 139 active `POST-BATCH-B-02*`, `POST-BATCH-B-03*`, and `POST-BATCH-B-04*` save disposition and 156 rows total; no `Data` files changed; whitespace check passed with expected `core.autocrlf=true` line-ending warnings.
 - Output path: `docs/codebase-audit/outputs/post-batch-b-save-compatibility-triage.csv`
+
+### 2026-06-06T23:20:03.8668234-05:00
+
+- Affected phase: Post-audit `POST-BATCH-B-04C` Homestead crop serializer save-compatibility triage
+- Cwd: `D:\ConficturaUO`
+- Command: Source review of `BaseCrop.cs:135-180` plus 10 wild crop plant serializer wrappers.
+- Result: `BaseCrop` writes and reads version, age/harvest fields, booleans, and ID list values in matching order; plant wrappers write and read only local version after base serialization. Classified all 11 rows as `SafeNoChange`. No source files changed.
+- Output path: `docs/codebase-audit/outputs/post-batch-b-save-compatibility-triage.csv`
+
+### 2026-06-06T23:20:03.8668234-05:00
+
+- Affected phase: Post-audit `POST-BATCH-B-04C` Homestead crop serializer save-compatibility triage
+- Cwd: `D:\ConficturaUO`
+- Command: Update `post-batch-b-save-compatibility-triage.csv`, append reviewed save-compatibility rows to `post-audit-active-backlog-status.csv`, and update status/readme/next-step artifacts.
+- Result: `post-batch-b-save-compatibility-triage.csv` now has 304 total rows, 169 reviewed rows, 135 queued rows, and 11 `POST-BATCH-B-04C` rows, all `SafeNoChange`; active backlog overlay now has 167 rows, including 150 active save-compatibility dispositions.
+- Output path: `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
+
+### 2026-06-06T23:20:42.2690101-05:00
+
+- Affected phase: Post-audit `POST-BATCH-B-04C` Homestead crop serializer save-compatibility triage
+- Cwd: `D:\ConficturaUO`
+- Command: `Import-Csv` verification of `post-batch-b-save-compatibility-triage.csv` and `post-audit-active-backlog-status.csv`; `git diff --name-only -- Data`; `git diff --check`.
+- Result: Parsed 304 save-triage rows with 169 `Reviewed`, 135 `Queued`, 11 `POST-BATCH-B-04C` rows, and 11 `SafeNoChange`; Homestead has 0 queued rows; active overlay has one row for each 150 active `POST-BATCH-B-02*`, `POST-BATCH-B-03*`, and `POST-BATCH-B-04*` save disposition and 167 rows total; no `Data` files changed; whitespace check passed with expected `core.autocrlf=true` line-ending warnings.
+- Output path: `docs/codebase-audit/outputs/post-batch-b-save-compatibility-triage.csv`

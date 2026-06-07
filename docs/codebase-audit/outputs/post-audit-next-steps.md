@@ -1,6 +1,6 @@
 # Post-Audit Next Steps
 
-Generated: 2026-06-06T23:17:11.3106522-05:00
+Generated: 2026-06-06T23:20:03.8668234-05:00
 
 ## Current State
 
@@ -218,6 +218,13 @@ Completed review-only subbatch: `POST-BATCH-B-04B` reviewed Homestead craft beve
 
 - 5 rows were reviewed with no source edits.
 - 5 rows were classified `IntentionalLegacy` because current version 2 write/read is aligned while older version branches consume legacy poison/fill/crafter/quality/variety save shapes.
+- No row was classified `ConfirmedIssue`, `NeedsMigrationPlan`, or `NeedsHumanDecision`.
+
+Completed review-only subbatch: `POST-BATCH-B-04C` reviewed Homestead crop serializers.
+
+- 11 rows were reviewed with no source edits.
+- 11 rows were classified `SafeNoChange` where source review confirmed crop field/order alignment or version-only plant wrapper serializers.
+- Homestead save-compatibility triage is complete with 18 reviewed rows and no source edits.
 - No row was classified `ConfirmedIssue`, `NeedsMigrationPlan`, or `NeedsHumanDecision`.
 
 Next:
