@@ -4018,3 +4018,19 @@ Scope: Deterministic phase runner log for the Confictura codebase audit and reor
 - Command: Update `post-batch-b-save-compatibility-triage.csv`, append reviewed save-compatibility row to `post-audit-active-backlog-status.csv`, and update status/readme/next-step artifacts.
 - Result: `post-batch-b-save-compatibility-triage.csv` now has 304 total rows, 273 reviewed rows, 31 queued rows, and 1 `POST-BATCH-B-20A` row; active backlog overlay now has 271 rows, including 254 active save-compatibility dispositions.
 - Output path: `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
+
+### 2026-06-07T13:04:45.9390281-05:00
+
+- Affected phase: Post-audit `POST-BATCH-B-21A` `Custom:Voting` serializer save-compatibility triage
+- Cwd: `D:\ConficturaUO`
+- Command: Source review of `VoteItem.cs:167-203`, `VoteSite.cs:113-149`, and `VoteStone.cs:109-143`.
+- Result: Reviewed 4 `Custom:Voting` rows. Classified 3 rows as `SafeNoChange` and 1 row as `FalsePositive`; no source files changed.
+- Output path: `docs/codebase-audit/outputs/post-batch-b-save-compatibility-triage.csv`
+
+### 2026-06-07T13:04:45.9390281-05:00
+
+- Affected phase: Post-audit `POST-BATCH-B-21A` `Custom:Voting` serializer save-compatibility triage
+- Cwd: `D:\ConficturaUO`
+- Command: Update `post-batch-b-save-compatibility-triage.csv`, append reviewed save-compatibility rows to `post-audit-active-backlog-status.csv`, and update status/readme/next-step artifacts.
+- Result: `post-batch-b-save-compatibility-triage.csv` now has 304 total rows, 277 reviewed rows, 27 queued rows, and 4 `POST-BATCH-B-21A` rows; active backlog overlay now has 275 rows, including 258 active save-compatibility dispositions.
+- Output path: `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`

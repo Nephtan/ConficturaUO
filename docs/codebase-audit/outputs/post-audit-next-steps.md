@@ -1,6 +1,6 @@
 # Post-Audit Next Steps
 
-Generated: 2026-06-07T13:00:54.3537424-05:00
+Generated: 2026-06-07T13:04:45.9390281-05:00
 
 ## Current State
 
@@ -39,6 +39,7 @@ The audit phase runner completed Phases 0 through 14 and the worktree was clean 
 - `7a29ca06 docs: triage government serializers`
 - `aba2143b docs: triage pandoras gift box serializer`
 - `d3b5276f docs: triage skill stone serializer`
+- `011c244c docs: triage staff toolbar serializer`
 
 `Server.csproj` Debug/x86 build passed in the source-build baseline. Runtime script inventory found 6,581 live-visible `.cs` files under `Data/Scripts`, excluding `bin` and `obj`.
 
@@ -93,15 +94,15 @@ Active backlog reconciliation:
 
 - `post-audit-active-backlog-status.csv` maps `RB-03235` through `RB-03251` to the packet-handler review artifact.
 - Active packet-handler disposition is 3 `Fixed` rows and 14 `ReviewedNoChange` rows.
-- `post-audit-active-backlog-status.csv` also maps 254 reviewed save-compatibility rows from `POST-BATCH-B-20A` and prior `POST-BATCH-B` subbatches to the save triage artifact.
+- `post-audit-active-backlog-status.csv` also maps 258 reviewed save-compatibility rows from `POST-BATCH-B-21A` and prior `POST-BATCH-B` subbatches to the save triage artifact.
 - The canonical Phase 13 `repair-backlog.csv` remains unchanged as historical generated evidence.
 
 Started: `POST-BATCH-B` P0 save compatibility triage in `post-batch-b-save-compatibility-triage.csv`.
 
 - The triage file scopes all 304 P0 critical save-compatibility rows.
-- Source-reviewed decisions cover the 19 `ServerCore` high-blast-radius rows, 30 XMLSpawner rows, 28 `System:Obsolete` rows, 74 `Custom:Mobiles` rows, 18 Homestead rows, 14 `System:Misc` rows, 13 `Items:Trades` rows, 12 `Items:Misc` rows, 12 `Items:Houses` rows, 11 `Trades:Bulk Orders` rows, 11 `Items:Magical` rows, 8 `Items:Special` rows, 7 `Mobiles:Base` rows, 1 `Custom:Book Publisher [2.0]` row, 1 `Custom:CEO's GM Hiding Stone [2.0]` row, 2 `Custom:Champions` rows, 4 `Custom:CloneOfflinePlayerCharacters` rows, 5 `Custom:Government System` rows, 1 `Custom:PandorasGiftBox` row, and 1 `Custom:Skill Stone` row, and 1 `Custom:Staff Toolbar [2.0]` row.
-- Current reviewed decisions are 1 `ConfirmedIssue`, 48 `FalsePositive`, 45 `IntentionalLegacy`, and 179 `SafeNoChange`.
-- The remaining 31 rows are queued for later source review and do not approve source edits.
+- Source-reviewed decisions cover the 19 `ServerCore` high-blast-radius rows, 30 XMLSpawner rows, 28 `System:Obsolete` rows, 74 `Custom:Mobiles` rows, 18 Homestead rows, 14 `System:Misc` rows, 13 `Items:Trades` rows, 12 `Items:Misc` rows, 12 `Items:Houses` rows, 11 `Trades:Bulk Orders` rows, 11 `Items:Magical` rows, 8 `Items:Special` rows, 7 `Mobiles:Base` rows, 1 `Custom:Book Publisher [2.0]` row, 1 `Custom:CEO's GM Hiding Stone [2.0]` row, 2 `Custom:Champions` rows, 4 `Custom:CloneOfflinePlayerCharacters` rows, 5 `Custom:Government System` rows, 1 `Custom:PandorasGiftBox` row, and 1 `Custom:Skill Stone` row, 1 `Custom:Staff Toolbar [2.0]` row, and 4 `Custom:Voting` rows.
+- Current reviewed decisions are 1 `ConfirmedIssue`, 49 `FalsePositive`, 45 `IntentionalLegacy`, and 182 `SafeNoChange`.
+- The remaining 27 rows are queued for later source review and do not approve source edits.
 - No serialized type name, namespace, field order, version, or file-location change is approved by this triage batch.
 
 Completed review-only subbatch: `POST-BATCH-B-02A` reviewed XMLSpawner central persistence rows in `BaseXmlSpawner.cs`, `XmlAttachment.cs`, `XmlSpawner2.cs`, and `XmlQuestPoints.cs`.
@@ -319,9 +320,17 @@ Completed review-only subbatch: `POST-BATCH-B-20A` reviewed `Custom:Staff Toolba
 - 1 row was classified `IntentionalLegacy` because current version 130 write/read is aligned while version 100 is still intentionally consumed through the legacy read branch.
 - No row was classified `ConfirmedIssue`, `NeedsMigrationPlan`, or `NeedsHumanDecision`.
 
+
+Completed review-only subbatch: `POST-BATCH-B-21A` reviewed `Custom:Voting` serializers.
+
+- 4 rows were reviewed with no source edits.
+- 3 rows were classified `SafeNoChange` where source review confirmed aligned `VoteItem`, `VoteSite`, and `VoteStone` write/read formats.
+- 1 row was classified `FalsePositive` because `VoteSite` is an embedded helper/property serializer with no applicable base serializer override.
+- No row was classified `ConfirmedIssue`, `NeedsMigrationPlan`, or `NeedsHumanDecision`.
+
 Next:
 
-1. Continue `POST-BATCH-B` with remaining queued systems grouped by system and file, starting with `Custom:Voting`.
+1. Continue `POST-BATCH-B` with remaining queued systems grouped by system and file, starting with `Items:Armor`.
 2. Do not change serialized layout, type names, namespaces, or file locations without a migration plan and explicit approval.
 3. Keep each remaining review-only commit scoped to one system group, or one file when a group is large.
 
