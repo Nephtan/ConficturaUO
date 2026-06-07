@@ -3730,3 +3730,27 @@ Scope: Deterministic phase runner log for the Confictura codebase audit and reor
 - Command: `Import-Csv` verification of `post-batch-b-save-compatibility-triage.csv` and `post-audit-active-backlog-status.csv`; `git diff --name-only -- Data`; `git diff --check`.
 - Result: Parsed 304 save-triage rows with 196 `Reviewed`, 108 `Queued`, 13 `POST-BATCH-B-06A` rows, 1 `FalsePositive`, 5 `IntentionalLegacy`, and 7 `SafeNoChange`; `Items:Trades` has 0 queued rows; active overlay has one row for each 177 active `POST-BATCH-B-02*`, `POST-BATCH-B-03*`, `POST-BATCH-B-04*`, `POST-BATCH-B-05*`, and `POST-BATCH-B-06*` save disposition and 194 rows total; no `Data` files changed; whitespace check passed with expected `core.autocrlf=true` line-ending warnings.
 - Output path: `docs/codebase-audit/outputs/post-batch-b-save-compatibility-triage.csv`
+
+### 2026-06-06T23:43:13.1315103-05:00
+
+- Affected phase: Post-audit `POST-BATCH-B-07A` `Items:Misc` serializer save-compatibility triage
+- Cwd: `D:\ConficturaUO`
+- Command: Source review of `AcidSlime.cs:103-108`, `Corpse.cs:700-900`, `Head.cs:125-182`, `EffectController.cs:295-384`, `Firebomb.cs:241-249`, `Gold.cs:60-94`, `PlayerBulletinBoards.cs:126-185`, `PlayerBulletinBoards.cs:371-395`, `PoolOfAcid.cs:102-110`, `PowerGenerator.cs:603-635`, and `SerpentPillar.cs:105-126`.
+- Result: Reviewed 12 `Items:Misc` rows. Classified 5 rows as `SafeNoChange`, 3 rows as `IntentionalLegacy`, 1 row as `FalsePositive`, 2 rows as `NeedsHumanDecision`, and 1 row as `NeedsMigrationPlan`. Human decision is required for transient `Item` subclasses that omit base serialization: `AcidSlime`, `FirebombField`, and `PoolOfAcid`. No source files changed.
+- Output path: `docs/codebase-audit/outputs/post-batch-b-save-compatibility-triage.csv`
+
+### 2026-06-06T23:43:13.1315103-05:00
+
+- Affected phase: Post-audit `POST-BATCH-B-07A` `Items:Misc` serializer save-compatibility triage
+- Cwd: `D:\ConficturaUO`
+- Command: Update `post-batch-b-save-compatibility-triage.csv`, append reviewed save-compatibility rows to `post-audit-active-backlog-status.csv`, and update status/readme/next-step artifacts.
+- Result: `post-batch-b-save-compatibility-triage.csv` now has 304 total rows, 208 reviewed rows, 96 queued rows, and 12 `POST-BATCH-B-07A` rows; active backlog overlay now has 206 rows, including 189 active save-compatibility dispositions; `outputs/README.md` marks the save-triage artifact `Blocked` pending transient-item save-policy guidance.
+- Output path: `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
+
+### 2026-06-06T23:46:06.5696089-05:00
+
+- Affected phase: Post-audit `POST-BATCH-B-07A` `Items:Misc` serializer save-compatibility triage
+- Cwd: `D:\ConficturaUO`
+- Command: `Import-Csv` verification of `post-batch-b-save-compatibility-triage.csv` and `post-audit-active-backlog-status.csv`; `git diff --name-only -- Data`; `git diff --check`.
+- Result: Parsed 304 save-triage rows with 208 `Reviewed`, 96 `Queued`, 12 `POST-BATCH-B-07A` rows, 1 `FalsePositive`, 3 `IntentionalLegacy`, 5 `SafeNoChange`, 2 `NeedsHumanDecision`, and 1 `NeedsMigrationPlan`; `Items:Misc` has 0 queued rows; active overlay has one row for each 189 active `POST-BATCH-B-02*`, `POST-BATCH-B-03*`, `POST-BATCH-B-04*`, `POST-BATCH-B-05*`, `POST-BATCH-B-06*`, and `POST-BATCH-B-07*` save disposition and 206 rows total; no `Data` files changed; whitespace check passed with expected `core.autocrlf=true` line-ending warnings.
+- Output path: `docs/codebase-audit/outputs/post-batch-b-save-compatibility-triage.csv`
