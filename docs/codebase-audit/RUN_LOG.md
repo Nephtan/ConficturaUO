@@ -3906,3 +3906,19 @@ Scope: Deterministic phase runner log for the Confictura codebase audit and reor
 - Command: Update `post-batch-b-save-compatibility-triage.csv`, append reviewed save-compatibility row to `post-audit-active-backlog-status.csv`, and update status/readme/next-step artifacts.
 - Result: `post-batch-b-save-compatibility-triage.csv` now has 304 total rows, 258 reviewed rows, 46 queued rows, and 1 `POST-BATCH-B-13A` row; active backlog overlay now has 256 rows, including 239 active save-compatibility dispositions.
 - Output path: `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
+
+### 2026-06-07T12:40:02.8210795-05:00
+
+- Affected phase: Post-audit `POST-BATCH-B-14A` `Custom:CEO's GM Hiding Stone [2.0]` serializer save-compatibility triage
+- Cwd: `D:\ConficturaUO`
+- Command: Source review of `gmhidingstone.cs:748-780`.
+- Result: Reviewed 1 `Custom:CEO's GM Hiding Stone [2.0]` row. Classified the row as `IntentionalLegacy`; no source files changed.
+- Output path: `docs/codebase-audit/outputs/post-batch-b-save-compatibility-triage.csv`
+
+### 2026-06-07T12:40:02.8210795-05:00
+
+- Affected phase: Post-audit `POST-BATCH-B-14A` `Custom:CEO's GM Hiding Stone [2.0]` serializer save-compatibility triage
+- Cwd: `D:\ConficturaUO`
+- Command: Update `post-batch-b-save-compatibility-triage.csv`, append reviewed save-compatibility row to `post-audit-active-backlog-status.csv`, and update status/readme/next-step artifacts.
+- Result: `post-batch-b-save-compatibility-triage.csv` now has 304 total rows, 259 reviewed rows, 45 queued rows, and 1 `POST-BATCH-B-14A` row; active backlog overlay now has 257 rows, including 240 active save-compatibility dispositions.
+- Output path: `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`

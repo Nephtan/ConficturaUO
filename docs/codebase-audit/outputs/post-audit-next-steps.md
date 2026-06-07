@@ -1,6 +1,6 @@
 # Post-Audit Next Steps
 
-Generated: 2026-06-07T12:36:52.7279021-05:00
+Generated: 2026-06-07T12:40:02.8210795-05:00
 
 ## Current State
 
@@ -32,6 +32,7 @@ The audit phase runner completed Phases 0 through 14 and the worktree was clean 
 - `6565ed8d docs: triage magical item serializers`
 - `be567028 docs: triage special item serializers`
 - `ddb3ea5d docs: triage base mobile serializers`
+- `83e3adfc docs: triage book publisher serializer`
 
 `Server.csproj` Debug/x86 build passed in the source-build baseline. Runtime script inventory found 6,581 live-visible `.cs` files under `Data/Scripts`, excluding `bin` and `obj`.
 
@@ -86,15 +87,15 @@ Active backlog reconciliation:
 
 - `post-audit-active-backlog-status.csv` maps `RB-03235` through `RB-03251` to the packet-handler review artifact.
 - Active packet-handler disposition is 3 `Fixed` rows and 14 `ReviewedNoChange` rows.
-- `post-audit-active-backlog-status.csv` also maps 239 reviewed save-compatibility rows from `POST-BATCH-B-02A`, `POST-BATCH-B-02B`, `POST-BATCH-B-02C`, `POST-BATCH-B-03A` through `POST-BATCH-B-03P`, `POST-BATCH-B-04A` through `POST-BATCH-B-04C`, `POST-BATCH-B-05A` through `POST-BATCH-B-05C`, `POST-BATCH-B-06A`, `POST-BATCH-B-07A`, transient-item decision batch `POST-BATCH-B-07B`, `POST-BATCH-B-08A`, `POST-BATCH-B-09A`, `POST-BATCH-B-10A`, `POST-BATCH-B-11A`, `POST-BATCH-B-12A`, and `POST-BATCH-B-13A` to the save triage artifact.
+- `post-audit-active-backlog-status.csv` also maps 240 reviewed save-compatibility rows from `POST-BATCH-B-02A`, `POST-BATCH-B-02B`, `POST-BATCH-B-02C`, `POST-BATCH-B-03A` through `POST-BATCH-B-03P`, `POST-BATCH-B-04A` through `POST-BATCH-B-04C`, `POST-BATCH-B-05A` through `POST-BATCH-B-05C`, `POST-BATCH-B-06A`, `POST-BATCH-B-07A`, transient-item decision batch `POST-BATCH-B-07B`, `POST-BATCH-B-08A`, `POST-BATCH-B-09A`, `POST-BATCH-B-10A`, `POST-BATCH-B-11A`, `POST-BATCH-B-12A`, `POST-BATCH-B-13A`, and `POST-BATCH-B-14A` to the save triage artifact.
 - The canonical Phase 13 `repair-backlog.csv` remains unchanged as historical generated evidence.
 
 Started: `POST-BATCH-B` P0 save compatibility triage in `post-batch-b-save-compatibility-triage.csv`.
 
 - The triage file scopes all 304 P0 critical save-compatibility rows.
-- Source-reviewed decisions cover the 19 `ServerCore` high-blast-radius rows, 30 XMLSpawner rows, 28 `System:Obsolete` rows, 74 `Custom:Mobiles` rows, 18 Homestead rows, 14 `System:Misc` rows, 13 `Items:Trades` rows, 12 `Items:Misc` rows, 12 `Items:Houses` rows, 11 `Trades:Bulk Orders` rows, 11 `Items:Magical` rows, 8 `Items:Special` rows, 7 `Mobiles:Base` rows, and 1 `Custom:Book Publisher [2.0]` row.
-- Current reviewed decisions are 48 `FalsePositive`, 42 `IntentionalLegacy`, and 168 `SafeNoChange`.
-- The remaining 46 rows are queued for later source review and do not approve source edits.
+- Source-reviewed decisions cover the 19 `ServerCore` high-blast-radius rows, 30 XMLSpawner rows, 28 `System:Obsolete` rows, 74 `Custom:Mobiles` rows, 18 Homestead rows, 14 `System:Misc` rows, 13 `Items:Trades` rows, 12 `Items:Misc` rows, 12 `Items:Houses` rows, 11 `Trades:Bulk Orders` rows, 11 `Items:Magical` rows, 8 `Items:Special` rows, 7 `Mobiles:Base` rows, 1 `Custom:Book Publisher [2.0]` row, and 1 `Custom:CEO's GM Hiding Stone [2.0]` row.
+- Current reviewed decisions are 48 `FalsePositive`, 43 `IntentionalLegacy`, and 168 `SafeNoChange`.
+- The remaining 45 rows are queued for later source review and do not approve source edits.
 - No serialized type name, namespace, field order, version, or file-location change is approved by this triage batch.
 
 Completed review-only subbatch: `POST-BATCH-B-02A` reviewed XMLSpawner central persistence rows in `BaseXmlSpawner.cs`, `XmlAttachment.cs`, `XmlSpawner2.cs`, and `XmlQuestPoints.cs`.
@@ -308,7 +309,7 @@ Completed review-only subbatch: `POST-BATCH-B-11A` reviewed `Items:Special` seri
 
 Next:
 
-1. Continue `POST-BATCH-B` with remaining queued systems grouped by system and file, starting with `Custom:CEO's GM Hiding Stone [2.0]`.
+1. Continue `POST-BATCH-B` with remaining queued systems grouped by system and file, starting with `Custom:Champions`.
 2. Do not change serialized layout, type names, namespaces, or file locations without a migration plan and explicit approval.
 3. Keep each remaining review-only commit scoped to one system group, or one file when a group is large.
 
