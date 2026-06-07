@@ -80,15 +80,15 @@ Active backlog reconciliation:
 
 - `post-audit-active-backlog-status.csv` maps `RB-03235` through `RB-03251` to the packet-handler review artifact.
 - Active packet-handler disposition is 3 `Fixed` rows and 14 `ReviewedNoChange` rows.
-- `post-audit-active-backlog-status.csv` also maps 105 reviewed save-compatibility rows from `POST-BATCH-B-02A`, `POST-BATCH-B-02B`, `POST-BATCH-B-02C`, and `POST-BATCH-B-03A` through `POST-BATCH-B-03M` to the save triage artifact.
+- `post-audit-active-backlog-status.csv` also maps 177 reviewed save-compatibility rows from `POST-BATCH-B-02A`, `POST-BATCH-B-02B`, `POST-BATCH-B-02C`, `POST-BATCH-B-03A` through `POST-BATCH-B-03P`, `POST-BATCH-B-04A` through `POST-BATCH-B-04C`, `POST-BATCH-B-05A` through `POST-BATCH-B-05C`, and `POST-BATCH-B-06A` to the save triage artifact.
 - The canonical Phase 13 `repair-backlog.csv` remains unchanged as historical generated evidence.
 
 Started: `POST-BATCH-B` P0 save compatibility triage in `post-batch-b-save-compatibility-triage.csv`.
 
 - The triage file scopes all 304 P0 critical save-compatibility rows.
-- Source-reviewed decisions cover the 19 `ServerCore` high-blast-radius rows, 10 `POST-BATCH-B-02A` XMLSpawner central persistence rows, 20 `POST-BATCH-B-02B` remaining XMLSpawner serializer rows, 28 `POST-BATCH-B-02C` `System:Obsolete` rows, and 47 `POST-BATCH-B-03*` `Custom:Mobiles` rows.
-- Current reviewed decisions are 25 `FalsePositive`, 16 `IntentionalLegacy`, and 83 `SafeNoChange`.
-- The remaining 180 rows are queued for later source review and do not approve source edits.
+- Source-reviewed decisions cover the 19 `ServerCore` high-blast-radius rows, 30 XMLSpawner rows, 28 `System:Obsolete` rows, 74 `Custom:Mobiles` rows, 18 Homestead rows, 14 `System:Misc` rows, and 13 `Items:Trades` rows.
+- Current reviewed decisions are 37 `FalsePositive`, 31 `IntentionalLegacy`, and 128 `SafeNoChange`.
+- The remaining 108 rows are queued for later source review and do not approve source edits.
 - No serialized type name, namespace, field order, version, or file-location change is approved by this triage batch.
 
 Completed review-only subbatch: `POST-BATCH-B-02A` reviewed XMLSpawner central persistence rows in `BaseXmlSpawner.cs`, `XmlAttachment.cs`, `XmlSpawner2.cs`, and `XmlQuestPoints.cs`.
@@ -247,10 +247,19 @@ Completed review-only subbatch: `POST-BATCH-B-05C` reviewed `System:Misc/Spawnin
 - `System:Misc` save-compatibility triage is complete with 14 reviewed rows and no source edits.
 - No row was classified `ConfirmedIssue`, `NeedsMigrationPlan`, or `NeedsHumanDecision`.
 
+Completed review-only subbatch: `POST-BATCH-B-06A` reviewed `Items:Trades` serializers.
+
+- 13 rows were reviewed with no source edits.
+- 7 rows were classified `SafeNoChange` where source review confirmed write/read alignment for runes, runebook entries, arrow resources, and disguise persistence.
+- 5 rows were classified `IntentionalLegacy` because current sharpening stone version 1 write/read is aligned while version 0 branches consume a retired owner serial.
+- 1 row was classified `FalsePositive` because `RunebookEntry` is a helper serializer with a paired `GenericReader` constructor and no applicable base serializer override.
+- `Items:Trades` save-compatibility triage is complete with 13 reviewed rows and no source edits.
+- No row was classified `ConfirmedIssue`, `NeedsMigrationPlan`, or `NeedsHumanDecision`.
+
 Next:
 
 1. If compile-only reports future errors, repair those exact runtime compile blockers before backlog risk work.
-2. Continue `POST-BATCH-B` with the remaining `Custom:Mobiles` rows, keeping review-only commits scoped by folder or small system group.
+2. Continue `POST-BATCH-B` with `Items:Misc`, keeping review-only commits scoped by system group or one file when the system group is large.
 3. Do not change serialized layout, type names, namespaces, or file locations without a migration plan and explicit approval.
 
 ## Reorganization Status
