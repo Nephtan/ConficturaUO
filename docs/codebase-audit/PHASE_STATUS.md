@@ -2,7 +2,7 @@
 
 Initialized: 2026-06-05T16:15:59.8020730-05:00
 
-Last updated: 2026-06-06T22:40:45.4901685-05:00
+Last updated: 2026-06-06T22:44:00.7275262-05:00
 
 Branch: `SAR`
 
@@ -14,13 +14,13 @@ Post-audit compile-only implementation HEAD: `09b7b7e5 feat: add compile-only sc
 
 Post-audit latest implemented source batch: `3259f43b fix: harden packet handler paths`
 
-Post-audit latest committed audit-state batch before the current review: `236faf68 docs: triage kobold mobile serializers`
+Post-audit latest committed audit-state batch before the current review: `60639ced docs: triage minotaur mobile serializers`
 
 Post-audit latest runtime-risk batch: `POST-BATCH-A` packet-handler review and focused source fixes, recorded in `outputs/post-batch-a-packet-handler-review.csv`; runtime hook map, `Server.csproj` Debug/x86 build, and `.\ConficturaServer.exe -compileonly -nocache` verification passed before commit.
 
-Post-audit active backlog overlay: `outputs/post-audit-active-backlog-status.csv` preserves historical `repair-backlog.csv` while recording 17 packet-handler dispositions and 93 reviewed save-compatibility dispositions across `POST-BATCH-B-02A`, `POST-BATCH-B-02B`, `POST-BATCH-B-02C`, and `POST-BATCH-B-03A` through `POST-BATCH-B-03I`.
+Post-audit active backlog overlay: `outputs/post-audit-active-backlog-status.csv` preserves historical `repair-backlog.csv` while recording 17 packet-handler dispositions and 97 reviewed save-compatibility dispositions across `POST-BATCH-B-02A`, `POST-BATCH-B-02B`, `POST-BATCH-B-02C`, and `POST-BATCH-B-03A` through `POST-BATCH-B-03J`.
 
-Post-audit save compatibility triage started: `outputs/post-batch-b-save-compatibility-triage.csv` scopes all 304 P0 critical save-compatibility rows, records source-reviewed decisions for 19 `ServerCore` rows, 30 XMLSpawner rows, 28 `System:Obsolete` rows, and 35 `Custom:Mobiles` rows, queues 192 remaining rows for later `POST-BATCH-B` review, and approves no source or serialized-layout edits.
+Post-audit save compatibility triage started: `outputs/post-batch-b-save-compatibility-triage.csv` scopes all 304 P0 critical save-compatibility rows, records source-reviewed decisions for 19 `ServerCore` rows, 30 XMLSpawner rows, 28 `System:Obsolete` rows, and 39 `Custom:Mobiles` rows, queues 188 remaining rows for later `POST-BATCH-B` review, and approves no source or serialized-layout edits.
 
 Scope: Deterministic phase runner state for the Confictura codebase audit and reorganization program.
 
