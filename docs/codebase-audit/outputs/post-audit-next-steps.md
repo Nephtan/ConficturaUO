@@ -1,6 +1,6 @@
 # Post-Audit Next Steps
 
-Generated: 2026-06-06T23:09:30.0545430-05:00
+Generated: 2026-06-06T23:13:48.6090525-05:00
 
 ## Current State
 
@@ -206,6 +206,12 @@ Completed review-only subbatch: `POST-BATCH-B-03P` reviewed `Custom:Mobiles/Vend
 
 - 3 rows were reviewed with no source edits.
 - 3 rows were classified `SafeNoChange` where source review confirmed base calls, version write/read alignment, and no custom serialized fields.
+- No row was classified `ConfirmedIssue`, `NeedsMigrationPlan`, or `NeedsHumanDecision`.
+
+Completed review-only subbatch: `POST-BATCH-B-04A` reviewed Homestead wine-grape and hops resource serializers.
+
+- 2 rows were reviewed with no source edits.
+- 2 rows were classified `IntentionalLegacy` because current version 1 write/read is aligned while version 0 branches consume old info-id save shapes.
 - No row was classified `ConfirmedIssue`, `NeedsMigrationPlan`, or `NeedsHumanDecision`.
 
 Next:

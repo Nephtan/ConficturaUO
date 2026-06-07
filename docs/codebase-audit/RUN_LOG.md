@@ -3562,3 +3562,27 @@ Scope: Deterministic phase runner log for the Confictura codebase audit and reor
 - Command: `Import-Csv` verification of `post-batch-b-save-compatibility-triage.csv` and `post-audit-active-backlog-status.csv`; `git diff --name-only -- Data`; `git diff --check`.
 - Result: Parsed 304 save-triage rows with 151 `Reviewed`, 153 `Queued`, 3 `POST-BATCH-B-03P` rows, and 3 `SafeNoChange`; `Custom:Mobiles` has 0 queued rows; active overlay has one row for each 132 active `POST-BATCH-B-02*` and `POST-BATCH-B-03*` save disposition and 149 rows total; no `Data` files changed; whitespace check passed with expected `core.autocrlf=true` line-ending warnings.
 - Output path: `docs/codebase-audit/outputs/post-batch-b-save-compatibility-triage.csv`
+
+### 2026-06-06T23:13:48.6090525-05:00
+
+- Affected phase: Post-audit `POST-BATCH-B-04A` Homestead resource serializer save-compatibility triage
+- Cwd: `D:\ConficturaUO`
+- Command: Source review of `WineGrapes.cs:33-103` and `Hops.cs:33-82`.
+- Result: Current version 1 writes version plus variety enum and reads the same shape; version 0 branches consume old info-id shapes and map them to current varieties. Classified both rows as `IntentionalLegacy`. No source files changed.
+- Output path: `docs/codebase-audit/outputs/post-batch-b-save-compatibility-triage.csv`
+
+### 2026-06-06T23:13:48.6090525-05:00
+
+- Affected phase: Post-audit `POST-BATCH-B-04A` Homestead resource serializer save-compatibility triage
+- Cwd: `D:\ConficturaUO`
+- Command: Update `post-batch-b-save-compatibility-triage.csv`, append reviewed save-compatibility rows to `post-audit-active-backlog-status.csv`, and update status/readme/next-step artifacts.
+- Result: `post-batch-b-save-compatibility-triage.csv` now has 304 total rows, 153 reviewed rows, 151 queued rows, and 2 `POST-BATCH-B-04A` rows, all `IntentionalLegacy`; active backlog overlay now has 151 rows, including 134 active save-compatibility dispositions.
+- Output path: `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
+
+### 2026-06-06T23:14:29.5013819-05:00
+
+- Affected phase: Post-audit `POST-BATCH-B-04A` Homestead resource serializer save-compatibility triage
+- Cwd: `D:\ConficturaUO`
+- Command: `Import-Csv` verification of `post-batch-b-save-compatibility-triage.csv` and `post-audit-active-backlog-status.csv`; `git diff --name-only -- Data`; `git diff --check`.
+- Result: Parsed 304 save-triage rows with 153 `Reviewed`, 151 `Queued`, 2 `POST-BATCH-B-04A` rows, and 2 `IntentionalLegacy`; active overlay has one row for each 134 active `POST-BATCH-B-02*`, `POST-BATCH-B-03*`, and `POST-BATCH-B-04*` save disposition and 151 rows total; no `Data` files changed; whitespace check passed with expected `core.autocrlf=true` line-ending warnings.
+- Output path: `docs/codebase-audit/outputs/post-batch-b-save-compatibility-triage.csv`
