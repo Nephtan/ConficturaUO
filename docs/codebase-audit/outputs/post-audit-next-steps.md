@@ -1,6 +1,6 @@
 # Post-Audit Next Steps
 
-Generated: 2026-06-06T23:23:14.4900504-05:00
+Generated: 2026-06-06T23:26:49.3474871-05:00
 
 ## Current State
 
@@ -231,6 +231,13 @@ Completed review-only subbatch: `POST-BATCH-B-05A` reviewed `System:Misc` helper
 
 - 6 rows were reviewed with no source edits.
 - 6 rows were classified `FalsePositive` because source review confirmed helper serializer/reader-constructor patterns where base serializer override checks do not apply.
+- No row was classified `ConfirmedIssue`, `NeedsMigrationPlan`, or `NeedsHumanDecision`.
+
+Completed review-only subbatch: `POST-BATCH-B-05B` reviewed `System:Misc/Guilds.cs` serializers.
+
+- 6 rows were reviewed with no source edits.
+- 5 rows were classified `FalsePositive` for helper serializer/reader-constructor patterns or duplicate generated rows.
+- 1 row was classified `IntentionalLegacy` for the main `Guild` serializer because current version 5 write/read is aligned and older versions are intentionally consumed through fall-through branches.
 - No row was classified `ConfirmedIssue`, `NeedsMigrationPlan`, or `NeedsHumanDecision`.
 
 Next:

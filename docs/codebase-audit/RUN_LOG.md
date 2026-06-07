@@ -3658,3 +3658,27 @@ Scope: Deterministic phase runner log for the Confictura codebase audit and reor
 - Command: `Import-Csv` verification of `post-batch-b-save-compatibility-triage.csv` and `post-audit-active-backlog-status.csv`; `git diff --name-only -- Data`; `git diff --check`.
 - Result: Parsed 304 save-triage rows with 175 `Reviewed`, 129 `Queued`, 6 `POST-BATCH-B-05A` rows, and 6 `FalsePositive`; active overlay has one row for each 156 active `POST-BATCH-B-02*`, `POST-BATCH-B-03*`, `POST-BATCH-B-04*`, and `POST-BATCH-B-05*` save disposition and 173 rows total; no `Data` files changed; whitespace check passed with expected `core.autocrlf=true` line-ending warnings.
 - Output path: `docs/codebase-audit/outputs/post-batch-b-save-compatibility-triage.csv`
+
+### 2026-06-06T23:26:49.3474871-05:00
+
+- Affected phase: Post-audit `POST-BATCH-B-05B` `System:Misc/Guilds.cs` serializer save-compatibility triage
+- Cwd: `D:\ConficturaUO`
+- Command: Source review of `Guilds.cs:205-236`, `Guilds.cs:578-616`, and `Guilds.cs:1335-1508`.
+- Result: Helper rows for `AllianceInfo` and `WarDeclaration` use reader constructors and no applicable base serializer override; one duplicate `Guild` row was generated for the same source block. Main `Guild` serializer writes version 5 and falls through versions 4 through 0 on read. Classified 5 rows as `FalsePositive` and 1 row as `IntentionalLegacy`. No source files changed.
+- Output path: `docs/codebase-audit/outputs/post-batch-b-save-compatibility-triage.csv`
+
+### 2026-06-06T23:26:49.3474871-05:00
+
+- Affected phase: Post-audit `POST-BATCH-B-05B` `System:Misc/Guilds.cs` serializer save-compatibility triage
+- Cwd: `D:\ConficturaUO`
+- Command: Update `post-batch-b-save-compatibility-triage.csv`, append reviewed save-compatibility rows to `post-audit-active-backlog-status.csv`, and update status/readme/next-step artifacts.
+- Result: `post-batch-b-save-compatibility-triage.csv` now has 304 total rows, 181 reviewed rows, 123 queued rows, and 6 `POST-BATCH-B-05B` rows; active backlog overlay now has 179 rows, including 162 active save-compatibility dispositions.
+- Output path: `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
+
+### 2026-06-06T23:27:28.9912127-05:00
+
+- Affected phase: Post-audit `POST-BATCH-B-05B` `System:Misc/Guilds.cs` serializer save-compatibility triage
+- Cwd: `D:\ConficturaUO`
+- Command: `Import-Csv` verification of `post-batch-b-save-compatibility-triage.csv` and `post-audit-active-backlog-status.csv`; `git diff --name-only -- Data`; `git diff --check`.
+- Result: Parsed 304 save-triage rows with 181 `Reviewed`, 123 `Queued`, 6 `POST-BATCH-B-05B` rows, 5 `FalsePositive`, and 1 `IntentionalLegacy`; active overlay has one row for each 162 active `POST-BATCH-B-02*`, `POST-BATCH-B-03*`, `POST-BATCH-B-04*`, and `POST-BATCH-B-05*` save disposition and 179 rows total; no `Data` files changed; whitespace check passed with expected `core.autocrlf=true` line-ending warnings.
+- Output path: `docs/codebase-audit/outputs/post-batch-b-save-compatibility-triage.csv`
