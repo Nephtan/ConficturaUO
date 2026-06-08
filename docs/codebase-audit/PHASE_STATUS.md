@@ -12,13 +12,13 @@ Post-audit live-runtime baseline HEAD: `9dce70de docs: record source build basel
 
 Post-audit compile-only implementation HEAD: `09b7b7e5 feat: add compile-only script verification`
 
-Post-audit latest implemented source batch: `POST-BATCH-D-24A` fixed the queued pooled enumerable ownership row in `Items:Houses` `Monopoly/Misc/GumpResponse.cs`.
+Post-audit latest implemented source batch: `POST-BATCH-D-25A` fixed the queued pooled enumerable ownership rows in `Items:Houses` `Remodeling` files.
 
 Post-audit latest committed audit-state batch before the current source repair: `6ae44f74 docs: close save compatibility triage`
 
 Post-audit latest runtime-risk review batch: `POST-BATCH-C-01A` reviewed the 17 P0 runtime-hook rows and 8 P0 `PlayerMobile` coupling rows in `outputs/post-batch-c-runtime-hooks-player-mobile-review.csv`. The batch made no source edits; the runtime-hook rows reconcile to the earlier `POST-BATCH-A` packet-handler review, and `PlayerMobile` coupling remains migration-gated.
 
-Post-audit active backlog overlay: `outputs/post-audit-active-backlog-status.csv` preserves historical `repair-backlog.csv` while recording 17 packet-handler dispositions, 285 reviewed save-compatibility dispositions across `POST-BATCH-B-34A` and prior `POST-BATCH-B` subbatches, 25 reviewed `POST-BATCH-C-01A` runtime-hook/`PlayerMobile` coupling dispositions, 96 `POST-BATCH-D` pooled enumerable fixes, and 2 `POST-BATCH-D` false positives.
+Post-audit active backlog overlay: `outputs/post-audit-active-backlog-status.csv` preserves historical `repair-backlog.csv` while recording 17 packet-handler dispositions, 285 reviewed save-compatibility dispositions across `POST-BATCH-B-34A` and prior `POST-BATCH-B` subbatches, 25 reviewed `POST-BATCH-C-01A` runtime-hook/`PlayerMobile` coupling dispositions, 102 `POST-BATCH-D` pooled enumerable fixes, and 2 `POST-BATCH-D` false positives.
 
 Post-audit save compatibility triage: `outputs/post-batch-b-save-compatibility-triage.csv` scopes all 304 P0 critical save-compatibility rows and records source-reviewed decisions for all 304 rows across `POST-BATCH-B`. No queued rows remain; all active confirmed save issues are fixed in the overlay.
 
@@ -75,6 +75,8 @@ Post-audit pooled enumerable ownership: `POST-BATCH-D-22A` fixed `RB-04780` in `
 Post-audit pooled enumerable ownership: `POST-BATCH-D-23A` fixed `RB-04781` through `RB-04784` in `Items:Houses` `Monopoly/Items/TownHouseSign.cs` by pairing sign-hiding, item-bounds, and door-linking scans with `try/finally Free`; `RB-04785` was classified `FalsePositive` because its hit is inside a disabled line-comment block. Verification passed: raw `TownHouseSign.cs` scan returned only the disabled comment hit, `Server.csproj` Debug/x86 build passed, and `.\ConficturaServer.exe -compileonly -nocache` passed without listener output.
 
 Post-audit pooled enumerable ownership: `POST-BATCH-D-24A` fixed `RB-04786` in `Items:Houses` `Monopoly/Misc/GumpResponse.cs` by pairing the nearby town-house scan with `try/finally Free`. Verification passed: targeted `GumpResponse.cs` scan found no remaining direct range scans, `Server.csproj` Debug/x86 build passed, and `.\ConficturaServer.exe -compileonly -nocache` passed without listener output.
+
+Post-audit pooled enumerable ownership: `POST-BATCH-D-25A` fixed `RB-04787` through `RB-04792` in `Items:Houses` `Remodeling` files by pairing lawn/shanty house lookup and visitor cleanup scans with `try/finally Free`. Verification passed: targeted `Items/Houses/Remodeling` scan found no remaining direct range scans and explicit pooled variables now have `Free`, `Server.csproj` Debug/x86 build passed, and `.\ConficturaServer.exe -compileonly -nocache` passed without listener output.
 
 Post-audit save compatibility blocker resolved: `SERIAL-1298` and `SERIAL-1300` now consume the previously written duration payloads before cleanup in `BlendWithForrestSpell.cs:123-151` and `GraspingRootsSpell.cs:116-132`. Verification: `New-SerializationRegister.ps1` regenerated serialization outputs, `Server.csproj` Debug/x86 build passed with Visual Studio MSBuild, and `.\ConficturaServer.exe -compileonly -nocache` passed without listener output.
 

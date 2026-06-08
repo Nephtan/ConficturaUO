@@ -631,9 +631,17 @@ Completed source subbatch: `POST-BATCH-D-24A` fixed `Items:Houses` `Monopoly/Mis
 - Existing gump response validation flow, owner-house lookup, serialization, namespaces, type names, save versions, and file location were preserved.
 - Verification passed: targeted `GumpResponse.cs` direct-scan check returned no matches, `Server.csproj` Debug/x86 build passed, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output.
 
+Completed source subbatch: `POST-BATCH-D-25A` fixed `Items:Houses` `Remodeling` pooled enumerable ownership.
+
+- 6 rows were reviewed and fixed: `RB-04787` through `RB-04792`.
+- Lawn/shanty house lookup and visitor cleanup scans now pair range results with `try/finally Free`.
+- Existing owner-house lookup early returns, visitor collection/deletion, serialization, namespaces, type names, save versions, and file locations were preserved.
+- Verification passed: targeted `Items/Houses/Remodeling` direct-scan check returned no matches, explicit pooled-variable check showed matching `Free` calls, `Server.csproj` Debug/x86 build passed, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output.
+- `Items:Houses` queued pooled-enumerable rows are complete.
+
 Next:
 
-1. Continue `POST-BATCH-D` at the next queued pooled-enumerable backlog rows after `RB-04786`, continuing `Items:Houses` with `Remodeling` files.
+1. Continue `POST-BATCH-D` at the next queued pooled-enumerable backlog rows after `RB-04792`, starting `Items:Misc`.
 2. Keep batches focused by system/file; repair only confirmed ownership leaks with `try/finally Free`.
 3. Verify each source batch with the relevant pooled enumerable scan, `Server.csproj` Debug/x86 build, and `.\ConficturaServer.exe -compileonly -nocache`.
 

@@ -4662,3 +4662,19 @@ Scope: Deterministic phase runner log for the Confictura codebase audit and reor
 - Command: Targeted `GumpResponse.cs` direct range-scan `rg`; Visual Studio MSBuild `Data/System/Source/Server.csproj /p:Configuration=Debug /p:Platform=x86 /v:minimal`; `.\ConficturaServer.exe -compileonly -nocache`; restore generated root executable artifacts; update `post-batch-d-pooled-enumerable-review.csv`, active overlay, status, README, and next-step artifacts.
 - Result: Targeted scan found no remaining direct range scans in `GumpResponse.cs`; `Server.csproj` Debug/x86 build passed; compile-only runtime script verification exited 0 and printed no `Listening:` output; generated `ConficturaServer.exe`, `.config`, and `.pdb` were restored; active backlog overlay now has 425 unique rows including 96 `POST-BATCH-D` fixed rows and 2 `POST-BATCH-D` false positives.
 - Output path: `docs/codebase-audit/outputs/post-batch-d-pooled-enumerable-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
+
+### 2026-06-08T18:18:01.3699109-05:00
+
+- Affected phase: Post-audit `POST-BATCH-D-25A` `Items:Houses` `Remodeling` pooled enumerable ownership repair
+- Cwd: `D:\ConficturaUO`
+- Command: Source review and patch of `RB-04787` through `RB-04792` in `Data/Scripts/Items/Houses/Remodeling`.
+- Result: Replaced or completed pooled enumerable ownership for lawn/shanty house lookup and visitor cleanup scans with `try/finally Free`. Owner-house lookup early returns, visitor collection/deletion, serialization, namespaces, type names, save versions, and file locations were preserved.
+- Output path: `Data/Scripts/Items/Houses/Remodeling/LawnGate.cs`; `Data/Scripts/Items/Houses/Remodeling/LawnItem.cs`; `Data/Scripts/Items/Houses/Remodeling/LawnSystem.cs`; `Data/Scripts/Items/Houses/Remodeling/ShantyDoor.cs`; `Data/Scripts/Items/Houses/Remodeling/ShantyItem.cs`; `Data/Scripts/Items/Houses/Remodeling/ShantySystem.cs`
+
+### 2026-06-08T18:18:01.3699109-05:00
+
+- Affected phase: Post-audit `POST-BATCH-D-25A` verification and audit artifact update
+- Cwd: `D:\ConficturaUO`
+- Command: Targeted `Items/Houses/Remodeling` direct range-scan `rg`; explicit pooled-variable ownership `rg`; Visual Studio MSBuild `Data/System/Source/Server.csproj /p:Configuration=Debug /p:Platform=x86 /v:minimal`; `.\ConficturaServer.exe -compileonly -nocache`; restore generated root executable artifacts; update `post-batch-d-pooled-enumerable-review.csv`, active overlay, status, README, and next-step artifacts.
+- Result: Targeted scan found no remaining direct range scans in `Items/Houses/Remodeling`; explicit pooled-variable check showed matching `eable.Free` calls; `Server.csproj` Debug/x86 build passed; compile-only runtime script verification exited 0 and printed no `Listening:` output; generated `ConficturaServer.exe`, `.config`, and `.pdb` were restored; active backlog overlay now has 431 unique rows including 102 `POST-BATCH-D` fixed rows and 2 `POST-BATCH-D` false positives. `Items:Houses` queued pooled-enumerable rows are complete.
+- Output path: `docs/codebase-audit/outputs/post-batch-d-pooled-enumerable-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
