@@ -578,9 +578,17 @@ Completed source subbatch: `POST-BATCH-D-17A` fixed `Items:Containers` pooled en
 - Verification passed: targeted `Items/Containers` direct-scan check returned no matches, `Server.csproj` Debug/x86 build passed, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output.
 - `Items:Containers` queued pooled-enumerable rows are complete.
 
+Completed source subbatch: `POST-BATCH-D-18A` fixed `Items:Doors` pooled enumerable ownership.
+
+- 4 rows were reviewed and fixed: `RB-04765` through `RB-04768`.
+- Nearby door lock/unlock/open and near-gate item scans now pair range results with `try/finally Free`.
+- Existing door collection, gate detection early return, serialization, namespaces, type names, save versions, and file locations were preserved.
+- Verification passed: targeted `Items/Doors` direct-scan check returned no matches, `Server.csproj` Debug/x86 build passed, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output.
+- `Items:Doors` queued pooled-enumerable rows are complete.
+
 Next:
 
-1. Continue `POST-BATCH-D` at the next queued pooled-enumerable backlog rows after `RB-04764`, starting `Items:Doors`.
+1. Continue `POST-BATCH-D` at the next queued pooled-enumerable backlog rows after `RB-04768`, starting `Items:Explorers`.
 2. Keep batches focused by system/file; repair only confirmed ownership leaks with `try/finally Free`.
 3. Verify each source batch with the relevant pooled enumerable scan, `Server.csproj` Debug/x86 build, and `.\ConficturaServer.exe -compileonly -nocache`.
 
