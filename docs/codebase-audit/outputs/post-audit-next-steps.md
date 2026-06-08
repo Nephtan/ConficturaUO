@@ -616,9 +616,17 @@ Completed source subbatch: `POST-BATCH-D-22A` fixed `Items:Houses` `Monopoly/Ite
 - Existing item visibility restoration, house cleanup, serialization, namespaces, type names, save versions, and file location were preserved.
 - Verification passed: targeted `TownHouse.cs` direct-scan check returned no matches, `Server.csproj` Debug/x86 build passed, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output.
 
+Completed source subbatch: `POST-BATCH-D-23A` reviewed `Items:Houses` `Monopoly/Items/TownHouseSign.cs` pooled enumerable ownership.
+
+- 5 rows were reviewed: `RB-04781` through `RB-04785`.
+- 4 live rows were fixed by pairing sign-hiding, item-bounds, and door-linking scans with `try/finally Free`.
+- `RB-04785` was classified `FalsePositive` because the reported `Map.GetItemsInBounds` loop is inside a disabled line-comment block.
+- Existing sign visibility changes, converted item collection, door linking/relinking, serialization, namespaces, type names, save versions, and file location were preserved.
+- Verification passed: raw `TownHouseSign.cs` range-scan check returned only the disabled comment hit, `Server.csproj` Debug/x86 build passed, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output.
+
 Next:
 
-1. Continue `POST-BATCH-D` at the next queued pooled-enumerable backlog rows after `RB-04780`, continuing `Items:Houses` with `Monopoly/Items/TownHouseSign.cs`.
+1. Continue `POST-BATCH-D` at the next queued pooled-enumerable backlog rows after `RB-04785`, continuing `Items:Houses` with `Monopoly/Misc/GumpResponse.cs`.
 2. Keep batches focused by system/file; repair only confirmed ownership leaks with `try/finally Free`.
 3. Verify each source batch with the relevant pooled enumerable scan, `Server.csproj` Debug/x86 build, and `.\ConficturaServer.exe -compileonly -nocache`.
 
