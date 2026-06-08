@@ -113,10 +113,19 @@ namespace Knives.TownHouses
 
             ArrayList list = new ArrayList();
 
-            foreach (Item item in m.GetItemsInRange(20))
+            IPooledEnumerable eable = m.GetItemsInRange(20);
+
+            try
             {
-                if (item is TownHouse)
-                    list.Add(item);
+                foreach (Item item in eable)
+                {
+                    if (item is TownHouse)
+                        list.Add(item);
+                }
+            }
+            finally
+            {
+                eable.Free();
             }
 
             foreach (TownHouse t in list)

@@ -624,9 +624,16 @@ Completed source subbatch: `POST-BATCH-D-23A` reviewed `Items:Houses` `Monopoly/
 - Existing sign visibility changes, converted item collection, door linking/relinking, serialization, namespaces, type names, save versions, and file location were preserved.
 - Verification passed: raw `TownHouseSign.cs` range-scan check returned only the disabled comment hit, `Server.csproj` Debug/x86 build passed, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output.
 
+Completed source subbatch: `POST-BATCH-D-24A` fixed `Items:Houses` `Monopoly/Misc/GumpResponse.cs` pooled enumerable ownership.
+
+- 1 row was reviewed and fixed: `RB-04786`.
+- Nearby town-house collection now pairs the range result with `try/finally Free`.
+- Existing gump response validation flow, owner-house lookup, serialization, namespaces, type names, save versions, and file location were preserved.
+- Verification passed: targeted `GumpResponse.cs` direct-scan check returned no matches, `Server.csproj` Debug/x86 build passed, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output.
+
 Next:
 
-1. Continue `POST-BATCH-D` at the next queued pooled-enumerable backlog rows after `RB-04785`, continuing `Items:Houses` with `Monopoly/Misc/GumpResponse.cs`.
+1. Continue `POST-BATCH-D` at the next queued pooled-enumerable backlog rows after `RB-04786`, continuing `Items:Houses` with `Remodeling` files.
 2. Keep batches focused by system/file; repair only confirmed ownership leaks with `try/finally Free`.
 3. Verify each source batch with the relevant pooled enumerable scan, `Server.csproj` Debug/x86 build, and `.\ConficturaServer.exe -compileonly -nocache`.
 

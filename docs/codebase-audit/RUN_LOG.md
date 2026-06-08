@@ -4646,3 +4646,19 @@ Scope: Deterministic phase runner log for the Confictura codebase audit and reor
 - Command: Raw `TownHouseSign.cs` range-scan `rg`; Visual Studio MSBuild `Data/System/Source/Server.csproj /p:Configuration=Debug /p:Platform=x86 /v:minimal`; `.\ConficturaServer.exe -compileonly -nocache`; restore generated root executable artifacts; update `post-batch-d-pooled-enumerable-review.csv`, active overlay, status, README, and next-step artifacts.
 - Result: Raw `TownHouseSign.cs` scan returned only the disabled comment hit at line 1412; `Server.csproj` Debug/x86 build passed; compile-only runtime script verification exited 0 and printed no `Listening:` output; generated `ConficturaServer.exe`, `.config`, and `.pdb` were restored; active backlog overlay now has 424 unique rows including 95 `POST-BATCH-D` fixed rows and 2 `POST-BATCH-D` false positives.
 - Output path: `docs/codebase-audit/outputs/post-batch-d-pooled-enumerable-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
+
+### 2026-06-08T18:14:22.5520682-05:00
+
+- Affected phase: Post-audit `POST-BATCH-D-24A` `Items:Houses` `GumpResponse.cs` pooled enumerable ownership repair
+- Cwd: `D:\ConficturaUO`
+- Command: Source review and patch of `RB-04786` in `Data/Scripts/Items/Houses/Monopoly/Misc/GumpResponse.cs`.
+- Result: Replaced the nearby town-house direct range scan with a local `IPooledEnumerable` variable and `try/finally Free`. Gump response validation flow, owner-house lookup, serialization, namespaces, type names, save versions, and file location were preserved.
+- Output path: `Data/Scripts/Items/Houses/Monopoly/Misc/GumpResponse.cs`
+
+### 2026-06-08T18:14:22.5520682-05:00
+
+- Affected phase: Post-audit `POST-BATCH-D-24A` verification and audit artifact update
+- Cwd: `D:\ConficturaUO`
+- Command: Targeted `GumpResponse.cs` direct range-scan `rg`; Visual Studio MSBuild `Data/System/Source/Server.csproj /p:Configuration=Debug /p:Platform=x86 /v:minimal`; `.\ConficturaServer.exe -compileonly -nocache`; restore generated root executable artifacts; update `post-batch-d-pooled-enumerable-review.csv`, active overlay, status, README, and next-step artifacts.
+- Result: Targeted scan found no remaining direct range scans in `GumpResponse.cs`; `Server.csproj` Debug/x86 build passed; compile-only runtime script verification exited 0 and printed no `Listening:` output; generated `ConficturaServer.exe`, `.config`, and `.pdb` were restored; active backlog overlay now has 425 unique rows including 96 `POST-BATCH-D` fixed rows and 2 `POST-BATCH-D` false positives.
+- Output path: `docs/codebase-audit/outputs/post-batch-d-pooled-enumerable-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
