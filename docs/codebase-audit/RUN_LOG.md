@@ -4358,3 +4358,19 @@ Scope: Deterministic phase runner log for the Confictura codebase audit and reor
 - Command: Targeted `Lord BlackThorn Clone.cs` direct range-scan `rg`; Visual Studio MSBuild `Data/System/Source/Server.csproj /p:Configuration=Debug /p:Platform=x86 /v:minimal`; `.\ConficturaServer.exe -compileonly -nocache`; restore generated root executable artifacts; update `post-batch-d-pooled-enumerable-review.csv`, active overlay, status, README, and next-step artifacts.
 - Result: Targeted scan found no remaining direct range scans in `Lord BlackThorn Clone.cs`; `Server.csproj` Debug/x86 build passed; compile-only runtime script verification exited 0 and printed no `Listening:` output; generated `ConficturaServer.exe`, `.config`, and `.pdb` were restored; active backlog overlay now has 351 unique rows including 24 `POST-BATCH-D` fixed rows.
 - Output path: `docs/codebase-audit/outputs/post-batch-d-pooled-enumerable-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
+
+### 2026-06-08T17:01:35.0112916-05:00
+
+- Affected phase: Post-audit `POST-BATCH-D-06A` `Custom:Invasion System` `MobileFeatures.cs` pooled enumerable ownership repair
+- Cwd: `D:\ConficturaUO`
+- Command: Source review and patch of `RB-04713` through `RB-04722` in `Data/Scripts/Custom/Invasion System/Add Ins/MobileFeatures.cs`.
+- Result: Replaced 10 direct `foreach` range scans over `GetMobilesInRange` with local `IPooledEnumerable` variables and `try/finally Free`, preserving target collection, reveal/drain side effects, damage behavior, serialization, namespaces, type names, save versions, and file location.
+- Output path: `Data/Scripts/Custom/Invasion System/Add Ins/MobileFeatures.cs`
+
+### 2026-06-08T17:01:35.0112916-05:00
+
+- Affected phase: Post-audit `POST-BATCH-D-06A` verification and audit artifact update
+- Cwd: `D:\ConficturaUO`
+- Command: Targeted `MobileFeatures.cs` direct range-scan `rg`; Visual Studio MSBuild `Data/System/Source/Server.csproj /p:Configuration=Debug /p:Platform=x86 /v:minimal`; `.\ConficturaServer.exe -compileonly -nocache`; restore generated root executable artifacts; update `post-batch-d-pooled-enumerable-review.csv`, active overlay, status, README, and next-step artifacts.
+- Result: Targeted scan found no remaining direct range scans in `MobileFeatures.cs`; `Server.csproj` Debug/x86 build passed; compile-only runtime script verification exited 0 and printed no `Listening:` output; generated `ConficturaServer.exe`, `.config`, and `.pdb` were restored; active backlog overlay now has 361 unique rows including 34 `POST-BATCH-D` fixed rows.
+- Output path: `docs/codebase-audit/outputs/post-batch-d-pooled-enumerable-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`

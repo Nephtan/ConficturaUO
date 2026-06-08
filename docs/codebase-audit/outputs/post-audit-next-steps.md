@@ -486,9 +486,16 @@ Completed source subbatch: `POST-BATCH-D-05A` fixed `Custom:Invasion System` `Lo
 - Existing `RunicGolemInvader` count behavior, serialization, namespaces, type names, save versions, and file location were preserved.
 - Verification passed: targeted `Lord BlackThorn Clone.cs` direct-scan check returned no matches, `Server.csproj` Debug/x86 build passed, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output.
 
+Completed source subbatch: `POST-BATCH-D-06A` fixed `Custom:Invasion System` `MobileFeatures.cs` pooled enumerable ownership.
+
+- 10 rows were reviewed and fixed: `RB-04713` through `RB-04722`.
+- Mass peace, mass provoke, revealer, area attack, and drain effect methods now pair `GetMobilesInRange` results with `try/finally Free`.
+- Existing target collection, reveal/drain side effects, damage behavior, serialization, namespaces, type names, save versions, and file location were preserved.
+- Verification passed: targeted `MobileFeatures.cs` direct-scan check returned no matches, `Server.csproj` Debug/x86 build passed, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output.
+
 Next:
 
-1. Continue `POST-BATCH-D` at the next queued pooled-enumerable backlog rows after `RB-04712`, continuing `Custom:Invasion System` with `MobileFeatures.cs`.
+1. Continue `POST-BATCH-D` at the next queued pooled-enumerable backlog rows after `RB-04722`, continuing `Custom:Invasion System` with `PirateCaptain.cs`.
 2. Keep batches focused by system/file; repair only confirmed ownership leaks with `try/finally Free`.
 3. Verify each source batch with the relevant pooled enumerable scan, `Server.csproj` Debug/x86 build, and `.\ConficturaServer.exe -compileonly -nocache`.
 
