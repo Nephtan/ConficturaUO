@@ -409,9 +409,15 @@ Completed source subbatch: `POST-BATCH-B-30B` applied the Druidism transient-eff
 - Writer order, version numbers, serialized type names, namespaces, and file locations were unchanged.
 - Verification passed: `New-SerializationRegister.ps1`, `Server.csproj` Debug/x86 build through Visual Studio MSBuild, and `.\ConficturaServer.exe -compileonly -nocache` with no `Listening:` output.
 
+Completed review-only subbatch: `POST-BATCH-B-31A` reviewed `Mobiles:Animals` serializers.
+
+- 1 row was reviewed with no source edits.
+- `SERIAL-1319` was classified `IntentionalLegacy` because current `EtherealMount` version 3 writes and reads donation flag, reward flag, mounted ID, regular ID, and rider in aligned order, while version 1 intentionally consumes an old discarded integer before the shared version 0 payload.
+- No row was classified `NeedsMigrationPlan` or `NeedsHumanDecision`.
+
 Next:
 
-1. Continue `POST-BATCH-B` with the 4 queued rows: `Mobiles:Animals`, `Quests:Summon`, and `System:Regions`.
+1. Continue `POST-BATCH-B` with the 3 queued rows: `Quests:Summon` and `System:Regions`.
 2. Do not change serialized layout, type names, namespaces, or file locations without a migration plan and explicit approval.
 3. Keep each remaining review-only commit scoped to one system group, or one file when a group is large.
 

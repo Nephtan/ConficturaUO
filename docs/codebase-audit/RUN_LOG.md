@@ -4190,3 +4190,19 @@ Scope: Deterministic phase runner log for the Confictura codebase audit and reor
 - Command: `docs/codebase-audit/tools/New-SerializationRegister.ps1`; `MSBuild.exe Data/System/Source/Server.csproj /p:Configuration=Debug /p:Platform=x86 /v:minimal`; `.\ConficturaServer.exe -compileonly -nocache`; update triage, active overlay, status, README, and next-step artifacts.
 - Result: Serialization outputs regenerated and now show the Druidism duration `ReadTimeSpan` calls; first MSBuild attempt was blocked by sandbox access to `C:\Users\nepht\AppData\Local\Microsoft SDKs`, then escalated Visual Studio MSBuild passed; compile-only script verification passed and did not print `Listening:`; generated executable artifacts were restored; `post-batch-b-save-compatibility-triage.csv` remains 304 total rows, 300 reviewed rows, and 4 queued rows.
 - Output path: `docs/codebase-audit/outputs/post-batch-b-save-compatibility-triage.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`; `docs/codebase-audit/outputs/serialization-register.csv`
+
+### 2026-06-08T01:45:58.1124396-05:00
+
+- Affected phase: Post-audit `POST-BATCH-B-31A` `Mobiles:Animals` serializer save-compatibility triage
+- Cwd: `D:\ConficturaUO`
+- Command: Source review of `Data/Scripts/Mobiles/Animals/Mounts/Ethereals.cs:338-400`.
+- Result: Reviewed 1 `Mobiles:Animals` row. Classified `SERIAL-1319` as `IntentionalLegacy` because the current version 3 payload is aligned and the extra version 1 `ReadInt` intentionally consumes an old payload; no source files changed.
+- Output path: `docs/codebase-audit/outputs/post-batch-b-save-compatibility-triage.csv`
+
+### 2026-06-08T01:45:58.1124396-05:00
+
+- Affected phase: Post-audit `POST-BATCH-B-31A` audit artifact update
+- Cwd: `D:\ConficturaUO`
+- Command: Update `post-batch-b-save-compatibility-triage.csv`, append `SERIAL-1319` to `post-audit-active-backlog-status.csv`, and update status/readme/next-step artifacts.
+- Result: `post-batch-b-save-compatibility-triage.csv` now has 304 total rows, 301 reviewed rows, 3 queued rows, and 1 `POST-BATCH-B-31A` row; active backlog overlay now has 299 rows, including 282 active save-compatibility dispositions.
+- Output path: `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`

@@ -2,7 +2,7 @@
 
 Initialized: 2026-06-05T16:15:59.8020730-05:00
 
-Last updated: 2026-06-08T01:42:04.9233477-05:00
+Last updated: 2026-06-08T01:45:58.1124396-05:00
 
 Branch: `SAR`
 
@@ -18,11 +18,11 @@ Post-audit latest committed audit-state batch before the current review: `57c449
 
 Post-audit latest runtime-risk batch: `POST-BATCH-A` packet-handler review and focused source fixes, recorded in `outputs/post-batch-a-packet-handler-review.csv`; runtime hook map, `Server.csproj` Debug/x86 build, and `.\ConficturaServer.exe -compileonly -nocache` verification passed before commit.
 
-Post-audit active backlog overlay: `outputs/post-audit-active-backlog-status.csv` preserves historical `repair-backlog.csv` while recording 17 packet-handler dispositions and 281 reviewed save-compatibility dispositions across `POST-BATCH-B-30B` and prior `POST-BATCH-B` subbatches.
+Post-audit active backlog overlay: `outputs/post-audit-active-backlog-status.csv` preserves historical `repair-backlog.csv` while recording 17 packet-handler dispositions and 282 reviewed save-compatibility dispositions across `POST-BATCH-B-31A` and prior `POST-BATCH-B` subbatches.
 
-Post-audit save compatibility triage started: `outputs/post-batch-b-save-compatibility-triage.csv` scopes all 304 P0 critical save-compatibility rows, records source-reviewed decisions for 1 `Custom:Book Publisher [2.0]` row, 1 `Custom:CEO's GM Hiding Stone [2.0]` row, 2 `Custom:Champions` rows, 4 `Custom:CloneOfflinePlayerCharacters` rows, 5 `Custom:Government System` rows, 74 `Custom:Mobiles` rows, 1 `Custom:PandorasGiftBox` row, 1 `Custom:Skill Stone` row, 1 `Custom:Staff Toolbar [2.0]` row, 18 `Custom:Vhaerun's CRL Homestead System [2.0]` rows, 4 `Custom:Voting` rows, 30 `Custom:XMLSpawner` rows, 3 `Items:Armor` rows, 1 `Items:Boats` row, 4 `Items:Books` rows, 5 `Items:Clothing` rows, 1 `Items:Containers` row, 1 `Items:Deeds` row, 4 `Items:Food` rows, 12 `Items:Houses` rows, 11 `Items:Magical` rows, 12 `Items:Misc` rows, 8 `Items:Special` rows, 13 `Items:Trades` rows, 2 `Items:Weapons` rows, 2 `Magic:Druidism` rows, 7 `Mobiles:Base` rows, 19 `ServerCore` rows, 14 `System:Misc` rows, 28 `System:Obsolete` rows, 11 `Trades:Bulk Orders` rows, queues 4 remaining rows, and is `InProgress` after the Druidism transient-effect policy was applied.
+Post-audit save compatibility triage started: `outputs/post-batch-b-save-compatibility-triage.csv` scopes all 304 P0 critical save-compatibility rows, records source-reviewed decisions for 1 `Custom:Book Publisher [2.0]` row, 1 `Custom:CEO's GM Hiding Stone [2.0]` row, 2 `Custom:Champions` rows, 4 `Custom:CloneOfflinePlayerCharacters` rows, 5 `Custom:Government System` rows, 74 `Custom:Mobiles` rows, 1 `Custom:PandorasGiftBox` row, 1 `Custom:Skill Stone` row, 1 `Custom:Staff Toolbar [2.0]` row, 18 `Custom:Vhaerun's CRL Homestead System [2.0]` rows, 4 `Custom:Voting` rows, 30 `Custom:XMLSpawner` rows, 3 `Items:Armor` rows, 1 `Items:Boats` row, 4 `Items:Books` rows, 5 `Items:Clothing` rows, 1 `Items:Containers` row, 1 `Items:Deeds` row, 4 `Items:Food` rows, 12 `Items:Houses` rows, 11 `Items:Magical` rows, 12 `Items:Misc` rows, 8 `Items:Special` rows, 13 `Items:Trades` rows, 2 `Items:Weapons` rows, 2 `Magic:Druidism` rows, 1 `Mobiles:Animals` row, 7 `Mobiles:Base` rows, 19 `ServerCore` rows, 14 `System:Misc` rows, 28 `System:Obsolete` rows, 11 `Trades:Bulk Orders` rows, queues 3 remaining rows, and is `InProgress`.
 
-Post-audit latest save-triage subbatch: `POST-BATCH-B-30B` applied the likely human decision for `Magic:Druidism` transient timed-effect serializers: existing duration payloads are consumed for save-stream alignment, then transient helper items are cleaned up on load.
+Post-audit latest save-triage subbatch: `POST-BATCH-B-31A` reviewed the `Mobiles:Animals` `EtherealMount` serializer and classified the row as `IntentionalLegacy`; no source files changed.
 
 Post-audit save compatibility blocker resolved: `SERIAL-1298` and `SERIAL-1300` now consume the previously written duration payloads before cleanup in `BlendWithForrestSpell.cs:123-151` and `GraspingRootsSpell.cs:116-132`. Verification: `New-SerializationRegister.ps1` regenerated serialization outputs, `Server.csproj` Debug/x86 build passed with Visual Studio MSBuild, and `.\ConficturaServer.exe -compileonly -nocache` passed without listener output.
 
