@@ -609,9 +609,16 @@ Completed source subbatch: `POST-BATCH-D-21A` fixed `Items:Houses` `TavernTable.
 - Existing patron collection/deletion, count accumulation, visitor early returns, serialization, namespaces, type names, save versions, and file location were preserved.
 - Verification passed: targeted `TavernTable.cs` direct-scan check returned no matches, `Server.csproj` Debug/x86 build passed, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output.
 
+Completed source subbatch: `POST-BATCH-D-22A` fixed `Items:Houses` `Monopoly/Items/TownHouse.cs` pooled enumerable ownership.
+
+- 1 row was reviewed and fixed: `RB-04780`.
+- Delete-time sign item scan now pairs the range result with `try/finally Free`.
+- Existing item visibility restoration, house cleanup, serialization, namespaces, type names, save versions, and file location were preserved.
+- Verification passed: targeted `TownHouse.cs` direct-scan check returned no matches, `Server.csproj` Debug/x86 build passed, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output.
+
 Next:
 
-1. Continue `POST-BATCH-D` at the next queued pooled-enumerable backlog rows after `RB-04779`, continuing `Items:Houses` with `Monopoly/Items/TownHouse.cs`.
+1. Continue `POST-BATCH-D` at the next queued pooled-enumerable backlog rows after `RB-04780`, continuing `Items:Houses` with `Monopoly/Items/TownHouseSign.cs`.
 2. Keep batches focused by system/file; repair only confirmed ownership leaks with `try/finally Free`.
 3. Verify each source batch with the relevant pooled enumerable scan, `Server.csproj` Debug/x86 build, and `.\ConficturaServer.exe -compileonly -nocache`.
 

@@ -272,12 +272,21 @@ namespace Knives.TownHouses
                 c_Hanger.Delete();
             }
 
-            foreach (Item item in Sign.GetItemsInRange(0))
+            IPooledEnumerable eable = Sign.GetItemsInRange(0);
+
+            try
             {
-                if (item != Sign)
+                foreach (Item item in eable)
                 {
-                    item.Visible = true;
+                    if (item != Sign)
+                    {
+                        item.Visible = true;
+                    }
                 }
+            }
+            finally
+            {
+                eable.Free();
             }
 
             c_Sign.ClearHouse();

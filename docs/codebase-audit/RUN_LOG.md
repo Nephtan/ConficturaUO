@@ -4614,3 +4614,19 @@ Scope: Deterministic phase runner log for the Confictura codebase audit and reor
 - Command: Targeted `TavernTable.cs` direct range-scan `rg`; Visual Studio MSBuild `Data/System/Source/Server.csproj /p:Configuration=Debug /p:Platform=x86 /v:minimal`; `.\ConficturaServer.exe -compileonly -nocache`; restore generated root executable artifacts; update `post-batch-d-pooled-enumerable-review.csv`, active overlay, status, README, and next-step artifacts.
 - Result: Targeted scan found no remaining direct range scans in `TavernTable.cs`; `Server.csproj` Debug/x86 build passed; compile-only runtime script verification exited 0 and printed no `Listening:` output; generated `ConficturaServer.exe`, `.config`, and `.pdb` were restored; active backlog overlay now has 418 unique rows including 90 `POST-BATCH-D` fixed rows and 1 `POST-BATCH-D` false positive.
 - Output path: `docs/codebase-audit/outputs/post-batch-d-pooled-enumerable-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
+
+### 2026-06-08T18:08:15.0506421-05:00
+
+- Affected phase: Post-audit `POST-BATCH-D-22A` `Items:Houses` `TownHouse.cs` pooled enumerable ownership repair
+- Cwd: `D:\ConficturaUO`
+- Command: Source review and patch of `RB-04780` in `Data/Scripts/Items/Houses/Monopoly/Items/TownHouse.cs`.
+- Result: Replaced the delete-time sign item direct range scan with a local `IPooledEnumerable` variable and `try/finally Free`. Item visibility restoration, house cleanup, serialization, namespaces, type names, save versions, and file location were preserved.
+- Output path: `Data/Scripts/Items/Houses/Monopoly/Items/TownHouse.cs`
+
+### 2026-06-08T18:08:15.0506421-05:00
+
+- Affected phase: Post-audit `POST-BATCH-D-22A` verification and audit artifact update
+- Cwd: `D:\ConficturaUO`
+- Command: Targeted `TownHouse.cs` direct range-scan `rg`; Visual Studio MSBuild `Data/System/Source/Server.csproj /p:Configuration=Debug /p:Platform=x86 /v:minimal`; `.\ConficturaServer.exe -compileonly -nocache`; restore generated root executable artifacts; update `post-batch-d-pooled-enumerable-review.csv`, active overlay, status, README, and next-step artifacts.
+- Result: Targeted scan found no remaining direct range scans in `TownHouse.cs`; `Server.csproj` Debug/x86 build passed; compile-only runtime script verification exited 0 and printed no `Listening:` output; generated `ConficturaServer.exe`, `.config`, and `.pdb` were restored; active backlog overlay now has 419 unique rows including 91 `POST-BATCH-D` fixed rows and 1 `POST-BATCH-D` false positive.
+- Output path: `docs/codebase-audit/outputs/post-batch-d-pooled-enumerable-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
