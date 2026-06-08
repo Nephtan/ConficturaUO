@@ -4174,3 +4174,19 @@ Scope: Deterministic phase runner log for the Confictura codebase audit and reor
 - Command: Update `post-batch-b-save-compatibility-triage.csv`, append reviewed save-compatibility rows to `post-audit-active-backlog-status.csv`, and update status/readme/next-step artifacts with exact blocker evidence and next safe action.
 - Result: `post-batch-b-save-compatibility-triage.csv` now has 304 total rows, 300 reviewed rows, 4 queued rows, and 2 `POST-BATCH-B-30A` rows; active backlog overlay now has 298 rows, including 281 active save-compatibility dispositions. Human decision required for `SERIAL-1298` and `SERIAL-1300` before source edits or further POST-BATCH-B review.
 - Output path: `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
+
+### 2026-06-08T01:42:04.9233477-05:00
+
+- Affected phase: Post-audit `POST-BATCH-B-30B` `Magic:Druidism` transient-effect serializer fix
+- Cwd: `D:\ConficturaUO`
+- Command: Apply source fix to `BlendWithForrestSpell.cs` and `GraspingRootsSpell.cs` after human decision to consume existing duration payloads and clean up transient timed-effect items on load.
+- Result: `BlendWithForrestSpell.InternalItem.Deserialize` now consumes the version 1 duration before owner/squelch reads and cleanup; `GraspingRootsSpell.InternalItem.Deserialize` now consumes the version 1 duration before deleting the transient helper item. Writer order, version values, namespaces, type names, and file locations were unchanged.
+- Output path: `Data/Scripts/Magic/Druidism/Effects/BlendWithForrestSpell.cs`; `Data/Scripts/Magic/Druidism/Effects/GraspingRootsSpell.cs`
+
+### 2026-06-08T01:42:04.9233477-05:00
+
+- Affected phase: Post-audit `POST-BATCH-B-30B` verification and audit artifact update
+- Cwd: `D:\ConficturaUO`
+- Command: `docs/codebase-audit/tools/New-SerializationRegister.ps1`; `MSBuild.exe Data/System/Source/Server.csproj /p:Configuration=Debug /p:Platform=x86 /v:minimal`; `.\ConficturaServer.exe -compileonly -nocache`; update triage, active overlay, status, README, and next-step artifacts.
+- Result: Serialization outputs regenerated and now show the Druidism duration `ReadTimeSpan` calls; first MSBuild attempt was blocked by sandbox access to `C:\Users\nepht\AppData\Local\Microsoft SDKs`, then escalated Visual Studio MSBuild passed; compile-only script verification passed and did not print `Listening:`; generated executable artifacts were restored; `post-batch-b-save-compatibility-triage.csv` remains 304 total rows, 300 reviewed rows, and 4 queued rows.
+- Output path: `docs/codebase-audit/outputs/post-batch-b-save-compatibility-triage.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`; `docs/codebase-audit/outputs/serialization-register.csv`

@@ -1,6 +1,6 @@
 # Phase 6 Serialization And Save Compatibility Summary
 
-Generated: 2026-06-05T17:25:38.2804381-05:00
+Generated: 2026-06-08T01:39:58.6056247-05:00
 
 ## Required Inputs
 
@@ -21,17 +21,17 @@ Generated: 2026-06-05T17:25:38.2804381-05:00
 | `phase-06-high-risk-serializer-list.csv` | 3953 | Rows requiring manual review because of high-risk systems, project truth, versioning, pairing, alignment, or move risk. |
 | `phase-06-move-rename-risk-list.csv` | 9158 | Serialized types with namespace/type or file-move risk classification. |
 | `phase-06-serializer-comment-target-list.csv` | 3105 | Candidate Phase 11 source-comment targets for fragile save behavior. |
-| `phase-06-save-compatibility-repair-backlog.csv` | 1625 | Concrete serializer follow-up items created from machine-detected risks. |
+| `phase-06-save-compatibility-repair-backlog.csv` | 1621 | Concrete serializer follow-up items created from machine-detected risks. |
 
 ## Version Handling Counts
 
 | Version Handling | Count |
 | --- | ---: |
-| IfVersionGates | 155 |
+| IfVersionGates | 157 |
 | NoVersionFound | 743 |
 | ReadVersionOnly | 16 |
 | SingleVersionOnly | 7179 |
-| SuspiciousOrder | 260 |
+| SuspiciousOrder | 258 |
 | Switch | 539 |
 | SwitchGotoCase | 172 |
 | WriteVersionOnly | 94 |
@@ -41,17 +41,17 @@ Generated: 2026-06-05T17:25:38.2804381-05:00
 | Field Alignment | Count |
 | --- | ---: |
 | AlignedByCountAndKnownTypes | 8270 |
-| CountMatchNeedsTypeReview:UnknownWrites=1 | 277 |
+| CountMatchNeedsTypeReview:UnknownWrites=1 | 278 |
 | CountMatchNeedsTypeReview:UnknownWrites=2 | 171 |
 | CountMismatch:Writes=0;Reads=1 | 86 |
 | CountMatchNeedsTypeReview:UnknownWrites=4 | 51 |
-| CountMatchNeedsTypeReview:UnknownWrites=3 | 33 |
+| CountMatchNeedsTypeReview:UnknownWrites=3 | 34 |
 | CountMatchNeedsTypeReview:UnknownWrites=5 | 22 |
 | CountMatchNeedsTypeReview:UnknownWrites=6 | 15 |
 | CountMismatch:Writes=4;Reads=3 | 13 |
-| CountMismatch:Writes=1;Reads=0 | 11 |
 | CountMatchNeedsTypeReview:UnknownWrites=8 | 11 |
 | CountMismatch:Writes=1;Reads=2 | 10 |
+| CountMismatch:Writes=1;Reads=0 | 10 |
 
 ## Move/Rename Risk Counts
 

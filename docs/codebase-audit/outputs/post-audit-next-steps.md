@@ -400,11 +400,18 @@ Blocked review-only subbatch: `POST-BATCH-B-30A` reviewed `Magic:Druidism` trans
 - `SERIAL-1298` writes version 1, remaining duration, owner, and squelch state in `BlendWithForrestSpell.InternalItem.Serialize`, but `Deserialize` reads version, then owner and squelch state without consuming the duration value before deleting the item.
 - `SERIAL-1300` writes version 1 and remaining duration in `GraspingRootsSpell.InternalItem.Serialize`, but `Deserialize` reads only the version.
 - Decision needed: approve these internal Druidism items as transient no-save/no-payload exceptions, or approve a save-compatibility policy to consume/discard the currently written duration payload during deserialize before deleting or restoring behavior.
-- Next safe action: do not edit source until the transient-effect save policy is chosen.
+
+Completed source subbatch: `POST-BATCH-B-30B` applied the Druidism transient-effect save policy.
+
+- The likely human decision was applied: these internal timed-effect helper items remain transient on load, but any existing serialized duration payload must be consumed to preserve stream alignment.
+- `SERIAL-1298` now consumes the version 1 duration before reading owner and squelch state, restores the owner state when present, and deletes the transient effect item.
+- `SERIAL-1300` now consumes the version 1 duration and deletes the transient effect item on load.
+- Writer order, version numbers, serialized type names, namespaces, and file locations were unchanged.
+- Verification passed: `New-SerializationRegister.ps1`, `Server.csproj` Debug/x86 build through Visual Studio MSBuild, and `.\ConficturaServer.exe -compileonly -nocache` with no `Listening:` output.
 
 Next:
 
-1. Stop pending human decision for `SERIAL-1298` and `SERIAL-1300` Druidism transient-effect save policy.
+1. Continue `POST-BATCH-B` with the 4 queued rows: `Mobiles:Animals`, `Quests:Summon`, and `System:Regions`.
 2. Do not change serialized layout, type names, namespaces, or file locations without a migration plan and explicit approval.
 3. Keep each remaining review-only commit scoped to one system group, or one file when a group is large.
 

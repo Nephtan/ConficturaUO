@@ -136,6 +136,10 @@ namespace Server.Spells.Herbalist
                 base.Deserialize(reader);
 
                 int version = reader.ReadInt();
+
+                if (version >= 1)
+                    reader.ReadTimeSpan();
+
                 m_Owner = reader.ReadMobile();
                 squeltched = reader.ReadBool();
                 if (m_Owner != null)
