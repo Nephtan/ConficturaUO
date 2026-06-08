@@ -94,22 +94,31 @@ namespace Server.Items
 
             bool foundPlayer = false;
 
-            foreach (Mobile mob in GetMobilesInRange(3))
+            IPooledEnumerable eable = GetMobilesInRange(3);
+
+            try
             {
-                if (!mob.Player || !mob.Alive || mob.AccessLevel > AccessLevel.Player)
-                    continue;
-
-                if (
-                    Server.Misc.SeeIfGemInBag.GemInPocket(mob) == true
-                    || Server.Misc.SeeIfJewelInBag.JewelInPocket(mob) == true
-                )
-                    return;
-
-                if (((this.Z + 8) >= mob.Z && (mob.Z + 16) > this.Z))
+                foreach (Mobile mob in eable)
                 {
-                    foundPlayer = true;
-                    break;
+                    if (!mob.Player || !mob.Alive || mob.AccessLevel > AccessLevel.Player)
+                        continue;
+
+                    if (
+                        Server.Misc.SeeIfGemInBag.GemInPocket(mob) == true
+                        || Server.Misc.SeeIfJewelInBag.JewelInPocket(mob) == true
+                    )
+                        return;
+
+                    if (((this.Z + 8) >= mob.Z && (mob.Z + 16) > this.Z))
+                    {
+                        foundPlayer = true;
+                        break;
+                    }
                 }
+            }
+            finally
+            {
+                eable.Free();
             }
 
             if (!foundPlayer)

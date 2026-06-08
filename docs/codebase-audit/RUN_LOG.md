@@ -4790,3 +4790,19 @@ Scope: Deterministic phase runner log for the Confictura codebase audit and reor
 - Command: Targeted `RubyPickaxe.cs` direct range-scan `rg`; explicit pooled-variable ownership `rg`; Visual Studio MSBuild `Data/System/Source/Server.csproj /p:Configuration=Debug /p:Platform=x86 /v:minimal`; `.\ConficturaServer.exe -compileonly -nocache`; restore generated root executable artifacts; update `post-batch-d-pooled-enumerable-review.csv`, active overlay, status, README, and next-step artifacts.
 - Result: Targeted scan found no remaining direct range scans in `RubyPickaxe.cs`; explicit pooled-variable check showed a matching `Free` call; `Server.csproj` Debug/x86 build passed; compile-only runtime script verification exited 0 and printed no `Listening:` output; generated `ConficturaServer.exe`, `.config`, and `.pdb` were restored; active backlog overlay now has 452 unique rows including 123 `POST-BATCH-D` fixed rows and 2 `POST-BATCH-D` false positives. `Items:Trades` queued pooled-enumerable rows are complete.
 - Output path: `docs/codebase-audit/outputs/post-batch-d-pooled-enumerable-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
+
+### 2026-06-08T18:54:48.5479798-05:00
+
+- Affected phase: Post-audit `POST-BATCH-D-33A` `Items:Traps` pooled enumerable ownership repair
+- Cwd: `D:\ConficturaUO`
+- Command: Source review and patch of `RB-04814` through `RB-04817` in `Data/Scripts/Items/Traps/FlameSpurtTrap.cs`, `SpikeTrap.cs`, `StoneFaceTrap.cs`, and `TrapKit.cs`.
+- Result: Replaced flame spurt refresh, spike trap movement damage, stone face damage, and trap kit nearby trap counting direct range scans with local `IPooledEnumerable` variables and `try/finally Free`. Gem/jewel early return, player detection, damage application, nearby trap limit behavior, serialization, namespaces, type names, save versions, and file locations were preserved.
+- Output path: `Data/Scripts/Items/Traps/FlameSpurtTrap.cs`; `Data/Scripts/Items/Traps/SpikeTrap.cs`; `Data/Scripts/Items/Traps/StoneFaceTrap.cs`; `Data/Scripts/Items/Traps/TrapKit.cs`
+
+### 2026-06-08T18:54:48.5479798-05:00
+
+- Affected phase: Post-audit `POST-BATCH-D-33A` verification and audit artifact update
+- Cwd: `D:\ConficturaUO`
+- Command: Targeted four-file `Items:Traps` direct range-scan `rg`; explicit pooled-variable ownership `rg`; Visual Studio MSBuild `Data/System/Source/Server.csproj /p:Configuration=Debug /p:Platform=x86 /v:minimal`; `.\ConficturaServer.exe -compileonly -nocache`; restore generated root executable artifacts; update `post-batch-d-pooled-enumerable-review.csv`, active overlay, status, README, and next-step artifacts.
+- Result: Targeted scan found no remaining direct range scans in the four touched trap files; explicit pooled-variable check showed matching `Free` calls; `Server.csproj` Debug/x86 build passed; compile-only runtime script verification exited 0 and printed no `Listening:` output; generated `ConficturaServer.exe`, `.config`, and `.pdb` were restored; active backlog overlay now has 456 unique rows including 127 `POST-BATCH-D` fixed rows and 2 `POST-BATCH-D` false positives. `Items:Traps` queued pooled-enumerable rows are complete.
+- Output path: `docs/codebase-audit/outputs/post-batch-d-pooled-enumerable-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`

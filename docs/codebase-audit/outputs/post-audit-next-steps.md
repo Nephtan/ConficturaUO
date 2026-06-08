@@ -693,9 +693,17 @@ Completed source subbatch: `POST-BATCH-D-32A` fixed `Items:Trades` `RubyPickaxe.
 - Verification passed: targeted `RubyPickaxe.cs` direct-scan check returned no matches, explicit pooled-variable check showed a matching `Free` call, `Server.csproj` Debug/x86 build passed, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output.
 - `Items:Trades` queued pooled-enumerable rows are complete.
 
+Completed source subbatch: `POST-BATCH-D-33A` fixed `Items:Traps` pooled enumerable ownership.
+
+- 4 rows were reviewed and fixed: `RB-04814` through `RB-04817`.
+- Flame spurt refresh, spike trap movement damage, stone face damage, and trap kit nearby trap counting now pair range results with `try/finally Free`.
+- Existing gem/jewel early return, player detection, damage application, nearby trap limit behavior, serialization, namespaces, type names, save versions, and file locations were preserved.
+- Verification passed: targeted four-file direct-scan check returned no matches, explicit pooled-variable check showed matching `Free` calls, `Server.csproj` Debug/x86 build passed, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output.
+- `Items:Traps` queued pooled-enumerable rows are complete.
+
 Next:
 
-1. Continue `POST-BATCH-D` at the next queued pooled-enumerable backlog row after `RB-04813`, starting `Items:Traps` with `FlameSpurtTrap.cs`.
+1. Continue `POST-BATCH-D` at the next queued pooled-enumerable backlog row after `RB-04817`, starting `Items:Weapons` with `BaseWeapon.cs`.
 2. Keep batches focused by system/file; repair only confirmed ownership leaks with `try/finally Free`.
 3. Verify each source batch with the relevant pooled enumerable scan, `Server.csproj` Debug/x86 build, and `.\ConficturaServer.exe -compileonly -nocache`.
 
