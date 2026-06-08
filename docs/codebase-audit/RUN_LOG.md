@@ -4502,3 +4502,19 @@ Scope: Deterministic phase runner log for the Confictura codebase audit and reor
 - Command: Raw XMLSpawner PvP direct range-scan `rg`; Visual Studio MSBuild `Data/System/Source/Server.csproj /p:Configuration=Debug /p:Platform=x86 /v:minimal`; `.\ConficturaServer.exe -compileonly -nocache`; restore generated root executable artifacts; update `post-batch-d-pooled-enumerable-review.csv`, active overlay, status, README, and next-step artifacts.
 - Result: Raw PvP scan returned only `LastManStandingGauntlet.cs:350`, which is inside a disabled block comment; `Server.csproj` Debug/x86 build passed; compile-only runtime script verification exited 0 and printed no `Listening:` output; generated `ConficturaServer.exe`, `.config`, and `.pdb` were restored; active backlog overlay now has 391 unique rows including 63 `POST-BATCH-D` fixed rows and 1 `POST-BATCH-D` false positive. `Custom:XMLSpawner` queued pooled-enumerable rows are complete.
 - Output path: `docs/codebase-audit/outputs/post-batch-d-pooled-enumerable-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
+
+### 2026-06-08T17:37:35.5304910-05:00
+
+- Affected phase: Post-audit `POST-BATCH-D-15A` `Items:Boats` pooled enumerable ownership repair
+- Cwd: `D:\ConficturaUO`
+- Command: Source review and patch of `RB-04753` through `RB-04759` in `Data/Scripts/Items/Boats`.
+- Result: Replaced boat cleanup, ship proximity, enemy-ship lookup, shipwright/caster, docking lantern, and plank close direct range scans with local `IPooledEnumerable` variables and `try/finally Free`. Crew cleanup detection, obstacle counting, shipwright/caster counting, dock access checks, blocked-close early return, serialization, namespaces, type names, save versions, and file locations were preserved.
+- Output path: `Data/Scripts/Items/Boats/BaseBoat.cs`; `Data/Scripts/Items/Boats/BoatBuild.cs`; `Data/Scripts/Items/Boats/CarpetBuild.cs`; `Data/Scripts/Items/Boats/DockingLantern.cs`; `Data/Scripts/Items/Boats/Plank.cs`
+
+### 2026-06-08T17:37:35.5304910-05:00
+
+- Affected phase: Post-audit `POST-BATCH-D-15A` verification and audit artifact update
+- Cwd: `D:\ConficturaUO`
+- Command: Targeted `Items/Boats` direct range-scan `rg`; Visual Studio MSBuild `Data/System/Source/Server.csproj /p:Configuration=Debug /p:Platform=x86 /v:minimal`; `.\ConficturaServer.exe -compileonly -nocache`; restore generated root executable artifacts; update `post-batch-d-pooled-enumerable-review.csv`, active overlay, status, README, and next-step artifacts.
+- Result: Targeted scan found no remaining direct range scans in `Items/Boats`; `Server.csproj` Debug/x86 build passed; compile-only runtime script verification exited 0 and printed no `Listening:` output; generated `ConficturaServer.exe`, `.config`, and `.pdb` were restored; active backlog overlay now has 398 unique rows including 70 `POST-BATCH-D` fixed rows and 1 `POST-BATCH-D` false positive. `Items:Boats` queued pooled-enumerable rows are complete.
+- Output path: `docs/codebase-audit/outputs/post-batch-d-pooled-enumerable-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`

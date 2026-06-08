@@ -554,9 +554,17 @@ Completed source subbatch: `POST-BATCH-D-14A` reviewed `Custom:XMLSpawner` PvP p
 - Verification passed: raw PvP direct-scan check returned only the disabled `LastManStandingGauntlet.cs` comment hit, `Server.csproj` Debug/x86 build passed, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output.
 - `Custom:XMLSpawner` queued pooled-enumerable rows are complete.
 
+Completed source subbatch: `POST-BATCH-D-15A` fixed `Items:Boats` pooled enumerable ownership.
+
+- 7 rows were reviewed and fixed: `RB-04753` through `RB-04759`.
+- Boat cleanup, ship proximity, enemy-ship lookup, shipwright/caster checks, docking lantern search, and plank close scans now pair range results with `try/finally Free`.
+- Existing crew cleanup detection, obstacle counting, shipwright/caster counting, dock access checks, blocked-close early return, serialization, namespaces, type names, save versions, and file locations were preserved.
+- Verification passed: targeted `Items/Boats` direct-scan check returned no matches, `Server.csproj` Debug/x86 build passed, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output.
+- `Items:Boats` queued pooled-enumerable rows are complete.
+
 Next:
 
-1. Continue `POST-BATCH-D` at the next queued pooled-enumerable backlog rows after `RB-04752`, starting `Items:Boats`.
+1. Continue `POST-BATCH-D` at the next queued pooled-enumerable backlog row after `RB-04759`, starting `Items:Books`.
 2. Keep batches focused by system/file; repair only confirmed ownership leaks with `try/finally Free`.
 3. Verify each source batch with the relevant pooled enumerable scan, `Server.csproj` Debug/x86 build, and `.\ConficturaServer.exe -compileonly -nocache`.
 
