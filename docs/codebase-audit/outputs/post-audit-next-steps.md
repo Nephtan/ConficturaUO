@@ -661,9 +661,17 @@ Completed source subbatch: `POST-BATCH-D-28A` fixed remaining `Items:Misc` poole
 - Verification passed: targeted four-file direct-scan check returned no matches, explicit pooled-variable check showed matching `Free` calls, `Server.csproj` Debug/x86 build passed, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output.
 - `Items:Misc` queued pooled-enumerable rows are complete.
 
+Completed source subbatch: `POST-BATCH-D-29A` fixed `Items:Potions` pooled enumerable ownership.
+
+- 5 rows were reviewed and fixed: `RB-04806` through `RB-04810`.
+- Alchemist counting, monster splatter counting, conflagration target collection, confusion blast effects, and frostbite target collection now pair range results with `try/finally Free`.
+- Existing potion targeting, effect application, transient potion behavior, serialization, namespaces, type names, save versions, and file locations were preserved.
+- Verification passed: targeted five-file direct-scan check returned no matches, explicit pooled-variable check showed matching `Free` calls, `Server.csproj` Debug/x86 build passed, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output.
+- `Items:Potions` queued pooled-enumerable rows are complete.
+
 Next:
 
-1. Continue `POST-BATCH-D` at the next queued pooled-enumerable backlog row after `RB-04805`, starting `Items:Potions` with `CanopicJar.cs`.
+1. Continue `POST-BATCH-D` at the next queued pooled-enumerable backlog row after `RB-04810`, starting `Items:Special` with `DemonPrison.cs`.
 2. Keep batches focused by system/file; repair only confirmed ownership leaks with `try/finally Free`.
 3. Verify each source batch with the relevant pooled enumerable scan, `Server.csproj` Debug/x86 build, and `.\ConficturaServer.exe -compileonly -nocache`.
 

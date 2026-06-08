@@ -4726,3 +4726,19 @@ Scope: Deterministic phase runner log for the Confictura codebase audit and reor
 - Command: Targeted four-file `Items:Misc` direct range-scan `rg`; explicit pooled-variable ownership `rg`; Visual Studio MSBuild `Data/System/Source/Server.csproj /p:Configuration=Debug /p:Platform=x86 /v:minimal`; `.\ConficturaServer.exe -compileonly -nocache`; restore generated root executable artifacts; update `post-batch-d-pooled-enumerable-review.csv`, active overlay, status, README, and next-step artifacts.
 - Result: Targeted scan found no remaining direct range scans in the four touched `Items:Misc` files; explicit pooled-variable check showed matching `Free` calls; `Server.csproj` Debug/x86 build passed; compile-only runtime script verification exited 0 and printed no `Listening:` output; generated `ConficturaServer.exe`, `.config`, and `.pdb` were restored; active backlog overlay now has 444 unique rows including 115 `POST-BATCH-D` fixed rows and 2 `POST-BATCH-D` false positives. `Items:Misc` queued pooled-enumerable rows are complete.
 - Output path: `docs/codebase-audit/outputs/post-batch-d-pooled-enumerable-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
+
+### 2026-06-08T18:42:18.0141056-05:00
+
+- Affected phase: Post-audit `POST-BATCH-D-29A` `Items:Potions` pooled enumerable ownership repair
+- Cwd: `D:\ConficturaUO`
+- Command: Source review and patch of `RB-04806` through `RB-04810` in `Data/Scripts/Items/Potions`.
+- Result: Replaced alchemist counting, monster splatter counting, conflagration target collection, confusion blast effect, and frostbite target collection direct range scans with local `IPooledEnumerable` variables and `try/finally Free`. Potion targeting, effect application, transient potion behavior, serialization, namespaces, type names, save versions, and file locations were preserved.
+- Output path: `Data/Scripts/Items/Potions/Special/CanopicJar.cs`; `Data/Scripts/Items/Potions/Special/MonsterSplatter.cs`; `Data/Scripts/Items/Potions/Standard/Conflagration Potions/BaseConflagrationPotion.cs`; `Data/Scripts/Items/Potions/Standard/Confusion Blast Potions/BaseConfusionBlastPotion.cs`; `Data/Scripts/Items/Potions/Standard/Frostbite Potions/BaseFrostbitePotion.cs`
+
+### 2026-06-08T18:42:18.0141056-05:00
+
+- Affected phase: Post-audit `POST-BATCH-D-29A` verification and audit artifact update
+- Cwd: `D:\ConficturaUO`
+- Command: Targeted `Items:Potions` direct range-scan `rg`; explicit pooled-variable ownership `rg`; Visual Studio MSBuild `Data/System/Source/Server.csproj /p:Configuration=Debug /p:Platform=x86 /v:minimal`; `.\ConficturaServer.exe -compileonly -nocache`; restore generated root executable artifacts; update `post-batch-d-pooled-enumerable-review.csv`, active overlay, status, README, and next-step artifacts.
+- Result: Targeted scan found no remaining direct range scans in the five touched `Items:Potions` files; explicit pooled-variable check showed matching `Free` calls; `Server.csproj` Debug/x86 build passed; compile-only runtime script verification exited 0 and printed no `Listening:` output; generated `ConficturaServer.exe`, `.config`, and `.pdb` were restored; active backlog overlay now has 449 unique rows including 120 `POST-BATCH-D` fixed rows and 2 `POST-BATCH-D` false positives. `Items:Potions` queued pooled-enumerable rows are complete.
+- Output path: `docs/codebase-audit/outputs/post-batch-d-pooled-enumerable-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
