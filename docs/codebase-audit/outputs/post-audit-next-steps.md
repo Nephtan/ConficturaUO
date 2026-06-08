@@ -500,9 +500,17 @@ Completed source subbatch: `POST-BATCH-D-07A` fixed `Custom:Invasion System` `Pi
 - The touched nested pirate crew scans also now free through `finally`; existing enemy-boat selection, pirate count behavior, serialization, namespaces, type names, save versions, and file location were preserved.
 - Verification passed: targeted `PirateCaptain.cs` direct-scan check returned no matches, `Server.csproj` Debug/x86 build passed, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output.
 
+Completed source subbatch: `POST-BATCH-D-08A` fixed `Custom:Invasion System` `SubChamps` pooled enumerable ownership.
+
+- 9 rows were reviewed and fixed: `RB-04725` through `RB-04733`.
+- SubChamp spawn-count helpers now pair `this.GetMobilesInRange(10)` results with `try/finally Free`.
+- Existing helper-count thresholds, spawn behavior, serialization, namespaces, type names, save versions, and file locations were preserved.
+- Verification passed: targeted `SubChamps` direct-scan check returned no matches, `Server.csproj` Debug/x86 build passed, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output.
+- `Custom:Invasion System` queued pooled-enumerable rows are complete.
+
 Next:
 
-1. Continue `POST-BATCH-D` at the next queued pooled-enumerable backlog rows after `RB-04724`, continuing `Custom:Invasion System` with `LordBlackThornBot.cs`.
+1. Continue `POST-BATCH-D` at the next queued pooled-enumerable backlog rows after `RB-04733`, starting `Custom:OmniAI`.
 2. Keep batches focused by system/file; repair only confirmed ownership leaks with `try/finally Free`.
 3. Verify each source batch with the relevant pooled enumerable scan, `Server.csproj` Debug/x86 build, and `.\ConficturaServer.exe -compileonly -nocache`.
 

@@ -4390,3 +4390,19 @@ Scope: Deterministic phase runner log for the Confictura codebase audit and reor
 - Command: Targeted `PirateCaptain.cs` direct range-scan `rg`; Visual Studio MSBuild `Data/System/Source/Server.csproj /p:Configuration=Debug /p:Platform=x86 /v:minimal`; `.\ConficturaServer.exe -compileonly -nocache`; restore generated root executable artifacts; update `post-batch-d-pooled-enumerable-review.csv`, active overlay, status, README, and next-step artifacts.
 - Result: Targeted scan found no remaining direct range scans in `PirateCaptain.cs`; `Server.csproj` Debug/x86 build passed; compile-only runtime script verification exited 0 and printed no `Listening:` output; generated `ConficturaServer.exe`, `.config`, and `.pdb` were restored; active backlog overlay now has 363 unique rows including 36 `POST-BATCH-D` fixed rows.
 - Output path: `docs/codebase-audit/outputs/post-batch-d-pooled-enumerable-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
+
+### 2026-06-08T17:09:23.4456433-05:00
+
+- Affected phase: Post-audit `POST-BATCH-D-08A` `Custom:Invasion System` `SubChamps` pooled enumerable ownership repair
+- Cwd: `D:\ConficturaUO`
+- Command: Source review and patch of `RB-04725` through `RB-04733` in `Data/Scripts/Custom/Invasion System/Add Ins/SubChamps`.
+- Result: Replaced 9 direct `foreach` range scans over `this.GetMobilesInRange(10)` with local `IPooledEnumerable` variables and `try/finally Free`, preserving helper-count thresholds, spawn behavior, serialization, namespaces, type names, save versions, and file locations.
+- Output path: `Data/Scripts/Custom/Invasion System/Add Ins/SubChamps`
+
+### 2026-06-08T17:09:23.4456433-05:00
+
+- Affected phase: Post-audit `POST-BATCH-D-08A` verification and audit artifact update
+- Cwd: `D:\ConficturaUO`
+- Command: Targeted `SubChamps` direct range-scan `rg`; Visual Studio MSBuild `Data/System/Source/Server.csproj /p:Configuration=Debug /p:Platform=x86 /v:minimal`; `.\ConficturaServer.exe -compileonly -nocache`; restore generated root executable artifacts; update `post-batch-d-pooled-enumerable-review.csv`, active overlay, status, README, and next-step artifacts.
+- Result: Targeted scan found no remaining direct range scans in `SubChamps`; `Server.csproj` Debug/x86 build passed; compile-only runtime script verification exited 0 and printed no `Listening:` output; generated `ConficturaServer.exe`, `.config`, and `.pdb` were restored; active backlog overlay now has 372 unique rows including 45 `POST-BATCH-D` fixed rows. `Custom:Invasion System` queued pooled-enumerable rows are complete.
+- Output path: `docs/codebase-audit/outputs/post-batch-d-pooled-enumerable-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`

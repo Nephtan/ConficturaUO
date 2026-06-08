@@ -133,10 +133,19 @@ namespace Server.Mobiles
 
             int orcs = 0;
 
-            foreach (Mobile m in this.GetMobilesInRange(10))
+            IPooledEnumerable eable = this.GetMobilesInRange(10);
+
+            try
             {
-                if (m is OrcCaptain || m is OrcBomber || m is OrcishLord)
-                    ++orcs;
+                foreach (Mobile m in eable)
+                {
+                    if (m is OrcCaptain || m is OrcBomber || m is OrcishLord)
+                        ++orcs;
+                }
+            }
+            finally
+            {
+                eable.Free();
             }
 
             if (orcs < 16)
