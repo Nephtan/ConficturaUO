@@ -4238,3 +4238,11 @@ Scope: Deterministic phase runner log for the Confictura codebase audit and reor
 - Command: Update `post-batch-b-save-compatibility-triage.csv`, append `SERIAL-1494` and `SERIAL-1496` to `post-audit-active-backlog-status.csv`, and update status/readme/next-step artifacts.
 - Result: `post-batch-b-save-compatibility-triage.csv` now has 304 total rows, 304 reviewed rows, 0 queued rows, and 2 `POST-BATCH-B-33A` rows; active backlog overlay now has 302 rows, including 285 active save-compatibility dispositions.
 - Output path: `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
+
+### 2026-06-08T01:54:18.0000000-05:00
+
+- Affected phase: Post-audit `POST-BATCH-B` save compatibility closeout
+- Cwd: `D:\ConficturaUO`
+- Command: Review final triage and active overlay counts after all 304 P0 critical save-compatibility rows were reviewed.
+- Result: `POST-BATCH-B` review is complete with 304 reviewed rows and 0 queued rows. Active overlay has 2 unresolved save `ConfirmedIssue` rows: `SERIAL-0032` and `SERIAL-1356`. `SERIAL-1356` requires a human save-policy decision before source repair, so `POST-BATCH-C` is blocked until the remaining save issues are fixed or explicitly deferred.
+- Output path: `docs/codebase-audit/outputs/post-batch-b-save-compatibility-closeout.md`

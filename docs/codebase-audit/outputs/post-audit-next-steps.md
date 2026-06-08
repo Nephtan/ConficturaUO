@@ -427,11 +427,19 @@ Completed review-only subbatch: `POST-BATCH-B-33A` reviewed `System:Regions` ser
 - `SERIAL-1494` and `SERIAL-1496` were classified `FalsePositive` because `SpawnEntry` is a helper serializer called by `SpawnPersistence`; the paired `Deserialize(reader, version)` and `Remove(reader, version)` methods consume the payload written by `SpawnEntry.Serialize`.
 - `POST-BATCH-B` save compatibility triage has now reviewed all 304 rows.
 
+Closeout status: `POST-BATCH-B` is complete but blocks before `POST-BATCH-C`.
+
+- No `NeedsMigrationPlan` or `NeedsHumanDecision` rows remain in the triage CSV.
+- Two active save issues remain in `post-audit-active-backlog-status.csv`: `SERIAL-0032` and `SERIAL-1356`.
+- `SERIAL-1356` needs a human save-policy decision: approve reader-order repair that preserves current writer order/version, or require a migration branch if older production saves used the reader order as the intended shape.
+- `SERIAL-0032` can be repaired as a source-safe null guard after the `SERIAL-1356` policy is chosen.
+- Do not begin `POST-BATCH-C` until these save issues are fixed or explicitly deferred.
+
 Next:
 
-1. Close out `POST-BATCH-B` by summarizing unresolved confirmed source issues and deciding whether the next source-safe save fix batch can proceed without migration approval.
+1. Stop pending the `SERIAL-1356` save-policy decision.
 2. Do not change serialized layout, type names, namespaces, or file locations without a migration plan and explicit approval.
-3. Keep each remaining review-only commit scoped to one system group, or one file when a group is large.
+3. If approved, run one focused save-source repair batch for `SERIAL-1356` and `SERIAL-0032`, then verify with serialization register regeneration, `Server.csproj` Debug/x86 build, and `.\ConficturaServer.exe -compileonly -nocache`.
 
 ## Reorganization Status
 
