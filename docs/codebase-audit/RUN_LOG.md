@@ -4222,3 +4222,19 @@ Scope: Deterministic phase runner log for the Confictura codebase audit and reor
 - Command: Update `post-batch-b-save-compatibility-triage.csv`, append `SERIAL-1356` to `post-audit-active-backlog-status.csv`, and update status/readme/next-step artifacts.
 - Result: `post-batch-b-save-compatibility-triage.csv` now has 304 total rows, 302 reviewed rows, 2 queued rows, and 1 `POST-BATCH-B-32A` row; active backlog overlay now has 300 rows, including 283 active save-compatibility dispositions.
 - Output path: `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
+
+### 2026-06-08T01:51:02.7822737-05:00
+
+- Affected phase: Post-audit `POST-BATCH-B-33A` `System:Regions` serializer save-compatibility triage
+- Cwd: `D:\ConficturaUO`
+- Command: Source review of `Data/Scripts/System/Regions/Spawning/SpawnPersistence.cs:39-70` and `Data/Scripts/System/Regions/Spawning/SpawnEntry.cs:277-361`.
+- Result: Reviewed 2 `System:Regions` rows. Classified `SERIAL-1494` and `SERIAL-1496` as `FalsePositive` because `SpawnEntry` is a helper serializer whose payload is consumed by `Deserialize(reader, version)` or `Remove(reader, version)` through `SpawnPersistence`; no source files changed.
+- Output path: `docs/codebase-audit/outputs/post-batch-b-save-compatibility-triage.csv`
+
+### 2026-06-08T01:51:02.7822737-05:00
+
+- Affected phase: Post-audit `POST-BATCH-B-33A` audit artifact update
+- Cwd: `D:\ConficturaUO`
+- Command: Update `post-batch-b-save-compatibility-triage.csv`, append `SERIAL-1494` and `SERIAL-1496` to `post-audit-active-backlog-status.csv`, and update status/readme/next-step artifacts.
+- Result: `post-batch-b-save-compatibility-triage.csv` now has 304 total rows, 304 reviewed rows, 0 queued rows, and 2 `POST-BATCH-B-33A` rows; active backlog overlay now has 302 rows, including 285 active save-compatibility dispositions.
+- Output path: `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`

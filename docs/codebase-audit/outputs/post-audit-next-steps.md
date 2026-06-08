@@ -421,9 +421,15 @@ Completed review-only subbatch: `POST-BATCH-B-32A` reviewed `Quests:Summon` seri
 - `SERIAL-1356` was classified `ConfirmedIssue` because current `SummonPrison.Serialize` writes `PrisonerFullNameUsed` and `PrisonerClothColorUsed` before `PrisonerSerial`, while current `Deserialize` reads `PrisonerSerial` before those two integers.
 - No row was classified `NeedsMigrationPlan` or `NeedsHumanDecision`; the later source fix should preserve writer order and version unless older-save evidence requires a migration branch.
 
+Completed review-only subbatch: `POST-BATCH-B-33A` reviewed `System:Regions` serializers.
+
+- 2 rows were reviewed with no source edits.
+- `SERIAL-1494` and `SERIAL-1496` were classified `FalsePositive` because `SpawnEntry` is a helper serializer called by `SpawnPersistence`; the paired `Deserialize(reader, version)` and `Remove(reader, version)` methods consume the payload written by `SpawnEntry.Serialize`.
+- `POST-BATCH-B` save compatibility triage has now reviewed all 304 rows.
+
 Next:
 
-1. Continue `POST-BATCH-B` with the 2 queued `System:Regions` rows.
+1. Close out `POST-BATCH-B` by summarizing unresolved confirmed source issues and deciding whether the next source-safe save fix batch can proceed without migration approval.
 2. Do not change serialized layout, type names, namespaces, or file locations without a migration plan and explicit approval.
 3. Keep each remaining review-only commit scoped to one system group, or one file when a group is large.
 
