@@ -4566,3 +4566,19 @@ Scope: Deterministic phase runner log for the Confictura codebase audit and reor
 - Command: Targeted `Items/Doors` direct range-scan `rg`; Visual Studio MSBuild `Data/System/Source/Server.csproj /p:Configuration=Debug /p:Platform=x86 /v:minimal`; `.\ConficturaServer.exe -compileonly -nocache`; restore generated root executable artifacts; update `post-batch-d-pooled-enumerable-review.csv`, active overlay, status, README, and next-step artifacts.
 - Result: Targeted scan found no remaining direct range scans in `Items/Doors`; `Server.csproj` Debug/x86 build passed; compile-only runtime script verification exited 0 and printed no `Listening:` output; generated `ConficturaServer.exe`, `.config`, and `.pdb` were restored; active backlog overlay now has 407 unique rows including 79 `POST-BATCH-D` fixed rows and 1 `POST-BATCH-D` false positive. `Items:Doors` queued pooled-enumerable rows are complete.
 - Output path: `docs/codebase-audit/outputs/post-batch-d-pooled-enumerable-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
+
+### 2026-06-08T17:57:34.2698412-05:00
+
+- Affected phase: Post-audit `POST-BATCH-D-19A` `Items:Explorers` pooled enumerable ownership repair
+- Cwd: `D:\ConficturaUO`
+- Command: Source review and patch of `RB-04769` through `RB-04773` in `Data/Scripts/Items/Explorers`.
+- Result: Replaced bedroll, bedrolled-out, campfire, enemy-nearby, and camp-nearby direct range scans with local `IPooledEnumerable` variables and `try/finally Free`. Bedroll owner checks, rest collection, hostile-creature checks, active-camp early returns, serialization, namespaces, type names, save versions, and file locations were preserved.
+- Output path: `Data/Scripts/Items/Explorers/Bedroll.cs`; `Data/Scripts/Items/Explorers/BedrolledOut.cs`; `Data/Scripts/Items/Explorers/Campfire.cs`; `Data/Scripts/Items/Explorers/Kindling.cs`
+
+### 2026-06-08T17:57:34.2698412-05:00
+
+- Affected phase: Post-audit `POST-BATCH-D-19A` verification and audit artifact update
+- Cwd: `D:\ConficturaUO`
+- Command: Targeted `Items/Explorers` direct range-scan `rg`; Visual Studio MSBuild `Data/System/Source/Server.csproj /p:Configuration=Debug /p:Platform=x86 /v:minimal`; `.\ConficturaServer.exe -compileonly -nocache`; restore generated root executable artifacts; update `post-batch-d-pooled-enumerable-review.csv`, active overlay, status, README, and next-step artifacts.
+- Result: Targeted scan found no remaining direct range scans in `Items/Explorers`; `Server.csproj` Debug/x86 build passed; compile-only runtime script verification exited 0 and printed no `Listening:` output; generated `ConficturaServer.exe`, `.config`, and `.pdb` were restored; active backlog overlay now has 412 unique rows including 84 `POST-BATCH-D` fixed rows and 1 `POST-BATCH-D` false positive. `Items:Explorers` queued pooled-enumerable rows are complete.
+- Output path: `docs/codebase-audit/outputs/post-batch-d-pooled-enumerable-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
