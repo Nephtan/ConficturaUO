@@ -4278,3 +4278,19 @@ Scope: Deterministic phase runner log for the Confictura codebase audit and reor
 - Command: Create `post-batch-c-runtime-hooks-player-mobile-review.csv`, append/update 25 rows in `post-audit-active-backlog-status.csv`, and update status/readme/next-step artifacts.
 - Result: `post-batch-c-runtime-hooks-player-mobile-review.csv` has 25 reviewed rows: 3 prior `Fixed`, 21 `ReviewedNoChange`, and 1 `SafeNoChange`; active backlog overlay now has 327 rows. No `Data` source file changed, and no row requires a migration plan or human decision from this review-only batch.
 - Output path: `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
+
+### 2026-06-08T16:38:18.0434300-05:00
+
+- Affected phase: Post-audit `POST-BATCH-D-01A` `Custom:Champions` pooled enumerable ownership repair
+- Cwd: `D:\ConficturaUO`
+- Command: Source review and patch of `RB-04689` through `RB-04696` in `Barracoon.cs`, `Ilhenir.cs`, `Rikktor.cs`, `Semidar.cs`, `Serado.cs`, `InterredGrizzle .cs`, and `PlagueBeastLord.cs`.
+- Result: Replaced 8 direct `foreach` range scans with local `IPooledEnumerable` variables and `try/finally Free`, preserving loop filtering, break behavior, target collection, damage/message side effects, serialization, namespaces, type names, save versions, and file locations.
+- Output path: `Data/Scripts/Custom/Champions/Mobiles/Champs-UO/Barracoon.cs`; `Data/Scripts/Custom/Champions/Mobiles/Champs-UO/Ilhenir.cs`; `Data/Scripts/Custom/Champions/Mobiles/Champs-UO/Rikktor.cs`; `Data/Scripts/Custom/Champions/Mobiles/Champs-UO/Semidar.cs`; `Data/Scripts/Custom/Champions/Mobiles/Champs-UO/Serado.cs`; `Data/Scripts/Custom/Champions/Mobiles/Minions/InterredGrizzle .cs`; `Data/Scripts/Custom/Champions/Mobiles/Minions/PlagueBeastLord.cs`
+
+### 2026-06-08T16:38:18.0434300-05:00
+
+- Affected phase: Post-audit `POST-BATCH-D-01A` verification and audit artifact update
+- Cwd: `D:\ConficturaUO`
+- Command: Targeted `Custom:Champions` direct range-scan `rg`; Visual Studio MSBuild `Data/System/Source/Server.csproj /p:Configuration=Debug /p:Platform=x86 /v:minimal`; `.\ConficturaServer.exe -compileonly -nocache`; restore generated root executable artifacts; update `post-batch-d-pooled-enumerable-review.csv`, active overlay, status, README, and next-step artifacts.
+- Result: Targeted scan found no remaining direct `foreach` range scans in `Custom:Champions`; `Server.csproj` Debug/x86 build passed; compile-only runtime script verification exited 0 and printed no `Listening:` output; generated `ConficturaServer.exe`, `.config`, and `.pdb` were restored; active backlog overlay now has 335 unique rows including 8 `POST-BATCH-D-01A` fixed rows.
+- Output path: `docs/codebase-audit/outputs/post-batch-d-pooled-enumerable-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`

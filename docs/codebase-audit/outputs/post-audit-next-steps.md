@@ -451,9 +451,18 @@ Completed review-only subbatch: `POST-BATCH-C-01A` reviewed P0 runtime hooks and
 
 Next:
 
-1. Start `POST-BATCH-D`: source-review P1 pooled enumerable ownership findings.
-2. Repair only confirmed ownership leaks with `try/finally Free`, grouped by small system/file batches.
-3. Verify any source fix with the relevant pooled enumerable scan, `Server.csproj` Debug/x86 build, and `.\ConficturaServer.exe -compileonly -nocache`.
+Completed source subbatch: `POST-BATCH-D-01A` fixed `Custom:Champions` pooled enumerable ownership.
+
+- 8 rows were reviewed and fixed: `RB-04689` through `RB-04696`.
+- Direct `foreach` loops over `GetItemsInRange`, `GetMobilesInRange`, and `GetClientsInRange` were replaced with local `IPooledEnumerable` variables and `try/finally Free`.
+- Existing loop filtering, break behavior, target collection, damage/message side effects, serialization, namespaces, type names, save versions, and file locations were preserved.
+- Verification passed: targeted `Custom:Champions` direct-scan check returned no matches, `Server.csproj` Debug/x86 build passed, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output.
+
+Next:
+
+1. Continue `POST-BATCH-D` at the next queued pooled-enumerable backlog rows after `RB-04696`.
+2. Keep batches focused by system/file; repair only confirmed ownership leaks with `try/finally Free`.
+3. Verify each source batch with the relevant pooled enumerable scan, `Server.csproj` Debug/x86 build, and `.\ConficturaServer.exe -compileonly -nocache`.
 
 ## Reorganization Status
 
