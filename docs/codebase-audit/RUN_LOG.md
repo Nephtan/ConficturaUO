@@ -4310,3 +4310,19 @@ Scope: Deterministic phase runner log for the Confictura codebase audit and reor
 - Command: Targeted `ClearDeckCommand` direct range-scan `rg`; Visual Studio MSBuild `Data/System/Source/Server.csproj /p:Configuration=Debug /p:Platform=x86 /v:minimal`; `.\ConficturaServer.exe -compileonly -nocache`; restore generated root executable artifacts; update `post-batch-d-pooled-enumerable-review.csv`, active overlay, status, README, and next-step artifacts.
 - Result: Targeted scan found no remaining direct range scan in `ClearDeckCommand`; `Server.csproj` Debug/x86 build passed; compile-only runtime script verification exited 0 and printed no `Listening:` output; generated `ConficturaServer.exe`, `.config`, and `.pdb` were restored; active backlog overlay now has 336 unique rows including 9 `POST-BATCH-D` fixed rows.
 - Output path: `docs/codebase-audit/outputs/post-batch-d-pooled-enumerable-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
+
+### 2026-06-08T16:50:54.6607029-05:00
+
+- Affected phase: Post-audit `POST-BATCH-D-03A` `Custom:Government System` pooled enumerable ownership repair
+- Cwd: `D:\ConficturaUO`
+- Command: Source review and patch of `RB-04698` through `RB-04708` in `Data/Scripts/Custom/Government System/Items/Deeds/CityDeed.cs` and `Data/Scripts/Custom/Government System/Vendor/CityLandLord.cs`.
+- Result: Replaced 11 direct `foreach` range scans over spawner `GetMobilesInRange(0)` with local `IPooledEnumerable` variables and `try/finally Free`, preserving landlord lookup, initialization, vendor freeze/direction behavior, serialization, namespaces, type names, save versions, and file locations.
+- Output path: `Data/Scripts/Custom/Government System/Items/Deeds/CityDeed.cs`; `Data/Scripts/Custom/Government System/Vendor/CityLandLord.cs`
+
+### 2026-06-08T16:50:54.6607029-05:00
+
+- Affected phase: Post-audit `POST-BATCH-D-03A` verification and audit artifact update
+- Cwd: `D:\ConficturaUO`
+- Command: Targeted `Custom:Government System` direct range-scan `rg`; Visual Studio MSBuild `Data/System/Source/Server.csproj /p:Configuration=Debug /p:Platform=x86 /v:minimal`; `.\ConficturaServer.exe -compileonly -nocache`; restore generated root executable artifacts; update `post-batch-d-pooled-enumerable-review.csv`, active overlay, status, README, and next-step artifacts.
+- Result: Targeted scan found no remaining direct range scans in `Custom:Government System`; `Server.csproj` Debug/x86 build passed; compile-only runtime script verification exited 0 and printed no `Listening:` output; generated `ConficturaServer.exe`, `.config`, and `.pdb` were restored; active backlog overlay now has 347 unique rows including 20 `POST-BATCH-D` fixed rows.
+- Output path: `docs/codebase-audit/outputs/post-batch-d-pooled-enumerable-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`

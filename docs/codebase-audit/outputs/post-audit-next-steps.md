@@ -465,9 +465,16 @@ Completed source subbatch: `POST-BATCH-D-02A` fixed `Custom:ClearDeckCommand` po
 - Existing corpse filtering, boat matching, deletion behavior, serialization, namespaces, type names, save versions, and file locations were preserved.
 - Verification passed: targeted `ClearDeckCommand` direct-scan check returned no matches, `Server.csproj` Debug/x86 build passed, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output.
 
+Completed source subbatch: `POST-BATCH-D-03A` fixed `Custom:Government System` pooled enumerable ownership.
+
+- 11 rows were reviewed and fixed: `RB-04698` through `RB-04708`.
+- `CityDeed.FinishPlacement`, `CityLandLord.CreateRandomVendors`, and `CityLandLord.Deserialize` now pair spawner `GetMobilesInRange(0)` results with `try/finally Free`.
+- Existing landlord lookup, initialization, vendor freeze/direction behavior, serialization, namespaces, type names, save versions, and file locations were preserved.
+- Verification passed: targeted `Custom:Government System` direct-scan check returned no matches, `Server.csproj` Debug/x86 build passed, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output.
+
 Next:
 
-1. Continue `POST-BATCH-D` at the next queued pooled-enumerable backlog rows after `RB-04697`, starting with `Custom:Government System`.
+1. Continue `POST-BATCH-D` at the next queued pooled-enumerable backlog rows after `RB-04708`, starting with `Custom:Invasion System`.
 2. Keep batches focused by system/file; repair only confirmed ownership leaks with `try/finally Free`.
 3. Verify each source batch with the relevant pooled enumerable scan, `Server.csproj` Debug/x86 build, and `.\ConficturaServer.exe -compileonly -nocache`.
 
