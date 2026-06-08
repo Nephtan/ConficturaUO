@@ -458,9 +458,16 @@ Completed source subbatch: `POST-BATCH-D-01A` fixed `Custom:Champions` pooled en
 - Existing loop filtering, break behavior, target collection, damage/message side effects, serialization, namespaces, type names, save versions, and file locations were preserved.
 - Verification passed: targeted `Custom:Champions` direct-scan check returned no matches, `Server.csproj` Debug/x86 build passed, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output.
 
+Completed source subbatch: `POST-BATCH-D-02A` fixed `Custom:ClearDeckCommand` pooled enumerable ownership.
+
+- 1 row was reviewed and fixed: `RB-04697`.
+- `ClearDeckCommand.ClearDeck_OnCommand` now pairs `playerBoat.GetItemsInRange(18)` with `try/finally Free`.
+- Existing corpse filtering, boat matching, deletion behavior, serialization, namespaces, type names, save versions, and file locations were preserved.
+- Verification passed: targeted `ClearDeckCommand` direct-scan check returned no matches, `Server.csproj` Debug/x86 build passed, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output.
+
 Next:
 
-1. Continue `POST-BATCH-D` at the next queued pooled-enumerable backlog rows after `RB-04696`.
+1. Continue `POST-BATCH-D` at the next queued pooled-enumerable backlog rows after `RB-04697`, starting with `Custom:Government System`.
 2. Keep batches focused by system/file; repair only confirmed ownership leaks with `try/finally Free`.
 3. Verify each source batch with the relevant pooled enumerable scan, `Server.csproj` Debug/x86 build, and `.\ConficturaServer.exe -compileonly -nocache`.
 
