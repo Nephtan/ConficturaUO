@@ -240,10 +240,19 @@ namespace Server.Engines.XmlSpawner2
             if (duelloc.DuelRange <= 0)
                 duelrange = 16;
 
-            foreach (Mobile m in duelloc.DuelMap.GetMobilesInRange(duelloc.DuelLocation, duelrange))
+            IPooledEnumerable eable = duelloc.DuelMap.GetMobilesInRange(duelloc.DuelLocation, duelrange);
+
+            try
             {
-                if (m.Player)
-                    return false;
+                foreach (Mobile m in eable)
+                {
+                    if (m.Player)
+                        return false;
+                }
+            }
+            finally
+            {
+                eable.Free();
             }
 
             return true;
@@ -2328,19 +2337,38 @@ namespace Server.Engines.XmlSpawner2
                 // if there were nearby pets/mounts then tele those as well
 
                 ArrayList petlist = new ArrayList();
-                foreach (Mobile m in killer.GetMobilesInRange(16))
+                IPooledEnumerable eable = killer.GetMobilesInRange(16);
+
+                try
                 {
-                    if (m is BaseCreature && ((BaseCreature)m).ControlMaster == killer)
+                    foreach (Mobile m in eable)
                     {
-                        petlist.Add(m);
+                        if (m is BaseCreature && ((BaseCreature)m).ControlMaster == killer)
+                        {
+                            petlist.Add(m);
+                        }
                     }
                 }
-                foreach (Mobile m in killed.GetMobilesInRange(16))
+                finally
                 {
-                    if (m is BaseCreature && ((BaseCreature)m).ControlMaster == killed)
+                    eable.Free();
+                }
+
+                eable = killed.GetMobilesInRange(16);
+
+                try
+                {
+                    foreach (Mobile m in eable)
                     {
-                        petlist.Add(m);
+                        if (m is BaseCreature && ((BaseCreature)m).ControlMaster == killed)
+                        {
+                            petlist.Add(m);
+                        }
                     }
+                }
+                finally
+                {
+                    eable.Free();
                 }
 
                 // port the pets

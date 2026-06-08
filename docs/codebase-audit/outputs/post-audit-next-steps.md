@@ -538,9 +538,16 @@ Completed source subbatch: `POST-BATCH-D-12A` fixed `Custom:XMLSpawner` `XmlSpaw
 - Existing player counting, proximity trigger checks, serialization, namespaces, type names, save versions, and file location were preserved.
 - Verification passed: targeted `XmlSpawner2.cs` direct-scan check returned no matches, `Server.csproj` Debug/x86 build passed, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output.
 
+Completed source subbatch: `POST-BATCH-D-13A` fixed `Custom:XMLSpawner` `XmlAttachments/XmlPoints.cs` pooled enumerable ownership.
+
+- 3 rows were reviewed and fixed: `RB-04746` through `RB-04748`.
+- Duel availability and duel return pet scans now pair `GetMobilesInRange` results with `try/finally Free`.
+- Existing occupied-duel-area early return, controlled pet collection, serialization, namespaces, type names, save versions, and file location were preserved.
+- Verification passed: targeted `XmlPoints.cs` direct-scan check returned no matches, `Server.csproj` Debug/x86 build passed, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output.
+
 Next:
 
-1. Continue `POST-BATCH-D` at the next queued pooled-enumerable backlog rows after `RB-04745`, continuing `Custom:XMLSpawner` with `XmlAttachments/XmlPoints.cs`.
+1. Continue `POST-BATCH-D` at the next queued pooled-enumerable backlog rows after `RB-04748`, continuing `Custom:XMLSpawner` PvP files.
 2. Keep batches focused by system/file; repair only confirmed ownership leaks with `try/finally Free`.
 3. Verify each source batch with the relevant pooled enumerable scan, `Server.csproj` Debug/x86 build, and `.\ConficturaServer.exe -compileonly -nocache`.
 
