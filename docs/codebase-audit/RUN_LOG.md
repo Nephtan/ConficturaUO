@@ -4206,3 +4206,19 @@ Scope: Deterministic phase runner log for the Confictura codebase audit and reor
 - Command: Update `post-batch-b-save-compatibility-triage.csv`, append `SERIAL-1319` to `post-audit-active-backlog-status.csv`, and update status/readme/next-step artifacts.
 - Result: `post-batch-b-save-compatibility-triage.csv` now has 304 total rows, 301 reviewed rows, 3 queued rows, and 1 `POST-BATCH-B-31A` row; active backlog overlay now has 299 rows, including 282 active save-compatibility dispositions.
 - Output path: `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
+
+### 2026-06-08T01:48:26.4410726-05:00
+
+- Affected phase: Post-audit `POST-BATCH-B-32A` `Quests:Summon` serializer save-compatibility triage
+- Cwd: `D:\ConficturaUO`
+- Command: Source review of `Data/Scripts/Quests/Summon/SummonPrison.cs:486-540`.
+- Result: Reviewed 1 `Quests:Summon` row. Classified `SERIAL-1356` as `ConfirmedIssue` because `Serialize` writes `PrisonerFullNameUsed` and `PrisonerClothColorUsed` before `PrisonerSerial`, while `Deserialize` reads `PrisonerSerial` before those two integers; no source files changed.
+- Output path: `docs/codebase-audit/outputs/post-batch-b-save-compatibility-triage.csv`
+
+### 2026-06-08T01:48:26.4410726-05:00
+
+- Affected phase: Post-audit `POST-BATCH-B-32A` audit artifact update
+- Cwd: `D:\ConficturaUO`
+- Command: Update `post-batch-b-save-compatibility-triage.csv`, append `SERIAL-1356` to `post-audit-active-backlog-status.csv`, and update status/readme/next-step artifacts.
+- Result: `post-batch-b-save-compatibility-triage.csv` now has 304 total rows, 302 reviewed rows, 2 queued rows, and 1 `POST-BATCH-B-32A` row; active backlog overlay now has 300 rows, including 283 active save-compatibility dispositions.
+- Output path: `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`

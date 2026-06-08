@@ -415,9 +415,15 @@ Completed review-only subbatch: `POST-BATCH-B-31A` reviewed `Mobiles:Animals` se
 - `SERIAL-1319` was classified `IntentionalLegacy` because current `EtherealMount` version 3 writes and reads donation flag, reward flag, mounted ID, regular ID, and rider in aligned order, while version 1 intentionally consumes an old discarded integer before the shared version 0 payload.
 - No row was classified `NeedsMigrationPlan` or `NeedsHumanDecision`.
 
+Completed review-only subbatch: `POST-BATCH-B-32A` reviewed `Quests:Summon` serializers.
+
+- 1 row was reviewed with no source edits.
+- `SERIAL-1356` was classified `ConfirmedIssue` because current `SummonPrison.Serialize` writes `PrisonerFullNameUsed` and `PrisonerClothColorUsed` before `PrisonerSerial`, while current `Deserialize` reads `PrisonerSerial` before those two integers.
+- No row was classified `NeedsMigrationPlan` or `NeedsHumanDecision`; the later source fix should preserve writer order and version unless older-save evidence requires a migration branch.
+
 Next:
 
-1. Continue `POST-BATCH-B` with the 3 queued rows: `Quests:Summon` and `System:Regions`.
+1. Continue `POST-BATCH-B` with the 2 queued `System:Regions` rows.
 2. Do not change serialized layout, type names, namespaces, or file locations without a migration plan and explicit approval.
 3. Keep each remaining review-only commit scoped to one system group, or one file when a group is large.
 
