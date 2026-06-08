@@ -4454,3 +4454,19 @@ Scope: Deterministic phase runner log for the Confictura codebase audit and reor
 - Command: Targeted `BaseXmlSpawner.cs` direct range-scan `rg`; Visual Studio MSBuild `Data/System/Source/Server.csproj /p:Configuration=Debug /p:Platform=x86 /v:minimal`; `.\ConficturaServer.exe -compileonly -nocache`; restore generated root executable artifacts; update `post-batch-d-pooled-enumerable-review.csv`, active overlay, status, README, and next-step artifacts.
 - Result: Targeted scan found no remaining direct range scans in `BaseXmlSpawner.cs`; `Server.csproj` Debug/x86 build passed; compile-only runtime script verification exited 0 and printed no `Listening:` output; generated `ConficturaServer.exe`, `.config`, and `.pdb` were restored; active backlog overlay now has 382 unique rows including 55 `POST-BATCH-D` fixed rows.
 - Output path: `docs/codebase-audit/outputs/post-batch-d-pooled-enumerable-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
+
+### 2026-06-08T17:24:41.7122501-05:00
+
+- Affected phase: Post-audit `POST-BATCH-D-12A` `Custom:XMLSpawner` `XmlSpawner2.cs` pooled enumerable ownership repair
+- Cwd: `D:\ConficturaUO`
+- Command: Source review and patch of `RB-04744` and `RB-04745` in `Data/Scripts/Custom/XMLSpawner/XmlSpawner2.cs`.
+- Result: Replaced `NearbyPlayerCount` and `OnTick` proximity direct range scans with local `IPooledEnumerable` variables and `try/finally Free`. Player counting, proximity trigger checks, serialization, namespaces, type names, save versions, and file location were preserved.
+- Output path: `Data/Scripts/Custom/XMLSpawner/XmlSpawner2.cs`
+
+### 2026-06-08T17:24:41.7122501-05:00
+
+- Affected phase: Post-audit `POST-BATCH-D-12A` verification and audit artifact update
+- Cwd: `D:\ConficturaUO`
+- Command: Targeted `XmlSpawner2.cs` direct range-scan `rg`; Visual Studio MSBuild `Data/System/Source/Server.csproj /p:Configuration=Debug /p:Platform=x86 /v:minimal`; `.\ConficturaServer.exe -compileonly -nocache`; restore generated root executable artifacts; update `post-batch-d-pooled-enumerable-review.csv`, active overlay, status, README, and next-step artifacts.
+- Result: Targeted scan found no remaining direct range scans in `XmlSpawner2.cs`; `Server.csproj` Debug/x86 build passed; compile-only runtime script verification exited 0 and printed no `Listening:` output; generated `ConficturaServer.exe`, `.config`, and `.pdb` were restored; active backlog overlay now has 384 unique rows including 57 `POST-BATCH-D` fixed rows.
+- Output path: `docs/codebase-audit/outputs/post-batch-d-pooled-enumerable-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`

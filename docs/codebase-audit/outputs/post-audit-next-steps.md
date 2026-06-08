@@ -531,9 +531,16 @@ Completed source subbatch: `POST-BATCH-D-11A` fixed `Custom:XMLSpawner` `BaseXml
 - The sibling split-line `refobject` mobile scan in the same touched branch was also fixed; existing player counting, keyword behavior, serialization, namespaces, type names, save versions, and file location were preserved.
 - Verification passed: targeted `BaseXmlSpawner.cs` direct-scan check returned no matches, `Server.csproj` Debug/x86 build passed, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output.
 
+Completed source subbatch: `POST-BATCH-D-12A` fixed `Custom:XMLSpawner` `XmlSpawner2.cs` pooled enumerable ownership.
+
+- 2 rows were reviewed and fixed: `RB-04744` and `RB-04745`.
+- `NearbyPlayerCount` and `OnTick` proximity player scans now pair `GetMobilesInRange` results with `try/finally Free`.
+- Existing player counting, proximity trigger checks, serialization, namespaces, type names, save versions, and file location were preserved.
+- Verification passed: targeted `XmlSpawner2.cs` direct-scan check returned no matches, `Server.csproj` Debug/x86 build passed, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output.
+
 Next:
 
-1. Continue `POST-BATCH-D` at the next queued pooled-enumerable backlog rows after `RB-04743`, continuing `Custom:XMLSpawner` with `XmlSpawner2.cs`.
+1. Continue `POST-BATCH-D` at the next queued pooled-enumerable backlog rows after `RB-04745`, continuing `Custom:XMLSpawner` with `XmlAttachments/XmlPoints.cs`.
 2. Keep batches focused by system/file; repair only confirmed ownership leaks with `try/finally Free`.
 3. Verify each source batch with the relevant pooled enumerable scan, `Server.csproj` Debug/x86 build, and `.\ConficturaServer.exe -compileonly -nocache`.
 
