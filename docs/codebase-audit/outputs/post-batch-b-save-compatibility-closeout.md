@@ -1,6 +1,6 @@
 # POST-BATCH-B Save Compatibility Closeout
 
-Generated: 2026-06-08T01:54:18.0000000-05:00
+Generated: 2026-06-08T14:34:52.8340561-05:00
 
 ## Summary
 
@@ -19,23 +19,22 @@ Active overlay status:
 
 | Active Status | Count |
 | --- | ---: |
-| `ConfirmedIssue` | 2 |
 | `FalsePositive` | 47 |
-| `Fixed` | 5 |
+| `Fixed` | 7 |
 | `IntentionalLegacy` | 52 |
 | `ReviewedNoChange` | 14 |
 | `SafeNoChange` | 182 |
 
-`NeedsMigrationPlan` and `NeedsHumanDecision` do not remain in the triage CSV. The two Druidism rows are fixed in the active overlay after `POST-BATCH-B-30B`.
+`NeedsMigrationPlan`, `NeedsHumanDecision`, and active save `ConfirmedIssue` rows do not remain. The two Druidism rows are fixed in the active overlay after `POST-BATCH-B-30B`, and the two remaining active save issues are fixed after `POST-BATCH-B-34A`.
 
-## Stop Point
+## Source Fix Closeout
 
-Stop before `POST-BATCH-C`. Two active save-compatibility source issues remain, and one requires a human save-policy decision before source repair.
+`POST-BATCH-B-34A` applied the likely human save-policy decision for `SERIAL-1356` and repaired both remaining active save issues without changing writer layout, version numbers, serialized type names, namespaces, or file locations.
 
-| Source ID | System | File | Evidence | Decision Needed | Next Safe Action |
-| --- | --- | --- | --- | --- | --- |
-| `SERIAL-0032` | `Custom:Government System` | `Data/Scripts/Custom/Government System/Items/Stones/CityResurrectionStone.cs` | `Serialize` dereferences `m_ghosts.Count` while a newly constructed unused stone can leave `m_ghosts` null. | None if source fix only initializes `m_ghosts` or writes zero count while preserving version and field order. | Repair in a focused source-safe save batch after the `SERIAL-1356` policy decision. |
-| `SERIAL-1356` | `Quests:Summon` | `Data/Scripts/Quests/Summon/SummonPrison.cs` | `Serialize` writes `PrisonerFullNameUsed` and `PrisonerClothColorUsed` before `PrisonerSerial`; `Deserialize` reads `PrisonerSerial` before those integers. | Approve reader-order repair that preserves current writer order/version, or require a migration branch if older production saves used the reader order as the intended shape. | Do not patch until this save-policy decision is made. |
+| Source ID | System | File | Fix | Verification |
+| --- | --- | --- | --- | --- |
+| `SERIAL-0032` | `Custom:Government System` | `Data/Scripts/Custom/Government System/Items/Stones/CityResurrectionStone.cs` | `Serialize` writes a zero ghost count when `m_ghosts` is null, preserving version 1 count/entry/sign order. | `New-SerializationRegister.ps1`; `Server.csproj` Debug/x86 build; `.\ConficturaServer.exe -compileonly -nocache` with no `Listening:` output. |
+| `SERIAL-1356` | `Quests:Summon` | `Data/Scripts/Quests/Summon/SummonPrison.cs` | `Deserialize` now reads `PrisonerFullNameUsed`, `PrisonerClothColorUsed`, then `PrisonerSerial`, matching the current writer order and preserving version 1. | `New-SerializationRegister.ps1`; `Server.csproj` Debug/x86 build; `.\ConficturaServer.exe -compileonly -nocache` with no `Listening:` output. |
 
 ## Verification
 
@@ -45,7 +44,8 @@ Stop before `POST-BATCH-C`. Two active save-compatibility source issues remain, 
 - Active overlay invariant checks passed: one save overlay row exists for each reviewed non-ServerCore save disposition.
 - Review-only batches confirmed `git diff --name-only -- Data` was empty.
 - `git diff --check` and `git diff --cached --check` passed for each committed batch, with only expected CRLF warnings from this checkout before staging.
+- `POST-BATCH-B-34A` regenerated serialization outputs, built `Data/System/Source/Server.csproj` Debug/x86, and passed `.\ConficturaServer.exe -compileonly -nocache` without listener output.
 
 ## Recommendation
 
-Run a focused save-source repair batch next for `SERIAL-1356` and `SERIAL-0032` only after the `SERIAL-1356` save-policy decision is made. Verify that batch with `New-SerializationRegister.ps1`, `Server.csproj` Debug/x86 build, and `.\ConficturaServer.exe -compileonly -nocache`. Do not begin `POST-BATCH-C` until these active save issues are fixed or explicitly accepted/deferred.
+`POST-BATCH-B` is complete and no longer blocks `POST-BATCH-C`. Start `POST-BATCH-C` with P0 runtime hooks and `PlayerMobile` coupling review, and keep any source fixes narrow enough to avoid serialization, public API, namespace, type-name, and file-location changes.

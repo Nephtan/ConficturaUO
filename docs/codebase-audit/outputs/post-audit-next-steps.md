@@ -427,19 +427,24 @@ Completed review-only subbatch: `POST-BATCH-B-33A` reviewed `System:Regions` ser
 - `SERIAL-1494` and `SERIAL-1496` were classified `FalsePositive` because `SpawnEntry` is a helper serializer called by `SpawnPersistence`; the paired `Deserialize(reader, version)` and `Remove(reader, version)` methods consume the payload written by `SpawnEntry.Serialize`.
 - `POST-BATCH-B` save compatibility triage has now reviewed all 304 rows.
 
-Closeout status: `POST-BATCH-B` is complete but blocks before `POST-BATCH-C`.
+Completed source subbatch: `POST-BATCH-B-34A` fixed the remaining active save serializer issues.
 
-- No `NeedsMigrationPlan` or `NeedsHumanDecision` rows remain in the triage CSV.
-- Two active save issues remain in `post-audit-active-backlog-status.csv`: `SERIAL-0032` and `SERIAL-1356`.
-- `SERIAL-1356` needs a human save-policy decision: approve reader-order repair that preserves current writer order/version, or require a migration branch if older production saves used the reader order as the intended shape.
-- `SERIAL-0032` can be repaired as a source-safe null guard after the `SERIAL-1356` policy is chosen.
-- Do not begin `POST-BATCH-C` until these save issues are fixed or explicitly deferred.
+- `SERIAL-1356` applied the likely human save-policy decision: current `SummonPrison` writer order is authoritative, so the reader now consumes `PrisonerFullNameUsed`, `PrisonerClothColorUsed`, then `PrisonerSerial` without changing writer order or version.
+- `SERIAL-0032` now writes zero ghost entries when `m_ghosts` is null in `CityResurrectionStone.Serialize`, preserving the version 1 count/entry/sign layout.
+- Writer order, version numbers, serialized type names, namespaces, and file locations were unchanged.
+- Verification passed: `New-SerializationRegister.ps1`, `Server.csproj` Debug/x86 build through Visual Studio MSBuild, and `.\ConficturaServer.exe -compileonly -nocache` with no `Listening:` output.
+
+Closeout status: `POST-BATCH-B` is complete and unblocked.
+
+- No queued rows remain in the triage CSV.
+- No `NeedsMigrationPlan`, `NeedsHumanDecision`, or active save `ConfirmedIssue` rows remain.
+- `POST-BATCH-C` is the next runtime-risk batch, but it has not started in this source-save repair batch.
 
 Next:
 
-1. Stop pending the `SERIAL-1356` save-policy decision.
-2. Do not change serialized layout, type names, namespaces, or file locations without a migration plan and explicit approval.
-3. If approved, run one focused save-source repair batch for `SERIAL-1356` and `SERIAL-0032`, then verify with serialization register regeneration, `Server.csproj` Debug/x86 build, and `.\ConficturaServer.exe -compileonly -nocache`.
+1. Start `POST-BATCH-C`: review P0 runtime hooks and `PlayerMobile` coupling rows first, using runtime hook map and serialization context.
+2. Keep source fixes narrow and avoid serialization, public API, namespace, type-name, or file-location changes.
+3. Verify any `POST-BATCH-C` source fix with `Server.csproj` Debug/x86 build and `.\ConficturaServer.exe -compileonly -nocache`.
 
 ## Reorganization Status
 

@@ -1,6 +1,6 @@
 # Phase 6 Serialization And Save Compatibility Summary
 
-Generated: 2026-06-08T01:39:58.6056247-05:00
+Generated: 2026-06-08T14:32:08.7633046-05:00
 
 ## Required Inputs
 
@@ -21,7 +21,7 @@ Generated: 2026-06-08T01:39:58.6056247-05:00
 | `phase-06-high-risk-serializer-list.csv` | 3953 | Rows requiring manual review because of high-risk systems, project truth, versioning, pairing, alignment, or move risk. |
 | `phase-06-move-rename-risk-list.csv` | 9158 | Serialized types with namespace/type or file-move risk classification. |
 | `phase-06-serializer-comment-target-list.csv` | 3105 | Candidate Phase 11 source-comment targets for fragile save behavior. |
-| `phase-06-save-compatibility-repair-backlog.csv` | 1621 | Concrete serializer follow-up items created from machine-detected risks. |
+| `phase-06-save-compatibility-repair-backlog.csv` | 1620 | Concrete serializer follow-up items created from machine-detected risks. |
 
 ## Version Handling Counts
 

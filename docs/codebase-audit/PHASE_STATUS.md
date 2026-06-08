@@ -2,7 +2,7 @@
 
 Initialized: 2026-06-05T16:15:59.8020730-05:00
 
-Last updated: 2026-06-08T01:54:18.0000000-05:00
+Last updated: 2026-06-08T14:34:52.8340561-05:00
 
 Branch: `SAR`
 
@@ -12,21 +12,23 @@ Post-audit live-runtime baseline HEAD: `9dce70de docs: record source build basel
 
 Post-audit compile-only implementation HEAD: `09b7b7e5 feat: add compile-only script verification`
 
-Post-audit latest implemented source batch: `POST-BATCH-B-30B` Druidism transient-effect deserialization stream-alignment fix.
+Post-audit latest implemented source batch: `POST-BATCH-B-34A` fixed the remaining active save serializer issues for `SERIAL-0032` and `SERIAL-1356`.
 
-Post-audit latest committed audit-state batch before the current review: `57c44933 docs: record druidism save blockers`
+Post-audit latest committed audit-state batch before the current source repair: `6ae44f74 docs: close save compatibility triage`
 
 Post-audit latest runtime-risk batch: `POST-BATCH-A` packet-handler review and focused source fixes, recorded in `outputs/post-batch-a-packet-handler-review.csv`; runtime hook map, `Server.csproj` Debug/x86 build, and `.\ConficturaServer.exe -compileonly -nocache` verification passed before commit.
 
-Post-audit active backlog overlay: `outputs/post-audit-active-backlog-status.csv` preserves historical `repair-backlog.csv` while recording 17 packet-handler dispositions and 285 reviewed save-compatibility dispositions across `POST-BATCH-B-33A` and prior `POST-BATCH-B` subbatches.
+Post-audit active backlog overlay: `outputs/post-audit-active-backlog-status.csv` preserves historical `repair-backlog.csv` while recording 17 packet-handler dispositions and 285 reviewed save-compatibility dispositions across `POST-BATCH-B-34A` and prior `POST-BATCH-B` subbatches.
 
-Post-audit save compatibility triage: `outputs/post-batch-b-save-compatibility-triage.csv` scopes all 304 P0 critical save-compatibility rows and now records source-reviewed decisions for all 304 rows across `POST-BATCH-B`. No queued rows remain; closeout review is pending for confirmed source issues.
+Post-audit save compatibility triage: `outputs/post-batch-b-save-compatibility-triage.csv` scopes all 304 P0 critical save-compatibility rows and records source-reviewed decisions for all 304 rows across `POST-BATCH-B`. No queued rows remain; all active confirmed save issues are fixed in the overlay.
 
-Post-audit latest save-triage subbatch: `POST-BATCH-B-33A` reviewed the `System:Regions` `SpawnEntry` helper serializer rows and classified both rows as `FalsePositive`; no source files changed.
+Post-audit latest save-source subbatch: `POST-BATCH-B-34A` applied the likely human save-policy decision for `SummonPrison`, repaired the reader order to match current writer order, and added a source-safe null ghost-table guard for `CityResurrectionStone`.
 
-Post-audit save compatibility closeout: `POST-BATCH-B` review is complete with 304 reviewed rows and 0 queued rows. Active save issues remain for `SERIAL-0032` and `SERIAL-1356`; `SERIAL-1356` requires a human save-policy decision before source repair, so `POST-BATCH-C` is blocked until the remaining save issues are fixed or explicitly deferred.
+Post-audit save compatibility closeout: `POST-BATCH-B` review is complete with 304 reviewed rows and 0 queued rows. No active save `ConfirmedIssue`, `NeedsMigrationPlan`, or `NeedsHumanDecision` rows remain; `POST-BATCH-C` is unblocked but not started.
 
 Post-audit save compatibility blocker resolved: `SERIAL-1298` and `SERIAL-1300` now consume the previously written duration payloads before cleanup in `BlendWithForrestSpell.cs:123-151` and `GraspingRootsSpell.cs:116-132`. Verification: `New-SerializationRegister.ps1` regenerated serialization outputs, `Server.csproj` Debug/x86 build passed with Visual Studio MSBuild, and `.\ConficturaServer.exe -compileonly -nocache` passed without listener output.
+
+Post-audit save compatibility blocker resolved: `SERIAL-0032` now writes zero ghost entries when `m_ghosts` is null in `CityResurrectionStone.cs:278-326`; `SERIAL-1356` now reads `PrisonerFullNameUsed`, `PrisonerClothColorUsed`, then `PrisonerSerial` in `SummonPrison.cs:486-540`, matching the current writer order. Verification: `New-SerializationRegister.ps1` regenerated serialization outputs, `Server.csproj` Debug/x86 build passed with Visual Studio MSBuild, and `.\ConficturaServer.exe -compileonly -nocache` passed without listener output.
 
 Scope: Deterministic phase runner state for the Confictura codebase audit and reorganization program.
 

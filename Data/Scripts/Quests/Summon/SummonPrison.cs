@@ -530,9 +530,9 @@ namespace Server.Items
             PrisonerHue = reader.ReadInt();
             PrisonerBase = reader.ReadString();
             PrisonerBody = reader.ReadInt();
-            PrisonerSerial = reader.ReadMobile();
             PrisonerFullNameUsed = reader.ReadInt();
             PrisonerClothColorUsed = reader.ReadInt();
+            PrisonerSerial = reader.ReadMobile();
             Jailor = reader.ReadString();
             Dungeon = reader.ReadString();
             RewardID = reader.ReadInt();

@@ -4246,3 +4246,19 @@ Scope: Deterministic phase runner log for the Confictura codebase audit and reor
 - Command: Review final triage and active overlay counts after all 304 P0 critical save-compatibility rows were reviewed.
 - Result: `POST-BATCH-B` review is complete with 304 reviewed rows and 0 queued rows. Active overlay has 2 unresolved save `ConfirmedIssue` rows: `SERIAL-0032` and `SERIAL-1356`. `SERIAL-1356` requires a human save-policy decision before source repair, so `POST-BATCH-C` is blocked until the remaining save issues are fixed or explicitly deferred.
 - Output path: `docs/codebase-audit/outputs/post-batch-b-save-compatibility-closeout.md`
+
+### 2026-06-08T14:34:52.8340561-05:00
+
+- Affected phase: Post-audit `POST-BATCH-B-34A` focused save serializer source repair
+- Cwd: `D:\ConficturaUO`
+- Command: Apply source fixes to `Data/Scripts/Quests/Summon/SummonPrison.cs` and `Data/Scripts/Custom/Government System/Items/Stones/CityResurrectionStone.cs`.
+- Result: `SummonPrison.Deserialize` now reads `PrisonerFullNameUsed`, `PrisonerClothColorUsed`, then `PrisonerSerial`, matching current writer order; `CityResurrectionStone.Serialize` now writes zero ghost entries when `m_ghosts` is null. Writer order for persisted fields, version numbers, serialized type names, namespaces, and file locations were unchanged.
+- Output path: `Data/Scripts/Quests/Summon/SummonPrison.cs`; `Data/Scripts/Custom/Government System/Items/Stones/CityResurrectionStone.cs`
+
+### 2026-06-08T14:34:52.8340561-05:00
+
+- Affected phase: Post-audit `POST-BATCH-B-34A` verification and audit artifact update
+- Cwd: `D:\ConficturaUO`
+- Command: `.\docs\codebase-audit\tools\New-SerializationRegister.ps1`; `MSBuild.exe Data/System/Source/Server.csproj /p:Configuration=Debug /p:Platform=x86 /v:minimal`; `.\ConficturaServer.exe -compileonly -nocache`; restore generated executable artifacts; update triage, active overlay, status, README, next-step, and closeout artifacts.
+- Result: Serialization outputs regenerated; `SummonPrison` no longer reports the prior Mobile-versus-Int type mismatch; Visual Studio MSBuild Debug/x86 server build passed; compile-only runtime script verification passed and did not print `Listening:`; generated executable artifacts were restored; active save `ConfirmedIssue` count is now 0 and `POST-BATCH-C` is unblocked but not started.
+- Output path: `docs/codebase-audit/outputs/post-batch-b-save-compatibility-triage.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`; `docs/codebase-audit/outputs/post-batch-b-save-compatibility-closeout.md`
