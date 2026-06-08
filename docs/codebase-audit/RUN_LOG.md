@@ -4534,3 +4534,19 @@ Scope: Deterministic phase runner log for the Confictura codebase audit and reor
 - Command: Targeted `Items/Books` direct range-scan `rg`; Visual Studio MSBuild `Data/System/Source/Server.csproj /p:Configuration=Debug /p:Platform=x86 /v:minimal`; `.\ConficturaServer.exe -compileonly -nocache`; restore generated root executable artifacts; update `post-batch-d-pooled-enumerable-review.csv`, active overlay, status, README, and next-step artifacts.
 - Result: Targeted scan found no remaining direct range scans in `Items/Books`; `Server.csproj` Debug/x86 build passed; compile-only runtime script verification exited 0 and printed no `Listening:` output; generated `ConficturaServer.exe`, `.config`, and `.pdb` were restored; active backlog overlay now has 402 unique rows including 74 `POST-BATCH-D` fixed rows and 1 `POST-BATCH-D` false positive. `Items:Books` queued pooled-enumerable rows are complete.
 - Output path: `docs/codebase-audit/outputs/post-batch-d-pooled-enumerable-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
+
+### 2026-06-08T17:48:47.1288968-05:00
+
+- Affected phase: Post-audit `POST-BATCH-D-17A` `Items:Containers` pooled enumerable ownership repair
+- Cwd: `D:\ConficturaUO`
+- Command: Source review and patch of `RB-04764` in `Data/Scripts/Items/Containers/FillableContainers.cs`.
+- Result: Replaced the fillable container nearest-vendor direct range scan with a local `IPooledEnumerable` variable and `try/finally Free`. Nearest vendor content selection, serialization, namespaces, type names, save versions, and file location were preserved.
+- Output path: `Data/Scripts/Items/Containers/FillableContainers.cs`
+
+### 2026-06-08T17:48:47.1288968-05:00
+
+- Affected phase: Post-audit `POST-BATCH-D-17A` verification and audit artifact update
+- Cwd: `D:\ConficturaUO`
+- Command: Targeted `Items/Containers` direct range-scan `rg`; Visual Studio MSBuild `Data/System/Source/Server.csproj /p:Configuration=Debug /p:Platform=x86 /v:minimal`; `.\ConficturaServer.exe -compileonly -nocache`; restore generated root executable artifacts; update `post-batch-d-pooled-enumerable-review.csv`, active overlay, status, README, and next-step artifacts.
+- Result: Targeted scan found no remaining direct range scans in `Items/Containers`; `Server.csproj` Debug/x86 build passed; compile-only runtime script verification exited 0 and printed no `Listening:` output; generated `ConficturaServer.exe`, `.config`, and `.pdb` were restored; active backlog overlay now has 403 unique rows including 75 `POST-BATCH-D` fixed rows and 1 `POST-BATCH-D` false positive. `Items:Containers` queued pooled-enumerable rows are complete.
+- Output path: `docs/codebase-audit/outputs/post-batch-d-pooled-enumerable-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`

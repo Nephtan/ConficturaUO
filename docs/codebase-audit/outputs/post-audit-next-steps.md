@@ -570,9 +570,17 @@ Completed source subbatch: `POST-BATCH-D-16A` fixed `Items:Books` pooled enumera
 - Verification passed: targeted `Items/Books` direct-scan check returned no matches, `Server.csproj` Debug/x86 build passed, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output.
 - `Items:Books` queued pooled-enumerable rows are complete.
 
+Completed source subbatch: `POST-BATCH-D-17A` fixed `Items:Containers` pooled enumerable ownership.
+
+- 1 row was reviewed and fixed: `RB-04764`.
+- `FillableContent.Acquire` now pairs the nearest-vendor `map.GetMobilesInRange(loc, 20)` scan with `try/finally Free`.
+- Existing nearest vendor content selection, serialization, namespaces, type names, save versions, and file location were preserved.
+- Verification passed: targeted `Items/Containers` direct-scan check returned no matches, `Server.csproj` Debug/x86 build passed, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output.
+- `Items:Containers` queued pooled-enumerable rows are complete.
+
 Next:
 
-1. Continue `POST-BATCH-D` at the next queued pooled-enumerable backlog row after `RB-04763`, starting `Items:Containers`.
+1. Continue `POST-BATCH-D` at the next queued pooled-enumerable backlog rows after `RB-04764`, starting `Items:Doors`.
 2. Keep batches focused by system/file; repair only confirmed ownership leaks with `try/finally Free`.
 3. Verify each source batch with the relevant pooled enumerable scan, `Server.csproj` Debug/x86 build, and `.\ConficturaServer.exe -compileonly -nocache`.
 
