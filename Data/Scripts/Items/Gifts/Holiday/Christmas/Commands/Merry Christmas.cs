@@ -41,24 +41,33 @@ namespace Server.Misc
                         {
                             if (tb.Uses > 0)
                             {
-                                foreach (Mobile m in from.GetMobilesInRange(3)) // TODO: Validate range
+                                IPooledEnumerable eable = from.GetMobilesInRange(3); // TODO: Validate range
+
+                                try
                                 {
-                                    if (!m.Player && m.Body.IsHuman && (m is BaseVendor))
+                                    foreach (Mobile m in eable)
                                     {
-                                        if (
-                                            m is BaseCreature
-                                            && (((BaseCreature)m).IsHumanInTown())
-                                        )
+                                        if (!m.Player && m.Body.IsHuman && (m is BaseVendor))
                                         {
-                                            from.Direction = from.GetDirectionTo(m);
-                                            m.Direction = m.GetDirectionTo(from);
+                                            if (
+                                                m is BaseCreature
+                                                && (((BaseCreature)m).IsHumanInTown())
+                                            )
+                                            {
+                                                from.Direction = from.GetDirectionTo(m);
+                                                m.Direction = m.GetDirectionTo(from);
 
-                                            MerryChristmas.GiveTreat(from, m, tb);
-                                            tb.ConsumeUse(from);
+                                                MerryChristmas.GiveTreat(from, m, tb);
+                                                tb.ConsumeUse(from);
 
-                                            return;
+                                                return;
+                                            }
                                         }
                                     }
+                                }
+                                finally
+                                {
+                                    eable.Free();
                                 }
 
                                 foundbag = true;

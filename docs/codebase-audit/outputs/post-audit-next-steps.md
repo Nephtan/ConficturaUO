@@ -594,9 +594,17 @@ Completed source subbatch: `POST-BATCH-D-19A` fixed `Items:Explorers` pooled enu
 - Verification passed: targeted `Items/Explorers` direct-scan check returned no matches, `Server.csproj` Debug/x86 build passed, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output.
 - `Items:Explorers` queued pooled-enumerable rows are complete.
 
+Completed source subbatch: `POST-BATCH-D-20A` fixed `Items:Gifts` pooled enumerable ownership.
+
+- 2 rows were reviewed and fixed: `RB-04774` and `RB-04775`.
+- Christmas and Halloween holiday speech-handler vendor scans now pair range results with `try/finally Free`.
+- Existing gift/treat selection, vendor responses, early returns, serialization, namespaces, type names, save versions, and file locations were preserved.
+- Verification passed: targeted `Items/Gifts` direct-scan check returned no matches, `Server.csproj` Debug/x86 build passed, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output.
+- `Items:Gifts` queued pooled-enumerable rows are complete.
+
 Next:
 
-1. Continue `POST-BATCH-D` at the next queued pooled-enumerable backlog rows after `RB-04773`, starting `Items:Gifts`.
+1. Continue `POST-BATCH-D` at the next queued pooled-enumerable backlog rows after `RB-04775`, starting `Items:Houses`.
 2. Keep batches focused by system/file; repair only confirmed ownership leaks with `try/finally Free`.
 3. Verify each source batch with the relevant pooled enumerable scan, `Server.csproj` Debug/x86 build, and `.\ConficturaServer.exe -compileonly -nocache`.
 
