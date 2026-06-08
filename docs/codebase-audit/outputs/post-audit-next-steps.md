@@ -472,9 +472,16 @@ Completed source subbatch: `POST-BATCH-D-03A` fixed `Custom:Government System` p
 - Existing landlord lookup, initialization, vendor freeze/direction behavior, serialization, namespaces, type names, save versions, and file locations were preserved.
 - Verification passed: targeted `Custom:Government System` direct-scan check returned no matches, `Server.csproj` Debug/x86 build passed, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output.
 
+Completed source subbatch: `POST-BATCH-D-04A` fixed `Custom:Invasion System` `BaseSpecialCreature.cs` pooled enumerable ownership.
+
+- 3 rows were reviewed and fixed: `RB-04709` through `RB-04711`.
+- `BaseSpecialCreature.Earthquake`, `BaseSpecialCreature.BreathStart`, and `BaseSpecialCreature.OnDamagedBySpell` now pair `GetMobilesInRange` results with `try/finally Free`.
+- Existing target collection, filtering, damage behavior, serialization, namespaces, type names, save versions, and file locations were preserved.
+- Verification passed: targeted `BaseSpecialCreature.cs` direct-scan check returned no matches, `Server.csproj` Debug/x86 build passed, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output.
+
 Next:
 
-1. Continue `POST-BATCH-D` at the next queued pooled-enumerable backlog rows after `RB-04708`, starting with `Custom:Invasion System`.
+1. Continue `POST-BATCH-D` at the next queued pooled-enumerable backlog rows after `RB-04711`, continuing `Custom:Invasion System` with `Lord BlackThorn Clone.cs`.
 2. Keep batches focused by system/file; repair only confirmed ownership leaks with `try/finally Free`.
 3. Verify each source batch with the relevant pooled enumerable scan, `Server.csproj` Debug/x86 build, and `.\ConficturaServer.exe -compileonly -nocache`.
 
