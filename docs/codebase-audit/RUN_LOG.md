@@ -4694,3 +4694,19 @@ Scope: Deterministic phase runner log for the Confictura codebase audit and reor
 - Command: Targeted `AcidSlime.cs` direct range-scan `rg`; Visual Studio MSBuild `Data/System/Source/Server.csproj /p:Configuration=Debug /p:Platform=x86 /v:minimal`; `.\ConficturaServer.exe -compileonly -nocache`; restore generated root executable artifacts; update `post-batch-d-pooled-enumerable-review.csv`, active overlay, status, README, and next-step artifacts.
 - Result: Targeted scan found no remaining direct range scans in `AcidSlime.cs`; `Server.csproj` Debug/x86 build passed; compile-only runtime script verification exited 0 and printed no `Listening:` output; generated `ConficturaServer.exe`, `.config`, and `.pdb` were restored; active backlog overlay now has 432 unique rows including 103 `POST-BATCH-D` fixed rows and 2 `POST-BATCH-D` false positives.
 - Output path: `docs/codebase-audit/outputs/post-batch-d-pooled-enumerable-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
+
+### 2026-06-08T18:34:25.5065432-05:00
+
+- Affected phase: Post-audit `POST-BATCH-D-27A` `Items:Misc` `MagicForges.cs` pooled enumerable ownership repair
+- Cwd: `D:\ConficturaUO`
+- Command: Source review and patch of `RB-04794` through `RB-04801` in `Data/Scripts/Items/Misc/MagicForges.cs`.
+- Result: Replaced serpent reward, dark core validation/enchantment, Golden Ranger, poison, cold, energy, and fire forge direct range scans with local `IPooledEnumerable` variables and `try/finally Free`. Reward, validation, item morphing, forge effect behavior, serialization, namespaces, type names, save versions, and file location were preserved.
+- Output path: `Data/Scripts/Items/Misc/MagicForges.cs`
+
+### 2026-06-08T18:34:25.5065432-05:00
+
+- Affected phase: Post-audit `POST-BATCH-D-27A` verification and audit artifact update
+- Cwd: `D:\ConficturaUO`
+- Command: Targeted `MagicForges.cs` direct range-scan `rg`; explicit pooled-variable ownership `rg`; Visual Studio MSBuild `Data/System/Source/Server.csproj /p:Configuration=Debug /p:Platform=x86 /v:minimal`; `.\ConficturaServer.exe -compileonly -nocache`; restore generated root executable artifacts; update `post-batch-d-pooled-enumerable-review.csv`, active overlay, status, README, and next-step artifacts.
+- Result: Targeted scan found no remaining direct range scans in `MagicForges.cs`; explicit pooled-variable check showed matching `Free` calls; `Server.csproj` Debug/x86 build passed; compile-only runtime script verification exited 0 and printed no `Listening:` output; generated `ConficturaServer.exe`, `.config`, and `.pdb` were restored; active backlog overlay now has 440 unique rows including 111 `POST-BATCH-D` fixed rows and 2 `POST-BATCH-D` false positives.
+- Output path: `docs/codebase-audit/outputs/post-batch-d-pooled-enumerable-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`

@@ -646,9 +646,16 @@ Completed source subbatch: `POST-BATCH-D-26A` fixed `Items:Misc` `AcidSlime.cs` 
 - Existing transient hazard behavior, damage filtering, serialization, namespaces, type names, save versions, and file location were preserved.
 - Verification passed: targeted `AcidSlime.cs` direct-scan check returned no matches, `Server.csproj` Debug/x86 build passed, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output.
 
+Completed source subbatch: `POST-BATCH-D-27A` fixed `Items:Misc` `MagicForges.cs` pooled enumerable ownership.
+
+- 8 rows were reviewed and fixed: `RB-04794` through `RB-04801`.
+- Serpent reward, dark core validation/enchantment, Golden Ranger, poison, cold, energy, and fire forge scans now pair range results with `try/finally Free`.
+- Existing reward, validation, item morphing, forge effect behavior, serialization, namespaces, type names, save versions, and file location were preserved.
+- Verification passed: targeted `MagicForges.cs` direct-scan check returned no matches, explicit pooled-variable check showed matching `Free` calls, `Server.csproj` Debug/x86 build passed, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output.
+
 Next:
 
-1. Continue `POST-BATCH-D` at the next queued pooled-enumerable backlog rows after `RB-04793`, continuing `Items:Misc` with `MagicForges.cs`.
+1. Continue `POST-BATCH-D` at the next queued pooled-enumerable backlog row after `RB-04801`, continuing `Items:Misc` with `MorphItem.cs`.
 2. Keep batches focused by system/file; repair only confirmed ownership leaks with `try/finally Free`.
 3. Verify each source batch with the relevant pooled enumerable scan, `Server.csproj` Debug/x86 build, and `.\ConficturaServer.exe -compileonly -nocache`.
 
