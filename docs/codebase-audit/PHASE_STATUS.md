@@ -2,7 +2,7 @@
 
 Initialized: 2026-06-05T16:15:59.8020730-05:00
 
-Last updated: 2026-06-08T14:34:52.8340561-05:00
+Last updated: 2026-06-08T15:41:13.9877742-05:00
 
 Branch: `SAR`
 
@@ -16,15 +16,17 @@ Post-audit latest implemented source batch: `POST-BATCH-B-34A` fixed the remaini
 
 Post-audit latest committed audit-state batch before the current source repair: `6ae44f74 docs: close save compatibility triage`
 
-Post-audit latest runtime-risk batch: `POST-BATCH-A` packet-handler review and focused source fixes, recorded in `outputs/post-batch-a-packet-handler-review.csv`; runtime hook map, `Server.csproj` Debug/x86 build, and `.\ConficturaServer.exe -compileonly -nocache` verification passed before commit.
+Post-audit latest runtime-risk review batch: `POST-BATCH-C-01A` reviewed the 17 P0 runtime-hook rows and 8 P0 `PlayerMobile` coupling rows in `outputs/post-batch-c-runtime-hooks-player-mobile-review.csv`. The batch made no source edits; the runtime-hook rows reconcile to the earlier `POST-BATCH-A` packet-handler review, and `PlayerMobile` coupling remains migration-gated.
 
-Post-audit active backlog overlay: `outputs/post-audit-active-backlog-status.csv` preserves historical `repair-backlog.csv` while recording 17 packet-handler dispositions and 285 reviewed save-compatibility dispositions across `POST-BATCH-B-34A` and prior `POST-BATCH-B` subbatches.
+Post-audit active backlog overlay: `outputs/post-audit-active-backlog-status.csv` preserves historical `repair-backlog.csv` while recording 17 packet-handler dispositions, 285 reviewed save-compatibility dispositions across `POST-BATCH-B-34A` and prior `POST-BATCH-B` subbatches, and 25 reviewed `POST-BATCH-C-01A` runtime-hook/`PlayerMobile` coupling dispositions.
 
 Post-audit save compatibility triage: `outputs/post-batch-b-save-compatibility-triage.csv` scopes all 304 P0 critical save-compatibility rows and records source-reviewed decisions for all 304 rows across `POST-BATCH-B`. No queued rows remain; all active confirmed save issues are fixed in the overlay.
 
 Post-audit latest save-source subbatch: `POST-BATCH-B-34A` applied the likely human save-policy decision for `SummonPrison`, repaired the reader order to match current writer order, and added a source-safe null ghost-table guard for `CityResurrectionStone`.
 
-Post-audit save compatibility closeout: `POST-BATCH-B` review is complete with 304 reviewed rows and 0 queued rows. No active save `ConfirmedIssue`, `NeedsMigrationPlan`, or `NeedsHumanDecision` rows remain; `POST-BATCH-C` is unblocked but not started.
+Post-audit save compatibility closeout: `POST-BATCH-B` review is complete with 304 reviewed rows and 0 queued rows. No active save `ConfirmedIssue`, `NeedsMigrationPlan`, or `NeedsHumanDecision` rows remain.
+
+Post-audit runtime-hook and `PlayerMobile` coupling review: `POST-BATCH-C-01A` is complete with 25 reviewed rows and no source edits. Active dispositions are 3 prior `Fixed` rows, 21 `ReviewedNoChange` rows, and 1 `SafeNoChange` row. No row requires a human decision or migration plan from this review-only batch.
 
 Post-audit save compatibility blocker resolved: `SERIAL-1298` and `SERIAL-1300` now consume the previously written duration payloads before cleanup in `BlendWithForrestSpell.cs:123-151` and `GraspingRootsSpell.cs:116-132`. Verification: `New-SerializationRegister.ps1` regenerated serialization outputs, `Server.csproj` Debug/x86 build passed with Visual Studio MSBuild, and `.\ConficturaServer.exe -compileonly -nocache` passed without listener output.
 

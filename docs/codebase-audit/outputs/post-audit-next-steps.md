@@ -438,13 +438,22 @@ Closeout status: `POST-BATCH-B` is complete and unblocked.
 
 - No queued rows remain in the triage CSV.
 - No `NeedsMigrationPlan`, `NeedsHumanDecision`, or active save `ConfirmedIssue` rows remain.
-- `POST-BATCH-C` is the next runtime-risk batch, but it has not started in this source-save repair batch.
+
+Completed review-only subbatch: `POST-BATCH-C-01A` reviewed P0 runtime hooks and `PlayerMobile` coupling rows.
+
+- 25 rows were reviewed with no source edits.
+- The 17 runtime-hook rows reconcile to the earlier `POST-BATCH-A` packet-handler review and focused fixes.
+- Active dispositions are 3 prior `Fixed` rows, 21 `ReviewedNoChange` rows, and 1 `SafeNoChange` row.
+- `RB-05228` / `SkillStone` is classified `SafeNoChange` because the source writes the assigned player through the Mobile object-reference format and reads it back through `reader.ReadMobile()` with a `PlayerMobile` cast.
+- `RB-05352` / `PlayerMobile` count mismatch is classified `ReviewedNoChange` because source review found the current version 37 fall-through mirrors `Serialize`; the generated mismatch is conservative extractor noise around helper serializers, conditional loops, and legacy branches.
+- The remaining `PlayerMobile Core` and `PvP Consent` coupling rows are classified `ReviewedNoChange` as intentional shared player state coupling, still migration-gated for future edits.
+- No row remains classified `NeedsMigrationPlan`, `NeedsHumanDecision`, or active `ConfirmedIssue`.
 
 Next:
 
-1. Start `POST-BATCH-C`: review P0 runtime hooks and `PlayerMobile` coupling rows first, using runtime hook map and serialization context.
-2. Keep source fixes narrow and avoid serialization, public API, namespace, type-name, or file-location changes.
-3. Verify any `POST-BATCH-C` source fix with `Server.csproj` Debug/x86 build and `.\ConficturaServer.exe -compileonly -nocache`.
+1. Start `POST-BATCH-D`: source-review P1 pooled enumerable ownership findings.
+2. Repair only confirmed ownership leaks with `try/finally Free`, grouped by small system/file batches.
+3. Verify any source fix with the relevant pooled enumerable scan, `Server.csproj` Debug/x86 build, and `.\ConficturaServer.exe -compileonly -nocache`.
 
 ## Reorganization Status
 

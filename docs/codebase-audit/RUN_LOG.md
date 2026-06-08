@@ -4262,3 +4262,19 @@ Scope: Deterministic phase runner log for the Confictura codebase audit and reor
 - Command: `.\docs\codebase-audit\tools\New-SerializationRegister.ps1`; `MSBuild.exe Data/System/Source/Server.csproj /p:Configuration=Debug /p:Platform=x86 /v:minimal`; `.\ConficturaServer.exe -compileonly -nocache`; restore generated executable artifacts; update triage, active overlay, status, README, next-step, and closeout artifacts.
 - Result: Serialization outputs regenerated; `SummonPrison` no longer reports the prior Mobile-versus-Int type mismatch; Visual Studio MSBuild Debug/x86 server build passed; compile-only runtime script verification passed and did not print `Listening:`; generated executable artifacts were restored; active save `ConfirmedIssue` count is now 0 and `POST-BATCH-C` is unblocked but not started.
 - Output path: `docs/codebase-audit/outputs/post-batch-b-save-compatibility-triage.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`; `docs/codebase-audit/outputs/post-batch-b-save-compatibility-closeout.md`
+
+### 2026-06-08T15:41:13.9877742-05:00
+
+- Affected phase: Post-audit `POST-BATCH-C-01A` runtime-hook and `PlayerMobile` coupling review
+- Cwd: `D:\ConficturaUO`
+- Command: Source/register review of the 17 P0 runtime-hook rows `RB-01877` through `RB-01893`, `SkillStone.cs:168-199`, `PlayerMobile.cs:4539-4937`, `PlayerMobile.cs:5004-5221`, `post-batch-a-packet-handler-review.csv`, `serialization-register.csv`, `dependency-graph.csv`, and `comment-target-register.csv`.
+- Result: Reviewed 25 rows with no source edits. Runtime-hook rows reconcile to the earlier packet-handler review and fixes; `SkillStone` assigned-player serialization is source-aligned through Mobile object-reference persistence; `PlayerMobile` version 37 source review found the current fall-through mirrors `Serialize`, so the generated count mismatch remains extractor noise rather than a confirmed save-stream mismatch.
+- Output path: `docs/codebase-audit/outputs/post-batch-c-runtime-hooks-player-mobile-review.csv`
+
+### 2026-06-08T15:41:13.9877742-05:00
+
+- Affected phase: Post-audit `POST-BATCH-C-01A` audit artifact update
+- Cwd: `D:\ConficturaUO`
+- Command: Create `post-batch-c-runtime-hooks-player-mobile-review.csv`, append/update 25 rows in `post-audit-active-backlog-status.csv`, and update status/readme/next-step artifacts.
+- Result: `post-batch-c-runtime-hooks-player-mobile-review.csv` has 25 reviewed rows: 3 prior `Fixed`, 21 `ReviewedNoChange`, and 1 `SafeNoChange`; active backlog overlay now has 327 rows. No `Data` source file changed, and no row requires a migration plan or human decision from this review-only batch.
+- Output path: `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
