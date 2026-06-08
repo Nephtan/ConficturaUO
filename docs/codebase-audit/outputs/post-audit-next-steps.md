@@ -508,9 +508,17 @@ Completed source subbatch: `POST-BATCH-D-08A` fixed `Custom:Invasion System` `Su
 - Verification passed: targeted `SubChamps` direct-scan check returned no matches, `Server.csproj` Debug/x86 build passed, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output.
 - `Custom:Invasion System` queued pooled-enumerable rows are complete.
 
+Completed source subbatch: `POST-BATCH-D-09A` fixed `Custom:OmniAI` pooled enumerable ownership.
+
+- 4 rows were reviewed and fixed: `RB-04734` through `RB-04737`.
+- OmniAI target, corpse, random-target, and dispel-evil scans now pair range results with `try/finally Free`.
+- Existing target filtering, corpse selection, cast detection, serialization, namespaces, type names, save versions, and file locations were preserved.
+- Verification passed: targeted `Custom:OmniAI` direct-scan check returned no matches, `Server.csproj` Debug/x86 build passed, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output.
+- `Custom:OmniAI` queued pooled-enumerable rows are complete.
+
 Next:
 
-1. Continue `POST-BATCH-D` at the next queued pooled-enumerable backlog rows after `RB-04733`, starting `Custom:OmniAI`.
+1. Continue `POST-BATCH-D` at the next queued pooled-enumerable backlog rows after `RB-04737`, starting `Custom:RandomEncounters`.
 2. Keep batches focused by system/file; repair only confirmed ownership leaks with `try/finally Free`.
 3. Verify each source batch with the relevant pooled enumerable scan, `Server.csproj` Debug/x86 build, and `.\ConficturaServer.exe -compileonly -nocache`.
 

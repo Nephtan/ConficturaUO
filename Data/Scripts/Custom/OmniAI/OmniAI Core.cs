@@ -561,13 +561,22 @@ namespace Server.Mobiles
             {
                 List<Mobile> targets = new List<Mobile>();
 
-                foreach (Mobile m in m_Mobile.GetMobilesInRange(12))
+                IPooledEnumerable eable = m_Mobile.GetMobilesInRange(12);
+
+                try
                 {
-                    if (m is BaseCreature)
+                    foreach (Mobile m in eable)
                     {
-                        if (((BaseCreature)m).IsDispellable && CanTarget(m_Mobile, m))
-                            targets.Add(m);
+                        if (m is BaseCreature)
+                        {
+                            if (((BaseCreature)m).IsDispellable && CanTarget(m_Mobile, m))
+                                targets.Add(m);
+                        }
                     }
+                }
+                finally
+                {
+                    eable.Free();
                 }
 
                 if (targets.Count >= 0)
@@ -672,12 +681,21 @@ namespace Server.Mobiles
 
                 List<Item> itemtargets = new List<Item>();
 
-                foreach (Item itemstofind in m_Mobile.GetItemsInRange(5))
+                IPooledEnumerable eable = m_Mobile.GetItemsInRange(5);
+
+                try
                 {
-                    if (itemstofind is Corpse)
+                    foreach (Item itemstofind in eable)
                     {
-                        itemtargets.Add(itemstofind);
+                        if (itemstofind is Corpse)
+                        {
+                            itemtargets.Add(itemstofind);
+                        }
                     }
+                }
+                finally
+                {
+                    eable.Free();
                 }
 
                 for (int i = 0; i < itemtargets.Count; ++i)
@@ -746,16 +764,25 @@ namespace Server.Mobiles
         {
             List<Mobile> list = new List<Mobile>();
 
-            foreach (Mobile m in from.GetMobilesInRange(12))
+            IPooledEnumerable eable = from.GetMobilesInRange(12);
+
+            try
             {
-                if (m != null && m != from)
-                    if (CanTarget(from, m) && from.InLOS(m))
-                    {
-                        if (allowcombatant && m == from.Combatant)
-                            continue;
-                        else
-                            list.Add(m);
-                    }
+                foreach (Mobile m in eable)
+                {
+                    if (m != null && m != from)
+                        if (CanTarget(from, m) && from.InLOS(m))
+                        {
+                            if (allowcombatant && m == from.Combatant)
+                                continue;
+                            else
+                                list.Add(m);
+                        }
+                }
+            }
+            finally
+            {
+                eable.Free();
             }
 
             if (list.Count == 0)

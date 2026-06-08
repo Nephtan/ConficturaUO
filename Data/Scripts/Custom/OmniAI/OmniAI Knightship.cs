@@ -136,26 +136,35 @@ namespace Server.Mobiles
 
             bool cast = false;
 
-            foreach (Mobile m in m_Mobile.GetMobilesInRange(4))
+            IPooledEnumerable eable = m_Mobile.GetMobilesInRange(4);
+
+            try
             {
-                if (m != null)
+                foreach (Mobile m in eable)
                 {
-                    if (
-                        m is BaseCreature
-                        && ((BaseCreature)m).Summoned
-                        && !((BaseCreature)m).IsAnimatedDead
-                    )
-                        cast = true;
-                    else if (
-                        m is BaseCreature
-                        && !((BaseCreature)m).Controlled
-                        && ((BaseCreature)m).Karma < 0
-                    )
-                        cast = true;
-                    else if (TransformationSpellHelper.GetContext(m) != null)
-                        cast = true;
+                    if (m != null)
+                    {
+                        if (
+                            m is BaseCreature
+                            && ((BaseCreature)m).Summoned
+                            && !((BaseCreature)m).IsAnimatedDead
+                        )
+                            cast = true;
+                        else if (
+                            m is BaseCreature
+                            && !((BaseCreature)m).Controlled
+                            && ((BaseCreature)m).Karma < 0
+                        )
+                            cast = true;
+                        else if (TransformationSpellHelper.GetContext(m) != null)
+                            cast = true;
+                    }
+                    continue;
                 }
-                continue;
+            }
+            finally
+            {
+                eable.Free();
             }
 
             return cast;

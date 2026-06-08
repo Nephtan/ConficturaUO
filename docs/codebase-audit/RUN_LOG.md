@@ -4406,3 +4406,19 @@ Scope: Deterministic phase runner log for the Confictura codebase audit and reor
 - Command: Targeted `SubChamps` direct range-scan `rg`; Visual Studio MSBuild `Data/System/Source/Server.csproj /p:Configuration=Debug /p:Platform=x86 /v:minimal`; `.\ConficturaServer.exe -compileonly -nocache`; restore generated root executable artifacts; update `post-batch-d-pooled-enumerable-review.csv`, active overlay, status, README, and next-step artifacts.
 - Result: Targeted scan found no remaining direct range scans in `SubChamps`; `Server.csproj` Debug/x86 build passed; compile-only runtime script verification exited 0 and printed no `Listening:` output; generated `ConficturaServer.exe`, `.config`, and `.pdb` were restored; active backlog overlay now has 372 unique rows including 45 `POST-BATCH-D` fixed rows. `Custom:Invasion System` queued pooled-enumerable rows are complete.
 - Output path: `docs/codebase-audit/outputs/post-batch-d-pooled-enumerable-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
+
+### 2026-06-08T17:13:09.9375736-05:00
+
+- Affected phase: Post-audit `POST-BATCH-D-09A` `Custom:OmniAI` pooled enumerable ownership repair
+- Cwd: `D:\ConficturaUO`
+- Command: Source review and patch of `RB-04734` through `RB-04737` in `Data/Scripts/Custom/OmniAI/OmniAI Core.cs` and `Data/Scripts/Custom/OmniAI/OmniAI Knightship.cs`.
+- Result: Replaced 4 direct `foreach` range scans with local `IPooledEnumerable` variables and `try/finally Free`, preserving target filtering, corpse selection, cast detection, serialization, namespaces, type names, save versions, and file locations.
+- Output path: `Data/Scripts/Custom/OmniAI/OmniAI Core.cs`; `Data/Scripts/Custom/OmniAI/OmniAI Knightship.cs`
+
+### 2026-06-08T17:13:09.9375736-05:00
+
+- Affected phase: Post-audit `POST-BATCH-D-09A` verification and audit artifact update
+- Cwd: `D:\ConficturaUO`
+- Command: Targeted `Custom:OmniAI` direct range-scan `rg`; Visual Studio MSBuild `Data/System/Source/Server.csproj /p:Configuration=Debug /p:Platform=x86 /v:minimal`; `.\ConficturaServer.exe -compileonly -nocache`; restore generated root executable artifacts; update `post-batch-d-pooled-enumerable-review.csv`, active overlay, status, README, and next-step artifacts.
+- Result: Targeted scan found no remaining direct range scans in `Custom:OmniAI`; `Server.csproj` Debug/x86 build passed; compile-only runtime script verification exited 0 and printed no `Listening:` output; generated `ConficturaServer.exe`, `.config`, and `.pdb` were restored; active backlog overlay now has 376 unique rows including 49 `POST-BATCH-D` fixed rows. `Custom:OmniAI` queued pooled-enumerable rows are complete.
+- Output path: `docs/codebase-audit/outputs/post-batch-d-pooled-enumerable-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
