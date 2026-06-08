@@ -545,9 +545,18 @@ Completed source subbatch: `POST-BATCH-D-13A` fixed `Custom:XMLSpawner` `XmlAtta
 - Existing occupied-duel-area early return, controlled pet collection, serialization, namespaces, type names, save versions, and file location were preserved.
 - Verification passed: targeted `XmlPoints.cs` direct-scan check returned no matches, `Server.csproj` Debug/x86 build passed, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output.
 
+Completed source subbatch: `POST-BATCH-D-14A` reviewed `Custom:XMLSpawner` PvP pooled enumerable ownership.
+
+- 4 rows were reviewed: `RB-04749` through `RB-04752`.
+- 3 live rows were fixed in `BaseChallengeGame.cs`, `KingOfTheHillGauntlet.cs`, and `TeamKotHGauntlet.cs` by pairing arena and hill `GetMobilesInRange` scans with `try/finally Free`.
+- `RB-04751` was classified `FalsePositive` because the reported `LastManStandingGauntlet.cs` loop is inside a disabled block comment and is not compiled or executed.
+- Existing arena clearing, hill scoring, non-participant collection, serialization, namespaces, type names, save versions, and file locations were preserved.
+- Verification passed: raw PvP direct-scan check returned only the disabled `LastManStandingGauntlet.cs` comment hit, `Server.csproj` Debug/x86 build passed, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output.
+- `Custom:XMLSpawner` queued pooled-enumerable rows are complete.
+
 Next:
 
-1. Continue `POST-BATCH-D` at the next queued pooled-enumerable backlog rows after `RB-04748`, continuing `Custom:XMLSpawner` PvP files.
+1. Continue `POST-BATCH-D` at the next queued pooled-enumerable backlog rows after `RB-04752`, starting `Items:Boats`.
 2. Keep batches focused by system/file; repair only confirmed ownership leaks with `try/finally Free`.
 3. Verify each source batch with the relevant pooled enumerable scan, `Server.csproj` Debug/x86 build, and `.\ConficturaServer.exe -compileonly -nocache`.
 

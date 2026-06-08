@@ -2,7 +2,7 @@
 
 Initialized: 2026-06-05T16:15:59.8020730-05:00
 
-Last updated: 2026-06-08T17:28:14.2259511-05:00
+Last updated: 2026-06-08T17:32:22.7946878-05:00
 
 Branch: `SAR`
 
@@ -12,13 +12,13 @@ Post-audit live-runtime baseline HEAD: `9dce70de docs: record source build basel
 
 Post-audit compile-only implementation HEAD: `09b7b7e5 feat: add compile-only script verification`
 
-Post-audit latest implemented source batch: `POST-BATCH-D-13A` fixed the pooled enumerable ownership rows in `Custom:XMLSpawner` `XmlAttachments/XmlPoints.cs`.
+Post-audit latest implemented source batch: `POST-BATCH-D-14A` fixed live pooled enumerable ownership rows in `Custom:XMLSpawner` PvP files and classified one disabled block-comment hit as `FalsePositive`.
 
 Post-audit latest committed audit-state batch before the current source repair: `6ae44f74 docs: close save compatibility triage`
 
 Post-audit latest runtime-risk review batch: `POST-BATCH-C-01A` reviewed the 17 P0 runtime-hook rows and 8 P0 `PlayerMobile` coupling rows in `outputs/post-batch-c-runtime-hooks-player-mobile-review.csv`. The batch made no source edits; the runtime-hook rows reconcile to the earlier `POST-BATCH-A` packet-handler review, and `PlayerMobile` coupling remains migration-gated.
 
-Post-audit active backlog overlay: `outputs/post-audit-active-backlog-status.csv` preserves historical `repair-backlog.csv` while recording 17 packet-handler dispositions, 285 reviewed save-compatibility dispositions across `POST-BATCH-B-34A` and prior `POST-BATCH-B` subbatches, 25 reviewed `POST-BATCH-C-01A` runtime-hook/`PlayerMobile` coupling dispositions, and 60 `POST-BATCH-D` pooled enumerable fixes.
+Post-audit active backlog overlay: `outputs/post-audit-active-backlog-status.csv` preserves historical `repair-backlog.csv` while recording 17 packet-handler dispositions, 285 reviewed save-compatibility dispositions across `POST-BATCH-B-34A` and prior `POST-BATCH-B` subbatches, 25 reviewed `POST-BATCH-C-01A` runtime-hook/`PlayerMobile` coupling dispositions, 63 `POST-BATCH-D` pooled enumerable fixes, and 1 `POST-BATCH-D` false positive.
 
 Post-audit save compatibility triage: `outputs/post-batch-b-save-compatibility-triage.csv` scopes all 304 P0 critical save-compatibility rows and records source-reviewed decisions for all 304 rows across `POST-BATCH-B`. No queued rows remain; all active confirmed save issues are fixed in the overlay.
 
@@ -53,6 +53,8 @@ Post-audit pooled enumerable ownership: `POST-BATCH-D-11A` fixed `RB-04741` thro
 Post-audit pooled enumerable ownership: `POST-BATCH-D-12A` fixed `RB-04744` and `RB-04745` in `XmlSpawner2.cs` by pairing `NearbyPlayerCount` and `OnTick` proximity `GetMobilesInRange` scans with `try/finally Free`. Verification passed: targeted `XmlSpawner2.cs` scan found no remaining direct range scans, `Server.csproj` Debug/x86 build passed, and `.\ConficturaServer.exe -compileonly -nocache` passed without listener output.
 
 Post-audit pooled enumerable ownership: `POST-BATCH-D-13A` fixed `RB-04746` through `RB-04748` in `XmlAttachments/XmlPoints.cs` by pairing duel availability and duel return pet `GetMobilesInRange` scans with `try/finally Free`. Verification passed: targeted `XmlPoints.cs` scan found no remaining direct range scans, `Server.csproj` Debug/x86 build passed, and `.\ConficturaServer.exe -compileonly -nocache` passed without listener output.
+
+Post-audit pooled enumerable ownership: `POST-BATCH-D-14A` fixed `RB-04749`, `RB-04750`, and `RB-04752` in XMLSpawner PvP challenge files by pairing live arena and hill `GetMobilesInRange` scans with `try/finally Free`; `RB-04751` was classified `FalsePositive` because its hit is inside a disabled block comment in `LastManStandingGauntlet.cs`. Verification passed: raw PvP scan returned only the disabled comment hit, `Server.csproj` Debug/x86 build passed, and `.\ConficturaServer.exe -compileonly -nocache` passed without listener output.
 
 Post-audit save compatibility blocker resolved: `SERIAL-1298` and `SERIAL-1300` now consume the previously written duration payloads before cleanup in `BlendWithForrestSpell.cs:123-151` and `GraspingRootsSpell.cs:116-132`. Verification: `New-SerializationRegister.ps1` regenerated serialization outputs, `Server.csproj` Debug/x86 build passed with Visual Studio MSBuild, and `.\ConficturaServer.exe -compileonly -nocache` passed without listener output.
 
