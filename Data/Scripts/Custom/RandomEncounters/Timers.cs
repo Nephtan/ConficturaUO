@@ -278,16 +278,23 @@ namespace Server.Misc
                 eable = i.Map.GetClientsInRange(loc, 18);
             }
 
-            foreach (NetState state in eable)
+            try
             {
-                if (state.Mobile != null && state.Mobile.AccessLevel > AccessLevel.Player)
-                    continue;
-
-                if (xmlDate.Count < RandomEncounterEngine.CleanupGrace)
+                foreach (NetState state in eable)
                 {
-                    xmlDate.Count += 1;
-                    return false;
+                    if (state.Mobile != null && state.Mobile.AccessLevel > AccessLevel.Player)
+                        continue;
+
+                    if (xmlDate.Count < RandomEncounterEngine.CleanupGrace)
+                    {
+                        xmlDate.Count += 1;
+                        return false;
+                    }
                 }
+            }
+            finally
+            {
+                eable.Free();
             }
 
             return true;

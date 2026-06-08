@@ -4422,3 +4422,19 @@ Scope: Deterministic phase runner log for the Confictura codebase audit and reor
 - Command: Targeted `Custom:OmniAI` direct range-scan `rg`; Visual Studio MSBuild `Data/System/Source/Server.csproj /p:Configuration=Debug /p:Platform=x86 /v:minimal`; `.\ConficturaServer.exe -compileonly -nocache`; restore generated root executable artifacts; update `post-batch-d-pooled-enumerable-review.csv`, active overlay, status, README, and next-step artifacts.
 - Result: Targeted scan found no remaining direct range scans in `Custom:OmniAI`; `Server.csproj` Debug/x86 build passed; compile-only runtime script verification exited 0 and printed no `Listening:` output; generated `ConficturaServer.exe`, `.config`, and `.pdb` were restored; active backlog overlay now has 376 unique rows including 49 `POST-BATCH-D` fixed rows. `Custom:OmniAI` queued pooled-enumerable rows are complete.
 - Output path: `docs/codebase-audit/outputs/post-batch-d-pooled-enumerable-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
+
+### 2026-06-08T17:16:10.5554764-05:00
+
+- Affected phase: Post-audit `POST-BATCH-D-10A` `Custom:RandomEncounters` pooled enumerable ownership repair
+- Cwd: `D:\ConficturaUO`
+- Command: Source review and patch of `RB-04738` through `RB-04740` in `Data/Scripts/Custom/RandomEncounters/Timers.cs`.
+- Result: Wrapped the assigned `GetClientsInRange` enumerable in `RandomEncounterCleanupTimer.MaybeRemove` with `try/finally Free`, preserving cleanup grace behavior, staff-player filtering, serialization, namespaces, type names, save versions, and file location.
+- Output path: `Data/Scripts/Custom/RandomEncounters/Timers.cs`
+
+### 2026-06-08T17:16:10.5554764-05:00
+
+- Affected phase: Post-audit `POST-BATCH-D-10A` verification and audit artifact update
+- Cwd: `D:\ConficturaUO`
+- Command: Targeted `Timers.cs` ownership `rg`; Visual Studio MSBuild `Data/System/Source/Server.csproj /p:Configuration=Debug /p:Platform=x86 /v:minimal`; `.\ConficturaServer.exe -compileonly -nocache`; restore generated root executable artifacts; update `post-batch-d-pooled-enumerable-review.csv`, active overlay, status, README, and next-step artifacts.
+- Result: Targeted ownership check found the assigned enumerable paired with `finally`; `Server.csproj` Debug/x86 build passed; compile-only runtime script verification exited 0 and printed no `Listening:` output; generated `ConficturaServer.exe`, `.config`, and `.pdb` were restored; active backlog overlay now has 379 unique rows including 52 `POST-BATCH-D` fixed rows. `Custom:RandomEncounters` queued pooled-enumerable rows are complete.
+- Output path: `docs/codebase-audit/outputs/post-batch-d-pooled-enumerable-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
