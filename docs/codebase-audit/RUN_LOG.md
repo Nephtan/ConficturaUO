@@ -4710,3 +4710,19 @@ Scope: Deterministic phase runner log for the Confictura codebase audit and reor
 - Command: Targeted `MagicForges.cs` direct range-scan `rg`; explicit pooled-variable ownership `rg`; Visual Studio MSBuild `Data/System/Source/Server.csproj /p:Configuration=Debug /p:Platform=x86 /v:minimal`; `.\ConficturaServer.exe -compileonly -nocache`; restore generated root executable artifacts; update `post-batch-d-pooled-enumerable-review.csv`, active overlay, status, README, and next-step artifacts.
 - Result: Targeted scan found no remaining direct range scans in `MagicForges.cs`; explicit pooled-variable check showed matching `Free` calls; `Server.csproj` Debug/x86 build passed; compile-only runtime script verification exited 0 and printed no `Listening:` output; generated `ConficturaServer.exe`, `.config`, and `.pdb` were restored; active backlog overlay now has 440 unique rows including 111 `POST-BATCH-D` fixed rows and 2 `POST-BATCH-D` false positives.
 - Output path: `docs/codebase-audit/outputs/post-batch-d-pooled-enumerable-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
+
+### 2026-06-08T18:38:09.4106780-05:00
+
+- Affected phase: Post-audit `POST-BATCH-D-28A` remaining `Items:Misc` pooled enumerable ownership repair
+- Cwd: `D:\ConficturaUO`
+- Command: Source review and patch of `RB-04802` through `RB-04805` in `Data/Scripts/Items/Misc/MorphItem.cs`, `PoolOfAcid.cs`, `WarningItem.cs`, and `Games/BaseBoard.cs`.
+- Result: Replaced morph item refresh, acid pool damage collection, warning-neighbor propagation, and game-board client fan-out direct range scans with local `IPooledEnumerable` variables and `try/finally Free`. Movement trigger, transient hazard, warning propagation, packet release flow, serialization, namespaces, type names, save versions, and file locations were preserved.
+- Output path: `Data/Scripts/Items/Misc/MorphItem.cs`; `Data/Scripts/Items/Misc/PoolOfAcid.cs`; `Data/Scripts/Items/Misc/WarningItem.cs`; `Data/Scripts/Items/Misc/Games/BaseBoard.cs`
+
+### 2026-06-08T18:38:09.4106780-05:00
+
+- Affected phase: Post-audit `POST-BATCH-D-28A` verification and audit artifact update
+- Cwd: `D:\ConficturaUO`
+- Command: Targeted four-file `Items:Misc` direct range-scan `rg`; explicit pooled-variable ownership `rg`; Visual Studio MSBuild `Data/System/Source/Server.csproj /p:Configuration=Debug /p:Platform=x86 /v:minimal`; `.\ConficturaServer.exe -compileonly -nocache`; restore generated root executable artifacts; update `post-batch-d-pooled-enumerable-review.csv`, active overlay, status, README, and next-step artifacts.
+- Result: Targeted scan found no remaining direct range scans in the four touched `Items:Misc` files; explicit pooled-variable check showed matching `Free` calls; `Server.csproj` Debug/x86 build passed; compile-only runtime script verification exited 0 and printed no `Listening:` output; generated `ConficturaServer.exe`, `.config`, and `.pdb` were restored; active backlog overlay now has 444 unique rows including 115 `POST-BATCH-D` fixed rows and 2 `POST-BATCH-D` false positives. `Items:Misc` queued pooled-enumerable rows are complete.
+- Output path: `docs/codebase-audit/outputs/post-batch-d-pooled-enumerable-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
