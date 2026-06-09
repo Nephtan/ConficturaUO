@@ -2,7 +2,7 @@
 
 Initialized: 2026-06-05T16:15:59.8020730-05:00
 
-Last updated: 2026-06-09T09:39:06.6359982-05:00
+Last updated: 2026-06-09T09:43:15.6368631-05:00
 
 Branch: `SAR`
 
@@ -12,13 +12,13 @@ Post-audit live-runtime baseline HEAD: `9dce70de docs: record source build basel
 
 Post-audit compile-only implementation HEAD: `09b7b7e5 feat: add compile-only script verification`
 
-Post-audit latest implemented source batch: `POST-BATCH-E-11A` fixed 1 Custom:NPC Control P1 speech-event row.
+Post-audit latest implemented source batch: `POST-BATCH-E-12A` fixed 3 Custom:OrbRemoteServer P1 command-hook rows.
 
 Post-audit latest committed audit-state batch before the current source repair: `6ae44f74 docs: close save compatibility triage`
 
 Post-audit latest runtime-risk review batch: `POST-BATCH-C-01A` reviewed the 17 P0 runtime-hook rows and 8 P0 `PlayerMobile` coupling rows in `outputs/post-batch-c-runtime-hooks-player-mobile-review.csv`. The batch made no source edits; the runtime-hook rows reconcile to the earlier `POST-BATCH-A` packet-handler review, and `PlayerMobile` coupling remains migration-gated.
 
-Post-audit active backlog overlay: `outputs/post-audit-active-backlog-status.csv` preserves historical `repair-backlog.csv` while recording 17 packet-handler dispositions, 285 reviewed save-compatibility dispositions across `POST-BATCH-B-34A` and prior `POST-BATCH-B` subbatches, 25 reviewed `POST-BATCH-C-01A` runtime-hook/`PlayerMobile` coupling dispositions, 406 `POST-BATCH-D` pooled enumerable fixes, 2 `POST-BATCH-D` false positives, and 78 `POST-BATCH-E` runtime-hook/gump-guard dispositions.
+Post-audit active backlog overlay: `outputs/post-audit-active-backlog-status.csv` preserves historical `repair-backlog.csv` while recording 17 packet-handler dispositions, 285 reviewed save-compatibility dispositions across `POST-BATCH-B-34A` and prior `POST-BATCH-B` subbatches, 25 reviewed `POST-BATCH-C-01A` runtime-hook/`PlayerMobile` coupling dispositions, 406 `POST-BATCH-D` pooled enumerable fixes, 2 `POST-BATCH-D` false positives, and 81 `POST-BATCH-E` runtime-hook/gump-guard dispositions.
 
 Post-audit save compatibility triage: `outputs/post-batch-b-save-compatibility-triage.csv` scopes all 304 P0 critical save-compatibility rows and records source-reviewed decisions for all 304 rows across `POST-BATCH-B`. No queued rows remain; all active confirmed save issues are fixed in the overlay.
 
@@ -199,6 +199,8 @@ Post-audit hooks/gumps/commands/regions: `POST-BATCH-E-09A` fixed the Custom:Ani
 Post-audit hooks/gumps/commands/regions: `POST-BATCH-E-10A` fixed the Custom:Book Publisher `[2.0]` P1 speech-hook rows in `Data/Scripts/Custom/Book Publisher [2.0]/Publisher.cs`. `Publisher.HandlesOnSpeech` now guards null/deleted speakers before range checks, and `Publisher.OnSpeech` guards null events and null/deleted mobiles before criminal checks and base speech handling; valid behavior, serialization, public APIs, namespaces, type names, save versions, and file location were preserved. Verification passed: targeted Book Publisher speech-hook guard scan, `Server.csproj` Debug/x86 build with Visual Studio MSBuild, and `.\ConficturaServer.exe -compileonly -nocache` with no `Listening:` output.
 
 Post-audit hooks/gumps/commands/regions: `POST-BATCH-E-11A` fixed the Custom:NPC Control P1 speech-event row in `Data/Scripts/Custom/NPC Control/StaffCommands/HearAll.cs`. `HearAllCommand.HearAllOnSpeech` now guards deleted speakers before formatting and broadcasting captured speech while preserving listener pruning and access checks; valid behavior, serialization, public APIs, namespaces, type names, save versions, and file location were preserved. Verification passed: targeted NPC Control hook guard scan, `Server.csproj` Debug/x86 build with Visual Studio MSBuild, and `.\ConficturaServer.exe -compileonly -nocache` with no `Listening:` output.
+
+Post-audit hooks/gumps/commands/regions: `POST-BATCH-E-12A` fixed the Custom:OrbRemoteServer P1 command-hook rows in `Data/Scripts/Custom/OrbRemoteServer/UOArchitect/ClientCommands.cs`. Nudge command handlers now guard null/deleted command users before moving location, and `MRemove` now guards null/deleted command users plus stale stored target owners before callback messaging and target reassignment; valid behavior, serialization, public APIs, namespaces, type names, save versions, and file location were preserved. Verification passed: targeted OrbRemoteServer command guard scan, `Server.csproj` Debug/x86 build with Visual Studio MSBuild, and `.\ConficturaServer.exe -compileonly -nocache` with no `Listening:` output.
 
 Post-audit save compatibility blocker resolved: `SERIAL-1298` and `SERIAL-1300` now consume the previously written duration payloads before cleanup in `BlendWithForrestSpell.cs:123-151` and `GraspingRootsSpell.cs:116-132`. Verification: `New-SerializationRegister.ps1` regenerated serialization outputs, `Server.csproj` Debug/x86 build passed with Visual Studio MSBuild, and `.\ConficturaServer.exe -compileonly -nocache` passed without listener output.
 

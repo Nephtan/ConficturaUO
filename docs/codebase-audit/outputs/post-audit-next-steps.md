@@ -1120,9 +1120,17 @@ Completed source subbatch: `POST-BATCH-E-11A` fixed the Custom:NPC Control HearA
 - Existing listener pruning, access checks, valid speech behavior, serialization, public APIs, namespaces, type names, save versions, and file location were preserved.
 - Verification passed: targeted NPC Control HearAll hook guard scan, Visual Studio MSBuild `Server.csproj` Debug/x86 build, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output. Generated root executable artifacts were restored.
 
+Completed source subbatch: `POST-BATCH-E-12A` fixed the Custom:OrbRemoteServer command-hook rows.
+
+- 3 rows were reviewed and fixed: `RB-01687`, `RB-01688`, and `RB-01689`.
+- `NudgeSelfDown_OnCommand` and `NudgeSelfUp_OnCommand` now guard null/deleted command users before moving the caller's Z location.
+- `MultiRemove_OnCommand` now guards null/deleted command users before assigning a target, and `OnTargetObject` now guards stale stored target owners before messaging or reassigning the target.
+- Existing valid GameMaster command behavior, serialization, public APIs, namespaces, type names, save versions, and file location were preserved.
+- Verification passed: targeted OrbRemoteServer ClientCommands guard scan, Visual Studio MSBuild `Server.csproj` Debug/x86 build, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output. Generated root executable artifacts were restored.
+
 Next:
 
-1. Continue `POST-BATCH-E` with the next focused P1 runtime-hook group by the active plan, currently `Custom:OrbRemoteServer`.
+1. Continue `POST-BATCH-E` with the next focused P1 runtime-hook group by the active plan, currently `Custom:Voting`.
 2. Keep P2 Boats and Bulk Orders command-access rows queued until the P2 command-access pass unless source evidence makes them an urgent local blocker.
 3. Preserve serialization, public APIs, namespaces, type names, save versions, and file locations; verify source fixes with `Server.csproj` Debug/x86 build and `.\ConficturaServer.exe -compileonly -nocache`.
 
