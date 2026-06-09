@@ -889,89 +889,105 @@ namespace Server.Misc
             int distpck = 0;
 
             ArrayList healers = new ArrayList();
-            foreach (Mobile healer in from.GetMobilesInRange(range))
-                if (healer is BaseHealer)
-                {
-                    bool WillResurrectMe = true;
+            IPooledEnumerable eable1 = from.GetMobilesInRange(range);
+            try
+            {
+                foreach (Mobile healer in eable1)
+                    if (healer is BaseHealer)
+                    {
+                        bool WillResurrectMe = true;
 
-                    Region reg = Region.Find(healer.Location, healer.Map);
+                        Region reg = Region.Find(healer.Location, healer.Map);
 
-                    if (healer is WanderingHealer || healer is EvilHealer)
-                    {
-                        WillResurrectMe = true;
-                    }
-                    else if (
-                        (
-                            reg.IsPartOf("Xardok's Castle")
-                            || Server.Misc.Worlds.IsCrypt(from.Location, from.Map)
-                        ) && (from.Karma < 0 || from.Kills > 0 || from.Criminal)
-                    )
-                    {
-                        WillResurrectMe = true;
-                    }
-                    else if (from.Criminal || from.Kills > 0 || from.Karma < 0)
-                    {
-                        WillResurrectMe = false;
-                    }
-
-                    if (SameArea(from, healer) == true && WillResurrectMe == true)
-                    {
-                        distchk++;
-                        healers.Add(healer);
-                        if (HowFar(from.X, from.Y, healer.X, healer.Y) < TheClosest)
+                        if (healer is WanderingHealer || healer is EvilHealer)
                         {
-                            TheClosest = HowFar(from.X, from.Y, healer.X, healer.Y);
-                            IsClosest = distchk;
+                            WillResurrectMe = true;
                         }
-                    }
-                }
+                        else if (
+                            (
+                                reg.IsPartOf("Xardok's Castle")
+                                || Server.Misc.Worlds.IsCrypt(from.Location, from.Map)
+                            ) && (from.Karma < 0 || from.Kills > 0 || from.Criminal)
+                        )
+                        {
+                            WillResurrectMe = true;
+                        }
+                        else if (from.Criminal || from.Kills > 0 || from.Karma < 0)
+                        {
+                            WillResurrectMe = false;
+                        }
 
-            int crim = 0;
-
-            foreach (Item shrine in from.GetItemsInRange(range))
-                if (
-                    shrine is AnkhWest
-                    || shrine is AnkhNorth
-                    || /* shrine is AnkhOfSacrificeAddon || */
-                    shrine is AltarDryad
-                    || shrine is AltarEvil
-                    || shrine is AltarDurama
-                    || shrine is AltarWizard
-                    || shrine is AltarGargoyle
-                    || shrine is AltarDaemon
-                    || shrine is AltarSea
-                    || shrine is AltarStatue
-                    || shrine is AltarShrineSouth
-                    || shrine is AltarShrineEast
-                    || shrine is AltarGodsSouth
-                    || shrine is AltarGodsEast
-                )
-                {
-                    Region spot = Region.Find(shrine.Location, shrine.Map);
-
-                    crim = 0;
-
-                    if (spot.IsPartOf(typeof(VillageRegion)) && from.Criminal == true)
-                    {
-                        crim = 1;
-                    }
-
-                    if (crim == 0)
-                    {
-                        Mobile mSp = new ShrineCritter();
-                        mSp.MoveToWorld(new Point3D(shrine.X, shrine.Y, shrine.Z), shrine.Map);
-                        if (SameArea(from, mSp) == true)
+                        if (SameArea(from, healer) == true && WillResurrectMe == true)
                         {
                             distchk++;
-                            healers.Add(mSp);
-                            if (HowFar(from.X, from.Y, mSp.X, mSp.Y) < TheClosest)
+                            healers.Add(healer);
+                            if (HowFar(from.X, from.Y, healer.X, healer.Y) < TheClosest)
                             {
-                                TheClosest = HowFar(from.X, from.Y, mSp.X, mSp.Y);
+                                TheClosest = HowFar(from.X, from.Y, healer.X, healer.Y);
                                 IsClosest = distchk;
                             }
                         }
                     }
-                }
+            }
+            finally
+            {
+                eable1.Free();
+            }
+
+            int crim = 0;
+
+            IPooledEnumerable eable2 = from.GetItemsInRange(range);
+            try
+            {
+                foreach (Item shrine in eable2)
+                    if (
+                        shrine is AnkhWest
+                        || shrine is AnkhNorth
+                        || /* shrine is AnkhOfSacrificeAddon || */
+                        shrine is AltarDryad
+                        || shrine is AltarEvil
+                        || shrine is AltarDurama
+                        || shrine is AltarWizard
+                        || shrine is AltarGargoyle
+                        || shrine is AltarDaemon
+                        || shrine is AltarSea
+                        || shrine is AltarStatue
+                        || shrine is AltarShrineSouth
+                        || shrine is AltarShrineEast
+                        || shrine is AltarGodsSouth
+                        || shrine is AltarGodsEast
+                    )
+                    {
+                        Region spot = Region.Find(shrine.Location, shrine.Map);
+
+                        crim = 0;
+
+                        if (spot.IsPartOf(typeof(VillageRegion)) && from.Criminal == true)
+                        {
+                            crim = 1;
+                        }
+
+                        if (crim == 0)
+                        {
+                            Mobile mSp = new ShrineCritter();
+                            mSp.MoveToWorld(new Point3D(shrine.X, shrine.Y, shrine.Z), shrine.Map);
+                            if (SameArea(from, mSp) == true)
+                            {
+                                distchk++;
+                                healers.Add(mSp);
+                                if (HowFar(from.X, from.Y, mSp.X, mSp.Y) < TheClosest)
+                                {
+                                    TheClosest = HowFar(from.X, from.Y, mSp.X, mSp.Y);
+                                    IsClosest = distchk;
+                                }
+                            }
+                        }
+                    }
+            }
+            finally
+            {
+                eable2.Free();
+            }
 
             for (int h = 0; h < healers.Count; ++h)
             {

@@ -686,34 +686,42 @@ namespace Server.Engines.PartySystem
         {
             Packet p = null;
 
-            foreach (NetState ns in from.GetClientsInRange(8))
+            IPooledEnumerable eable = from.GetClientsInRange(8);
+            try
             {
-                Mobile mob = ns.Mobile;
-
-                if (
-                    mob != null
-                    && mob.AccessLevel >= AccessLevel.GameMaster
-                    && mob.AccessLevel > from.AccessLevel
-                    && mob.Party != this
-                    && !m_Listeners.Contains(mob)
-                )
+                foreach (NetState ns in eable)
                 {
-                    if (p == null)
-                        p = Packet.Acquire(
-                            new UnicodeMessage(
-                                from.Serial,
-                                from.Body,
-                                MessageType.Regular,
-                                from.SpeechHue,
-                                3,
-                                from.Language,
-                                from.Name,
-                                text
-                            )
-                        );
+                    Mobile mob = ns.Mobile;
 
-                    ns.Send(p);
+                    if (
+                        mob != null
+                        && mob.AccessLevel >= AccessLevel.GameMaster
+                        && mob.AccessLevel > from.AccessLevel
+                        && mob.Party != this
+                        && !m_Listeners.Contains(mob)
+                    )
+                    {
+                        if (p == null)
+                            p = Packet.Acquire(
+                                new UnicodeMessage(
+                                    from.Serial,
+                                    from.Body,
+                                    MessageType.Regular,
+                                    from.SpeechHue,
+                                    3,
+                                    from.Language,
+                                    from.Name,
+                                    text
+                                )
+                            );
+
+                        ns.Send(p);
+                    }
                 }
+            }
+            finally
+            {
+                eable.Free();
             }
 
             Packet.Release(p);
