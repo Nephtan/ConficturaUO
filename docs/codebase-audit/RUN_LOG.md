@@ -4295,6 +4295,22 @@ Scope: Deterministic phase runner log for the Confictura codebase audit and reor
 - Result: Targeted scan found no remaining direct `foreach` range scans in `Custom:Champions`; `Server.csproj` Debug/x86 build passed; compile-only runtime script verification exited 0 and printed no `Listening:` output; generated `ConficturaServer.exe`, `.config`, and `.pdb` were restored; active backlog overlay now has 335 unique rows including 8 `POST-BATCH-D-01A` fixed rows.
 - Output path: `docs/codebase-audit/outputs/post-batch-d-pooled-enumerable-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
 
+### 2026-06-09T08:34:27.2807478-05:00
+
+- Affected phase: Post-audit `POST-BATCH-E-01A` Boats runtime-hook/gump-guard repair
+- Cwd: `D:\ConficturaUO`
+- Command: Source review and patch of `RB-02281`, `RB-02284`, `RB-02282`, `RB-02283`, `RB-03325`, `RB-03328`, `RB-03326`, and `RB-03327` across `Data/Scripts/Items/Boats/BaseBoat.cs`, `CarpetBuild.cs`, `Gumps/ConfirmDryDockGump.cs`, `PirateBounty.cs`, and `RenameBoatPrompt.cs`.
+- Result: Added null/deleted response guards to passive boat gump/prompt handlers, added stale-state validation to `ConfirmDryDockGump`, delegated dry-dock completion through the responding mobile, and moved the `DockedBoat` null check before `boat.Hue` in `BaseBoat.EndDryDock`. Serialization, public APIs, namespaces, type names, save versions, file locations, and project files were preserved.
+- Output path: `Data/Scripts/Items/Boats/BaseBoat.cs`; `Data/Scripts/Items/Boats/CarpetBuild.cs`; `Data/Scripts/Items/Boats/Gumps/ConfirmDryDockGump.cs`; `Data/Scripts/Items/Boats/PirateBounty.cs`; `Data/Scripts/Items/Boats/RenameBoatPrompt.cs`
+
+### 2026-06-09T08:34:27.2807478-05:00
+
+- Affected phase: Post-audit `POST-BATCH-E-01A` verification and audit artifact update
+- Cwd: `D:\ConficturaUO`
+- Command: Targeted Boats hook/gump guard `rg` scans; failed PATH `msbuild` lookup; Visual Studio MSBuild `Data/System/Source/Server.csproj /p:Configuration=Debug /p:Platform=x86 /v:minimal`; `.\ConficturaServer.exe -compileonly -nocache`; restore generated root executable artifacts; update `post-batch-e-hooks-gumps-commands-regions-review.csv`, active overlay, status, README, and next-step artifacts.
+- Result: Targeted scans confirmed the intended null/deleted/stale-state guards and existing Boats event/speech registrations; PATH `msbuild` was unavailable, so Visual Studio Community 2022 MSBuild was used and `Server.csproj` Debug/x86 build passed; compile-only runtime script verification exited 0 and printed no `Listening:` output; generated `ConficturaServer.exe`, `.config`, and `.pdb` were restored; active backlog overlay now includes 18 `POST-BATCH-E-01A` Boats dispositions, with 8 `Fixed` and 10 `ReviewedNoChange`.
+- Output path: `docs/codebase-audit/outputs/post-batch-e-hooks-gumps-commands-regions-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
+
 ### 2026-06-08T16:42:46.5194703-05:00
 
 - Affected phase: Post-audit `POST-BATCH-D-02A` `Custom:ClearDeckCommand` pooled enumerable ownership repair

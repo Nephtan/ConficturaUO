@@ -1758,10 +1758,11 @@ namespace Server.Multis
                 return;
 
             BaseDockedBoat boat = DockedBoat;
-            boat.Hue = hue;
 
             if (boat == null)
                 return;
+
+            boat.Hue = hue;
 
             foreach (Mobile stow in World.Mobiles.Values)
                 if (stow is PlayerMobile && stow.Region.Name == "the Ship's Lower Deck")

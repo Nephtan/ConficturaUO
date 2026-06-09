@@ -15,6 +15,12 @@ namespace Server.Multis
 
         public override void OnResponse(Mobile from, string text)
         {
+            if (from == null || from.Deleted || m_Boat == null || m_Boat.Deleted)
+                return;
+
+            if (text == null)
+                text = String.Empty;
+
             m_Boat.EndRename(from, text);
         }
     }

@@ -12,13 +12,13 @@ Post-audit live-runtime baseline HEAD: `9dce70de docs: record source build basel
 
 Post-audit compile-only implementation HEAD: `09b7b7e5 feat: add compile-only script verification`
 
-Post-audit latest implemented source batch: `POST-BATCH-D-73A` fixed `RB-05096` in `Trades:Harvest`; `POST-BATCH-D` pooled enumerable ownership is complete.
+Post-audit latest implemented source batch: `POST-BATCH-E-01A` reviewed the first Boats runtime-hook/gump-guard group, fixed 8 stale/null response guard rows, and reviewed 10 marker-derived rows with no source change.
 
 Post-audit latest committed audit-state batch before the current source repair: `6ae44f74 docs: close save compatibility triage`
 
 Post-audit latest runtime-risk review batch: `POST-BATCH-C-01A` reviewed the 17 P0 runtime-hook rows and 8 P0 `PlayerMobile` coupling rows in `outputs/post-batch-c-runtime-hooks-player-mobile-review.csv`. The batch made no source edits; the runtime-hook rows reconcile to the earlier `POST-BATCH-A` packet-handler review, and `PlayerMobile` coupling remains migration-gated.
 
-Post-audit active backlog overlay: `outputs/post-audit-active-backlog-status.csv` preserves historical `repair-backlog.csv` while recording 17 packet-handler dispositions, 285 reviewed save-compatibility dispositions across `POST-BATCH-B-34A` and prior `POST-BATCH-B` subbatches, 25 reviewed `POST-BATCH-C-01A` runtime-hook/`PlayerMobile` coupling dispositions, 406 `POST-BATCH-D` pooled enumerable fixes, and 2 `POST-BATCH-D` false positives.
+Post-audit active backlog overlay: `outputs/post-audit-active-backlog-status.csv` preserves historical `repair-backlog.csv` while recording 17 packet-handler dispositions, 285 reviewed save-compatibility dispositions across `POST-BATCH-B-34A` and prior `POST-BATCH-B` subbatches, 25 reviewed `POST-BATCH-C-01A` runtime-hook/`PlayerMobile` coupling dispositions, 406 `POST-BATCH-D` pooled enumerable fixes, 2 `POST-BATCH-D` false positives, and 18 `POST-BATCH-E-01A` Boats runtime-hook/gump-guard dispositions.
 
 Post-audit save compatibility triage: `outputs/post-batch-b-save-compatibility-triage.csv` scopes all 304 P0 critical save-compatibility rows and records source-reviewed decisions for all 304 rows across `POST-BATCH-B`. No queued rows remain; all active confirmed save issues are fixed in the overlay.
 
@@ -173,6 +173,8 @@ Post-audit pooled enumerable ownership: `POST-BATCH-D-71A` fixed `RB-05076` thro
 Post-audit pooled enumerable ownership: `POST-BATCH-D-72A` fixed `RB-05086` through `RB-05095` in `Trades:Guild` by pairing guildmaster and shoppe authorization scans with `try/finally Free`. Verification passed: targeted `Trades:Guild` direct-scan check found no remaining direct range scans in the touched files, explicit pooled-variable checks showed matching `Free` calls across the 10 touched loops, `Server.csproj` Debug/x86 build passed, and `.\ConficturaServer.exe -compileonly -nocache` passed without listener output.
 
 Post-audit pooled enumerable ownership: `POST-BATCH-D-73A` fixed `RB-05096` in `Trades:Harvest` by pairing the harvest drop-at-feet stack scan with `try/finally Free`. Verification passed: targeted `Trades:Harvest` direct-scan check found no remaining direct range scans in `HarvestSystem.cs`, explicit pooled-variable checks showed a matching `Free` call, `Server.csproj` Debug/x86 build passed, and `.\ConficturaServer.exe -compileonly -nocache` passed without listener output. `POST-BATCH-D` is complete with 408 reviewed rows: 406 fixed and 2 false positives.
+
+Post-audit hooks/gumps/commands/regions: `POST-BATCH-E-01A` started `POST-BATCH-E` by reviewing the first P1 Boats runtime-hook/gump-guard group in `outputs/post-batch-e-hooks-gumps-commands-regions-review.csv`. The batch fixed passive boat gump/prompt null/deleted guards, added stale-state validation to `ConfirmDryDockGump`, and moved the `DockedBoat` null check before `boat.Hue` in `BaseBoat.EndDryDock`; 10 duplicate or marker-derived Boats rows were reviewed with no source change. Verification passed: targeted Boats hook/gump guard scans, `Server.csproj` Debug/x86 build with Visual Studio MSBuild, and `.\ConficturaServer.exe -compileonly -nocache` with no `Listening:` output.
 
 Post-audit save compatibility blocker resolved: `SERIAL-1298` and `SERIAL-1300` now consume the previously written duration payloads before cleanup in `BlendWithForrestSpell.cs:123-151` and `GraspingRootsSpell.cs:116-132`. Verification: `New-SerializationRegister.ps1` regenerated serialization outputs, `Server.csproj` Debug/x86 build passed with Visual Studio MSBuild, and `.\ConficturaServer.exe -compileonly -nocache` passed without listener output.
 

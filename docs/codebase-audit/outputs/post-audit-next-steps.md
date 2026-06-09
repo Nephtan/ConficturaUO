@@ -1023,8 +1023,17 @@ Completed source subbatch: `POST-BATCH-D-73A` fixed `Trades:Harvest` pooled enum
 
 Next:
 
-1. Start `POST-BATCH-E`: runtime hooks, gump guards, command access, regions, and map risks by system.
-2. Ground the next batch in `repair-backlog.csv`, `runtime-hook-map.csv`, `post-batch-c-runtime-hooks-player-mobile-review.csv`, and the active overlay before editing source.
+Completed source subbatch: `POST-BATCH-E-01A` started `POST-BATCH-E` with the first Boats P1 runtime-hook/gump-guard group.
+
+- 18 rows were reviewed: `RB-01729`, `RB-01938`, `RB-02172`, `RB-02281`, `RB-02829`, `RB-02830`, `RB-02284`, `RB-02282`, `RB-02831`, `RB-02283`, `RB-01730`, `RB-03325`, `RB-03784`, `RB-03785`, `RB-03328`, `RB-03326`, `RB-03786`, and `RB-03327`.
+- 8 rows were fixed by adding stale/null/deleted response guards to passive boat gump/prompt handlers, adding stale-state validation to `ConfirmDryDockGump`, and moving the `DockedBoat` null check before `boat.Hue` in `BaseBoat.EndDryDock`.
+- 10 rows were reviewed with no source change because source review confirmed non-user WorldSave/timer behavior, existing speech/login guard behavior, or duplicate gump-send marker rows covered by companion response guard fixes.
+- Verification passed: targeted Boats hook/gump guard scans, Visual Studio MSBuild `Server.csproj` Debug/x86 build, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output. Generated root executable artifacts were restored.
+
+Next:
+
+1. Continue `POST-BATCH-E` with the next P1 runtime-hook group by deterministic order, currently `Bulk Orders`.
+2. Keep P2 Boats command-access rows queued until the P2 command-access pass unless source evidence makes them an urgent local blocker.
 3. Preserve serialization, public APIs, namespaces, type names, save versions, and file locations; verify source fixes with `Server.csproj` Debug/x86 build and `.\ConficturaServer.exe -compileonly -nocache`.
 
 ## Reorganization Status
