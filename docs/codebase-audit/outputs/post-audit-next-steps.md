@@ -1305,9 +1305,16 @@ Completed source subbatch: `POST-BATCH-E-35A` fixed the Spell Framework Spellboo
 - Valid spellbook open/cast behavior, serialization, public APIs, namespaces, type names, save versions, file location, and project files were preserved.
 - Verification passed: targeted Spellbook request hook scan, Visual Studio MSBuild `Server.csproj` Debug/x86 build, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output. Generated root executable artifacts were restored.
 
+Completed source subbatch: `POST-BATCH-E-36A` fixed the Spell Framework AnimalForm login hook row.
+
+- 1 row was reviewed and fixed: `RB-01749`.
+- `AnimalForm.OnLogin` now guards null login args and null/deleted mobiles before context lookup and speed-control packet send.
+- Valid animal-form speed boost restoration behavior, serialization, public APIs, namespaces, type names, save versions, file location, and project files were preserved.
+- Verification passed: targeted AnimalForm login hook scan, Visual Studio MSBuild `Server.csproj` Debug/x86 build, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output. Generated root executable artifacts were restored.
+
 Next:
 
-1. Continue `POST-BATCH-E` with the next focused P1 runtime-hook/gump-guard group by the active plan, currently `Spell Framework` row `RB-01749` in `Data/Scripts/Magic/Ninjitsu/AnimalForm.cs`.
+1. Continue `POST-BATCH-E` with the next focused P1 runtime-hook/gump-guard group by the active plan, currently `Spell Framework` row `RB-01750` in `Data/Scripts/Magic/Research/Spells/Enchanting/ResearchEnchant.cs`.
 2. Keep P2 Boats and Bulk Orders command-access rows queued until the P2 command-access pass unless source evidence makes them an urgent local blocker.
 3. Preserve serialization, public APIs, namespaces, type names, save versions, and file locations; verify source fixes with `Server.csproj` Debug/x86 build and `.\ConficturaServer.exe -compileonly -nocache`.
 
