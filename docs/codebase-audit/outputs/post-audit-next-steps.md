@@ -1251,9 +1251,19 @@ Completed source subbatch: `POST-BATCH-E-28A` fixed Housing runtime-hook rows.
 - Valid housing behavior, Monopoly error notification behavior, pooled enumerable ownership, serialization, public APIs, namespaces, type names, save versions, file locations, and project files were preserved.
 - Verification passed: targeted Housing hook scan, Visual Studio MSBuild `Server.csproj` Debug/x86 build, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output. Generated root executable artifacts were restored.
 
+Completed source subbatch: `POST-BATCH-E-29A` reviewed and fixed System:Chat runtime-hook rows.
+
+- 9 rows were reviewed: `RB-01758`, `RB-01759`, `RB-01760`, `RB-01761`, `RB-01762`, `RB-01763`, `RB-01977`, `RB-02175`, and `RB-02198`.
+- `RB-01758` and `RB-02198` were classified `ReviewedNoChange` because `General.OnLoad` performs startup chat file loads and optional singleton-backed IRC autoconnect without event-arg or player trust-boundary dereferences.
+- `General.OnSave` now skips null chat data, null message lists, and null messages before seven-day cleanup during world save.
+- `General.OnSpeech`, `General.OnLogin`, and `General.OnCreate` now guard null/deleted event mobiles and stale chat data/channel entries before chat recording, global speech fan-out, PM notifications, friend alerts, and new-character channel joins.
+- `Errors.OnLogin` now guards null login events and null/deleted mobiles before staff notification gump dispatch.
+- Valid chat behavior, error notification behavior, serialization, public APIs, namespaces, type names, save versions, file locations, and project files were preserved.
+- Verification passed: targeted System:Chat hook scan, Visual Studio MSBuild `Server.csproj` Debug/x86 build, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output. Generated root executable artifacts were restored.
+
 Next:
 
-1. Continue `POST-BATCH-E` with the next focused P1 runtime-hook group by the active plan, currently `System:Chat` rows beginning at `RB-01758`.
+1. Continue `POST-BATCH-E` with the next focused P1 runtime-hook/gump-guard group by the active plan, currently the remaining `System:Chat` gump rows beginning at `RB-02390`.
 2. Keep P2 Boats and Bulk Orders command-access rows queued until the P2 command-access pass unless source evidence makes them an urgent local blocker.
 3. Preserve serialization, public APIs, namespaces, type names, save versions, and file locations; verify source fixes with `Server.csproj` Debug/x86 build and `.\ConficturaServer.exe -compileonly -nocache`.
 
