@@ -1078,9 +1078,18 @@ Completed source subbatch: `POST-BATCH-E-06A` fixed the Custom:AnimalSystem Faer
 - Existing valid backpack speech behavior, serialization, public APIs, namespaces, type names, save versions, and file location were preserved.
 - Verification passed: targeted Faery speech-hook guard scan, Visual Studio MSBuild `Server.csproj` Debug/x86 build, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output. Generated root executable artifacts were restored.
 
+Completed source subbatch: `POST-BATCH-E-07A` fixed the Custom:AnimalSystem Felinus shape-stone speech/gump rows.
+
+- 6 rows were reviewed and fixed: `RB-01898`, `RB-01899`, `RB-02209`, `RB-02545`, `RB-03253`, and `RB-03500`.
+- `FelinusShapeShiftStone.OnSpeech` now guards invalid speech events and backpacks before keyword handling.
+- `HueGump.OnResponse` now guards null/deleted responders, stale stored users, and deleted stones before hue changes.
+- `ChangeHue.OnClick` now guards stored user/stone state before sending the gump.
+- Existing valid behavior, serialization, public APIs, namespaces, type names, save versions, and file location were preserved.
+- Verification passed: targeted Felinus guard scan, Visual Studio MSBuild `Server.csproj` Debug/x86 build, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output. Generated root executable artifacts were restored.
+
 Next:
 
-1. Continue `POST-BATCH-E` with the next `Custom:AnimalSystem` file slice, currently `FelinusShapeChangeStone.cs`.
+1. Continue `POST-BATCH-E` with the next `Custom:AnimalSystem` file slice, currently `RatShapeChangeStone.cs`.
 2. Keep P2 Boats and Bulk Orders command-access rows queued until the P2 command-access pass unless source evidence makes them an urgent local blocker.
 3. Preserve serialization, public APIs, namespaces, type names, save versions, and file locations; verify source fixes with `Server.csproj` Debug/x86 build and `.\ConficturaServer.exe -compileonly -nocache`.
 

@@ -4423,6 +4423,22 @@ Scope: Deterministic phase runner log for the Confictura codebase audit and reor
 - Result: Targeted scan confirmed speech-event/Mobile/Backpack guards before keyword handling and `base.OnSpeech`; `Server.csproj` Debug/x86 build passed with Visual Studio Community 2022 MSBuild; compile-only runtime script verification exited 0 and printed no `Listening:` output; generated `ConficturaServer.exe`, `.config`, and `.pdb` were restored; active backlog overlay now includes 56 `POST-BATCH-E` dispositions.
 - Output path: `docs/codebase-audit/outputs/post-batch-e-hooks-gumps-commands-regions-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
 
+### 2026-06-09T09:13:27.3774610-05:00
+
+- Affected phase: Post-audit `POST-BATCH-E-07A` Custom:AnimalSystem Felinus shape-stone speech/gump guard repair
+- Cwd: `D:\ConficturaUO`
+- Command: Source review and patch of `RB-01898`, `RB-01899`, `RB-02209`, `RB-02545`, `RB-03253`, and `RB-03500` in `Data/Scripts/Custom/AnimalSystem/ShapeShiftStones/FelinusShapeChangeStone.cs`.
+- Result: Added speech event/Mobile/Backpack guards before keyword handling, NetState/Mobile/stale-user/deleted-stone guards before hue response handling, and stored Mobile/stone guards before context-menu gump sends. Valid behavior, serialization, public APIs, namespaces, type names, save versions, file locations, and project files were preserved.
+- Output path: `Data/Scripts/Custom/AnimalSystem/ShapeShiftStones/FelinusShapeChangeStone.cs`
+
+### 2026-06-09T09:13:27.3774610-05:00
+
+- Affected phase: Post-audit `POST-BATCH-E-07A` verification and audit artifact update
+- Cwd: `D:\ConficturaUO`
+- Command: Targeted Felinus shape-stone guard `rg` scan; Visual Studio MSBuild `Data/System/Source/Server.csproj /p:Configuration=Debug /p:Platform=x86 /v:minimal`; `.\ConficturaServer.exe -compileonly -nocache`; restore generated root executable artifacts; append `POST-BATCH-E-07A` rows to `post-batch-e-hooks-gumps-commands-regions-review.csv` and the active overlay; update status, README, and next-step artifacts.
+- Result: Targeted scan confirmed speech, gump response, and context-menu send guards; `Server.csproj` Debug/x86 build passed with Visual Studio Community 2022 MSBuild; compile-only runtime script verification exited 0 and printed no `Listening:` output; generated `ConficturaServer.exe`, `.config`, and `.pdb` were restored; active backlog overlay now includes 62 `POST-BATCH-E` dispositions.
+- Output path: `docs/codebase-audit/outputs/post-batch-e-hooks-gumps-commands-regions-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
+
 ### 2026-06-08T16:42:46.5194703-05:00
 
 - Affected phase: Post-audit `POST-BATCH-D-02A` `Custom:ClearDeckCommand` pooled enumerable ownership repair
