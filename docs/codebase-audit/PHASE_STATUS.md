@@ -2,7 +2,7 @@
 
 Initialized: 2026-06-05T16:15:59.8020730-05:00
 
-Last updated: 2026-06-09T09:52:22.4314972-05:00
+Last updated: 2026-06-09T09:57:13.2751853-05:00
 
 Branch: `SAR`
 
@@ -12,13 +12,13 @@ Post-audit live-runtime baseline HEAD: `9dce70de docs: record source build basel
 
 Post-audit compile-only implementation HEAD: `09b7b7e5 feat: add compile-only script verification`
 
-Post-audit latest implemented source batch: `POST-BATCH-E-13A` fixed 2 Custom:Voting P1 command-hook rows. Latest review-only batch: `POST-BATCH-E-14A` classified 7 XMLSpawner commented command-register rows as false positives.
+Post-audit latest implemented source batch: `POST-BATCH-E-15A` fixed 1 System:Commands P1 command-hook row. Latest review-only batch: `POST-BATCH-E-14A` classified 7 XMLSpawner commented command-register rows as false positives.
 
 Post-audit latest committed audit-state batch before the current source repair: `6ae44f74 docs: close save compatibility triage`
 
 Post-audit latest runtime-risk review batch: `POST-BATCH-C-01A` reviewed the 17 P0 runtime-hook rows and 8 P0 `PlayerMobile` coupling rows in `outputs/post-batch-c-runtime-hooks-player-mobile-review.csv`. The batch made no source edits; the runtime-hook rows reconcile to the earlier `POST-BATCH-A` packet-handler review, and `PlayerMobile` coupling remains migration-gated.
 
-Post-audit active backlog overlay: `outputs/post-audit-active-backlog-status.csv` preserves historical `repair-backlog.csv` while recording 17 packet-handler dispositions, 285 reviewed save-compatibility dispositions across `POST-BATCH-B-34A` and prior `POST-BATCH-B` subbatches, 25 reviewed `POST-BATCH-C-01A` runtime-hook/`PlayerMobile` coupling dispositions, 406 `POST-BATCH-D` pooled enumerable fixes, 2 `POST-BATCH-D` false positives, and 90 `POST-BATCH-E` runtime-hook/gump-guard dispositions.
+Post-audit active backlog overlay: `outputs/post-audit-active-backlog-status.csv` preserves historical `repair-backlog.csv` while recording 17 packet-handler dispositions, 285 reviewed save-compatibility dispositions across `POST-BATCH-B-34A` and prior `POST-BATCH-B` subbatches, 25 reviewed `POST-BATCH-C-01A` runtime-hook/`PlayerMobile` coupling dispositions, 406 `POST-BATCH-D` pooled enumerable fixes, 2 `POST-BATCH-D` false positives, and 91 `POST-BATCH-E` runtime-hook/gump-guard dispositions.
 
 Post-audit save compatibility triage: `outputs/post-batch-b-save-compatibility-triage.csv` scopes all 304 P0 critical save-compatibility rows and records source-reviewed decisions for all 304 rows across `POST-BATCH-B`. No queued rows remain; all active confirmed save issues are fixed in the overlay.
 
@@ -205,6 +205,8 @@ Post-audit hooks/gumps/commands/regions: `POST-BATCH-E-12A` fixed the Custom:Orb
 Post-audit hooks/gumps/commands/regions: `POST-BATCH-E-13A` fixed the Custom:Voting P1 command-hook rows in `Data/Scripts/Custom/Voting/VoteCommand.cs`. `VoteConfig_OnCommand` and `VoteInstance_OnCommand` now guard null command events before Mobile/deleted checks and properties gump sends; the adjacent `Vote_OnCommand` received the same guard in the touched entry-point surface. Valid behavior, serialization, public APIs, namespaces, type names, save versions, and file location were preserved. Verification passed: targeted Voting command guard scan, `Server.csproj` Debug/x86 build with Visual Studio MSBuild, and `.\ConficturaServer.exe -compileonly -nocache` with no `Listening:` output.
 
 Post-audit hooks/gumps/commands/regions: `POST-BATCH-E-14A` reviewed XMLSpawner P1 command-hook rows in `Data/Scripts/Custom/XMLSpawner/XmlSpawner2.cs` and `Data/Scripts/Custom/XMLSpawner/XmlAttach/XmlAttach.cs`. Seven generated rows were classified `FalsePositive` because the matched `CommandSystem.Register` lines are inactive line comments; active `TargetCommands` registrations remain for `XmlSet`, `AddAtt`, and `DelAtt`. No source files changed. Verification was source review and targeted command-comment scan; source build and compile-only verification were not required for this review-only false-positive batch.
+
+Post-audit hooks/gumps/commands/regions: `POST-BATCH-E-15A` fixed the System:Commands P1 command-hook row in `Data/Scripts/System/Commands/CrashCommand.cs`. `Crash_OnCommand` now handles null command events and null/deleted mobiles while writing diagnostic information, but still throws the intentional crash exception for every invocation; valid Administrator crash-test behavior, serialization, public APIs, namespaces, type names, save versions, and file location were preserved. Verification passed: targeted CrashCommand guard scan, `Server.csproj` Debug/x86 build with Visual Studio MSBuild, and `.\ConficturaServer.exe -compileonly -nocache` with no `Listening:` output.
 
 Post-audit save compatibility blocker resolved: `SERIAL-1298` and `SERIAL-1300` now consume the previously written duration payloads before cleanup in `BlendWithForrestSpell.cs:123-151` and `GraspingRootsSpell.cs:116-132`. Verification: `New-SerializationRegister.ps1` regenerated serialization outputs, `Server.csproj` Debug/x86 build passed with Visual Studio MSBuild, and `.\ConficturaServer.exe -compileonly -nocache` passed without listener output.
 

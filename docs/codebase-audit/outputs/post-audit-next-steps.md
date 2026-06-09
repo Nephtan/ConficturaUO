@@ -1144,9 +1144,17 @@ Completed review-only subbatch: `POST-BATCH-E-14A` reviewed XMLSpawner commented
 - No source files changed; source build and compile-only verification were not required for this review-only false-positive batch.
 - Verification passed: targeted XMLSpawner command-comment source review over `XmlSpawner2.cs` and `XmlAttach.cs`.
 
+Completed source subbatch: `POST-BATCH-E-15A` fixed the System:Commands Crash command row.
+
+- 1 row was reviewed and fixed: `RB-01699`.
+- `Crash_OnCommand` now tolerates null command events and null/deleted mobiles while writing diagnostic information.
+- The command still throws the intentional crash exception for every invocation.
+- Existing valid Administrator crash-test behavior, serialization, public APIs, namespaces, type names, save versions, and file location were preserved.
+- Verification passed: targeted CrashCommand guard scan, Visual Studio MSBuild `Server.csproj` Debug/x86 build, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output. Generated root executable artifacts were restored.
+
 Next:
 
-1. Continue `POST-BATCH-E` with the next focused P1 runtime-hook group by the active plan, currently `System:Commands`.
+1. Continue `POST-BATCH-E` with the next focused P1 runtime-hook group by the active plan, currently `System:Misc`.
 2. Keep P2 Boats and Bulk Orders command-access rows queued until the P2 command-access pass unless source evidence makes them an urgent local blocker.
 3. Preserve serialization, public APIs, namespaces, type names, save versions, and file locations; verify source fixes with `Server.csproj` Debug/x86 build and `.\ConficturaServer.exe -compileonly -nocache`.
 

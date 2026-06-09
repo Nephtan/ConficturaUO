@@ -4543,6 +4543,22 @@ Scope: Deterministic phase runner log for the Confictura codebase audit and reor
 - Result: Classified seven marker-derived rows as `FalsePositive` because the matched `XmlSet`, `TagList`, `ItemAtt`, `MobAtt`, `DelAtt`, `TrigAtt`, and `AddAtt` `CommandSystem.Register` rows are inactive line comments. Active `TargetCommands` registrations remain for `XmlSet`, `AddAtt`, and `DelAtt`. No source files changed; source build and compile-only runtime script verification were not required for this review-only false-positive batch. Active backlog overlay now includes 90 `POST-BATCH-E` dispositions.
 - Output path: `docs/codebase-audit/outputs/post-batch-e-hooks-gumps-commands-regions-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
 
+### 2026-06-09T09:57:13.2751853-05:00
+
+- Affected phase: Post-audit `POST-BATCH-E-15A` System:Commands Crash command guard repair
+- Cwd: `D:\ConficturaUO`
+- Command: Source review and patch of `RB-01699` in `Data/Scripts/System/Commands/CrashCommand.cs`.
+- Result: Made pre-crash diagnostic logging tolerate null command events and null/deleted mobiles while preserving the intentional crash exception for every invocation. Valid Administrator crash-test behavior, serialization, public APIs, namespaces, type names, save versions, file locations, and project files were preserved.
+- Output path: `Data/Scripts/System/Commands/CrashCommand.cs`
+
+### 2026-06-09T09:57:13.2751853-05:00
+
+- Affected phase: Post-audit `POST-BATCH-E-15A` verification and audit artifact update
+- Cwd: `D:\ConficturaUO`
+- Command: Targeted CrashCommand guard `rg` scan; Visual Studio MSBuild `Data/System/Source/Server.csproj /p:Configuration=Debug /p:Platform=x86 /v:minimal`; `.\ConficturaServer.exe -compileonly -nocache`; restore generated root executable artifacts; append `POST-BATCH-E-15A` row to `post-batch-e-hooks-gumps-commands-regions-review.csv` and the active overlay; update status, README, and next-step artifacts.
+- Result: Targeted scan confirmed Administrator command registration, null/deleted-safe diagnostic logging, and preserved intentional `InvalidOperationException` throw; `Server.csproj` Debug/x86 build passed with Visual Studio Community 2022 MSBuild; compile-only runtime script verification exited 0 and printed no `Listening:` output; generated `ConficturaServer.exe`, `.config`, and `.pdb` were restored; active backlog overlay now includes 91 `POST-BATCH-E` dispositions.
+- Output path: `docs/codebase-audit/outputs/post-batch-e-hooks-gumps-commands-regions-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
+
 ### 2026-06-08T16:42:46.5194703-05:00
 
 - Affected phase: Post-audit `POST-BATCH-D-02A` `Custom:ClearDeckCommand` pooled enumerable ownership repair
