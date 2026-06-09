@@ -1113,9 +1113,16 @@ Completed source subbatch: `POST-BATCH-E-10A` fixed the Custom:Book Publisher `[
 - Existing valid behavior, serialization, public APIs, namespaces, type names, save versions, and file location were preserved.
 - Verification passed: targeted Book Publisher speech-hook guard scan, Visual Studio MSBuild `Server.csproj` Debug/x86 build, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output. Generated root executable artifacts were restored.
 
+Completed source subbatch: `POST-BATCH-E-11A` fixed the Custom:NPC Control HearAll speech-event row.
+
+- 1 row was reviewed and fixed: `RB-01711`.
+- `HearAllCommand.HearAllOnSpeech` now guards deleted speakers before formatting and broadcasting captured speech.
+- Existing listener pruning, access checks, valid speech behavior, serialization, public APIs, namespaces, type names, save versions, and file location were preserved.
+- Verification passed: targeted NPC Control HearAll hook guard scan, Visual Studio MSBuild `Server.csproj` Debug/x86 build, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output. Generated root executable artifacts were restored.
+
 Next:
 
-1. Continue `POST-BATCH-E` with the next focused P1 runtime-hook group by the active plan, currently `Custom:NPC Control`.
+1. Continue `POST-BATCH-E` with the next focused P1 runtime-hook group by the active plan, currently `Custom:OrbRemoteServer`.
 2. Keep P2 Boats and Bulk Orders command-access rows queued until the P2 command-access pass unless source evidence makes them an urgent local blocker.
 3. Preserve serialization, public APIs, namespaces, type names, save versions, and file locations; verify source fixes with `Server.csproj` Debug/x86 build and `.\ConficturaServer.exe -compileonly -nocache`.
 
