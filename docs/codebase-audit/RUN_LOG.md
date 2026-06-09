@@ -4679,6 +4679,22 @@ Scope: Deterministic phase runner log for the Confictura codebase audit and reor
 - Result: Classified both rows `ReviewedNoChange`. `EventSink_WorldSave` serializes singleton-backed `VoteConfig.Instance` without dereferencing event args; `EventSink_ServerStarted` deserializes singleton-backed `VoteConfig.Instance` and has no event args. No source files changed; source build and compile-only runtime script verification were not required for this review-only batch. Active backlog overlay now includes 111 `POST-BATCH-E` dispositions.
 - Output path: `docs/codebase-audit/outputs/post-batch-e-hooks-gumps-commands-regions-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
 
+### 2026-06-09T10:43:30.1202232-05:00
+
+- Affected phase: Post-audit `POST-BATCH-E-24A` XMLSpawner runtime hook guard repair
+- Cwd: `D:\ConficturaUO`
+- Command: Source review of `RB-01723` through `RB-01728`; patch `Data/Scripts/Custom/XMLSpawner/XmlAttach/XmlAttach.cs` and `Data/Scripts/Custom/XMLSpawner/XmlAttachments/XmlPoints.cs`.
+- Result: Classified the commented QuestGumpRequest subscription as `FalsePositive`, classified XMLSpawner attachment WorldLoad/WorldSave persistence hooks as `ReviewedNoChange`, and added null event-args plus null/deleted mobile guards to XMLSpawner attachment speech/movement and points/challenge speech handlers. Valid XMLSpawner runtime behavior, attachment persistence, serialization, public APIs, namespaces, type names, save versions, file locations, and project files were preserved.
+- Output path: `Data/Scripts/Custom/XMLSpawner/XmlAttach/XmlAttach.cs`; `Data/Scripts/Custom/XMLSpawner/XmlAttachments/XmlPoints.cs`
+
+### 2026-06-09T10:43:30.1202232-05:00
+
+- Affected phase: Post-audit `POST-BATCH-E-24A` verification and audit artifact update
+- Cwd: `D:\ConficturaUO`
+- Command: Targeted XMLSpawner hook source review; Visual Studio MSBuild `Data/System/Source/Server.csproj /p:Configuration=Debug /p:Platform=x86 /v:minimal`; `.\ConficturaServer.exe -compileonly -nocache`; restore generated root executable artifacts; append `POST-BATCH-E-24A` rows to `post-batch-e-hooks-gumps-commands-regions-review.csv` and the active overlay; update status, README, and next-step artifacts.
+- Result: Targeted review confirmed the QuestGumpRequest row is inactive, WorldLoad/WorldSave hooks intentionally avoid event-arg dereference, and the speech/movement hooks guard null event args plus null/deleted mobiles; `Server.csproj` Debug/x86 build passed with Visual Studio Community 2022 MSBuild; compile-only runtime script verification exited 0 and printed no `Listening:` output; generated `ConficturaServer.exe`, `.config`, and `.pdb` were restored; active backlog overlay now includes 117 `POST-BATCH-E` dispositions.
+- Output path: `docs/codebase-audit/outputs/post-batch-e-hooks-gumps-commands-regions-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
+
 ### 2026-06-08T16:42:46.5194703-05:00
 
 - Affected phase: Post-audit `POST-BATCH-D-02A` `Custom:ClearDeckCommand` pooled enumerable ownership repair

@@ -748,9 +748,12 @@ namespace Server.Engines.XmlSpawner2
 
         public static void EventSink_Speech(SpeechEventArgs args)
         {
+            if (args == null)
+                return;
+
             Mobile from = args.Mobile;
 
-            if (from == null || from.Map == null || !from.Player)
+            if (from == null || from.Deleted || from.Map == null || !from.Player)
                 return;
 
             if (args.Speech != null && args.Speech.ToLower() == "showpoints")

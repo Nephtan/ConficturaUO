@@ -1212,9 +1212,18 @@ Completed review-only subbatch: `POST-BATCH-E-23A` reviewed Custom:Voting config
 - `Instance` is singleton-backed before both calls; no source files changed.
 - Verification passed: targeted Voting hook source review. Source build and compile-only verification were not required for this review-only batch.
 
+Completed source subbatch: `POST-BATCH-E-24A` reviewed XMLSpawner runtime-hook rows.
+
+- 6 rows were reviewed: `RB-01723` through `RB-01728`.
+- `RB-01723` was classified `FalsePositive` because the matched QuestGumpRequest subscription is line-commented and inactive.
+- `RB-01724` and `RB-01725` were classified `ReviewedNoChange` because the XMLSpawner attachment WorldLoad/WorldSave hooks are intentional persistence hooks and do not dereference event args.
+- `RB-01726`, `RB-01727`, and `RB-01728` were fixed by guarding null event args and null/deleted mobiles before XMLSpawner attachment speech/movement dispatch and points/challenge speech handling.
+- Valid XMLSpawner attachment persistence, runtime behavior, serialization, public APIs, namespaces, type names, save versions, file locations, and project files were preserved.
+- Verification passed: targeted XMLSpawner hook source review, Visual Studio MSBuild `Server.csproj` Debug/x86 build, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output. Generated root executable artifacts were restored.
+
 Next:
 
-1. Continue `POST-BATCH-E` with the next focused P1 runtime-hook group by the active plan, currently XMLSpawner rows beginning at `RB-01723`.
+1. Continue `POST-BATCH-E` with the next focused P1 runtime-hook group by the active plan, currently `Items:Doors` rows beginning at `RB-01731`.
 2. Keep P2 Boats and Bulk Orders command-access rows queued until the P2 command-access pass unless source evidence makes them an urgent local blocker.
 3. Preserve serialization, public APIs, namespaces, type names, save versions, and file locations; verify source fixes with `Server.csproj` Debug/x86 build and `.\ConficturaServer.exe -compileonly -nocache`.
 

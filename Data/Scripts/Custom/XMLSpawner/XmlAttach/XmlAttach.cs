@@ -1156,10 +1156,15 @@ namespace Server.Engines.XmlSpawner2
 
         public static void EventSink_Movement(MovementEventArgs args)
         {
+            if (args == null)
+                return;
+
             Mobile from = args.Mobile;
 
             if (
-                !from.Player /* || from.AccessLevel > AccessLevel.Player */
+                from == null
+                || from.Deleted
+                || !from.Player /* || from.AccessLevel > AccessLevel.Player */
             )
                 return;
 
@@ -1224,10 +1229,14 @@ namespace Server.Engines.XmlSpawner2
 
         public static void EventSink_Speech(SpeechEventArgs args)
         {
+            if (args == null)
+                return;
+
             Mobile from = args.Mobile;
 
             if (
                 from == null
+                || from.Deleted
                 || from.Map == null /*|| from.AccessLevel > AccessLevel.Player */
             )
                 return;
