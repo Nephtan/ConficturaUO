@@ -101,13 +101,22 @@ namespace Server.Mobiles
             {
                 ArrayList bugs = new ArrayList();
 
-                foreach (Mobile m in GetMobilesInRange(5))
+                IPooledEnumerable eable = GetMobilesInRange(5);
+
+                try
                 {
-                    if (m is Swarm)
+                    foreach (Mobile m in eable)
                     {
-                        if (((BaseCreature)m).Summoned)
-                            bugs.Add(m);
+                        if (m is Swarm)
+                        {
+                            if (((BaseCreature)m).Summoned)
+                                bugs.Add(m);
+                        }
                     }
+                }
+                finally
+                {
+                    eable.Free();
                 }
 
                 while (bugs.Count > 6)

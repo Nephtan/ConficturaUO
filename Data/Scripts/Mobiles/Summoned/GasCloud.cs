@@ -101,28 +101,37 @@ namespace Server.Mobiles
 
             if (Utility.RandomBool())
             {
-                foreach (Mobile m in this.GetMobilesInRange(7))
+                IPooledEnumerable eable = this.GetMobilesInRange(7);
+
+                try
                 {
-                    bool addTarget = false;
-                    if (this != m && this.SummonMaster != m && Utility.RandomBool())
+                    foreach (Mobile m in eable)
                     {
-                        if (m is PlayerMobile && m.Alive && !(m.Blessed))
+                        bool addTarget = false;
+                        if (this != m && this.SummonMaster != m && Utility.RandomBool())
                         {
-                            addTarget = true;
-                        }
-                        else if (m is BaseCreature)
-                        {
-                            if (((BaseCreature)m).GetMaster() != this.SummonMaster)
+                            if (m is PlayerMobile && m.Alive && !(m.Blessed))
                             {
                                 addTarget = true;
                             }
-                        }
+                            else if (m is BaseCreature)
+                            {
+                                if (((BaseCreature)m).GetMaster() != this.SummonMaster)
+                                {
+                                    addTarget = true;
+                                }
+                            }
 
-                        if (addTarget)
-                        {
-                            targets.Add(m);
+                            if (addTarget)
+                            {
+                                targets.Add(m);
+                            }
                         }
                     }
+                }
+                finally
+                {
+                    eable.Free();
                 }
 
                 int damage = Utility.Random(12, 25);
@@ -163,13 +172,22 @@ namespace Server.Mobiles
             {
                 ArrayList spirtsOrVortexes = new ArrayList();
 
-                foreach (Mobile m in GetMobilesInRange(5))
+                IPooledEnumerable eable = GetMobilesInRange(5);
+
+                try
                 {
-                    if (BaseCreature.isVortex(m))
+                    foreach (Mobile m in eable)
                     {
-                        if (((BaseCreature)m).Summoned)
-                            spirtsOrVortexes.Add(m);
+                        if (BaseCreature.isVortex(m))
+                        {
+                            if (((BaseCreature)m).Summoned)
+                                spirtsOrVortexes.Add(m);
+                        }
                     }
+                }
+                finally
+                {
+                    eable.Free();
                 }
 
                 while (spirtsOrVortexes.Count > 6)

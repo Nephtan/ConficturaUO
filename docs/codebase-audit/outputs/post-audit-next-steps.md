@@ -925,9 +925,17 @@ Completed source subbatch: `POST-BATCH-D-61A` fixed `Mobiles:Slimes` pooled enum
 - Verification passed: targeted `Mobiles/Slimes` direct-scan check returned no matches, explicit pooled-variable check showed matching `Free` calls across the five touched loops, `Server.csproj` Debug/x86 build passed, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output.
 - `Mobiles:Slimes` queued pooled-enumerable rows are complete.
 
+Completed source subbatch: `POST-BATCH-D-62A` fixed `Mobiles:Summoned` pooled enumerable ownership.
+
+- 7 rows were reviewed and fixed: `RB-04994` through `RB-05000`.
+- DeathVortex and GasCloud random target acquisition plus summoned-vortex and swarm cleanup scans now pair range results with `try/finally Free`.
+- Existing random filters, target list damage scaling, cleanup list trimming behavior, serialization, namespaces, type names, save versions, and file location were preserved.
+- Verification passed: targeted `Mobiles/Summoned` direct-scan check returned no matches, explicit pooled-variable check showed matching `Free` calls across the seven touched loops, `Server.csproj` Debug/x86 build passed, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output.
+- `Mobiles:Summoned` queued pooled-enumerable rows are complete.
+
 Next:
 
-1. Continue `POST-BATCH-D` at the next queued pooled-enumerable backlog row after `RB-04993`, starting `Mobiles:Summoned` with `BladeSpirits.cs`.
+1. Continue `POST-BATCH-D` at the next queued pooled-enumerable backlog row after `RB-05000`, starting `Mobiles:Undead` with `Dracolich.cs`.
 2. Keep batches focused by system/file; repair only confirmed ownership leaks with `try/finally Free`.
 3. Verify each source batch with the relevant pooled enumerable scan, `Server.csproj` Debug/x86 build, and `.\ConficturaServer.exe -compileonly -nocache`.
 
