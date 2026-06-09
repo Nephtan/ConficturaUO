@@ -1261,9 +1261,17 @@ Completed source subbatch: `POST-BATCH-E-29A` reviewed and fixed System:Chat run
 - Valid chat behavior, error notification behavior, serialization, public APIs, namespaces, type names, save versions, file locations, and project files were preserved.
 - Verification passed: targeted System:Chat hook scan, Visual Studio MSBuild `Server.csproj` Debug/x86 build, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output. Generated root executable artifacts were restored.
 
+Completed source subbatch: `POST-BATCH-E-30A` fixed the remaining System:Chat gump rows.
+
+- 4 rows were reviewed and fixed: `RB-02390`, `RB-03108`, `RB-03434`, and `RB-04063`.
+- `SendMessageGump.InternalPicker.OnResponse` now guards stale hue-picker gump/owner state before applying message color and rebuilding the gump.
+- `ProfileGump.Client` now guards stale owner/target state before rebuilding the profile gump, reading target `NetState`, or opening `ClientGump`.
+- Valid chat gump behavior, serialization, public APIs, namespaces, type names, save versions, file locations, and project files were preserved.
+- Verification passed: targeted System:Chat gump scan, Visual Studio MSBuild `Server.csproj` Debug/x86 build, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output. Generated root executable artifacts were restored.
+
 Next:
 
-1. Continue `POST-BATCH-E` with the next focused P1 runtime-hook/gump-guard group by the active plan, currently the remaining `System:Chat` gump rows beginning at `RB-02390`.
+1. Continue `POST-BATCH-E` with the next focused P1 runtime-hook/gump-guard group by the active plan, currently `Items:Magical` row `RB-01741`.
 2. Keep P2 Boats and Bulk Orders command-access rows queued until the P2 command-access pass unless source evidence makes them an urgent local blocker.
 3. Preserve serialization, public APIs, namespaces, type names, save versions, and file locations; verify source fixes with `Server.csproj` Debug/x86 build and `.\ConficturaServer.exe -compileonly -nocache`.
 
