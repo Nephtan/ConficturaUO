@@ -949,9 +949,17 @@ Completed source subbatch: `POST-BATCH-D-64A` fixed `Mobiles:Unique` pooled enum
 - Verification passed: targeted `Mobiles/Unique` direct-scan check returned no matches, explicit pooled-variable check showed matching `Free` calls across the 16 touched loops, `Server.csproj` Debug/x86 build passed, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output.
 - `Mobiles:Unique` queued pooled-enumerable rows are complete.
 
+Completed source subbatch: `POST-BATCH-D-65A` fixed `Mobiles:Unusual` pooled enumerable ownership.
+
+- 11 rows were reviewed and fixed: `RB-05029` through `RB-05039`.
+- Drain-life, petrification, teleport-target, alien blood splatter-counting, nearby-attacker, and gold-carrier scans now pair range results with `try/finally Free`.
+- Existing target filters, first valid teleport target selection, splatter-counting behavior, nearby-attacker detection, gold-carrier selection, serialization, namespaces, type names, save versions, and file location were preserved.
+- Verification passed: targeted `Mobiles/Unusual` direct-scan check returned no matches, explicit pooled-variable check showed matching `Free` calls across the 11 touched loops, `Server.csproj` Debug/x86 build passed, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output.
+- `Mobiles:Unusual` queued pooled-enumerable rows are complete.
+
 Next:
 
-1. Continue `POST-BATCH-D` at the next queued pooled-enumerable backlog row after `RB-05028`, starting `Mobiles:Unusual` with `BloodGodTentacles.cs`.
+1. Continue `POST-BATCH-D` at the next queued pooled-enumerable backlog row after `RB-05039`, starting `Quests:Frankenstein` with `FrankenJournal.cs`.
 2. Keep batches focused by system/file; repair only confirmed ownership leaks with `try/finally Free`.
 3. Verify each source batch with the relevant pooled enumerable scan, `Server.csproj` Debug/x86 build, and `.\ConficturaServer.exe -compileonly -nocache`.
 
