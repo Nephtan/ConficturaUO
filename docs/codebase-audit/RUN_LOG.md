@@ -4950,3 +4950,19 @@ Scope: Deterministic phase runner log for the Confictura codebase audit and reor
 - Command: Targeted `Magic/Misc` direct range-scan `rg`; explicit pooled-variable ownership `rg`; Visual Studio MSBuild `Data/System/Source/Server.csproj /p:Configuration=Debug /p:Platform=x86 /v:minimal`; `.\ConficturaServer.exe -compileonly -nocache`; restore generated root executable artifacts; update `post-batch-d-pooled-enumerable-review.csv`, active overlay, status, README, and next-step artifacts.
 - Result: Targeted scan found no remaining direct range scans in the touched `Magic:Misc` files; explicit pooled-variable check showed matching `Free` calls across the two touched files; `Server.csproj` Debug/x86 build passed; compile-only runtime script verification exited 0 and printed no `Listening:` output; generated `ConficturaServer.exe`, `.config`, and `.pdb` were restored; active backlog overlay now has 495 unique rows including 166 `POST-BATCH-D` fixed rows and 2 `POST-BATCH-D` false positives. `Magic:Misc` queued pooled-enumerable rows are complete.
 - Output path: `docs/codebase-audit/outputs/post-batch-d-pooled-enumerable-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
+
+### 2026-06-08T19:44:46.7075578-05:00
+
+- Affected phase: Post-audit `POST-BATCH-D-43A` `Magic:Necromancy` pooled enumerable ownership repair
+- Cwd: `D:\ConficturaUO`
+- Command: Source review and patch of `RB-04857` and `RB-04858` in `Data/Scripts/Magic/Necromancy`.
+- Result: Replaced Poison Strike and Wither direct range scans with local `IPooledEnumerable` variables and `try/finally Free`. Harmful target filters, splash damage collection, wither target collection, serialization, namespaces, type names, save versions, and file locations were preserved.
+- Output path: `Data/Scripts/Magic/Necromancy/PoisonStrike.cs`; `Data/Scripts/Magic/Necromancy/Wither.cs`
+
+### 2026-06-08T19:44:46.7075578-05:00
+
+- Affected phase: Post-audit `POST-BATCH-D-43A` verification and audit artifact update
+- Cwd: `D:\ConficturaUO`
+- Command: Targeted `Magic/Necromancy` direct range-scan `rg`; explicit pooled-variable ownership `rg`; Visual Studio MSBuild `Data/System/Source/Server.csproj /p:Configuration=Debug /p:Platform=x86 /v:minimal`; `.\ConficturaServer.exe -compileonly -nocache`; restore generated root executable artifacts; update `post-batch-d-pooled-enumerable-review.csv`, active overlay, status, README, and next-step artifacts.
+- Result: Targeted scan found no remaining direct range scans in the touched `Magic:Necromancy` files; explicit pooled-variable check showed matching `Free` calls across the two touched files; `Server.csproj` Debug/x86 build passed; compile-only runtime script verification exited 0 and printed no `Listening:` output; generated `ConficturaServer.exe`, `.config`, and `.pdb` were restored; active backlog overlay now has 497 unique rows including 168 `POST-BATCH-D` fixed rows and 2 `POST-BATCH-D` false positives. `Magic:Necromancy` queued pooled-enumerable rows are complete.
+- Output path: `docs/codebase-audit/outputs/post-batch-d-pooled-enumerable-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
