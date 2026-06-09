@@ -1064,9 +1064,16 @@ Completed source subbatch: `POST-BATCH-E-04A` fixed the Clone Offline Player Cha
 - Existing valid login/logout behavior, serialization, public APIs, namespaces, type names, save versions, and file location were preserved.
 - Verification passed: targeted Clone Offline login/logout hook guard scan, Visual Studio MSBuild `Server.csproj` Debug/x86 build, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output. Generated root executable artifacts were restored.
 
+Completed source subbatch: `POST-BATCH-E-05A` fixed the Crafting Core P1 repair target/CraftGump rows.
+
+- 2 rows were reviewed and fixed: `RB-03221` and `RB-04176`.
+- `Repair.InternalTarget.OnTarget` now guards null/deleted targeters, missing craft systems, null targets, and stale/deleted tools before repair processing and CraftGump resend.
+- Existing valid repair target behavior, serialization, public APIs, namespaces, type names, save versions, and file location were preserved.
+- Verification passed: targeted Repair.cs guard scan, Visual Studio MSBuild `Server.csproj` Debug/x86 build, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output. Generated root executable artifacts were restored.
+
 Next:
 
-1. Continue `POST-BATCH-E` with the next P1 runtime-hook/gump-guard group by deterministic order, currently `Crafting Core`.
+1. Continue `POST-BATCH-E` with the next P1 runtime-hook/gump-guard group by deterministic order, currently `Custom:AnimalSystem`.
 2. Keep P2 Boats and Bulk Orders command-access rows queued until the P2 command-access pass unless source evidence makes them an urgent local blocker.
 3. Preserve serialization, public APIs, namespaces, type names, save versions, and file locations; verify source fixes with `Server.csproj` Debug/x86 build and `.\ConficturaServer.exe -compileonly -nocache`.
 

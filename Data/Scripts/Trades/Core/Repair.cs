@@ -206,6 +206,9 @@ namespace Server.Engines.Craft
             {
                 int number;
 
+                if (from == null || from.Deleted || m_CraftSystem == null || targeted == null)
+                    return;
+
                 if (!CheckDeed(from))
                     return;
 
@@ -531,6 +534,9 @@ namespace Server.Engines.Craft
 
                 if (!usingDeed)
                 {
+                    if (m_Tool == null || m_Tool.Deleted)
+                        return;
+
                     CraftContext context = m_CraftSystem.GetContext(from);
                     from.SendGump(new CraftGump(from, m_CraftSystem, m_Tool, number));
                 }
