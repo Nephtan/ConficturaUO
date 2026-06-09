@@ -4743,6 +4743,22 @@ Scope: Deterministic phase runner log for the Confictura codebase audit and reor
 - Result: Targeted scan confirmed Christmas and Halloween speech registrations and null/deleted/backpack/speech/mobile guards; `Server.csproj` Debug/x86 build passed with Visual Studio Community 2022 MSBuild; compile-only runtime script verification exited 0 and printed no `Listening:` output; generated `ConficturaServer.exe`, `.config`, and `.pdb` were restored; active backlog overlay now includes 121 `POST-BATCH-E` dispositions.
 - Output path: `docs/codebase-audit/outputs/post-batch-e-hooks-gumps-commands-regions-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
 
+### 2026-06-09T11:07:59.4473900-05:00
+
+- Affected phase: Post-audit `POST-BATCH-E-28A` Housing hook guard repair
+- Cwd: `D:\ConficturaUO`
+- Command: Source review and patch of `RB-01735`, `RB-01736`, `RB-01737`, `RB-01738`, `RB-01739`, `RB-01740`, `RB-01945`, and `RB-02173` across `Data/Scripts/Items/Houses/HouseFoundation.cs`, `Data/Scripts/Items/Houses/Monopoly/Gumps/Error Reporting/Errors.cs`, and `Data/Scripts/Items/Houses/Monopoly/Misc/General.cs`.
+- Result: Added null/deleted event/mobile guards for house customization speech and Monopoly error login; added invalid TownHouse/TownHouseSign guard coverage for Monopoly save/start/login/speech paths including duplicate WorldSave and speech-delegation rows. Valid housing behavior, Monopoly error notification behavior, pooled enumerable ownership, serialization, public APIs, namespaces, type names, save versions, file locations, and project files were preserved.
+- Output path: `Data/Scripts/Items/Houses/HouseFoundation.cs`; `Data/Scripts/Items/Houses/Monopoly/Gumps/Error Reporting/Errors.cs`; `Data/Scripts/Items/Houses/Monopoly/Misc/General.cs`
+
+### 2026-06-09T11:07:59.4473900-05:00
+
+- Affected phase: Post-audit `POST-BATCH-E-28A` verification and audit artifact update
+- Cwd: `D:\ConficturaUO`
+- Command: Targeted Housing hook scan; Visual Studio MSBuild `Data/System/Source/Server.csproj /p:Configuration=Debug /p:Platform=x86 /v:minimal`; `.\ConficturaServer.exe -compileonly -nocache`; restore generated root executable artifacts; append `POST-BATCH-E-28A` rows to `post-batch-e-hooks-gumps-commands-regions-review.csv` and the active overlay; update status, README, and next-step artifacts.
+- Result: Targeted scan confirmed HouseFoundation, Monopoly Errors, and Monopoly General registrations plus null/deleted/list-entry guards; `Server.csproj` Debug/x86 build passed with Visual Studio Community 2022 MSBuild; compile-only runtime script verification exited 0 and printed no `Listening:` output; generated `ConficturaServer.exe`, `.config`, and `.pdb` were restored; active backlog overlay now includes 129 `POST-BATCH-E` dispositions.
+- Output path: `docs/codebase-audit/outputs/post-batch-e-hooks-gumps-commands-regions-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
+
 ### 2026-06-08T16:42:46.5194703-05:00
 
 - Affected phase: Post-audit `POST-BATCH-D-02A` `Custom:ClearDeckCommand` pooled enumerable ownership repair

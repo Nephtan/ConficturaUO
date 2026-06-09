@@ -1242,9 +1242,18 @@ Completed source subbatch: `POST-BATCH-E-27A` fixed the Items:Gifts holiday spee
 - Valid holiday gift behavior, pooled enumerable ownership, serialization, public APIs, namespaces, type names, save versions, file locations, and project files were preserved.
 - Verification passed: targeted Items:Gifts speech hook scan, Visual Studio MSBuild `Server.csproj` Debug/x86 build, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output. Generated root executable artifacts were restored.
 
+Completed source subbatch: `POST-BATCH-E-28A` fixed Housing runtime-hook rows.
+
+- 8 rows were reviewed and fixed: `RB-01735`, `RB-01736`, `RB-01737`, `RB-01738`, `RB-01739`, `RB-01740`, `RB-01945`, and `RB-02173`.
+- `HouseFoundation.EventSink_Speech` now guards null speech events and null/deleted mobiles before customization speech blocking.
+- Monopoly error login now guards null login events and null/deleted mobiles before staff notification gump dispatch.
+- Monopoly general save/start/login/speech handlers now skip invalid TownHouse/TownHouseSign entries and guard null/deleted event mobiles before house ownership, speech, and rental-command processing.
+- Valid housing behavior, Monopoly error notification behavior, pooled enumerable ownership, serialization, public APIs, namespaces, type names, save versions, file locations, and project files were preserved.
+- Verification passed: targeted Housing hook scan, Visual Studio MSBuild `Server.csproj` Debug/x86 build, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output. Generated root executable artifacts were restored.
+
 Next:
 
-1. Continue `POST-BATCH-E` with the next focused P1 runtime-hook group by the active plan, currently Housing rows beginning at `RB-01735`.
+1. Continue `POST-BATCH-E` with the next focused P1 runtime-hook group by the active plan, currently `System:Chat` rows beginning at `RB-01758`.
 2. Keep P2 Boats and Bulk Orders command-access rows queued until the P2 command-access pass unless source evidence makes them an urgent local blocker.
 3. Preserve serialization, public APIs, namespaces, type names, save versions, and file locations; verify source fixes with `Server.csproj` Debug/x86 build and `.\ConficturaServer.exe -compileonly -nocache`.
 
