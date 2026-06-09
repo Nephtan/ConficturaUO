@@ -701,9 +701,17 @@ Completed source subbatch: `POST-BATCH-D-33A` fixed `Items:Traps` pooled enumera
 - Verification passed: targeted four-file direct-scan check returned no matches, explicit pooled-variable check showed matching `Free` calls, `Server.csproj` Debug/x86 build passed, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output.
 - `Items:Traps` queued pooled-enumerable rows are complete.
 
+Completed source subbatch: `POST-BATCH-D-34A` fixed `Items:Weapons` `BaseWeapon.cs` pooled enumerable ownership.
+
+- 3 rows were reviewed and fixed: `RB-04818` through `RB-04820`.
+- Pack-instinct counting, mirror-image diversion, and area-attack target collection now pair range results with `try/finally Free`.
+- Existing pack bonus thresholds, mirror-image break behavior, area-target collection, empty-list return, serialization, namespaces, type names, save versions, and file location were preserved.
+- Verification passed: targeted `BaseWeapon.cs` direct-scan check returned no matches, explicit pooled-variable check showed matching `Free` calls, `Server.csproj` Debug/x86 build passed, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output.
+- `Items:Weapons` queued pooled-enumerable rows are complete.
+
 Next:
 
-1. Continue `POST-BATCH-D` at the next queued pooled-enumerable backlog row after `RB-04817`, starting `Items:Weapons` with `BaseWeapon.cs`.
+1. Continue `POST-BATCH-D` at the next queued pooled-enumerable backlog row after `RB-04820`, starting `Magic:Bard` with `ArmysPaeonSong.cs`.
 2. Keep batches focused by system/file; repair only confirmed ownership leaks with `try/finally Free`.
 3. Verify each source batch with the relevant pooled enumerable scan, `Server.csproj` Debug/x86 build, and `.\ConficturaServer.exe -compileonly -nocache`.
 
