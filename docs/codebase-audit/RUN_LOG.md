@@ -5334,3 +5334,19 @@ Scope: Deterministic phase runner log for the Confictura codebase audit and reor
 - Command: Targeted quest direct range-scan `rg` covering qualified and unqualified `Get*InRange` calls; explicit pooled-variable ownership `rg`; CSV consistency parse; Visual Studio MSBuild `Data/System/Source/Server.csproj /p:Configuration=Debug /p:Platform=x86 /v:minimal`; `.\ConficturaServer.exe -compileonly -nocache`; restore generated root executable artifacts; update `post-batch-d-pooled-enumerable-review.csv`, active overlay, status, README, and next-step artifacts.
 - Result: Targeted scan found no remaining direct range scans in the touched quest files; explicit pooled-variable check showed matching `Free` calls across the 11 touched loops; CSV consistency parse reported 362 review rows, 360 fixed rows, 2 false positives, no missing reviewed fields, and no duplicate backlog IDs; `Server.csproj` Debug/x86 build passed; compile-only runtime script verification exited 0 and printed no `Listening:` output; generated `ConficturaServer.exe`, `.config`, and `.pdb` were restored; active backlog overlay now has 689 unique rows including 360 `POST-BATCH-D` fixed rows and 2 `POST-BATCH-D` false positives. Quest queued pooled-enumerable rows through `RB-05050` are complete.
 - Output path: `docs/codebase-audit/outputs/post-batch-d-pooled-enumerable-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
+
+### 2026-06-08T22:03:27.7088717-05:00
+
+- Affected phase: Post-audit `POST-BATCH-D-67A` `System:Commands` pooled enumerable ownership repair
+- Cwd: `D:\ConficturaUO`
+- Command: Source review and patch of `RB-05051` through `RB-05054` across `Data/Scripts/System/Commands`.
+- Result: Replaced banker-spawner, client broadcast, corpse search, and moon gate search direct range scans with local `IPooledEnumerable` variables and `try/finally Free`. Banker detection, packet visibility checks, nearest-corpse selection, moon gate selection, serialization, namespaces, type names, save versions, and file location were preserved.
+- Output path: `Data/Scripts/System/Commands`
+
+### 2026-06-08T22:03:27.7088717-05:00
+
+- Affected phase: Post-audit `POST-BATCH-D-67A` verification and audit artifact update
+- Cwd: `D:\ConficturaUO`
+- Command: Targeted `System:Commands` direct range-scan `rg` covering qualified and unqualified `Get*InRange` calls; explicit pooled-variable ownership `rg`; CSV consistency parse; Visual Studio MSBuild `Data/System/Source/Server.csproj /p:Configuration=Debug /p:Platform=x86 /v:minimal`; `.\ConficturaServer.exe -compileonly -nocache`; restore generated root executable artifacts; update `post-batch-d-pooled-enumerable-review.csv`, active overlay, status, README, and next-step artifacts.
+- Result: Targeted scan found no remaining direct range scans in the touched command files; explicit pooled-variable check showed matching `Free` calls across the four touched loops; CSV consistency parse reported 366 review rows, 364 fixed rows, 2 false positives, no missing reviewed fields, and no duplicate backlog IDs; `Server.csproj` Debug/x86 build passed; compile-only runtime script verification exited 0 and printed no `Listening:` output; generated `ConficturaServer.exe`, `.config`, and `.pdb` were restored; active backlog overlay now has 693 unique rows including 364 `POST-BATCH-D` fixed rows and 2 `POST-BATCH-D` false positives. `System:Commands` queued pooled-enumerable rows are complete.
+- Output path: `docs/codebase-audit/outputs/post-batch-d-pooled-enumerable-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`

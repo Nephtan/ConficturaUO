@@ -965,9 +965,17 @@ Completed source subbatch: `POST-BATCH-D-66A` fixed quest pooled enumerable owne
 - Verification passed: targeted quest direct-scan check returned no matches in the touched files, explicit pooled-variable check showed matching `Free` calls across the 11 touched loops, `Server.csproj` Debug/x86 build passed, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output.
 - Quest queued pooled-enumerable rows through `RB-05050` are complete.
 
+Completed source subbatch: `POST-BATCH-D-67A` fixed `System:Commands` pooled enumerable ownership.
+
+- 4 rows were reviewed and fixed: `RB-05051` through `RB-05054`.
+- Banker-spawner, client broadcast, corpse search, and moon gate search scans now pair range results with `try/finally Free`.
+- Existing banker detection, packet visibility checks, nearest-corpse selection, moon gate selection, serialization, namespaces, type names, save versions, and file location were preserved.
+- Verification passed: targeted `System:Commands` direct-scan check returned no matches in the touched files, explicit pooled-variable check showed matching `Free` calls across the four touched loops, `Server.csproj` Debug/x86 build passed, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output.
+- `System:Commands` queued pooled-enumerable rows are complete.
+
 Next:
 
-1. Continue `POST-BATCH-D` at the next queued pooled-enumerable backlog row after `RB-05050`, starting `System:Commands` with `Handlers.cs`.
+1. Continue `POST-BATCH-D` at the next queued pooled-enumerable backlog row after `RB-05054`, starting `System:Misc` with `Death.cs`.
 2. Keep batches focused by system/file; repair only confirmed ownership leaks with `try/finally Free`.
 3. Verify each source batch with the relevant pooled enumerable scan, `Server.csproj` Debug/x86 build, and `.\ConficturaServer.exe -compileonly -nocache`.
 

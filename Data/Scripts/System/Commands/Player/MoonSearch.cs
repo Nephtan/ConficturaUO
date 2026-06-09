@@ -55,23 +55,31 @@ namespace Server.Misc
 
             ArrayList lunargates = new ArrayList();
             ArrayList mice = new ArrayList();
-            foreach (Item lunar in from.GetItemsInRange(range))
-                if (lunar is GateMoon || lunar is moongates || lunar is Moongate)
-                {
-                    Mobile mSp = new MoonCritter();
-                    mSp.MoveToWorld(new Point3D(lunar.X, lunar.Y, lunar.Z), lunar.Map);
-
-                    if (SameArea(from, mSp) == true)
+            IPooledEnumerable eable = from.GetItemsInRange(range);
+            try
+            {
+                foreach (Item lunar in eable)
+                    if (lunar is GateMoon || lunar is moongates || lunar is Moongate)
                     {
-                        distchk++;
-                        lunargates.Add(mSp);
-                        if (HowFar(from.X, from.Y, mSp.X, mSp.Y) < TheClosest)
+                        Mobile mSp = new MoonCritter();
+                        mSp.MoveToWorld(new Point3D(lunar.X, lunar.Y, lunar.Z), lunar.Map);
+
+                        if (SameArea(from, mSp) == true)
                         {
-                            TheClosest = HowFar(from.X, from.Y, mSp.X, mSp.Y);
-                            IsClosest = distchk;
+                            distchk++;
+                            lunargates.Add(mSp);
+                            if (HowFar(from.X, from.Y, mSp.X, mSp.Y) < TheClosest)
+                            {
+                                TheClosest = HowFar(from.X, from.Y, mSp.X, mSp.Y);
+                                IsClosest = distchk;
+                            }
                         }
                     }
-                }
+            }
+            finally
+            {
+                eable.Free();
+            }
 
             for (int h = 0; h < lunargates.Count; ++h)
             {
