@@ -265,15 +265,23 @@ namespace Server.Items
 
         public static void GetNearbyTown(Coffer coffer)
         {
-            foreach (Mobile citizen in coffer.GetMobilesInRange(20))
+            IPooledEnumerable eable = coffer.GetMobilesInRange(20);
+            try
             {
-                if (citizen is BaseVendor)
+                foreach (Mobile citizen in eable)
                 {
-                    coffer.CofferTown = Server.Misc.Worlds.GetRegionName(
-                        citizen.Map,
-                        citizen.Location
-                    );
+                    if (citizen is BaseVendor)
+                    {
+                        coffer.CofferTown = Server.Misc.Worlds.GetRegionName(
+                            citizen.Map,
+                            citizen.Location
+                        );
+                    }
                 }
+            }
+            finally
+            {
+                eable.Free();
             }
         }
 

@@ -40,22 +40,30 @@ namespace Server.Items
             }
             else
             {
-                foreach (Mobile citizen in hay.GetMobilesInRange(200))
+                IPooledEnumerable eable = hay.GetMobilesInRange(200);
+                try
                 {
-                    if (
-                        citizen is BaseVendor
-                        || citizen is TownGuards
-                        || (citizen is Citizens && !(citizen is HouseVisitor))
-                    )
+                    foreach (Mobile citizen in eable)
                     {
-                        if (citizen.Region.Name != null)
+                        if (
+                            citizen is BaseVendor
+                            || citizen is TownGuards
+                            || (citizen is Citizens && !(citizen is HouseVisitor))
+                        )
                         {
-                            hay.HayTown = Server.Misc.Worlds.GetRegionName(
-                                citizen.Map,
-                                citizen.Location
-                            );
+                            if (citizen.Region.Name != null)
+                            {
+                                hay.HayTown = Server.Misc.Worlds.GetRegionName(
+                                    citizen.Map,
+                                    citizen.Location
+                                );
+                            }
                         }
                     }
+                }
+                finally
+                {
+                    eable.Free();
                 }
             }
 

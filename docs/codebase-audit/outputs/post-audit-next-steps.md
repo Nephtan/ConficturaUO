@@ -957,9 +957,17 @@ Completed source subbatch: `POST-BATCH-D-65A` fixed `Mobiles:Unusual` pooled enu
 - Verification passed: targeted `Mobiles/Unusual` direct-scan check returned no matches, explicit pooled-variable check showed matching `Free` calls across the 11 touched loops, `Server.csproj` Debug/x86 build passed, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output.
 - `Mobiles:Unusual` queued pooled-enumerable rows are complete.
 
+Completed source subbatch: `POST-BATCH-D-66A` fixed quest pooled enumerable ownership.
+
+- 11 rows were reviewed and fixed: `RB-05040` through `RB-05050`.
+- Power-coil, hoard, nearby-monster, Balinor blocker, PremiumSpawner, town-detection, and rune-gate scans now pair range results with `try/finally Free`.
+- Existing proximity checks, target collection, location override, town detection, rune gate collection, serialization, namespaces, type names, save versions, and file location were preserved.
+- Verification passed: targeted quest direct-scan check returned no matches in the touched files, explicit pooled-variable check showed matching `Free` calls across the 11 touched loops, `Server.csproj` Debug/x86 build passed, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output.
+- Quest queued pooled-enumerable rows through `RB-05050` are complete.
+
 Next:
 
-1. Continue `POST-BATCH-D` at the next queued pooled-enumerable backlog row after `RB-05039`, starting `Quests:Frankenstein` with `FrankenJournal.cs`.
+1. Continue `POST-BATCH-D` at the next queued pooled-enumerable backlog row after `RB-05050`, starting `System:Commands` with `Handlers.cs`.
 2. Keep batches focused by system/file; repair only confirmed ownership leaks with `try/finally Free`.
 3. Verify each source batch with the relevant pooled enumerable scan, `Server.csproj` Debug/x86 build, and `.\ConficturaServer.exe -compileonly -nocache`.
 
