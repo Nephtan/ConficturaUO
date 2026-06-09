@@ -4639,6 +4639,22 @@ Scope: Deterministic phase runner log for the Confictura codebase audit and reor
 - Result: Targeted scan confirmed CharacterCreated/Login registrations, null event guards, and deleted/no-account `TryGift` guards before account/backpack access; `Server.csproj` Debug/x86 build passed with Visual Studio Community 2022 MSBuild; compile-only runtime script verification exited 0 and printed no `Listening:` output; generated `ConficturaServer.exe`, `.config`, and `.pdb` were restored; active backlog overlay now includes 107 `POST-BATCH-E` dispositions.
 - Output path: `docs/codebase-audit/outputs/post-batch-e-hooks-gumps-commands-regions-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
 
+### 2026-06-09T10:28:18.0581904-05:00
+
+- Affected phase: Post-audit `POST-BATCH-E-21A` Staff Toolbar login hook guard repair
+- Cwd: `D:\ConficturaUO`
+- Command: Source review and patch of `RB-01719` in `Data/Scripts/Custom/Staff Toolbar [2.0]/Toolbar.cs`.
+- Result: Added null `LoginEventArgs`, null mobile, deleted-mobile, and missing-account guard before access-level checks, toolbar gump close, and `SendToolbar`/`ReadInfo` account access. Valid staff login toolbar behavior, serialization, public APIs, namespaces, type names, save versions, file location, and project files were preserved.
+- Output path: `Data/Scripts/Custom/Staff Toolbar [2.0]/Toolbar.cs`
+
+### 2026-06-09T10:28:18.0581904-05:00
+
+- Affected phase: Post-audit `POST-BATCH-E-21A` verification and audit artifact update
+- Cwd: `D:\ConficturaUO`
+- Command: Targeted Staff Toolbar hook `rg` scan; Visual Studio MSBuild `Data/System/Source/Server.csproj /p:Configuration=Debug /p:Platform=x86 /v:minimal`; `.\ConficturaServer.exe -compileonly -nocache`; restore generated root executable artifacts; append `POST-BATCH-E-21A` row to `post-batch-e-hooks-gumps-commands-regions-review.csv` and the active overlay; update status, README, and next-step artifacts.
+- Result: Targeted scan confirmed login registration and null/deleted/no-account guard before `SendToolbar`/`ReadInfo` path; `Server.csproj` Debug/x86 build passed with Visual Studio Community 2022 MSBuild; compile-only runtime script verification exited 0 and printed no `Listening:` output; generated `ConficturaServer.exe`, `.config`, and `.pdb` were restored; active backlog overlay now includes 108 `POST-BATCH-E` dispositions.
+- Output path: `docs/codebase-audit/outputs/post-batch-e-hooks-gumps-commands-regions-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
+
 ### 2026-06-08T16:42:46.5194703-05:00
 
 - Affected phase: Post-audit `POST-BATCH-D-02A` `Custom:ClearDeckCommand` pooled enumerable ownership repair

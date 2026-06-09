@@ -1190,9 +1190,16 @@ Completed source subbatch: `POST-BATCH-E-20A` fixed the Custom:PandorasGiftBox c
 - Valid character-created/login gift behavior, serialization, public APIs, namespaces, type names, save versions, file location, and project files were preserved.
 - Verification passed: targeted PandorasGiftBox hook scan, Visual Studio MSBuild `Server.csproj` Debug/x86 build, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output. Generated root executable artifacts were restored.
 
+Completed source subbatch: `POST-BATCH-E-21A` fixed the Staff Toolbar login hook row.
+
+- 1 row was reviewed and fixed: `RB-01719`.
+- `ToolbarHelper.OnLogin` now guards null login events, null mobiles, deleted mobiles, and missing accounts before access-level checks, toolbar gump close, and `SendToolbar`/`ReadInfo` account access.
+- Valid staff login toolbar behavior, serialization, public APIs, namespaces, type names, save versions, file location, and project files were preserved.
+- Verification passed: targeted Staff Toolbar hook scan, Visual Studio MSBuild `Server.csproj` Debug/x86 build, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output. Generated root executable artifacts were restored.
+
 Next:
 
-1. Continue `POST-BATCH-E` with the next focused P1 runtime-hook group by the active plan, currently Staff Toolbar `Toolbar.cs` row `RB-01719`.
+1. Continue `POST-BATCH-E` with the next focused P1 runtime-hook group by the active plan, currently Custom:TellAFriend `TellAFriend.cs` row `RB-01720`.
 2. Keep P2 Boats and Bulk Orders command-access rows queued until the P2 command-access pass unless source evidence makes them an urgent local blocker.
 3. Preserve serialization, public APIs, namespaces, type names, save versions, and file locations; verify source fixes with `Server.csproj` Debug/x86 build and `.\ConficturaServer.exe -compileonly -nocache`.
 

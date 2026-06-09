@@ -43,6 +43,9 @@ namespace Joeku
         /// </summary>
         private static void OnLogin(LoginEventArgs e)
         {
+            if (e == null || e.Mobile == null || e.Mobile.Deleted || e.Mobile.Account == null)
+                return;
+
             if (e.Mobile.AccessLevel >= AccessLevel.Counselor)
             {
                 e.Mobile.CloseGump(typeof(Toolbar));
