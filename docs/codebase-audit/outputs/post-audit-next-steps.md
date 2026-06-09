@@ -941,9 +941,17 @@ Completed source subbatch: `POST-BATCH-D-63A` fixed `Mobiles:Undead` pooled enum
 - Verification passed: targeted `Mobiles/Undead` direct-scan check returned no matches, explicit pooled-variable check showed matching `Free` calls across the 12 touched loops, `Server.csproj` Debug/x86 build passed, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output.
 - `Mobiles:Undead` queued pooled-enumerable rows are complete.
 
+Completed source subbatch: `POST-BATCH-D-64A` fixed `Mobiles:Unique` pooled enumerable ownership.
+
+- 16 rows were reviewed and fixed: `RB-05013` through `RB-05028`.
+- Death-gate, spawn-count, and splatter-counting scans now pair range results with `try/finally Free`.
+- Existing quest item checks, reward effects, Titan kill-permission fallback checks, spawn thresholds, splatter-counting behavior, serialization, namespaces, type names, save versions, and file location were preserved.
+- Verification passed: targeted `Mobiles/Unique` direct-scan check returned no matches, explicit pooled-variable check showed matching `Free` calls across the 16 touched loops, `Server.csproj` Debug/x86 build passed, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output.
+- `Mobiles:Unique` queued pooled-enumerable rows are complete.
+
 Next:
 
-1. Continue `POST-BATCH-D` at the next queued pooled-enumerable backlog row after `RB-05012`, starting `Mobiles:Unique` with `BaneOfAnarchy.cs`.
+1. Continue `POST-BATCH-D` at the next queued pooled-enumerable backlog row after `RB-05028`, starting `Mobiles:Unusual` with `BloodGodTentacles.cs`.
 2. Keep batches focused by system/file; repair only confirmed ownership leaks with `try/finally Free`.
 3. Verify each source batch with the relevant pooled enumerable scan, `Server.csproj` Debug/x86 build, and `.\ConficturaServer.exe -compileonly -nocache`.
 
