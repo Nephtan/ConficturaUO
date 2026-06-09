@@ -1105,9 +1105,17 @@ Completed source subbatch: `POST-BATCH-E-09A` fixed the Custom:AnimalSystem Wolv
 - Existing valid behavior, serialization, public APIs, namespaces, type names, save versions, and file location were preserved.
 - Verification passed: targeted Wolven guard scan, Visual Studio MSBuild `Server.csproj` Debug/x86 build, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output. Generated root executable artifacts were restored.
 
+Completed source subbatch: `POST-BATCH-E-10A` fixed the Custom:Book Publisher `[2.0]` speech-hook rows.
+
+- 3 rows were reviewed and fixed: `RB-01904`, `RB-01905`, and `RB-01906`.
+- `Publisher.HandlesOnSpeech` now guards null/deleted speakers before range checks.
+- `Publisher.OnSpeech` now guards null speech events and null/deleted mobiles before criminal checks and base speech handling.
+- Existing valid behavior, serialization, public APIs, namespaces, type names, save versions, and file location were preserved.
+- Verification passed: targeted Book Publisher speech-hook guard scan, Visual Studio MSBuild `Server.csproj` Debug/x86 build, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output. Generated root executable artifacts were restored.
+
 Next:
 
-1. Continue `POST-BATCH-E` with the next P1 runtime-hook group by deterministic order, currently `Custom:Book Publisher [2.0]`.
+1. Continue `POST-BATCH-E` with the next focused P1 runtime-hook group by the active plan, currently `Custom:NPC Control`.
 2. Keep P2 Boats and Bulk Orders command-access rows queued until the P2 command-access pass unless source evidence makes them an urgent local blocker.
 3. Preserve serialization, public APIs, namespaces, type names, save versions, and file locations; verify source fixes with `Server.csproj` Debug/x86 build and `.\ConficturaServer.exe -compileonly -nocache`.
 
