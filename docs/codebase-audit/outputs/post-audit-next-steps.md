@@ -733,9 +733,17 @@ Completed source subbatch: `POST-BATCH-D-37A` fixed `Magic:Druidism` `Treefellow
 - Verification passed: targeted `TreefellowSpell.cs` direct-scan check returned no matches, explicit pooled-variable check showed a matching `Free` call, `Server.csproj` Debug/x86 build passed, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output.
 - `Magic:Druidism` queued pooled-enumerable rows are complete.
 
+Completed source subbatch: `POST-BATCH-D-38A` fixed `Magic:Elementalism` pooled enumerable ownership.
+
+- 10 rows were reviewed and fixed: `RB-04834` through `RB-04843`.
+- Elemental mobile cleanup, elemental field collision, and Elemental Apocalypse target collection now pair range results with `try/finally Free`.
+- Existing summoned guards, vortex filters, field target queueing, apocalypse harmful target filters, serialization, namespaces, type names, save versions, and file locations were preserved.
+- Verification passed: targeted `Magic/Elementalism` direct-scan check returned no matches, explicit pooled-variable check showed matching `Free` calls across the 10 touched files, `Server.csproj` Debug/x86 build passed, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output.
+- `Magic:Elementalism` queued pooled-enumerable rows are complete.
+
 Next:
 
-1. Continue `POST-BATCH-D` at the next queued pooled-enumerable backlog row after `RB-04833`, starting `Magic:Elementalism` with `ElementalFiendAir.cs`.
+1. Continue `POST-BATCH-D` at the next queued pooled-enumerable backlog row after `RB-04843`, starting `Magic:Jester` with `BagOfTricks.cs`.
 2. Keep batches focused by system/file; repair only confirmed ownership leaks with `try/finally Free`.
 3. Verify each source batch with the relevant pooled enumerable scan, `Server.csproj` Debug/x86 build, and `.\ConficturaServer.exe -compileonly -nocache`.
 

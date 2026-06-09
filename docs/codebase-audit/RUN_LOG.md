@@ -4870,3 +4870,19 @@ Scope: Deterministic phase runner log for the Confictura codebase audit and reor
 - Command: Targeted `TreefellowSpell.cs` direct range-scan `rg`; explicit pooled-variable ownership `rg`; Visual Studio MSBuild `Data/System/Source/Server.csproj /p:Configuration=Debug /p:Platform=x86 /v:minimal`; `.\ConficturaServer.exe -compileonly -nocache`; restore generated root executable artifacts; update `post-batch-d-pooled-enumerable-review.csv`, active overlay, status, README, and next-step artifacts.
 - Result: Targeted scan found no remaining direct range scans in `TreefellowSpell.cs`; explicit pooled-variable check showed a matching `Free` call; `Server.csproj` Debug/x86 build passed; compile-only runtime script verification exited 0 and printed no `Listening:` output; generated `ConficturaServer.exe`, `.config`, and `.pdb` were restored; active backlog overlay now has 472 unique rows including 143 `POST-BATCH-D` fixed rows and 2 `POST-BATCH-D` false positives. `Magic:Druidism` queued pooled-enumerable rows are complete.
 - Output path: `docs/codebase-audit/outputs/post-batch-d-pooled-enumerable-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
+
+### 2026-06-08T19:18:16.3025306-05:00
+
+- Affected phase: Post-audit `POST-BATCH-D-38A` `Magic:Elementalism` pooled enumerable ownership repair
+- Cwd: `D:\ConficturaUO`
+- Command: Source review and patch of `RB-04834` through `RB-04843` in `Data/Scripts/Magic/Elementalism`.
+- Result: Replaced elemental mobile cleanup, elemental field collision, and Elemental Apocalypse target-collection direct range scans with local `IPooledEnumerable` variables and `try/finally Free`. Summoned guards, vortex filters, field target queueing, apocalypse harmful target filters, serialization, namespaces, type names, save versions, and file locations were preserved.
+- Output path: `Data/Scripts/Magic/Elementalism/Mobiles/ElementalFiendAir.cs`; `Data/Scripts/Magic/Elementalism/Mobiles/ElementalFiendEarth.cs`; `Data/Scripts/Magic/Elementalism/Mobiles/ElementalFiendFire.cs`; `Data/Scripts/Magic/Elementalism/Mobiles/ElementalFiendWater.cs`; `Data/Scripts/Magic/Elementalism/Mobiles/ElementalSpiritAir.cs`; `Data/Scripts/Magic/Elementalism/Mobiles/ElementalSpiritEarth.cs`; `Data/Scripts/Magic/Elementalism/Mobiles/ElementalSpiritFire.cs`; `Data/Scripts/Magic/Elementalism/Mobiles/ElementalSpiritWater.cs`; `Data/Scripts/Magic/Elementalism/Sphere 4/Elemental_Field.cs`; `Data/Scripts/Magic/Elementalism/Sphere 8/Elemental_Apocalypse.cs`
+
+### 2026-06-08T19:18:16.3025306-05:00
+
+- Affected phase: Post-audit `POST-BATCH-D-38A` verification and audit artifact update
+- Cwd: `D:\ConficturaUO`
+- Command: Targeted `Magic/Elementalism` direct range-scan `rg`; explicit pooled-variable ownership `rg`; Visual Studio MSBuild `Data/System/Source/Server.csproj /p:Configuration=Debug /p:Platform=x86 /v:minimal`; `.\ConficturaServer.exe -compileonly -nocache`; restore generated root executable artifacts; update `post-batch-d-pooled-enumerable-review.csv`, active overlay, status, README, and next-step artifacts.
+- Result: Targeted scan found no remaining direct range scans in the touched `Magic:Elementalism` files; explicit pooled-variable check showed matching `Free` calls across the 10 touched files; `Server.csproj` Debug/x86 build passed; compile-only runtime script verification exited 0 and printed no `Listening:` output; generated `ConficturaServer.exe`, `.config`, and `.pdb` were restored; active backlog overlay now has 482 unique rows including 153 `POST-BATCH-D` fixed rows and 2 `POST-BATCH-D` false positives. `Magic:Elementalism` queued pooled-enumerable rows are complete.
+- Output path: `docs/codebase-audit/outputs/post-batch-d-pooled-enumerable-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
