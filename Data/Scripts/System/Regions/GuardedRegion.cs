@@ -314,27 +314,35 @@ namespace Server.Regions
                         Mobile fakeCall = null;
                         double prio = 0.0;
 
-                        foreach (Mobile v in m.GetMobilesInRange(8))
+                        IPooledEnumerable eable = m.GetMobilesInRange(8);
+                        try
                         {
-                            if (
-                                !v.Player
-                                && v != m
-                                && !IsGuardCandidate(v)
-                                && (
-                                    (v is BaseCreature)
-                                        ? ((BaseCreature)v).IsHumanInTown()
-                                        : (v.Body.IsHuman && v.Region.IsPartOf(this))
-                                )
-                            )
+                            foreach (Mobile v in eable)
                             {
-                                double dist = m.GetDistanceToSqrt(v);
-
-                                if (fakeCall == null || dist < prio)
+                                if (
+                                    !v.Player
+                                    && v != m
+                                    && !IsGuardCandidate(v)
+                                    && (
+                                        (v is BaseCreature)
+                                            ? ((BaseCreature)v).IsHumanInTown()
+                                            : (v.Body.IsHuman && v.Region.IsPartOf(this))
+                                    )
+                                )
                                 {
-                                    fakeCall = v;
-                                    prio = dist;
+                                    double dist = m.GetDistanceToSqrt(v);
+
+                                    if (fakeCall == null || dist < prio)
+                                    {
+                                        fakeCall = v;
+                                        prio = dist;
+                                    }
                                 }
                             }
+                        }
+                        finally
+                        {
+                            eable.Free();
                         }
 
                         if (fakeCall != null)

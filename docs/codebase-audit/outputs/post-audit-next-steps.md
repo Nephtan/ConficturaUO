@@ -989,9 +989,17 @@ Completed source subbatch: `POST-BATCH-D-69A` fixed `System:Obsolete` pooled enu
 - Verification passed: targeted `System:Obsolete` direct-scan check returned no matches in the touched files, explicit pooled-variable check showed matching `Free` calls across the 13 touched loops, `Server.csproj` Debug/x86 build passed, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output.
 - `System:Obsolete` queued pooled-enumerable rows are complete.
 
+Completed source subbatch: `POST-BATCH-D-70A` fixed `System:Regions` pooled enumerable ownership.
+
+- 1 row was reviewed and fixed: `RB-05075`.
+- `GuardedRegion.CheckGuardCandidate` now pairs the nearby-mobile scan with `try/finally Free`.
+- Existing guard-candidate timing, nearest fake guard-caller selection, serialization, namespaces, type names, save versions, and file location were preserved.
+- Verification passed: targeted `System:Regions` direct-scan check returned no matches in `GuardedRegion.cs`, explicit pooled-variable check showed matching `Free` calls, `Server.csproj` Debug/x86 build passed, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output.
+- `System:Regions` queued pooled-enumerable rows are complete.
+
 Next:
 
-1. Continue `POST-BATCH-D` at the next queued pooled-enumerable backlog row after `RB-05074`, starting `System:Regions` with `GuardedRegion.cs`.
+1. Continue `POST-BATCH-D` at the next queued pooled-enumerable backlog row after `RB-05075`, starting `System:Skills` with `Hiding.cs`.
 2. Keep batches focused by system/file; repair only confirmed ownership leaks with `try/finally Free`.
 3. Verify each source batch with the relevant pooled enumerable scan, `Server.csproj` Debug/x86 build, and `.\ConficturaServer.exe -compileonly -nocache`.
 
