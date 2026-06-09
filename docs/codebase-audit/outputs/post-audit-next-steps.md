@@ -813,9 +813,17 @@ Completed source subbatch: `POST-BATCH-D-47A` fixed `Mobiles:Base` `BaseVendor.c
 - Verification passed: targeted `BaseVendor.cs` direct-scan check returned no matches, explicit pooled-variable check showed matching `Free` calls across the two touched loops, `Server.csproj` Debug/x86 build passed, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output.
 - `BaseVendor.cs` queued pooled-enumerable rows are complete.
 
+Completed source subbatch: `POST-BATCH-D-48A` fixed `Mobiles:Base` `Behavior.cs` pooled enumerable ownership.
+
+- 9 rows were reviewed and fixed: `RB-04877` through `RB-04885`.
+- AI summon-count, cleanup, proximity, friend-guard, aggressor, marching-order, searching, need-finding, and dispel scans now pair range results with `try/finally Free`.
+- Existing target filters, continue paths, combatant scoring, hidden-player detection math, need priority, dispel priority, serialization, namespaces, type names, save versions, and file location were preserved.
+- Verification passed: targeted `Behavior.cs` direct-scan check returned no matches, explicit pooled-variable check showed matching `Free` calls across the nine touched loops, `Server.csproj` Debug/x86 build passed, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output.
+- `Behavior.cs` queued pooled-enumerable rows are complete.
+
 Next:
 
-1. Continue `POST-BATCH-D` at the next queued pooled-enumerable backlog row after `RB-04876`, continuing `Mobiles:Base` with `Behavior.cs`.
+1. Continue `POST-BATCH-D` at the next queued pooled-enumerable backlog row after `RB-04885`, continuing `Mobiles:Base` with `PlayerMobile.cs`.
 2. Keep batches focused by system/file; repair only confirmed ownership leaks with `try/finally Free`.
 3. Verify each source batch with the relevant pooled enumerable scan, `Server.csproj` Debug/x86 build, and `.\ConficturaServer.exe -compileonly -nocache`.
 
