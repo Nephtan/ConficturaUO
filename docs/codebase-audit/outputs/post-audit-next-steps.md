@@ -1152,9 +1152,17 @@ Completed source subbatch: `POST-BATCH-E-15A` fixed the System:Commands Crash co
 - Existing valid Administrator crash-test behavior, serialization, public APIs, namespaces, type names, save versions, and file location were preserved.
 - Verification passed: targeted CrashCommand guard scan, Visual Studio MSBuild `Server.csproj` Debug/x86 build, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output. Generated root executable artifacts were restored.
 
+Completed source subbatch: `POST-BATCH-E-16A` fixed the System:Misc AutoRestart command-hook rows.
+
+- 8 rows were reviewed and fixed: `RB-01700` through `RB-01707`.
+- `Restart`, `AR-On`, `AR-Off`, `AR-When`, `AR-Time`, `AR-Text`, `AR-Save`, and `AR-Load` now use a shared `GetCommandMobile` guard for null command events and null/deleted command users.
+- `AR-Save` still requires a live `PlayerMobile` with a nondeleted backpack before dropping an `AutoRestarter`; `AR-Load` still assigns the load target for valid users, and its target callback now ignores null/deleted targeters.
+- Valid restart scheduling, AutoRestart setting changes, backpack save behavior, load-target behavior, serialization, public APIs, namespaces, type names, save versions, file location, and project files were preserved.
+- Verification passed: targeted AutoRestart command guard scan, Visual Studio MSBuild `Server.csproj` Debug/x86 build, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output. Generated root executable artifacts were restored.
+
 Next:
 
-1. Continue `POST-BATCH-E` with the next focused P1 runtime-hook group by the active plan, currently `System:Misc`.
+1. Continue `POST-BATCH-E` with the next focused P1 runtime-hook group by the active plan, currently `System:Misc` `World.cs` row `RB-01708`.
 2. Keep P2 Boats and Bulk Orders command-access rows queued until the P2 command-access pass unless source evidence makes them an urgent local blocker.
 3. Preserve serialization, public APIs, namespaces, type names, save versions, and file locations; verify source fixes with `Server.csproj` Debug/x86 build and `.\ConficturaServer.exe -compileonly -nocache`.
 

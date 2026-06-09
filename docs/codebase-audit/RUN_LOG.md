@@ -4559,6 +4559,22 @@ Scope: Deterministic phase runner log for the Confictura codebase audit and reor
 - Result: Targeted scan confirmed Administrator command registration, null/deleted-safe diagnostic logging, and preserved intentional `InvalidOperationException` throw; `Server.csproj` Debug/x86 build passed with Visual Studio Community 2022 MSBuild; compile-only runtime script verification exited 0 and printed no `Listening:` output; generated `ConficturaServer.exe`, `.config`, and `.pdb` were restored; active backlog overlay now includes 91 `POST-BATCH-E` dispositions.
 - Output path: `docs/codebase-audit/outputs/post-batch-e-hooks-gumps-commands-regions-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
 
+### 2026-06-09T10:04:00.0876526-05:00
+
+- Affected phase: Post-audit `POST-BATCH-E-16A` System:Misc AutoRestart command guard repair
+- Cwd: `D:\ConficturaUO`
+- Command: Source review and patch of `RB-01700` through `RB-01707` in `Data/Scripts/System/Misc/AutoRestart.cs`.
+- Result: Added shared `GetCommandMobile` guard for null command events and null/deleted command users across `Restart`, `AR-On`, `AR-Off`, `AR-When`, `AR-Time`, `AR-Text`, `AR-Save`, and `AR-Load`; guarded the load target callback against null/deleted targeters; preserved valid restart scheduling, AutoRestart setting changes, backpack save behavior, load-target behavior, serialization, public APIs, namespaces, type names, save versions, file location, and project files.
+- Output path: `Data/Scripts/System/Misc/AutoRestart.cs`
+
+### 2026-06-09T10:04:00.0876526-05:00
+
+- Affected phase: Post-audit `POST-BATCH-E-16A` verification and audit artifact update
+- Cwd: `D:\ConficturaUO`
+- Command: Targeted AutoRestart command guard `rg` scan; Visual Studio MSBuild `Data/System/Source/Server.csproj /p:Configuration=Debug /p:Platform=x86 /v:minimal`; `.\ConficturaServer.exe -compileonly -nocache`; restore generated root executable artifacts; append `POST-BATCH-E-16A` rows to `post-batch-e-hooks-gumps-commands-regions-review.csv` and the active overlay; update status, README, and next-step artifacts.
+- Result: Targeted scan confirmed command registrations, shared `GetCommandMobile` guard, guarded AutoRestart command handlers, and preserved restart scheduling/save/load target behavior; `Server.csproj` Debug/x86 build passed with Visual Studio Community 2022 MSBuild; compile-only runtime script verification exited 0 and printed no `Listening:` output; generated `ConficturaServer.exe`, `.config`, and `.pdb` were restored; active backlog overlay now includes 99 `POST-BATCH-E` dispositions.
+- Output path: `docs/codebase-audit/outputs/post-batch-e-hooks-gumps-commands-regions-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
+
 ### 2026-06-08T16:42:46.5194703-05:00
 
 - Affected phase: Post-audit `POST-BATCH-D-02A` `Custom:ClearDeckCommand` pooled enumerable ownership repair
