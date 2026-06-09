@@ -4838,3 +4838,19 @@ Scope: Deterministic phase runner log for the Confictura codebase audit and reor
 - Command: Targeted `Magic/Bard/Spells` direct range-scan `rg`; explicit pooled-variable ownership `rg`; Visual Studio MSBuild `Data/System/Source/Server.csproj /p:Configuration=Debug /p:Platform=x86 /v:minimal`; `.\ConficturaServer.exe -compileonly -nocache`; restore generated root executable artifacts; update `post-batch-d-pooled-enumerable-review.csv`, active overlay, status, README, and next-step artifacts.
 - Result: Targeted scan found no remaining direct range scans in `Magic/Bard/Spells`; explicit pooled-variable check showed matching `Free` calls across the 11 touched spell files; `Server.csproj` Debug/x86 build passed; compile-only runtime script verification exited 0 and printed no `Listening:` output; generated `ConficturaServer.exe`, `.config`, and `.pdb` were restored; active backlog overlay now has 470 unique rows including 141 `POST-BATCH-D` fixed rows and 2 `POST-BATCH-D` false positives. `Magic:Bard` queued pooled-enumerable rows are complete.
 - Output path: `docs/codebase-audit/outputs/post-batch-d-pooled-enumerable-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
+
+### 2026-06-08T19:10:10.9806326-05:00
+
+- Affected phase: Post-audit `POST-BATCH-D-36A` `Magic:Bushido` pooled enumerable ownership repair
+- Cwd: `D:\ConficturaUO`
+- Command: Source review and patch of `RB-04832` in `Data/Scripts/Magic/Bushido/MomentumStrike.cs`.
+- Result: Replaced the momentum target collection direct range scan with a local `IPooledEnumerable` variable and `try/finally Free`. Target filtering, mana checks, damage transfer behavior, serialization, namespaces, type names, save versions, and file location were preserved.
+- Output path: `Data/Scripts/Magic/Bushido/MomentumStrike.cs`
+
+### 2026-06-08T19:10:10.9806326-05:00
+
+- Affected phase: Post-audit `POST-BATCH-D-36A` verification and audit artifact update
+- Cwd: `D:\ConficturaUO`
+- Command: Targeted `MomentumStrike.cs` direct range-scan `rg`; explicit pooled-variable ownership `rg`; Visual Studio MSBuild `Data/System/Source/Server.csproj /p:Configuration=Debug /p:Platform=x86 /v:minimal`; `.\ConficturaServer.exe -compileonly -nocache`; restore generated root executable artifacts; update `post-batch-d-pooled-enumerable-review.csv`, active overlay, status, README, and next-step artifacts.
+- Result: Targeted scan found no remaining direct range scans in `MomentumStrike.cs`; explicit pooled-variable check showed a matching `Free` call; `Server.csproj` Debug/x86 build passed; compile-only runtime script verification exited 0 and printed no `Listening:` output; generated `ConficturaServer.exe`, `.config`, and `.pdb` were restored; active backlog overlay now has 471 unique rows including 142 `POST-BATCH-D` fixed rows and 2 `POST-BATCH-D` false positives. `Magic:Bushido` queued pooled-enumerable rows are complete.
+- Output path: `docs/codebase-audit/outputs/post-batch-d-pooled-enumerable-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
