@@ -199,26 +199,33 @@ namespace Server.Custom.Confictura.CloneOfflinePlayerCharacters
 
         private static void OnLogout(LogoutEventArgs e)
         {
-            PlayerMobile playerMobile = e.Mobile as PlayerMobile;
+            if (e == null || e.Mobile == null || e.Mobile.Deleted)
+                return;
+
+            Mobile mobile = e.Mobile;
+            PlayerMobile playerMobile = mobile as PlayerMobile;
 
             if (
-                !(e.Mobile is CharacterClone)
+                !(mobile is CharacterClone)
                 && playerMobile != null
                 && playerMobile.Alive
                 && playerMobile.AccessLevel == AccessLevel.Player
                 && IsValidRegion(playerMobile)
             )
             {
-                CharacterClone characterClone = CloneThings.CreateClone(e.Mobile);
-                CloneThings.CloneMobileProperties(e.Mobile, characterClone);
-                CloneThings.CloneMobileItems(e.Mobile, characterClone);
-                CloneThings.CloneMobileBackpack(e.Mobile, characterClone);
-                CloneThings.CloneMobileMount(e.Mobile, characterClone);
+                CharacterClone characterClone = CloneThings.CreateClone(mobile);
+                CloneThings.CloneMobileProperties(mobile, characterClone);
+                CloneThings.CloneMobileItems(mobile, characterClone);
+                CloneThings.CloneMobileBackpack(mobile, characterClone);
+                CloneThings.CloneMobileMount(mobile, characterClone);
             }
         }
 
         private static void OnLogin(LoginEventArgs e)
         {
+            if (e == null || e.Mobile == null || e.Mobile.Deleted)
+                return;
+
             DeleteClonesOf(e.Mobile);
         }
     }

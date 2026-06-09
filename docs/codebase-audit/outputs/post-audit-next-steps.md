@@ -1057,9 +1057,16 @@ Completed source subbatch: `POST-BATCH-E-03A` fixed the Champions P1 movement-ho
 - Existing valid-mover behavior, serialization, public APIs, namespaces, type names, save versions, and file location were preserved.
 - Verification passed: targeted PlagueBeastLord movement-hook guard scan, Visual Studio MSBuild `Server.csproj` Debug/x86 build, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output. Generated root executable artifacts were restored.
 
+Completed source subbatch: `POST-BATCH-E-04A` fixed the Clone Offline Player Characters P1 login/logout hook rows.
+
+- 2 rows were reviewed and fixed: `RB-01709` and `RB-01710`.
+- `CloneOfflinePlayerCharacters.OnLogout` and `OnLogin` now guard null event args, null mobiles, and deleted mobiles before clone creation/deletion logic.
+- Existing valid login/logout behavior, serialization, public APIs, namespaces, type names, save versions, and file location were preserved.
+- Verification passed: targeted Clone Offline login/logout hook guard scan, Visual Studio MSBuild `Server.csproj` Debug/x86 build, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output. Generated root executable artifacts were restored.
+
 Next:
 
-1. Continue `POST-BATCH-E` with the next P1 runtime-hook group by deterministic order, currently `Clone Offline Player Characters`.
+1. Continue `POST-BATCH-E` with the next P1 runtime-hook/gump-guard group by deterministic order, currently `Crafting Core`.
 2. Keep P2 Boats and Bulk Orders command-access rows queued until the P2 command-access pass unless source evidence makes them an urgent local blocker.
 3. Preserve serialization, public APIs, namespaces, type names, save versions, and file locations; verify source fixes with `Server.csproj` Debug/x86 build and `.\ConficturaServer.exe -compileonly -nocache`.
 
