@@ -909,9 +909,17 @@ Completed source subbatch: `POST-BATCH-D-59A` fixed `Mobiles:Plants` pooled enum
 - Verification passed: targeted `Mobiles/Plants` direct-scan check returned no matches, explicit pooled-variable check showed matching `Free` calls across the six touched loops, `Server.csproj` Debug/x86 build passed, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output.
 - `Mobiles:Plants` queued pooled-enumerable rows are complete.
 
+Completed source subbatch: `POST-BATCH-D-60A` fixed `Mobiles:Reptilian` pooled enumerable ownership.
+
+- 7 rows were reviewed and fixed: `RB-04982` through `RB-04988`.
+- Stone, poison, teleport, shock, drain-life, and splatter-counting scans now pair range results with `try/finally Free`.
+- Existing target collection, first valid teleport target selection, splatter-counting behavior, serialization, namespaces, type names, save versions, and file location were preserved.
+- Verification passed: targeted `Mobiles/Reptilian` direct-scan check returned no matches, explicit pooled-variable check showed matching `Free` calls across the seven touched loops, `Server.csproj` Debug/x86 build passed, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output.
+- `Mobiles:Reptilian` queued pooled-enumerable rows are complete.
+
 Next:
 
-1. Continue `POST-BATCH-D` at the next queued pooled-enumerable backlog row after `RB-04981`, starting `Mobiles:Reptilian` with `BasiliskRiding.cs`.
+1. Continue `POST-BATCH-D` at the next queued pooled-enumerable backlog row after `RB-04988`, starting `Mobiles:Slimes` with `BloodWorm.cs`.
 2. Keep batches focused by system/file; repair only confirmed ownership leaks with `try/finally Free`.
 3. Verify each source batch with the relevant pooled enumerable scan, `Server.csproj` Debug/x86 build, and `.\ConficturaServer.exe -compileonly -nocache`.
 
