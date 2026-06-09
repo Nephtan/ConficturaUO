@@ -4711,6 +4711,22 @@ Scope: Deterministic phase runner log for the Confictura codebase audit and reor
 - Result: Targeted scan confirmed OpenDoorMacroUsed registration and null/deleted guard before map/sector access; `Server.csproj` Debug/x86 build passed with Visual Studio Community 2022 MSBuild; compile-only runtime script verification exited 0 and printed no `Listening:` output; generated `ConficturaServer.exe`, `.config`, and `.pdb` were restored; active backlog overlay now includes 118 `POST-BATCH-E` dispositions.
 - Output path: `docs/codebase-audit/outputs/post-batch-e-hooks-gumps-commands-regions-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
 
+### 2026-06-09T10:56:13.8370017-05:00
+
+- Affected phase: Post-audit `POST-BATCH-E-26A` Items:Food beverage login hook guard repair
+- Cwd: `D:\ConficturaUO`
+- Command: Source review and patch of `RB-01732` in `Data/Scripts/Items/Food/Beverage.cs`.
+- Result: Added null `LoginEventArgs` and null/deleted mobile guards before drunk heave timer checks read BAC, map, or timer table state. Valid beverage BAC timer behavior, serialization, public APIs, namespaces, type names, save versions, file location, and project files were preserved.
+- Output path: `Data/Scripts/Items/Food/Beverage.cs`
+
+### 2026-06-09T10:56:13.8370017-05:00
+
+- Affected phase: Post-audit `POST-BATCH-E-26A` verification and audit artifact update
+- Cwd: `D:\ConficturaUO`
+- Command: Targeted Beverage login hook scan; Visual Studio MSBuild `Data/System/Source/Server.csproj /p:Configuration=Debug /p:Platform=x86 /v:minimal`; `.\ConficturaServer.exe -compileonly -nocache`; restore generated root executable artifacts; append `POST-BATCH-E-26A` row to `post-batch-e-hooks-gumps-commands-regions-review.csv` and the active overlay; update status, README, and next-step artifacts.
+- Result: Targeted scan confirmed EventSink.Login registration and null/deleted guard before BAC/map/timer access; `Server.csproj` Debug/x86 build passed with Visual Studio Community 2022 MSBuild; compile-only runtime script verification exited 0 and printed no `Listening:` output; generated `ConficturaServer.exe`, `.config`, and `.pdb` were restored; active backlog overlay now includes 119 `POST-BATCH-E` dispositions.
+- Output path: `docs/codebase-audit/outputs/post-batch-e-hooks-gumps-commands-regions-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
+
 ### 2026-06-08T16:42:46.5194703-05:00
 
 - Affected phase: Post-audit `POST-BATCH-D-02A` `Custom:ClearDeckCommand` pooled enumerable ownership repair
