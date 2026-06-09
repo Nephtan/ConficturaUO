@@ -5942,3 +5942,19 @@ Scope: Deterministic phase runner log for the Confictura codebase audit and reor
 - Command: Targeted System:Chat gump guard scan; Visual Studio MSBuild `Data/System/Source/Server.csproj /p:Configuration=Debug /p:Platform=x86 /v:minimal`; `.\ConficturaServer.exe -compileonly -nocache`; restore generated root executable artifacts; append `POST-BATCH-E-30A` rows to `post-batch-e-hooks-gumps-commands-regions-review.csv` and the active overlay; update status, README, and next-step artifacts.
 - Result: Targeted scan confirmed SendMessageGump hue-picker and ProfileGump client callback stale-state guards; `Server.csproj` Debug/x86 build passed with Visual Studio Community 2022 MSBuild; compile-only runtime script verification exited 0 and printed no `Listening:` output; generated `ConficturaServer.exe`, `.config`, and `.pdb` were restored; active backlog overlay now includes 142 `POST-BATCH-E` dispositions.
 - Output path: `docs/codebase-audit/outputs/post-batch-e-hooks-gumps-commands-regions-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
+
+### 2026-06-09T11:34:19.3992586-05:00
+
+- Affected phase: Post-audit `POST-BATCH-E-31A` Items:Magical SoulOrb PlayerDeath hook guard repair
+- Cwd: `D:\ConficturaUO`
+- Command: Source review and patch of `RB-01741` in `Data/Scripts/Items/Magical/SoulOrb.cs`.
+- Result: Added a null `PlayerDeathEventArgs` guard before `SoulOrb.EventSink_Death` reads `e.Mobile`. Valid soul-orb resurrection behavior, delayed resurrection scheduling, serialization, public APIs, namespaces, type names, save versions, file location, and project files were preserved.
+- Output path: `Data/Scripts/Items/Magical/SoulOrb.cs`
+
+### 2026-06-09T11:34:19.3992586-05:00
+
+- Affected phase: Post-audit `POST-BATCH-E-31A` verification and audit artifact update
+- Cwd: `D:\ConficturaUO`
+- Command: Targeted SoulOrb PlayerDeath hook scan; Visual Studio MSBuild `Data/System/Source/Server.csproj /p:Configuration=Debug /p:Platform=x86 /v:minimal`; `.\ConficturaServer.exe -compileonly -nocache`; restore generated root executable artifacts; append `POST-BATCH-E-31A` row to `post-batch-e-hooks-gumps-commands-regions-review.csv` and the active overlay; update status, README, and next-step artifacts.
+- Result: Targeted scan confirmed PlayerDeath registration plus null `PlayerDeathEventArgs` guard before `e.Mobile`; `Server.csproj` Debug/x86 build passed with Visual Studio Community 2022 MSBuild; compile-only runtime script verification exited 0 and printed no `Listening:` output; generated `ConficturaServer.exe`, `.config`, and `.pdb` were restored; active backlog overlay now includes 143 `POST-BATCH-E` dispositions.
+- Output path: `docs/codebase-audit/outputs/post-batch-e-hooks-gumps-commands-regions-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
