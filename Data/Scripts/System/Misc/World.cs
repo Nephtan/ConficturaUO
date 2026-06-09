@@ -2603,6 +2603,9 @@ namespace Server.Misc
         [Description("Tells you what world you are in.")]
         public static void WhereWorld_OnCommand(CommandEventArgs e)
         {
+            if (e == null || e.Mobile == null || e.Mobile.Deleted)
+                return;
+
             Mobile from = e.Mobile;
             string sMap = Worlds.GetMyWorld(from.Map, from.Location, from.X, from.Y);
             from.SendMessage("You are currently in " + sMap + ".");
