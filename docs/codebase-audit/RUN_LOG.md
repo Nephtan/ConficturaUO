@@ -5430,3 +5430,19 @@ Scope: Deterministic phase runner log for the Confictura codebase audit and reor
 - Command: Targeted `Trades:Guild` direct range-scan `rg` covering qualified and unqualified `Get*InRange` calls; explicit pooled-variable ownership `rg`; `git diff --check`; Visual Studio MSBuild `Data/System/Source/Server.csproj /p:Configuration=Debug /p:Platform=x86 /v:minimal`; `.\ConficturaServer.exe -compileonly -nocache`; restore generated root executable artifacts; update `post-batch-d-pooled-enumerable-review.csv`, active overlay, status, README, and next-step artifacts.
 - Result: Targeted scan found no remaining direct range scans in the touched guild files; explicit pooled-variable check showed matching `Free` calls across the 10 touched loops; `git diff --check` reported only expected line-ending warnings; `Server.csproj` Debug/x86 build passed; compile-only runtime script verification exited 0 and printed no `Listening:` output; generated `ConficturaServer.exe`, `.config`, and `.pdb` were restored; active backlog overlay now has 734 unique rows including 405 `POST-BATCH-D` fixed rows and 2 `POST-BATCH-D` false positives. `Trades:Guild` queued pooled-enumerable rows are complete.
 - Output path: `docs/codebase-audit/outputs/post-batch-d-pooled-enumerable-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
+
+### 2026-06-08T22:40:58.5435096-05:00
+
+- Affected phase: Post-audit `POST-BATCH-D-73A` `Trades:Harvest` pooled enumerable ownership repair
+- Cwd: `D:\ConficturaUO`
+- Command: Source review and patch of `RB-05096` in `Data/Scripts/Trades/Harvest/HarvestSystem.cs`.
+- Result: Replaced the harvest drop-at-feet item direct range scan with a local `IPooledEnumerable` variable and `try/finally Free`. At-feet item snapshot, stack merge behavior, serialization, namespaces, type names, save versions, and file location were preserved.
+- Output path: `Data/Scripts/Trades/Harvest/HarvestSystem.cs`
+
+### 2026-06-08T22:40:58.5435096-05:00
+
+- Affected phase: Post-audit `POST-BATCH-D-73A` verification, audit artifact update, and `POST-BATCH-D` closeout
+- Cwd: `D:\ConficturaUO`
+- Command: Targeted `Trades:Harvest` direct range-scan `rg` covering qualified and unqualified `Get*InRange` calls; explicit pooled-variable ownership `rg`; `git diff --check`; Visual Studio MSBuild `Data/System/Source/Server.csproj /p:Configuration=Debug /p:Platform=x86 /v:minimal`; `.\ConficturaServer.exe -compileonly -nocache`; restore generated root executable artifacts; update `post-batch-d-pooled-enumerable-review.csv`, active overlay, status, README, and next-step artifacts.
+- Result: Targeted scan found no remaining direct range scans in `HarvestSystem.cs`; explicit pooled-variable check showed a matching `Free` call; `git diff --check` reported only expected line-ending warnings; `Server.csproj` Debug/x86 build passed; compile-only runtime script verification exited 0 and printed no `Listening:` output; generated `ConficturaServer.exe`, `.config`, and `.pdb` were restored; active backlog overlay now has 735 unique rows including 406 `POST-BATCH-D` fixed rows and 2 `POST-BATCH-D` false positives. `POST-BATCH-D` is complete with 408 reviewed pooled-enumerable rows and no remaining queued pooled-enumerable backlog rows.
+- Output path: `docs/codebase-audit/outputs/post-batch-d-pooled-enumerable-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
