@@ -869,9 +869,17 @@ Completed source subbatch: `POST-BATCH-D-54A` fixed `Mobiles:Elementals` pooled 
 - Verification passed: targeted `Mobiles/Elementals` direct-scan check returned no matches, explicit pooled-variable check showed matching `Free` calls across the eight touched loops, `Server.csproj` Debug/x86 build passed, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output.
 - `Mobiles:Elementals` queued pooled-enumerable rows are complete.
 
+Completed source subbatch: `POST-BATCH-D-55A` fixed `Mobiles:Hellish` pooled enumerable ownership.
+
+- 1 row was reviewed and fixed: `RB-04934`.
+- ShadowFiend hidden-player reveal now pairs the range result with `try/finally Free`.
+- Existing reveal filters, serialization, namespaces, type names, save versions, and file location were preserved.
+- Verification passed: targeted `Mobiles/Hellish` direct-scan check returned no matches, explicit pooled-variable check showed a matching `Free` call, `Server.csproj` Debug/x86 build passed, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output.
+- `Mobiles:Hellish` queued pooled-enumerable rows are complete.
+
 Next:
 
-1. Continue `POST-BATCH-D` at the next queued pooled-enumerable backlog row after `RB-04933`, starting `Mobiles:Hellish` with `ShadowFiend.cs`.
+1. Continue `POST-BATCH-D` at the next queued pooled-enumerable backlog row after `RB-04934`, starting `Mobiles:Humanoids` with `Medusa.cs`.
 2. Keep batches focused by system/file; repair only confirmed ownership leaks with `try/finally Free`.
 3. Verify each source batch with the relevant pooled enumerable scan, `Server.csproj` Debug/x86 build, and `.\ConficturaServer.exe -compileonly -nocache`.
 
