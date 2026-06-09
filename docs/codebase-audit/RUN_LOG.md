@@ -4695,6 +4695,22 @@ Scope: Deterministic phase runner log for the Confictura codebase audit and reor
 - Result: Targeted review confirmed the QuestGumpRequest row is inactive, WorldLoad/WorldSave hooks intentionally avoid event-arg dereference, and the speech/movement hooks guard null event args plus null/deleted mobiles; `Server.csproj` Debug/x86 build passed with Visual Studio Community 2022 MSBuild; compile-only runtime script verification exited 0 and printed no `Listening:` output; generated `ConficturaServer.exe`, `.config`, and `.pdb` were restored; active backlog overlay now includes 117 `POST-BATCH-E` dispositions.
 - Output path: `docs/codebase-audit/outputs/post-batch-e-hooks-gumps-commands-regions-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
 
+### 2026-06-09T10:51:31.2071582-05:00
+
+- Affected phase: Post-audit `POST-BATCH-E-25A` Items:Doors door macro hook guard repair
+- Cwd: `D:\ConficturaUO`
+- Command: Source review and patch of `RB-01731` in `Data/Scripts/Items/Doors/BaseDoor.cs`.
+- Result: Added null `OpenDoorMacroEventArgs` and null/deleted mobile guards before direction, map, sector, LOS, and door `OnDoubleClick` processing. Valid door macro behavior, serialization, public APIs, namespaces, type names, save versions, file location, and project files were preserved.
+- Output path: `Data/Scripts/Items/Doors/BaseDoor.cs`
+
+### 2026-06-09T10:51:31.2071582-05:00
+
+- Affected phase: Post-audit `POST-BATCH-E-25A` verification and audit artifact update
+- Cwd: `D:\ConficturaUO`
+- Command: Targeted BaseDoor hook scan; Visual Studio MSBuild `Data/System/Source/Server.csproj /p:Configuration=Debug /p:Platform=x86 /v:minimal`; `.\ConficturaServer.exe -compileonly -nocache`; restore generated root executable artifacts; append `POST-BATCH-E-25A` row to `post-batch-e-hooks-gumps-commands-regions-review.csv` and the active overlay; update status, README, and next-step artifacts.
+- Result: Targeted scan confirmed OpenDoorMacroUsed registration and null/deleted guard before map/sector access; `Server.csproj` Debug/x86 build passed with Visual Studio Community 2022 MSBuild; compile-only runtime script verification exited 0 and printed no `Listening:` output; generated `ConficturaServer.exe`, `.config`, and `.pdb` were restored; active backlog overlay now includes 118 `POST-BATCH-E` dispositions.
+- Output path: `docs/codebase-audit/outputs/post-batch-e-hooks-gumps-commands-regions-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
+
 ### 2026-06-08T16:42:46.5194703-05:00
 
 - Affected phase: Post-audit `POST-BATCH-D-02A` `Custom:ClearDeckCommand` pooled enumerable ownership repair

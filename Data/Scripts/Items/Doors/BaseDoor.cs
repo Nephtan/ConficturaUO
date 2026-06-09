@@ -294,7 +294,13 @@ namespace Server.Items
 
         private static void EventSink_OpenDoorMacroUsed(OpenDoorMacroEventArgs args)
         {
+            if (args == null)
+                return;
+
             Mobile m = args.Mobile;
+
+            if (m == null || m.Deleted)
+                return;
 
             if (m.Map != null)
             {
