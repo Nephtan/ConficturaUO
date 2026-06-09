@@ -1005,9 +1005,17 @@ Completed source subbatch: `POST-BATCH-D-71A` fixed `System:Skills` pooled enume
 - Verification passed: targeted `System:Skills` direct-scan check returned no matches in the touched files, explicit pooled-variable check showed matching `Free` calls across the 10 touched loops, `Server.csproj` Debug/x86 build passed, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output.
 - `System:Skills` queued pooled-enumerable rows are complete.
 
+Completed source subbatch: `POST-BATCH-D-72A` fixed `Trades:Guild` pooled enumerable ownership.
+
+- 10 rows were reviewed and fixed: `RB-05086` through `RB-05095`.
+- GuildCarpentry, GuildFletching, GuildHammer, GuildSewing, and GuildTinkering now pair their nearby guildmaster and shoppe scans with `try/finally Free`.
+- Existing guildmaster count, owned-shoppe count, map fallback authorization, serialization, namespaces, type names, save versions, and file location were preserved.
+- Verification passed: targeted `Trades:Guild` direct-scan check returned no matches in the touched files, explicit pooled-variable check showed matching `Free` calls across the 10 touched loops, `Server.csproj` Debug/x86 build passed, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output.
+- `Trades:Guild` queued pooled-enumerable rows are complete.
+
 Next:
 
-1. Continue `POST-BATCH-D` at the next queued pooled-enumerable backlog row after `RB-05085`, starting `Trades:Guild` with `GuildCarpentry.cs`.
+1. Continue `POST-BATCH-D` at the next queued pooled-enumerable backlog row after `RB-05095`, starting `Trades:Harvest` with `HarvestSystem.cs`.
 2. Keep batches focused by system/file; repair only confirmed ownership leaks with `try/finally Free`.
 3. Verify each source batch with the relevant pooled enumerable scan, `Server.csproj` Debug/x86 build, and `.\ConficturaServer.exe -compileonly -nocache`.
 
