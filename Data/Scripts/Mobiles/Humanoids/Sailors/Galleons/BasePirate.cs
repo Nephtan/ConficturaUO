@@ -1496,12 +1496,20 @@ namespace Server.Mobiles
 
         public bool CaptainCanDie()
         {
-            foreach (Mobile m in GetMobilesInRange(10))
+            IPooledEnumerable eable1 = GetMobilesInRange(10);
+            try
             {
-                if (m is BaseCreature && m.EmoteHue == this.EmoteHue && m != this && m.Alive)
+                foreach (Mobile m in eable1)
                 {
-                    return false;
+                    if (m is BaseCreature && m.EmoteHue == this.EmoteHue && m != this && m.Alive)
+                    {
+                        return false;
+                    }
                 }
+            }
+            finally
+            {
+                eable1.Free();
             }
             return true;
         }

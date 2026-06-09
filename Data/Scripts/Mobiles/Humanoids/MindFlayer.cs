@@ -94,10 +94,18 @@ namespace Server.Mobiles
 
             int monsters = 0;
 
-            foreach (Mobile m in this.GetMobilesInRange(10))
+            IPooledEnumerable eable1 = this.GetMobilesInRange(10);
+            try
             {
-                if (m is EvilEnergyVortex)
-                    ++monsters;
+                foreach (Mobile m in eable1)
+                {
+                    if (m is EvilEnergyVortex)
+                        ++monsters;
+                }
+            }
+            finally
+            {
+                eable1.Free();
             }
 
             if (monsters < 1)
