@@ -997,9 +997,17 @@ Completed source subbatch: `POST-BATCH-D-70A` fixed `System:Regions` pooled enum
 - Verification passed: targeted `System:Regions` direct-scan check returned no matches in `GuardedRegion.cs`, explicit pooled-variable check showed matching `Free` calls, `Server.csproj` Debug/x86 build passed, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output.
 - `System:Regions` queued pooled-enumerable rows are complete.
 
+Completed source subbatch: `POST-BATCH-D-71A` fixed `System:Skills` pooled enumerable ownership.
+
+- 10 rows were reviewed and fixed: `RB-05076` through `RB-05085`.
+- Hiding, Peacemaking, Spiritualism, Stealing, Tracking, FrenziedWhirlwind, LightningArrow, WhirlwindAttack, and DoubleWhirlwindAttack scans now pair range results with `try/finally Free`.
+- Existing combat detection, area peace filters, corpse first-match behavior, thief witness notices, tracking filters, weapon ability target snapshots, serialization, namespaces, type names, save versions, and file location were preserved.
+- Verification passed: targeted `System:Skills` direct-scan check returned no matches in the touched files, explicit pooled-variable check showed matching `Free` calls across the 10 touched loops, `Server.csproj` Debug/x86 build passed, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output.
+- `System:Skills` queued pooled-enumerable rows are complete.
+
 Next:
 
-1. Continue `POST-BATCH-D` at the next queued pooled-enumerable backlog row after `RB-05075`, starting `System:Skills` with `Hiding.cs`.
+1. Continue `POST-BATCH-D` at the next queued pooled-enumerable backlog row after `RB-05085`, starting `Trades:Guild` with `GuildCarpentry.cs`.
 2. Keep batches focused by system/file; repair only confirmed ownership leaks with `try/finally Free`.
 3. Verify each source batch with the relevant pooled enumerable scan, `Server.csproj` Debug/x86 build, and `.\ConficturaServer.exe -compileonly -nocache`.
 

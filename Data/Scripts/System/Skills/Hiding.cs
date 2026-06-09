@@ -82,14 +82,22 @@ namespace Server.SkillHandlers
             {
                 if (!m_CombatOverride)
                 {
-                    foreach (Mobile check in m.GetMobilesInRange(range))
+                    IPooledEnumerable eable = m.GetMobilesInRange(range);
+                    try
                     {
-                        if (check.InLOS(m) && check.Combatant == m)
+                        foreach (Mobile check in eable)
                         {
-                            badCombat = true;
-                            ok = false;
-                            break;
+                            if (check.InLOS(m) && check.Combatant == m)
+                            {
+                                badCombat = true;
+                                ok = false;
+                                break;
+                            }
                         }
+                    }
+                    finally
+                    {
+                        eable.Free();
                     }
                 }
 
