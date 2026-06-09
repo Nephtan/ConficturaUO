@@ -4327,6 +4327,22 @@ Scope: Deterministic phase runner log for the Confictura codebase audit and reor
 - Result: Targeted scan confirmed the intended speech/gump/context-menu guards; `Server.csproj` Debug/x86 build passed with Visual Studio Community 2022 MSBuild; compile-only runtime script verification exited 0 and printed no `Listening:` output; generated `ConficturaServer.exe`, `.config`, and `.pdb` were restored; active backlog overlay now includes 24 `POST-BATCH-E` dispositions.
 - Output path: `docs/codebase-audit/outputs/post-batch-e-hooks-gumps-commands-regions-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
 
+### 2026-06-09T08:43:49.7334198-05:00
+
+- Affected phase: Post-audit `POST-BATCH-E-02B` Bulk Orders BOB filter gump guard repair
+- Cwd: `D:\ConficturaUO`
+- Command: Source review and patch of `RB-02441`, `RB-03214`, `RB-03215`, `RB-03216`, `RB-03217`, `RB-03218`, `RB-03485`, `RB-04169`, `RB-04170`, `RB-04171`, `RB-04172`, and `RB-04173` in `Data/Scripts/Trades/Bulk Orders/Books/Gumps/BOBFilterGump.cs`.
+- Result: Added NetState, PlayerMobile, stale responder, deleted book, and null active filter guards before `BOBFilterGump.OnResponse` mutates filter state or resends `BOBGump`/`BOBFilterGump`. Serialization, public APIs, namespaces, type names, save versions, file locations, and project files were preserved.
+- Output path: `Data/Scripts/Trades/Bulk Orders/Books/Gumps/BOBFilterGump.cs`
+
+### 2026-06-09T08:43:49.7334198-05:00
+
+- Affected phase: Post-audit `POST-BATCH-E-02B` verification and audit artifact update
+- Cwd: `D:\ConficturaUO`
+- Command: Targeted BOB filter guard `rg` scan; Visual Studio MSBuild `Data/System/Source/Server.csproj /p:Configuration=Debug /p:Platform=x86 /v:minimal`; `.\ConficturaServer.exe -compileonly -nocache`; restore generated root executable artifacts; append `POST-BATCH-E-02B` rows to `post-batch-e-hooks-gumps-commands-regions-review.csv` and the active overlay; update status, README, and next-step artifacts.
+- Result: Targeted scan confirmed the intended response-entry guards before filter mutation and SendGump branches; `Server.csproj` Debug/x86 build passed with Visual Studio Community 2022 MSBuild; compile-only runtime script verification exited 0 and printed no `Listening:` output; generated `ConficturaServer.exe`, `.config`, and `.pdb` were restored; active backlog overlay now includes 36 `POST-BATCH-E` dispositions.
+- Output path: `docs/codebase-audit/outputs/post-batch-e-hooks-gumps-commands-regions-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
+
 ### 2026-06-08T16:42:46.5194703-05:00
 
 - Affected phase: Post-audit `POST-BATCH-D-02A` `Custom:ClearDeckCommand` pooled enumerable ownership repair

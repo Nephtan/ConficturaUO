@@ -1038,9 +1038,15 @@ Completed source subbatch: `POST-BATCH-E-02A` continued `POST-BATCH-E` with the 
 - The context-menu `ChangeBodyValue.OnClick` path now guards stale/deleted stored Mobile and stone state before sending the gump.
 - Verification passed: targeted Dragon shape-stone guard scan, Visual Studio MSBuild `Server.csproj` Debug/x86 build, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output. Generated root executable artifacts were restored.
 
+Completed source subbatch: `POST-BATCH-E-02B` continued `POST-BATCH-E` with Bulk Orders `BOBFilterGump.cs`.
+
+- 12 rows were reviewed and fixed: `RB-02441`, `RB-03214`, `RB-03215`, `RB-03216`, `RB-03217`, `RB-03218`, `RB-03485`, `RB-04169`, `RB-04170`, `RB-04171`, `RB-04172`, and `RB-04173`.
+- `BOBFilterGump.OnResponse` now guards null `NetState`, stale/non-player responders, deleted players, deleted books, and null active filters before filter mutation or gump resend branches.
+- Verification passed: targeted BOB filter guard scan, Visual Studio MSBuild `Server.csproj` Debug/x86 build, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output. Generated root executable artifacts were restored.
+
 Next:
 
-1. Continue `POST-BATCH-E` with the next Bulk Orders file slice, currently `Data/Scripts/Trades/Bulk Orders/Books/Gumps/BOBFilterGump.cs`.
+1. Continue `POST-BATCH-E` with the next Bulk Orders file slice, currently `Data/Scripts/Trades/Bulk Orders/Gumps/LargeBODAcceptGump.cs`.
 2. Keep P2 Boats command-access rows queued until the P2 command-access pass unless source evidence makes them an urgent local blocker.
 3. Preserve serialization, public APIs, namespaces, type names, save versions, and file locations; verify source fixes with `Server.csproj` Debug/x86 build and `.\ConficturaServer.exe -compileonly -nocache`.
 
