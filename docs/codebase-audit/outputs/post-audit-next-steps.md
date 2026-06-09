@@ -1284,9 +1284,16 @@ Completed source subbatch: `POST-BATCH-E-32A` fixed the Items:Misc LiarsDice dis
 - Valid LiarsDice player removal, balance return, serialization, public APIs, namespaces, type names, save versions, file location, and project files were preserved.
 - Verification passed: targeted LiarsDice hook scan, Visual Studio MSBuild `Server.csproj` Debug/x86 build, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output. Generated root executable artifacts were restored.
 
+Completed source subbatch: `POST-BATCH-E-33A` fixed the Items:Potions AutoResPotion PlayerDeath hook row.
+
+- 1 row was reviewed and fixed: `RB-01744`.
+- `AutoResPotion.EventSink_Death` now guards null death event args before reading `e.Mobile`.
+- Valid auto-resurrection potion behavior, delayed resurrection scheduling, serialization, public APIs, namespaces, type names, save versions, file location, and project files were preserved.
+- Verification passed: targeted AutoResPotion PlayerDeath hook scan, Visual Studio MSBuild `Server.csproj` Debug/x86 build, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output. Generated root executable artifacts were restored.
+
 Next:
 
-1. Continue `POST-BATCH-E` with the next focused P1 runtime-hook/gump-guard group by the active plan, currently `Items:Potions` row `RB-01744` in `Data/Scripts/Items/Potions/Special/AutoResPotion.cs`.
+1. Continue `POST-BATCH-E` with the next focused P1 runtime-hook/gump-guard group by the active plan, currently `Items:Weapons` rows `RB-01745` and `RB-01746` in `Data/Scripts/Items/Weapons/Hands/Fists.cs`.
 2. Keep P2 Boats and Bulk Orders command-access rows queued until the P2 command-access pass unless source evidence makes them an urgent local blocker.
 3. Preserve serialization, public APIs, namespaces, type names, save versions, and file locations; verify source fixes with `Server.csproj` Debug/x86 build and `.\ConficturaServer.exe -compileonly -nocache`.
 
