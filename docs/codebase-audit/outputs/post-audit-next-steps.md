@@ -853,9 +853,17 @@ Completed source subbatch: `POST-BATCH-D-52A` fixed `Mobiles:Daemons` pooled enu
 - Verification passed: targeted `Mobiles/Daemons` direct-scan check returned no matches, explicit pooled-variable check showed matching `Free` calls across the six touched loops, `Server.csproj` Debug/x86 build passed, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output.
 - `Mobiles:Daemons` queued pooled-enumerable rows are complete.
 
+Completed source subbatch: `POST-BATCH-D-53A` fixed `Mobiles:Dragons` pooled enumerable ownership.
+
+- 6 rows were reviewed and fixed: `RB-04920` through `RB-04925`.
+- Dragon splatter-counting and VampiricDragon drain-life scans now pair range results with `try/finally Free`.
+- Existing splatter selection, drain-life target filters, serialization, namespaces, type names, save versions, and file location were preserved.
+- Verification passed: targeted `Mobiles/Dragons` direct-scan check returned no matches, explicit pooled-variable check showed matching `Free` calls across the six touched loops, `Server.csproj` Debug/x86 build passed, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output.
+- `Mobiles:Dragons` queued pooled-enumerable rows are complete.
+
 Next:
 
-1. Continue `POST-BATCH-D` at the next queued pooled-enumerable backlog row after `RB-04919`, starting `Mobiles:Dragons` with `Dragons.cs`.
+1. Continue `POST-BATCH-D` at the next queued pooled-enumerable backlog row after `RB-04925`, starting `Mobiles:Elementals` with `MudMan.cs`.
 2. Keep batches focused by system/file; repair only confirmed ownership leaks with `try/finally Free`.
 3. Verify each source batch with the relevant pooled enumerable scan, `Server.csproj` Debug/x86 build, and `.\ConficturaServer.exe -compileonly -nocache`.
 
