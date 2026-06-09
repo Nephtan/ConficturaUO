@@ -33,24 +33,32 @@ namespace Server.Mobiles
                 BardHit music = new BardHit();
                 music.Delete();
 
-                foreach (Item instrument in this.GetItemsInRange(1))
+                IPooledEnumerable eable1 = this.GetItemsInRange(1);
+                try
                 {
-                    if (instrument is BardHit)
+                    foreach (Item instrument in eable1)
                     {
-                        if (this.FindItemOnLayer(Layer.FirstValid) != null)
+                        if (instrument is BardHit)
                         {
-                            this.FindItemOnLayer(Layer.TwoHanded).Delete();
+                            if (this.FindItemOnLayer(Layer.FirstValid) != null)
+                            {
+                                this.FindItemOnLayer(Layer.TwoHanded).Delete();
+                            }
+                            else if (this.FindItemOnLayer(Layer.OneHanded) != null)
+                            {
+                                this.FindItemOnLayer(Layer.TwoHanded).Delete();
+                            }
+                            else if (this.FindItemOnLayer(Layer.TwoHanded) != null)
+                            {
+                                this.FindItemOnLayer(Layer.TwoHanded).Delete();
+                            }
+                            music = (BardHit)instrument;
                         }
-                        else if (this.FindItemOnLayer(Layer.OneHanded) != null)
-                        {
-                            this.FindItemOnLayer(Layer.TwoHanded).Delete();
-                        }
-                        else if (this.FindItemOnLayer(Layer.TwoHanded) != null)
-                        {
-                            this.FindItemOnLayer(Layer.TwoHanded).Delete();
-                        }
-                        music = (BardHit)instrument;
                     }
+                }
+                finally
+                {
+                    eable1.Free();
                 }
 
                 if (music.ItemID == 0x27B3)

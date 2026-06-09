@@ -26,39 +26,47 @@ namespace Server.Mobiles
         {
             if (DateTime.Now >= m_NextTalk)
             {
-                foreach (Item dummy in this.GetItemsInRange(1))
+                IPooledEnumerable eable1 = this.GetItemsInRange(1);
+                try
                 {
-                    if (dummy is TrainingDummy || dummy is TrainingDaemon)
+                    foreach (Item dummy in eable1)
                     {
-                        dummy.OnDoubleClick(this);
-
-                        if (dummy is TrainingDummy)
+                        if (dummy is TrainingDummy || dummy is TrainingDaemon)
                         {
-                            if (dummy.X == X)
+                            dummy.OnDoubleClick(this);
+
+                            if (dummy is TrainingDummy)
                             {
-                                dummy.ItemID = 0x1070;
+                                if (dummy.X == X)
+                                {
+                                    dummy.ItemID = 0x1070;
+                                }
+                                else
+                                {
+                                    dummy.ItemID = 0x1074;
+                                }
                             }
                             else
                             {
-                                dummy.ItemID = 0x1074;
+                                if (dummy.X == X)
+                                {
+                                    dummy.ItemID = 0x56B1;
+                                }
+                                else
+                                {
+                                    dummy.ItemID = 0x56AB;
+                                }
                             }
-                        }
-                        else
-                        {
-                            if (dummy.X == X)
-                            {
-                                dummy.ItemID = 0x56B1;
-                            }
-                            else
-                            {
-                                dummy.ItemID = 0x56AB;
-                            }
-                        }
 
-                        m_NextTalk = (
-                            DateTime.Now + TimeSpan.FromSeconds(Utility.RandomMinMax(2, 5))
-                        );
+                            m_NextTalk = (
+                                DateTime.Now + TimeSpan.FromSeconds(Utility.RandomMinMax(2, 5))
+                            );
+                        }
                     }
+                }
+                finally
+                {
+                    eable1.Free();
                 }
             }
         }

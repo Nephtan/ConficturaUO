@@ -829,9 +829,17 @@ Completed source subbatch: `POST-BATCH-D-49A` fixed `Mobiles:Base` `PlayerMobile
 - Verification passed: targeted `PlayerMobile.cs` direct-scan check returned no matches, explicit pooled-variable check showed matching `Free` calls across the two touched loops, `Server.csproj` Debug/x86 build passed, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output.
 - `PlayerMobile.cs` queued pooled-enumerable rows are complete.
 
+Completed source subbatch: `POST-BATCH-D-50A` fixed `Mobiles:Civilized` pooled enumerable ownership.
+
+- 23 rows were reviewed and fixed: `RB-04888` through `RB-04910`.
+- Tradesman, training, working-spot, familiar, and pack-beast scans now pair range results with `try/finally Free`.
+- Existing work actions, cleanup lists, familiar filters, pack-beast eligibility checks, serialization, namespaces, type names, save versions, and file location were preserved.
+- Verification passed: targeted `Mobiles/Civilized` direct-scan check returned no matches, explicit pooled-variable check showed matching `Free` calls across the 23 touched loops, `Server.csproj` Debug/x86 build passed, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output.
+- `Mobiles:Civilized` queued pooled-enumerable rows are complete.
+
 Next:
 
-1. Continue `POST-BATCH-D` at the next queued pooled-enumerable backlog row after `RB-04887`, starting `Mobiles:Civilized` with `TradesmanAlchemist.cs`.
+1. Continue `POST-BATCH-D` at the next queued pooled-enumerable backlog row after `RB-04910`, starting `Mobiles:Constructs` with `WaxSculpture.cs`.
 2. Keep batches focused by system/file; repair only confirmed ownership leaks with `try/finally Free`.
 3. Verify each source batch with the relevant pooled enumerable scan, `Server.csproj` Debug/x86 build, and `.\ConficturaServer.exe -compileonly -nocache`.
 
