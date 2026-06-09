@@ -1050,9 +1050,16 @@ Completed source subbatch: `POST-BATCH-E-02C` completed the Bulk Orders P1 runti
 - `LargeBODAcceptGump`, `LargeBODGump`, `SmallBODAcceptGump`, and `SmallBODGump` now guard null `NetState`, stale responders, deleted mobiles, deleted deeds, missing backpacks, and stale backpack ownership before accept, cancel, combine, or gump resend branches.
 - Verification passed: targeted large/small BOD gump guard scan, Visual Studio MSBuild `Server.csproj` Debug/x86 build, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output. Generated root executable artifacts were restored.
 
+Completed source subbatch: `POST-BATCH-E-03A` fixed the Champions P1 movement-hook rows in `PlagueBeastLord.cs`.
+
+- 2 rows were reviewed and fixed: `RB-01997` and `RB-01998`.
+- `PlagueBeastLord.OnMovement` now guards null/deleted movers and deleted backpacks before `IsAccessibleTo` and `SendRemovePacket`.
+- Existing valid-mover behavior, serialization, public APIs, namespaces, type names, save versions, and file location were preserved.
+- Verification passed: targeted PlagueBeastLord movement-hook guard scan, Visual Studio MSBuild `Server.csproj` Debug/x86 build, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output. Generated root executable artifacts were restored.
+
 Next:
 
-1. Continue `POST-BATCH-E` with the next P1 runtime-hook group by deterministic order, currently `Champions`.
+1. Continue `POST-BATCH-E` with the next P1 runtime-hook group by deterministic order, currently `Clone Offline Player Characters`.
 2. Keep P2 Boats and Bulk Orders command-access rows queued until the P2 command-access pass unless source evidence makes them an urgent local blocker.
 3. Preserve serialization, public APIs, namespaces, type names, save versions, and file locations; verify source fixes with `Server.csproj` Debug/x86 build and `.\ConficturaServer.exe -compileonly -nocache`.
 

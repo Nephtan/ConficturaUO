@@ -131,13 +131,18 @@ namespace Server.Mobiles
         {
             base.OnMovement(m, oldLocation);
 
+            Container pack = Backpack;
+
             if (
-                Backpack != null
+                m != null
+                && !m.Deleted
+                && pack != null
+                && !pack.Deleted
                 && IsAccessibleTo(m)
                 && m.InRange(oldLocation, 3)
                 && !m.InRange(this, 3)
             )
-                Backpack.SendRemovePacket();
+                pack.SendRemovePacket();
         }
 
         public override bool CheckNonlocalLift(Mobile from, Item item)

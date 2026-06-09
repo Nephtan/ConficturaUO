@@ -4359,6 +4359,22 @@ Scope: Deterministic phase runner log for the Confictura codebase audit and reor
 - Result: Targeted scan confirmed the intended response-entry guards before accept, cancel, combine, and SendGump branches; `Server.csproj` Debug/x86 build passed with Visual Studio Community 2022 MSBuild; compile-only runtime script verification exited 0 and printed no `Listening:` output; generated `ConficturaServer.exe`, `.config`, and `.pdb` were restored; active backlog overlay now includes 48 `POST-BATCH-E` dispositions.
 - Output path: `docs/codebase-audit/outputs/post-batch-e-hooks-gumps-commands-regions-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
 
+### 2026-06-09T08:53:45.8104115-05:00
+
+- Affected phase: Post-audit `POST-BATCH-E-03A` Champions movement-hook guard repair
+- Cwd: `D:\ConficturaUO`
+- Command: Source review and patch of `RB-01997` and `RB-01998` in `Data/Scripts/Custom/Champions/Mobiles/Minions/PlagueBeastLord.cs`.
+- Result: Added null/deleted mover and deleted backpack guards before `PlagueBeastLord.OnMovement` calls `IsAccessibleTo` or `SendRemovePacket`. Valid-mover behavior, serialization, public APIs, namespaces, type names, save versions, file locations, and project files were preserved.
+- Output path: `Data/Scripts/Custom/Champions/Mobiles/Minions/PlagueBeastLord.cs`
+
+### 2026-06-09T08:53:45.8104115-05:00
+
+- Affected phase: Post-audit `POST-BATCH-E-03A` verification and audit artifact update
+- Cwd: `D:\ConficturaUO`
+- Command: Targeted PlagueBeastLord movement-hook guard `rg` scan; Visual Studio MSBuild `Data/System/Source/Server.csproj /p:Configuration=Debug /p:Platform=x86 /v:minimal`; `.\ConficturaServer.exe -compileonly -nocache`; restore generated root executable artifacts; append `POST-BATCH-E-03A` rows to `post-batch-e-hooks-gumps-commands-regions-review.csv` and the active overlay; update status, README, and next-step artifacts.
+- Result: Targeted scan confirmed mover/backpack guards before `SendRemovePacket`; `Server.csproj` Debug/x86 build passed with Visual Studio Community 2022 MSBuild; compile-only runtime script verification exited 0 and printed no `Listening:` output; generated `ConficturaServer.exe`, `.config`, and `.pdb` were restored; active backlog overlay now includes 50 `POST-BATCH-E` dispositions.
+- Output path: `docs/codebase-audit/outputs/post-batch-e-hooks-gumps-commands-regions-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
+
 ### 2026-06-08T16:42:46.5194703-05:00
 
 - Affected phase: Post-audit `POST-BATCH-D-02A` `Custom:ClearDeckCommand` pooled enumerable ownership repair
