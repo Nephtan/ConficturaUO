@@ -4671,6 +4671,14 @@ Scope: Deterministic phase runner log for the Confictura codebase audit and reor
 - Result: Targeted scan confirmed login registration and null/deleted/no-account guard before `ToldAFriend`/`GotAFriend`/account reward logic; `Server.csproj` Debug/x86 build passed with Visual Studio Community 2022 MSBuild; compile-only runtime script verification exited 0 and printed no `Listening:` output; generated `ConficturaServer.exe`, `.config`, and `.pdb` were restored; active backlog overlay now includes 109 `POST-BATCH-E` dispositions.
 - Output path: `docs/codebase-audit/outputs/post-batch-e-hooks-gumps-commands-regions-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
 
+### 2026-06-09T10:35:40.1743598-05:00
+
+- Affected phase: Post-audit `POST-BATCH-E-23A` Custom:Voting config persistence hook review
+- Cwd: `D:\ConficturaUO`
+- Command: Source review of `RB-01721` and `RB-01722` in `Data/Scripts/Custom/Voting/VoteConfig.cs`; update `post-batch-e-hooks-gumps-commands-regions-review.csv`, active overlay, status, README, and next-step artifacts.
+- Result: Classified both rows `ReviewedNoChange`. `EventSink_WorldSave` serializes singleton-backed `VoteConfig.Instance` without dereferencing event args; `EventSink_ServerStarted` deserializes singleton-backed `VoteConfig.Instance` and has no event args. No source files changed; source build and compile-only runtime script verification were not required for this review-only batch. Active backlog overlay now includes 111 `POST-BATCH-E` dispositions.
+- Output path: `docs/codebase-audit/outputs/post-batch-e-hooks-gumps-commands-regions-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
+
 ### 2026-06-08T16:42:46.5194703-05:00
 
 - Affected phase: Post-audit `POST-BATCH-D-02A` `Custom:ClearDeckCommand` pooled enumerable ownership repair

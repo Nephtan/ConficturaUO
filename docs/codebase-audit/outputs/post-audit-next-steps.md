@@ -1204,9 +1204,17 @@ Completed source subbatch: `POST-BATCH-E-22A` fixed the Custom:TellAFriend login
 - Valid login referral behavior, serialization, public APIs, namespaces, type names, save versions, file location, and project files were preserved.
 - Verification passed: targeted TellAFriend hook scan, Visual Studio MSBuild `Server.csproj` Debug/x86 build, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output. Generated root executable artifacts were restored.
 
+Completed review-only subbatch: `POST-BATCH-E-23A` reviewed Custom:Voting config persistence hook rows.
+
+- 2 rows were reviewed and classified `ReviewedNoChange`: `RB-01721` and `RB-01722`.
+- `EventSink_WorldSave` serializes `VoteConfig.Instance` without dereferencing event args.
+- `EventSink_ServerStarted` deserializes `VoteConfig.Instance` and has no event args.
+- `Instance` is singleton-backed before both calls; no source files changed.
+- Verification passed: targeted Voting hook source review. Source build and compile-only verification were not required for this review-only batch.
+
 Next:
 
-1. Continue `POST-BATCH-E` with the next focused P1 runtime-hook group by the active plan, currently Custom:Voting `VoteConfig.cs` rows `RB-01721` and `RB-01722`.
+1. Continue `POST-BATCH-E` with the next focused P1 runtime-hook group by the active plan, currently XMLSpawner rows beginning at `RB-01723`.
 2. Keep P2 Boats and Bulk Orders command-access rows queued until the P2 command-access pass unless source evidence makes them an urgent local blocker.
 3. Preserve serialization, public APIs, namespaces, type names, save versions, and file locations; verify source fixes with `Server.csproj` Debug/x86 build and `.\ConficturaServer.exe -compileonly -nocache`.
 
