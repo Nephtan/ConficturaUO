@@ -4607,6 +4607,22 @@ Scope: Deterministic phase runner log for the Confictura codebase audit and reor
 - Result: Targeted scan confirmed constructor `EventSink` rows are commented inactive, active `Initialize` registrations remain, and login/logout handlers now guard null/deleted/no-backpack mobiles; `Server.csproj` Debug/x86 build passed with Visual Studio Community 2022 MSBuild; compile-only runtime script verification exited 0 and printed no `Listening:` output; generated `ConficturaServer.exe`, `.config`, and `.pdb` were restored; active backlog overlay now includes 104 `POST-BATCH-E` dispositions.
 - Output path: `docs/codebase-audit/outputs/post-batch-e-hooks-gumps-commands-regions-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
 
+### 2026-06-09T10:19:11.1303372-05:00
+
+- Affected phase: Post-audit `POST-BATCH-E-19A` OmniAI stun-request invocation guard repair
+- Cwd: `D:\ConficturaUO`
+- Command: Source review and patch of `RB-01716` in `Data/Scripts/Custom/OmniAI/OmniAI Shared.cs`.
+- Result: Added null/deleted `m_Mobile` guard at the start of `UseWeaponStrike` before weapon skill checks, weapon ability assignment, or `EventSink.InvokeStunRequest`. Valid live-mobile weapon-strike behavior, serialization, public APIs, namespaces, type names, save versions, file location, and project files were preserved.
+- Output path: `Data/Scripts/Custom/OmniAI/OmniAI Shared.cs`
+
+### 2026-06-09T10:19:11.1303372-05:00
+
+- Affected phase: Post-audit `POST-BATCH-E-19A` verification and audit artifact update
+- Cwd: `D:\ConficturaUO`
+- Command: Targeted OmniAI `UseWeaponStrike` `rg` scan; Visual Studio MSBuild `Data/System/Source/Server.csproj /p:Configuration=Debug /p:Platform=x86 /v:minimal`; `.\ConficturaServer.exe -compileonly -nocache`; restore generated root executable artifacts; append `POST-BATCH-E-19A` row to `post-batch-e-hooks-gumps-commands-regions-review.csv` and the active overlay; update status, README, and next-step artifacts.
+- Result: Targeted scan confirmed null/deleted `m_Mobile` guard precedes `WeaponAbility.SetCurrentAbility` and `EventSink.InvokeStunRequest`; `Server.csproj` Debug/x86 build passed with Visual Studio Community 2022 MSBuild; compile-only runtime script verification exited 0 and printed no `Listening:` output; generated `ConficturaServer.exe`, `.config`, and `.pdb` were restored; active backlog overlay now includes 105 `POST-BATCH-E` dispositions.
+- Output path: `docs/codebase-audit/outputs/post-batch-e-hooks-gumps-commands-regions-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
+
 ### 2026-06-08T16:42:46.5194703-05:00
 
 - Affected phase: Post-audit `POST-BATCH-D-02A` `Custom:ClearDeckCommand` pooled enumerable ownership repair

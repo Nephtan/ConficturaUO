@@ -199,6 +199,9 @@ namespace Server.Mobiles
 
         public void UseWeaponStrike()
         {
+            if (m_Mobile == null || m_Mobile.Deleted)
+                return;
+
             m_Mobile.DebugSay("Picking a weapon move");
 
             BaseWeapon weapon = m_Mobile.FindItemOnLayer(Layer.OneHanded) as BaseWeapon;
