@@ -893,10 +893,19 @@ namespace Server.Items
             {
                 int fool = 0;
 
-                foreach (Mobile m in this.GetMobilesInRange(20))
+                IPooledEnumerable eable = this.GetMobilesInRange(20);
+
+                try
                 {
-                    if (m is Jester || m is ChucklesJester)
-                        ++fool;
+                    foreach (Mobile m in eable)
+                    {
+                        if (m is Jester || m is ChucklesJester)
+                            ++fool;
+                    }
+                }
+                finally
+                {
+                    eable.Free();
                 }
 
                 if (fool == 0)

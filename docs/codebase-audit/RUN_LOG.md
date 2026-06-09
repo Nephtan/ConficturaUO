@@ -4886,3 +4886,19 @@ Scope: Deterministic phase runner log for the Confictura codebase audit and reor
 - Command: Targeted `Magic/Elementalism` direct range-scan `rg`; explicit pooled-variable ownership `rg`; Visual Studio MSBuild `Data/System/Source/Server.csproj /p:Configuration=Debug /p:Platform=x86 /v:minimal`; `.\ConficturaServer.exe -compileonly -nocache`; restore generated root executable artifacts; update `post-batch-d-pooled-enumerable-review.csv`, active overlay, status, README, and next-step artifacts.
 - Result: Targeted scan found no remaining direct range scans in the touched `Magic:Elementalism` files; explicit pooled-variable check showed matching `Free` calls across the 10 touched files; `Server.csproj` Debug/x86 build passed; compile-only runtime script verification exited 0 and printed no `Listening:` output; generated `ConficturaServer.exe`, `.config`, and `.pdb` were restored; active backlog overlay now has 482 unique rows including 153 `POST-BATCH-D` fixed rows and 2 `POST-BATCH-D` false positives. `Magic:Elementalism` queued pooled-enumerable rows are complete.
 - Output path: `docs/codebase-audit/outputs/post-batch-d-pooled-enumerable-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
+
+### 2026-06-08T19:24:31.4575885-05:00
+
+- Affected phase: Post-audit `POST-BATCH-D-39A` `Magic:Jester` pooled enumerable ownership repair
+- Cwd: `D:\ConficturaUO`
+- Command: Source review and patch of `RB-04844` through `RB-04848` in `Data/Scripts/Magic/Jester`.
+- Result: Replaced jester proximity, prank explosion, splatter-count, and Hilarity target direct range scans with local `IPooledEnumerable` variables and `try/finally Free`. Prank point checks, explosion target filters, splatter creation gates, Hilarity creature/non-creature filters, serialization, namespaces, type names, save versions, and file locations were preserved.
+- Output path: `Data/Scripts/Magic/Jester/BagOfTricks.cs`; `Data/Scripts/Magic/Jester/SummonedPrank.cs`; `Data/Scripts/Magic/Jester/Spells/FlowerPower.cs`; `Data/Scripts/Magic/Jester/Spells/Hilarity.cs`; `Data/Scripts/Magic/Jester/Spells/SeltzerBottle.cs`
+
+### 2026-06-08T19:24:31.4575885-05:00
+
+- Affected phase: Post-audit `POST-BATCH-D-39A` verification and audit artifact update
+- Cwd: `D:\ConficturaUO`
+- Command: Targeted `Magic/Jester` direct range-scan `rg`; explicit pooled-variable ownership `rg`; Visual Studio MSBuild `Data/System/Source/Server.csproj /p:Configuration=Debug /p:Platform=x86 /v:minimal`; `.\ConficturaServer.exe -compileonly -nocache`; restore generated root executable artifacts; update `post-batch-d-pooled-enumerable-review.csv`, active overlay, status, README, and next-step artifacts.
+- Result: Targeted scan found no remaining direct range scans in `Magic/Jester`; explicit pooled-variable check showed matching `Free` calls across the five touched files; `Server.csproj` Debug/x86 build passed; compile-only runtime script verification exited 0 and printed no `Listening:` output; generated `ConficturaServer.exe`, `.config`, and `.pdb` were restored; active backlog overlay now has 487 unique rows including 158 `POST-BATCH-D` fixed rows and 2 `POST-BATCH-D` false positives. `Magic:Jester` queued pooled-enumerable rows are complete.
+- Output path: `docs/codebase-audit/outputs/post-batch-d-pooled-enumerable-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
