@@ -709,9 +709,17 @@ Completed source subbatch: `POST-BATCH-D-34A` fixed `Items:Weapons` `BaseWeapon.
 - Verification passed: targeted `BaseWeapon.cs` direct-scan check returned no matches, explicit pooled-variable check showed matching `Free` calls, `Server.csproj` Debug/x86 build passed, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output.
 - `Items:Weapons` queued pooled-enumerable rows are complete.
 
+Completed source subbatch: `POST-BATCH-D-35A` fixed `Magic:Bard` spell pooled enumerable ownership.
+
+- 11 rows were reviewed and fixed: `RB-04821` through `RB-04831`.
+- Nearby song target collection in Bard spell files now pairs range results with `try/finally Free`.
+- Existing beneficial target filters, Magic Finale summoned/control-slot filters, song effects, serialization, namespaces, type names, save versions, and file locations were preserved.
+- Verification passed: targeted `Magic/Bard/Spells` direct-scan check returned no matches, explicit pooled-variable check showed matching `Free` calls across the 11 touched spell files, `Server.csproj` Debug/x86 build passed, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output.
+- `Magic:Bard` queued pooled-enumerable rows are complete.
+
 Next:
 
-1. Continue `POST-BATCH-D` at the next queued pooled-enumerable backlog row after `RB-04820`, starting `Magic:Bard` with `ArmysPaeonSong.cs`.
+1. Continue `POST-BATCH-D` at the next queued pooled-enumerable backlog row after `RB-04831`, starting `Magic:Bushido` with `MomentumStrike.cs`.
 2. Keep batches focused by system/file; repair only confirmed ownership leaks with `try/finally Free`.
 3. Verify each source batch with the relevant pooled enumerable scan, `Server.csproj` Debug/x86 build, and `.\ConficturaServer.exe -compileonly -nocache`.
 

@@ -4822,3 +4822,19 @@ Scope: Deterministic phase runner log for the Confictura codebase audit and reor
 - Command: Targeted `BaseWeapon.cs` direct range-scan `rg`; explicit pooled-variable ownership `rg`; Visual Studio MSBuild `Data/System/Source/Server.csproj /p:Configuration=Debug /p:Platform=x86 /v:minimal`; `.\ConficturaServer.exe -compileonly -nocache`; restore generated root executable artifacts; update `post-batch-d-pooled-enumerable-review.csv`, active overlay, status, README, and next-step artifacts.
 - Result: Targeted scan found no remaining direct range scans in `BaseWeapon.cs`; explicit pooled-variable check showed matching `Free` calls; `Server.csproj` Debug/x86 build passed; compile-only runtime script verification exited 0 and printed no `Listening:` output; generated `ConficturaServer.exe`, `.config`, and `.pdb` were restored; active backlog overlay now has 459 unique rows including 130 `POST-BATCH-D` fixed rows and 2 `POST-BATCH-D` false positives. `Items:Weapons` queued pooled-enumerable rows are complete.
 - Output path: `docs/codebase-audit/outputs/post-batch-d-pooled-enumerable-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
+
+### 2026-06-08T19:04:47.1924696-05:00
+
+- Affected phase: Post-audit `POST-BATCH-D-35A` `Magic:Bard` pooled enumerable ownership repair
+- Cwd: `D:\ConficturaUO`
+- Command: Source review and patch of `RB-04821` through `RB-04831` in `Data/Scripts/Magic/Bard/Spells`.
+- Result: Replaced 11 Bard song nearby target-collection direct range scans with local `IPooledEnumerable` variables and `try/finally Free`. Beneficial target filters, Magic Finale summoned/control-slot filters, song effects, serialization, namespaces, type names, save versions, and file locations were preserved.
+- Output path: `Data/Scripts/Magic/Bard/Spells/ArmysPaeonSong.cs`; `Data/Scripts/Magic/Bard/Spells/EnchantingEtudeSong.cs`; `Data/Scripts/Magic/Bard/Spells/EnergyCarolSong.cs`; `Data/Scripts/Magic/Bard/Spells/FireCarolSong.cs`; `Data/Scripts/Magic/Bard/Spells/IceCarolSong.cs`; `Data/Scripts/Magic/Bard/Spells/KnightsMinneSong.cs`; `Data/Scripts/Magic/Bard/Spells/MagesBalladSong.cs`; `Data/Scripts/Magic/Bard/Spells/MagicFinaleSong.cs`; `Data/Scripts/Magic/Bard/Spells/PoisonCarolSong.cs`; `Data/Scripts/Magic/Bard/Spells/SheepfoeMamboSong.cs`; `Data/Scripts/Magic/Bard/Spells/SinewyEtudeSong.cs`
+
+### 2026-06-08T19:04:47.1924696-05:00
+
+- Affected phase: Post-audit `POST-BATCH-D-35A` verification and audit artifact update
+- Cwd: `D:\ConficturaUO`
+- Command: Targeted `Magic/Bard/Spells` direct range-scan `rg`; explicit pooled-variable ownership `rg`; Visual Studio MSBuild `Data/System/Source/Server.csproj /p:Configuration=Debug /p:Platform=x86 /v:minimal`; `.\ConficturaServer.exe -compileonly -nocache`; restore generated root executable artifacts; update `post-batch-d-pooled-enumerable-review.csv`, active overlay, status, README, and next-step artifacts.
+- Result: Targeted scan found no remaining direct range scans in `Magic/Bard/Spells`; explicit pooled-variable check showed matching `Free` calls across the 11 touched spell files; `Server.csproj` Debug/x86 build passed; compile-only runtime script verification exited 0 and printed no `Listening:` output; generated `ConficturaServer.exe`, `.config`, and `.pdb` were restored; active backlog overlay now has 470 unique rows including 141 `POST-BATCH-D` fixed rows and 2 `POST-BATCH-D` false positives. `Magic:Bard` queued pooled-enumerable rows are complete.
+- Output path: `docs/codebase-audit/outputs/post-batch-d-pooled-enumerable-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
