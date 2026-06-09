@@ -1167,9 +1167,17 @@ Completed source subbatch: `POST-BATCH-E-17A` fixed the System:Misc world comman
 - Valid Administrator world-command behavior, serialization, public APIs, namespaces, type names, save versions, file location, and project files were preserved.
 - Verification passed: targeted World command guard scan, Visual Studio MSBuild `Server.csproj` Debug/x86 build, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output. Generated root executable artifacts were restored.
 
+Completed source subbatch: `POST-BATCH-E-18A` reviewed and fixed Offline Skill Training `StudyBook.cs` login/logout hook rows.
+
+- 4 rows were reviewed: `RB-01712` through `RB-01715`.
+- `RB-01712` and `RB-01713` were classified `FalsePositive` because they match line-commented constructor `EventSink` subscriptions.
+- `RB-01714` and `RB-01715` were fixed: `OnLogin` and `OnLogout` now guard null event args, null mobiles, deleted mobiles, and missing backpacks before scanning user backpack contents.
+- Active `Initialize` login/logout subscriptions remain; valid login/logout training behavior, serialization, public APIs, namespaces, type names, save versions, file location, and project files were preserved.
+- Verification passed: targeted StudyBook hook scan, Visual Studio MSBuild `Server.csproj` Debug/x86 build, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output. Generated root executable artifacts were restored.
+
 Next:
 
-1. Continue `POST-BATCH-E` with the next focused P1 runtime-hook group by the active plan, currently Offline Skill Training `StudyBook.cs` rows `RB-01712` through `RB-01715`.
+1. Continue `POST-BATCH-E` with the next focused P1 runtime-hook group by the active plan, currently OmniAI `OmniAI Shared.cs` row `RB-01716`.
 2. Keep P2 Boats and Bulk Orders command-access rows queued until the P2 command-access pass unless source evidence makes them an urgent local blocker.
 3. Preserve serialization, public APIs, namespaces, type names, save versions, and file locations; verify source fixes with `Server.csproj` Debug/x86 build and `.\ConficturaServer.exe -compileonly -nocache`.
 

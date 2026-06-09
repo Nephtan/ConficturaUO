@@ -4591,6 +4591,22 @@ Scope: Deterministic phase runner log for the Confictura codebase audit and reor
 - Result: Targeted scan confirmed Administrator world command registration, null/deleted guard before `Worlds.GetMyWorld`, and preserved valid world-location response behavior; `Server.csproj` Debug/x86 build passed with Visual Studio Community 2022 MSBuild; compile-only runtime script verification exited 0 and printed no `Listening:` output; generated `ConficturaServer.exe`, `.config`, and `.pdb` were restored; active backlog overlay now includes 100 `POST-BATCH-E` dispositions.
 - Output path: `docs/codebase-audit/outputs/post-batch-e-hooks-gumps-commands-regions-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
 
+### 2026-06-09T10:14:22.4498695-05:00
+
+- Affected phase: Post-audit `POST-BATCH-E-18A` Offline Skill Training login/logout hook review and repair
+- Cwd: `D:\ConficturaUO`
+- Command: Source review and patch of `RB-01712` through `RB-01715` in `Data/Scripts/Custom/Offline Skill Training/Items/StudyBook.cs`.
+- Result: Classified the constructor `EventSink.Login` and `EventSink.Logout` rows as false positives because both are line-commented inactive code. Added null event args, null mobile, deleted-mobile, and missing-backpack guards to active `OnLogin` and `OnLogout` before scanning the user's backpack for `StudyBook` instances. Valid login/logout training behavior, serialization, public APIs, namespaces, type names, save versions, file location, and project files were preserved.
+- Output path: `Data/Scripts/Custom/Offline Skill Training/Items/StudyBook.cs`
+
+### 2026-06-09T10:14:22.4498695-05:00
+
+- Affected phase: Post-audit `POST-BATCH-E-18A` verification and audit artifact update
+- Cwd: `D:\ConficturaUO`
+- Command: Targeted Offline Skill Training StudyBook hook `rg` scan; Visual Studio MSBuild `Data/System/Source/Server.csproj /p:Configuration=Debug /p:Platform=x86 /v:minimal`; `.\ConficturaServer.exe -compileonly -nocache`; restore generated root executable artifacts; append `POST-BATCH-E-18A` rows to `post-batch-e-hooks-gumps-commands-regions-review.csv` and the active overlay; update status, README, and next-step artifacts.
+- Result: Targeted scan confirmed constructor `EventSink` rows are commented inactive, active `Initialize` registrations remain, and login/logout handlers now guard null/deleted/no-backpack mobiles; `Server.csproj` Debug/x86 build passed with Visual Studio Community 2022 MSBuild; compile-only runtime script verification exited 0 and printed no `Listening:` output; generated `ConficturaServer.exe`, `.config`, and `.pdb` were restored; active backlog overlay now includes 104 `POST-BATCH-E` dispositions.
+- Output path: `docs/codebase-audit/outputs/post-batch-e-hooks-gumps-commands-regions-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
+
 ### 2026-06-08T16:42:46.5194703-05:00
 
 - Affected phase: Post-audit `POST-BATCH-D-02A` `Custom:ClearDeckCommand` pooled enumerable ownership repair
