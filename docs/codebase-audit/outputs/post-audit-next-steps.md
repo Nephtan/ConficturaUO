@@ -797,9 +797,17 @@ Completed source subbatch: `POST-BATCH-D-45A` fixed `Mobiles:Animals` pooled enu
 - Verification passed: targeted `Mobiles/Animals` direct-scan check returned no matches in the touched files, explicit pooled-variable check showed matching `Free` calls across the two touched files, `Server.csproj` Debug/x86 build passed, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output.
 - `Mobiles:Animals` queued pooled-enumerable rows are complete.
 
+Completed source subbatch: `POST-BATCH-D-46A` fixed `Mobiles:Base` `BaseCreature.cs` pooled enumerable ownership.
+
+- 5 rows were reviewed and fixed: `RB-04870` through `RB-04874`.
+- Breath splash, team-size, boat-link, rummage, and pet-teleport scans now pair range results with `try/finally Free`.
+- Existing target filters, early break behavior, boat-link keep/delete behavior, pet selection, serialization, namespaces, type names, save versions, and file location were preserved.
+- Verification passed: targeted `BaseCreature.cs` direct-scan check returned no matches, explicit pooled-variable check showed matching `Free` calls across the five touched loops, `Server.csproj` Debug/x86 build passed, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output.
+- `BaseCreature.cs` queued pooled-enumerable rows are complete.
+
 Next:
 
-1. Continue `POST-BATCH-D` at the next queued pooled-enumerable backlog row after `RB-04869`, starting `Mobiles:Base` with `BaseCreature.cs`.
+1. Continue `POST-BATCH-D` at the next queued pooled-enumerable backlog row after `RB-04874`, continuing `Mobiles:Base` with `BaseVendor.cs`.
 2. Keep batches focused by system/file; repair only confirmed ownership leaks with `try/finally Free`.
 3. Verify each source batch with the relevant pooled enumerable scan, `Server.csproj` Debug/x86 build, and `.\ConficturaServer.exe -compileonly -nocache`.
 
