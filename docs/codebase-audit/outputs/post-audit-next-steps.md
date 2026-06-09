@@ -1044,10 +1044,16 @@ Completed source subbatch: `POST-BATCH-E-02B` continued `POST-BATCH-E` with Bulk
 - `BOBFilterGump.OnResponse` now guards null `NetState`, stale/non-player responders, deleted players, deleted books, and null active filters before filter mutation or gump resend branches.
 - Verification passed: targeted BOB filter guard scan, Visual Studio MSBuild `Server.csproj` Debug/x86 build, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output. Generated root executable artifacts were restored.
 
+Completed source subbatch: `POST-BATCH-E-02C` completed the Bulk Orders P1 runtime-hook/gump-guard file slices across the large/small BOD accept and display gumps.
+
+- 12 rows were reviewed and fixed: `RB-02442`, `RB-03486`, `RB-02443`, `RB-03219`, `RB-03487`, `RB-04174`, `RB-02444`, `RB-03488`, `RB-02445`, `RB-03220`, `RB-03489`, and `RB-04175`.
+- `LargeBODAcceptGump`, `LargeBODGump`, `SmallBODAcceptGump`, and `SmallBODGump` now guard null `NetState`, stale responders, deleted mobiles, deleted deeds, missing backpacks, and stale backpack ownership before accept, cancel, combine, or gump resend branches.
+- Verification passed: targeted large/small BOD gump guard scan, Visual Studio MSBuild `Server.csproj` Debug/x86 build, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output. Generated root executable artifacts were restored.
+
 Next:
 
-1. Continue `POST-BATCH-E` with the next Bulk Orders file slice, currently `Data/Scripts/Trades/Bulk Orders/Gumps/LargeBODAcceptGump.cs`.
-2. Keep P2 Boats command-access rows queued until the P2 command-access pass unless source evidence makes them an urgent local blocker.
+1. Continue `POST-BATCH-E` with the next P1 runtime-hook group by deterministic order, currently `Champions`.
+2. Keep P2 Boats and Bulk Orders command-access rows queued until the P2 command-access pass unless source evidence makes them an urgent local blocker.
 3. Preserve serialization, public APIs, namespaces, type names, save versions, and file locations; verify source fixes with `Server.csproj` Debug/x86 build and `.\ConficturaServer.exe -compileonly -nocache`.
 
 ## Reorganization Status
