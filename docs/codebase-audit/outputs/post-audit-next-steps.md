@@ -725,9 +725,17 @@ Completed source subbatch: `POST-BATCH-D-36A` fixed `Magic:Bushido` `MomentumStr
 - Verification passed: targeted `MomentumStrike.cs` direct-scan check returned no matches, explicit pooled-variable check showed a matching `Free` call, `Server.csproj` Debug/x86 build passed, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output.
 - `Magic:Bushido` queued pooled-enumerable rows are complete.
 
+Completed source subbatch: `POST-BATCH-D-37A` fixed `Magic:Druidism` `TreefellowSpell.cs` pooled enumerable ownership.
+
+- 1 row was reviewed and fixed: `RB-04833`.
+- Summoned treefellow nearby vortex cleanup now pairs the range result with `try/finally Free`.
+- Existing Core.SE/Summoned guard, vortex filtering, dispel cleanup, serialization, namespaces, type names, save versions, and file location were preserved.
+- Verification passed: targeted `TreefellowSpell.cs` direct-scan check returned no matches, explicit pooled-variable check showed a matching `Free` call, `Server.csproj` Debug/x86 build passed, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output.
+- `Magic:Druidism` queued pooled-enumerable rows are complete.
+
 Next:
 
-1. Continue `POST-BATCH-D` at the next queued pooled-enumerable backlog row after `RB-04832`, starting `Magic:Druidism` with `TreefellowSpell.cs`.
+1. Continue `POST-BATCH-D` at the next queued pooled-enumerable backlog row after `RB-04833`, starting `Magic:Elementalism` with `ElementalFiendAir.cs`.
 2. Keep batches focused by system/file; repair only confirmed ownership leaks with `try/finally Free`.
 3. Verify each source batch with the relevant pooled enumerable scan, `Server.csproj` Debug/x86 build, and `.\ConficturaServer.exe -compileonly -nocache`.
 

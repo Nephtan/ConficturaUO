@@ -4854,3 +4854,19 @@ Scope: Deterministic phase runner log for the Confictura codebase audit and reor
 - Command: Targeted `MomentumStrike.cs` direct range-scan `rg`; explicit pooled-variable ownership `rg`; Visual Studio MSBuild `Data/System/Source/Server.csproj /p:Configuration=Debug /p:Platform=x86 /v:minimal`; `.\ConficturaServer.exe -compileonly -nocache`; restore generated root executable artifacts; update `post-batch-d-pooled-enumerable-review.csv`, active overlay, status, README, and next-step artifacts.
 - Result: Targeted scan found no remaining direct range scans in `MomentumStrike.cs`; explicit pooled-variable check showed a matching `Free` call; `Server.csproj` Debug/x86 build passed; compile-only runtime script verification exited 0 and printed no `Listening:` output; generated `ConficturaServer.exe`, `.config`, and `.pdb` were restored; active backlog overlay now has 471 unique rows including 142 `POST-BATCH-D` fixed rows and 2 `POST-BATCH-D` false positives. `Magic:Bushido` queued pooled-enumerable rows are complete.
 - Output path: `docs/codebase-audit/outputs/post-batch-d-pooled-enumerable-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
+
+### 2026-06-08T19:13:33.1988002-05:00
+
+- Affected phase: Post-audit `POST-BATCH-D-37A` `Magic:Druidism` pooled enumerable ownership repair
+- Cwd: `D:\ConficturaUO`
+- Command: Source review and patch of `RB-04833` in `Data/Scripts/Magic/Druidism/Effects/TreefellowSpell.cs`.
+- Result: Replaced the summoned treefellow nearby vortex cleanup direct range scan with a local `IPooledEnumerable` variable and `try/finally Free`. Core.SE/Summoned guard, vortex filtering, dispel cleanup, serialization, namespaces, type names, save versions, and file location were preserved.
+- Output path: `Data/Scripts/Magic/Druidism/Effects/TreefellowSpell.cs`
+
+### 2026-06-08T19:13:33.1988002-05:00
+
+- Affected phase: Post-audit `POST-BATCH-D-37A` verification and audit artifact update
+- Cwd: `D:\ConficturaUO`
+- Command: Targeted `TreefellowSpell.cs` direct range-scan `rg`; explicit pooled-variable ownership `rg`; Visual Studio MSBuild `Data/System/Source/Server.csproj /p:Configuration=Debug /p:Platform=x86 /v:minimal`; `.\ConficturaServer.exe -compileonly -nocache`; restore generated root executable artifacts; update `post-batch-d-pooled-enumerable-review.csv`, active overlay, status, README, and next-step artifacts.
+- Result: Targeted scan found no remaining direct range scans in `TreefellowSpell.cs`; explicit pooled-variable check showed a matching `Free` call; `Server.csproj` Debug/x86 build passed; compile-only runtime script verification exited 0 and printed no `Listening:` output; generated `ConficturaServer.exe`, `.config`, and `.pdb` were restored; active backlog overlay now has 472 unique rows including 143 `POST-BATCH-D` fixed rows and 2 `POST-BATCH-D` false positives. `Magic:Druidism` queued pooled-enumerable rows are complete.
+- Output path: `docs/codebase-audit/outputs/post-batch-d-pooled-enumerable-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
