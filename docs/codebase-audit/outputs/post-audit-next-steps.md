@@ -861,9 +861,17 @@ Completed source subbatch: `POST-BATCH-D-53A` fixed `Mobiles:Dragons` pooled enu
 - Verification passed: targeted `Mobiles/Dragons` direct-scan check returned no matches, explicit pooled-variable check showed matching `Free` calls across the six touched loops, `Server.csproj` Debug/x86 build passed, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output.
 - `Mobiles:Dragons` queued pooled-enumerable rows are complete.
 
+Completed source subbatch: `POST-BATCH-D-54A` fixed `Mobiles:Elementals` pooled enumerable ownership.
+
+- 8 rows were reviewed and fixed: `RB-04926` through `RB-04933`.
+- MudMan, StormCloud, and elemental splatter-counting scans now pair range results with `try/finally Free`.
+- Existing target filters, splatter selection, serialization, namespaces, type names, save versions, and file location were preserved.
+- Verification passed: targeted `Mobiles/Elementals` direct-scan check returned no matches, explicit pooled-variable check showed matching `Free` calls across the eight touched loops, `Server.csproj` Debug/x86 build passed, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output.
+- `Mobiles:Elementals` queued pooled-enumerable rows are complete.
+
 Next:
 
-1. Continue `POST-BATCH-D` at the next queued pooled-enumerable backlog row after `RB-04925`, starting `Mobiles:Elementals` with `MudMan.cs`.
+1. Continue `POST-BATCH-D` at the next queued pooled-enumerable backlog row after `RB-04933`, starting `Mobiles:Hellish` with `ShadowFiend.cs`.
 2. Keep batches focused by system/file; repair only confirmed ownership leaks with `try/finally Free`.
 3. Verify each source batch with the relevant pooled enumerable scan, `Server.csproj` Debug/x86 build, and `.\ConficturaServer.exe -compileonly -nocache`.
 

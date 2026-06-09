@@ -132,12 +132,20 @@ namespace Server.Mobiles
                     Color = 0xBAD;
                 }
 
-                foreach (Item splash in this.GetItemsInRange(10))
+                IPooledEnumerable eable1 = this.GetItemsInRange(10);
+                try
                 {
-                    if (splash is MonsterSplatter && splash.Name == Goo)
+                    foreach (Item splash in eable1)
                     {
-                        goo++;
+                        if (splash is MonsterSplatter && splash.Name == Goo)
+                        {
+                            goo++;
+                        }
                     }
+                }
+                finally
+                {
+                    eable1.Free();
                 }
 
                 if (goo == 0)
