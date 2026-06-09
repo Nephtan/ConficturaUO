@@ -3506,32 +3506,41 @@ namespace Server.Mobiles
         {
             Packet p = null;
 
-            foreach (NetState ns in from.GetClientsInRange(8))
+            IPooledEnumerable eable = from.GetClientsInRange(8);
+
+            try
             {
-                Mobile mob = ns.Mobile;
-
-                if (
-                    mob != null
-                    && mob.AccessLevel >= AccessLevel.GameMaster
-                    && mob.AccessLevel > from.AccessLevel
-                )
+                foreach (NetState ns in eable)
                 {
-                    if (p == null)
-                        p = Packet.Acquire(
-                            new UnicodeMessage(
-                                from.Serial,
-                                from.Body,
-                                MessageType.Regular,
-                                from.SpeechHue,
-                                3,
-                                from.Language,
-                                from.Name,
-                                text
-                            )
-                        );
+                    Mobile mob = ns.Mobile;
 
-                    ns.Send(p);
+                    if (
+                        mob != null
+                        && mob.AccessLevel >= AccessLevel.GameMaster
+                        && mob.AccessLevel > from.AccessLevel
+                    )
+                    {
+                        if (p == null)
+                            p = Packet.Acquire(
+                                new UnicodeMessage(
+                                    from.Serial,
+                                    from.Body,
+                                    MessageType.Regular,
+                                    from.SpeechHue,
+                                    3,
+                                    from.Language,
+                                    from.Name,
+                                    text
+                                )
+                            );
+
+                        ns.Send(p);
+                    }
                 }
+            }
+            finally
+            {
+                eable.Free();
             }
 
             Packet.Release(p);
@@ -5829,26 +5838,35 @@ namespace Server.Mobiles
 
         private void DeltaEnemies(Type oldType, Type newType)
         {
-            foreach (Mobile m in this.GetMobilesInRange(18))
+            IPooledEnumerable eable = this.GetMobilesInRange(18);
+
+            try
             {
-                Type t = m.GetType();
-
-                if (t == oldType || t == newType)
+                foreach (Mobile m in eable)
                 {
-                    NetState ns = this.NetState;
+                    Type t = m.GetType();
 
-                    if (ns != null)
+                    if (t == oldType || t == newType)
                     {
-                        if (ns.StygianAbyss)
+                        NetState ns = this.NetState;
+
+                        if (ns != null)
                         {
-                            ns.Send(new MobileMoving(m, Notoriety.Compute(this, m)));
-                        }
-                        else
-                        {
-                            ns.Send(new MobileMovingOld(m, Notoriety.Compute(this, m)));
+                            if (ns.StygianAbyss)
+                            {
+                                ns.Send(new MobileMoving(m, Notoriety.Compute(this, m)));
+                            }
+                            else
+                            {
+                                ns.Send(new MobileMovingOld(m, Notoriety.Compute(this, m)));
+                            }
                         }
                     }
                 }
+            }
+            finally
+            {
+                eable.Free();
             }
         }
 

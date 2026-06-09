@@ -5046,3 +5046,19 @@ Scope: Deterministic phase runner log for the Confictura codebase audit and reor
 - Command: Targeted `Behavior.cs` direct range-scan `rg`; explicit pooled-variable ownership `rg`; Visual Studio MSBuild `Data/System/Source/Server.csproj /p:Configuration=Debug /p:Platform=x86 /v:minimal`; `.\ConficturaServer.exe -compileonly -nocache`; restore generated root executable artifacts; update `post-batch-d-pooled-enumerable-review.csv`, active overlay, status, README, and next-step artifacts.
 - Result: Targeted scan found no remaining direct range scans in `Behavior.cs`; explicit pooled-variable check showed matching `Free` calls across the nine touched loops; `Server.csproj` Debug/x86 build passed; compile-only runtime script verification exited 0 and printed no `Listening:` output; generated `ConficturaServer.exe`, `.config`, and `.pdb` were restored; active backlog overlay now has 524 unique rows including 195 `POST-BATCH-D` fixed rows and 2 `POST-BATCH-D` false positives. `Behavior.cs` queued pooled-enumerable rows are complete.
 - Output path: `docs/codebase-audit/outputs/post-batch-d-pooled-enumerable-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
+
+### 2026-06-08T20:15:02.7910996-05:00
+
+- Affected phase: Post-audit `POST-BATCH-D-49A` `Mobiles:Base` `PlayerMobile.cs` pooled enumerable ownership repair
+- Cwd: `D:\ConficturaUO`
+- Command: Source review and patch of `RB-04886` and `RB-04887` in `Data/Scripts/Mobiles/Base/PlayerMobile.cs`.
+- Result: Replaced staff-message client and enemy notoriety direct range scans with local `IPooledEnumerable` variables and `try/finally Free`. Packet acquisition/release, staff access filters, enemy notoriety update packets, serialization, namespaces, type names, save versions, and file location were preserved.
+- Output path: `Data/Scripts/Mobiles/Base/PlayerMobile.cs`
+
+### 2026-06-08T20:15:02.7910996-05:00
+
+- Affected phase: Post-audit `POST-BATCH-D-49A` verification and audit artifact update
+- Cwd: `D:\ConficturaUO`
+- Command: Targeted `PlayerMobile.cs` direct range-scan `rg`; explicit pooled-variable ownership `rg`; Visual Studio MSBuild `Data/System/Source/Server.csproj /p:Configuration=Debug /p:Platform=x86 /v:minimal`; `.\ConficturaServer.exe -compileonly -nocache`; restore generated root executable artifacts; update `post-batch-d-pooled-enumerable-review.csv`, active overlay, status, README, and next-step artifacts.
+- Result: Targeted scan found no remaining direct range scans in `PlayerMobile.cs`; explicit pooled-variable check showed matching `Free` calls across the two touched loops; `Server.csproj` Debug/x86 build passed; compile-only runtime script verification exited 0 and printed no `Listening:` output; generated `ConficturaServer.exe`, `.config`, and `.pdb` were restored; active backlog overlay now has 526 unique rows including 197 `POST-BATCH-D` fixed rows and 2 `POST-BATCH-D` false positives. `PlayerMobile.cs` queued pooled-enumerable rows are complete.
+- Output path: `docs/codebase-audit/outputs/post-batch-d-pooled-enumerable-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`

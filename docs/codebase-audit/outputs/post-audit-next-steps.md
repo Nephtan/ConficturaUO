@@ -821,9 +821,17 @@ Completed source subbatch: `POST-BATCH-D-48A` fixed `Mobiles:Base` `Behavior.cs`
 - Verification passed: targeted `Behavior.cs` direct-scan check returned no matches, explicit pooled-variable check showed matching `Free` calls across the nine touched loops, `Server.csproj` Debug/x86 build passed, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output.
 - `Behavior.cs` queued pooled-enumerable rows are complete.
 
+Completed source subbatch: `POST-BATCH-D-49A` fixed `Mobiles:Base` `PlayerMobile.cs` pooled enumerable ownership.
+
+- 2 rows were reviewed and fixed: `RB-04886` and `RB-04887`.
+- Staff-message client and enemy notoriety scans now pair range results with `try/finally Free`.
+- Existing packet acquisition/release, staff access filters, enemy notoriety update packets, serialization, namespaces, type names, save versions, and file location were preserved.
+- Verification passed: targeted `PlayerMobile.cs` direct-scan check returned no matches, explicit pooled-variable check showed matching `Free` calls across the two touched loops, `Server.csproj` Debug/x86 build passed, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output.
+- `PlayerMobile.cs` queued pooled-enumerable rows are complete.
+
 Next:
 
-1. Continue `POST-BATCH-D` at the next queued pooled-enumerable backlog row after `RB-04885`, continuing `Mobiles:Base` with `PlayerMobile.cs`.
+1. Continue `POST-BATCH-D` at the next queued pooled-enumerable backlog row after `RB-04887`, starting `Mobiles:Civilized` with `TradesmanAlchemist.cs`.
 2. Keep batches focused by system/file; repair only confirmed ownership leaks with `try/finally Free`.
 3. Verify each source batch with the relevant pooled enumerable scan, `Server.csproj` Debug/x86 build, and `.\ConficturaServer.exe -compileonly -nocache`.
 
