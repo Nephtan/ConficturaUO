@@ -5990,3 +5990,19 @@ Scope: Deterministic phase runner log for the Confictura codebase audit and reor
 - Command: Targeted AutoResPotion PlayerDeath hook scan; Visual Studio MSBuild `Data/System/Source/Server.csproj /p:Configuration=Debug /p:Platform=x86 /v:minimal`; `.\ConficturaServer.exe -compileonly -nocache`; restore generated root executable artifacts; append `POST-BATCH-E-33A` row to `post-batch-e-hooks-gumps-commands-regions-review.csv` and the active overlay; update status, README, and next-step artifacts.
 - Result: Targeted scan confirmed PlayerDeath registration plus null `PlayerDeathEventArgs` guard before `e.Mobile`; `Server.csproj` Debug/x86 build passed with Visual Studio Community 2022 MSBuild; compile-only runtime script verification exited 0 and printed no `Listening:` output; generated `ConficturaServer.exe`, `.config`, and `.pdb` were restored; active backlog overlay now includes 146 `POST-BATCH-E` dispositions.
 - Output path: `docs/codebase-audit/outputs/post-batch-e-hooks-gumps-commands-regions-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
+
+### 2026-06-09T11:45:34.9680825-05:00
+
+- Affected phase: Post-audit `POST-BATCH-E-34A` Items:Weapons Fists request hook guard repair
+- Cwd: `D:\ConficturaUO`
+- Command: Source review and patch of `RB-01745` and `RB-01746` in `Data/Scripts/Items/Weapons/Hands/Fists.cs`.
+- Result: Added null request args and null/deleted mobile guards to `Fists.EventSink_DisarmRequest` and `Fists.EventSink_StunRequest` before skill, free-hand, disruptive-action, and ready-toggle logic. Valid disarm/stun request behavior, serialization, public APIs, namespaces, type names, save versions, file location, and project files were preserved.
+- Output path: `Data/Scripts/Items/Weapons/Hands/Fists.cs`
+
+### 2026-06-09T11:45:34.9680825-05:00
+
+- Affected phase: Post-audit `POST-BATCH-E-34A` verification and audit artifact update
+- Cwd: `D:\ConficturaUO`
+- Command: Targeted Fists disarm/stun request hook scan; Visual Studio MSBuild `Data/System/Source/Server.csproj /p:Configuration=Debug /p:Platform=x86 /v:minimal`; `.\ConficturaServer.exe -compileonly -nocache`; restore generated root executable artifacts; append `POST-BATCH-E-34A` rows to `post-batch-e-hooks-gumps-commands-regions-review.csv` and the active overlay; update status, README, and next-step artifacts.
+- Result: Targeted scan confirmed DisarmRequest/StunRequest registrations plus null/deleted request guards; `Server.csproj` Debug/x86 build passed with Visual Studio Community 2022 MSBuild; compile-only runtime script verification exited 0 and printed no `Listening:` output; generated `ConficturaServer.exe`, `.config`, and `.pdb` were restored; active backlog overlay now includes 148 `POST-BATCH-E` dispositions.
+- Output path: `docs/codebase-audit/outputs/post-batch-e-hooks-gumps-commands-regions-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
