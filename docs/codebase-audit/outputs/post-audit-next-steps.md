@@ -1276,9 +1276,17 @@ Completed source subbatch: `POST-BATCH-E-31A` fixed the Items:Magical SoulOrb Pl
 - Valid soul-orb resurrection behavior, delayed resurrection scheduling, serialization, public APIs, namespaces, type names, save versions, file location, and project files were preserved.
 - Verification passed: targeted SoulOrb PlayerDeath hook scan, Visual Studio MSBuild `Server.csproj` Debug/x86 build, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output. Generated root executable artifacts were restored.
 
+Completed source subbatch: `POST-BATCH-E-32A` fixed the Items:Misc LiarsDice disconnect/crash hook rows.
+
+- 2 rows were reviewed and fixed: `RB-01742` and `RB-01743`.
+- `DiceState.EventSink_Disconnected` now guards null disconnect args, null/deleted mobiles, stale player entries, and list bounds before removal and broadcast.
+- `DiceState.EventSink_ServerCrashed` now bounds player iteration and skips stale/null/deleted entries before crash-time balance deposits.
+- Valid LiarsDice player removal, balance return, serialization, public APIs, namespaces, type names, save versions, file location, and project files were preserved.
+- Verification passed: targeted LiarsDice hook scan, Visual Studio MSBuild `Server.csproj` Debug/x86 build, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output. Generated root executable artifacts were restored.
+
 Next:
 
-1. Continue `POST-BATCH-E` with the next focused P1 runtime-hook/gump-guard group by the active plan, currently `Items:Misc` rows `RB-01742` and `RB-01743` in `Data/Scripts/Items/Misc/Games/LiarsDice/DiceChannel.cs`.
+1. Continue `POST-BATCH-E` with the next focused P1 runtime-hook/gump-guard group by the active plan, currently `Items:Potions` row `RB-01744` in `Data/Scripts/Items/Potions/Special/AutoResPotion.cs`.
 2. Keep P2 Boats and Bulk Orders command-access rows queued until the P2 command-access pass unless source evidence makes them an urgent local blocker.
 3. Preserve serialization, public APIs, namespaces, type names, save versions, and file locations; verify source fixes with `Server.csproj` Debug/x86 build and `.\ConficturaServer.exe -compileonly -nocache`.
 

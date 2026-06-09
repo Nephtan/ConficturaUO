@@ -2,7 +2,7 @@
 
 Initialized: 2026-06-05T16:15:59.8020730-05:00
 
-Last updated: 2026-06-09T11:34:19.3992586-05:00
+Last updated: 2026-06-09T11:38:53.1223165-05:00
 
 Branch: `SAR`
 
@@ -12,13 +12,13 @@ Post-audit live-runtime baseline HEAD: `9dce70de docs: record source build basel
 
 Post-audit compile-only implementation HEAD: `09b7b7e5 feat: add compile-only script verification`
 
-Post-audit latest implemented source batch: `POST-BATCH-E-31A` fixed the Items:Magical P1 `SoulOrb` PlayerDeath hook row in `Data/Scripts/Items/Magical/SoulOrb.cs`. Latest review-only batch: `POST-BATCH-E-23A` reviewed 2 Custom:Voting P1 config persistence hook rows with no source changes.
+Post-audit latest implemented source batch: `POST-BATCH-E-32A` fixed the Items:Misc P1 LiarsDice disconnect/crash hook rows in `Data/Scripts/Items/Misc/Games/LiarsDice/DiceChannel.cs`. Latest review-only batch: `POST-BATCH-E-23A` reviewed 2 Custom:Voting P1 config persistence hook rows with no source changes.
 
 Post-audit latest committed audit-state batch before the current source repair: `6ae44f74 docs: close save compatibility triage`
 
 Post-audit latest runtime-risk review batch: `POST-BATCH-C-01A` reviewed the 17 P0 runtime-hook rows and 8 P0 `PlayerMobile` coupling rows in `outputs/post-batch-c-runtime-hooks-player-mobile-review.csv`. The batch made no source edits; the runtime-hook rows reconcile to the earlier `POST-BATCH-A` packet-handler review, and `PlayerMobile` coupling remains migration-gated.
 
-Post-audit active backlog overlay: `outputs/post-audit-active-backlog-status.csv` preserves historical `repair-backlog.csv` while recording 17 packet-handler dispositions, 285 reviewed save-compatibility dispositions across `POST-BATCH-B-34A` and prior `POST-BATCH-B` subbatches, 25 reviewed `POST-BATCH-C-01A` runtime-hook/`PlayerMobile` coupling dispositions, 406 `POST-BATCH-D` pooled enumerable fixes, 2 `POST-BATCH-D` false positives, and 143 `POST-BATCH-E` runtime-hook/gump-guard dispositions.
+Post-audit active backlog overlay: `outputs/post-audit-active-backlog-status.csv` preserves historical `repair-backlog.csv` while recording 17 packet-handler dispositions, 285 reviewed save-compatibility dispositions across `POST-BATCH-B-34A` and prior `POST-BATCH-B` subbatches, 25 reviewed `POST-BATCH-C-01A` runtime-hook/`PlayerMobile` coupling dispositions, 406 `POST-BATCH-D` pooled enumerable fixes, 2 `POST-BATCH-D` false positives, and 145 `POST-BATCH-E` runtime-hook/gump-guard dispositions.
 
 Post-audit save compatibility triage: `outputs/post-batch-b-save-compatibility-triage.csv` scopes all 304 P0 critical save-compatibility rows and records source-reviewed decisions for all 304 rows across `POST-BATCH-B`. No queued rows remain; all active confirmed save issues are fixed in the overlay.
 
@@ -239,6 +239,8 @@ Post-audit hooks/gumps/commands/regions: `POST-BATCH-E-29A` reviewed System:Chat
 Post-audit hooks/gumps/commands/regions: `POST-BATCH-E-30A` fixed the remaining System:Chat gump rows in `Data/Scripts/System/Chat/Gumps/3.0 Skin/SendMessageGump.cs` and `Data/Scripts/System/Chat/Gumps/3.0 Skin/ProfileGump.cs`. The hue-picker response now guards stale gump/owner state before applying message color, and the profile client callback now guards stale owner/target state before rebuilding or opening `ClientGump`. Valid chat gump behavior, serialization, public APIs, namespaces, type names, save versions, file locations, and project files were preserved. Verification passed: targeted System:Chat gump scan, `Server.csproj` Debug/x86 build with Visual Studio MSBuild, and `.\ConficturaServer.exe -compileonly -nocache` with no `Listening:` output.
 
 Post-audit hooks/gumps/commands/regions: `POST-BATCH-E-31A` fixed the Items:Magical SoulOrb PlayerDeath hook row in `Data/Scripts/Items/Magical/SoulOrb.cs`. `SoulOrb.EventSink_Death` now guards null death event args before reading `e.Mobile`; valid soul-orb resurrection behavior, delayed resurrection scheduling, serialization, public APIs, namespaces, type names, save versions, file location, and project files were preserved. Verification passed: targeted SoulOrb PlayerDeath hook scan, `Server.csproj` Debug/x86 build with Visual Studio MSBuild, and `.\ConficturaServer.exe -compileonly -nocache` with no `Listening:` output.
+
+Post-audit hooks/gumps/commands/regions: `POST-BATCH-E-32A` fixed the Items:Misc LiarsDice disconnect/crash hook rows in `Data/Scripts/Items/Misc/Games/LiarsDice/DiceChannel.cs`. `DiceState.EventSink_Disconnected` now guards null disconnect args, null/deleted mobiles, stale player entries, and list bounds before removal/broadcast; `DiceState.EventSink_ServerCrashed` now bounds player iteration and skips stale/null/deleted entries before crash-time deposits. Valid LiarsDice player removal, balance return, serialization, public APIs, namespaces, type names, save versions, file location, and project files were preserved. Verification passed: targeted LiarsDice hook scan, `Server.csproj` Debug/x86 build with Visual Studio MSBuild, and `.\ConficturaServer.exe -compileonly -nocache` with no `Listening:` output.
 
 Post-audit save compatibility blocker resolved: `SERIAL-1298` and `SERIAL-1300` now consume the previously written duration payloads before cleanup in `BlendWithForrestSpell.cs:123-151` and `GraspingRootsSpell.cs:116-132`. Verification: `New-SerializationRegister.ps1` regenerated serialization outputs, `Server.csproj` Debug/x86 build passed with Visual Studio MSBuild, and `.\ConficturaServer.exe -compileonly -nocache` passed without listener output.
 

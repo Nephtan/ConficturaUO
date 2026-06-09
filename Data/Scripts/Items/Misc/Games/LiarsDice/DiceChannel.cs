@@ -237,10 +237,18 @@ namespace Server.LiarsDice
         private void EventSink_ServerCrashed(CrashedEventArgs e)
         {
             //is the mobile already in game?
-            for (int i = 0; i < this.playerCnt; i++)
+            for (int i = 0; i < this.playerCnt && i < dicePlayers.Count; i++)
             {
+                MobileDiceStstatus dicePlayer = dicePlayers[i];
+                if (dicePlayer == null)
+                    continue;
+
+                Mobile player = dicePlayer.getMobile();
+                if (player == null || player.Deleted)
+                    continue;
+
                 //since it's crashing anyways, we just deposit, in hopes it gets saved
-                Banker.Deposit(dicePlayers[i].getMobile(), dicePlayers[i].GetTableBalance());
+                Banker.Deposit(player, dicePlayer.GetTableBalance());
             }
         }
 
@@ -249,11 +257,21 @@ namespace Server.LiarsDice
         */
         private void EventSink_Disconnected(DisconnectedEventArgs args)
         {
+            if (args == null)
+                return;
+
             Mobile m = args.Mobile;
+            if (m == null || m.Deleted)
+                return;
+
             //is the mobile already in game?
-            for (int i = 0; i < this.playerCnt; i++)
+            for (int i = 0; i < this.playerCnt && i < dicePlayers.Count; i++)
             {
-                if (m == dicePlayers[i].getMobile())
+                MobileDiceStstatus dicePlayer = dicePlayers[i];
+                if (dicePlayer == null)
+                    continue;
+
+                if (m == dicePlayer.getMobile())
                 {
                     RemovePlayer(m, true);
                     SendMessageAllPlayers("Player " + m.Name + " has disconnected.");

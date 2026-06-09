@@ -5958,3 +5958,19 @@ Scope: Deterministic phase runner log for the Confictura codebase audit and reor
 - Command: Targeted SoulOrb PlayerDeath hook scan; Visual Studio MSBuild `Data/System/Source/Server.csproj /p:Configuration=Debug /p:Platform=x86 /v:minimal`; `.\ConficturaServer.exe -compileonly -nocache`; restore generated root executable artifacts; append `POST-BATCH-E-31A` row to `post-batch-e-hooks-gumps-commands-regions-review.csv` and the active overlay; update status, README, and next-step artifacts.
 - Result: Targeted scan confirmed PlayerDeath registration plus null `PlayerDeathEventArgs` guard before `e.Mobile`; `Server.csproj` Debug/x86 build passed with Visual Studio Community 2022 MSBuild; compile-only runtime script verification exited 0 and printed no `Listening:` output; generated `ConficturaServer.exe`, `.config`, and `.pdb` were restored; active backlog overlay now includes 143 `POST-BATCH-E` dispositions.
 - Output path: `docs/codebase-audit/outputs/post-batch-e-hooks-gumps-commands-regions-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
+
+### 2026-06-09T11:38:53.1223165-05:00
+
+- Affected phase: Post-audit `POST-BATCH-E-32A` Items:Misc LiarsDice disconnect/crash hook guard repair
+- Cwd: `D:\ConficturaUO`
+- Command: Source review and patch of `RB-01742` and `RB-01743` in `Data/Scripts/Items/Misc/Games/LiarsDice/DiceChannel.cs`.
+- Result: Added null disconnect args, null/deleted mobile, stale player-entry, and list-count bounds guards to `DiceState.EventSink_Disconnected`; added list-count bounds and stale/null/deleted player-entry guards before crash-time balance deposits in `DiceState.EventSink_ServerCrashed`. Valid LiarsDice player removal, balance return, serialization, public APIs, namespaces, type names, save versions, file location, and project files were preserved.
+- Output path: `Data/Scripts/Items/Misc/Games/LiarsDice/DiceChannel.cs`
+
+### 2026-06-09T11:38:53.1223165-05:00
+
+- Affected phase: Post-audit `POST-BATCH-E-32A` verification and audit artifact update
+- Cwd: `D:\ConficturaUO`
+- Command: Targeted LiarsDice disconnect/crash hook scan; Visual Studio MSBuild `Data/System/Source/Server.csproj /p:Configuration=Debug /p:Platform=x86 /v:minimal`; `.\ConficturaServer.exe -compileonly -nocache`; restore generated root executable artifacts; append `POST-BATCH-E-32A` rows to `post-batch-e-hooks-gumps-commands-regions-review.csv` and the active overlay; update status, README, and next-step artifacts.
+- Result: Targeted scan confirmed Disconnected/Crashed registrations plus null/deleted/list bounds guards; `Server.csproj` Debug/x86 build passed with Visual Studio Community 2022 MSBuild; compile-only runtime script verification exited 0 and printed no `Listening:` output; generated `ConficturaServer.exe`, `.config`, and `.pdb` were restored; active backlog overlay now includes 145 `POST-BATCH-E` dispositions.
+- Output path: `docs/codebase-audit/outputs/post-batch-e-hooks-gumps-commands-regions-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
