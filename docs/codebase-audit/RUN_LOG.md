@@ -4623,6 +4623,22 @@ Scope: Deterministic phase runner log for the Confictura codebase audit and reor
 - Result: Targeted scan confirmed null/deleted `m_Mobile` guard precedes `WeaponAbility.SetCurrentAbility` and `EventSink.InvokeStunRequest`; `Server.csproj` Debug/x86 build passed with Visual Studio Community 2022 MSBuild; compile-only runtime script verification exited 0 and printed no `Listening:` output; generated `ConficturaServer.exe`, `.config`, and `.pdb` were restored; active backlog overlay now includes 105 `POST-BATCH-E` dispositions.
 - Output path: `docs/codebase-audit/outputs/post-batch-e-hooks-gumps-commands-regions-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
 
+### 2026-06-09T10:24:09.8274394-05:00
+
+- Affected phase: Post-audit `POST-BATCH-E-20A` Custom:PandorasGiftBox character-created/login hook guard repair
+- Cwd: `D:\ConficturaUO`
+- Command: Source review and patch of `RB-01717` and `RB-01718` in `Data/Scripts/Custom/PandorasGiftBox/PandorasGiftBox.cs`.
+- Result: Added null event-args guards to `EventSink_CharacterCreated` and `EventSink_Login` before passing event mobiles to `TryGift`; `TryGift` now rejects deleted/no-account mobiles before account/backpack gift checks. Valid character-created/login gift behavior, serialization, public APIs, namespaces, type names, save versions, file location, and project files were preserved.
+- Output path: `Data/Scripts/Custom/PandorasGiftBox/PandorasGiftBox.cs`
+
+### 2026-06-09T10:24:09.8274394-05:00
+
+- Affected phase: Post-audit `POST-BATCH-E-20A` verification and audit artifact update
+- Cwd: `D:\ConficturaUO`
+- Command: Targeted PandorasGiftBox hook `rg` scan; Visual Studio MSBuild `Data/System/Source/Server.csproj /p:Configuration=Debug /p:Platform=x86 /v:minimal`; `.\ConficturaServer.exe -compileonly -nocache`; restore generated root executable artifacts; append `POST-BATCH-E-20A` rows to `post-batch-e-hooks-gumps-commands-regions-review.csv` and the active overlay; update status, README, and next-step artifacts.
+- Result: Targeted scan confirmed CharacterCreated/Login registrations, null event guards, and deleted/no-account `TryGift` guards before account/backpack access; `Server.csproj` Debug/x86 build passed with Visual Studio Community 2022 MSBuild; compile-only runtime script verification exited 0 and printed no `Listening:` output; generated `ConficturaServer.exe`, `.config`, and `.pdb` were restored; active backlog overlay now includes 107 `POST-BATCH-E` dispositions.
+- Output path: `docs/codebase-audit/outputs/post-batch-e-hooks-gumps-commands-regions-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
+
 ### 2026-06-08T16:42:46.5194703-05:00
 
 - Affected phase: Post-audit `POST-BATCH-D-02A` `Custom:ClearDeckCommand` pooled enumerable ownership repair

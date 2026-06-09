@@ -1182,9 +1182,17 @@ Completed source subbatch: `POST-BATCH-E-19A` fixed the OmniAI stun-request invo
 - Valid live-mobile weapon-strike behavior, serialization, public APIs, namespaces, type names, save versions, file location, and project files were preserved.
 - Verification passed: targeted OmniAI `UseWeaponStrike` scan, Visual Studio MSBuild `Server.csproj` Debug/x86 build, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output. Generated root executable artifacts were restored.
 
+Completed source subbatch: `POST-BATCH-E-20A` fixed the Custom:PandorasGiftBox character-created/login hook rows.
+
+- 2 rows were reviewed and fixed: `RB-01717` and `RB-01718`.
+- `EventSink_CharacterCreated` and `EventSink_Login` now guard null event args before passing mobiles to `TryGift`.
+- `TryGift` now rejects deleted/no-account mobiles before account/backpack gift checks.
+- Valid character-created/login gift behavior, serialization, public APIs, namespaces, type names, save versions, file location, and project files were preserved.
+- Verification passed: targeted PandorasGiftBox hook scan, Visual Studio MSBuild `Server.csproj` Debug/x86 build, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output. Generated root executable artifacts were restored.
+
 Next:
 
-1. Continue `POST-BATCH-E` with the next focused P1 runtime-hook group by the active plan, currently Custom:PandorasGiftBox `PandorasGiftBox.cs` rows `RB-01717` and `RB-01718`.
+1. Continue `POST-BATCH-E` with the next focused P1 runtime-hook group by the active plan, currently Staff Toolbar `Toolbar.cs` row `RB-01719`.
 2. Keep P2 Boats and Bulk Orders command-access rows queued until the P2 command-access pass unless source evidence makes them an urgent local blocker.
 3. Preserve serialization, public APIs, namespaces, type names, save versions, and file locations; verify source fixes with `Server.csproj` Debug/x86 build and `.\ConficturaServer.exe -compileonly -nocache`.
 
