@@ -981,9 +981,17 @@ Completed source subbatch: `POST-BATCH-D-68A` fixed `System:Misc` pooled enumera
 - Verification passed: targeted `System:Misc` direct-scan check returned no matches in the touched files, explicit pooled-variable check showed matching `Free` calls across the seven touched loops, `Server.csproj` Debug/x86 build passed, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output.
 - `System:Misc` queued pooled-enumerable rows are complete.
 
+Completed source subbatch: `POST-BATCH-D-69A` fixed `System:Obsolete` pooled enumerable ownership.
+
+- 13 rows were reviewed and fixed: `RB-05062` through `RB-05074`.
+- Faction trap placement, Holy Bless/Curse area effects, Ethics ankh detection, faction object existence checks, glowing-goo splatter counting, dispel target acquisition, TurnStone target collection, and SalesBook nearby/speech scans now pair range results with `try/finally Free`.
+- Existing placement rejection, target filtering, early return/break behavior, dispel prioritization, target lists, vendor speech gating, serialization, namespaces, type names, save versions, and file location were preserved.
+- Verification passed: targeted `System:Obsolete` direct-scan check returned no matches in the touched files, explicit pooled-variable check showed matching `Free` calls across the 13 touched loops, `Server.csproj` Debug/x86 build passed, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output.
+- `System:Obsolete` queued pooled-enumerable rows are complete.
+
 Next:
 
-1. Continue `POST-BATCH-D` at the next queued pooled-enumerable backlog row after `RB-05061`, starting `System:Obsolete` with `BaseCreature.cs`.
+1. Continue `POST-BATCH-D` at the next queued pooled-enumerable backlog row after `RB-05074`, starting `System:Regions` with `GuardedRegion.cs`.
 2. Keep batches focused by system/file; repair only confirmed ownership leaks with `try/finally Free`.
 3. Verify each source batch with the relevant pooled enumerable scan, `Server.csproj` Debug/x86 build, and `.\ConficturaServer.exe -compileonly -nocache`.
 

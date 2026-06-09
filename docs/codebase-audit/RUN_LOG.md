@@ -5366,3 +5366,19 @@ Scope: Deterministic phase runner log for the Confictura codebase audit and reor
 - Command: Targeted `System:Misc` direct range-scan `rg` covering qualified and unqualified `Get*InRange` calls; explicit pooled-variable ownership `rg`; CSV consistency parse; Visual Studio MSBuild `Data/System/Source/Server.csproj /p:Configuration=Debug /p:Platform=x86 /v:minimal`; `.\ConficturaServer.exe -compileonly -nocache`; restore generated root executable artifacts; update `post-batch-d-pooled-enumerable-review.csv`, active overlay, status, README, and next-step artifacts.
 - Result: Targeted scan found no remaining direct range scans in the touched misc files; explicit pooled-variable check showed matching `Free` calls across the seven touched loops; CSV consistency parse reported 373 review rows, 371 fixed rows, 2 false positives, no missing reviewed fields, and no duplicate backlog IDs; `Server.csproj` Debug/x86 build passed; compile-only runtime script verification exited 0 and printed no `Listening:` output; generated `ConficturaServer.exe`, `.config`, and `.pdb` were restored; active backlog overlay now has 700 unique rows including 371 `POST-BATCH-D` fixed rows and 2 `POST-BATCH-D` false positives. `System:Misc` queued pooled-enumerable rows are complete.
 - Output path: `docs/codebase-audit/outputs/post-batch-d-pooled-enumerable-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
+
+### 2026-06-08T22:19:47.7829353-05:00
+
+- Affected phase: Post-audit `POST-BATCH-D-69A` `System:Obsolete` pooled enumerable ownership repair
+- Cwd: `D:\ConficturaUO`
+- Command: Source review and patch of `RB-05062` through `RB-05074` across `Data/Scripts/System/Obsolete/Obsolete.cs` and `Data/Scripts/System/Obsolete/Sphinx.cs`.
+- Result: Replaced faction trap, Holy Bless/Curse, Ethics ankh, faction existence, glowing-goo splatter, dispel-target, TurnStone, and SalesBook direct range scans with local `IPooledEnumerable` variables and `try/finally Free`. Placement rejection, target filtering, early return/break behavior, dispel prioritization, target list behavior, vendor speech gating, serialization, namespaces, type names, save versions, and file location were preserved.
+- Output path: `Data/Scripts/System/Obsolete/Obsolete.cs`; `Data/Scripts/System/Obsolete/Sphinx.cs`
+
+### 2026-06-08T22:19:47.7829353-05:00
+
+- Affected phase: Post-audit `POST-BATCH-D-69A` verification and audit artifact update
+- Cwd: `D:\ConficturaUO`
+- Command: Targeted `System:Obsolete` direct range-scan `rg` covering qualified and unqualified `Get*InRange` calls; explicit pooled-variable ownership `rg`; `git diff --check`; Visual Studio MSBuild `Data/System/Source/Server.csproj /p:Configuration=Debug /p:Platform=x86 /v:minimal`; `.\ConficturaServer.exe -compileonly -nocache`; restore generated root executable artifacts; update `post-batch-d-pooled-enumerable-review.csv`, active overlay, status, README, and next-step artifacts.
+- Result: Targeted scan found no remaining direct range scans in the touched obsolete files; explicit pooled-variable check showed matching `Free` calls across the 13 touched loops; `git diff --check` reported only expected line-ending warnings; `Server.csproj` Debug/x86 build passed; compile-only runtime script verification exited 0 and printed no `Listening:` output; generated `ConficturaServer.exe`, `.config`, and `.pdb` were restored; active backlog overlay now has 713 unique rows including 384 `POST-BATCH-D` fixed rows and 2 `POST-BATCH-D` false positives. `System:Obsolete` queued pooled-enumerable rows are complete.
+- Output path: `docs/codebase-audit/outputs/post-batch-d-pooled-enumerable-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`

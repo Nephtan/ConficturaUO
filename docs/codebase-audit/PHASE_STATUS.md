@@ -2,7 +2,7 @@
 
 Initialized: 2026-06-05T16:15:59.8020730-05:00
 
-Last updated: 2026-06-08T22:08:49.5055724-05:00
+Last updated: 2026-06-08T22:19:47.7829353-05:00
 
 Branch: `SAR`
 
@@ -12,13 +12,13 @@ Post-audit live-runtime baseline HEAD: `9dce70de docs: record source build basel
 
 Post-audit compile-only implementation HEAD: `09b7b7e5 feat: add compile-only script verification`
 
-Post-audit latest implemented source batch: `POST-BATCH-D-68A` fixed `RB-05055` through `RB-05061` in `System:Misc`.
+Post-audit latest implemented source batch: `POST-BATCH-D-69A` fixed `RB-05062` through `RB-05074` in `System:Obsolete`.
 
 Post-audit latest committed audit-state batch before the current source repair: `6ae44f74 docs: close save compatibility triage`
 
 Post-audit latest runtime-risk review batch: `POST-BATCH-C-01A` reviewed the 17 P0 runtime-hook rows and 8 P0 `PlayerMobile` coupling rows in `outputs/post-batch-c-runtime-hooks-player-mobile-review.csv`. The batch made no source edits; the runtime-hook rows reconcile to the earlier `POST-BATCH-A` packet-handler review, and `PlayerMobile` coupling remains migration-gated.
 
-Post-audit active backlog overlay: `outputs/post-audit-active-backlog-status.csv` preserves historical `repair-backlog.csv` while recording 17 packet-handler dispositions, 285 reviewed save-compatibility dispositions across `POST-BATCH-B-34A` and prior `POST-BATCH-B` subbatches, 25 reviewed `POST-BATCH-C-01A` runtime-hook/`PlayerMobile` coupling dispositions, 371 `POST-BATCH-D` pooled enumerable fixes, and 2 `POST-BATCH-D` false positives.
+Post-audit active backlog overlay: `outputs/post-audit-active-backlog-status.csv` preserves historical `repair-backlog.csv` while recording 17 packet-handler dispositions, 285 reviewed save-compatibility dispositions across `POST-BATCH-B-34A` and prior `POST-BATCH-B` subbatches, 25 reviewed `POST-BATCH-C-01A` runtime-hook/`PlayerMobile` coupling dispositions, 384 `POST-BATCH-D` pooled enumerable fixes, and 2 `POST-BATCH-D` false positives.
 
 Post-audit save compatibility triage: `outputs/post-batch-b-save-compatibility-triage.csv` scopes all 304 P0 critical save-compatibility rows and records source-reviewed decisions for all 304 rows across `POST-BATCH-B`. No queued rows remain; all active confirmed save issues are fixed in the overlay.
 
@@ -163,6 +163,8 @@ Post-audit pooled enumerable ownership: `POST-BATCH-D-66A` fixed `RB-05040` thro
 Post-audit pooled enumerable ownership: `POST-BATCH-D-67A` fixed `RB-05051` through `RB-05054` in `System:Commands` by pairing banker-spawner, client broadcast, corpse search, and moon gate search scans with `try/finally Free`. Verification passed: targeted `System:Commands` direct-scan check found no remaining direct range scans in the touched files, explicit pooled-variable checks showed matching `Free` calls across the four touched loops, `Server.csproj` Debug/x86 build passed, and `.\ConficturaServer.exe -compileonly -nocache` passed without listener output.
 
 Post-audit pooled enumerable ownership: `POST-BATCH-D-68A` fixed `RB-05055` through `RB-05061` in `System:Misc` by pairing death healer/shrine, party staff-message, PremiumSpawner activation, boat detection, and boat-town proximity scans with `try/finally Free`. Verification passed: targeted `System:Misc` direct-scan check found no remaining direct range scans in the touched files, explicit pooled-variable checks showed matching `Free` calls across the seven touched loops, `Server.csproj` Debug/x86 build passed, and `.\ConficturaServer.exe -compileonly -nocache` passed without listener output.
+
+Post-audit pooled enumerable ownership: `POST-BATCH-D-69A` fixed `RB-05062` through `RB-05074` in `System:Obsolete` by pairing faction trap, ethics, faction existence, splatter-counting, dispel-target, TurnStone, and SalesBook range scans with `try/finally Free`. Verification passed: targeted `System:Obsolete` direct-scan check found no remaining direct range scans in the touched files, explicit pooled-variable checks showed matching `Free` calls across the 13 touched loops, `Server.csproj` Debug/x86 build passed, and `.\ConficturaServer.exe -compileonly -nocache` passed without listener output.
 
 Post-audit save compatibility blocker resolved: `SERIAL-1298` and `SERIAL-1300` now consume the previously written duration payloads before cleanup in `BlendWithForrestSpell.cs:123-151` and `GraspingRootsSpell.cs:116-132`. Verification: `New-SerializationRegister.ps1` regenerated serialization outputs, `Server.csproj` Debug/x86 build passed with Visual Studio MSBuild, and `.\ConficturaServer.exe -compileonly -nocache` passed without listener output.
 
