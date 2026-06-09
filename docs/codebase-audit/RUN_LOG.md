@@ -6006,3 +6006,19 @@ Scope: Deterministic phase runner log for the Confictura codebase audit and reor
 - Command: Targeted Fists disarm/stun request hook scan; Visual Studio MSBuild `Data/System/Source/Server.csproj /p:Configuration=Debug /p:Platform=x86 /v:minimal`; `.\ConficturaServer.exe -compileonly -nocache`; restore generated root executable artifacts; append `POST-BATCH-E-34A` rows to `post-batch-e-hooks-gumps-commands-regions-review.csv` and the active overlay; update status, README, and next-step artifacts.
 - Result: Targeted scan confirmed DisarmRequest/StunRequest registrations plus null/deleted request guards; `Server.csproj` Debug/x86 build passed with Visual Studio Community 2022 MSBuild; compile-only runtime script verification exited 0 and printed no `Listening:` output; generated `ConficturaServer.exe`, `.config`, and `.pdb` were restored; active backlog overlay now includes 148 `POST-BATCH-E` dispositions.
 - Output path: `docs/codebase-audit/outputs/post-batch-e-hooks-gumps-commands-regions-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
+
+### 2026-06-09T11:49:00.1804200-05:00
+
+- Affected phase: Post-audit `POST-BATCH-E-35A` Spell Framework Spellbook request hook guard repair
+- Cwd: `D:\ConficturaUO`
+- Command: Source review and patch of `RB-01747` and `RB-01748` in `Data/Scripts/Magic/Magery/Spellbook.cs`.
+- Result: Added null request args and null/deleted mobile guards to `Spellbook.EventSink_OpenSpellbookRequest` and `Spellbook.EventSink_CastSpellRequest` before design-context checks, spellbook lookup/display, special-move selection, or spell casting. Valid spellbook open/cast behavior, serialization, public APIs, namespaces, type names, save versions, file location, and project files were preserved.
+- Output path: `Data/Scripts/Magic/Magery/Spellbook.cs`
+
+### 2026-06-09T11:49:00.1804200-05:00
+
+- Affected phase: Post-audit `POST-BATCH-E-35A` verification and audit artifact update
+- Cwd: `D:\ConficturaUO`
+- Command: Targeted Spellbook open/cast request hook scan; Visual Studio MSBuild `Data/System/Source/Server.csproj /p:Configuration=Debug /p:Platform=x86 /v:minimal`; `.\ConficturaServer.exe -compileonly -nocache`; restore generated root executable artifacts; append `POST-BATCH-E-35A` rows to `post-batch-e-hooks-gumps-commands-regions-review.csv` and the active overlay; update status, README, and next-step artifacts.
+- Result: Targeted scan confirmed OpenSpellbookRequest/CastSpellRequest registrations plus null/deleted request guards; `Server.csproj` Debug/x86 build passed with Visual Studio Community 2022 MSBuild; compile-only runtime script verification exited 0 and printed no `Listening:` output; generated `ConficturaServer.exe`, `.config`, and `.pdb` were restored; active backlog overlay now includes 150 `POST-BATCH-E` dispositions.
+- Output path: `docs/codebase-audit/outputs/post-batch-e-hooks-gumps-commands-regions-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`

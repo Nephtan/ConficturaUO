@@ -2,7 +2,7 @@
 
 Initialized: 2026-06-05T16:15:59.8020730-05:00
 
-Last updated: 2026-06-09T11:45:34.9680825-05:00
+Last updated: 2026-06-09T11:49:00.1804200-05:00
 
 Branch: `SAR`
 
@@ -12,13 +12,13 @@ Post-audit live-runtime baseline HEAD: `9dce70de docs: record source build basel
 
 Post-audit compile-only implementation HEAD: `09b7b7e5 feat: add compile-only script verification`
 
-Post-audit latest implemented source batch: `POST-BATCH-E-34A` fixed the Items:Weapons P1 Fists disarm/stun request hook rows in `Data/Scripts/Items/Weapons/Hands/Fists.cs`. Latest review-only batch: `POST-BATCH-E-23A` reviewed 2 Custom:Voting P1 config persistence hook rows with no source changes.
+Post-audit latest implemented source batch: `POST-BATCH-E-35A` fixed the Spell Framework P1 Spellbook open/cast request hook rows in `Data/Scripts/Magic/Magery/Spellbook.cs`. Latest review-only batch: `POST-BATCH-E-23A` reviewed 2 Custom:Voting P1 config persistence hook rows with no source changes.
 
 Post-audit latest committed audit-state batch before the current source repair: `6ae44f74 docs: close save compatibility triage`
 
 Post-audit latest runtime-risk review batch: `POST-BATCH-C-01A` reviewed the 17 P0 runtime-hook rows and 8 P0 `PlayerMobile` coupling rows in `outputs/post-batch-c-runtime-hooks-player-mobile-review.csv`. The batch made no source edits; the runtime-hook rows reconcile to the earlier `POST-BATCH-A` packet-handler review, and `PlayerMobile` coupling remains migration-gated.
 
-Post-audit active backlog overlay: `outputs/post-audit-active-backlog-status.csv` preserves historical `repair-backlog.csv` while recording 17 packet-handler dispositions, 285 reviewed save-compatibility dispositions across `POST-BATCH-B-34A` and prior `POST-BATCH-B` subbatches, 25 reviewed `POST-BATCH-C-01A` runtime-hook/`PlayerMobile` coupling dispositions, 406 `POST-BATCH-D` pooled enumerable fixes, 2 `POST-BATCH-D` false positives, and 148 `POST-BATCH-E` runtime-hook/gump-guard dispositions.
+Post-audit active backlog overlay: `outputs/post-audit-active-backlog-status.csv` preserves historical `repair-backlog.csv` while recording 17 packet-handler dispositions, 285 reviewed save-compatibility dispositions across `POST-BATCH-B-34A` and prior `POST-BATCH-B` subbatches, 25 reviewed `POST-BATCH-C-01A` runtime-hook/`PlayerMobile` coupling dispositions, 406 `POST-BATCH-D` pooled enumerable fixes, 2 `POST-BATCH-D` false positives, and 150 `POST-BATCH-E` runtime-hook/gump-guard dispositions.
 
 Post-audit save compatibility triage: `outputs/post-batch-b-save-compatibility-triage.csv` scopes all 304 P0 critical save-compatibility rows and records source-reviewed decisions for all 304 rows across `POST-BATCH-B`. No queued rows remain; all active confirmed save issues are fixed in the overlay.
 
@@ -245,6 +245,8 @@ Post-audit hooks/gumps/commands/regions: `POST-BATCH-E-32A` fixed the Items:Misc
 Post-audit hooks/gumps/commands/regions: `POST-BATCH-E-33A` fixed the Items:Potions AutoResPotion PlayerDeath hook row in `Data/Scripts/Items/Potions/Special/AutoResPotion.cs`. `AutoResPotion.EventSink_Death` now guards null death event args before reading `e.Mobile`; valid auto-resurrection potion behavior, delayed resurrection scheduling, serialization, public APIs, namespaces, type names, save versions, file location, and project files were preserved. Verification passed: targeted AutoResPotion PlayerDeath hook scan, `Server.csproj` Debug/x86 build with Visual Studio MSBuild, and `.\ConficturaServer.exe -compileonly -nocache` with no `Listening:` output.
 
 Post-audit hooks/gumps/commands/regions: `POST-BATCH-E-34A` fixed the Items:Weapons Fists disarm/stun request hook rows in `Data/Scripts/Items/Weapons/Hands/Fists.cs`. `Fists.EventSink_DisarmRequest` and `Fists.EventSink_StunRequest` now guard null request args and null/deleted mobiles before skill, free-hand, disruptive-action, and ready-toggle logic. Valid disarm/stun request behavior, serialization, public APIs, namespaces, type names, save versions, file location, and project files were preserved. Verification passed: targeted Fists request hook scan, `Server.csproj` Debug/x86 build with Visual Studio MSBuild, and `.\ConficturaServer.exe -compileonly -nocache` with no `Listening:` output.
+
+Post-audit hooks/gumps/commands/regions: `POST-BATCH-E-35A` fixed the Spell Framework Spellbook open/cast request hook rows in `Data/Scripts/Magic/Magery/Spellbook.cs`. `Spellbook.EventSink_OpenSpellbookRequest` and `Spellbook.EventSink_CastSpellRequest` now guard null request args and null/deleted mobiles before design-context checks, spellbook lookup/display, special-move selection, or spell casting. Valid spellbook open/cast behavior, serialization, public APIs, namespaces, type names, save versions, file location, and project files were preserved. Verification passed: targeted Spellbook request hook scan, `Server.csproj` Debug/x86 build with Visual Studio MSBuild, and `.\ConficturaServer.exe -compileonly -nocache` with no `Listening:` output.
 
 Post-audit save compatibility blocker resolved: `SERIAL-1298` and `SERIAL-1300` now consume the previously written duration payloads before cleanup in `BlendWithForrestSpell.cs:123-151` and `GraspingRootsSpell.cs:116-132`. Verification: `New-SerializationRegister.ps1` regenerated serialization outputs, `Server.csproj` Debug/x86 build passed with Visual Studio MSBuild, and `.\ConficturaServer.exe -compileonly -nocache` passed without listener output.
 
