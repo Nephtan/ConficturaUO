@@ -1235,9 +1235,16 @@ Completed source subbatch: `POST-BATCH-E-26A` fixed the Items:Food beverage logi
 - Valid beverage BAC timer behavior, serialization, public APIs, namespaces, type names, save versions, file location, and project files were preserved.
 - Verification passed: targeted Beverage login hook scan, Visual Studio MSBuild `Server.csproj` Debug/x86 build, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output. Generated root executable artifacts were restored.
 
+Completed source subbatch: `POST-BATCH-E-27A` fixed the Items:Gifts holiday speech hook rows.
+
+- 2 rows were reviewed and fixed: `RB-01733` and `RB-01734`.
+- `MerryChristmas.EventSink_Speech` and `TrickOrTreat.EventSink_Speech` now guard null speech events, null/deleted speakers, missing backpacks, null speech text, and null/deleted nearby mobiles before gift-bag/vendor processing.
+- Valid holiday gift behavior, pooled enumerable ownership, serialization, public APIs, namespaces, type names, save versions, file locations, and project files were preserved.
+- Verification passed: targeted Items:Gifts speech hook scan, Visual Studio MSBuild `Server.csproj` Debug/x86 build, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output. Generated root executable artifacts were restored.
+
 Next:
 
-1. Continue `POST-BATCH-E` with the next focused P1 runtime-hook group by the active plan, currently `Items:Gifts` rows beginning at `RB-01733`.
+1. Continue `POST-BATCH-E` with the next focused P1 runtime-hook group by the active plan, currently Housing rows beginning at `RB-01735`.
 2. Keep P2 Boats and Bulk Orders command-access rows queued until the P2 command-access pass unless source evidence makes them an urgent local blocker.
 3. Preserve serialization, public APIs, namespaces, type names, save versions, and file locations; verify source fixes with `Server.csproj` Debug/x86 build and `.\ConficturaServer.exe -compileonly -nocache`.
 

@@ -2,7 +2,7 @@
 
 Initialized: 2026-06-05T16:15:59.8020730-05:00
 
-Last updated: 2026-06-09T10:56:13.8370017-05:00
+Last updated: 2026-06-09T11:01:12.4683505-05:00
 
 Branch: `SAR`
 
@@ -12,13 +12,13 @@ Post-audit live-runtime baseline HEAD: `9dce70de docs: record source build basel
 
 Post-audit compile-only implementation HEAD: `09b7b7e5 feat: add compile-only script verification`
 
-Post-audit latest implemented source batch: `POST-BATCH-E-26A` fixed 1 Items:Food P1 beverage login hook row. Latest review-only batch: `POST-BATCH-E-23A` reviewed 2 Custom:Voting P1 config persistence hook rows with no source changes.
+Post-audit latest implemented source batch: `POST-BATCH-E-27A` fixed 2 Items:Gifts P1 speech hook rows. Latest review-only batch: `POST-BATCH-E-23A` reviewed 2 Custom:Voting P1 config persistence hook rows with no source changes.
 
 Post-audit latest committed audit-state batch before the current source repair: `6ae44f74 docs: close save compatibility triage`
 
 Post-audit latest runtime-risk review batch: `POST-BATCH-C-01A` reviewed the 17 P0 runtime-hook rows and 8 P0 `PlayerMobile` coupling rows in `outputs/post-batch-c-runtime-hooks-player-mobile-review.csv`. The batch made no source edits; the runtime-hook rows reconcile to the earlier `POST-BATCH-A` packet-handler review, and `PlayerMobile` coupling remains migration-gated.
 
-Post-audit active backlog overlay: `outputs/post-audit-active-backlog-status.csv` preserves historical `repair-backlog.csv` while recording 17 packet-handler dispositions, 285 reviewed save-compatibility dispositions across `POST-BATCH-B-34A` and prior `POST-BATCH-B` subbatches, 25 reviewed `POST-BATCH-C-01A` runtime-hook/`PlayerMobile` coupling dispositions, 406 `POST-BATCH-D` pooled enumerable fixes, 2 `POST-BATCH-D` false positives, and 119 `POST-BATCH-E` runtime-hook/gump-guard dispositions.
+Post-audit active backlog overlay: `outputs/post-audit-active-backlog-status.csv` preserves historical `repair-backlog.csv` while recording 17 packet-handler dispositions, 285 reviewed save-compatibility dispositions across `POST-BATCH-B-34A` and prior `POST-BATCH-B` subbatches, 25 reviewed `POST-BATCH-C-01A` runtime-hook/`PlayerMobile` coupling dispositions, 406 `POST-BATCH-D` pooled enumerable fixes, 2 `POST-BATCH-D` false positives, and 121 `POST-BATCH-E` runtime-hook/gump-guard dispositions.
 
 Post-audit save compatibility triage: `outputs/post-batch-b-save-compatibility-triage.csv` scopes all 304 P0 critical save-compatibility rows and records source-reviewed decisions for all 304 rows across `POST-BATCH-B`. No queued rows remain; all active confirmed save issues are fixed in the overlay.
 
@@ -229,6 +229,8 @@ Post-audit hooks/gumps/commands/regions: `POST-BATCH-E-24A` reviewed XMLSpawner 
 Post-audit hooks/gumps/commands/regions: `POST-BATCH-E-25A` fixed the Items:Doors door macro hook row in `Data/Scripts/Items/Doors/BaseDoor.cs`. `EventSink_OpenDoorMacroUsed` now guards null event args and null/deleted mobiles before direction, map, sector, LOS, and door `OnDoubleClick` processing. Valid door macro behavior, serialization, public APIs, namespaces, type names, save versions, file location, and project files were preserved. Verification passed: targeted BaseDoor hook scan, `Server.csproj` Debug/x86 build with Visual Studio MSBuild, and `.\ConficturaServer.exe -compileonly -nocache` with no `Listening:` output.
 
 Post-audit hooks/gumps/commands/regions: `POST-BATCH-E-26A` fixed the Items:Food beverage login hook row in `Data/Scripts/Items/Food/Beverage.cs`. `EventSink_Login` now guards null login events, and `CheckHeaveTimer` now rejects null/deleted mobiles before reading BAC, map, or timer table state. Valid beverage BAC timer behavior, serialization, public APIs, namespaces, type names, save versions, file location, and project files were preserved. Verification passed: targeted Beverage login hook scan, `Server.csproj` Debug/x86 build with Visual Studio MSBuild, and `.\ConficturaServer.exe -compileonly -nocache` with no `Listening:` output.
+
+Post-audit hooks/gumps/commands/regions: `POST-BATCH-E-27A` fixed the Items:Gifts Christmas and Halloween speech hook rows in `Merry Christmas.cs` and `TrickOrTreat.cs`. Both handlers now guard null speech events, null/deleted speakers, missing backpacks, null speech text, and null/deleted nearby mobiles before gift-bag/vendor processing. Valid holiday gift behavior, pooled enumerable ownership, serialization, public APIs, namespaces, type names, save versions, file locations, and project files were preserved. Verification passed: targeted Items:Gifts speech hook scan, `Server.csproj` Debug/x86 build with Visual Studio MSBuild, and `.\ConficturaServer.exe -compileonly -nocache` with no `Listening:` output.
 
 Post-audit save compatibility blocker resolved: `SERIAL-1298` and `SERIAL-1300` now consume the previously written duration payloads before cleanup in `BlendWithForrestSpell.cs:123-151` and `GraspingRootsSpell.cs:116-132`. Verification: `New-SerializationRegister.ps1` regenerated serialization outputs, `Server.csproj` Debug/x86 build passed with Visual Studio MSBuild, and `.\ConficturaServer.exe -compileonly -nocache` passed without listener output.
 

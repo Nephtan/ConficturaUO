@@ -17,8 +17,14 @@ namespace Server.Misc
 
         public static void EventSink_Speech(SpeechEventArgs args)
         {
+            if (args == null)
+                return;
+
             Mobile from = args.Mobile;
             int[] keywords = args.Keywords;
+
+            if (from == null || from.Deleted || from.Backpack == null || args.Speech == null)
+                return;
 
             if (from is PlayerMobile)
             {
@@ -46,6 +52,9 @@ namespace Server.Misc
                                 {
                                     foreach (Mobile m in eable)
                                     {
+                                        if (m == null || m.Deleted)
+                                            continue;
+
                                         Container cont = m.Backpack;
 
                                         if (cont != null && cont.ConsumeTotal(typeof(Gold), 1))

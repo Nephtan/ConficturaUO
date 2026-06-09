@@ -4727,6 +4727,22 @@ Scope: Deterministic phase runner log for the Confictura codebase audit and reor
 - Result: Targeted scan confirmed EventSink.Login registration and null/deleted guard before BAC/map/timer access; `Server.csproj` Debug/x86 build passed with Visual Studio Community 2022 MSBuild; compile-only runtime script verification exited 0 and printed no `Listening:` output; generated `ConficturaServer.exe`, `.config`, and `.pdb` were restored; active backlog overlay now includes 119 `POST-BATCH-E` dispositions.
 - Output path: `docs/codebase-audit/outputs/post-batch-e-hooks-gumps-commands-regions-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
 
+### 2026-06-09T11:01:12.4683505-05:00
+
+- Affected phase: Post-audit `POST-BATCH-E-27A` Items:Gifts holiday speech hook guard repair
+- Cwd: `D:\ConficturaUO`
+- Command: Source review and patch of `RB-01733` and `RB-01734` in `Data/Scripts/Items/Gifts/Holiday/Christmas/Commands/Merry Christmas.cs` and `Data/Scripts/Items/Gifts/Holiday/Halloween/TrickOrTreat.cs`.
+- Result: Added null speech event, null/deleted speaker, missing backpack, null speech text, and null/deleted nearby-mobile guards before Christmas and Halloween gift-bag/vendor processing. Valid holiday gift behavior, pooled enumerable ownership, serialization, public APIs, namespaces, type names, save versions, file locations, and project files were preserved.
+- Output path: `Data/Scripts/Items/Gifts/Holiday/Christmas/Commands/Merry Christmas.cs`; `Data/Scripts/Items/Gifts/Holiday/Halloween/TrickOrTreat.cs`
+
+### 2026-06-09T11:01:12.4683505-05:00
+
+- Affected phase: Post-audit `POST-BATCH-E-27A` verification and audit artifact update
+- Cwd: `D:\ConficturaUO`
+- Command: Targeted Items:Gifts speech hook scan; Visual Studio MSBuild `Data/System/Source/Server.csproj /p:Configuration=Debug /p:Platform=x86 /v:minimal`; `.\ConficturaServer.exe -compileonly -nocache`; restore generated root executable artifacts; append `POST-BATCH-E-27A` rows to `post-batch-e-hooks-gumps-commands-regions-review.csv` and the active overlay; update status, README, and next-step artifacts.
+- Result: Targeted scan confirmed Christmas and Halloween speech registrations and null/deleted/backpack/speech/mobile guards; `Server.csproj` Debug/x86 build passed with Visual Studio Community 2022 MSBuild; compile-only runtime script verification exited 0 and printed no `Listening:` output; generated `ConficturaServer.exe`, `.config`, and `.pdb` were restored; active backlog overlay now includes 121 `POST-BATCH-E` dispositions.
+- Output path: `docs/codebase-audit/outputs/post-batch-e-hooks-gumps-commands-regions-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
+
 ### 2026-06-08T16:42:46.5194703-05:00
 
 - Affected phase: Post-audit `POST-BATCH-D-02A` `Custom:ClearDeckCommand` pooled enumerable ownership repair
