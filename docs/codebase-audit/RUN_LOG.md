@@ -4535,6 +4535,14 @@ Scope: Deterministic phase runner log for the Confictura codebase audit and reor
 - Result: Targeted scan confirmed Vote, VoteConfig, and VoteInstance registrations and command event/mobile/deleted guards; `Server.csproj` Debug/x86 build passed with Visual Studio Community 2022 MSBuild; compile-only runtime script verification exited 0 and printed no `Listening:` output; generated `ConficturaServer.exe`, `.config`, and `.pdb` were restored; active backlog overlay now includes 83 `POST-BATCH-E` dispositions.
 - Output path: `docs/codebase-audit/outputs/post-batch-e-hooks-gumps-commands-regions-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
 
+### 2026-06-09T09:52:22.4314972-05:00
+
+- Affected phase: Post-audit `POST-BATCH-E-14A` XMLSpawner command-register false-positive review
+- Cwd: `D:\ConficturaUO`
+- Command: Targeted source review of commented command-register rows for `RB-01692` through `RB-01698` in `Data/Scripts/Custom/XMLSpawner/XmlSpawner2.cs` and `Data/Scripts/Custom/XMLSpawner/XmlAttach/XmlAttach.cs`; append `POST-BATCH-E-14A` rows to `post-batch-e-hooks-gumps-commands-regions-review.csv` and the active overlay; update status, README, and next-step artifacts.
+- Result: Classified seven marker-derived rows as `FalsePositive` because the matched `XmlSet`, `TagList`, `ItemAtt`, `MobAtt`, `DelAtt`, `TrigAtt`, and `AddAtt` `CommandSystem.Register` rows are inactive line comments. Active `TargetCommands` registrations remain for `XmlSet`, `AddAtt`, and `DelAtt`. No source files changed; source build and compile-only runtime script verification were not required for this review-only false-positive batch. Active backlog overlay now includes 90 `POST-BATCH-E` dispositions.
+- Output path: `docs/codebase-audit/outputs/post-batch-e-hooks-gumps-commands-regions-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
+
 ### 2026-06-08T16:42:46.5194703-05:00
 
 - Affected phase: Post-audit `POST-BATCH-D-02A` `Custom:ClearDeckCommand` pooled enumerable ownership repair
