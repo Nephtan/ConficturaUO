@@ -60,7 +60,10 @@ namespace Server.Items
 
 	public override void OnSpeech( SpeechEventArgs e ) 
 	{ 
-		if ( !e.Handled && this.IsChildOf( e.Mobile.Backpack )) 
+		if ( e == null || e.Mobile == null || e.Mobile.Deleted )
+			return;
+
+		if ( !e.Handled && e.Mobile.Backpack != null && !e.Mobile.Backpack.Deleted && this.IsChildOf( e.Mobile.Backpack ))
         { 
 			string keyword = e.Speech; 
 			switch ( keyword ) 

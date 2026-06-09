@@ -1071,9 +1071,16 @@ Completed source subbatch: `POST-BATCH-E-05A` fixed the Crafting Core P1 repair 
 - Existing valid repair target behavior, serialization, public APIs, namespaces, type names, save versions, and file location were preserved.
 - Verification passed: targeted Repair.cs guard scan, Visual Studio MSBuild `Server.csproj` Debug/x86 build, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output. Generated root executable artifacts were restored.
 
+Completed source subbatch: `POST-BATCH-E-06A` fixed the Custom:AnimalSystem Faery shape-stone speech-hook rows.
+
+- 2 rows were reviewed and fixed: `RB-01896` and `RB-01897`.
+- `FaerieShapeShiftStone.OnSpeech` now guards null speech events, null/deleted mobiles, and missing/deleted backpacks before backpack checks and keyword handling.
+- Existing valid backpack speech behavior, serialization, public APIs, namespaces, type names, save versions, and file location were preserved.
+- Verification passed: targeted Faery speech-hook guard scan, Visual Studio MSBuild `Server.csproj` Debug/x86 build, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output. Generated root executable artifacts were restored.
+
 Next:
 
-1. Continue `POST-BATCH-E` with the next P1 runtime-hook/gump-guard group by deterministic order, currently `Custom:AnimalSystem`.
+1. Continue `POST-BATCH-E` with the next `Custom:AnimalSystem` file slice, currently `FelinusShapeChangeStone.cs`.
 2. Keep P2 Boats and Bulk Orders command-access rows queued until the P2 command-access pass unless source evidence makes them an urgent local blocker.
 3. Preserve serialization, public APIs, namespaces, type names, save versions, and file locations; verify source fixes with `Server.csproj` Debug/x86 build and `.\ConficturaServer.exe -compileonly -nocache`.
 

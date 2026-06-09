@@ -12,13 +12,13 @@ Post-audit live-runtime baseline HEAD: `9dce70de docs: record source build basel
 
 Post-audit compile-only implementation HEAD: `09b7b7e5 feat: add compile-only script verification`
 
-Post-audit latest implemented source batch: `POST-BATCH-E-05A` fixed 2 Crafting Core P1 repair target/CraftGump guard rows.
+Post-audit latest implemented source batch: `POST-BATCH-E-06A` fixed 2 Custom:AnimalSystem Faery shape-stone P1 speech-hook rows.
 
 Post-audit latest committed audit-state batch before the current source repair: `6ae44f74 docs: close save compatibility triage`
 
 Post-audit latest runtime-risk review batch: `POST-BATCH-C-01A` reviewed the 17 P0 runtime-hook rows and 8 P0 `PlayerMobile` coupling rows in `outputs/post-batch-c-runtime-hooks-player-mobile-review.csv`. The batch made no source edits; the runtime-hook rows reconcile to the earlier `POST-BATCH-A` packet-handler review, and `PlayerMobile` coupling remains migration-gated.
 
-Post-audit active backlog overlay: `outputs/post-audit-active-backlog-status.csv` preserves historical `repair-backlog.csv` while recording 17 packet-handler dispositions, 285 reviewed save-compatibility dispositions across `POST-BATCH-B-34A` and prior `POST-BATCH-B` subbatches, 25 reviewed `POST-BATCH-C-01A` runtime-hook/`PlayerMobile` coupling dispositions, 406 `POST-BATCH-D` pooled enumerable fixes, 2 `POST-BATCH-D` false positives, and 54 `POST-BATCH-E` runtime-hook/gump-guard dispositions.
+Post-audit active backlog overlay: `outputs/post-audit-active-backlog-status.csv` preserves historical `repair-backlog.csv` while recording 17 packet-handler dispositions, 285 reviewed save-compatibility dispositions across `POST-BATCH-B-34A` and prior `POST-BATCH-B` subbatches, 25 reviewed `POST-BATCH-C-01A` runtime-hook/`PlayerMobile` coupling dispositions, 406 `POST-BATCH-D` pooled enumerable fixes, 2 `POST-BATCH-D` false positives, and 56 `POST-BATCH-E` runtime-hook/gump-guard dispositions.
 
 Post-audit save compatibility triage: `outputs/post-batch-b-save-compatibility-triage.csv` scopes all 304 P0 critical save-compatibility rows and records source-reviewed decisions for all 304 rows across `POST-BATCH-B`. No queued rows remain; all active confirmed save issues are fixed in the overlay.
 
@@ -187,6 +187,8 @@ Post-audit hooks/gumps/commands/regions: `POST-BATCH-E-03A` fixed the Champions 
 Post-audit hooks/gumps/commands/regions: `POST-BATCH-E-04A` fixed the Clone Offline Player Characters P1 login/logout hook rows in `Data/Scripts/Custom/CloneOfflinePlayerCharacters/CloneOfflinePlayerCharacters.cs`. `OnLogout` and `OnLogin` now guard null event args, null mobiles, and deleted mobiles before clone creation/deletion logic; valid login/logout behavior, serialization, public APIs, namespaces, type names, save versions, and file location were preserved. Verification passed: targeted clone login/logout hook guard scan, `Server.csproj` Debug/x86 build with Visual Studio MSBuild, and `.\ConficturaServer.exe -compileonly -nocache` with no `Listening:` output.
 
 Post-audit hooks/gumps/commands/regions: `POST-BATCH-E-05A` fixed the Crafting Core P1 repair target/CraftGump rows in `Data/Scripts/Trades/Core/Repair.cs`. `Repair.InternalTarget.OnTarget` now guards null/deleted targeters, missing craft systems, null targets, and stale/deleted tools before repair processing and CraftGump resend; valid repair target behavior, serialization, public APIs, namespaces, type names, save versions, and file location were preserved. Verification passed: targeted repair guard scan, `Server.csproj` Debug/x86 build with Visual Studio MSBuild, and `.\ConficturaServer.exe -compileonly -nocache` with no `Listening:` output.
+
+Post-audit hooks/gumps/commands/regions: `POST-BATCH-E-06A` fixed the Custom:AnimalSystem Faery shape-stone P1 speech-hook rows in `Data/Scripts/Custom/AnimalSystem/ShapeShiftStones/FaeryShapeChangeStone.cs`. `FaerieShapeShiftStone.OnSpeech` now guards null speech events, null/deleted mobiles, and missing/deleted backpacks before backpack checks and keyword handling; valid backpack speech behavior, serialization, public APIs, namespaces, type names, save versions, and file location were preserved. Verification passed: targeted Faery speech-hook guard scan, `Server.csproj` Debug/x86 build with Visual Studio MSBuild, and `.\ConficturaServer.exe -compileonly -nocache` with no `Listening:` output.
 
 Post-audit save compatibility blocker resolved: `SERIAL-1298` and `SERIAL-1300` now consume the previously written duration payloads before cleanup in `BlendWithForrestSpell.cs:123-151` and `GraspingRootsSpell.cs:116-132`. Verification: `New-SerializationRegister.ps1` regenerated serialization outputs, `Server.csproj` Debug/x86 build passed with Visual Studio MSBuild, and `.\ConficturaServer.exe -compileonly -nocache` passed without listener output.
 
