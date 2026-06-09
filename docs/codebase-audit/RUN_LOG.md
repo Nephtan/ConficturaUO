@@ -4902,3 +4902,19 @@ Scope: Deterministic phase runner log for the Confictura codebase audit and reor
 - Command: Targeted `Magic/Jester` direct range-scan `rg`; explicit pooled-variable ownership `rg`; Visual Studio MSBuild `Data/System/Source/Server.csproj /p:Configuration=Debug /p:Platform=x86 /v:minimal`; `.\ConficturaServer.exe -compileonly -nocache`; restore generated root executable artifacts; update `post-batch-d-pooled-enumerable-review.csv`, active overlay, status, README, and next-step artifacts.
 - Result: Targeted scan found no remaining direct range scans in `Magic/Jester`; explicit pooled-variable check showed matching `Free` calls across the five touched files; `Server.csproj` Debug/x86 build passed; compile-only runtime script verification exited 0 and printed no `Listening:` output; generated `ConficturaServer.exe`, `.config`, and `.pdb` were restored; active backlog overlay now has 487 unique rows including 158 `POST-BATCH-D` fixed rows and 2 `POST-BATCH-D` false positives. `Magic:Jester` queued pooled-enumerable rows are complete.
 - Output path: `docs/codebase-audit/outputs/post-batch-d-pooled-enumerable-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
+
+### 2026-06-08T19:30:25.3414101-05:00
+
+- Affected phase: Post-audit `POST-BATCH-D-40A` `Magic:Knight` pooled enumerable ownership repair
+- Cwd: `D:\ConficturaUO`
+- Command: Source review and patch of `RB-04849` through `RB-04851` in `Data/Scripts/Magic/Knight`.
+- Result: Replaced Dispel Evil, Holy Light, and Noble Sacrifice direct range scans with local `IPooledEnumerable` variables and `try/finally Free`. Harmful/beneficial target filters, Dispel Evil controlled-creature handling, Noble Sacrifice range TODO, serialization, namespaces, type names, save versions, and file locations were preserved.
+- Output path: `Data/Scripts/Magic/Knight/DispelEvil.cs`; `Data/Scripts/Magic/Knight/HolyLight.cs`; `Data/Scripts/Magic/Knight/NobleSacrifice.cs`
+
+### 2026-06-08T19:30:25.3414101-05:00
+
+- Affected phase: Post-audit `POST-BATCH-D-40A` verification and audit artifact update
+- Cwd: `D:\ConficturaUO`
+- Command: Targeted `Magic/Knight` direct range-scan `rg`; explicit pooled-variable ownership `rg`; Visual Studio MSBuild `Data/System/Source/Server.csproj /p:Configuration=Debug /p:Platform=x86 /v:minimal`; `.\ConficturaServer.exe -compileonly -nocache`; restore generated root executable artifacts; update `post-batch-d-pooled-enumerable-review.csv`, active overlay, status, README, and next-step artifacts.
+- Result: Targeted scan found no remaining direct range scans in `Magic/Knight`; explicit pooled-variable check showed matching `Free` calls across the three touched files; `Server.csproj` Debug/x86 build passed; compile-only runtime script verification exited 0 and printed no `Listening:` output; generated `ConficturaServer.exe`, `.config`, and `.pdb` were restored; active backlog overlay now has 490 unique rows including 161 `POST-BATCH-D` fixed rows and 2 `POST-BATCH-D` false positives. `Magic:Knight` queued pooled-enumerable rows are complete.
+- Output path: `docs/codebase-audit/outputs/post-batch-d-pooled-enumerable-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
