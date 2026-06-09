@@ -1128,9 +1128,17 @@ Completed source subbatch: `POST-BATCH-E-12A` fixed the Custom:OrbRemoteServer c
 - Existing valid GameMaster command behavior, serialization, public APIs, namespaces, type names, save versions, and file location were preserved.
 - Verification passed: targeted OrbRemoteServer ClientCommands guard scan, Visual Studio MSBuild `Server.csproj` Debug/x86 build, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output. Generated root executable artifacts were restored.
 
+Completed source subbatch: `POST-BATCH-E-13A` fixed the Custom:Voting command-hook rows.
+
+- 2 rows were reviewed and fixed: `RB-01690` and `RB-01691`.
+- `VoteConfig_OnCommand` and `VoteInstance_OnCommand` now guard null command events before Mobile/deleted checks and properties gump sends.
+- The adjacent `Vote_OnCommand` received the same null-event guard in the touched entry-point surface.
+- Existing valid command behavior, serialization, public APIs, namespaces, type names, save versions, and file location were preserved.
+- Verification passed: targeted Voting command guard scan, Visual Studio MSBuild `Server.csproj` Debug/x86 build, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output. Generated root executable artifacts were restored.
+
 Next:
 
-1. Continue `POST-BATCH-E` with the next focused P1 runtime-hook group by the active plan, currently `Custom:Voting`.
+1. Continue `POST-BATCH-E` with the next focused P1 runtime-hook group by the active plan, currently `Custom:XMLSpawner`.
 2. Keep P2 Boats and Bulk Orders command-access rows queued until the P2 command-access pass unless source evidence makes them an urgent local blocker.
 3. Preserve serialization, public APIs, namespaces, type names, save versions, and file locations; verify source fixes with `Server.csproj` Debug/x86 build and `.\ConficturaServer.exe -compileonly -nocache`.
 

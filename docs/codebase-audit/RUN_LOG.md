@@ -4519,6 +4519,22 @@ Scope: Deterministic phase runner log for the Confictura codebase audit and reor
 - Result: Targeted scan confirmed command registrations, command mobile guards, stale target-owner guard, and preserved movement/target sends; `Server.csproj` Debug/x86 build passed with Visual Studio Community 2022 MSBuild; compile-only runtime script verification exited 0 and printed no `Listening:` output; generated `ConficturaServer.exe`, `.config`, and `.pdb` were restored; active backlog overlay now includes 81 `POST-BATCH-E` dispositions.
 - Output path: `docs/codebase-audit/outputs/post-batch-e-hooks-gumps-commands-regions-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
 
+### 2026-06-09T09:48:06.7426692-05:00
+
+- Affected phase: Post-audit `POST-BATCH-E-13A` Custom:Voting command-hook guard repair
+- Cwd: `D:\ConficturaUO`
+- Command: Source review and patch of `RB-01690` and `RB-01691` in `Data/Scripts/Custom/Voting/VoteCommand.cs`.
+- Result: Added null command-event guards before Mobile/deleted checks and gump/vote actions in the Voting command handlers. The adjacent player `Vote` command received the same guard in the touched entry-point surface. Valid behavior, serialization, public APIs, namespaces, type names, save versions, file locations, and project files were preserved.
+- Output path: `Data/Scripts/Custom/Voting/VoteCommand.cs`
+
+### 2026-06-09T09:48:06.7426692-05:00
+
+- Affected phase: Post-audit `POST-BATCH-E-13A` verification and audit artifact update
+- Cwd: `D:\ConficturaUO`
+- Command: Targeted Voting command guard `rg` scan; Visual Studio MSBuild `Data/System/Source/Server.csproj /p:Configuration=Debug /p:Platform=x86 /v:minimal`; `.\ConficturaServer.exe -compileonly -nocache`; restore generated root executable artifacts; append `POST-BATCH-E-13A` rows to `post-batch-e-hooks-gumps-commands-regions-review.csv` and the active overlay; update status, README, and next-step artifacts.
+- Result: Targeted scan confirmed Vote, VoteConfig, and VoteInstance registrations and command event/mobile/deleted guards; `Server.csproj` Debug/x86 build passed with Visual Studio Community 2022 MSBuild; compile-only runtime script verification exited 0 and printed no `Listening:` output; generated `ConficturaServer.exe`, `.config`, and `.pdb` were restored; active backlog overlay now includes 83 `POST-BATCH-E` dispositions.
+- Output path: `docs/codebase-audit/outputs/post-batch-e-hooks-gumps-commands-regions-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
+
 ### 2026-06-08T16:42:46.5194703-05:00
 
 - Affected phase: Post-audit `POST-BATCH-D-02A` `Custom:ClearDeckCommand` pooled enumerable ownership repair
