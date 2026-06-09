@@ -1030,9 +1030,17 @@ Completed source subbatch: `POST-BATCH-E-01A` started `POST-BATCH-E` with the fi
 - 10 rows were reviewed with no source change because source review confirmed non-user WorldSave/timer behavior, existing speech/login guard behavior, or duplicate gump-send marker rows covered by companion response guard fixes.
 - Verification passed: targeted Boats hook/gump guard scans, Visual Studio MSBuild `Server.csproj` Debug/x86 build, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output. Generated root executable artifacts were restored.
 
+Completed source subbatch: `POST-BATCH-E-02A` continued `POST-BATCH-E` with the first Bulk Orders file slice, `DragonShapeChangeStone-body.cs`.
+
+- 6 rows were reviewed and fixed: `RB-01894`, `RB-01895`, `RB-02208`, `RB-02544`, `RB-03252`, and `RB-03499`.
+- `DragonShapeShiftStone.OnSpeech` now guards null/deleted mobiles and missing backpacks before keyword handling.
+- `BodyValueGump.OnResponse` now guards null `NetState`, null/deleted or stale mobiles, and deleted shift stones before accepting button replies.
+- The context-menu `ChangeBodyValue.OnClick` path now guards stale/deleted stored Mobile and stone state before sending the gump.
+- Verification passed: targeted Dragon shape-stone guard scan, Visual Studio MSBuild `Server.csproj` Debug/x86 build, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output. Generated root executable artifacts were restored.
+
 Next:
 
-1. Continue `POST-BATCH-E` with the next P1 runtime-hook group by deterministic order, currently `Bulk Orders`.
+1. Continue `POST-BATCH-E` with the next Bulk Orders file slice, currently `Data/Scripts/Trades/Bulk Orders/Books/Gumps/BOBFilterGump.cs`.
 2. Keep P2 Boats command-access rows queued until the P2 command-access pass unless source evidence makes them an urgent local blocker.
 3. Preserve serialization, public APIs, namespaces, type names, save versions, and file locations; verify source fixes with `Server.csproj` Debug/x86 build and `.\ConficturaServer.exe -compileonly -nocache`.
 
