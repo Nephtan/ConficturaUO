@@ -1428,9 +1428,16 @@ Completed source subbatch: `POST-BATCH-E-52A` fixed the System:Misc buff-icon cl
 - Valid buff resend behavior, serialization, public APIs, namespaces, type names, save versions, file location, and project files were preserved.
 - Verification passed: targeted BuffIcons hook scan, Visual Studio MSBuild `Server.csproj` Debug/x86 build, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output. Generated root executable artifacts were restored.
 
+Completed source subbatch: `POST-BATCH-E-53A` fixed the System:Misc character-created hook row.
+
+- 1 row was reviewed and fixed: `RB-01790`.
+- `EventSink_CharacterCreated` now guards null character-created args, null `NetState`, and non-`Account` account state before profession validation, player mobile creation, access-level assignment, and new-character logging.
+- Valid character creation behavior, XML points attachment, serialization, public APIs, namespaces, type names, save versions, file location, and project files were preserved.
+- Verification passed: targeted CharacterCreation hook scan, Visual Studio MSBuild `Server.csproj` Debug/x86 build, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output. Generated root executable artifacts were restored.
+
 Next:
 
-1. Continue `POST-BATCH-E` with the next focused P1 runtime-hook/gump-guard group by the active plan, currently `System:Misc` row `RB-01790` in `Data/Scripts/System/Misc/CharacterCreation.cs`.
+1. Continue `POST-BATCH-E` with the next focused P1 runtime-hook/gump-guard group by the active plan, currently `System:Misc` row `RB-01791` in `Data/Scripts/System/Misc/ClientVerification.cs`.
 2. Keep P2 Boats and Bulk Orders command-access rows queued until the P2 command-access pass unless source evidence makes them an urgent local blocker.
 3. Preserve serialization, public APIs, namespaces, type names, save versions, and file locations; verify source fixes with `Server.csproj` Debug/x86 build and `.\ConficturaServer.exe -compileonly -nocache`.
 

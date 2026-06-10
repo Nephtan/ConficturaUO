@@ -6278,3 +6278,19 @@ Scope: Deterministic phase runner log for the Confictura codebase audit and reor
 - Command: Targeted BuffIcons hook scan; Visual Studio MSBuild `Data/System/Source/Server.csproj /p:Configuration=Debug /p:Platform=x86 /v:minimal`; `.\ConficturaServer.exe -compileonly -nocache`; restore generated root executable artifacts; append `POST-BATCH-E-52A` row to `post-batch-e-hooks-gumps-commands-regions-review.csv` and the active overlay; update status, README, and next-step artifacts.
 - Result: Targeted scan confirmed the ClientVersionReceived registration plus null args/state/mobile guards; `Server.csproj` Debug/x86 build passed with Visual Studio Community 2022 MSBuild; compile-only runtime script verification exited 0 and printed no `Listening:` output; generated `ConficturaServer.exe`, `.config`, and `.pdb` were restored; active backlog overlay now includes 188 `POST-BATCH-E` dispositions.
 - Output path: `docs/codebase-audit/outputs/post-batch-e-hooks-gumps-commands-regions-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
+
+### 2026-06-09T20:18:14.2044315-05:00
+
+- Affected phase: Post-audit `POST-BATCH-E-53A` System:Misc character-created hook guard repair
+- Cwd: `D:\ConficturaUO`
+- Command: Source review and patch of `RB-01790` in `Data/Scripts/System/Misc/CharacterCreation.cs`.
+- Result: Added null `CharacterCreatedEventArgs`, null `NetState`, and non-`Account` account guards before profession validation, player mobile creation, access-level assignment, and new-character logging. Valid character creation behavior, XML points attachment, serialization, public APIs, namespaces, type names, save versions, file location, and project files were preserved.
+- Output path: `Data/Scripts/System/Misc/CharacterCreation.cs`
+
+### 2026-06-09T20:18:14.2044315-05:00
+
+- Affected phase: Post-audit `POST-BATCH-E-53A` verification and audit artifact update
+- Cwd: `D:\ConficturaUO`
+- Command: Targeted CharacterCreation hook scan; Visual Studio MSBuild `Data/System/Source/Server.csproj /p:Configuration=Debug /p:Platform=x86 /v:minimal`; `.\ConficturaServer.exe -compileonly -nocache`; restore generated root executable artifacts; append `POST-BATCH-E-53A` row to `post-batch-e-hooks-gumps-commands-regions-review.csv` and the active overlay; update status, README, and next-step artifacts.
+- Result: Targeted scan confirmed the CharacterCreated registration plus null args/state/account guards; `Server.csproj` Debug/x86 build passed with Visual Studio Community 2022 MSBuild; compile-only runtime script verification exited 0 and printed no `Listening:` output; generated `ConficturaServer.exe`, `.config`, and `.pdb` were restored; active backlog overlay now includes 189 `POST-BATCH-E` dispositions.
+- Output path: `docs/codebase-audit/outputs/post-batch-e-hooks-gumps-commands-regions-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
