@@ -6822,3 +6822,19 @@ Scope: Deterministic phase runner log for the Confictura codebase audit and reor
 - Command: Targeted PacketHandlers/EventSink/Guilds/Players source review; append `POST-BATCH-E-86A` rows to `post-batch-e-hooks-gumps-commands-regions-review.csv` and the active overlay; update status, README, and next-step artifacts.
 - Result: Targeted source review confirmed the encoded in-game dispatch guard, constructed event args, missing SetAbility subscribers, and downstream null/deleted mobile guard coverage for guild and quest gump requests; source build and compile-only verification were not required because no source files changed; active backlog overlay now includes 250 `POST-BATCH-E` dispositions.
 - Output path: `docs/codebase-audit/outputs/post-batch-e-hooks-gumps-commands-regions-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
+
+### 2026-06-09T22:30:28.7607484-05:00
+
+- Affected phase: Post-audit `POST-BATCH-E-87A` ServerCore `PacketHandlers.cs` rename, chat, and delete-character event invocation review
+- Cwd: `D:\ConficturaUO`
+- Command: Source review of `RB-01852` through `RB-01854` in `Data/System/Source/Network/PacketHandlers.cs`.
+- Result: Reviewed rename, chat, and delete-character event invocations with no source change. Rename and chat are in-game packet handlers covered by the MessagePump null/deleted mobile guard before dispatch; rename also has subscriber-level guard coverage, chat is an obsolete no-op subscriber, and delete-character is covered by the Accounts subscriber's event/state/account/index validation.
+- Output path: `docs/codebase-audit/outputs/post-batch-e-hooks-gumps-commands-regions-review.csv`
+
+### 2026-06-09T22:30:28.7607484-05:00
+
+- Affected phase: Post-audit `POST-BATCH-E-87A` verification and audit artifact update
+- Cwd: `D:\ConficturaUO`
+- Command: Targeted PacketHandlers/MessagePump/EventSink/RenameRequests/Obsolete/Accounts source review; append `POST-BATCH-E-87A` rows to `post-batch-e-hooks-gumps-commands-regions-review.csv` and the active overlay; update status, README, and next-step artifacts.
+- Result: Targeted source review confirmed dispatcher or subscriber guard coverage for rename, chat, and delete request invocations; source build and compile-only verification were not required because no source files changed; active backlog overlay now includes 253 `POST-BATCH-E` dispositions.
+- Output path: `docs/codebase-audit/outputs/post-batch-e-hooks-gumps-commands-regions-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`

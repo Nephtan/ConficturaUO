@@ -1678,9 +1678,17 @@ Completed review-only subbatch: `POST-BATCH-E-86A` reviewed the ServerCore encod
 - Valid set-ability, guild gump request, and quest/stats gump request behavior, serialization, public APIs, namespaces, type names, save versions, and file locations remain unchanged.
 - Verification passed: targeted PacketHandlers/EventSink/Guilds/Players source review. Source build and compile-only verification were not required because no source files changed.
 
+Completed review-only subbatch: `POST-BATCH-E-87A` reviewed the ServerCore PacketHandlers rename, chat, and delete-character invocation rows.
+
+- 3 rows were reviewed with no source change: `RB-01852` through `RB-01854`.
+- `RenameRequest` and `ChatRequest` are registered as in-game packet handlers, so `MessagePump` rejects null/deleted mobiles before dispatch; `RenameRequests.EventSink_RenameRequest` also guards null/deleted `from` and target mobiles plus null names.
+- The current `ChatRequest` subscriber is an obsolete no-op handler, and the `DeleteRequest` subscriber in `Accounts` validates null args/state, account type, index bounds, missing/active characters, delete delay, and jail restrictions before deleting.
+- Valid rename, obsolete chat-request, and character-delete request behavior, serialization, public APIs, namespaces, type names, save versions, and file locations remain unchanged.
+- Verification passed: targeted PacketHandlers/MessagePump/EventSink/RenameRequests/Obsolete/Accounts source review. Source build and compile-only verification were not required because no source files changed.
+
 Next:
 
-1. Continue `POST-BATCH-E` with the next focused P1 runtime-hook/gump-guard group by the active plan, currently `ServerCore` row `RB-01852` in `Data/System/Source/Network/PacketHandlers.cs`.
+1. Continue `POST-BATCH-E` with the next focused P1 runtime-hook/gump-guard group by the active plan, currently `ServerCore` row `RB-01855` in `Data/System/Source/Network/PacketHandlers.cs`.
 2. Keep P2 Boats and Bulk Orders command-access rows queued until the P2 command-access pass unless source evidence makes them an urgent local blocker.
 3. Preserve serialization, public APIs, namespaces, type names, save versions, and file locations; verify source fixes with `Server.csproj` Debug/x86 build and `.\ConficturaServer.exe -compileonly -nocache`.
 
