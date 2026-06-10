@@ -17,6 +17,9 @@ namespace Server.Misc
 
         public static void EventSink_Speech(SpeechEventArgs args)
         {
+            if (args == null || args.Mobile == null || args.Mobile.Deleted || args.Keywords == null)
+                return;
+
             Mobile from = args.Mobile;
             int[] keywords = args.Keywords;
 
