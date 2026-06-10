@@ -1349,9 +1349,16 @@ Completed source subbatch: `POST-BATCH-E-41A` fixed the System:Commands command 
 - Valid command logging behavior, serialization, public APIs, namespaces, type names, save versions, file location, and project files were preserved.
 - Verification passed: targeted Logging command hook scan, Visual Studio MSBuild `Server.csproj` Debug/x86 build, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output. Generated root executable artifacts were restored.
 
+Completed source subbatch: `POST-BATCH-E-42A` fixed the System:Commands visibility-list login hook row.
+
+- 1 row was reviewed and fixed: `RB-01765`.
+- `VisibilityList.OnLogin` now guards null login args and null/deleted mobiles before clearing a `PlayerMobile` visibility list on login.
+- Valid login visibility-list reset behavior, serialization, public APIs, namespaces, type names, save versions, file location, and project files were preserved.
+- Verification passed: targeted VisibilityList login hook scan, Visual Studio MSBuild `Server.csproj` Debug/x86 build, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output. Generated root executable artifacts were restored.
+
 Next:
 
-1. Continue `POST-BATCH-E` with the next focused P1 runtime-hook/gump-guard group by the active plan, currently `System:Commands` row `RB-01765` in `Data/Scripts/System/Commands/VisibilityList.cs`.
+1. Continue `POST-BATCH-E` with the next focused P1 runtime-hook/gump-guard group by the active plan, currently `System:Commands` row `RB-01766` in `Data/Scripts/System/Commands/Player/Afk.cs`.
 2. Keep P2 Boats and Bulk Orders command-access rows queued until the P2 command-access pass unless source evidence makes them an urgent local blocker.
 3. Preserve serialization, public APIs, namespaces, type names, save versions, and file locations; verify source fixes with `Server.csproj` Debug/x86 build and `.\ConficturaServer.exe -compileonly -nocache`.
 
