@@ -1327,9 +1327,17 @@ Completed source subbatch: `POST-BATCH-E-38A` fixed the Spell Framework Research
 - Valid ResearchSneak logout cleanup behavior, serialization, public APIs, namespaces, type names, save versions, file location, and project files were preserved.
 - Verification passed: targeted ResearchSneak logout hook scan, Visual Studio MSBuild `Server.csproj` Debug/x86 build, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output. Generated root executable artifacts were restored.
 
+Completed review-only subbatch: `POST-BATCH-E-39A` reviewed Vendor Core combat request invocation rows.
+
+- 2 rows were reviewed and classified `ReviewedNoChange`: `RB-01752` and `RB-01753`.
+- `Behavior.cs` creates `StunRequestEventArgs` and `DisarmRequestEventArgs` from the owned `BaseAI.m_Mobile` inside action methods that already dereference the AI owner before the invocation.
+- The only subscribed handlers are `Fists.EventSink_StunRequest` and `Fists.EventSink_DisarmRequest`, and those handlers now guard null event args and null/deleted mobiles.
+- No source files changed.
+- Verification passed: targeted Behavior/Fists/EventSink source review. Source build and compile-only verification were not required for this review-only batch.
+
 Next:
 
-1. Continue `POST-BATCH-E` with the next focused P1 runtime-hook/gump-guard group by the active plan, currently `Vendor Core` rows `RB-01752` and `RB-01753` in `Data/Scripts/Mobiles/Base/Behavior.cs`.
+1. Continue `POST-BATCH-E` with the next focused P1 runtime-hook/gump-guard group by the active plan, currently `PvP Consent` rows `RB-01754` through `RB-01757` in `Data/Scripts/Mobiles/Base/PlayerMobile.cs`.
 2. Keep P2 Boats and Bulk Orders command-access rows queued until the P2 command-access pass unless source evidence makes them an urgent local blocker.
 3. Preserve serialization, public APIs, namespaces, type names, save versions, and file locations; verify source fixes with `Server.csproj` Debug/x86 build and `.\ConficturaServer.exe -compileonly -nocache`.
 
