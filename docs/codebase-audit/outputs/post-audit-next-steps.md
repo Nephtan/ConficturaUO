@@ -1312,9 +1312,17 @@ Completed source subbatch: `POST-BATCH-E-36A` fixed the Spell Framework AnimalFo
 - Valid animal-form speed boost restoration behavior, serialization, public APIs, namespaces, type names, save versions, file location, and project files were preserved.
 - Verification passed: targeted AnimalForm login hook scan, Visual Studio MSBuild `Server.csproj` Debug/x86 build, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output. Generated root executable artifacts were restored.
 
+Completed source subbatch: `POST-BATCH-E-37A` fixed the Spell Framework ResearchEnchant logout hook row.
+
+- 1 row was reviewed and fixed: `RB-01750`.
+- `ResearchEnchant.OnLogout` now guards null logout args and null/deleted mobiles before ending effects for the logging-out mobile.
+- Valid ResearchEnchant logout cleanup behavior was preserved; the `EndEffects(null)` all-cleanup path remains unchanged for timer/deserialization cleanup.
+- Serialization, public APIs, namespaces, type names, save versions, file location, and project files were unchanged.
+- Verification passed: targeted ResearchEnchant logout hook scan, Visual Studio MSBuild `Server.csproj` Debug/x86 build, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output. Generated root executable artifacts were restored.
+
 Next:
 
-1. Continue `POST-BATCH-E` with the next focused P1 runtime-hook/gump-guard group by the active plan, currently `Spell Framework` row `RB-01750` in `Data/Scripts/Magic/Research/Spells/Enchanting/ResearchEnchant.cs`.
+1. Continue `POST-BATCH-E` with the next focused P1 runtime-hook/gump-guard group by the active plan, currently `Spell Framework` row `RB-01751` in `Data/Scripts/Magic/Research/Spells/Enchanting/ResearchSneak.cs`.
 2. Keep P2 Boats and Bulk Orders command-access rows queued until the P2 command-access pass unless source evidence makes them an urgent local blocker.
 3. Preserve serialization, public APIs, namespaces, type names, save versions, and file locations; verify source fixes with `Server.csproj` Debug/x86 build and `.\ConficturaServer.exe -compileonly -nocache`.
 

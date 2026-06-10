@@ -6038,3 +6038,19 @@ Scope: Deterministic phase runner log for the Confictura codebase audit and reor
 - Command: Targeted AnimalForm login hook scan; Visual Studio MSBuild `Data/System/Source/Server.csproj /p:Configuration=Debug /p:Platform=x86 /v:minimal`; `.\ConficturaServer.exe -compileonly -nocache`; restore generated root executable artifacts; append `POST-BATCH-E-36A` row to `post-batch-e-hooks-gumps-commands-regions-review.csv` and the active overlay; update status, README, and next-step artifacts.
 - Result: Targeted scan confirmed Login registration plus null/deleted login guards; `Server.csproj` Debug/x86 build passed with Visual Studio Community 2022 MSBuild; compile-only runtime script verification exited 0 and printed no `Listening:` output; generated `ConficturaServer.exe`, `.config`, and `.pdb` were restored; active backlog overlay now includes 151 `POST-BATCH-E` dispositions.
 - Output path: `docs/codebase-audit/outputs/post-batch-e-hooks-gumps-commands-regions-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
+
+### 2026-06-09T12:00:38.2203110-05:00
+
+- Affected phase: Post-audit `POST-BATCH-E-37A` Spell Framework ResearchEnchant logout hook guard repair
+- Cwd: `D:\ConficturaUO`
+- Command: Source review and patch of `RB-01750` in `Data/Scripts/Magic/Research/Spells/Enchanting/ResearchEnchant.cs`.
+- Result: Added null logout args and null/deleted mobile guards before `ResearchEnchant.OnLogout` ends effects for the logging-out mobile. The intentional `EndEffects(null)` all-cleanup path remains unchanged for timer/deserialization cleanup. Valid ResearchEnchant logout cleanup behavior, serialization, public APIs, namespaces, type names, save versions, file location, and project files were preserved.
+- Output path: `Data/Scripts/Magic/Research/Spells/Enchanting/ResearchEnchant.cs`
+
+### 2026-06-09T12:00:38.2203110-05:00
+
+- Affected phase: Post-audit `POST-BATCH-E-37A` verification and audit artifact update
+- Cwd: `D:\ConficturaUO`
+- Command: Targeted ResearchEnchant logout hook scan; Visual Studio MSBuild `Data/System/Source/Server.csproj /p:Configuration=Debug /p:Platform=x86 /v:minimal`; `.\ConficturaServer.exe -compileonly -nocache`; restore generated root executable artifacts; append `POST-BATCH-E-37A` row to `post-batch-e-hooks-gumps-commands-regions-review.csv` and the active overlay; update status, README, and next-step artifacts.
+- Result: Targeted scan confirmed Logout registration plus null/deleted logout guards; `Server.csproj` Debug/x86 build passed with Visual Studio Community 2022 MSBuild; compile-only runtime script verification exited 0 and printed no `Listening:` output; generated `ConficturaServer.exe`, `.config`, and `.pdb` were restored; active backlog overlay now includes 152 `POST-BATCH-E` dispositions.
+- Output path: `docs/codebase-audit/outputs/post-batch-e-hooks-gumps-commands-regions-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
