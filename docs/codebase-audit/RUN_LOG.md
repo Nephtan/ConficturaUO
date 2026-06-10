@@ -6142,3 +6142,19 @@ Scope: Deterministic phase runner log for the Confictura codebase audit and reor
 - Command: Targeted AFK hook scan; Visual Studio MSBuild `Data/System/Source/Server.csproj /p:Configuration=Debug /p:Platform=x86 /v:minimal`; `.\ConficturaServer.exe -compileonly -nocache`; restore generated root executable artifacts; append `POST-BATCH-E-43A` rows to `post-batch-e-hooks-gumps-commands-regions-review.csv` and the active overlay; update status, README, and next-step artifacts.
 - Result: Targeted scan confirmed the Logout/Speech/PlayerDeath registrations plus null event and null mobile guards; `Server.csproj` Debug/x86 build passed with Visual Studio Community 2022 MSBuild; compile-only runtime script verification exited 0 and printed no `Listening:` output; generated `ConficturaServer.exe`, `.config`, and `.pdb` were restored; active backlog overlay now includes 165 `POST-BATCH-E` dispositions.
 - Output path: `docs/codebase-audit/outputs/post-batch-e-hooks-gumps-commands-regions-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
+
+### 2026-06-09T19:42:42.4534284-05:00
+
+- Affected phase: Post-audit `POST-BATCH-E-44A` System:Commands auto-sheathe logout hook guard repair
+- Cwd: `D:\ConficturaUO`
+- Command: Source review and patch of `RB-01769` in `Data/Scripts/System/Commands/Player/AutoSheatheWeapon.cs`.
+- Result: Added null `LogoutEventArgs` and null event-mobile guards before `AutoSheatheWeapon.OnPlayerLogout` clears cached weapon state. Valid logout cache cleanup behavior, including cleanup for valid mobile objects without a deleted-mobile early return, serialization, public APIs, namespaces, type names, save versions, file location, and project files were preserved.
+- Output path: `Data/Scripts/System/Commands/Player/AutoSheatheWeapon.cs`
+
+### 2026-06-09T19:42:42.4534284-05:00
+
+- Affected phase: Post-audit `POST-BATCH-E-44A` verification and audit artifact update
+- Cwd: `D:\ConficturaUO`
+- Command: Targeted AutoSheathe logout hook scan; Visual Studio MSBuild `Data/System/Source/Server.csproj /p:Configuration=Debug /p:Platform=x86 /v:minimal`; `.\ConficturaServer.exe -compileonly -nocache`; restore generated root executable artifacts; append `POST-BATCH-E-44A` row to `post-batch-e-hooks-gumps-commands-regions-review.csv` and the active overlay; update status, README, and next-step artifacts.
+- Result: Targeted scan confirmed the Logout registration plus null event and null mobile guards; `Server.csproj` Debug/x86 build passed with Visual Studio Community 2022 MSBuild; compile-only runtime script verification exited 0 and printed no `Listening:` output; generated `ConficturaServer.exe`, `.config`, and `.pdb` were restored; active backlog overlay now includes 166 `POST-BATCH-E` dispositions.
+- Output path: `docs/codebase-audit/outputs/post-batch-e-hooks-gumps-commands-regions-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
