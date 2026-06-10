@@ -4,6 +4,8 @@ This directory stores durable outputs produced by the codebase systems audit and
 
 Raw command output may remain temporary when it is easy to regenerate. Curated tables, reviewed registers, blocker records, accepted risks, and verification notes belong here so future runs do not depend on chat history.
 
+For the human start-here guide, read [../README.md](../README.md). This file is the artifact catalog for the `outputs/` directory.
+
 ## Output Policy
 
 - Keep outputs source-verified and phase-labeled.
@@ -12,6 +14,86 @@ Raw command output may remain temporary when it is easy to regenerate. Curated t
 - Mark uncertain records as `Unknown`, `Partial`, `Blocked`, `Deferred`, or `Intentional` instead of guessing.
 - Record generation commands and verification in `../RUN_LOG.md`.
 - Do not approve reorganization moves from this directory alone; moves require Phase 12 design and Phase 6 save-compatibility review where serialized types are affected.
+
+## How Outputs Are Organized
+
+There are three kinds of files in this directory:
+
+| Kind | Pattern | Meaning |
+| --- | --- | --- |
+| Canonical registers | `project-truth-register.csv`, `runtime-hook-map.csv`, `serialization-register.csv`, and similar unprefixed files. | Current canonical copy produced by a phase or post-audit baseline. Use these first for broad lookups. |
+| Phase-scoped copies | `phase-NN-*`. | Evidence produced for a specific phase. These preserve what the phase generated and are useful for audits, reruns, and traceability. |
+| Post-audit overlays and reviews | `post-audit-*`, `post-batch-*`, compile-only/source-build baseline files. | Current implementation and review state after the full phase audit. Use these to reconcile historical backlog rows. |
+
+When a canonical register and a phase-scoped copy have the same purpose, the canonical file is the easier lookup target and the phase file is the traceable phase artifact. Example: use `serialization-register.csv` for normal serializer lookup, and `phase-06-serialization-register.csv` when proving exactly what Phase 6 generated.
+
+## Start Here By Task
+
+| Task | Open First | Then Open |
+| --- | --- | --- |
+| Understand current post-audit state | `../PHASE_STATUS.md` | `post-audit-next-steps.md`, `post-audit-active-backlog-status.csv` |
+| Find live runtime compile context | `live-build-and-runtime-script-compile-model.md` | `runtime-script-compile-inventory.csv`, `compile-only-verification-baseline.md` |
+| Find Visual Studio project drift | `project-truth-register.csv` | `missing-compile-targets.csv`, `unincluded-source-files.csv`, `project-cleanup-backlog.csv` |
+| Find source ownership | `system-owner-map.csv` | `cross-tree-runtime-inventory.csv`, `system-cards/` |
+| Review hooks, commands, packets, gumps, or timers | `runtime-hook-map.csv` | Phase 5 focused registers and relevant `post-batch-*` reviews |
+| Review save compatibility | `serialization-register.csv` | `phase-06-high-risk-serializer-list.csv`, `phase-06-move-rename-risk-list.csv`, `post-batch-b-save-compatibility-triage.csv` |
+| Review documentation truth | `documentation-truth-table.csv` | `phase-07-stale-claim-backlog.csv`, `phase-07-source-trace-coverage-report.csv` |
+| Review dependencies | `dependency-graph.csv` | `phase-08-hard-dependency-list.csv`, `phase-08-soft-dependency-list.csv`, `phase-08-conflict-edge-list.csv` |
+| Review gameplay synergy or conflicts | `synergy-conflict-matrix.csv` | `phase-09-balance-risk-list.csv`, `phase-09-preservation-notes.csv` |
+| Find actionable repair state | `post-audit-active-backlog-status.csv` | `repair-backlog.csv`, `verification-matrix.csv`, relevant `post-batch-*` artifact |
+| Review reorganization design | `reorganization-design.md` | `phase-12-move-proposal-table.csv`, `phase-12-keep-in-place-decisions.csv` |
+
+## Historical Backlog vs Active Overlay
+
+`repair-backlog.csv` is the Phase 13 generated backlog. It should remain stable as historical evidence unless Phase 13 is intentionally regenerated.
+
+`post-audit-active-backlog-status.csv` is the active overlay for rows that have been reviewed, fixed, accepted, or otherwise dispositioned after Phase 13. It records the historical backlog state, active status, review artifact, source evidence, commit, and notes.
+
+Use this reconciliation rule:
+
+1. Search `post-audit-active-backlog-status.csv` by `BacklogId`.
+2. If a row exists, trust its `ActiveStatus` and linked `ReviewArtifact` for current state.
+3. If no overlay row exists, use `repair-backlog.csv` as the remaining historical backlog source.
+4. Check `../PHASE_STATUS.md` for latest batch-level notes before starting work.
+
+Do not mark a historical `Ready` row as still actionable until you have checked the active overlay.
+
+## Common Status Terms
+
+| Status | Meaning |
+| --- | --- |
+| `Ready` | Historical backlog item was generated as actionable. Check post-audit overlay before acting. |
+| `Open` | Historical backlog item was still open at generation time. Check post-audit overlay before acting. |
+| `Deferred` | Work was intentionally postponed, usually for design, migration, or reorganization gating. |
+| `Fixed` | A later batch changed source/docs and recorded verification and commit evidence. |
+| `ReviewedNoChange` | Source was reviewed and no edit was needed. |
+| `SafeNoChange` | Source was reviewed and the generated risk was safe as-is. |
+| `IntentionalLegacy` | Behavior is intentionally retained for compatibility. |
+| `FalsePositive` | The generated risk row was not a real issue after source review. |
+
+## CSV Reading Tips
+
+Use PowerShell `Import-Csv` for large files:
+
+```powershell
+Import-Csv docs/codebase-audit/outputs/post-audit-active-backlog-status.csv |
+    Where-Object { $_.BacklogId -eq 'RB-03235' } |
+    Format-List
+```
+
+```powershell
+Import-Csv docs/codebase-audit/outputs/system-owner-map.csv |
+    Where-Object { $_.Path -like '*PvPConsent*' } |
+    Select-Object Path,System,Evidence |
+    Format-Table -AutoSize
+```
+
+Tips:
+
+- Use `Select-Object` to narrow wide rows before reading.
+- Avoid editing generated CSVs in spreadsheet tools unless you can preserve UTF-8, quoting, and line endings.
+- Treat generated risk rows as leads. Source review and post-audit review artifacts decide final disposition.
+- Keep repository-relative paths and exact IDs when copying evidence into new docs or backlog entries.
 
 ## Expected Outputs
 
