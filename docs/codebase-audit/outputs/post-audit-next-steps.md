@@ -1442,9 +1442,17 @@ Completed source subbatch: `POST-BATCH-E-54A` fixed the System:Misc client-versi
 - Valid client version enforcement behavior, serialization, public APIs, namespaces, type names, save versions, file location, and project files were preserved.
 - Verification passed: targeted ClientVerification hook scan, Visual Studio MSBuild `Server.csproj` Debug/x86 build, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output. Generated root executable artifacts were restored.
 
+Completed source/review subbatch: `POST-BATCH-E-55A` reviewed System:Misc console server-start and speech hook rows.
+
+- 2 rows were reviewed: `RB-01792` and `RB-01793`.
+- `RB-01792` was classified `ReviewedNoChange`: `ServerStartedEventHandler` has no event args and `EventSink_ServerStarted` does not dereference caller state.
+- `RB-01793` was fixed: `OnSpeech` now guards null speech args, null/deleted mobiles, and null maps before region lookup and console speech logging.
+- Valid console startup/speech behavior, serialization, public APIs, namespaces, type names, save versions, file location, and project files were preserved.
+- Verification passed: targeted Console/EventSink hook scan, Visual Studio MSBuild `Server.csproj` Debug/x86 build, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output. Generated root executable artifacts were restored.
+
 Next:
 
-1. Continue `POST-BATCH-E` with the next focused P1 runtime-hook/gump-guard group by the active plan, currently `System:Misc` row `RB-01792` in `Data/Scripts/System/Misc/Console.cs`.
+1. Continue `POST-BATCH-E` with the next focused P1 runtime-hook/gump-guard group by the active plan, currently `System:Misc` row `RB-01794` in `Data/Scripts/System/Misc/CrashGuard.cs`.
 2. Keep P2 Boats and Bulk Orders command-access rows queued until the P2 command-access pass unless source evidence makes them an urgent local blocker.
 3. Preserve serialization, public APIs, namespaces, type names, save versions, and file locations; verify source fixes with `Server.csproj` Debug/x86 build and `.\ConficturaServer.exe -compileonly -nocache`.
 

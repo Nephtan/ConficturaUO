@@ -6310,3 +6310,19 @@ Scope: Deterministic phase runner log for the Confictura codebase audit and reor
 - Command: Targeted ClientVerification hook scan; Visual Studio MSBuild `Data/System/Source/Server.csproj /p:Configuration=Debug /p:Platform=x86 /v:minimal`; `.\ConficturaServer.exe -compileonly -nocache`; restore generated root executable artifacts; append `POST-BATCH-E-54A` row to `post-batch-e-hooks-gumps-commands-regions-review.csv` and the active overlay; update status, README, and next-step artifacts.
 - Result: Targeted scan confirmed the ClientVersionReceived registration plus null args/state/version/mobile guards; `Server.csproj` Debug/x86 build passed with Visual Studio Community 2022 MSBuild; compile-only runtime script verification exited 0 and printed no `Listening:` output; generated `ConficturaServer.exe`, `.config`, and `.pdb` were restored; active backlog overlay now includes 190 `POST-BATCH-E` dispositions.
 - Output path: `docs/codebase-audit/outputs/post-batch-e-hooks-gumps-commands-regions-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
+
+### 2026-06-09T20:27:21.6056244-05:00
+
+- Affected phase: Post-audit `POST-BATCH-E-55A` System:Misc console server-start/speech hook review
+- Cwd: `D:\ConficturaUO`
+- Command: Source review of `RB-01792` and source review/patch of `RB-01793` in `Data/Scripts/System/Misc/Console.cs` and `Data/System/Source/EventSink.cs`.
+- Result: Classified `RB-01792` `ReviewedNoChange` because `ServerStartedEventHandler` has no event args and `EventSink_ServerStarted` does not dereference caller state. Added null `SpeechEventArgs`, null/deleted mobile, and null-map-safe region lookup guards in `OnSpeech` before console speech logging. Valid console startup/speech behavior, serialization, public APIs, namespaces, type names, save versions, file location, and project files were preserved.
+- Output path: `Data/Scripts/System/Misc/Console.cs`
+
+### 2026-06-09T20:27:21.6056244-05:00
+
+- Affected phase: Post-audit `POST-BATCH-E-55A` verification and audit artifact update
+- Cwd: `D:\ConficturaUO`
+- Command: Targeted Console/EventSink hook scan; Visual Studio MSBuild `Data/System/Source/Server.csproj /p:Configuration=Debug /p:Platform=x86 /v:minimal`; `.\ConficturaServer.exe -compileonly -nocache`; restore generated root executable artifacts; append `POST-BATCH-E-55A` rows to `post-batch-e-hooks-gumps-commands-regions-review.csv` and the active overlay; update status, README, and next-step artifacts.
+- Result: Targeted scan confirmed the ServerStarted no-args delegate and Speech registration plus null args/mobile/map guard coverage; `Server.csproj` Debug/x86 build passed with Visual Studio Community 2022 MSBuild; compile-only runtime script verification exited 0 and printed no `Listening:` output; generated `ConficturaServer.exe`, `.config`, and `.pdb` were restored; active backlog overlay now includes 192 `POST-BATCH-E` dispositions.
+- Output path: `docs/codebase-audit/outputs/post-batch-e-hooks-gumps-commands-regions-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
