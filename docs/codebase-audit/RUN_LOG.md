@@ -6870,3 +6870,19 @@ Scope: Deterministic phase runner log for the Confictura codebase audit and reor
 - Command: Targeted PacketHandlers/MessagePump/ExtendedCommand/EventSink/Profile/HelpGump/Spellbook/Obsolete source review; append `POST-BATCH-E-89A` rows to `post-batch-e-hooks-gumps-commands-regions-review.csv` and the active overlay; update status, README, and next-step artifacts.
 - Result: Targeted source review confirmed dispatcher guard coverage, subscriber guard coverage for profile/help/cast requests, and no current VirtueGumpRequest or VirtueItemRequest subscriber; source build and compile-only verification were not required because no source files changed; active backlog overlay now includes 265 `POST-BATCH-E` dispositions.
 - Output path: `docs/codebase-audit/outputs/post-batch-e-hooks-gumps-commands-regions-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
+
+### 2026-06-09T22:42:55.9802192-05:00
+
+- Affected phase: Post-audit `POST-BATCH-E-90A` ServerCore stun, disarm, and client-version invocation review
+- Cwd: `D:\ConficturaUO`
+- Command: Source review of `RB-01867` through `RB-01870` in `Data/System/Source/Network/PacketHandlers.cs`.
+- Result: Reviewed stun, disarm, and client-version invocations with no source change, and classified the commented `ClientType` client-version invocation row as a false positive. Extended dispatcher guards cover stun/disarm null/deleted mobiles, Fists subscribers guard invalid event/mobile state, and client-version subscribers guard invalid event/state/version/mobile state before doing work.
+- Output path: `docs/codebase-audit/outputs/post-batch-e-hooks-gumps-commands-regions-review.csv`
+
+### 2026-06-09T22:42:55.9802192-05:00
+
+- Affected phase: Post-audit `POST-BATCH-E-90A` verification and audit artifact update
+- Cwd: `D:\ConficturaUO`
+- Command: Targeted PacketHandlers/ExtendedCommand/EventSink/Fists/BuffIcons/ClientVerification source review; append `POST-BATCH-E-90A` rows to `post-batch-e-hooks-gumps-commands-regions-review.csv` and the active overlay; update status, README, and next-step artifacts.
+- Result: Targeted source review confirmed guard coverage for stun, disarm, and client-version dispatches and confirmed line 2056 is commented code; source build and compile-only verification were not required because no source files changed; active backlog overlay now includes 269 `POST-BATCH-E` dispositions.
+- Output path: `docs/codebase-audit/outputs/post-batch-e-hooks-gumps-commands-regions-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
