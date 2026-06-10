@@ -1663,9 +1663,16 @@ Completed review-only subbatch: `POST-BATCH-E-84A` reviewed the ServerCore `Worl
 - Valid guild index load, world-load ordering, world-save dispatch, subscriber behavior, serialization, public APIs, namespaces, type names, save versions, and file locations remain unchanged.
 - Verification passed: targeted World/EventSink/Guilds source review. Source build and compile-only verification were not required because no source files changed.
 
+Completed review-only subbatch: `POST-BATCH-E-85A` reviewed the ServerCore `Listener.cs` socket-connect invocation row.
+
+- 1 row was reviewed with no source change: `RB-01848`.
+- The accept path calls `VerifySocket` only for non-null accepted sockets, `VerifySocket` constructs `SocketConnectEventArgs` inside the existing try/catch before dispatch, and current `Accounts`/`SocketOptions` subscribers already guard null args plus invalid socket state.
+- Valid listener accept filtering, socket option application, firewall/IP limit handling, exception-to-deny behavior, serialization, public APIs, namespaces, type names, save versions, and file locations remain unchanged.
+- Verification passed: targeted Listener/EventSink/Accounts/SocketOptions source review. Source build and compile-only verification were not required because no source files changed.
+
 Next:
 
-1. Continue `POST-BATCH-E` with the next focused P1 runtime-hook/gump-guard group by the active plan, currently `ServerCore` row `RB-01848` in `Data/System/Source/Network/Listener.cs`.
+1. Continue `POST-BATCH-E` with the next focused P1 runtime-hook/gump-guard group by the active plan, currently `ServerCore` row `RB-01849` in `Data/System/Source/Network/PacketHandlers.cs`.
 2. Keep P2 Boats and Bulk Orders command-access rows queued until the P2 command-access pass unless source evidence makes them an urgent local blocker.
 3. Preserve serialization, public APIs, namespaces, type names, save versions, and file locations; verify source fixes with `Server.csproj` Debug/x86 build and `.\ConficturaServer.exe -compileonly -nocache`.
 

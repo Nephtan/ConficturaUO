@@ -6790,3 +6790,19 @@ Scope: Deterministic phase runner log for the Confictura codebase audit and reor
 - Command: Targeted World/EventSink/Guilds source review; append `POST-BATCH-E-84A` rows to `post-batch-e-hooks-gumps-commands-regions-review.csv` and the active overlay; update status, README, and next-step artifacts.
 - Result: Targeted source review confirmed the listed World event invocations use constructed or no-args event dispatch and current subscribers do not require source changes; source build and compile-only verification were not required because no source files changed; active backlog overlay now includes 246 `POST-BATCH-E` dispositions.
 - Output path: `docs/codebase-audit/outputs/post-batch-e-hooks-gumps-commands-regions-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
+
+### 2026-06-09T22:21:23.4444560-05:00
+
+- Affected phase: Post-audit `POST-BATCH-E-85A` ServerCore `Listener.cs` socket-connect invocation review
+- Cwd: `D:\ConficturaUO`
+- Command: Source review of `RB-01848` in `Data/System/Source/Network/Listener.cs`.
+- Result: Reviewed the socket-connect EventSink invocation with no source change. The accept path calls `VerifySocket` only for non-null accepted sockets, `VerifySocket` constructs `SocketConnectEventArgs` inside the existing try/catch before dispatch, and the current socket subscribers already guard null args plus invalid socket state.
+- Output path: `docs/codebase-audit/outputs/post-batch-e-hooks-gumps-commands-regions-review.csv`
+
+### 2026-06-09T22:21:23.4444560-05:00
+
+- Affected phase: Post-audit `POST-BATCH-E-85A` verification and audit artifact update
+- Cwd: `D:\ConficturaUO`
+- Command: Targeted Listener/EventSink/Accounts/SocketOptions source review; append `POST-BATCH-E-85A` row to `post-batch-e-hooks-gumps-commands-regions-review.csv` and the active overlay; update status, README, and next-step artifacts.
+- Result: Targeted source review confirmed `SocketConnectEventArgs` is constructed at the callsite and subscriber guard coverage is already present; source build and compile-only verification were not required because no source files changed; active backlog overlay now includes 247 `POST-BATCH-E` dispositions.
+- Output path: `docs/codebase-audit/outputs/post-batch-e-hooks-gumps-commands-regions-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
