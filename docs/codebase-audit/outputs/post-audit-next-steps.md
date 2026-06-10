@@ -1596,9 +1596,16 @@ Completed source subbatch: `POST-BATCH-E-75A` reviewed the Regions Obsolete runt
 - Valid ethics speech, faction login/logout, faction keyword, veteran reward login, disabled chat-request, and reflector type-cache behavior were preserved. Serialization, public APIs, namespaces, type names, save versions, file location, and project files were unchanged.
 - Verification passed: targeted Obsolete/EventSink hook scan, Visual Studio MSBuild `Server.csproj` Debug/x86 build, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output. Generated root executable artifacts were restored.
 
+Completed source subbatch: `POST-BATCH-E-76A` fixed the Housing house-region login hook row.
+
+- 1 row was reviewed and fixed: `RB-01824`.
+- `HouseRegion.OnLogin` now guards null login args and null/deleted mobiles before house lookup, friend/public checks, and ban-location relocation.
+- Valid private-house login relocation behavior for valid mobiles was preserved. Serialization, public APIs, namespaces, type names, save versions, file location, and project files were unchanged.
+- Verification passed: targeted HouseRegion/EventSink hook scan, Visual Studio MSBuild `Server.csproj` Debug/x86 build, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output. Generated root executable artifacts were restored.
+
 Next:
 
-1. Continue `POST-BATCH-E` with the next focused P1 runtime-hook/gump-guard group by the active plan, currently `Housing` row `RB-01824` in `Data/Scripts/System/Regions/HouseRegion.cs`.
+1. Continue `POST-BATCH-E` with the next focused P1 runtime-hook/gump-guard group by the active plan, currently `System:Skills` row `RB-01825` in `Data/Scripts/System/Skills/Weapon Abilities/CustomWeaponAbilities.cs`.
 2. Keep P2 Boats and Bulk Orders command-access rows queued until the P2 command-access pass unless source evidence makes them an urgent local blocker.
 3. Preserve serialization, public APIs, namespaces, type names, save versions, and file locations; verify source fixes with `Server.csproj` Debug/x86 build and `.\ConficturaServer.exe -compileonly -nocache`.
 

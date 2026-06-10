@@ -6646,3 +6646,19 @@ Scope: Deterministic phase runner log for the Confictura codebase audit and reor
 - Command: Targeted Obsolete/EventSink hook scan; Visual Studio MSBuild `Data/System/Source/Server.csproj /p:Configuration=Debug /p:Platform=x86 /v:minimal`; `.\ConficturaServer.exe -compileonly -nocache`; restore generated root executable artifacts; append `POST-BATCH-E-75A` rows to `post-batch-e-hooks-gumps-commands-regions-review.csv` and the active overlay; update status, README, and next-step artifacts.
 - Result: Targeted scan confirmed ChatRequest, Ethics speech, Faction login/logout/speech, WorldSave, and VeteranRewards login registrations plus intended guard coverage and no-change decisions; `Server.csproj` Debug/x86 build passed with Visual Studio Community 2022 MSBuild; compile-only runtime script verification exited 0 and printed no `Listening:` output; generated `ConficturaServer.exe`, `.config`, and `.pdb` were restored; active backlog overlay now includes 222 `POST-BATCH-E` dispositions.
 - Output path: `docs/codebase-audit/outputs/post-batch-e-hooks-gumps-commands-regions-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
+
+### 2026-06-09T21:47:36.0858469-05:00
+
+- Affected phase: Post-audit `POST-BATCH-E-76A` Housing house-region login hook guard repair
+- Cwd: `D:\ConficturaUO`
+- Command: Source review and patch of `RB-01824` in `Data/Scripts/System/Regions/HouseRegion.cs`.
+- Result: Added null `LoginEventArgs` and null/deleted mobile guards before house lookup, friend/public checks, and ban-location relocation. Valid private-house login relocation behavior for valid mobiles, serialization, public APIs, namespaces, type names, save versions, file location, and project files were preserved.
+- Output path: `Data/Scripts/System/Regions/HouseRegion.cs`
+
+### 2026-06-09T21:47:36.0858469-05:00
+
+- Affected phase: Post-audit `POST-BATCH-E-76A` verification and audit artifact update
+- Cwd: `D:\ConficturaUO`
+- Command: Targeted HouseRegion/EventSink hook scan; Visual Studio MSBuild `Data/System/Source/Server.csproj /p:Configuration=Debug /p:Platform=x86 /v:minimal`; `.\ConficturaServer.exe -compileonly -nocache`; restore generated root executable artifacts; append `POST-BATCH-E-76A` row to `post-batch-e-hooks-gumps-commands-regions-review.csv` and the active overlay; update status, README, and next-step artifacts.
+- Result: Targeted scan confirmed Login registration plus null args/mobile/deleted guard coverage; `Server.csproj` Debug/x86 build passed with Visual Studio Community 2022 MSBuild; compile-only runtime script verification exited 0 and printed no `Listening:` output; generated `ConficturaServer.exe`, `.config`, and `.pdb` were restored; active backlog overlay now includes 223 `POST-BATCH-E` dispositions.
+- Output path: `docs/codebase-audit/outputs/post-batch-e-hooks-gumps-commands-regions-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
