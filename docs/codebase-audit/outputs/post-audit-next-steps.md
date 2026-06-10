@@ -1493,9 +1493,16 @@ Completed source subbatch: `POST-BATCH-E-61A` fixed the System:Misc light-cycle 
 - Valid login light-level refresh behavior, serialization, public APIs, namespaces, type names, save versions, file location, and project files were preserved.
 - Verification passed: targeted LightCycle/EventSink hook scan, Visual Studio MSBuild `Server.csproj` Debug/x86 build, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output. Generated root executable artifacts were restored.
 
+Completed source subbatch: `POST-BATCH-E-62A` fixed the System:Misc login-stats hook row.
+
+- 1 row was reviewed and fixed: `RB-01801`.
+- `LoginStats.EventSink_Login` now guards null login args and null/deleted mobiles before login messaging, and uses a safe `PlayerMobile` cast before back-tax and unique-name logic.
+- Valid login help messaging, government back-tax handling, and unique-name prompt behavior, serialization, public APIs, namespaces, type names, save versions, file location, and project files were preserved.
+- Verification passed: targeted LoginStats/EventSink hook scan, Visual Studio MSBuild `Server.csproj` Debug/x86 build, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output. Generated root executable artifacts were restored.
+
 Next:
 
-1. Continue `POST-BATCH-E` with the next focused P1 runtime-hook/gump-guard group by the active plan, currently `System:Misc` row `RB-01801` in `Data/Scripts/System/Misc/LoginStats.cs`.
+1. Continue `POST-BATCH-E` with the next focused P1 runtime-hook/gump-guard group by the active plan, currently `System:Misc` row `RB-01802` in `Data/Scripts/System/Misc/MOTD.cs`.
 2. Keep P2 Boats and Bulk Orders command-access rows queued until the P2 command-access pass unless source evidence makes them an urgent local blocker.
 3. Preserve serialization, public APIs, namespaces, type names, save versions, and file locations; verify source fixes with `Server.csproj` Debug/x86 build and `.\ConficturaServer.exe -compileonly -nocache`.
 

@@ -6422,3 +6422,19 @@ Scope: Deterministic phase runner log for the Confictura codebase audit and reor
 - Command: Targeted LightCycle/EventSink hook scan; Visual Studio MSBuild `Data/System/Source/Server.csproj /p:Configuration=Debug /p:Platform=x86 /v:minimal`; `.\ConficturaServer.exe -compileonly -nocache`; restore generated root executable artifacts; append `POST-BATCH-E-61A` row to `post-batch-e-hooks-gumps-commands-regions-review.csv` and the active overlay; update status, README, and next-step artifacts.
 - Result: Targeted scan confirmed the Login registration plus null args/mobile/deleted/map guard coverage; `Server.csproj` Debug/x86 build passed with Visual Studio Community 2022 MSBuild; compile-only runtime script verification exited 0 and printed no `Listening:` output; generated `ConficturaServer.exe`, `.config`, and `.pdb` were restored; active backlog overlay now includes 199 `POST-BATCH-E` dispositions.
 - Output path: `docs/codebase-audit/outputs/post-batch-e-hooks-gumps-commands-regions-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
+
+### 2026-06-09T20:49:48.6341767-05:00
+
+- Affected phase: Post-audit `POST-BATCH-E-62A` System:Misc login-stats hook guard repair
+- Cwd: `D:\ConficturaUO`
+- Command: Source review and patch of `RB-01801` in `Data/Scripts/System/Misc/LoginStats.cs`.
+- Result: Added null `LoginEventArgs` and null/deleted mobile guards before login messaging; replaced the direct `PlayerMobile` cast with a safe cast before back-tax and unique-name logic. Valid login help messaging, government back-tax handling, and unique-name prompt behavior, serialization, public APIs, namespaces, type names, save versions, file location, and project files were preserved.
+- Output path: `Data/Scripts/System/Misc/LoginStats.cs`
+
+### 2026-06-09T20:49:48.6341767-05:00
+
+- Affected phase: Post-audit `POST-BATCH-E-62A` verification and audit artifact update
+- Cwd: `D:\ConficturaUO`
+- Command: Targeted LoginStats/EventSink hook scan; Visual Studio MSBuild `Data/System/Source/Server.csproj /p:Configuration=Debug /p:Platform=x86 /v:minimal`; `.\ConficturaServer.exe -compileonly -nocache`; restore generated root executable artifacts; append `POST-BATCH-E-62A` row to `post-batch-e-hooks-gumps-commands-regions-review.csv` and the active overlay; update status, README, and next-step artifacts.
+- Result: Targeted scan confirmed the Login registration plus null args/mobile/deleted and safe `PlayerMobile` guard coverage; `Server.csproj` Debug/x86 build passed with Visual Studio Community 2022 MSBuild; compile-only runtime script verification exited 0 and printed no `Listening:` output; generated `ConficturaServer.exe`, `.config`, and `.pdb` were restored; active backlog overlay now includes 200 `POST-BATCH-E` dispositions.
+- Output path: `docs/codebase-audit/outputs/post-batch-e-hooks-gumps-commands-regions-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
