@@ -1320,9 +1320,16 @@ Completed source subbatch: `POST-BATCH-E-37A` fixed the Spell Framework Research
 - Serialization, public APIs, namespaces, type names, save versions, file location, and project files were unchanged.
 - Verification passed: targeted ResearchEnchant logout hook scan, Visual Studio MSBuild `Server.csproj` Debug/x86 build, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output. Generated root executable artifacts were restored.
 
+Completed source subbatch: `POST-BATCH-E-38A` fixed the Spell Framework ResearchSneak logout hook row.
+
+- 1 row was reviewed and fixed: `RB-01751`.
+- `ResearchSneak.OnLogout` now guards null logout args and null/deleted mobiles before removing sneak effects for the logging-out mobile.
+- Valid ResearchSneak logout cleanup behavior, serialization, public APIs, namespaces, type names, save versions, file location, and project files were preserved.
+- Verification passed: targeted ResearchSneak logout hook scan, Visual Studio MSBuild `Server.csproj` Debug/x86 build, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output. Generated root executable artifacts were restored.
+
 Next:
 
-1. Continue `POST-BATCH-E` with the next focused P1 runtime-hook/gump-guard group by the active plan, currently `Spell Framework` row `RB-01751` in `Data/Scripts/Magic/Research/Spells/Enchanting/ResearchSneak.cs`.
+1. Continue `POST-BATCH-E` with the next focused P1 runtime-hook/gump-guard group by the active plan, currently `Vendor Core` rows `RB-01752` and `RB-01753` in `Data/Scripts/Mobiles/Base/Behavior.cs`.
 2. Keep P2 Boats and Bulk Orders command-access rows queued until the P2 command-access pass unless source evidence makes them an urgent local blocker.
 3. Preserve serialization, public APIs, namespaces, type names, save versions, and file locations; verify source fixes with `Server.csproj` Debug/x86 build and `.\ConficturaServer.exe -compileonly -nocache`.
 
