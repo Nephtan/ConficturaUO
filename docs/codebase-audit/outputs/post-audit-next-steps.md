@@ -1710,9 +1710,17 @@ Completed review-only subbatch: `POST-BATCH-E-90A` reviewed the ServerCore Packe
 - Valid stun/disarm ready-toggle and client-version received behavior, serialization, public APIs, namespaces, type names, save versions, and file locations remain unchanged.
 - Verification passed: targeted PacketHandlers/ExtendedCommand/EventSink/Fists/BuffIcons/ClientVerification source review. Source build and compile-only verification were not required because no source files changed.
 
+Completed review-only subbatch: `POST-BATCH-E-91A` reviewed the ServerCore PacketHandlers login, character-created, game-login, account-login, and server-list invocation rows.
+
+- 6 rows were reviewed with no source change: `RB-01871` through `RB-01876`.
+- The login completion path validates account/slot state and non-null mobiles before starting login; character-created packets construct event args from parsed character data and current state/account; game/account login and server-list events construct args from current connection/account state.
+- Current character-creation, account login, game login, and server-list subscribers guard invalid event/state/account/socket inputs before doing work; login subscriber hardening is represented by earlier focused `POST-BATCH-E` login-hook batches.
+- Valid login completion, character creation, game/account login, and server-list behavior, serialization, public APIs, namespaces, type names, save versions, and file locations remain unchanged.
+- Verification passed: targeted PacketHandlers/EventSink/CharacterCreation/Accounts/ServerList source review. Source build and compile-only verification were not required because no source files changed.
+
 Next:
 
-1. Continue `POST-BATCH-E` with the next focused P1 runtime-hook/gump-guard group by the active plan, currently `ServerCore` row `RB-01871` in `Data/System/Source/Network/PacketHandlers.cs`.
+1. Continue `POST-BATCH-E` with the next focused runtime-hook/gump-guard group by the active plan, currently `XMLSpawner` row `RB-01877` in `Data/Scripts/Custom/XMLSpawner/PacketHandlerOverrides.cs`.
 2. Keep P2 Boats and Bulk Orders command-access rows queued until the P2 command-access pass unless source evidence makes them an urgent local blocker.
 3. Preserve serialization, public APIs, namespaces, type names, save versions, and file locations; verify source fixes with `Server.csproj` Debug/x86 build and `.\ConficturaServer.exe -compileonly -nocache`.
 

@@ -6886,3 +6886,19 @@ Scope: Deterministic phase runner log for the Confictura codebase audit and reor
 - Command: Targeted PacketHandlers/ExtendedCommand/EventSink/Fists/BuffIcons/ClientVerification source review; append `POST-BATCH-E-90A` rows to `post-batch-e-hooks-gumps-commands-regions-review.csv` and the active overlay; update status, README, and next-step artifacts.
 - Result: Targeted source review confirmed guard coverage for stun, disarm, and client-version dispatches and confirmed line 2056 is commented code; source build and compile-only verification were not required because no source files changed; active backlog overlay now includes 269 `POST-BATCH-E` dispositions.
 - Output path: `docs/codebase-audit/outputs/post-batch-e-hooks-gumps-commands-regions-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
+
+### 2026-06-09T22:47:41.9419923-05:00
+
+- Affected phase: Post-audit `POST-BATCH-E-91A` ServerCore login and account event invocation review
+- Cwd: `D:\ConficturaUO`
+- Command: Source review of `RB-01871` through `RB-01876` in `Data/System/Source/Network/PacketHandlers.cs`.
+- Result: Reviewed login, character-created, game-login, account-login, and server-list event invocations with no source change. PacketHandlers constructs event args from validated login/account/character payload state, and current CharacterCreation, Accounts, and ServerList subscribers guard invalid event/state/account/socket inputs before doing work.
+- Output path: `docs/codebase-audit/outputs/post-batch-e-hooks-gumps-commands-regions-review.csv`
+
+### 2026-06-09T22:47:41.9419923-05:00
+
+- Affected phase: Post-audit `POST-BATCH-E-91A` verification and audit artifact update
+- Cwd: `D:\ConficturaUO`
+- Command: Targeted PacketHandlers/EventSink/CharacterCreation/Accounts/ServerList source review; append `POST-BATCH-E-91A` rows to `post-batch-e-hooks-gumps-commands-regions-review.csv` and the active overlay; update status, README, and next-step artifacts.
+- Result: Targeted source review confirmed constructed event args and caller/subscriber guard coverage for login, character-created, game-login, account-login, and server-list invocations; source build and compile-only verification were not required because no source files changed; active backlog overlay now includes 275 `POST-BATCH-E` dispositions.
+- Output path: `docs/codebase-audit/outputs/post-batch-e-hooks-gumps-commands-regions-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
