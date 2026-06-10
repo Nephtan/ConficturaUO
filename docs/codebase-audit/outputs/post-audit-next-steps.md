@@ -1610,9 +1610,16 @@ Completed source subbatch: `POST-BATCH-E-77A` fixed the System:Skills custom wea
 - Valid auto-open weapon-bar behavior for valid mobiles was preserved. Serialization, public APIs, namespaces, type names, save versions, file location, and project files were unchanged.
 - Verification passed: targeted CustomWeaponAbilities/EventSink hook scan, Visual Studio MSBuild `Server.csproj` Debug/x86 build, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output. Generated root executable artifacts were restored.
 
+Completed review-only subbatch: `POST-BATCH-E-78A` reviewed the Trades:Apiculture world-save hive update hook row.
+
+- 1 row was reviewed with no source change: `RB-01826`.
+- `BeeHiveHelper.EventSink_WorldSave` does not consume `WorldSaveEventArgs` and delegates to the existing save-time hive update pass.
+- Valid save-time hive update behavior remains unchanged. Serialization, public APIs, namespaces, type names, save versions, file location, and project files were unchanged.
+- Verification passed: targeted BeeHiveHelper/EventSink source review. Source build and compile-only verification were not required because no source files changed.
+
 Next:
 
-1. Continue `POST-BATCH-E` with the next focused P1 runtime-hook/gump-guard group by the active plan, currently `Trades:Apiculture` row `RB-01826` in `Data/Scripts/Trades/Apiculture/beehivehelper.cs`.
+1. Continue `POST-BATCH-E` with the next focused P1 runtime-hook/gump-guard group by the active plan, currently `Gardening` row `RB-01827` in `Data/Scripts/Trades/Gardening/PlantSystem.cs`.
 2. Keep P2 Boats and Bulk Orders command-access rows queued until the P2 command-access pass unless source evidence makes them an urgent local blocker.
 3. Preserve serialization, public APIs, namespaces, type names, save versions, and file locations; verify source fixes with `Server.csproj` Debug/x86 build and `.\ConficturaServer.exe -compileonly -nocache`.
 
