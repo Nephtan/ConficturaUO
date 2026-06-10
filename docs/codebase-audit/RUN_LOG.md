@@ -6326,3 +6326,19 @@ Scope: Deterministic phase runner log for the Confictura codebase audit and reor
 - Command: Targeted Console/EventSink hook scan; Visual Studio MSBuild `Data/System/Source/Server.csproj /p:Configuration=Debug /p:Platform=x86 /v:minimal`; `.\ConficturaServer.exe -compileonly -nocache`; restore generated root executable artifacts; append `POST-BATCH-E-55A` rows to `post-batch-e-hooks-gumps-commands-regions-review.csv` and the active overlay; update status, README, and next-step artifacts.
 - Result: Targeted scan confirmed the ServerStarted no-args delegate and Speech registration plus null args/mobile/map guard coverage; `Server.csproj` Debug/x86 build passed with Visual Studio Community 2022 MSBuild; compile-only runtime script verification exited 0 and printed no `Listening:` output; generated `ConficturaServer.exe`, `.config`, and `.pdb` were restored; active backlog overlay now includes 192 `POST-BATCH-E` dispositions.
 - Output path: `docs/codebase-audit/outputs/post-batch-e-hooks-gumps-commands-regions-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
+
+### 2026-06-09T20:31:10.7542023-05:00
+
+- Affected phase: Post-audit `POST-BATCH-E-56A` System:Misc crash-guard crashed-event hook guard repair
+- Cwd: `D:\ConficturaUO`
+- Command: Source review and patch of `RB-01794` in `Data/Scripts/System/Misc/CrashGuard.cs`.
+- Result: Added null `CrashedEventArgs` guard before crash report generation, backup, service close flag assignment, or restart logic. Valid crash-report, backup, service-close, and restart behavior for real crash events, serialization, public APIs, namespaces, type names, save versions, file location, and project files were preserved.
+- Output path: `Data/Scripts/System/Misc/CrashGuard.cs`
+
+### 2026-06-09T20:31:10.7542023-05:00
+
+- Affected phase: Post-audit `POST-BATCH-E-56A` verification and audit artifact update
+- Cwd: `D:\ConficturaUO`
+- Command: Targeted CrashGuard/EventSink hook scan; Visual Studio MSBuild `Data/System/Source/Server.csproj /p:Configuration=Debug /p:Platform=x86 /v:minimal`; `.\ConficturaServer.exe -compileonly -nocache`; restore generated root executable artifacts; append `POST-BATCH-E-56A` row to `post-batch-e-hooks-gumps-commands-regions-review.csv` and the active overlay; update status, README, and next-step artifacts.
+- Result: Targeted scan confirmed the Crashed registration plus null args guard coverage before `e.Close`/restart/report use; `Server.csproj` Debug/x86 build passed with Visual Studio Community 2022 MSBuild; compile-only runtime script verification exited 0 and printed no `Listening:` output; generated `ConficturaServer.exe`, `.config`, and `.pdb` were restored; active backlog overlay now includes 193 `POST-BATCH-E` dispositions.
+- Output path: `docs/codebase-audit/outputs/post-batch-e-hooks-gumps-commands-regions-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
