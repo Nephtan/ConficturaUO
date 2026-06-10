@@ -6158,3 +6158,19 @@ Scope: Deterministic phase runner log for the Confictura codebase audit and reor
 - Command: Targeted AutoSheathe logout hook scan; Visual Studio MSBuild `Data/System/Source/Server.csproj /p:Configuration=Debug /p:Platform=x86 /v:minimal`; `.\ConficturaServer.exe -compileonly -nocache`; restore generated root executable artifacts; append `POST-BATCH-E-44A` row to `post-batch-e-hooks-gumps-commands-regions-review.csv` and the active overlay; update status, README, and next-step artifacts.
 - Result: Targeted scan confirmed the Logout registration plus null event and null mobile guards; `Server.csproj` Debug/x86 build passed with Visual Studio Community 2022 MSBuild; compile-only runtime script verification exited 0 and printed no `Listening:` output; generated `ConficturaServer.exe`, `.config`, and `.pdb` were restored; active backlog overlay now includes 166 `POST-BATCH-E` dispositions.
 - Output path: `docs/codebase-audit/outputs/post-batch-e-hooks-gumps-commands-regions-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
+
+### 2026-06-09T19:46:29.0986166-05:00
+
+- Affected phase: Post-audit `POST-BATCH-E-45A` System:Gumps report-murderer death hook guard repair
+- Cwd: `D:\ConficturaUO`
+- Command: Source review and patch of `RB-01770` in `Data/Scripts/System/Gumps/ReportMurderer.cs`.
+- Result: Added null `PlayerDeathEventArgs` and null/deleted victim mobile guards before `ReportMurdererGump.EventSink_PlayerDeath` reads aggressor state, awards fame/karma, registers quest kills, or schedules murder-report gumps. Valid murder-report behavior, serialization, public APIs, namespaces, type names, save versions, file location, and project files were preserved.
+- Output path: `Data/Scripts/System/Gumps/ReportMurderer.cs`
+
+### 2026-06-09T19:46:29.0986166-05:00
+
+- Affected phase: Post-audit `POST-BATCH-E-45A` verification and audit artifact update
+- Cwd: `D:\ConficturaUO`
+- Command: Targeted ReportMurderer death hook scan; Visual Studio MSBuild `Data/System/Source/Server.csproj /p:Configuration=Debug /p:Platform=x86 /v:minimal`; `.\ConficturaServer.exe -compileonly -nocache`; restore generated root executable artifacts; append `POST-BATCH-E-45A` row to `post-batch-e-hooks-gumps-commands-regions-review.csv` and the active overlay; update status, README, and next-step artifacts.
+- Result: Targeted scan confirmed the PlayerDeath registration plus null/deleted victim guards; `Server.csproj` Debug/x86 build passed with Visual Studio Community 2022 MSBuild; compile-only runtime script verification exited 0 and printed no `Listening:` output; generated `ConficturaServer.exe`, `.config`, and `.pdb` were restored; active backlog overlay now includes 167 `POST-BATCH-E` dispositions.
+- Output path: `docs/codebase-audit/outputs/post-batch-e-hooks-gumps-commands-regions-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
