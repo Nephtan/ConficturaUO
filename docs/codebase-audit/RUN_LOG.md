@@ -6966,3 +6966,19 @@ Scope: Deterministic phase runner log for the Confictura codebase audit and reor
 - Command: Append `POST-BATCH-E-95A` rows to `post-batch-e-hooks-gumps-commands-regions-review.csv`; update status, README, and next-step artifacts while preserving the existing `POST-BATCH-C-01A` active overlay rows for `RB-01884` through `RB-01886`.
 - Result: Active backlog overlay remains unique with 276 `POST-BATCH-E` dispositions, while the `POST-BATCH-E` review CSV records 285 reviewed rows through `POST-BATCH-E-95A`.
 - Output path: `docs/codebase-audit/outputs/post-batch-e-hooks-gumps-commands-regions-review.csv`
+
+### 2026-06-09T23:13:29.2218208-05:00
+
+- Affected phase: Post-audit `POST-BATCH-E-96A` Chat3Guild packet handler review
+- Cwd: `D:\ConficturaUO`
+- Command: Source review of `RB-01887` and `RB-01888` in `Data/Scripts/System/Chat/General/Chat3Guild.cs`, `Data/System/Source/Network/MessagePump.cs`, `Data/Scripts/System/Chat/Channels/Channel.cs`, and `Data/Scripts/System/Chat/Channels/Guild.cs`.
+- Result: Reviewed ASCII and Unicode guild chat packet handlers with no source change. Existing MessagePump null/deleted mobile dispatch guards, Chat3Guild text/type/encoded-keyword bounds, and Channel/Guild chat eligibility checks remain intact. Source build and compile-only verification were not required because no source files changed.
+- Output path: `docs/codebase-audit/outputs/post-batch-e-hooks-gumps-commands-regions-review.csv`
+
+### 2026-06-09T23:13:29.2218208-05:00
+
+- Affected phase: Post-audit `POST-BATCH-E-96A` verification and audit artifact update
+- Cwd: `D:\ConficturaUO`
+- Command: Append `POST-BATCH-E-96A` rows to `post-batch-e-hooks-gumps-commands-regions-review.csv`; update status, README, and next-step artifacts while preserving the existing `POST-BATCH-C-01A` active overlay rows for `RB-01887` and `RB-01888`.
+- Result: Active backlog overlay remains unique with 276 `POST-BATCH-E` dispositions, while the `POST-BATCH-E` review CSV records 287 reviewed rows through `POST-BATCH-E-96A`.
+- Output path: `docs/codebase-audit/outputs/post-batch-e-hooks-gumps-commands-regions-review.csv`

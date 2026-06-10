@@ -1749,9 +1749,16 @@ Completed review-only subbatch: `POST-BATCH-E-95A` reviewed already-covered bull
 - The active overlay was not duplicated for these rows because they already have active `POST-BATCH-C-01A` dispositions; the `POST-BATCH-E` review CSV records the re-review evidence.
 - Verification passed: targeted BulletinBoards, MahjongPacketHandlers, MapItem, and MessagePump source review plus duplicate-registration `rg` checks. Source build and compile-only verification were not required because no source files changed.
 
+Completed review-only subbatch: `POST-BATCH-E-96A` reviewed already-covered Chat3Guild guild chat packet rows.
+
+- 2 rows were reviewed: `RB-01887` and `RB-01888`.
+- `RB-01887` and `RB-01888` were reviewed with no source change: the ASCII and Unicode guild chat handlers are in-game packet handlers with existing MessagePump null/deleted mobile dispatch guards, local text/type/encoded-keyword bounds, and downstream Channel/Guild chat eligibility checks.
+- The active overlay was not duplicated for these rows because they already have active `POST-BATCH-C-01A` dispositions; the `POST-BATCH-E` review CSV records the re-review evidence.
+- Verification passed: targeted Chat3Guild, MessagePump, Channel, and Guild source review. Source build and compile-only verification were not required because no source files changed.
+
 Next:
 
-1. Continue `POST-BATCH-E` with the next focused runtime-hook/gump-guard group by the active plan, currently `System:Chat` row `RB-01887` in `Data/Scripts/System/Chat/General/Chat3Guild.cs`.
+1. Continue `POST-BATCH-E` with the next focused runtime-hook/gump-guard group by the active plan, currently `System:Misc` row `RB-01889` in `Data/Scripts/System/Misc/HardwareInfo.cs`.
 2. Keep P2 Boats and Bulk Orders command-access rows queued until the P2 command-access pass unless source evidence makes them an urgent local blocker.
 3. Preserve serialization, public APIs, namespaces, type names, save versions, and file locations; verify source fixes with `Server.csproj` Debug/x86 build and `.\ConficturaServer.exe -compileonly -nocache`.
 
