@@ -1507,9 +1507,16 @@ Completed source subbatch: `POST-BATCH-E-63A` fixed the System:Misc MOTD login h
 - Valid MOTD display, start-region welcome, quickbar, reagent-bar, serialization, public APIs, namespaces, type names, save versions, file location, and project files were preserved.
 - Verification passed: targeted MOTD/EventSink hook scan, Visual Studio MSBuild `Server.csproj` Debug/x86 build, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output. Generated root executable artifacts were restored.
 
+Completed source subbatch: `POST-BATCH-E-64A` fixed the System:Misc paperdoll request hook row.
+
+- 1 row was reviewed and fixed: `RB-01803`.
+- `Paperdoll.EventSink_PaperdollRequest` now guards null request args, null/deleted beholder and beheld mobiles, null equipped item lists, and null/deleted item entries before paperdoll and OPL packet sends.
+- Valid paperdoll display and OPL update behavior, serialization, public APIs, namespaces, type names, save versions, file location, and project files were preserved.
+- Verification passed: targeted Paperdoll/EventSink hook scan, Visual Studio MSBuild `Server.csproj` Debug/x86 build, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output. Generated root executable artifacts were restored.
+
 Next:
 
-1. Continue `POST-BATCH-E` with the next focused P1 runtime-hook/gump-guard group by the active plan, currently `System:Misc` row `RB-01803` in `Data/Scripts/System/Misc/Paperdoll.cs`.
+1. Continue `POST-BATCH-E` with the next focused P1 runtime-hook/gump-guard group by the active plan, currently `System:Misc` row `RB-01804` in `Data/Scripts/System/Misc/Party.cs`.
 2. Keep P2 Boats and Bulk Orders command-access rows queued until the P2 command-access pass unless source evidence makes them an urgent local blocker.
 3. Preserve serialization, public APIs, namespaces, type names, save versions, and file locations; verify source fixes with `Server.csproj` Debug/x86 build and `.\ConficturaServer.exe -compileonly -nocache`.
 

@@ -6454,3 +6454,19 @@ Scope: Deterministic phase runner log for the Confictura codebase audit and reor
 - Command: Targeted MOTD/EventSink hook scan; Visual Studio MSBuild `Data/System/Source/Server.csproj /p:Configuration=Debug /p:Platform=x86 /v:minimal`; `.\ConficturaServer.exe -compileonly -nocache`; restore generated root executable artifacts; append `POST-BATCH-E-63A` row to `post-batch-e-hooks-gumps-commands-regions-review.csv` and the active overlay; update status, README, and next-step artifacts.
 - Result: Targeted scan confirmed the Login registration plus null args/mobile/deleted/non-player guard coverage and helper guard coverage; `Server.csproj` Debug/x86 build passed with Visual Studio Community 2022 MSBuild; compile-only runtime script verification exited 0 and printed no `Listening:` output; generated `ConficturaServer.exe`, `.config`, and `.pdb` were restored; active backlog overlay now includes 201 `POST-BATCH-E` dispositions.
 - Output path: `docs/codebase-audit/outputs/post-batch-e-hooks-gumps-commands-regions-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
+
+### 2026-06-09T20:56:11.6049807-05:00
+
+- Affected phase: Post-audit `POST-BATCH-E-64A` System:Misc paperdoll request hook guard repair
+- Cwd: `D:\ConficturaUO`
+- Command: Source review and patch of `RB-01803` in `Data/Scripts/System/Misc/Paperdoll.cs`.
+- Result: Added null `PaperdollRequestEventArgs`, null/deleted beholder and beheld mobile, null item-list, and null/deleted item-entry guards before paperdoll and OPL packet sends. Valid paperdoll display and OPL update behavior, serialization, public APIs, namespaces, type names, save versions, file location, and project files were preserved.
+- Output path: `Data/Scripts/System/Misc/Paperdoll.cs`
+
+### 2026-06-09T20:56:11.6049807-05:00
+
+- Affected phase: Post-audit `POST-BATCH-E-64A` verification and audit artifact update
+- Cwd: `D:\ConficturaUO`
+- Command: Targeted Paperdoll/EventSink hook scan; Visual Studio MSBuild `Data/System/Source/Server.csproj /p:Configuration=Debug /p:Platform=x86 /v:minimal`; `.\ConficturaServer.exe -compileonly -nocache`; restore generated root executable artifacts; append `POST-BATCH-E-64A` row to `post-batch-e-hooks-gumps-commands-regions-review.csv` and the active overlay; update status, README, and next-step artifacts.
+- Result: Targeted scan confirmed the PaperdollRequest registration plus null args/mobile/deleted/list/item guard coverage; `Server.csproj` Debug/x86 build passed with Visual Studio Community 2022 MSBuild; compile-only runtime script verification exited 0 and printed no `Listening:` output; generated `ConficturaServer.exe`, `.config`, and `.pdb` were restored; active backlog overlay now includes 202 `POST-BATCH-E` dispositions.
+- Output path: `docs/codebase-audit/outputs/post-batch-e-hooks-gumps-commands-regions-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
