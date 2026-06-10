@@ -6470,3 +6470,19 @@ Scope: Deterministic phase runner log for the Confictura codebase audit and reor
 - Command: Targeted Paperdoll/EventSink hook scan; Visual Studio MSBuild `Data/System/Source/Server.csproj /p:Configuration=Debug /p:Platform=x86 /v:minimal`; `.\ConficturaServer.exe -compileonly -nocache`; restore generated root executable artifacts; append `POST-BATCH-E-64A` row to `post-batch-e-hooks-gumps-commands-regions-review.csv` and the active overlay; update status, README, and next-step artifacts.
 - Result: Targeted scan confirmed the PaperdollRequest registration plus null args/mobile/deleted/list/item guard coverage; `Server.csproj` Debug/x86 build passed with Visual Studio Community 2022 MSBuild; compile-only runtime script verification exited 0 and printed no `Listening:` output; generated `ConficturaServer.exe`, `.config`, and `.pdb` were restored; active backlog overlay now includes 202 `POST-BATCH-E` dispositions.
 - Output path: `docs/codebase-audit/outputs/post-batch-e-hooks-gumps-commands-regions-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
+
+### 2026-06-09T21:00:05.8680548-05:00
+
+- Affected phase: Post-audit `POST-BATCH-E-65A` System:Misc party logout/login/death hook guard repair
+- Cwd: `D:\ConficturaUO`
+- Command: Source review and patch of `RB-01804`, `RB-01805`, and `RB-01806` in `Data/Scripts/System/Misc/Party.cs`.
+- Result: Added null event-args/mobile guards before party logout/login/death hook work, preserving logout cleanup for valid deleted-mobile objects; added deleted killer fallback for death messages; added stale owner and null/deleted party-member guards in the delayed rejoin timer before status packet sends. Valid party cleanup, rejoin notification, and death-message behavior, serialization, public APIs, namespaces, type names, save versions, file location, and project files were preserved.
+- Output path: `Data/Scripts/System/Misc/Party.cs`
+
+### 2026-06-09T21:00:05.8680548-05:00
+
+- Affected phase: Post-audit `POST-BATCH-E-65A` verification and audit artifact update
+- Cwd: `D:\ConficturaUO`
+- Command: Targeted Party/EventSink hook scan; Visual Studio MSBuild `Data/System/Source/Server.csproj /p:Configuration=Debug /p:Platform=x86 /v:minimal`; `.\ConficturaServer.exe -compileonly -nocache`; restore generated root executable artifacts; append `POST-BATCH-E-65A` rows to `post-batch-e-hooks-gumps-commands-regions-review.csv` and the active overlay; update status, README, and next-step artifacts.
+- Result: Targeted scan confirmed Logout/Login/PlayerDeath registrations plus null args/mobile/deleted and delayed rejoin stale-state guard coverage; `Server.csproj` Debug/x86 build passed with Visual Studio Community 2022 MSBuild; compile-only runtime script verification exited 0 and printed no `Listening:` output; generated `ConficturaServer.exe`, `.config`, and `.pdb` were restored; active backlog overlay now includes 205 `POST-BATCH-E` dispositions.
+- Output path: `docs/codebase-audit/outputs/post-batch-e-hooks-gumps-commands-regions-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
