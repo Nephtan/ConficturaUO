@@ -1544,9 +1544,17 @@ Completed source subbatch: `POST-BATCH-E-68A` fixed the System:Misc profanity sp
 - Valid disabled-by-default registration, profanity blocking/action behavior, null-speech validation behavior, serialization, public APIs, namespaces, type names, save versions, file location, and project files were preserved.
 - Verification passed: targeted ProfanityProtection/NameVerification/EventSink hook scan, Visual Studio MSBuild `Server.csproj` Debug/x86 build, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output. Generated root executable artifacts were restored.
 
+Completed source subbatch: `POST-BATCH-E-69A` fixed the System:Misc profile request hook rows.
+
+- 2 rows were reviewed and fixed: `RB-01810` and `RB-01811`.
+- `Profile.EventSink_ProfileRequest` now guards null request args and null/deleted beholder or beheld mobiles before player, map, range, visibility, title, and profile packet work.
+- `Profile.EventSink_ChangeProfileRequest` now guards null change args and null/deleted beholder or beheld mobiles before profile lock checks or profile text updates.
+- Valid profile display/edit behavior, including existing beholder-profile update semantics, serialization, public APIs, namespaces, type names, save versions, file location, and project files were preserved.
+- Verification passed: targeted Profile/EventSink/PacketHandlers hook scan, Visual Studio MSBuild `Server.csproj` Debug/x86 build, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output. Generated root executable artifacts were restored.
+
 Next:
 
-1. Continue `POST-BATCH-E` with the next focused P1 runtime-hook/gump-guard group by the active plan, currently `System:Misc` row `RB-01810` in `Data/Scripts/System/Misc/Profile.cs`.
+1. Continue `POST-BATCH-E` with the next focused P1 runtime-hook/gump-guard group by the active plan, currently `System:Misc` row `RB-01812` in `Data/Scripts/System/Misc/RenameRequests.cs`.
 2. Keep P2 Boats and Bulk Orders command-access rows queued until the P2 command-access pass unless source evidence makes them an urgent local blocker.
 3. Preserve serialization, public APIs, namespaces, type names, save versions, and file locations; verify source fixes with `Server.csproj` Debug/x86 build and `.\ConficturaServer.exe -compileonly -nocache`.
 
