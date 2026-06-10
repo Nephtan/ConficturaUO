@@ -1617,9 +1617,17 @@ Completed review-only subbatch: `POST-BATCH-E-78A` reviewed the Trades:Apicultur
 - Valid save-time hive update behavior remains unchanged. Serialization, public APIs, namespaces, type names, save versions, file location, and project files were unchanged.
 - Verification passed: targeted BeeHiveHelper/EventSink source review. Source build and compile-only verification were not required because no source files changed.
 
+Completed source subbatch: `POST-BATCH-E-79A` reviewed the Gardening plant-system runtime-hook group.
+
+- 3 rows were reviewed: fixed `RB-01829`; reviewed `RB-01827` and `RB-01828` with no source change.
+- `PlantSystem.EventSink_Login` now guards null login args and null/deleted mobiles before backpack and bank plant growth checks.
+- `PlantSystem.EventSink_WorldLoad` has no event args, and `PlantSystem.EventSink_WorldSave` does not consume `WorldSaveEventArgs`; both still delegate to the existing `GrowAll` pass.
+- Valid world-load, save-time, and login-time plant growth behavior was preserved. Serialization, public APIs, namespaces, type names, save versions, file location, and project files were unchanged.
+- Verification passed: targeted PlantSystem/EventSink hook scan, Visual Studio MSBuild `Server.csproj` Debug/x86 build, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output. Generated root executable artifacts were restored.
+
 Next:
 
-1. Continue `POST-BATCH-E` with the next focused P1 runtime-hook/gump-guard group by the active plan, currently `Gardening` row `RB-01827` in `Data/Scripts/Trades/Gardening/PlantSystem.cs`.
+1. Continue `POST-BATCH-E` with the next focused P1 runtime-hook/gump-guard group by the active plan, currently `ServerCore` row `RB-01830` in `Data/System/Source/Commands.cs`.
 2. Keep P2 Boats and Bulk Orders command-access rows queued until the P2 command-access pass unless source evidence makes them an urgent local blocker.
 3. Preserve serialization, public APIs, namespaces, type names, save versions, and file locations; verify source fixes with `Server.csproj` Debug/x86 build and `.\ConficturaServer.exe -compileonly -nocache`.
 

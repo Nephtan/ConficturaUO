@@ -6694,3 +6694,19 @@ Scope: Deterministic phase runner log for the Confictura codebase audit and reor
 - Command: Targeted BeeHiveHelper/EventSink source review; append `POST-BATCH-E-78A` row to `post-batch-e-hooks-gumps-commands-regions-review.csv` and the active overlay; update status, README, and next-step artifacts.
 - Result: Targeted source review confirmed WorldSave registration and no event-args dereference; source build and compile-only verification were not required because no source files changed; active backlog overlay now includes 225 `POST-BATCH-E` dispositions.
 - Output path: `docs/codebase-audit/outputs/post-batch-e-hooks-gumps-commands-regions-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
+
+### 2026-06-09T21:57:03.3766063-05:00
+
+- Affected phase: Post-audit `POST-BATCH-E-79A` Gardening plant-system runtime-hook group
+- Cwd: `D:\ConficturaUO`
+- Command: Source review and patch of `RB-01827` through `RB-01829` in `Data/Scripts/Trades/Gardening/PlantSystem.cs`.
+- Result: Added null `LoginEventArgs` and null/deleted mobile guards before backpack and bank plant growth checks. Reviewed `PlantSystem.EventSink_WorldLoad` and `PlantSystem.EventSink_WorldSave` with no source change because they only delegate to `GrowAll`.
+- Output path: `Data/Scripts/Trades/Gardening/PlantSystem.cs`
+
+### 2026-06-09T21:57:03.3766063-05:00
+
+- Affected phase: Post-audit `POST-BATCH-E-79A` verification and audit artifact update
+- Cwd: `D:\ConficturaUO`
+- Command: Targeted PlantSystem/EventSink hook scan; Visual Studio MSBuild `Data/System/Source/Server.csproj /p:Configuration=Debug /p:Platform=x86 /v:minimal`; `.\ConficturaServer.exe -compileonly -nocache`; restore generated root executable artifacts; append `POST-BATCH-E-79A` rows to `post-batch-e-hooks-gumps-commands-regions-review.csv` and the active overlay; update status, README, and next-step artifacts.
+- Result: Targeted scan confirmed WorldLoad, WorldSave, and Login registrations plus login null args/mobile/deleted guard coverage and no-change world-hook decisions; `Server.csproj` Debug/x86 build passed with Visual Studio Community 2022 MSBuild; compile-only runtime script verification exited 0 and printed no `Listening:` output; generated `ConficturaServer.exe`, `.config`, and `.pdb` were restored; active backlog overlay now includes 228 `POST-BATCH-E` dispositions.
+- Output path: `docs/codebase-audit/outputs/post-batch-e-hooks-gumps-commands-regions-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
