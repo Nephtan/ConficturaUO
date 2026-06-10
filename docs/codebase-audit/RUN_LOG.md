@@ -6262,3 +6262,19 @@ Scope: Deterministic phase runner log for the Confictura codebase audit and reor
 - Command: Source review of `RB-01787` and `RB-01788` in `Data/Scripts/System/Misc/Broadcasts.cs` and `Data/System/Source/EventSink.cs`.
 - Result: Classified both rows `ReviewedNoChange`. `EventSink_Crashed` and `EventSink_Shutdown` do not dereference event args and already wrap `World.Broadcast` in `try/catch`; adding null-args returns would not improve state safety. No source files changed; source build and compile-only verification were not required for this review-only batch. Active backlog overlay now includes 187 `POST-BATCH-E` dispositions.
 - Output path: `docs/codebase-audit/outputs/post-batch-e-hooks-gumps-commands-regions-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
+
+### 2026-06-09T20:15:08.2899745-05:00
+
+- Affected phase: Post-audit `POST-BATCH-E-52A` System:Misc buff-icon client-version hook guard repair
+- Cwd: `D:\ConficturaUO`
+- Command: Source review and patch of `RB-01789` in `Data/Scripts/System/Misc/BuffIcons.cs`.
+- Result: Added null `ClientVersionReceivedArgs`, null `NetState`, null/deleted mobile, and non-`PlayerMobile` guards before scheduling `PlayerMobile.ResendBuffs`. Valid buff resend behavior, serialization, public APIs, namespaces, type names, save versions, file location, and project files were preserved.
+- Output path: `Data/Scripts/System/Misc/BuffIcons.cs`
+
+### 2026-06-09T20:15:08.2899745-05:00
+
+- Affected phase: Post-audit `POST-BATCH-E-52A` verification and audit artifact update
+- Cwd: `D:\ConficturaUO`
+- Command: Targeted BuffIcons hook scan; Visual Studio MSBuild `Data/System/Source/Server.csproj /p:Configuration=Debug /p:Platform=x86 /v:minimal`; `.\ConficturaServer.exe -compileonly -nocache`; restore generated root executable artifacts; append `POST-BATCH-E-52A` row to `post-batch-e-hooks-gumps-commands-regions-review.csv` and the active overlay; update status, README, and next-step artifacts.
+- Result: Targeted scan confirmed the ClientVersionReceived registration plus null args/state/mobile guards; `Server.csproj` Debug/x86 build passed with Visual Studio Community 2022 MSBuild; compile-only runtime script verification exited 0 and printed no `Listening:` output; generated `ConficturaServer.exe`, `.config`, and `.pdb` were restored; active backlog overlay now includes 188 `POST-BATCH-E` dispositions.
+- Output path: `docs/codebase-audit/outputs/post-batch-e-hooks-gumps-commands-regions-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`

@@ -1421,9 +1421,16 @@ Completed review-only subbatch: `POST-BATCH-E-51A` reviewed System:Misc crash/sh
 - No source files changed.
 - Verification passed: targeted Broadcasts/EventSink source review. Source build and compile-only verification were not required because no source files changed.
 
+Completed source subbatch: `POST-BATCH-E-52A` fixed the System:Misc buff-icon client-version hook row.
+
+- 1 row was reviewed and fixed: `RB-01789`.
+- The `ClientVersionReceived` delegate now guards null args, null `NetState`, null/deleted mobiles, and non-`PlayerMobile` state before scheduling `PlayerMobile.ResendBuffs`.
+- Valid buff resend behavior, serialization, public APIs, namespaces, type names, save versions, file location, and project files were preserved.
+- Verification passed: targeted BuffIcons hook scan, Visual Studio MSBuild `Server.csproj` Debug/x86 build, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output. Generated root executable artifacts were restored.
+
 Next:
 
-1. Continue `POST-BATCH-E` with the next focused P1 runtime-hook/gump-guard group by the active plan, currently `System:Misc` row `RB-01789` in `Data/Scripts/System/Misc/BuffIcons.cs`.
+1. Continue `POST-BATCH-E` with the next focused P1 runtime-hook/gump-guard group by the active plan, currently `System:Misc` row `RB-01790` in `Data/Scripts/System/Misc/CharacterCreation.cs`.
 2. Keep P2 Boats and Bulk Orders command-access rows queued until the P2 command-access pass unless source evidence makes them an urgent local blocker.
 3. Preserve serialization, public APIs, namespaces, type names, save versions, and file locations; verify source fixes with `Server.csproj` Debug/x86 build and `.\ConficturaServer.exe -compileonly -nocache`.
 
