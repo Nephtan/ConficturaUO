@@ -1632,9 +1632,16 @@ Completed review-only subbatch: `POST-BATCH-E-80A` reviewed the ServerCore comma
 - Broad null-caller command framework behavior was not changed. Valid command parsing, access checks, handler dispatch, invalid-command messaging, and command event behavior remain unchanged.
 - Verification passed: targeted Commands/EventSink source review. Source build and compile-only verification were not required because no source files changed.
 
+Completed review-only subbatch: `POST-BATCH-E-81A` classified the Homestead `EventSink.cs` marker row as a false positive.
+
+- 1 row was reviewed as a false positive: `RB-01831`.
+- The generated row matched the file banner text `EventSink.cs` at line 2, not executable runtime hook code.
+- No source behavior changed. EventSink world-load and world-save rows remain separately represented in the runtime hook map.
+- Verification passed: targeted EventSink/runtime-hook-map source review. Source build and compile-only verification were not required because no source files changed.
+
 Next:
 
-1. Continue `POST-BATCH-E` with the next focused P1 runtime-hook/gump-guard group by the active plan, currently `Homestead` row `RB-01831` in `Data/System/Source/EventSink.cs`.
+1. Continue `POST-BATCH-E` with the next focused P1 runtime-hook/gump-guard group by the active plan, currently `ServerCore` row `RB-01832` in `Data/System/Source/Main.cs`.
 2. Keep P2 Boats and Bulk Orders command-access rows queued until the P2 command-access pass unless source evidence makes them an urgent local blocker.
 3. Preserve serialization, public APIs, namespaces, type names, save versions, and file locations; verify source fixes with `Server.csproj` Debug/x86 build and `.\ConficturaServer.exe -compileonly -nocache`.
 

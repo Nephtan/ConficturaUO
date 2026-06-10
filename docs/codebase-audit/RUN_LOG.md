@@ -6726,3 +6726,19 @@ Scope: Deterministic phase runner log for the Confictura codebase audit and reor
 - Command: Targeted Commands/EventSink source review; append `POST-BATCH-E-80A` row to `post-batch-e-hooks-gumps-commands-regions-review.csv` and the active overlay; update status, README, and next-step artifacts.
 - Result: Targeted source review confirmed `InvokeCommand` receives a just-constructed `CommandEventArgs` on the valid command path; source build and compile-only verification were not required because no source files changed; active backlog overlay now includes 229 `POST-BATCH-E` dispositions.
 - Output path: `docs/codebase-audit/outputs/post-batch-e-hooks-gumps-commands-regions-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
+
+### 2026-06-09T22:03:09.2051568-05:00
+
+- Affected phase: Post-audit `POST-BATCH-E-81A` Homestead `EventSink.cs` marker false positive
+- Cwd: `D:\ConficturaUO`
+- Command: Source and runtime-hook-map review of `RB-01831` in `Data/System/Source/EventSink.cs`.
+- Result: Classified the row as `FalsePositive` because the generated marker matched the file banner text `EventSink.cs` at line 2, not executable runtime hook code. EventSink world-load and world-save rows remain separately represented in the runtime hook map.
+- Output path: `docs/codebase-audit/outputs/post-batch-e-hooks-gumps-commands-regions-review.csv`
+
+### 2026-06-09T22:03:09.2051568-05:00
+
+- Affected phase: Post-audit `POST-BATCH-E-81A` verification and audit artifact update
+- Cwd: `D:\ConficturaUO`
+- Command: Targeted EventSink/runtime-hook-map source review; append `POST-BATCH-E-81A` row to `post-batch-e-hooks-gumps-commands-regions-review.csv` and the active overlay; update status, README, and next-step artifacts.
+- Result: Targeted review confirmed the row is extractor noise from the file banner; no source files changed and source build/compile-only verification were not required; active backlog overlay now includes 230 `POST-BATCH-E` dispositions.
+- Output path: `docs/codebase-audit/outputs/post-batch-e-hooks-gumps-commands-regions-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
