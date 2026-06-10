@@ -6902,3 +6902,19 @@ Scope: Deterministic phase runner log for the Confictura codebase audit and reor
 - Command: Targeted PacketHandlers/EventSink/CharacterCreation/Accounts/ServerList source review; append `POST-BATCH-E-91A` rows to `post-batch-e-hooks-gumps-commands-regions-review.csv` and the active overlay; update status, README, and next-step artifacts.
 - Result: Targeted source review confirmed constructed event args and caller/subscriber guard coverage for login, character-created, game-login, account-login, and server-list invocations; source build and compile-only verification were not required because no source files changed; active backlog overlay now includes 275 `POST-BATCH-E` dispositions.
 - Output path: `docs/codebase-audit/outputs/post-batch-e-hooks-gumps-commands-regions-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
+
+### 2026-06-09T22:52:16.0339296-05:00
+
+- Affected phase: Post-audit `POST-BATCH-E-92A` XMLSpawner packet override review
+- Cwd: `D:\ConficturaUO`
+- Command: Source review of `RB-01877` through `RB-01879` in `Data/Scripts/Custom/XMLSpawner/PacketHandlerOverrides.cs` and `Data/Scripts/Custom/XMLSpawner/XmlTextEntryBook.cs`.
+- Result: Reviewed XMLSpawner content-change and use-request packet overrides with no source change, and classified the commented XmlTextEntryBook registration row as a false positive. The live overrides are in-game packet registrations protected by MessagePump null/deleted mobile guards; target/page/attachment validation remains in the XMLSpawner handlers.
+- Output path: `docs/codebase-audit/outputs/post-batch-e-hooks-gumps-commands-regions-review.csv`
+
+### 2026-06-09T22:52:16.0339296-05:00
+
+- Affected phase: Post-audit `POST-BATCH-E-92A` verification and audit artifact update
+- Cwd: `D:\ConficturaUO`
+- Command: Targeted PacketHandlerOverrides/MessagePump/XmlTextEntryBook/XmlAttach source review; append `POST-BATCH-E-92A` rows to `post-batch-e-hooks-gumps-commands-regions-review.csv`; update status, README, and next-step artifacts while preserving the existing `POST-BATCH-C-01A` active overlay rows for `RB-01877` through `RB-01879`.
+- Result: Targeted source review confirmed XMLSpawner content-change and use-request override guard coverage, and classified the commented XmlTextEntryBook registration row as non-executable; source build and compile-only verification were not required because no source files changed; active backlog overlay remains at 275 `POST-BATCH-E` dispositions with no duplicate BacklogIds, while the `POST-BATCH-E` review CSV records 278 reviewed rows through `POST-BATCH-E-92A`.
+- Output path: `docs/codebase-audit/outputs/post-batch-e-hooks-gumps-commands-regions-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
