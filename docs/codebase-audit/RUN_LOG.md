@@ -6710,3 +6710,19 @@ Scope: Deterministic phase runner log for the Confictura codebase audit and reor
 - Command: Targeted PlantSystem/EventSink hook scan; Visual Studio MSBuild `Data/System/Source/Server.csproj /p:Configuration=Debug /p:Platform=x86 /v:minimal`; `.\ConficturaServer.exe -compileonly -nocache`; restore generated root executable artifacts; append `POST-BATCH-E-79A` rows to `post-batch-e-hooks-gumps-commands-regions-review.csv` and the active overlay; update status, README, and next-step artifacts.
 - Result: Targeted scan confirmed WorldLoad, WorldSave, and Login registrations plus login null args/mobile/deleted guard coverage and no-change world-hook decisions; `Server.csproj` Debug/x86 build passed with Visual Studio Community 2022 MSBuild; compile-only runtime script verification exited 0 and printed no `Listening:` output; generated `ConficturaServer.exe`, `.config`, and `.pdb` were restored; active backlog overlay now includes 228 `POST-BATCH-E` dispositions.
 - Output path: `docs/codebase-audit/outputs/post-batch-e-hooks-gumps-commands-regions-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
+
+### 2026-06-09T22:00:27.0127690-05:00
+
+- Affected phase: Post-audit `POST-BATCH-E-80A` ServerCore command event invocation review
+- Cwd: `D:\ConficturaUO`
+- Command: Source review of `RB-01830` in `Data/System/Source/Commands.cs`.
+- Result: Reviewed `CommandSystem.Handle` with no source change because it constructs a non-null `CommandEventArgs` immediately before `EventSink.InvokeCommand(e)` on the valid command path after command lookup, access checks, and handler dispatch. Broad null-caller command framework behavior was not changed.
+- Output path: `docs/codebase-audit/outputs/post-batch-e-hooks-gumps-commands-regions-review.csv`
+
+### 2026-06-09T22:00:27.0127690-05:00
+
+- Affected phase: Post-audit `POST-BATCH-E-80A` verification and audit artifact update
+- Cwd: `D:\ConficturaUO`
+- Command: Targeted Commands/EventSink source review; append `POST-BATCH-E-80A` row to `post-batch-e-hooks-gumps-commands-regions-review.csv` and the active overlay; update status, README, and next-step artifacts.
+- Result: Targeted source review confirmed `InvokeCommand` receives a just-constructed `CommandEventArgs` on the valid command path; source build and compile-only verification were not required because no source files changed; active backlog overlay now includes 229 `POST-BATCH-E` dispositions.
+- Output path: `docs/codebase-audit/outputs/post-batch-e-hooks-gumps-commands-regions-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`

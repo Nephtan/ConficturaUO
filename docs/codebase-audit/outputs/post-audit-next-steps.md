@@ -1625,9 +1625,16 @@ Completed source subbatch: `POST-BATCH-E-79A` reviewed the Gardening plant-syste
 - Valid world-load, save-time, and login-time plant growth behavior was preserved. Serialization, public APIs, namespaces, type names, save versions, file location, and project files were unchanged.
 - Verification passed: targeted PlantSystem/EventSink hook scan, Visual Studio MSBuild `Server.csproj` Debug/x86 build, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output. Generated root executable artifacts were restored.
 
+Completed review-only subbatch: `POST-BATCH-E-80A` reviewed the ServerCore command event invocation row.
+
+- 1 row was reviewed with no source change: `RB-01830`.
+- `CommandSystem.Handle` constructs a non-null `CommandEventArgs` immediately before `EventSink.InvokeCommand(e)` on the valid command path after command lookup, access checks, and handler dispatch.
+- Broad null-caller command framework behavior was not changed. Valid command parsing, access checks, handler dispatch, invalid-command messaging, and command event behavior remain unchanged.
+- Verification passed: targeted Commands/EventSink source review. Source build and compile-only verification were not required because no source files changed.
+
 Next:
 
-1. Continue `POST-BATCH-E` with the next focused P1 runtime-hook/gump-guard group by the active plan, currently `ServerCore` row `RB-01830` in `Data/System/Source/Commands.cs`.
+1. Continue `POST-BATCH-E` with the next focused P1 runtime-hook/gump-guard group by the active plan, currently `Homestead` row `RB-01831` in `Data/System/Source/EventSink.cs`.
 2. Keep P2 Boats and Bulk Orders command-access rows queued until the P2 command-access pass unless source evidence makes them an urgent local blocker.
 3. Preserve serialization, public APIs, namespaces, type names, save versions, and file locations; verify source fixes with `Server.csproj` Debug/x86 build and `.\ConficturaServer.exe -compileonly -nocache`.
 
