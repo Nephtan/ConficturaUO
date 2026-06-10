@@ -7030,3 +7030,19 @@ Scope: Deterministic phase runner log for the Confictura codebase audit and reor
 - Command: Append `POST-BATCH-E-99A` row to `post-batch-e-hooks-gumps-commands-regions-review.csv`; update status, README, and next-step artifacts while preserving the existing `POST-BATCH-C-01A` active overlay row for `RB-01891`.
 - Result: Active backlog overlay remains unique with 276 `POST-BATCH-E` dispositions, while the `POST-BATCH-E` review CSV records 290 reviewed rows through `POST-BATCH-E-99A`.
 - Output path: `docs/codebase-audit/outputs/post-batch-e-hooks-gumps-commands-regions-review.csv`
+
+### 2026-06-09T23:22:28.4745902-05:00
+
+- Affected phase: Post-audit `POST-BATCH-E-100A` obsolete legacy chat packet review
+- Cwd: `D:\ConficturaUO`
+- Command: Source review of `RB-01892` and `RB-01893` in `Data/Scripts/System/Obsolete/Obsolete.cs` and dispatch guards in `Data/System/Source/Network/MessagePump.cs`.
+- Result: Reviewed obsolete open-chat and chat-action packet handlers with no source change. Both handlers register as in-game packets protected by MessagePump null/deleted mobile guards; the open-chat path validates bounded nickname/account tag state before adding chat users, and the chat-action path requires an existing `ChatUser`, known action handler, conference state, and moderator status where applicable before callback dispatch. Broader legacy chat policy remains deferred. Source build and compile-only verification were not required because no source files changed.
+- Output path: `docs/codebase-audit/outputs/post-batch-e-hooks-gumps-commands-regions-review.csv`
+
+### 2026-06-09T23:22:28.4745902-05:00
+
+- Affected phase: Post-audit `POST-BATCH-E-100A` verification, audit artifact update, and handoff check
+- Cwd: `D:\ConficturaUO`
+- Command: Append `POST-BATCH-E-100A` rows to `post-batch-e-hooks-gumps-commands-regions-review.csv`; compare `repair-backlog.csv` against the `POST-BATCH-E` review CSV for unreviewed `Runtime hooks`, `Gump guards`, `Command access`, and `Regions` rows; update status, README, and next-step artifacts while preserving the existing `POST-BATCH-C-01A` active overlay rows for `RB-01892` and `RB-01893`.
+- Result: Active backlog overlay remains unique with 276 `POST-BATCH-E` dispositions, while the `POST-BATCH-E` review CSV records 292 reviewed rows through `POST-BATCH-E-100A`; no unreviewed `Runtime hooks`, `Gump guards`, `Command access`, or `Regions` repair-backlog rows remain, so the next step is a human decision on deferred policy reviews or the next post-audit batch track.
+- Output path: `docs/codebase-audit/outputs/post-batch-e-hooks-gumps-commands-regions-review.csv`

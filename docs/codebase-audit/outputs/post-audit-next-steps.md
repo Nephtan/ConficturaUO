@@ -1777,11 +1777,18 @@ Completed review-only subbatch: `POST-BATCH-E-99A` reviewed the already-covered 
 - The active overlay was not duplicated for this row because it already has an active `POST-BATCH-C-01A` disposition; broader remote-admin design/security policy remains deferred rather than changed inside the packet-guard batch.
 - Verification passed: targeted RemoteAdmin source review. Source build and compile-only verification were not required because no source files changed.
 
+Completed review-only subbatch: `POST-BATCH-E-100A` reviewed the already-covered obsolete legacy chat packet rows.
+
+- 2 rows were reviewed: `RB-01892` and `RB-01893`.
+- `RB-01892` and `RB-01893` were reviewed with no source change: both obsolete chat packet handlers are in-game handlers protected by MessagePump null/deleted mobile dispatch guards; the open-chat path validates bounded nickname/account tag state before adding a chat user, and the chat-action path requires an existing `ChatUser`, known action handler, conference state, and moderator status where applicable before dispatch.
+- The active overlay was not duplicated for these rows because they already have active `POST-BATCH-C-01A` dispositions; broader legacy chat policy remains deferred rather than changed inside the packet-guard batch.
+- Verification passed: targeted Obsolete chat and MessagePump source review plus repair-backlog/review CSV comparison. Source build and compile-only verification were not required because no source files changed.
+
 Next:
 
-1. Continue `POST-BATCH-E` with the next focused runtime-hook/gump-guard group by the active plan, currently `Regions` row `RB-01892` in `Data/Scripts/System/Obsolete/Obsolete.cs`.
-2. Keep P2 Boats and Bulk Orders command-access rows queued until the P2 command-access pass unless source evidence makes them an urgent local blocker.
-3. Preserve serialization, public APIs, namespaces, type names, save versions, and file locations; verify source fixes with `Server.csproj` Debug/x86 build and `.\ConficturaServer.exe -compileonly -nocache`.
+1. Human intervention point reached: comparing `repair-backlog.csv` against `post-batch-e-hooks-gumps-commands-regions-review.csv` found no remaining unreviewed `Runtime hooks`, `Gump guards`, `Command access`, or `Regions` rows.
+2. Decide whether to open deferred behavior/security-policy reviews, including RemoteAdmin protocol policy and legacy chat policy, or start a new post-audit batch track.
+3. Preserve serialization, public APIs, namespaces, type names, save versions, and file locations; verify any future source fixes with `Server.csproj` Debug/x86 build and `.\ConficturaServer.exe -compileonly -nocache`.
 
 ## Reorganization Status
 
