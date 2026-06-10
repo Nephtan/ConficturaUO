@@ -6806,3 +6806,19 @@ Scope: Deterministic phase runner log for the Confictura codebase audit and reor
 - Command: Targeted Listener/EventSink/Accounts/SocketOptions source review; append `POST-BATCH-E-85A` row to `post-batch-e-hooks-gumps-commands-regions-review.csv` and the active overlay; update status, README, and next-step artifacts.
 - Result: Targeted source review confirmed `SocketConnectEventArgs` is constructed at the callsite and subscriber guard coverage is already present; source build and compile-only verification were not required because no source files changed; active backlog overlay now includes 247 `POST-BATCH-E` dispositions.
 - Output path: `docs/codebase-audit/outputs/post-batch-e-hooks-gumps-commands-regions-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
+
+### 2026-06-09T22:25:56.6260090-05:00
+
+- Affected phase: Post-audit `POST-BATCH-E-86A` ServerCore encoded `PacketHandlers.cs` event invocation review
+- Cwd: `D:\ConficturaUO`
+- Command: Source review of `RB-01849` through `RB-01851` in `Data/System/Source/Network/PacketHandlers.cs`.
+- Result: Reviewed set-ability, guild-gump, and quest-gump encoded event invocations with no source change. The handlers are registered as in-game encoded packet handlers, so `EncodedCommand` rejects null `state.Mobile` before dispatch; no `SetAbility` subscriber is registered, and current guild/quest subscribers already guard null/deleted mobiles.
+- Output path: `docs/codebase-audit/outputs/post-batch-e-hooks-gumps-commands-regions-review.csv`
+
+### 2026-06-09T22:25:56.6260090-05:00
+
+- Affected phase: Post-audit `POST-BATCH-E-86A` verification and audit artifact update
+- Cwd: `D:\ConficturaUO`
+- Command: Targeted PacketHandlers/EventSink/Guilds/Players source review; append `POST-BATCH-E-86A` rows to `post-batch-e-hooks-gumps-commands-regions-review.csv` and the active overlay; update status, README, and next-step artifacts.
+- Result: Targeted source review confirmed the encoded in-game dispatch guard, constructed event args, missing SetAbility subscribers, and downstream null/deleted mobile guard coverage for guild and quest gump requests; source build and compile-only verification were not required because no source files changed; active backlog overlay now includes 250 `POST-BATCH-E` dispositions.
+- Output path: `docs/codebase-audit/outputs/post-batch-e-hooks-gumps-commands-regions-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
