@@ -1735,9 +1735,16 @@ Completed review-only subbatch: `POST-BATCH-E-93A` reviewed the BaseBook packet 
 - The active overlay was not duplicated for these rows because `RB-01880` through `RB-01882` already have active `POST-BATCH-C-01A` dispositions; the `POST-BATCH-E` review CSV records the re-review evidence.
 - Verification passed: targeted BaseBook/MessagePump source review plus direct-call and duplicate-registration `rg` checks. Source build and compile-only verification were not required because no source files changed.
 
+Completed source subbatch: `POST-BATCH-E-94A` fixed the Monopoly gump response packet override row.
+
+- 1 row was fixed: `RB-01883`.
+- `Data/Scripts/Items/Houses/Monopoly/Misc/GumpResponse.cs` now restores the previously deferred exact switch/text maximum parity repair: `DisplayGumpResponse` rejects switch counts above the matched gump's check/radio entry count, rejects text counts above the matched gump's text-entry count, and disconnects oversized text-entry payloads before allocating relays or invoking `OnResponse`.
+- Serialization, public APIs, namespaces, type names, save versions, file locations, and `Scripts.csproj` remain unchanged.
+- Verification passed: `Server.csproj` Debug/x86 build via Visual Studio MSBuild; `.\ConficturaServer.exe -compileonly -nocache` completed successfully and printed no `Listening` output; generated root executable artifacts were restored.
+
 Next:
 
-1. Continue `POST-BATCH-E` with the next focused runtime-hook/gump-guard group by the active plan, currently `Housing` row `RB-01883` in `Data/Scripts/Items/Houses/Monopoly/Misc/GumpResponse.cs`.
+1. Continue `POST-BATCH-E` with the next focused runtime-hook/gump-guard group by the active plan, currently `Items:Misc` row `RB-01884` in `Data/Scripts/Items/Misc/BulletinBoards.cs`.
 2. Keep P2 Boats and Bulk Orders command-access rows queued until the P2 command-access pass unless source evidence makes them an urgent local blocker.
 3. Preserve serialization, public APIs, namespaces, type names, save versions, and file locations; verify source fixes with `Server.csproj` Debug/x86 build and `.\ConficturaServer.exe -compileonly -nocache`.
 

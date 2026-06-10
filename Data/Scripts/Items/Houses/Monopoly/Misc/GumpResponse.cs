@@ -40,7 +40,7 @@ namespace Knives.TownHouses
                 {
                     int switchCount = pvSrc.ReadInt32();
 
-                    if (switchCount < 0)
+                    if (switchCount < 0 || switchCount > CountSwitches(gump))
                     {
                         Console.WriteLine(
                             "Client: {0}: Invalid gump response, disconnecting...",
@@ -57,7 +57,7 @@ namespace Knives.TownHouses
 
                     int textCount = pvSrc.ReadInt32();
 
-                    if (textCount < 0)
+                    if (textCount < 0 || textCount > CountTextEntries(gump))
                     {
                         Console.WriteLine(
                             "Client: {0}: Invalid gump response, disconnecting...",
@@ -75,7 +75,14 @@ namespace Knives.TownHouses
                         int textLength = pvSrc.ReadUInt16();
 
                         if (textLength > 239)
+                        {
+                            Console.WriteLine(
+                                "Client: {0}: Invalid gump response, disconnecting...",
+                                state
+                            );
+                            state.Dispose();
                             return;
+                        }
 
                         string text = pvSrc.ReadUnicodeStringSafe(textLength);
                         textEntries[j] = new TextRelay(entryID, text);
@@ -102,6 +109,32 @@ namespace Knives.TownHouses
             {
                 PacketHandlers.DisplayGumpResponse(state, pvSrc);
             }
+        }
+
+        private static int CountSwitches(Gump gump)
+        {
+            int count = 0;
+
+            foreach (GumpEntry entry in gump.Entries)
+            {
+                if (entry is GumpCheck || entry is GumpRadio)
+                    ++count;
+            }
+
+            return count;
+        }
+
+        private static int CountTextEntries(Gump gump)
+        {
+            int count = 0;
+
+            foreach (GumpEntry entry in gump.Entries)
+            {
+                if (entry is GumpTextEntry || entry is GumpTextEntryLimited)
+                    ++count;
+            }
+
+            return count;
         }
 
         private static bool CheckResponse(Gump gump, Mobile m, int id)

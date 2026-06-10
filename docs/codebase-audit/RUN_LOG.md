@@ -6934,3 +6934,19 @@ Scope: Deterministic phase runner log for the Confictura codebase audit and reor
 - Command: Targeted BaseBook/MessagePump source review; append `POST-BATCH-E-93A` rows to `post-batch-e-hooks-gumps-commands-regions-review.csv`; update status, README, and next-step artifacts while preserving the existing `POST-BATCH-C-01A` active overlay rows for `RB-01880` through `RB-01882`.
 - Result: Source build and compile-only verification were not required because no source files changed; active backlog overlay remains at 275 `POST-BATCH-E` dispositions with no duplicate BacklogIds, while the `POST-BATCH-E` review CSV records 281 reviewed rows through `POST-BATCH-E-93A`.
 - Output path: `docs/codebase-audit/outputs/post-batch-e-hooks-gumps-commands-regions-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
+
+### 2026-06-09T23:04:31.0536900-05:00
+
+- Affected phase: Post-audit `POST-BATCH-E-94A` Monopoly gump response packet repair
+- Cwd: `D:\ConficturaUO`
+- Command: Source review of `RB-01883` in `Data/Scripts/Items/Houses/Monopoly/Misc/GumpResponse.cs`, comparison with core `PacketHandlers.DisplayGumpResponse`, and source patch to restore switch/text count and oversized text-entry bounds behavior without changing server public APIs.
+- Result: Patched `DisplayGumpResponse` to reject switch counts above the matched gump's check/radio entry count, reject text counts above the matched gump's text-entry count, and disconnect oversized text-entry payloads before relay allocation or `OnResponse`, while preserving the existing PacketReader position restore and successor/core fallback behavior.
+- Output path: `Data/Scripts/Items/Houses/Monopoly/Misc/GumpResponse.cs`
+
+### 2026-06-09T23:04:31.0536900-05:00
+
+- Affected phase: Post-audit `POST-BATCH-E-94A` verification and audit artifact update
+- Cwd: `D:\ConficturaUO`
+- Command: `& 'C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\MSBuild.exe' Data/System/Source/Server.csproj /p:Configuration=Debug /p:Platform=x86 /v:minimal`; `.\ConficturaServer.exe -compileonly -nocache`; restore generated root executable artifacts; append `POST-BATCH-E-94A` row to `post-batch-e-hooks-gumps-commands-regions-review.csv`; update the existing active overlay row for `RB-01883`; update status, README, and next-step artifacts.
+- Result: `Server.csproj` Debug/x86 build passed; compile-only runtime script verification completed successfully and printed no `Listening` output; generated `ConficturaServer.exe`, `.config`, and `.pdb` were restored; active backlog overlay remains unique and now has 276 `POST-BATCH-E` dispositions; the `POST-BATCH-E` review CSV records 282 reviewed rows through `POST-BATCH-E-94A`.
+- Output path: `docs/codebase-audit/outputs/post-batch-e-hooks-gumps-commands-regions-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
