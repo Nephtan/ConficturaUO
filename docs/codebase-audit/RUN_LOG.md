@@ -6950,3 +6950,19 @@ Scope: Deterministic phase runner log for the Confictura codebase audit and reor
 - Command: `& 'C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\MSBuild.exe' Data/System/Source/Server.csproj /p:Configuration=Debug /p:Platform=x86 /v:minimal`; `.\ConficturaServer.exe -compileonly -nocache`; restore generated root executable artifacts; append `POST-BATCH-E-94A` row to `post-batch-e-hooks-gumps-commands-regions-review.csv`; update the existing active overlay row for `RB-01883`; update status, README, and next-step artifacts.
 - Result: `Server.csproj` Debug/x86 build passed; compile-only runtime script verification completed successfully and printed no `Listening` output; generated `ConficturaServer.exe`, `.config`, and `.pdb` were restored; active backlog overlay remains unique and now has 276 `POST-BATCH-E` dispositions; the `POST-BATCH-E` review CSV records 282 reviewed rows through `POST-BATCH-E-94A`.
 - Output path: `docs/codebase-audit/outputs/post-batch-e-hooks-gumps-commands-regions-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
+
+### 2026-06-09T23:08:59.3836669-05:00
+
+- Affected phase: Post-audit `POST-BATCH-E-95A` already-covered packet handler review
+- Cwd: `D:\ConficturaUO`
+- Command: Source review of `RB-01884` through `RB-01886` in `Data/Scripts/Items/Misc/BulletinBoards.cs`, `Data/Scripts/Items/Misc/Games/Mahjong/MahjongPacketHandlers.cs`, `Data/Scripts/Items/Trades/Maps/MapItem.cs`, `Data/System/Source/Network/MessagePump.cs`, and targeted duplicate-registration `rg` checks.
+- Result: Reviewed bulletin board, mahjong, and map command packet handlers with no source change. Existing MessagePump null/deleted mobile dispatch guards plus local board/range/poster, mahjong player/dealer, and map edit validation gates remain intact. Source build and compile-only verification were not required because no source files changed.
+- Output path: `docs/codebase-audit/outputs/post-batch-e-hooks-gumps-commands-regions-review.csv`
+
+### 2026-06-09T23:08:59.3836669-05:00
+
+- Affected phase: Post-audit `POST-BATCH-E-95A` verification and audit artifact update
+- Cwd: `D:\ConficturaUO`
+- Command: Append `POST-BATCH-E-95A` rows to `post-batch-e-hooks-gumps-commands-regions-review.csv`; update status, README, and next-step artifacts while preserving the existing `POST-BATCH-C-01A` active overlay rows for `RB-01884` through `RB-01886`.
+- Result: Active backlog overlay remains unique with 276 `POST-BATCH-E` dispositions, while the `POST-BATCH-E` review CSV records 285 reviewed rows through `POST-BATCH-E-95A`.
+- Output path: `docs/codebase-audit/outputs/post-batch-e-hooks-gumps-commands-regions-review.csv`
