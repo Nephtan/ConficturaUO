@@ -6582,3 +6582,19 @@ Scope: Deterministic phase runner log for the Confictura codebase audit and reor
 - Command: Targeted ServerList/EventSink hook scan; Visual Studio MSBuild `Data/System/Source/Server.csproj /p:Configuration=Debug /p:Platform=x86 /v:minimal`; `.\ConficturaServer.exe -compileonly -nocache`; restore generated root executable artifacts; append `POST-BATCH-E-71A` row to `post-batch-e-hooks-gumps-commands-regions-review.csv` and the active overlay; update status, README, and next-step artifacts.
 - Result: Targeted scan confirmed the ServerList registration plus null args/state/socket guard coverage; `Server.csproj` Debug/x86 build passed with Visual Studio Community 2022 MSBuild; compile-only runtime script verification exited 0 and printed no `Listening:` output; generated `ConficturaServer.exe`, `.config`, and `.pdb` were restored; active backlog overlay now includes 212 `POST-BATCH-E` dispositions.
 - Output path: `docs/codebase-audit/outputs/post-batch-e-hooks-gumps-commands-regions-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
+
+### 2026-06-09T21:28:08.9758778-05:00
+
+- Affected phase: Post-audit `POST-BATCH-E-72A` System:Misc shard poller login hook guard repair
+- Cwd: `D:\ConficturaUO`
+- Command: Source review and patch of `RB-01814` in `Data/Scripts/System/Misc/ShardPoller.cs`.
+- Result: Added null `LoginEventArgs` and null/deleted mobile guards before delayed poll gump scheduling; delayed callback now safely casts the mobile state and skips null/deleted mobiles before `NetState` and poll gump work. Valid active poll login prompt, queued poll, vote-check, poll deactivation behavior, serialization, public APIs, namespaces, type names, save versions, file location, and project files were preserved.
+- Output path: `Data/Scripts/System/Misc/ShardPoller.cs`
+
+### 2026-06-09T21:28:08.9758778-05:00
+
+- Affected phase: Post-audit `POST-BATCH-E-72A` verification and audit artifact update
+- Cwd: `D:\ConficturaUO`
+- Command: Targeted ShardPoller/EventSink hook scan; Visual Studio MSBuild `Data/System/Source/Server.csproj /p:Configuration=Debug /p:Platform=x86 /v:minimal`; `.\ConficturaServer.exe -compileonly -nocache`; restore generated root executable artifacts; append `POST-BATCH-E-72A` row to `post-batch-e-hooks-gumps-commands-regions-review.csv` and the active overlay; update status, README, and next-step artifacts.
+- Result: Targeted scan confirmed the Login registration plus null args/mobile/deleted and delayed callback stale-state guard coverage; `Server.csproj` Debug/x86 build passed with Visual Studio Community 2022 MSBuild; compile-only runtime script verification exited 0 and printed no `Listening:` output; generated `ConficturaServer.exe`, `.config`, and `.pdb` were restored; active backlog overlay now includes 213 `POST-BATCH-E` dispositions.
+- Output path: `docs/codebase-audit/outputs/post-batch-e-hooks-gumps-commands-regions-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
