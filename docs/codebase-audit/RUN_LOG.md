@@ -6854,3 +6854,19 @@ Scope: Deterministic phase runner log for the Confictura codebase audit and reor
 - Command: Targeted PacketHandlers/MessagePump/EventSink/Animations/Spellbook/BaseDoor/Obsolete source review; append `POST-BATCH-E-88A` rows to `post-batch-e-hooks-gumps-commands-regions-review.csv` and the active overlay; update status, README, and next-step artifacts.
 - Result: Targeted source review confirmed TextCommand dispatcher guard coverage, subscriber guard coverage for animate/spellbook/cast/open-door requests, and no current VirtueMacroRequest subscriber; source build and compile-only verification were not required because no source files changed; active backlog overlay now includes 259 `POST-BATCH-E` dispositions.
 - Output path: `docs/codebase-audit/outputs/post-batch-e-hooks-gumps-commands-regions-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
+
+### 2026-06-09T22:39:11.8850291-05:00
+
+- Affected phase: Post-audit `POST-BATCH-E-89A` ServerCore profile, help, virtue, and cast request invocation review
+- Cwd: `D:\ConficturaUO`
+- Command: Source review of `RB-01861` through `RB-01866` in `Data/System/Source/Network/PacketHandlers.cs`.
+- Result: Reviewed profile display/edit, help request, virtue gump/item request, and extended cast request invocations with no source change. Dispatcher guards cover null/deleted mobiles before in-game standard or extended handler dispatch; profile/help/cast subscribers already guard invalid args/mobile state; and `VirtueGumpRequest`/`VirtueItemRequest` have no current subscribers.
+- Output path: `docs/codebase-audit/outputs/post-batch-e-hooks-gumps-commands-regions-review.csv`
+
+### 2026-06-09T22:39:11.8850291-05:00
+
+- Affected phase: Post-audit `POST-BATCH-E-89A` verification and audit artifact update
+- Cwd: `D:\ConficturaUO`
+- Command: Targeted PacketHandlers/MessagePump/ExtendedCommand/EventSink/Profile/HelpGump/Spellbook/Obsolete source review; append `POST-BATCH-E-89A` rows to `post-batch-e-hooks-gumps-commands-regions-review.csv` and the active overlay; update status, README, and next-step artifacts.
+- Result: Targeted source review confirmed dispatcher guard coverage, subscriber guard coverage for profile/help/cast requests, and no current VirtueGumpRequest or VirtueItemRequest subscriber; source build and compile-only verification were not required because no source files changed; active backlog overlay now includes 265 `POST-BATCH-E` dispositions.
+- Output path: `docs/codebase-audit/outputs/post-batch-e-hooks-gumps-commands-regions-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`

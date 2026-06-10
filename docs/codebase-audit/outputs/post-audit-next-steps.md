@@ -1694,9 +1694,17 @@ Completed review-only subbatch: `POST-BATCH-E-88A` reviewed the ServerCore TextC
 - Valid animation, spellbook open/cast, open-door macro, and inert virtue macro behavior, serialization, public APIs, namespaces, type names, save versions, and file locations remain unchanged.
 - Verification passed: targeted PacketHandlers/MessagePump/EventSink/Animations/Spellbook/BaseDoor/Obsolete source review. Source build and compile-only verification were not required because no source files changed.
 
+Completed review-only subbatch: `POST-BATCH-E-89A` reviewed the ServerCore PacketHandlers profile, help, virtue gump/item, and extended cast request invocation rows.
+
+- 6 rows were reviewed with no source change: `RB-01861` through `RB-01866`.
+- Profile and help request packets are registered as in-game packets, and extended cast is registered as an in-game extended packet, so dispatcher guards reject null/deleted mobiles before handler dispatch.
+- Current profile, help, and cast subscribers guard null args and null/deleted mobiles before doing work; virtue gump/item events currently have no registered subscriber because the obsolete virtue gump initializer is disabled.
+- Valid profile display/edit, help request, inert virtue gump/item, and extended cast request behavior, serialization, public APIs, namespaces, type names, save versions, and file locations remain unchanged.
+- Verification passed: targeted PacketHandlers/MessagePump/ExtendedCommand/EventSink/Profile/HelpGump/Spellbook/Obsolete source review. Source build and compile-only verification were not required because no source files changed.
+
 Next:
 
-1. Continue `POST-BATCH-E` with the next focused P1 runtime-hook/gump-guard group by the active plan, currently `ServerCore` row `RB-01861` in `Data/System/Source/Network/PacketHandlers.cs`.
+1. Continue `POST-BATCH-E` with the next focused P1 runtime-hook/gump-guard group by the active plan, currently `ServerCore` row `RB-01867` in `Data/System/Source/Network/PacketHandlers.cs`.
 2. Keep P2 Boats and Bulk Orders command-access rows queued until the P2 command-access pass unless source evidence makes them an urgent local blocker.
 3. Preserve serialization, public APIs, namespaces, type names, save versions, and file locations; verify source fixes with `Server.csproj` Debug/x86 build and `.\ConficturaServer.exe -compileonly -nocache`.
 
