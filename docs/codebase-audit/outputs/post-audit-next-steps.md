@@ -1756,9 +1756,16 @@ Completed review-only subbatch: `POST-BATCH-E-96A` reviewed already-covered Chat
 - The active overlay was not duplicated for these rows because they already have active `POST-BATCH-C-01A` dispositions; the `POST-BATCH-E` review CSV records the re-review evidence.
 - Verification passed: targeted Chat3Guild, MessagePump, Channel, and Guild source review. Source build and compile-only verification were not required because no source files changed.
 
+Completed review-only subbatch: `POST-BATCH-E-97A` reviewed the already-covered HardwareInfo account hardware packet row.
+
+- 1 row was reviewed: `RB-01889`.
+- `RB-01889` was reviewed with no source change: the fixed-length 0xD9 hardware packet intentionally registers as non-ingame, stores parsed hardware data only when `state.Account` is an `Account`, and exposes staff review through the `HWInfo` command gated at `AccessLevel.GameMaster`.
+- The active overlay was not duplicated for this row because it already has an active `POST-BATCH-C-01A` disposition; the `POST-BATCH-E` review CSV records the re-review evidence.
+- Verification passed: targeted HardwareInfo source review. Source build and compile-only verification were not required because no source files changed.
+
 Next:
 
-1. Continue `POST-BATCH-E` with the next focused runtime-hook/gump-guard group by the active plan, currently `System:Misc` row `RB-01889` in `Data/Scripts/System/Misc/HardwareInfo.cs`.
+1. Continue `POST-BATCH-E` with the next focused runtime-hook/gump-guard group by the active plan, currently `System:Misc` row `RB-01890` in `Data/Scripts/System/Misc/ProtocolExtensions.cs`.
 2. Keep P2 Boats and Bulk Orders command-access rows queued until the P2 command-access pass unless source evidence makes them an urgent local blocker.
 3. Preserve serialization, public APIs, namespaces, type names, save versions, and file locations; verify source fixes with `Server.csproj` Debug/x86 build and `.\ConficturaServer.exe -compileonly -nocache`.
 

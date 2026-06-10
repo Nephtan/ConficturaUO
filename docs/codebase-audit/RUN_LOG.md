@@ -6982,3 +6982,19 @@ Scope: Deterministic phase runner log for the Confictura codebase audit and reor
 - Command: Append `POST-BATCH-E-96A` rows to `post-batch-e-hooks-gumps-commands-regions-review.csv`; update status, README, and next-step artifacts while preserving the existing `POST-BATCH-C-01A` active overlay rows for `RB-01887` and `RB-01888`.
 - Result: Active backlog overlay remains unique with 276 `POST-BATCH-E` dispositions, while the `POST-BATCH-E` review CSV records 287 reviewed rows through `POST-BATCH-E-96A`.
 - Output path: `docs/codebase-audit/outputs/post-batch-e-hooks-gumps-commands-regions-review.csv`
+
+### 2026-06-09T23:16:05.7673555-05:00
+
+- Affected phase: Post-audit `POST-BATCH-E-97A` HardwareInfo packet handler review
+- Cwd: `D:\ConficturaUO`
+- Command: Source review of `RB-01889` in `Data/Scripts/System/Misc/HardwareInfo.cs`.
+- Result: Reviewed the account hardware packet handler with no source change. The fixed-length 0xD9 handler intentionally accepts pre-ingame account state, writes hardware data only when `state.Account` is an `Account`, and staff display remains command-gated at `AccessLevel.GameMaster`; broader retention/privacy policy remains outside this batch. Source build and compile-only verification were not required because no source files changed.
+- Output path: `docs/codebase-audit/outputs/post-batch-e-hooks-gumps-commands-regions-review.csv`
+
+### 2026-06-09T23:16:05.7673555-05:00
+
+- Affected phase: Post-audit `POST-BATCH-E-97A` verification and audit artifact update
+- Cwd: `D:\ConficturaUO`
+- Command: Append `POST-BATCH-E-97A` row to `post-batch-e-hooks-gumps-commands-regions-review.csv`; update status, README, and next-step artifacts while preserving the existing `POST-BATCH-C-01A` active overlay row for `RB-01889`.
+- Result: Active backlog overlay remains unique with 276 `POST-BATCH-E` dispositions, while the `POST-BATCH-E` review CSV records 288 reviewed rows through `POST-BATCH-E-97A`.
+- Output path: `docs/codebase-audit/outputs/post-batch-e-hooks-gumps-commands-regions-review.csv`
