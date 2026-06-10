@@ -14,9 +14,12 @@ namespace Server
 
         private static void EventSink_Login(LoginEventArgs args)
         {
+            if (args == null || args.Mobile == null || args.Mobile.Deleted)
+                return;
+
             Mobile from = args.Mobile;
 
-            if (from != null && Server.Misc.PlayerSettings.AutoOpenWepBar(from))
+            if (Server.Misc.PlayerSettings.AutoOpenWepBar(from))
             {
                 Check(from);
             }

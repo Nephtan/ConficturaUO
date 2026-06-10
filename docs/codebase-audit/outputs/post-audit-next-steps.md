@@ -1603,9 +1603,16 @@ Completed source subbatch: `POST-BATCH-E-76A` fixed the Housing house-region log
 - Valid private-house login relocation behavior for valid mobiles was preserved. Serialization, public APIs, namespaces, type names, save versions, file location, and project files were unchanged.
 - Verification passed: targeted HouseRegion/EventSink hook scan, Visual Studio MSBuild `Server.csproj` Debug/x86 build, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output. Generated root executable artifacts were restored.
 
+Completed source subbatch: `POST-BATCH-E-77A` fixed the System:Skills custom weapon abilities login hook row.
+
+- 1 row was reviewed and fixed: `RB-01825`.
+- `CustomWeaponAbilities.EventSink_Login` now guards null login args and null/deleted mobiles before auto-open weapon-bar settings lookup and special-attack gump refresh.
+- Valid auto-open weapon-bar behavior for valid mobiles was preserved. Serialization, public APIs, namespaces, type names, save versions, file location, and project files were unchanged.
+- Verification passed: targeted CustomWeaponAbilities/EventSink hook scan, Visual Studio MSBuild `Server.csproj` Debug/x86 build, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output. Generated root executable artifacts were restored.
+
 Next:
 
-1. Continue `POST-BATCH-E` with the next focused P1 runtime-hook/gump-guard group by the active plan, currently `System:Skills` row `RB-01825` in `Data/Scripts/System/Skills/Weapon Abilities/CustomWeaponAbilities.cs`.
+1. Continue `POST-BATCH-E` with the next focused P1 runtime-hook/gump-guard group by the active plan, currently `Trades:Apiculture` row `RB-01826` in `Data/Scripts/Trades/Apiculture/beehivehelper.cs`.
 2. Keep P2 Boats and Bulk Orders command-access rows queued until the P2 command-access pass unless source evidence makes them an urgent local blocker.
 3. Preserve serialization, public APIs, namespaces, type names, save versions, and file locations; verify source fixes with `Server.csproj` Debug/x86 build and `.\ConficturaServer.exe -compileonly -nocache`.
 
