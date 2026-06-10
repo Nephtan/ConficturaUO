@@ -1581,9 +1581,16 @@ Completed source subbatch: `POST-BATCH-E-73A` fixed the System:Misc socket conne
 - Valid send-queue coalescing, listener endpoint setup, disallowed-connection skip, TCP NoDelay behavior for valid sockets, serialization, public APIs, namespaces, type names, save versions, file location, and project files were preserved.
 - Verification passed: targeted SocketOptions/EventSink hook scan, Visual Studio MSBuild `Server.csproj` Debug/x86 build, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output. Generated root executable artifacts were restored.
 
+Completed source subbatch: `POST-BATCH-E-74A` fixed the System:Misc weight-overloading movement hook row.
+
+- 1 row was reviewed and fixed: `RB-01816`.
+- `WeightOverloading.EventSink_Movement` now guards null movement args and null/deleted mobiles before alive/access/player, overload fatigue, movement blocking, step-count, and `DeathStrike` step handling.
+- Valid overload fatigue, movement blocking, low-stamina drain, player step counting, non-player `DeathStrike` step behavior, serialization, public APIs, namespaces, type names, save versions, file location, and project files were preserved.
+- Verification passed: targeted WeightOverloading/EventSink hook scan, Visual Studio MSBuild `Server.csproj` Debug/x86 build, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output. Generated root executable artifacts were restored.
+
 Next:
 
-1. Continue `POST-BATCH-E` with the next focused P1 runtime-hook/gump-guard group by the active plan, currently `System:Misc` row `RB-01816` in `Data/Scripts/System/Misc/WeightOverloading.cs`.
+1. Continue `POST-BATCH-E` with the next focused P1 runtime-hook/gump-guard group by the active plan, currently `Regions` row `RB-01817` in `Data/Scripts/System/Obsolete/Obsolete.cs`.
 2. Keep P2 Boats and Bulk Orders command-access rows queued until the P2 command-access pass unless source evidence makes them an urgent local blocker.
 3. Preserve serialization, public APIs, namespaces, type names, save versions, and file locations; verify source fixes with `Server.csproj` Debug/x86 build and `.\ConficturaServer.exe -compileonly -nocache`.
 

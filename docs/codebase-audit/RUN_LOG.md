@@ -6614,3 +6614,19 @@ Scope: Deterministic phase runner log for the Confictura codebase audit and reor
 - Command: Targeted SocketOptions/EventSink hook scan; Visual Studio MSBuild `Data/System/Source/Server.csproj /p:Configuration=Debug /p:Platform=x86 /v:minimal`; `.\ConficturaServer.exe -compileonly -nocache`; restore generated root executable artifacts; append `POST-BATCH-E-73A` row to `post-batch-e-hooks-gumps-commands-regions-review.csv` and the active overlay; update status, README, and next-step artifacts.
 - Result: Targeted scan confirmed the SocketConnect registration plus null args/socket guard coverage; `Server.csproj` Debug/x86 build passed with Visual Studio Community 2022 MSBuild; compile-only runtime script verification exited 0 and printed no `Listening:` output; generated `ConficturaServer.exe`, `.config`, and `.pdb` were restored; active backlog overlay now includes 214 `POST-BATCH-E` dispositions.
 - Output path: `docs/codebase-audit/outputs/post-batch-e-hooks-gumps-commands-regions-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
+
+### 2026-06-09T21:34:06.4662643-05:00
+
+- Affected phase: Post-audit `POST-BATCH-E-74A` System:Misc weight-overloading movement hook guard repair
+- Cwd: `D:\ConficturaUO`
+- Command: Source review and patch of `RB-01816` in `Data/Scripts/System/Misc/WeightOverloading.cs`.
+- Result: Added null `MovementEventArgs` and null/deleted mobile guards before alive/access/player, overload fatigue, blocked movement, step-count, and `DeathStrike` step handling. Valid overload fatigue, movement blocking, low-stamina drain, player step counting, non-player `DeathStrike` step behavior, serialization, public APIs, namespaces, type names, save versions, file location, and project files were preserved.
+- Output path: `Data/Scripts/System/Misc/WeightOverloading.cs`
+
+### 2026-06-09T21:34:06.4662643-05:00
+
+- Affected phase: Post-audit `POST-BATCH-E-74A` verification and audit artifact update
+- Cwd: `D:\ConficturaUO`
+- Command: Targeted WeightOverloading/EventSink hook scan; Visual Studio MSBuild `Data/System/Source/Server.csproj /p:Configuration=Debug /p:Platform=x86 /v:minimal`; `.\ConficturaServer.exe -compileonly -nocache`; restore generated root executable artifacts; append `POST-BATCH-E-74A` row to `post-batch-e-hooks-gumps-commands-regions-review.csv` and the active overlay; update status, README, and next-step artifacts.
+- Result: Targeted scan confirmed the Movement registration plus null args/mobile/deleted guard coverage; `Server.csproj` Debug/x86 build passed with Visual Studio Community 2022 MSBuild; compile-only runtime script verification exited 0 and printed no `Listening:` output; generated `ConficturaServer.exe`, `.config`, and `.pdb` were restored; active backlog overlay now includes 215 `POST-BATCH-E` dispositions.
+- Output path: `docs/codebase-audit/outputs/post-batch-e-hooks-gumps-commands-regions-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
