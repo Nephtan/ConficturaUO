@@ -6998,3 +6998,19 @@ Scope: Deterministic phase runner log for the Confictura codebase audit and reor
 - Command: Append `POST-BATCH-E-97A` row to `post-batch-e-hooks-gumps-commands-regions-review.csv`; update status, README, and next-step artifacts while preserving the existing `POST-BATCH-C-01A` active overlay row for `RB-01889`.
 - Result: Active backlog overlay remains unique with 276 `POST-BATCH-E` dispositions, while the `POST-BATCH-E` review CSV records 288 reviewed rows through `POST-BATCH-E-97A`.
 - Output path: `docs/codebase-audit/outputs/post-batch-e-hooks-gumps-commands-regions-review.csv`
+
+### 2026-06-09T23:18:07.9376833-05:00
+
+- Affected phase: Post-audit `POST-BATCH-E-98A` ProtocolExtensions packet dispatcher review
+- Cwd: `D:\ConficturaUO`
+- Command: Source review of `RB-01890` in `Data/Scripts/System/Misc/ProtocolExtensions.cs` and first-packet handling in `Data/System/Source/Network/MessagePump.cs`.
+- Result: Reviewed the bundled 0xF0 packet dispatcher with no source change. The outer packet remains non-ingame by design, subhandler lookup is bounded, and `DecodeBundledPacket` explicitly rejects null or deleted mobiles before invoking ingame subhandlers. Source build and compile-only verification were not required because no source files changed.
+- Output path: `docs/codebase-audit/outputs/post-batch-e-hooks-gumps-commands-regions-review.csv`
+
+### 2026-06-09T23:18:07.9376833-05:00
+
+- Affected phase: Post-audit `POST-BATCH-E-98A` verification and audit artifact update
+- Cwd: `D:\ConficturaUO`
+- Command: Append `POST-BATCH-E-98A` row to `post-batch-e-hooks-gumps-commands-regions-review.csv`; update status, README, and next-step artifacts while preserving the existing `POST-BATCH-C-01A` active overlay row for `RB-01890`.
+- Result: Active backlog overlay remains unique with 276 `POST-BATCH-E` dispositions, while the `POST-BATCH-E` review CSV records 289 reviewed rows through `POST-BATCH-E-98A`.
+- Output path: `docs/codebase-audit/outputs/post-batch-e-hooks-gumps-commands-regions-review.csv`

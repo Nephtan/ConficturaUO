@@ -1763,9 +1763,16 @@ Completed review-only subbatch: `POST-BATCH-E-97A` reviewed the already-covered 
 - The active overlay was not duplicated for this row because it already has an active `POST-BATCH-C-01A` disposition; the `POST-BATCH-E` review CSV records the re-review evidence.
 - Verification passed: targeted HardwareInfo source review. Source build and compile-only verification were not required because no source files changed.
 
+Completed review-only subbatch: `POST-BATCH-E-98A` reviewed the already-covered ProtocolExtensions bundled packet dispatcher row.
+
+- 1 row was reviewed: `RB-01890`.
+- `RB-01890` was reviewed with no source change: 0xF0 remains a non-ingame outer packet, but `DecodeBundledPacket` resolves the bundled subhandler by bounded packet id and explicitly rejects null or deleted mobiles before invoking ingame subhandlers such as `QueryPartyLocations`.
+- The active overlay was not duplicated for this row because it already has an active `POST-BATCH-C-01A` disposition; the `POST-BATCH-E` review CSV records the re-review evidence.
+- Verification passed: targeted ProtocolExtensions and MessagePump source review. Source build and compile-only verification were not required because no source files changed.
+
 Next:
 
-1. Continue `POST-BATCH-E` with the next focused runtime-hook/gump-guard group by the active plan, currently `System:Misc` row `RB-01890` in `Data/Scripts/System/Misc/ProtocolExtensions.cs`.
+1. Continue `POST-BATCH-E` with the next focused runtime-hook/gump-guard group by the active plan, currently `System:Misc` row `RB-01891` in `Data/Scripts/System/Misc/Remote.cs`.
 2. Keep P2 Boats and Bulk Orders command-access rows queued until the P2 command-access pass unless source evidence makes them an urgent local blocker.
 3. Preserve serialization, public APIs, namespaces, type names, save versions, and file locations; verify source fixes with `Server.csproj` Debug/x86 build and `.\ConficturaServer.exe -compileonly -nocache`.
 
