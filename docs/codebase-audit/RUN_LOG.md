@@ -6918,3 +6918,19 @@ Scope: Deterministic phase runner log for the Confictura codebase audit and reor
 - Command: Targeted PacketHandlerOverrides/MessagePump/XmlTextEntryBook/XmlAttach source review; append `POST-BATCH-E-92A` rows to `post-batch-e-hooks-gumps-commands-regions-review.csv`; update status, README, and next-step artifacts while preserving the existing `POST-BATCH-C-01A` active overlay rows for `RB-01877` through `RB-01879`.
 - Result: Targeted source review confirmed XMLSpawner content-change and use-request override guard coverage, and classified the commented XmlTextEntryBook registration row as non-executable; source build and compile-only verification were not required because no source files changed; active backlog overlay remains at 275 `POST-BATCH-E` dispositions with no duplicate BacklogIds, while the `POST-BATCH-E` review CSV records 278 reviewed rows through `POST-BATCH-E-92A`.
 - Output path: `docs/codebase-audit/outputs/post-batch-e-hooks-gumps-commands-regions-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
+
+### 2026-06-09T22:58:44.8330579-05:00
+
+- Affected phase: Post-audit `POST-BATCH-E-93A` BaseBook packet handler review
+- Cwd: `D:\ConficturaUO`
+- Command: Source review of `RB-01880` through `RB-01882` in `Data/Scripts/Items/Books/BaseBook.cs`, `Data/System/Source/Network/MessagePump.cs`, and targeted direct-call/duplicate-registration `rg` checks.
+- Result: Reviewed BaseBook header/content packet handlers with no source change. The handlers are registered as in-game packets and rely on `MessagePump` null/deleted mobile guards before dispatch; handler-local writable/range/accessibility and title/author/page/line bounds checks remain intact. Targeted `rg` found no direct handler calls and no duplicate `0xD4`, `0x66`, or `0x93` BaseBook packet registrations.
+- Output path: `docs/codebase-audit/outputs/post-batch-e-hooks-gumps-commands-regions-review.csv`
+
+### 2026-06-09T22:58:44.8330579-05:00
+
+- Affected phase: Post-audit `POST-BATCH-E-93A` verification and audit artifact update
+- Cwd: `D:\ConficturaUO`
+- Command: Targeted BaseBook/MessagePump source review; append `POST-BATCH-E-93A` rows to `post-batch-e-hooks-gumps-commands-regions-review.csv`; update status, README, and next-step artifacts while preserving the existing `POST-BATCH-C-01A` active overlay rows for `RB-01880` through `RB-01882`.
+- Result: Source build and compile-only verification were not required because no source files changed; active backlog overlay remains at 275 `POST-BATCH-E` dispositions with no duplicate BacklogIds, while the `POST-BATCH-E` review CSV records 281 reviewed rows through `POST-BATCH-E-93A`.
+- Output path: `docs/codebase-audit/outputs/post-batch-e-hooks-gumps-commands-regions-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`

@@ -1727,9 +1727,17 @@ Completed review-only subbatch: `POST-BATCH-E-92A` reviewed the XMLSpawner packe
 - The active overlay was not duplicated for these rows because `RB-01877` through `RB-01879` already have active `POST-BATCH-C-01A` dispositions; the `POST-BATCH-E` review CSV records the re-review evidence.
 - Verification passed: targeted PacketHandlerOverrides/MessagePump/XmlTextEntryBook/XmlAttach source review. Source build and compile-only verification were not required because no source files changed.
 
+Completed review-only subbatch: `POST-BATCH-E-93A` reviewed the BaseBook packet handler rows.
+
+- 3 rows were reviewed: `RB-01880` through `RB-01882`.
+- `RB-01880`, `RB-01881`, and `RB-01882` were reviewed with no source change: BaseBook header/content packet handlers register as in-game packet handlers, so `MessagePump` rejects null/deleted mobiles before dispatch, and the handlers validate writable/range/accessibility plus title, author, page, index, line count, and line length bounds before updating book state.
+- Valid BaseBook packet behavior, serialization, public APIs, namespaces, type names, save versions, and file locations remain unchanged.
+- The active overlay was not duplicated for these rows because `RB-01880` through `RB-01882` already have active `POST-BATCH-C-01A` dispositions; the `POST-BATCH-E` review CSV records the re-review evidence.
+- Verification passed: targeted BaseBook/MessagePump source review plus direct-call and duplicate-registration `rg` checks. Source build and compile-only verification were not required because no source files changed.
+
 Next:
 
-1. Continue `POST-BATCH-E` with the next focused runtime-hook/gump-guard group by the active plan, currently `Items:Books` row `RB-01880` in `Data/Scripts/Items/Books/BaseBook.cs`.
+1. Continue `POST-BATCH-E` with the next focused runtime-hook/gump-guard group by the active plan, currently `Housing` row `RB-01883` in `Data/Scripts/Items/Houses/Monopoly/Misc/GumpResponse.cs`.
 2. Keep P2 Boats and Bulk Orders command-access rows queued until the P2 command-access pass unless source evidence makes them an urgent local blocker.
 3. Preserve serialization, public APIs, namespaces, type names, save versions, and file locations; verify source fixes with `Server.csproj` Debug/x86 build and `.\ConficturaServer.exe -compileonly -nocache`.
 
