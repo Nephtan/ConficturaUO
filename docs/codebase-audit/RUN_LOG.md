@@ -6342,3 +6342,19 @@ Scope: Deterministic phase runner log for the Confictura codebase audit and reor
 - Command: Targeted CrashGuard/EventSink hook scan; Visual Studio MSBuild `Data/System/Source/Server.csproj /p:Configuration=Debug /p:Platform=x86 /v:minimal`; `.\ConficturaServer.exe -compileonly -nocache`; restore generated root executable artifacts; append `POST-BATCH-E-56A` row to `post-batch-e-hooks-gumps-commands-regions-review.csv` and the active overlay; update status, README, and next-step artifacts.
 - Result: Targeted scan confirmed the Crashed registration plus null args guard coverage before `e.Close`/restart/report use; `Server.csproj` Debug/x86 build passed with Visual Studio Community 2022 MSBuild; compile-only runtime script verification exited 0 and printed no `Listening:` output; generated `ConficturaServer.exe`, `.config`, and `.pdb` were restored; active backlog overlay now includes 193 `POST-BATCH-E` dispositions.
 - Output path: `docs/codebase-audit/outputs/post-batch-e-hooks-gumps-commands-regions-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
+
+### 2026-06-09T20:34:30.6232667-05:00
+
+- Affected phase: Post-audit `POST-BATCH-E-57A` System:Misc death auto-resurrection hook guard repair
+- Cwd: `D:\ConficturaUO`
+- Command: Source review and patch of `RB-01795` in `Data/Scripts/System/Misc/Death.cs`.
+- Result: Added null `PlayerDeathEventArgs` and null/deleted mobile guards before scheduling delayed resurrection prompt work; added delayed-callback stale mobile and missing-backpack guards before closing/sending resurrection gumps. Valid auto-resurrection prompt behavior, soul-orb skip behavior, serialization, public APIs, namespaces, type names, save versions, file location, and project files were preserved.
+- Output path: `Data/Scripts/System/Misc/Death.cs`
+
+### 2026-06-09T20:34:30.6232667-05:00
+
+- Affected phase: Post-audit `POST-BATCH-E-57A` verification and audit artifact update
+- Cwd: `D:\ConficturaUO`
+- Command: Targeted Death/EventSink hook scan; Visual Studio MSBuild `Data/System/Source/Server.csproj /p:Configuration=Debug /p:Platform=x86 /v:minimal`; `.\ConficturaServer.exe -compileonly -nocache`; restore generated root executable artifacts; append `POST-BATCH-E-57A` row to `post-batch-e-hooks-gumps-commands-regions-review.csv` and the active overlay; update status, README, and next-step artifacts.
+- Result: Targeted scan confirmed the PlayerDeath registration plus null args/mobile/deleted guard coverage and delayed callback stale-state coverage; `Server.csproj` Debug/x86 build passed with Visual Studio Community 2022 MSBuild; compile-only runtime script verification exited 0 and printed no `Listening:` output; generated `ConficturaServer.exe`, `.config`, and `.pdb` were restored; active backlog overlay now includes 194 `POST-BATCH-E` dispositions.
+- Output path: `docs/codebase-audit/outputs/post-batch-e-hooks-gumps-commands-regions-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`

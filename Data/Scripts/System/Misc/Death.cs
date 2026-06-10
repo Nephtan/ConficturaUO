@@ -542,9 +542,12 @@ namespace Server
 
         private static void EventSink_PlayerDeath(PlayerDeathEventArgs e)
         {
+            if (e == null || e.Mobile == null || e.Mobile.Deleted)
+                return;
+
             Mobile m = e.Mobile;
 
-            if (m != null && !m.Alive && GetPlayerInfo.GetResurrectCost(m) > 0)
+            if (!m.Alive && GetPlayerInfo.GetResurrectCost(m) > 0)
             {
                 Timer.DelayCall(TimeSpan.FromSeconds(5.0), ResurrectNow, m);
             }
@@ -553,8 +556,15 @@ namespace Server
         private static void ResurrectNow(object state)
         {
             Mobile m = state as Mobile;
+            if (m == null || m.Deleted)
+                return;
+
             m.CloseGump(typeof(ResurrectNowGump));
-            Item orb = m.Backpack.FindItemByType(typeof(SoulOrb));
+            Item orb = null;
+
+            if (m.Backpack != null)
+                orb = m.Backpack.FindItemByType(typeof(SoulOrb));
+
             if (orb == null)
             {
                 BuffInfo.RemoveBuff(m, BuffIcon.Resurrection);

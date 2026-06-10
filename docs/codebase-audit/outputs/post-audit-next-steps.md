@@ -1457,9 +1457,16 @@ Completed source subbatch: `POST-BATCH-E-56A` fixed the System:Misc crash-guard 
 - Valid crash-report, backup, service-close, and restart behavior for real crash events, serialization, public APIs, namespaces, type names, save versions, file location, and project files were preserved.
 - Verification passed: targeted CrashGuard/EventSink hook scan, Visual Studio MSBuild `Server.csproj` Debug/x86 build, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output. Generated root executable artifacts were restored.
 
+Completed source subbatch: `POST-BATCH-E-57A` fixed the System:Misc death auto-resurrection hook row.
+
+- 1 row was reviewed and fixed: `RB-01795`.
+- `AutoRessurection.EventSink_PlayerDeath` now guards null death args and null/deleted mobiles before scheduling the resurrection prompt, and the delayed callback now skips stale mobiles and safely handles missing backpacks while preserving the no-soul-orb prompt path.
+- Valid auto-resurrection prompt behavior, soul-orb skip behavior, serialization, public APIs, namespaces, type names, save versions, file location, and project files were preserved.
+- Verification passed: targeted Death/EventSink hook scan, Visual Studio MSBuild `Server.csproj` Debug/x86 build, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output. Generated root executable artifacts were restored.
+
 Next:
 
-1. Continue `POST-BATCH-E` with the next focused P1 runtime-hook/gump-guard group by the active plan, currently `System:Misc` row `RB-01795` in `Data/Scripts/System/Misc/Death.cs`.
+1. Continue `POST-BATCH-E` with the next focused P1 runtime-hook/gump-guard group by the active plan, currently `System:Misc` row `RB-01796` in `Data/Scripts/System/Misc/Fastwalk.cs`.
 2. Keep P2 Boats and Bulk Orders command-access rows queued until the P2 command-access pass unless source evidence makes them an urgent local blocker.
 3. Preserve serialization, public APIs, namespaces, type names, save versions, and file locations; verify source fixes with `Server.csproj` Debug/x86 build and `.\ConficturaServer.exe -compileonly -nocache`.
 
