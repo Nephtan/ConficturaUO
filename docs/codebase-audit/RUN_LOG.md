@@ -6838,3 +6838,19 @@ Scope: Deterministic phase runner log for the Confictura codebase audit and reor
 - Command: Targeted PacketHandlers/MessagePump/EventSink/RenameRequests/Obsolete/Accounts source review; append `POST-BATCH-E-87A` rows to `post-batch-e-hooks-gumps-commands-regions-review.csv` and the active overlay; update status, README, and next-step artifacts.
 - Result: Targeted source review confirmed dispatcher or subscriber guard coverage for rename, chat, and delete request invocations; source build and compile-only verification were not required because no source files changed; active backlog overlay now includes 253 `POST-BATCH-E` dispositions.
 - Output path: `docs/codebase-audit/outputs/post-batch-e-hooks-gumps-commands-regions-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
+
+### 2026-06-09T22:34:22.9656315-05:00
+
+- Affected phase: Post-audit `POST-BATCH-E-88A` ServerCore `TextCommand` event invocation review
+- Cwd: `D:\ConficturaUO`
+- Command: Source review of `RB-01855` through `RB-01860` in `Data/System/Source/Network/PacketHandlers.cs`.
+- Result: Reviewed animate, open-spellbook, cast-from-book, open-door, cast-from-macro, and virtue macro `TextCommand` event invocations with no source change. The standard in-game packet dispatcher rejects null/deleted mobiles before `TextCommand`; current animate/spellbook/cast/open-door subscribers already guard invalid args/mobile state, and `VirtueMacroRequest` has no current subscriber.
+- Output path: `docs/codebase-audit/outputs/post-batch-e-hooks-gumps-commands-regions-review.csv`
+
+### 2026-06-09T22:34:22.9656315-05:00
+
+- Affected phase: Post-audit `POST-BATCH-E-88A` verification and audit artifact update
+- Cwd: `D:\ConficturaUO`
+- Command: Targeted PacketHandlers/MessagePump/EventSink/Animations/Spellbook/BaseDoor/Obsolete source review; append `POST-BATCH-E-88A` rows to `post-batch-e-hooks-gumps-commands-regions-review.csv` and the active overlay; update status, README, and next-step artifacts.
+- Result: Targeted source review confirmed TextCommand dispatcher guard coverage, subscriber guard coverage for animate/spellbook/cast/open-door requests, and no current VirtueMacroRequest subscriber; source build and compile-only verification were not required because no source files changed; active backlog overlay now includes 259 `POST-BATCH-E` dispositions.
+- Output path: `docs/codebase-audit/outputs/post-batch-e-hooks-gumps-commands-regions-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
