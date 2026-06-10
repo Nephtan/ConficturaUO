@@ -1377,9 +1377,16 @@ Completed source subbatch: `POST-BATCH-E-45A` fixed the System:Gumps report-murd
 - Valid murder-report behavior, serialization, public APIs, namespaces, type names, save versions, file location, and project files were preserved.
 - Verification passed: targeted ReportMurderer death hook scan, Visual Studio MSBuild `Server.csproj` Debug/x86 build, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output. Generated root executable artifacts were restored.
 
+Completed source subbatch: `POST-BATCH-E-46A` fixed the System:Help help-request hook row.
+
+- 1 row was reviewed and fixed: `RB-01771`.
+- `HelpGump.EventSink_HelpRequest` now guards null help args, null/deleted mobiles, and null `NetState` before reading open gumps, checking page eligibility, or sending the help menu/gump.
+- Valid help-request behavior, serialization, public APIs, namespaces, type names, save versions, file location, and project files were preserved.
+- Verification passed: targeted HelpGump help-request hook scan, Visual Studio MSBuild `Server.csproj` Debug/x86 build, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output. Generated root executable artifacts were restored.
+
 Next:
 
-1. Continue `POST-BATCH-E` with the next focused P1 runtime-hook/gump-guard group by the active plan, currently `System:Help` row `RB-01771` in `Data/Scripts/System/Help/Gumps/HelpGump.cs`.
+1. Continue `POST-BATCH-E` with the next focused P1 runtime-hook/gump-guard group by the active plan, currently `System:Misc` row `RB-01772` in `Data/Scripts/System/Misc/Accounts.cs`.
 2. Keep P2 Boats and Bulk Orders command-access rows queued until the P2 command-access pass unless source evidence makes them an urgent local blocker.
 3. Preserve serialization, public APIs, namespaces, type names, save versions, and file locations; verify source fixes with `Server.csproj` Debug/x86 build and `.\ConficturaServer.exe -compileonly -nocache`.
 
