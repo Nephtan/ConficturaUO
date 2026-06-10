@@ -1414,9 +1414,16 @@ Completed source subbatch: `POST-BATCH-E-50A` fixed System:Misc broadcast login/
 - Valid login migration, logout logging, save-on-disconnect, ghost walking, serialization, public APIs, namespaces, type names, save versions, file location, and project files were preserved.
 - Verification passed: targeted Broadcast hook scan, Visual Studio MSBuild `Server.csproj` Debug/x86 build, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output. Generated root executable artifacts were restored.
 
+Completed review-only subbatch: `POST-BATCH-E-51A` reviewed System:Misc crash/shutdown broadcast rows.
+
+- 2 rows were reviewed and classified `ReviewedNoChange`: `RB-01787` and `RB-01788`.
+- `Broadcasts.EventSink_Crashed` and `Broadcasts.EventSink_Shutdown` do not dereference their event args and already isolate broadcast failures inside `try/catch`; adding null-args returns would not improve state safety.
+- No source files changed.
+- Verification passed: targeted Broadcasts/EventSink source review. Source build and compile-only verification were not required because no source files changed.
+
 Next:
 
-1. Continue `POST-BATCH-E` with the next focused P1 runtime-hook/gump-guard group by the active plan, currently `System:Misc` row `RB-01787` in `Data/Scripts/System/Misc/Broadcasts.cs`.
+1. Continue `POST-BATCH-E` with the next focused P1 runtime-hook/gump-guard group by the active plan, currently `System:Misc` row `RB-01789` in `Data/Scripts/System/Misc/BuffIcons.cs`.
 2. Keep P2 Boats and Bulk Orders command-access rows queued until the P2 command-access pass unless source evidence makes them an urgent local blocker.
 3. Preserve serialization, public APIs, namespaces, type names, save versions, and file locations; verify source fixes with `Server.csproj` Debug/x86 build and `.\ConficturaServer.exe -compileonly -nocache`.
 

@@ -6254,3 +6254,11 @@ Scope: Deterministic phase runner log for the Confictura codebase audit and reor
 - Command: Targeted Broadcast hook scan; Visual Studio MSBuild `Data/System/Source/Server.csproj /p:Configuration=Debug /p:Platform=x86 /v:minimal`; `.\ConficturaServer.exe -compileonly -nocache`; restore generated root executable artifacts; append `POST-BATCH-E-50A` rows to `post-batch-e-hooks-gumps-commands-regions-review.csv` and the active overlay; update status, README, and next-step artifacts.
 - Result: Targeted scan confirmed the Login/Logout/Disconnected/PlayerDeath registrations plus null/deleted event-mobile guard coverage; `Server.csproj` Debug/x86 build passed with Visual Studio Community 2022 MSBuild; compile-only runtime script verification exited 0 and printed no `Listening:` output; generated `ConficturaServer.exe`, `.config`, and `.pdb` were restored; active backlog overlay now includes 185 `POST-BATCH-E` dispositions.
 - Output path: `docs/codebase-audit/outputs/post-batch-e-hooks-gumps-commands-regions-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
+
+### 2026-06-09T20:12:01.2537794-05:00
+
+- Affected phase: Post-audit `POST-BATCH-E-51A` System:Misc crash/shutdown broadcast hook review
+- Cwd: `D:\ConficturaUO`
+- Command: Source review of `RB-01787` and `RB-01788` in `Data/Scripts/System/Misc/Broadcasts.cs` and `Data/System/Source/EventSink.cs`.
+- Result: Classified both rows `ReviewedNoChange`. `EventSink_Crashed` and `EventSink_Shutdown` do not dereference event args and already wrap `World.Broadcast` in `try/catch`; adding null-args returns would not improve state safety. No source files changed; source build and compile-only verification were not required for this review-only batch. Active backlog overlay now includes 187 `POST-BATCH-E` dispositions.
+- Output path: `docs/codebase-audit/outputs/post-batch-e-hooks-gumps-commands-regions-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
