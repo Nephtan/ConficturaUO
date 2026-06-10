@@ -1574,9 +1574,16 @@ Completed source subbatch: `POST-BATCH-E-72A` fixed the System:Misc shard poller
 - Valid active poll login prompt, queued poll, vote-check, poll deactivation behavior, serialization, public APIs, namespaces, type names, save versions, file location, and project files were preserved.
 - Verification passed: targeted ShardPoller/EventSink hook scan, Visual Studio MSBuild `Server.csproj` Debug/x86 build, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output. Generated root executable artifacts were restored.
 
+Completed source subbatch: `POST-BATCH-E-73A` fixed the System:Misc socket connect hook row.
+
+- 1 row was reviewed and fixed: `RB-01815`.
+- `SocketOptions.EventSink_SocketConnect` now guards null socket-connect args and rejects null socket state before applying TCP NoDelay.
+- Valid send-queue coalescing, listener endpoint setup, disallowed-connection skip, TCP NoDelay behavior for valid sockets, serialization, public APIs, namespaces, type names, save versions, file location, and project files were preserved.
+- Verification passed: targeted SocketOptions/EventSink hook scan, Visual Studio MSBuild `Server.csproj` Debug/x86 build, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output. Generated root executable artifacts were restored.
+
 Next:
 
-1. Continue `POST-BATCH-E` with the next focused P1 runtime-hook/gump-guard group by the active plan, currently `System:Misc` row `RB-01815` in `Data/Scripts/System/Misc/SocketOptions.cs`.
+1. Continue `POST-BATCH-E` with the next focused P1 runtime-hook/gump-guard group by the active plan, currently `System:Misc` row `RB-01816` in `Data/Scripts/System/Misc/WeightOverloading.cs`.
 2. Keep P2 Boats and Bulk Orders command-access rows queued until the P2 command-access pass unless source evidence makes them an urgent local blocker.
 3. Preserve serialization, public APIs, namespaces, type names, save versions, and file locations; verify source fixes with `Server.csproj` Debug/x86 build and `.\ConficturaServer.exe -compileonly -nocache`.
 
