@@ -1770,9 +1770,16 @@ Completed review-only subbatch: `POST-BATCH-E-98A` reviewed the already-covered 
 - The active overlay was not duplicated for this row because it already has an active `POST-BATCH-C-01A` disposition; the `POST-BATCH-E` review CSV records the re-review evidence.
 - Verification passed: targeted ProtocolExtensions and MessagePump source review. Source build and compile-only verification were not required because no source files changed.
 
+Completed review-only subbatch: `POST-BATCH-E-99A` reviewed the already-covered RemoteAdmin packet row.
+
+- 1 row was reviewed: `RB-01891`.
+- `RB-01891` was reviewed with no source change: 0xF1 remains a non-ingame remote-admin protocol packet, login authenticates against account, IP, password, access level, and ban state, and non-login admin commands route through `IsAuth` before `RemoteAdminHandlers.Handle`.
+- The active overlay was not duplicated for this row because it already has an active `POST-BATCH-C-01A` disposition; broader remote-admin design/security policy remains deferred rather than changed inside the packet-guard batch.
+- Verification passed: targeted RemoteAdmin source review. Source build and compile-only verification were not required because no source files changed.
+
 Next:
 
-1. Continue `POST-BATCH-E` with the next focused runtime-hook/gump-guard group by the active plan, currently `System:Misc` row `RB-01891` in `Data/Scripts/System/Misc/Remote.cs`.
+1. Continue `POST-BATCH-E` with the next focused runtime-hook/gump-guard group by the active plan, currently `Regions` row `RB-01892` in `Data/Scripts/System/Obsolete/Obsolete.cs`.
 2. Keep P2 Boats and Bulk Orders command-access rows queued until the P2 command-access pass unless source evidence makes them an urgent local blocker.
 3. Preserve serialization, public APIs, namespaces, type names, save versions, and file locations; verify source fixes with `Server.csproj` Debug/x86 build and `.\ConficturaServer.exe -compileonly -nocache`.
 
