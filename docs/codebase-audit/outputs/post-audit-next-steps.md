@@ -1537,9 +1537,16 @@ Completed source subbatch: `POST-BATCH-E-67A` fixed the System:Misc login music 
 - Valid login music behavior, serialization, public APIs, namespaces, type names, save versions, file location, and project files were preserved.
 - Verification passed: targeted PlayMusicOnLogin/EventSink hook scan, Visual Studio MSBuild `Server.csproj` Debug/x86 build, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output. Generated root executable artifacts were restored.
 
+Completed source subbatch: `POST-BATCH-E-68A` fixed the System:Misc profanity speech hook row.
+
+- 1 row was reviewed and fixed: `RB-01809`.
+- `ProfanityProtection.EventSink_Speech` now guards null speech args and null/deleted mobiles before access checks, profanity validation, or configured profanity actions.
+- Valid disabled-by-default registration, profanity blocking/action behavior, null-speech validation behavior, serialization, public APIs, namespaces, type names, save versions, file location, and project files were preserved.
+- Verification passed: targeted ProfanityProtection/NameVerification/EventSink hook scan, Visual Studio MSBuild `Server.csproj` Debug/x86 build, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output. Generated root executable artifacts were restored.
+
 Next:
 
-1. Continue `POST-BATCH-E` with the next focused P1 runtime-hook/gump-guard group by the active plan, currently `System:Misc` row `RB-01809` in `Data/Scripts/System/Misc/ProfanityProtection.cs`.
+1. Continue `POST-BATCH-E` with the next focused P1 runtime-hook/gump-guard group by the active plan, currently `System:Misc` row `RB-01810` in `Data/Scripts/System/Misc/Profile.cs`.
 2. Keep P2 Boats and Bulk Orders command-access rows queued until the P2 command-access pass unless source evidence makes them an urgent local blocker.
 3. Preserve serialization, public APIs, namespaces, type names, save versions, and file locations; verify source fixes with `Server.csproj` Debug/x86 build and `.\ConficturaServer.exe -compileonly -nocache`.
 

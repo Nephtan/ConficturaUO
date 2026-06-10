@@ -58,6 +58,9 @@ namespace Server.Misc
 
         private static void EventSink_Speech(SpeechEventArgs e)
         {
+            if (e == null || e.Mobile == null || e.Mobile.Deleted)
+                return;
+
             Mobile from = e.Mobile;
 
             if (from.AccessLevel > AccessLevel.Player)

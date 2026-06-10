@@ -6518,3 +6518,19 @@ Scope: Deterministic phase runner log for the Confictura codebase audit and reor
 - Command: Targeted PlayMusicOnLogin/EventSink hook scan; Visual Studio MSBuild `Data/System/Source/Server.csproj /p:Configuration=Debug /p:Platform=x86 /v:minimal`; `.\ConficturaServer.exe -compileonly -nocache`; restore generated root executable artifacts; append `POST-BATCH-E-67A` row to `post-batch-e-hooks-gumps-commands-regions-review.csv` and the active overlay; update status, README, and next-step artifacts.
 - Result: Targeted scan confirmed the Login registration plus null args/mobile/deleted guard coverage; `Server.csproj` Debug/x86 build passed with Visual Studio Community 2022 MSBuild; compile-only runtime script verification exited 0 and printed no `Listening:` output; generated `ConficturaServer.exe`, `.config`, and `.pdb` were restored; active backlog overlay now includes 207 `POST-BATCH-E` dispositions.
 - Output path: `docs/codebase-audit/outputs/post-batch-e-hooks-gumps-commands-regions-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
+
+### 2026-06-09T21:14:40.6199562-05:00
+
+- Affected phase: Post-audit `POST-BATCH-E-68A` System:Misc profanity speech hook guard repair
+- Cwd: `D:\ConficturaUO`
+- Command: Source review and patch of `RB-01809` in `Data/Scripts/System/Misc/ProfanityProtection.cs`.
+- Result: Added null `SpeechEventArgs` and null/deleted mobile guards before access checks, profanity validation, or configured profanity actions. Valid disabled-by-default registration, profanity blocking/action behavior, null-speech validation behavior, serialization, public APIs, namespaces, type names, save versions, file location, and project files were preserved.
+- Output path: `Data/Scripts/System/Misc/ProfanityProtection.cs`
+
+### 2026-06-09T21:14:40.6199562-05:00
+
+- Affected phase: Post-audit `POST-BATCH-E-68A` verification and audit artifact update
+- Cwd: `D:\ConficturaUO`
+- Command: Targeted ProfanityProtection/NameVerification/EventSink hook scan; Visual Studio MSBuild `Data/System/Source/Server.csproj /p:Configuration=Debug /p:Platform=x86 /v:minimal`; `.\ConficturaServer.exe -compileonly -nocache`; restore generated root executable artifacts; append `POST-BATCH-E-68A` row to `post-batch-e-hooks-gumps-commands-regions-review.csv` and the active overlay; update status, README, and next-step artifacts.
+- Result: Targeted scan confirmed the Speech registration plus null args/mobile/deleted guard coverage and existing null-speech validation behavior; `Server.csproj` Debug/x86 build passed with Visual Studio Community 2022 MSBuild; compile-only runtime script verification exited 0 and printed no `Listening:` output; generated `ConficturaServer.exe`, `.config`, and `.pdb` were restored; active backlog overlay now includes 208 `POST-BATCH-E` dispositions.
+- Output path: `docs/codebase-audit/outputs/post-batch-e-hooks-gumps-commands-regions-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
