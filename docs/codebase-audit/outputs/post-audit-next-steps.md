@@ -1406,9 +1406,17 @@ Completed source subbatch: `POST-BATCH-E-49A` fixed the System:Misc aggressive-a
 - Valid attack notification behavior, serialization, public APIs, namespaces, type names, save versions, file location, and project files were preserved.
 - Verification passed: targeted AttackMessage hook scan, Visual Studio MSBuild `Server.csproj` Debug/x86 build, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output. Generated root executable artifacts were restored.
 
+Completed source subbatch: `POST-BATCH-E-50A` fixed System:Misc broadcast login/logout/disconnect/death hook rows.
+
+- 4 rows were reviewed and fixed: `RB-01783`, `RB-01784`, `RB-01785`, and `RB-01786`.
+- `World_Login` now guards null login args, null/deleted mobiles, and non-`PlayerMobile` state before race/database/login-region work.
+- `World_Logout` and `OnDeath` guard null/deleted event mobiles before access logging or ghost walking; `World_Leave` guards null disconnect args/mobiles while preserving save-on-disconnect behavior for valid mobile objects without a deleted-mobile early return.
+- Valid login migration, logout logging, save-on-disconnect, ghost walking, serialization, public APIs, namespaces, type names, save versions, file location, and project files were preserved.
+- Verification passed: targeted Broadcast hook scan, Visual Studio MSBuild `Server.csproj` Debug/x86 build, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output. Generated root executable artifacts were restored.
+
 Next:
 
-1. Continue `POST-BATCH-E` with the next focused P1 runtime-hook/gump-guard group by the active plan, currently `System:Misc` row `RB-01783` in `Data/Scripts/System/Misc/Broadcast.cs`.
+1. Continue `POST-BATCH-E` with the next focused P1 runtime-hook/gump-guard group by the active plan, currently `System:Misc` row `RB-01787` in `Data/Scripts/System/Misc/Broadcasts.cs`.
 2. Keep P2 Boats and Bulk Orders command-access rows queued until the P2 command-access pass unless source evidence makes them an urgent local blocker.
 3. Preserve serialization, public APIs, namespaces, type names, save versions, and file locations; verify source fixes with `Server.csproj` Debug/x86 build and `.\ConficturaServer.exe -compileonly -nocache`.
 
