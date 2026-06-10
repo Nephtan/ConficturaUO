@@ -6126,3 +6126,19 @@ Scope: Deterministic phase runner log for the Confictura codebase audit and reor
 - Command: Targeted VisibilityList login hook scan; Visual Studio MSBuild `Data/System/Source/Server.csproj /p:Configuration=Debug /p:Platform=x86 /v:minimal`; `.\ConficturaServer.exe -compileonly -nocache`; restore generated root executable artifacts; append `POST-BATCH-E-42A` row to `post-batch-e-hooks-gumps-commands-regions-review.csv` and the active overlay; update status, README, and next-step artifacts.
 - Result: Targeted scan confirmed the Login registration plus null/deleted login-mobile guards; `Server.csproj` Debug/x86 build passed with Visual Studio Community 2022 MSBuild; compile-only runtime script verification exited 0 and printed no `Listening:` output; generated `ConficturaServer.exe`, `.config`, and `.pdb` were restored; active backlog overlay now includes 161 `POST-BATCH-E` dispositions.
 - Output path: `docs/codebase-audit/outputs/post-batch-e-hooks-gumps-commands-regions-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
+
+### 2026-06-09T19:38:51.1881605-05:00
+
+- Affected phase: Post-audit `POST-BATCH-E-43A` System:Commands AFK logout/speech/death hook guard repair
+- Cwd: `D:\ConficturaUO`
+- Command: Source review and patch of `RB-01766`, `RB-01767`, `RB-01768`, and duplicate speech-method marker `RB-01978` in `Data/Scripts/System/Commands/Player/Afk.cs`.
+- Result: Added null event args and null event-mobile guards before `AFK.OnLogout`, `AFK.OnSpeech`, and `AFK.OnDeath` perform AFK table lookups and wake-up cleanup. Valid AFK wake-up behavior, including logout/death cleanup for valid mobiles, serialization, public APIs, namespaces, type names, save versions, file location, and project files were preserved.
+- Output path: `Data/Scripts/System/Commands/Player/Afk.cs`
+
+### 2026-06-09T19:38:51.1881605-05:00
+
+- Affected phase: Post-audit `POST-BATCH-E-43A` verification and audit artifact update
+- Cwd: `D:\ConficturaUO`
+- Command: Targeted AFK hook scan; Visual Studio MSBuild `Data/System/Source/Server.csproj /p:Configuration=Debug /p:Platform=x86 /v:minimal`; `.\ConficturaServer.exe -compileonly -nocache`; restore generated root executable artifacts; append `POST-BATCH-E-43A` rows to `post-batch-e-hooks-gumps-commands-regions-review.csv` and the active overlay; update status, README, and next-step artifacts.
+- Result: Targeted scan confirmed the Logout/Speech/PlayerDeath registrations plus null event and null mobile guards; `Server.csproj` Debug/x86 build passed with Visual Studio Community 2022 MSBuild; compile-only runtime script verification exited 0 and printed no `Listening:` output; generated `ConficturaServer.exe`, `.config`, and `.pdb` were restored; active backlog overlay now includes 165 `POST-BATCH-E` dispositions.
+- Output path: `docs/codebase-audit/outputs/post-batch-e-hooks-gumps-commands-regions-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
