@@ -1435,9 +1435,16 @@ Completed source subbatch: `POST-BATCH-E-53A` fixed the System:Misc character-cr
 - Valid character creation behavior, XML points attachment, serialization, public APIs, namespaces, type names, save versions, file location, and project files were preserved.
 - Verification passed: targeted CharacterCreation hook scan, Visual Studio MSBuild `Server.csproj` Debug/x86 build, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output. Generated root executable artifacts were restored.
 
+Completed source subbatch: `POST-BATCH-E-54A` fixed the System:Misc client-version verification hook row.
+
+- 1 row was reviewed and fixed: `RB-01791`.
+- `EventSink_ClientVersionReceived` now guards null client-version args, null `NetState`, null `ClientVersion`, and null/deleted mobiles before access-level checks, old-client policy checks, warning/kick messaging, delayed disconnect scheduling, or warning gump dispatch.
+- Valid client version enforcement behavior, serialization, public APIs, namespaces, type names, save versions, file location, and project files were preserved.
+- Verification passed: targeted ClientVerification hook scan, Visual Studio MSBuild `Server.csproj` Debug/x86 build, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output. Generated root executable artifacts were restored.
+
 Next:
 
-1. Continue `POST-BATCH-E` with the next focused P1 runtime-hook/gump-guard group by the active plan, currently `System:Misc` row `RB-01791` in `Data/Scripts/System/Misc/ClientVerification.cs`.
+1. Continue `POST-BATCH-E` with the next focused P1 runtime-hook/gump-guard group by the active plan, currently `System:Misc` row `RB-01792` in `Data/Scripts/System/Misc/Console.cs`.
 2. Keep P2 Boats and Bulk Orders command-access rows queued until the P2 command-access pass unless source evidence makes them an urgent local blocker.
 3. Preserve serialization, public APIs, namespaces, type names, save versions, and file locations; verify source fixes with `Server.csproj` Debug/x86 build and `.\ConficturaServer.exe -compileonly -nocache`.
 

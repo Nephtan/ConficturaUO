@@ -6294,3 +6294,19 @@ Scope: Deterministic phase runner log for the Confictura codebase audit and reor
 - Command: Targeted CharacterCreation hook scan; Visual Studio MSBuild `Data/System/Source/Server.csproj /p:Configuration=Debug /p:Platform=x86 /v:minimal`; `.\ConficturaServer.exe -compileonly -nocache`; restore generated root executable artifacts; append `POST-BATCH-E-53A` row to `post-batch-e-hooks-gumps-commands-regions-review.csv` and the active overlay; update status, README, and next-step artifacts.
 - Result: Targeted scan confirmed the CharacterCreated registration plus null args/state/account guards; `Server.csproj` Debug/x86 build passed with Visual Studio Community 2022 MSBuild; compile-only runtime script verification exited 0 and printed no `Listening:` output; generated `ConficturaServer.exe`, `.config`, and `.pdb` were restored; active backlog overlay now includes 189 `POST-BATCH-E` dispositions.
 - Output path: `docs/codebase-audit/outputs/post-batch-e-hooks-gumps-commands-regions-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
+
+### 2026-06-09T20:21:35.7153818-05:00
+
+- Affected phase: Post-audit `POST-BATCH-E-54A` System:Misc client-version verification hook guard repair
+- Cwd: `D:\ConficturaUO`
+- Command: Source review and patch of `RB-01791` in `Data/Scripts/System/Misc/ClientVerification.cs`.
+- Result: Added null `ClientVersionReceivedArgs`, null `NetState`, null `ClientVersion`, and null/deleted mobile guards before access-level checks, client policy checks, warning/kick messaging, delayed disconnect scheduling, or warning gump dispatch. Valid client version enforcement behavior, serialization, public APIs, namespaces, type names, save versions, file location, and project files were preserved.
+- Output path: `Data/Scripts/System/Misc/ClientVerification.cs`
+
+### 2026-06-09T20:21:35.7153818-05:00
+
+- Affected phase: Post-audit `POST-BATCH-E-54A` verification and audit artifact update
+- Cwd: `D:\ConficturaUO`
+- Command: Targeted ClientVerification hook scan; Visual Studio MSBuild `Data/System/Source/Server.csproj /p:Configuration=Debug /p:Platform=x86 /v:minimal`; `.\ConficturaServer.exe -compileonly -nocache`; restore generated root executable artifacts; append `POST-BATCH-E-54A` row to `post-batch-e-hooks-gumps-commands-regions-review.csv` and the active overlay; update status, README, and next-step artifacts.
+- Result: Targeted scan confirmed the ClientVersionReceived registration plus null args/state/version/mobile guards; `Server.csproj` Debug/x86 build passed with Visual Studio Community 2022 MSBuild; compile-only runtime script verification exited 0 and printed no `Listening:` output; generated `ConficturaServer.exe`, `.config`, and `.pdb` were restored; active backlog overlay now includes 190 `POST-BATCH-E` dispositions.
+- Output path: `docs/codebase-audit/outputs/post-batch-e-hooks-gumps-commands-regions-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
