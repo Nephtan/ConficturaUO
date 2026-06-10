@@ -6774,3 +6774,19 @@ Scope: Deterministic phase runner log for the Confictura codebase audit and reor
 - Command: Targeted Mobile/EventSink source review; append `POST-BATCH-E-83A` rows to `post-batch-e-hooks-gumps-commands-regions-review.csv` and the active overlay; update status, README, and next-step artifacts.
 - Result: Targeted source review confirmed the listed Mobile event invocations construct event args at the callsite from current instance/state or use pooled args immediately before dispatch; source build and compile-only verification were not required because no source files changed; active backlog overlay now includes 243 `POST-BATCH-E` dispositions.
 - Output path: `docs/codebase-audit/outputs/post-batch-e-hooks-gumps-commands-regions-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
+
+### 2026-06-09T22:18:19.8098499-05:00
+
+- Affected phase: Post-audit `POST-BATCH-E-84A` ServerCore `World.cs` event invocation group review
+- Cwd: `D:\ConficturaUO`
+- Command: Source review of `RB-01845` through `RB-01847` in `Data/System/Source/World.cs`.
+- Result: Reviewed create-guild, world-load, and world-save EventSink invocations with no source change. `World.Load` constructs/reuses `CreateGuildEventArgs` and updates the current guild id before dispatch; `World.Load` invokes a no-args `WorldLoad` delegate after successful deserialization; `World.Save` constructs `WorldSaveEventArgs` immediately before dispatch and keeps the existing save-event failure wrapping.
+- Output path: `docs/codebase-audit/outputs/post-batch-e-hooks-gumps-commands-regions-review.csv`
+
+### 2026-06-09T22:18:19.8098499-05:00
+
+- Affected phase: Post-audit `POST-BATCH-E-84A` verification and audit artifact update
+- Cwd: `D:\ConficturaUO`
+- Command: Targeted World/EventSink/Guilds source review; append `POST-BATCH-E-84A` rows to `post-batch-e-hooks-gumps-commands-regions-review.csv` and the active overlay; update status, README, and next-step artifacts.
+- Result: Targeted source review confirmed the listed World event invocations use constructed or no-args event dispatch and current subscribers do not require source changes; source build and compile-only verification were not required because no source files changed; active backlog overlay now includes 246 `POST-BATCH-E` dispositions.
+- Output path: `docs/codebase-audit/outputs/post-batch-e-hooks-gumps-commands-regions-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`

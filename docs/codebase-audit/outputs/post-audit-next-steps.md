@@ -1654,9 +1654,18 @@ Completed review-only subbatch: `POST-BATCH-E-83A` reviewed the ServerCore `Mobi
 - Valid event ordering, blocking semantics, pooled-args ownership, logout timer behavior, and command/speech handling remain unchanged.
 - Verification passed: targeted Mobile/EventSink source review. Source build and compile-only verification were not required because no source files changed.
 
+Completed review-only subbatch: `POST-BATCH-E-84A` reviewed the ServerCore `World.cs` event invocation group.
+
+- 3 rows were reviewed with no source change: `RB-01845` through `RB-01847`.
+- `World.Load` constructs and reuses `CreateGuildEventArgs`, sets the current guild id from the index, and dispatches it immediately; the only `CreateGuild` subscriber already guards null args before constructing `Guild`.
+- `World.Load` invokes the no-args `WorldLoad` delegate after successful deserialization and before safety-queue, totals, and region refresh work.
+- `World.Save` constructs `WorldSaveEventArgs` from the save message flag immediately before dispatch and keeps the existing save-event failure wrapping.
+- Valid guild index load, world-load ordering, world-save dispatch, subscriber behavior, serialization, public APIs, namespaces, type names, save versions, and file locations remain unchanged.
+- Verification passed: targeted World/EventSink/Guilds source review. Source build and compile-only verification were not required because no source files changed.
+
 Next:
 
-1. Continue `POST-BATCH-E` with the next focused P1 runtime-hook/gump-guard group by the active plan, currently `ServerCore` row `RB-01845` in `Data/System/Source/World.cs`.
+1. Continue `POST-BATCH-E` with the next focused P1 runtime-hook/gump-guard group by the active plan, currently `ServerCore` row `RB-01848` in `Data/System/Source/Network/Listener.cs`.
 2. Keep P2 Boats and Bulk Orders command-access rows queued until the P2 command-access pass unless source evidence makes them an urgent local blocker.
 3. Preserve serialization, public APIs, namespaces, type names, save versions, and file locations; verify source fixes with `Server.csproj` Debug/x86 build and `.\ConficturaServer.exe -compileonly -nocache`.
 
