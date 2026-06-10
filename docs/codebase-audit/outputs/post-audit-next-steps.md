@@ -1646,9 +1646,17 @@ Completed review-only subbatch: `POST-BATCH-E-82A` reviewed the ServerCore `Main
 - Valid crash reporting, shutdown dispatch, compile-only early-return, and server-start event ordering remain unchanged.
 - Verification passed: targeted Main/EventSink source review. Source build and compile-only verification were not required because no source files changed.
 
+Completed review-only subbatch: `POST-BATCH-E-83A` reviewed the ServerCore `Mobile.cs` event invocation group.
+
+- 10 rows were reviewed with no source change: `RB-01835` through `RB-01844`.
+- `Mobile.cs` constructs or retrieves the relevant event args at the callsite for hunger changes, logout, aggressive action, movement, fast-walk, player death, speech, connected/disconnected, and paperdoll requests; pooled args are freed on the existing paths.
+- Broader core caller contracts, including null aggressor, speech payload, and paperdoll target policy, were not changed.
+- Valid event ordering, blocking semantics, pooled-args ownership, logout timer behavior, and command/speech handling remain unchanged.
+- Verification passed: targeted Mobile/EventSink source review. Source build and compile-only verification were not required because no source files changed.
+
 Next:
 
-1. Continue `POST-BATCH-E` with the next focused P1 runtime-hook/gump-guard group by the active plan, currently `ServerCore` row `RB-01835` in `Data/System/Source/Mobile.cs`.
+1. Continue `POST-BATCH-E` with the next focused P1 runtime-hook/gump-guard group by the active plan, currently `ServerCore` row `RB-01845` in `Data/System/Source/World.cs`.
 2. Keep P2 Boats and Bulk Orders command-access rows queued until the P2 command-access pass unless source evidence makes them an urgent local blocker.
 3. Preserve serialization, public APIs, namespaces, type names, save versions, and file locations; verify source fixes with `Server.csproj` Debug/x86 build and `.\ConficturaServer.exe -compileonly -nocache`.
 

@@ -6758,3 +6758,19 @@ Scope: Deterministic phase runner log for the Confictura codebase audit and reor
 - Command: Targeted Main/EventSink source review; append `POST-BATCH-E-82A` rows to `post-batch-e-hooks-gumps-commands-regions-review.csv` and the active overlay; update status, README, and next-step artifacts.
 - Result: Targeted source review confirmed crash, shutdown, and server-start event invocations use constructed args or no-args delegates; source build and compile-only verification were not required because no source files changed; active backlog overlay now includes 233 `POST-BATCH-E` dispositions.
 - Output path: `docs/codebase-audit/outputs/post-batch-e-hooks-gumps-commands-regions-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
+
+### 2026-06-09T22:11:02.2898563-05:00
+
+- Affected phase: Post-audit `POST-BATCH-E-83A` ServerCore `Mobile.cs` event invocation group review
+- Cwd: `D:\ConficturaUO`
+- Command: Source review of `RB-01835` through `RB-01844` in `Data/System/Source/Mobile.cs`.
+- Result: Reviewed Mobile hunger-change, logout, aggressive-action, movement, fast-walk, player-death, speech, connected/disconnected, and paperdoll event invocations with no source change. Event args are constructed or retrieved at the callsite from the current mobile/state, and pooled args are freed on the existing paths; broader core caller contracts were not changed.
+- Output path: `docs/codebase-audit/outputs/post-batch-e-hooks-gumps-commands-regions-review.csv`
+
+### 2026-06-09T22:11:02.2898563-05:00
+
+- Affected phase: Post-audit `POST-BATCH-E-83A` verification and audit artifact update
+- Cwd: `D:\ConficturaUO`
+- Command: Targeted Mobile/EventSink source review; append `POST-BATCH-E-83A` rows to `post-batch-e-hooks-gumps-commands-regions-review.csv` and the active overlay; update status, README, and next-step artifacts.
+- Result: Targeted source review confirmed the listed Mobile event invocations construct event args at the callsite from current instance/state or use pooled args immediately before dispatch; source build and compile-only verification were not required because no source files changed; active backlog overlay now includes 243 `POST-BATCH-E` dispositions.
+- Output path: `docs/codebase-audit/outputs/post-batch-e-hooks-gumps-commands-regions-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
