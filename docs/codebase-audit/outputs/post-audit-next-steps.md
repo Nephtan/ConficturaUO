@@ -1639,9 +1639,16 @@ Completed review-only subbatch: `POST-BATCH-E-81A` classified the Homestead `Eve
 - No source behavior changed. EventSink world-load and world-save rows remain separately represented in the runtime hook map.
 - Verification passed: targeted EventSink/runtime-hook-map source review. Source build and compile-only verification were not required because no source files changed.
 
+Completed review-only subbatch: `POST-BATCH-E-82A` reviewed the ServerCore `Main.cs` crash, shutdown, and server-start event invocation rows.
+
+- 3 rows were reviewed with no source change: `RB-01832`, `RB-01833`, and `RB-01834`.
+- `Core.CurrentDomain_UnhandledException` constructs `CrashedEventArgs` immediately before `EventSink.InvokeCrashed`; `Core.HandleClosed` passes a newly constructed `ShutdownEventArgs`; `EventSink.InvokeServerStarted` uses a no-args delegate.
+- Valid crash reporting, shutdown dispatch, compile-only early-return, and server-start event ordering remain unchanged.
+- Verification passed: targeted Main/EventSink source review. Source build and compile-only verification were not required because no source files changed.
+
 Next:
 
-1. Continue `POST-BATCH-E` with the next focused P1 runtime-hook/gump-guard group by the active plan, currently `ServerCore` row `RB-01832` in `Data/System/Source/Main.cs`.
+1. Continue `POST-BATCH-E` with the next focused P1 runtime-hook/gump-guard group by the active plan, currently `ServerCore` row `RB-01835` in `Data/System/Source/Mobile.cs`.
 2. Keep P2 Boats and Bulk Orders command-access rows queued until the P2 command-access pass unless source evidence makes them an urgent local blocker.
 3. Preserve serialization, public APIs, namespaces, type names, save versions, and file locations; verify source fixes with `Server.csproj` Debug/x86 build and `.\ConficturaServer.exe -compileonly -nocache`.
 

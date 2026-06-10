@@ -6742,3 +6742,19 @@ Scope: Deterministic phase runner log for the Confictura codebase audit and reor
 - Command: Targeted EventSink/runtime-hook-map source review; append `POST-BATCH-E-81A` row to `post-batch-e-hooks-gumps-commands-regions-review.csv` and the active overlay; update status, README, and next-step artifacts.
 - Result: Targeted review confirmed the row is extractor noise from the file banner; no source files changed and source build/compile-only verification were not required; active backlog overlay now includes 230 `POST-BATCH-E` dispositions.
 - Output path: `docs/codebase-audit/outputs/post-batch-e-hooks-gumps-commands-regions-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
+
+### 2026-06-09T22:05:40.9400617-05:00
+
+- Affected phase: Post-audit `POST-BATCH-E-82A` ServerCore `Main.cs` event invocation review
+- Cwd: `D:\ConficturaUO`
+- Command: Source review of `RB-01832` through `RB-01834` in `Data/System/Source/Main.cs`.
+- Result: Reviewed crash, shutdown, and server-start event invocations with no source change. Crash dispatch constructs `CrashedEventArgs` immediately before `EventSink.InvokeCrashed`; shutdown dispatch passes a newly constructed `ShutdownEventArgs`; server-start dispatch uses a no-args delegate.
+- Output path: `docs/codebase-audit/outputs/post-batch-e-hooks-gumps-commands-regions-review.csv`
+
+### 2026-06-09T22:05:40.9400617-05:00
+
+- Affected phase: Post-audit `POST-BATCH-E-82A` verification and audit artifact update
+- Cwd: `D:\ConficturaUO`
+- Command: Targeted Main/EventSink source review; append `POST-BATCH-E-82A` rows to `post-batch-e-hooks-gumps-commands-regions-review.csv` and the active overlay; update status, README, and next-step artifacts.
+- Result: Targeted source review confirmed crash, shutdown, and server-start event invocations use constructed args or no-args delegates; source build and compile-only verification were not required because no source files changed; active backlog overlay now includes 233 `POST-BATCH-E` dispositions.
+- Output path: `docs/codebase-audit/outputs/post-batch-e-hooks-gumps-commands-regions-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
