@@ -6190,3 +6190,19 @@ Scope: Deterministic phase runner log for the Confictura codebase audit and reor
 - Command: Targeted HelpGump help-request hook scan; Visual Studio MSBuild `Data/System/Source/Server.csproj /p:Configuration=Debug /p:Platform=x86 /v:minimal`; `.\ConficturaServer.exe -compileonly -nocache`; restore generated root executable artifacts; append `POST-BATCH-E-46A` row to `post-batch-e-hooks-gumps-commands-regions-review.csv` and the active overlay; update status, README, and next-step artifacts.
 - Result: Targeted scan confirmed the HelpRequest registration plus null/deleted mobile and null `NetState` guards; `Server.csproj` Debug/x86 build passed with Visual Studio Community 2022 MSBuild; compile-only runtime script verification exited 0 and printed no `Listening:` output; generated `ConficturaServer.exe`, `.config`, and `.pdb` were restored; active backlog overlay now includes 168 `POST-BATCH-E` dispositions.
 - Output path: `docs/codebase-audit/outputs/post-batch-e-hooks-gumps-commands-regions-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
+
+### 2026-06-09T19:56:07.2914086-05:00
+
+- Affected phase: Post-audit `POST-BATCH-E-47A` System:Misc account event-hook guard repair/review
+- Cwd: `D:\ConficturaUO`
+- Command: Source review and patch of `RB-01772` through `RB-01780`, plus duplicate WorldSave/WorldLoad rows `RB-02177` and `RB-02199`, in `Data/Scripts/System/Misc/Accounts.cs`.
+- Result: Added null event args and invalid state guards to socket connect, delete request, account login, game login, connected, disconnected, and login handlers. Disconnect cleanup intentionally has no deleted-mobile early return so valid mobile timer/session cleanup still runs. `Accounts.Load` and `Accounts.Save` were classified `ReviewedNoChange` because WorldLoad has no args and `Save(WorldSaveEventArgs e)` does not consume `e`.
+- Output path: `Data/Scripts/System/Misc/Accounts.cs`
+
+### 2026-06-09T19:56:07.2914086-05:00
+
+- Affected phase: Post-audit `POST-BATCH-E-47A` verification and audit artifact update
+- Cwd: `D:\ConficturaUO`
+- Command: Targeted Accounts hook scan; Visual Studio MSBuild `Data/System/Source/Server.csproj /p:Configuration=Debug /p:Platform=x86 /v:minimal`; `.\ConficturaServer.exe -compileonly -nocache`; restore generated root executable artifacts; append `POST-BATCH-E-47A` rows to `post-batch-e-hooks-gumps-commands-regions-review.csv` and the active overlay; update status, README, and next-step artifacts.
+- Result: Targeted scan confirmed the SocketConnect/DeleteRequest/AccountLogin/GameLogin/Connected/Disconnected/Login registrations plus null args/state/socket/mobile guard coverage; WorldLoad/WorldSave rows were reviewed with no source change; `Server.csproj` Debug/x86 build passed with Visual Studio Community 2022 MSBuild; compile-only runtime script verification exited 0 and printed no `Listening:` output; generated `ConficturaServer.exe`, `.config`, and `.pdb` were restored; active backlog overlay now includes 179 `POST-BATCH-E` dispositions.
+- Output path: `docs/codebase-audit/outputs/post-batch-e-hooks-gumps-commands-regions-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`

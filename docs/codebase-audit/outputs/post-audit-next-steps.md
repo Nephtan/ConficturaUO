@@ -1384,9 +1384,17 @@ Completed source subbatch: `POST-BATCH-E-46A` fixed the System:Help help-request
 - Valid help-request behavior, serialization, public APIs, namespaces, type names, save versions, file location, and project files were preserved.
 - Verification passed: targeted HelpGump help-request hook scan, Visual Studio MSBuild `Server.csproj` Debug/x86 build, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output. Generated root executable artifacts were restored.
 
+Completed source subbatch: `POST-BATCH-E-47A` fixed/reviewed System:Misc account event-hook rows.
+
+- 11 rows were reviewed: `RB-01772` through `RB-01780`, plus duplicate WorldSave/WorldLoad rows `RB-02177` and `RB-02199`.
+- 7 rows were fixed: socket connect, delete request, account login, game login, connected, disconnected, and login handlers now guard null event args and invalid state before socket/account/mobile work; disconnect intentionally does not add a deleted-mobile early return so valid mobile cleanup still runs.
+- 4 rows were classified `ReviewedNoChange`: `Accounts.Load` has no WorldLoad event args to guard, and `Accounts.Save(WorldSaveEventArgs e)` does not consume `e`, so adding a null-args return would change direct save semantics without improving runtime state safety.
+- Valid connection filtering, account login, young timer, session accounting, account XML load/save behavior, serialization, public APIs, namespaces, type names, save versions, file location, and project files were preserved.
+- Verification passed: targeted Accounts hook scan, Visual Studio MSBuild `Server.csproj` Debug/x86 build, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output. Generated root executable artifacts were restored.
+
 Next:
 
-1. Continue `POST-BATCH-E` with the next focused P1 runtime-hook/gump-guard group by the active plan, currently `System:Misc` row `RB-01772` in `Data/Scripts/System/Misc/Accounts.cs`.
+1. Continue `POST-BATCH-E` with the next focused P1 runtime-hook/gump-guard group by the active plan, currently `System:Misc` row `RB-01781` in `Data/Scripts/System/Misc/Animations.cs`.
 2. Keep P2 Boats and Bulk Orders command-access rows queued until the P2 command-access pass unless source evidence makes them an urgent local blocker.
 3. Preserve serialization, public APIs, namespaces, type names, save versions, and file locations; verify source fixes with `Server.csproj` Debug/x86 build and `.\ConficturaServer.exe -compileonly -nocache`.
 
