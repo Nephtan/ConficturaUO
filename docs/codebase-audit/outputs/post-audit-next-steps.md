@@ -1559,9 +1559,16 @@ Completed source subbatch: `POST-BATCH-E-70A` fixed the System:Misc rename reque
 - Valid pet rename permission, validation, profanity rejection, localized message, rename behavior, serialization, public APIs, namespaces, type names, save versions, file location, and project files were preserved.
 - Verification passed: targeted RenameRequests/NameVerification/EventSink/PacketHandlers hook scan, Visual Studio MSBuild `Server.csproj` Debug/x86 build, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output. Generated root executable artifacts were restored.
 
+Completed source subbatch: `POST-BATCH-E-71A` fixed the System:Misc server-list hook row.
+
+- 1 row was reviewed and fixed: `RB-01813`.
+- `ServerList.EventSink_ServerList` now guards null server-list args and rejects null `NetState` or socket state before endpoint selection and server-list address publication.
+- Valid server-list address detection, endpoint selection, catch-all rejection behavior, serialization, public APIs, namespaces, type names, save versions, file location, and project files were preserved.
+- Verification passed: targeted ServerList/EventSink hook scan, Visual Studio MSBuild `Server.csproj` Debug/x86 build, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output. Generated root executable artifacts were restored.
+
 Next:
 
-1. Continue `POST-BATCH-E` with the next focused P1 runtime-hook/gump-guard group by the active plan, currently `System:Misc` row `RB-01813` in `Data/Scripts/System/Misc/ServerList.cs`.
+1. Continue `POST-BATCH-E` with the next focused P1 runtime-hook/gump-guard group by the active plan, currently `System:Misc` row `RB-01814` in `Data/Scripts/System/Misc/ShardPoller.cs`.
 2. Keep P2 Boats and Bulk Orders command-access rows queued until the P2 command-access pass unless source evidence makes them an urgent local blocker.
 3. Preserve serialization, public APIs, namespaces, type names, save versions, and file locations; verify source fixes with `Server.csproj` Debug/x86 build and `.\ConficturaServer.exe -compileonly -nocache`.
 

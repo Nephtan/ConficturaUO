@@ -6566,3 +6566,19 @@ Scope: Deterministic phase runner log for the Confictura codebase audit and reor
 - Command: Targeted RenameRequests/NameVerification/EventSink/PacketHandlers hook scan; Visual Studio MSBuild `Data/System/Source/Server.csproj /p:Configuration=Debug /p:Platform=x86 /v:minimal`; `.\ConficturaServer.exe -compileonly -nocache`; restore generated root executable artifacts; append `POST-BATCH-E-70A` row to `post-batch-e-hooks-gumps-commands-regions-review.csv` and the active overlay; update status, README, and next-step artifacts.
 - Result: Targeted scan confirmed the RenameRequest registration plus null args/mobile/deleted/name guard coverage; `Server.csproj` Debug/x86 build passed with Visual Studio Community 2022 MSBuild; compile-only runtime script verification exited 0 and printed no `Listening:` output; generated `ConficturaServer.exe`, `.config`, and `.pdb` were restored; active backlog overlay now includes 211 `POST-BATCH-E` dispositions.
 - Output path: `docs/codebase-audit/outputs/post-batch-e-hooks-gumps-commands-regions-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
+
+### 2026-06-09T21:24:52.8097966-05:00
+
+- Affected phase: Post-audit `POST-BATCH-E-71A` System:Misc server-list hook guard repair
+- Cwd: `D:\ConficturaUO`
+- Command: Source review and patch of `RB-01813` in `Data/Scripts/System/Misc/ServerList.cs`.
+- Result: Added null `ServerListEventArgs` guard and null `NetState`/socket rejection before endpoint selection and server-list address publication. Valid server-list address detection, endpoint selection, catch-all rejection behavior, serialization, public APIs, namespaces, type names, save versions, file location, and project files were preserved.
+- Output path: `Data/Scripts/System/Misc/ServerList.cs`
+
+### 2026-06-09T21:24:52.8097966-05:00
+
+- Affected phase: Post-audit `POST-BATCH-E-71A` verification and audit artifact update
+- Cwd: `D:\ConficturaUO`
+- Command: Targeted ServerList/EventSink hook scan; Visual Studio MSBuild `Data/System/Source/Server.csproj /p:Configuration=Debug /p:Platform=x86 /v:minimal`; `.\ConficturaServer.exe -compileonly -nocache`; restore generated root executable artifacts; append `POST-BATCH-E-71A` row to `post-batch-e-hooks-gumps-commands-regions-review.csv` and the active overlay; update status, README, and next-step artifacts.
+- Result: Targeted scan confirmed the ServerList registration plus null args/state/socket guard coverage; `Server.csproj` Debug/x86 build passed with Visual Studio Community 2022 MSBuild; compile-only runtime script verification exited 0 and printed no `Listening:` output; generated `ConficturaServer.exe`, `.config`, and `.pdb` were restored; active backlog overlay now includes 212 `POST-BATCH-E` dispositions.
+- Output path: `docs/codebase-audit/outputs/post-batch-e-hooks-gumps-commands-regions-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`

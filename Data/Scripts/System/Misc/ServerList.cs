@@ -62,6 +62,15 @@ namespace Server.Misc
 
         private static void EventSink_ServerList(ServerListEventArgs e)
         {
+            if (e == null)
+                return;
+
+            if (e.State == null || e.State.Socket == null)
+            {
+                e.Rejected = true;
+                return;
+            }
+
             try
             {
                 NetState ns = e.State;
