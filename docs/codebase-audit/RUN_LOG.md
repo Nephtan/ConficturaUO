@@ -6078,3 +6078,19 @@ Scope: Deterministic phase runner log for the Confictura codebase audit and reor
 - Command: Source review of `RB-01752` and `RB-01753` in `Data/Scripts/Mobiles/Base/Behavior.cs`, `Data/Scripts/Items/Weapons/Hands/Fists.cs`, and `Data/System/Source/EventSink.cs`.
 - Result: Classified both rows `ReviewedNoChange`. `Behavior.cs` creates `StunRequestEventArgs` and `DisarmRequestEventArgs` from owned `BaseAI.m_Mobile` inside action methods that already depend on the AI owner, and the active `Fists` subscribers guard null event args plus null/deleted mobiles. No source files changed; source build and compile-only verification were not required for this review-only batch.
 - Output path: `docs/codebase-audit/outputs/post-batch-e-hooks-gumps-commands-regions-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
+
+### 2026-06-09T19:21:50.9852241-05:00
+
+- Affected phase: Post-audit `POST-BATCH-E-40A` PvP Consent PlayerMobile lifecycle hook guard repair
+- Cwd: `D:\ConficturaUO`
+- Command: Source review and patch of `RB-01754` through `RB-01757` in `Data/Scripts/Mobiles/Base/PlayerMobile.cs`.
+- Result: Added null event args and null/deleted mobile guards to `OnLogin`, `OnLogout`, `EventSink_Connected`, and `EventSink_Disconnected` before lifecycle cleanup/update work. Valid player lifecycle behavior, serialization, public APIs, namespaces, type names, save versions, file location, and project files were preserved.
+- Output path: `Data/Scripts/Mobiles/Base/PlayerMobile.cs`
+
+### 2026-06-09T19:21:50.9852241-05:00
+
+- Affected phase: Post-audit `POST-BATCH-E-40A` verification and audit artifact update
+- Cwd: `D:\ConficturaUO`
+- Command: Targeted PlayerMobile lifecycle hook scan; Visual Studio MSBuild `Data/System/Source/Server.csproj /p:Configuration=Debug /p:Platform=x86 /v:minimal`; `.\ConficturaServer.exe -compileonly -nocache`; restore generated root executable artifacts; append `POST-BATCH-E-40A` rows to `post-batch-e-hooks-gumps-commands-regions-review.csv` and the active overlay; update status, README, and next-step artifacts.
+- Result: Targeted scan confirmed lifecycle EventSink registrations plus null/deleted event-mobile guards; `Server.csproj` Debug/x86 build passed with Visual Studio Community 2022 MSBuild; compile-only runtime script verification exited 0 and printed no `Listening:` output; generated `ConficturaServer.exe`, `.config`, and `.pdb` were restored; active backlog overlay now includes 159 `POST-BATCH-E` dispositions.
+- Output path: `docs/codebase-audit/outputs/post-batch-e-hooks-gumps-commands-regions-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`

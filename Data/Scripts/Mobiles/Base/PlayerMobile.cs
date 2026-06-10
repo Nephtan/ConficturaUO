@@ -1002,7 +1002,13 @@ namespace Server.Mobiles
 
         private static void OnLogin(LoginEventArgs e)
         {
+            if (e == null)
+                return;
+
             Mobile from = e.Mobile;
+
+            if (from == null || from.Deleted)
+                return;
 
             CheckAtrophies(from);
 
@@ -1321,13 +1327,29 @@ namespace Server.Mobiles
 
         private static void OnLogout(LogoutEventArgs e)
         {
-            if (e.Mobile is PlayerMobile)
-                ((PlayerMobile)e.Mobile).AutoStablePets();
+            if (e == null)
+                return;
+
+            Mobile mobile = e.Mobile;
+
+            if (mobile == null || mobile.Deleted)
+                return;
+
+            if (mobile is PlayerMobile)
+                ((PlayerMobile)mobile).AutoStablePets();
         }
 
         private static void EventSink_Connected(ConnectedEventArgs e)
         {
-            PlayerMobile pm = e.Mobile as PlayerMobile;
+            if (e == null)
+                return;
+
+            Mobile mobile = e.Mobile;
+
+            if (mobile == null || mobile.Deleted)
+                return;
+
+            PlayerMobile pm = mobile as PlayerMobile;
 
             if (pm != null)
             {
@@ -1340,12 +1362,12 @@ namespace Server.Mobiles
                 pm.LastOnline = DateTime.Now;
             }
 
-            DisguiseTimers.StartTimer(e.Mobile);
+            DisguiseTimers.StartTimer(mobile);
 
             Timer.DelayCall(
                 TimeSpan.Zero,
                 new TimerStateCallback(ClearSpecialMovesCallback),
-                e.Mobile
+                mobile
             );
         }
 
@@ -1358,7 +1380,14 @@ namespace Server.Mobiles
 
         private static void EventSink_Disconnected(DisconnectedEventArgs e)
         {
+            if (e == null)
+                return;
+
             Mobile from = e.Mobile;
+
+            if (from == null || from.Deleted)
+                return;
+
             DesignContext context = DesignContext.Find(from);
 
             if (context != null)
@@ -1385,7 +1414,7 @@ namespace Server.Mobiles
                 context.Foundation.RestoreRelocatedEntities();
             }
 
-            PlayerMobile pm = e.Mobile as PlayerMobile;
+            PlayerMobile pm = from as PlayerMobile;
 
             if (pm != null)
             {
