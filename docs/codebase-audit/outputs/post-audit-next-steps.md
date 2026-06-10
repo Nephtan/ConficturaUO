@@ -1588,9 +1588,17 @@ Completed source subbatch: `POST-BATCH-E-74A` fixed the System:Misc weight-overl
 - Valid overload fatigue, movement blocking, low-stamina drain, player step counting, non-player `DeathStrike` step behavior, serialization, public APIs, namespaces, type names, save versions, file location, and project files were preserved.
 - Verification passed: targeted WeightOverloading/EventSink hook scan, Visual Studio MSBuild `Server.csproj` Debug/x86 build, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output. Generated root executable artifacts were restored.
 
+Completed source subbatch: `POST-BATCH-E-75A` reviewed the Regions Obsolete runtime-hook group.
+
+- 7 rows were reviewed: fixed `RB-01818`, `RB-01819`, `RB-01820`, `RB-01821`, and `RB-01823`; reviewed `RB-01817` and `RB-01822` with no source change.
+- `Ethic.EventSink_Speech`, `Faction.EventSink_Login`, `Faction.EventSink_Logout`, `Keywords.EventSink_Speech`, and `RewardSystem.EventSink_Login` now guard null event args and null/deleted mobiles before handler work; `Keywords.EventSink_Speech` also guards null keyword arrays.
+- `ChatSystem.EventSink_ChatRequest` remains no-op/comment-only, and `Reflector.EventSink_WorldSave` still clears only its internal type cache without consuming event args.
+- Valid ethics speech, faction login/logout, faction keyword, veteran reward login, disabled chat-request, and reflector type-cache behavior were preserved. Serialization, public APIs, namespaces, type names, save versions, file location, and project files were unchanged.
+- Verification passed: targeted Obsolete/EventSink hook scan, Visual Studio MSBuild `Server.csproj` Debug/x86 build, and `.\ConficturaServer.exe -compileonly -nocache` exited 0 with no `Listening:` output. Generated root executable artifacts were restored.
+
 Next:
 
-1. Continue `POST-BATCH-E` with the next focused P1 runtime-hook/gump-guard group by the active plan, currently `Regions` row `RB-01817` in `Data/Scripts/System/Obsolete/Obsolete.cs`.
+1. Continue `POST-BATCH-E` with the next focused P1 runtime-hook/gump-guard group by the active plan, currently `Housing` row `RB-01824` in `Data/Scripts/System/Regions/HouseRegion.cs`.
 2. Keep P2 Boats and Bulk Orders command-access rows queued until the P2 command-access pass unless source evidence makes them an urgent local blocker.
 3. Preserve serialization, public APIs, namespaces, type names, save versions, and file locations; verify source fixes with `Server.csproj` Debug/x86 build and `.\ConficturaServer.exe -compileonly -nocache`.
 

@@ -6630,3 +6630,19 @@ Scope: Deterministic phase runner log for the Confictura codebase audit and reor
 - Command: Targeted WeightOverloading/EventSink hook scan; Visual Studio MSBuild `Data/System/Source/Server.csproj /p:Configuration=Debug /p:Platform=x86 /v:minimal`; `.\ConficturaServer.exe -compileonly -nocache`; restore generated root executable artifacts; append `POST-BATCH-E-74A` row to `post-batch-e-hooks-gumps-commands-regions-review.csv` and the active overlay; update status, README, and next-step artifacts.
 - Result: Targeted scan confirmed the Movement registration plus null args/mobile/deleted guard coverage; `Server.csproj` Debug/x86 build passed with Visual Studio Community 2022 MSBuild; compile-only runtime script verification exited 0 and printed no `Listening:` output; generated `ConficturaServer.exe`, `.config`, and `.pdb` were restored; active backlog overlay now includes 215 `POST-BATCH-E` dispositions.
 - Output path: `docs/codebase-audit/outputs/post-batch-e-hooks-gumps-commands-regions-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`
+
+### 2026-06-09T21:41:02.6720047-05:00
+
+- Affected phase: Post-audit `POST-BATCH-E-75A` Regions Obsolete runtime-hook group
+- Cwd: `D:\ConficturaUO`
+- Command: Source review and patch of `RB-01817` through `RB-01823` in `Data/Scripts/System/Obsolete/Obsolete.cs`.
+- Result: Added null event-args and null/deleted mobile guards to `Ethic.EventSink_Speech`, `Faction.EventSink_Login`, `Faction.EventSink_Logout`, `Keywords.EventSink_Speech`, and `RewardSystem.EventSink_Login`; `Keywords.EventSink_Speech` also guards null keyword arrays. Reviewed `ChatSystem.EventSink_ChatRequest` and `Reflector.EventSink_WorldSave` with no source change because the handlers do not consume their event args.
+- Output path: `Data/Scripts/System/Obsolete/Obsolete.cs`
+
+### 2026-06-09T21:41:02.6720047-05:00
+
+- Affected phase: Post-audit `POST-BATCH-E-75A` verification and audit artifact update
+- Cwd: `D:\ConficturaUO`
+- Command: Targeted Obsolete/EventSink hook scan; Visual Studio MSBuild `Data/System/Source/Server.csproj /p:Configuration=Debug /p:Platform=x86 /v:minimal`; `.\ConficturaServer.exe -compileonly -nocache`; restore generated root executable artifacts; append `POST-BATCH-E-75A` rows to `post-batch-e-hooks-gumps-commands-regions-review.csv` and the active overlay; update status, README, and next-step artifacts.
+- Result: Targeted scan confirmed ChatRequest, Ethics speech, Faction login/logout/speech, WorldSave, and VeteranRewards login registrations plus intended guard coverage and no-change decisions; `Server.csproj` Debug/x86 build passed with Visual Studio Community 2022 MSBuild; compile-only runtime script verification exited 0 and printed no `Listening:` output; generated `ConficturaServer.exe`, `.config`, and `.pdb` were restored; active backlog overlay now includes 222 `POST-BATCH-E` dispositions.
+- Output path: `docs/codebase-audit/outputs/post-batch-e-hooks-gumps-commands-regions-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`

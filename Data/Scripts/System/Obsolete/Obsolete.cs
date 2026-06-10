@@ -9928,6 +9928,9 @@ namespace Server.Ethics
 
         public static void EventSink_Speech(SpeechEventArgs e)
         {
+            if (e == null || e.Mobile == null || e.Mobile.Deleted)
+                return;
+
             if (e.Blocked || e.Handled)
                 return;
 
@@ -11533,6 +11536,9 @@ namespace Server.Factions
 
         private static void EventSink_Logout(LogoutEventArgs e)
         {
+            if (e == null || e.Mobile == null || e.Mobile.Deleted)
+                return;
+
             Mobile mob = e.Mobile;
 
             Container pack = mob.Backpack;
@@ -11548,6 +11554,9 @@ namespace Server.Factions
 
         private static void EventSink_Login(LoginEventArgs e)
         {
+            if (e == null || e.Mobile == null || e.Mobile.Deleted)
+                return;
+
             Mobile mob = e.Mobile;
 
             CheckLeaveTimer(mob);
@@ -19969,6 +19978,9 @@ namespace Server.Factions
 
         private static void EventSink_Speech(SpeechEventArgs e)
         {
+            if (e == null || e.Mobile == null || e.Mobile.Deleted || e.Keywords == null)
+                return;
+
             Mobile from = e.Mobile;
             int[] keywords = e.Keywords;
 
@@ -29122,6 +29134,9 @@ namespace Server.Engines.VeteranRewards
 
         private static void EventSink_Login(LoginEventArgs e)
         {
+            if (e == null || e.Mobile == null || e.Mobile.Deleted)
+                return;
+
             if (!e.Mobile.Alive)
                 return;
 
