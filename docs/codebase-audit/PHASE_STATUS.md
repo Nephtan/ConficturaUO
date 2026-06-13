@@ -2,7 +2,7 @@
 
 Initialized: 2026-06-05T16:15:59.8020730-05:00
 
-Last updated: 2026-06-09T22:52:16.0339296-05:00
+Last updated: 2026-06-13T13:14:33.2498564-05:00
 
 Branch: `SAR`
 
@@ -15,6 +15,8 @@ Post-audit compile-only implementation HEAD: `09b7b7e5 feat: add compile-only sc
 Post-audit latest implemented source batch: `POST-BATCH-E-94A` fixed the Monopoly `DisplayGumpResponse` packet override in `Data/Scripts/Items/Houses/Monopoly/Misc/GumpResponse.cs` by restoring switch/text count bounds and oversized text-entry disconnect behavior without changing server public APIs. Latest reviewed no-change batch: `POST-BATCH-E-100A` reviewed the obsolete legacy chat packet handlers with no source change; those rows remain active-overlay-covered by `POST-BATCH-C-01A` and broader legacy chat policy remains deferred.
 
 Post-audit latest committed audit-state batch before the current source repair: `6ae44f74 docs: close save compatibility triage`
+
+Post-audit project-hygiene repair: `ScriptsProjectTruth` was repaired for `Data/Scripts/Scripts.csproj` by replacing 82 stale `MovedGumpFolder` compile targets with their current `Gumps` paths and adding 10 active runtime-visible sources that were absent from the Visual Studio scripts project. Regenerated project truth now reports 6,581 script source files, 6,581 `Scripts.csproj` compile includes, 0 missing compile targets, 0 active unlisted sources, and 0 project cleanup backlog groups. This is `IDEProjectHygiene` verification only; it is not live runtime script compile proof. The maintained solution build now reaches `Scripts.csproj` compilation and fails on unrelated existing project dependency/reference surfaces (`OrbServerSDK`, `UOArchitectInterface`, `System.Web`, and `System.Drawing` references), not missing compile targets.
 
 Post-audit latest runtime-risk review batch: `POST-BATCH-C-01A` reviewed the 17 P0 runtime-hook rows and 8 P0 `PlayerMobile` coupling rows in `outputs/post-batch-c-runtime-hooks-player-mobile-review.csv`. The batch made no source edits; the runtime-hook rows reconcile to the earlier `POST-BATCH-A` packet-handler review, and `PlayerMobile` coupling remains migration-gated.
 

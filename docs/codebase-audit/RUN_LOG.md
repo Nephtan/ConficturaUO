@@ -7046,3 +7046,83 @@ Scope: Deterministic phase runner log for the Confictura codebase audit and reor
 - Command: Append `POST-BATCH-E-100A` rows to `post-batch-e-hooks-gumps-commands-regions-review.csv`; compare `repair-backlog.csv` against the `POST-BATCH-E` review CSV for unreviewed `Runtime hooks`, `Gump guards`, `Command access`, and `Regions` rows; update status, README, and next-step artifacts while preserving the existing `POST-BATCH-C-01A` active overlay rows for `RB-01892` and `RB-01893`.
 - Result: Active backlog overlay remains unique with 276 `POST-BATCH-E` dispositions, while the `POST-BATCH-E` review CSV records 292 reviewed rows through `POST-BATCH-E-100A`; no unreviewed `Runtime hooks`, `Gump guards`, `Command access`, or `Regions` repair-backlog rows remain, so the next step is a human decision on deferred policy reviews or the next post-audit batch track.
 - Output path: `docs/codebase-audit/outputs/post-batch-e-hooks-gumps-commands-regions-review.csv`
+
+### 2026-06-13T13:14:33.2498564-05:00
+
+- Affected phase: Post-audit `ScriptsProjectTruth` / `IDEProjectHygiene` repair
+- Cwd: `D:\ConficturaUO`
+- Command: `git status --short`
+- Result: Clean worktree before edits.
+- Output path: Working tree status only.
+
+### 2026-06-13T13:14:33.2498564-05:00
+
+- Affected phase: Post-audit `ScriptsProjectTruth` / `IDEProjectHygiene` repair
+- Cwd: `D:\ConficturaUO`
+- Command: Update `Data/Scripts/Scripts.csproj` by replacing 82 stale `MovedGumpFolder` compile includes with their one same-filename active source replacement from `phase-02-unincluded-source-classified.csv`, then add 10 active sources missing from the project.
+- Result: Replaced 82 exact include paths and added 10 active compile includes without editing runtime source files.
+- Output path: `Data/Scripts/Scripts.csproj`
+
+### 2026-06-13T13:14:33.2498564-05:00
+
+- Affected phase: Post-audit `ScriptsProjectTruth` / `IDEProjectHygiene` repair
+- Cwd: `D:\ConficturaUO`
+- Command: `.\docs\codebase-audit\tools\New-ProjectTruthRegister.ps1`
+- Result: Initial rerun completed against stale Phase 1 include inventory and still reported the pre-repair counts: 6,571 script compile includes, 6,581 script source files, 82 missing compile targets, and 92 unincluded source files. The project truth tool consumes `phase-01-project-includes.csv`, so the include inventory had to be refreshed before the final project truth rerun.
+- Output path: `docs/codebase-audit/outputs/project-truth-register.csv`
+
+### 2026-06-13T13:14:33.2498564-05:00
+
+- Affected phase: Post-audit `ScriptsProjectTruth` / `IDEProjectHygiene` repair
+- Cwd: `D:\ConficturaUO`
+- Command: `.\docs\codebase-audit\tools\Invoke-CodebaseAuditInventory.ps1`
+- Result: Failed during a later null-export step, but refreshed the include-dependent Phase 1 CSVs used by project truth. The refreshed `phase-01-project-includes.csv` contains 6,581 compile includes, `phase-01-missing-compile-targets.csv` has 0 rows, and `phase-01-unincluded-source-files.csv` has 0 rows.
+- Output path: `docs/codebase-audit/outputs/phase-01-project-includes.csv`; `docs/codebase-audit/outputs/phase-01-missing-compile-targets.csv`; `docs/codebase-audit/outputs/phase-01-unincluded-source-files.csv`
+
+### 2026-06-13T13:14:33.2498564-05:00
+
+- Affected phase: Post-audit `ScriptsProjectTruth` / `IDEProjectHygiene` repair
+- Cwd: `D:\ConficturaUO`
+- Command: `.\docs\codebase-audit\tools\New-ProjectTruthRegister.ps1`
+- Result: Succeeded after the include inventory refresh. Project truth now reports 13,162 rows, 6,581 script compile includes, 6,581 script source files, 0 missing compile targets, 0 unincluded source files, and 0 project cleanup backlog groups.
+- Output path: `docs/codebase-audit/outputs/project-truth-register.csv`; `docs/codebase-audit/outputs/phase-02-missing-compile-targets-classified.csv`; `docs/codebase-audit/outputs/phase-02-unincluded-source-classified.csv`; `docs/codebase-audit/outputs/phase-02-project-cleanup-backlog.csv`
+
+### 2026-06-13T13:14:33.2498564-05:00
+
+- Affected phase: Post-audit `ScriptsProjectTruth` / `IDEProjectHygiene` repair
+- Cwd: `D:\ConficturaUO`
+- Command: `git diff --check`
+- Result: Passed with no whitespace errors.
+- Output path: Working tree diff check only.
+
+### 2026-06-13T13:14:33.2498564-05:00
+
+- Affected phase: Post-audit `ScriptsProjectTruth` / `IDEProjectHygiene` repair
+- Cwd: `D:\ConficturaUO`
+- Command: `msbuild ConficturaUO.sln /p:Configuration=Debug /p:Platform="Any CPU"`
+- Result: Failed because `msbuild` was not on `PATH` in this shell. The same build was rerun through the Visual Studio 2022 MSBuild executable.
+- Output path: `docs/codebase-audit/outputs/phase-02-build-verification.md`
+
+### 2026-06-13T13:14:33.2498564-05:00
+
+- Affected phase: Post-audit `ScriptsProjectTruth` / `IDEProjectHygiene` repair
+- Cwd: `D:\ConficturaUO`
+- Command: `& 'C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\MSBuild.exe' ConficturaUO.sln /p:Configuration=Debug /p:Platform="Any CPU"`
+- Result: Sandboxed run failed with `MSB4184` because access to `C:\Users\nepht\AppData\Local\Microsoft SDKs` was denied. The same command was rerun outside the sandbox with approval.
+- Output path: `docs/codebase-audit/outputs/phase-02-build-verification.md`
+
+### 2026-06-13T13:14:33.2498564-05:00
+
+- Affected phase: Post-audit `ScriptsProjectTruth` / `IDEProjectHygiene` repair
+- Cwd: `D:\ConficturaUO`
+- Command: `& 'C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\MSBuild.exe' ConficturaUO.sln /p:Configuration=Debug /p:Platform="Any CPU"` and errors-only rerun with `/v:minimal /clp:ErrorsOnly`
+- Result: Out-of-sandbox build reached `Scripts.csproj` compilation and failed with 93 existing dependency/reference errors. The failure no longer includes stale missing source file errors; representative remaining surfaces are missing `OrbServerSDK`, missing `UOArchitectInterface`, and missing `System.Web`/`System.Drawing` reference namespaces. This is recorded as `IDEProjectHygiene` follow-up, not live runtime proof and not project truth drift.
+- Output path: `docs/codebase-audit/outputs/phase-02-build-verification.md`
+
+### 2026-06-13T13:14:33.2498564-05:00
+
+- Affected phase: Post-audit `ScriptsProjectTruth` / `IDEProjectHygiene` repair
+- Cwd: `D:\ConficturaUO`
+- Command: `git restore -- ConficturaServer.exe ConficturaServer.exe.config ConficturaServer.pdb`
+- Result: Succeeded. Tracked MSBuild-generated server artifacts were restored before staging.
+- Output path: Working tree status only.
