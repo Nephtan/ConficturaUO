@@ -59,7 +59,7 @@ Deferred to Phase 9 synergy and conflict matrix.
 
 ## Documentation
 
-No matching wiki page was found by Phase 4 doc-name pattern matching.
+docs/codebase-audit/outputs/system-cards/playermobile-core.md
 
 ## Verification Status
 

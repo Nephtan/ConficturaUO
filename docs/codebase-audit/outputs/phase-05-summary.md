@@ -1,6 +1,6 @@
 # Phase 5 Runtime Hook Map Summary
 
-Generated: 2026-06-05T17:07:19.2703856-05:00
+Generated: 2026-06-13T20:42:07.2432928-05:00
 
 ## Required Inputs
 
@@ -15,9 +15,9 @@ Generated: 2026-06-05T17:07:19.2703856-05:00
 
 | Output | Rows | Purpose |
 | --- | ---: | --- |
-| `runtime-hook-map.csv` | 6604 | Canonical runtime hook map. |
-| `phase-05-runtime-hook-map.csv` | 6604 | Phase-scoped hook map. |
-| `phase-05-global-hook-risk-list.csv` | 2979 | Global, high-risk, and critical hook rows. |
+| `runtime-hook-map.csv` | 6605 | Canonical runtime hook map. |
+| `phase-05-runtime-hook-map.csv` | 6605 | Phase-scoped hook map. |
+| `phase-05-global-hook-risk-list.csv` | 2954 | Global, high-risk, and critical hook rows. |
 | `phase-05-command-surface-register.csv` | 499 | Command registration surface with access and duplicate counts. |
 | `phase-05-packet-handler-register.csv` | 17 | Packet handler rows treated as critical network entry points. |
 | `phase-05-gump-response-risk-register.csv` | 4066 | Gump send/response rows with guard-review flags. |
@@ -36,7 +36,7 @@ Generated: 2026-06-05T17:07:19.2703856-05:00
 | Movement | 172 |
 | Packet | 17 |
 | Region | 89 |
-| Speech | 103 |
+| Speech | 104 |
 | Timer | 1004 |
 | WorldLoad | 16 |
 | WorldSave | 23 |
@@ -46,8 +46,8 @@ Generated: 2026-06-05T17:07:19.2703856-05:00
 | Risk | Count |
 | --- | ---: |
 | Critical | 17 |
-| High | 1531 |
-| Medium | 5056 |
+| High | 1506 |
+| Medium | 5082 |
 
 ## Exit Criteria
 

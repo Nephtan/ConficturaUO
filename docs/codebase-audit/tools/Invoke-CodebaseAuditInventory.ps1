@@ -129,6 +129,12 @@ function Export-AuditCsv
     )
 
     $path = Join-Path $OutputDir $FileName
+    if ($null -eq $Rows -or @($Rows).Count -eq 0)
+    {
+        Set-Content -LiteralPath $path -Value $null -Encoding UTF8
+        return $path
+    }
+
     $Rows | Export-Csv -LiteralPath $path -NoTypeInformation -Encoding UTF8
     return $path
 }

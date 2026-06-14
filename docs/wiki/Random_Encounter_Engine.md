@@ -10,7 +10,7 @@ This page documents the random encounter engine as the compiled C# currently beh
 - `Data/Scripts/Custom/RandomEncounters/Records.cs`
 - `Data/Scripts/Custom/RandomEncounters/Commands.cs`
 - `Data/Scripts/Custom/RandomEncounters/RandomEncounters.xml`
-- `Data/Scripts/Custom/CharacterLevel/CharacterLevelService.cs`
+- `Data/Scripts/Custom/Progression/CharacterLevel/CharacterLevelService.cs`
 
 ## Runtime Summary
 - The engine loads `Data/Scripts/Custom/RandomEncounters/RandomEncounters.xml` on initialization.

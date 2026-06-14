@@ -131,7 +131,7 @@ Deferred to Phase 9 synergy and conflict matrix.
 
 ## Documentation
 
-docs/wiki/Champion_Spawns.md
+docs/codebase-audit/outputs/system-cards/champions.md;docs/wiki/Champion_Spawns.md
 
 ## Verification Status
 

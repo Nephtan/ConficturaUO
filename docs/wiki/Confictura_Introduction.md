@@ -121,15 +121,15 @@ The canonical service defines internal archetype lanes for Confictura's broad
 class ecosystem: martial, archer, assassin, ninja, samurai, knight, death
 knight, arcane mage, elementalist, necromancer, witch, druid, holy man, mystic
 monk, Jedi, Syth, researcher, ranger, bard, thief, jester, crafter, gatherer,
-merchant, seafarer, creature race, and alien. ?F:Data/Scripts/Custom/CharacterLevel/CharacterLevelService.cs†L11-L40??
+merchant, seafarer, creature race, and alien. ?F:Data/Scripts/Custom/Progression/CharacterLevel/CharacterLevelService.cs†L11-L40??
 It exposes overall level, archetype level, encounter alias level, and diagnostic
 reporting rather than treating total skill alone as the whole character.
-?F:Data/Scripts/Custom/CharacterLevel/CharacterLevelService.cs†L99-L224??
+?F:Data/Scripts/Custom/Progression/CharacterLevel/CharacterLevelService.cs†L99-L224??
 
 The overall score intentionally blends focused adventure power, total skill
-progress, stat progress, and bounded fame/karma reputation. ?F:Data/Scripts/Custom/CharacterLevel/CharacterLevelService.cs†L258-L265??
+progress, stat progress, and bounded fame/karma reputation. ?F:Data/Scripts/Custom/Progression/CharacterLevel/CharacterLevelService.cs†L258-L265??
 Skill and stat progress are normalized against the character's actual skill and
-stat caps, not a universal default. ?F:Data/Scripts/Custom/CharacterLevel/CharacterLevelService.cs†L566-L615??
+stat caps, not a universal default. ?F:Data/Scripts/Custom/Progression/CharacterLevel/CharacterLevelService.cs†L566-L615??
 That matters because Confictura has real alternate progression paths, and the
 same raw skill total does not mean the same thing for a default, savage,
 fugitive, alien, or Ether character.
@@ -147,18 +147,18 @@ staff-visible and encounter-visible archetypes. Martial combat checks weapon
 skills with tactics, anatomy, parry, focus, and healing. Archery blends
 marksmanship, bowcraft, tactics, anatomy, and focus. Assassin and thief lanes
 value stealth, stealing, snooping, lockpicking, hiding, and remove trap.
-?F:Data/Scripts/Custom/CharacterLevel/CharacterLevelService.cs†L284-L323?? ?F:Data/Scripts/Custom/CharacterLevel/CharacterLevelService.cs†L461-L480??
+?F:Data/Scripts/Custom/Progression/CharacterLevel/CharacterLevelService.cs†L284-L323?? ?F:Data/Scripts/Custom/Progression/CharacterLevel/CharacterLevelService.cs†L461-L480??
 
 Magic and spiritual paths are similarly plural. Arcane mage uses magery,
 alchemy, inscription, meditation, magic resist, and psychology; elementalist
 uses elementalism with meditation, psychology, and focus; necromancer and witch
 care about necromancy, spiritualism, poison, forensics, tasting, and dark
 karma; holy man and knight paths reward positive karma; Syth and death knight
-reward negative karma. ?F:Data/Scripts/Custom/CharacterLevel/CharacterLevelService.cs†L331-L444??
+reward negative karma. ?F:Data/Scripts/Custom/Progression/CharacterLevel/CharacterLevelService.cs†L331-L444??
 
 Nature, support, trade, travel, and oddball roles have a place too. Druid,
 ranger, bard, crafter, gatherer, merchant, seafarer, creature race, and alien
-all have explicit scoring lanes. ?F:Data/Scripts/Custom/CharacterLevel/CharacterLevelService.cs†L391-L460?? ?F:Data/Scripts/Custom/CharacterLevel/CharacterLevelService.cs†L482-L545??
+all have explicit scoring lanes. ?F:Data/Scripts/Custom/Progression/CharacterLevel/CharacterLevelService.cs†L391-L460?? ?F:Data/Scripts/Custom/Progression/CharacterLevel/CharacterLevelService.cs†L482-L545??
 
 The practical player takeaway is simple: Confictura is friendly to focused
 characters. It wants a fighter to feel like a fighter, a bard to feel like a
@@ -295,7 +295,7 @@ Key operational commands include:
 | Area | Commands | Purpose |
 | --- | --- | --- |
 | Random encounters | `[rand init]`, `[rand stop]`, `[rand now <RegionType>]`, `[rand import]` | Load, stop, force-check, or import encounter data. ?F:docs/wiki/Random_Encounter_Engine.md†L20-L28?? |
-| Character level | `[CharLevel]`, `[CharLevelTarget]` | Show canonical level diagnostics for yourself or a targeted mobile. ?F:Data/Scripts/Custom/CharacterLevel/CharacterLevelCommands.cs†L12-L35?? |
+| Character level | `[CharLevel]`, `[CharLevelTarget]` | Show canonical level diagnostics for yourself or a targeted mobile. ?F:Data/Scripts/Custom/Progression/CharacterLevel/CharacterLevelCommands.cs†L12-L35?? |
 | Government | `GovHelp`, `AdminAdd`, `FindCities`, `GovTesting`, `UpgradeCitySystem` | Player help, admin item creation, city discovery, testing timers, and city upgrades. ?F:docs/wiki/Government_System.md†L45-L52?? |
 | Invasions | `[invasion]` | Open the city invasion gump and start or stop city assaults. ?F:docs/wiki/Invasion_System.md†L6-L21?? |
 | XMLSpawner | `[XmlAdd]`, `[XmlEdit]`, `[XmlFind]`, `[XmlHome]`, `[XmlLoad]`, `[XmlLoadHere]`, `[XmlSave]`, `[XmlSaveAll]`, attachment commands | Create, edit, find, load, save, and attach XML-driven spawner content. ?F:docs/wiki/XML_Spawner_Enhancements.md†L3-L18?? |
@@ -315,7 +315,7 @@ First, character level is now canonical. The recon report describes the live
 service, player level display routing, player random encounter routing, and the
 remaining creature legacy path. ?F:docs/wiki/Character_Level_Recon_Report.md†L3-L10??
 The current code routes visible player level and random encounter player level
-checks through that service. ?F:Data/Scripts/Custom/CharacterLevel/CharacterLevelService.cs†L99-L224?? ?F:Data/Scripts/System/Misc/Players.cs†L893-L901?? ?F:Data/Scripts/Custom/RandomEncounters/Helpers.cs†L113-L121??
+checks through that service. ?F:Data/Scripts/Custom/Progression/CharacterLevel/CharacterLevelService.cs†L99-L224?? ?F:Data/Scripts/System/Misc/Players.cs†L893-L901?? ?F:Data/Scripts/Custom/RandomEncounters/Helpers.cs†L113-L121??
 
 Second, random encounters have been moved from placeholder-ish low gates toward
 a real 1-100 dungeon curve, while player checks now honor the encounter alias
@@ -356,7 +356,7 @@ The safest first reads are:
 
 - `docs/wiki/Random_Encounter_Engine.md` for the current live dynamic PvE model.
 - `docs/wiki/Character_Level_Recon_Report.md` plus
-  `Data/Scripts/Custom/CharacterLevel/CharacterLevelService.cs` for progression.
+  `Data/Scripts/Custom/Progression/CharacterLevel/CharacterLevelService.cs` for progression.
 - `docs/AI_OVERHAUL_AUDIT.md` before touching creature AI.
 - `docs/SystemAudit.md` for the full system inventory and documentation gaps.
 - `docs/wiki/Government_System.md`, `docs/wiki/Homestead_System.md`,

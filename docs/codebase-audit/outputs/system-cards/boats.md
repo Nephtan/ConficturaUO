@@ -94,7 +94,7 @@ Deferred to Phase 9 synergy and conflict matrix.
 
 ## Documentation
 
-docs/wiki/Boat_Core_Mechanics.md;docs/wiki/boat-navigation-control.md;docs/wiki/NPC_Shipwright_Sailing_Guide.md;docs/wiki/Shipwright_Sailing_Tutorial.md
+docs/codebase-audit/outputs/system-cards/boats.md;docs/wiki/Boat_Core_Mechanics.md;docs/wiki/boat-navigation-control.md;docs/wiki/NPC_Shipwright_Sailing_Guide.md;docs/wiki/Shipwright_Sailing_Tutorial.md
 
 ## Verification Status
 

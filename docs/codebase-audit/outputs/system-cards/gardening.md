@@ -121,7 +121,7 @@ Deferred to Phase 9 synergy and conflict matrix.
 
 ## Documentation
 
-docs/wiki/Gardening_System.md
+docs/codebase-audit/outputs/system-cards/gardening.md;docs/wiki/Gardening_System.md
 
 ## Verification Status
 

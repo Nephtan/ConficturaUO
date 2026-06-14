@@ -1,16 +1,16 @@
 # Phase 7 Documentation Truth Audit Summary
 
-Generated: 2026-06-13T19:42:39.2056972-05:00
+Generated: 2026-06-13T20:42:57.2889368-05:00
 
 ## Required Inputs
 
 | Input | Status |
 | --- | --- |
-| Documentation inventory | Present: `phase-01-documentation-inventory.csv` with 141 rows |
+| Documentation inventory | Present: `phase-01-documentation-inventory.csv` with 199 rows |
 | Wiki index | Present: `docs/wiki/INDEX.md` with 108 indexed links |
 | Wiki backlog | Present: `docs/wiki/wikibacklog.md` with 17 rows |
 | System Cards | Present: `phase-04-system-card-index.csv` with 27 rows |
-| Runtime Hook Map | Present: `runtime-hook-map.csv` with 6604 rows |
+| Runtime Hook Map | Present: `runtime-hook-map.csv` with 6605 rows |
 | Serialization Register | Present: `serialization-register.csv` with 9158 rows |
 | Project Truth Register | Present: `project-truth-register.csv` with 13162 rows |
 

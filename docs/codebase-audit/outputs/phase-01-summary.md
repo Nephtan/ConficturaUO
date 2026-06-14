@@ -1,6 +1,6 @@
 # Phase 1 Reproducible Inventory Summary
 
-Generated: 2026-06-05T16:38:36.9628575-05:00
+Generated: 2026-06-13T20:35:32.1949725-05:00
 
 ## Required Inputs
 
@@ -20,19 +20,19 @@ Generated: 2026-06-05T16:38:36.9628575-05:00
 | phase-01-source-files.csv | 6700 | All .cs source files under audit roots, excluding generated output folders. |
 | phase-01-project-files.csv | 5 | .sln and .csproj files. |
 | phase-01-config-files.csv | 190 | XML/config/data files under Data, excluding generated output folders. |
-| phase-01-agents.csv | 39 | Instruction scope files. |
-| phase-01-project-includes.csv | 6571 | Scripts.csproj compile includes decoded and resolved with literal path checks. |
-| phase-01-missing-compile-targets.csv | 82 | Compile includes whose target file does not exist. |
-| phase-01-unincluded-source-files.csv | 92 | Real script .cs files absent from Scripts.csproj. |
+| phase-01-agents.csv | 40 | Instruction scope files. |
+| phase-01-project-includes.csv | 6581 | Scripts.csproj compile includes decoded and resolved with literal path checks. |
+| phase-01-missing-compile-targets.csv | 0 | Compile includes whose target file does not exist. |
+| phase-01-unincluded-source-files.csv | 0 | Real script .cs files absent from Scripts.csproj. |
 | phase-01-namespace-type-inventory.csv | 6700 | Namespace and declared type markers. |
-| phase-01-runtime-marker-inventory.csv | 6604 | Runtime entry marker hits for commands, hooks, timers, gumps, and regions. |
+| phase-01-runtime-marker-inventory.csv | 6605 | Runtime entry marker hits for commands, hooks, timers, gumps, and regions. |
 | phase-01-command-registration-inventory.csv | 499 | Command registration marker hits. |
 | phase-01-event-packet-hook-inventory.csv | 1228 | Event, packet, timer, and world hook marker hits. |
 | phase-01-serialization-marker-inventory.csv | 5342 | Serializer-related marker summary by file. |
 | phase-01-gump-inventory.csv | 4066 | Gump open and response marker hits. |
 | phase-01-config-reference-inventory.csv | 114 | String references to XML/config/text/json data files in source. |
-| phase-01-documentation-inventory.csv | 141 | Markdown inventory with source-trace, code-verified, needs-rework, slug, and link markers. |
-| phase-01-duplicate-doc-slugs.csv | 2 | Duplicate normalized documentation slugs. |
+| phase-01-documentation-inventory.csv | 199 | Markdown inventory with source-trace, code-verified, needs-rework, slug, and link markers. |
+| phase-01-duplicate-doc-slugs.csv | 9 | Duplicate normalized documentation slugs. |
 
 ## Reproduction Command
 

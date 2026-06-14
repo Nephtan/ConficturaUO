@@ -66,7 +66,7 @@ Deferred to Phase 9 synergy and conflict matrix.
 
 ## Documentation
 
-docs/wiki/OmniAI.md
+docs/codebase-audit/outputs/system-cards/omniai.md;docs/wiki/OmniAI.md
 
 ## Verification Status
 

@@ -119,7 +119,7 @@ Deferred to Phase 9 synergy and conflict matrix.
 
 ## Documentation
 
-docs/wiki/Bulk_Order_System.md
+docs/codebase-audit/outputs/system-cards/bulk-orders.md;docs/wiki/Bulk_Order_System.md
 
 ## Verification Status
 

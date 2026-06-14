@@ -314,7 +314,7 @@ Deferred to Phase 9 synergy and conflict matrix.
 
 ## Documentation
 
-docs/wiki/Homestead_System.md
+docs/codebase-audit/outputs/system-cards/homestead.md;docs/wiki/Homestead_System.md
 
 ## Verification Status
 

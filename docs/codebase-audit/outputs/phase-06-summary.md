@@ -1,6 +1,6 @@
 # Phase 6 Serialization And Save Compatibility Summary
 
-Generated: 2026-06-08T14:32:08.7633046-05:00
+Generated: 2026-06-13T20:42:45.8650172-05:00
 
 ## Required Inputs
 
@@ -9,7 +9,7 @@ Generated: 2026-06-08T14:32:08.7633046-05:00
 | Serialization marker scans | Present: `phase-01-serialization-marker-inventory.csv` with 5342 file rows |
 | CrossTreeRuntimeInventory | Present: `cross-tree-runtime-inventory.csv` with 6700 rows |
 | System Cards | Present: `system-owner-map.csv` with 2629 owner rows |
-| Project Truth Register | Present: `project-truth-register.csv` with 13152 rows |
+| Project Truth Register | Present: `project-truth-register.csv` with 13162 rows |
 | Root serialization standards | Present in root `AGENTS.md` instructions |
 
 ## Generated Outputs
@@ -21,7 +21,7 @@ Generated: 2026-06-08T14:32:08.7633046-05:00
 | `phase-06-high-risk-serializer-list.csv` | 3953 | Rows requiring manual review because of high-risk systems, project truth, versioning, pairing, alignment, or move risk. |
 | `phase-06-move-rename-risk-list.csv` | 9158 | Serialized types with namespace/type or file-move risk classification. |
 | `phase-06-serializer-comment-target-list.csv` | 3105 | Candidate Phase 11 source-comment targets for fragile save behavior. |
-| `phase-06-save-compatibility-repair-backlog.csv` | 1620 | Concrete serializer follow-up items created from machine-detected risks. |
+| `phase-06-save-compatibility-repair-backlog.csv` | 1616 | Concrete serializer follow-up items created from machine-detected risks. |
 
 ## Version Handling Counts
 
@@ -58,8 +58,8 @@ Generated: 2026-06-08T14:32:08.7633046-05:00
 | Move/Rename Risk | Count |
 | --- | ---: |
 | DoNotMove | 1 |
-| NamespaceOrTypeRenameDanger | 6888 |
-| UnknownUntilBuildTruthRepaired | 27 |
+| NamespaceOrTypeRenameDanger | 6892 |
+| UnknownUntilBuildTruthRepaired | 23 |
 | UnknownUntilSaveTest | 2242 |
 
 ## Exit Criteria

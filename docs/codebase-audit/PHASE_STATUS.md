@@ -2,7 +2,7 @@
 
 Initialized: 2026-06-05T16:15:59.8020730-05:00
 
-Last updated: 2026-06-13T20:17:10.5956233-05:00
+Last updated: 2026-06-13T20:49:49.0363375-05:00
 
 Branch: `SAR`
 
@@ -295,6 +295,8 @@ Post-audit hooks/gumps/commands/regions: `POST-BATCH-E-54A` fixed the System:Mis
 Post-audit save compatibility blocker resolved: `SERIAL-1298` and `SERIAL-1300` now consume the previously written duration payloads before cleanup in `BlendWithForrestSpell.cs:123-151` and `GraspingRootsSpell.cs:116-132`. Verification: `New-SerializationRegister.ps1` regenerated serialization outputs, `Server.csproj` Debug/x86 build passed with Visual Studio MSBuild, and `.\ConficturaServer.exe -compileonly -nocache` passed without listener output.
 
 Post-audit save compatibility blocker resolved: `SERIAL-0032` now writes zero ghost entries when `m_ghosts` is null in `CityResurrectionStone.cs:278-326`; `SERIAL-1356` now reads `PrisonerFullNameUsed`, `PrisonerClothColorUsed`, then `PrisonerSerial` in `SummonPrison.cs:486-540`, matching the current writer order. Verification: `New-SerializationRegister.ps1` regenerated serialization outputs, `Server.csproj` Debug/x86 build passed with Visual Studio MSBuild, and `.\ConficturaServer.exe -compileonly -nocache` passed without listener output.
+
+Post-audit reorganization pilot: `POST-BATCH-H-01A` executed the Character Level Phase 12 move from `Data/Scripts/Custom/CharacterLevel` to `Data/Scripts/Custom/Progression/CharacterLevel`, moved exactly two runtime-visible `.cs` files, updated two `Scripts.csproj` includes and current source-trace docs, regenerated runtime script compile inventory plus Phase 1/2/3/4/5/6/7/8/9 path-sensitive outputs, and added an active overlay `Fixed` disposition for `RB-06802`. Verification: git diff --check=Passed with no whitespace errors; Git emitted expected LF-to-CRLF working-copy warnings for edited text files; solution Debug/Any CPU=Passed with existing warnings; Scripts built Data/Scripts/ClassLibrary.dll and generated script-project artifacts were removed before staging; Server Debug/x86=Passed; Server built D:/ConficturaUO/ConficturaServer.exe and tracked root build artifacts were restored before staging; compile-only=Passed; compile-only output reported Scripts: Compile-only verification completed successfully and Exiting...done.
 
 Scope: Deterministic phase runner state for the Confictura codebase audit and reorganization program.
 

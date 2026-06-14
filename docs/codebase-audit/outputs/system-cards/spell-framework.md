@@ -319,7 +319,7 @@ Deferred to Phase 9 synergy and conflict matrix.
 
 ## Documentation
 
-docs/wiki/Base_Spell_Framework.md;docs/wiki/Mage_Spellcasting_Tips.md;docs/wiki/Magery_Spell_Color_Setting.md;docs/wiki/Magery_Spell_System.md;docs/wiki/Misc_Magic_Spells.md
+docs/codebase-audit/outputs/system-cards/spell-framework.md;docs/wiki/Base_Spell_Framework.md;docs/wiki/Mage_Spellcasting_Tips.md;docs/wiki/Magery_Spell_Color_Setting.md;docs/wiki/Magery_Spell_System.md;docs/wiki/Misc_Magic_Spells.md
 
 ## Verification Status
 

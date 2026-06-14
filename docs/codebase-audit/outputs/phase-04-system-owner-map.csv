@@ -1,6 +1,6 @@
 "System","Classification","File","PrimaryRole","SecondaryRoles","RuntimeHooks","SerializedState","Gumps","ConfigData","VerificationStatus"
-"Character Level","GameplayLayer","Data/Scripts/Custom/CharacterLevel/CharacterLevelCommands.cs","CommandSurface","StartupWiring;PlayerProgression","Initialize","","","","PartiallyVerified"
-"Character Level","GameplayLayer","Data/Scripts/Custom/CharacterLevel/CharacterLevelService.cs","PlayerProgression","","","","","","PartiallyVerified"
+"Character Level","GameplayLayer","Data/Scripts/Custom/Progression/CharacterLevel/CharacterLevelCommands.cs","CommandSurface","StartupWiring;PlayerProgression","Initialize","","","","PartiallyVerified"
+"Character Level","GameplayLayer","Data/Scripts/Custom/Progression/CharacterLevel/CharacterLevelService.cs","PlayerProgression","","","","","","PartiallyVerified"
 "Random Encounters","GameplayLayer","Data/Scripts/Custom/RandomEncounters/Commands.cs","CommandSurface","StartupWiring;WorldState","Initialize","","","","PartiallyVerified"
 "Random Encounters","GameplayLayer","Data/Scripts/Custom/RandomEncounters/Definitions.cs","WorldState","","","","","","PartiallyVerified"
 "Random Encounters","GameplayLayer","Data/Scripts/Custom/RandomEncounters/EncounterEngine.cs","StartupWiring","WorldState","Initialize","","","./Data/Scripts/Custom/RandomEncounters/RandomEncounters.xml","PartiallyVerified"

@@ -14,8 +14,8 @@ Matched source files: 2.
 
 | File | Primary Role | Runtime Hooks | Serialized | Gumps |
 | --- | --- | --- | --- | --- |
-| Data/Scripts/Custom/CharacterLevel/CharacterLevelCommands.cs | CommandSurface | Initialize | No |  |
-| Data/Scripts/Custom/CharacterLevel/CharacterLevelService.cs | PlayerProgression |  | No |  |
+| Data/Scripts/Custom/Progression/CharacterLevel/CharacterLevelCommands.cs | CommandSurface | Initialize | No |  |
+| Data/Scripts/Custom/Progression/CharacterLevel/CharacterLevelService.cs | PlayerProgression |  | No |  |
 
 ## Data Files
 
@@ -25,8 +25,8 @@ No XML/config/text/json references were found in Phase 1 string-reference marker
 
 | Entry | Evidence |
 | --- | --- |
-| Command $(Escape-MarkdownCell @{Command=; AccessLevel=; Handler=; File=Data/Scripts/Custom/CharacterLevel/CharacterLevelCommands.cs; Line=14; LikelySystem=Custom:CharacterLevel; RegistrationLine=CommandSystem.Register(}.Command) | Data/Scripts/Custom/CharacterLevel/CharacterLevelCommands.cs:14 |
-| Command $(Escape-MarkdownCell @{Command=; AccessLevel=; Handler=; File=Data/Scripts/Custom/CharacterLevel/CharacterLevelCommands.cs; Line=20; LikelySystem=Custom:CharacterLevel; RegistrationLine=CommandSystem.Register(}.Command) | Data/Scripts/Custom/CharacterLevel/CharacterLevelCommands.cs:20 |
+| Command $(Escape-MarkdownCell @{Command=; AccessLevel=; Handler=; File=Data/Scripts/Custom/Progression/CharacterLevel/CharacterLevelCommands.cs; Line=14; LikelySystem=Custom:Progression; RegistrationLine=CommandSystem.Register(}.Command) | Data/Scripts/Custom/Progression/CharacterLevel/CharacterLevelCommands.cs:14 |
+| Command $(Escape-MarkdownCell @{Command=; AccessLevel=; Handler=; File=Data/Scripts/Custom/Progression/CharacterLevel/CharacterLevelCommands.cs; Line=20; LikelySystem=Custom:Progression; RegistrationLine=CommandSystem.Register(}.Command) | Data/Scripts/Custom/Progression/CharacterLevel/CharacterLevelCommands.cs:20 |
 
 ## Staff Entry Points
 

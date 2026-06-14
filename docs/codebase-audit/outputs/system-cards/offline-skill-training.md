@@ -65,7 +65,7 @@ Deferred to Phase 9 synergy and conflict matrix.
 
 ## Documentation
 
-docs/wiki/offline-skill-training.md
+docs/codebase-audit/outputs/system-cards/offline-skill-training.md;docs/wiki/offline-skill-training.md
 
 ## Verification Status
 
