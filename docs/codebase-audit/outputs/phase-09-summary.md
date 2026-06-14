@@ -1,12 +1,12 @@
 # Phase 9 Synergy And Conflict Matrix Summary
 
-Generated: 2026-06-13T23:04:24.4055575-05:00
+Generated: 2026-06-13T23:17:29.0352849-05:00
 
 ## Required Inputs
 
 | Input | Status |
 | --- | --- |
-| Dependency Graph | Present: `dependency-graph.csv` with 30212 rows |
+| Dependency Graph | Present: `dependency-graph.csv` with 30211 rows |
 | System Cards | Present: `phase-04-system-card-index.csv` with 27 rows |
 | Documentation Truth Table | Present: `documentation-truth-table.csv` with 122 rows |
 | Runtime Hook Map | Present: `runtime-hook-map.csv` with 6605 rows |

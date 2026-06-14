@@ -14,27 +14,27 @@ Matched source files: 11.
 
 | File | Primary Role | Runtime Hooks | Serialized | Gumps |
 | --- | --- | --- | --- | --- |
-| Data/Scripts/Custom/RandomEncounters/Commands.cs | CommandSurface | Initialize | No |  |
-| Data/Scripts/Custom/RandomEncounters/Definitions.cs | WorldState |  | No |  |
-| Data/Scripts/Custom/RandomEncounters/EncounterEngine.cs | StartupWiring | Initialize | No |  |
-| Data/Scripts/Custom/RandomEncounters/Helpers.cs | StartupWiring | Initialize | No |  |
-| Data/Scripts/Custom/RandomEncounters/Import.cs | Persistence |  | Yes |  |
-| Data/Scripts/Custom/RandomEncounters/Records.cs | WorldState |  | No |  |
-| Data/Scripts/Custom/RandomEncounters/RedBlackTree.cs | WorldState |  | No |  |
-| Data/Scripts/Custom/RandomEncounters/SpawnFinder.cs | WorldState |  | No |  |
-| Data/Scripts/Custom/RandomEncounters/Timers.cs | StartupWiring | CustomTimerSubclass | No |  |
-| Data/Scripts/Custom/RandomEncounters/XmlDateCount.cs | Persistence |  | Yes |  |
-| Data/Scripts/Custom/RandomEncounters/XmlLinePreservingDoc.cs | WorldState |  | No |  |
+| Data/Scripts/Custom/PvE/RandomEncounters/Commands.cs | CommandSurface | Initialize | No |  |
+| Data/Scripts/Custom/PvE/RandomEncounters/Definitions.cs | WorldState |  | No |  |
+| Data/Scripts/Custom/PvE/RandomEncounters/EncounterEngine.cs | StartupWiring | Initialize | No |  |
+| Data/Scripts/Custom/PvE/RandomEncounters/Helpers.cs | StartupWiring | Initialize | No |  |
+| Data/Scripts/Custom/PvE/RandomEncounters/Import.cs | Persistence |  | Yes |  |
+| Data/Scripts/Custom/PvE/RandomEncounters/Records.cs | WorldState |  | No |  |
+| Data/Scripts/Custom/PvE/RandomEncounters/RedBlackTree.cs | WorldState |  | No |  |
+| Data/Scripts/Custom/PvE/RandomEncounters/SpawnFinder.cs | WorldState |  | No |  |
+| Data/Scripts/Custom/PvE/RandomEncounters/Timers.cs | StartupWiring | CustomTimerSubclass | No |  |
+| Data/Scripts/Custom/PvE/RandomEncounters/XmlDateCount.cs | Persistence |  | Yes |  |
+| Data/Scripts/Custom/PvE/RandomEncounters/XmlLinePreservingDoc.cs | WorldState |  | No |  |
 
 ## Data Files
 
-./Data/Scripts/Custom/RandomEncounters/RandomEncounters.xml;Data/Import/Premiums/RandomEncounters.xml
+./Data/Scripts/Custom/PvE/RandomEncounters/RandomEncounters.xml;Data/Import/Premiums/RandomEncounters.xml
 
 ## Player Entry Points
 
 | Entry | Evidence |
 | --- | --- |
-| Command $(Escape-MarkdownCell @{Command=; AccessLevel=; Handler=; File=Data/Scripts/Custom/RandomEncounters/Commands.cs; Line=23; LikelySystem=Custom:RandomEncounters; RegistrationLine=Server.Commands.CommandSystem.Register(}.Command) | Data/Scripts/Custom/RandomEncounters/Commands.cs:23 |
+| Command $(Escape-MarkdownCell @{Command=; AccessLevel=; Handler=; File=Data/Scripts/Custom/PvE/RandomEncounters/Commands.cs; Line=23; LikelySystem=Custom:PvE; RegistrationLine=Server.Commands.CommandSystem.Register(}.Command) | Data/Scripts/Custom/PvE/RandomEncounters/Commands.cs:23 |
 
 ## Staff Entry Points
 

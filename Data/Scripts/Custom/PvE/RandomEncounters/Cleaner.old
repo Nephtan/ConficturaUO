@@ -1,0 +1,147 @@
+//------------------------------------------------------------------------------
+//  
+//------------------------------------------------------------------------------
+using System;
+using System.Collections;
+//------------------------------------------------------------------------------
+using Server;
+using Server.Items;
+using Server.Multis;
+using Server.Mobiles;
+using Server.Accounting;
+using Server.Engines.XmlSpawner2;
+//------------------------------------------------------------------------------
+//  The Cleaner--this runs once every server start to look for items that were
+//               created by random encounter system and tagged
+//------------------------------------------------------------------------------
+namespace Server.Misc
+{
+    public class Cleaner
+    {
+        public static void Initialize()
+        {
+            Timer.DelayCall( 
+                TimeSpan.FromSeconds( 2.5 ), 
+                new TimerCallback( Run ) 
+                );
+        }
+
+        public static void Run( )
+        {
+            if( RandomEncounterEngine.Debug ) Console.Write("RandomEncounters: Running Cleaner...");
+
+            //ArrayList itemDeleteList = new ArrayList();
+
+//            int nAttachments = 0;
+//
+//            foreach( XmlAttachment attachment in XmlAttach.AllAttachments.Values )
+//            {
+//                if( attachment is XmlDate )
+//                {
+//                    XmlDate xmlDate = (XmlDate) attachment;
+//
+//                    if( xmlDate.Name == "RandomEncountersCreated" )
+//                    {
+//                        object attachedTo = xmlDate.AttachedTo;
+//
+//                        nAttachments++;
+//
+//                        if( attachedTo is Item )
+//                        {
+//                        }
+//                        else if( attachedTo is Mobile )
+//                        {
+//                            if( attachedTo is BaseCreature )
+//                            {
+//                                BaseCreature c = (BaseCreature) attachedTo;
+//                            }
+//                        }
+//
+//                        if( nAttachments % 20 == 0 ) Console.Write(".");
+//                    }
+//                }
+//            }
+//            Console.WriteLine("\nRandomEncounters: Cleaned {0} objects", nAttachments);
+
+//            foreach ( Item item in World.Items.Values )
+//            {
+//                XmlDate creationTime = (XmlDate) XmlAttach.FindAttachment( item, typeof( XmlDate ), "RandomEncountersCreated" );
+//
+//                // Random Encounters shouldn't tag anything but !Movables; however we'll be very
+//                // careful here and make sure that all tagged items are also not movable.
+//
+//                if( creationTime!= null && !item.Movable )
+//                {
+//                    itemDeleteList.Add( item );
+//                }
+//            }
+//
+//            if( RandomEncounterEngine.Debug ) Console.WriteLine("RandomEncounters: Cleaning Done.");
+
+//            foreach ( Mobile mobile in World.Mobiles.Values )
+//            {
+//                bool    delete = false;
+//
+//                if ( mobile is PlayerMobile ) 
+//                {
+//                    if( ((PlayerMobile) mobile).Account == null )
+//                    {
+//                        //if( RandomEncounterEngine.Debug ) Console.WriteLine("Found player with null account: " + mobile.Name);
+//                        delete = true;
+//                        //Account acct = Accounts.GetAccount("admin");
+//                        //acct[1] = mobile;
+//                        //Console.WriteLine("Assigned to admin");
+//                    }
+//                    else continue;
+//                }
+//
+//                if ( 
+//                    mobile.Map == null
+//                    ||
+//                    mobile.Map == Map.Internal
+//                    ||
+//                    mobile.Location == Point3D.Zero
+//                   )
+//                {
+//                    delete = true;
+//                }
+//
+//                if ( mobile is BaseVendor || mobile is BaseChampion ) 
+//                {
+//                    // we delete these if they have bad maps, otherwise not
+//                    if (!delete) continue; 
+//                }
+//
+//                if (
+//                    mobile is BaseCreature
+//                    && 
+//                    ((BaseCreature) mobile).Owners.Count <= 0
+//                    && 
+//                    ((BaseCreature) mobile).Combatant == null
+//                   )
+//                {
+//                    //if( RandomEncounterEngine.Debug ) Console.WriteLine("Cleaner: Mobile {0} no longer needs to exist...", mobile.Name);
+//                    delete = true;
+//                }
+//                
+//                if( delete )
+//                {
+//                    //if( RandomEncounterEngine.Debug ) Console.WriteLine("Cleaner: Marking {0} for deletion...", mobile.Name);
+//                    //deleteList.Add( mobile );
+//                }
+//            }
+
+            //if( RandomEncounterEngine.Debug ) Console.WriteLine("Cleaner: Cleaning " + deleteList.Count);
+
+//            if ( itemDeleteList.Count > 0 )
+//            {
+//                //if( RandomEncounterEngine.Debug ) Console.WriteLine( "Cleaner: Detected {0} inaccessible mobile's, removing..", deleteList.Count );
+//                foreach ( Item item in itemDeleteList ) 
+//                {
+//                    if( RandomEncounterEngine.Debug ) Console.WriteLine( "Cleaner: Deleting " + item );
+//                    item.Delete();
+//                }
+//            }
+        }
+    }
+}

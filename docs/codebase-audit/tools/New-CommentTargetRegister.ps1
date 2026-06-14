@@ -218,13 +218,13 @@ foreach ($candidate in $candidates)
         $verification))
 }
 
-$randomEncounterLine = Find-CommentLine 'Data/Scripts/Custom/RandomEncounters/Helpers.cs' 'Player encounters intentionally use CharacterLevelService'
-$randomEncounterEvidence = 'Random Encounters->Character Level:DirectReference:Data/Scripts/Custom/RandomEncounters/Helpers.cs:L118:CharacterLevelService'
+$randomEncounterLine = Find-CommentLine 'Data/Scripts/Custom/PvE/RandomEncounters/Helpers.cs' 'Player encounters intentionally use CharacterLevelService'
+$randomEncounterEvidence = 'Random Encounters->Character Level:DirectReference:Data/Scripts/Custom/PvE/RandomEncounters/Helpers.cs:L118:CharacterLevelService'
 [void]$reviewed.Add((New-ReviewedRow `
     'P11-MANUAL-0001' `
     '' `
     '11.4 Cross-System Dependency Comments' `
-    'Data/Scripts/Custom/RandomEncounters/Helpers.cs' `
+    'Data/Scripts/Custom/PvE/RandomEncounters/Helpers.cs' `
     'Server.Custom.Confictura.RandomEncounters.Helpers' `
     'CalculateLevelForMobile' `
     'Dependency' `

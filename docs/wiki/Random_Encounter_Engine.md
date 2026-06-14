@@ -1,19 +1,19 @@
 # Random Encounter Engine
 
-This page documents the random encounter engine as the compiled C# currently behaves. The live encounter tables come from `Data/Scripts/Custom/RandomEncounters/RandomEncounters.xml`; the wiki is not the source of truth for per-region spawn lists.
+This page documents the random encounter engine as the compiled C# currently behaves. The live encounter tables come from `Data/Scripts/Custom/PvE/RandomEncounters/RandomEncounters.xml`; the wiki is not the source of truth for per-region spawn lists.
 
 ## Key Scripts
-- `Data/Scripts/Custom/RandomEncounters/EncounterEngine.cs`
-- `Data/Scripts/Custom/RandomEncounters/Timers.cs`
-- `Data/Scripts/Custom/RandomEncounters/SpawnFinder.cs`
-- `Data/Scripts/Custom/RandomEncounters/Helpers.cs`
-- `Data/Scripts/Custom/RandomEncounters/Records.cs`
-- `Data/Scripts/Custom/RandomEncounters/Commands.cs`
-- `Data/Scripts/Custom/RandomEncounters/RandomEncounters.xml`
+- `Data/Scripts/Custom/PvE/RandomEncounters/EncounterEngine.cs`
+- `Data/Scripts/Custom/PvE/RandomEncounters/Timers.cs`
+- `Data/Scripts/Custom/PvE/RandomEncounters/SpawnFinder.cs`
+- `Data/Scripts/Custom/PvE/RandomEncounters/Helpers.cs`
+- `Data/Scripts/Custom/PvE/RandomEncounters/Records.cs`
+- `Data/Scripts/Custom/PvE/RandomEncounters/Commands.cs`
+- `Data/Scripts/Custom/PvE/RandomEncounters/RandomEncounters.xml`
 - `Data/Scripts/Custom/Progression/CharacterLevel/CharacterLevelService.cs`
 
 ## Runtime Summary
-- The engine loads `Data/Scripts/Custom/RandomEncounters/RandomEncounters.xml` on initialization.
+- The engine loads `Data/Scripts/Custom/PvE/RandomEncounters/RandomEncounters.xml` on initialization.
 - A reinitialize timer checks that file every 15 seconds and reloads the system after the file write time changes.
 - Encounter timers are always created for `DungeonRegion`, `CaveRegion`, `BardDungeonRegion`, `OutDoorRegion`, and `VillageRegion`, even if the XML only defines some of those region types.
 - Spawned mobiles and items receive a `RandomEncountersCreated` XML attachment so the cleanup timer can track them later.

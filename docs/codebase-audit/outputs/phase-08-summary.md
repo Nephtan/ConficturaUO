@@ -1,6 +1,6 @@
 # Phase 8 Dependency Graph Summary
 
-Generated: 2026-06-13T23:04:55.2993775-05:00
+Generated: 2026-06-13T23:18:10.2567991-05:00
 
 ## Required Inputs
 
@@ -17,10 +17,10 @@ Generated: 2026-06-13T23:04:55.2993775-05:00
 
 | Output | Rows | Purpose |
 | --- | ---: | --- |
-| `dependency-graph.csv` | 30211 | Canonical dependency graph. |
-| `phase-08-dependency-graph.csv` | 30211 | Phase-scoped dependency graph. |
+| `dependency-graph.csv` | 30209 | Canonical dependency graph. |
+| `phase-08-dependency-graph.csv` | 30209 | Phase-scoped dependency graph. |
 | `phase-08-hard-dependency-list.csv` | 29900 | Hard source, runtime, serialization, project, and config dependencies. |
-| `phase-08-soft-dependency-list.csv` | 311 | Soft or speculative documentation/config relationships. |
+| `phase-08-soft-dependency-list.csv` | 309 | Soft or speculative documentation/config relationships. |
 | `phase-08-conflict-edge-list.csv` | 1214 | Conflict, mismatch, duplicate, or manual-review edges. |
 | `phase-08-standalone-proof-list.csv` | 27 | Negative-evidence standalone proof table for system-card systems. |
 
@@ -30,7 +30,7 @@ Generated: 2026-06-13T23:04:55.2993775-05:00
 | --- | ---: |
 | DirectReference | 1508 |
 | DocsOnly | 114 |
-| DocsSourceTrace | 190 |
+| DocsSourceTrace | 188 |
 | DocumentationConflict | 2 |
 | GlobalHook | 227 |
 | PacketHandler | 17 |
@@ -45,7 +45,7 @@ Generated: 2026-06-13T23:04:55.2993775-05:00
 | Strength | Count |
 | --- | ---: |
 | Hard | 29900 |
-| Soft | 195 |
+| Soft | 193 |
 | Speculative | 116 |
 
 ## Exit Criteria

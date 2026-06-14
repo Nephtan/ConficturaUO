@@ -131,7 +131,7 @@ When `randomStart` is false, outward searches start at index `0`; inward searche
 
 ## Random Encounter Integration
 
-`Data/Scripts/Custom/RandomEncounters/SpawnFinder.cs` is the only traced consumer outside the search package.
+`Data/Scripts/Custom/PvE/RandomEncounters/SpawnFinder.cs` is the only traced consumer outside the search package.
 
 | SpawnFinder method | Search API used | Purpose |
 | --- | --- | --- |

@@ -208,7 +208,7 @@ $changeRows = @(
     [pscustomobject]@{
         Batch = 'PriorPhase11SourceComments'
         ChangeType = 'SourceCodeCommentOnly'
-        Files = 'Data/Scripts/Mobiles/Base/PlayerMobile.cs;Data/Scripts/Custom/RandomEncounters/Helpers.cs'
+        Files = 'Data/Scripts/Mobiles/Base/PlayerMobile.cs;Data/Scripts/Custom/PvE/RandomEncounters/Helpers.cs'
         VerificationRequired = 'Static comment presence checks; git diff checks; MSBuild attempted and failed on known Phase 2 Scripts.csproj missing compile targets.'
         BuildRequired = 'AttemptedEarlier'
         Reason = 'Only two explanatory comments were added; no behavior, serialization writes/reads, hooks, or project includes changed.'

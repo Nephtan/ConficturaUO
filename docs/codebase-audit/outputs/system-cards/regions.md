@@ -17,8 +17,8 @@ Matched source files: 56.
 | Data/Scripts/Custom/Champions/System/CannedEvil/ChampionSpawnRegion.cs | WorldState |  | No |  |
 | Data/Scripts/Custom/Government System/Regions/CityMarketRegion.cs | RegionPolicy | RegionOverride | No |  |
 | Data/Scripts/Custom/Government System/Regions/PlayerCityRegion.cs | RegionPolicy | OnSpeech;RegionOverride | No |  |
-| Data/Scripts/Custom/RandomEncounters/Definitions.cs | WorldState |  | No |  |
-| Data/Scripts/Custom/RandomEncounters/Records.cs | WorldState |  | No |  |
+| Data/Scripts/Custom/PvE/RandomEncounters/Definitions.cs | WorldState |  | No |  |
+| Data/Scripts/Custom/PvE/RandomEncounters/Records.cs | WorldState |  | No |  |
 | Data/Scripts/Custom/XMLSpawner/XmlPoints PvP/ChallengeGameRegion.cs | RegionPolicy | RegionOverride | No |  |
 | Data/Scripts/Custom/XMLSpawner/XmlPoints PvP/ChallengeRegionStone.cs | StartupWiring | Timer.DelayCall | Yes |  |
 | Data/Scripts/Items/Houses/BaseHouse.cs | StartupWiring | CustomTimerSubclass;Timer.DelayCall | Yes | SendGump |

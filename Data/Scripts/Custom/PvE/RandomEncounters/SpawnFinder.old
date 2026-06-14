@@ -1,0 +1,365 @@
+//------------------------------------------------------------------------------
+// <summary>
+//   
+//  </summary>
+//------------------------------------------------------------------------------
+using System;
+using System.Collections;
+//------------------------------------------------------------------------------
+using Server;
+using Server.Mobiles;
+using Server.Items;
+using Server.Regions;
+using Server.Misc;
+//------------------------------------------------------------------------------
+namespace Server.Misc
+{
+    //--------------------------------------------------------------------------
+    public class SpawnFinder
+    {
+        //----------------------------------------------------------------------
+        //  PickPointOnCircle -- picks a point a circle from clock position 0-15
+        //                       at distance from centerPoint
+        //----------------------------------------------------------------------
+        public static Point2D PickPointOnCircle( Point3D centerPoint, int position, int distance )
+        {
+            int xOffset = 0, yOffset = 0;
+            //------------------------------------------------------------------
+            //  16 points on a circle, clockwise from north; the multipliers are
+            //     normals taken from sin/cos(2R*PI/16); this works well far out,
+            //     but generates duplicate positions close in; a minor wart we'll
+            //     ignore.
+            //------------------------------------------------------------------
+            switch( position )
+            {
+                case  0: { xOffset = (int)(distance *  0.00); yOffset = (int)(distance *  1.00); break; }
+                case  1: { xOffset = (int)(distance *  0.38); yOffset = (int)(distance *  0.92); break; }
+                case  2: { xOffset = (int)(distance *  0.71); yOffset = (int)(distance *  0.71); break; }
+                case  3: { xOffset = (int)(distance *  0.92); yOffset = (int)(distance *  0.38); break; }
+    
+                case  4: { xOffset = (int)(distance *  1.00); yOffset = (int)(distance *  0.00); break; }
+                case  5: { xOffset = (int)(distance *  0.92); yOffset = (int)(distance * -0.38); break; }
+                case  6: { xOffset = (int)(distance *  0.71); yOffset = (int)(distance * -0.71); break; }
+                case  7: { xOffset = (int)(distance *  0.38); yOffset = (int)(distance * -0.92); break; }
+
+                case  8: { xOffset = (int)(distance *  0.00); yOffset = (int)(distance * -1.00); break; }
+                case  9: { xOffset = (int)(distance * -0.38); yOffset = (int)(distance * -0.92); break; }
+                case 10: { xOffset = (int)(distance * -0.71); yOffset = (int)(distance * -0.71); break; }
+                case 11: { xOffset = (int)(distance * -0.92); yOffset = (int)(distance * -0.38); break; }
+
+                case 12: { xOffset = (int)(distance * -1.00); yOffset = (int)(distance *  0.00); break; }
+                case 13: { xOffset = (int)(distance * -0.92); yOffset = (int)(distance *  0.38); break; }
+                case 14: { xOffset = (int)(distance * -0.71); yOffset = (int)(distance *  0.71); break; }
+                case 15: { xOffset = (int)(distance * -0.38); yOffset = (int)(distance *  0.92); break; }
+            }
+
+            return new Point2D( centerPoint.X + xOffset, centerPoint.Y + yOffset );
+        }
+        //----------------------------------------------------------------------
+        //  Here, we are going to spiral inwards towards the center point,
+        //  picking the first spawnable location at the outer most edge of
+        //  the spiral that we encounter; a random starting position on the
+        //  spiral ensures no bias towards particular positions
+        //----------------------------------------------------------------------
+        public static bool FindInwards(
+            PlayerMobile    pm,
+            Point3D         centerPoint,
+            ref Point3D     spawnPoint,
+            LandType        landType,
+            int             distance,
+            EffectType      effectType,
+            int             effectHue
+            )
+        {
+            return FindInternal( pm, centerPoint, ref spawnPoint, landType, distance, true, effectType, effectHue );
+        }
+        //----------------------------------------------------------------------
+        //  Opposite of the above; we want the first spawn location closest to
+        //  the center -- no closer than the initial distance
+        //----------------------------------------------------------------------
+        public static bool FindOutwards(
+            PlayerMobile    pm,
+            Point3D         centerPoint,
+            ref Point3D     spawnPoint,
+            LandType        landType,
+            int             distance,
+            EffectType      effectType,
+            int             effectHue
+            )
+        {
+            return FindInternal( pm, centerPoint, ref spawnPoint, landType, distance, false, effectType, effectHue );
+        }
+        //----------------------------------------------------------------------
+        //  Here, we are going to search the quadrant that it is ahead of the player, because
+        //  he is running
+        //----------------------------------------------------------------------
+        public static bool FindAhead(
+            PlayerMobile    playerMobile,
+            Point3D         centerPoint,
+            ref Point3D     spawnPoint,
+            LandType        landType,
+            int             distance,
+            EffectType      effectType,
+            int             effectHue
+            )
+        {
+            Direction direction = playerMobile.Direction;
+
+            return false;
+        }
+        //----------------------------------------------------------------------
+        //  Implementation of the find spiral pattern; supports inwards from
+        //    distance, and outwards from distance searches
+        //----------------------------------------------------------------------
+        private static bool FindInternal(
+            /*
+            Map             map,
+            Region          sourceRegion,
+            */
+            PlayerMobile    pm,
+            Point3D         centerPoint,
+            ref Point3D     spawnPoint,
+            LandType        landType,
+            int             distance,
+            bool            inwards,
+            EffectType      effectType,
+            int             effectHue
+            )
+        {
+            Map             map             = pm.Map;
+            Region          sourceRegion    = pm.Region;
+
+            int             startingPos     = Utility.RandomMinMax( 0, 15 );
+
+            for( int i = 0;; i++ )
+            {
+                int     currentPos        = ( startingPos + i ) % 16;                
+                int     iteration         = i / 16;
+                int     currentDistance   = inwards ? distance - iteration : distance + iteration;
+
+                //if (iteration > 4) return false;
+
+                Point2D currentPoint = PickPointOnCircle( centerPoint, currentPos, currentDistance );
+
+                //--------------------------------------------------------------
+                //  We've spiraled to the center:
+                //--------------------------------------------------------------
+
+                if( inwards && currentPoint.X == centerPoint.X && currentPoint.Y == centerPoint.Y )
+                {
+                    return false;
+                }
+
+                Tile        landTile  = map.Tiles.GetLandTile( centerPoint.X, centerPoint.Y );
+                Tile        spawnTile   = map.Tiles.GetLandTile( currentPoint.X, currentPoint.Y );
+                Tile[]      staticTiles = map.Tiles.GetStaticTiles( currentPoint.X, currentPoint.Y, true );
+
+                Region r = Region.Find( new Point3D( currentPoint.X, currentPoint.Y, landTile.Z ), map );
+
+                if( r.GetType() != sourceRegion.GetType() ) continue;
+
+                if( r is HouseRegion ) continue;
+
+                //--------------------------------------------------------------
+                //  WATER LOCATION:
+                //--------------------------------------------------------------
+                if ((TileData.LandTable[spawnTile.ID & 0x3FFF].Flags & TileFlag.Wet) == TileFlag.Wet)
+                {
+                    if( landType != LandType.Water ) continue; // water tile, isn't a water encounter
+
+                    //----------------------------------------------------------
+                    // Instead of the CanSpawn function we use can fit, as it allows us to not require
+                    // a surface (which defaults to true otherwise)
+                    //----------------------------------------------------------
+
+                    if (map.CanFit( currentPoint.X, currentPoint.Y, spawnTile.Z, 16, true, true, false ))
+                    {
+                        spawnPoint.X = currentPoint.X;
+                        spawnPoint.Y = currentPoint.Y;
+                        spawnPoint.Z = spawnTile.Z;
+
+                        return true;
+                    }
+                    //----------------------------------------------------------
+                    // XXX -- note; there is a degenerate case where the static and not the land tile
+                    //        determines water. This is along coastlines, and in rivers and the like;
+                    //        may be useful later, as we can take "Wet" cells to generally be "at sea".
+                    //  For now, though, we are ignoring these static wet tiles. One reason for
+                    //        this is that if we don't we could end up getting dolphins in small
+                    //        inland lakes.
+                    //----------------------------------------------------------
+                }
+                //--------------------------------------------------------------
+                //  LAND LOCATION:
+                //--------------------------------------------------------------
+                else
+                {
+                    if( landType == LandType.Water ) continue; // land tile, isn't a land encounter
+
+                    //  search for wet static tiles; these are coastal cells; 
+                    //  if we we want land, we don't want to spawn in cells like these:
+
+                    bool foundWet = false;
+                    foreach( Tile staticTile in staticTiles ) 
+                    {
+                        if ((TileData.ItemTable[staticTile.ID & 0x3FFF].Flags & TileFlag.Wet) == TileFlag.Wet) 
+                        {
+                            foundWet=true;
+                            break;
+                        }
+                    }
+
+                    if( foundWet ) continue;
+
+//if( RandomEncounterEngine.DebugEffect )
+//Effects.SendLocationParticles( 
+//EffectItem.Create( new Point3D( currentPoint.X, currentPoint.Y, centerPoint.Z), map, EffectItem.DefaultDuration ), 
+//0x37CC, 1, 40, 36, 3, 9917, 0 
+//);
+
+                    // we will probe highest to lowest if the player is above ground level (e.g, they are in  a tower),
+                    // or lowest to highest otherwise:
+
+                    ArrayList staticTileArray = new ArrayList( staticTiles );
+                    staticTileArray.Sort( new TileComparer() );
+                    if( centerPoint.Z > landTile.Z ) staticTileArray.Reverse();
+
+                    foreach( Tile staticTile in staticTileArray )
+                    {
+                        if (map.CanSpawnMobile( currentPoint.X, currentPoint.Y, staticTile.Z))
+                        {
+                            spawnPoint.X = currentPoint.X;
+                            spawnPoint.Y = currentPoint.Y;
+                            spawnPoint.Z = staticTile.Z;
+
+                            if( RandomEncounterEngine.DebugEffect )
+                                Effects.SendLocationParticles( 
+                                    EffectItem.Create( new Point3D( spawnPoint.X, spawnPoint.Y, spawnPoint.Z), map, EffectItem.DefaultDuration ), 
+                                    0x37CC, 1, 40, 96, 3, 9917, 0 
+                                    );
+                            else if( effectType != EffectType.None )
+                            {
+                                EffectEntry effect = EffectEntry.Lookup[(int)effectType];
+
+                                Effects.SendLocationParticles( 
+                                    EffectItem.Create( new Point3D( spawnPoint.X, spawnPoint.Y, spawnPoint.Z), map, EffectItem.DefaultDuration ), 
+                                    effect.Animation, effect.Speed, effect.Duration, effectHue, effect.RenderMode, effect.Effect, 0 
+                                    );
+                            }
+                            //Console.WriteLine("Found good point at static.Z");
+                            return true;
+                        }
+
+//if( RandomEncounterEngine.DebugEffect )
+//Effects.SendLocationParticles( 
+//EffectItem.Create( new Point3D( currentPoint.X, currentPoint.Y, staticTile.Z), map, EffectItem.DefaultDuration ), 
+//0x37CC, 1, 40, 36, 3, 9917, 0 
+//);
+                    }
+
+                    // probe spawn tile Z
+                    if (map.CanSpawnMobile( currentPoint.X, currentPoint.Y, spawnTile.Z))
+                    {
+                        spawnPoint.X = currentPoint.X;
+                        spawnPoint.Y = currentPoint.Y;
+                        spawnPoint.Z = spawnTile.Z;
+
+                        if( RandomEncounterEngine.DebugEffect )
+                            Effects.SendLocationParticles( 
+                                EffectItem.Create( new Point3D( spawnPoint.X, spawnPoint.Y, spawnPoint.Z), map, EffectItem.DefaultDuration ), 
+                                0x37CC, 1, 40, 36, 3, 9917, 0 
+                                );
+                        else if( effectType != EffectType.None )
+                        {
+                            EffectEntry effect = EffectEntry.Lookup[(int)effectType];
+
+                            Effects.SendLocationParticles( 
+                                EffectItem.Create( new Point3D( spawnPoint.X, spawnPoint.Y, spawnPoint.Z), map, EffectItem.DefaultDuration ), 
+                                effect.Animation, effect.Speed, effect.Duration, effectHue, effect.RenderMode, effect.Effect, 0 
+                                );
+                        }
+//Console.WriteLine("Found good point at search point.Z");
+                        return true;
+                    }
+
+                    // probe player tile Z
+                    if (map.CanSpawnMobile( currentPoint.X, currentPoint.Y, centerPoint.Z ))
+                    {
+                        spawnPoint.X = currentPoint.X;
+                        spawnPoint.Y = currentPoint.Y;
+                        spawnPoint.Z = centerPoint.Z;
+
+                        if( RandomEncounterEngine.DebugEffect )
+                            Effects.SendLocationParticles( 
+                                EffectItem.Create( new Point3D( spawnPoint.X, spawnPoint.Y, spawnPoint.Z), map, EffectItem.DefaultDuration ), 
+                                0x37CC, 1, 40, 167, 3, 9917, 0 
+                                );
+                        else if( effectType != EffectType.None )
+                        {
+                            EffectEntry effect = EffectEntry.Lookup[(int)effectType];
+
+                            Effects.SendLocationParticles( 
+                                EffectItem.Create( new Point3D( spawnPoint.X, spawnPoint.Y, spawnPoint.Z), map, EffectItem.DefaultDuration ), 
+                                effect.Animation, effect.Speed, effect.Duration, effectHue, effect.RenderMode, effect.Effect, 0 
+                                );
+                        }
+//Console.WriteLine("Found good point at center point.Z");
+                        return true;
+                    }
+
+//if( RandomEncounterEngine.DebugEffect )
+//Effects.SendLocationParticles( 
+//EffectItem.Create( new Point3D( currentPoint.X, currentPoint.Y, spawnTile.Z), map, EffectItem.DefaultDuration ), 
+//0x37CC, 1, 40, 36, 3, 9917, 0 
+//);
+                }
+            }
+        }
+
+//  X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X  
+//  X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X  
+//  X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X  
+//  X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X  
+//  X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X  
+//  X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X  
+//  X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X  
+//  X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X  
+//  X X X X X X X X X X X X X X | X X X X X X X X X X X X X X X X  
+//  X X X X X X X X \ X X X X X | X X X X X / X X X X X X X X X X  
+//  X X X X X X X X X \ X X X X | X X X X / X X X X X X X X X X X  
+//  X X X X X X X X X X \ X X X | X X X / X X X X X X X X X X X X  
+//  X X X X X X X X X X X \ X X | X X / X X X X X X X X X X X X X  
+//  X X X X X X X X X X X X \ X | X / X X X X X X X X X X X X X X  
+//  X X X X X X X X X X X X X \ | / X X X X X X X X X X X X X X X  
+//  X X X X X X X - - - - - - - O - - - - - - - - X X X X X X X X  
+//  X X X X X X X X X X X X X / | \ X X X X X X X X X X X X X X X  
+//  X X X X X X X X X X X X / X | X \ X X X X X X X X X X X X X X  
+//  X X X X X X X X X X X / X X | X X \ X X X X X X X X X X X X X  
+//  X X X X X X X X X X / X X X | X X X \ X X X X X X X X X X X X  
+//  X X X X X X X X X / X X X X | X X X X \ X X X X X X X X X X X  
+//  X X X X X X X X / X X X X X | X X X X X \ X X X X X X X X X X  
+//  X X X X X X X X X X X X X X | X X X X X X X X X X X X X X X X  
+//  X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X  
+//  X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X  
+//  X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X  
+//  X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X  
+//  X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X  
+//  X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X  
+//  X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X  
+//  X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X  
+//  X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X X  
+    }
+    public class TileComparer : IComparer
+    {
+        public int Compare( object o1, object o2 )
+        {
+            Tile tile1 = (Tile) o1;
+            Tile tile2 = (Tile) o2;
+
+            if ( tile1.Z < tile2.Z ) return -1;
+            if ( tile1.Z > tile2.Z ) return 1;
+
+            else return 0;
+        }
+    }
+}

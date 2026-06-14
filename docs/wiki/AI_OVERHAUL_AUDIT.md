@@ -20,8 +20,8 @@ This audit is based on source review and codewide search only. It does not rely 
 - `Data/Scripts/Mobiles/Base/BaseVendor.cs`
 - `Data/Scripts/Mobiles/Base/BaseHealer.cs`
 - `Data/Scripts/System/Regions/BaseRegion.cs`
-- `Data/Scripts/Custom/RandomEncounters/Import.cs`
-- `Data/Scripts/Custom/RandomEncounters/EncounterEngine.cs`
+- `Data/Scripts/Custom/PvE/RandomEncounters/Import.cs`
+- `Data/Scripts/Custom/PvE/RandomEncounters/EncounterEngine.cs`
 - `Data/Scripts/Mobiles/Civilized/Citizens/Citizens.cs`
 - `Data/Scripts/Mobiles/Civilized/Vendors/Mage.cs`
 - `Data/Scripts/Mobiles/Civilized/Vendors/Banker.cs`
@@ -1577,7 +1577,7 @@ rg -n -F "AIObject" Data/Scripts
 rg -n -F "AIObject." Data/Scripts
 rg -n --glob '!Data/Scripts/System/Obsolete/**' --glob '!Data/Scripts/Custom/XMLSpawner/**' ": base\\(AIType\\.AI_" Data/Scripts
 rg -n --glob '!Data/Scripts/System/Obsolete/**' --glob '!Data/Scripts/Custom/XMLSpawner/**' "AI\\s*=\\s*AIType\\." Data/Scripts
-rg -n "AIType\\.AI_(Vendor|Healer|Citizen|Predator)" Data/Scripts/Mobiles/Base/BaseVendor.cs Data/Scripts/Mobiles/Base/BaseHealer.cs Data/Scripts/Custom/RandomEncounters/Import.cs Data/Scripts/Custom/RandomEncounters/EncounterEngine.cs
+rg -n "AIType\\.AI_(Vendor|Healer|Citizen|Predator)" Data/Scripts/Mobiles/Base/BaseVendor.cs Data/Scripts/Mobiles/Base/BaseHealer.cs Data/Scripts/Custom/PvE/RandomEncounters/Import.cs Data/Scripts/Custom/PvE/RandomEncounters/EncounterEngine.cs
 rg -n -F "AIType.AI_Citizen" Data/Scripts/Mobiles/Base Data/Scripts/System Data/Scripts/Mobiles/Civilized
 ~~~
 

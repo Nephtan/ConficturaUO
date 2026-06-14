@@ -185,11 +185,11 @@ elite tables around `65:<alias>`, and rare spikes around `85:<alias>`.
 
 The XML itself shows those tiered gates in practice, including rare
 `85:Necromancer` and elite `65:Ranger` entries, followed by `45`, `25`, and `1`
-tiers with `scaleUp="false"`. ?F:Data/Scripts/Custom/RandomEncounters/RandomEncounters.xml†L17-L35??
+tiers with `scaleUp="false"`. ?F:Data/Scripts/Custom/PvE/RandomEncounters/RandomEncounters.xml†L17-L35??
 At runtime, the encounter engine calculates the chosen player's level against
-the encounter's `LevelType` before spawning that tier. ?F:Data/Scripts/Custom/RandomEncounters/EncounterEngine.cs†L944-L964??
+the encounter's `LevelType` before spawning that tier. ?F:Data/Scripts/Custom/PvE/RandomEncounters/EncounterEngine.cs†L944-L964??
 For players, the helper now routes encounter level checks into the canonical
-character level service. ?F:Data/Scripts/Custom/RandomEncounters/Helpers.cs†L113-L121??
+character level service. ?F:Data/Scripts/Custom/PvE/RandomEncounters/Helpers.cs†L113-L121??
 
 Champion spawns provide another style of PvE escalation. They build waves that
 advance an altar toward a champion boss, reward eligible participants with
@@ -315,12 +315,12 @@ First, character level is now canonical. The recon report describes the live
 service, player level display routing, player random encounter routing, and the
 remaining creature legacy path. ?F:docs/wiki/Character_Level_Recon_Report.md†L3-L10??
 The current code routes visible player level and random encounter player level
-checks through that service. ?F:Data/Scripts/Custom/Progression/CharacterLevel/CharacterLevelService.cs†L99-L224?? ?F:Data/Scripts/System/Misc/Players.cs†L893-L901?? ?F:Data/Scripts/Custom/RandomEncounters/Helpers.cs†L113-L121??
+checks through that service. ?F:Data/Scripts/Custom/Progression/CharacterLevel/CharacterLevelService.cs†L99-L224?? ?F:Data/Scripts/System/Misc/Players.cs†L893-L901?? ?F:Data/Scripts/Custom/PvE/RandomEncounters/Helpers.cs†L113-L121??
 
 Second, random encounters have been moved from placeholder-ish low gates toward
 a real 1-100 dungeon curve, while player checks now honor the encounter alias
 mapping. ?F:docs/wiki/Character_Level_Recon_Report.md†L76-L89??
-The current XML and documentation show that curve in live tables. ?F:Data/Scripts/Custom/RandomEncounters/RandomEncounters.xml†L17-L35?? ?F:docs/wiki/Random_Encounter_Engine.md†L68-L75??
+The current XML and documentation show that curve in live tables. ?F:Data/Scripts/Custom/PvE/RandomEncounters/RandomEncounters.xml†L17-L35?? ?F:docs/wiki/Random_Encounter_Engine.md†L68-L75??
 
 Third, AI work is being treated with caution and respect for the shard's
 complexity. The AI audit explicitly frames AI as layered behavior rather than
