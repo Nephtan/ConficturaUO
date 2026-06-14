@@ -655,7 +655,7 @@
     <Compile Include="Custom\Searches\SpiralSearch.cs" />
     <Compile Include="Custom\Searches\Types.cs" />
     <Compile Include="Custom\Skill Stone\SkillStone.cs" />
-    <Compile Include="Custom\Staff Toolbar [2.0]\Toolbar.cs" />
+    <Compile Include="Custom\ThirdParty\Staff Toolbar [2.0]\Toolbar.cs" />
     <Compile Include="Custom\TellAFriend\Rewards\StatBall.cs" />
     <Compile Include="Custom\TellAFriend\TellAFriend.cs" />
     <Compile Include="Custom\Vhaerun%27s CRL Homestead System [2.0]\Dracana%27s Winecrafting [2.0]\Addons\BottleRackAddon.cs" />

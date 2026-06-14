@@ -66,7 +66,7 @@ Deferred to Phase 9 synergy and conflict matrix.
 
 ## Documentation
 
-docs/codebase-audit/outputs/system-cards/omniai.md;docs/wiki/OmniAI.md
+docs/codebase-audit/outputs/post-batch-h-omniai-move-closeout.md;docs/codebase-audit/outputs/system-cards/omniai.md;docs/wiki/OmniAI.md
 
 ## Verification Status
 

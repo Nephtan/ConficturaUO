@@ -14,7 +14,7 @@ Matched source files: 1.
 
 | File | Primary Role | Runtime Hooks | Serialized | Gumps |
 | --- | --- | --- | --- | --- |
-| Data/Scripts/Custom/Staff Toolbar [2.0]/Toolbar.cs | StartupWiring | EventSink;Initialize;OnLogin | Yes | OnResponse;SendGump |
+| Data/Scripts/Custom/ThirdParty/Staff Toolbar [2.0]/Toolbar.cs | StartupWiring | EventSink;Initialize;OnLogin | Yes | OnResponse;SendGump |
 
 ## Data Files
 

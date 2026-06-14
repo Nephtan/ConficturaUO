@@ -22,7 +22,7 @@
 "Random Encounters","GameplayLayer","NotStandalone","30","3","19","8","0","0","2","2","2","Generated evidence found; standalone claim not supported."
 "Regions","SharedService","NotStandalone","811","425","481","306","94","2","178","10","4","Generated evidence found; standalone claim not supported."
 "Spell Framework","SharedService","NotStandalone","1490","244","613","351","14","0","359","0","16","Generated evidence found; standalone claim not supported."
-"Staff Toolbar","StaffEventTool","NotStandalone","29","0","1","26","2","0","1","0","0","Generated evidence found; standalone claim not supported."
+"Staff Toolbar","StaffEventTool","NotStandalone","1","0","1","0","0","0","0","0","0","Generated evidence found; standalone claim not supported."
 "Static Gump Tool","StaffEventTool","NotStandalone","213","18","38","193","0","0","0","0","0","Generated evidence found; standalone claim not supported."
 "Vendor Core","SharedService","NotStandalone","921","93","229","148","22","0","271","2","8","Generated evidence found; standalone claim not supported."
 "XMLSpawner","SharedService","NotStandalone","861","14","83","589","62","3","100","4","0","Generated evidence found; standalone claim not supported."

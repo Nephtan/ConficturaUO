@@ -1,7 +1,7 @@
 # Staff Toolbar
 
 ## Overview
-The Staff Toolbar is Joeku's command-toolbar system implemented in `Data/Scripts/Custom/Staff Toolbar [2.0]/Toolbar.cs`. It is compiled through `Data/Scripts/Scripts.csproj` and lives in the `Joeku` namespace.
+The Staff Toolbar is Joeku's command-toolbar system implemented in `Data/Scripts/Custom/ThirdParty/Staff Toolbar [2.0]/Toolbar.cs`. It is compiled through `Data/Scripts/Scripts.csproj` and lives in the `Joeku` namespace.
 
 The system consists of one command/login helper, one persistent storage item, account-keyed toolbar profiles, and two gumps:
 

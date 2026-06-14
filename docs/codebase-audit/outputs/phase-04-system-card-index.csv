@@ -10,7 +10,7 @@
 "Monster Nests","GameplayLayer","docs/codebase-audit/outputs/system-cards/monster-nests.md","6","0","2","6","0","1","NeedsSerializationReview"
 "Clone Offline Player Characters","GameplayLayer","docs/codebase-audit/outputs/system-cards/clone-offline-player-characters.md","13","4","5","7","0","1","NeedsSerializationReview"
 "Offline Skill Training","GameplayLayer","docs/codebase-audit/outputs/system-cards/offline-skill-training.md","7","0","1","6","0","2","NeedsSerializationReview"
-"OmniAI","ImportedPackage","docs/codebase-audit/outputs/system-cards/omniai.md","8","0","2","1","0","2","NeedsSerializationReview"
+"OmniAI","ImportedPackage","docs/codebase-audit/outputs/system-cards/omniai.md","8","0","2","1","0","3","NeedsSerializationReview"
 "AI Overhaul","GameplayLayer","docs/codebase-audit/outputs/system-cards/ai-overhaul.md","1","0","0","0","0","2","PartiallyVerified"
 "Staff Toolbar","StaffEventTool","docs/codebase-audit/outputs/system-cards/staff-toolbar.md","1","0","1","1","1","1","NeedsSerializationReview"
 "Static Gump Tool","StaffEventTool","docs/codebase-audit/outputs/system-cards/static-gump-tool.md","21","23","21","0","21","1","NeedsRuntimeReview"
