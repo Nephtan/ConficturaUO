@@ -54,7 +54,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Custom\Access Level Stone [2.0]\AccessLevelStone.cs" />
-    <Compile Include="Custom\AIOverhaul\AITacticalTargeting.cs" />
+    <Compile Include="Custom\Combat\AIOverhaul\AITacticalTargeting.cs" />
     <Compile Include="Custom\AnimalSystem\ShapeShiftStones\DragonShapeChangeStone-body.cs" />
     <Compile Include="Custom\AnimalSystem\ShapeShiftStones\FaeryShapeChangeStone.cs" />
     <Compile Include="Custom\AnimalSystem\ShapeShiftStones\FelinusShapeChangeStone.cs" />

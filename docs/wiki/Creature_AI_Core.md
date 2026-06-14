@@ -14,7 +14,7 @@ This is not a command package. No `CommandSystem.Register()` entry point is pres
 | --- | --- | --- |
 | `Data/Scripts/Mobiles/Base/BaseCreature.cs` | `Mobile` subclass | Core creature state, lifecycle hooks, taming, pet control fields, loot/death behavior, combat hooks, and persistence. |
 | `Data/Scripts/Mobiles/Base/Behavior.cs` | AI framework | `AIType`, `ActionType`, `BaseAI`, pet command target flow, movement helpers, and concrete AI classes. |
-| `Data/Scripts/Custom/AIOverhaul/AITacticalTargeting.cs` | helper | Exact-type tactical targeting whitelist, target bonus scoring, and skirmisher spacing bands referenced by `BaseCreature` and `Behavior.cs`. |
+| `Data/Scripts/Custom/Combat/AIOverhaul/AITacticalTargeting.cs` | helper | Exact-type tactical targeting whitelist, target bonus scoring, and skirmisher spacing bands referenced by `BaseCreature` and `Behavior.cs`. |
 | `Data/Scripts/Scripts.csproj` | project file | Explicit compile list for scripts. `BaseCreature.cs` and `Behavior.cs` are listed here. |
 
 ## Core Entry Points
@@ -241,7 +241,7 @@ There are no direct in-game admin commands registered by this system. The import
 | --- | --- | --- |
 | `AI_Citizen` does not instantiate an AI object. | `AIType.AI_Citizen` and `CitizenAI` exist, and multiple mobiles assign `AI_Citizen`, but `ChangeAIType()` has no `AI_Citizen` switch case. | Citizen mobiles can have `AIObject == null`, so they do not get the `BaseAI` timer, speech/context-menu AI behavior, or normal AI activation. |
 | `AI_Predator` is mapped to `MeleeAI`. | The `AI_Predator` switch case comments out `new PredatorAI(this)` and creates `new MeleeAI(this)` instead. | The compiled `PredatorAI` class is effectively unused through normal AI selection. |
-| The tactical targeting helper appears absent from `Scripts.csproj`. | `BaseCreature.cs` and `Behavior.cs` reference `AITacticalTargeting`, but the project search found no `Compile Include` for `Custom\AIOverhaul\AITacticalTargeting.cs`. | Maintained MSBuild script builds can fail with unresolved `AITacticalTargeting`/`AITacticalTargetProfile`/`AITacticalReacquireReason` types unless the project file is updated. |
+| The tactical targeting helper moved during POST-BATCH-H. | `Data/Scripts/Scripts.csproj` now includes `Custom\Combat\AIOverhaul\AITacticalTargeting.cs`, matching the moved helper path. | Maintained project hygiene and live runtime script visibility are aligned for the helper path; this row remains a source-trace note rather than an active project drift issue. |
 | Several pooled range enumerables are not freed. | `AcquireFocusMob()` explicitly frees `Map.GetMobilesInRange()`, but other paths use `foreach` directly over `GetMobilesInRange()`, including `GetTeamSize()`, `TeleportPets()`, `DoOrderAttack()`, `HealerAI.Find()`, and `Searching()`. | Repeated AI scans can leak pooled enumerables in active areas. |
 | AI searching can divide by zero and has collapsed delay math. | `AITimer.OnTick()` calculates `int delay = (15000 / m_Owner.m_Mobile.Int)` after only checking Searching skill, then uses integer ratios `9 / 10` and `10 / 9` for min/max bounds. | A Searching-capable creature with `Int == 0` can throw; otherwise the lower bound becomes zero seconds instead of the intended 90% delay. |
 | Control chance does not use Animal Lore. | `GetControlChance()` initializes both `taming` and `lore` from `SkillName.Taming`; only higher Druidism can replace `lore`. | Animal Lore has no effect on pet control chance despite the lore-style formula. |

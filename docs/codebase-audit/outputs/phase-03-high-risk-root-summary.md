@@ -1,6 +1,6 @@
 # Phase 3 High-Risk Root Summary
 
-Generated: 2026-06-13T20:41:26.5729595-05:00
+Generated: 2026-06-13T22:20:47.6227013-05:00
 
 | Root | Main Role | Main Risk | First Follow-Up |
 | --- | --- | --- | --- |

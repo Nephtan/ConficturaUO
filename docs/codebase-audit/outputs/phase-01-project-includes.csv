@@ -1,6 +1,6 @@
 "IncludePath","DecodedIncludePath","ResolvedPath","Exists","FilesystemMatch","Issue","LikelySystem"
 "Custom\Access Level Stone [2.0]\AccessLevelStone.cs","Custom\Access Level Stone [2.0]\AccessLevelStone.cs","Data/Scripts/Custom/Access Level Stone [2.0]/AccessLevelStone.cs","True","True","","Custom:Access Level Stone [2.0]"
-"Custom\AIOverhaul\AITacticalTargeting.cs","Custom\AIOverhaul\AITacticalTargeting.cs","Data/Scripts/Custom/AIOverhaul/AITacticalTargeting.cs","True","True","","Custom:AIOverhaul"
+"Custom\Combat\AIOverhaul\AITacticalTargeting.cs","Custom\Combat\AIOverhaul\AITacticalTargeting.cs","Data/Scripts/Custom/Combat/AIOverhaul/AITacticalTargeting.cs","True","True","","Custom:Combat"
 "Custom\AnimalSystem\ShapeShiftStones\DragonShapeChangeStone-body.cs","Custom\AnimalSystem\ShapeShiftStones\DragonShapeChangeStone-body.cs","Data/Scripts/Custom/AnimalSystem/ShapeShiftStones/DragonShapeChangeStone-body.cs","True","True","","Custom:AnimalSystem"
 "Custom\AnimalSystem\ShapeShiftStones\FaeryShapeChangeStone.cs","Custom\AnimalSystem\ShapeShiftStones\FaeryShapeChangeStone.cs","Data/Scripts/Custom/AnimalSystem/ShapeShiftStones/FaeryShapeChangeStone.cs","True","True","","Custom:AnimalSystem"
 "Custom\AnimalSystem\ShapeShiftStones\FelinusShapeChangeStone.cs","Custom\AnimalSystem\ShapeShiftStones\FelinusShapeChangeStone.cs","Data/Scripts/Custom/AnimalSystem/ShapeShiftStones/FelinusShapeChangeStone.cs","True","True","","Custom:AnimalSystem"

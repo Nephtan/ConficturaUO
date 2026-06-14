@@ -1,6 +1,6 @@
 # Phase 3 Cross-Tree Runtime Inventory Summary
 
-Generated: 2026-06-13T20:41:26.5783256-05:00
+Generated: 2026-06-13T22:20:47.6248988-05:00
 
 ## Required Inputs
 
@@ -18,7 +18,7 @@ Generated: 2026-06-13T20:41:26.5783256-05:00
 | cross-tree-runtime-inventory.csv | 6700 | Canonical runtime role and owner inventory. |
 | phase-03-cross-tree-runtime-inventory.csv | 6700 | Phase-scoped copy of the runtime inventory. |
 | phase-03-root-role-summary.csv | 8 | Root-level marker and role counts. |
-| phase-03-unknown-owner-list.csv | 147 | Files with Unknown owner or role requiring follow-up. |
+| phase-03-unknown-owner-list.csv | 146 | Files with Unknown owner or role requiring follow-up. |
 | phase-03-high-risk-root-summary.csv | 8 | Machine-readable high-risk root summary. |
 | phase-03-high-risk-root-summary.md | 8 | Human-readable high-risk root summary. |
 
@@ -26,7 +26,7 @@ Generated: 2026-06-13T20:41:26.5783256-05:00
 
 | Root | Files | Init | Commands | Events | Packets | Serialization | Gumps | Unknown Roles | Unknown Owners |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
-| Custom | 1134 | 96 | 65 | 11 | 2 | 870 | 245 | 29 | 0 |
+| Custom | 1134 | 96 | 65 | 11 | 2 | 870 | 245 | 28 | 0 |
 | Items | 3029 | 40 | 14 | 13 | 5 | 2927 | 197 | 0 | 0 |
 | Magic | 574 | 13 | 11 | 4 | 0 | 214 | 36 | 0 | 0 |
 | Mobiles | 1102 | 2 | 0 | 2 | 0 | 1092 | 100 | 0 | 0 |

@@ -14,7 +14,7 @@ Matched source files: 1.
 
 | File | Primary Role | Runtime Hooks | Serialized | Gumps |
 | --- | --- | --- | --- | --- |
-| Data/Scripts/Custom/AIOverhaul/AITacticalTargeting.cs | Unknown |  | No |  |
+| Data/Scripts/Custom/Combat/AIOverhaul/AITacticalTargeting.cs | CombatPolicy |  | No |  |
 
 ## Data Files
 

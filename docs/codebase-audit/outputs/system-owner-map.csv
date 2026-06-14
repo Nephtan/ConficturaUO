@@ -977,7 +977,7 @@
 "OmniAI","ImportedPackage","Data/Scripts/Custom/OmniAI/OmniAI Necromancy.cs","Unknown","","","","","","PartiallyVerified"
 "OmniAI","ImportedPackage","Data/Scripts/Custom/OmniAI/OmniAI Ninjitsu.cs","StartupWiring","","Timer.DelayCall","","","","PartiallyVerified"
 "OmniAI","ImportedPackage","Data/Scripts/Custom/OmniAI/OmniAI Shared.cs","StartupWiring","","EventSink","","","","PartiallyVerified"
-"AI Overhaul","GameplayLayer","Data/Scripts/Custom/AIOverhaul/AITacticalTargeting.cs","Unknown","","","","","","PartiallyVerified"
+"AI Overhaul","GameplayLayer","Data/Scripts/Custom/Combat/AIOverhaul/AITacticalTargeting.cs","CombatPolicy","","","","","","PartiallyVerified"
 "Staff Toolbar","StaffEventTool","Data/Scripts/Custom/Staff Toolbar [2.0]/Toolbar.cs","StartupWiring","GumpUI;Persistence;StaffTooling","EventSink;Initialize;OnLogin","class:ToolbarHelper;class:ToolbarInfos;class:ToolbarInfo;class:Toolbar;class:ToolbarEdit;class:GumpIDs;enum:MiscIDs;enum:ButtonIDs","OnResponse;SendGump","","PartiallyVerified"
 "Static Gump Tool","StaffEventTool","Data/Scripts/Custom/OzThothStaticGump/StaticGump(Alternative).cs","CommandSurface","StartupWiring;GumpUI;StaffTooling","Initialize","","OnResponse;SendGump","","PartiallyVerified"
 "Static Gump Tool","StaffEventTool","Data/Scripts/Custom/OzThothStaticGump/Side Gumps/AddAnimation.cs","CommandSurface","StartupWiring;GumpUI;StaffTooling","Initialize","","OnResponse;SendGump","","PartiallyVerified"

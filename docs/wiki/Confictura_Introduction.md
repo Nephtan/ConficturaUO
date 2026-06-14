@@ -211,14 +211,14 @@ Confictura's AI surface is best understood as an ecosystem. The AI overhaul
 audit says the shard does not have one AI system: `BaseCreature`, `BaseAI`,
 `Behavior.cs`, engine activation, sector logic, constructor-assigned AI,
 `ForcedAI`, and bespoke `OnThink` or combat hooks all combine to define how
-creatures behave. ?F:docs/AI_OVERHAUL_AUDIT.md†L16-L35??
+creatures behave. ?F:docs/wiki/AI_OVERHAUL_AUDIT.md†L16-L35??
 
 That means combat feel is not controlled by one class replacement. Target
 selection, activation, pathing, home behavior, perception, bard/control states,
 custom encounter hooks, and script-specific logic all matter. The audit calls
 `AcquireFocusMob` a targeting choke point, `ChangeAIType` a central assignment
 seam for stock shells, and `OnThink` plus combat hooks the main way bespoke
-encounter behavior piggybacks on AI timers. ?F:docs/AI_OVERHAUL_AUDIT.md†L27-L35??
+encounter behavior piggybacks on AI timers. ?F:docs/wiki/AI_OVERHAUL_AUDIT.md†L27-L35??
 
 OmniAI is the modular custom combat AI layer. It lets creatures react to field
 spells, swap weapons, heal themselves, and invoke skill-system abilities such
@@ -325,7 +325,7 @@ The current XML and documentation show that curve in live tables. ?F:Data/Script
 Third, AI work is being treated with caution and respect for the shard's
 complexity. The AI audit explicitly frames AI as layered behavior rather than
 one replaceable class, and warns that global AI changes affect different
-mobiles and encounters unevenly. ?F:docs/AI_OVERHAUL_AUDIT.md†L16-L35??
+mobiles and encounters unevenly. ?F:docs/wiki/AI_OVERHAUL_AUDIT.md†L16-L35??
 
 Fourth, documentation is actively catching up to systems. The wiki index now
 collects documented systems such as point commands, range-sensitive
@@ -357,7 +357,7 @@ The safest first reads are:
 - `docs/wiki/Random_Encounter_Engine.md` for the current live dynamic PvE model.
 - `docs/wiki/Character_Level_Recon_Report.md` plus
   `Data/Scripts/Custom/Progression/CharacterLevel/CharacterLevelService.cs` for progression.
-- `docs/AI_OVERHAUL_AUDIT.md` before touching creature AI.
+- `docs/wiki/AI_OVERHAUL_AUDIT.md` before touching creature AI.
 - `docs/SystemAudit.md` for the full system inventory and documentation gaps.
 - `docs/wiki/Government_System.md`, `docs/wiki/Homestead_System.md`,
   `docs/wiki/Bard_Song_Magic.md`, and `docs/wiki/XML_Spawner_Enhancements.md`
