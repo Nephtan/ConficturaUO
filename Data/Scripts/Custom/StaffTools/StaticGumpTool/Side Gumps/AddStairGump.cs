@@ -26,8 +26,12 @@ namespace Server.Gumps
         [Description("Displays a menu from which you can interactively add Stairs.")]
         public static void AddStair_OnCommand(CommandEventArgs e)
         {
-            e.Mobile.CloseGump(typeof(AddStairGump));
-            e.Mobile.SendGump(new AddStairGump());
+            Mobile from = StaticGumpCommandGuard.GetMobile(e);
+            if (from == null)
+                return;
+
+            from.CloseGump(typeof(AddStairGump));
+            from.SendGump(new AddStairGump());
         }
 
         public static StairInfo[] m_Types = new StairInfo[]

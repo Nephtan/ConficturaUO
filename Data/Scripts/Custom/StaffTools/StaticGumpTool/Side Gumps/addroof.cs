@@ -26,8 +26,12 @@ namespace Server.Gumps
         [Description("Displays a menu from which you can interactively add Ground Statics.")]
         public static void AddRoof_OnCommand(CommandEventArgs e)
         {
-            e.Mobile.CloseGump(typeof(AddRoofGump));
-            e.Mobile.SendGump(new AddRoofGump());
+            Mobile from = StaticGumpCommandGuard.GetMobile(e);
+            if (from == null)
+                return;
+
+            from.CloseGump(typeof(AddRoofGump));
+            from.SendGump(new AddRoofGump());
         }
 
         public static RoofInfo[] m_Types = new RoofInfo[]

@@ -26,8 +26,12 @@ namespace Server.Gumps
         [Description("Displays a menu from which you can interactively add Furniture Statics.")]
         public static void AddFurniture_OnCommand(CommandEventArgs e)
         {
-            e.Mobile.CloseGump(typeof(AddFurnitureGump));
-            e.Mobile.SendGump(new AddFurnitureGump());
+            Mobile from = StaticGumpCommandGuard.GetMobile(e);
+            if (from == null)
+                return;
+
+            from.CloseGump(typeof(AddFurnitureGump));
+            from.SendGump(new AddFurnitureGump());
         }
 
         public static FurnitureInfo[] m_Types = new FurnitureInfo[]

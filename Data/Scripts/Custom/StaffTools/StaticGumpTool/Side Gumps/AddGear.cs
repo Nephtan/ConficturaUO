@@ -26,8 +26,12 @@ namespace Server.Gumps
         [Description("Displays a menu from which you can interactively add Gear Statics.")]
         public static void AddGearStatic_OnCommand(CommandEventArgs e)
         {
-            e.Mobile.CloseGump(typeof(AddGearStaticGump));
-            e.Mobile.SendGump(new AddGearStaticGump());
+            Mobile from = StaticGumpCommandGuard.GetMobile(e);
+            if (from == null)
+                return;
+
+            from.CloseGump(typeof(AddGearStaticGump));
+            from.SendGump(new AddGearStaticGump());
         }
 
         public static GearInfo[] m_Types = new GearInfo[]

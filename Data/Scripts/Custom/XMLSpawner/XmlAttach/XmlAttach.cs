@@ -1601,8 +1601,11 @@ namespace Server.Engines.XmlSpawner2
         [Description("Returns descriptions of the attachments on the targeted object.")]
         public static void GetAttachments_OnCommand(CommandEventArgs e)
         {
+            if (e == null || e.Mobile == null || e.Mobile.Deleted || e.Arguments == null)
+                return;
+
             int ser = -1;
-            if (e.Arguments.Length > 0)
+            if (e.Arguments.Length > 0 && e.Arguments[0].Length > 0)
             {
                 // is this a numeric arg?
                 char c = e.Arguments[0][0];
@@ -1801,6 +1804,9 @@ namespace Server.Engines.XmlSpawner2
         [Description("Lists all available attachments.")]
         public static void ListAvailableAttachments_OnCommand(CommandEventArgs e)
         {
+            if (e == null || e.Mobile == null || e.Mobile.Deleted)
+                return;
+
             ArrayList attachtypes = Match(typeof(XmlAttachment));
 
             string parmliststr = null;

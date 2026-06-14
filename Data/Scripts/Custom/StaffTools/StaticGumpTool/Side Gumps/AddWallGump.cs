@@ -26,8 +26,12 @@ namespace Server.Gumps
         [Description("Displays a menu from which you can interactively add Walls.")]
         public static void AddWall_OnCommand(CommandEventArgs e)
         {
-            e.Mobile.CloseGump(typeof(AddWallGump));
-            e.Mobile.SendGump(new AddWallGump());
+            Mobile from = StaticGumpCommandGuard.GetMobile(e);
+            if (from == null)
+                return;
+
+            from.CloseGump(typeof(AddWallGump));
+            from.SendGump(new AddWallGump());
         }
 
         public static WallInfo[] m_Types = new WallInfo[]

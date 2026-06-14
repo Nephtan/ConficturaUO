@@ -26,8 +26,12 @@ namespace Server.Gumps
         [Description("Displays a menu from which you can interactively add Ground Statics.")]
         public static void AddGroundStStatic_OnCommand(CommandEventArgs e)
         {
-            e.Mobile.CloseGump(typeof(AddGroundStStaticGump));
-            e.Mobile.SendGump(new AddGroundStStaticGump());
+            Mobile from = StaticGumpCommandGuard.GetMobile(e);
+            if (from == null)
+                return;
+
+            from.CloseGump(typeof(AddGroundStStaticGump));
+            from.SendGump(new AddGroundStStaticGump());
         }
 
         public static GroundSTInfo[] m_Types = new GroundSTInfo[]

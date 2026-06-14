@@ -26,8 +26,12 @@ namespace Server.Gumps
         [Description("Displays a menu from which you can interactively add Rock Statics.")]
         public static void AddRock_OnCommand(CommandEventArgs e)
         {
-            e.Mobile.CloseGump(typeof(AddRockGump));
-            e.Mobile.SendGump(new AddRockGump());
+            Mobile from = StaticGumpCommandGuard.GetMobile(e);
+            if (from == null)
+                return;
+
+            from.CloseGump(typeof(AddRockGump));
+            from.SendGump(new AddRockGump());
         }
 
         public static RockInfo[] m_Types = new RockInfo[]

@@ -26,8 +26,12 @@ namespace Server.Gumps
         [Description("Displays a menu from which you can interactively add Sign Post Statics.")]
         public static void AddSignPStatic_OnCommand(CommandEventArgs e)
         {
-            e.Mobile.CloseGump(typeof(AddSignPStaticGump));
-            e.Mobile.SendGump(new AddSignPStaticGump());
+            Mobile from = StaticGumpCommandGuard.GetMobile(e);
+            if (from == null)
+                return;
+
+            from.CloseGump(typeof(AddSignPStaticGump));
+            from.SendGump(new AddSignPStaticGump());
         }
 
         public static SignPInfo[] m_Types = new SignPInfo[]

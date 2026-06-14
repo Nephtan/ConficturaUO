@@ -26,8 +26,12 @@ namespace Server.Gumps
         [Description("Displays a menu from which you can interactively add Arches.")]
         public static void AddArch_OnCommand(CommandEventArgs e)
         {
-            e.Mobile.CloseGump(typeof(AddArchGump));
-            e.Mobile.SendGump(new AddArchGump());
+            Mobile from = StaticGumpCommandGuard.GetMobile(e);
+            if (from == null)
+                return;
+
+            from.CloseGump(typeof(AddArchGump));
+            from.SendGump(new AddArchGump());
         }
 
         public static ArchInfo[] m_Types = new ArchInfo[]

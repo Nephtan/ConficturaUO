@@ -26,8 +26,12 @@ namespace Server.Gumps
         [Description("Displays a menu from which you can interactively add Nature Statics.")]
         public static void AddNatureStatic_OnCommand(CommandEventArgs e)
         {
-            e.Mobile.CloseGump(typeof(AddNatureStaticGump));
-            e.Mobile.SendGump(new AddNatureStaticGump());
+            Mobile from = StaticGumpCommandGuard.GetMobile(e);
+            if (from == null)
+                return;
+
+            from.CloseGump(typeof(AddNatureStaticGump));
+            from.SendGump(new AddNatureStaticGump());
         }
 
         public static NatureInfo[] m_Types = new NatureInfo[]

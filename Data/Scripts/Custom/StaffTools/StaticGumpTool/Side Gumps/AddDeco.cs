@@ -26,8 +26,12 @@ namespace Server.Gumps
         [Description("Displays a menu from which you can interactively add Deco Statics.")]
         public static void AddDecoStatic_OnCommand(CommandEventArgs e)
         {
-            e.Mobile.CloseGump(typeof(AddDecoStaticGump));
-            e.Mobile.SendGump(new AddDecoStaticGump());
+            Mobile from = StaticGumpCommandGuard.GetMobile(e);
+            if (from == null)
+                return;
+
+            from.CloseGump(typeof(AddDecoStaticGump));
+            from.SendGump(new AddDecoStaticGump());
         }
 
         public static DecoSTInfo[] m_Types = new DecoSTInfo[]

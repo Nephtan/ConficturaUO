@@ -334,6 +334,8 @@ Tips:
 | `post-batch-o-gump-guard-closeout.md` | Post-audit | Close out POST-BATCH-O with source repair summary, decision counts, verification, and queue reconciliation. | Complete |
 | `post-batch-p-runtime-hook-source-review.csv` | Post-audit | Source-review and repair dispositions for all 103 POST-BATCH-N runtime-hook source-batch rows. | Complete |
 | `post-batch-p-runtime-hook-closeout.md` | Post-audit | Close out POST-BATCH-P with source repair summary, decision counts, verification, and queue reconciliation. | Complete |
+| `post-batch-q-staff-command-metadata-source-review.csv` | Post-audit | Source-review and repair dispositions for all 92 POST-BATCH-N staff command metadata source-batch rows. | Complete |
+| `post-batch-q-staff-command-metadata-closeout.md` | Post-audit | Close out POST-BATCH-Q with source repair summary, decision counts, verification, and queue reconciliation. | Complete |
 
 
 ## Initial State

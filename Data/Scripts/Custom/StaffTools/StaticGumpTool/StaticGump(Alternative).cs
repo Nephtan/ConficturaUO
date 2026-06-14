@@ -31,7 +31,10 @@ namespace Server.Gumps
         [Description("Makes a call to an in game static tool")]
         private static void OzThothsStatic_OnCommand(CommandEventArgs e)
         {
-            Mobile from = e.Mobile;
+            Mobile from = StaticGumpCommandGuard.GetMobile(e);
+            if (from == null)
+                return;
+
             from.CloseGump(typeof(OzThothsStaticOtherGump));
             from.SendGump(new OzThothsStaticOtherGump(from));
         }
@@ -1072,6 +1075,17 @@ namespace Server.Gumps
                     break;
                 }
             }
+        }
+    }
+
+    internal static class StaticGumpCommandGuard
+    {
+        public static Mobile GetMobile(CommandEventArgs e)
+        {
+            if (e == null || e.Mobile == null || e.Mobile.Deleted)
+                return null;
+
+            return e.Mobile;
         }
     }
 }

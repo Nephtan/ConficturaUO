@@ -26,8 +26,12 @@ namespace Server.Gumps
         [Description("Displays a menu from which you can interactively add Light statics.")]
         public static void AddLightsStatic_OnCommand(CommandEventArgs e)
         {
-            e.Mobile.CloseGump(typeof(AddLightsStaticGump));
-            e.Mobile.SendGump(new AddLightsStaticGump());
+            Mobile from = StaticGumpCommandGuard.GetMobile(e);
+            if (from == null)
+                return;
+
+            from.CloseGump(typeof(AddLightsStaticGump));
+            from.SendGump(new AddLightsStaticGump());
         }
 
         public static LightSTInfo[] m_Types = new LightSTInfo[]

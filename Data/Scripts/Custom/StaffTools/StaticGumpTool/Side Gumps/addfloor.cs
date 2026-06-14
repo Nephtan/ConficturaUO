@@ -26,8 +26,12 @@ namespace Server.Gumps
         [Description("Displays a menu from which you can interactively add Floors.")]
         public static void AddFloor_OnCommand(CommandEventArgs e)
         {
-            e.Mobile.CloseGump(typeof(AddFloorGump));
-            e.Mobile.SendGump(new AddFloorGump());
+            Mobile from = StaticGumpCommandGuard.GetMobile(e);
+            if (from == null)
+                return;
+
+            from.CloseGump(typeof(AddFloorGump));
+            from.SendGump(new AddFloorGump());
         }
 
         public static FloorInfo[] m_Types = new FloorInfo[]

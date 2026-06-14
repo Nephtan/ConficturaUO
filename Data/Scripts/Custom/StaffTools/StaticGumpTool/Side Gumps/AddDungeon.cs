@@ -26,8 +26,12 @@ namespace Server.Gumps
         [Description("Displays a menu from which you can interactively add Dungeon Statics.")]
         public static void AddDungStatic_OnCommand(CommandEventArgs e)
         {
-            e.Mobile.CloseGump(typeof(AddDungStaticGump));
-            e.Mobile.SendGump(new AddDungStaticGump());
+            Mobile from = StaticGumpCommandGuard.GetMobile(e);
+            if (from == null)
+                return;
+
+            from.CloseGump(typeof(AddDungStaticGump));
+            from.SendGump(new AddDungStaticGump());
         }
 
         public static DunInfo[] m_Types = new DunInfo[]

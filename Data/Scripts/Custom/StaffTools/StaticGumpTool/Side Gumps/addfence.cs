@@ -21,8 +21,12 @@ namespace Server.Gumps
         [Description("Displays a menu from which you can interactively add Fences.")]
         public static void AddFence_OnCommand(CommandEventArgs e)
         {
-            e.Mobile.CloseGump(typeof(AddFenceGump));
-            e.Mobile.SendGump(new AddFenceGump());
+            Mobile from = StaticGumpCommandGuard.GetMobile(e);
+            if (from == null)
+                return;
+
+            from.CloseGump(typeof(AddFenceGump));
+            from.SendGump(new AddFenceGump());
         }
 
         public static FenceInfo[] m_Types = new FenceInfo[]

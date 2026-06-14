@@ -1924,6 +1924,9 @@ namespace Server.Engines.XmlSpawner2
         [Description("Saves the targeted Talking NPC to an xml file.")]
         public static void SaveNPC_OnCommand(CommandEventArgs e)
         {
+            if (e == null || e.Mobile == null || e.Mobile.Deleted)
+                return;
+
             e.Mobile.Target = new SaveNPCTarget(e);
         }
 
@@ -1965,6 +1968,9 @@ namespace Server.Engines.XmlSpawner2
         [Description("Loads the targeted Talking NPC to an xml file.")]
         public static void LoadNPC_OnCommand(CommandEventArgs e)
         {
+            if (e == null || e.Mobile == null || e.Mobile.Deleted)
+                return;
+
             e.Mobile.Target = new LoadNPCTarget(e);
         }
 

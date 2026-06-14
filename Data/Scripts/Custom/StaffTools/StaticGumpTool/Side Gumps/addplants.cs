@@ -26,8 +26,12 @@ namespace Server.Gumps
         [Description("Displays a menu from which you can interactively add Plants Statics.")]
         public static void AddPlants_OnCommand(CommandEventArgs e)
         {
-            e.Mobile.CloseGump(typeof(AddPlantsGump));
-            e.Mobile.SendGump(new AddPlantsGump());
+            Mobile from = StaticGumpCommandGuard.GetMobile(e);
+            if (from == null)
+                return;
+
+            from.CloseGump(typeof(AddPlantsGump));
+            from.SendGump(new AddPlantsGump());
         }
 
         public static PlantsInfo[] m_Types = new PlantsInfo[]

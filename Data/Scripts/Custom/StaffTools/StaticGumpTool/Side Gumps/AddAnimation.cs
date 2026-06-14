@@ -26,8 +26,12 @@ namespace Server.Gumps
         [Description("Displays a menu from which you can interactively add Animations.")]
         public static void AddAnimation_OnCommand(CommandEventArgs e)
         {
-            e.Mobile.CloseGump(typeof(AddAnimationGump));
-            e.Mobile.SendGump(new AddAnimationGump());
+            Mobile from = StaticGumpCommandGuard.GetMobile(e);
+            if (from == null)
+                return;
+
+            from.CloseGump(typeof(AddAnimationGump));
+            from.SendGump(new AddAnimationGump());
         }
 
         public static AnimationInfo[] m_Types = new AnimationInfo[]

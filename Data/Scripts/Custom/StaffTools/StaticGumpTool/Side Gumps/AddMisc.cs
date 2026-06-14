@@ -26,8 +26,12 @@ namespace Server.Gumps
         [Description("Displays a menu from which you can interactively add Misc Statics.")]
         public static void AddMiscStatic_OnCommand(CommandEventArgs e)
         {
-            e.Mobile.CloseGump(typeof(AddMiscStaticGump));
-            e.Mobile.SendGump(new AddMiscStaticGump());
+            Mobile from = StaticGumpCommandGuard.GetMobile(e);
+            if (from == null)
+                return;
+
+            from.CloseGump(typeof(AddMiscStaticGump));
+            from.SendGump(new AddMiscStaticGump());
         }
 
         public static MiscSTInfo[] m_Types = new MiscSTInfo[]

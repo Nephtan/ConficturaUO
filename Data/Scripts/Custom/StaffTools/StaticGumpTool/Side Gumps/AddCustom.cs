@@ -26,8 +26,12 @@ namespace Server.Gumps
         [Description("Displays a menu from which you can interactively add Cooking Statics.")]
         public static void AddCustomStatic_OnCommand(CommandEventArgs e)
         {
-            e.Mobile.CloseGump(typeof(AddCustomStaticGump));
-            e.Mobile.SendGump(new AddCustomStaticGump());
+            Mobile from = StaticGumpCommandGuard.GetMobile(e);
+            if (from == null)
+                return;
+
+            from.CloseGump(typeof(AddCustomStaticGump));
+            from.SendGump(new AddCustomStaticGump());
         }
 
         public static CustomSTInfo[] m_Types = new CustomSTInfo[]
