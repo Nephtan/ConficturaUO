@@ -2,7 +2,7 @@
 
 Initialized: 2026-06-05T16:15:59.8020730-05:00
 
-Last updated: 2026-06-14T00:11:26.6430965-05:00
+Last updated: 2026-06-14T00:18:20.2467255-05:00
 
 Branch: `SAR`
 
@@ -298,7 +298,7 @@ Post-audit save compatibility blocker resolved: `SERIAL-0032` now writes zero gh
 
 Post-audit reorganization pilot: `POST-BATCH-H-01A` executed the Character Level Phase 12 move from `Data/Scripts/Custom/CharacterLevel` to `Data/Scripts/Custom/Progression/CharacterLevel`, moved exactly two runtime-visible `.cs` files, updated two `Scripts.csproj` includes and current source-trace docs, regenerated runtime script compile inventory plus Phase 1/2/3/4/5/6/7/8/9 path-sensitive outputs, and added an active overlay `Fixed` disposition for `RB-06802`. Verification: git diff --check=Passed with no whitespace errors; Git emitted expected LF-to-CRLF working-copy warnings for edited text files; solution Debug/Any CPU=Passed with existing warnings; Scripts built Data/Scripts/ClassLibrary.dll and generated script-project artifacts were removed before staging; Server Debug/x86=Passed; Server built D:/ConficturaUO/ConficturaServer.exe and tracked root build artifacts were restored before staging; compile-only=Passed; compile-only output reported Scripts: Compile-only verification completed successfully and Exiting...done.
 
-Post-audit reorganization runner: `POST-BATCH-H-12A` classified Government `Data/Scripts/Custom/Government System` as `NeedsHumanDecision` rather than moving to `Data/Scripts/Custom/Government/GovernmentSystem`. The package has 207 runtime-visible `.cs` files, 207 project include rows, 144 serializer rows, and 227 runtime hook rows; the Phase 12 gate explicitly requires human package/save approval because serializer, gump, hook, region, policy, balance, and XML/config risks remain unresolved (RB-05609:PvP Consent <-> Government balance/policy; RB-05611:Government <-> Homestead balance/policy; RB-05612:Government <-> Vendor Core balance/policy; RB-05632:Government <-> Invasion staff workflow ownership; RB-06806:PvP Consent move gate remains deferred; RB-06808:Invasion move gate remains deferred). Verification: git diff --check=Passed with expected LF-to-CRLF working-copy warnings and no whitespace errors; no source/project/runtime files changed.
+Post-audit reorganization runner: `POST-BATCH-H-13A` classified Offline Skill Training `Data/Scripts/Custom/Offline Skill Training` as `DeferredMoveGate` rather than moving to `Data/Scripts/Custom/Progression/OfflineSkillTraining`. Project truth is clean (7 include rows, 7 source rows, 0 missing, 0 unincluded), but serializer review is not cleared (170 rows, 166 NeedsSourceReview, 166 UnknownUntilSaveTest, 4 NamespaceOrTypeRenameDanger); related balance/doc rows remain deferred or queued (RB-05603:Character Level <-> Offline Skill Training balance/policy; RB-05608:Random Encounters <-> Offline Skill Training balance/policy; RB-06737:Offline Skill Training canonical documentation source trace). Verification: git diff --check=Passed with expected LF-to-CRLF working-copy warnings and no whitespace errors; no source/project/runtime files changed.
 
 Scope: Deterministic phase runner state for the Confictura codebase audit and reorganization program.
 
