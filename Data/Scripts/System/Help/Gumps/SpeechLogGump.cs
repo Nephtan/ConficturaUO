@@ -107,6 +107,9 @@ namespace Server.Engines.Help
 
         public override void OnResponse(NetState sender, RelayInfo info)
         {
+            if (sender == null || info == null || sender.Mobile == null || sender.Mobile.Deleted || m_Player == null || m_Player.Deleted || sender.Mobile != m_Player || m_Log == null)
+                return;
+
             Mobile from = sender.Mobile;
 
             switch (info.ButtonID)

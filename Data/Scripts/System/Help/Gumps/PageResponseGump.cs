@@ -42,6 +42,9 @@ namespace Server.Engines.Help
 
         public override void OnResponse(NetState sender, RelayInfo info)
         {
+            if (sender == null || info == null || sender.Mobile == null || sender.Mobile.Deleted || m_From == null || m_From.Deleted || sender.Mobile != m_From)
+                return;
+
             if (info.ButtonID != 1)
                 m_From.SendGump(new MessageSentGump(m_From, m_Name, m_Text));
         }

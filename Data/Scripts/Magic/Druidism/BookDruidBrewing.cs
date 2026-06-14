@@ -402,6 +402,9 @@ namespace Server.Items
 
             public override void OnResponse(NetState state, RelayInfo info)
             {
+                if (state == null || info == null || state.Mobile == null || state.Mobile.Deleted)
+                    return;
+
                 Mobile from = state.Mobile;
                 int page = info.ButtonID;
                 if (page == 99)
