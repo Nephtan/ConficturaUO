@@ -1,12 +1,12 @@
 # Phase 7 Documentation Truth Audit Summary
 
-Generated: 2026-06-13T23:33:48.8857455-05:00
+Generated: 2026-06-13T23:48:58.9209186-05:00
 
 ## Required Inputs
 
 | Input | Status |
 | --- | --- |
-| Documentation inventory | Present: `phase-01-documentation-inventory.csv` with 205 rows |
+| Documentation inventory | Present: `phase-01-documentation-inventory.csv` with 207 rows |
 | Wiki index | Present: `docs/wiki/INDEX.md` with 108 indexed links |
 | Wiki backlog | Present: `docs/wiki/wikibacklog.md` with 17 rows |
 | System Cards | Present: `phase-04-system-card-index.csv` with 27 rows |

@@ -64,7 +64,7 @@ Deferred to Phase 9 synergy and conflict matrix.
 
 ## Documentation
 
-docs/codebase-audit/outputs/system-cards/pvp-consent.md;docs/wiki/PvP_Consent_System.md;docs/wiki/pvp-consent-system.md
+docs/codebase-audit/outputs/post-batch-h-pvp-consent-gate-closeout.md;docs/codebase-audit/outputs/system-cards/pvp-consent.md;docs/wiki/PvP_Consent_System.md;docs/wiki/pvp-consent-system.md
 
 ## Verification Status
 

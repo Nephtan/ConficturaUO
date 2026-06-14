@@ -1,6 +1,6 @@
 # Phase 8 Dependency Graph Summary
 
-Generated: 2026-06-13T23:34:37.9476030-05:00
+Generated: 2026-06-13T23:49:46.3217845-05:00
 
 ## Required Inputs
 
@@ -17,9 +17,9 @@ Generated: 2026-06-13T23:34:37.9476030-05:00
 
 | Output | Rows | Purpose |
 | --- | ---: | --- |
-| `dependency-graph.csv` | 30210 | Canonical dependency graph. |
-| `phase-08-dependency-graph.csv` | 30210 | Phase-scoped dependency graph. |
-| `phase-08-hard-dependency-list.csv` | 29899 | Hard source, runtime, serialization, project, and config dependencies. |
+| `dependency-graph.csv` | 30209 | Canonical dependency graph. |
+| `phase-08-dependency-graph.csv` | 30209 | Phase-scoped dependency graph. |
+| `phase-08-hard-dependency-list.csv` | 29898 | Hard source, runtime, serialization, project, and config dependencies. |
 | `phase-08-soft-dependency-list.csv` | 311 | Soft or speculative documentation/config relationships. |
 | `phase-08-conflict-edge-list.csv` | 1214 | Conflict, mismatch, duplicate, or manual-review edges. |
 | `phase-08-standalone-proof-list.csv` | 27 | Negative-evidence standalone proof table for system-card systems. |
@@ -34,7 +34,7 @@ Generated: 2026-06-13T23:34:37.9476030-05:00
 | DocumentationConflict | 2 |
 | GlobalHook | 227 |
 | PacketHandler | 17 |
-| ProjectInclude | 158 |
+| ProjectInclude | 157 |
 | RuntimeHook | 6361 |
 | Serialization | 20303 |
 | SerializationConflict | 1212 |
@@ -44,7 +44,7 @@ Generated: 2026-06-13T23:34:37.9476030-05:00
 
 | Strength | Count |
 | --- | ---: |
-| Hard | 29899 |
+| Hard | 29898 |
 | Soft | 195 |
 | Speculative | 116 |
 

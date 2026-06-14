@@ -1,7 +1,7 @@
 "System","Classification","CardPath","SourceFileCount","CommandCount","HookFileCount","SerializedFileCount","GumpFileCount","DocCount","VerificationStatus"
 "Character Level","GameplayLayer","docs/codebase-audit/outputs/system-cards/character-level.md","2","2","1","0","0","1","NeedsRuntimeReview"
 "Random Encounters","GameplayLayer","docs/codebase-audit/outputs/system-cards/random-encounters.md","11","1","4","2","0","1","NeedsSerializationReview"
-"PvP Consent","GameplayLayer","docs/codebase-audit/outputs/system-cards/pvp-consent.md","6","1","4","5","4","3","NeedsSerializationReview"
+"PvP Consent","GameplayLayer","docs/codebase-audit/outputs/system-cards/pvp-consent.md","6","1","4","5","4","4","NeedsSerializationReview"
 "Government","GameplayLayer","docs/codebase-audit/outputs/system-cards/government.md","217","9","18","148","60","2","NeedsSerializationReview"
 "Homestead","ImportedPackage","docs/codebase-audit/outputs/system-cards/homestead.md","402","6","104","372","62","2","NeedsSerializationReview"
 "XMLSpawner","SharedService","docs/codebase-audit/outputs/system-cards/xmlspawner.md","133","75","59","84","59","1","NeedsSerializationReview"

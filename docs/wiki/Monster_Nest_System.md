@@ -10,12 +10,12 @@ There are no commands, gumps, `EventSink` hooks, or XMLSpawner attachments in th
 
 ## Script Inventory
 
-* `Data/Scripts/Custom/MonsterNest/MonsterNest.cs`
-* `Data/Scripts/Custom/MonsterNest/MonsterNestEntity.cs`
-* `Data/Scripts/Custom/MonsterNest/MonsterNestLoot.cs`
-* `Data/Scripts/Custom/MonsterNest/Types/RatmanNest.cs`
-* `Data/Scripts/Custom/MonsterNest/Types/LizardmanNest.cs`
-* `Data/Scripts/Custom/MonsterNest/Types/UndeadNest.cs`
+* `Data/Scripts/Custom/PvE/MonsterNests/MonsterNest.cs`
+* `Data/Scripts/Custom/PvE/MonsterNests/MonsterNestEntity.cs`
+* `Data/Scripts/Custom/PvE/MonsterNests/MonsterNestLoot.cs`
+* `Data/Scripts/Custom/PvE/MonsterNests/Types/RatmanNest.cs`
+* `Data/Scripts/Custom/PvE/MonsterNests/Types/LizardmanNest.cs`
+* `Data/Scripts/Custom/PvE/MonsterNests/Types/UndeadNest.cs`
 
 `Data/Scripts/Scripts.csproj` explicitly compiles all six scripts, so the system is part of the maintained script assembly.
 

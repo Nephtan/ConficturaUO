@@ -14,12 +14,12 @@ Matched source files: 6.
 
 | File | Primary Role | Runtime Hooks | Serialized | Gumps |
 | --- | --- | --- | --- | --- |
-| Data/Scripts/Custom/MonsterNest/MonsterNest.cs | StartupWiring | CustomTimerSubclass | Yes |  |
-| Data/Scripts/Custom/MonsterNest/MonsterNestEntity.cs | Persistence |  | Yes |  |
-| Data/Scripts/Custom/MonsterNest/MonsterNestLoot.cs | StartupWiring | CustomTimerSubclass | Yes |  |
-| Data/Scripts/Custom/MonsterNest/Types/LizardmanNest.cs | Persistence |  | Yes |  |
-| Data/Scripts/Custom/MonsterNest/Types/RatmanNest.cs | Persistence |  | Yes |  |
-| Data/Scripts/Custom/MonsterNest/Types/UndeadNest.cs | Persistence |  | Yes |  |
+| Data/Scripts/Custom/PvE/MonsterNests/MonsterNest.cs | StartupWiring | CustomTimerSubclass | Yes |  |
+| Data/Scripts/Custom/PvE/MonsterNests/MonsterNestEntity.cs | Persistence |  | Yes |  |
+| Data/Scripts/Custom/PvE/MonsterNests/MonsterNestLoot.cs | StartupWiring | CustomTimerSubclass | Yes |  |
+| Data/Scripts/Custom/PvE/MonsterNests/Types/LizardmanNest.cs | Persistence |  | Yes |  |
+| Data/Scripts/Custom/PvE/MonsterNests/Types/RatmanNest.cs | Persistence |  | Yes |  |
+| Data/Scripts/Custom/PvE/MonsterNests/Types/UndeadNest.cs | Persistence |  | Yes |  |
 
 ## Data Files
 
