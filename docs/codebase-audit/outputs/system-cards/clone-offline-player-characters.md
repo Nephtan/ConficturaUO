@@ -14,16 +14,16 @@ Matched source files: 13.
 
 | File | Primary Role | Runtime Hooks | Serialized | Gumps |
 | --- | --- | --- | --- | --- |
-| Data/Scripts/Custom/CloneOfflinePlayerCharacters/BackpackClone.cs | Persistence |  | Yes |  |
-| Data/Scripts/Custom/CloneOfflinePlayerCharacters/CharacterClone.cs | StartupWiring | CustomTimerSubclass | Yes |  |
-| Data/Scripts/Custom/CloneOfflinePlayerCharacters/CheckClonesCommand.cs | CommandSurface | Initialize | No |  |
-| Data/Scripts/Custom/CloneOfflinePlayerCharacters/CloneOfflinePlayerCharacters.cs | StartupWiring | EventSink;Initialize;OnLogin;OnLogout | No |  |
-| Data/Scripts/Custom/CloneOfflinePlayerCharacters/CloneThings.cs | Unknown |  | No |  |
-| Data/Scripts/Custom/CloneOfflinePlayerCharacters/EtherealMountClone.cs | Persistence |  | Yes |  |
-| Data/Scripts/Custom/CloneOfflinePlayerCharacters/MountClone.cs | Persistence |  | Yes |  |
 | Data/Scripts/Custom/Invasion System/Add Ins/Lord BlackThorn Clone.cs | Persistence |  | Yes |  |
 | Data/Scripts/Custom/NPC Control/CloneCommands.cs | CommandSurface | Initialize | Yes |  |
 | Data/Scripts/Custom/NPC Control/StaffCommands/CloneMe.cs | CommandSurface | Initialize | No |  |
+| Data/Scripts/Custom/PvE/CloneOfflinePlayerCharacters/BackpackClone.cs | Persistence |  | Yes |  |
+| Data/Scripts/Custom/PvE/CloneOfflinePlayerCharacters/CharacterClone.cs | StartupWiring | CustomTimerSubclass | Yes |  |
+| Data/Scripts/Custom/PvE/CloneOfflinePlayerCharacters/CheckClonesCommand.cs | CommandSurface | Initialize | No |  |
+| Data/Scripts/Custom/PvE/CloneOfflinePlayerCharacters/CloneOfflinePlayerCharacters.cs | StartupWiring | EventSink;Initialize;OnLogin;OnLogout | No |  |
+| Data/Scripts/Custom/PvE/CloneOfflinePlayerCharacters/CloneThings.cs | Unknown |  | No |  |
+| Data/Scripts/Custom/PvE/CloneOfflinePlayerCharacters/EtherealMountClone.cs | Persistence |  | Yes |  |
+| Data/Scripts/Custom/PvE/CloneOfflinePlayerCharacters/MountClone.cs | Persistence |  | Yes |  |
 | Data/Scripts/Magic/Ninjitsu/MirrorImage.cs | Persistence |  | Yes |  |
 | Data/Scripts/Magic/Research/Spells/Conjuration/ResearchClone.cs | CombatPolicy |  | No |  |
 | Data/Scripts/Magic/Syth/Spells/Clone.cs | CombatPolicy |  | No |  |
@@ -36,10 +36,10 @@ No XML/config/text/json references were found in Phase 1 string-reference marker
 
 | Entry | Evidence |
 | --- | --- |
-| Command $(Escape-MarkdownCell @{Command=; AccessLevel=; Handler=; File=Data/Scripts/Custom/CloneOfflinePlayerCharacters/CheckClonesCommand.cs; Line=19; LikelySystem=Custom:CloneOfflinePlayerCharacters; RegistrationLine=CommandSystem.Register(}.Command) | Data/Scripts/Custom/CloneOfflinePlayerCharacters/CheckClonesCommand.cs:19 |
 | Command $(Escape-MarkdownCell @{Command=Clone; AccessLevel=; Handler=Clone_OnCommand; File=Data/Scripts/Custom/NPC Control/CloneCommands.cs; Line=21; LikelySystem=Custom:NPC Control; RegistrationLine=CommandSystem.Register("Clone", accessLevel, new CommandEventHandler(Clone_OnCommand));}.Command) | Data/Scripts/Custom/NPC Control/CloneCommands.cs:21 |
 | Command $(Escape-MarkdownCell @{Command=; AccessLevel=; Handler=; File=Data/Scripts/Custom/NPC Control/CloneCommands.cs; Line=22; LikelySystem=Custom:NPC Control; RegistrationLine=CommandSystem.Register(}.Command) | Data/Scripts/Custom/NPC Control/CloneCommands.cs:22 |
 | Command $(Escape-MarkdownCell @{Command=; AccessLevel=; Handler=; File=Data/Scripts/Custom/NPC Control/StaffCommands/CloneMe.cs; Line=17; LikelySystem=Custom:NPC Control; RegistrationLine=CommandSystem.Register(}.Command) | Data/Scripts/Custom/NPC Control/StaffCommands/CloneMe.cs:17 |
+| Command $(Escape-MarkdownCell @{Command=; AccessLevel=; Handler=; File=Data/Scripts/Custom/PvE/CloneOfflinePlayerCharacters/CheckClonesCommand.cs; Line=19; LikelySystem=Custom:PvE; RegistrationLine=CommandSystem.Register(}.Command) | Data/Scripts/Custom/PvE/CloneOfflinePlayerCharacters/CheckClonesCommand.cs:19 |
 
 ## Staff Entry Points
 

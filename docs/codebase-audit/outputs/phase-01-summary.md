@@ -1,6 +1,6 @@
 # Phase 1 Reproducible Inventory Summary
 
-Generated: 2026-06-13T23:15:25.8311241-05:00
+Generated: 2026-06-13T23:30:52.5026502-05:00
 
 ## Required Inputs
 
@@ -31,7 +31,7 @@ Generated: 2026-06-13T23:15:25.8311241-05:00
 | phase-01-serialization-marker-inventory.csv | 5342 | Serializer-related marker summary by file. |
 | phase-01-gump-inventory.csv | 4066 | Gump open and response marker hits. |
 | phase-01-config-reference-inventory.csv | 114 | String references to XML/config/text/json data files in source. |
-| phase-01-documentation-inventory.csv | 204 | Markdown inventory with source-trace, code-verified, needs-rework, slug, and link markers. |
+| phase-01-documentation-inventory.csv | 205 | Markdown inventory with source-trace, code-verified, needs-rework, slug, and link markers. |
 | phase-01-duplicate-doc-slugs.csv | 9 | Duplicate normalized documentation slugs. |
 
 ## Reproduction Command

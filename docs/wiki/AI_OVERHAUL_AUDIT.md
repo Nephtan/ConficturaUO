@@ -1177,7 +1177,7 @@ This list is exact for non-obsolete gameplay code reviewed through search.
 
 ### Live `ForcedAI` overrides
 
-- `Data/Scripts/Custom/CloneOfflinePlayerCharacters/CharacterClone.cs`
+- `Data/Scripts/Custom/PvE/CloneOfflinePlayerCharacters/CharacterClone.cs`
 - `Data/Scripts/Custom/ThirdParty/OmniAI/AITester.cs`
 - `Data/Scripts/Magic/Jester/Spells/Clowns.cs`
 - `Data/Scripts/Magic/Ninjitsu/MirrorImage.cs`
