@@ -14,27 +14,27 @@ Matched source files: 21.
 
 | File | Primary Role | Runtime Hooks | Serialized | Gumps |
 | --- | --- | --- | --- | --- |
-| Data/Scripts/Custom/OzThothStaticGump/StaticGump(Alternative).cs | CommandSurface | Initialize | No | OnResponse;SendGump |
-| Data/Scripts/Custom/OzThothStaticGump/Side Gumps/AddAnimation.cs | CommandSurface | Initialize | No | OnResponse;SendGump |
-| Data/Scripts/Custom/OzThothStaticGump/Side Gumps/AddArch.cs | CommandSurface | Initialize | No | OnResponse;SendGump |
-| Data/Scripts/Custom/OzThothStaticGump/Side Gumps/AddCooking.cs | CommandSurface | Initialize | No | OnResponse;SendGump |
-| Data/Scripts/Custom/OzThothStaticGump/Side Gumps/AddCustom.cs | CommandSurface | Initialize | No | OnResponse;SendGump |
-| Data/Scripts/Custom/OzThothStaticGump/Side Gumps/AddDeco.cs | CommandSurface | Initialize | No | OnResponse;SendGump |
-| Data/Scripts/Custom/OzThothStaticGump/Side Gumps/AddDungeon.cs | CommandSurface | Initialize | No | OnResponse;SendGump |
-| Data/Scripts/Custom/OzThothStaticGump/Side Gumps/addfence.cs | CommandSurface | Initialize | No | OnResponse;SendGump |
-| Data/Scripts/Custom/OzThothStaticGump/Side Gumps/addfloor.cs | CommandSurface | Initialize | No | OnResponse;SendGump |
-| Data/Scripts/Custom/OzThothStaticGump/Side Gumps/AddFurniture.cs | CommandSurface | Initialize | No | OnResponse;SendGump |
-| Data/Scripts/Custom/OzThothStaticGump/Side Gumps/AddGear.cs | CommandSurface | Initialize | No | OnResponse;SendGump |
-| Data/Scripts/Custom/OzThothStaticGump/Side Gumps/AddGround.cs | CommandSurface | Initialize | No | OnResponse;SendGump |
-| Data/Scripts/Custom/OzThothStaticGump/Side Gumps/AddLight.cs | CommandSurface | Initialize | No | OnResponse;SendGump |
-| Data/Scripts/Custom/OzThothStaticGump/Side Gumps/AddMisc.cs | CommandSurface | Initialize | No | OnResponse;SendGump |
-| Data/Scripts/Custom/OzThothStaticGump/Side Gumps/AddNature.cs | CommandSurface | Initialize | No | OnResponse;SendGump |
-| Data/Scripts/Custom/OzThothStaticGump/Side Gumps/addplants.cs | CommandSurface | Initialize | No | OnResponse;SendGump |
-| Data/Scripts/Custom/OzThothStaticGump/Side Gumps/addrock.cs | CommandSurface | Initialize | No | OnResponse;SendGump |
-| Data/Scripts/Custom/OzThothStaticGump/Side Gumps/addroof.cs | CommandSurface | Initialize | No | OnResponse;SendGump |
-| Data/Scripts/Custom/OzThothStaticGump/Side Gumps/AddSignPost.cs | CommandSurface | Initialize | No | OnResponse;SendGump |
-| Data/Scripts/Custom/OzThothStaticGump/Side Gumps/AddStairGump.cs | CommandSurface | Initialize | No | OnResponse;SendGump |
-| Data/Scripts/Custom/OzThothStaticGump/Side Gumps/AddWallGump.cs | CommandSurface | Initialize | No | OnResponse;SendGump |
+| Data/Scripts/Custom/StaffTools/StaticGumpTool/StaticGump(Alternative).cs | CommandSurface | Initialize | No | OnResponse;SendGump |
+| Data/Scripts/Custom/StaffTools/StaticGumpTool/Side Gumps/AddAnimation.cs | CommandSurface | Initialize | No | OnResponse;SendGump |
+| Data/Scripts/Custom/StaffTools/StaticGumpTool/Side Gumps/AddArch.cs | CommandSurface | Initialize | No | OnResponse;SendGump |
+| Data/Scripts/Custom/StaffTools/StaticGumpTool/Side Gumps/AddCooking.cs | CommandSurface | Initialize | No | OnResponse;SendGump |
+| Data/Scripts/Custom/StaffTools/StaticGumpTool/Side Gumps/AddCustom.cs | CommandSurface | Initialize | No | OnResponse;SendGump |
+| Data/Scripts/Custom/StaffTools/StaticGumpTool/Side Gumps/AddDeco.cs | CommandSurface | Initialize | No | OnResponse;SendGump |
+| Data/Scripts/Custom/StaffTools/StaticGumpTool/Side Gumps/AddDungeon.cs | CommandSurface | Initialize | No | OnResponse;SendGump |
+| Data/Scripts/Custom/StaffTools/StaticGumpTool/Side Gumps/addfence.cs | CommandSurface | Initialize | No | OnResponse;SendGump |
+| Data/Scripts/Custom/StaffTools/StaticGumpTool/Side Gumps/addfloor.cs | CommandSurface | Initialize | No | OnResponse;SendGump |
+| Data/Scripts/Custom/StaffTools/StaticGumpTool/Side Gumps/AddFurniture.cs | CommandSurface | Initialize | No | OnResponse;SendGump |
+| Data/Scripts/Custom/StaffTools/StaticGumpTool/Side Gumps/AddGear.cs | CommandSurface | Initialize | No | OnResponse;SendGump |
+| Data/Scripts/Custom/StaffTools/StaticGumpTool/Side Gumps/AddGround.cs | CommandSurface | Initialize | No | OnResponse;SendGump |
+| Data/Scripts/Custom/StaffTools/StaticGumpTool/Side Gumps/AddLight.cs | CommandSurface | Initialize | No | OnResponse;SendGump |
+| Data/Scripts/Custom/StaffTools/StaticGumpTool/Side Gumps/AddMisc.cs | CommandSurface | Initialize | No | OnResponse;SendGump |
+| Data/Scripts/Custom/StaffTools/StaticGumpTool/Side Gumps/AddNature.cs | CommandSurface | Initialize | No | OnResponse;SendGump |
+| Data/Scripts/Custom/StaffTools/StaticGumpTool/Side Gumps/addplants.cs | CommandSurface | Initialize | No | OnResponse;SendGump |
+| Data/Scripts/Custom/StaffTools/StaticGumpTool/Side Gumps/addrock.cs | CommandSurface | Initialize | No | OnResponse;SendGump |
+| Data/Scripts/Custom/StaffTools/StaticGumpTool/Side Gumps/addroof.cs | CommandSurface | Initialize | No | OnResponse;SendGump |
+| Data/Scripts/Custom/StaffTools/StaticGumpTool/Side Gumps/AddSignPost.cs | CommandSurface | Initialize | No | OnResponse;SendGump |
+| Data/Scripts/Custom/StaffTools/StaticGumpTool/Side Gumps/AddStairGump.cs | CommandSurface | Initialize | No | OnResponse;SendGump |
+| Data/Scripts/Custom/StaffTools/StaticGumpTool/Side Gumps/AddWallGump.cs | CommandSurface | Initialize | No | OnResponse;SendGump |
 
 ## Data Files
 
@@ -44,29 +44,29 @@ No XML/config/text/json references were found in Phase 1 string-reference marker
 
 | Entry | Evidence |
 | --- | --- |
-| Command $(Escape-MarkdownCell @{Command=; AccessLevel=; Handler=; File=Data/Scripts/Custom/OzThothStaticGump/StaticGump(Alternative).cs; Line=13; LikelySystem=Custom:OzThothStaticGump; RegistrationLine=CommandSystem.Register(}.Command) | Data/Scripts/Custom/OzThothStaticGump/StaticGump(Alternative).cs:13 |
-| Command $(Escape-MarkdownCell @{Command=; AccessLevel=; Handler=; File=Data/Scripts/Custom/OzThothStaticGump/StaticGump(Alternative).cs; Line=18; LikelySystem=Custom:OzThothStaticGump; RegistrationLine=CommandSystem.Register(}.Command) | Data/Scripts/Custom/OzThothStaticGump/StaticGump(Alternative).cs:18 |
-| Command $(Escape-MarkdownCell @{Command=; AccessLevel=; Handler=; File=Data/Scripts/Custom/OzThothStaticGump/StaticGump(Alternative).cs; Line=23; LikelySystem=Custom:OzThothStaticGump; RegistrationLine=CommandSystem.Register(}.Command) | Data/Scripts/Custom/OzThothStaticGump/StaticGump(Alternative).cs:23 |
-| Command $(Escape-MarkdownCell @{Command=; AccessLevel=; Handler=; File=Data/Scripts/Custom/OzThothStaticGump/Side Gumps/AddAnimation.cs; Line=18; LikelySystem=Custom:OzThothStaticGump; RegistrationLine=CommandSystem.Register(}.Command) | Data/Scripts/Custom/OzThothStaticGump/Side Gumps/AddAnimation.cs:18 |
-| Command $(Escape-MarkdownCell @{Command=; AccessLevel=; Handler=; File=Data/Scripts/Custom/OzThothStaticGump/Side Gumps/AddArch.cs; Line=18; LikelySystem=Custom:OzThothStaticGump; RegistrationLine=CommandSystem.Register(}.Command) | Data/Scripts/Custom/OzThothStaticGump/Side Gumps/AddArch.cs:18 |
-| Command $(Escape-MarkdownCell @{Command=; AccessLevel=; Handler=; File=Data/Scripts/Custom/OzThothStaticGump/Side Gumps/AddCooking.cs; Line=18; LikelySystem=Custom:OzThothStaticGump; RegistrationLine=CommandSystem.Register(}.Command) | Data/Scripts/Custom/OzThothStaticGump/Side Gumps/AddCooking.cs:18 |
-| Command $(Escape-MarkdownCell @{Command=; AccessLevel=; Handler=; File=Data/Scripts/Custom/OzThothStaticGump/Side Gumps/AddCustom.cs; Line=18; LikelySystem=Custom:OzThothStaticGump; RegistrationLine=CommandSystem.Register(}.Command) | Data/Scripts/Custom/OzThothStaticGump/Side Gumps/AddCustom.cs:18 |
-| Command $(Escape-MarkdownCell @{Command=; AccessLevel=; Handler=; File=Data/Scripts/Custom/OzThothStaticGump/Side Gumps/AddDeco.cs; Line=18; LikelySystem=Custom:OzThothStaticGump; RegistrationLine=CommandSystem.Register(}.Command) | Data/Scripts/Custom/OzThothStaticGump/Side Gumps/AddDeco.cs:18 |
-| Command $(Escape-MarkdownCell @{Command=; AccessLevel=; Handler=; File=Data/Scripts/Custom/OzThothStaticGump/Side Gumps/AddDungeon.cs; Line=18; LikelySystem=Custom:OzThothStaticGump; RegistrationLine=CommandSystem.Register(}.Command) | Data/Scripts/Custom/OzThothStaticGump/Side Gumps/AddDungeon.cs:18 |
-| Command $(Escape-MarkdownCell @{Command=; AccessLevel=; Handler=; File=Data/Scripts/Custom/OzThothStaticGump/Side Gumps/addfence.cs; Line=13; LikelySystem=Custom:OzThothStaticGump; RegistrationLine=CommandSystem.Register(}.Command) | Data/Scripts/Custom/OzThothStaticGump/Side Gumps/addfence.cs:13 |
-| Command $(Escape-MarkdownCell @{Command=; AccessLevel=; Handler=; File=Data/Scripts/Custom/OzThothStaticGump/Side Gumps/addfloor.cs; Line=18; LikelySystem=Custom:OzThothStaticGump; RegistrationLine=CommandSystem.Register(}.Command) | Data/Scripts/Custom/OzThothStaticGump/Side Gumps/addfloor.cs:18 |
-| Command $(Escape-MarkdownCell @{Command=; AccessLevel=; Handler=; File=Data/Scripts/Custom/OzThothStaticGump/Side Gumps/AddFurniture.cs; Line=18; LikelySystem=Custom:OzThothStaticGump; RegistrationLine=CommandSystem.Register(}.Command) | Data/Scripts/Custom/OzThothStaticGump/Side Gumps/AddFurniture.cs:18 |
-| Command $(Escape-MarkdownCell @{Command=; AccessLevel=; Handler=; File=Data/Scripts/Custom/OzThothStaticGump/Side Gumps/AddGear.cs; Line=18; LikelySystem=Custom:OzThothStaticGump; RegistrationLine=CommandSystem.Register(}.Command) | Data/Scripts/Custom/OzThothStaticGump/Side Gumps/AddGear.cs:18 |
-| Command $(Escape-MarkdownCell @{Command=; AccessLevel=; Handler=; File=Data/Scripts/Custom/OzThothStaticGump/Side Gumps/AddGround.cs; Line=18; LikelySystem=Custom:OzThothStaticGump; RegistrationLine=CommandSystem.Register(}.Command) | Data/Scripts/Custom/OzThothStaticGump/Side Gumps/AddGround.cs:18 |
-| Command $(Escape-MarkdownCell @{Command=; AccessLevel=; Handler=; File=Data/Scripts/Custom/OzThothStaticGump/Side Gumps/AddLight.cs; Line=18; LikelySystem=Custom:OzThothStaticGump; RegistrationLine=CommandSystem.Register(}.Command) | Data/Scripts/Custom/OzThothStaticGump/Side Gumps/AddLight.cs:18 |
-| Command $(Escape-MarkdownCell @{Command=; AccessLevel=; Handler=; File=Data/Scripts/Custom/OzThothStaticGump/Side Gumps/AddMisc.cs; Line=18; LikelySystem=Custom:OzThothStaticGump; RegistrationLine=CommandSystem.Register(}.Command) | Data/Scripts/Custom/OzThothStaticGump/Side Gumps/AddMisc.cs:18 |
-| Command $(Escape-MarkdownCell @{Command=; AccessLevel=; Handler=; File=Data/Scripts/Custom/OzThothStaticGump/Side Gumps/AddNature.cs; Line=18; LikelySystem=Custom:OzThothStaticGump; RegistrationLine=CommandSystem.Register(}.Command) | Data/Scripts/Custom/OzThothStaticGump/Side Gumps/AddNature.cs:18 |
-| Command $(Escape-MarkdownCell @{Command=; AccessLevel=; Handler=; File=Data/Scripts/Custom/OzThothStaticGump/Side Gumps/addplants.cs; Line=18; LikelySystem=Custom:OzThothStaticGump; RegistrationLine=CommandSystem.Register(}.Command) | Data/Scripts/Custom/OzThothStaticGump/Side Gumps/addplants.cs:18 |
-| Command $(Escape-MarkdownCell @{Command=; AccessLevel=; Handler=; File=Data/Scripts/Custom/OzThothStaticGump/Side Gumps/addrock.cs; Line=18; LikelySystem=Custom:OzThothStaticGump; RegistrationLine=CommandSystem.Register(}.Command) | Data/Scripts/Custom/OzThothStaticGump/Side Gumps/addrock.cs:18 |
-| Command $(Escape-MarkdownCell @{Command=; AccessLevel=; Handler=; File=Data/Scripts/Custom/OzThothStaticGump/Side Gumps/addroof.cs; Line=18; LikelySystem=Custom:OzThothStaticGump; RegistrationLine=CommandSystem.Register(}.Command) | Data/Scripts/Custom/OzThothStaticGump/Side Gumps/addroof.cs:18 |
-| Command $(Escape-MarkdownCell @{Command=; AccessLevel=; Handler=; File=Data/Scripts/Custom/OzThothStaticGump/Side Gumps/AddSignPost.cs; Line=18; LikelySystem=Custom:OzThothStaticGump; RegistrationLine=CommandSystem.Register(}.Command) | Data/Scripts/Custom/OzThothStaticGump/Side Gumps/AddSignPost.cs:18 |
-| Command $(Escape-MarkdownCell @{Command=; AccessLevel=; Handler=; File=Data/Scripts/Custom/OzThothStaticGump/Side Gumps/AddStairGump.cs; Line=18; LikelySystem=Custom:OzThothStaticGump; RegistrationLine=CommandSystem.Register(}.Command) | Data/Scripts/Custom/OzThothStaticGump/Side Gumps/AddStairGump.cs:18 |
-| Command $(Escape-MarkdownCell @{Command=; AccessLevel=; Handler=; File=Data/Scripts/Custom/OzThothStaticGump/Side Gumps/AddWallGump.cs; Line=18; LikelySystem=Custom:OzThothStaticGump; RegistrationLine=CommandSystem.Register(}.Command) | Data/Scripts/Custom/OzThothStaticGump/Side Gumps/AddWallGump.cs:18 |
+| Command $(Escape-MarkdownCell @{Command=; AccessLevel=; Handler=; File=Data/Scripts/Custom/StaffTools/StaticGumpTool/StaticGump(Alternative).cs; Line=13; LikelySystem=Custom:StaffTools; RegistrationLine=CommandSystem.Register(}.Command) | Data/Scripts/Custom/StaffTools/StaticGumpTool/StaticGump(Alternative).cs:13 |
+| Command $(Escape-MarkdownCell @{Command=; AccessLevel=; Handler=; File=Data/Scripts/Custom/StaffTools/StaticGumpTool/StaticGump(Alternative).cs; Line=18; LikelySystem=Custom:StaffTools; RegistrationLine=CommandSystem.Register(}.Command) | Data/Scripts/Custom/StaffTools/StaticGumpTool/StaticGump(Alternative).cs:18 |
+| Command $(Escape-MarkdownCell @{Command=; AccessLevel=; Handler=; File=Data/Scripts/Custom/StaffTools/StaticGumpTool/StaticGump(Alternative).cs; Line=23; LikelySystem=Custom:StaffTools; RegistrationLine=CommandSystem.Register(}.Command) | Data/Scripts/Custom/StaffTools/StaticGumpTool/StaticGump(Alternative).cs:23 |
+| Command $(Escape-MarkdownCell @{Command=; AccessLevel=; Handler=; File=Data/Scripts/Custom/StaffTools/StaticGumpTool/Side Gumps/AddAnimation.cs; Line=18; LikelySystem=Custom:StaffTools; RegistrationLine=CommandSystem.Register(}.Command) | Data/Scripts/Custom/StaffTools/StaticGumpTool/Side Gumps/AddAnimation.cs:18 |
+| Command $(Escape-MarkdownCell @{Command=; AccessLevel=; Handler=; File=Data/Scripts/Custom/StaffTools/StaticGumpTool/Side Gumps/AddArch.cs; Line=18; LikelySystem=Custom:StaffTools; RegistrationLine=CommandSystem.Register(}.Command) | Data/Scripts/Custom/StaffTools/StaticGumpTool/Side Gumps/AddArch.cs:18 |
+| Command $(Escape-MarkdownCell @{Command=; AccessLevel=; Handler=; File=Data/Scripts/Custom/StaffTools/StaticGumpTool/Side Gumps/AddCooking.cs; Line=18; LikelySystem=Custom:StaffTools; RegistrationLine=CommandSystem.Register(}.Command) | Data/Scripts/Custom/StaffTools/StaticGumpTool/Side Gumps/AddCooking.cs:18 |
+| Command $(Escape-MarkdownCell @{Command=; AccessLevel=; Handler=; File=Data/Scripts/Custom/StaffTools/StaticGumpTool/Side Gumps/AddCustom.cs; Line=18; LikelySystem=Custom:StaffTools; RegistrationLine=CommandSystem.Register(}.Command) | Data/Scripts/Custom/StaffTools/StaticGumpTool/Side Gumps/AddCustom.cs:18 |
+| Command $(Escape-MarkdownCell @{Command=; AccessLevel=; Handler=; File=Data/Scripts/Custom/StaffTools/StaticGumpTool/Side Gumps/AddDeco.cs; Line=18; LikelySystem=Custom:StaffTools; RegistrationLine=CommandSystem.Register(}.Command) | Data/Scripts/Custom/StaffTools/StaticGumpTool/Side Gumps/AddDeco.cs:18 |
+| Command $(Escape-MarkdownCell @{Command=; AccessLevel=; Handler=; File=Data/Scripts/Custom/StaffTools/StaticGumpTool/Side Gumps/AddDungeon.cs; Line=18; LikelySystem=Custom:StaffTools; RegistrationLine=CommandSystem.Register(}.Command) | Data/Scripts/Custom/StaffTools/StaticGumpTool/Side Gumps/AddDungeon.cs:18 |
+| Command $(Escape-MarkdownCell @{Command=; AccessLevel=; Handler=; File=Data/Scripts/Custom/StaffTools/StaticGumpTool/Side Gumps/addfence.cs; Line=13; LikelySystem=Custom:StaffTools; RegistrationLine=CommandSystem.Register(}.Command) | Data/Scripts/Custom/StaffTools/StaticGumpTool/Side Gumps/addfence.cs:13 |
+| Command $(Escape-MarkdownCell @{Command=; AccessLevel=; Handler=; File=Data/Scripts/Custom/StaffTools/StaticGumpTool/Side Gumps/addfloor.cs; Line=18; LikelySystem=Custom:StaffTools; RegistrationLine=CommandSystem.Register(}.Command) | Data/Scripts/Custom/StaffTools/StaticGumpTool/Side Gumps/addfloor.cs:18 |
+| Command $(Escape-MarkdownCell @{Command=; AccessLevel=; Handler=; File=Data/Scripts/Custom/StaffTools/StaticGumpTool/Side Gumps/AddFurniture.cs; Line=18; LikelySystem=Custom:StaffTools; RegistrationLine=CommandSystem.Register(}.Command) | Data/Scripts/Custom/StaffTools/StaticGumpTool/Side Gumps/AddFurniture.cs:18 |
+| Command $(Escape-MarkdownCell @{Command=; AccessLevel=; Handler=; File=Data/Scripts/Custom/StaffTools/StaticGumpTool/Side Gumps/AddGear.cs; Line=18; LikelySystem=Custom:StaffTools; RegistrationLine=CommandSystem.Register(}.Command) | Data/Scripts/Custom/StaffTools/StaticGumpTool/Side Gumps/AddGear.cs:18 |
+| Command $(Escape-MarkdownCell @{Command=; AccessLevel=; Handler=; File=Data/Scripts/Custom/StaffTools/StaticGumpTool/Side Gumps/AddGround.cs; Line=18; LikelySystem=Custom:StaffTools; RegistrationLine=CommandSystem.Register(}.Command) | Data/Scripts/Custom/StaffTools/StaticGumpTool/Side Gumps/AddGround.cs:18 |
+| Command $(Escape-MarkdownCell @{Command=; AccessLevel=; Handler=; File=Data/Scripts/Custom/StaffTools/StaticGumpTool/Side Gumps/AddLight.cs; Line=18; LikelySystem=Custom:StaffTools; RegistrationLine=CommandSystem.Register(}.Command) | Data/Scripts/Custom/StaffTools/StaticGumpTool/Side Gumps/AddLight.cs:18 |
+| Command $(Escape-MarkdownCell @{Command=; AccessLevel=; Handler=; File=Data/Scripts/Custom/StaffTools/StaticGumpTool/Side Gumps/AddMisc.cs; Line=18; LikelySystem=Custom:StaffTools; RegistrationLine=CommandSystem.Register(}.Command) | Data/Scripts/Custom/StaffTools/StaticGumpTool/Side Gumps/AddMisc.cs:18 |
+| Command $(Escape-MarkdownCell @{Command=; AccessLevel=; Handler=; File=Data/Scripts/Custom/StaffTools/StaticGumpTool/Side Gumps/AddNature.cs; Line=18; LikelySystem=Custom:StaffTools; RegistrationLine=CommandSystem.Register(}.Command) | Data/Scripts/Custom/StaffTools/StaticGumpTool/Side Gumps/AddNature.cs:18 |
+| Command $(Escape-MarkdownCell @{Command=; AccessLevel=; Handler=; File=Data/Scripts/Custom/StaffTools/StaticGumpTool/Side Gumps/addplants.cs; Line=18; LikelySystem=Custom:StaffTools; RegistrationLine=CommandSystem.Register(}.Command) | Data/Scripts/Custom/StaffTools/StaticGumpTool/Side Gumps/addplants.cs:18 |
+| Command $(Escape-MarkdownCell @{Command=; AccessLevel=; Handler=; File=Data/Scripts/Custom/StaffTools/StaticGumpTool/Side Gumps/addrock.cs; Line=18; LikelySystem=Custom:StaffTools; RegistrationLine=CommandSystem.Register(}.Command) | Data/Scripts/Custom/StaffTools/StaticGumpTool/Side Gumps/addrock.cs:18 |
+| Command $(Escape-MarkdownCell @{Command=; AccessLevel=; Handler=; File=Data/Scripts/Custom/StaffTools/StaticGumpTool/Side Gumps/addroof.cs; Line=18; LikelySystem=Custom:StaffTools; RegistrationLine=CommandSystem.Register(}.Command) | Data/Scripts/Custom/StaffTools/StaticGumpTool/Side Gumps/addroof.cs:18 |
+| Command $(Escape-MarkdownCell @{Command=; AccessLevel=; Handler=; File=Data/Scripts/Custom/StaffTools/StaticGumpTool/Side Gumps/AddSignPost.cs; Line=18; LikelySystem=Custom:StaffTools; RegistrationLine=CommandSystem.Register(}.Command) | Data/Scripts/Custom/StaffTools/StaticGumpTool/Side Gumps/AddSignPost.cs:18 |
+| Command $(Escape-MarkdownCell @{Command=; AccessLevel=; Handler=; File=Data/Scripts/Custom/StaffTools/StaticGumpTool/Side Gumps/AddStairGump.cs; Line=18; LikelySystem=Custom:StaffTools; RegistrationLine=CommandSystem.Register(}.Command) | Data/Scripts/Custom/StaffTools/StaticGumpTool/Side Gumps/AddStairGump.cs:18 |
+| Command $(Escape-MarkdownCell @{Command=; AccessLevel=; Handler=; File=Data/Scripts/Custom/StaffTools/StaticGumpTool/Side Gumps/AddWallGump.cs; Line=18; LikelySystem=Custom:StaffTools; RegistrationLine=CommandSystem.Register(}.Command) | Data/Scripts/Custom/StaffTools/StaticGumpTool/Side Gumps/AddWallGump.cs:18 |
 
 ## Staff Entry Points
 

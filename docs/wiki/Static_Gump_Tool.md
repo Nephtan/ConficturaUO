@@ -2,7 +2,7 @@
 
 ## Scope
 
-This page documents the staff-facing static editing gump package under `Data/Scripts/Custom/OzThothStaticGump/`.
+This page documents the staff-facing static editing gump package under `Data/Scripts/Custom/StaffTools/StaticGumpTool/`.
 It covers the alternative Oz'Thoth static tool gump, its categorized static picker gumps, and the staff commands those gumps dispatch.
 
 The package is not a player feature. It is a Game Master building aid for adding, moving, inspecting, and deleting static items through existing RunUO command surfaces.

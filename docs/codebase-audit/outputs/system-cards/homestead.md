@@ -17,7 +17,7 @@ Matched source files: 402.
 | Data/Scripts/Custom/Offline Skill Training/Items/AdvancedStudyBooks.cs | Persistence |  | Yes |  |
 | Data/Scripts/Custom/Offline Skill Training/Items/LegendaryStudyBooks.cs | Persistence |  | Yes |  |
 | Data/Scripts/Custom/Offline Skill Training/Items/StandardStudyBooks.cs | Persistence |  | Yes |  |
-| Data/Scripts/Custom/OzThothStaticGump/Side Gumps/AddCooking.cs | CommandSurface | Initialize | No | OnResponse;SendGump |
+| Data/Scripts/Custom/StaffTools/StaticGumpTool/Side Gumps/AddCooking.cs | CommandSurface | Initialize | No | OnResponse;SendGump |
 | Data/Scripts/Custom/Vhaerun's CRL Homestead System [2.0]/Dracana's Winecrafting [2.0]/Addons/BottleRackAddon.cs | Persistence |  | Yes |  |
 | Data/Scripts/Custom/Vhaerun's CRL Homestead System [2.0]/Dracana's Winecrafting [2.0]/Addons/KegStorageAddon.cs | Persistence |  | Yes |  |
 | Data/Scripts/Custom/Vhaerun's CRL Homestead System [2.0]/Dracana's Winecrafting [2.0]/Commands/AddGrapevines.cs | CommandSurface | Initialize | No | SendGump |
@@ -274,7 +274,7 @@ No XML/config/text/json references were found in Phase 1 string-reference marker
 
 | Entry | Evidence |
 | --- | --- |
-| Command $(Escape-MarkdownCell @{Command=; AccessLevel=; Handler=; File=Data/Scripts/Custom/OzThothStaticGump/Side Gumps/AddCooking.cs; Line=18; LikelySystem=Custom:OzThothStaticGump; RegistrationLine=CommandSystem.Register(}.Command) | Data/Scripts/Custom/OzThothStaticGump/Side Gumps/AddCooking.cs:18 |
+| Command $(Escape-MarkdownCell @{Command=; AccessLevel=; Handler=; File=Data/Scripts/Custom/StaffTools/StaticGumpTool/Side Gumps/AddCooking.cs; Line=18; LikelySystem=Custom:StaffTools; RegistrationLine=CommandSystem.Register(}.Command) | Data/Scripts/Custom/StaffTools/StaticGumpTool/Side Gumps/AddCooking.cs:18 |
 | Command $(Escape-MarkdownCell @{Command=; AccessLevel=; Handler=; File=Data/Scripts/Custom/Vhaerun's CRL Homestead System [2.0]/Dracana's Winecrafting [2.0]/Commands/AddGrapevines.cs; Line=20; LikelySystem=Custom:Vhaerun's CRL Homestead System [2.0]; RegistrationLine=CommandSystem.Register(}.Command) | Data/Scripts/Custom/Vhaerun's CRL Homestead System [2.0]/Dracana's Winecrafting [2.0]/Commands/AddGrapevines.cs:20 |
 | Command $(Escape-MarkdownCell @{Command=; AccessLevel=; Handler=; File=Data/Scripts/Custom/Vhaerun's CRL Homestead System [2.0]/Vhaerun's CRL Cooking/Package Systems/HungerGump/HungerGump.cs; Line=22; LikelySystem=Custom:Vhaerun's CRL Homestead System [2.0]; RegistrationLine=CommandSystem.Register(}.Command) | Data/Scripts/Custom/Vhaerun's CRL Homestead System [2.0]/Vhaerun's CRL Cooking/Package Systems/HungerGump/HungerGump.cs:22 |
 | Command $(Escape-MarkdownCell @{Command=; AccessLevel=; Handler=; File=Data/Scripts/Custom/Vhaerun's CRL Homestead System [2.0]/Vhaerun's CRL Cooking/Package Systems/HungerGump/HungerGump.cs; Line=27; LikelySystem=Custom:Vhaerun's CRL Homestead System [2.0]; RegistrationLine=CommandSystem.Register(}.Command) | Data/Scripts/Custom/Vhaerun's CRL Homestead System [2.0]/Vhaerun's CRL Cooking/Package Systems/HungerGump/HungerGump.cs:27 |

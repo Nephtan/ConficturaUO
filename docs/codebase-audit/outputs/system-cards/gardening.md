@@ -14,7 +14,7 @@ Matched source files: 63.
 
 | File | Primary Role | Runtime Hooks | Serialized | Gumps |
 | --- | --- | --- | --- | --- |
-| Data/Scripts/Custom/OzThothStaticGump/Side Gumps/addplants.cs | CommandSurface | Initialize | No | OnResponse;SendGump |
+| Data/Scripts/Custom/StaffTools/StaticGumpTool/Side Gumps/addplants.cs | CommandSurface | Initialize | No | OnResponse;SendGump |
 | Data/Scripts/Custom/Vhaerun's CRL Homestead System [2.0]/Vhaerun's CRL Crops/CropFood/Eggplant.cs | Persistence |  | Yes |  |
 | Data/Scripts/Custom/Vhaerun's CRL Homestead System [2.0]/Vhaerun's CRL Crops/Crops/EggplantCrop.cs | StartupWiring | CustomTimerSubclass | Yes | SendGump |
 | Data/Scripts/Custom/Vhaerun's CRL Homestead System [2.0]/Vhaerun's CRL Crops/Wild Crops/Crops/CarrotPlant.cs | Persistence |  | Yes |  |
@@ -86,7 +86,7 @@ No XML/config/text/json references were found in Phase 1 string-reference marker
 
 | Entry | Evidence |
 | --- | --- |
-| Command $(Escape-MarkdownCell @{Command=; AccessLevel=; Handler=; File=Data/Scripts/Custom/OzThothStaticGump/Side Gumps/addplants.cs; Line=18; LikelySystem=Custom:OzThothStaticGump; RegistrationLine=CommandSystem.Register(}.Command) | Data/Scripts/Custom/OzThothStaticGump/Side Gumps/addplants.cs:18 |
+| Command $(Escape-MarkdownCell @{Command=; AccessLevel=; Handler=; File=Data/Scripts/Custom/StaffTools/StaticGumpTool/Side Gumps/addplants.cs; Line=18; LikelySystem=Custom:StaffTools; RegistrationLine=CommandSystem.Register(}.Command) | Data/Scripts/Custom/StaffTools/StaticGumpTool/Side Gumps/addplants.cs:18 |
 
 ## Staff Entry Points
 

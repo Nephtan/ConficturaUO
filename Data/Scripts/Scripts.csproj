@@ -1,4 +1,4 @@
-﻿<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -603,27 +603,27 @@
     <Compile Include="Custom\OrbRemoteServer\UOArchitect\MoveItemsCommand.cs" />
     <Compile Include="Custom\OrbRemoteServer\UOArchitect\SelectItemsRequest.cs" />
     <Compile Include="Custom\OrbRemoteServer\UOArchitect\UOAR_ObjectTarget.cs" />
-    <Compile Include="Custom\OzThothStaticGump\Side Gumps\AddAnimation.cs" />
-    <Compile Include="Custom\OzThothStaticGump\Side Gumps\AddArch.cs" />
-    <Compile Include="Custom\OzThothStaticGump\Side Gumps\AddCooking.cs" />
-    <Compile Include="Custom\OzThothStaticGump\Side Gumps\AddCustom.cs" />
-    <Compile Include="Custom\OzThothStaticGump\Side Gumps\AddDeco.cs" />
-    <Compile Include="Custom\OzThothStaticGump\Side Gumps\AddDungeon.cs" />
-    <Compile Include="Custom\OzThothStaticGump\Side Gumps\addfence.cs" />
-    <Compile Include="Custom\OzThothStaticGump\Side Gumps\addfloor.cs" />
-    <Compile Include="Custom\OzThothStaticGump\Side Gumps\AddFurniture.cs" />
-    <Compile Include="Custom\OzThothStaticGump\Side Gumps\AddGear.cs" />
-    <Compile Include="Custom\OzThothStaticGump\Side Gumps\AddGround.cs" />
-    <Compile Include="Custom\OzThothStaticGump\Side Gumps\AddLight.cs" />
-    <Compile Include="Custom\OzThothStaticGump\Side Gumps\AddMisc.cs" />
-    <Compile Include="Custom\OzThothStaticGump\Side Gumps\AddNature.cs" />
-    <Compile Include="Custom\OzThothStaticGump\Side Gumps\addplants.cs" />
-    <Compile Include="Custom\OzThothStaticGump\Side Gumps\addrock.cs" />
-    <Compile Include="Custom\OzThothStaticGump\Side Gumps\addroof.cs" />
-    <Compile Include="Custom\OzThothStaticGump\Side Gumps\AddSignPost.cs" />
-    <Compile Include="Custom\OzThothStaticGump\Side Gumps\AddStairGump.cs" />
-    <Compile Include="Custom\OzThothStaticGump\Side Gumps\AddWallGump.cs" />
-    <Compile Include="Custom\OzThothStaticGump\StaticGump%28Alternative%29.cs" />
+    <Compile Include="Custom\StaffTools\StaticGumpTool\Side Gumps\AddAnimation.cs" />
+    <Compile Include="Custom\StaffTools\StaticGumpTool\Side Gumps\AddArch.cs" />
+    <Compile Include="Custom\StaffTools\StaticGumpTool\Side Gumps\AddCooking.cs" />
+    <Compile Include="Custom\StaffTools\StaticGumpTool\Side Gumps\AddCustom.cs" />
+    <Compile Include="Custom\StaffTools\StaticGumpTool\Side Gumps\AddDeco.cs" />
+    <Compile Include="Custom\StaffTools\StaticGumpTool\Side Gumps\AddDungeon.cs" />
+    <Compile Include="Custom\StaffTools\StaticGumpTool\Side Gumps\addfence.cs" />
+    <Compile Include="Custom\StaffTools\StaticGumpTool\Side Gumps\addfloor.cs" />
+    <Compile Include="Custom\StaffTools\StaticGumpTool\Side Gumps\AddFurniture.cs" />
+    <Compile Include="Custom\StaffTools\StaticGumpTool\Side Gumps\AddGear.cs" />
+    <Compile Include="Custom\StaffTools\StaticGumpTool\Side Gumps\AddGround.cs" />
+    <Compile Include="Custom\StaffTools\StaticGumpTool\Side Gumps\AddLight.cs" />
+    <Compile Include="Custom\StaffTools\StaticGumpTool\Side Gumps\AddMisc.cs" />
+    <Compile Include="Custom\StaffTools\StaticGumpTool\Side Gumps\AddNature.cs" />
+    <Compile Include="Custom\StaffTools\StaticGumpTool\Side Gumps\addplants.cs" />
+    <Compile Include="Custom\StaffTools\StaticGumpTool\Side Gumps\addrock.cs" />
+    <Compile Include="Custom\StaffTools\StaticGumpTool\Side Gumps\addroof.cs" />
+    <Compile Include="Custom\StaffTools\StaticGumpTool\Side Gumps\AddSignPost.cs" />
+    <Compile Include="Custom\StaffTools\StaticGumpTool\Side Gumps\AddStairGump.cs" />
+    <Compile Include="Custom\StaffTools\StaticGumpTool\Side Gumps\AddWallGump.cs" />
+    <Compile Include="Custom\StaffTools\StaticGumpTool\StaticGump%28Alternative%29.cs" />
     <Compile Include="Custom\PandorasGiftBox\PandorasGiftBox.cs" />
     <Compile Include="Custom\Player Range Sensitive Mod\setdeactivation.cs" />
     <Compile Include="Custom\Point Command [2.0]\Point.cs" />
@@ -6642,7 +6642,7 @@
     <Content Include="Custom\Offline Skill Training\readme.txt" />
     <Content Include="Custom\OrbRemoteServer\ExportMobiles.txt" />
     <Content Include="Custom\OrbRemoteServer\UOArchitect\BuildDesignTarget Backup.txt" />
-    <Content Include="Custom\OzThothStaticGump\README.txt" />
+    <Content Include="Custom\StaffTools\StaticGumpTool\README.txt" />
     <Content Include="Custom\PvPConsent\READ ME.txt" />
     <Content Include="Custom\RandomEncounters\COPYING.txt" />
     <Content Include="Custom\RandomEncounters\RandomEncounters.xml" />
