@@ -328,6 +328,8 @@ Tips:
 
 | `post-batch-m-command-access-source-review.csv` | Post-audit | Source review for the 174 POST-BATCH-L queued P2 command-access follow-ups, resolving helper access, parser offsets, legacy command surfaces, and policy-decision rows. | Complete |
 | `post-batch-m-command-access-closeout.md` | Post-audit | Close out POST-BATCH-M with decision counts, review classes, human decision rows, active-overlay reconciliation, and verification notes. | Complete |
+| `post-batch-n-source-readiness-queue.csv` | Post-audit | Classify all 899 formerly active `QueuedSourceFollowUp` rows into source-ready, docs-only, schema-docs-only, migration-plan, or policy-design lanes before source repair begins. | Complete |
+| `post-batch-n-closeout.md` | Post-audit | Close out POST-BATCH-N with readiness counts, lane counts, gate policy, active-overlay reconciliation, and verification notes. | Complete |
 
 ## Initial State
 
