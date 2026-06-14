@@ -2,7 +2,7 @@
 
 Initialized: 2026-06-05T16:15:59.8020730-05:00
 
-Last updated: 2026-06-14T00:18:20.2467255-05:00
+Last updated: 2026-06-14T00:22:56.2977509-05:00
 
 Branch: `SAR`
 
@@ -298,7 +298,7 @@ Post-audit save compatibility blocker resolved: `SERIAL-0032` now writes zero gh
 
 Post-audit reorganization pilot: `POST-BATCH-H-01A` executed the Character Level Phase 12 move from `Data/Scripts/Custom/CharacterLevel` to `Data/Scripts/Custom/Progression/CharacterLevel`, moved exactly two runtime-visible `.cs` files, updated two `Scripts.csproj` includes and current source-trace docs, regenerated runtime script compile inventory plus Phase 1/2/3/4/5/6/7/8/9 path-sensitive outputs, and added an active overlay `Fixed` disposition for `RB-06802`. Verification: git diff --check=Passed with no whitespace errors; Git emitted expected LF-to-CRLF working-copy warnings for edited text files; solution Debug/Any CPU=Passed with existing warnings; Scripts built Data/Scripts/ClassLibrary.dll and generated script-project artifacts were removed before staging; Server Debug/x86=Passed; Server built D:/ConficturaUO/ConficturaServer.exe and tracked root build artifacts were restored before staging; compile-only=Passed; compile-only output reported Scripts: Compile-only verification completed successfully and Exiting...done.
 
-Post-audit reorganization runner: `POST-BATCH-H-13A` classified Offline Skill Training `Data/Scripts/Custom/Offline Skill Training` as `DeferredMoveGate` rather than moving to `Data/Scripts/Custom/Progression/OfflineSkillTraining`. Project truth is clean (7 include rows, 7 source rows, 0 missing, 0 unincluded), but serializer review is not cleared (170 rows, 166 NeedsSourceReview, 166 UnknownUntilSaveTest, 4 NamespaceOrTypeRenameDanger); related balance/doc rows remain deferred or queued (RB-05603:Character Level <-> Offline Skill Training balance/policy; RB-05608:Random Encounters <-> Offline Skill Training balance/policy; RB-06737:Offline Skill Training canonical documentation source trace). Verification: git diff --check=Passed with expected LF-to-CRLF working-copy warnings and no whitespace errors; no source/project/runtime files changed.
+Post-audit reorganization runner: `POST-BATCH-H-14A` classified Homestead `Data/Scripts/Custom/Vhaerun's CRL Homestead System [2.0]` as `NeedsHumanDecision` rather than moving to `Data/Scripts/Custom/ThirdParty/Vhaerun's CRL Homestead System [2.0]`. Project truth is clean (388 include rows, 388 source rows, 0 missing, 0 unincluded), but explicit approval and save/package gates are not cleared (707 serializer rows, 707 NeedsSourceReview, 707 UnknownUntilSaveTest, 219 hook rows, 3 nested AGENTS scopes; RB-05611:Government <-> Homestead balance/policy; RB-05613:Homestead <-> Crafting Core balance/policy; RB-05614:Homestead <-> Harvest System balance/policy; RB-05615:Homestead <-> Bulk Orders balance/policy; RB-05616:Homestead <-> Gardening balance/policy; RB-05617:Homestead <-> Vendor Core balance/policy; RB-05633:Homestead <-> Static Gump Tool staff tooling policy; RB-06690:Farmable Crops source trace; RB-06705:Homestead canonical source trace; RB-06735:Offline Skill Training/Homestead doc source trace; RB-06807:Government move gate remains human-gated). Verification: git diff --check=Passed with expected LF-to-CRLF working-copy warnings and no whitespace errors; no source/project/runtime files changed.
 
 Scope: Deterministic phase runner state for the Confictura codebase audit and reorganization program.
 
