@@ -2,7 +2,7 @@
 
 Initialized: 2026-06-05T16:15:59.8020730-05:00
 
-Last updated: 2026-06-13T13:14:33.2498564-05:00
+Last updated: 2026-06-13T19:16:08.3913927-05:00
 
 Branch: `SAR`
 
@@ -16,7 +16,7 @@ Post-audit latest implemented source batch: `POST-BATCH-E-94A` fixed the Monopol
 
 Post-audit latest committed audit-state batch before the current source repair: `6ae44f74 docs: close save compatibility triage`
 
-Post-audit project-hygiene repair: `ScriptsProjectTruth` was repaired for `Data/Scripts/Scripts.csproj` by replacing 82 stale `MovedGumpFolder` compile targets with their current `Gumps` paths and adding 10 active runtime-visible sources that were absent from the Visual Studio scripts project. Regenerated project truth now reports 6,581 script source files, 6,581 `Scripts.csproj` compile includes, 0 missing compile targets, 0 active unlisted sources, and 0 project cleanup backlog groups. This is `IDEProjectHygiene` verification only; it is not live runtime script compile proof. The maintained solution build now reaches `Scripts.csproj` compilation and fails on unrelated existing project dependency/reference surfaces (`OrbServerSDK`, `UOArchitectInterface`, `System.Web`, and `System.Drawing` references), not missing compile targets.
+Post-audit project-hygiene repair: `ScriptsProjectTruth` was repaired for `Data/Scripts/Scripts.csproj` by replacing 82 stale `MovedGumpFolder` compile targets with their current `Gumps` paths and adding 10 active runtime-visible sources that were absent from the Visual Studio scripts project. A follow-up `IDEProjectHygiene` repair then mirrored runtime assembly references into `Scripts.csproj` for `OrbServerSDK`, `UOArchitectInterface`, `System.Web`, `System.Drawing`, `System.Runtime.Remoting`, and `System.Windows.Forms`, and changed Debug `Scripts.csproj` PDB output to portable format to avoid the native PDB method metadata limit in `Server.Misc.Farms.PlantGardens()`. Regenerated project truth reports 6,581 script source files, 6,581 `Scripts.csproj` compile includes, 0 missing compile targets, 0 active unlisted sources, and 0 project cleanup backlog groups. The maintained `ConficturaUO.sln` Debug/`Any CPU` build now passes as Visual Studio project hygiene with warnings; this is not live runtime script compile proof. Direct `Data/Scripts/Scripts.csproj` Debug/`AnyCPU` still fails before script compilation because `Server.csproj` has no standalone `Debug|AnyCPU` output path outside solution mapping.
 
 Post-audit latest runtime-risk review batch: `POST-BATCH-C-01A` reviewed the 17 P0 runtime-hook rows and 8 P0 `PlayerMobile` coupling rows in `outputs/post-batch-c-runtime-hooks-player-mobile-review.csv`. The batch made no source edits; the runtime-hook rows reconcile to the earlier `POST-BATCH-A` packet-handler review, and `PlayerMobile` coupling remains migration-gated.
 

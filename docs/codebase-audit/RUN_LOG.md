@@ -7126,3 +7126,67 @@ Scope: Deterministic phase runner log for the Confictura codebase audit and reor
 - Command: `git restore -- ConficturaServer.exe ConficturaServer.exe.config ConficturaServer.pdb`
 - Result: Succeeded. Tracked MSBuild-generated server artifacts were restored before staging.
 - Output path: Working tree status only.
+
+### 2026-06-13T19:16:08.3913927-05:00
+
+- Affected phase: Post-audit `IDEProjectHygiene` reference repair
+- Cwd: `D:\ConficturaUO`
+- Command: `git status --short`
+- Result: Clean worktree before the Visual Studio project reference repair.
+- Output path: Working tree status only.
+
+### 2026-06-13T19:16:08.3913927-05:00
+
+- Affected phase: Post-audit `IDEProjectHygiene` reference repair
+- Cwd: `D:\ConficturaUO`
+- Command: Inspect `Data/System/CFG/Assemblies.cfg`, `Data/System/Source/ScriptCompiler.cs`, checked-in root DLLs, and `Data/Scripts/Scripts.csproj`.
+- Result: Runtime script compilation already references `System.Web.dll`, `System.Drawing.dll`, `System.Windows.Forms.dll`, `OrbServerSDK.dll`, `System.Runtime.Remoting.dll`, and `UOArchitectInterface.dll`. `OrbServerSDK.dll` and `UOArchitectInterface.dll` exist at the repository root, and `Scripts.csproj` lacked those Visual Studio project references.
+- Output path: `Data/System/CFG/Assemblies.cfg`; `Data/System/Source/ScriptCompiler.cs`; `Data/Scripts/Scripts.csproj`
+
+### 2026-06-13T19:16:08.3913927-05:00
+
+- Affected phase: Post-audit `IDEProjectHygiene` reference repair
+- Cwd: `D:\ConficturaUO`
+- Command: Update `Data/Scripts/Scripts.csproj` references and Debug `DebugType`.
+- Result: Added project references for the runtime assembly list and changed Debug PDB output from native `full` PDBs to `portable` PDBs after MSBuild proved portable PDBs avoid `CS0041` for `Server.Misc.Farms.PlantGardens()`. No runtime source files changed.
+- Output path: `Data/Scripts/Scripts.csproj`
+
+### 2026-06-13T19:16:08.3913927-05:00
+
+- Affected phase: Post-audit `IDEProjectHygiene` reference repair
+- Cwd: `D:\ConficturaUO`
+- Command: `.\docs\codebase-audit\tools\New-ProjectTruthRegister.ps1`
+- Result: Succeeded. Counts remain 13,162 project truth rows, 6,581 script compile includes, 6,581 script source files, 0 missing compile targets, 0 unincluded source files, and 0 project cleanup backlog groups.
+- Output path: `docs/codebase-audit/outputs/project-truth-register.csv`; `docs/codebase-audit/outputs/phase-02-missing-compile-targets-classified.csv`; `docs/codebase-audit/outputs/phase-02-unincluded-source-classified.csv`
+
+### 2026-06-13T19:16:08.3913927-05:00
+
+- Affected phase: Post-audit `IDEProjectHygiene` reference repair
+- Cwd: `D:\ConficturaUO`
+- Command: `git diff --check`
+- Result: Passed with no whitespace errors; Git emitted the expected CRLF warning for `Data/Scripts/Scripts.csproj`.
+- Output path: Working tree diff check only.
+
+### 2026-06-13T19:16:08.3913927-05:00
+
+- Affected phase: Post-audit `IDEProjectHygiene` reference repair
+- Cwd: `D:\ConficturaUO`
+- Command: `& 'C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\MSBuild.exe' .\ConficturaUO.sln /p:Configuration=Debug /p:Platform="Any CPU" /v:minimal /nologo`
+- Result: Passed with warnings. The maintained solution build no longer fails on missing `OrbServerSDK`, `UOArchitectInterface`, `System.Web`, or `System.Drawing` references, and no longer fails on the native PDB metadata limit.
+- Output path: `docs/codebase-audit/outputs/phase-02-build-verification.md`
+
+### 2026-06-13T19:16:08.3913927-05:00
+
+- Affected phase: Post-audit `IDEProjectHygiene` reference repair
+- Cwd: `D:\ConficturaUO`
+- Command: `& 'C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\MSBuild.exe' .\Data\Scripts\Scripts.csproj /p:Configuration=Debug /p:Platform=AnyCPU /v:minimal /nologo`
+- Result: Failed before script compilation on the known direct project-reference limitation: `Server.csproj` has no standalone `Debug|AnyCPU` output path outside solution mapping.
+- Output path: `docs/codebase-audit/outputs/phase-02-build-verification.md`
+
+### 2026-06-13T19:16:08.3913927-05:00
+
+- Affected phase: Post-audit `IDEProjectHygiene` reference repair
+- Cwd: `D:\ConficturaUO`
+- Command: `git restore -- ConficturaServer.exe ConficturaServer.exe.config ConficturaServer.pdb`; remove exact untracked MSBuild outputs from `Data/Scripts`.
+- Result: Succeeded. Tracked generated server artifacts were restored and untracked build outputs created by MSBuild were removed before staging.
+- Output path: Working tree status only.

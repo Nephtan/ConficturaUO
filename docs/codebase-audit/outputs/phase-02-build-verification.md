@@ -68,6 +68,23 @@ Post-repair project truth status:
 | `phase-02-unincluded-source-classified.csv` | 0 |
 | `phase-02-project-cleanup-backlog.csv` | 0 |
 
-Visual Studio solution build verification still does not pass, but it no longer fails because of stale `Scripts.csproj` paths. The remaining failure should be tracked as project dependency/reference cleanup, not as `ScriptsProjectTruth` drift.
+At this stage of the post-audit `ScriptsProjectTruth` repair, Visual Studio solution build verification did not pass, but it no longer failed because of stale `Scripts.csproj` paths. The remaining failure was tracked as project dependency/reference cleanup, not as `ScriptsProjectTruth` drift, and is addressed by the follow-up `IDEProjectHygiene` reference repair below.
 
 This file does not record live runtime script compile verification. Live runtime verification now requires a `Server.csproj` build followed by a time-boxed startup compile smoke with the built executable, as described in `live-build-and-runtime-script-compile-model.md`.
+
+## Post-Audit IDEProjectHygiene Reference Repair
+
+Generated: 2026-06-13T19:16:08.3913927-05:00
+
+| Command | Result | Notes |
+| --- | --- | --- |
+| `git status --short` | Succeeded | Worktree was clean before the reference repair batch. |
+| Inspect `Data/System/CFG/Assemblies.cfg`, `ScriptCompiler.GetReferenceAssemblies()`, checked-in root DLLs, and `Scripts.csproj` references | Succeeded | Runtime script compilation already references `System.Web.dll`, `System.Drawing.dll`, `System.Windows.Forms.dll`, `OrbServerSDK.dll`, `System.Runtime.Remoting.dll`, and `UOArchitectInterface.dll`; `OrbServerSDK.dll` and `UOArchitectInterface.dll` exist at the repository root. |
+| Update `Data/Scripts/Scripts.csproj` references and Debug `DebugType` | Succeeded | Added Visual Studio project references for the runtime assembly list and changed Debug PDB output from native full PDBs to portable PDBs. No runtime source files changed. |
+| `.\docs\codebase-audit\tools\New-ProjectTruthRegister.ps1` | Succeeded | Counts remain 6,581 script compile includes, 6,581 script source files, 0 missing compile targets, 0 unincluded source files, and 0 backlog groups. |
+| `git diff --check` | Succeeded | No whitespace errors; Git emitted the repository's expected CRLF working-tree warning for `Scripts.csproj`. |
+| `& 'C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\MSBuild.exe' .\ConficturaUO.sln /p:Configuration=Debug /p:Platform="Any CPU" /v:minimal /nologo` | Passed with warnings | The maintained solution build no longer fails on missing `OrbServerSDK`, `UOArchitectInterface`, `System.Web`, or `System.Drawing` references, and no longer fails on the native PDB metadata limit. |
+| `& 'C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\MSBuild.exe' .\Data\Scripts\Scripts.csproj /p:Configuration=Debug /p:Platform=AnyCPU /v:minimal /nologo` | Failed before script compilation | Known direct project-reference limitation: standalone `Scripts.csproj` passes `Debug|AnyCPU` to `Server.csproj`, which has no matching output path outside solution mapping. |
+| `git restore -- ConficturaServer.exe ConficturaServer.exe.config ConficturaServer.pdb` and exact untracked MSBuild output cleanup | Succeeded | Restored tracked server artifacts and removed untracked `Data/Scripts` build outputs produced by MSBuild. |
+
+This `IDEProjectHygiene` repair does not prove live runtime script compile behavior. Runtime proof still requires the operational server build plus a time-boxed startup script compile smoke.
