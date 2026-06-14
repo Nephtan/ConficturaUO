@@ -2,7 +2,7 @@
 
 Initialized: 2026-06-05T16:15:59.8020730-05:00
 
-Last updated: 2026-06-13T23:38:41.8781692-05:00
+Last updated: 2026-06-13T23:43:09.9206912-05:00
 
 Branch: `SAR`
 
@@ -298,7 +298,7 @@ Post-audit save compatibility blocker resolved: `SERIAL-0032` now writes zero gh
 
 Post-audit reorganization pilot: `POST-BATCH-H-01A` executed the Character Level Phase 12 move from `Data/Scripts/Custom/CharacterLevel` to `Data/Scripts/Custom/Progression/CharacterLevel`, moved exactly two runtime-visible `.cs` files, updated two `Scripts.csproj` includes and current source-trace docs, regenerated runtime script compile inventory plus Phase 1/2/3/4/5/6/7/8/9 path-sensitive outputs, and added an active overlay `Fixed` disposition for `RB-06802`. Verification: git diff --check=Passed with no whitespace errors; Git emitted expected LF-to-CRLF working-copy warnings for edited text files; solution Debug/Any CPU=Passed with existing warnings; Scripts built Data/Scripts/ClassLibrary.dll and generated script-project artifacts were removed before staging; Server Debug/x86=Passed; Server built D:/ConficturaUO/ConficturaServer.exe and tracked root build artifacts were restored before staging; compile-only=Passed; compile-only output reported Scripts: Compile-only verification completed successfully and Exiting...done.
 
-Post-audit reorganization runner: `POST-BATCH-H-07A` executed the Clone Offline Player Characters Phase 12 containment move from `Data/Scripts/Custom/CloneOfflinePlayerCharacters` to `Data/Scripts/Custom/PvE/CloneOfflinePlayerCharacters`, moved 7 runtime-visible `.cs` files, updated 7 `Scripts.csproj` compile references and current source-trace docs, preserved the `Server.Custom.Confictura.CloneOfflinePlayerCharacters` namespace and four serialized version `0` clone types, regenerated runtime script compile inventory plus Phase 1/2/3/4/5/6/7/8/9 path-sensitive outputs, and added an active overlay `Fixed` disposition for `RB-06815`. Verification: git diff --check=Passed with expected LF-to-CRLF working-copy warnings and no whitespace errors; solution Debug/Any CPU=Passed; ConficturaUO.sln Debug/Any CPU built Server and Scripts with existing warnings and no errors; Server Debug/x86=Passed; Server.csproj Debug/x86 built ConficturaServer.exe; compile-only=Passed; compile-only output reported Scripts: Compile-only verification completed successfully and Exiting...done.
+Post-audit reorganization runner: `POST-BATCH-H-08A` classified PvP Consent `Data/Scripts/Custom/PvPConsent` as `DeferredMoveGate` rather than moving to `Data/Scripts/Custom/PvP/PvPConsent`. The package has 5 runtime-visible `.cs` files, 5 project include rows, 5 serializer rows, and 13 runtime hook rows, but the Phase 12 move gate remains blocked by deferred/human-gated Government and XMLPoints/XMLSpawner policy decisions (RB-05609:PvP Consent <-> Government balance/policy; RB-05610:PvP Consent <-> XMLSpawner/XMLPoints balance/policy; RB-05631:XMLSpawner staff tooling policy decision). Verification: git diff --check=Passed with expected LF-to-CRLF working-copy warnings and no whitespace errors; no source/project/runtime files changed.
 
 Scope: Deterministic phase runner state for the Confictura codebase audit and reorganization program.
 
