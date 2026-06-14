@@ -63,8 +63,8 @@ These files were read directly because they define the framework or high-risk be
 - `Data/Scripts/Mobiles/Base/BaseHealer.cs`
 - `Data/System/Source/Sector.cs`
 - `Data/System/Source/Region.cs`
-- `Data/Scripts/Custom/OmniAI/OmniAI Core.cs`
-- `Data/Scripts/Custom/OmniAI/OmniAI Shared.cs`
+- `Data/Scripts/Custom/ThirdParty/OmniAI/OmniAI Core.cs`
+- `Data/Scripts/Custom/ThirdParty/OmniAI/OmniAI Shared.cs`
 - key exception files for clones, summons, pirates, champions, and scripted bosses
 
 Facts in the core-framework, timer, control-order, movement/pathing, legality, and engine-hook sections should be treated as high-confidence findings because they are grounded in direct source review.
@@ -1178,7 +1178,7 @@ This list is exact for non-obsolete gameplay code reviewed through search.
 ### Live `ForcedAI` overrides
 
 - `Data/Scripts/Custom/CloneOfflinePlayerCharacters/CharacterClone.cs`
-- `Data/Scripts/Custom/OmniAI/AITester.cs`
+- `Data/Scripts/Custom/ThirdParty/OmniAI/AITester.cs`
 - `Data/Scripts/Magic/Jester/Spells/Clowns.cs`
 - `Data/Scripts/Magic/Ninjitsu/MirrorImage.cs`
 

@@ -42,7 +42,7 @@ Several runtime paths bypass numeric registry lookup and construct these spell c
 
 | Entry point | Behavior |
 | --- | --- |
-| `Data/Scripts/Custom/OmniAI/OmniAI Magery.cs` and `Data/Scripts/Mobiles/Base/Behavior.cs` | Return `new AttackSpells(m_Mobile, null)` for some AI spell choices. |
+| `Data/Scripts/Custom/ThirdParty/OmniAI/OmniAI Magery.cs` and `Data/Scripts/Mobiles/Base/Behavior.cs` | Return `new AttackSpells(m_Mobile, null)` for some AI spell choices. |
 | `Data/Scripts/Items/Magical/Artifacts/Artifact_GandalfsStaff.cs` | Casts `SummonDragonSpell` from Merlin's Mystical Staff after the staff cooldown check. |
 | `Data/Scripts/Items/Magical/Artifacts/Artifact_StaffofSnakes.cs` | Casts `SummonSnakesSpell` from Staff of the Serpent after the staff cooldown check. |
 | `Data/Scripts/Items/Magical/HydraTooth.cs` | Casts `SummonSkeletonSpell` directly from the hydra tooth scroll item. |

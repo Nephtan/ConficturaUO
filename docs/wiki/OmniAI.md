@@ -4,14 +4,14 @@
 OmniAI is a `BaseAI` replacement in `Server.Mobiles` that lets a creature mix standard movement and targeting with optional Bushido, Knightship, Magery, Necromancy, and Ninjitsu actions. It is not a standalone engine with spawners or persistence hooks; it is attached per creature by returning `new OmniAI(this)` from that creature's `ForcedAI` override.
 
 ## Core Scripts
-- `Data/Scripts/Custom/OmniAI/OmniAI Core.cs`
-- `Data/Scripts/Custom/OmniAI/OmniAI Shared.cs`
-- `Data/Scripts/Custom/OmniAI/OmniAI Bushido.cs`
-- `Data/Scripts/Custom/OmniAI/OmniAI Knightship.cs`
-- `Data/Scripts/Custom/OmniAI/OmniAI Magery.cs`
-- `Data/Scripts/Custom/OmniAI/OmniAI Necromancy.cs`
-- `Data/Scripts/Custom/OmniAI/OmniAI Ninjitsu.cs`
-- `Data/Scripts/Custom/OmniAI/AITester.cs`
+- `Data/Scripts/Custom/ThirdParty/OmniAI/OmniAI Core.cs`
+- `Data/Scripts/Custom/ThirdParty/OmniAI/OmniAI Shared.cs`
+- `Data/Scripts/Custom/ThirdParty/OmniAI/OmniAI Bushido.cs`
+- `Data/Scripts/Custom/ThirdParty/OmniAI/OmniAI Knightship.cs`
+- `Data/Scripts/Custom/ThirdParty/OmniAI/OmniAI Magery.cs`
+- `Data/Scripts/Custom/ThirdParty/OmniAI/OmniAI Necromancy.cs`
+- `Data/Scripts/Custom/ThirdParty/OmniAI/OmniAI Ninjitsu.cs`
+- `Data/Scripts/Custom/ThirdParty/OmniAI/AITester.cs`
 
 ## How A Creature Uses It
 Override `ForcedAI` on a `BaseCreature` subclass:

@@ -14,14 +14,14 @@ Matched source files: 8.
 
 | File | Primary Role | Runtime Hooks | Serialized | Gumps |
 | --- | --- | --- | --- | --- |
-| Data/Scripts/Custom/OmniAI/AITester.cs | Persistence |  | Yes |  |
-| Data/Scripts/Custom/OmniAI/OmniAI Bushido.cs | Unknown |  | No |  |
-| Data/Scripts/Custom/OmniAI/OmniAI Core.cs | Unknown |  | No |  |
-| Data/Scripts/Custom/OmniAI/OmniAI Knightship.cs | Unknown |  | No |  |
-| Data/Scripts/Custom/OmniAI/OmniAI Magery.cs | Unknown |  | No |  |
-| Data/Scripts/Custom/OmniAI/OmniAI Necromancy.cs | Unknown |  | No |  |
-| Data/Scripts/Custom/OmniAI/OmniAI Ninjitsu.cs | StartupWiring | Timer.DelayCall | No |  |
-| Data/Scripts/Custom/OmniAI/OmniAI Shared.cs | StartupWiring | EventSink | No |  |
+| Data/Scripts/Custom/ThirdParty/OmniAI/AITester.cs | Persistence |  | Yes |  |
+| Data/Scripts/Custom/ThirdParty/OmniAI/OmniAI Bushido.cs | Unknown |  | No |  |
+| Data/Scripts/Custom/ThirdParty/OmniAI/OmniAI Core.cs | Unknown |  | No |  |
+| Data/Scripts/Custom/ThirdParty/OmniAI/OmniAI Knightship.cs | Unknown |  | No |  |
+| Data/Scripts/Custom/ThirdParty/OmniAI/OmniAI Magery.cs | Unknown |  | No |  |
+| Data/Scripts/Custom/ThirdParty/OmniAI/OmniAI Necromancy.cs | Unknown |  | No |  |
+| Data/Scripts/Custom/ThirdParty/OmniAI/OmniAI Ninjitsu.cs | StartupWiring | Timer.DelayCall | No |  |
+| Data/Scripts/Custom/ThirdParty/OmniAI/OmniAI Shared.cs | StartupWiring | EventSink | No |  |
 
 ## Data Files
 
