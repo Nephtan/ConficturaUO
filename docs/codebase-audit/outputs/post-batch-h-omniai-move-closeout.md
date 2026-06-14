@@ -12,16 +12,16 @@ The moved scripts remain under `Data/Scripts`, so live runtime script compile vi
 
 | Evidence | Value |
 | --- | --- |
-| Backlog row | $BacklogId |
-| Original path | $OldDir |
-| Target path | $TargetDir |
-| Workspace files moved | $(Data/Scripts/Custom/ThirdParty/OmniAI/AITester.cs Data/Scripts/Custom/ThirdParty/OmniAI/OmniAI Bushido.cs Data/Scripts/Custom/ThirdParty/OmniAI/OmniAI Core.cs Data/Scripts/Custom/ThirdParty/OmniAI/OmniAI Knightship.cs Data/Scripts/Custom/ThirdParty/OmniAI/OmniAI Magery.cs Data/Scripts/Custom/ThirdParty/OmniAI/OmniAI Necromancy.cs Data/Scripts/Custom/ThirdParty/OmniAI/OmniAI Ninjitsu.cs Data/Scripts/Custom/ThirdParty/OmniAI/OmniAI Shared.cs.Count) |
-| Runtime-visible files moved | $RuntimeFileCount |
+| Backlog row | `RB-06810` |
+| Original path | `Data/Scripts/Custom/OmniAI` |
+| Target path | `Data/Scripts/Custom/ThirdParty/OmniAI` |
+| Workspace files moved | `8` |
+| Runtime-visible files moved | `8` |
 | Namespace/type/API changes | `None` |
-| Serialized OmniAI rows | $(.Count) |
-| Serialized type | $(@{System=Custom:ThirdParty; CardSystems=OmniAI; File=Data/Scripts/Custom/ThirdParty/OmniAI/AITester.cs; Namespace=Server.Mobiles; Class=Server.Mobiles.AITester; TypeName=AITester; BaseType=BaseCreature; Kind=Mobile; IncludedInScriptsProject=True; MissingCompileTarget=False; UnincludedSource=False; HasSerialConstructor=True; SerializeLine=123; DeserializeLine=129; BaseSerializeLine=125; BaseDeserializeLine=131; BaseCallStatus=BaseCallsFirst; CurrentVersion=0; VersionWriteLine=126; VersionReadLine=132; VersionHandling=SingleVersionOnly; OlderVersions=; WriteCount=1; ReadCount=1; Writes=L126:Write[int]:(int)0; Reads=L132:ReadInt[Int]:; FieldAlignment=AlignedByCountAndKnownTypes; DeletedFields=; MoveRenameRisk=NamespaceOrTypeRenameDanger; MoveRenameRiskReason=World saves bind serialized namespace and type name; do not rename without a migration plan.; CommentNeeded=No; CommentReason=; ReviewStatus=MachineMapped; ReviewReasons=; Evidence=Serialize:L123;Deserialize:L129;SerialCtor:L120;VersionWrite:L126;VersionRead:L132}.Class) version $(@{System=Custom:ThirdParty; CardSystems=OmniAI; File=Data/Scripts/Custom/ThirdParty/OmniAI/AITester.cs; Namespace=Server.Mobiles; Class=Server.Mobiles.AITester; TypeName=AITester; BaseType=BaseCreature; Kind=Mobile; IncludedInScriptsProject=True; MissingCompileTarget=False; UnincludedSource=False; HasSerialConstructor=True; SerializeLine=123; DeserializeLine=129; BaseSerializeLine=125; BaseDeserializeLine=131; BaseCallStatus=BaseCallsFirst; CurrentVersion=0; VersionWriteLine=126; VersionReadLine=132; VersionHandling=SingleVersionOnly; OlderVersions=; WriteCount=1; ReadCount=1; Writes=L126:Write[int]:(int)0; Reads=L132:ReadInt[Int]:; FieldAlignment=AlignedByCountAndKnownTypes; DeletedFields=; MoveRenameRisk=NamespaceOrTypeRenameDanger; MoveRenameRiskReason=World saves bind serialized namespace and type name; do not rename without a migration plan.; CommentNeeded=No; CommentReason=; ReviewStatus=MachineMapped; ReviewReasons=; Evidence=Serialize:L123;Deserialize:L129;SerialCtor:L120;VersionWrite:L126;VersionRead:L132}.CurrentVersion) |
-| Runtime hook rows | $( .Count) |
-| Runtime script inventory target rows | $(       .Count) |
+| Serialized OmniAI rows | `1` |
+| Serialized type | `Server.Mobiles.AITester` version `0` |
+| Runtime hook rows | `2` |
+| Runtime script inventory target rows | `8` |
 
 ## Project Truth Result
 
@@ -47,4 +47,4 @@ The moved scripts remain under `Data/Scripts`, so live runtime script compile vi
 
 ## Rollback
 
-Move $TargetDir back to $OldDir, restore the previous Scripts.csproj include paths, rerun project truth and path-sensitive audit generators, and revert OmniAI documentation/source-trace paths.
+Move `Data/Scripts/Custom/ThirdParty/OmniAI` back to `Data/Scripts/Custom/OmniAI`, restore the previous `Scripts.csproj` include paths, rerun project truth and path-sensitive audit generators, and revert OmniAI documentation/source-trace paths.

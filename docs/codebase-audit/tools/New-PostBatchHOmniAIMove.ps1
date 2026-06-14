@@ -282,16 +282,16 @@ $Closeout.Add('## Scope') | Out-Null
 $Closeout.Add('') | Out-Null
 $Closeout.Add('| Evidence | Value |') | Out-Null
 $Closeout.Add('| --- | --- |') | Out-Null
-$Closeout.Add("| Backlog row | `$BacklogId` |") | Out-Null
-$Closeout.Add("| Original path | `$OldDir` |") | Out-Null
-$Closeout.Add("| Target path | `$TargetDir` |") | Out-Null
-$Closeout.Add("| Workspace files moved | `$($WorkspaceFiles.Count)` |") | Out-Null
-$Closeout.Add("| Runtime-visible files moved | `$RuntimeFileCount` |") | Out-Null
+$Closeout.Add(('| Backlog row | `{0}` |' -f $BacklogId)) | Out-Null
+$Closeout.Add(('| Original path | `{0}` |' -f $OldDir)) | Out-Null
+$Closeout.Add(('| Target path | `{0}` |' -f $TargetDir)) | Out-Null
+$Closeout.Add(('| Workspace files moved | `{0}` |' -f $WorkspaceFiles.Count)) | Out-Null
+$Closeout.Add(('| Runtime-visible files moved | `{0}` |' -f $RuntimeFileCount)) | Out-Null
 $Closeout.Add('| Namespace/type/API changes | `None` |') | Out-Null
-$Closeout.Add("| Serialized OmniAI rows | `$($OmniSerializationRows.Count)` |") | Out-Null
-$Closeout.Add("| Serialized type | `$($SerializedRow.Class)` version `$($SerializedRow.CurrentVersion)` |") | Out-Null
-$Closeout.Add("| Runtime hook rows | `$($HookRows.Count)` |") | Out-Null
-$Closeout.Add("| Runtime script inventory target rows | `$($RuntimeTargetRows.Count)` |") | Out-Null
+$Closeout.Add(('| Serialized OmniAI rows | `{0}` |' -f $OmniSerializationRows.Count)) | Out-Null
+$Closeout.Add(('| Serialized type | `{0}` version `{1}` |' -f $SerializedRow.Class, $SerializedRow.CurrentVersion)) | Out-Null
+$Closeout.Add(('| Runtime hook rows | `{0}` |' -f $HookRows.Count)) | Out-Null
+$Closeout.Add(('| Runtime script inventory target rows | `{0}` |' -f $RuntimeTargetRows.Count)) | Out-Null
 $Closeout.Add('') | Out-Null
 $Closeout.Add('## Project Truth Result') | Out-Null
 $Closeout.Add('') | Out-Null
@@ -317,7 +317,7 @@ $Closeout.Add("- .\ConficturaServer.exe -compileonly -nocache: $CompileOnlyResul
 $Closeout.Add('') | Out-Null
 $Closeout.Add('## Rollback') | Out-Null
 $Closeout.Add('') | Out-Null
-$Closeout.Add("Move `$TargetDir` back to `$OldDir`, restore the previous `Scripts.csproj` include paths, rerun project truth and path-sensitive audit generators, and revert OmniAI documentation/source-trace paths.") | Out-Null
+$Closeout.Add(('Move `{0}` back to `{1}`, restore the previous `Scripts.csproj` include paths, rerun project truth and path-sensitive audit generators, and revert OmniAI documentation/source-trace paths.' -f $TargetDir, $OldDir)) | Out-Null
 Write-Utf8File -Path $CloseoutPath -Lines $Closeout
 
 $Readme = @(Get-Content -LiteralPath $ReadmePath)

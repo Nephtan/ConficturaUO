@@ -12,15 +12,15 @@ The moved scripts remain under `Data/Scripts`, so live runtime script compile vi
 
 | Evidence | Value |
 | --- | --- |
-| Backlog row | $BacklogId |
-| Original path | $OldDir |
-| Target path | $TargetDir |
-| Workspace files moved | $(Data/Scripts/Custom/StaffTools/StaticGumpTool/AGENTS.md Data/Scripts/Custom/StaffTools/StaticGumpTool/README.txt Data/Scripts/Custom/StaffTools/StaticGumpTool/Side Gumps/AddAnimation.cs Data/Scripts/Custom/StaffTools/StaticGumpTool/Side Gumps/AddArch.cs Data/Scripts/Custom/StaffTools/StaticGumpTool/Side Gumps/AddCooking.cs Data/Scripts/Custom/StaffTools/StaticGumpTool/Side Gumps/AddCustom.cs Data/Scripts/Custom/StaffTools/StaticGumpTool/Side Gumps/AddDeco.cs Data/Scripts/Custom/StaffTools/StaticGumpTool/Side Gumps/AddDungeon.cs Data/Scripts/Custom/StaffTools/StaticGumpTool/Side Gumps/addfence.cs Data/Scripts/Custom/StaffTools/StaticGumpTool/Side Gumps/addfloor.cs Data/Scripts/Custom/StaffTools/StaticGumpTool/Side Gumps/AddFurniture.cs Data/Scripts/Custom/StaffTools/StaticGumpTool/Side Gumps/AddGear.cs Data/Scripts/Custom/StaffTools/StaticGumpTool/Side Gumps/AddGround.cs Data/Scripts/Custom/StaffTools/StaticGumpTool/Side Gumps/AddLight.cs Data/Scripts/Custom/StaffTools/StaticGumpTool/Side Gumps/AddMisc.cs Data/Scripts/Custom/StaffTools/StaticGumpTool/Side Gumps/AddNature.cs Data/Scripts/Custom/StaffTools/StaticGumpTool/Side Gumps/addplants.cs Data/Scripts/Custom/StaffTools/StaticGumpTool/Side Gumps/addrock.cs Data/Scripts/Custom/StaffTools/StaticGumpTool/Side Gumps/addroof.cs Data/Scripts/Custom/StaffTools/StaticGumpTool/Side Gumps/AddSignPost.cs Data/Scripts/Custom/StaffTools/StaticGumpTool/Side Gumps/AddStairGump.cs Data/Scripts/Custom/StaffTools/StaticGumpTool/Side Gumps/AddWallGump.cs Data/Scripts/Custom/StaffTools/StaticGumpTool/StaticGump(Alternative).cs.Count) |
-| Runtime-visible files moved | $RuntimeFileCount |
+| Backlog row | `RB-06811` |
+| Original path | `Data/Scripts/Custom/OzThothStaticGump` |
+| Target path | `Data/Scripts/Custom/StaffTools/StaticGumpTool` |
+| Workspace files moved | `23` |
+| Runtime-visible files moved | `21` |
 | Namespace/type/API changes | `None` |
-| Serialized Static Gump Tool rows | $(.Count) |
-| Runtime hook rows | $(                                                                                                                                                                                                     .Count) |
-| Runtime script inventory target rows | $(                    .Count) |
+| Serialized Static Gump Tool rows | `0` |
+| Runtime hook rows | `198` |
+| Runtime script inventory target rows | `21` |
 
 ## Project Truth Result
 
@@ -45,4 +45,4 @@ The moved scripts remain under `Data/Scripts`, so live runtime script compile vi
 
 ## Rollback
 
-Move $TargetDir back to $OldDir, restore the previous Scripts.csproj include/content paths, rerun project truth and path-sensitive audit generators, and revert Static Gump Tool documentation/source-trace paths.
+Move `Data/Scripts/Custom/StaffTools/StaticGumpTool` back to `Data/Scripts/Custom/OzThothStaticGump`, restore the previous `Scripts.csproj` include/content paths, rerun project truth and path-sensitive audit generators, and revert Static Gump Tool documentation/source-trace paths.
