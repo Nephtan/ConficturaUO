@@ -1,6 +1,6 @@
 # Phase 2 Build And Project Truth Summary
 
-Generated: 2026-06-13T19:14:45.9068477-05:00
+Generated: 2026-06-13T20:17:10.5956233-05:00
 
 ## Required Inputs
 
@@ -33,11 +33,11 @@ Generated: 2026-06-13T19:14:45.9068477-05:00
 
 ## Build Verification
 
-Build verification is recorded separately in `phase-02-build-verification.md`. Post-audit `IDEProjectHygiene` verification now records the maintained `ConficturaUO.sln` Debug/`Any CPU` build passing with warnings after `Scripts.csproj` reference and portable PDB repairs.
+Build verification is recorded separately in `phase-02-build-verification.md`. Post-audit `IDEProjectHygiene` verification records the maintained `ConficturaUO.sln` Debug/`Any CPU` build passing with warnings after `Scripts.csproj` reference and portable PDB repairs. `POST-BATCH-G` is a reconciliation closeout only and does not claim live runtime script compile proof.
 
 ## Exit Criteria
 
 - Project truth table explains every project/source mismatch with `DriftClass`, `LikelySystem`, and `Action`.
 - Remaining discrepancies are grouped into `phase-02-project-cleanup-backlog.csv`.
 - Solution configuration mapping identifies which solution builds cover both projects.
-- Post-audit project repair has reconciled `ScriptsProjectTruth`; post-audit Visual Studio reference and Debug PDB repairs are recorded as `IDEProjectHygiene`, not live runtime script compile proof.
+- Post-audit project repair has reconciled `ScriptsProjectTruth`; post-audit Visual Studio reference and Debug PDB repairs are recorded as `IDEProjectHygiene`, not live runtime script compile proof. `POST-BATCH-G` records all historical project include drift rows as active-overlay fixed against current zero-drift project truth evidence.

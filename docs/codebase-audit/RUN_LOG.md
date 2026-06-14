@@ -7230,3 +7230,35 @@ Scope: Deterministic phase runner log for the Confictura codebase audit and reor
 - Command: `git diff --check`; source/config/project diff check; POST-BATCH-F review/overlay invariant check; edited canonical documentation source-trace check.
 - Result: Passed. `git diff --check` reported no whitespace errors; no `.cs`, `.xml`, `.cfg`, `.csproj`, or `Data/` paths changed; final invariant checks found 540 review rows, 540 POST-BATCH-F active overlay rows, no blank decisions, no blank verification fields, and no blank overlay actions; all eight edited canonical docs are marked `SourceTracePresent=Yes`.
 - Output path: `docs/codebase-audit/outputs/post-batch-f-documentation-balance-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`; `docs/codebase-audit/outputs/documentation-truth-table.csv`
+
+### 2026-06-13T20:17:10.5956233-05:00
+
+- Affected phase: Post-audit `POST-BATCH-G` project include drift closeout
+- Cwd: `D:\ConficturaUO`
+- Command: `git status --short`; `rg --files -g AGENTS.md`; read root/doc audit instructions, root audit plan, Phase 2 plan, Phase 13 plan, repair backlog, active overlay, and current project truth outputs.
+- Result: Initial worktree was clean; applicable instructions and inputs were present; `repair-backlog.csv` contains 61 historical `Project include drift` rows.
+- Output path: `docs/codebase-audit/outputs/post-batch-g-project-include-drift-review.csv`
+
+### 2026-06-13T20:17:10.5956233-05:00
+
+- Affected phase: Phase 2 project truth verification for `POST-BATCH-G`
+- Cwd: `D:\ConficturaUO`
+- Command: `.\docs\codebase-audit\tools\New-ProjectTruthRegister.ps1`
+- Result: Succeeded. Counts are 6581 `Scripts.csproj` compile includes, 6581 script source files, 0 missing compile targets, 0 unincluded source files, 0 project cleanup backlog groups, and zero rows in phase-scoped missing/unincluded/project cleanup outputs.
+- Output path: `docs/codebase-audit/outputs/project-truth-register.csv`; `docs/codebase-audit/outputs/missing-compile-targets.csv`; `docs/codebase-audit/outputs/unincluded-source-files.csv`; `docs/codebase-audit/outputs/project-cleanup-backlog.csv`; `docs/codebase-audit/outputs/phase-02-summary.md`
+
+### 2026-06-13T20:17:10.5956233-05:00
+
+- Affected phase: Post-audit `POST-BATCH-G` audit state update
+- Cwd: `D:\ConficturaUO`
+- Command: `.\docs\codebase-audit\tools\New-PostBatchGReview.ps1`
+- Result: Review CSV and active overlay each contain 61 POST-BATCH-G rows; all are FixedProjectTruthDrift / active Fixed reconciliations. No source, project, runtime, XML, config, namespace, serialization, save-version, runtime-location, or gameplay files changed.
+- Output path: `docs/codebase-audit/outputs/post-batch-g-project-include-drift-review.csv`; `docs/codebase-audit/outputs/post-batch-g-project-include-drift-closeout.md`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`; `docs/codebase-audit/PHASE_STATUS.md`
+
+### 2026-06-13T20:17:50.3016854-05:00
+
+- Affected phase: Post-audit `POST-BATCH-G` final verification
+- Cwd: `D:\ConficturaUO`
+- Command: `git diff --check`; source/config/project diff check; project-drift zero-row check; POST-BATCH-G review/overlay invariant check.
+- Result: Passed. `git diff --check` reported no whitespace errors; no `.cs`, `.xml`, `.cfg`, `.csproj`, or `Data/` paths changed; six project-drift output files remain zero rows; final invariant checks found 61 review rows, 61 POST-BATCH-G active overlay rows, 61 `FixedProjectTruthDrift` decisions, 61 active `Fixed` rows, no blank decisions, no blank verification fields, and no blank overlay actions.
+- Output path: `docs/codebase-audit/outputs/post-batch-g-project-include-drift-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`; `docs/codebase-audit/outputs/project-truth-register.csv`
