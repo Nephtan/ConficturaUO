@@ -14,6 +14,9 @@ namespace Server.Items
 
         public override void OnMovement(Mobile m, Point3D oldLocation)
         {
+            if (m == null || m.Deleted || Deleted)
+                return;
+
             if (m == m_Owner)
                 this.Delete();
         }

@@ -22,6 +22,9 @@ namespace Server.Items
 
         public override void OnMovement(Mobile m, Point3D old)
         {
+            if (m == null || m.Deleted)
+                return;
+
             base.OnMovement(m, old);
 
             if (m.Alive && m.Player && (m.AccessLevel == AccessLevel.Player || !m.Hidden))

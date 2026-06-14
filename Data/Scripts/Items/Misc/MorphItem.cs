@@ -79,6 +79,9 @@ namespace Server.Items
 
         public override void OnMovement(Mobile m, Point3D oldLocation)
         {
+            if (m == null || m.Deleted)
+                return;
+
             if (
                 Utility.InRange(m.Location, Location, CurrentRange)
                 || Utility.InRange(oldLocation, Location, CurrentRange)

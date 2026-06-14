@@ -3942,6 +3942,9 @@ namespace Server.Mobiles
 
         public override void OnSpeech(SpeechEventArgs e)
         {
+            if (e == null || e.Speech == null)
+                return;
+
             if ( /*!e.Handled && */
                 m_Running
                 && m_ProximityRange >= 0

@@ -281,6 +281,9 @@ namespace Server.Regions
             Point3D oldLocation
         )
         {
+            if (from == null || from.Deleted || m_House == null || m_House.Deleted)
+                return false;
+
             if (!base.OnMoveInto(from, d, newLocation, oldLocation))
                 return false;
 
@@ -410,6 +413,18 @@ namespace Server.Regions
 
         public override void OnSpeech(SpeechEventArgs e)
         {
+            if (
+                e == null
+                || e.Mobile == null
+                || e.Mobile.Deleted
+                || e.Speech == null
+                || m_House == null
+                || m_House.Deleted
+                || m_House.Sign == null
+                || m_House.Sign.Deleted
+            )
+                return;
+
             base.OnSpeech(e);
 
             Mobile from = e.Mobile;

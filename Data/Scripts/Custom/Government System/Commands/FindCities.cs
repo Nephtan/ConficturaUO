@@ -24,6 +24,9 @@ namespace Server.Commands
         [Description("Locates all cities on all facets.")]
         private static void FindCities_OnCommand(CommandEventArgs e)
         {
+            if (e == null || e.Mobile == null || e.Mobile.Deleted)
+                return;
+
             e.Mobile.SendGump(new FindCitiesGump(0, null, null));
         }
     }

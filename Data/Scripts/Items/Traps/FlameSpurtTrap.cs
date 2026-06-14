@@ -139,6 +139,9 @@ namespace Server.Items
 
         public override bool OnMoveOver(Mobile m)
         {
+            if (m == null || m.Deleted)
+                return true;
+
             if (!m.Alive || !m.Player || m.AccessLevel > AccessLevel.Player)
                 return true;
 
@@ -178,6 +181,9 @@ namespace Server.Items
 
         public override void OnMovement(Mobile m, Point3D oldLocation)
         {
+            if (m == null || m.Deleted)
+                return;
+
             base.OnMovement(m, oldLocation);
 
             if (

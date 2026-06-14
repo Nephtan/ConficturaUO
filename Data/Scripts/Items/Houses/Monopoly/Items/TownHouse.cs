@@ -237,6 +237,11 @@ namespace Knives.TownHouses
 
         public override void OnSpeech(SpeechEventArgs e)
         {
+            if (e == null || e.Mobile == null || e.Mobile.Deleted || e.Speech == null)
+            {
+                return;
+            }
+
             if (e.Mobile != Owner || !IsInside(e.Mobile))
             {
                 return;
@@ -244,7 +249,10 @@ namespace Knives.TownHouses
 
             if (e.Speech.ToLower() == "check house rent")
             {
-                c_Sign.CheckRentTimer();
+                if (c_Sign != null && !c_Sign.Deleted)
+                {
+                    c_Sign.CheckRentTimer();
+                }
             }
 
             Timer.DelayCall(TimeSpan.Zero, new TimerStateCallback(AfterSpeech), e.Mobile);
@@ -253,7 +261,7 @@ namespace Knives.TownHouses
         private void AfterSpeech(object o)
         {
             Mobile m = o as Mobile; // Attempt to cast o to Mobile
-            if (m == null) // Check if the cast failed
+            if (m == null || m.Deleted) // Check if the cast failed or the mobile went stale.
             {
                 return;
             }

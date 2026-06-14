@@ -2345,6 +2345,9 @@ namespace Server.Factions
 
         public override void OnMovement(Mobile m, Point3D oldLocation)
         {
+            if (m == null || m.Deleted)
+                return;
+
             base.OnMovement(m, oldLocation);
 
             if (!CheckDecay() && CheckRange(m.Location, oldLocation, 6))
@@ -25294,6 +25297,9 @@ namespace Server.Engines.Quests
 
         public override void OnEnter(Mobile m)
         {
+            if (m == null || m.Deleted)
+                return;
+
             base.OnEnter(m);
 
             if (m_Quest != null && m_Objective != null)

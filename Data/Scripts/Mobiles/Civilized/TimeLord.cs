@@ -18,6 +18,11 @@ namespace Server.Mobiles
 
         public override void OnMovement(Mobile m, Point3D oldLocation)
         {
+            if (m == null || m.Deleted)
+            {
+                return;
+            }
+
             if (m is PlayerMobile)
             {
                 if (DateTime.Now >= m_NextTalk && InRange(m, 4) && InLOS(m))
@@ -125,6 +130,9 @@ namespace Server.Mobiles
 
         public override void OnGaveMeleeAttack(Mobile defender)
         {
+            if (defender == null || defender.Deleted)
+                return;
+
             switch (Utility.Random(4))
             {
                 case 0:

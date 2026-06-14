@@ -299,9 +299,13 @@ namespace Server.LiarsDice
         */
         public void AddPlayerWaitingNoStatus(int currentHighlightedPlayerIdx)
         {
-            for (int i = 0; i < this.playerCnt; i++)
+            for (int i = 0; i < this.playerCnt && i < dicePlayers.Count; i++)
             {
-                if (dicePlayers[i].getMobile().HasGump(typeof(ExitDiceGump)) == false)
+                Mobile mobile = GetValidDiceMobile(dicePlayers[i]);
+                if (mobile == null)
+                    continue;
+
+                if (mobile.HasGump(typeof(ExitDiceGump)) == false)
                 {
                     RemoveStatusGump(dicePlayers[i]);
                     PlayerWaiting(dicePlayers[i], currentHighlightedPlayerIdx);
@@ -322,7 +326,7 @@ namespace Server.LiarsDice
                 m.CloseGump(typeof(GameDiceGump));
             }
             //is the mobile already in game?
-            for (int i = 0; i < this.playerCnt; i++)
+            for (int i = 0; i < this.playerCnt && i < dicePlayers.Count; i++)
             {
                 if (m == dicePlayers[i].getMobile())
                 {
@@ -489,19 +493,24 @@ namespace Server.LiarsDice
             MobileDiceStstatus currPlayer
         )
         {
+            Mobile prevMobile = GetValidDiceMobile(prevPlayer);
+            Mobile currMobile = GetValidDiceMobile(currPlayer);
+            if (prevMobile == null || currMobile == null)
+                return;
+
             RemoveGumps(prevPlayer);
             int prevRollOrBluff = prevPlayer.GetPrevRollOrBluff();
             cbg = new CallBluffGump(this, prevRollOrBluff);
             try
             {
-                currPlayer.getMobile().SendGump(cbg);
+                currMobile.SendGump(cbg);
             }
             catch
             {
                 SendMessageAllPlayers(
-                    "Player " + currPlayer.getMobile().Name + " was disconnected"
+                    "Player " + currMobile.Name + " was disconnected"
                 );
-                RemovePlayer(currPlayer.getMobile(), true);
+                RemovePlayer(currMobile, true);
             }
             //do timer checking, since timer is a thread, when the callback occurs we just look at the "previous" player
             SetTimerAction(prevPlayer, currPlayer);
@@ -512,18 +521,22 @@ namespace Server.LiarsDice
         */
         public void PlayerTurn(MobileDiceStstatus mds, int diceToBeat)
         {
+            Mobile mobile = GetValidDiceMobile(mds);
+            if (mobile == null)
+                return;
+
             RemoveGumps(mds);
             //rolls and sets to previous
             int currRoll = mds.Roll();
             gdg = new GameDiceGump(this, currRoll, diceToBeat);
             try
             {
-                mds.getMobile().SendGump(gdg);
+                mobile.SendGump(gdg);
             }
             catch
             {
-                SendMessageAllPlayers("Player " + mds.getMobile().Name + " was disconnected");
-                RemovePlayer(mds.getMobile(), true);
+                SendMessageAllPlayers("Player " + mobile.Name + " was disconnected");
+                RemovePlayer(mobile, true);
             }
         }
 
@@ -532,32 +545,36 @@ namespace Server.LiarsDice
         */
         public void AddPlayerWaiting(int currentHighlightedPlayerIdx)
         {
-            for (int i = 0; i < this.playerCnt; i++)
+            if (currentHighlightedPlayerIdx < 0 || currentHighlightedPlayerIdx >= dicePlayers.Count)
+                return;
+
+            Mobile highlighted = GetValidDiceMobile(dicePlayers[currentHighlightedPlayerIdx]);
+            if (highlighted == null)
+                return;
+
+            for (int i = 0; i < this.playerCnt && i < dicePlayers.Count; i++)
             {
-                if (dicePlayers[i].getMobile().HasGump(typeof(ExitDiceGump)) == false)
+                Mobile mobile = GetValidDiceMobile(dicePlayers[i]);
+                if (mobile == null)
+                    continue;
+
+                if (mobile.HasGump(typeof(ExitDiceGump)) == false)
                 {
                     RemoveStatusGump(dicePlayers[i]);
                     PlayerWaiting(dicePlayers[i], currentHighlightedPlayerIdx);
                     if (this.playerCnt >= 2)
                     {
-                        dicePlayers[i]
-                            .getMobile()
-                            .SendMessage(
-                                "It is now "
-                                    + dicePlayers[currentHighlightedPlayerIdx].getMobile().Name
-                                    + "'s turn, and he has "
-                                    + this.playerToActSeconds
-                                    + " seconds to act."
-                            );
+                        mobile.SendMessage(
+                            "It is now "
+                                + highlighted.Name
+                                + "'s turn, and he has "
+                                + this.playerToActSeconds
+                                + " seconds to act."
+                        );
                     }
                     else
                     {
-                        dicePlayers[i]
-                            .getMobile()
-                            .SendMessage(
-                                dicePlayers[currentHighlightedPlayerIdx].getMobile().Name
-                                    + " joined liars dice."
-                            );
+                        mobile.SendMessage(highlighted.Name + " joined liars dice.");
                     }
                 }
             }
@@ -699,6 +716,9 @@ namespace Server.LiarsDice
         */
         public void ShowExitConfirmGump(Mobile m)
         {
+            if (m == null || m.Deleted)
+                return;
+
             try
             {
                 while (m.HasGump(typeof(ExitDiceGump)))
@@ -719,7 +739,13 @@ namespace Server.LiarsDice
         */
         public void AddStatusGump(Mobile m)
         {
+            if (m == null || m.Deleted)
+                return;
+
             int noExitMobileIdx = GetCurrentDicePlayerIdx(m);
+            if (noExitMobileIdx < 0 || noExitMobileIdx >= dicePlayers.Count)
+                return;
+
             PlayerWaiting(dicePlayers[noExitMobileIdx], updatedMobileIdx);
         }
 
@@ -728,6 +754,9 @@ namespace Server.LiarsDice
         */
         public void ShowNewGameGump(Mobile m)
         {
+            if (m == null || m.Deleted)
+                return;
+
             while (m.HasGump(typeof(NewDiceGameGump)))
             {
                 m.CloseGump(typeof(NewDiceGameGump));
@@ -764,9 +793,16 @@ namespace Server.LiarsDice
         */
         public void PlayerWaiting(MobileDiceStstatus mds, int currentPlayerIdx)
         {
-            if (mds.getMobile().HasGump(typeof(StatusDiceGump)))
+            Mobile mobile = GetValidDiceMobile(mds);
+            if (mobile == null)
+                return;
+
+            if (currentPlayerIdx < 0 || currentPlayerIdx >= dicePlayers.Count)
+                return;
+
+            if (mobile.HasGump(typeof(StatusDiceGump)))
             {
-                mds.getMobile().CloseGump(typeof(StatusDiceGump));
+                mobile.CloseGump(typeof(StatusDiceGump));
             }
             string[] playerNames = this.GetPlayerNames();
             int[] playerBalances = this.GetPlayerBalances();
@@ -780,18 +816,18 @@ namespace Server.LiarsDice
             );
             try
             {
-                bool success = mds.getMobile().SendGump(sdg);
+                bool success = mobile.SendGump(sdg);
                 //check to make sure the status gump was actually sent, and use THIS as our dissconnect protection
                 if (success == false)
                 {
-                    SendMessageAllPlayers("Player " + mds.getMobile().Name + " was disconnected");
-                    RemovePlayer(mds.getMobile(), true);
+                    SendMessageAllPlayers("Player " + mobile.Name + " was disconnected");
+                    RemovePlayer(mobile, true);
                 }
             }
             catch
             {
-                SendMessageAllPlayers("Player " + mds.getMobile().Name + " was disconnected");
-                RemovePlayer(mds.getMobile(), true);
+                SendMessageAllPlayers("Player " + mobile.Name + " was disconnected");
+                RemovePlayer(mobile, true);
             }
         }
 
@@ -800,6 +836,9 @@ namespace Server.LiarsDice
         */
         public void SetTimerAction(MobileDiceStstatus prevPlayer, MobileDiceStstatus currPlayer)
         {
+            if (GetValidDiceMobile(prevPlayer) == null || GetValidDiceMobile(currPlayer) == null)
+                return;
+
             prevPlayer.SetTimeStamp(DateTime.Now);
             currPlayer.SetTimeStamp(DateTime.Now);
             //setup the "warning" timer
@@ -808,6 +847,10 @@ namespace Server.LiarsDice
                 new TimerCallback(
                     delegate()
                     {
+                        Mobile currMobile = GetValidDiceMobile(currPlayer);
+                        if (currMobile == null)
+                            return;
+
                         TimeSpan timeDiff = (DateTime.Now - currPlayer.GetTimeStamp());
                         //check time in miliseconds
                         if (timeDiff.TotalMilliseconds > ((this.playerToActSeconds - 5) * 1000))
@@ -815,7 +858,7 @@ namespace Server.LiarsDice
                             if (this.playerCnt > 1)
                             {
                                 SendMessageAllPlayers(
-                                    currPlayer.getMobile().Name
+                                    currMobile.Name
                                         + " has 5 seconds to act before being kicked!"
                                 );
                             }
@@ -829,6 +872,10 @@ namespace Server.LiarsDice
                 new TimerCallback(
                     delegate()
                     {
+                        Mobile currMobile = GetValidDiceMobile(currPlayer);
+                        if (currMobile == null)
+                            return;
+
                         TimeSpan timeDiff = (DateTime.Now - currPlayer.GetTimeStamp());
                         //check time in miliseconds
                         if (timeDiff.TotalMilliseconds > (this.playerToActSeconds * 1000))
@@ -836,10 +883,10 @@ namespace Server.LiarsDice
                             if (this.playerCnt > 1)
                             {
                                 SendMessageAllPlayers(
-                                    currPlayer.getMobile().Name
+                                    currMobile.Name
                                         + " ran out of time, and has been kicked from the game."
                                 );
-                                RemovePlayer(currPlayer.getMobile(), true);
+                                RemovePlayer(currMobile, true);
                             }
                         }
                     }
@@ -865,7 +912,7 @@ namespace Server.LiarsDice
         */
         private int GetCurrentDicePlayerIdx(Mobile m)
         {
-            for (int i = 0; i < this.playerCnt; i++)
+            for (int i = 0; i < this.playerCnt && i < dicePlayers.Count; i++)
             {
                 if (m == dicePlayers[i].getMobile())
                 {
@@ -932,9 +979,11 @@ namespace Server.LiarsDice
         */
         private void SendMessageAllPlayers(string text)
         {
-            for (int i = 0; i < this.playerCnt; i++)
+            for (int i = 0; i < this.playerCnt && i < dicePlayers.Count; i++)
             {
-                dicePlayers[i].getMobile().SendMessage(text);
+                Mobile mobile = GetValidDiceMobile(dicePlayers[i]);
+                if (mobile != null)
+                    mobile.SendMessage(text);
             }
         }
 
@@ -959,9 +1008,10 @@ namespace Server.LiarsDice
         private string[] GetPlayerNames()
         {
             string[] playerNames = new string[playerCnt];
-            for (int i = 0; i < this.playerCnt; i++)
+            for (int i = 0; i < this.playerCnt && i < dicePlayers.Count; i++)
             {
-                playerNames[i] = dicePlayers[i].getMobile().Name;
+                Mobile mobile = GetValidDiceMobile(dicePlayers[i]);
+                playerNames[i] = mobile == null ? "Unknown" : mobile.Name;
             }
             return playerNames;
         }
@@ -972,7 +1022,7 @@ namespace Server.LiarsDice
         private int[] GetPlayerBalances()
         {
             int[] playerBalances = new int[playerCnt];
-            for (int i = 0; i < this.playerCnt; i++)
+            for (int i = 0; i < this.playerCnt && i < dicePlayers.Count; i++)
             {
                 playerBalances[i] = dicePlayers[i].GetTableBalance();
             }
@@ -985,7 +1035,7 @@ namespace Server.LiarsDice
         private int[] GetPlayerPrevRollOrBluff()
         {
             int[] playerPrevRollOrBluff = new int[playerCnt];
-            for (int i = 0; i < this.playerCnt; i++)
+            for (int i = 0; i < this.playerCnt && i < dicePlayers.Count; i++)
             {
                 playerPrevRollOrBluff[i] = dicePlayers[i].GetPrevRollOrBluff();
             }
@@ -997,17 +1047,21 @@ namespace Server.LiarsDice
         */
         public void RemoveStatusGump(MobileDiceStstatus mds)
         {
+            Mobile mobile = GetValidDiceMobile(mds);
+            if (mobile == null)
+                return;
+
             try
             {
-                while (mds.getMobile().HasGump(typeof(StatusDiceGump)))
+                while (mobile.HasGump(typeof(StatusDiceGump)))
                 {
-                    mds.getMobile().CloseGump(typeof(StatusDiceGump));
+                    mobile.CloseGump(typeof(StatusDiceGump));
                 }
             }
             catch
             {
-                SendMessageAllPlayers("Player " + mds.getMobile().Name + " was disconnected");
-                RemovePlayer(mds.getMobile(), true);
+                SendMessageAllPlayers("Player " + mobile.Name + " was disconnected");
+                RemovePlayer(mobile, true);
             }
         }
 
@@ -1016,35 +1070,51 @@ namespace Server.LiarsDice
         */
         private void RemoveGumps(MobileDiceStstatus mds)
         {
+            Mobile mobile = GetValidDiceMobile(mds);
+            if (mobile == null)
+                return;
+
             try
             {
-                while (mds.getMobile().HasGump(typeof(NewDiceGameGump)))
+                while (mobile.HasGump(typeof(NewDiceGameGump)))
                 {
-                    mds.getMobile().CloseGump(typeof(NewDiceGameGump));
+                    mobile.CloseGump(typeof(NewDiceGameGump));
                 }
-                while (mds.getMobile().HasGump(typeof(ExitDiceGump)))
+                while (mobile.HasGump(typeof(ExitDiceGump)))
                 {
-                    mds.getMobile().CloseGump(typeof(ExitDiceGump));
+                    mobile.CloseGump(typeof(ExitDiceGump));
                 }
 
-                while (mds.getMobile().HasGump(typeof(StatusDiceGump)))
+                while (mobile.HasGump(typeof(StatusDiceGump)))
                 {
-                    mds.getMobile().CloseGump(typeof(StatusDiceGump));
+                    mobile.CloseGump(typeof(StatusDiceGump));
                 }
-                while (mds.getMobile().HasGump(typeof(GameDiceGump)))
+                while (mobile.HasGump(typeof(GameDiceGump)))
                 {
-                    mds.getMobile().CloseGump(typeof(GameDiceGump));
+                    mobile.CloseGump(typeof(GameDiceGump));
                 }
-                while (mds.getMobile().HasGump(typeof(CallBluffGump)))
+                while (mobile.HasGump(typeof(CallBluffGump)))
                 {
-                    mds.getMobile().CloseGump(typeof(CallBluffGump));
+                    mobile.CloseGump(typeof(CallBluffGump));
                 }
             }
             catch
             {
-                SendMessageAllPlayers("Player " + mds.getMobile().Name + " was disconnected");
-                RemovePlayer(mds.getMobile(), true);
+                SendMessageAllPlayers("Player " + mobile.Name + " was disconnected");
+                RemovePlayer(mobile, true);
             }
+        }
+
+        private Mobile GetValidDiceMobile(MobileDiceStstatus mds)
+        {
+            if (mds == null)
+                return null;
+
+            Mobile mobile = mds.getMobile();
+            if (mobile == null || mobile.Deleted)
+                return null;
+
+            return mobile;
         }
     }
 }
