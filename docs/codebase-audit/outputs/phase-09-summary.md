@@ -1,12 +1,12 @@
 # Phase 9 Synergy And Conflict Matrix Summary
 
-Generated: 2026-06-05T18:07:13.7548526-05:00
+Generated: 2026-06-13T19:43:24.1013002-05:00
 
 ## Required Inputs
 
 | Input | Status |
 | --- | --- |
-| Dependency Graph | Present: `dependency-graph.csv` with 30063 rows |
+| Dependency Graph | Present: `dependency-graph.csv` with 30211 rows |
 | System Cards | Present: `phase-04-system-card-index.csv` with 27 rows |
 | Documentation Truth Table | Present: `documentation-truth-table.csv` with 122 rows |
 | Runtime Hook Map | Present: `runtime-hook-map.csv` with 6604 rows |
@@ -21,7 +21,7 @@ Generated: 2026-06-05T18:07:13.7548526-05:00
 | `phase-09-synergy-conflict-matrix.csv` | 351 | Phase-scoped copy of the pairwise matrix. |
 | `phase-09-domain-buckets.csv` | 27 | Domain grouping for Phase 9 review. |
 | `phase-09-balance-risk-list.csv` | 26 | Gameplay, pacing, reward, and policy balance risks separated from code correctness. |
-| `phase-09-documentation-risk-list.csv` | 158 | Source-trace, stale-claim, alias, and missing-path documentation risks. |
+| `phase-09-documentation-risk-list.csv` | 141 | Source-trace, stale-claim, alias, and missing-path documentation risks. |
 | `phase-09-staff-dependency-list.csv` | 32 | Relationships requiring staff tooling, staff events, or event override policy. |
 | `phase-09-preservation-notes.csv` | 22 | Positive synergies to preserve during later cleanup. |
 | `phase-09-player-objective-review.csv` | 27 | Immediate, medium-term, long-term, staff, exploration, crafting/economy, and progression goals by system. |

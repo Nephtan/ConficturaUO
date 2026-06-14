@@ -1,6 +1,6 @@
 # Phase 8 Dependency Graph Summary
 
-Generated: 2026-06-05T17:53:18.5614483-05:00
+Generated: 2026-06-13T19:43:17.5088134-05:00
 
 ## Required Inputs
 
@@ -11,17 +11,17 @@ Generated: 2026-06-05T17:53:18.5614483-05:00
 | Runtime Hook Map | Present: `runtime-hook-map.csv` with 6604 rows |
 | Serialization Register | Present: `serialization-register.csv` with 9158 rows |
 | Documentation Truth Table | Present: `documentation-truth-table.csv` with 122 rows |
-| Project Truth Register | Present: `project-truth-register.csv` with 13152 rows |
+| Project Truth Register | Present: `project-truth-register.csv` with 13162 rows |
 
 ## Generated Outputs
 
 | Output | Rows | Purpose |
 | --- | ---: | --- |
-| `dependency-graph.csv` | 30063 | Canonical dependency graph. |
-| `phase-08-dependency-graph.csv` | 30063 | Phase-scoped dependency graph. |
-| `phase-08-hard-dependency-list.csv` | 29933 | Hard source, runtime, serialization, project, and config dependencies. |
-| `phase-08-soft-dependency-list.csv` | 130 | Soft or speculative documentation/config relationships. |
-| `phase-08-conflict-edge-list.csv` | 1248 | Conflict, mismatch, duplicate, or manual-review edges. |
+| `dependency-graph.csv` | 30211 | Canonical dependency graph. |
+| `phase-08-dependency-graph.csv` | 30211 | Phase-scoped dependency graph. |
+| `phase-08-hard-dependency-list.csv` | 29900 | Hard source, runtime, serialization, project, and config dependencies. |
+| `phase-08-soft-dependency-list.csv` | 311 | Soft or speculative documentation/config relationships. |
+| `phase-08-conflict-edge-list.csv` | 1214 | Conflict, mismatch, duplicate, or manual-review edges. |
 | `phase-08-standalone-proof-list.csv` | 27 | Negative-evidence standalone proof table for system-card systems. |
 
 ## Edge Type Counts
@@ -30,23 +30,22 @@ Generated: 2026-06-05T17:53:18.5614483-05:00
 | --- | ---: |
 | DirectReference | 1508 |
 | DocsOnly | 114 |
-| DocsSourceTrace | 9 |
+| DocsSourceTrace | 190 |
 | DocumentationConflict | 2 |
 | GlobalHook | 227 |
 | PacketHandler | 17 |
-| ProjectInclude | 159 |
-| ProjectTruthConflict | 32 |
+| ProjectInclude | 160 |
 | RuntimeHook | 6360 |
 | Serialization | 20303 |
-| SerializationConflict | 1214 |
+| SerializationConflict | 1212 |
 | XMLConfig | 118 |
 
 ## Strength Counts
 
 | Strength | Count |
 | --- | ---: |
-| Hard | 29933 |
-| Soft | 14 |
+| Hard | 29900 |
+| Soft | 195 |
 | Speculative | 116 |
 
 ## Exit Criteria

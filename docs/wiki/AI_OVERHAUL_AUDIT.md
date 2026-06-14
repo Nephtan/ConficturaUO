@@ -13,6 +13,19 @@ This document is a static-analysis audit of the current AI surface in the Confic
 
 This audit is based on source review and codewide search only. It does not rely on a live server run.
 
+## Source Trace
+
+- `Data/Scripts/Mobiles/Base/BaseCreature.cs`
+- `Data/Scripts/Mobiles/Base/Behavior.cs`
+- `Data/Scripts/Mobiles/Base/BaseVendor.cs`
+- `Data/Scripts/Mobiles/Base/BaseHealer.cs`
+- `Data/Scripts/System/Regions/BaseRegion.cs`
+- `Data/Scripts/Custom/RandomEncounters/Import.cs`
+- `Data/Scripts/Custom/RandomEncounters/EncounterEngine.cs`
+- `Data/Scripts/Mobiles/Civilized/Citizens/Citizens.cs`
+- `Data/Scripts/Mobiles/Civilized/Vendors/Mage.cs`
+- `Data/Scripts/Mobiles/Civilized/Vendors/Banker.cs`
+
 ## Executive Summary
 
 The shard does not have one AI system. It has a layered behavior stack:
@@ -1556,7 +1569,7 @@ rg -n -F "override void OnGotMeleeAttack(" Data/Scripts
 
 ### Assignment and switching surfaces
 
-```powershell
+~~~powershell
 rg -n "AI\\s*=\\s*AIType\\." Data/Scripts
 rg -n "ChangeAIType\\(" Data/Scripts
 rg -n "CurrentAI\\s*=|DefaultAI\\s*=" Data/Scripts
@@ -1566,7 +1579,7 @@ rg -n --glob '!Data/Scripts/System/Obsolete/**' --glob '!Data/Scripts/Custom/XML
 rg -n --glob '!Data/Scripts/System/Obsolete/**' --glob '!Data/Scripts/Custom/XMLSpawner/**' "AI\\s*=\\s*AIType\\." Data/Scripts
 rg -n "AIType\\.AI_(Vendor|Healer|Citizen|Predator)" Data/Scripts/Mobiles/Base/BaseVendor.cs Data/Scripts/Mobiles/Base/BaseHealer.cs Data/Scripts/Custom/RandomEncounters/Import.cs Data/Scripts/Custom/RandomEncounters/EncounterEngine.cs
 rg -n -F "AIType.AI_Citizen" Data/Scripts/Mobiles/Base Data/Scripts/System Data/Scripts/Mobiles/Civilized
-```
+~~~
 
 ### Suggested exclusions when refreshing counts
 

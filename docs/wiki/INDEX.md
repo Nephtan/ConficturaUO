@@ -109,6 +109,7 @@ Guides are grouped by primary audience and use case.
 - [XML Spawner Enhancements](XML_Spawner_Enhancements.md)
 
 ## Technical And Engine Reference
+- [AI Overhaul Audit](AI_OVERHAUL_AUDIT.md)
 - [Boat Core Mechanics](Boat_Core_Mechanics.md)
 - [Base Spell Framework](Base_Spell_Framework.md)
 - [Clone Offline Player Characters](Clone_Offline_Player_Characters.md)

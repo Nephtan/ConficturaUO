@@ -10,13 +10,23 @@ The traced system does not register custom `[Command]` handlers, packet handlers
 
 Code-Verified: 2026-05-08
 
-## Core Scripts
+## Source Trace
 
 | Script | Namespace | Role |
 | --- | --- | --- |
 | `Data/Scripts/Trades/Shoppes/BaseShoppe.cs` | `Server.Items` | Shared `Item`, secure access, purchase flow, stocking rules, customer timers, serialization, and `ShoppeGump`. |
 | `Data/Scripts/Trades/Shoppes/Customers.cs` | `Server.Misc` | Customer-slot generation, reward formulas, success chance, contract completion, refusal, and packed customer string parsing. |
-| `Data/Scripts/Trades/Shoppes/*Shoppe.cs` | `Server.Items` | Eleven concrete work shoppe subclasses with title, skill, guild, tool/resource labels, sound, and task text generator. |
+| `Data/Scripts/Trades/Shoppes/AlchemistShoppe.cs` | `Server.Items` | Concrete alchemy work shoppe subclass. |
+| `Data/Scripts/Trades/Shoppes/BakerShoppe.cs` | `Server.Items` | Concrete cooking work shoppe subclass. |
+| `Data/Scripts/Trades/Shoppes/BlacksmithShoppe.cs` | `Server.Items` | Concrete blacksmith work shoppe subclass. |
+| `Data/Scripts/Trades/Shoppes/BowyerShoppe.cs` | `Server.Items` | Concrete bowcraft work shoppe subclass. |
+| `Data/Scripts/Trades/Shoppes/CarpentryShoppe.cs` | `Server.Items` | Concrete carpentry work shoppe subclass. |
+| `Data/Scripts/Trades/Shoppes/CartographyShoppe.cs` | `Server.Items` | Concrete cartography work shoppe subclass. |
+| `Data/Scripts/Trades/Shoppes/HerbalistShoppe.cs` | `Server.Items` | Concrete herbalist work shoppe subclass. |
+| `Data/Scripts/Trades/Shoppes/LibrarianShoppe.cs` | `Server.Items` | Concrete librarian work shoppe subclass. |
+| `Data/Scripts/Trades/Shoppes/MorticianShoppe.cs` | `Server.Items` | Concrete mortician work shoppe subclass. |
+| `Data/Scripts/Trades/Shoppes/TailorShoppe.cs` | `Server.Items` | Concrete tailor work shoppe subclass. |
+| `Data/Scripts/Trades/Shoppes/TinkerShoppe.cs` | `Server.Items` | Concrete tinkering work shoppe subclass. |
 | `Data/Scripts/Trades/Shoppes/MerchantCrate.cs` | `Server.Items` | Sale container, crate cash-out, pickup timers, and item price table. |
 | `Data/Scripts/Mobiles/Base/BaseVendor.cs` | `Server.ContextMenus` | Adds `SetupShoppeEntry` when a player has the matching skill and is using a matching vendor class. |
 | `Data/Scripts/Mobiles/Base/StoreSalesList.cs` | `Server.Mobiles` | Sells `MerchantCrate` and the `WorkShoppes` book from vendor inventories. |

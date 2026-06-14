@@ -5,15 +5,21 @@
 This page documents the player-facing command guide rendered by `Server.Engines.Help.HelpGump` page `1`.
 The guide is a `Gump` text page plus button dispatch into existing player command handlers. It does not define a new `Item`, `Mobile`, packet handler, XMLSpawner attachment, save object, or serializer.
 
-## Core Scripts
+## Source Trace
 
 | Script | Role |
 | --- | --- |
 | `Data/Scripts/System/Help/Gumps/HelpGump.cs` | Registers the Help request event hook, builds the Help Gump navigation, renders `MyHelp()` on page `1`, and dispatches Help button replies. |
 | `Data/System/Source/Commands.cs` | Provides `CommandSystem.Prefix`, command registration, case-insensitive command lookup, argument splitting, and access checks. |
 | `Data/Scripts/System/Commands/Handlers.cs` | Sets the shard command prefix to `[` and registers the core `[Help` command. |
-| `Data/Scripts/System/Commands/Player/*.cs` | Defines most player commands listed by the Help text, including AFK, bandaging, emotes, loot settings, bars, play styles, and skill commands. |
-| `Data/Scripts/System/Skills/Weapon Abilities/*.cs` | Defines weapon ability toolbar commands such as `[sad`, `[set1` through `[set5`, and `[abilitynames`. |
+| `Data/Scripts/System/Commands/Player/Afk.cs` | Defines the AFK player command path. |
+| `Data/Scripts/System/Commands/Player/BandSelf.cs` | Defines player bandage self/other command paths. |
+| `Data/Scripts/System/Commands/Player/Emote.cs` | Defines player emote command paths. |
+| `Data/Scripts/System/Commands/Player/Loot.cs` | Defines player loot settings command paths. |
+| `Data/Scripts/System/Commands/Player/SpellBarsManage.cs` | Defines player spellbar editor command paths. |
+| `Data/Scripts/System/Commands/Player/SkillListing.cs` | Defines the compact skill-list command path. |
+| `Data/Scripts/System/Skills/Weapon Abilities/SpecialAttackCommands.cs` | Defines weapon ability toolbar commands such as `[sad`, `[set1` through `[set5`, and `[abilitynames`. |
+| `Data/Scripts/System/Skills/Weapon Abilities/AbilityBook.cs` | Defines the weapon ability book item used by the ability system. |
 | `Data/Scripts/System/Misc/Accounts.cs` | Defines `[Password <newPassword> <repeatPassword>` when the password command flag is enabled. |
 | `Data/Scripts/System/Misc/MOTD.cs` | Defines `[MOTD` and opens the message-of-the-day gump. |
 | `Data/Scripts/System/Misc/Statistics.cs` | Defines `[Statistics` when the statistics system is enabled. |

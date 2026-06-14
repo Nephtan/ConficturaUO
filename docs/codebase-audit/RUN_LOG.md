@@ -7190,3 +7190,43 @@ Scope: Deterministic phase runner log for the Confictura codebase audit and reor
 - Command: `git restore -- ConficturaServer.exe ConficturaServer.exe.config ConficturaServer.pdb`; remove exact untracked MSBuild outputs from `Data/Scripts`.
 - Result: Succeeded. Tracked generated server artifacts were restored and untracked build outputs created by MSBuild were removed before staging.
 - Output path: Working tree status only.
+
+### 2026-06-13T19:48:57.0377992-05:00
+
+- Affected phase: Post-audit `POST-BATCH-F` documentation and balance review
+- Cwd: `D:\ConficturaUO`
+- Command: `git status --short`; `rg --files -g AGENTS.md`; read root/doc audit instructions, batch plan, repair backlog, active overlay, documentation truth, dependency graph, synergy/conflict, and relevant phase plans.
+- Result: Initial worktree was clean; applicable instructions and inputs were present; POST-BATCH-F filter matched 540 rows.
+- Output path: `docs/codebase-audit/outputs/post-batch-f-documentation-balance-review.csv`
+
+### 2026-06-13T19:48:57.0377992-05:00
+
+- Affected phase: Post-audit `POST-BATCH-F` documentation/source-trace corrections
+- Cwd: `D:\ConficturaUO`
+- Command: edit wiki documentation source traces and index entries for objective missing-path/source-trace evidence.
+- Result: Replaced wildcard/multi-path source references with exact existing source paths in nine wiki pages and added `AI_OVERHAUL_AUDIT.md` to the technical index; no source/config/project files changed.
+- Output path: `docs/wiki/AI_OVERHAUL_AUDIT.md`; `docs/wiki/Apiculture_Beekeeping.md`; `docs/wiki/Gardening_System.md`; `docs/wiki/In_Game_Command_List.md`; `docs/wiki/Player_Mobile_Core.md`; `docs/wiki/Runic_Tools_Crafting.md`; `docs/wiki/Shoppes_Vendors.md`; `docs/wiki/Standard_Crafting.md`; `docs/wiki/wikibacklog.md`; `docs/wiki/INDEX.md`
+
+### 2026-06-13T19:48:57.0377992-05:00
+
+- Affected phase: Phase 7/8/9 regenerated evidence for `POST-BATCH-F`
+- Cwd: `D:\ConficturaUO`
+- Command: `.\docs\codebase-audit\tools\New-DocumentationTruthAudit.ps1`; `.\docs\codebase-audit\tools\New-DependencyGraph.ps1`; `.\docs\codebase-audit\tools\New-SynergyConflictMatrix.ps1`
+- Result: Documentation truth regenerated with 106 canonical pages, 97 canonical pages still missing Source Trace, and one remaining missing-source row isolated to legacy `SystemAudit.md`; dependency graph regenerated with 30,211 edges; synergy/conflict matrix regenerated with 351 rows, 26 balance-risk rows, 141 documentation-risk rows, and 32 staff-dependency rows.
+- Output path: `docs/codebase-audit/outputs/documentation-truth-table.csv`; `docs/codebase-audit/outputs/dependency-graph.csv`; `docs/codebase-audit/outputs/synergy-conflict-matrix.csv`
+
+### 2026-06-13T19:48:57.0377992-05:00
+
+- Affected phase: Post-audit `POST-BATCH-F` audit state update
+- Cwd: `D:\ConficturaUO`
+- Command: `.\docs\codebase-audit\tools\New-PostBatchFReview.ps1`
+- Result: Review CSV and active overlay each contain 540 POST-BATCH-F rows; decision counts are DeferredBalanceDecision=26, DeferredLegacyAuditTableCleanup=1, DeferredSourceTraceReview=130, DeferredSupportDocReview=2, FixedDocumentationTrace=20, FixedHistoricalPathReference=5, NeedsHumanDecision=32, QueuedSchemaDocumentation=232, QueuedSourceFollowUp=92.
+- Output path: `docs/codebase-audit/outputs/post-batch-f-documentation-balance-review.csv`; `docs/codebase-audit/outputs/post-batch-f-documentation-balance-closeout.md`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`; `docs/codebase-audit/PHASE_STATUS.md`
+
+### 2026-06-13T19:52:04.2147226-05:00
+
+- Affected phase: Post-audit `POST-BATCH-F` final verification
+- Cwd: `D:\ConficturaUO`
+- Command: `git diff --check`; source/config/project diff check; POST-BATCH-F review/overlay invariant check; edited canonical documentation source-trace check.
+- Result: Passed. `git diff --check` reported no whitespace errors; no `.cs`, `.xml`, `.cfg`, `.csproj`, or `Data/` paths changed; final invariant checks found 540 review rows, 540 POST-BATCH-F active overlay rows, no blank decisions, no blank verification fields, and no blank overlay actions; all eight edited canonical docs are marked `SourceTracePresent=Yes`.
+- Output path: `docs/codebase-audit/outputs/post-batch-f-documentation-balance-review.csv`; `docs/codebase-audit/outputs/post-audit-active-backlog-status.csv`; `docs/codebase-audit/outputs/documentation-truth-table.csv`

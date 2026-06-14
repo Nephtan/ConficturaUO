@@ -1,3 +1,3 @@
 "AliasPath","AliasType","CanonicalPath","Indexed","IndependentClaims","ExistingBacklogIds","GeneratedBacklogId","Recommendation"
-"docs/wiki/pvp-consent-system.md","LegacySlug","docs/wiki/PvP_Consent_System.md","True","Yes","","DOC-0077","Reduce alias to a canonical pointer or verify that independent claims are generated from the canonical page."
-"docs/wiki/voting-system.md","LegacySlug","docs/wiki/Voting_Rewards.md","True","Yes","","DOC-0103","Reduce alias to a canonical pointer or verify that independent claims are generated from the canonical page."
+"docs/wiki/pvp-consent-system.md","LegacySlug","docs/wiki/PvP_Consent_System.md","True","Yes","","DOC-0073","Reduce alias to a canonical pointer or verify that independent claims are generated from the canonical page."
+"docs/wiki/voting-system.md","LegacySlug","docs/wiki/Voting_Rewards.md","True","Yes","","DOC-0097","Reduce alias to a canonical pointer or verify that independent claims are generated from the canonical page."
