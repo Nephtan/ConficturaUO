@@ -349,3 +349,5 @@ The Phase 0 baseline output, Phase 1 reproducible inventory outputs, Phase 2 pro
 | post-batch-s-schema-documentation-closeout.md | Post-audit | Close out POST-BATCH-S with schema evidence, diagnostic false positives, verification, and queue reconciliation. | Complete |
 | post-batch-t-docs-source-trace-review.csv | Post-audit | Documentation source-trace dispositions for all 133 POST-BATCH-N docs-only rows. | Complete |
 | post-batch-t-docs-source-trace-closeout.md | Post-audit | Close out POST-BATCH-T with source-trace, alias, support-doc no-change, verification, and queue reconciliation. | Complete |
+| post-batch-u-save-migration-plan-review.csv | Post-audit | Source-reviewed migration-plan dispositions for all 77 POST-BATCH-N save migration-plan rows. | Complete |
+| post-batch-u-save-migration-plan-closeout.md | Post-audit | Close out POST-BATCH-U with migration-gate decisions, serializer evidence, verification, and queue reconciliation. | Complete |
