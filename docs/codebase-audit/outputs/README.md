@@ -367,3 +367,4 @@ The Phase 0 baseline output, Phase 1 reproducible inventory outputs, Phase 2 pro
 | source-batch-controller-closeout.md | Source batches | Close out the source batch controller run without source edits, recording required next input for SOURCE-BATCH-001 and approval blockers for gated batches. | Complete |
 | source-batch-001-target.md | Source batches | Durable interview target for SOURCE-BATCH-001 OilCloth guard repair, including fence result, unchanged behavior, and ready goal command. | Complete |
 | source-batch-intake-register.csv | Source batches | Structured intake register for SOURCE-BATCH-001 and remaining roadmap paths, including gated approval status. | Complete |
+| source-batch-001-oilcloth-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-001 with OilCloth source guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |

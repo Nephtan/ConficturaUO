@@ -4,7 +4,7 @@ Reviewed at: 2026-06-15T12:47:55.6250644-05:00
 
 ## Summary
 
-The source batch controller processed the POST-BATCH-AA roadmap in order without making source edits.
+The source batch controller processed the POST-BATCH-AA roadmap in order, then later recorded the SOURCE-BATCH-001 intake and source execution updates.
 
 Initial controller result before SOURCE-BATCH-001 intake:
 
@@ -20,11 +20,19 @@ Intake update at 2026-06-15T15:45:07.1199481-05:00:
 - The intake register is `docs/codebase-audit/outputs/source-batch-intake-register.csv`.
 - Gated roadmap batches remain blocked pending explicit approval.
 
+Source execution update at 2026-06-15T16:44:08.0818812-05:00:
+
+- `SOURCE-BATCH-001` implemented the OilCloth guard repair in `Data/Scripts/Items/Misc/OilCloth.cs`.
+- `SOURCE-BATCH-001` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-001-oilcloth-guard-repair-closeout.md`.
+- `SOURCE-BATCH-002+` remains pending a concrete non-gated source target.
+- Gated roadmap batches remain blocked pending explicit approval.
+
 ## Controller Status
 
 | Order | Batch | Controller status | Source edits allowed now |
 | ---: | --- | --- | --- |
-| 1 | `SOURCE-BATCH-001` | `PendingConcreteSourceTarget` | No |
+| 1 | `SOURCE-BATCH-001` | `Committed` | No |
 | 2 | `SOURCE-BATCH-002+` | `PendingConcreteSourceTarget` | No |
 | 3 | `GATED-SOURCE-BATCH-STAFF` | `BlockedPendingApproval` | No |
 | 4 | `GATED-SOURCE-BATCH-BALANCE` | `BlockedPendingApproval` | No |
@@ -76,3 +84,4 @@ To run a gated batch, provide explicit approval naming:
 
 - `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`
 - `docs/codebase-audit/outputs/source-batch-controller-closeout.md`
+- `docs/codebase-audit/outputs/source-batch-001-oilcloth-guard-repair-closeout.md`
