@@ -4,7 +4,7 @@ Reviewed at: 2026-06-15T12:47:55.6250644-05:00
 
 ## Summary
 
-The source batch controller processed the POST-BATCH-AA roadmap in order, then later recorded the SOURCE-BATCH-001 intake and source execution updates.
+The source batch controller processed the POST-BATCH-AA roadmap in order, then later recorded the SOURCE-BATCH-001 and SOURCE-BATCH-002 intake/source execution updates.
 
 Initial controller result before SOURCE-BATCH-001 intake:
 
@@ -28,17 +28,27 @@ Source execution update at 2026-06-15T16:44:08.0818812-05:00:
 - `SOURCE-BATCH-002+` remains pending a concrete non-gated source target.
 - Gated roadmap batches remain blocked pending explicit approval.
 
+Source execution update at 2026-06-15T18:45:22.3593239-05:00:
+
+- `SOURCE-BATCH-002` implemented the OilCloth dye/scissor guard repair in `Data/Scripts/Items/Misc/OilCloth.cs`.
+- `SOURCE-BATCH-002` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-002-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-002-oilcloth-dye-scissor-guard-repair-closeout.md`.
+- `SOURCE-BATCH-003+` remains pending a concrete non-gated source target.
+- Gated roadmap batches remain blocked pending explicit approval.
+
 ## Controller Status
 
 | Order | Batch | Controller status | Source edits allowed now |
 | ---: | --- | --- | --- |
 | 1 | `SOURCE-BATCH-001` | `Committed` | No |
-| 2 | `SOURCE-BATCH-002+` | `PendingConcreteSourceTarget` | No |
-| 3 | `GATED-SOURCE-BATCH-STAFF` | `BlockedPendingApproval` | No |
-| 4 | `GATED-SOURCE-BATCH-BALANCE` | `BlockedPendingApproval` | No |
-| 5 | `GATED-SOURCE-BATCH-REGION` | `BlockedPendingApproval` | No |
-| 6 | `GATED-SOURCE-BATCH-HOUSEFOUNDATION` | `BlockedPendingApproval` | No |
-| 7 | `GATED-SOURCE-BATCH-REORG` | `BlockedPendingApproval` | No |
+| 2 | `SOURCE-BATCH-002` | `Committed` | No |
+| 3 | `SOURCE-BATCH-003+` | `PendingConcreteSourceTarget` | No |
+| 4 | `GATED-SOURCE-BATCH-STAFF` | `BlockedPendingApproval` | No |
+| 5 | `GATED-SOURCE-BATCH-BALANCE` | `BlockedPendingApproval` | No |
+| 6 | `GATED-SOURCE-BATCH-REGION` | `BlockedPendingApproval` | No |
+| 7 | `GATED-SOURCE-BATCH-HOUSEFOUNDATION` | `BlockedPendingApproval` | No |
+| 8 | `GATED-SOURCE-BATCH-REORG` | `BlockedPendingApproval` | No |
 
 ## Evidence
 
@@ -49,16 +59,19 @@ Source execution update at 2026-06-15T16:44:08.0818812-05:00:
 | Immediate executable roadmap rows | 1 |
 | Selected immediate boundary rows | 1 |
 | Conditional gated roadmap rows | 5 |
+| Controller rows after SOURCE-BATCH-002 | 8 |
+| Committed non-gated source batches | 2 |
+| Pending repeatable non-gated source batch row | 1 |
 | POST-BATCH-Y `AcceptedFence` rows | 83 |
 | POST-BATCH-Y `BlocksOnlyThisDomain` rows | 7 |
 | POST-BATCH-Y `BlocksSourceWork` rows | 0 |
 
 ## Required Next Input
 
-To run `SOURCE-BATCH-001`, provide:
+To run the next non-gated source batch, provide:
 
 ```text
-SOURCE-BATCH-001 target:
+SOURCE-BATCH-003 target:
 - Behavior to change:
 - System:
 - Expected files, if known:
@@ -77,11 +90,15 @@ To run a gated batch, provide explicit approval naming:
 - `git status --short` was clean before controller documentation edits.
 - Applicable `AGENTS.md` files were re-read for `docs/codebase-audit/`.
 - Roadmap and gate reconciliation were checked from current CSV files.
-- No source verification, source build, or runtime compile-only verification was required because no source/project/XML/config/data behavior changed.
-- `git diff --check` passed with expected LF-to-CRLF warnings only.
+- Initial controller source verification, source build, and runtime compile-only verification were not required because the initial controller run did not change source/project/XML/config/data behavior.
+- `SOURCE-BATCH-001` source verification is recorded in `source-batch-001-oilcloth-guard-repair-closeout.md`.
+- `SOURCE-BATCH-002` source verification is recorded in `source-batch-002-oilcloth-dye-scissor-guard-repair-closeout.md`.
+- The latest source-batch verification passed targeted source scan, serializer diff scan, `Server.csproj` Debug/x86 build, runtime compile-only verification, generated artifact restoration, and `git diff --check`.
 
 ## Outputs
 
 - `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`
 - `docs/codebase-audit/outputs/source-batch-controller-closeout.md`
 - `docs/codebase-audit/outputs/source-batch-001-oilcloth-guard-repair-closeout.md`
+- `docs/codebase-audit/outputs/source-batch-002-target.md`
+- `docs/codebase-audit/outputs/source-batch-002-oilcloth-dye-scissor-guard-repair-closeout.md`

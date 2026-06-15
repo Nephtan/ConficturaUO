@@ -26,7 +26,7 @@ namespace Server.Items
 
         public bool Dye(Mobile from, DyeTub sender)
         {
-            if (Deleted)
+            if (Deleted || from == null || from.Deleted || sender == null || sender.Deleted)
                 return false;
 
             Hue = sender.DyedHue;
@@ -36,7 +36,14 @@ namespace Server.Items
 
         public bool Scissor(Mobile from, Scissors scissors)
         {
-            if (Deleted || !from.CanSee(this))
+            if (
+                Deleted
+                || from == null
+                || from.Deleted
+                || scissors == null
+                || scissors.Deleted
+                || !from.CanSee(this)
+            )
                 return false;
 
             base.ScissorHelper(from, new Bandage(), 1);
