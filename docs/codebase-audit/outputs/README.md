@@ -361,3 +361,5 @@ The Phase 0 baseline output, Phase 1 reproducible inventory outputs, Phase 2 pro
 | post-batch-y-source-change-readiness-closeout.md | Post-audit | Close out POST-BATCH-Y with accepted fences, domain-only blockers, first source-change boundary, verification, and overlay reconciliation. | Complete |
 | post-batch-z-first-source-change-selection.csv | Post-audit | Select the first allowed source-change boundary after reconciling Phase 13 batch order, active overlay dispositions, and POST-BATCH-Y fences. | Complete |
 | post-batch-z-first-source-change-selection-closeout.md | Post-audit | Close out POST-BATCH-Z with the selected non-gated source-change boundary, exclusions, verification requirements, and ready SOURCE-BATCH-001 goal command. | Complete |
+| post-batch-aa-source-batch-roadmap.csv | Post-audit | Sequential roadmap for the remaining logical source-change batches using the active overlay and POST-BATCH-Y/Z fences. | Complete |
+| post-batch-aa-source-batch-roadmap-closeout.md | Post-audit | Close out POST-BATCH-AA with roadmap order, gate evidence, and ready goal templates for non-gated and gated source batches. | Complete |
