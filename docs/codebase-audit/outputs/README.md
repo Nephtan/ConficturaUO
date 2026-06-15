@@ -336,6 +336,8 @@ Tips:
 | `post-batch-p-runtime-hook-closeout.md` | Post-audit | Close out POST-BATCH-P with source repair summary, decision counts, verification, and queue reconciliation. | Complete |
 | `post-batch-q-staff-command-metadata-source-review.csv` | Post-audit | Source-review and repair dispositions for all 92 POST-BATCH-N staff command metadata source-batch rows. | Complete |
 | `post-batch-q-staff-command-metadata-closeout.md` | Post-audit | Close out POST-BATCH-Q with source repair summary, decision counts, verification, and queue reconciliation. | Complete |
+| `post-batch-r-save-constructor-persistence-review.csv` | Post-audit | Source-review dispositions for all 23 POST-BATCH-N save constructor persistence rows. | Complete |
+| `post-batch-r-save-constructor-persistence-closeout.md` | Post-audit | Close out POST-BATCH-R with constructor evidence, serializer alignment evidence, verification, and queue reconciliation. | Complete |
 
 
 ## Initial State
