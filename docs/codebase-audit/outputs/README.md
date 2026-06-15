@@ -338,6 +338,8 @@ Tips:
 | `post-batch-q-staff-command-metadata-closeout.md` | Post-audit | Close out POST-BATCH-Q with source repair summary, decision counts, verification, and queue reconciliation. | Complete |
 | `post-batch-r-save-constructor-persistence-review.csv` | Post-audit | Source-review dispositions for all 23 POST-BATCH-N save constructor persistence rows. | Complete |
 | `post-batch-r-save-constructor-persistence-closeout.md` | Post-audit | Close out POST-BATCH-R with constructor evidence, serializer alignment evidence, verification, and queue reconciliation. | Complete |
+| `post-batch-s-schema-documentation-review.csv` | Post-audit | Schema/parser documentation dispositions for all 232 POST-BATCH-N schema documentation rows. | Complete |
+| `post-batch-s-schema-documentation-closeout.md` | Post-audit | Close out POST-BATCH-S with schema evidence, diagnostic false positives, verification, and queue reconciliation. | Complete |
 
 
 ## Initial State
