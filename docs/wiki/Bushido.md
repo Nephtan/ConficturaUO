@@ -132,3 +132,55 @@ No Bushido-specific `[Command]`, `[Usage]`, or `[Description]` handlers were fou
 * `MomentumStrike.OnHit` iterates `attacker.GetMobilesInRange(weapon.MaxRange)` directly. `Mobile.GetMobilesInRange` returns an `IPooledEnumerable`, so this path should free the enumerable after use.
 * `LightningStrike.Validate` stores unscaled `BaseMana` in `PlayerMobile.ExecutesLightningStrike`, and `PlayerMobile.OnManaChange` clears the move when mana falls below that base value. Lower Mana Cost and other `ScaleMana` effects can therefore be ignored by this pre-hit clear path.
 * `HonorableExecution.GetDamageScalar` has a source `TODO` for `20 -> Perfection`, but the compiled damage scalar uses a hard-coded `20` multiplier rather than the active Perfection value.
+
+## Source Trace
+
+POST-BATCH-T reviewed this page on 2026-06-14T21:09:11.0049244-05:00 against current source and audit registers.
+
+- Canonical status: Canonical.
+- Queue rows: PBN-0081.
+- Backlog rows: RB-06671.
+- Audit registers used: documentation-truth-table.csv, runtime-hook-map.csv, serialization-register.csv, and project-truth-register.csv.
+
+### Source Files Reviewed
+
+- Data/Scripts/Magic/Bushido/ (CurrentDirectory)
+
+### Runtime Evidence
+
+- Hook summary: Timer=7.
+- Data/Scripts/Magic/Bushido/Confidence.cs:L88 Timer CustomTimerSubclass access=GlobalOrInternal
+- Data/Scripts/Magic/Bushido/Confidence.cs:L137 Timer CustomTimerSubclass access=GlobalOrInternal
+- Data/Scripts/Magic/Bushido/CounterAttack.cs:L103 Timer CustomTimerSubclass access=GlobalOrInternal
+- Data/Scripts/Magic/Bushido/Evasion.cs:L139 Timer Timer.DelayCall access=GlobalOrInternal
+- Data/Scripts/Magic/Bushido/Evasion.cs:L241 Timer CustomTimerSubclass access=GlobalOrInternal
+- Data/Scripts/Magic/Bushido/HonorableExecution.cs:L64 Timer Timer.DelayCall access=GlobalOrInternal
+- Data/Scripts/Magic/Bushido/HonorableExecution.cs:L88 Timer Timer.DelayCall access=GlobalOrInternal
+
+### Serialization Evidence
+
+- Serialized rows matched: 1.
+- Data/Scripts/Magic/Bushido/BookOfBushido.cs:Server.Items.BookOfBushido version=1 serialize=L36 deserialize=L43 alignment=AlignedByCountAndKnownTypes
+
+### Project And Runtime Coverage
+
+- Data/Scripts/Magic/Bushido/BookOfBushido.cs=Keep
+- Data/Scripts/Magic/Bushido/BookOfBushido.cs=Keep
+- Data/Scripts/Magic/Bushido/Confidence.cs=Keep
+- Data/Scripts/Magic/Bushido/Confidence.cs=Keep
+- Data/Scripts/Magic/Bushido/CounterAttack.cs=Keep
+- Data/Scripts/Magic/Bushido/CounterAttack.cs=Keep
+- Data/Scripts/Magic/Bushido/Evasion.cs=Keep
+- Data/Scripts/Magic/Bushido/Evasion.cs=Keep
+- Data/Scripts/Magic/Bushido/HonorableExecution.cs=Keep
+- Data/Scripts/Magic/Bushido/HonorableExecution.cs=Keep
+- Data/Scripts/Magic/Bushido/LightningStrike.cs=Keep
+- Data/Scripts/Magic/Bushido/LightningStrike.cs=Keep
+- Data/Scripts/Magic/Bushido/MomentumStrike.cs=Keep
+- Data/Scripts/Magic/Bushido/MomentumStrike.cs=Keep
+- Data/Scripts/Magic/Bushido/SamuraiMove.cs=Keep
+- Data/Scripts/Magic/Bushido/SamuraiMove.cs=Keep
+- Data/Scripts/Magic/Bushido/SamuraiSpell.cs=Keep
+- Data/Scripts/Magic/Bushido/SamuraiSpell.cs=Keep
+
+No C# source, project files, XML/config/data files, namespaces, serializers, gameplay behavior, or migration policy were changed in POST-BATCH-T.

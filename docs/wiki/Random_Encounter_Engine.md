@@ -141,3 +141,58 @@ Encounter selection then works like this:
 - Match `Map.Name`, region type, and region name strings exactly.
 - Use `name="default"` only for the fallback table of a facet/region-type pair.
 - Do not rely on `<Prop>` tags until the engine code is completed.
+
+## Source Trace
+
+POST-BATCH-T reviewed this page on 2026-06-14T21:09:11.0049244-05:00 against current source and audit registers.
+
+- Canonical status: Canonical.
+- Queue rows: PBN-0012; PBN-0063.
+- Backlog rows: RB-06754; RB-06755.
+- Audit registers used: documentation-truth-table.csv, runtime-hook-map.csv, serialization-register.csv, and project-truth-register.csv.
+
+### Source Files Reviewed
+
+- Data/Scripts/Custom/PvE/RandomEncounters/RandomEncounters.xml (CurrentFile)
+- Data/Scripts/Custom/PvE/RandomEncounters/EncounterEngine.cs (CurrentFile)
+- Data/Scripts/Custom/PvE/RandomEncounters/Timers.cs (CurrentFile)
+- Data/Scripts/Custom/PvE/RandomEncounters/SpawnFinder.cs (CurrentFile)
+- Data/Scripts/Custom/PvE/RandomEncounters/Helpers.cs (CurrentFile)
+- Data/Scripts/Custom/PvE/RandomEncounters/Records.cs (CurrentFile)
+- Data/Scripts/Custom/PvE/RandomEncounters/Commands.cs (CurrentFile)
+- Data/Scripts/Custom/Progression/CharacterLevel/CharacterLevelService.cs (CurrentFile)
+
+### Runtime Evidence
+
+- Hook summary: Command=1; Initialize=3; Timer=4.
+- Data/Scripts/Custom/PvE/RandomEncounters/Commands.cs:L21 Initialize Initialize access=GlobalOrInternal
+- Data/Scripts/Custom/PvE/RandomEncounters/Commands.cs:L23 Command CommandSystem.Register access=Unknown
+- Data/Scripts/Custom/PvE/RandomEncounters/EncounterEngine.cs:L99 Initialize Initialize access=GlobalOrInternal
+- Data/Scripts/Custom/PvE/RandomEncounters/Helpers.cs:L30 Initialize Initialize access=GlobalOrInternal
+- Data/Scripts/Custom/PvE/RandomEncounters/Timers.cs:L28 Timer CustomTimerSubclass access=GlobalOrInternal
+- Data/Scripts/Custom/PvE/RandomEncounters/Timers.cs:L53 Timer CustomTimerSubclass access=GlobalOrInternal
+- Data/Scripts/Custom/PvE/RandomEncounters/Timers.cs:L85 Timer CustomTimerSubclass access=GlobalOrInternal
+- Data/Scripts/Custom/PvE/RandomEncounters/Timers.cs:L303 Timer CustomTimerSubclass access=GlobalOrInternal
+
+### Serialization Evidence
+
+- No serialized classes matched the reviewed source set in serialization-register.csv.
+
+### Project And Runtime Coverage
+
+- Data/Scripts/Custom/Progression/CharacterLevel/CharacterLevelService.cs=Keep
+- Data/Scripts/Custom/Progression/CharacterLevel/CharacterLevelService.cs=Keep
+- Data/Scripts/Custom/PvE/RandomEncounters/Commands.cs=Keep
+- Data/Scripts/Custom/PvE/RandomEncounters/Commands.cs=Keep
+- Data/Scripts/Custom/PvE/RandomEncounters/EncounterEngine.cs=Keep
+- Data/Scripts/Custom/PvE/RandomEncounters/EncounterEngine.cs=Keep
+- Data/Scripts/Custom/PvE/RandomEncounters/Helpers.cs=Keep
+- Data/Scripts/Custom/PvE/RandomEncounters/Helpers.cs=Keep
+- Data/Scripts/Custom/PvE/RandomEncounters/Records.cs=Keep
+- Data/Scripts/Custom/PvE/RandomEncounters/Records.cs=Keep
+- Data/Scripts/Custom/PvE/RandomEncounters/SpawnFinder.cs=Keep
+- Data/Scripts/Custom/PvE/RandomEncounters/SpawnFinder.cs=Keep
+- Data/Scripts/Custom/PvE/RandomEncounters/Timers.cs=Keep
+- Data/Scripts/Custom/PvE/RandomEncounters/Timers.cs=Keep
+
+No C# source, project files, XML/config/data files, namespaces, serializers, gameplay behavior, or migration policy were changed in POST-BATCH-T.

@@ -269,3 +269,62 @@ Use normal RunUO construction for trainer placement:
 | `DismountPlayer()` appends physical mounts to `m.Stabled` without checking `GetMaxStabled()` or charging the 30-gold stable fee. | No-mount-region handling can exceed normal stable slot limits and bypass the paid trainer stable flow. |
 | The stable success text says the trainer will sell the pet after one real-world week, but no expiration or sale-off logic was found in the traced stable code. | Stabled creatures are stored on `Mobile.Stabled`, and cleanup tasks explicitly skip internal-map creatures when `IsStabled` is true, so the weekly warning appears stale or incomplete. |
 | `IsNoMountRegion()` computes a `world` string and never uses it. | Harmless runtime waste, but it suggests the region helper was partially edited or left with dead logic. |
+
+## Source Trace
+
+POST-BATCH-T reviewed this page on 2026-06-14T21:09:11.0049244-05:00 against current source and audit registers.
+
+- Canonical status: Canonical.
+- Queue rows: PBN-0053; PBN-0120.
+- Backlog rows: RB-06656; RB-06657.
+- Audit registers used: documentation-truth-table.csv, runtime-hook-map.csv, serialization-register.csv, and project-truth-register.csv.
+
+### Source Files Reviewed
+
+- Data/Scripts/Mobiles/Civilized/Vendors/AnimalTrainer.cs (CurrentFile)
+- Data/Scripts/Mobiles/Civilized/Vendors/GypsyAnimalTrainer.cs (CurrentFile)
+- Data/System/Source/Mobile.cs (CurrentFile)
+- Data/Scripts/Mobiles/Base/BaseCreature.cs (CurrentFile)
+- Data/Scripts/Mobiles/Base/PlayerMobile.cs (CurrentFile)
+- Data/Scripts/System/Misc/Settings.cs (CurrentFile)
+
+### Runtime Evidence
+
+- Hook summary: Event=14; Gump=10; Initialize=2; Login=1; Logout=1; Movement=6; Speech=13; Timer=27; WorldLoad=1.
+- Data/Scripts/Mobiles/Base/BaseCreature.cs:L487 Timer CustomTimerSubclass access=GlobalOrInternal
+- Data/Scripts/Mobiles/Base/BaseCreature.cs:L914 Timer Timer.DelayCall access=GlobalOrInternal
+- Data/Scripts/Mobiles/Base/BaseCreature.cs:L950 Timer Timer.DelayCall access=GlobalOrInternal
+- Data/Scripts/Mobiles/Base/BaseCreature.cs:L5879 Timer Timer.DelayCall access=GlobalOrInternal
+- Data/Scripts/Mobiles/Base/BaseCreature.cs:L8605 Speech OnSpeech access=GlobalOrInternal
+- Data/Scripts/Mobiles/Base/BaseCreature.cs:L8609 Speech OnSpeech access=GlobalOrInternal
+- Data/Scripts/Mobiles/Base/BaseCreature.cs:L8612 Speech OnSpeech access=GlobalOrInternal
+- Data/Scripts/Mobiles/Base/BaseCreature.cs:L8790 Movement OnMovement access=GlobalOrInternal
+- Data/Scripts/Mobiles/Base/BaseCreature.cs:L8792 Movement OnMovement access=GlobalOrInternal
+- Data/Scripts/Mobiles/Base/BaseCreature.cs:L8800 Movement OnMovement access=GlobalOrInternal
+- Data/Scripts/Mobiles/Base/BaseCreature.cs:L11300 Timer Timer.DelayCall access=GlobalOrInternal
+- Data/Scripts/Mobiles/Base/BaseCreature.cs:L12194 Timer CustomTimerSubclass access=GlobalOrInternal
+- Additional hook rows are recorded in runtime-hook-map.csv for this source set.
+
+### Serialization Evidence
+
+- Serialized rows matched: 5.
+- Data/Scripts/Mobiles/Base/BaseCreature.cs:Server.Mobiles.BaseCreature version=19 serialize=L6507 deserialize=L6665 alignment=TypeMismatch:#30:Write=bool/Read=Double;#32:Write=DeltaTime/Read=Bool;#33:Write=int/Read=DeltaTime;#37:Write=int/Read=Mobile;#53:Write=bool/Read=StrongMobileList;#55:Write=DateTime/Read=Bool;#57:Write=bool/Read=DateTime;#61:Write=bool/Read=StrongMobileList;#62:Write=int/Read=Bool
+- Data/Scripts/Mobiles/Base/PlayerMobile.cs:Server.Mobiles.PlayerMobile version=37 serialize=L5042 deserialize=L4577 alignment=CountMismatch:Writes=120;Reads=119
+- Data/Scripts/Mobiles/Civilized/Vendors/AnimalTrainer.cs:Server.Mobiles.AnimalTrainer version=0 serialize=L926 deserialize=L933 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Mobiles/Civilized/Vendors/GypsyAnimalTrainer.cs:Server.Mobiles.GypsyAnimalTrainer version=0 serialize=L66 deserialize=L73 alignment=AlignedByCountAndKnownTypes
+- Data/System/Source/Mobile.cs:Server.Mobile version=35 serialize=L6183 deserialize=L5700 alignment=CountMismatch:Writes=98;Reads=104
+
+### Project And Runtime Coverage
+
+- Data/Scripts/Mobiles/Base/BaseCreature.cs=Keep
+- Data/Scripts/Mobiles/Base/BaseCreature.cs=Keep
+- Data/Scripts/Mobiles/Base/PlayerMobile.cs=Keep
+- Data/Scripts/Mobiles/Base/PlayerMobile.cs=Keep
+- Data/Scripts/Mobiles/Civilized/Vendors/AnimalTrainer.cs=Keep
+- Data/Scripts/Mobiles/Civilized/Vendors/AnimalTrainer.cs=Keep
+- Data/Scripts/Mobiles/Civilized/Vendors/GypsyAnimalTrainer.cs=Keep
+- Data/Scripts/Mobiles/Civilized/Vendors/GypsyAnimalTrainer.cs=Keep
+- Data/Scripts/System/Misc/Settings.cs=Keep
+- Data/Scripts/System/Misc/Settings.cs=Keep
+
+No C# source, project files, XML/config/data files, namespaces, serializers, gameplay behavior, or migration policy were changed in POST-BATCH-T.

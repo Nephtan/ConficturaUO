@@ -259,3 +259,78 @@ Placement uses standard `BaseAddonDeed` targeting: the deed must be in the calle
 4. The multi-tile statue deed rotation helper is effectively dead. `Statues.FlipStatue` updates `StatueID` and direction text, but no call site invokes it; the inherited `[Flip]` command only applies `BaseStatueDeed`'s `[Flipable(0x32F0, 0x32F0)]`, which leaves the deed item ID unchanged and does not update `StatueID`.
 5. Assembly deeds use `Item.Weight` as a hidden temporary statue ID before `CraftItem.CompleteCraft` resets it to `10`. This works for the current constructors, but it is a fragile coupling between craft finalization and item weight.
 6. `BaseAddonDeed` placement casts `from` to `PlayerMobile` without a type guard before checking player-city mayor placement. Stone assembly deeds inherit that path.
+
+## Source Trace
+
+POST-BATCH-T reviewed this page on 2026-06-14T21:09:11.0049244-05:00 against current source and audit registers.
+
+- Canonical status: Canonical.
+- Queue rows: PBN-0016; PBN-0024; PBN-0131.
+- Backlog rows: RB-06779; RB-06780; RB-06781.
+- Audit registers used: documentation-truth-table.csv, runtime-hook-map.csv, serialization-register.csv, and project-truth-register.csv.
+
+### Source Files Reviewed
+
+- Data/Scripts/Trades/Crafting/DefMasonry.cs (CurrentFile)
+- Data/Scripts/Items/Trades/Tools/MalletAndChisel.cs (CurrentFile)
+- Data/Scripts/Items/Trades/Specialized/MasonryBook.cs (CurrentFile)
+- Data/Scripts/Items/Trades/Specialized/StoneMiningBook.cs (CurrentFile)
+- Data/Scripts/Items/Trades/Resources/Masonry/Granite.cs (CurrentFile)
+- Data/Scripts/Mobiles/Civilized/Vendors/StoneCrafter.cs (CurrentFile)
+- Data/Scripts/Trades/Stone/BaseStatue.cs (CurrentFile)
+- Data/Scripts/Trades/Stone/BaseStatueDeed.cs (CurrentFile)
+- Data/Scripts/Trades/Stone/Assemblies.cs (CurrentFile)
+- Data/Scripts/Trades/Stone/Furniture.cs (CurrentFile)
+- Data/Scripts/Trades/Stone/Gravestones.cs (CurrentFile)
+- Data/Scripts/Trades/Stone/Statues.cs (CurrentFile)
+- Data/Scripts/Scripts.csproj (CurrentFile)
+
+### Runtime Evidence
+
+- Hook summary: Gump=2; Timer=1.
+- Data/Scripts/Mobiles/Civilized/Vendors/StoneCrafter.cs:L86 Gump SendGump access=Internal
+- Data/Scripts/Trades/Crafting/DefMasonry.cs:L77 Timer CustomTimerSubclass access=GlobalOrInternal
+- Data/Scripts/Trades/Stone/BaseStatue.cs:L137 Gump OnResponse access=Internal
+
+### Serialization Evidence
+
+- Serialized rows matched: 121.
+- Data/Scripts/Items/Trades/Resources/Masonry/Granite.cs:Server.Items.AgapiteGranite version=0 serialize=L245 deserialize=L252 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Items/Trades/Resources/Masonry/Granite.cs:Server.Items.BaseGranite version=1 serialize=L22 deserialize=L29 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Items/Trades/Resources/Masonry/Granite.cs:Server.Items.BronzeGranite version=0 serialize=L187 deserialize=L194 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Items/Trades/Resources/Masonry/Granite.cs:Server.Items.CopperGranite version=0 serialize=L158 deserialize=L165 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Items/Trades/Resources/Masonry/Granite.cs:Server.Items.DullCopperGranite version=0 serialize=L100 deserialize=L107 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Items/Trades/Resources/Masonry/Granite.cs:Server.Items.DwarvenGranite version=0 serialize=L390 deserialize=L397 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Items/Trades/Resources/Masonry/Granite.cs:Server.Items.GoldGranite version=0 serialize=L216 deserialize=L223 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Items/Trades/Resources/Masonry/Granite.cs:Server.Items.Granite version=0 serialize=L71 deserialize=L78 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Items/Trades/Resources/Masonry/Granite.cs:Server.Items.MithrilGranite version=0 serialize=L361 deserialize=L368 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Items/Trades/Resources/Masonry/Granite.cs:Server.Items.NepturiteGranite version=0 serialize=L443 deserialize=L450 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Items/Trades/Resources/Masonry/Granite.cs:Server.Items.ObsidianGranite version=0 serialize=L332 deserialize=L339 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Items/Trades/Resources/Masonry/Granite.cs:Server.Items.ShadowIronGranite version=0 serialize=L129 deserialize=L136 alignment=AlignedByCountAndKnownTypes
+- Additional serializer rows are recorded in serialization-register.csv for this source set.
+
+### Project And Runtime Coverage
+
+- Data/Scripts/Items/Trades/Resources/Masonry/Granite.cs=Keep
+- Data/Scripts/Items/Trades/Resources/Masonry/Granite.cs=Keep
+- Data/Scripts/Items/Trades/Specialized/MasonryBook.cs=Keep
+- Data/Scripts/Items/Trades/Specialized/MasonryBook.cs=Keep
+- Data/Scripts/Items/Trades/Specialized/StoneMiningBook.cs=Keep
+- Data/Scripts/Items/Trades/Specialized/StoneMiningBook.cs=Keep
+- Data/Scripts/Items/Trades/Tools/MalletAndChisel.cs=Keep
+- Data/Scripts/Items/Trades/Tools/MalletAndChisel.cs=Keep
+- Data/Scripts/Mobiles/Civilized/Vendors/StoneCrafter.cs=Keep
+- Data/Scripts/Mobiles/Civilized/Vendors/StoneCrafter.cs=Keep
+- Data/Scripts/Trades/Crafting/DefMasonry.cs=Keep
+- Data/Scripts/Trades/Crafting/DefMasonry.cs=Keep
+- Data/Scripts/Trades/Stone/Assemblies.cs=Keep
+- Data/Scripts/Trades/Stone/Assemblies.cs=Keep
+- Data/Scripts/Trades/Stone/BaseStatue.cs=Keep
+- Data/Scripts/Trades/Stone/BaseStatue.cs=Keep
+- Data/Scripts/Trades/Stone/BaseStatueDeed.cs=Keep
+- Data/Scripts/Trades/Stone/BaseStatueDeed.cs=Keep
+- Data/Scripts/Trades/Stone/Furniture.cs=Keep
+- Data/Scripts/Trades/Stone/Furniture.cs=Keep
+- Additional project-truth rows are recorded in project-truth-register.csv for this source set.
+
+No C# source, project files, XML/config/data files, namespaces, serializers, gameplay behavior, or migration policy were changed in POST-BATCH-T.

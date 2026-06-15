@@ -182,3 +182,59 @@ Temporary `SacredBoon`, `Sanctify`, `Seance`, and `TrialByFire` effects are time
 * `SacredBoonSpell.Target` reports that an unseen target cannot be seen, but then continues into the duplicate/effect checks because the next condition is not chained with `else`.
 * `BanishEvilSpell` casts the target to `BaseCreature` but dereferences `bc.IsBonded` and `bc.IsDispellable` without checking whether the cast succeeded.
 * `MalletStake.CorpseTarget` calls `c.Owner.GetType()` without checking whether the corpse owner is null.
+
+## Source Trace
+
+POST-BATCH-T reviewed this page on 2026-06-14T21:09:11.0049244-05:00 against current source and audit registers.
+
+- Canonical status: Canonical.
+- Queue rows: PBN-0036.
+- Backlog rows: RB-06704.
+- Audit registers used: documentation-truth-table.csv, runtime-hook-map.csv, serialization-register.csv, and project-truth-register.csv.
+
+### Source Files Reviewed
+
+- Data/Scripts/Magic/Holy Man/HolyManSpell.cs (CurrentFile)
+- Data/Scripts/Magic/Holy Man/HolyManSpellBook.cs (CurrentFile)
+- Data/Scripts/Magic/Holy Man/HolyManCommands.cs (CurrentFile)
+- Data/Scripts/Magic/Holy Man/HolySymbols.cs (CurrentFile)
+- Data/Scripts/Magic/Holy Man/HolySymbol.cs (CurrentFile)
+
+### Runtime Evidence
+
+- Hook summary: Command=1; Gump=1; Initialize=1.
+- Data/Scripts/Magic/Holy Man/HolyManCommands.cs:L15 Initialize Initialize access=GlobalOrInternal
+- Data/Scripts/Magic/Holy Man/HolyManCommands.cs:L65 Command CommandSystem.Register access=Unknown
+- Data/Scripts/Magic/Holy Man/HolyManSpellBook.cs:L93 Gump SendGump access=Internal
+
+### Serialization Evidence
+
+- Serialized rows matched: 16.
+- Data/Scripts/Magic/Holy Man/HolyManSpellBook.cs:Server.Items.HolyManSpellbook version=0 serialize=L111 deserialize=L118 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Magic/Holy Man/HolySymbol.cs:Server.Items.HolySymbol version=1 serialize=L64 deserialize=L72 alignment=CountMatchNeedsTypeReview:UnknownWrites=1
+- Data/Scripts/Magic/Holy Man/HolySymbols.cs:Server.Items.HolyManSymbol770 version=0 serialize=L32 deserialize=L38 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Magic/Holy Man/HolySymbols.cs:Server.Items.HolyManSymbol771 version=0 serialize=L71 deserialize=L77 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Magic/Holy Man/HolySymbols.cs:Server.Items.HolyManSymbol772 version=0 serialize=L110 deserialize=L116 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Magic/Holy Man/HolySymbols.cs:Server.Items.HolyManSymbol773 version=0 serialize=L149 deserialize=L155 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Magic/Holy Man/HolySymbols.cs:Server.Items.HolyManSymbol774 version=0 serialize=L188 deserialize=L194 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Magic/Holy Man/HolySymbols.cs:Server.Items.HolyManSymbol775 version=0 serialize=L227 deserialize=L233 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Magic/Holy Man/HolySymbols.cs:Server.Items.HolyManSymbol776 version=0 serialize=L266 deserialize=L272 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Magic/Holy Man/HolySymbols.cs:Server.Items.HolyManSymbol777 version=0 serialize=L305 deserialize=L311 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Magic/Holy Man/HolySymbols.cs:Server.Items.HolyManSymbol778 version=0 serialize=L344 deserialize=L350 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Magic/Holy Man/HolySymbols.cs:Server.Items.HolyManSymbol779 version=0 serialize=L383 deserialize=L389 alignment=AlignedByCountAndKnownTypes
+- Additional serializer rows are recorded in serialization-register.csv for this source set.
+
+### Project And Runtime Coverage
+
+- Data/Scripts/Magic/Holy Man/HolyManCommands.cs=Keep
+- Data/Scripts/Magic/Holy Man/HolyManCommands.cs=Keep
+- Data/Scripts/Magic/Holy Man/HolyManSpell.cs=Keep
+- Data/Scripts/Magic/Holy Man/HolyManSpell.cs=Keep
+- Data/Scripts/Magic/Holy Man/HolyManSpellBook.cs=Keep
+- Data/Scripts/Magic/Holy Man/HolyManSpellBook.cs=Keep
+- Data/Scripts/Magic/Holy Man/HolySymbol.cs=Keep
+- Data/Scripts/Magic/Holy Man/HolySymbol.cs=Keep
+- Data/Scripts/Magic/Holy Man/HolySymbols.cs=Keep
+- Data/Scripts/Magic/Holy Man/HolySymbols.cs=Keep
+
+No C# source, project files, XML/config/data files, namespaces, serializers, gameplay behavior, or migration policy were changed in POST-BATCH-T.

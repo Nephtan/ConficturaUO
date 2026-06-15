@@ -141,3 +141,76 @@ Successful turn-in does this:
 
 ## Audience
 Players and staff
+
+## Source Trace
+
+POST-BATCH-T reviewed this page on 2026-06-14T21:09:11.0049244-05:00 against current source and audit registers.
+
+- Canonical status: Canonical.
+- Queue rows: PBN-0007.
+- Backlog rows: RB-06670.
+- Audit registers used: documentation-truth-table.csv, runtime-hook-map.csv, serialization-register.csv, and project-truth-register.csv.
+
+### Source Files Reviewed
+
+- Data/Scripts/Trades/Bulk Orders/SmallBOD.cs (CurrentFile)
+- Data/Scripts/Trades/Bulk Orders/LargeBOD.cs (CurrentFile)
+- Data/Scripts/Trades/Bulk Orders/SmallSmithBOD.cs (CurrentFile)
+- Data/Scripts/Trades/Bulk Orders/SmallTailorBOD.cs (CurrentFile)
+- Data/Scripts/Trades/Bulk Orders/LargeSmithBOD.cs (CurrentFile)
+- Data/Scripts/Trades/Bulk Orders/LargeTailorBOD.cs (CurrentFile)
+- Data/Scripts/Trades/Bulk Orders/Rewards.cs (CurrentFile)
+- Data/Scripts/Trades/Bulk Orders/Books/BulkOrderBook.cs (CurrentFile)
+- Data/Scripts/Mobiles/Base/BaseVendor.cs (CurrentFile)
+
+### Runtime Evidence
+
+- Hook summary: Gump=15.
+- Data/Scripts/Mobiles/Base/BaseVendor.cs:L172 Gump SendGump access=Internal
+- Data/Scripts/Mobiles/Base/BaseVendor.cs:L176 Gump SendGump access=Internal
+- Data/Scripts/Mobiles/Base/BaseVendor.cs:L3124 Gump SendGump access=Internal
+- Data/Scripts/Mobiles/Base/BaseVendor.cs:L3126 Gump SendGump access=Internal
+- Data/Scripts/Mobiles/Base/BaseVendor.cs:L3363 Gump SendGump access=Internal
+- Data/Scripts/Trades/Bulk Orders/Books/BulkOrderBook.cs:L76 Gump SendGump access=Internal
+- Data/Scripts/Trades/Bulk Orders/Books/BulkOrderBook.cs:L91 Gump SendGump access=Internal
+- Data/Scripts/Trades/Bulk Orders/Books/BulkOrderBook.cs:L100 Gump SendGump access=Internal
+- Data/Scripts/Trades/Bulk Orders/Books/BulkOrderBook.cs:L104 Gump SendGump access=Internal
+- Data/Scripts/Trades/Bulk Orders/Books/BulkOrderBook.cs:L141 Gump SendGump access=Internal
+- Data/Scripts/Trades/Bulk Orders/Books/BulkOrderBook.cs:L329 Gump OnResponse access=Internal
+- Data/Scripts/Trades/Bulk Orders/LargeBOD.cs:L176 Gump SendGump access=Internal
+- Additional hook rows are recorded in runtime-hook-map.csv for this source set.
+
+### Serialization Evidence
+
+- Serialized rows matched: 8.
+- Data/Scripts/Mobiles/Base/BaseVendor.cs:Server.Mobiles.BaseVendor version=1 serialize=L3144 deserialize=L3183 alignment=CountMismatch:Writes=3;Reads=2
+- Data/Scripts/Trades/Bulk Orders/Books/BulkOrderBook.cs:Server.Engines.BulkOrders.BulkOrderBook version=2 serialize=L193 deserialize=L230 alignment=CountMismatch:Writes=7;Reads=5
+- Data/Scripts/Trades/Bulk Orders/LargeBOD.cs:Server.Engines.BulkOrders.LargeBOD version=0 serialize=L303 deserialize=L319 alignment=CountMatchNeedsTypeReview:UnknownWrites=2
+- Data/Scripts/Trades/Bulk Orders/LargeSmithBOD.cs:Server.Engines.BulkOrders.LargeSmithBOD version=0 serialize=L151 deserialize=L158 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Trades/Bulk Orders/LargeTailorBOD.cs:Server.Engines.BulkOrders.LargeTailorBOD version=0 serialize=L160 deserialize=L167 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Trades/Bulk Orders/SmallBOD.cs:Server.Engines.BulkOrders.SmallBOD version=0 serialize=L329 deserialize=L344 alignment=CountMatchNeedsTypeReview:UnknownWrites=6
+- Data/Scripts/Trades/Bulk Orders/SmallSmithBOD.cs:Server.Engines.BulkOrders.SmallSmithBOD version=0 serialize=L290 deserialize=L297 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Trades/Bulk Orders/SmallTailorBOD.cs:Server.Engines.BulkOrders.SmallTailorBOD version=0 serialize=L277 deserialize=L284 alignment=AlignedByCountAndKnownTypes
+
+### Project And Runtime Coverage
+
+- Data/Scripts/Mobiles/Base/BaseVendor.cs=Keep
+- Data/Scripts/Mobiles/Base/BaseVendor.cs=Keep
+- Data/Scripts/Trades/Bulk Orders/Books/BulkOrderBook.cs=Keep
+- Data/Scripts/Trades/Bulk Orders/Books/BulkOrderBook.cs=Keep
+- Data/Scripts/Trades/Bulk Orders/LargeBOD.cs=Keep
+- Data/Scripts/Trades/Bulk Orders/LargeBOD.cs=Keep
+- Data/Scripts/Trades/Bulk Orders/LargeSmithBOD.cs=Keep
+- Data/Scripts/Trades/Bulk Orders/LargeSmithBOD.cs=Keep
+- Data/Scripts/Trades/Bulk Orders/LargeTailorBOD.cs=Keep
+- Data/Scripts/Trades/Bulk Orders/LargeTailorBOD.cs=Keep
+- Data/Scripts/Trades/Bulk Orders/Rewards.cs=Keep
+- Data/Scripts/Trades/Bulk Orders/Rewards.cs=Keep
+- Data/Scripts/Trades/Bulk Orders/SmallBOD.cs=Keep
+- Data/Scripts/Trades/Bulk Orders/SmallBOD.cs=Keep
+- Data/Scripts/Trades/Bulk Orders/SmallSmithBOD.cs=Keep
+- Data/Scripts/Trades/Bulk Orders/SmallSmithBOD.cs=Keep
+- Data/Scripts/Trades/Bulk Orders/SmallTailorBOD.cs=Keep
+- Data/Scripts/Trades/Bulk Orders/SmallTailorBOD.cs=Keep
+
+No C# source, project files, XML/config/data files, namespaces, serializers, gameplay behavior, or migration policy were changed in POST-BATCH-T.

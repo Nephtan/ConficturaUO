@@ -76,3 +76,63 @@ The tool does not define a world controller, persistent item, timer, save format
 | The main command handler advertises `[Usage("StaticTool")]`, but the registered command is `StaticsTool`. | Staff help text can point to the wrong command spelling. |
 | Main and side gump command/reply handlers dereference `e.Mobile` or `sender.Mobile` without null or stale-state guards. | Malformed command context or stale gump replies can throw instead of failing quietly. |
 | Side gumps index their static catalog arrays from reply button IDs without bounds checks after the item-selection offset is removed. | Invalid or stale reply IDs can throw `IndexOutOfRangeException`. |
+
+## Source Trace
+
+POST-BATCH-T reviewed this page on 2026-06-14T21:09:11.0049244-05:00 against current source and audit registers.
+
+- Canonical status: Canonical.
+- Queue rows: PBN-0073.
+- Backlog rows: RB-06778.
+- Audit registers used: documentation-truth-table.csv, runtime-hook-map.csv, serialization-register.csv, and project-truth-register.csv.
+
+### Source Files Reviewed
+
+- Data/Scripts/Custom/StaffTools/StaticGumpTool/ (CurrentDirectory)
+
+### Runtime Evidence
+
+- Hook summary: Command=23; Gump=153; Initialize=22.
+- Data/Scripts/Custom/StaffTools/StaticGumpTool/Side Gumps/AddAnimation.cs:L16 Initialize Initialize access=GlobalOrInternal
+- Data/Scripts/Custom/StaffTools/StaticGumpTool/Side Gumps/AddAnimation.cs:L18 Command CommandSystem.Register access=Unknown
+- Data/Scripts/Custom/StaffTools/StaticGumpTool/Side Gumps/AddAnimation.cs:L30 Gump SendGump access=Internal
+- Data/Scripts/Custom/StaffTools/StaticGumpTool/Side Gumps/AddAnimation.cs:L736 Gump OnResponse access=Internal
+- Data/Scripts/Custom/StaffTools/StaticGumpTool/Side Gumps/AddAnimation.cs:L767 Gump SendGump access=Internal
+- Data/Scripts/Custom/StaffTools/StaticGumpTool/Side Gumps/AddArch.cs:L16 Initialize Initialize access=GlobalOrInternal
+- Data/Scripts/Custom/StaffTools/StaticGumpTool/Side Gumps/AddArch.cs:L18 Command CommandSystem.Register access=Unknown
+- Data/Scripts/Custom/StaffTools/StaticGumpTool/Side Gumps/AddArch.cs:L30 Gump SendGump access=Internal
+- Data/Scripts/Custom/StaffTools/StaticGumpTool/Side Gumps/AddArch.cs:L402 Gump OnResponse access=Internal
+- Data/Scripts/Custom/StaffTools/StaticGumpTool/Side Gumps/AddArch.cs:L433 Gump SendGump access=Internal
+- Data/Scripts/Custom/StaffTools/StaticGumpTool/Side Gumps/AddCooking.cs:L16 Initialize Initialize access=GlobalOrInternal
+- Data/Scripts/Custom/StaffTools/StaticGumpTool/Side Gumps/AddCooking.cs:L18 Command CommandSystem.Register access=Unknown
+- Additional hook rows are recorded in runtime-hook-map.csv for this source set.
+
+### Serialization Evidence
+
+- No serialized classes matched the reviewed source set in serialization-register.csv.
+
+### Project And Runtime Coverage
+
+- Data/Scripts/Custom/StaffTools/StaticGumpTool/Side Gumps/AddAnimation.cs=Keep
+- Data/Scripts/Custom/StaffTools/StaticGumpTool/Side Gumps/AddAnimation.cs=Keep
+- Data/Scripts/Custom/StaffTools/StaticGumpTool/Side Gumps/AddArch.cs=Keep
+- Data/Scripts/Custom/StaffTools/StaticGumpTool/Side Gumps/AddArch.cs=Keep
+- Data/Scripts/Custom/StaffTools/StaticGumpTool/Side Gumps/AddCooking.cs=Keep
+- Data/Scripts/Custom/StaffTools/StaticGumpTool/Side Gumps/AddCooking.cs=Keep
+- Data/Scripts/Custom/StaffTools/StaticGumpTool/Side Gumps/AddCustom.cs=Keep
+- Data/Scripts/Custom/StaffTools/StaticGumpTool/Side Gumps/AddCustom.cs=Keep
+- Data/Scripts/Custom/StaffTools/StaticGumpTool/Side Gumps/AddDeco.cs=Keep
+- Data/Scripts/Custom/StaffTools/StaticGumpTool/Side Gumps/AddDeco.cs=Keep
+- Data/Scripts/Custom/StaffTools/StaticGumpTool/Side Gumps/AddDungeon.cs=Keep
+- Data/Scripts/Custom/StaffTools/StaticGumpTool/Side Gumps/AddDungeon.cs=Keep
+- Data/Scripts/Custom/StaffTools/StaticGumpTool/Side Gumps/addfence.cs=Keep
+- Data/Scripts/Custom/StaffTools/StaticGumpTool/Side Gumps/addfence.cs=Keep
+- Data/Scripts/Custom/StaffTools/StaticGumpTool/Side Gumps/addfloor.cs=Keep
+- Data/Scripts/Custom/StaffTools/StaticGumpTool/Side Gumps/addfloor.cs=Keep
+- Data/Scripts/Custom/StaffTools/StaticGumpTool/Side Gumps/AddFurniture.cs=Keep
+- Data/Scripts/Custom/StaffTools/StaticGumpTool/Side Gumps/AddFurniture.cs=Keep
+- Data/Scripts/Custom/StaffTools/StaticGumpTool/Side Gumps/AddGear.cs=Keep
+- Data/Scripts/Custom/StaffTools/StaticGumpTool/Side Gumps/AddGear.cs=Keep
+- Additional project-truth rows are recorded in project-truth-register.csv for this source set.
+
+No C# source, project files, XML/config/data files, namespaces, serializers, gameplay behavior, or migration policy were changed in POST-BATCH-T.

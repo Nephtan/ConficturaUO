@@ -229,3 +229,57 @@ All three stock nests use `LootLevel = 1`, so their exact live payout odds are:
 ## XMLSpawner
 
 This system does not contain XMLSpawner attachments, packet hooks, or XMLSpawner registration code. The only dynamic type lookup is the legacy `NestSpawnType` string path, which uses `SpawnerType.GetType()` and `ScriptCompiler.FindTypeByName()` rather than XMLSpawner infrastructure.
+
+## Source Trace
+
+POST-BATCH-T reviewed this page on 2026-06-14T21:09:11.0049244-05:00 against current source and audit registers.
+
+- Canonical status: Canonical.
+- Queue rows: PBN-0046.
+- Backlog rows: RB-06726.
+- Audit registers used: documentation-truth-table.csv, runtime-hook-map.csv, serialization-register.csv, and project-truth-register.csv.
+
+### Source Files Reviewed
+
+- Data/Scripts/Custom/PvE/MonsterNests/MonsterNest.cs (CurrentFile)
+- Data/Scripts/Custom/PvE/MonsterNests/MonsterNestEntity.cs (CurrentFile)
+- Data/Scripts/Custom/PvE/MonsterNests/MonsterNestLoot.cs (CurrentFile)
+- Data/Scripts/Custom/PvE/MonsterNests/Types/RatmanNest.cs (CurrentFile)
+- Data/Scripts/Custom/PvE/MonsterNests/Types/LizardmanNest.cs (CurrentFile)
+- Data/Scripts/Custom/PvE/MonsterNests/Types/UndeadNest.cs (CurrentFile)
+- Data/Scripts/Scripts.csproj (CurrentFile)
+
+### Runtime Evidence
+
+- Hook summary: Timer=4.
+- Data/Scripts/Custom/PvE/MonsterNests/MonsterNest.cs:L301 Timer CustomTimerSubclass access=GlobalOrInternal
+- Data/Scripts/Custom/PvE/MonsterNests/MonsterNest.cs:L327 Timer CustomTimerSubclass access=GlobalOrInternal
+- Data/Scripts/Custom/PvE/MonsterNests/MonsterNestLoot.cs:L105 Timer CustomTimerSubclass access=GlobalOrInternal
+- Data/Scripts/Custom/PvE/MonsterNests/MonsterNestLoot.cs:L132 Timer CustomTimerSubclass access=GlobalOrInternal
+
+### Serialization Evidence
+
+- Serialized rows matched: 6.
+- Data/Scripts/Custom/PvE/MonsterNests/MonsterNest.cs:Server.Items.MonsterNest version=0 serialize=L267 deserialize=L284 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Custom/PvE/MonsterNests/MonsterNestEntity.cs:Server.Mobiles.MonsterNestEntity version=0 serialize=L117 deserialize=L124 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Custom/PvE/MonsterNests/MonsterNestLoot.cs:Server.Items.MonsterNestLoot version=0 serialize=L89 deserialize=L97 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Custom/PvE/MonsterNests/Types/LizardmanNest.cs:Server.Custom.Confictura.LizardmanNest version=0 serialize=L52 deserialize=L58 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Custom/PvE/MonsterNests/Types/RatmanNest.cs:Server.Custom.Confictura.RatmanNest version=0 serialize=L48 deserialize=L54 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Custom/PvE/MonsterNests/Types/UndeadNest.cs:Server.Items.UndeadNest version=0 serialize=L35 deserialize=L41 alignment=AlignedByCountAndKnownTypes
+
+### Project And Runtime Coverage
+
+- Data/Scripts/Custom/PvE/MonsterNests/MonsterNest.cs=Keep
+- Data/Scripts/Custom/PvE/MonsterNests/MonsterNest.cs=Keep
+- Data/Scripts/Custom/PvE/MonsterNests/MonsterNestEntity.cs=Keep
+- Data/Scripts/Custom/PvE/MonsterNests/MonsterNestEntity.cs=Keep
+- Data/Scripts/Custom/PvE/MonsterNests/MonsterNestLoot.cs=Keep
+- Data/Scripts/Custom/PvE/MonsterNests/MonsterNestLoot.cs=Keep
+- Data/Scripts/Custom/PvE/MonsterNests/Types/LizardmanNest.cs=Keep
+- Data/Scripts/Custom/PvE/MonsterNests/Types/LizardmanNest.cs=Keep
+- Data/Scripts/Custom/PvE/MonsterNests/Types/RatmanNest.cs=Keep
+- Data/Scripts/Custom/PvE/MonsterNests/Types/RatmanNest.cs=Keep
+- Data/Scripts/Custom/PvE/MonsterNests/Types/UndeadNest.cs=Keep
+- Data/Scripts/Custom/PvE/MonsterNests/Types/UndeadNest.cs=Keep
+
+No C# source, project files, XML/config/data files, namespaces, serializers, gameplay behavior, or migration policy were changed in POST-BATCH-T.

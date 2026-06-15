@@ -82,3 +82,41 @@ This script needs C# rework. `CharacterControlGump` renders six visible characte
 
 ## Audience
 Staff
+
+## Source Trace
+
+POST-BATCH-T reviewed this page on 2026-06-14T21:09:11.0049244-05:00 against current source and audit registers.
+
+- Canonical status: Canonical.
+- Queue rows: PBN-0083.
+- Backlog rows: RB-06675.
+- Audit registers used: documentation-truth-table.csv, runtime-hook-map.csv, serialization-register.csv, and project-truth-register.csv.
+
+### Source Files Reviewed
+
+- Data/Scripts/Custom/Character Swap/CharacterSwap.cs (CurrentFile)
+
+### Runtime Evidence
+
+- Hook summary: Command=1; Gump=8; Initialize=1.
+- Data/Scripts/Custom/Character Swap/CharacterSwap.cs:L12 Initialize Initialize access=GlobalOrInternal
+- Data/Scripts/Custom/Character Swap/CharacterSwap.cs:L14 Command CommandSystem.Register access=Unknown
+- Data/Scripts/Custom/Character Swap/CharacterSwap.cs:L27 Gump SendGump access=Internal
+- Data/Scripts/Custom/Character Swap/CharacterSwap.cs:L194 Gump OnResponse access=Internal
+- Data/Scripts/Custom/Character Swap/CharacterSwap.cs:L216 Gump SendGump access=Internal
+- Data/Scripts/Custom/Character Swap/CharacterSwap.cs:L251 Gump SendGump access=Internal
+- Data/Scripts/Custom/Character Swap/CharacterSwap.cs:L329 Gump SendGump access=Internal
+- Data/Scripts/Custom/Character Swap/CharacterSwap.cs:L363 Gump SendGump access=Internal
+- Data/Scripts/Custom/Character Swap/CharacterSwap.cs:L435 Gump SendGump access=Internal
+- Data/Scripts/Custom/Character Swap/CharacterSwap.cs:L500 Gump SendGump access=Internal
+
+### Serialization Evidence
+
+- No serialized classes matched the reviewed source set in serialization-register.csv.
+
+### Project And Runtime Coverage
+
+- Data/Scripts/Custom/Character Swap/CharacterSwap.cs=Keep
+- Data/Scripts/Custom/Character Swap/CharacterSwap.cs=Keep
+
+No C# source, project files, XML/config/data files, namespaces, serializers, gameplay behavior, or migration policy were changed in POST-BATCH-T.

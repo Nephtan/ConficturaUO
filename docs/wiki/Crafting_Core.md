@@ -228,3 +228,75 @@ Version `0` tools only stored `UsesRemaining`; version `1` falls through to read
 - `Repair.OnTarget` calls `targeted.GetType()` before checking whether `targeted` is null or an `Item`, so a null target object can dereference before the normal invalid-target messages.
 - `CraftItem.EnchantItem` casts `Mobile from` directly to `PlayerMobile`; any non-player `Mobile` that reaches magical crafting can throw before guild and skill bonuses are calculated.
 - `Enhance.Invoke` consumes one equipped `AncientSmithyHammer` use for blacksmith enhancement before outcome resolution and without checking that the hammer is the actual tool passed into the target flow. This differs from the normal crafting path, which guards the extra ancient hammer decrement with `hammer != tool`.
+
+## Source Trace
+
+POST-BATCH-T reviewed this page on 2026-06-14T21:09:11.0049244-05:00 against current source and audit registers.
+
+- Canonical status: Canonical.
+- Queue rows: PBN-0014.
+- Backlog rows: RB-06681.
+- Audit registers used: documentation-truth-table.csv, runtime-hook-map.csv, serialization-register.csv, and project-truth-register.csv.
+
+### Source Files Reviewed
+
+- Data/Scripts/Items/Trades/Tools/BaseTool.cs (CurrentFile)
+- Data/Scripts/Trades/Core/CraftSystem.cs (CurrentFile)
+- Data/Scripts/Trades/Core/CraftContext.cs (CurrentFile)
+- Data/Scripts/Trades/Core/CraftItem.cs (CurrentFile)
+- Data/Scripts/Trades/Core/Gumps/CraftGump.cs (CurrentFile)
+- Data/Scripts/Trades/Core/Gumps/CraftGumpItem.cs (CurrentFile)
+- Data/Scripts/Trades/Core/Gumps/QueryMakersMarkGump.cs (CurrentFile)
+- Data/Scripts/Trades/Core/Recipes.cs (CurrentFile)
+- Data/Scripts/Trades/Core/Repair.cs (CurrentFile)
+- Data/Scripts/Trades/Core/Resmelt.cs (CurrentFile)
+- Data/Scripts/Trades/Core/Enhance.cs (CurrentFile)
+- Data/Scripts/Trades/Core/CustomCraft.cs (CurrentFile)
+
+### Runtime Evidence
+
+- Hook summary: Command=2; Gump=47; Initialize=1; Timer=2.
+- Data/Scripts/Items/Trades/Tools/BaseTool.cs:L163 Gump SendGump access=Internal
+- Data/Scripts/Items/Trades/Tools/BaseTool.cs:L198 Gump SendGump access=Internal
+- Data/Scripts/Trades/Core/CraftItem.cs:L1149 Gump SendGump access=Internal
+- Data/Scripts/Trades/Core/CraftItem.cs:L1157 Gump SendGump access=Internal
+- Data/Scripts/Trades/Core/CraftItem.cs:L1163 Gump SendGump access=Internal
+- Data/Scripts/Trades/Core/CraftItem.cs:L1169 Gump SendGump access=Internal
+- Data/Scripts/Trades/Core/CraftItem.cs:L1175 Gump SendGump access=Internal
+- Data/Scripts/Trades/Core/CraftItem.cs:L1181 Gump SendGump access=Internal
+- Data/Scripts/Trades/Core/CraftItem.cs:L1594 Gump SendGump access=Internal
+- Data/Scripts/Trades/Core/CraftItem.cs:L1619 Gump SendGump access=Internal
+- Data/Scripts/Trades/Core/CraftItem.cs:L1630 Gump SendGump access=Internal
+- Data/Scripts/Trades/Core/CraftItem.cs:L1668 Gump SendGump access=Internal
+- Additional hook rows are recorded in runtime-hook-map.csv for this source set.
+
+### Serialization Evidence
+
+- Serialized rows matched: 1.
+- Data/Scripts/Items/Trades/Tools/BaseTool.cs:Server.Items.BaseTool version=1 serialize=L207 deserialize=L219 alignment=AlignedByCountAndKnownTypes
+
+### Project And Runtime Coverage
+
+- Data/Scripts/Items/Trades/Tools/BaseTool.cs=Keep
+- Data/Scripts/Items/Trades/Tools/BaseTool.cs=Keep
+- Data/Scripts/Trades/Core/CraftContext.cs=Keep
+- Data/Scripts/Trades/Core/CraftContext.cs=Keep
+- Data/Scripts/Trades/Core/CraftItem.cs=Keep
+- Data/Scripts/Trades/Core/CraftItem.cs=Keep
+- Data/Scripts/Trades/Core/CraftSystem.cs=Keep
+- Data/Scripts/Trades/Core/CraftSystem.cs=Keep
+- Data/Scripts/Trades/Core/CustomCraft.cs=Keep
+- Data/Scripts/Trades/Core/CustomCraft.cs=Keep
+- Data/Scripts/Trades/Core/Enhance.cs=Keep
+- Data/Scripts/Trades/Core/Enhance.cs=Keep
+- Data/Scripts/Trades/Core/Gumps/CraftGump.cs=Keep
+- Data/Scripts/Trades/Core/Gumps/CraftGump.cs=Keep
+- Data/Scripts/Trades/Core/Gumps/CraftGumpItem.cs=Keep
+- Data/Scripts/Trades/Core/Gumps/CraftGumpItem.cs=Keep
+- Data/Scripts/Trades/Core/Gumps/QueryMakersMarkGump.cs=Keep
+- Data/Scripts/Trades/Core/Gumps/QueryMakersMarkGump.cs=Keep
+- Data/Scripts/Trades/Core/Recipes.cs=Keep
+- Data/Scripts/Trades/Core/Recipes.cs=Keep
+- Additional project-truth rows are recorded in project-truth-register.csv for this source set.
+
+No C# source, project files, XML/config/data files, namespaces, serializers, gameplay behavior, or migration policy were changed in POST-BATCH-T.

@@ -316,3 +316,77 @@ Admin-sensitive cases:
 * `QuestTome.OnDoubleClick()` creates the final boss with `ScriptCompiler.FindTypeByName(VillainType)` and `Activator.CreateInstance(mobType)`, then casts to `BaseCreature` without checking for a null type, constructor failure, or non-`BaseCreature` type.
 * `QuestTeleporter` exposes and serializes `TeleporterItem` and `TeleporterLock`, but the traced teleport logic does not use either field. Staff may assume these properties affect gate behavior when they do not.
 * Several quest scripts iterate `GetMobilesInRange()` or `GetItemsInRange()` directly without freeing the pooled enumerable, including `HoardSpawner`, `SearchBase`, `SkullOfBaronAlmric`, `Coffer`, `HayCrate`, `HollowStump`, `BalinorTeleporter`, `SummonPrison`, and `FrankenJournal`.
+
+## Source Trace
+
+POST-BATCH-T reviewed this page on 2026-06-14T21:09:11.0049244-05:00 against current source and audit registers.
+
+- Canonical status: Canonical.
+- Queue rows: PBN-0042; PBN-0049; PBN-0069; PBN-0127.
+- Backlog rows: RB-06749; RB-06750; RB-06751; RB-06752.
+- Audit registers used: documentation-truth-table.csv, runtime-hook-map.csv, serialization-register.csv, and project-truth-register.csv.
+
+### Source Files Reviewed
+
+- Data/Scripts/Quests/ (CurrentDirectory)
+- Data/Scripts/System/Obsolete/Obsolete.cs (CurrentFile)
+
+### Runtime Evidence
+
+- Hook summary: Command=12; Event=7; Gump=159; Initialize=19; Movement=16; Packet=2; Region=5; Speech=3; Timer=49; WorldSave=1.
+- Data/Scripts/Quests/Codex/CodexWisdom.cs:L424 Gump OnResponse access=Internal
+- Data/Scripts/Quests/Codex/CodexWisdom.cs:L486 Gump SendGump access=Internal
+- Data/Scripts/Quests/Codex/CodexWisdom.cs:L607 Gump OnResponse access=Internal
+- Data/Scripts/Quests/Codex/CodexWisdom.cs:L794 Gump SendGump access=Internal
+- Data/Scripts/Quests/Codex/CodexWisdom.cs:L799 Gump SendGump access=Internal
+- Data/Scripts/Quests/Codex/CodexWisdom.cs:L804 Gump SendGump access=Internal
+- Data/Scripts/Quests/Codex/VortexCube.cs:L336 Gump SendGump access=Internal
+- Data/Scripts/Quests/Codex/VortexCube.cs:L847 Gump OnResponse access=Internal
+- Data/Scripts/Quests/Epic/CourierMail.cs:L215 Gump SendGump access=Internal
+- Data/Scripts/Quests/Epic/Gumps/EpicGump.cs:L604 Gump OnResponse access=Internal
+- Data/Scripts/Quests/Fishing/FishingQuestBoard.cs:L40 Gump SendGump access=Internal
+- Data/Scripts/Quests/Fishing/FishingQuestBoard.cs:L74 Gump SendGump access=Internal
+- Additional hook rows are recorded in runtime-hook-map.csv for this source set.
+
+### Serialization Evidence
+
+- Serialized rows matched: 302.
+- Data/Scripts/Quests/Assassin/AssassinBox.cs:Server.Items.BoxOfAtonement version=0 serialize=L59 deserialize=L65 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Quests/Assassin/PoisonFood.cs:Server.Items.PoisonFood version=0 serialize=L178 deserialize=L186 alignment=CountMatchNeedsTypeReview:UnknownWrites=2
+- Data/Scripts/Quests/Assassin/PoisonLiquid.cs:Server.Items.PoisonLiquid version=0 serialize=L179 deserialize=L187 alignment=CountMatchNeedsTypeReview:UnknownWrites=2
+- Data/Scripts/Quests/Bards Tale/MangarsRewards.cs:Server.Items.BardicFeatheredHat version=0 serialize=L151 deserialize=L157 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Quests/Bards Tale/MangarsRewards.cs:Server.Items.MangarsElementalistRobe version=0 serialize=L113 deserialize=L119 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Quests/Bards Tale/MangarsRewards.cs:Server.Items.MangarsNecroRobe version=0 serialize=L73 deserialize=L79 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Quests/Bards Tale/MangarsRewards.cs:Server.Items.MangarsRobe version=0 serialize=L33 deserialize=L39 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Quests/Codex/ApproachVoid.cs:Server.Items.ApproachVoid version=0 serialize=L90 deserialize=L96 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Quests/Codex/CodexWisdom.cs:Server.CodexWisdom version=1 serialize=L1065 deserialize=L1082 alignment=CountMatchNeedsTypeReview:UnknownWrites=6
+- Data/Scripts/Quests/Codex/CubeOnCorpse.cs:Server.Items.CubeOnCorpse version=0 serialize=L180 deserialize=L186 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Quests/Codex/DoorCodex.cs:Server.Items.DoorCodex version=0 serialize=L142 deserialize=L148 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Quests/Codex/VortexCube.cs:Server.Items.VortexCube version=0 serialize=L343 deserialize=L374 alignment=CountMatchNeedsTypeReview:UnknownWrites=19
+- Additional serializer rows are recorded in serialization-register.csv for this source set.
+
+### Project And Runtime Coverage
+
+- Data/Scripts/Quests/Assassin/AssassinBox.cs=Keep
+- Data/Scripts/Quests/Assassin/AssassinBox.cs=Keep
+- Data/Scripts/Quests/Assassin/AssassinFunctions.cs=Keep
+- Data/Scripts/Quests/Assassin/AssassinFunctions.cs=Keep
+- Data/Scripts/Quests/Assassin/PoisonFood.cs=Keep
+- Data/Scripts/Quests/Assassin/PoisonFood.cs=Keep
+- Data/Scripts/Quests/Assassin/PoisonLiquid.cs=Keep
+- Data/Scripts/Quests/Assassin/PoisonLiquid.cs=Keep
+- Data/Scripts/Quests/Bards Tale/MangarsRewards.cs=Keep
+- Data/Scripts/Quests/Bards Tale/MangarsRewards.cs=Keep
+- Data/Scripts/Quests/Codex/ApproachVoid.cs=Keep
+- Data/Scripts/Quests/Codex/ApproachVoid.cs=Keep
+- Data/Scripts/Quests/Codex/CodexWisdom.cs=Keep
+- Data/Scripts/Quests/Codex/CodexWisdom.cs=Keep
+- Data/Scripts/Quests/Codex/CubeOnCorpse.cs=Keep
+- Data/Scripts/Quests/Codex/CubeOnCorpse.cs=Keep
+- Data/Scripts/Quests/Codex/DoorCodex.cs=Keep
+- Data/Scripts/Quests/Codex/DoorCodex.cs=Keep
+- Data/Scripts/Quests/Codex/VortexCube.cs=Keep
+- Data/Scripts/Quests/Codex/VortexCube.cs=Keep
+- Additional project-truth rows are recorded in project-truth-register.csv for this source set.
+
+No C# source, project files, XML/config/data files, namespaces, serializers, gameplay behavior, or migration policy were changed in POST-BATCH-T.

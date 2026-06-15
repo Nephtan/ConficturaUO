@@ -120,3 +120,76 @@ Active curses, transformations, Mind Rot scalars, Pain Spike timers, Curse Weapo
 | `StrangleSpell` adds a buff even when the harmful sequence fails. | Its buff duration and `BuffInfo.AddBuff` logic run after the `if (CheckHSequence(m))` block rather than inside it. |
 | `ExorcismSpell` can self-damage without the normal sequence check. | The non-dispellable demon and high-Fame branches call `SpellHelper.Damage` before the `CheckHSequence(m)` branch, so they can bypass the resource/fizzle path used by successful exorcisms. |
 | `SummonFamiliarGump` trusts stale constructor state and hides failures. | `OnResponse` uses stored `m_From` and `m_Spell` rather than `sender.Mobile`, does not guard deleted/dead/stale caster state, and wraps familiar construction in an empty `catch`. |
+
+## Source Trace
+
+POST-BATCH-T reviewed this page on 2026-06-14T21:09:11.0049244-05:00 against current source and audit registers.
+
+- Canonical status: Canonical.
+- Queue rows: PBN-0099.
+- Backlog rows: RB-06728.
+- Audit registers used: documentation-truth-table.csv, runtime-hook-map.csv, serialization-register.csv, and project-truth-register.csv.
+
+### Source Files Reviewed
+
+- Data/Scripts/Magic/Necromancy (CurrentDirectory)
+
+### Runtime Evidence
+
+- Hook summary: Gump=4; Timer=9.
+- Data/Scripts/Magic/Necromancy/BloodOathSpell.cs:L151 Timer CustomTimerSubclass access=GlobalOrInternal
+- Data/Scripts/Magic/Necromancy/CorpseSkin.cs:L123 Timer CustomTimerSubclass access=GlobalOrInternal
+- Data/Scripts/Magic/Necromancy/CurseWeapon.cs:L95 Timer CustomTimerSubclass access=GlobalOrInternal
+- Data/Scripts/Magic/Necromancy/CurseWeapon.cs:L114 Timer CustomTimerSubclass access=GlobalOrInternal
+- Data/Scripts/Magic/Necromancy/EvilOmen.cs:L80 Timer Timer.DelayCall access=GlobalOrInternal
+- Data/Scripts/Magic/Necromancy/Exorcism.cs:L131 Timer CustomTimerSubclass access=GlobalOrInternal
+- Data/Scripts/Magic/Necromancy/MindRot.cs:L158 Timer CustomTimerSubclass access=GlobalOrInternal
+- Data/Scripts/Magic/Necromancy/PainSpike.cs:L124 Timer CustomTimerSubclass access=GlobalOrInternal
+- Data/Scripts/Magic/Necromancy/Strangle.cs:L142 Timer CustomTimerSubclass access=GlobalOrInternal
+- Data/Scripts/Magic/Necromancy/SummonFamiliar.cs:L65 Gump SendGump access=Internal
+- Data/Scripts/Magic/Necromancy/SummonFamiliar.cs:L207 Gump OnResponse access=Internal
+- Data/Scripts/Magic/Necromancy/SummonFamiliar.cs:L233 Gump SendGump access=Internal
+- Additional hook rows are recorded in runtime-hook-map.csv for this source set.
+
+### Serialization Evidence
+
+- Serialized rows matched: 18.
+- Data/Scripts/Magic/Necromancy/NecromancerSpellbook.cs:Server.Items.NecromancerSpellbook version=1 serialize=L36 deserialize=L43 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Magic/Necromancy/Scrolls/AnimateDeadScroll.cs:Server.Items.AnimateDeadScroll version=0 serialize=L20 deserialize=L27 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Magic/Necromancy/Scrolls/BloodOathScroll.cs:Server.Items.BloodOathScroll version=0 serialize=L20 deserialize=L27 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Magic/Necromancy/Scrolls/CorpseSkinScroll.cs:Server.Items.CorpseSkinScroll version=0 serialize=L20 deserialize=L27 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Magic/Necromancy/Scrolls/CurseWeaponScroll.cs:Server.Items.CurseWeaponScroll version=0 serialize=L20 deserialize=L27 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Magic/Necromancy/Scrolls/EvilOmenScroll.cs:Server.Items.EvilOmenScroll version=0 serialize=L20 deserialize=L27 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Magic/Necromancy/Scrolls/ExorcismScroll.cs:Server.Items.ExorcismScroll version=0 serialize=L27 deserialize=L34 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Magic/Necromancy/Scrolls/HorrificBeastScroll.cs:Server.Items.HorrificBeastScroll version=0 serialize=L20 deserialize=L27 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Magic/Necromancy/Scrolls/LichFormScroll.cs:Server.Items.LichFormScroll version=0 serialize=L20 deserialize=L27 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Magic/Necromancy/Scrolls/MindRotScroll.cs:Server.Items.MindRotScroll version=0 serialize=L20 deserialize=L27 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Magic/Necromancy/Scrolls/PainSpikeScroll.cs:Server.Items.PainSpikeScroll version=0 serialize=L20 deserialize=L27 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Magic/Necromancy/Scrolls/PoisonStrikeScroll.cs:Server.Items.PoisonStrikeScroll version=0 serialize=L20 deserialize=L27 alignment=AlignedByCountAndKnownTypes
+- Additional serializer rows are recorded in serialization-register.csv for this source set.
+
+### Project And Runtime Coverage
+
+- Data/Scripts/Magic/Necromancy/AnimateDeadSpell.cs=Keep
+- Data/Scripts/Magic/Necromancy/AnimateDeadSpell.cs=Keep
+- Data/Scripts/Magic/Necromancy/BloodOathSpell.cs=Keep
+- Data/Scripts/Magic/Necromancy/BloodOathSpell.cs=Keep
+- Data/Scripts/Magic/Necromancy/CorpseSkin.cs=Keep
+- Data/Scripts/Magic/Necromancy/CorpseSkin.cs=Keep
+- Data/Scripts/Magic/Necromancy/CurseWeapon.cs=Keep
+- Data/Scripts/Magic/Necromancy/CurseWeapon.cs=Keep
+- Data/Scripts/Magic/Necromancy/EvilOmen.cs=Keep
+- Data/Scripts/Magic/Necromancy/EvilOmen.cs=Keep
+- Data/Scripts/Magic/Necromancy/Exorcism.cs=Keep
+- Data/Scripts/Magic/Necromancy/Exorcism.cs=Keep
+- Data/Scripts/Magic/Necromancy/HorrificBeast.cs=Keep
+- Data/Scripts/Magic/Necromancy/HorrificBeast.cs=Keep
+- Data/Scripts/Magic/Necromancy/LichForm.cs=Keep
+- Data/Scripts/Magic/Necromancy/LichForm.cs=Keep
+- Data/Scripts/Magic/Necromancy/MindRot.cs=Keep
+- Data/Scripts/Magic/Necromancy/MindRot.cs=Keep
+- Data/Scripts/Magic/Necromancy/NecromancerSpell.cs=Keep
+- Data/Scripts/Magic/Necromancy/NecromancerSpell.cs=Keep
+- Additional project-truth rows are recorded in project-truth-register.csv for this source set.
+
+No C# source, project files, XML/config/data files, namespaces, serializers, gameplay behavior, or migration policy were changed in POST-BATCH-T.

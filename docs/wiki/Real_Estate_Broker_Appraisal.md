@@ -132,3 +132,60 @@ None. The traced broker code contains no `[Command]` registration and no command
 | `BlueTentDeed` and `GreenTentDeed` are `HouseDeed` subclasses but are not included in `ComputePriceFor()`. | The broker recognizes them as house deeds, but appraisal and drag/drop sale return `0` and say the broker is not interested. |
 | Appraisal targeting checks only `obj is HouseDeed`. | A player can appraise a targeted deed without proving the deed is in their backpack; no gold is paid until drag/drop sale, so this is an information/validation gap rather than a payout path. |
 | Refund prices are hardcoded in `RealEstateBroker` instead of derived from the deed or housing price data. | New `HouseDeed` subclasses or changed house prices will not automatically update broker payouts. |
+
+## Source Trace
+
+POST-BATCH-T reviewed this page on 2026-06-14T21:09:11.0049244-05:00 against current source and audit registers.
+
+- Canonical status: Canonical.
+- Queue rows: PBN-0030; PBN-0129.
+- Backlog rows: RB-06757; RB-06758.
+- Audit registers used: documentation-truth-table.csv, runtime-hook-map.csv, serialization-register.csv, and project-truth-register.csv.
+
+### Source Files Reviewed
+
+- Data/Scripts/Mobiles/Civilized/Vendors/RealEstateBroker.cs (CurrentFile)
+- Data/Scripts/Items/Houses/Deeds.cs (CurrentFile)
+- Data/Scripts/Items/Houses/SmallTents.cs (CurrentFile)
+- Data/Scripts/Mobiles/Base/StoreSalesList.cs (CurrentFile)
+- Data/Scripts/System/Misc/AOS.cs (CurrentFile)
+
+### Runtime Evidence
+
+- Hook summary: Movement=2; Speech=2.
+- Data/Scripts/Mobiles/Civilized/Vendors/RealEstateBroker.cs:L39 Movement OnMovement access=GlobalOrInternal
+- Data/Scripts/Mobiles/Civilized/Vendors/RealEstateBroker.cs:L67 Movement OnMovement access=GlobalOrInternal
+- Data/Scripts/Mobiles/Civilized/Vendors/RealEstateBroker.cs:L70 Speech OnSpeech access=GlobalOrInternal
+- Data/Scripts/Mobiles/Civilized/Vendors/RealEstateBroker.cs:L84 Speech OnSpeech access=GlobalOrInternal
+
+### Serialization Evidence
+
+- Serialized rows matched: 27.
+- Data/Scripts/Items/Houses/Deeds.cs:Server.Multis.Deeds.BrickHouseDeed version=0 serialize=L459 deserialize=L466 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Items/Houses/Deeds.cs:Server.Multis.Deeds.CastleDeed version=0 serialize=L649 deserialize=L656 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Items/Houses/Deeds.cs:Server.Multis.Deeds.FieldStoneHouseDeed version=0 serialize=L269 deserialize=L276 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Items/Houses/Deeds.cs:Server.Multis.Deeds.HouseDeed version=1 serialize=L73 deserialize=L84 alignment=CountMatchNeedsTypeReview:UnknownWrites=2
+- Data/Scripts/Items/Houses/Deeds.cs:Server.Multis.Deeds.KeepDeed version=0 serialize=L611 deserialize=L618 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Items/Houses/Deeds.cs:Server.Multis.Deeds.LargeMarbleDeed version=0 serialize=L725 deserialize=L732 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Items/Houses/Deeds.cs:Server.Multis.Deeds.LargePatioDeed version=0 serialize=L687 deserialize=L694 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Items/Houses/Deeds.cs:Server.Multis.Deeds.LogCabinDeed version=0 serialize=L801 deserialize=L808 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Items/Houses/Deeds.cs:Server.Multis.Deeds.MarbleWorkshopDeed version=0 serialize=L953 deserialize=L960 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Items/Houses/Deeds.cs:Server.Multis.Deeds.SandstonePatioDeed version=0 serialize=L839 deserialize=L846 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Items/Houses/Deeds.cs:Server.Multis.Deeds.SmallBrickHouseDeed version=0 serialize=L307 deserialize=L314 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Items/Houses/Deeds.cs:Server.Multis.Deeds.SmallTowerDeed version=0 serialize=L763 deserialize=L770 alignment=AlignedByCountAndKnownTypes
+- Additional serializer rows are recorded in serialization-register.csv for this source set.
+
+### Project And Runtime Coverage
+
+- Data/Scripts/Items/Houses/Deeds.cs=Keep
+- Data/Scripts/Items/Houses/Deeds.cs=Keep
+- Data/Scripts/Items/Houses/SmallTents.cs=Keep
+- Data/Scripts/Items/Houses/SmallTents.cs=Keep
+- Data/Scripts/Mobiles/Base/StoreSalesList.cs=Keep
+- Data/Scripts/Mobiles/Base/StoreSalesList.cs=Keep
+- Data/Scripts/Mobiles/Civilized/Vendors/RealEstateBroker.cs=Keep
+- Data/Scripts/Mobiles/Civilized/Vendors/RealEstateBroker.cs=Keep
+- Data/Scripts/System/Misc/AOS.cs=Keep
+- Data/Scripts/System/Misc/AOS.cs=Keep
+
+No C# source, project files, XML/config/data files, namespaces, serializers, gameplay behavior, or migration policy were changed in POST-BATCH-T.

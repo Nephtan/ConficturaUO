@@ -195,3 +195,76 @@ There are no required GameMaster commands for this guide. `[Help` is a player-ac
 | The static main Help text advertises `[cleardeck`, but the left navigation `Corpse Clear` button invokes `[corpseclear`; those commands are different corpse-cleanup paths. |
 | `BasicHelp()` tells players that `[status` displays the stats window, but no registered `[Status`/`[status` command was found in the C# trace. |
 | The Help text lists seven difficulty labels, while `Worlds.GetDifficultyLevel()` documents a `0` to `5` difficulty range and traced assignments commonly stop at `4`; no direct mapping from all seven labels to returned integer heat values was found in this guide code. |
+
+## Source Trace
+
+POST-BATCH-T reviewed this page on 2026-06-14T21:09:11.0049244-05:00 against current source and audit registers.
+
+- Canonical status: Canonical.
+- Queue rows: PBN-0119.
+- Backlog rows: RB-06800.
+- Audit registers used: documentation-truth-table.csv, runtime-hook-map.csv, serialization-register.csv, and project-truth-register.csv.
+
+### Source Files Reviewed
+
+- Data/Scripts/System/Help/Gumps/HelpGump.cs (CurrentFile)
+- Data/Scripts/System/Commands/Player/Basics.cs (CurrentFile)
+- Data/Scripts/Items/Books/DynamicBook.cs (CurrentFile)
+- Data/Scripts/System/Commands/Player/MyLibrary.cs (CurrentFile)
+- Data/Scripts/System/Commands/Handlers.cs (CurrentFile)
+- Data/System/Source/Commands.cs (CurrentFile)
+- Data/Scripts/System/Misc/World.cs (CurrentFile)
+- Data/Scripts/Mobiles/Base/BaseCreature.cs (CurrentFile)
+
+### Runtime Evidence
+
+- Hook summary: Command=3; Event=2; Gump=97; Initialize=4; Movement=3; Speech=3; Timer=8.
+- Data/Scripts/Items/Books/DynamicBook.cs:L77 Gump OnResponse access=Internal
+- Data/Scripts/Items/Books/DynamicBook.cs:L122 Gump OnResponse access=Internal
+- Data/Scripts/Items/Books/DynamicBook.cs:L181 Gump OnResponse access=Internal
+- Data/Scripts/Items/Books/DynamicBook.cs:L452 Gump SendGump access=Internal
+- Data/Scripts/Items/Books/DynamicBook.cs:L460 Gump SendGump access=Internal
+- Data/Scripts/Items/Books/DynamicBook.cs:L468 Gump SendGump access=Internal
+- Data/Scripts/Items/Books/DynamicBook.cs:L858 Timer Timer.DelayCall access=GlobalOrInternal
+- Data/Scripts/Items/Books/DynamicBook.cs:L900 Timer Timer.DelayCall access=GlobalOrInternal
+- Data/Scripts/Mobiles/Base/BaseCreature.cs:L487 Timer CustomTimerSubclass access=GlobalOrInternal
+- Data/Scripts/Mobiles/Base/BaseCreature.cs:L914 Timer Timer.DelayCall access=GlobalOrInternal
+- Data/Scripts/Mobiles/Base/BaseCreature.cs:L950 Timer Timer.DelayCall access=GlobalOrInternal
+- Data/Scripts/Mobiles/Base/BaseCreature.cs:L5879 Timer Timer.DelayCall access=GlobalOrInternal
+- Additional hook rows are recorded in runtime-hook-map.csv for this source set.
+
+### Serialization Evidence
+
+- Serialized rows matched: 25.
+- Data/Scripts/Items/Books/DynamicBook.cs:Server.Items.AlchemicalElixirs version=Unknown serialize=L1523 deserialize=L1529 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Items/Books/DynamicBook.cs:Server.Items.AlchemicalMixtures version=Unknown serialize=L1563 deserialize=L1569 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Items/Books/DynamicBook.cs:Server.Items.BookBottleCity version=Unknown serialize=L1017 deserialize=L1023 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Items/Books/DynamicBook.cs:Server.Items.BookGuideToAdventure version=Unknown serialize=L977 deserialize=L984 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Items/Books/DynamicBook.cs:Server.Items.BookofDeadClue version=Unknown serialize=L1071 deserialize=L1077 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Items/Books/DynamicBook.cs:Server.Items.BookOfPoisons version=Unknown serialize=L1603 deserialize=L1609 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Items/Books/DynamicBook.cs:Server.Items.CBookDruidicHerbalism version=Unknown serialize=L888 deserialize=L894 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Items/Books/DynamicBook.cs:Server.Items.CBookElvesandOrks version=Unknown serialize=L1151 deserialize=L1157 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Items/Books/DynamicBook.cs:Server.Items.CBookNecroticAlchemy version=Unknown serialize=L847 deserialize=L853 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Items/Books/DynamicBook.cs:Server.Items.CBookTheLostTribeofSosaria version=Unknown serialize=L1327 deserialize=L1333 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Items/Books/DynamicBook.cs:Server.Items.CBookTombofDurmas version=Unknown serialize=L1111 deserialize=L1117 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Items/Books/DynamicBook.cs:Server.Items.DynamicBook version=0 serialize=L482 deserialize=L498 alignment=CountMatchNeedsTypeReview:UnknownWrites=10
+- Additional serializer rows are recorded in serialization-register.csv for this source set.
+
+### Project And Runtime Coverage
+
+- Data/Scripts/Items/Books/DynamicBook.cs=Keep
+- Data/Scripts/Items/Books/DynamicBook.cs=Keep
+- Data/Scripts/Mobiles/Base/BaseCreature.cs=Keep
+- Data/Scripts/Mobiles/Base/BaseCreature.cs=Keep
+- Data/Scripts/System/Commands/Handlers.cs=Keep
+- Data/Scripts/System/Commands/Handlers.cs=Keep
+- Data/Scripts/System/Commands/Player/Basics.cs=Keep
+- Data/Scripts/System/Commands/Player/Basics.cs=Keep
+- Data/Scripts/System/Commands/Player/MyLibrary.cs=Keep
+- Data/Scripts/System/Commands/Player/MyLibrary.cs=Keep
+- Data/Scripts/System/Help/Gumps/HelpGump.cs=Keep
+- Data/Scripts/System/Help/Gumps/HelpGump.cs=Keep
+- Data/Scripts/System/Misc/World.cs=Keep
+- Data/Scripts/System/Misc/World.cs=Keep
+
+No C# source, project files, XML/config/data files, namespaces, serializers, gameplay behavior, or migration policy were changed in POST-BATCH-T.

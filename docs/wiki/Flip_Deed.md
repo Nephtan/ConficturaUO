@@ -171,3 +171,70 @@ Most replacement targets inherit their own serialization from `BaseAddonDeed`, w
 * The supported deed list is a hardcoded `else if` chain. Directional `BaseAddonDeed` classes not explicitly listed receive `That deed cannot be flipped to face another direction!`, even if they are otherwise directional or `FlipableAttribute`-decorated.
 * `Flip Deed` behavior is inconsistent for `BaseStatueDeed`: regular deed pairs are replaced into the caller's backpack and delete the old floor item, but `BaseStatueDeed` is mutated in place.
 * `InfoHelpGump.OnResponse` also dereferences `sender.Mobile` without a null guard when closing the help page.
+
+## Source Trace
+
+POST-BATCH-T reviewed this page on 2026-06-14T21:09:11.0049244-05:00 against current source and audit registers.
+
+- Canonical status: Canonical.
+- Queue rows: PBN-0028.
+- Backlog rows: RB-06692.
+- Audit registers used: documentation-truth-table.csv, runtime-hook-map.csv, serialization-register.csv, and project-truth-register.csv.
+
+### Source Files Reviewed
+
+- Data/Scripts/Items/Houses/InteriorDecorator.cs (CurrentFile)
+- Data/Scripts/System/Help/Gumps/HelpGump.cs (CurrentFile)
+- Data/Scripts/Items/Construction/Addons/BaseAddonDeed.cs (CurrentFile)
+- Data/Scripts/Items/Misc/FlipableAttribute.cs (CurrentFile)
+- Data/Scripts/Trades/Stone/BaseStatueDeed.cs (CurrentFile)
+- Data/Scripts/Items/Relics/DDRelicBearRugs.cs (CurrentFile)
+- Data/Scripts/Items/Houses/TentsEast.cs (CurrentFile)
+
+### Runtime Evidence
+
+- Hook summary: Command=1; Event=1; Gump=79; Initialize=2.
+- Data/Scripts/Items/Houses/InteriorDecorator.cs:L73 Gump SendGump access=Internal
+- Data/Scripts/Items/Houses/InteriorDecorator.cs:L178 Gump OnResponse access=Internal
+- Data/Scripts/Items/Houses/InteriorDecorator.cs:L184 Gump SendGump access=Internal
+- Data/Scripts/Items/Houses/InteriorDecorator.cs:L185 Gump SendGump access=Internal
+- Data/Scripts/Items/Houses/InteriorDecorator.cs:L237 Gump SendGump access=Internal
+- Data/Scripts/Items/Misc/FlipableAttribute.cs:L11 Initialize Initialize access=GlobalOrInternal
+- Data/Scripts/Items/Misc/FlipableAttribute.cs:L13 Command CommandSystem.Register access=Unknown
+- Data/Scripts/System/Help/Gumps/HelpGump.cs:L42 Gump OnResponse access=Internal
+- Data/Scripts/System/Help/Gumps/HelpGump.cs:L69 Initialize Initialize access=GlobalOrInternal
+- Data/Scripts/System/Help/Gumps/HelpGump.cs:L71 Event EventSink access=GlobalOrInternal
+- Data/Scripts/System/Help/Gumps/HelpGump.cs:L96 Gump SendGump access=Internal
+- Data/Scripts/System/Help/Gumps/HelpGump.cs:L2162 Gump OnResponse access=Internal
+- Additional hook rows are recorded in runtime-hook-map.csv for this source set.
+
+### Serialization Evidence
+
+- Serialized rows matched: 8.
+- Data/Scripts/Items/Construction/Addons/BaseAddonDeed.cs:Server.Items.BaseAddonDeed version=0 serialize=L33 deserialize=L40 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Items/Houses/InteriorDecorator.cs:Server.Items.InteriorDecorator version=0 serialize=L55 deserialize=L61 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Items/Houses/TentsEast.cs:Server.Items.MyTentEastAddon version=0 serialize=L169 deserialize=L177 alignment=CountMatchNeedsTypeReview:UnknownWrites=2
+- Data/Scripts/Items/Houses/TentsEast.cs:Server.Items.MyTentEastAddonDeed version=0 serialize=L267 deserialize=L274 alignment=CountMatchNeedsTypeReview:UnknownWrites=1
+- Data/Scripts/Items/Relics/DDRelicBearRugs.cs:Server.Items.DDRelicBearRugsAddon version=0 serialize=L774 deserialize=L786 alignment=CountMatchNeedsTypeReview:UnknownWrites=6
+- Data/Scripts/Items/Relics/DDRelicBearRugs.cs:Server.Items.DDRelicBearRugsAddonDeed version=0 serialize=L1082 deserialize=L1094 alignment=CountMatchNeedsTypeReview:UnknownWrites=6
+- Data/Scripts/Trades/Stone/BaseStatueDeed.cs:Server.Items.BaseStatueAddon version=0 serialize=L378 deserialize=L389 alignment=CountMatchNeedsTypeReview:UnknownWrites=5
+- Data/Scripts/Trades/Stone/BaseStatueDeed.cs:Server.Items.BaseStatueDeed version=0 serialize=L536 deserialize=L547 alignment=CountMatchNeedsTypeReview:UnknownWrites=5
+
+### Project And Runtime Coverage
+
+- Data/Scripts/Items/Construction/Addons/BaseAddonDeed.cs=Keep
+- Data/Scripts/Items/Construction/Addons/BaseAddonDeed.cs=Keep
+- Data/Scripts/Items/Houses/InteriorDecorator.cs=Keep
+- Data/Scripts/Items/Houses/InteriorDecorator.cs=Keep
+- Data/Scripts/Items/Houses/TentsEast.cs=Keep
+- Data/Scripts/Items/Houses/TentsEast.cs=Keep
+- Data/Scripts/Items/Misc/FlipableAttribute.cs=Keep
+- Data/Scripts/Items/Misc/FlipableAttribute.cs=Keep
+- Data/Scripts/Items/Relics/DDRelicBearRugs.cs=Keep
+- Data/Scripts/Items/Relics/DDRelicBearRugs.cs=Keep
+- Data/Scripts/System/Help/Gumps/HelpGump.cs=Keep
+- Data/Scripts/System/Help/Gumps/HelpGump.cs=Keep
+- Data/Scripts/Trades/Stone/BaseStatueDeed.cs=Keep
+- Data/Scripts/Trades/Stone/BaseStatueDeed.cs=Keep
+
+No C# source, project files, XML/config/data files, namespaces, serializers, gameplay behavior, or migration policy were changed in POST-BATCH-T.

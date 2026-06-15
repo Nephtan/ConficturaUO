@@ -194,3 +194,58 @@ The treasure map roll uses this weighted level list:
 | The secondary shelf reward path can run after the shared harvest code reports a failed primary item roll. | `HarvestSystem.FinishHarvesting` calls `OnHarvestFinished` even when `type == null`, so the shelf reward can be granted without primary item delivery, bank consumption, or tool wear if its independent search and skill rolls pass. |
 | Inherited ML bonus-resource failure deletes the primary item instead of the failed bonus item. | If a bonus resource is constructed but cannot be placed, `HarvestSystem` calls `item.Delete()` rather than deleting `bonusItem`; this affects Librarian's ML `LoreBook`, `DDRelicScrolls`, and `DDRelicBook` bonus table. |
 | `m_Offsets` and `inIslesDread` are dead code. | These hardcoded values do not affect runtime behavior and appear to be leftovers from earlier harvest logic. |
+
+## Source Trace
+
+POST-BATCH-T reviewed this page on 2026-06-14T21:09:11.0049244-05:00 against current source and audit registers.
+
+- Canonical status: Canonical.
+- Queue rows: PBN-0023.
+- Backlog rows: RB-06713.
+- Audit registers used: documentation-truth-table.csv, runtime-hook-map.csv, serialization-register.csv, and project-truth-register.csv.
+
+### Source Files Reviewed
+
+- Data/Scripts/Trades/Librarian/Librarian.cs (CurrentFile)
+- Data/Scripts/Trades/Librarian/Monocle.cs (CurrentFile)
+- Data/Scripts/Trades/Librarian/LibraryScrolls.cs (CurrentFile)
+- Data/Scripts/Items/Unknown/UnknownScroll.cs (CurrentFile)
+- Data/Scripts/Trades/Harvest/HarvestSystem.cs (CurrentFile)
+- Data/Scripts/Trades/Harvest/HarvestDefinition.cs (CurrentFile)
+- Data/Scripts/Trades/Harvest/HarvestBank.cs (CurrentFile)
+
+### Runtime Evidence
+
+- Hook summary: Initialize=1.
+- Data/Scripts/Trades/Librarian/Librarian.cs:L501 Initialize Initialize access=GlobalOrInternal
+
+### Serialization Evidence
+
+- Serialized rows matched: 8.
+- Data/Scripts/Items/Unknown/UnknownScroll.cs:Server.Items.UnknownScroll version=0 serialize=L274 deserialize=L283 alignment=CountMatchNeedsTypeReview:UnknownWrites=3
+- Data/Scripts/Trades/Librarian/LibraryScrolls.cs:Server.Items.LibraryScroll1 version=Unknown serialize=L95 deserialize=L100 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Trades/Librarian/LibraryScrolls.cs:Server.Items.LibraryScroll2 version=Unknown serialize=L190 deserialize=L195 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Trades/Librarian/LibraryScrolls.cs:Server.Items.LibraryScroll3 version=Unknown serialize=L285 deserialize=L290 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Trades/Librarian/LibraryScrolls.cs:Server.Items.LibraryScroll4 version=Unknown serialize=L380 deserialize=L385 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Trades/Librarian/LibraryScrolls.cs:Server.Items.LibraryScroll5 version=Unknown serialize=L475 deserialize=L480 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Trades/Librarian/LibraryScrolls.cs:Server.Items.LibraryScroll6 version=Unknown serialize=L570 deserialize=L575 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Trades/Librarian/Monocle.cs:Server.Items.Monocle version=0 serialize=L34 deserialize=L40 alignment=AlignedByCountAndKnownTypes
+
+### Project And Runtime Coverage
+
+- Data/Scripts/Items/Unknown/UnknownScroll.cs=Keep
+- Data/Scripts/Items/Unknown/UnknownScroll.cs=Keep
+- Data/Scripts/Trades/Harvest/HarvestBank.cs=Keep
+- Data/Scripts/Trades/Harvest/HarvestBank.cs=Keep
+- Data/Scripts/Trades/Harvest/HarvestDefinition.cs=Keep
+- Data/Scripts/Trades/Harvest/HarvestDefinition.cs=Keep
+- Data/Scripts/Trades/Harvest/HarvestSystem.cs=Keep
+- Data/Scripts/Trades/Harvest/HarvestSystem.cs=Keep
+- Data/Scripts/Trades/Librarian/Librarian.cs=Keep
+- Data/Scripts/Trades/Librarian/Librarian.cs=Keep
+- Data/Scripts/Trades/Librarian/LibraryScrolls.cs=Keep
+- Data/Scripts/Trades/Librarian/LibraryScrolls.cs=Keep
+- Data/Scripts/Trades/Librarian/Monocle.cs=Keep
+- Data/Scripts/Trades/Librarian/Monocle.cs=Keep
+
+No C# source, project files, XML/config/data files, namespaces, serializers, gameplay behavior, or migration policy were changed in POST-BATCH-T.

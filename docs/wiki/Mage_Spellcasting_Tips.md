@@ -165,3 +165,92 @@ The Help Gump's explanatory text states that each school has two toolbars except
 | Begging price reduction is not clamped in the final `toConsume` calculation. | Extremely high Begging values could reduce the final gold cost to `0` or below, causing the service to return silently because `toConsume == 0`. |
 | `MeteorSwarmMagicStaff` constructs with `IntRequirement = 45` while its properties and deserialize repair say it should require `40` intelligence. | Newly constructed Meteor Swarm wands are treated as eighth-circle wands by the mage charge table until deserialized or manually corrected. |
 | `HelpGump.OnResponse()` dereferences `state.Mobile` and calls `from.SendSound()` before validation; many toolbar paths cast `Mobile` directly to `PlayerMobile`. | Nonstandard `NetState` or non-player callers can throw before defensive checks run. |
+
+## Source Trace
+
+POST-BATCH-T reviewed this page on 2026-06-14T21:09:11.0049244-05:00 against current source and audit registers.
+
+- Canonical status: Canonical.
+- Queue rows: PBN-0056; PBN-0122.
+- Backlog rows: RB-06714; RB-06715.
+- Audit registers used: documentation-truth-table.csv, runtime-hook-map.csv, serialization-register.csv, and project-truth-register.csv.
+
+### Source Files Reviewed
+
+- Data/Scripts/Mobiles/Civilized/Vendors/Mage.cs (CurrentFile)
+- Data/Scripts/System/Misc/Talk.cs (CurrentFile)
+- Data/Scripts/System/Commands/Player/MyChat.cs (CurrentFile)
+- Data/Scripts/Items/Wands/BaseMagicStaff.cs (CurrentFile)
+- Data/Scripts/Items/Wands/ (CurrentDirectory)
+- Data/Scripts/Magic/Magery/Magery 1st/CreateFood.cs (CurrentFile)
+- Data/Scripts/Magic/Magery/Magery 2nd/RemoveTrap.cs (CurrentFile)
+- Data/Scripts/Magic/Magery/Magery 3rd/Telekinesis.cs (CurrentFile)
+- Data/Scripts/Magic/Magery/Magery 6th/Reveal.cs (CurrentFile)
+- Data/Scripts/Magic/Base/Spell.cs (CurrentFile)
+- Data/Scripts/Magic/Base/ForgetfulGem.cs (CurrentFile)
+- Data/Scripts/System/Help/Gumps/HelpGump.cs (CurrentFile)
+- Data/Scripts/System/Commands/Player/SpellBarsManage.cs (CurrentFile)
+- Data/Scripts/System/Commands/Player/SpellBarsDisplay.cs (CurrentFile)
+- Data/Scripts/System/Commands/Player/SpellBarsCommands.cs (CurrentFile)
+- Data/Scripts/System/Commands/Player/SpellBarsFunctions.cs (CurrentFile)
+- Data/Scripts/Mobiles/Base/PlayerMobile.cs (CurrentFile)
+
+### Runtime Evidence
+
+- Hook summary: Command=134; Event=5; Gump=964; Initialize=69; Login=1; Logout=1; Speech=1; Timer=11.
+- Data/Scripts/Items/Wands/BaseMagicStaff.cs:L106 Timer Timer.DelayCall access=GlobalOrInternal
+- Data/Scripts/Magic/Base/ForgetfulGem.cs:L33 Gump SendGump access=Internal
+- Data/Scripts/Magic/Base/ForgetfulGem.cs:L169 Gump OnResponse access=Internal
+- Data/Scripts/Magic/Base/ForgetfulGem.cs:L180 Gump SendGump access=Internal
+- Data/Scripts/Magic/Base/ForgetfulGem.cs:L208 Gump SendGump access=Internal
+- Data/Scripts/Magic/Base/Spell.cs:L1219 Timer CustomTimerSubclass access=GlobalOrInternal
+- Data/Scripts/Magic/Base/Spell.cs:L1251 Timer CustomTimerSubclass access=GlobalOrInternal
+- Data/Scripts/Mobiles/Base/PlayerMobile.cs:L798 Initialize Initialize access=GlobalOrInternal
+- Data/Scripts/Mobiles/Base/PlayerMobile.cs:L806 Event EventSink access=GlobalOrInternal
+- Data/Scripts/Mobiles/Base/PlayerMobile.cs:L807 Event EventSink access=GlobalOrInternal
+- Data/Scripts/Mobiles/Base/PlayerMobile.cs:L808 Event EventSink access=GlobalOrInternal
+- Data/Scripts/Mobiles/Base/PlayerMobile.cs:L809 Event EventSink access=GlobalOrInternal
+- Additional hook rows are recorded in runtime-hook-map.csv for this source set.
+
+### Serialization Evidence
+
+- Serialized rows matched: 69.
+- Data/Scripts/Items/Wands/1st Circle/ClumsyStaff.cs:Server.Items.ClumsyMagicStaff version=0 serialize=L29 deserialize=L36 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Items/Wands/1st Circle/CreateFoodStaff.cs:Server.Items.CreateFoodMagicStaff version=0 serialize=L29 deserialize=L36 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Items/Wands/1st Circle/FeebleStaff.cs:Server.Items.FeebleMagicStaff version=0 serialize=L29 deserialize=L36 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Items/Wands/1st Circle/HealStaff.cs:Server.Items.HealMagicStaff version=0 serialize=L29 deserialize=L36 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Items/Wands/1st Circle/IdentifyStaff.cs:Server.Items.IdentifyStaff version=0 serialize=L21 deserialize=L27 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Items/Wands/1st Circle/MagicArrowStaff.cs:Server.Items.MagicArrowMagicStaff version=0 serialize=L29 deserialize=L36 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Items/Wands/1st Circle/NightSightStaff.cs:Server.Items.NightSightMagicStaff version=0 serialize=L29 deserialize=L36 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Items/Wands/1st Circle/ReactiveArmorStaff.cs:Server.Items.ReactiveArmorMagicStaff version=0 serialize=L28 deserialize=L35 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Items/Wands/1st Circle/WeaknessStaff.cs:Server.Items.WeaknessMagicStaff version=0 serialize=L29 deserialize=L36 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Items/Wands/2nd Circle/AgilityStaff.cs:Server.Items.AgilityMagicStaff version=0 serialize=L29 deserialize=L36 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Items/Wands/2nd Circle/CunningStaff.cs:Server.Items.CunningMagicStaff version=0 serialize=L29 deserialize=L36 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Items/Wands/2nd Circle/CureStaff.cs:Server.Items.CureMagicStaff version=0 serialize=L29 deserialize=L36 alignment=AlignedByCountAndKnownTypes
+- Additional serializer rows are recorded in serialization-register.csv for this source set.
+
+### Project And Runtime Coverage
+
+- Data/Scripts/Items/Wands/1st Circle/ClumsyStaff.cs=Keep
+- Data/Scripts/Items/Wands/1st Circle/ClumsyStaff.cs=Keep
+- Data/Scripts/Items/Wands/1st Circle/CreateFoodStaff.cs=Keep
+- Data/Scripts/Items/Wands/1st Circle/CreateFoodStaff.cs=Keep
+- Data/Scripts/Items/Wands/1st Circle/FeebleStaff.cs=Keep
+- Data/Scripts/Items/Wands/1st Circle/FeebleStaff.cs=Keep
+- Data/Scripts/Items/Wands/1st Circle/HealStaff.cs=Keep
+- Data/Scripts/Items/Wands/1st Circle/HealStaff.cs=Keep
+- Data/Scripts/Items/Wands/1st Circle/IdentifyStaff.cs=Keep
+- Data/Scripts/Items/Wands/1st Circle/IdentifyStaff.cs=Keep
+- Data/Scripts/Items/Wands/1st Circle/MagicArrowStaff.cs=Keep
+- Data/Scripts/Items/Wands/1st Circle/MagicArrowStaff.cs=Keep
+- Data/Scripts/Items/Wands/1st Circle/NightSightStaff.cs=Keep
+- Data/Scripts/Items/Wands/1st Circle/NightSightStaff.cs=Keep
+- Data/Scripts/Items/Wands/1st Circle/ReactiveArmorStaff.cs=Keep
+- Data/Scripts/Items/Wands/1st Circle/ReactiveArmorStaff.cs=Keep
+- Data/Scripts/Items/Wands/1st Circle/WeaknessStaff.cs=Keep
+- Data/Scripts/Items/Wands/1st Circle/WeaknessStaff.cs=Keep
+- Data/Scripts/Items/Wands/2nd Circle/AgilityStaff.cs=Keep
+- Data/Scripts/Items/Wands/2nd Circle/AgilityStaff.cs=Keep
+- Additional project-truth rows are recorded in project-truth-register.csv for this source set.
+
+No C# source, project files, XML/config/data files, namespaces, serializers, gameplay behavior, or migration policy were changed in POST-BATCH-T.

@@ -152,3 +152,52 @@ plain command-plus-gump control surface.
 - The gump exposes only direct helm controls. It does not expose the map-course
   features that `BaseBoat` supports through speech keywords such as `goto` and
   `single`.
+
+## Source Trace
+
+POST-BATCH-T reviewed this page on 2026-06-14T21:09:11.0049244-05:00 against current source and audit registers.
+
+- Canonical status: Canonical.
+- Queue rows: PBN-0003.
+- Backlog rows: RB-06667.
+- Audit registers used: documentation-truth-table.csv, runtime-hook-map.csv, serialization-register.csv, and project-truth-register.csv.
+
+### Source Files Reviewed
+
+- Data/Scripts/Custom/BoatNavigationTotem/BoatNavigationTotam.cs (CurrentFile)
+- Data/Scripts/Items/Boats/BaseBoat.cs (CurrentFile)
+- Data/Scripts/Items/Boats/Plank.cs (CurrentFile)
+
+### Runtime Evidence
+
+- Hook summary: Command=3; Event=1; Gump=27; Initialize=2; Speech=1; Timer=5; WorldSave=1.
+- Data/Scripts/Custom/BoatNavigationTotem/BoatNavigationTotam.cs:L17 Initialize Initialize access=GlobalOrInternal
+- Data/Scripts/Custom/BoatNavigationTotem/BoatNavigationTotam.cs:L19 Command CommandSystem.Register access=Unknown
+- Data/Scripts/Custom/BoatNavigationTotem/BoatNavigationTotam.cs:L24 Command CommandSystem.Register access=Unknown
+- Data/Scripts/Custom/BoatNavigationTotem/BoatNavigationTotam.cs:L29 Command CommandSystem.Register access=Unknown
+- Data/Scripts/Custom/BoatNavigationTotem/BoatNavigationTotam.cs:L43 Gump SendGump access=Internal
+- Data/Scripts/Custom/BoatNavigationTotem/BoatNavigationTotam.cs:L53 Gump SendGump access=Internal
+- Data/Scripts/Custom/BoatNavigationTotem/BoatNavigationTotam.cs:L63 Gump SendGump access=Internal
+- Data/Scripts/Custom/BoatNavigationTotem/BoatNavigationTotam.cs:L197 Gump OnResponse access=Internal
+- Data/Scripts/Custom/BoatNavigationTotem/BoatNavigationTotam.cs:L219 Gump SendGump access=Internal
+- Data/Scripts/Custom/BoatNavigationTotem/BoatNavigationTotam.cs:L227 Gump SendGump access=Internal
+- Data/Scripts/Custom/BoatNavigationTotem/BoatNavigationTotam.cs:L300 Gump SendGump access=Internal
+- Data/Scripts/Custom/BoatNavigationTotem/BoatNavigationTotam.cs:L373 Gump SendGump access=Internal
+- Additional hook rows are recorded in runtime-hook-map.csv for this source set.
+
+### Serialization Evidence
+
+- Serialized rows matched: 2.
+- Data/Scripts/Items/Boats/BaseBoat.cs:Server.Multis.BaseBoat version=3 serialize=L663 deserialize=L688 alignment=CountMatchNeedsTypeReview:UnknownWrites=8
+- Data/Scripts/Items/Boats/Plank.cs:Server.Items.Plank version=0 serialize=L47 deserialize=L59 alignment=CountMatchNeedsTypeReview:UnknownWrites=3
+
+### Project And Runtime Coverage
+
+- Data/Scripts/Custom/BoatNavigationTotem/BoatNavigationTotam.cs=Keep
+- Data/Scripts/Custom/BoatNavigationTotem/BoatNavigationTotam.cs=Keep
+- Data/Scripts/Items/Boats/BaseBoat.cs=Keep
+- Data/Scripts/Items/Boats/BaseBoat.cs=Keep
+- Data/Scripts/Items/Boats/Plank.cs=Keep
+- Data/Scripts/Items/Boats/Plank.cs=Keep
+
+No C# source, project files, XML/config/data files, namespaces, serializers, gameplay behavior, or migration policy were changed in POST-BATCH-T.

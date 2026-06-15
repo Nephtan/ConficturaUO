@@ -300,3 +300,62 @@ Button `7` creates a `LevelLaserSword`; button `8` creates a `LevelDoubleLaserSw
 | `JediSpellbook.OnDragDrop` has no owner guard. | Double-clicking checks `owner == from`, but `OnDragDrop` transforms gear, consumes gems/durasteel/crystals, and calls `from.ProcessClothing()` without verifying the dropper owns the datacron. | Another Mobile with access to the Item may alter or charge someone else's datacron. |
 | `Replicate` names its orb differently than `SoulOrb` expects. | `Replicate` creates a `SoulOrb` named `replication crystal`; `SoulOrb` special resurrection/property text checks for `cloning crystal`. | The resurrection still uses `SoulOrb.OnSummoned`, but player-facing text falls back to generic soul-orb wording. |
 | `JediMirage` deserialization and deletion lack caster null guards. | `JediMirage.Deserialize` calls `MirrorImage.AddClone(m_Caster)`, and `OnDelete` removes a Mirage buff from `m_Caster` without checking for null. | Loaded or orphaned mirages can pass a null Mobile into clone/buff cleanup paths. |
+
+## Source Trace
+
+POST-BATCH-T reviewed this page on 2026-06-14T21:09:11.0049244-05:00 against current source and audit registers.
+
+- Canonical status: Canonical.
+- Queue rows: PBN-0037.
+- Backlog rows: RB-06710.
+- Audit registers used: documentation-truth-table.csv, runtime-hook-map.csv, serialization-register.csv, and project-truth-register.csv.
+
+### Source Files Reviewed
+
+- Data/Scripts/Magic/Jedi/JediSpell.cs (CurrentFile)
+- Data/Scripts/Magic/Jedi/JediSpellbook.cs (CurrentFile)
+- Data/Scripts/Magic/Jedi/JediCommandList.cs (CurrentFile)
+- Data/Scripts/Magic/Jedi/JediDatacrons.cs (CurrentFile)
+- Data/Scripts/Magic/Jedi/KaranCrystal.cs (CurrentFile)
+
+### Runtime Evidence
+
+- Hook summary: Command=1; Gump=5; Initialize=1.
+- Data/Scripts/Magic/Jedi/JediCommandList.cs:L15 Initialize Initialize access=GlobalOrInternal
+- Data/Scripts/Magic/Jedi/JediCommandList.cs:L62 Command CommandSystem.Register access=Unknown
+- Data/Scripts/Magic/Jedi/JediSpellbook.cs:L103 Gump SendGump access=Internal
+- Data/Scripts/Magic/Jedi/JediSpellbook.cs:L496 Gump OnResponse access=Internal
+- Data/Scripts/Magic/Jedi/JediSpellbook.cs:L503 Gump SendGump access=Internal
+- Data/Scripts/Magic/Jedi/JediSpellbook.cs:L700 Gump OnResponse access=Internal
+- Data/Scripts/Magic/Jedi/JediSpellbook.cs:L707 Gump SendGump access=Internal
+
+### Serialization Evidence
+
+- Serialized rows matched: 12.
+- Data/Scripts/Magic/Jedi/JediDatacrons.cs:Server.Items.JediDatacron01 version=0 serialize=L32 deserialize=L38 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Magic/Jedi/JediDatacrons.cs:Server.Items.JediDatacron02 version=0 serialize=L71 deserialize=L77 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Magic/Jedi/JediDatacrons.cs:Server.Items.JediDatacron03 version=0 serialize=L110 deserialize=L116 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Magic/Jedi/JediDatacrons.cs:Server.Items.JediDatacron04 version=0 serialize=L149 deserialize=L155 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Magic/Jedi/JediDatacrons.cs:Server.Items.JediDatacron05 version=0 serialize=L188 deserialize=L194 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Magic/Jedi/JediDatacrons.cs:Server.Items.JediDatacron06 version=0 serialize=L227 deserialize=L233 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Magic/Jedi/JediDatacrons.cs:Server.Items.JediDatacron07 version=0 serialize=L266 deserialize=L272 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Magic/Jedi/JediDatacrons.cs:Server.Items.JediDatacron08 version=0 serialize=L305 deserialize=L311 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Magic/Jedi/JediDatacrons.cs:Server.Items.JediDatacron09 version=0 serialize=L344 deserialize=L350 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Magic/Jedi/JediDatacrons.cs:Server.Items.JediDatacron10 version=0 serialize=L383 deserialize=L389 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Magic/Jedi/JediSpellbook.cs:Server.Items.JediSpellbook version=0 serialize=L712 deserialize=L724 alignment=CountMatchNeedsTypeReview:UnknownWrites=5
+- Data/Scripts/Magic/Jedi/KaranCrystal.cs:Server.Items.KaranCrystal version=0 serialize=L24 deserialize=L30 alignment=AlignedByCountAndKnownTypes
+
+### Project And Runtime Coverage
+
+- Data/Scripts/Magic/Jedi/JediCommandList.cs=Keep
+- Data/Scripts/Magic/Jedi/JediCommandList.cs=Keep
+- Data/Scripts/Magic/Jedi/JediDatacrons.cs=Keep
+- Data/Scripts/Magic/Jedi/JediDatacrons.cs=Keep
+- Data/Scripts/Magic/Jedi/JediSpell.cs=Keep
+- Data/Scripts/Magic/Jedi/JediSpell.cs=Keep
+- Data/Scripts/Magic/Jedi/JediSpellbook.cs=Keep
+- Data/Scripts/Magic/Jedi/JediSpellbook.cs=Keep
+- Data/Scripts/Magic/Jedi/KaranCrystal.cs=Keep
+- Data/Scripts/Magic/Jedi/KaranCrystal.cs=Keep
+
+No C# source, project files, XML/config/data files, namespaces, serializers, gameplay behavior, or migration policy were changed in POST-BATCH-T.

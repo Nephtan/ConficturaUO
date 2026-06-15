@@ -164,3 +164,67 @@ Tiger Strength first runs the shared cast gate, then refuses casts where `Caster
 | `Espionage.InternalTarget` checks `this.GetType()` against `TreasureMapChest`, `ParagonChest`, and `PirateChest` instead of checking the targeted container. | The explicit Paragon/Pirate/Treasure branch messages are unreachable; only the later high-level treasure-map chest check still applies. |
 | `Deception.CheckCast()` and `MonkeyLeap.CheckCast()` do not call `base.CheckCast()`. | Those abilities can enter targeting/cast delay without the shared Shinobi pre-checks; the later sequence still performs shared spending and failure checks. |
 | Eagle Eye's failure text says "Your don't notice anything." | Player-facing typo. |
+
+## Source Trace
+
+POST-BATCH-T reviewed this page on 2026-06-14T21:09:11.0049244-05:00 against current source and audit registers.
+
+- Canonical status: Canonical.
+- Queue rows: PBN-0106.
+- Backlog rows: RB-06767.
+- Audit registers used: documentation-truth-table.csv, runtime-hook-map.csv, serialization-register.csv, and project-truth-register.csv.
+
+### Source Files Reviewed
+
+- Data/Scripts/Magic/Shinobi/ShinobiSpell.cs (CurrentFile)
+- Data/Scripts/Magic/Shinobi/ShinobiCommandList.cs (CurrentFile)
+- Data/Scripts/Magic/Shinobi/ShinobiScroll.cs (CurrentFile)
+- Data/Scripts/Magic/Shinobi/Spells/ (CurrentDirectory)
+
+### Runtime Evidence
+
+- Hook summary: Command=1; Gump=9; Initialize=1; Timer=2.
+- Data/Scripts/Magic/Shinobi/ShinobiCommandList.cs:L15 Initialize Initialize access=GlobalOrInternal
+- Data/Scripts/Magic/Shinobi/ShinobiCommandList.cs:L58 Command CommandSystem.Register access=Unknown
+- Data/Scripts/Magic/Shinobi/ShinobiScroll.cs:L204 Gump SendGump access=Internal
+- Data/Scripts/Magic/Shinobi/ShinobiScroll.cs:L1073 Gump OnResponse access=Internal
+- Data/Scripts/Magic/Shinobi/ShinobiScroll.cs:L1097 Gump SendGump access=Internal
+- Data/Scripts/Magic/Shinobi/ShinobiScroll.cs:L1102 Gump SendGump access=Internal
+- Data/Scripts/Magic/Shinobi/ShinobiScroll.cs:L1119 Gump SendGump access=Internal
+- Data/Scripts/Magic/Shinobi/ShinobiScroll.cs:L1182 Gump OnResponse access=Internal
+- Data/Scripts/Magic/Shinobi/ShinobiScroll.cs:L1189 Gump SendGump access=Internal
+- Data/Scripts/Magic/Shinobi/ShinobiScroll.cs:L1252 Gump OnResponse access=Internal
+- Data/Scripts/Magic/Shinobi/ShinobiScroll.cs:L1259 Gump SendGump access=Internal
+- Data/Scripts/Magic/Shinobi/Spells/CheetahPaws.cs:L117 Timer CustomTimerSubclass access=GlobalOrInternal
+- Additional hook rows are recorded in runtime-hook-map.csv for this source set.
+
+### Serialization Evidence
+
+- Serialized rows matched: 1.
+- Data/Scripts/Magic/Shinobi/ShinobiScroll.cs:Server.Items.ShinobiScroll version=1 serialize=L431 deserialize=L447 alignment=CountMatchNeedsTypeReview:UnknownWrites=9
+
+### Project And Runtime Coverage
+
+- Data/Scripts/Magic/Shinobi/ShinobiCommandList.cs=Keep
+- Data/Scripts/Magic/Shinobi/ShinobiCommandList.cs=Keep
+- Data/Scripts/Magic/Shinobi/ShinobiScroll.cs=Keep
+- Data/Scripts/Magic/Shinobi/ShinobiScroll.cs=Keep
+- Data/Scripts/Magic/Shinobi/ShinobiSpell.cs=Keep
+- Data/Scripts/Magic/Shinobi/ShinobiSpell.cs=Keep
+- Data/Scripts/Magic/Shinobi/Spells/CheetahPaws.cs=Keep
+- Data/Scripts/Magic/Shinobi/Spells/CheetahPaws.cs=Keep
+- Data/Scripts/Magic/Shinobi/Spells/Deception.cs=Keep
+- Data/Scripts/Magic/Shinobi/Spells/Deception.cs=Keep
+- Data/Scripts/Magic/Shinobi/Spells/EagleEye.cs=Keep
+- Data/Scripts/Magic/Shinobi/Spells/EagleEye.cs=Keep
+- Data/Scripts/Magic/Shinobi/Spells/Espionage.cs=Keep
+- Data/Scripts/Magic/Shinobi/Spells/Espionage.cs=Keep
+- Data/Scripts/Magic/Shinobi/Spells/FerretFlee.cs=Keep
+- Data/Scripts/Magic/Shinobi/Spells/FerretFlee.cs=Keep
+- Data/Scripts/Magic/Shinobi/Spells/MonkeyLeap.cs=Keep
+- Data/Scripts/Magic/Shinobi/Spells/MonkeyLeap.cs=Keep
+- Data/Scripts/Magic/Shinobi/Spells/MysticShuriken.cs=Keep
+- Data/Scripts/Magic/Shinobi/Spells/MysticShuriken.cs=Keep
+- Additional project-truth rows are recorded in project-truth-register.csv for this source set.
+
+No C# source, project files, XML/config/data files, namespaces, serializers, gameplay behavior, or migration policy were changed in POST-BATCH-T.

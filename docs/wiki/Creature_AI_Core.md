@@ -249,3 +249,54 @@ There are no direct in-game admin commands registered by this system. The import
 | `ChaosDamage` and `DirectDamage` command properties are not serialized. | The fields and properties exist, but version `7` only writes/reads physical, fire, cold, poison, and energy damage/resistance values. | Staff-set chaos/direct damage seeds reset on world save/load. |
 | Guard movement response looks incomplete. | `OnMovement()` retains `m_NoDupeGuards` and guard-lock helpers, but after the murderer-in-range filter it performs no guard dispatch or state change. | Human murderer proximity handling appears to be a dead branch in the traced code. |
 | Hourly loyalty release can dereference a null AI object. | `LoyaltyTimer` calls `c.AIObject.DoOrderRelease()` without checking `AIObject`. | Any controlled commandable creature with an unmapped/null AI can throw when loyalty reaches zero. |
+
+## Source Trace
+
+POST-BATCH-T reviewed this page on 2026-06-14T21:09:11.0049244-05:00 against current source and audit registers.
+
+- Canonical status: Canonical.
+- Queue rows: PBN-0001.
+- Backlog rows: RB-06682.
+- Audit registers used: documentation-truth-table.csv, runtime-hook-map.csv, serialization-register.csv, and project-truth-register.csv.
+
+### Source Files Reviewed
+
+- Data/Scripts/Mobiles/Base/BaseCreature.cs (CurrentFile)
+- Data/Scripts/Mobiles/Base/Behavior.cs (CurrentFile)
+- Data/Scripts/Custom/Combat/AIOverhaul/AITacticalTargeting.cs (CurrentFile)
+- Data/Scripts/Scripts.csproj (CurrentFile)
+
+### Runtime Evidence
+
+- Hook summary: Event=2; Gump=2; Initialize=1; Movement=3; Speech=6; Timer=9; WorldLoad=1.
+- Data/Scripts/Mobiles/Base/BaseCreature.cs:L487 Timer CustomTimerSubclass access=GlobalOrInternal
+- Data/Scripts/Mobiles/Base/BaseCreature.cs:L914 Timer Timer.DelayCall access=GlobalOrInternal
+- Data/Scripts/Mobiles/Base/BaseCreature.cs:L950 Timer Timer.DelayCall access=GlobalOrInternal
+- Data/Scripts/Mobiles/Base/BaseCreature.cs:L5879 Timer Timer.DelayCall access=GlobalOrInternal
+- Data/Scripts/Mobiles/Base/BaseCreature.cs:L8605 Speech OnSpeech access=GlobalOrInternal
+- Data/Scripts/Mobiles/Base/BaseCreature.cs:L8609 Speech OnSpeech access=GlobalOrInternal
+- Data/Scripts/Mobiles/Base/BaseCreature.cs:L8612 Speech OnSpeech access=GlobalOrInternal
+- Data/Scripts/Mobiles/Base/BaseCreature.cs:L8790 Movement OnMovement access=GlobalOrInternal
+- Data/Scripts/Mobiles/Base/BaseCreature.cs:L8792 Movement OnMovement access=GlobalOrInternal
+- Data/Scripts/Mobiles/Base/BaseCreature.cs:L8800 Movement OnMovement access=GlobalOrInternal
+- Data/Scripts/Mobiles/Base/BaseCreature.cs:L11300 Timer Timer.DelayCall access=GlobalOrInternal
+- Data/Scripts/Mobiles/Base/BaseCreature.cs:L12194 Timer CustomTimerSubclass access=GlobalOrInternal
+- Additional hook rows are recorded in runtime-hook-map.csv for this source set.
+
+### Serialization Evidence
+
+- Serialized rows matched: 3.
+- Data/Scripts/Mobiles/Base/BaseCreature.cs:Server.Mobiles.BaseCreature version=19 serialize=L6507 deserialize=L6665 alignment=TypeMismatch:#30:Write=bool/Read=Double;#32:Write=DeltaTime/Read=Bool;#33:Write=int/Read=DeltaTime;#37:Write=int/Read=Mobile;#53:Write=bool/Read=StrongMobileList;#55:Write=DateTime/Read=Bool;#57:Write=bool/Read=DateTime;#61:Write=bool/Read=StrongMobileList;#62:Write=int/Read=Bool
+- Data/Scripts/Mobiles/Base/Behavior.cs:Server.HeldLight version=0 serialize=L1138 deserialize=L1144 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Mobiles/Base/Behavior.cs:Server.TransferItem version=0 serialize=L11753 deserialize=L11760 alignment=AlignedByCountAndKnownTypes
+
+### Project And Runtime Coverage
+
+- Data/Scripts/Custom/Combat/AIOverhaul/AITacticalTargeting.cs=Keep
+- Data/Scripts/Custom/Combat/AIOverhaul/AITacticalTargeting.cs=Keep
+- Data/Scripts/Mobiles/Base/BaseCreature.cs=Keep
+- Data/Scripts/Mobiles/Base/BaseCreature.cs=Keep
+- Data/Scripts/Mobiles/Base/Behavior.cs=Keep
+- Data/Scripts/Mobiles/Base/Behavior.cs=Keep
+
+No C# source, project files, XML/config/data files, namespaces, serializers, gameplay behavior, or migration policy were changed in POST-BATCH-T.

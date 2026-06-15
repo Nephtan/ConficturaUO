@@ -370,3 +370,77 @@ a multi-world RPG sandbox: players choose strange fates, grow through
 skill-cap-aware archetypes, face curated dynamic PvE, build cities and
 homesteads, explore by land and sea, and rely on a deep staff toolchain that
 keeps the world adjustable, inspectable, and alive.
+
+## Source Trace
+
+POST-BATCH-T reviewed this page on 2026-06-14T21:09:11.0049244-05:00 against current source and audit registers.
+
+- Canonical status: Canonical.
+- Queue rows: PBN-0011.
+- Backlog rows: RB-06680.
+- Audit registers used: documentation-truth-table.csv, runtime-hook-map.csv, serialization-register.csv, and project-truth-register.csv.
+
+### Source Files Reviewed
+
+- Data/Scripts/Custom (CurrentDirectory)
+- Data/Scripts/Custom/Progression/CharacterLevel/CharacterLevelService.cs (CurrentFile)
+
+### Runtime Evidence
+
+- Hook summary: Command=139; Event=20; Gump=1032; Initialize=99; Login=4; Logout=2; Movement=33; Packet=3; Region=9; Speech=45; Timer=250; WorldLoad=1; WorldSave=3.
+- Data/Scripts/Custom/AnimalSystem/ShapeShiftStones/DragonShapeChangeStone-body.cs:L73 Speech OnSpeech access=GlobalOrInternal
+- Data/Scripts/Custom/AnimalSystem/ShapeShiftStones/DragonShapeChangeStone-body.cs:L79 Speech OnSpeech access=GlobalOrInternal
+- Data/Scripts/Custom/AnimalSystem/ShapeShiftStones/DragonShapeChangeStone-body.cs:L109 Speech OnSpeech access=GlobalOrInternal
+- Data/Scripts/Custom/AnimalSystem/ShapeShiftStones/DragonShapeChangeStone-body.cs:L196 Gump OnResponse access=Internal
+- Data/Scripts/Custom/AnimalSystem/ShapeShiftStones/DragonShapeChangeStone-body.cs:L245 Gump SendGump access=Internal
+- Data/Scripts/Custom/AnimalSystem/ShapeShiftStones/FaeryShapeChangeStone.cs:L61 Speech OnSpeech access=GlobalOrInternal
+- Data/Scripts/Custom/AnimalSystem/ShapeShiftStones/FaeryShapeChangeStone.cs:L92 Speech OnSpeech access=GlobalOrInternal
+- Data/Scripts/Custom/AnimalSystem/ShapeShiftStones/FelinusShapeChangeStone.cs:L73 Speech OnSpeech access=GlobalOrInternal
+- Data/Scripts/Custom/AnimalSystem/ShapeShiftStones/FelinusShapeChangeStone.cs:L104 Speech OnSpeech access=GlobalOrInternal
+- Data/Scripts/Custom/AnimalSystem/ShapeShiftStones/FelinusShapeChangeStone.cs:L188 Gump OnResponse access=Internal
+- Data/Scripts/Custom/AnimalSystem/ShapeShiftStones/FelinusShapeChangeStone.cs:L245 Gump SendGump access=Internal
+- Data/Scripts/Custom/AnimalSystem/ShapeShiftStones/RatShapeChangeStone.cs:L73 Speech OnSpeech access=GlobalOrInternal
+- Additional hook rows are recorded in runtime-hook-map.csv for this source set.
+
+### Serialization Evidence
+
+- Serialized rows matched: 1435.
+- Data/Scripts/Custom/Access Level Stone [2.0]/AccessLevelStone.cs:Server.Items.AccessLevelStone version=1 serialize=L82 deserialize=L96 alignment=CountMatchNeedsTypeReview:UnknownWrites=2
+- Data/Scripts/Custom/AnimalSystem/ShapeShiftStones/DragonShapeChangeStone-body.cs:Server.Items.DragonShapeShiftStone version=1 serialize=L134 deserialize=L145 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Custom/AnimalSystem/ShapeShiftStones/FaeryShapeChangeStone.cs:Server.Items.FaerieShapeShiftStone version=0 serialize=L119 deserialize=L129 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Custom/AnimalSystem/ShapeShiftStones/FelinusShapeChangeStone.cs:Server.Items.FelinusShapeShiftStone version=1 serialize=L126 deserialize=L137 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Custom/AnimalSystem/ShapeShiftStones/RatShapeChangeStone.cs:Server.Items.RatShapeShiftStone version=1 serialize=L126 deserialize=L137 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Custom/AnimalSystem/ShapeShiftStones/WolvenShapeChangeStone.cs:Server.Items.WolvenShapeShiftStone version=1 serialize=L126 deserialize=L137 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Custom/Book Publisher [2.0]/PublishedBook.cs:Server.Items.PublishedBook version=0 serialize=L215 deserialize=L193 alignment=CountMismatch:Writes=6;Reads=5
+- Data/Scripts/Custom/Book Publisher [2.0]/Publisher.cs:Server.Mobiles.Publisher version=0 serialize=L32 deserialize=L39 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Custom/CEO's GM Hiding Stone [2.0]/gmhidingstone.cs:Server.Items.GMHidingStone version=2 serialize=L748 deserialize=L758 alignment=CountMismatch:Writes=4;Reads=6
+- Data/Scripts/Custom/Champions/Items/PlagueBeastBackpack.cs:Server.Items.PlagueBeastBackpack version=Unknown serialize=L209 deserialize=L216 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Custom/Champions/Items/PlagueBeastBlood.cs:Server.Items.PlagueBeastBlood version=Unknown serialize=L118 deserialize=L125 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Custom/Champions/Items/PlagueBeastGland.cs:Server.Items.PlagueBeastGland version=Unknown serialize=L20 deserialize=L27 alignment=AlignedByCountAndKnownTypes
+- Additional serializer rows are recorded in serialization-register.csv for this source set.
+
+### Project And Runtime Coverage
+
+- Data/Scripts/Custom/Access Level Stone [2.0]/AccessLevelStone.cs=Keep
+- Data/Scripts/Custom/Access Level Stone [2.0]/AccessLevelStone.cs=Keep
+- Data/Scripts/Custom/AnimalSystem/ShapeShiftStones/DragonShapeChangeStone-body.cs=Keep
+- Data/Scripts/Custom/AnimalSystem/ShapeShiftStones/DragonShapeChangeStone-body.cs=Keep
+- Data/Scripts/Custom/AnimalSystem/ShapeShiftStones/FaeryShapeChangeStone.cs=Keep
+- Data/Scripts/Custom/AnimalSystem/ShapeShiftStones/FaeryShapeChangeStone.cs=Keep
+- Data/Scripts/Custom/AnimalSystem/ShapeShiftStones/FelinusShapeChangeStone.cs=Keep
+- Data/Scripts/Custom/AnimalSystem/ShapeShiftStones/FelinusShapeChangeStone.cs=Keep
+- Data/Scripts/Custom/AnimalSystem/ShapeShiftStones/RatShapeChangeStone.cs=Keep
+- Data/Scripts/Custom/AnimalSystem/ShapeShiftStones/RatShapeChangeStone.cs=Keep
+- Data/Scripts/Custom/AnimalSystem/ShapeShiftStones/WolvenShapeChangeStone.cs=Keep
+- Data/Scripts/Custom/AnimalSystem/ShapeShiftStones/WolvenShapeChangeStone.cs=Keep
+- Data/Scripts/Custom/BoatNavigationTotem/BoatNavigationTotam.cs=Keep
+- Data/Scripts/Custom/BoatNavigationTotem/BoatNavigationTotam.cs=Keep
+- Data/Scripts/Custom/BondInfo/BondInfo.cs=Keep
+- Data/Scripts/Custom/BondInfo/BondInfo.cs=Keep
+- Data/Scripts/Custom/Book Publisher [2.0]/BookBuyInfo.cs=Keep
+- Data/Scripts/Custom/Book Publisher [2.0]/BookBuyInfo.cs=Keep
+- Data/Scripts/Custom/Book Publisher [2.0]/PublishedBook.cs=Keep
+- Data/Scripts/Custom/Book Publisher [2.0]/PublishedBook.cs=Keep
+- Additional project-truth rows are recorded in project-truth-register.csv for this source set.
+
+No C# source, project files, XML/config/data files, namespaces, serializers, gameplay behavior, or migration policy were changed in POST-BATCH-T.

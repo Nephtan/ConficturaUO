@@ -195,3 +195,37 @@ There are no package-specific `[Usage]` or `[Description]` command attributes be
 * Spawned `RingWraith` mobiles are not marked `Summoned`, have no owner, and have no cleanup timer. If they are not killed, the script leaves them as persistent world mobiles.
 * `RingWraith` assigns three independent damage-type values of `40..80`, so the total melee damage-type percentages can exceed `100`.
 * The corpse name string is `a ring wrath`, which appears to be a typo for `a ring wraith`.
+
+## Source Trace
+
+POST-BATCH-T reviewed this page on 2026-06-14T21:09:11.0049244-05:00 against current source and audit registers.
+
+- Canonical status: Canonical.
+- Queue rows: PBN-0112.
+- Backlog rows: RB-06787.
+- Audit registers used: documentation-truth-table.csv, runtime-hook-map.csv, serialization-register.csv, and project-truth-register.csv.
+
+### Source Files Reviewed
+
+- Data/Scripts/Custom/LOTR - The One Ring/TheOneRing.cs (CurrentFile)
+- Data/Scripts/Custom/LOTR - The One Ring/RingWraith.cs (CurrentFile)
+- Data/Scripts/Scripts.csproj (CurrentFile)
+
+### Runtime Evidence
+
+- No runtime hook rows matched the reviewed source set in runtime-hook-map.csv.
+
+### Serialization Evidence
+
+- Serialized rows matched: 2.
+- Data/Scripts/Custom/LOTR - The One Ring/RingWraith.cs:Server.Mobiles.RingWraith version=0 serialize=L103 deserialize=L109 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Custom/LOTR - The One Ring/TheOneRing.cs:Server.Items.TheOneRing version=0 serialize=L136 deserialize=L146 alignment=AlignedByCountAndKnownTypes
+
+### Project And Runtime Coverage
+
+- Data/Scripts/Custom/LOTR - The One Ring/RingWraith.cs=Keep
+- Data/Scripts/Custom/LOTR - The One Ring/RingWraith.cs=Keep
+- Data/Scripts/Custom/LOTR - The One Ring/TheOneRing.cs=Keep
+- Data/Scripts/Custom/LOTR - The One Ring/TheOneRing.cs=Keep
+
+No C# source, project files, XML/config/data files, namespaces, serializers, gameplay behavior, or migration policy were changed in POST-BATCH-T.

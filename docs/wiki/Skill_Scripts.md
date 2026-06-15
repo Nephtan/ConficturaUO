@@ -168,3 +168,92 @@ Weapon abilities are not `SkillInfo` callbacks, but they are stored under `Data/
 | `Stealing` has null and logging hazards. | The coffer branch calls `m_Thief.Backpack.FindItemByType(...)` without a backpack null check. It also logs `coffer.CofferGold` after setting it to `0`, so the log records zero gold stolen. |
 | Special attack display assumes a valid player weapon. | `[SpecialAttacksDisplay` casts `e.Mobile` to `PlayerMobile` and `pm.Weapon` to `BaseWeapon` without null/type guards, so unarmed or unusual callers can throw before user feedback. |
 | `GetTrueBestSkill` helper methods index empty lists. | `GetSkill()` and `GetSkillTop5()` create an empty `List<LGSkillLists>`, sort it, and then index it, making those helper paths unusable if called. |
+
+## Source Trace
+
+POST-BATCH-T reviewed this page on 2026-06-14T21:09:11.0049244-05:00 against current source and audit registers.
+
+- Canonical status: Canonical.
+- Queue rows: PBN-0107.
+- Backlog rows: RB-06772.
+- Audit registers used: documentation-truth-table.csv, runtime-hook-map.csv, serialization-register.csv, and project-truth-register.csv.
+
+### Source Files Reviewed
+
+- Data/System/Source/Skills.cs (CurrentFile)
+- Data/Scripts/System/Skills/ (CurrentDirectory)
+- Data/Scripts/System/Skills/SkillCheck.cs (CurrentFile)
+- Data/Scripts/System/Skills/Anatomy.cs (CurrentFile)
+- Data/Scripts/System/Skills/ArmsLore.cs (CurrentFile)
+- Data/Scripts/System/Skills/Begging.cs (CurrentFile)
+- Data/Scripts/System/Skills/Discordance.cs (CurrentFile)
+- Data/Scripts/System/Skills/Druidism.cs (CurrentFile)
+- Data/Scripts/System/Skills/Forensics.cs (CurrentFile)
+- Data/Scripts/System/Skills/Hiding.cs (CurrentFile)
+- Data/Scripts/System/Skills/Inscribe.cs (CurrentFile)
+- Data/Scripts/System/Skills/ItemIdentification.cs (CurrentFile)
+- Data/Scripts/System/Skills/Meditation.cs (CurrentFile)
+- Data/Scripts/System/Skills/Peacemaking.cs (CurrentFile)
+- Data/Scripts/System/Skills/Poisoning.cs (CurrentFile)
+- Data/Scripts/System/Skills/Provocation.cs (CurrentFile)
+- Data/Scripts/System/Skills/Psychology.cs (CurrentFile)
+- Data/Scripts/System/Skills/RemoveTrap.cs (CurrentFile)
+- Data/Scripts/System/Skills/Searching.cs (CurrentFile)
+- Data/Scripts/System/Skills/Snooping.cs (CurrentFile)
+- Data/Scripts/System/Skills/Spiritualism.cs (CurrentFile)
+- Data/Scripts/System/Skills/Stealing.cs (CurrentFile)
+- Data/Scripts/System/Skills/Stealth.cs (CurrentFile)
+- Data/Scripts/System/Skills/Taming.cs (CurrentFile)
+- Data/Scripts/System/Skills/Tasting.cs (CurrentFile)
+- Data/Scripts/System/Skills/Tracking.cs (CurrentFile)
+- Data/Scripts/System/Skills/Weapon Abilities/ (CurrentDirectory)
+
+### Runtime Evidence
+
+- Hook summary: Command=13; Event=1; Gump=21; Initialize=28; Timer=20.
+- Data/Scripts/System/Skills/Anatomy.cs:L11 Initialize Initialize access=GlobalOrInternal
+- Data/Scripts/System/Skills/ArmsLore.cs:L15 Initialize Initialize access=GlobalOrInternal
+- Data/Scripts/System/Skills/Begging.cs:L13 Initialize Initialize access=GlobalOrInternal
+- Data/Scripts/System/Skills/Begging.cs:L433 Timer CustomTimerSubclass access=GlobalOrInternal
+- Data/Scripts/System/Skills/Discordance.cs:L11 Initialize Initialize access=GlobalOrInternal
+- Data/Scripts/System/Skills/Druidism.cs:L16 Initialize Initialize access=GlobalOrInternal
+- Data/Scripts/System/Skills/Druidism.cs:L92 Gump SendGump access=Internal
+- Data/Scripts/System/Skills/Druidism.cs:L113 Gump SendGump access=Internal
+- Data/Scripts/System/Skills/Druidism.cs:L323 Gump OnResponse access=Internal
+- Data/Scripts/System/Skills/Forensics.cs:L13 Initialize Initialize access=GlobalOrInternal
+- Data/Scripts/System/Skills/Hiding.cs:L20 Initialize Initialize access=GlobalOrInternal
+- Data/Scripts/System/Skills/Inscribe.cs:L11 Initialize Initialize access=GlobalOrInternal
+- Additional hook rows are recorded in runtime-hook-map.csv for this source set.
+
+### Serialization Evidence
+
+- Serialized rows matched: 3.
+- Data/Scripts/System/Skills/Weapon Abilities/AbilityBook.cs:Server.Items.WeaponAbilityBook version=0 serialize=L687 deserialize=L693 alignment=AlignedByCountAndKnownTypes
+- Data/System/Source/Skills.cs:Server.Skill version=Unknown serialize=L492 deserialize=L alignment=CountMismatch:Writes=5;Reads=0
+- Data/System/Source/Skills.cs:Server.Skills version=3 serialize=L1573 deserialize=L alignment=CountMismatch:Writes=3;Reads=0
+
+### Project And Runtime Coverage
+
+- Data/Scripts/System/Skills/Anatomy.cs=Keep
+- Data/Scripts/System/Skills/Anatomy.cs=Keep
+- Data/Scripts/System/Skills/ArmsLore.cs=Keep
+- Data/Scripts/System/Skills/ArmsLore.cs=Keep
+- Data/Scripts/System/Skills/Begging.cs=Keep
+- Data/Scripts/System/Skills/Begging.cs=Keep
+- Data/Scripts/System/Skills/Discordance.cs=Keep
+- Data/Scripts/System/Skills/Discordance.cs=Keep
+- Data/Scripts/System/Skills/Druidism.cs=Keep
+- Data/Scripts/System/Skills/Druidism.cs=Keep
+- Data/Scripts/System/Skills/Forensics.cs=Keep
+- Data/Scripts/System/Skills/Forensics.cs=Keep
+- Data/Scripts/System/Skills/Hiding.cs=Keep
+- Data/Scripts/System/Skills/Hiding.cs=Keep
+- Data/Scripts/System/Skills/Inscribe.cs=Keep
+- Data/Scripts/System/Skills/Inscribe.cs=Keep
+- Data/Scripts/System/Skills/ItemIdentification.cs=Keep
+- Data/Scripts/System/Skills/ItemIdentification.cs=Keep
+- Data/Scripts/System/Skills/Meditation.cs=Keep
+- Data/Scripts/System/Skills/Meditation.cs=Keep
+- Additional project-truth rows are recorded in project-truth-register.csv for this source set.
+
+No C# source, project files, XML/config/data files, namespaces, serializers, gameplay behavior, or migration policy were changed in POST-BATCH-T.
