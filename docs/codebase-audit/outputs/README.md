@@ -353,3 +353,5 @@ The Phase 0 baseline output, Phase 1 reproducible inventory outputs, Phase 2 pro
 | post-batch-u-save-migration-plan-closeout.md | Post-audit | Close out POST-BATCH-U with migration-gate decisions, serializer evidence, verification, and queue reconciliation. | Complete |
 | post-batch-v-region-policy-design-review.csv | Post-audit | Source-reviewed policy dispositions for all 4 POST-BATCH-N region policy-design rows. | Complete |
 | post-batch-v-region-policy-design-closeout.md | Post-audit | Close out POST-BATCH-V with region policy decisions, false-positive evidence, verification, and queue reconciliation. | Complete |
+| post-batch-w-historical-save-migration-plan-review.csv | Post-audit | Source-reviewed migration-plan dispositions for all 73 historical POST-BATCH-J save-compatibility NeedsMigrationPlan rows. | Complete |
+| post-batch-w-historical-save-migration-plan-closeout.md | Post-audit | Close out POST-BATCH-W with helper serializer no-change decisions, scanner ambiguity false positives, the HouseFoundation legacy base-order migration plan, verification, and queue reconciliation. | Complete |
