@@ -1,6 +1,6 @@
 # SOURCE-BATCH-CONTROLLER Closeout
 
-Reviewed at: 2026-06-15T19:36:50.2500868-05:00
+Reviewed at: 2026-06-15T19:41:56.9271291-05:00
 
 ## Summary
 
@@ -43,8 +43,16 @@ Source execution update at 2026-06-15T19:36:50.2500868-05:00:
 - `SOURCE-BATCH-003` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
 - The source-batch target is `docs/codebase-audit/outputs/source-batch-003-target.md`.
 - The source-batch closeout is `docs/codebase-audit/outputs/source-batch-003-firebomb-interaction-guard-repair-closeout.md`.
+- The source-batch commit is `daca74d1` (`fix: guard Firebomb interactions`).
 - `SOURCE-BATCH-004+` remains pending a concrete non-gated source target.
 - Gated roadmap batches remain blocked pending explicit approval.
+
+Runner closeout update at 2026-06-15T19:41:56.9271291-05:00:
+
+- Current controller state has three committed non-gated source batches: `SOURCE-BATCH-001`, `SOURCE-BATCH-002`, and `SOURCE-BATCH-003`.
+- `SOURCE-BATCH-004+` is not opened because no concrete non-gated source target exists after the Firebomb batch.
+- Remaining conditional lanes are gated by POST-BATCH-Y fences and still require explicit approval before source edits.
+- All currently approved source-safe batches discoverable from the controller artifacts are complete.
 
 ## Controller Status
 
@@ -75,6 +83,7 @@ Source execution update at 2026-06-15T19:36:50.2500868-05:00:
 | POST-BATCH-Y `AcceptedFence` rows | 83 |
 | POST-BATCH-Y `BlocksOnlyThisDomain` rows | 7 |
 | POST-BATCH-Y `BlocksSourceWork` rows | 0 |
+| Concrete approved source-safe targets after SOURCE-BATCH-003 | 0 |
 
 ## Required Next Input
 

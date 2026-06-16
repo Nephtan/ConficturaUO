@@ -71,4 +71,4 @@ No command, event hook, gump, packet handler, region, startup, project, XML/conf
 - `docs/codebase-audit/RUN_LOG.md`
 - `docs/codebase-audit/outputs/README.md`
 
-Commit hash: pending until the batch commit is created; final hash must be recorded by the source-batch runner closeout update.
+Commit hash: `daca74d1` (`fix: guard Firebomb interactions`).
