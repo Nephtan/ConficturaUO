@@ -19,16 +19,26 @@ namespace Server.Items
 
         protected override void OnTarget(Mobile from, object target)
         {
-            if (target is BaseRanged)
+            if (from == null || from.Deleted)
+                return;
+
+            if (m_Deed == null || m_Deed.Deleted || m_Deed.RootParent != from)
             {
-                Item item = (Item)target;
-                if (((BaseRanged)item).Balanced == true)
+                from.SendLocalizedMessage(1042001);
+                return;
+            }
+
+            BaseRanged item = target as BaseRanged;
+
+            if (item != null && !item.Deleted)
+            {
+                if (item.Balanced == true)
                     from.SendMessage("That is already balanced!");
                 else if (item.RootParent != from)
                     from.SendMessage("You must have the weapon in your backpack!");
                 else
                 {
-                    ((BaseRanged)item).Balanced = true;
+                    item.Balanced = true;
                     from.SendMessage("You successfully make your weapon balanced.");
                     m_Deed.Delete();
                 }
@@ -72,7 +82,10 @@ public class BalancingDeed : Item
 
     public override void OnDoubleClick(Mobile from)
     {
-        if (!IsChildOf(from.Backpack))
+        if (from == null || from.Deleted)
+            return;
+
+        if (Deleted || from.Backpack == null || !IsChildOf(from.Backpack))
             from.SendLocalizedMessage(1042001);
         else
         {
