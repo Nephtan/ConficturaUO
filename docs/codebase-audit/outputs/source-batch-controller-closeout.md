@@ -1,10 +1,10 @@
 # SOURCE-BATCH-CONTROLLER Closeout
 
-Reviewed at: 2026-06-16T11:29:34.9621783-05:00
+Reviewed at: 2026-06-16T14:53:11.7853163-05:00
 
 ## Summary
 
-The source batch controller processed the POST-BATCH-AA roadmap in order, then later recorded the SOURCE-BATCH-001 through SOURCE-BATCH-006 intake/source execution updates.
+The source batch controller processed the POST-BATCH-AA roadmap in order, then later recorded the SOURCE-BATCH-001 through SOURCE-BATCH-007 intake/source execution updates.
 
 Initial controller result before SOURCE-BATCH-001 intake:
 
@@ -82,6 +82,15 @@ Source execution update at 2026-06-16T11:29:34.9621783-05:00:
 - Origami and KeyRing were intentionally not opened in this sweep because active save-compat overlay rows exist.
 - Gated roadmap batches remain blocked pending explicit approval.
 
+Source execution update at 2026-06-16T14:53:11.7853163-05:00:
+
+- `SOURCE-BATCH-007` implemented the UnusualDyes target guard repair in `Data/Scripts/Items/Misc/Dyes/UnusualDyes.cs`.
+- `SOURCE-BATCH-007` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-007-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-007-unusualdyes-target-guard-repair-closeout.md`.
+- `SOURCE-BATCH-008+` remains pending the next concrete non-gated source target.
+- Gated roadmap batches remain blocked pending explicit approval.
+
 ## Controller Status
 
 | Order | Batch | Controller status | Source edits allowed now |
@@ -92,12 +101,13 @@ Source execution update at 2026-06-16T11:29:34.9621783-05:00:
 | 4 | `SOURCE-BATCH-004` | `Committed` | No |
 | 5 | `SOURCE-BATCH-005` | `Committed` | No |
 | 6 | `SOURCE-BATCH-006` | `Committed` | No |
-| 7 | `SOURCE-BATCH-007+` | `PendingConcreteSourceTarget` | No |
-| 8 | `GATED-SOURCE-BATCH-STAFF` | `BlockedPendingApproval` | No |
-| 9 | `GATED-SOURCE-BATCH-BALANCE` | `BlockedPendingApproval` | No |
-| 10 | `GATED-SOURCE-BATCH-REGION` | `BlockedPendingApproval` | No |
-| 11 | `GATED-SOURCE-BATCH-HOUSEFOUNDATION` | `BlockedPendingApproval` | No |
-| 12 | `GATED-SOURCE-BATCH-REORG` | `BlockedPendingApproval` | No |
+| 7 | `SOURCE-BATCH-007` | `Committed` | No |
+| 8 | `SOURCE-BATCH-008+` | `PendingConcreteSourceTarget` | No |
+| 9 | `GATED-SOURCE-BATCH-STAFF` | `BlockedPendingApproval` | No |
+| 10 | `GATED-SOURCE-BATCH-BALANCE` | `BlockedPendingApproval` | No |
+| 11 | `GATED-SOURCE-BATCH-REGION` | `BlockedPendingApproval` | No |
+| 12 | `GATED-SOURCE-BATCH-HOUSEFOUNDATION` | `BlockedPendingApproval` | No |
+| 13 | `GATED-SOURCE-BATCH-REORG` | `BlockedPendingApproval` | No |
 
 ## Evidence
 
@@ -112,19 +122,20 @@ Source execution update at 2026-06-16T11:29:34.9621783-05:00:
 | Controller rows after SOURCE-BATCH-004 | 10 |
 | Controller rows after SOURCE-BATCH-005 | 11 |
 | Controller rows after SOURCE-BATCH-006 | 12 |
-| Committed non-gated source batches | 6 |
+| Controller rows after SOURCE-BATCH-007 | 13 |
+| Committed non-gated source batches | 7 |
 | Pending repeatable non-gated source batch row | 1 |
 | POST-BATCH-Y `AcceptedFence` rows | 83 |
 | POST-BATCH-Y `BlocksOnlyThisDomain` rows | 7 |
 | POST-BATCH-Y `BlocksSourceWork` rows | 0 |
-| Concrete approved source-safe targets after SOURCE-BATCH-006 | 0 |
+| Concrete approved source-safe targets after SOURCE-BATCH-007 | 0 |
 
 ## Required Next Input
 
 To run the next non-gated source batch, provide:
 
 ```text
-SOURCE-BATCH-007 target:
+SOURCE-BATCH-008 target:
 - Behavior to change:
 - System:
 - Expected files, if known:
@@ -150,6 +161,7 @@ To run a gated batch, provide explicit approval naming:
 - `SOURCE-BATCH-004` source verification is recorded in `source-batch-004-arcanegem-interaction-guard-repair-closeout.md`.
 - `SOURCE-BATCH-005` source verification is recorded in `source-batch-005-powercrystal-target-guard-repair-closeout.md`.
 - `SOURCE-BATCH-006` source verification is recorded in `source-batch-006-clockworkassembly-guard-repair-closeout.md`.
+- `SOURCE-BATCH-007` source verification is recorded in `source-batch-007-unusualdyes-target-guard-repair-closeout.md`.
 - The latest source-batch verification passed targeted source scan, POST-BATCH-Y gate scan, active overlay scan, serializer diff scan, forbidden-surface diff scan, `Server.csproj` Debug/x86 build, runtime compile-only verification, generated artifact restoration, and `git diff --check`.
 
 ## Outputs
@@ -167,3 +179,5 @@ To run a gated batch, provide explicit approval naming:
 - `docs/codebase-audit/outputs/source-batch-005-powercrystal-target-guard-repair-closeout.md`
 - `docs/codebase-audit/outputs/source-batch-006-target.md`
 - `docs/codebase-audit/outputs/source-batch-006-clockworkassembly-guard-repair-closeout.md`
+- `docs/codebase-audit/outputs/source-batch-007-target.md`
+- `docs/codebase-audit/outputs/source-batch-007-unusualdyes-target-guard-repair-closeout.md`
