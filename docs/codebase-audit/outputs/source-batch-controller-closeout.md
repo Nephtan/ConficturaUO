@@ -1,10 +1,10 @@
 # SOURCE-BATCH-CONTROLLER Closeout
 
-Reviewed at: 2026-06-16T18:43:10.0827741-05:00
+Reviewed at: 2026-06-16T18:47:37.0216166-05:00
 
 ## Summary
 
-The source batch controller processed the POST-BATCH-AA roadmap in order, then later recorded the SOURCE-BATCH-001 through SOURCE-BATCH-014 intake/source execution updates.
+The source batch controller processed the POST-BATCH-AA roadmap in order, then later recorded the SOURCE-BATCH-001 through SOURCE-BATCH-015 intake/source execution updates.
 
 Initial controller result before SOURCE-BATCH-001 intake:
 
@@ -155,6 +155,15 @@ Source execution update at 2026-06-16T18:43:10.0827741-05:00:
 - `SOURCE-BATCH-015+` remains pending the next concrete non-gated source target.
 - Gated roadmap batches remain blocked pending explicit approval.
 
+Source execution update at 2026-06-16T18:47:37.0216166-05:00:
+
+- `SOURCE-BATCH-015` implemented the BookofDead guard repair in `Data/Scripts/Items/Misc/Bodies/LivingDead/BookofDead.cs`.
+- `SOURCE-BATCH-015` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-015-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-015-bookofdead-guard-repair-closeout.md`.
+- `SOURCE-BATCH-016+` remains pending the next concrete non-gated source target.
+- Gated roadmap batches remain blocked pending explicit approval.
+
 ## Controller Status
 
 | Order | Batch | Controller status | Source edits allowed now |
@@ -173,12 +182,13 @@ Source execution update at 2026-06-16T18:43:10.0827741-05:00:
 | 12 | `SOURCE-BATCH-012` | `Committed` | No |
 | 13 | `SOURCE-BATCH-013` | `Committed` | No |
 | 14 | `SOURCE-BATCH-014` | `Committed` | No |
-| 15 | `SOURCE-BATCH-015+` | `PendingConcreteSourceTarget` | No |
-| 16 | `GATED-SOURCE-BATCH-STAFF` | `BlockedPendingApproval` | No |
-| 17 | `GATED-SOURCE-BATCH-BALANCE` | `BlockedPendingApproval` | No |
-| 18 | `GATED-SOURCE-BATCH-REGION` | `BlockedPendingApproval` | No |
-| 19 | `GATED-SOURCE-BATCH-HOUSEFOUNDATION` | `BlockedPendingApproval` | No |
-| 20 | `GATED-SOURCE-BATCH-REORG` | `BlockedPendingApproval` | No |
+| 15 | `SOURCE-BATCH-015` | `Committed` | No |
+| 16 | `SOURCE-BATCH-016+` | `PendingConcreteSourceTarget` | No |
+| 17 | `GATED-SOURCE-BATCH-STAFF` | `BlockedPendingApproval` | No |
+| 18 | `GATED-SOURCE-BATCH-BALANCE` | `BlockedPendingApproval` | No |
+| 19 | `GATED-SOURCE-BATCH-REGION` | `BlockedPendingApproval` | No |
+| 20 | `GATED-SOURCE-BATCH-HOUSEFOUNDATION` | `BlockedPendingApproval` | No |
+| 21 | `GATED-SOURCE-BATCH-REORG` | `BlockedPendingApproval` | No |
 
 ## Evidence
 
@@ -201,20 +211,21 @@ Source execution update at 2026-06-16T18:43:10.0827741-05:00:
 | Controller rows after SOURCE-BATCH-012 | 18 |
 | Controller rows after SOURCE-BATCH-013 | 19 |
 | Controller rows after SOURCE-BATCH-014 | 20 |
-| Committed non-gated source batches | 14 |
+| Controller rows after SOURCE-BATCH-015 | 21 |
+| Committed non-gated source batches | 15 |
 | Pending repeatable non-gated source batch row | 1 |
 | POST-BATCH-Y `AcceptedFence` rows | 83 |
 | POST-BATCH-Y `BlocksOnlyThisDomain` rows | 7 |
 | POST-BATCH-Y `BlocksSourceWork` rows | 0 |
-| Concrete approved source-safe targets after SOURCE-BATCH-014 | 0 |
+| Concrete approved source-safe targets after SOURCE-BATCH-015 | 0 |
 
 ## Required Next Input
 
 To run the next non-gated source batch, provide:
 
 ```text
-SOURCE-BATCH-015 target:
-- Confirm BookofDead preflight remains zero-gate and zero-overlay, or select the next clean source-batch-012 candidate.
+SOURCE-BATCH-016 target:
+- Confirm MagicPigment preflight remains zero-gate and zero-overlay, or select the next clean source-batch-012 candidate.
 - If the candidate list is exhausted, run SOURCE-BATCH-017+ candidate discovery before implementation.
 ```
 
@@ -245,6 +256,7 @@ To run a gated batch, provide explicit approval naming:
 - `SOURCE-BATCH-012` source verification is recorded in `source-batch-012-balancingdeed-guard-repair-closeout.md`.
 - `SOURCE-BATCH-013` source verification is recorded in `source-batch-013-hydratooth-guard-repair-closeout.md`.
 - `SOURCE-BATCH-014` source verification is recorded in `source-batch-014-magichammer-guard-repair-closeout.md`.
+- `SOURCE-BATCH-015` source verification is recorded in `source-batch-015-bookofdead-guard-repair-closeout.md`.
 - The latest source-batch verification passed targeted source scan, POST-BATCH-Y gate scan, active overlay scan, serializer diff scan, forbidden-surface diff scan, `Server.csproj` Debug/x86 build, runtime compile-only verification, generated artifact restoration, and `git diff --check`.
 
 ## Outputs
@@ -278,3 +290,5 @@ To run a gated batch, provide explicit approval naming:
 - `docs/codebase-audit/outputs/source-batch-013-hydratooth-guard-repair-closeout.md`
 - `docs/codebase-audit/outputs/source-batch-014-target.md`
 - `docs/codebase-audit/outputs/source-batch-014-magichammer-guard-repair-closeout.md`
+- `docs/codebase-audit/outputs/source-batch-015-target.md`
+- `docs/codebase-audit/outputs/source-batch-015-bookofdead-guard-repair-closeout.md`
