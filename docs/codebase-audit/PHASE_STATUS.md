@@ -2,7 +2,7 @@
 
 Initialized: 2026-06-05T16:15:59.8020730-05:00
 
-Last updated: 2026-06-15T20:19:18.7694914-05:00
+Last updated: 2026-06-16T09:32:30.6099096-05:00
 
 Branch: `SAR`
 
@@ -371,4 +371,6 @@ Source batch execution: SOURCE-BATCH-003 implemented the Firebomb interaction gu
 
 Source batch runner closeout: After SOURCE-BATCH-003, the controller has no additional concrete approved non-gated source target. `SOURCE-BATCH-004+` remains `PendingConcreteSourceTarget`; staff/access, command-access, balance/economy, region/map, HouseFoundation serializer migration, broader serializer/migration, project/XML/config/data, and reorganization lanes remain blocked by POST-BATCH-Y fences until explicit approval is recorded.
 
-Source decision intake: `docs/codebase-audit/outputs/source-change-executive-decision-intake.csv` was generated as an Excel-openable executive decision workbook source for the remaining source-change gates. It contains 94 rows: 90 one-to-one POST-BATCH-Y gate rows, one `SOURCE-BATCH-004+` next-target row, and three global control rows for automation policy, reorganization policy, and serialization policy. `ExecutiveDecision` and `ExecutiveDecisionDetails` are blank on every row for later owner input. Validation confirmed 90 gate rows, no missing or extra POST-BATCH-Y `GateRowId` values, and no source/project/XML/config/data behavior changes.
+Source decision intake: `docs/codebase-audit/outputs/source-change-executive-decision-intake.csv` was generated as an Excel-openable executive decision workbook source for the remaining source-change gates. It contains 94 rows: 90 one-to-one POST-BATCH-Y gate rows, one `SOURCE-BATCH-004+` next-target row, and three global control rows for automation policy, reorganization policy, and serialization policy. `EXEC-0001` was filled by the owner as `Ask for candidate discovery list`; the remaining rows were initially blank for later owner input. Validation confirmed 90 gate rows, no missing or extra POST-BATCH-Y `GateRowId` values, and no source/project/XML/config/data behavior changes.
+
+Source decision intake: SOURCE-DECISION-INTAKE recorded final executive decisions for all 94 rows in `docs/codebase-audit/outputs/source-change-executive-decision-intake.csv`. Non-gated source work now asks for a candidate discovery list; automation is approved only for sequential non-gated rows with one commit per batch; serialization defaults preserve namespace/type identity and save order; staff tooling, command access, economy/reward tuning, region/map policy, and HouseFoundation serializer order are preserved; folder/namespace cleanup is approved only as file/folder/package moves after a per-system move plan with rollback. Validation confirmed rows=94, GateRow=90, GlobalControl=3, NextTarget=1, blank decisions=0, blank details=0, missing POST-BATCH-Y gate IDs=0, extra POST-BATCH-Y gate IDs=0, and the requested decision counts exactly.
