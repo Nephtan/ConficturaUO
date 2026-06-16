@@ -63,6 +63,15 @@ Source execution update at 2026-06-16T11:15:37.0000000-05:00:
 - `SOURCE-BATCH-005+` remains pending the next concrete non-gated source target.
 - Gated roadmap batches remain blocked pending explicit approval.
 
+Source execution update at 2026-06-16T11:22:52.2093583-05:00:
+
+- `SOURCE-BATCH-005` implemented the PowerCrystal target guard repair in `Data/Scripts/Items/Misc/PowerCrystal.cs`.
+- `SOURCE-BATCH-005` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-005-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-005-powercrystal-target-guard-repair-closeout.md`.
+- `SOURCE-BATCH-006+` remains pending the next concrete non-gated source target.
+- Gated roadmap batches remain blocked pending explicit approval.
+
 ## Controller Status
 
 | Order | Batch | Controller status | Source edits allowed now |
@@ -71,12 +80,13 @@ Source execution update at 2026-06-16T11:15:37.0000000-05:00:
 | 2 | `SOURCE-BATCH-002` | `Committed` | No |
 | 3 | `SOURCE-BATCH-003` | `Committed` | No |
 | 4 | `SOURCE-BATCH-004` | `Committed` | No |
-| 5 | `SOURCE-BATCH-005+` | `PendingConcreteSourceTarget` | No |
-| 6 | `GATED-SOURCE-BATCH-STAFF` | `BlockedPendingApproval` | No |
-| 7 | `GATED-SOURCE-BATCH-BALANCE` | `BlockedPendingApproval` | No |
-| 8 | `GATED-SOURCE-BATCH-REGION` | `BlockedPendingApproval` | No |
-| 9 | `GATED-SOURCE-BATCH-HOUSEFOUNDATION` | `BlockedPendingApproval` | No |
-| 10 | `GATED-SOURCE-BATCH-REORG` | `BlockedPendingApproval` | No |
+| 5 | `SOURCE-BATCH-005` | `Committed` | No |
+| 6 | `SOURCE-BATCH-006+` | `PendingConcreteSourceTarget` | No |
+| 7 | `GATED-SOURCE-BATCH-STAFF` | `BlockedPendingApproval` | No |
+| 8 | `GATED-SOURCE-BATCH-BALANCE` | `BlockedPendingApproval` | No |
+| 9 | `GATED-SOURCE-BATCH-REGION` | `BlockedPendingApproval` | No |
+| 10 | `GATED-SOURCE-BATCH-HOUSEFOUNDATION` | `BlockedPendingApproval` | No |
+| 11 | `GATED-SOURCE-BATCH-REORG` | `BlockedPendingApproval` | No |
 
 ## Evidence
 
@@ -89,7 +99,8 @@ Source execution update at 2026-06-16T11:15:37.0000000-05:00:
 | Conditional gated roadmap rows | 5 |
 | Controller rows after SOURCE-BATCH-003 | 9 |
 | Controller rows after SOURCE-BATCH-004 | 10 |
-| Committed non-gated source batches | 4 |
+| Controller rows after SOURCE-BATCH-005 | 11 |
+| Committed non-gated source batches | 5 |
 | Pending repeatable non-gated source batch row | 1 |
 | POST-BATCH-Y `AcceptedFence` rows | 83 |
 | POST-BATCH-Y `BlocksOnlyThisDomain` rows | 7 |
@@ -125,6 +136,7 @@ To run a gated batch, provide explicit approval naming:
 - `SOURCE-BATCH-002` source verification is recorded in `source-batch-002-oilcloth-dye-scissor-guard-repair-closeout.md`.
 - `SOURCE-BATCH-003` source verification is recorded in `source-batch-003-firebomb-interaction-guard-repair-closeout.md`.
 - `SOURCE-BATCH-004` source verification is recorded in `source-batch-004-arcanegem-interaction-guard-repair-closeout.md`.
+- `SOURCE-BATCH-005` source verification is recorded in `source-batch-005-powercrystal-target-guard-repair-closeout.md`.
 - The latest source-batch verification passed targeted source scan, POST-BATCH-Y gate scan, active overlay scan, serializer diff scan, forbidden-surface diff scan, `Server.csproj` Debug/x86 build, runtime compile-only verification, generated artifact restoration, and `git diff --check`.
 
 ## Outputs
@@ -138,3 +150,5 @@ To run a gated batch, provide explicit approval naming:
 - `docs/codebase-audit/outputs/source-batch-003-firebomb-interaction-guard-repair-closeout.md`
 - `docs/codebase-audit/outputs/source-batch-004-target.md`
 - `docs/codebase-audit/outputs/source-batch-004-arcanegem-interaction-guard-repair-closeout.md`
+- `docs/codebase-audit/outputs/source-batch-005-target.md`
+- `docs/codebase-audit/outputs/source-batch-005-powercrystal-target-guard-repair-closeout.md`
