@@ -1,10 +1,10 @@
 # SOURCE-BATCH-CONTROLLER Closeout
 
-Reviewed at: 2026-06-16T18:08:44.8478282-05:00
+Reviewed at: 2026-06-16T18:14:26.8607304-05:00
 
 ## Summary
 
-The source batch controller processed the POST-BATCH-AA roadmap in order, then later recorded the SOURCE-BATCH-001 through SOURCE-BATCH-008 intake/source execution updates.
+The source batch controller processed the POST-BATCH-AA roadmap in order, then later recorded the SOURCE-BATCH-001 through SOURCE-BATCH-009 intake/source execution updates.
 
 Initial controller result before SOURCE-BATCH-001 intake:
 
@@ -100,6 +100,15 @@ Source execution update at 2026-06-16T18:08:44.8478282-05:00:
 - `SOURCE-BATCH-009+` remains pending the next concrete non-gated source target.
 - Gated roadmap batches remain blocked pending explicit approval.
 
+Source execution update at 2026-06-16T18:14:26.8607304-05:00:
+
+- `SOURCE-BATCH-009` implemented the WeaponRenamingTool guard repair in `Data/Scripts/Items/Magical/WeaponRenamingTool.cs`.
+- `SOURCE-BATCH-009` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-009-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-009-weaponrenamingtool-guard-repair-closeout.md`.
+- `SOURCE-BATCH-010+` remains pending the next concrete non-gated source target.
+- Gated roadmap batches remain blocked pending explicit approval.
+
 ## Controller Status
 
 | Order | Batch | Controller status | Source edits allowed now |
@@ -112,12 +121,13 @@ Source execution update at 2026-06-16T18:08:44.8478282-05:00:
 | 6 | `SOURCE-BATCH-006` | `Committed` | No |
 | 7 | `SOURCE-BATCH-007` | `Committed` | No |
 | 8 | `SOURCE-BATCH-008` | `Committed` | No |
-| 9 | `SOURCE-BATCH-009+` | `PendingConcreteSourceTarget` | No |
-| 10 | `GATED-SOURCE-BATCH-STAFF` | `BlockedPendingApproval` | No |
-| 11 | `GATED-SOURCE-BATCH-BALANCE` | `BlockedPendingApproval` | No |
-| 12 | `GATED-SOURCE-BATCH-REGION` | `BlockedPendingApproval` | No |
-| 13 | `GATED-SOURCE-BATCH-HOUSEFOUNDATION` | `BlockedPendingApproval` | No |
-| 14 | `GATED-SOURCE-BATCH-REORG` | `BlockedPendingApproval` | No |
+| 9 | `SOURCE-BATCH-009` | `Committed` | No |
+| 10 | `SOURCE-BATCH-010+` | `PendingConcreteSourceTarget` | No |
+| 11 | `GATED-SOURCE-BATCH-STAFF` | `BlockedPendingApproval` | No |
+| 12 | `GATED-SOURCE-BATCH-BALANCE` | `BlockedPendingApproval` | No |
+| 13 | `GATED-SOURCE-BATCH-REGION` | `BlockedPendingApproval` | No |
+| 14 | `GATED-SOURCE-BATCH-HOUSEFOUNDATION` | `BlockedPendingApproval` | No |
+| 15 | `GATED-SOURCE-BATCH-REORG` | `BlockedPendingApproval` | No |
 
 ## Evidence
 
@@ -134,19 +144,20 @@ Source execution update at 2026-06-16T18:08:44.8478282-05:00:
 | Controller rows after SOURCE-BATCH-006 | 12 |
 | Controller rows after SOURCE-BATCH-007 | 13 |
 | Controller rows after SOURCE-BATCH-008 | 14 |
-| Committed non-gated source batches | 8 |
+| Controller rows after SOURCE-BATCH-009 | 15 |
+| Committed non-gated source batches | 9 |
 | Pending repeatable non-gated source batch row | 1 |
 | POST-BATCH-Y `AcceptedFence` rows | 83 |
 | POST-BATCH-Y `BlocksOnlyThisDomain` rows | 7 |
 | POST-BATCH-Y `BlocksSourceWork` rows | 0 |
-| Concrete approved source-safe targets after SOURCE-BATCH-008 | 0 |
+| Concrete approved source-safe targets after SOURCE-BATCH-009 | 0 |
 
 ## Required Next Input
 
 To run the next non-gated source batch, provide:
 
 ```text
-SOURCE-BATCH-009 target:
+SOURCE-BATCH-010 target:
 - Behavior to change:
 - System:
 - Expected files, if known:
@@ -174,6 +185,7 @@ To run a gated batch, provide explicit approval naming:
 - `SOURCE-BATCH-006` source verification is recorded in `source-batch-006-clockworkassembly-guard-repair-closeout.md`.
 - `SOURCE-BATCH-007` source verification is recorded in `source-batch-007-unusualdyes-target-guard-repair-closeout.md`.
 - `SOURCE-BATCH-008` source verification is recorded in `source-batch-008-velocitydeed-guard-repair-closeout.md`.
+- `SOURCE-BATCH-009` source verification is recorded in `source-batch-009-weaponrenamingtool-guard-repair-closeout.md`.
 - The latest source-batch verification passed targeted source scan, POST-BATCH-Y gate scan, active overlay scan, serializer diff scan, forbidden-surface diff scan, `Server.csproj` Debug/x86 build, runtime compile-only verification, generated artifact restoration, and `git diff --check`.
 
 ## Outputs
@@ -195,3 +207,5 @@ To run a gated batch, provide explicit approval naming:
 - `docs/codebase-audit/outputs/source-batch-007-unusualdyes-target-guard-repair-closeout.md`
 - `docs/codebase-audit/outputs/source-batch-008-target.md`
 - `docs/codebase-audit/outputs/source-batch-008-velocitydeed-guard-repair-closeout.md`
+- `docs/codebase-audit/outputs/source-batch-009-target.md`
+- `docs/codebase-audit/outputs/source-batch-009-weaponrenamingtool-guard-repair-closeout.md`
