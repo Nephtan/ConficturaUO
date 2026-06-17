@@ -1,10 +1,10 @@
 # SOURCE-BATCH-CONTROLLER Closeout
 
-Reviewed at: 2026-06-16T19:03:28.5856904-05:00
+Reviewed at: 2026-06-16T19:08:27.3028568-05:00
 
 ## Summary
 
-The source batch controller processed the POST-BATCH-AA roadmap in order, then later recorded the SOURCE-BATCH-001 through SOURCE-BATCH-017 intake/source execution updates.
+The source batch controller processed the POST-BATCH-AA roadmap in order, then later recorded the SOURCE-BATCH-001 through SOURCE-BATCH-018 intake/source execution updates.
 
 Initial controller result before SOURCE-BATCH-001 intake:
 
@@ -190,6 +190,15 @@ Source execution update at 2026-06-16T19:03:28.5856904-05:00:
 - `SOURCE-BATCH-018+` remains pending the next concrete non-gated source target.
 - Gated roadmap batches remain blocked pending explicit approval.
 
+Source execution update at 2026-06-16T19:08:27.3028568-05:00:
+
+- `SOURCE-BATCH-018` implemented the MagicalDyes guard repair in `Data/Scripts/Items/Misc/Dyes/MagicalDyes.cs`.
+- `SOURCE-BATCH-018` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-018-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-018-magicaldyes-guard-repair-closeout.md`.
+- `SOURCE-BATCH-019+` remains pending the next concrete non-gated source target.
+- Gated roadmap batches remain blocked pending explicit approval.
+
 ## Controller Status
 
 | Order | Batch | Controller status | Source edits allowed now |
@@ -211,12 +220,13 @@ Source execution update at 2026-06-16T19:03:28.5856904-05:00:
 | 15 | `SOURCE-BATCH-015` | `Committed` | No |
 | 16 | `SOURCE-BATCH-016` | `Committed` | No |
 | 17 | `SOURCE-BATCH-017` | `Committed` | No |
-| 18 | `SOURCE-BATCH-018+` | `PendingConcreteSourceTarget` | No |
-| 19 | `GATED-SOURCE-BATCH-STAFF` | `BlockedPendingApproval` | No |
-| 20 | `GATED-SOURCE-BATCH-BALANCE` | `BlockedPendingApproval` | No |
-| 21 | `GATED-SOURCE-BATCH-REGION` | `BlockedPendingApproval` | No |
-| 22 | `GATED-SOURCE-BATCH-HOUSEFOUNDATION` | `BlockedPendingApproval` | No |
-| 23 | `GATED-SOURCE-BATCH-REORG` | `BlockedPendingApproval` | No |
+| 18 | `SOURCE-BATCH-018` | `Committed` | No |
+| 19 | `SOURCE-BATCH-019+` | `PendingConcreteSourceTarget` | No |
+| 20 | `GATED-SOURCE-BATCH-STAFF` | `BlockedPendingApproval` | No |
+| 21 | `GATED-SOURCE-BATCH-BALANCE` | `BlockedPendingApproval` | No |
+| 22 | `GATED-SOURCE-BATCH-REGION` | `BlockedPendingApproval` | No |
+| 23 | `GATED-SOURCE-BATCH-HOUSEFOUNDATION` | `BlockedPendingApproval` | No |
+| 24 | `GATED-SOURCE-BATCH-REORG` | `BlockedPendingApproval` | No |
 
 ## Evidence
 
@@ -242,20 +252,21 @@ Source execution update at 2026-06-16T19:03:28.5856904-05:00:
 | Controller rows after SOURCE-BATCH-015 | 21 |
 | Controller rows after SOURCE-BATCH-016 | 22 |
 | Controller rows after SOURCE-BATCH-017 | 23 |
-| Committed non-gated source batches | 17 |
+| Controller rows after SOURCE-BATCH-018 | 24 |
+| Committed non-gated source batches | 18 |
 | Pending repeatable non-gated source batch row | 1 |
 | POST-BATCH-Y `AcceptedFence` rows | 83 |
 | POST-BATCH-Y `BlocksOnlyThisDomain` rows | 7 |
 | POST-BATCH-Y `BlocksSourceWork` rows | 0 |
-| Concrete approved source-safe targets after SOURCE-BATCH-017 | 0 |
+| Concrete approved source-safe targets after SOURCE-BATCH-018 | 0 |
 
 ## Required Next Input
 
 To run the next non-gated source batch, provide:
 
 ```text
-SOURCE-BATCH-018 target:
-- Confirm MagicalDyes preflight remains zero-gate and zero-overlay.
+SOURCE-BATCH-019 target:
+- Confirm AllDyeTubsArmor preflight remains zero-gate and zero-overlay.
 - If preflight fails, select the next clean source-batch-017 candidate or record the skip with evidence.
 ```
 
@@ -290,6 +301,7 @@ To run a gated batch, provide explicit approval naming:
 - `SOURCE-BATCH-016` source verification is recorded in `source-batch-016-magicpigment-guard-repair-closeout.md`.
 - `SOURCE-BATCH-017` discovery verification is recorded in `source-batch-017-candidate-discovery-closeout.md`.
 - `SOURCE-BATCH-017` source verification is recorded in `source-batch-017-promotionaltoken-guard-repair-closeout.md`.
+- `SOURCE-BATCH-018` source verification is recorded in `source-batch-018-magicaldyes-guard-repair-closeout.md`.
 - The latest source-batch verification passed targeted source scan, POST-BATCH-Y gate scan, active overlay scan, serializer diff scan, forbidden-surface diff scan, `Server.csproj` Debug/x86 build, runtime compile-only verification, generated artifact restoration, and `git diff --check`.
 
 ## Outputs
@@ -331,3 +343,5 @@ To run a gated batch, provide explicit approval naming:
 - `docs/codebase-audit/outputs/source-batch-017-candidate-discovery-closeout.md`
 - `docs/codebase-audit/outputs/source-batch-017-target.md`
 - `docs/codebase-audit/outputs/source-batch-017-promotionaltoken-guard-repair-closeout.md`
+- `docs/codebase-audit/outputs/source-batch-018-target.md`
+- `docs/codebase-audit/outputs/source-batch-018-magicaldyes-guard-repair-closeout.md`
