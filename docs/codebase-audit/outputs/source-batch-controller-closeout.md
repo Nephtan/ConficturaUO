@@ -446,3 +446,16 @@ To run a gated batch, provide explicit approval naming:
 - `docs/codebase-audit/outputs/source-batch-026-slayerdeed-guard-repair-closeout.md`
 - `docs/codebase-audit/outputs/source-batch-027-target.md`
 - `docs/codebase-audit/outputs/source-batch-027-artifactmanual-guard-repair-closeout.md`
+- `docs/codebase-audit/outputs/source-batch-028-candidate-discovery.csv`
+- `docs/codebase-audit/outputs/source-batch-028-candidate-discovery-closeout.md`
+- `docs/codebase-audit/outputs/source-batch-028-target.md`
+- `docs/codebase-audit/outputs/source-batch-028-dyetub-guard-repair-closeout.md`
+
+## SOURCE-BATCH-028 Update
+
+- `SOURCE-BATCH-028` implemented the DyeTub guard repair in `Data/Scripts/Items/Misc/Dyes/DyeTub.cs`.
+- `SOURCE-BATCH-028` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-028-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-028-dyetub-guard-repair-closeout.md`.
+- `SOURCE-BATCH-029+` remains pending the next concrete non-gated source target from `source-batch-028-candidate-discovery.csv`.
+- Gated roadmap batches remain blocked pending explicit approval.
