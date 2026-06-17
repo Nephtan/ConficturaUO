@@ -377,6 +377,8 @@ To run a gated batch, provide explicit approval naming:
 - `SOURCE-BATCH-022` source verification is recorded in `source-batch-022-alldyetubsbookrune-guard-repair-closeout.md`.
 - `SOURCE-BATCH-023` source verification is recorded in `source-batch-023-alldyetubsbookspell-guard-repair-closeout.md`.
 - `SOURCE-BATCH-024` source verification is recorded in `source-batch-024-alldyetubsmountethereal-guard-repair-closeout.md`.
+- `SOURCE-BATCH-025` discovery verification is recorded in `source-batch-025-candidate-discovery-closeout.md`.
+- `SOURCE-BATCH-025` source verification is recorded in `source-batch-025-luckyhorseshoes-guard-repair-closeout.md`.
 - The latest source-batch verification passed targeted source scan, POST-BATCH-Y gate scan, active overlay scan, serializer diff scan, forbidden-surface diff scan, `Server.csproj` Debug/x86 build, runtime compile-only verification, generated artifact restoration, and `git diff --check`.
 
 ## Outputs
@@ -434,3 +436,7 @@ To run a gated batch, provide explicit approval naming:
 - `docs/codebase-audit/outputs/source-batch-023-alldyetubsbookspell-guard-repair-closeout.md`
 - `docs/codebase-audit/outputs/source-batch-024-target.md`
 - `docs/codebase-audit/outputs/source-batch-024-alldyetubsmountethereal-guard-repair-closeout.md`
+- `docs/codebase-audit/outputs/source-batch-025-candidate-discovery.csv`
+- `docs/codebase-audit/outputs/source-batch-025-candidate-discovery-closeout.md`
+- `docs/codebase-audit/outputs/source-batch-025-target.md`
+- `docs/codebase-audit/outputs/source-batch-025-luckyhorseshoes-guard-repair-closeout.md`
