@@ -208,6 +208,15 @@ Source execution update at 2026-06-16T19:13:19.7195952-05:00:
 - `SOURCE-BATCH-020+` remains pending the next concrete non-gated source target.
 - Gated roadmap batches remain blocked pending explicit approval.
 
+Source execution update at 2026-06-16T19:19:55.8367442-05:00:
+
+- `SOURCE-BATCH-020` implemented the AllDyeTubsWeapon guard repair in `Data/Scripts/Items/Misc/Dyes/AllDyeTubsWeapon.cs`.
+- `SOURCE-BATCH-020` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-020-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-020-alldyetubsweapon-guard-repair-closeout.md`.
+- `SOURCE-BATCH-021+` remains pending the next concrete non-gated source target.
+- Gated roadmap batches remain blocked pending explicit approval.
+
 ## Controller Status
 
 | Order | Batch | Controller status | Source edits allowed now |
@@ -231,12 +240,13 @@ Source execution update at 2026-06-16T19:13:19.7195952-05:00:
 | 17 | `SOURCE-BATCH-017` | `Committed` | No |
 | 18 | `SOURCE-BATCH-018` | `Committed` | No |
 | 19 | `SOURCE-BATCH-019` | `Committed` | No |
-| 20 | `SOURCE-BATCH-020+` | `PendingConcreteSourceTarget` | No |
-| 21 | `GATED-SOURCE-BATCH-STAFF` | `BlockedPendingApproval` | No |
-| 22 | `GATED-SOURCE-BATCH-BALANCE` | `BlockedPendingApproval` | No |
-| 23 | `GATED-SOURCE-BATCH-REGION` | `BlockedPendingApproval` | No |
-| 24 | `GATED-SOURCE-BATCH-HOUSEFOUNDATION` | `BlockedPendingApproval` | No |
-| 25 | `GATED-SOURCE-BATCH-REORG` | `BlockedPendingApproval` | No |
+| 20 | `SOURCE-BATCH-020` | `Committed` | No |
+| 21 | `SOURCE-BATCH-021+` | `PendingConcreteSourceTarget` | No |
+| 22 | `GATED-SOURCE-BATCH-STAFF` | `BlockedPendingApproval` | No |
+| 23 | `GATED-SOURCE-BATCH-BALANCE` | `BlockedPendingApproval` | No |
+| 24 | `GATED-SOURCE-BATCH-REGION` | `BlockedPendingApproval` | No |
+| 25 | `GATED-SOURCE-BATCH-HOUSEFOUNDATION` | `BlockedPendingApproval` | No |
+| 26 | `GATED-SOURCE-BATCH-REORG` | `BlockedPendingApproval` | No |
 
 ## Evidence
 
@@ -264,20 +274,21 @@ Source execution update at 2026-06-16T19:13:19.7195952-05:00:
 | Controller rows after SOURCE-BATCH-017 | 23 |
 | Controller rows after SOURCE-BATCH-018 | 24 |
 | Controller rows after SOURCE-BATCH-019 | 25 |
-| Committed non-gated source batches | 19 |
+| Controller rows after SOURCE-BATCH-020 | 26 |
+| Committed non-gated source batches | 20 |
 | Pending repeatable non-gated source batch row | 1 |
 | POST-BATCH-Y `AcceptedFence` rows | 83 |
 | POST-BATCH-Y `BlocksOnlyThisDomain` rows | 7 |
 | POST-BATCH-Y `BlocksSourceWork` rows | 0 |
-| Concrete approved source-safe targets after SOURCE-BATCH-019 | 0 |
+| Concrete approved source-safe targets after SOURCE-BATCH-020 | 0 |
 
 ## Required Next Input
 
 To run the next non-gated source batch, provide:
 
 ```text
-SOURCE-BATCH-020 target:
-- Confirm AllDyeTubsWeapon preflight remains zero-gate and zero-overlay.
+SOURCE-BATCH-021 target:
+- Confirm AllDyeTubsFurniture preflight remains zero-gate and zero-overlay.
 - If preflight fails, select the next clean source-batch-017 candidate or record the skip with evidence.
 ```
 
@@ -314,6 +325,7 @@ To run a gated batch, provide explicit approval naming:
 - `SOURCE-BATCH-017` source verification is recorded in `source-batch-017-promotionaltoken-guard-repair-closeout.md`.
 - `SOURCE-BATCH-018` source verification is recorded in `source-batch-018-magicaldyes-guard-repair-closeout.md`.
 - `SOURCE-BATCH-019` source verification is recorded in `source-batch-019-alldyetubsarmor-guard-repair-closeout.md`.
+- `SOURCE-BATCH-020` source verification is recorded in `source-batch-020-alldyetubsweapon-guard-repair-closeout.md`.
 - The latest source-batch verification passed targeted source scan, POST-BATCH-Y gate scan, active overlay scan, serializer diff scan, forbidden-surface diff scan, `Server.csproj` Debug/x86 build, runtime compile-only verification, generated artifact restoration, and `git diff --check`.
 
 ## Outputs
@@ -359,3 +371,5 @@ To run a gated batch, provide explicit approval naming:
 - `docs/codebase-audit/outputs/source-batch-018-magicaldyes-guard-repair-closeout.md`
 - `docs/codebase-audit/outputs/source-batch-019-target.md`
 - `docs/codebase-audit/outputs/source-batch-019-alldyetubsarmor-guard-repair-closeout.md`
+- `docs/codebase-audit/outputs/source-batch-020-target.md`
+- `docs/codebase-audit/outputs/source-batch-020-alldyetubsweapon-guard-repair-closeout.md`
