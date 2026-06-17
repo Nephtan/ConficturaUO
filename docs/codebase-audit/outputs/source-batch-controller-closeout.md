@@ -735,3 +735,12 @@ To run a gated batch, provide explicit approval naming:
 - The source-batch closeout is `docs/codebase-audit/outputs/source-batch-053-oilice-guard-repair-closeout.md`.
 - `SOURCE-BATCH-054+` remains pending the next concrete non-gated source target from `source-batch-049-candidate-discovery.csv`.
 - Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-054 Update
+
+- `SOURCE-BATCH-054` implemented the OilJade guard repair in `Data/Scripts/Items/Potions/Oils/OilJade.cs`.
+- `SOURCE-BATCH-054` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-054-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-054-oiljade-guard-repair-closeout.md`.
+- `SOURCE-BATCH-055+` remains pending the next concrete non-gated source target from `source-batch-049-candidate-discovery.csv`.
+- Gated roadmap batches remain blocked pending explicit approval.
