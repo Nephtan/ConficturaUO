@@ -798,3 +798,12 @@ To run a gated batch, provide explicit approval naming:
 - The source-batch closeout is `docs/codebase-audit/outputs/source-batch-060-oilsilver-guard-repair-closeout.md`.
 - `SOURCE-BATCH-061+` remains pending the next concrete non-gated source target from `source-batch-049-candidate-discovery.csv`.
 - Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-061 Update
+
+- `SOURCE-BATCH-061` implemented the OilSpinel guard repair in `Data/Scripts/Items/Potions/Oils/OilSpinel.cs`.
+- `SOURCE-BATCH-061` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-061-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-061-oilspinel-guard-repair-closeout.md`.
+- `SOURCE-BATCH-062+` remains pending the next concrete non-gated source target from `source-batch-049-candidate-discovery.csv`.
+- Gated roadmap batches remain blocked pending explicit approval.
