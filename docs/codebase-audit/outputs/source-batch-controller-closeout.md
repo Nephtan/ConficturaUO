@@ -555,3 +555,12 @@ To run a gated batch, provide explicit approval naming:
 - The candidate discovery closeout is `docs/codebase-audit/outputs/source-batch-037-candidate-discovery-closeout.md`.
 - `SOURCE-BATCH-037+` remains pending implementation of `SB037-CAND-001` / EverlastingBottle Guard Repair.
 - Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-037 Update
+
+- `SOURCE-BATCH-037` implemented the EverlastingBottle guard repair in `Data/Scripts/Items/Magical/Artifacts/Minor/EverlastingBottle.cs`.
+- `SOURCE-BATCH-037` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-037-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-037-everlastingbottle-guard-repair-closeout.md`.
+- `SOURCE-BATCH-038+` remains pending the next concrete non-gated source target from `source-batch-037-candidate-discovery.csv`.
+- Gated roadmap batches remain blocked pending explicit approval.
