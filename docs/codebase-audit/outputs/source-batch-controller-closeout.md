@@ -627,3 +627,12 @@ To run a gated batch, provide explicit approval naming:
 - The source-batch closeout is `docs/codebase-audit/outputs/source-batch-043-furnituredyetub-guard-repair-closeout.md`.
 - `SOURCE-BATCH-044+` remains pending the next concrete non-gated source target from `source-batch-040-candidate-discovery.csv`.
 - Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-044 Update
+
+- `SOURCE-BATCH-044` implemented the RunebookDyeTub guard repair in `Data/Scripts/Items/Misc/Dyes/RunebookDyeTub.cs`.
+- `SOURCE-BATCH-044` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-044-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-044-runebookdyetub-guard-repair-closeout.md`.
+- `SOURCE-BATCH-045+` remains pending the next concrete non-gated source target from `source-batch-040-candidate-discovery.csv`.
+- Gated roadmap batches remain blocked pending explicit approval.
