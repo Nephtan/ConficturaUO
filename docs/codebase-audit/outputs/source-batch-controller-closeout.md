@@ -853,3 +853,13 @@ To run a gated batch, provide explicit approval naming:
 - The source-batch closeout is `docs/codebase-audit/outputs/source-batch-066-smokebomb-guard-repair-closeout.md`.
 - `SOURCE-BATCH-067+` remains pending the next concrete non-gated source target from `source-batch-064-candidate-discovery.csv`.
 - Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-067 Update
+
+- `SOURCE-BATCH-067` implemented the EggBomb guard repair in `Data/Scripts/Items/Trades/Ninjitsu/EggBomb.cs`.
+- `SOURCE-BATCH-067` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-067-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-067-eggbomb-guard-repair-closeout.md`.
+- Static verification passed, but `Server.csproj` Debug/x86 build and runtime compile-only verification are recorded as unavailable for this batch because MSBuild escalation was rejected after the session hit its usage limit and the restored tracked executable did not honor `-compileonly`.
+- `SOURCE-BATCH-068+` requires a fresh candidate discovery pass once build verification is available again.
+- Gated roadmap batches remain blocked pending explicit approval.
