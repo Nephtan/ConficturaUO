@@ -646,3 +646,11 @@ To run a gated batch, provide explicit approval naming:
 - The `source-batch-040-candidate-discovery.csv` implementation queue is exhausted.
 - `SOURCE-BATCH-046+` remains pending candidate discovery for the next clean non-gated target.
 - Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-046 Candidate Discovery Update
+
+- `SOURCE-BATCH-046` candidate discovery identified three clean oil-material guard candidates.
+- The candidate discovery output is `docs/codebase-audit/outputs/source-batch-046-candidate-discovery.csv`.
+- The candidate discovery closeout is `docs/codebase-audit/outputs/source-batch-046-candidate-discovery-closeout.md`.
+- `SOURCE-BATCH-046+` remains pending implementation of `SB046-CAND-001` / OilMetal Guard Repair.
+- Gated roadmap batches remain blocked pending explicit approval.
