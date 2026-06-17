@@ -682,3 +682,20 @@ To run a gated batch, provide explicit approval naming:
 - The `source-batch-046-candidate-discovery.csv` implementation queue is exhausted.
 - `SOURCE-BATCH-049+` remains pending candidate discovery for the next clean non-gated target.
 - Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-049 Candidate Discovery Update
+
+- `SOURCE-BATCH-049` candidate discovery identified 15 clean gem-specific oil guard candidates.
+- The candidate discovery output is `docs/codebase-audit/outputs/source-batch-049-candidate-discovery.csv`.
+- The candidate discovery closeout is `docs/codebase-audit/outputs/source-batch-049-candidate-discovery-closeout.md`.
+- `SOURCE-BATCH-049+` remains pending implementation of `SB049-CAND-001` / OilAmethyst Guard Repair.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-049 Update
+
+- `SOURCE-BATCH-049` implemented the OilAmethyst guard repair in `Data/Scripts/Items/Potions/Oils/OilAmethyst.cs`.
+- `SOURCE-BATCH-049` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-049-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-049-oilamethyst-guard-repair-closeout.md`.
+- `SOURCE-BATCH-050+` remains pending the next concrete non-gated source target from `source-batch-049-candidate-discovery.csv`.
+- Gated roadmap batches remain blocked pending explicit approval.
