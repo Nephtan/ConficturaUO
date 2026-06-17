@@ -460,6 +460,8 @@ To run a gated batch, provide explicit approval naming:
 - `docs/codebase-audit/outputs/source-batch-031-dice4-guard-repair-closeout.md`
 - `docs/codebase-audit/outputs/source-batch-032-target.md`
 - `docs/codebase-audit/outputs/source-batch-032-dice6-guard-repair-closeout.md`
+- `docs/codebase-audit/outputs/source-batch-033-target.md`
+- `docs/codebase-audit/outputs/source-batch-033-dice8-guard-repair-closeout.md`
 
 ## SOURCE-BATCH-028 Update
 
@@ -505,4 +507,13 @@ To run a gated batch, provide explicit approval naming:
 - The source-batch target is `docs/codebase-audit/outputs/source-batch-032-target.md`.
 - The source-batch closeout is `docs/codebase-audit/outputs/source-batch-032-dice6-guard-repair-closeout.md`.
 - `SOURCE-BATCH-033+` remains pending the next concrete non-gated source target from `source-batch-031-candidate-discovery.csv`.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-033 Update
+
+- `SOURCE-BATCH-033` implemented the Dice8 guard repair in `Data/Scripts/Items/Misc/Games/DandD/Dice8.cs`.
+- `SOURCE-BATCH-033` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-033-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-033-dice8-guard-repair-closeout.md`.
+- `SOURCE-BATCH-034+` remains pending the next concrete non-gated source target from `source-batch-031-candidate-discovery.csv`.
 - Gated roadmap batches remain blocked pending explicit approval.
