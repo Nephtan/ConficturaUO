@@ -753,3 +753,12 @@ To run a gated batch, provide explicit approval naming:
 - The source-batch closeout is `docs/codebase-audit/outputs/source-batch-055-oilmarble-guard-repair-closeout.md`.
 - `SOURCE-BATCH-056+` remains pending the next concrete non-gated source target from `source-batch-049-candidate-discovery.csv`.
 - Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-056 Update
+
+- `SOURCE-BATCH-056` implemented the OilOnyx guard repair in `Data/Scripts/Items/Potions/Oils/OilOnyx.cs`.
+- `SOURCE-BATCH-056` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-056-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-056-oilonyx-guard-repair-closeout.md`.
+- `SOURCE-BATCH-057+` remains pending the next concrete non-gated source target from `source-batch-049-candidate-discovery.csv`.
+- Gated roadmap batches remain blocked pending explicit approval.
