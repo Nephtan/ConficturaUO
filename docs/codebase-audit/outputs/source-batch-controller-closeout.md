@@ -654,3 +654,12 @@ To run a gated batch, provide explicit approval naming:
 - The candidate discovery closeout is `docs/codebase-audit/outputs/source-batch-046-candidate-discovery-closeout.md`.
 - `SOURCE-BATCH-046+` remains pending implementation of `SB046-CAND-001` / OilMetal Guard Repair.
 - Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-046 Update
+
+- `SOURCE-BATCH-046` implemented the OilMetal guard repair in `Data/Scripts/Items/Potions/Oils/OilMetal.cs`.
+- `SOURCE-BATCH-046` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-046-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-046-oilmetal-guard-repair-closeout.md`.
+- `SOURCE-BATCH-047+` remains pending the next concrete non-gated source target from `source-batch-046-candidate-discovery.csv`.
+- Gated roadmap batches remain blocked pending explicit approval.
