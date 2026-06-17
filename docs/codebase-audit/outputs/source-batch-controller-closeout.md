@@ -816,3 +816,12 @@ To run a gated batch, provide explicit approval naming:
 - The source-batch closeout is `docs/codebase-audit/outputs/source-batch-062-oilstarruby-guard-repair-closeout.md`.
 - `SOURCE-BATCH-063+` remains pending the next concrete non-gated source target from `source-batch-049-candidate-discovery.csv`.
 - Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-063 Update
+
+- `SOURCE-BATCH-063` implemented the OilTopaz guard repair in `Data/Scripts/Items/Potions/Oils/OilTopaz.cs`.
+- `SOURCE-BATCH-063` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-063-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-063-oiltopaz-guard-repair-closeout.md`.
+- `SOURCE-BATCH-064+` requires a fresh candidate discovery pass because `source-batch-049-candidate-discovery.csv` is exhausted.
+- Gated roadmap batches remain blocked pending explicit approval.
