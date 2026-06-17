@@ -1,6 +1,6 @@
 # SOURCE-BATCH-CONTROLLER Closeout
 
-Reviewed at: 2026-06-16T18:52:04.9029004-05:00
+Reviewed at: 2026-06-16T18:59:28.2920934-05:00
 
 ## Summary
 
@@ -174,6 +174,13 @@ Source execution update at 2026-06-16T18:52:04.9029004-05:00:
 - `SOURCE-BATCH-017+` remains pending a discovery-only pass before any further implementation opens.
 - Gated roadmap batches remain blocked pending explicit approval.
 
+Candidate discovery update at 2026-06-16T18:59:28.2920934-05:00:
+
+- `SOURCE-BATCH-017` discovery produced `docs/codebase-audit/outputs/source-batch-017-candidate-discovery.csv`.
+- The recommended next non-gated target is `SB017-CAND-001` / `SOURCE-BATCH-017 PromotionalToken Guard Repair`.
+- `SOURCE-BATCH-017+` remains `PendingConcreteSourceTarget`, but now has a concrete candidate to open after preflight.
+- Gated roadmap batches remain blocked pending explicit approval.
+
 ## Controller Status
 
 | Order | Batch | Controller status | Source edits allowed now |
@@ -229,17 +236,16 @@ Source execution update at 2026-06-16T18:52:04.9029004-05:00:
 | POST-BATCH-Y `AcceptedFence` rows | 83 |
 | POST-BATCH-Y `BlocksOnlyThisDomain` rows | 7 |
 | POST-BATCH-Y `BlocksSourceWork` rows | 0 |
-| Concrete approved source-safe targets after SOURCE-BATCH-016 | 0 |
+| Concrete approved source-safe targets after SOURCE-BATCH-016 discovery | 1 |
 
 ## Required Next Input
 
 To run the next non-gated source batch, provide:
 
 ```text
-SOURCE-BATCH-017 candidate discovery:
-- Candidate systems to scan:
-- Candidate source roots, if preferred:
-- What should stay excluded:
+SOURCE-BATCH-017 target:
+- Confirm PromotionalToken preflight remains zero-gate and zero-overlay.
+- If preflight fails, select the next clean source-batch-017 candidate or record the skip with evidence.
 ```
 
 To run a gated batch, provide explicit approval naming:
@@ -271,6 +277,7 @@ To run a gated batch, provide explicit approval naming:
 - `SOURCE-BATCH-014` source verification is recorded in `source-batch-014-magichammer-guard-repair-closeout.md`.
 - `SOURCE-BATCH-015` source verification is recorded in `source-batch-015-bookofdead-guard-repair-closeout.md`.
 - `SOURCE-BATCH-016` source verification is recorded in `source-batch-016-magicpigment-guard-repair-closeout.md`.
+- `SOURCE-BATCH-017` discovery verification is recorded in `source-batch-017-candidate-discovery-closeout.md`.
 - The latest source-batch verification passed targeted source scan, POST-BATCH-Y gate scan, active overlay scan, serializer diff scan, forbidden-surface diff scan, `Server.csproj` Debug/x86 build, runtime compile-only verification, generated artifact restoration, and `git diff --check`.
 
 ## Outputs
@@ -308,3 +315,5 @@ To run a gated batch, provide explicit approval naming:
 - `docs/codebase-audit/outputs/source-batch-015-bookofdead-guard-repair-closeout.md`
 - `docs/codebase-audit/outputs/source-batch-016-target.md`
 - `docs/codebase-audit/outputs/source-batch-016-magicpigment-guard-repair-closeout.md`
+- `docs/codebase-audit/outputs/source-batch-017-candidate-discovery.csv`
+- `docs/codebase-audit/outputs/source-batch-017-candidate-discovery-closeout.md`
