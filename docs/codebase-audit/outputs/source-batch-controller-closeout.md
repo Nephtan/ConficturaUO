@@ -547,3 +547,11 @@ To run a gated batch, provide explicit approval naming:
 - The `source-batch-031-candidate-discovery.csv` implementation queue is exhausted.
 - `SOURCE-BATCH-037+` remains pending candidate discovery for the next clean non-gated target.
 - Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-037 Candidate Discovery Update
+
+- `SOURCE-BATCH-037` candidate discovery identified three clean guard candidates: EverlastingBottle, EverlastingLoaf, and MusicBox.
+- The candidate discovery output is `docs/codebase-audit/outputs/source-batch-037-candidate-discovery.csv`.
+- The candidate discovery closeout is `docs/codebase-audit/outputs/source-batch-037-candidate-discovery-closeout.md`.
+- `SOURCE-BATCH-037+` remains pending implementation of `SB037-CAND-001` / EverlastingBottle Guard Repair.
+- Gated roadmap batches remain blocked pending explicit approval.
