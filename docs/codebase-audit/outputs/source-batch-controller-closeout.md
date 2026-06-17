@@ -452,6 +452,8 @@ To run a gated batch, provide explicit approval naming:
 - `docs/codebase-audit/outputs/source-batch-028-dyetub-guard-repair-closeout.md`
 - `docs/codebase-audit/outputs/source-batch-029-target.md`
 - `docs/codebase-audit/outputs/source-batch-029-key-interaction-guard-repair-closeout.md`
+- `docs/codebase-audit/outputs/source-batch-030-target.md`
+- `docs/codebase-audit/outputs/source-batch-030-puzzlecube-guard-repair-closeout.md`
 
 ## SOURCE-BATCH-028 Update
 
@@ -469,4 +471,14 @@ To run a gated batch, provide explicit approval naming:
 - The source-batch target is `docs/codebase-audit/outputs/source-batch-029-target.md`.
 - The source-batch closeout is `docs/codebase-audit/outputs/source-batch-029-key-interaction-guard-repair-closeout.md`.
 - `SOURCE-BATCH-030+` remains pending the next concrete non-gated source target from `source-batch-028-candidate-discovery.csv`.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-030 Update
+
+- `SOURCE-BATCH-030` implemented the PuzzleCube guard repair in `Data/Scripts/Items/Misc/Games/PuzzleCube.cs`.
+- `SOURCE-BATCH-030` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-030-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-030-puzzlecube-guard-repair-closeout.md`.
+- The `source-batch-028-candidate-discovery.csv` implementation queue is exhausted.
+- `SOURCE-BATCH-031+` remains pending candidate discovery for the next clean non-gated target.
 - Gated roadmap batches remain blocked pending explicit approval.
