@@ -825,3 +825,13 @@ To run a gated batch, provide explicit approval naming:
 - The source-batch closeout is `docs/codebase-audit/outputs/source-batch-063-oiltopaz-guard-repair-closeout.md`.
 - `SOURCE-BATCH-064+` requires a fresh candidate discovery pass because `source-batch-049-candidate-discovery.csv` is exhausted.
 - Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-064 Update
+
+- `SOURCE-BATCH-064+` discovery created `docs/codebase-audit/outputs/source-batch-064-candidate-discovery.csv`.
+- `SOURCE-BATCH-064` implemented the GlassblowingBook guard repair in `Data/Scripts/Items/Trades/Specialized/GlassblowingBook.cs`.
+- `SOURCE-BATCH-064` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-064-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-064-glassblowingbook-guard-repair-closeout.md`.
+- `SOURCE-BATCH-065+` remains pending the next concrete non-gated source target from `source-batch-064-candidate-discovery.csv`.
+- Gated roadmap batches remain blocked pending explicit approval.
