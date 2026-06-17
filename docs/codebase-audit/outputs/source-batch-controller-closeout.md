@@ -835,3 +835,12 @@ To run a gated batch, provide explicit approval naming:
 - The source-batch closeout is `docs/codebase-audit/outputs/source-batch-064-glassblowingbook-guard-repair-closeout.md`.
 - `SOURCE-BATCH-065+` remains pending the next concrete non-gated source target from `source-batch-064-candidate-discovery.csv`.
 - Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-065 Update
+
+- `SOURCE-BATCH-065` implemented the SandMiningBook guard repair in `Data/Scripts/Items/Trades/Specialized/SandMiningBook.cs`.
+- `SOURCE-BATCH-065` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-065-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-065-sandminingbook-guard-repair-closeout.md`.
+- `SOURCE-BATCH-066+` remains pending the next concrete non-gated source target from `source-batch-064-candidate-discovery.csv`.
+- Gated roadmap batches remain blocked pending explicit approval.
