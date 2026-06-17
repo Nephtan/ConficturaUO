@@ -591,3 +591,12 @@ To run a gated batch, provide explicit approval naming:
 - The candidate discovery closeout is `docs/codebase-audit/outputs/source-batch-040-candidate-discovery-closeout.md`.
 - `SOURCE-BATCH-040+` remains pending implementation of `SB040-CAND-001` / RewardBlackDyeTub Guard Repair.
 - Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-040 Update
+
+- `SOURCE-BATCH-040` implemented the RewardBlackDyeTub guard repair in `Data/Scripts/Items/Misc/Dyes/RewardBlackDyeTub.cs`.
+- `SOURCE-BATCH-040` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-040-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-040-rewardblackdyetub-guard-repair-closeout.md`.
+- `SOURCE-BATCH-041+` remains pending the next concrete non-gated source target from `source-batch-040-candidate-discovery.csv`.
+- Gated roadmap batches remain blocked pending explicit approval.
