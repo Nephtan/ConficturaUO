@@ -227,6 +227,15 @@ Source execution update at 2026-06-16T19:24:10.9554142-05:00:
 - `SOURCE-BATCH-022+` remains pending candidate discovery for the next clean non-gated target.
 - Gated roadmap batches remain blocked pending explicit approval.
 
+Source execution update at 2026-06-16T19:31:49.9389645-05:00:
+
+- `SOURCE-BATCH-022` implemented the AllDyeTubsBookRune guard repair in `Data/Scripts/Items/Misc/Dyes/AllDyeTubsBookRune.cs`.
+- `SOURCE-BATCH-022` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-022-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-022-alldyetubsbookrune-guard-repair-closeout.md`.
+- `SOURCE-BATCH-023+` remains pending the next concrete non-gated source target.
+- Gated roadmap batches remain blocked pending explicit approval.
+
 ## Controller Status
 
 | Order | Batch | Controller status | Source edits allowed now |
@@ -252,12 +261,13 @@ Source execution update at 2026-06-16T19:24:10.9554142-05:00:
 | 19 | `SOURCE-BATCH-019` | `Committed` | No |
 | 20 | `SOURCE-BATCH-020` | `Committed` | No |
 | 21 | `SOURCE-BATCH-021` | `Committed` | No |
-| 22 | `SOURCE-BATCH-022+` | `PendingConcreteSourceTarget` | No |
-| 23 | `GATED-SOURCE-BATCH-STAFF` | `BlockedPendingApproval` | No |
-| 24 | `GATED-SOURCE-BATCH-BALANCE` | `BlockedPendingApproval` | No |
-| 25 | `GATED-SOURCE-BATCH-REGION` | `BlockedPendingApproval` | No |
-| 26 | `GATED-SOURCE-BATCH-HOUSEFOUNDATION` | `BlockedPendingApproval` | No |
-| 27 | `GATED-SOURCE-BATCH-REORG` | `BlockedPendingApproval` | No |
+| 22 | `SOURCE-BATCH-022` | `Committed` | No |
+| 23 | `SOURCE-BATCH-023+` | `PendingConcreteSourceTarget` | No |
+| 24 | `GATED-SOURCE-BATCH-STAFF` | `BlockedPendingApproval` | No |
+| 25 | `GATED-SOURCE-BATCH-BALANCE` | `BlockedPendingApproval` | No |
+| 26 | `GATED-SOURCE-BATCH-REGION` | `BlockedPendingApproval` | No |
+| 27 | `GATED-SOURCE-BATCH-HOUSEFOUNDATION` | `BlockedPendingApproval` | No |
+| 28 | `GATED-SOURCE-BATCH-REORG` | `BlockedPendingApproval` | No |
 
 ## Evidence
 
@@ -287,21 +297,22 @@ Source execution update at 2026-06-16T19:24:10.9554142-05:00:
 | Controller rows after SOURCE-BATCH-019 | 25 |
 | Controller rows after SOURCE-BATCH-020 | 26 |
 | Controller rows after SOURCE-BATCH-021 | 27 |
-| Committed non-gated source batches | 21 |
+| Controller rows after SOURCE-BATCH-022 | 28 |
+| Committed non-gated source batches | 22 |
 | Pending repeatable non-gated source batch row | 1 |
 | POST-BATCH-Y `AcceptedFence` rows | 83 |
 | POST-BATCH-Y `BlocksOnlyThisDomain` rows | 7 |
 | POST-BATCH-Y `BlocksSourceWork` rows | 0 |
-| Concrete approved source-safe targets after SOURCE-BATCH-021 | 0 |
+| Concrete approved source-safe targets after SOURCE-BATCH-022 | 0 |
 
 ## Required Next Input
 
 To run the next non-gated source batch, provide:
 
 ```text
-SOURCE-BATCH-022 discovery:
-- Run discovery-only pass for the next clean zero-gate, zero-overlay non-gated guard candidate.
-- Exclude gated, active-overlay, serializer-migration, staff/access, balance/economy, region/map, project/config/data, XML/config/data, and reorganization work.
+SOURCE-BATCH-023 target:
+- Confirm AllDyeTubsBookSpell preflight remains zero-gate and zero-overlay.
+- If preflight fails, select the next clean source-batch-022 candidate or record the skip with evidence.
 ```
 
 To run a gated batch, provide explicit approval naming:
@@ -339,6 +350,8 @@ To run a gated batch, provide explicit approval naming:
 - `SOURCE-BATCH-019` source verification is recorded in `source-batch-019-alldyetubsarmor-guard-repair-closeout.md`.
 - `SOURCE-BATCH-020` source verification is recorded in `source-batch-020-alldyetubsweapon-guard-repair-closeout.md`.
 - `SOURCE-BATCH-021` source verification is recorded in `source-batch-021-alldyetubsfurniture-guard-repair-closeout.md`.
+- `SOURCE-BATCH-022` discovery verification is recorded in `source-batch-022-candidate-discovery-closeout.md`.
+- `SOURCE-BATCH-022` source verification is recorded in `source-batch-022-alldyetubsbookrune-guard-repair-closeout.md`.
 - The latest source-batch verification passed targeted source scan, POST-BATCH-Y gate scan, active overlay scan, serializer diff scan, forbidden-surface diff scan, `Server.csproj` Debug/x86 build, runtime compile-only verification, generated artifact restoration, and `git diff --check`.
 
 ## Outputs
@@ -388,3 +401,7 @@ To run a gated batch, provide explicit approval naming:
 - `docs/codebase-audit/outputs/source-batch-020-alldyetubsweapon-guard-repair-closeout.md`
 - `docs/codebase-audit/outputs/source-batch-021-target.md`
 - `docs/codebase-audit/outputs/source-batch-021-alldyetubsfurniture-guard-repair-closeout.md`
+- `docs/codebase-audit/outputs/source-batch-022-candidate-discovery.csv`
+- `docs/codebase-audit/outputs/source-batch-022-candidate-discovery-closeout.md`
+- `docs/codebase-audit/outputs/source-batch-022-target.md`
+- `docs/codebase-audit/outputs/source-batch-022-alldyetubsbookrune-guard-repair-closeout.md`
