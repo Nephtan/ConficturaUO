@@ -450,6 +450,8 @@ To run a gated batch, provide explicit approval naming:
 - `docs/codebase-audit/outputs/source-batch-028-candidate-discovery-closeout.md`
 - `docs/codebase-audit/outputs/source-batch-028-target.md`
 - `docs/codebase-audit/outputs/source-batch-028-dyetub-guard-repair-closeout.md`
+- `docs/codebase-audit/outputs/source-batch-029-target.md`
+- `docs/codebase-audit/outputs/source-batch-029-key-interaction-guard-repair-closeout.md`
 
 ## SOURCE-BATCH-028 Update
 
@@ -458,4 +460,13 @@ To run a gated batch, provide explicit approval naming:
 - The source-batch target is `docs/codebase-audit/outputs/source-batch-028-target.md`.
 - The source-batch closeout is `docs/codebase-audit/outputs/source-batch-028-dyetub-guard-repair-closeout.md`.
 - `SOURCE-BATCH-029+` remains pending the next concrete non-gated source target from `source-batch-028-candidate-discovery.csv`.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-029 Update
+
+- `SOURCE-BATCH-029` implemented the Key interaction guard repair in `Data/Scripts/Items/Misc/Key.cs`.
+- `SOURCE-BATCH-029` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-029-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-029-key-interaction-guard-repair-closeout.md`.
+- `SOURCE-BATCH-030+` remains pending the next concrete non-gated source target from `source-batch-028-candidate-discovery.csv`.
 - Gated roadmap batches remain blocked pending explicit approval.
