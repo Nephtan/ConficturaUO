@@ -6,7 +6,7 @@ A new update is available through the recently announced launcher.
 
 - The launcher update includes a ClassicUO update.
 - This update fixes issues where books and some text could disappear in places.
-
+ 
 Please update through the launcher before continuing your adventures.
 
 [*]May 2nd, 2026, 12:41pm Central Time
