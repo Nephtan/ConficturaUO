@@ -6,6 +6,7 @@ using Server.Accounting;
 using Server.Commands;
 using Server.Commands.Generic;
 using Server.ContextMenus;
+using Server.Custom.Confictura.LoreBooks;
 using Server.Gumps;
 using Server.Items;
 using Server.Misc;
@@ -868,6 +869,8 @@ namespace Server.Misc
             }
         }
 
+        private const string LibraryConfigPrefix = "v2:";
+
         public static string ValLibraryConfig(Mobile m) // ----------------------------------------------------------------------------------------------
         {
             string val = "";
@@ -877,91 +880,217 @@ namespace Server.Misc
                 PlayerMobile pm = (PlayerMobile)m;
                 val = pm.MyLibrary;
 
-                if (val == null || val == "")
-                    pm.MyLibrary = val =
-                        "0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#0#";
+                if (val == null || val.Length == 0)
+                {
+                    pm.MyLibrary = val = LibraryConfigPrefix;
+                }
+                else if (!IsLibraryConfigV2(val))
+                {
+                    string converted = ConvertLegacyLibraryConfig(val);
+
+                    if (IsLibraryConfigV2(converted))
+                    {
+                        pm.MyLibrary = val = converted;
+                    }
+                }
             }
+
             return val;
+        }
+
+        public static string[] GetLibraryConfigIds(Mobile m)
+        {
+            string keys = ValLibraryConfig(m);
+
+            if (!IsLibraryConfigV2(keys))
+            {
+                keys = ConvertLegacyLibraryConfig(keys);
+            }
+
+            if (!IsLibraryConfigV2(keys))
+            {
+                return new string[0];
+            }
+
+            List<string> ids = DecodeLibraryConfig(keys);
+            return ids.ToArray();
+        }
+
+        public static bool GetLibraryConfig(Mobile m, string id)
+        {
+            if (id == null || id.Length == 0)
+            {
+                return false;
+            }
+
+            List<string> ids = DecodeLibraryConfig(ValLibraryConfig(m));
+            return ContainsLibraryId(ids, id);
         }
 
         public static bool GetLibraryConfig(Mobile m, int row) // ---------------------------------------------------------------------------------------
         {
-            bool isSET = false;
+            PlayerLibraryEntry entry = LoreBookCatalog.GetLibraryEntryByLegacyRow(row);
 
-            if (m != null && m is PlayerMobile)
+            if (entry == null)
             {
-                string keys = ValLibraryConfig(m);
-
-                if (keys.Length > 0)
-                {
-                    string[] configures = keys.Split('#');
-                    int nEntry = 1;
-                    foreach (string key in configures)
-                    {
-                        if (nEntry == row && key == "1")
-                        {
-                            isSET = true;
-                        }
-
-                        nEntry++;
-                    }
-                }
+                return false;
             }
 
-            return isSET;
+            return GetLibraryConfig(m, entry.Id);
+        }
+
+        public static void SetLibraryConfig(Mobile m, string id)
+        {
+            if (m == null || !(m is PlayerMobile) || id == null || id.Length == 0)
+            {
+                return;
+            }
+
+            if (LoreBookCatalog.GetLibraryEntry(id) == null)
+            {
+                return;
+            }
+
+            PlayerMobile pm = (PlayerMobile)m;
+            string keys = ValLibraryConfig(m);
+
+            if (!IsLibraryConfigV2(keys))
+            {
+                return;
+            }
+
+            List<string> ids = DecodeLibraryConfig(keys);
+
+            if (!ContainsLibraryId(ids, id))
+            {
+                ids.Add(id);
+                pm.MyLibrary = EncodeLibraryConfig(ids);
+            }
         }
 
         public static void SetLibraryConfig(Mobile m, int key) // --------------------------------------------------------------------------
         {
-            if (m != null && m is PlayerMobile)
+            PlayerLibraryEntry entry = LoreBookCatalog.GetLibraryEntryByLegacyRow(key);
+
+            if (entry != null)
             {
-                PlayerMobile pm = (PlayerMobile)m;
+                SetLibraryConfig(m, entry.Id);
+            }
+        }
 
-                string keys = ValLibraryConfig(m);
-                int records = 76; // TOTAL ENTRIES
-                string entry = "";
-                int nEntry = 1;
+        public static void SetAllLibraryConfig(Mobile m)
+        {
+            if (m == null || !(m is PlayerMobile))
+            {
+                return;
+            }
 
-                if (keys.Length > 0)
+            PlayerMobile pm = (PlayerMobile)m;
+            string[] ids = LoreBookCatalog.GetAllLibraryIds();
+            List<string> idList = new List<string>();
+
+            for (int i = 0; i < ids.Length; i++)
+            {
+                if (ids[i] != null && ids[i].Length > 0 && !ContainsLibraryId(idList, ids[i]))
                 {
-                    string[] configures = keys.Split('#');
-                    foreach (string keyset in configures)
+                    idList.Add(ids[i]);
+                }
+            }
+
+            pm.MyLibrary = EncodeLibraryConfig(idList);
+        }
+
+        private static bool IsLibraryConfigV2(string keys)
+        {
+            return keys != null && keys.StartsWith(LibraryConfigPrefix);
+        }
+
+        private static string ConvertLegacyLibraryConfig(string keys)
+        {
+            if (keys == null)
+            {
+                return LibraryConfigPrefix;
+            }
+
+            if (keys.Length == 0)
+            {
+                return LibraryConfigPrefix;
+            }
+
+            if (LoreBookCatalog.GetEntryByLegacyId(0) == null)
+            {
+                return keys;
+            }
+
+            List<string> ids = new List<string>();
+            string[] configures = keys.Split('#');
+            int nEntry = 1;
+
+            foreach (string key in configures)
+            {
+                if (key == "1")
+                {
+                    PlayerLibraryEntry entry = LoreBookCatalog.GetLibraryEntryByLegacyRow(nEntry);
+
+                    if (entry != null && !ContainsLibraryId(ids, entry.Id))
                     {
-                        if (records > 0)
-                        {
-                            records--;
-                            string sets = "1";
-                            if (keyset != "1")
-                            {
-                                sets = "0";
-                            }
-
-                            if (nEntry == key && sets == "1")
-                            {
-                                entry = entry + "0#";
-                            }
-                            else if (nEntry == key && sets == "0")
-                            {
-                                entry = entry + "1#";
-                            }
-                            else
-                            {
-                                entry = entry + sets + "#";
-                            }
-
-                            nEntry++;
-                        }
+                        ids.Add(entry.Id);
                     }
                 }
 
-                while (records > 0)
-                {
-                    entry = entry + "0#";
-                    records--;
-                }
-
-                pm.MyLibrary = entry;
+                nEntry++;
             }
+
+            return EncodeLibraryConfig(ids);
+        }
+
+        private static List<string> DecodeLibraryConfig(string keys)
+        {
+            List<string> ids = new List<string>();
+
+            if (!IsLibraryConfigV2(keys))
+            {
+                return ids;
+            }
+
+            string payload = keys.Substring(LibraryConfigPrefix.Length);
+
+            if (payload.Length == 0)
+            {
+                return ids;
+            }
+
+            string[] configures = payload.Split(';');
+
+            foreach (string key in configures)
+            {
+                string id = key.Trim();
+
+                if (id.Length > 0 && !ContainsLibraryId(ids, id))
+                {
+                    ids.Add(id);
+                }
+            }
+
+            return ids;
+        }
+
+        private static string EncodeLibraryConfig(List<string> ids)
+        {
+            return LibraryConfigPrefix + String.Join(";", ids.ToArray());
+        }
+
+        private static bool ContainsLibraryId(List<string> ids, string id)
+        {
+            for (int i = 0; i < ids.Count; i++)
+            {
+                if (String.Compare(ids[i], id, true) == 0)
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         public static string ValChatConfig(Mobile m) // ----------------------------------------------------------------------------------------------

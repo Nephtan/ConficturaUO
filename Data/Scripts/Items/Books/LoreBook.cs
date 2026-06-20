@@ -3,6 +3,7 @@ using System.Collections;
 using System.Globalization;
 using System.Text;
 using Server;
+using Server.Custom.Confictura.LoreBooks;
 using Server.Gumps;
 using Server.Items;
 using Server.Misc;
@@ -21,12 +22,39 @@ namespace Server.Items
             if (BookTrue > 0) { }
             else
             {
-                writeBook(Utility.RandomMinMax(0, 46));
+                LoreBookCatalogEntry entry = LoreBookCatalog.GetRandomLootEntry();
+
+                if (entry != null)
+                {
+                    writeBook(entry.Id);
+                }
+                else
+                {
+                    writeBook(Utility.RandomMinMax(0, 46));
+                }
+            }
+        }
+
+        public void writeBook(string catalogId)
+        {
+            LoreBookCatalogEntry entry = LoreBookCatalog.GetEntry(catalogId);
+
+            if (entry != null)
+            {
+                LoreBookCatalog.ApplyToBook(this, entry);
             }
         }
 
         public void writeBook(int val)
         {
+            LoreBookCatalogEntry catalogEntry = LoreBookCatalog.GetEntryByLegacyId(val);
+
+            if (catalogEntry != null)
+            {
+                writeBook(catalogEntry.Id);
+                return;
+            }
+
             BookRegion = null;
             BookMap = null;
             BookWorld = null;
@@ -36,6 +64,7 @@ namespace Server.Items
 
             ItemID = RandomThings.GetRandomBookItemID();
             Hue = Utility.RandomColor(0);
+            Light = LightType.Empty;
             SetBookCover(0, this);
             BookTitle = Server.Misc.RandomThings.GetBookTitle();
             Name = BookTitle;
@@ -285,6 +314,13 @@ namespace Server.Items
             }
 
             GetText(this);
+            catalogEntry = LoreBookCatalog.GetEntryByLegacyId(val);
+
+            if (catalogEntry != null)
+            {
+                BookItem = catalogEntry.Id;
+            }
+
             Name = BookTitle;
         }
 
@@ -313,6 +349,11 @@ namespace Server.Items
 
         public static void GetText(LoreBook book)
         {
+            if (LoreBookCatalog.ApplyText(book))
+            {
+                return;
+            }
+
             if (book.BookTitle == "Akalabeth's Tale")
             {
                 book.BookText =
