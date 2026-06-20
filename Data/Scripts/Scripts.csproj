@@ -339,6 +339,7 @@
     <Compile Include="Custom\Government System\Vendor\CityRentedVendor.cs" />
     <Compile Include="Custom\Government System\Vendor\SBCityLandLord.cs" />
     <Compile Include="Custom\Government System\Vendor\SBCityManager.cs" />
+    <Compile Include="Custom\LoreBooks\LoreBookCatalog.cs" />
     <Compile Include="Custom\Invasion System\Add Ins\BaseSpecialCreature.cs" />
     <Compile Include="Custom\Invasion System\Add Ins\Lord BlackThorn Clone.cs" />
     <Compile Include="Custom\Invasion System\Add Ins\Metal Assemblies\Assembly Analyzer.cs" />
