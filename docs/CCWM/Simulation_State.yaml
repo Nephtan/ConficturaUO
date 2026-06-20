@@ -1,0 +1,428 @@
+schema:
+  schema_version: 2
+  policy_schema_version: 2
+  run_number: 395
+  last_updated: "2026-05-29T21:03:02.7985787-05:00"
+  active_state_scope: "current playable continuity for the next client-side run"
+  historical_log: "docs/CCWM/Confictura_Codex_World_Map.md"
+
+client_side_runtime_policy:
+  active_model: "client_visible_player"
+  csharp_tracing: "diagnostic_fallback_only"
+  macro_travel_unit: "intention"
+  terrain_checks: "Use only for dense terrain, failed movement, visible obstacles, water, mountains, ruins, dungeons, walls, doors, or unexplained custom friction."
+  threat_heuristics:
+    immediate_threat: "hostile or dangerous mobile within 0-10 tiles"
+    potential_threat: "hostile or dangerous mobile within 11-18 tiles"
+    passive_or_offscreen: "context or route memory only"
+
+account:
+  account_id: "placeholder:first_account"
+  name: "placeholder:first_account"
+  access_level: "Player"
+  character_slot_index: 0
+  other_known_account_characters: []
+  account_character_discovery_flags:
+    - slot: 0
+      name: "Mira Vale"
+      raw_character_discovered: "0#1#0#0#0#0#0#0#0##"
+      decoded_discovery_flags:
+        land_of_sosaria: true
+        land_of_lodoria: false
+        savaged_empire: false
+        ambrosia: false
+        serpent_island: false
+        isle_of_dread: false
+        lodoria_other: false
+        underworld: false
+        unknown_ninth_world: false
+
+identity:
+  serial: "placeholder:runtime_serial_unknown"
+  name: "Mira Vale"
+  access_level: "Player"
+  player: true
+  npc_guild: "None"
+  young: false
+  female: true
+  race: "Human"
+  race_id: 0
+  race_home_land: 0
+  hue: "0x6F6"
+  appearance_terminal_status: "Crash-site appearance terminal was opened/read; skin hue set to 0x6F6; hair and facial-hair hues remain unresolved but unchanged."
+
+fate_tarot:
+  selected_card: "THE STAR"
+  selected_page: 13
+  selected_name: "The Shuttle Crash Site"
+  fate_family: "alien_crash_site"
+  tarot_status: "selected_star_entered_crash_site"
+  current_open_tarot_page: null
+  accessible_tarot_cards_now: []
+  inaccessible_tarot_pages:
+    - { page: 10, card: "Hierophant", gate_reason: "no account character has discovered the Land of Lodoria" }
+    - { page: 11, card: "High Priestess", gate_reason: "no account character has discovered the Land of Lodoria" }
+    - { page: 12, card: "STRNGTH", gate_reason: "no account character has discovered the Savaged Empire" }
+  allow_alien_choice: true
+  visit_lodor: false
+  visit_savage: false
+  access_gate_check_current_run: "Run 395 began post-tarot in Britain and did not attempt any gypsy tarot/start-table/card action. Lodoria, Savage, and Alien gates remain unchanged; double-clicking Tsesas did not affect fate-tarot access."
+
+lifecycle:
+  stage: "britain_tsesas_doubleclick_no_ui_open"
+  has_left_start_flow: true
+  login_status: "logged_in_after_character_creation"
+  create_status: "created_player_mobile"
+  session_marker: "run_1_first_login"
+  elapsed_play_time: "historical play through Run 395; see map log for detailed run archive"
+  last_action: "Run 395 double-clicked adjacent Tsesas after the prior context-click no-op. No paperdoll, backpack, speech row, context menu, gump, vendor surface, target cursor, overhead line, item, gold, skill, quest, discovery, map transition, crime flag, or combat followed."
+  current_goal: "Tsesas is resolved as a no-row and no-paperdoll surface. Stop wasting clicks on him; inspect Moria, Van, or Paulin, route east toward the known shop cluster, or head north toward Bank of Britain."
+  current_open_gumps: []
+  current_open_vendor_window: null
+  current_open_context_menu:
+    status: "none_open"
+    target: "Tsesas"
+    target_serial: 36830
+    target_type: "Server.Mobiles.Humanoid"
+    read_status: "no visible menu entries appeared"
+    visible_choices: []
+    last_choice: "none; no context menu is open"
+    last_result: "No context menu opened on Tsesas in Run 394, and double-clicking him in Run 395 opened no paperdoll or prompt. No speech row, vendor row, trainer row, paperdoll row, gump, target cursor, overhead text, item, gold, skill, quest, discovery, map transition, crime flag, or combat followed."
+  target_cursor:
+    active: false
+    source: null
+    prompt: null
+    visible_choice: null
+    last_cleared_source: "Condon wand-charging service canceled in Run 351 without selecting a target"
+    last_result: "No target cursor opened during Run 395; double-clicking Tsesas produced no paperdoll, menu, or prompt."
+  latest_player_message: "No new player-facing message; Tsesas' double-click produced no visible paperdoll, menu, or speech."
+  next_client_visible_decision: "Stop wasting clicks on Tsesas; inspect Moria, Van, or Paulin, route east toward the known shop cluster, or head north toward the Bank of Britain marker."
+
+location:
+  map: "Map.Sosaria"
+  map_file_index: 1
+  point3d: { x: 2981, y: 1111, z: 0 }
+  facing_direction: "south toward Tsesas after double-clicking him"
+  region_name: "Britain / shopfront south of The Grand Clock Makers"
+  region_type: "open town frontage between The Grand Clock Makers and southern Britain street"
+  guarded: "No combat, target cursor, vendor window, sell list, container, pet stable/claim action, open context menu, paperdoll, or stored public-door return is active. The screen is passive Britain shopfront context with Tsesas adjacent, Donata behind, Melinda/Rosanne north/east, nearby citizens, Paulin at the east edge, the fox, and a coffer that still looks like theft risk."
+  public_area: true
+  visible_blockers:
+    - { type: "Mobile", name: "Tsesas", point3d: { x: 2981, y: 1112, z: 0 }, status: "adjacent passive humanoid; context-click produced no visible menu entries and double-click opened no paperdoll or prompt" }
+    - { type: "Mobile", name: "Donata", point3d: { x: 2979, y: 1104, z: 0 }, status: "passive logger/tradesperson behind Mira; prior speech row produced only an overhead rumor" }
+    - { type: "Static", name: "The Grand Clock Makers", point3d: { x: 2996, y: 1101, z: 5 }, status: "east shop marker; known tinker/guildmaster/trapdoor lead" }
+    - { type: "DarkWoodDoor", name: "DarkWoodDoor", point3d: { x: 2995, y: 1103, z: 5 }, status: "visible clock-shop door frontage" }
+    - { type: "BasementDoor", name: "basement trapdoor", point3d: { x: 2992, y: 1105, z: 5 }, status: "visible trapdoor lead already known as a public-door style basement route" }
+    - { type: "Coffer", name: "coffer", point3d: { x: 2989, y: 1107, z: 11 }, status: "visible shop coffer; still looks like guarded-shop theft risk, not starter loot" }
+    - { type: "Mobile", name: "Paulin", point3d: { x: 2999, y: 1112, z: 0 }, status: "edge-visible town guard east; reinforces the coffer as a theft risk, not free loot" }
+    - { type: "Static", name: "City of Britain", point3d: { x: 2996, y: 1128, z: 0 }, status: "south/east city sign marker at edge of screen" }
+  known_blocked_point3d:
+    summary: "No movement blocker was encountered. Run 395 stayed in place and found Tsesas' double-click is also a no-op/no-paperdoll surface."
+  stored_public_door_return:
+    status: "cleared_after_unicorns_horn_exterior_return"
+    stored_anchor: null
+    evidence: "Run 391 used the interior tavern public door while CharacterPublicDoor was `2982#1089#5#Sosaria#the Unicorn's Horn Tavern`; PublicDoor returned Mira to that exterior point and cleared CharacterPublicDoor."
+
+perception:
+  visual_scan:
+    scan_center: { x: 2981, y: 1111, z: 0 }
+    map: "Map.Sosaria"
+    radius_tiles: 18
+    scan_confidence: "high for committed live-state mobiles/items around Tsesas. The live snapshot is canonical until manually refreshed; playable continuity keeps Mira and the fox near Point3D(2981,1111,0). No hostile or dangerous mobile is acting on Mira. Tsesas' context-click and double-click both produced no visible UI; no gump, context menu, vendor window, paperdoll, target cursor, combat, discovery message, payout, sell list, stable/claim action, or container is open."
+    sources:
+      - "docs/CCWM/live-state/manifest.yaml"
+      - "docs/CCWM/live-state/spawners.jsonl"
+      - "docs/CCWM/live-state/mobiles.jsonl"
+      - "docs/CCWM/live-state/items.jsonl"
+      - "docs/CCWM/client-worldmap-markers/Sosaria.csv"
+      - "docs/CCWM/client-worldmap-markers/Sosaria-Common.csv"
+    visible_mobiles:
+      - { serial: 200274, type: "Server.Mobiles.Fox", name: "a fox", point3d: { x: 2981, y: 1111, z: 0 }, dx: 0, dy: 0, approximate: true, status: "controlled follower by simulation continuity; remained beside Mira while she double-clicked Tsesas" }
+      - { serial: 318084, type: "Server.Mobiles.Tinker", name: "Melinda", point3d: { x: 2989, y: 1096, z: 5 }, dx: 8, dy: -15, status: "visible passive tinker in Grand Clock Makers; buy/repair/identify leads already known" }
+      - { serial: 318085, type: "Server.Mobiles.TinkerGuildmaster", name: "Rosanne", point3d: { x: 2988, y: 1101, z: 5 }, dx: 7, dy: -10, status: "visible passive tinker guildmaster; prior lockpicking quote remains money-gated" }
+      - { serial: 37971, type: "Server.Mobiles.TradesmanLogger", name: "Donata", point3d: { x: 2979, y: 1104, z: 0 }, dx: -2, dy: -7, status: "visible passive logger/tradesperson behind Mira; prior speech row produced only an overhead rumor" }
+      - { serial: 36830, type: "Server.Mobiles.Humanoid", name: "Tsesas", point3d: { x: 2981, y: 1112, z: 0 }, dx: 0, dy: 1, status: "adjacent unusual humanoid; passive, not attacking; context-click produced no menu and double-click opened no paperdoll" }
+      - { serial: 572299, type: "Server.Mobiles.TownGuards", name: "Paulin", point3d: { x: 2999, y: 1112, z: 0 }, dx: 18, dy: 1, status: "edge-visible town guard east" }
+      - { serial: 36831, type: "Server.Mobiles.Citizens", name: "Moria", point3d: { x: 2984, y: 1115, z: 0 }, dx: 3, dy: 4, status: "visible passive citizen south/east" }
+      - { serial: 36833, type: "Server.Mobiles.Citizens", name: "Van", point3d: { x: 2981, y: 1118, z: 0 }, dx: 0, dy: 7, status: "visible passive citizen south" }
+      - { serial: 318091, type: "Server.Mobiles.TownGuards", name: "Gabrielle", point3d: { x: 2999, y: 1124, z: 44 }, dx: 18, dy: 13, status: "edge-visible elevated/upper town guard context, not interacting" }
+    visible_items:
+      - { serial: 1075459010, type: "Server.Items.Static", name: "The Grand Clock Makers", point3d: { x: 2996, y: 1101, z: 5 }, dx: 15, dy: -10, status: "visible clock-shop sign north/east" }
+      - { serial: 1075459003, type: "Server.Items.DarkWoodDoor", name: "DarkWoodDoor", point3d: { x: 2995, y: 1103, z: 5 }, dx: 14, dy: -8, status: "visible clock-shop door frontage" }
+      - { serial: 1075458989, type: "Server.Items.BasementDoor", name: "basement trapdoor", point3d: { x: 2992, y: 1105, z: 5 }, dx: 11, dy: -6, status: "visible basement route already known" }
+      - { serial: 1075461218, type: "Server.Items.Coffer", name: "coffer", point3d: { x: 2989, y: 1107, z: 11 }, dx: 8, dy: -4, status: "visible shop coffer; theft risk, not touched" }
+      - { serial: 1075459011, type: "Server.Items.Static", name: "City of Britain", point3d: { x: 2996, y: 1128, z: 0 }, dx: 15, dy: 17, status: "edge-visible city sign/marker south-east" }
+    visible_running_spawner_objects:
+      - { serial: 1075701452, type: "Server.Mobiles.PremiumSpawner", point3d: { x: 2999, y: 1112, z: 0 }, status: "running TownGuards spawner with Paulin visible at the east edge; route context only, not an active blocker" }
+    client_worldmap_markers:
+      - { name: "The Grand Clock Makers", point2d: { x: 2996, y: 1101 }, source: "Sosaria-Common.csv", use: "north/east shop/trapdoor lead still in screen" }
+      - { name: "The Unicorn's Horn", point2d: { x: 2982, y: 1086 }, source: "Sosaria-Common.csv", use: "north backtrack marker now off current screen edge" }
+      - { name: "Profuse Provisions", point2d: { x: 3009, y: 1111 }, source: "Sosaria-Common.csv", use: "east shop route beyond the clock-shop cluster" }
+      - { name: "City of Britain", point2d: { x: 2996, y: 1128 }, source: "Sosaria-Common.csv", use: "south/east town context marker" }
+      - { name: "Premier Gems", point2d: { x: 3021, y: 1111 }, source: "Sosaria-Common.csv", use: "east shop route beyond Profuse Provisions" }
+      - { name: "The Cleaver", point2d: { x: 2968, y: 1062 }, source: "Sosaria-Common.csv", use: "northwest food/shop marker, off-screen" }
+      - { name: "Britain", point2d: { x: 2999, y: 1060 }, source: "Sosaria.csv", use: "town context marker" }
+      - { name: "Bank of Britain", point2d: { x: 3015, y: 1056 }, source: "Sosaria-Common.csv", use: "north/east bank route, off-screen but known by overlay" }
+    recently_changed_interactions:
+      - target_serial: 36830
+        target_type: "Server.Mobiles.Humanoid"
+        target_name: "Tsesas"
+        last_action: "Run 395 double-clicked adjacent Tsesas from normal range after the prior context-click no-op."
+        result: "No paperdoll, backpack, visible context menu, speech row, vendor row, trainer row, gump, target cursor, overhead text, item, gold, skill, quest, discovery, map transition, crime flag, or combat followed."
+      - target_serial: 37971
+        target_type: "Server.Mobiles.TradesmanLogger"
+        target_name: "Donata"
+        last_action: "Run 393 chose Donata's visible speech/talk row from the already-open context menu."
+        result: "Donata said `Some warlock found dragon like creatures with scales of gems.` The context menu closed and no service gump, buy list, sell list, target cursor, item, gold, skill, quest, discovery, map transition, or combat followed."
+      - target_serial: 1075460040
+        target_type: "Server.Items.PublicDoor"
+        target_name: "door"
+        last_action: "Run 391 ran to the south tavern public door and double-clicked it from normal range."
+        result: "The stored Unicorn's Horn return anchor was consumed. Mira and the fox returned to Point3D(2982,1089,5) outside the tavern, CharacterPublicDoor cleared, and no gump, target cursor, loot, gold, skill, quest, discovery flag, crime flag, or combat followed."
+      - target_serial: 317542
+        target_type: "Server.Mobiles.Shepherd"
+        target_name: "Dominick"
+        last_action: "Run 390 reopened Dominick's context menu and chose the visible Train Taming row."
+        result: "Dominick quoted the normal paid training terms and left Taming as the pending lesson. Mira paid no gold, gained no skill, and walked away in Run 391 without paying."
+      - target_serial: 1075460048
+        target_type: "Server.Items.StatusBoard"
+        target_name: "Status Board"
+        last_action: "Run 381 read the already-open Status Board from around Point3D(3693,3508,0), then closed it without using a roster page arrow."
+        result: "The large StatusGump showed the shard name, online/account/uptime/RAM counters, and roster columns for name, guild, stats, skills, karma, fame, and kills. Closing it cleared the UI. No page arrow was pressed and no quest, reward, discovery, money, skill, item, target cursor, combat, or map transition followed."
+      - target_serial: 1075460037
+        target_type: "Server.Items.AdminBoard"
+        target_name: "News From The Nobles"
+        last_action: "Run 380 pressed the open `Welcome to Confictura` article body's visible top-right board button, then closed the returned News From The Nobles article list."
+        result: "The article button returned to the Lord British article list first; closing that list cleared the news-board UI. No article row was selected this run, and no reward, item, gold, target cursor, quest, discovery, combat, or map transition followed."
+      - target_serial: 1075460073
+        target_type: "Server.Items.GuildBoard"
+        target_name: "Local Guilds"
+        last_action: "Run 377 closed the already-read SAGE ADVICE gump, then double-clicked Local Guilds from normal range and read the visible LOCAL GUILDS gump; Run 378 closed that already-read LOCAL GUILDS gump."
+        result: "The board opened a read-only guild directory/rules gump, and closing it later was pure UI cleanup. It did not join or resign from a guild, move gold, create or delete a ring, alter skills, open a vendor list, start a quest, create a target cursor, change discovery flags, trigger combat, or move maps. It taught that joining requires a guildmaster Join interaction and exact dropped gold starting at 2,000, later joins double the fee, replacement rings cost 400 gold, and Thieves Guild membership gates theft against other players."
+      - target_serial: 1075460072
+        target_type: "Server.Items.SearchBoard"
+        target_name: "Sage Advice"
+        last_action: "Run 376 double-clicked the adjacent Sage Advice board from normal range and read the visible SAGE ADVICE BoardGump; Run 377 closed that already-read gump before using Local Guilds."
+        result: "The board opened an information gump only. It taught the artifact-search route: pay sages 5,000 to 10,000 gold for Legend Lore books, use the artifact page with coordinates and a sextant, and expect searches that may cross unknown lands or worlds. No artifact quest, item, gold movement, target cursor, discovery, combat, or map transition followed."
+      - target_serial: 1075460063
+        target_type: "Server.Items.FishingQuestBoard"
+        target_name: "Seeking Brave Sailors"
+        last_action: "Run 376 chose the visible Done row on the already-open Sailors context menu."
+        result: "The board printed `You are not currently on a quest.` No sailor quest was accepted, no completion payout occurred, and no gump, target cursor, boat, gold, discovery, combat, or map transition followed."
+      - target_serial: 1075460054
+        target_type: "Server.Items.StandardQuestBoard"
+        target_name: "Seeking Brave Adventurers"
+        last_action: "Run 374 chose the visible Done row on the already-open board context menu."
+        result: "The board printed `You are not currently on a quest.` No standard quest was accepted, no completion payout occurred, and no gump, target cursor, gold movement, quest log mutation, or map transition followed."
+      - target_serial: 1075460190
+        target_type: "Server.Items.LiarsDice"
+        target_name: "Liar's Dice Game"
+        last_action: "Run 371 walked to the nearest visible Liar's Dice table and double-clicked it from normal range."
+        result: "The table sent `Sorry, but you must have at least 100 gold in your bank to play!` No buy-in gump, text entry, freeze state, withdrawal, target cursor, discovery, combat, or map transition followed."
+      - target_serial: 1075460204
+        target_type: "Server.Items.Dices"
+        target_name: "Dices"
+        last_action: "Run 371 double-clicked the nearby loose dice from normal range."
+        result: "The dice played a roll sound and printed an overhead two-dice result. No gump, pot, payout, item, target cursor, discovery, combat, or map transition followed."
+      - target_serial: 1075460203
+        target_type: "Server.Items.tarotpoker"
+        target_name: "Deck of Tarot Poker Cards"
+        last_action: "Run 370 double-clicked the adjacent tarot-poker deck, read the random Wheel of Fortune card image and overhead table-rule text, then closed the simple card gump."
+        result: "The deck produced a visible card draw and overhead text saying Mira may take one-tenth of the pot. No pot, gold, item, bank withdrawal, target cursor, discovery, combat, or map transition followed."
+      - target_serial: 1075460200
+        target_type: "Server.Items.HiLoCards"
+        target_name: "High-Low Card Game"
+        last_action: "Run 369 pressed the visible help arrow again on the already-read High-Low Card Game gump, then used the visible Cash Out control."
+        result: "The help panel closed first. Cash Out then closed the table gump with Credits: 0. No Play, ATM withdrawal, payout, item, gold, target cursor, discovery, combat, or map transition followed."
+      - target_serial: 317541
+        target_type: "Server.Mobiles.Waiter"
+        target_name: "Sidney"
+        last_action: "Run 366 closed Sidney's already-read Buy window, context-clicked Sidney again, and chose his visible Sell row."
+        result: "Sidney gave the normal vendor refusal, `You have nothing I would be interested in.` No sell list opened; no item, gold, target cursor, quest, discovery, combat, or map transition followed."
+      - target_serial: 1075458939
+        target_type: "Server.Items.PublicDoor"
+        target_name: "the Unicorn's Horn Tavern"
+        last_action: "Run 364 closed Melinda's Buy window, walked northwest to the visible tavern public door, and double-clicked it from normal range."
+        result: "The door stored an exterior return anchor and moved Mira and the fox to Point3D(3721,3495,0) in the shared tavern room. No UI, loot, target cursor, gold, discovery, skill gain, or combat followed."
+      - target_serial: 318085
+        target_type: "Server.Mobiles.TinkerGuildmaster"
+        target_name: "Rosanne"
+        last_action: "Run 360 context-clicked Rosanne, read the visible guildmaster/trainer menu, and chose the Lockpicking teaching row."
+        result: "Rosanne produced a normal paid-training quote and left a Lockpicking lesson as a money-gated option. No skill gain, item, gold movement, guild membership, gump, target cursor, vendor window, discovery, quest, combat, or movement followed."
+    recently_visible_route_context:
+      - { name: "Tsesas", serial: 36830, point3d: { x: 2981, y: 1112, z: 0 }, relation: "adjacent passive humanoid; context-click and double-click are both no-op/no-ui surfaces" }
+      - { name: "Donata", serial: 37971, point3d: { x: 2979, y: 1104, z: 0 }, relation: "passive logger/tradesperson behind Mira; speech row resolved as overhead rumor, no UI open" }
+      - { name: "Moria", serial: 36831, point3d: { x: 2984, y: 1115, z: 0 }, relation: "nearby passive citizen south/east, not yet interacted from this position" }
+      - { name: "Van", serial: 36833, point3d: { x: 2981, y: 1118, z: 0 }, relation: "nearby passive citizen south, not yet interacted from this position" }
+      - { name: "Paulin", serial: 572299, point3d: { x: 2999, y: 1112, z: 0 }, relation: "edge-visible town guard east; coffer remains a poor theft risk" }
+      - { name: "The Grand Clock Makers", serial: 1075459010, point3d: { x: 2996, y: 1101, z: 5 }, relation: "north/east shop marker with Melinda, Rosanne, the basement trapdoor, and a coffer visible" }
+      - { name: "Bank of Britain", serial: null, point3d: { x: 3015, y: 1056, z: null }, relation: "world-map marker route only; off-screen but known by overlay" }
+
+route_memory:
+  current_route_intent: "Tsesas' no-menu/no-paperdoll result is resolved; move to another nearby citizen/guard or leave for an overlay route while avoiding the coffer."
+  last_route_result: "Run 395 stayed at Point3D(2981,1111,0) and double-clicked adjacent Tsesas. The click produced no paperdoll, menu, prompt, speech, or combat."
+  macro_travel_route_summary: "No macro travel in Run 395. Mira remained at Point3D(2981,1111,0), facing adjacent Tsesas."
+  immediate_options:
+    - "leave Tsesas alone and inspect nearby Moria, Van, or Paulin"
+    - "inspect The Grand Clock Makers frontage, dark wood door, basement trapdoor, Melinda, or Rosanne"
+    - "head toward the Bank of Britain marker or another nearby Britain overlay marker"
+    - "avoid the visible shop coffer unless deliberately accepting theft risk"
+  ordinary_collision_policy: "Town signs, shop doors, porch props, trapdoors, citizens, and frontage walls are visible route geometry; trace only if a normal click produces unexplained custom behavior."
+
+diagnostic_csharp_current_run:
+  reason: "Run 395 used live-state files and world-map marker CSVs for screen context, then traced Humanoid/Citizens/BaseCreature/Mobile double-click and context code only because Tsesas' normal double-click produced no visible paperdoll or prompt after the prior context-click no-op. No helper was invoked as a player action, and no code was traced for routine movement, pet follow, terrain, private timers, or ambient AI."
+  paths_traced:
+    - "docs/CCWM/live-state/manifest.yaml"
+    - "docs/CCWM/live-state/mobiles.jsonl"
+    - "docs/CCWM/live-state/items.jsonl"
+    - "docs/CCWM/live-state/spawners.jsonl"
+    - "docs/CCWM/client-worldmap-markers/Sosaria.csv"
+    - "docs/CCWM/client-worldmap-markers/Sosaria-Common.csv"
+    - "Data/Scripts/Mobiles/Civilized/Citizens/Citizens.cs"
+    - "Data/Scripts/Mobiles/Civilized/Citizens/Humanoid.cs"
+    - "Data/Scripts/Mobiles/Base/BaseCreature.cs"
+    - "Data/System/Source/Mobile.cs"
+  player_visible_result: "Mira double-clicked adjacent Tsesas. No paperdoll, backpack, context menu, speech, target cursor, or UI/message appeared."
+  learned_gate: "Humanoid inherits Citizens, Citizens.GetContextMenuEntries skips adding SpeechGumpEntry for Humanoid, and BaseCreature double-click falls through to Mobile.OnDoubleClick. Mobile only displays a paperdoll if CanPaperdollBeOpenedBy returns true; Tsesas' saved body 9 does not surface a normal player paperdoll here."
+
+vitals_status:
+  alive: true
+  death_state: "alive"
+  blessed: false
+  hidden: false
+  hidden_note: "The Unicorn's Horn Tavern public-door return did not hide Mira; PublicDoor hiding only applies when used from specific regions such as the Dojo, Thieves Guild, Camping Tent, Dungeon Room, or Black Magic Guild."
+  criminal: false
+  wanted: 0
+  murderer: false
+  hunger: 20
+  thirst: 20
+  poison: null
+  disease: null
+  hits: { current: 100, max: 100 }
+  stam: { current: 40, max: 40 }
+  mana: { current: 40, max: 40 }
+  raw_stats: { str: 50, dex: 20, int: 20 }
+  fame: 0
+  karma: 0
+  kills: 0
+
+skills_leveling:
+  profession_label: "warrior"
+  skill_start: 40000
+  skills_cap: 40000
+  computed_overall_level: 10
+  best_archetype: "Alien"
+  notable_skills:
+    Druidism: { base: 1.7, value: 1.7, cap: 100.0, lock: "Up" }
+    Fencing: { base: "unknown", value: "unknown", cap: 100.0, lock: "Up", current_training_status: "starter knife used on training dummy in Run 354 and dart board in Run 355; exact value not remeasured" }
+    Lockpicking: { base: 0.0, value: 0.0, cap: 100.0, lock: "Up", current_training_status: "Rosanne quoted paid Lockpicking training in Run 360; no gold was paid and no skill gain occurred; Run 363 opened Melinda's Buy window instead of training" }
+    Mercantile: { base: 0.0, value: 0.0, cap: 100.0, lock: "Up" }
+    Snooping: { base: 0.0, value: 0.0, cap: 100.0, lock: "Up" }
+    Stealing: { base: 0.5, value: 0.5, cap: 100.0, lock: "Up", current_training_status: "pickpocket dip remains a no-money trainer off-screen in the Thieves Guild" }
+    Tailoring: { base: 0.1, value: 0.1, cap: 100.0, lock: "Up" }
+    Taming: { base: 0.5, value: 0.5, cap: 100.0, lock: "Up", current_training_status: "Dominick quoted a paid Taming lesson in Run 390; no gold was paid and no skill gain occurred." }
+  other_skills_default: { base: 0.0, value: 0.0, cap: 100.0, lock: "Up" }
+  active_skill_timer: null
+  active_learning_offer:
+    teacher: "Dominick"
+    teacher_type: "Server.Mobiles.Shepherd"
+    skill: "Taming"
+    status: "quoted_unpaid_pending_learning_offer_left_teacher_area"
+    quoted_price: "visible trainer price line appeared, but exact number is not preserved in this saved continuity; live-state JSON does not include Dominick's randomized skill base"
+    visible_summary: "Dominick's Train Taming row produced the normal paid-training quote in Run 390. Run 391 walked away and used the public-door return without paying, so no Taming skill increase occurred."
+  last_skill_friction: "Run 390 tested Train Taming. Run 391 walked away without paying, so the quote remains an unpaid lesson marker; Druidism and Veterinary training rows remain untested paid-lesson leads."
+
+inventory_equipment:
+  backpack:
+    exists: true
+    movable: false
+    contents:
+      - { type: "CookedBird", name: "cooked alien meat", amount: 10, hue: "0xB64", fill_factor_each: 10 }
+      - { type: "MedicalRecord", name: "Medical Record", amount: 1, data_patient: "Mira Vale", data_planet: "Alaunrae V", read_status: "opened_read_and_closed", last_appraisal_result: "Suki said she could not put a value on it; Elana said it did not need her identify services" }
+      - { type: "Server.Engines.BulkOrders.SmallTailorBOD", name: "a bulk order deed", amount: 1, hue: "0x483", loot_type: "Blessed", weight: 1.0, amount_finished: 0, amount_to_make: "visible when the deed gump is reopened; exact randomized value not captured", item_requested: "visible low-end cloth tailoring item when the deed gump is reopened; exact randomized item not captured", read_status: "accepted_from_Kachine_read_and_closed", current_gump_open: false }
+      - { type: "Server.Items.ThiefNote", name: "secret note", amount: 1, owner: "Mira Vale", read_status: "gump_closed_generic_rules_read_assignment_unresolved", current_gump_open: false, visible_status: "paper-style note gump was closed in Run 328; generic rules are known, but exact randomized NoteStory assignment line is unresolved in saved continuity" }
+    known_missing_tools:
+      - { type: "Server.Items.Lockpick", status: "not present in the known backpack contents; Melinda's tinker shop can price lockpicks when stocked, but Mira bought none" }
+      - { type: "Server.Items.BaseMagicStaff", status: "no known magic wand/staff in the visible backpack contents" }
+  equipped_items_by_layer:
+    shirt: { type: "FancyShirt", name: "fancy shirt" }
+    shoes: { type: "Boots", name: "boots" }
+    pants: { type: "LongPants", name: "long pants" }
+    weapon: { type: "Dagger", name: "knife" }
+  held_light_source: null
+  gold_currency: 0
+  last_loot_friction: "Run 395 only double-clicked Tsesas and opened no UI. Mira has 0 gold, paid nothing, gained no skill, and no known backpack/equipment item was sold, purchased, stabled, claimed, opened as a container, looted, dragged, dropped, awarded, created, deleted, mounted, or moved. The nearby clock-shop coffer remains untouched theft risk."
+  bank: "Bank balance/storage were previously seen as 0; Liar's Dice reinforced that Mira does not meet the 100-gold bank gate. Bank of Britain is off-screen north/east from the current Tsesas/clock-shop frontage but known by world-map marker."
+  bank_box:
+    status: "closed_after_thieves_guild_empty_inspection"
+    visible_contents: []
+
+followers:
+  current_count: 1
+  max_count: 5
+  controlled:
+    - serial: 200274
+      type: "Server.Mobiles.Fox"
+      name: "a fox"
+      point3d: { x: 2981, y: 1111, z: 0 }
+      approximate: true
+      control_slots: 1
+      control_order: "Follow"
+      control_target: "Mira Vale"
+      control_master: "Mira Vale"
+      controlled: true
+      bonded: false
+      player_use: "companion only; remained with Mira while she stood beside Tsesas. The fox is not stabled and is not protection unless combat or body-blocking is deliberately engaged."
+  travel_assumption: "A pet ordered to Follow keeps up within practical update range during routine travel and is teleported with the player by public-door transitions."
+
+quests_progression:
+  character_discovered_raw: "0#1#0#0#0#0#0#0#0##"
+  character_discovered_decoded_nine_world_map:
+    land_of_sosaria: true
+    land_of_lodoria: false
+    savaged_empire: false
+    ambrosia: false
+    serpent_island: false
+    isle_of_dread: false
+    unknown_7: false
+    unknown_8: false
+    unknown_9: false
+  current_quest_object: { type: "Server.Items.ThiefNote", name: "secret note", source: "Lore thief job row", status: "closed NoteGump; generic theft rules read; exact randomized NoteStory line still absent from saved continuity and must be manually captured before route planning" }
+  current_standard_quest_object: null
+  standard_quest_board_context: "Seeking Brave Adventurers Done row was selected at Point3D(3693,3508,2) with no active standard quest; it printed `You are not currently on a quest.` No hire/start row was selected, so no standard quest object exists."
+  current_fishing_quest_object: null
+  fishing_quest_board_context: "Seeking Brave Sailors Done row was selected at Point3D(3695,3508,2) with no active fishing quest; the board printed `You are not currently on a quest.` No hire/start row was selected, so no fishing quest object exists."
+  completed_quests: []
+  acquired_recipes: []
+  recent_rumors:
+    - { speaker: "Donata", text: "Some warlock found dragon like creatures with scales of gems.", status: "fresh generic citizen rumor; route flavor only, no quest object or marker" }
+    - { speaker: "Peter", text: "I heard many tales of adventurers going to the Flooded Temple and seeing the 'Evil Kryss of Gayrone the Explorer'.", status: "long-term gossip only" }
+    - { speaker: "Markos", text: "I overheard someone tell of dark elves summoning demons in dungeon destard.", status: "long-term danger/dungeon gossip only" }
+
+playstyle_settings:
+  CharacterMOTD: 0
+  CharacterWanted: 0
+  CharacterLoot: 0
+  CharacterPublicDoor: null
+  NONPK_PvP_consent_state: "neutral/null; still eligible for player-facing PvP choice flow"
+  WeaponBarOpen: "unknown"
+
+ui_tools_books_bars:
+  MyChat: null
+  RegBar: null
+  MyLibrary: null
+  QuickBar: null
+  MusicPlaylist: null
+  UsingAncientBook: false
+  open_toolbar_state: "unknown"
+
+timers_effects_cooldowns:
+  active_buffs_debuffs: []
+  peaced_until: null
+  ankh_next_use: null
+  compassion_gains_today: 0
+  active_taming_timer: null
+
+verification_policy:
+  no_msbuild_required: true
+  reason: "documentation/state simulation only"

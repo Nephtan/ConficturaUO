@@ -28,3 +28,9 @@ Info/online.txt
 Info/quests.txt
 Info/deaths.txt
 *.zip
+__pycache__/
+*.pyc
+/docs/CCWM/tools/live-state-exporter/bin/
+/docs/CCWM/tools/live-state-exporter/obj/
+/docs/CCWM/tools/live-state-exporter/tmp-export/
+discord_announcements_log.json

@@ -4856,17 +4856,36 @@ namespace Server.Misc
 
         public static void MakeAssassinNote(Mobile from)
         {
+            if (from == null)
+            {
+                return;
+            }
+
+            string title = from.Title;
+
+            if (title == null || title.Length == 0)
+            {
+                return;
+            }
+
+            BaseCreature bc_from = from as BaseCreature;
+
+            if (bc_from == null)
+            {
+                return;
+            }
+
             bool MakeNote = false;
 
-            if (from.Title.Contains(" assassin"))
+            if (title.Contains(" assassin"))
             {
                 MakeNote = true;
             }
-            else if (from.Title.Contains(" hunter"))
+            else if (title.Contains(" hunter"))
             {
                 MakeNote = true;
             }
-            else if (from.Title.Contains(" ninja"))
+            else if (title.Contains(" ninja"))
             {
                 MakeNote = true;
             }
@@ -5147,7 +5166,7 @@ namespace Server.Misc
 
                     AssassinNote letter = new AssassinNote();
                     letter.LetterMessage = ScrollText;
-                    ((BaseCreature)from).PackItem(letter);
+                    bc_from.PackItem(letter);
                 }
             }
         }

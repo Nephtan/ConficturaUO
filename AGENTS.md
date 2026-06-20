@@ -18,17 +18,17 @@ The agent's primary objective is to assist with the development and maintenance 
 
 * **Framework:** .NET Framework 4.8
 
-* **IDE:** The project is developed using Visual Studio Community 2022.
+* **IDE/Build Tools:** Use Visual Studio 2022 with .NET Framework build tools. Visual Studio Community 2022 is sufficient, but other Visual Studio 2022 editions should work.
 
 * **Core Dependencies:** The `Data/Scripts/Scripts.csproj` project depends on the core engine project at `Data/System/Source/Server.csproj`. Keep this relationship in mind when analyzing or modifying code.
 
-* **Line Endings:** Use (LF) line endings to remain compatible with the server environment.
+* **Line Endings:** Prefer LF for committed text files you edit. This checkout currently has `core.autocrlf=true` and no `.gitattributes`, so Git may materialize CRLF in the working tree; avoid mass line-ending-only rewrites.
 
 ## Known Build Workflows
 
-* **Preferred Build Entry Point:** Open `ConficturaUO.sln` in Visual Studio 2022. This is the maintained server build workflow. The solution includes `Data/System/Source/Server.csproj` and `Data/Scripts/Scripts.csproj`, and the `Scripts` project depends on `Server`.
+* **Preferred Build Entry Point:** Open `ConficturaUO.sln` in Visual Studio 2022. This is the maintained server build workflow. The solution includes `Data/System/Source/Server.csproj` and `Data/Scripts/Scripts.csproj`, and the `Scripts` project depends on `Server`. Use `Debug|Any CPU`, `Release|Any CPU`, or `Release|x86` when building both projects from the solution; `Debug|x86` currently builds only the `Server` project.
 
-* **Command-Line Solution Build:** From a Visual Studio Developer PowerShell/Command Prompt, use `msbuild ConficturaUO.sln /p:Configuration=Debug /p:Platform=x86` or `msbuild ConficturaUO.sln /p:Configuration=Release /p:Platform=x86`. If `msbuild` is not on PATH, use the Visual Studio 2022 MSBuild executable directly. The solution maps the `Server` project to `x86` and the `Scripts` project to `Any CPU`.
+* **Command-Line Solution Build:** From a Visual Studio Developer PowerShell/Command Prompt, use `msbuild ConficturaUO.sln /p:Configuration=Debug /p:Platform="Any CPU"`, `msbuild ConficturaUO.sln /p:Configuration=Release /p:Platform="Any CPU"`, or `msbuild ConficturaUO.sln /p:Configuration=Release /p:Platform=x86` for full solution builds. If `msbuild` is not on PATH, use the Visual Studio 2022 MSBuild executable directly. In full solution configurations, the solution maps the `Server` project to `x86` and the `Scripts` project to `Any CPU`.
 
 * **Command-Line Project Builds:** For narrower builds, use `msbuild Data/System/Source/Server.csproj /p:Configuration=Debug /p:Platform=x86` or `msbuild Data/System/Source/Server.csproj /p:Configuration=Release /p:Platform=x86` for the server, or `msbuild Data/Scripts/Scripts.csproj /p:Configuration=Debug /p:Platform=AnyCPU` or `msbuild Data/Scripts/Scripts.csproj /p:Configuration=Release /p:Platform=AnyCPU` for scripts. `Scripts.csproj` has a project reference to `..\System\Source\Server.csproj`, so building scripts also pulls in the server project.
 
@@ -163,7 +163,7 @@ If your task requires modifying or creating files, follow these steps:
 
 * **Pre-Commit Enforcement:** This checkout currently has no active commit-blocking linter, formatter, or static-analysis hook. `.git/hooks` contains only disabled `.sample` hook templates, `core.hooksPath` is unset, and the repository does not contain `.gitattributes`, `.pre-commit-config.yaml`, or `.pre-commit-config.yml`. The inactive Git `pre-commit.sample` template would check for non-ASCII filenames and staged whitespace errors if renamed to `pre-commit`, but those checks are not currently enforced.
 
-4. **Maintain a Clean Worktree:** Run `git status` to confirm your commit. Your worktree must be in a clean state when you are finished.
+4. **Maintain a Clean Worktree:** Run `git status` to confirm your commit. Your own changes must be committed and clean when you are finished. If unrelated pre-existing changes remain, mention them and do not modify or revert them.
 
 5. **Do Not Amend History:** Do not modify or amend existing commits.
 
