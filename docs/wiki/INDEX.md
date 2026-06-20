@@ -102,6 +102,7 @@ Guides are grouped by primary audience and use case.
 - [Change Season Command](Change_Season_Command.md)
 - [Character Swap](Character_Swap.md)
 - [GM Hiding Stone](GM_Hiding_Stone.md)
+- [Lore Book Catalog](Lore_Book_Catalog.md)
 - [NPC Control Commands](NPC_Control_Commands.md)
 - [Pandora's Gift Box](Pandoras_Gift_Box.md)
 - [Staff Toolbar](Staff_Toolbar.md)
