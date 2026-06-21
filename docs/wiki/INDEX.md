@@ -115,6 +115,7 @@ Guides are grouped by primary audience and use case.
 - [Clone Offline Player Characters](Clone_Offline_Player_Characters.md)
 - [Command Utilities](Command_Utilities.md)
 - [Creature AI Core](Creature_AI_Core.md)
+- [Coding Gumps](Coding_Gumps.md)
 - [Gump Framework](Gump_Framework.md)
 - [Misc Core Systems](Misc_Core_Systems.md)
 - [Obsolete Script Collection](Obsolete_Script_Collection.md)
