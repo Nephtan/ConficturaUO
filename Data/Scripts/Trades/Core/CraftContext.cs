@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Server.Items;
 
 namespace Server.Engines.Craft
 {
@@ -19,6 +20,11 @@ namespace Server.Engines.Craft
         private int m_LastGroupIndex;
         private bool m_DoNotColor;
         private CraftMarkOption m_MarkOption;
+        private int m_MakeAmount;
+        private CraftItem m_MakeAmountItem;
+        private Type m_MakeAmountTypeRes;
+        private BaseTool m_MakeAmountTool;
+        private int m_MakeAmountRemaining;
 
         public List<CraftItem> Items
         {
@@ -49,6 +55,11 @@ namespace Server.Engines.Craft
             get { return m_MarkOption; }
             set { m_MarkOption = value; }
         }
+        public int MakeAmount
+        {
+            get { return m_MakeAmount; }
+            set { m_MakeAmount = value; }
+        }
 
         public CraftContext()
         {
@@ -56,6 +67,7 @@ namespace Server.Engines.Craft
             m_LastResourceIndex = -1;
             m_LastResourceIndex2 = -1;
             m_LastGroupIndex = -1;
+            m_MakeAmount = 1;
         }
 
         public CraftItem LastMade
@@ -77,6 +89,53 @@ namespace Server.Engines.Craft
                 m_Items.RemoveAt(9);
 
             m_Items.Insert(0, item);
+        }
+
+        public void StartMakeAmountBatch(CraftItem item, Type typeRes, BaseTool tool, int amount)
+        {
+            if (item == null || tool == null || tool.Deleted || amount <= 1)
+            {
+                ClearMakeAmountBatch();
+                return;
+            }
+
+            m_MakeAmountItem = item;
+            m_MakeAmountTypeRes = typeRes;
+            m_MakeAmountTool = tool;
+            m_MakeAmountRemaining = amount - 1;
+        }
+
+        public void ClearMakeAmountBatch()
+        {
+            m_MakeAmountItem = null;
+            m_MakeAmountTypeRes = null;
+            m_MakeAmountTool = null;
+            m_MakeAmountRemaining = 0;
+        }
+
+        public bool ConsumeMakeAmountBatch(CraftItem item, Type typeRes, BaseTool tool)
+        {
+            if (
+                m_MakeAmountItem != item
+                || m_MakeAmountTypeRes != typeRes
+                || m_MakeAmountTool != tool
+                || tool == null
+                || tool.Deleted
+                || tool.UsesRemaining <= 0
+            )
+            {
+                ClearMakeAmountBatch();
+                return false;
+            }
+
+            if (m_MakeAmountRemaining <= 0)
+            {
+                ClearMakeAmountBatch();
+                return false;
+            }
+
+            m_MakeAmountRemaining--;
+            return true;
         }
     }
 }

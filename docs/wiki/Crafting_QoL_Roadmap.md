@@ -193,6 +193,14 @@ Acceptance criteria:
 - Missing resources, invalid skill, broken tool, lost tool access, recipe lockout, or expansion lockout stop the sequence cleanly.
 - Single-attempt crafting remains unchanged when amount is `1`.
 
+Phase 2 implementation notes:
+
+- Main `CraftGump` footer uses `Amount` label `(150,402)` and text entry `(215,402,45,18)` between Exit and Make Last.
+- `CraftGumpItem` footer uses `Amount` label `(150,387)` and text entry `(215,387,45,18)` between Back and Make Now.
+- Amount text-entry ID is `9000`; accepted numeric input is clamped to `1..100`, and non-numeric or blank input reopens the current gump with `Enter an amount from 1 to 100.`
+- Repeated crafting is runtime-only `CraftContext` state. The first attempt starts normally; each subsequent attempt is scheduled only after the previous craft timer completes and `EndAction(typeof(CraftSystem))` has run.
+- The sequence stops on hard validation failures, deleted/broken tools, recipe/expansion/skill lockouts, missing resources, special faction imbue handoff, or custom craft handoff.
+
 ### Phase 3 - Batch Status And Summary
 
 Make repeated crafting understandable while it is running.

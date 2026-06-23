@@ -1077,6 +1077,36 @@ namespace Server.Engines.Craft
 
         public void Craft(Mobile from, CraftSystem craftSystem, Type typeRes, BaseTool tool)
         {
+            Craft(from, craftSystem, typeRes, tool, CraftGump.MinMakeAmount, false);
+        }
+
+        public void Craft(
+            Mobile from,
+            CraftSystem craftSystem,
+            Type typeRes,
+            BaseTool tool,
+            int makeAmount
+        )
+        {
+            Craft(from, craftSystem, typeRes, tool, makeAmount, false);
+        }
+
+        private void Craft(
+            Mobile from,
+            CraftSystem craftSystem,
+            Type typeRes,
+            BaseTool tool,
+            int makeAmount,
+            bool continuingMakeAmount
+        )
+        {
+            CraftContext context = craftSystem.GetContext(from);
+
+            if (makeAmount < CraftGump.MinMakeAmount)
+                makeAmount = CraftGump.MinMakeAmount;
+            else if (makeAmount > CraftGump.MaxMakeAmount)
+                makeAmount = CraftGump.MaxMakeAmount;
+
             if (from.BeginAction(typeof(CraftSystem)))
             {
                 if (
@@ -1125,7 +1155,16 @@ namespace Server.Engines.Craft
 
                                     if (ConsumeAttributes(from, ref message, false))
                                     {
-                                        CraftContext context = craftSystem.GetContext(from);
+                                        if (!continuingMakeAmount)
+                                        {
+                                            if (context != null)
+                                                context.StartMakeAmountBatch(
+                                                    this,
+                                                    typeRes,
+                                                    tool,
+                                                    makeAmount
+                                                );
+                                        }
 
                                         if (context != null)
                                             context.OnMade(this);
@@ -1145,6 +1184,9 @@ namespace Server.Engines.Craft
                                     }
                                     else
                                     {
+                                        if (context != null)
+                                            context.ClearMakeAmountBatch();
+
                                         from.EndAction(typeof(CraftSystem));
                                         from.SendGump(
                                             new CraftGump(from, craftSystem, tool, message)
@@ -1153,30 +1195,45 @@ namespace Server.Engines.Craft
                                 }
                                 else
                                 {
+                                    if (context != null)
+                                        context.ClearMakeAmountBatch();
+
                                     from.EndAction(typeof(CraftSystem));
                                     from.SendGump(new CraftGump(from, craftSystem, tool, message));
                                 }
                             }
                             else
                             {
+                                if (context != null)
+                                    context.ClearMakeAmountBatch();
+
                                 from.EndAction(typeof(CraftSystem));
                                 from.SendGump(new CraftGump(from, craftSystem, tool, badCraft));
                             }
                         }
                         else
                         {
+                            if (context != null)
+                                context.ClearMakeAmountBatch();
+
                             from.EndAction(typeof(CraftSystem));
                             from.SendGump(new CraftGump(from, craftSystem, tool, 1072847)); // You must learn that recipe from a scroll.
                         }
                     }
                     else
                     {
+                        if (context != null)
+                            context.ClearMakeAmountBatch();
+
                         from.EndAction(typeof(CraftSystem));
                         from.SendGump(new CraftGump(from, craftSystem, tool, 1044153)); // You don't have the required skills to attempt this item.
                     }
                 }
                 else
                 {
+                    if (context != null)
+                        context.ClearMakeAmountBatch();
+
                     from.EndAction(typeof(CraftSystem));
                     from.SendGump(
                         new CraftGump(
@@ -1190,6 +1247,9 @@ namespace Server.Engines.Craft
             }
             else
             {
+                if (continuingMakeAmount && context != null)
+                    context.ClearMakeAmountBatch();
+
                 from.SendLocalizedMessage(500119); // You must wait to perform another action
             }
         }
@@ -1207,6 +1267,104 @@ namespace Server.Engines.Craft
                         "The \"{0}\" expansion is required to attempt this item.",
                         ExpansionInfo.GetInfo(expansion).Name
                     );
+            }
+        }
+
+        private void ContinueMakeAmountBatch(
+            Mobile from,
+            CraftSystem craftSystem,
+            Type typeRes,
+            BaseTool tool
+        )
+        {
+            CraftContext context = craftSystem.GetContext(from);
+
+            if (context == null || !context.ConsumeMakeAmountBatch(this, typeRes, tool))
+                return;
+
+            Timer.DelayCall(
+                TimeSpan.Zero,
+                new TimerStateCallback(ContinueMakeAmountBatch_Callback),
+                new MakeAmountBatchState(from, craftSystem, this, typeRes, tool)
+            );
+        }
+
+        private static void ContinueMakeAmountBatch_Callback(object state)
+        {
+            MakeAmountBatchState batchState = state as MakeAmountBatchState;
+
+            if (batchState == null)
+                return;
+
+            Mobile from = batchState.From;
+            CraftSystem craftSystem = batchState.CraftSystem;
+            CraftItem craftItem = batchState.CraftItem;
+            Type typeRes = batchState.TypeRes;
+            BaseTool tool = batchState.Tool;
+
+            if (from == null || from.Deleted || craftSystem == null || craftItem == null)
+                return;
+
+            CraftContext context = craftSystem.GetContext(from);
+
+            if (context == null)
+                return;
+
+            if (tool == null || tool.Deleted || tool.UsesRemaining <= 0)
+            {
+                context.ClearMakeAmountBatch();
+                return;
+            }
+
+            craftItem.Craft(from, craftSystem, typeRes, tool, CraftGump.MinMakeAmount, true);
+        }
+
+        private class MakeAmountBatchState
+        {
+            private Mobile m_From;
+            private CraftSystem m_CraftSystem;
+            private CraftItem m_CraftItem;
+            private Type m_TypeRes;
+            private BaseTool m_Tool;
+
+            public MakeAmountBatchState(
+                Mobile from,
+                CraftSystem craftSystem,
+                CraftItem craftItem,
+                Type typeRes,
+                BaseTool tool
+            )
+            {
+                m_From = from;
+                m_CraftSystem = craftSystem;
+                m_CraftItem = craftItem;
+                m_TypeRes = typeRes;
+                m_Tool = tool;
+            }
+
+            public Mobile From
+            {
+                get { return m_From; }
+            }
+
+            public CraftSystem CraftSystem
+            {
+                get { return m_CraftSystem; }
+            }
+
+            public CraftItem CraftItem
+            {
+                get { return m_CraftItem; }
+            }
+
+            public Type TypeRes
+            {
+                get { return m_TypeRes; }
+            }
+
+            public BaseTool Tool
+            {
+                get { return m_Tool; }
             }
         }
 
@@ -1586,10 +1744,14 @@ namespace Server.Engines.Craft
             CustomCraft customCraft
         )
         {
+            CraftContext context = craftSystem.GetContext(from);
             int badCraft = craftSystem.CanCraft(from, tool, m_Type);
 
             if (badCraft > 0)
             {
+                if (context != null)
+                    context.ClearMakeAmountBatch();
+
                 if (tool != null && !tool.Deleted && tool.UsesRemaining > 0)
                     from.SendGump(new CraftGump(from, craftSystem, tool, badCraft));
                 else
@@ -1615,6 +1777,9 @@ namespace Server.Engines.Craft
                 )
             )
             {
+                if (context != null)
+                    context.ClearMakeAmountBatch();
+
                 if (tool != null && !tool.Deleted && tool.UsesRemaining > 0)
                     from.SendGump(new CraftGump(from, craftSystem, tool, checkMessage));
                 else if (checkMessage is int && (int)checkMessage > 0)
@@ -1626,6 +1791,9 @@ namespace Server.Engines.Craft
             }
             else if (!ConsumeAttributes(from, ref checkMessage, false))
             {
+                if (context != null)
+                    context.ClearMakeAmountBatch();
+
                 if (tool != null && !tool.Deleted && tool.UsesRemaining > 0)
                     from.SendGump(new CraftGump(from, craftSystem, tool, checkMessage));
                 else if (checkMessage is int && (int)checkMessage > 0)
@@ -1664,6 +1832,9 @@ namespace Server.Engines.Craft
                     )
                 )
                 {
+                    if (context != null)
+                        context.ClearMakeAmountBatch();
+
                     if (tool != null && !tool.Deleted && tool.UsesRemaining > 0)
                         from.SendGump(new CraftGump(from, craftSystem, tool, message));
                     else if (message is int && (int)message > 0)
@@ -1675,6 +1846,9 @@ namespace Server.Engines.Craft
                 }
                 else if (!ConsumeAttributes(from, ref message, true))
                 {
+                    if (context != null)
+                        context.ClearMakeAmountBatch();
+
                     if (tool != null && !tool.Deleted && tool.UsesRemaining > 0)
                         from.SendGump(new CraftGump(from, craftSystem, tool, message));
                     else if (message is int && (int)message > 0)
@@ -3902,6 +4076,10 @@ namespace Server.Engines.Craft
                 // TODO: Scroll imbuing
 
                 if (queryFactionImbue)
+                {
+                    if (context != null)
+                        context.ClearMakeAmountBatch();
+
                     from.SendGump(
                         new FactionImbueGump(
                             quality,
@@ -3915,13 +4093,29 @@ namespace Server.Engines.Craft
                             def
                         )
                     );
+                }
                 else if (tool != null && !tool.Deleted && tool.UsesRemaining > 0)
+                {
                     from.SendGump(new CraftGump(from, craftSystem, tool, num));
+                    ContinueMakeAmountBatch(from, craftSystem, typeRes, tool);
+                }
                 else if (num > 0)
+                {
+                    if (context != null)
+                        context.ClearMakeAmountBatch();
+
                     from.SendLocalizedMessage(num);
+                }
+                else if (context != null)
+                {
+                    context.ClearMakeAmountBatch();
+                }
             }
             else if (!allRequiredSkills)
             {
+                if (context != null)
+                    context.ClearMakeAmountBatch();
+
                 if (tool != null && !tool.Deleted && tool.UsesRemaining > 0)
                     from.SendGump(new CraftGump(from, craftSystem, tool, 1044153));
                 else
@@ -3949,6 +4143,9 @@ namespace Server.Engines.Craft
                     )
                 )
                 {
+                    if (context != null)
+                        context.ClearMakeAmountBatch();
+
                     if (tool != null && !tool.Deleted && tool.UsesRemaining > 0)
                         from.SendGump(new CraftGump(from, craftSystem, tool, message));
                     else if (message is int && (int)message > 0)
@@ -3979,9 +4176,21 @@ namespace Server.Engines.Craft
                 );
 
                 if (tool != null && !tool.Deleted && tool.UsesRemaining > 0)
+                {
                     from.SendGump(new CraftGump(from, craftSystem, tool, num));
+                    ContinueMakeAmountBatch(from, craftSystem, typeRes, tool);
+                }
                 else if (num > 0)
+                {
+                    if (context != null)
+                        context.ClearMakeAmountBatch();
+
                     from.SendLocalizedMessage(num);
+                }
+                else if (context != null)
+                {
+                    context.ClearMakeAmountBatch();
+                }
             }
         }
 
@@ -4028,10 +4237,14 @@ namespace Server.Engines.Craft
                 {
                     m_From.EndAction(typeof(CraftSystem));
 
+                    CraftContext context = m_CraftSystem.GetContext(m_From);
                     int badCraft = m_CraftSystem.CanCraft(m_From, m_Tool, m_CraftItem.m_Type);
 
                     if (badCraft > 0)
                     {
+                        if (context != null)
+                            context.ClearMakeAmountBatch();
+
                         if (m_Tool != null && !m_Tool.Deleted && m_Tool.UsesRemaining > 0)
                             m_From.SendGump(new CraftGump(m_From, m_CraftSystem, m_Tool, badCraft));
                         else
@@ -4051,8 +4264,6 @@ namespace Server.Engines.Craft
                         ref allRequiredSkills,
                         false
                     );
-
-                    CraftContext context = m_CraftSystem.GetContext(m_From);
 
                     if (context == null)
                         return;
@@ -4082,6 +4293,7 @@ namespace Server.Engines.Craft
                         if (cc != null)
                             cc.EndCraftAction();
 
+                        context.ClearMakeAmountBatch();
                         return;
                     }
 

@@ -12,12 +12,14 @@ namespace Server.Engines.Craft
         private CraftSystem m_CraftSystem;
         private CraftItem m_CraftItem;
         private BaseTool m_Tool;
+        private object m_Notice;
 
         private const int LabelHue = 0x480; // 0x384
         private const int RedLabelHue = 0x20;
 
         private const int LabelColor = 0x7FFF;
         private const int RedLabelColor = 0x6400;
+        private const int FontColor = 0xFFFFFF;
 
         private const int GreyLabelColor = 0x3DEF;
 
@@ -33,12 +35,24 @@ namespace Server.Engines.Craft
             CraftItem craftItem,
             BaseTool tool
         )
+            : this(from, craftSystem, craftItem, tool, null)
+        {
+        }
+
+        public CraftGumpItem(
+            Mobile from,
+            CraftSystem craftSystem,
+            CraftItem craftItem,
+            BaseTool tool,
+            object notice
+        )
             : base(40, 40)
         {
             m_From = from;
             m_CraftSystem = craftSystem;
             m_CraftItem = craftItem;
             m_Tool = tool;
+            m_Notice = notice;
 
             from.CloseGump(typeof(CraftGump));
             from.CloseGump(typeof(CraftGumpItem));
@@ -110,6 +124,51 @@ namespace Server.Engines.Craft
             return null;
         }
 
+        private void AddMakeAmountField(int x, int y)
+        {
+            CraftContext context = m_CraftSystem.GetContext(m_From);
+
+            AddLabel(x, y, LabelHue, "Amount");
+            AddTextEntry(
+                x + 65,
+                y,
+                45,
+                18,
+                LabelHue,
+                CraftGump.MakeAmountTextEntryID,
+                CraftGump.GetMakeAmount(context).ToString()
+            );
+        }
+
+        private void AddNotice()
+        {
+            if (m_Notice is int && (int)m_Notice > 0)
+            {
+                AddHtmlLocalized(
+                    170,
+                    302 + (m_OtherCount++ * 20),
+                    310,
+                    18,
+                    (int)m_Notice,
+                    LabelColor,
+                    false,
+                    false
+                );
+            }
+            else if (m_Notice is string)
+            {
+                AddHtml(
+                    170,
+                    302 + (m_OtherCount++ * 20),
+                    310,
+                    18,
+                    String.Format("<BASEFONT COLOR=#{0:X6}>{1}</BASEFONT>", FontColor, m_Notice),
+                    false,
+                    false
+                );
+            }
+        }
+
         // Builds a single page of the crafting gump, including navigation controls,
         // the per-page resource list, and the "Other" section messaging.
         private void BuildPage(
@@ -176,7 +235,9 @@ namespace Server.Engines.Craft
                 AddHtml(10, 12, 510, 20, m_CraftSystem.GumpTitleString, false, false);
 
             AddButton(15, 387, 4014, 4016, 0, GumpButtonType.Reply, 0);
-            AddHtmlLocalized(50, 390, 150, 18, 1044150, LabelColor, false, false); // BACK
+            AddHtmlLocalized(50, 390, 90, 18, 1044150, LabelColor, false, false); // BACK
+
+            AddMakeAmountField(150, 387);
 
             if (needsRecipe)
             {
@@ -195,6 +256,8 @@ namespace Server.Engines.Craft
                 AddLabel(330, 40, LabelHue, m_CraftItem.NameString);
 
             m_OtherCount = 0;
+
+            AddNotice();
 
             if (m_CraftItem.UseAllRes)
                 AddHtmlLocalized(
@@ -458,6 +521,23 @@ namespace Server.Engines.Craft
             if (sender == null || m_From == null || m_From.Deleted || sender.Mobile != m_From)
                 return;
 
+            CraftContext context = m_CraftSystem.GetContext(m_From);
+            int makeAmount;
+
+            if (!CraftGump.TryReadMakeAmount(info, context, out makeAmount))
+            {
+                m_From.SendGump(
+                    new CraftGumpItem(
+                        m_From,
+                        m_CraftSystem,
+                        m_CraftItem,
+                        m_Tool,
+                        CraftGump.MakeAmountInvalidMessage
+                    )
+                );
+                return;
+            }
+
             // Back Button
             if (info.ButtonID == 0)
             {
@@ -475,8 +555,6 @@ namespace Server.Engines.Craft
                 else
                 {
                     Type type = null;
-
-                    CraftContext context = m_CraftSystem.GetContext(m_From);
 
                     if (context != null)
                     {
@@ -523,7 +601,8 @@ namespace Server.Engines.Craft
                         m_CraftItem.ItemType,
                         type,
                         m_Tool,
-                        m_CraftItem
+                        m_CraftItem,
+                        makeAmount
                     );
                 }
             }
