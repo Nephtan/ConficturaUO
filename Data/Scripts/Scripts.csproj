@@ -6505,8 +6505,8 @@
     <Compile Include="Trades\Core\CraftContext.cs" />
     <Compile Include="Trades\Core\CraftGroup.cs" />
     <Compile Include="Trades\Core\CraftGroupCol.cs" />
-    <Compile Include="Trades\Core\CraftGump.cs" />
-    <Compile Include="Trades\Core\CraftGumpItem.cs" />
+    <Compile Include="Trades\Core\Gumps\CraftGump.cs" />
+    <Compile Include="Trades\Core\Gumps\CraftGumpItem.cs" />
     <Compile Include="Trades\Core\CraftItem.cs" />
     <Compile Include="Trades\Core\CraftItemCol.cs" />
     <Compile Include="Trades\Core\CraftItemIDAttribute.cs" />
@@ -6519,7 +6519,7 @@
     <Compile Include="Trades\Core\CraftSystem.cs" />
     <Compile Include="Trades\Core\CustomCraft.cs" />
     <Compile Include="Trades\Core\Enhance.cs" />
-    <Compile Include="Trades\Core\QueryMakersMarkGump.cs" />
+    <Compile Include="Trades\Core\Gumps\QueryMakersMarkGump.cs" />
     <Compile Include="Trades\Core\Recipes.cs" />
     <Compile Include="Trades\Core\Repair.cs" />
     <Compile Include="Trades\Core\Resmelt.cs" />
