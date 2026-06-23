@@ -18,6 +18,7 @@ namespace Server.Engines.Craft
         private const int LabelHue = 0x480;
         private const int LabelColor = 0x7FFF;
         private const int FontColor = 0xFFFFFF;
+        private const int LastTenGroupIndex = 501;
 
         private enum CraftPage
         {
@@ -48,6 +49,9 @@ namespace Server.Engines.Craft
             m_Page = page;
 
             CraftContext context = craftSystem.GetContext(from);
+
+            if (context != null)
+                ValidateContext(context);
 
             from.CloseGump(typeof(CraftGump));
             from.CloseGump(typeof(CraftGumpItem));
@@ -151,10 +155,10 @@ namespace Server.Engines.Craft
 
                 Type resourceType = craftSystem.CraftSubRes.ResType;
 
-                if (resIndex > -1)
-                {
-                    CraftSubRes subResource = craftSystem.CraftSubRes.GetAt(resIndex);
+                CraftSubRes subResource = GetSubResource(craftSystem.CraftSubRes, resIndex);
 
+                if (subResource != null)
+                {
                     nameString = subResource.NameString;
                     nameNumber = subResource.NameNumber;
                     resourceType = subResource.ItemType;
@@ -204,10 +208,10 @@ namespace Server.Engines.Craft
 
                 Type resourceType = craftSystem.CraftSubRes2.ResType;
 
-                if (resIndex > -1)
-                {
-                    CraftSubRes subResource = craftSystem.CraftSubRes2.GetAt(resIndex);
+                CraftSubRes subResource = GetSubResource(craftSystem.CraftSubRes2, resIndex);
 
+                if (subResource != null)
+                {
                     nameString = subResource.NameString;
                     nameNumber = subResource.NameNumber;
                     resourceType = subResource.ItemType;
@@ -255,6 +259,29 @@ namespace Server.Engines.Craft
                 CreateResList(true, from);
             else if (context != null && context.LastGroupIndex > -1)
                 CreateItemList(context.LastGroupIndex);
+        }
+
+        private void ValidateContext(CraftContext context)
+        {
+            if (context.LastResourceIndex < -1 || context.LastResourceIndex >= m_CraftSystem.CraftSubRes.Count)
+                context.LastResourceIndex = -1;
+
+            if (context.LastResourceIndex2 < -1 || context.LastResourceIndex2 >= m_CraftSystem.CraftSubRes2.Count)
+                context.LastResourceIndex2 = -1;
+
+            if (
+                context.LastGroupIndex != LastTenGroupIndex
+                && (context.LastGroupIndex < -1 || context.LastGroupIndex >= m_CraftSystem.CraftGroups.Count)
+            )
+                context.LastGroupIndex = -1;
+        }
+
+        private static CraftSubRes GetSubResource(CraftSubResCol res, int index)
+        {
+            if (index >= 0 && index < res.Count)
+                return res.GetAt(index);
+
+            return null;
         }
 
         public void CreateResList(bool opt, Mobile from)
@@ -413,13 +440,17 @@ namespace Server.Engines.Craft
 
         public void CreateItemList(int selectedGroup)
         {
-            if (selectedGroup == 501) // 501 : Last 10
+            if (selectedGroup == LastTenGroupIndex)
             {
                 CreateMakeLastList();
                 return;
             }
 
             CraftGroupCol craftGroupCol = m_CraftSystem.CraftGroups;
+
+            if (selectedGroup < 0 || selectedGroup >= craftGroupCol.Count)
+                return;
+
             CraftGroup craftGroup = craftGroupCol.GetAt(selectedGroup);
             CraftItemCol craftItemCol = craftGroup.CraftItems;
 
@@ -559,6 +590,9 @@ namespace Server.Engines.Craft
 
         public override void OnResponse(NetState sender, RelayInfo info)
         {
+            if (sender == null || m_From == null || m_From.Deleted || sender.Mobile != m_From)
+                return;
+
             if (info.ButtonID <= 0)
                 return; // Canceled
 
@@ -569,6 +603,9 @@ namespace Server.Engines.Craft
             CraftSystem system = m_CraftSystem;
             CraftGroupCol groups = system.CraftGroups;
             CraftContext context = system.GetContext(m_From);
+
+            if (context != null)
+                ValidateContext(context);
 
             switch (type)
             {
@@ -746,7 +783,7 @@ namespace Server.Engines.Craft
                             if (context == null)
                                 break;
 
-                            context.LastGroupIndex = 501;
+                            context.LastGroupIndex = LastTenGroupIndex;
                             m_From.SendGump(new CraftGump(m_From, system, m_Tool, null));
 
                             break;

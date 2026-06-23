@@ -22,8 +22,8 @@ namespace Server.Engines.Craft
         private const int GreyLabelColor = 0x3DEF;
 
         // Number of material entries that can be displayed on a single page without
-        // overlapping other sections of the gump.
-        private const int ResourcesPerPage = 4;
+        // overlapping the material page controls.
+        private const int ResourcesPerPage = 3;
 
         private int m_OtherCount;
 
@@ -61,6 +61,9 @@ namespace Server.Engines.Craft
                     m_CraftItem.UseSubRes2 ? context.LastResourceIndex2 : context.LastResourceIndex
                 );
 
+            if (resIndex < 0 || resIndex >= res.Count)
+                resIndex = -1;
+
             bool cropScroll =
                 (m_CraftItem.Resources.Count > 1)
                 && m_CraftItem.Resources.GetAt(m_CraftItem.Resources.Count - 1).ItemType
@@ -97,6 +100,14 @@ namespace Server.Engines.Craft
                     ref retainedColorShown
                 );
             }
+        }
+
+        private static CraftSubRes GetSubResource(CraftSubResCol res, int index)
+        {
+            if (index >= 0 && index < res.Count)
+                return res.GetAt(index);
+
+            return null;
         }
 
         // Builds a single page of the crafting gump, including navigation controls,
@@ -334,10 +345,11 @@ namespace Server.Engines.Craft
                     m_CraftItem.UseSubRes2 ? context.LastResourceIndex2 : context.LastResourceIndex
                 );
 
+            CraftSubRes subResource = GetSubResource(res, resIndex);
             bool allRequiredSkills = true;
             double chance = m_CraftItem.GetSuccessChance(
                 m_From,
-                resIndex > -1 ? res.GetAt(resIndex).ItemType : null,
+                subResource != null ? subResource.ItemType : null,
                 m_CraftSystem,
                 false,
                 ref allRequiredSkills
@@ -398,10 +410,10 @@ namespace Server.Engines.Craft
                 nameNumber = craftResource.NameNumber;
 
                 // Resource Mutation
-                if (type == res.ResType && resIndex > -1)
-                {
-                    CraftSubRes subResource = res.GetAt(resIndex);
+                CraftSubRes subResource = GetSubResource(res, resIndex);
 
+                if (type == res.ResType && subResource != null)
+                {
                     type = subResource.ItemType;
 
                     nameString = subResource.NameString;
@@ -443,13 +455,16 @@ namespace Server.Engines.Craft
 
         public override void OnResponse(NetState sender, RelayInfo info)
         {
+            if (sender == null || m_From == null || m_From.Deleted || sender.Mobile != m_From)
+                return;
+
             // Back Button
             if (info.ButtonID == 0)
             {
                 CraftGump craftGump = new CraftGump(m_From, m_CraftSystem, m_Tool, null);
                 m_From.SendGump(craftGump);
             }
-            else // Make Button
+            else if (info.ButtonID == 1) // Make Button
             {
                 int num = m_CraftSystem.CanCraft(m_From, m_Tool, m_CraftItem.ItemType);
 
@@ -477,7 +492,30 @@ namespace Server.Engines.Craft
                         );
 
                         if (resIndex > -1)
-                            type = res.GetAt(resIndex).ItemType;
+                        {
+                            CraftSubRes subResource = GetSubResource(res, resIndex);
+
+                            if (subResource == null)
+                            {
+                                if (m_CraftItem.UseSubRes2)
+                                    context.LastResourceIndex2 = -1;
+                                else
+                                    context.LastResourceIndex = -1;
+
+                                m_From.SendGump(
+                                    new CraftGump(
+                                        m_From,
+                                        m_CraftSystem,
+                                        m_Tool,
+                                        "Your selected material is no longer available. Please choose a material again."
+                                    )
+                                );
+
+                                return;
+                            }
+
+                            type = subResource.ItemType;
+                        }
                     }
 
                     m_CraftSystem.CreateItem(
@@ -488,6 +526,17 @@ namespace Server.Engines.Craft
                         m_CraftItem
                     );
                 }
+            }
+            else
+            {
+                m_From.SendGump(
+                    new CraftGump(
+                        m_From,
+                        m_CraftSystem,
+                        m_Tool,
+                        "That crafting action is no longer available."
+                    )
+                );
             }
         }
     }
