@@ -231,6 +231,12 @@ Acceptance criteria:
 - Players can stop without losing the current attempt's normal outcome.
 - Staff can tell from summary output why a batch ended.
 
+Phase 3 implementation notes:
+
+- `CraftBatchStatusGump` is a separate `(580,40)` status window sized `270x174`; it closes only prior batch status gumps, not the main craft gump.
+- Stop uses button ID `1`, sets a runtime stop flag, and prevents only the next attempt after the current craft timer or maker's mark prompt completes.
+- Final feedback uses a summary status gump plus a message containing the end reason, completed attempts, total attempts, successes, and failures.
+
 ### Phase 4 - Container QoL
 
 Plan source containers and destination bags as a separate feature after Make Amount is stable.

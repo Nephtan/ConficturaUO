@@ -1164,6 +1164,8 @@ namespace Server.Engines.Craft
                                                     tool,
                                                     makeAmount
                                                 );
+
+                                            ShowMakeAmountStatus(from, craftSystem, context);
                                         }
 
                                         if (context != null)
@@ -1184,8 +1186,12 @@ namespace Server.Engines.Craft
                                     }
                                     else
                                     {
-                                        if (context != null)
-                                            context.ClearMakeAmountBatch();
+                                        EndMakeAmountBatch(
+                                            from,
+                                            craftSystem,
+                                            context,
+                                            "Stopped because attributes could not be consumed."
+                                        );
 
                                         from.EndAction(typeof(CraftSystem));
                                         from.SendGump(
@@ -1195,8 +1201,12 @@ namespace Server.Engines.Craft
                                 }
                                 else
                                 {
-                                    if (context != null)
-                                        context.ClearMakeAmountBatch();
+                                    EndMakeAmountBatch(
+                                        from,
+                                        craftSystem,
+                                        context,
+                                        "Stopped because required resources are missing."
+                                    );
 
                                     from.EndAction(typeof(CraftSystem));
                                     from.SendGump(new CraftGump(from, craftSystem, tool, message));
@@ -1204,8 +1214,12 @@ namespace Server.Engines.Craft
                             }
                             else
                             {
-                                if (context != null)
-                                    context.ClearMakeAmountBatch();
+                                EndMakeAmountBatch(
+                                    from,
+                                    craftSystem,
+                                    context,
+                                    "Stopped because the tool can no longer craft this item."
+                                );
 
                                 from.EndAction(typeof(CraftSystem));
                                 from.SendGump(new CraftGump(from, craftSystem, tool, badCraft));
@@ -1213,8 +1227,12 @@ namespace Server.Engines.Craft
                         }
                         else
                         {
-                            if (context != null)
-                                context.ClearMakeAmountBatch();
+                            EndMakeAmountBatch(
+                                from,
+                                craftSystem,
+                                context,
+                                "Stopped because the recipe is locked."
+                            );
 
                             from.EndAction(typeof(CraftSystem));
                             from.SendGump(new CraftGump(from, craftSystem, tool, 1072847)); // You must learn that recipe from a scroll.
@@ -1222,8 +1240,12 @@ namespace Server.Engines.Craft
                     }
                     else
                     {
-                        if (context != null)
-                            context.ClearMakeAmountBatch();
+                        EndMakeAmountBatch(
+                            from,
+                            craftSystem,
+                            context,
+                            "Stopped because required skills are missing."
+                        );
 
                         from.EndAction(typeof(CraftSystem));
                         from.SendGump(new CraftGump(from, craftSystem, tool, 1044153)); // You don't have the required skills to attempt this item.
@@ -1231,8 +1253,12 @@ namespace Server.Engines.Craft
                 }
                 else
                 {
-                    if (context != null)
-                        context.ClearMakeAmountBatch();
+                    EndMakeAmountBatch(
+                        from,
+                        craftSystem,
+                        context,
+                        "Stopped because the required expansion is missing."
+                    );
 
                     from.EndAction(typeof(CraftSystem));
                     from.SendGump(
@@ -1247,11 +1273,68 @@ namespace Server.Engines.Craft
             }
             else
             {
-                if (continuingMakeAmount && context != null)
-                    context.ClearMakeAmountBatch();
+                if (continuingMakeAmount)
+                    EndMakeAmountBatch(
+                        from,
+                        craftSystem,
+                        context,
+                        "Stopped because another action is still in progress."
+                    );
 
                 from.SendLocalizedMessage(500119); // You must wait to perform another action
             }
+        }
+
+        private static void ShowMakeAmountStatus(
+            Mobile from,
+            CraftSystem craftSystem,
+            CraftContext context
+        )
+        {
+            if (
+                from != null
+                && !from.Deleted
+                && craftSystem != null
+                && context != null
+                && context.HasMakeAmountBatch
+            )
+                from.SendGump(new CraftBatchStatusGump(from, craftSystem, context));
+        }
+
+        private static void EndMakeAmountBatch(
+            Mobile from,
+            CraftSystem craftSystem,
+            CraftContext context,
+            string reason
+        )
+        {
+            if (context == null)
+                return;
+
+            if (!context.HasMakeAmountBatch)
+            {
+                context.ClearMakeAmountBatch();
+                return;
+            }
+
+            context.SetMakeAmountState(reason);
+
+            if (from != null && !from.Deleted && craftSystem != null)
+            {
+                from.SendGump(new CraftBatchStatusGump(from, craftSystem, context, reason));
+                from.SendMessage(
+                    String.Format(
+                        "Batch crafting ended: {0} ({1}/{2} attempts, {3} successes, {4} failures).",
+                        reason,
+                        context.MakeAmountAttemptsComplete,
+                        context.MakeAmountTotal,
+                        context.MakeAmountSuccesses,
+                        context.MakeAmountFailures
+                    )
+                );
+            }
+
+            context.ClearMakeAmountBatch();
         }
 
         private object RequiredExpansionMessage(Expansion expansion) //Eventually convert to TextDefinition, but that requires that we convert all the gumps to ues it too.  Not that it wouldn't be a bad idea.
@@ -1279,8 +1362,39 @@ namespace Server.Engines.Craft
         {
             CraftContext context = craftSystem.GetContext(from);
 
-            if (context == null || !context.ConsumeMakeAmountBatch(this, typeRes, tool))
+            if (context == null || !context.HasMakeAmountBatch)
                 return;
+
+            if (!context.MatchesMakeAmountBatch(this, typeRes, tool))
+            {
+                EndMakeAmountBatch(
+                    from,
+                    craftSystem,
+                    context,
+                    "Stopped because the recipe or tool changed."
+                );
+                return;
+            }
+
+            if (context.MakeAmountStopRequested)
+            {
+                EndMakeAmountBatch(from, craftSystem, context, "Stopped by player.");
+                return;
+            }
+
+            if (!context.HasMakeAmountRemaining)
+            {
+                EndMakeAmountBatch(from, craftSystem, context, "Completed.");
+                return;
+            }
+
+            if (!context.ConsumeMakeAmountBatch(this, typeRes, tool))
+            {
+                EndMakeAmountBatch(from, craftSystem, context, "Stopped before the next attempt.");
+                return;
+            }
+
+            ShowMakeAmountStatus(from, craftSystem, context);
 
             Timer.DelayCall(
                 TimeSpan.Zero,
@@ -1312,7 +1426,12 @@ namespace Server.Engines.Craft
 
             if (tool == null || tool.Deleted || tool.UsesRemaining <= 0)
             {
-                context.ClearMakeAmountBatch();
+                EndMakeAmountBatch(
+                    from,
+                    craftSystem,
+                    context,
+                    "Stopped because the tool has no uses remaining."
+                );
                 return;
             }
 
@@ -1750,7 +1869,14 @@ namespace Server.Engines.Craft
             if (badCraft > 0)
             {
                 if (context != null)
-                    context.ClearMakeAmountBatch();
+                    context.RecordMakeAmountAttempt(false);
+
+                EndMakeAmountBatch(
+                    from,
+                    craftSystem,
+                    context,
+                    "Stopped because the tool can no longer craft this item."
+                );
 
                 if (tool != null && !tool.Deleted && tool.UsesRemaining > 0)
                     from.SendGump(new CraftGump(from, craftSystem, tool, badCraft));
@@ -1778,7 +1904,14 @@ namespace Server.Engines.Craft
             )
             {
                 if (context != null)
-                    context.ClearMakeAmountBatch();
+                    context.RecordMakeAmountAttempt(false);
+
+                EndMakeAmountBatch(
+                    from,
+                    craftSystem,
+                    context,
+                    "Stopped because required resources are missing."
+                );
 
                 if (tool != null && !tool.Deleted && tool.UsesRemaining > 0)
                     from.SendGump(new CraftGump(from, craftSystem, tool, checkMessage));
@@ -1792,7 +1925,14 @@ namespace Server.Engines.Craft
             else if (!ConsumeAttributes(from, ref checkMessage, false))
             {
                 if (context != null)
-                    context.ClearMakeAmountBatch();
+                    context.RecordMakeAmountAttempt(false);
+
+                EndMakeAmountBatch(
+                    from,
+                    craftSystem,
+                    context,
+                    "Stopped because attributes could not be consumed."
+                );
 
                 if (tool != null && !tool.Deleted && tool.UsesRemaining > 0)
                     from.SendGump(new CraftGump(from, craftSystem, tool, checkMessage));
@@ -1833,7 +1973,14 @@ namespace Server.Engines.Craft
                 )
                 {
                     if (context != null)
-                        context.ClearMakeAmountBatch();
+                        context.RecordMakeAmountAttempt(false);
+
+                    EndMakeAmountBatch(
+                        from,
+                        craftSystem,
+                        context,
+                        "Stopped because required resources are missing."
+                    );
 
                     if (tool != null && !tool.Deleted && tool.UsesRemaining > 0)
                         from.SendGump(new CraftGump(from, craftSystem, tool, message));
@@ -1847,7 +1994,14 @@ namespace Server.Engines.Craft
                 else if (!ConsumeAttributes(from, ref message, true))
                 {
                     if (context != null)
-                        context.ClearMakeAmountBatch();
+                        context.RecordMakeAmountAttempt(false);
+
+                    EndMakeAmountBatch(
+                        from,
+                        craftSystem,
+                        context,
+                        "Stopped because attributes could not be consumed."
+                    );
 
                     if (tool != null && !tool.Deleted && tool.UsesRemaining > 0)
                         from.SendGump(new CraftGump(from, craftSystem, tool, message));
@@ -4075,10 +4229,17 @@ namespace Server.Engines.Craft
 
                 // TODO: Scroll imbuing
 
+                if (context != null)
+                    context.RecordMakeAmountAttempt(true);
+
                 if (queryFactionImbue)
                 {
-                    if (context != null)
-                        context.ClearMakeAmountBatch();
+                    EndMakeAmountBatch(
+                        from,
+                        craftSystem,
+                        context,
+                        "Stopped for faction imbue selection."
+                    );
 
                     from.SendGump(
                         new FactionImbueGump(
@@ -4101,20 +4262,36 @@ namespace Server.Engines.Craft
                 }
                 else if (num > 0)
                 {
-                    if (context != null)
-                        context.ClearMakeAmountBatch();
+                    EndMakeAmountBatch(
+                        from,
+                        craftSystem,
+                        context,
+                        "Stopped because the tool has no uses remaining."
+                    );
 
                     from.SendLocalizedMessage(num);
                 }
                 else if (context != null)
                 {
-                    context.ClearMakeAmountBatch();
+                    EndMakeAmountBatch(
+                        from,
+                        craftSystem,
+                        context,
+                        "Stopped because the tool has no uses remaining."
+                    );
                 }
             }
             else if (!allRequiredSkills)
             {
                 if (context != null)
-                    context.ClearMakeAmountBatch();
+                    context.RecordMakeAmountAttempt(false);
+
+                EndMakeAmountBatch(
+                    from,
+                    craftSystem,
+                    context,
+                    "Stopped because required skills are missing."
+                );
 
                 if (tool != null && !tool.Deleted && tool.UsesRemaining > 0)
                     from.SendGump(new CraftGump(from, craftSystem, tool, 1044153));
@@ -4144,7 +4321,14 @@ namespace Server.Engines.Craft
                 )
                 {
                     if (context != null)
-                        context.ClearMakeAmountBatch();
+                        context.RecordMakeAmountAttempt(false);
+
+                    EndMakeAmountBatch(
+                        from,
+                        craftSystem,
+                        context,
+                        "Stopped because required resources are missing."
+                    );
 
                     if (tool != null && !tool.Deleted && tool.UsesRemaining > 0)
                         from.SendGump(new CraftGump(from, craftSystem, tool, message));
@@ -4175,6 +4359,9 @@ namespace Server.Engines.Craft
                     this
                 );
 
+                if (context != null)
+                    context.RecordMakeAmountAttempt(false);
+
                 if (tool != null && !tool.Deleted && tool.UsesRemaining > 0)
                 {
                     from.SendGump(new CraftGump(from, craftSystem, tool, num));
@@ -4182,14 +4369,23 @@ namespace Server.Engines.Craft
                 }
                 else if (num > 0)
                 {
-                    if (context != null)
-                        context.ClearMakeAmountBatch();
+                    EndMakeAmountBatch(
+                        from,
+                        craftSystem,
+                        context,
+                        "Stopped because the tool has no uses remaining."
+                    );
 
                     from.SendLocalizedMessage(num);
                 }
                 else if (context != null)
                 {
-                    context.ClearMakeAmountBatch();
+                    EndMakeAmountBatch(
+                        from,
+                        craftSystem,
+                        context,
+                        "Stopped because the tool has no uses remaining."
+                    );
                 }
             }
         }
@@ -4243,7 +4439,14 @@ namespace Server.Engines.Craft
                     if (badCraft > 0)
                     {
                         if (context != null)
-                            context.ClearMakeAmountBatch();
+                            context.RecordMakeAmountAttempt(false);
+
+                        EndMakeAmountBatch(
+                            m_From,
+                            m_CraftSystem,
+                            context,
+                            "Stopped because the tool can no longer craft this item."
+                        );
 
                         if (m_Tool != null && !m_Tool.Deleted && m_Tool.UsesRemaining > 0)
                             m_From.SendGump(new CraftGump(m_From, m_CraftSystem, m_Tool, badCraft));
@@ -4293,7 +4496,12 @@ namespace Server.Engines.Craft
                         if (cc != null)
                             cc.EndCraftAction();
 
-                        context.ClearMakeAmountBatch();
+                        EndMakeAmountBatch(
+                            m_From,
+                            m_CraftSystem,
+                            context,
+                            "Stopped for custom craft handling."
+                        );
                         return;
                     }
 
@@ -4304,6 +4512,9 @@ namespace Server.Engines.Craft
 
                     if (makersMark && context.MarkOption == CraftMarkOption.PromptForMark)
                     {
+                        context.SetMakeAmountState("Waiting for maker's mark");
+                        ShowMakeAmountStatus(m_From, m_CraftSystem, context);
+
                         m_From.SendGump(
                             new QueryMakersMarkGump(
                                 quality,

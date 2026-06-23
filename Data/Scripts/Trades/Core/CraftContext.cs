@@ -25,6 +25,12 @@ namespace Server.Engines.Craft
         private Type m_MakeAmountTypeRes;
         private BaseTool m_MakeAmountTool;
         private int m_MakeAmountRemaining;
+        private int m_MakeAmountTotal;
+        private int m_MakeAmountCurrent;
+        private int m_MakeAmountSuccesses;
+        private int m_MakeAmountFailures;
+        private bool m_MakeAmountStopRequested;
+        private string m_MakeAmountState;
 
         public List<CraftItem> Items
         {
@@ -59,6 +65,42 @@ namespace Server.Engines.Craft
         {
             get { return m_MakeAmount; }
             set { m_MakeAmount = value; }
+        }
+        public bool HasMakeAmountBatch
+        {
+            get { return m_MakeAmountItem != null && m_MakeAmountTotal > 1; }
+        }
+        public CraftItem MakeAmountItem
+        {
+            get { return m_MakeAmountItem; }
+        }
+        public int MakeAmountTotal
+        {
+            get { return m_MakeAmountTotal; }
+        }
+        public int MakeAmountCurrent
+        {
+            get { return m_MakeAmountCurrent; }
+        }
+        public int MakeAmountSuccesses
+        {
+            get { return m_MakeAmountSuccesses; }
+        }
+        public int MakeAmountFailures
+        {
+            get { return m_MakeAmountFailures; }
+        }
+        public int MakeAmountAttemptsComplete
+        {
+            get { return m_MakeAmountSuccesses + m_MakeAmountFailures; }
+        }
+        public bool MakeAmountStopRequested
+        {
+            get { return m_MakeAmountStopRequested; }
+        }
+        public string MakeAmountState
+        {
+            get { return m_MakeAmountState == null ? String.Empty : m_MakeAmountState; }
         }
 
         public CraftContext()
@@ -103,6 +145,12 @@ namespace Server.Engines.Craft
             m_MakeAmountTypeRes = typeRes;
             m_MakeAmountTool = tool;
             m_MakeAmountRemaining = amount - 1;
+            m_MakeAmountTotal = amount;
+            m_MakeAmountCurrent = 1;
+            m_MakeAmountSuccesses = 0;
+            m_MakeAmountFailures = 0;
+            m_MakeAmountStopRequested = false;
+            m_MakeAmountState = "Crafting";
         }
 
         public void ClearMakeAmountBatch()
@@ -111,30 +159,73 @@ namespace Server.Engines.Craft
             m_MakeAmountTypeRes = null;
             m_MakeAmountTool = null;
             m_MakeAmountRemaining = 0;
+            m_MakeAmountTotal = 0;
+            m_MakeAmountCurrent = 0;
+            m_MakeAmountSuccesses = 0;
+            m_MakeAmountFailures = 0;
+            m_MakeAmountStopRequested = false;
+            m_MakeAmountState = null;
+        }
+
+        public bool MatchesMakeAmountBatch(CraftItem item, Type typeRes, BaseTool tool)
+        {
+            return HasMakeAmountBatch
+                && m_MakeAmountItem == item
+                && m_MakeAmountTypeRes == typeRes
+                && m_MakeAmountTool == tool
+                && tool != null
+                && !tool.Deleted
+                && tool.UsesRemaining > 0;
+        }
+
+        public bool HasMakeAmountRemaining
+        {
+            get { return m_MakeAmountRemaining > 0; }
+        }
+
+        public void RequestMakeAmountStop()
+        {
+            if (HasMakeAmountBatch)
+            {
+                m_MakeAmountStopRequested = true;
+                m_MakeAmountState = "Stopping after current attempt";
+            }
+        }
+
+        public void SetMakeAmountState(string state)
+        {
+            if (HasMakeAmountBatch)
+                m_MakeAmountState = state;
+        }
+
+        public void RecordMakeAmountAttempt(bool success)
+        {
+            if (!HasMakeAmountBatch)
+                return;
+
+            if (success)
+            {
+                m_MakeAmountSuccesses++;
+                m_MakeAmountState = "Last attempt succeeded";
+            }
+            else
+            {
+                m_MakeAmountFailures++;
+                m_MakeAmountState = "Last attempt failed";
+            }
         }
 
         public bool ConsumeMakeAmountBatch(CraftItem item, Type typeRes, BaseTool tool)
         {
-            if (
-                m_MakeAmountItem != item
-                || m_MakeAmountTypeRes != typeRes
-                || m_MakeAmountTool != tool
-                || tool == null
-                || tool.Deleted
-                || tool.UsesRemaining <= 0
-            )
-            {
-                ClearMakeAmountBatch();
+            if (!MatchesMakeAmountBatch(item, typeRes, tool))
                 return false;
-            }
 
-            if (m_MakeAmountRemaining <= 0)
-            {
-                ClearMakeAmountBatch();
+            if (m_MakeAmountStopRequested || m_MakeAmountRemaining <= 0)
                 return false;
-            }
 
             m_MakeAmountRemaining--;
+            m_MakeAmountCurrent++;
+            m_MakeAmountState = "Crafting";
             return true;
         }
     }
