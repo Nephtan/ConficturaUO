@@ -111,6 +111,21 @@ Acceptance criteria:
 - Staff can review a coordinate sketch and response-path inventory.
 - Known stale-index crash paths are either fixed or called out as blockers for later phases.
 
+Phase 0 audit results:
+
+- `CraftGump` opens at `(40, 40)` and draws a `530 x 437` frame. Fixed regions are: title `(10,10,510,22)`, categories `(10,37,200,250)`, selections `(215,37,305,250)`, notices header `(10,292,150,45)`, notice body `(165,292,355,45)`, and footer/actions `(10,342,510,85)`.
+- `CraftGump` footer/action controls are fixed at these rows: Exit `(15,402)` with label `(50,405)`, Make Last `(270,402)` with label `(305,405)`, Resmelt `(15,342)`, Repair `(270,342)`, primary resource `(15,362)`, maker's mark `(270,362)`, secondary resource `(15,382)`, and Enhance `(270,382)`.
+- `CraftGump` left-panel rows start with Last Ten at `(15,60)` and craft groups at `(15,80 + index * 20)`. The list is not paged, so any future craft system with enough groups to reach the lower action band must add paging or a visible row cap before more controls are added.
+- `CraftGump` right-panel recipe, Last Ten, and resource rows use ten rows per page at `(220,60 + index * 20)` with labels beginning at `(255,63 + index * 20)`. Recipe/detail and Last Ten/detail buttons use `(480,60 + index * 20)`. Page controls sit at y `260`.
+- `CraftGumpItem` opens at `(40, 40)` and draws a `530 x 417` frame. Fixed regions are: title `(10,10,510,22)`, item art `(10,37,150,148)`, item/chance `(165,37,355,90)`, skills `(165,132,355,80)`, materials `(165,217,355,80)`, other notes `(165,302,355,80)`, and footer `(10,387,510,22)`.
+- `CraftGumpItem` footer controls are Back `(15,387)` with label `(50,390)` and Make Now `(270,387)` with label `(305,390)`. Material pages use four resource rows at `y = 219, 239, 259, 279`; page buttons also sit at `y = 277`, so long material lists need client verification for overlap before Phase 1/2 layout work.
+- `QueryMakersMarkGump` is a separate `(100,200)` confirmation gump with a `220 x 170` frame, Continue button ID `1` at `(20,100)`, and Cancel button ID `0` at `(20,125)`.
+- `CraftGump` reply IDs are packed as `1 + type + (index * 7)`: type `0` group, `1` make recipe, `2` recipe details, `3` make Last Ten, `4` Last Ten details, `5` resource selection, and `6` misc. Misc index values are `0` primary resource, `1` resmelt, `2` Make Last, `3` Last Ten, `4` toggle resource hue, `5` repair, `6` maker's mark option, `7` secondary resource, and `8` enhance.
+- `CraftGumpItem` currently uses only reply ID `0` for Back and reply ID `1` for Make Now. Any non-zero reply is treated as Make Now, so Phase 2 must change this path to explicit button decoding before adding Make Amount controls.
+- Core crafting gumps currently have no `AddTextEntry` controls. Phase 2 must reserve and document the first text-entry IDs, visible bounds, parsing rules, invalid-input feedback, and stale-gump behavior.
+- Send and response paths are: `BaseTool.OnDoubleClick` and captcha redirect open `CraftGump`; `CraftGump.OnResponse` routes group/item/resource/misc replies; `CraftGumpItem.OnResponse` routes Back or Make Now; `CraftItem.Craft` starts the normal craft timer; the timer either opens `QueryMakersMarkGump` or calls `CompleteCraft`; repair, resmelt, and enhance leave the gump through target cursors and send a replacement `CraftGump` with feedback.
+- Scheduled blockers before adding repeated crafting: guard `CraftGump` construction against stale `LastGroupIndex`, `LastResourceIndex`, and `LastResourceIndex2`; guard `CraftGumpItem` display and Make Now paths against stale resource indices; guard `Repair.OnTarget` before calling `targeted.GetType()`; add sender/mobile/deleted/tool-access checks to touched response paths; and replace `CraftGumpItem`'s "any non-zero means Make Now" behavior with explicit reply handling.
+
 ### Phase 1 - Stock QoL Polish
 
 Preserve and polish the conveniences that already exist.
@@ -314,8 +329,13 @@ Players should be told that Make Amount reduces clicks, not crafting time. Staff
 - `docs/wiki/Gump_Framework.md`
 - `docs/wiki/Crafting_Core.md`
 - `crafting-qol-improvements.md`
+- `Data/Scripts/Items/Trades/Tools/BaseTool.cs`
 - `Data/Scripts/Trades/Core/Gumps/CraftGump.cs`
 - `Data/Scripts/Trades/Core/Gumps/CraftGumpItem.cs`
+- `Data/Scripts/Trades/Core/Gumps/QueryMakersMarkGump.cs`
 - `Data/Scripts/Trades/Core/CraftContext.cs`
 - `Data/Scripts/Trades/Core/CraftItem.cs`
 - `Data/Scripts/Trades/Core/CraftSystem.cs`
+- `Data/Scripts/Trades/Core/Enhance.cs`
+- `Data/Scripts/Trades/Core/Repair.cs`
+- `Data/Scripts/Trades/Core/Resmelt.cs`
