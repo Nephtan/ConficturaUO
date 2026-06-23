@@ -20,6 +20,8 @@ namespace Server.Engines.Craft
         private const int LabelColor = 0x7FFF;
         private const int RedLabelColor = 0x6400;
         private const int FontColor = 0xFFFFFF;
+        private const int TextEntryHue = 0;
+        private const int TextEntryBackground = 0xBBC;
 
         private const int GreyLabelColor = 0x3DEF;
 
@@ -128,13 +130,22 @@ namespace Server.Engines.Craft
         {
             CraftContext context = m_CraftSystem.GetContext(m_From);
 
-            AddLabel(x, y, LabelHue, "Amount");
-            AddTextEntry(
-                x + 65,
-                y,
-                45,
+            AddHtml(
+                x,
+                y + 3,
+                62,
                 18,
-                LabelHue,
+                String.Format("<BASEFONT COLOR=#{0:X6}>AMOUNT</BASEFONT>", FontColor),
+                false,
+                false
+            );
+            AddImageTiled(x + 63, y, 49, 18, TextEntryBackground);
+            AddTextEntry(
+                x + 66,
+                y,
+                43,
+                18,
+                TextEntryHue,
                 CraftGump.MakeAmountTextEntryID,
                 CraftGump.GetMakeAmount(context).ToString()
             );

@@ -195,8 +195,8 @@ Acceptance criteria:
 
 Phase 2 implementation notes:
 
-- Main `CraftGump` footer uses `Amount` label `(150,402)` and text entry `(215,402,45,18)` between Exit and Make Last.
-- `CraftGumpItem` footer uses `Amount` label `(150,387)` and text entry `(215,387,45,18)` between Back and Make Now.
+- Main `CraftGump` footer uses `AMOUNT` label `(150,405,62,18)`, input well `(213,402,49,18)`, and text entry `(216,402,43,18)` between Exit and Make Last.
+- `CraftGumpItem` footer uses `AMOUNT` label `(150,390,62,18)`, input well `(213,387,49,18)`, and text entry `(216,387,43,18)` between Back and Make Now.
 - Amount text-entry ID is `9000`; accepted numeric input is clamped to `1..100`, and non-numeric or blank input reopens the current gump with `Enter an amount from 1 to 100.`
 - Repeated crafting is runtime-only `CraftContext` state. The first attempt starts normally; each subsequent attempt is scheduled only after the previous craft timer completes and `EndAction(typeof(CraftSystem))` has run.
 - The sequence stops on hard validation failures, deleted/broken tools, recipe/expansion/skill lockouts, missing resources, special faction imbue handoff, or custom craft handoff.

@@ -18,6 +18,8 @@ namespace Server.Engines.Craft
         private const int LabelHue = 0x480;
         private const int LabelColor = 0x7FFF;
         private const int FontColor = 0xFFFFFF;
+        private const int TextEntryHue = 0;
+        private const int TextEntryBackground = 0xBBC;
         private const int LastTenGroupIndex = 501;
         public const int MakeAmountTextEntryID = 9000;
         public const int MinMakeAmount = 1;
@@ -292,13 +294,22 @@ namespace Server.Engines.Craft
 
         private void AddMakeAmountField(CraftContext context, int x, int y)
         {
-            AddLabel(x, y, LabelHue, "Amount");
-            AddTextEntry(
-                x + 65,
-                y,
-                45,
+            AddHtml(
+                x,
+                y + 3,
+                62,
                 18,
-                LabelHue,
+                String.Format("<BASEFONT COLOR=#{0:X6}>AMOUNT</BASEFONT>", FontColor),
+                false,
+                false
+            );
+            AddImageTiled(x + 63, y, 49, 18, TextEntryBackground);
+            AddTextEntry(
+                x + 66,
+                y,
+                43,
+                18,
+                TextEntryHue,
                 MakeAmountTextEntryID,
                 GetMakeAmount(context).ToString()
             );
