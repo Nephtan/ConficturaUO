@@ -118,13 +118,13 @@ Phase 0 audit results:
 - `CraftGump` left-panel rows start with Last Ten at `(15,60)` and craft groups at `(15,80 + index * 20)`. The list is not paged, so any future craft system with enough groups to reach the lower action band must add paging or a visible row cap before more controls are added.
 - `CraftGump` right-panel recipe, Last Ten, and resource rows use ten rows per page at `(220,60 + index * 20)` with labels beginning at `(255,63 + index * 20)`. Recipe/detail and Last Ten/detail buttons use `(480,60 + index * 20)`. Page controls sit at y `260`.
 - `CraftGumpItem` opens at `(40, 40)` and draws a `530 x 417` frame. Fixed regions are: title `(10,10,510,22)`, item art `(10,37,150,148)`, item/chance `(165,37,355,90)`, skills `(165,132,355,80)`, materials `(165,217,355,80)`, other notes `(165,302,355,80)`, and footer `(10,387,510,22)`.
-- `CraftGumpItem` footer controls are Back `(15,387)` with label `(50,390)` and Make Now `(270,387)` with label `(305,390)`. Material pages use four resource rows at `y = 219, 239, 259, 279`; page buttons also sit at `y = 277`, so long material lists need client verification for overlap before Phase 1/2 layout work.
+- `CraftGumpItem` footer controls are Back `(15,387)` with label `(50,390)` and Make Now `(270,387)` with label `(305,390)`. After Phase 1, material pages use three resource rows at `y = 219, 239, 259` so page buttons at `y = 277` have a reserved navigation row.
 - `QueryMakersMarkGump` is a separate `(100,200)` confirmation gump with a `220 x 170` frame, Continue button ID `1` at `(20,100)`, and Cancel button ID `0` at `(20,125)`.
 - `CraftGump` reply IDs are packed as `1 + type + (index * 7)`: type `0` group, `1` make recipe, `2` recipe details, `3` make Last Ten, `4` Last Ten details, `5` resource selection, and `6` misc. Misc index values are `0` primary resource, `1` resmelt, `2` Make Last, `3` Last Ten, `4` toggle resource hue, `5` repair, `6` maker's mark option, `7` secondary resource, and `8` enhance.
-- `CraftGumpItem` currently uses only reply ID `0` for Back and reply ID `1` for Make Now. Any non-zero reply is treated as Make Now, so Phase 2 must change this path to explicit button decoding before adding Make Amount controls.
+- `CraftGumpItem` uses reply ID `0` for Back and reply ID `1` for Make Now. After Phase 1, unexpected reply IDs return the player to `CraftGump` with clear feedback instead of being treated as Make Now.
 - Core crafting gumps currently have no `AddTextEntry` controls. Phase 2 must reserve and document the first text-entry IDs, visible bounds, parsing rules, invalid-input feedback, and stale-gump behavior.
 - Send and response paths are: `BaseTool.OnDoubleClick` and captcha redirect open `CraftGump`; `CraftGump.OnResponse` routes group/item/resource/misc replies; `CraftGumpItem.OnResponse` routes Back or Make Now; `CraftItem.Craft` starts the normal craft timer; the timer either opens `QueryMakersMarkGump` or calls `CompleteCraft`; repair, resmelt, and enhance leave the gump through target cursors and send a replacement `CraftGump` with feedback.
-- Scheduled blockers before adding repeated crafting: guard `CraftGump` construction against stale `LastGroupIndex`, `LastResourceIndex`, and `LastResourceIndex2`; guard `CraftGumpItem` display and Make Now paths against stale resource indices; guard `Repair.OnTarget` before calling `targeted.GetType()`; add sender/mobile/deleted/tool-access checks to touched response paths; and replace `CraftGumpItem`'s "any non-zero means Make Now" behavior with explicit reply handling.
+- Phase 1 resolved the stale `CraftGump` group/resource context guards, stale `CraftGumpItem` material display and Make Now guards, `Repair.OnTarget` null-target guard, touched response-path sender/mobile/deleted checks, and explicit `CraftGumpItem` reply handling. Remaining before repeated crafting: broaden tool-access checks where Phase 2 touches new response paths and complete client verification for older clients.
 
 ### Phase 1 - Stock QoL Polish
 
@@ -153,6 +153,14 @@ Acceptance criteria:
 
 - Each major craft skill has a quick manual pass for normal craft, Make Last, Last Ten, material selection, and any enabled misc buttons.
 - Any button that appears must lead to a visible action, visible target cursor, or clear feedback message.
+
+Phase 1 implementation notes:
+
+- Keep the stock crafting semantics intact: no batch controls, no timer shortcuts, and no new saved state.
+- Guard stale remembered group/material selections before drawing or acting on them.
+- Keep item-detail material pages to three visible rows so the existing page controls have their own space.
+- Treat only item-detail reply ID `1` as Make Now; return unexpected replies to the main craft gump with feedback.
+- Return repair/enhance invalid target paths to the craft gump with clear localized feedback.
 
 ### Phase 2 - Make Amount
 
