@@ -92,6 +92,12 @@ Every touched `OnResponse` path must revalidate:
 
 Inventory the existing crafting UI before adding features.
 
+Goal command:
+
+```text
+Using docs/wiki/Crafting_QoL_Roadmap.md as the source of truth, complete Phase 0 - UI And Safety Audit: inventory current CraftGump and CraftGumpItem layouts, response paths, button and text-entry IDs, and stale group/resource index risks; document findings and blockers; do not add player-facing crafting features.
+```
+
 Deliverables:
 
 - Document current `CraftGump` and `CraftGumpItem` layouts with coordinates for panels, footer controls, resource pages, Last Ten, and item detail pages.
@@ -108,6 +114,12 @@ Acceptance criteria:
 ### Phase 1 - Stock QoL Polish
 
 Preserve and polish the conveniences that already exist.
+
+Goal command:
+
+```text
+Using docs/wiki/Crafting_QoL_Roadmap.md as the source of truth, complete Phase 1 - Stock QoL Polish: preserve crafting semantics while polishing Make Last, Last Ten, resource counts, remembered material selection, maker's mark, repair, resmelt, and enhance surfaces; improve unclear labels, cropping, and feedback; do not add batch controls.
+```
 
 Deliverables:
 
@@ -130,6 +142,12 @@ Acceptance criteria:
 ### Phase 2 - Make Amount
 
 Add the first custom click-reduction feature: a finite Make Amount field.
+
+Goal command:
+
+```text
+Using docs/wiki/Crafting_QoL_Roadmap.md as the source of truth, implement Phase 2 - Make Amount: add a finite amount field with a 1..100 accepted range, count values as attempts, preserve normal craft timers with one attempt active at a time, and apply the amount to selected recipe rows, Last Ten, Make Last, and item-detail Make Now.
+```
 
 Deliverables:
 
@@ -156,6 +174,12 @@ Acceptance criteria:
 
 Make repeated crafting understandable while it is running.
 
+Goal command:
+
+```text
+Using docs/wiki/Crafting_QoL_Roadmap.md as the source of truth, implement Phase 3 - Batch Status And Summary: add visible batch progress UI with recipe name, current/total attempts, success/failure counts, current state, an explicit Stop action that allows the current attempt to finish normally, and final summary feedback.
+```
+
 Deliverables:
 
 - Add a small batch status gump or status panel showing recipe name, current attempt, total attempts, successes, failures, and current state.
@@ -180,6 +204,12 @@ Acceptance criteria:
 
 Plan source containers and destination bags as a separate feature after Make Amount is stable.
 
+Goal command:
+
+```text
+Using docs/wiki/Crafting_QoL_Roadmap.md as the source of truth, implement Phase 4 - Container QoL separately from Make Amount: add source-container and destination-bag selection with target handoffs, visible active container state, reset controls, ownership/access validation, stale-container fallback, and runtime-only state unless persistence is separately approved.
+```
+
 Deliverables:
 
 - Add a design for selecting one approved source container for resources.
@@ -201,6 +231,12 @@ Acceptance criteria:
 ### Phase 5 - Full Queue Evaluation
 
 Evaluate a full multi-item crafting queue only after the smaller QoL phases have proven stable.
+
+Goal command:
+
+```text
+Using docs/wiki/Crafting_QoL_Roadmap.md as the source of truth, complete Phase 5 - Full Queue Evaluation: write a separate queue design before code, covering queue rows, paging, per-row controls, enable/disable states, target counts, stop conditions, summary behavior, source/destination interaction, and acceptance tests.
+```
 
 Deliverables:
 
