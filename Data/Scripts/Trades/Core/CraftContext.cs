@@ -431,12 +431,6 @@ namespace Server.Engines.Craft
                 return false;
             }
 
-            if (!container.IsAccessibleTo(from))
-            {
-                message = "You cannot access that container.";
-                return false;
-            }
-
             return true;
         }
 

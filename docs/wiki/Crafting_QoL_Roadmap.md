@@ -268,7 +268,7 @@ Acceptance criteria:
 Implementation notes:
 
 - Store source and output container choices in runtime `CraftContext` only; no player serialization or project-file changes are needed.
-- Main `CraftGump` uses misc button indexes `9`, `10`, and `11` for source, output, and reset controls in the center footer column.
+- Main `CraftGump` uses misc button indexes `9`, `10`, and `11` for source, output, and reset controls in the far-right footer space.
 - Source and output selections accept only the backpack or containers inside the backpack; deleted, inaccessible, world, bank, and house containers clear back to backpack behavior.
 - Resource counts, resource checks, and resource consumption resolve against the active source container; crafted results try the active output bag and fall back to the backpack when it becomes invalid or cannot hold the item.
 
