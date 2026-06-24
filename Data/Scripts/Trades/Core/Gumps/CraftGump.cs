@@ -19,7 +19,17 @@ namespace Server.Engines.Craft
         private const int LabelColor = 0x7FFF;
         private const int FontColor = 0xFFFFFF;
         private const int TextEntryHue = 0;
+        private const int TextEntryFrame = 0x52;
         private const int TextEntryBackground = 0xBBC;
+        private const int MakeAmountLabelWidth = 56;
+        private const int MakeAmountFieldOffset = 59;
+        private const int MakeAmountFrameWidth = 58;
+        private const int MakeAmountFrameHeight = 22;
+        private const int MakeAmountFieldInset = 2;
+        private const int MakeAmountFieldWidth = 54;
+        private const int MakeAmountFieldHeight = 18;
+        private const int MakeAmountTextInset = 6;
+        private const int MakeAmountTextWidth = 46;
         private const int LastTenGroupIndex = 501;
         public const int MakeAmountTextEntryID = 9000;
         public const int MinMakeAmount = 1;
@@ -97,7 +107,7 @@ namespace Server.Engines.Craft
             AddButton(270, 402, 4005, 4007, GetButtonID(6, 2), GumpButtonType.Reply, 0);
             AddHtmlLocalized(305, 405, 150, 18, 1044013, LabelColor, false, false); // MAKE LAST
 
-            AddMakeAmountField(context, 150, 402);
+            AddMakeAmountField(context, 145, 400);
 
             // Mark option
             if (craftSystem.MarkOption)
@@ -297,18 +307,32 @@ namespace Server.Engines.Craft
             AddHtml(
                 x,
                 y + 3,
-                62,
+                MakeAmountLabelWidth,
                 18,
                 String.Format("<BASEFONT COLOR=#{0:X6}>AMOUNT</BASEFONT>", FontColor),
                 false,
                 false
             );
-            AddImageTiled(x + 63, y, 49, 18, TextEntryBackground);
-            AddTextEntry(
-                x + 66,
+
+            AddImageTiled(
+                x + MakeAmountFieldOffset,
                 y,
-                43,
-                18,
+                MakeAmountFrameWidth,
+                MakeAmountFrameHeight,
+                TextEntryFrame
+            );
+            AddImageTiled(
+                x + MakeAmountFieldOffset + MakeAmountFieldInset,
+                y + MakeAmountFieldInset,
+                MakeAmountFieldWidth,
+                MakeAmountFieldHeight,
+                TextEntryBackground
+            );
+            AddTextEntry(
+                x + MakeAmountFieldOffset + MakeAmountTextInset,
+                y + MakeAmountFieldInset,
+                MakeAmountTextWidth,
+                MakeAmountFieldHeight,
                 TextEntryHue,
                 MakeAmountTextEntryID,
                 GetMakeAmount(context).ToString()
