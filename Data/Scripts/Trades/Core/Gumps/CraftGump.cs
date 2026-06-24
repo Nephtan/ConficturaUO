@@ -39,10 +39,10 @@ namespace Server.Engines.Craft
         private const int SourceContainerButtonIndex = 9;
         private const int DestinationContainerButtonIndex = 10;
         private const int ResetContainersButtonIndex = 11;
-        private const int ContainerButtonX = 145;
-        private const int ContainerLabelX = 180;
+        private const int ContainerButtonX = 395;
+        private const int ContainerLabelX = 430;
         private const int ContainerLabelWidth = 85;
-        private const int FooterLeftLabelWidth = 90;
+        private const int FooterLeftLabelWidth = 215;
 
         private enum CraftPage
         {
@@ -1122,15 +1122,37 @@ namespace Server.Engines.Craft
             private CraftPage m_Page;
 
             public CraftContainerTarget(CraftSystem craftSystem, BaseTool tool, bool source, CraftPage page)
-                : base(2, false, TargetFlags.None)
+                : base(-1, false, TargetFlags.None)
             {
                 m_CraftSystem = craftSystem;
                 m_Tool = tool;
                 m_Source = source;
                 m_Page = page;
+                AllowNonlocal = true;
+                CheckLOS = false;
             }
 
             protected override void OnTarget(Mobile from, object targeted)
+            {
+                HandleTarget(from, targeted);
+            }
+
+            protected override void OnTargetNotAccessible(Mobile from, object targeted)
+            {
+                HandleTarget(from, targeted);
+            }
+
+            protected override void OnCantSeeTarget(Mobile from, object targeted)
+            {
+                HandleTarget(from, targeted);
+            }
+
+            protected override void OnTargetOutOfRange(Mobile from, object targeted)
+            {
+                HandleTarget(from, targeted);
+            }
+
+            private void HandleTarget(Mobile from, object targeted)
             {
                 if (from == null || from.Deleted || m_CraftSystem == null)
                     return;
