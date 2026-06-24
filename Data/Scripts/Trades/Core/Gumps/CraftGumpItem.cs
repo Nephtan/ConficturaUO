@@ -118,6 +118,7 @@ namespace Server.Engines.Craft
                     pageIndex,
                     totalPages,
                     needsRecipe,
+                    context,
                     res,
                     resIndex,
                     cropScroll,
@@ -175,6 +176,35 @@ namespace Server.Engines.Craft
             );
         }
 
+        private void AddContainerStatus(CraftContext context)
+        {
+            AddContainerStatusLabel(
+                170,
+                60,
+                150,
+                String.Format("SRC: {0}", CraftContainerUtility.GetSourceDisplayName(m_From, context))
+            );
+            AddContainerStatusLabel(
+                330,
+                60,
+                180,
+                String.Format("OUT: {0}", CraftContainerUtility.GetDestinationDisplayName(m_From, context))
+            );
+        }
+
+        private void AddContainerStatusLabel(int x, int y, int width, string text)
+        {
+            AddHtml(
+                x,
+                y,
+                width,
+                18,
+                String.Format("<BASEFONT COLOR=#{0:X6}>{1}</BASEFONT>", FontColor, Utility.FixHtml(text)),
+                false,
+                false
+            );
+        }
+
         private void AddNotice()
         {
             if (m_Notice is int && (int)m_Notice > 0)
@@ -210,6 +240,7 @@ namespace Server.Engines.Craft
             int pageIndex,
             int totalPages,
             bool needsRecipe,
+            CraftContext context,
             CraftSubResCol res,
             int resIndex,
             bool cropScroll,
@@ -289,6 +320,8 @@ namespace Server.Engines.Craft
                 AddHtmlLocalized(330, 40, 180, 18, m_CraftItem.NameNumber, LabelColor, false, false);
             else
                 AddLabel(330, 40, LabelHue, m_CraftItem.NameString);
+
+            AddContainerStatus(context);
 
             m_OtherCount = 0;
 
