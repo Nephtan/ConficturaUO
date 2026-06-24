@@ -21,7 +21,17 @@ namespace Server.Engines.Craft
         private const int RedLabelColor = 0x6400;
         private const int FontColor = 0xFFFFFF;
         private const int TextEntryHue = 0;
+        private const int TextEntryFrame = 0x52;
         private const int TextEntryBackground = 0xBBC;
+        private const int MakeAmountLabelWidth = 56;
+        private const int MakeAmountFieldOffset = 59;
+        private const int MakeAmountFrameWidth = 58;
+        private const int MakeAmountFrameHeight = 22;
+        private const int MakeAmountFieldInset = 2;
+        private const int MakeAmountFieldWidth = 54;
+        private const int MakeAmountFieldHeight = 18;
+        private const int MakeAmountTextInset = 6;
+        private const int MakeAmountTextWidth = 46;
 
         private const int GreyLabelColor = 0x3DEF;
 
@@ -133,18 +143,32 @@ namespace Server.Engines.Craft
             AddHtml(
                 x,
                 y + 3,
-                62,
+                MakeAmountLabelWidth,
                 18,
                 String.Format("<BASEFONT COLOR=#{0:X6}>AMOUNT</BASEFONT>", FontColor),
                 false,
                 false
             );
-            AddImageTiled(x + 63, y, 49, 18, TextEntryBackground);
-            AddTextEntry(
-                x + 66,
+
+            AddImageTiled(
+                x + MakeAmountFieldOffset,
                 y,
-                43,
-                18,
+                MakeAmountFrameWidth,
+                MakeAmountFrameHeight,
+                TextEntryFrame
+            );
+            AddImageTiled(
+                x + MakeAmountFieldOffset + MakeAmountFieldInset,
+                y + MakeAmountFieldInset,
+                MakeAmountFieldWidth,
+                MakeAmountFieldHeight,
+                TextEntryBackground
+            );
+            AddTextEntry(
+                x + MakeAmountFieldOffset + MakeAmountTextInset,
+                y + MakeAmountFieldInset,
+                MakeAmountTextWidth,
+                MakeAmountFieldHeight,
                 TextEntryHue,
                 CraftGump.MakeAmountTextEntryID,
                 CraftGump.GetMakeAmount(context).ToString()
@@ -248,7 +272,7 @@ namespace Server.Engines.Craft
             AddButton(15, 387, 4014, 4016, 0, GumpButtonType.Reply, 0);
             AddHtmlLocalized(50, 390, 90, 18, 1044150, LabelColor, false, false); // BACK
 
-            AddMakeAmountField(150, 387);
+            AddMakeAmountField(145, 387);
 
             if (needsRecipe)
             {
