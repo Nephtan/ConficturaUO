@@ -265,6 +265,13 @@ Acceptance criteria:
 - No container setting can bypass ownership, range, access, or backpack requirements unless deliberately approved.
 - Make Amount still works correctly when selected containers become invalid mid-session.
 
+Implementation notes:
+
+- Store source and output container choices in runtime `CraftContext` only; no player serialization or project-file changes are needed.
+- Main `CraftGump` uses misc button indexes `9`, `10`, and `11` for source, output, and reset controls in the center footer column.
+- Source and output selections accept only the backpack or containers inside the backpack; deleted, inaccessible, world, bank, and house containers clear back to backpack behavior.
+- Resource counts, resource checks, and resource consumption resolve against the active source container; crafted results try the active output bag and fall back to the backpack when it becomes invalid or cannot hold the item.
+
 ### Phase 5 - Full Queue Evaluation
 
 Evaluate a full multi-item crafting queue only after the smaller QoL phases have proven stable.

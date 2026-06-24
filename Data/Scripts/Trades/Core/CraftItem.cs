@@ -708,7 +708,8 @@ namespace Server.Engines.Craft
             bool isFailure
         )
         {
-            Container ourPack = from.Backpack;
+            CraftContext context = craftSystem.GetContext(from);
+            Container ourPack = CraftContainerUtility.ResolveSourceContainer(from, context, true);
 
             if (ourPack == null)
                 return false;
@@ -4166,7 +4167,7 @@ namespace Server.Engines.Craft
                         item.ItemID = 0xEC3;
                     }
 
-                    from.AddToBackpack(item);
+                    CraftContainerUtility.PlaceCraftResult(from, context, item);
 
                     if (from.AccessLevel > AccessLevel.Player)
                         CommandLogging.WriteLine(

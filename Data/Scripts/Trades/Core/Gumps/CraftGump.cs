@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Server.Gumps;
 using Server.Items;
 using Server.Network;
+using Server.Targeting;
 
 namespace Server.Engines.Craft
 {
@@ -35,6 +36,13 @@ namespace Server.Engines.Craft
         public const int MinMakeAmount = 1;
         public const int MaxMakeAmount = 100;
         public const string MakeAmountInvalidMessage = "Enter an amount from 1 to 100.";
+        private const int SourceContainerButtonIndex = 9;
+        private const int DestinationContainerButtonIndex = 10;
+        private const int ResetContainersButtonIndex = 11;
+        private const int ContainerButtonX = 145;
+        private const int ContainerLabelX = 180;
+        private const int ContainerLabelWidth = 85;
+        private const int FooterLeftLabelWidth = 90;
 
         private enum CraftPage
         {
@@ -68,6 +76,9 @@ namespace Server.Engines.Craft
 
             if (context != null)
                 ValidateContext(context);
+
+            Container sourceContainer = CraftContainerUtility.ResolveSourceContainer(from, context, true);
+            CraftContainerUtility.ResolveDestinationContainer(from, context, true);
 
             from.CloseGump(typeof(CraftGump));
             from.CloseGump(typeof(CraftGumpItem));
@@ -107,6 +118,7 @@ namespace Server.Engines.Craft
             AddButton(270, 402, 4005, 4007, GetButtonID(6, 2), GumpButtonType.Reply, 0);
             AddHtmlLocalized(305, 405, 150, 18, 1044013, LabelColor, false, false); // MAKE LAST
 
+            AddCraftContainerControls(context);
             AddMakeAmountField(context, 145, 400);
 
             // Mark option
@@ -184,9 +196,9 @@ namespace Server.Engines.Craft
 
                 int resourceCount = 0;
 
-                if (from.Backpack != null)
+                if (sourceContainer != null)
                 {
-                    Item[] items = from.Backpack.FindItemsByType(resourceType, true);
+                    Item[] items = sourceContainer.FindItemsByType(resourceType, true);
 
                     for (int i = 0; i < items.Length; ++i)
                         resourceCount += items[i].Amount;
@@ -198,7 +210,7 @@ namespace Server.Engines.Craft
                     AddHtmlLocalized(
                         50,
                         365,
-                        250,
+                        FooterLeftLabelWidth,
                         18,
                         nameNumber,
                         resourceCount.ToString(),
@@ -207,11 +219,18 @@ namespace Server.Engines.Craft
                         false
                     );
                 else
-                    AddLabel(
+                    AddHtml(
                         50,
-                        362,
-                        LabelHue,
-                        String.Format("{0} ({1} Available)", nameString, resourceCount)
+                        365,
+                        FooterLeftLabelWidth,
+                        18,
+                        String.Format(
+                            "<BASEFONT COLOR=#{0:X6}>{1}</BASEFONT>",
+                            FontColor,
+                            Utility.FixHtml(String.Format("{0} ({1})", nameString, resourceCount))
+                        ),
+                        false,
+                        false
                     );
             }
             // ****************************************
@@ -237,9 +256,9 @@ namespace Server.Engines.Craft
 
                 int resourceCount = 0;
 
-                if (from.Backpack != null)
+                if (sourceContainer != null)
                 {
-                    Item[] items = from.Backpack.FindItemsByType(resourceType, true);
+                    Item[] items = sourceContainer.FindItemsByType(resourceType, true);
 
                     for (int i = 0; i < items.Length; ++i)
                         resourceCount += items[i].Amount;
@@ -251,7 +270,7 @@ namespace Server.Engines.Craft
                     AddHtmlLocalized(
                         50,
                         385,
-                        250,
+                        FooterLeftLabelWidth,
                         18,
                         nameNumber,
                         resourceCount.ToString(),
@@ -260,11 +279,18 @@ namespace Server.Engines.Craft
                         false
                     );
                 else
-                    AddLabel(
+                    AddHtml(
                         50,
                         385,
-                        LabelHue,
-                        String.Format("{0} ({1} Available)", nameString, resourceCount)
+                        FooterLeftLabelWidth,
+                        18,
+                        String.Format(
+                            "<BASEFONT COLOR=#{0:X6}>{1}</BASEFONT>",
+                            FontColor,
+                            Utility.FixHtml(String.Format("{0} ({1})", nameString, resourceCount))
+                        ),
+                        false,
+                        false
                     );
             }
             // ****************************************
@@ -300,6 +326,63 @@ namespace Server.Engines.Craft
                 return res.GetAt(index);
 
             return null;
+        }
+
+        private void AddCraftContainerControls(CraftContext context)
+        {
+            AddButton(
+                ContainerButtonX,
+                342,
+                4005,
+                4007,
+                GetButtonID(6, SourceContainerButtonIndex),
+                GumpButtonType.Reply,
+                0
+            );
+            AddCraftContainerLabel(
+                ContainerLabelX,
+                345,
+                String.Format("SRC: {0}", CraftContainerUtility.GetSourceDisplayName(m_From, context))
+            );
+
+            AddButton(
+                ContainerButtonX,
+                362,
+                4005,
+                4007,
+                GetButtonID(6, DestinationContainerButtonIndex),
+                GumpButtonType.Reply,
+                0
+            );
+            AddCraftContainerLabel(
+                ContainerLabelX,
+                365,
+                String.Format("OUT: {0}", CraftContainerUtility.GetDestinationDisplayName(m_From, context))
+            );
+
+            AddButton(
+                ContainerButtonX,
+                382,
+                4017,
+                4019,
+                GetButtonID(6, ResetContainersButtonIndex),
+                GumpButtonType.Reply,
+                0
+            );
+            AddCraftContainerLabel(ContainerLabelX, 385, "RESET BAGS");
+        }
+
+        private void AddCraftContainerLabel(int x, int y, string text)
+        {
+            AddHtml(
+                x,
+                y,
+                ContainerLabelWidth,
+                18,
+                String.Format("<BASEFONT COLOR=#{0:X6}>{1}</BASEFONT>", FontColor, Utility.FixHtml(text)),
+                false,
+                false
+            );
         }
 
         private void AddMakeAmountField(CraftContext context, int x, int y)
@@ -694,6 +777,47 @@ namespace Server.Engines.Craft
             }
         }
 
+        private void HandleCraftContainerResponse(CraftSystem system, CraftContext context, int index)
+        {
+            if (context == null)
+            {
+                m_From.SendGump(new CraftGump(m_From, system, m_Tool, "Crafting context is not available.", m_Page));
+                return;
+            }
+
+            int badCraft = system.CanCraft(m_From, m_Tool, null);
+
+            if (badCraft > 0)
+            {
+                m_From.SendGump(new CraftGump(m_From, system, m_Tool, badCraft, m_Page));
+                return;
+            }
+
+            switch (index)
+            {
+                case SourceContainerButtonIndex:
+                {
+                    m_From.SendMessage("Target the container to use for crafting materials.");
+                    m_From.Target = new CraftContainerTarget(system, m_Tool, true, m_Page);
+                    break;
+                }
+                case DestinationContainerButtonIndex:
+                {
+                    m_From.SendMessage("Target the container to receive crafted items.");
+                    m_From.Target = new CraftContainerTarget(system, m_Tool, false, m_Page);
+                    break;
+                }
+                case ResetContainersButtonIndex:
+                {
+                    context.ResetCraftContainers();
+                    m_From.SendGump(
+                        new CraftGump(m_From, system, m_Tool, "Crafting containers reset to your backpack.", m_Page)
+                    );
+                    break;
+                }
+            }
+        }
+
         public override void OnResponse(NetState sender, RelayInfo info)
         {
             if (sender == null || m_From == null || m_From.Deleted || sender.Mobile != m_From)
@@ -712,6 +836,19 @@ namespace Server.Engines.Craft
 
             if (context != null)
                 ValidateContext(context);
+
+            if (
+                type == 6
+                && (
+                    index == SourceContainerButtonIndex
+                    || index == DestinationContainerButtonIndex
+                    || index == ResetContainersButtonIndex
+                )
+            )
+            {
+                HandleCraftContainerResponse(system, context, index);
+                return;
+            }
 
             int makeAmount;
 
@@ -974,6 +1111,56 @@ namespace Server.Engines.Craft
 
                     break;
                 }
+            }
+        }
+
+        private class CraftContainerTarget : Target
+        {
+            private CraftSystem m_CraftSystem;
+            private BaseTool m_Tool;
+            private bool m_Source;
+            private CraftPage m_Page;
+
+            public CraftContainerTarget(CraftSystem craftSystem, BaseTool tool, bool source, CraftPage page)
+                : base(2, false, TargetFlags.None)
+            {
+                m_CraftSystem = craftSystem;
+                m_Tool = tool;
+                m_Source = source;
+                m_Page = page;
+            }
+
+            protected override void OnTarget(Mobile from, object targeted)
+            {
+                if (from == null || from.Deleted || m_CraftSystem == null)
+                    return;
+
+                CraftContext context = m_CraftSystem.GetContext(from);
+                int badCraft = m_CraftSystem.CanCraft(from, m_Tool, null);
+
+                if (badCraft > 0)
+                {
+                    from.SendGump(new CraftGump(from, m_CraftSystem, m_Tool, badCraft, m_Page));
+                    return;
+                }
+
+                Container container = targeted as Container;
+                string message;
+
+                if (m_Source)
+                    CraftContainerUtility.TrySetSourceContainer(from, context, container, out message);
+                else
+                    CraftContainerUtility.TrySetDestinationContainer(from, context, container, out message);
+
+                from.SendGump(new CraftGump(from, m_CraftSystem, m_Tool, message, m_Page));
+            }
+
+            protected override void OnTargetCancel(Mobile from, TargetCancelType cancelType)
+            {
+                if (from == null || from.Deleted || m_CraftSystem == null)
+                    return;
+
+                from.SendGump(new CraftGump(from, m_CraftSystem, m_Tool, "Container selection canceled.", m_Page));
             }
         }
     }

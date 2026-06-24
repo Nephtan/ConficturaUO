@@ -31,6 +31,8 @@ namespace Server.Engines.Craft
         private int m_MakeAmountFailures;
         private bool m_MakeAmountStopRequested;
         private string m_MakeAmountState;
+        private Container m_SourceContainer;
+        private Container m_DestinationContainer;
 
         public List<CraftItem> Items
         {
@@ -101,6 +103,16 @@ namespace Server.Engines.Craft
         public string MakeAmountState
         {
             get { return m_MakeAmountState == null ? String.Empty : m_MakeAmountState; }
+        }
+        public Container SourceContainer
+        {
+            get { return m_SourceContainer; }
+            set { m_SourceContainer = value; }
+        }
+        public Container DestinationContainer
+        {
+            get { return m_DestinationContainer; }
+            set { m_DestinationContainer = value; }
         }
 
         public CraftContext()
@@ -227,6 +239,253 @@ namespace Server.Engines.Craft
             m_MakeAmountCurrent++;
             m_MakeAmountState = "Crafting";
             return true;
+        }
+
+        public void ResetCraftContainers()
+        {
+            m_SourceContainer = null;
+            m_DestinationContainer = null;
+        }
+    }
+
+    internal static class CraftContainerUtility
+    {
+        private const int MaxDisplayNameLength = 14;
+
+        public static Container ResolveSourceContainer(Mobile from, CraftContext context, bool sendMessage)
+        {
+            return ResolveContainer(from, context, true, sendMessage);
+        }
+
+        public static Container ResolveDestinationContainer(Mobile from, CraftContext context, bool sendMessage)
+        {
+            return ResolveContainer(from, context, false, sendMessage);
+        }
+
+        public static bool TrySetSourceContainer(
+            Mobile from,
+            CraftContext context,
+            Container container,
+            out string message
+        )
+        {
+            return TrySetContainer(from, context, container, true, out message);
+        }
+
+        public static bool TrySetDestinationContainer(
+            Mobile from,
+            CraftContext context,
+            Container container,
+            out string message
+        )
+        {
+            return TrySetContainer(from, context, container, false, out message);
+        }
+
+        public static string GetSourceDisplayName(Mobile from, CraftContext context)
+        {
+            return GetDisplayName(from, context, true);
+        }
+
+        public static string GetDestinationDisplayName(Mobile from, CraftContext context)
+        {
+            return GetDisplayName(from, context, false);
+        }
+
+        public static bool PlaceCraftResult(Mobile from, CraftContext context, Item item)
+        {
+            if (from == null || item == null)
+                return false;
+
+            Container backpack = from.Backpack;
+            Container destination = ResolveDestinationContainer(from, context, true);
+
+            if (destination != null && destination != backpack)
+            {
+                if (destination.TryDropItem(from, item, false))
+                    return true;
+
+                from.SendMessage("The selected output bag cannot hold that item; using your backpack.");
+            }
+
+            return from.AddToBackpack(item);
+        }
+
+        private static Container ResolveContainer(
+            Mobile from,
+            CraftContext context,
+            bool source,
+            bool sendMessage
+        )
+        {
+            Container backpack = GetBackpack(from);
+
+            if (context == null)
+                return backpack;
+
+            Container selected = source ? context.SourceContainer : context.DestinationContainer;
+
+            if (selected == null || selected == backpack)
+                return backpack;
+
+            string message;
+
+            if (IsValidContainer(from, selected, out message))
+                return selected;
+
+            if (source)
+                context.SourceContainer = null;
+            else
+                context.DestinationContainer = null;
+
+            if (sendMessage && from != null)
+            {
+                if (source)
+                    from.SendMessage("The selected source container is no longer available; using your backpack.");
+                else
+                    from.SendMessage("The selected output bag is no longer available; using your backpack.");
+            }
+
+            return backpack;
+        }
+
+        private static bool TrySetContainer(
+            Mobile from,
+            CraftContext context,
+            Container container,
+            bool source,
+            out string message
+        )
+        {
+            message = null;
+
+            if (context == null)
+            {
+                message = "Crafting context is not available.";
+                return false;
+            }
+
+            string validationMessage;
+
+            if (!IsValidContainer(from, container, out validationMessage))
+            {
+                message = validationMessage;
+                return false;
+            }
+
+            Container backpack = from.Backpack;
+
+            if (container == backpack)
+            {
+                if (source)
+                    context.SourceContainer = null;
+                else
+                    context.DestinationContainer = null;
+
+                message = source
+                    ? "Crafting source reset to your backpack."
+                    : "Crafting output reset to your backpack.";
+                return true;
+            }
+
+            if (source)
+                context.SourceContainer = container;
+            else
+                context.DestinationContainer = container;
+
+            message = String.Format(
+                "{0} set to {1}.",
+                source ? "Crafting source" : "Crafting output",
+                GetContainerDisplayName(container)
+            );
+            return true;
+        }
+
+        private static bool IsValidContainer(Mobile from, Container container, out string message)
+        {
+            message = null;
+
+            if (from == null || from.Deleted)
+            {
+                message = "You cannot select crafting containers right now.";
+                return false;
+            }
+
+            Container backpack = from.Backpack;
+
+            if (backpack == null)
+            {
+                message = "You must have a backpack to use crafting containers.";
+                return false;
+            }
+
+            if (container == null || container.Deleted)
+            {
+                message = "That is not an available container.";
+                return false;
+            }
+
+            if (container != backpack && !container.IsChildOf(backpack))
+            {
+                message = "Select a container in your backpack.";
+                return false;
+            }
+
+            if (!container.IsAccessibleTo(from))
+            {
+                message = "You cannot access that container.";
+                return false;
+            }
+
+            return true;
+        }
+
+        private static Container GetBackpack(Mobile from)
+        {
+            if (from == null || from.Deleted)
+                return null;
+
+            return from.Backpack;
+        }
+
+        private static string GetDisplayName(Mobile from, CraftContext context, bool source)
+        {
+            Container container = ResolveContainer(from, context, source, false);
+
+            if (container == null)
+                return "No backpack";
+
+            if (from != null && container == from.Backpack)
+                return "Backpack";
+
+            return GetContainerDisplayName(container);
+        }
+
+        private static string GetContainerDisplayName(Container container)
+        {
+            if (container == null)
+                return "Backpack";
+
+            string name = container.Name;
+
+            if (String.IsNullOrEmpty(name))
+                name = container.GetType().Name;
+
+            return CropText(name, MaxDisplayNameLength);
+        }
+
+        private static string CropText(string text, int maxLength)
+        {
+            if (String.IsNullOrEmpty(text))
+                return String.Empty;
+
+            if (text.Length <= maxLength)
+                return text;
+
+            if (maxLength <= 3)
+                return text.Substring(0, maxLength);
+
+            return text.Substring(0, maxLength - 3) + "...";
         }
     }
 }
