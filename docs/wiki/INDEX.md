@@ -64,6 +64,7 @@ Guides are grouped by primary audience and use case.
 - [Book Publisher](Book_Publisher.md)
 - [Bulk Order System](Bulk_Order_System.md)
 - [Crafting Core](Crafting_Core.md)
+- [Crafting Queue Design](Crafting_Queue_Design.md)
 - [Crafting QoL Roadmap](Crafting_QoL_Roadmap.md)
 - [Farmable Crops System](Farmable_Crops_System.md)
 - [Flip Deed](Flip_Deed.md)
