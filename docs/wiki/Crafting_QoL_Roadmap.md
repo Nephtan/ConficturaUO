@@ -282,6 +282,8 @@ Goal command:
 Using docs/wiki/Crafting_QoL_Roadmap.md as the source of truth, complete Phase 5 - Full Queue Evaluation: write a separate queue design before code, covering queue rows, paging, per-row controls, enable/disable states, target counts, stop conditions, summary behavior, source/destination interaction, and acceptance tests.
 ```
 
+Design document: [Crafting Queue Design](Crafting_Queue_Design.md).
+
 Deliverables:
 
 - Write a separate queue design before code.
