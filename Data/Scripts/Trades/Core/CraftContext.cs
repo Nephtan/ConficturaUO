@@ -251,6 +251,7 @@ namespace Server.Engines.Craft
     internal static class CraftContainerUtility
     {
         private const int MaxDisplayNameLength = 14;
+        private const int WorldContainerRange = 2;
 
         public static Container ResolveSourceContainer(Mobile from, CraftContext context, bool sendMessage)
         {
@@ -425,9 +426,30 @@ namespace Server.Engines.Craft
                 return false;
             }
 
-            if (container != backpack && !container.IsChildOf(backpack))
+            if (container == backpack || container.IsChildOf(backpack))
+                return true;
+
+            if (container.RootParent is Mobile)
             {
-                message = "Select a container in your backpack.";
+                message = "Select your backpack, a bag in your backpack, or a nearby container you can access.";
+                return false;
+            }
+
+            if (container.Map == null || container.Map != from.Map)
+            {
+                message = "That container is not available from here.";
+                return false;
+            }
+
+            if (!from.InRange(container.GetWorldLocation(), WorldContainerRange))
+            {
+                message = "That container is too far away.";
+                return false;
+            }
+
+            if (!container.IsAccessibleTo(from))
+            {
+                message = "You cannot access that container.";
                 return false;
             }
 
