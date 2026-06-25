@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Server.Items;
+using Server.Multis;
 
 namespace Server.Engines.Craft
 {
@@ -12,9 +13,182 @@ namespace Server.Engines.Craft
         PromptForMark
     }
 
+    public enum CraftQueueRowState
+    {
+        Pending,
+        Running,
+        Disabled,
+        Complete,
+        Blocked,
+        StopRequested
+    }
+
+    public class CraftQueueRow
+    {
+        private int m_RowId;
+        private CraftItem m_CraftItem;
+        private Type m_ItemType;
+        private Type m_TypeRes;
+        private string m_DisplayName;
+        private int m_TargetAttempts;
+        private int m_CompletedAttempts;
+        private int m_Successes;
+        private int m_Failures;
+        private bool m_Enabled;
+        private CraftQueueRowState m_State;
+        private string m_LastMessage;
+
+        public CraftQueueRow(int rowId, CraftItem craftItem, Type typeRes, int targetAttempts)
+        {
+            m_RowId = rowId;
+            m_CraftItem = craftItem;
+            m_ItemType = craftItem == null ? null : craftItem.ItemType;
+            m_TypeRes = typeRes;
+            m_DisplayName = GetDisplayName(craftItem);
+            m_TargetAttempts = targetAttempts;
+            m_Enabled = true;
+            m_State = CraftQueueRowState.Pending;
+        }
+
+        public int RowId
+        {
+            get { return m_RowId; }
+        }
+
+        public CraftItem CraftItem
+        {
+            get { return m_CraftItem; }
+        }
+
+        public Type ItemType
+        {
+            get { return m_ItemType; }
+        }
+
+        public Type TypeRes
+        {
+            get { return m_TypeRes; }
+        }
+
+        public string DisplayName
+        {
+            get { return m_DisplayName; }
+        }
+
+        public int TargetAttempts
+        {
+            get { return m_TargetAttempts; }
+            set { m_TargetAttempts = value; }
+        }
+
+        public int CompletedAttempts
+        {
+            get { return m_CompletedAttempts; }
+        }
+
+        public int Successes
+        {
+            get { return m_Successes; }
+        }
+
+        public int Failures
+        {
+            get { return m_Failures; }
+        }
+
+        public bool Enabled
+        {
+            get { return m_Enabled; }
+            set
+            {
+                m_Enabled = value;
+
+                if (!m_Enabled)
+                    m_State = CraftQueueRowState.Disabled;
+                else if (m_CompletedAttempts >= m_TargetAttempts)
+                    m_State = CraftQueueRowState.Complete;
+                else
+                    m_State = CraftQueueRowState.Pending;
+            }
+        }
+
+        public CraftQueueRowState State
+        {
+            get { return m_State; }
+            set { m_State = value; }
+        }
+
+        public string LastMessage
+        {
+            get { return m_LastMessage == null ? String.Empty : m_LastMessage; }
+            set { m_LastMessage = value; }
+        }
+
+        public bool IsComplete
+        {
+            get { return m_CompletedAttempts >= m_TargetAttempts; }
+        }
+
+        public bool CanRun
+        {
+            get { return m_Enabled && !IsComplete; }
+        }
+
+        public void RecordAttempt(bool success)
+        {
+            m_CompletedAttempts++;
+
+            if (success)
+            {
+                m_Successes++;
+                m_LastMessage = "Last attempt succeeded.";
+            }
+            else
+            {
+                m_Failures++;
+                m_LastMessage = "Last attempt failed.";
+            }
+
+            if (m_CompletedAttempts >= m_TargetAttempts)
+                m_State = CraftQueueRowState.Complete;
+            else if (m_Enabled)
+                m_State = CraftQueueRowState.Pending;
+            else
+                m_State = CraftQueueRowState.Disabled;
+        }
+
+        public void Reset()
+        {
+            m_CompletedAttempts = 0;
+            m_Successes = 0;
+            m_Failures = 0;
+            m_LastMessage = null;
+            m_State = m_Enabled ? CraftQueueRowState.Pending : CraftQueueRowState.Disabled;
+        }
+
+        private static string GetDisplayName(CraftItem craftItem)
+        {
+            if (craftItem == null)
+                return "Unknown";
+
+            if (!String.IsNullOrEmpty(craftItem.NameString))
+                return craftItem.NameString;
+
+            if (craftItem.ItemType != null)
+                return craftItem.ItemType.Name;
+
+            return "Unknown";
+        }
+    }
+
     public class CraftContext
     {
+        public const int MaxCraftQueueRows = 25;
+        public const int MaxCraftQueueAttemptsPerRow = 100;
+        public const int MaxCraftQueuePendingAttempts = 500;
+
         private List<CraftItem> m_Items;
+        private List<CraftQueueRow> m_CraftQueueRows;
         private int m_LastResourceIndex;
         private int m_LastResourceIndex2;
         private int m_LastGroupIndex;
@@ -33,10 +207,21 @@ namespace Server.Engines.Craft
         private string m_MakeAmountState;
         private Container m_SourceContainer;
         private Container m_DestinationContainer;
+        private int m_NextCraftQueueRowId;
+        private int m_SelectedCraftQueueRowId;
+        private int m_ActiveCraftQueueRowId;
+        private bool m_CraftQueueRunning;
+        private bool m_CraftQueueStopRequested;
+        private string m_CraftQueueState;
+        private BaseTool m_CraftQueueTool;
 
         public List<CraftItem> Items
         {
             get { return m_Items; }
+        }
+        public List<CraftQueueRow> CraftQueueRows
+        {
+            get { return m_CraftQueueRows; }
         }
         public int LastResourceIndex
         {
@@ -114,14 +299,43 @@ namespace Server.Engines.Craft
             get { return m_DestinationContainer; }
             set { m_DestinationContainer = value; }
         }
+        public int SelectedCraftQueueRowId
+        {
+            get { return m_SelectedCraftQueueRowId; }
+            set { m_SelectedCraftQueueRowId = value; }
+        }
+        public bool HasCraftQueueRows
+        {
+            get { return m_CraftQueueRows.Count > 0; }
+        }
+        public bool CraftQueueRunning
+        {
+            get { return m_CraftQueueRunning; }
+        }
+        public bool CraftQueueStopRequested
+        {
+            get { return m_CraftQueueStopRequested; }
+        }
+        public string CraftQueueState
+        {
+            get { return m_CraftQueueState == null ? String.Empty : m_CraftQueueState; }
+        }
+        public BaseTool CraftQueueTool
+        {
+            get { return m_CraftQueueTool; }
+        }
 
         public CraftContext()
         {
             m_Items = new List<CraftItem>();
+            m_CraftQueueRows = new List<CraftQueueRow>();
             m_LastResourceIndex = -1;
             m_LastResourceIndex2 = -1;
             m_LastGroupIndex = -1;
             m_MakeAmount = 1;
+            m_SelectedCraftQueueRowId = -1;
+            m_ActiveCraftQueueRowId = -1;
+            m_NextCraftQueueRowId = 1;
         }
 
         public CraftItem LastMade
@@ -245,6 +459,498 @@ namespace Server.Engines.Craft
         {
             m_SourceContainer = null;
             m_DestinationContainer = null;
+        }
+
+        public CraftQueueRow AddCraftQueueRow(CraftItem item, Type typeRes, int targetAttempts, out string message)
+        {
+            message = null;
+
+            if (item == null)
+            {
+                message = "Select a valid recipe before adding it to the queue.";
+                return null;
+            }
+
+            if (m_CraftQueueRunning)
+            {
+                message = "Stop the active queue before adding more recipes.";
+                return null;
+            }
+
+            if (m_CraftQueueRows.Count >= MaxCraftQueueRows)
+            {
+                message = String.Format("The crafting queue is limited to {0} rows.", MaxCraftQueueRows);
+                return null;
+            }
+
+            if (targetAttempts < 1)
+                targetAttempts = 1;
+            else if (targetAttempts > MaxCraftQueueAttemptsPerRow)
+                targetAttempts = MaxCraftQueueAttemptsPerRow;
+
+            if (GetCraftQueuePendingAttempts() + targetAttempts > MaxCraftQueuePendingAttempts)
+            {
+                message = String.Format(
+                    "The crafting queue is limited to {0} pending attempts.",
+                    MaxCraftQueuePendingAttempts
+                );
+                return null;
+            }
+
+            CraftQueueRow row = new CraftQueueRow(m_NextCraftQueueRowId++, item, typeRes, targetAttempts);
+            m_CraftQueueRows.Add(row);
+            m_SelectedCraftQueueRowId = row.RowId;
+            m_CraftQueueState = String.Format("Added {0}.", row.DisplayName);
+            message = m_CraftQueueState;
+            return row;
+        }
+
+        public CraftQueueRow GetCraftQueueRow(int rowId)
+        {
+            for (int i = 0; i < m_CraftQueueRows.Count; i++)
+            {
+                if (m_CraftQueueRows[i].RowId == rowId)
+                    return m_CraftQueueRows[i];
+            }
+
+            return null;
+        }
+
+        public CraftQueueRow GetSelectedCraftQueueRow()
+        {
+            CraftQueueRow row = GetCraftQueueRow(m_SelectedCraftQueueRowId);
+
+            if (row != null)
+                return row;
+
+            if (m_CraftQueueRows.Count > 0)
+            {
+                row = m_CraftQueueRows[0];
+                m_SelectedCraftQueueRowId = row.RowId;
+            }
+            else
+            {
+                m_SelectedCraftQueueRowId = -1;
+            }
+
+            return row;
+        }
+
+        public CraftQueueRow GetActiveCraftQueueRow()
+        {
+            return GetCraftQueueRow(m_ActiveCraftQueueRowId);
+        }
+
+        public bool RemoveCraftQueueRow(int rowId, out string message)
+        {
+            message = null;
+
+            if (m_CraftQueueRunning)
+            {
+                message = "Stop the active queue before removing rows.";
+                return false;
+            }
+
+            for (int i = 0; i < m_CraftQueueRows.Count; i++)
+            {
+                CraftQueueRow row = m_CraftQueueRows[i];
+
+                if (row.RowId == rowId)
+                {
+                    m_CraftQueueRows.RemoveAt(i);
+
+                    if (m_SelectedCraftQueueRowId == rowId)
+                        m_SelectedCraftQueueRowId = m_CraftQueueRows.Count > 0 ? m_CraftQueueRows[Math.Min(i, m_CraftQueueRows.Count - 1)].RowId : -1;
+
+                    message = "Queue row removed.";
+                    m_CraftQueueState = message;
+                    return true;
+                }
+            }
+
+            message = "That queue row is no longer available.";
+            return false;
+        }
+
+        public bool MoveCraftQueueRow(int rowId, int offset, out string message)
+        {
+            message = null;
+
+            if (m_CraftQueueRunning)
+            {
+                message = "Stop the active queue before reordering rows.";
+                return false;
+            }
+
+            for (int i = 0; i < m_CraftQueueRows.Count; i++)
+            {
+                if (m_CraftQueueRows[i].RowId == rowId)
+                {
+                    int newIndex = i + offset;
+
+                    if (newIndex < 0 || newIndex >= m_CraftQueueRows.Count)
+                    {
+                        message = "That queue row cannot move farther.";
+                        return false;
+                    }
+
+                    CraftQueueRow row = m_CraftQueueRows[i];
+                    m_CraftQueueRows.RemoveAt(i);
+                    m_CraftQueueRows.Insert(newIndex, row);
+                    message = "Queue row moved.";
+                    m_CraftQueueState = message;
+                    return true;
+                }
+            }
+
+            message = "That queue row is no longer available.";
+            return false;
+        }
+
+        public bool ToggleCraftQueueRow(int rowId, out string message)
+        {
+            message = null;
+            CraftQueueRow row = GetCraftQueueRow(rowId);
+
+            if (row == null)
+            {
+                message = "That queue row is no longer available.";
+                return false;
+            }
+
+            if (m_CraftQueueRunning)
+            {
+                message = "Stop the active queue before changing enabled rows.";
+                return false;
+            }
+
+            row.Enabled = !row.Enabled;
+            message = row.Enabled ? "Queue row enabled." : "Queue row disabled.";
+            m_CraftQueueState = message;
+            return true;
+        }
+
+        public bool SetCraftQueueRowTarget(int rowId, int targetAttempts, out string message)
+        {
+            message = null;
+            CraftQueueRow row = GetCraftQueueRow(rowId);
+
+            if (row == null)
+            {
+                message = "Select a valid queue row first.";
+                return false;
+            }
+
+            if (m_CraftQueueRunning)
+            {
+                message = "Stop the active queue before changing amounts.";
+                return false;
+            }
+
+            if (targetAttempts < 1 || targetAttempts > MaxCraftQueueAttemptsPerRow)
+            {
+                message = String.Format("Enter an amount from 1 to {0}.", MaxCraftQueueAttemptsPerRow);
+                return false;
+            }
+
+            if (targetAttempts < row.CompletedAttempts)
+            {
+                message = "Reset or remove that row before lowering it below completed attempts.";
+                return false;
+            }
+
+            int currentPending = GetCraftQueuePendingAttempts() - Math.Max(0, row.TargetAttempts - row.CompletedAttempts);
+            int newPending = Math.Max(0, targetAttempts - row.CompletedAttempts);
+
+            if (currentPending + newPending > MaxCraftQueuePendingAttempts)
+            {
+                message = String.Format(
+                    "The crafting queue is limited to {0} pending attempts.",
+                    MaxCraftQueuePendingAttempts
+                );
+                return false;
+            }
+
+            row.TargetAttempts = targetAttempts;
+
+            if (row.IsComplete)
+                row.State = CraftQueueRowState.Complete;
+            else if (row.Enabled)
+                row.State = CraftQueueRowState.Pending;
+
+            message = "Queue amount updated.";
+            m_CraftQueueState = message;
+            return true;
+        }
+
+        public void ClearCraftQueue()
+        {
+            if (m_CraftQueueRunning)
+                return;
+
+            m_CraftQueueRows.Clear();
+            m_SelectedCraftQueueRowId = -1;
+            m_ActiveCraftQueueRowId = -1;
+            m_CraftQueueState = "Queue cleared.";
+        }
+
+        public void ClearCompletedCraftQueueRows()
+        {
+            if (m_CraftQueueRunning)
+                return;
+
+            for (int i = m_CraftQueueRows.Count - 1; i >= 0; i--)
+            {
+                if (m_CraftQueueRows[i].IsComplete)
+                    m_CraftQueueRows.RemoveAt(i);
+            }
+
+            if (GetSelectedCraftQueueRow() == null)
+                m_SelectedCraftQueueRowId = -1;
+
+            m_CraftQueueState = "Completed queue rows cleared.";
+        }
+
+        public void ResetCraftQueueRow(int rowId, out string message)
+        {
+            message = null;
+
+            if (m_CraftQueueRunning)
+            {
+                message = "Stop the active queue before resetting rows.";
+                return;
+            }
+
+            CraftQueueRow row = GetCraftQueueRow(rowId);
+
+            if (row == null)
+            {
+                message = "That queue row is no longer available.";
+                return;
+            }
+
+            row.Reset();
+            message = "Queue row reset.";
+            m_CraftQueueState = message;
+        }
+
+        public bool StartCraftQueue(BaseTool tool, out string message)
+        {
+            message = null;
+
+            if (m_CraftQueueRunning)
+            {
+                message = "The crafting queue is already running.";
+                return false;
+            }
+
+            if (tool == null || tool.Deleted || tool.UsesRemaining <= 0)
+            {
+                message = "You need a usable tool to start the crafting queue.";
+                return false;
+            }
+
+            if (GetNextCraftQueueRow() == null)
+            {
+                message = "The crafting queue has no enabled incomplete rows.";
+                return false;
+            }
+
+            m_CraftQueueTool = tool;
+            m_CraftQueueRunning = true;
+            m_CraftQueueStopRequested = false;
+            m_ActiveCraftQueueRowId = -1;
+            m_CraftQueueState = "Queue started.";
+            ClearMakeAmountBatch();
+            return true;
+        }
+
+        public void RequestCraftQueueStop()
+        {
+            if (m_CraftQueueRunning)
+            {
+                m_CraftQueueStopRequested = true;
+                m_CraftQueueState = "Stopping after current attempt.";
+
+                CraftQueueRow row = GetActiveCraftQueueRow();
+
+                if (row != null)
+                    row.State = CraftQueueRowState.StopRequested;
+            }
+        }
+
+        public bool PrepareNextCraftQueueAttempt(BaseTool tool, out CraftQueueRow row, out string reason)
+        {
+            row = null;
+            reason = null;
+
+            if (!m_CraftQueueRunning)
+                return false;
+
+            if (m_CraftQueueStopRequested)
+            {
+                reason = "Stopped by player.";
+                return false;
+            }
+
+            if (m_CraftQueueTool != null && tool != m_CraftQueueTool)
+            {
+                reason = "Stopped because the tool changed.";
+                return false;
+            }
+
+            if (tool == null || tool.Deleted || tool.UsesRemaining <= 0)
+            {
+                reason = "Stopped because the tool has no uses remaining.";
+                return false;
+            }
+
+            row = GetNextCraftQueueRow();
+
+            if (row == null)
+            {
+                reason = "Completed.";
+                return false;
+            }
+
+            m_ActiveCraftQueueRowId = row.RowId;
+            m_SelectedCraftQueueRowId = row.RowId;
+            row.State = CraftQueueRowState.Running;
+            row.LastMessage = "Crafting.";
+            m_CraftQueueState = String.Format("Crafting {0}.", row.DisplayName);
+            return true;
+        }
+
+        public void RecordCraftQueueAttempt(CraftItem item, Type typeRes, BaseTool tool, bool success)
+        {
+            if (!m_CraftQueueRunning)
+                return;
+
+            CraftQueueRow row = GetActiveCraftQueueRow();
+
+            if (row == null || row.CraftItem != item || row.TypeRes != typeRes || (m_CraftQueueTool != null && tool != m_CraftQueueTool))
+                row = FindMatchingCraftQueueRow(item, typeRes);
+
+            if (row == null)
+                return;
+
+            row.RecordAttempt(success);
+            m_SelectedCraftQueueRowId = row.RowId;
+            m_CraftQueueState = row.LastMessage;
+        }
+
+        public void EndCraftQueue(string reason)
+        {
+            if (!m_CraftQueueRunning && !m_CraftQueueStopRequested)
+                return;
+
+            CraftQueueRow row = GetActiveCraftQueueRow();
+
+            if (row != null && row.State == CraftQueueRowState.Running)
+                row.State = row.IsComplete ? CraftQueueRowState.Complete : CraftQueueRowState.Pending;
+
+            m_CraftQueueRunning = false;
+            m_CraftQueueStopRequested = false;
+            m_ActiveCraftQueueRowId = -1;
+            m_CraftQueueTool = null;
+            m_CraftQueueState = reason;
+        }
+
+        public int GetCraftQueuePendingAttempts()
+        {
+            int total = 0;
+
+            for (int i = 0; i < m_CraftQueueRows.Count; i++)
+            {
+                CraftQueueRow row = m_CraftQueueRows[i];
+
+                if (row.Enabled)
+                    total += Math.Max(0, row.TargetAttempts - row.CompletedAttempts);
+            }
+
+            return total;
+        }
+
+        public int GetCraftQueueCompletedAttempts()
+        {
+            int total = 0;
+
+            for (int i = 0; i < m_CraftQueueRows.Count; i++)
+                total += m_CraftQueueRows[i].CompletedAttempts;
+
+            return total;
+        }
+
+        public int GetCraftQueueTargetAttempts()
+        {
+            int total = 0;
+
+            for (int i = 0; i < m_CraftQueueRows.Count; i++)
+            {
+                if (m_CraftQueueRows[i].Enabled)
+                    total += m_CraftQueueRows[i].TargetAttempts;
+            }
+
+            return total;
+        }
+
+        public int GetCraftQueueSuccesses()
+        {
+            int total = 0;
+
+            for (int i = 0; i < m_CraftQueueRows.Count; i++)
+                total += m_CraftQueueRows[i].Successes;
+
+            return total;
+        }
+
+        public int GetCraftQueueFailures()
+        {
+            int total = 0;
+
+            for (int i = 0; i < m_CraftQueueRows.Count; i++)
+                total += m_CraftQueueRows[i].Failures;
+
+            return total;
+        }
+
+        public int GetCraftQueueDisabledRows()
+        {
+            int total = 0;
+
+            for (int i = 0; i < m_CraftQueueRows.Count; i++)
+            {
+                if (!m_CraftQueueRows[i].Enabled)
+                    total++;
+            }
+
+            return total;
+        }
+
+        private CraftQueueRow GetNextCraftQueueRow()
+        {
+            for (int i = 0; i < m_CraftQueueRows.Count; i++)
+            {
+                CraftQueueRow row = m_CraftQueueRows[i];
+
+                if (row.CanRun)
+                    return row;
+            }
+
+            return null;
+        }
+
+        private CraftQueueRow FindMatchingCraftQueueRow(CraftItem item, Type typeRes)
+        {
+            for (int i = 0; i < m_CraftQueueRows.Count; i++)
+            {
+                CraftQueueRow row = m_CraftQueueRows[i];
+
+                if (row.CraftItem == item && row.TypeRes == typeRes && row.CanRun)
+                    return row;
+            }
+
+            return null;
         }
     }
 
@@ -447,13 +1153,42 @@ namespace Server.Engines.Craft
                 return false;
             }
 
-            if (!container.IsAccessibleTo(from))
+            if (!HasContainerAccess(from, container))
             {
                 message = "You cannot access that container.";
                 return false;
             }
 
             return true;
+        }
+
+        private static bool HasContainerAccess(Mobile from, Container container)
+        {
+            if (container.IsAccessibleTo(from))
+                return true;
+
+            BaseHouse house = BaseHouse.FindHouseAt(container);
+
+            if (house == null)
+                return false;
+
+            if (house.IsBanned(from))
+                return false;
+
+            SecureAccessResult secureAccess = house.CheckSecureAccess(from, container);
+
+            switch (secureAccess)
+            {
+                case SecureAccessResult.Accessible:
+                    return true;
+                case SecureAccessResult.Inaccessible:
+                    return false;
+            }
+
+            if (house.IsLockedDown(container))
+                return house.IsCoOwner(from);
+
+            return house.Public || house.HasAccess(from);
         }
 
         private static Container GetBackpack(Mobile from)
