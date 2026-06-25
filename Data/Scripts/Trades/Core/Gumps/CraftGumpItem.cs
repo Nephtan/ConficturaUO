@@ -32,6 +32,7 @@ namespace Server.Engines.Craft
         private const int MakeAmountFieldHeight = 18;
         private const int MakeAmountTextInset = 6;
         private const int MakeAmountTextWidth = 46;
+        private const int AddQueueButtonID = 2;
 
         private const int GreyLabelColor = 0x3DEF;
 
@@ -314,6 +315,9 @@ namespace Server.Engines.Craft
             {
                 AddButton(270, 387, 4005, 4007, 1, GumpButtonType.Reply, 0);
                 AddHtmlLocalized(305, 390, 150, 18, 1044151, LabelColor, false, false); // MAKE NOW
+
+                AddButton(395, 387, 4005, 4007, AddQueueButtonID, GumpButtonType.Reply, 0);
+                AddHtml(430, 390, 80, 18, String.Format("<BASEFONT COLOR=#{0:X6}>QUEUE</BASEFONT>", FontColor), false, false);
             }
 
             if (m_CraftItem.NameNumber > 0)
@@ -673,6 +677,23 @@ namespace Server.Engines.Craft
                         makeAmount
                     );
                 }
+            }
+            else if (info.ButtonID == AddQueueButtonID)
+            {
+                if (context == null)
+                {
+                    m_From.SendGump(new CraftGump(m_From, m_CraftSystem, m_Tool, "Crafting context is not available."));
+                    return;
+                }
+
+                Type type = CraftGump.GetSelectedResourceType(m_CraftSystem, m_CraftItem, context);
+                string message;
+                CraftQueueRow row = context.AddCraftQueueRow(m_CraftItem, type, makeAmount, out message);
+
+                if (row == null)
+                    m_From.SendGump(new CraftGumpItem(m_From, m_CraftSystem, m_CraftItem, m_Tool, message));
+                else
+                    m_From.SendGump(new CraftQueueGump(m_From, m_CraftSystem, m_Tool, message));
             }
             else
             {

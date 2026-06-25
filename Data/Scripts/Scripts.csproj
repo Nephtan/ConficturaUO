@@ -6508,6 +6508,7 @@
     <Compile Include="Trades\Core\Gumps\CraftBatchStatusGump.cs" />
     <Compile Include="Trades\Core\Gumps\CraftGump.cs" />
     <Compile Include="Trades\Core\Gumps\CraftGumpItem.cs" />
+    <Compile Include="Trades\Core\Gumps\CraftQueueGump.cs" />
     <Compile Include="Trades\Core\CraftItem.cs" />
     <Compile Include="Trades\Core\CraftItemCol.cs" />
     <Compile Include="Trades\Core\CraftItemIDAttribute.cs" />

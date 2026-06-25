@@ -1274,7 +1274,7 @@ namespace Server.Engines.Craft
             }
             else
             {
-                if (continuingMakeAmount)
+                if (continuingMakeAmount || (context != null && context.CraftQueueRunning))
                     EndMakeAmountBatch(
                         from,
                         craftSystem,
@@ -1302,6 +1302,21 @@ namespace Server.Engines.Craft
                 from.SendGump(new CraftBatchStatusGump(from, craftSystem, context));
         }
 
+        private static void RecordCraftAttempt(
+            CraftContext context,
+            CraftItem item,
+            Type typeRes,
+            BaseTool tool,
+            bool success
+        )
+        {
+            if (context == null)
+                return;
+
+            context.RecordMakeAmountAttempt(success);
+            context.RecordCraftQueueAttempt(item, typeRes, tool, success);
+        }
+
         private static void EndMakeAmountBatch(
             Mobile from,
             CraftSystem craftSystem,
@@ -1311,6 +1326,9 @@ namespace Server.Engines.Craft
         {
             if (context == null)
                 return;
+
+            if (context.CraftQueueRunning)
+                CraftQueueController.EndQueue(from, craftSystem, context, reason);
 
             if (!context.HasMakeAmountBatch)
             {
@@ -1869,8 +1887,7 @@ namespace Server.Engines.Craft
 
             if (badCraft > 0)
             {
-                if (context != null)
-                    context.RecordMakeAmountAttempt(false);
+                RecordCraftAttempt(context, this, typeRes, tool, false);
 
                 EndMakeAmountBatch(
                     from,
@@ -1904,8 +1921,7 @@ namespace Server.Engines.Craft
                 )
             )
             {
-                if (context != null)
-                    context.RecordMakeAmountAttempt(false);
+                RecordCraftAttempt(context, this, typeRes, tool, false);
 
                 EndMakeAmountBatch(
                     from,
@@ -1925,8 +1941,7 @@ namespace Server.Engines.Craft
             }
             else if (!ConsumeAttributes(from, ref checkMessage, false))
             {
-                if (context != null)
-                    context.RecordMakeAmountAttempt(false);
+                RecordCraftAttempt(context, this, typeRes, tool, false);
 
                 EndMakeAmountBatch(
                     from,
@@ -1973,8 +1988,7 @@ namespace Server.Engines.Craft
                     )
                 )
                 {
-                    if (context != null)
-                        context.RecordMakeAmountAttempt(false);
+                    RecordCraftAttempt(context, this, typeRes, tool, false);
 
                     EndMakeAmountBatch(
                         from,
@@ -1994,8 +2008,7 @@ namespace Server.Engines.Craft
                 }
                 else if (!ConsumeAttributes(from, ref message, true))
                 {
-                    if (context != null)
-                        context.RecordMakeAmountAttempt(false);
+                    RecordCraftAttempt(context, this, typeRes, tool, false);
 
                     EndMakeAmountBatch(
                         from,
@@ -4167,7 +4180,21 @@ namespace Server.Engines.Craft
                         item.ItemID = 0xEC3;
                     }
 
-                    CraftContainerUtility.PlaceCraftResult(from, context, item);
+                    if (!CraftContainerUtility.PlaceCraftResult(from, context, item))
+                    {
+                        if (context != null && context.CraftQueueRunning)
+                        {
+                            item.Delete();
+                            RecordCraftAttempt(context, this, typeRes, tool, false);
+                            EndMakeAmountBatch(
+                                from,
+                                craftSystem,
+                                context,
+                                "Stopped because crafted output could not be placed."
+                            );
+                            return;
+                        }
+                    }
 
                     if (from.AccessLevel > AccessLevel.Player)
                         CommandLogging.WriteLine(
@@ -4230,8 +4257,7 @@ namespace Server.Engines.Craft
 
                 // TODO: Scroll imbuing
 
-                if (context != null)
-                    context.RecordMakeAmountAttempt(true);
+                RecordCraftAttempt(context, this, typeRes, tool, true);
 
                 if (queryFactionImbue)
                 {
@@ -4258,8 +4284,16 @@ namespace Server.Engines.Craft
                 }
                 else if (tool != null && !tool.Deleted && tool.UsesRemaining > 0)
                 {
-                    from.SendGump(new CraftGump(from, craftSystem, tool, num));
-                    ContinueMakeAmountBatch(from, craftSystem, typeRes, tool);
+                    if (context != null && context.CraftQueueRunning)
+                    {
+                        from.SendGump(new CraftQueueGump(from, craftSystem, tool));
+                        CraftQueueController.ContinueQueueAfterAttempt(from, craftSystem, tool);
+                    }
+                    else
+                    {
+                        from.SendGump(new CraftGump(from, craftSystem, tool, num));
+                        ContinueMakeAmountBatch(from, craftSystem, typeRes, tool);
+                    }
                 }
                 else if (num > 0)
                 {
@@ -4284,8 +4318,7 @@ namespace Server.Engines.Craft
             }
             else if (!allRequiredSkills)
             {
-                if (context != null)
-                    context.RecordMakeAmountAttempt(false);
+                RecordCraftAttempt(context, this, typeRes, tool, false);
 
                 EndMakeAmountBatch(
                     from,
@@ -4321,8 +4354,7 @@ namespace Server.Engines.Craft
                     )
                 )
                 {
-                    if (context != null)
-                        context.RecordMakeAmountAttempt(false);
+                    RecordCraftAttempt(context, this, typeRes, tool, false);
 
                     EndMakeAmountBatch(
                         from,
@@ -4360,13 +4392,20 @@ namespace Server.Engines.Craft
                     this
                 );
 
-                if (context != null)
-                    context.RecordMakeAmountAttempt(false);
+                RecordCraftAttempt(context, this, typeRes, tool, false);
 
                 if (tool != null && !tool.Deleted && tool.UsesRemaining > 0)
                 {
-                    from.SendGump(new CraftGump(from, craftSystem, tool, num));
-                    ContinueMakeAmountBatch(from, craftSystem, typeRes, tool);
+                    if (context != null && context.CraftQueueRunning)
+                    {
+                        from.SendGump(new CraftQueueGump(from, craftSystem, tool));
+                        CraftQueueController.ContinueQueueAfterAttempt(from, craftSystem, tool);
+                    }
+                    else
+                    {
+                        from.SendGump(new CraftGump(from, craftSystem, tool, num));
+                        ContinueMakeAmountBatch(from, craftSystem, typeRes, tool);
+                    }
                 }
                 else if (num > 0)
                 {
@@ -4439,8 +4478,7 @@ namespace Server.Engines.Craft
 
                     if (badCraft > 0)
                     {
-                        if (context != null)
-                            context.RecordMakeAmountAttempt(false);
+                        RecordCraftAttempt(context, m_CraftItem, m_TypeRes, m_Tool, false);
 
                         EndMakeAmountBatch(
                             m_From,
@@ -4515,6 +4553,14 @@ namespace Server.Engines.Craft
                     {
                         context.SetMakeAmountState("Waiting for maker's mark");
                         ShowMakeAmountStatus(m_From, m_CraftSystem, context);
+
+                        if (context.CraftQueueRunning)
+                            CraftQueueController.EndQueue(
+                                m_From,
+                                m_CraftSystem,
+                                context,
+                                "Stopped for maker's mark selection."
+                            );
 
                         m_From.SendGump(
                             new QueryMakersMarkGump(
