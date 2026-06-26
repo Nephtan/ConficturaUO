@@ -863,3 +863,14 @@ To run a gated batch, provide explicit approval naming:
 - Static verification passed, but `Server.csproj` Debug/x86 build and runtime compile-only verification are recorded as unavailable for this batch because MSBuild escalation was rejected after the session hit its usage limit and the restored tracked executable did not honor `-compileonly`.
 - `SOURCE-BATCH-068+` requires a fresh candidate discovery pass once build verification is available again.
 - Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-068 Update
+
+- Verification availability was restored before new source edits: `Data/System/Source/Server.csproj` Debug/x86 build passed and `.\ConficturaServer.exe -compileonly -nocache` passed.
+- `SOURCE-BATCH-068+` discovery created `docs/codebase-audit/outputs/source-batch-068-candidate-discovery.csv`.
+- `SOURCE-BATCH-068` implemented the SkeletonsKey guard repair in `Data/Scripts/Items/Containers/SkeltonsKey.cs`.
+- `SOURCE-BATCH-068` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-068-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-068-skeletonskey-guard-repair-closeout.md`.
+- `SOURCE-BATCH-069+` remains pending the next concrete non-gated source target from `source-batch-068-candidate-discovery.csv`.
+- Gated roadmap batches remain blocked pending explicit approval.
