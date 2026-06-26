@@ -39,7 +39,11 @@ namespace Server.Items
         public override void OnDoubleClick(Mobile from)
         {
             int tempNumber = -1;
-            if (!IsChildOf(from.Backpack))
+
+            if (from == null || from.Deleted || Deleted)
+                return;
+
+            if (from.Backpack == null || !IsChildOf(from.Backpack))
             {
                 from.SendLocalizedMessage(1042001); // That must be in your pack for you to use it.
             }
