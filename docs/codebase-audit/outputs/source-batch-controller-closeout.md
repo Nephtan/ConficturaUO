@@ -874,3 +874,12 @@ To run a gated batch, provide explicit approval naming:
 - The source-batch closeout is `docs/codebase-audit/outputs/source-batch-068-skeletonskey-guard-repair-closeout.md`.
 - `SOURCE-BATCH-069+` remains pending the next concrete non-gated source target from `source-batch-068-candidate-discovery.csv`.
 - Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-069 Update
+
+- `SOURCE-BATCH-069` implemented the MagicSkeltonsKey guard repair in `Data/Scripts/Items/Containers/MagicSkeltonsKey.cs`.
+- `SOURCE-BATCH-069` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-069-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-069-magicskeltonskey-guard-repair-closeout.md`.
+- `SOURCE-BATCH-070+` remains pending the next concrete non-gated source target from `source-batch-068-candidate-discovery.csv`.
+- Gated roadmap batches remain blocked pending explicit approval.
