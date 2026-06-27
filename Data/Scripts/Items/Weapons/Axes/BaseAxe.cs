@@ -125,6 +125,7 @@ namespace Server.Items
             if (!(this.HarvestSystem is Mining))
                 from.SendLocalizedMessage(1010018); // What do you want to use this item on?
 
+            HarvestLoopController.CancelForNewTarget(from);
             HarvestSystem.BeginHarvesting(from, this);
         }
 

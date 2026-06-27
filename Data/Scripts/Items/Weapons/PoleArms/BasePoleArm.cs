@@ -78,7 +78,10 @@ namespace Server.Items
                 return;
 
             if (IsChildOf(from.Backpack) || Parent == from)
+            {
+                HarvestLoopController.CancelForNewTarget(from);
                 HarvestSystem.BeginHarvesting(from, this);
+            }
             else
                 from.SendLocalizedMessage(1042001); // That must be in your pack for you to use it.
         }
