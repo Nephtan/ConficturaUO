@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Server.Commands;
+using Server.Engines.Harvest;
 using Server.Items;
 using Server.Misc;
 using Server.Mobiles;
@@ -1069,14 +1070,25 @@ namespace Server.Gumps
             }
             Mobile from = sender.Mobile;
 
+            if (from == null)
+            {
+                HarvestLoopController.OnCaptchaFailed(m_From, m_ActionObject);
+                return;
+            }
+
             switch (info.ButtonID)
             {
                 case 2:
 
                     {
                         TextRelay tr_captcha = info.GetTextEntry(3);
-                        if (tr_captcha.Text.Length != 3)
+                        if (
+                            tr_captcha == null
+                            || tr_captcha.Text == null
+                            || tr_captcha.Text.Length != 3
+                        )
                         {
+                            HarvestLoopController.OnCaptchaFailed(from, m_ActionObject);
                             from.SendMessage("You failed to prove that you're not A.F.K.");
                             return;
                         }
@@ -1087,6 +1099,7 @@ namespace Server.Gumps
                             || Char.ToUpper(tr_captcha.Text[2]) != m_C
                         )
                         {
+                            HarvestLoopController.OnCaptchaFailed(from, m_ActionObject);
                             from.SendMessage("You failed to prove that you're not A.F.K.");
                             return;
                         }
@@ -1103,6 +1116,11 @@ namespace Server.Gumps
                         m_Action(m_From, m_ActionObject);
                     }
                     break;
+                default:
+                {
+                    HarvestLoopController.OnCaptchaFailed(from, m_ActionObject);
+                    break;
+                }
             }
         }
     }

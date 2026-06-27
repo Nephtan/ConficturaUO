@@ -6576,6 +6576,7 @@
     <Compile Include="Trades\Harvest\HarvestBank.cs" />
     <Compile Include="Trades\Harvest\HarvestDefinition.cs" />
     <Compile Include="Trades\Harvest\HarvestResource.cs" />
+    <Compile Include="Trades\Harvest\HarvestLoopController.cs" />
     <Compile Include="Trades\Harvest\HarvestSoundTimer.cs" />
     <Compile Include="Trades\Harvest\HarvestSystem.cs" />
     <Compile Include="Trades\Harvest\HarvestTarget.cs" />
