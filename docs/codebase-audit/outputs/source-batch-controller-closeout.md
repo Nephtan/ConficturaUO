@@ -1120,3 +1120,12 @@ To run a gated batch, provide explicit approval naming:
 - The source-batch closeout is `docs/codebase-audit/outputs/source-batch-094-freshbrain-guard-repair-closeout.md`.
 - `SOURCE-BATCH-095+` remains pending the next concrete non-gated source target from `source-batch-093-candidate-discovery.csv`.
 - Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-095 Update
+
+- `SOURCE-BATCH-095` implemented the TastyHeart guard repair in `Data/Scripts/Items/Food/TastyHeart.cs`.
+- `SOURCE-BATCH-095` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-095-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-095-tastyheart-guard-repair-closeout.md`.
+- `SOURCE-BATCH-096+` remains pending the next concrete non-gated source target from `source-batch-093-candidate-discovery.csv`.
+- Gated roadmap batches remain blocked pending explicit approval.
