@@ -1193,3 +1193,12 @@ To run a gated batch, provide explicit approval naming:
 - The source-batch closeout is `docs/codebase-audit/outputs/source-batch-102-yarnsandthreads-guard-repair-closeout.md`.
 - `SOURCE-BATCH-103+` remains pending the next concrete non-gated source target from `source-batch-099-candidate-discovery.csv`.
 - Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-103 Update
+
+- `SOURCE-BATCH-103` implemented the PolishBoneBrush guard repair in `Data/Scripts/Items/Trades/Resources/Tailor/PolishBoneBrush.cs`.
+- `SOURCE-BATCH-103` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-103-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-103-polishbonebrush-guard-repair-closeout.md`.
+- The `source-batch-099-candidate-discovery.csv` implementation queue is exhausted; `SOURCE-BATCH-104+` requires fresh candidate discovery.
+- Gated roadmap batches remain blocked pending explicit approval.
