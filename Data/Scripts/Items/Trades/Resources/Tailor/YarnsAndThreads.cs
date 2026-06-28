@@ -40,7 +40,7 @@ namespace Server.Items
 
         public bool Dye(Mobile from, DyeTub sender)
         {
-            if (Deleted)
+            if (Deleted || from == null || from.Deleted || sender == null || sender.Deleted)
                 return false;
 
             Hue = sender.DyedHue;
@@ -50,7 +50,10 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
-            if (IsChildOf(from.Backpack))
+            if (from == null || from.Deleted || Deleted)
+                return;
+
+            if (from.Backpack != null && IsChildOf(from.Backpack))
             {
                 from.SendLocalizedMessage(500366); // Select a loom to use that on.
                 from.Target = new PickLoomTarget(this);
@@ -73,7 +76,7 @@ namespace Server.Items
 
             protected override void OnTarget(Mobile from, object targeted)
             {
-                if (m_Material.Deleted)
+                if (from == null || from.Deleted || m_Material == null || m_Material.Deleted)
                     return;
 
                 ILoom loom = targeted as ILoom;
@@ -83,7 +86,7 @@ namespace Server.Items
 
                 if (loom != null)
                 {
-                    if (!m_Material.IsChildOf(from.Backpack))
+                    if (from.Backpack == null || !m_Material.IsChildOf(from.Backpack))
                     {
                         from.SendLocalizedMessage(1042001); // That must be in your pack for you to use it.
                     }
