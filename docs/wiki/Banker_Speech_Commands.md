@@ -149,3 +149,60 @@ No in-game admin or player commands are registered by this system.
 | `withdraw` does not use `Container.CheckHold()` or `TryDropItem()` for the backpack deposit. | It checks only current backpack totals before calling `DropItem(new Gold(amount))`, so the added gold pile can exceed the backpack's true item or weight capacity. |
 | `BankCheck.OnDoubleClick()` deletes the original check before all replacement value is safely placed. | If the bank cannot accept generated gold, the remainder is reissued through `AddToBackpack()`; that method can fall back to moving the new check into the world when the backpack cannot hold it. |
 | Multiple banker keyword IDs in one speech event can execute in one pass. | `e.Handled` is set per matched keyword, but the loop continues through any later keyword IDs already decoded for the same speech. |
+
+## Source Trace
+
+POST-BATCH-T reviewed this page on 2026-06-14T21:09:11.0049244-05:00 against current source and audit registers.
+
+- Canonical status: Canonical.
+- Queue rows: PBN-0121.
+- Backlog rows: RB-06662.
+- Audit registers used: documentation-truth-table.csv, runtime-hook-map.csv, serialization-register.csv, and project-truth-register.csv.
+
+### Source Files Reviewed
+
+- Data/Scripts/Mobiles/Civilized/Vendors/Banker.cs (CurrentFile)
+- Data/Scripts/Mobiles/Civilized/Vendors/GypsyBanker.cs (CurrentFile)
+- Data/Scripts/Items/Misc/BankCheck.cs (CurrentFile)
+- Data/System/Source/Items/Containers.cs (CurrentFile)
+- Data/System/Source/Mobile.cs (CurrentFile)
+- Data/Scripts/System/Misc/ContextMenu.cs (CurrentFile)
+
+### Runtime Evidence
+
+- Hook summary: Event=10; Gump=4; Movement=3; Speech=9; Timer=13; WorldLoad=1.
+- Data/Scripts/Mobiles/Civilized/Vendors/Banker.cs:L233 Speech OnSpeech access=GlobalOrInternal
+- Data/Scripts/Mobiles/Civilized/Vendors/Banker.cs:L368 Speech OnSpeech access=GlobalOrInternal
+- Data/Scripts/Mobiles/Civilized/Vendors/Banker.cs:L408 Gump SendGump access=Internal
+- Data/System/Source/Mobile.cs:L1458 Timer CustomTimerSubclass access=GlobalOrInternal
+- Data/System/Source/Mobile.cs:L1657 Event EventSink access=GlobalOrInternal
+- Data/System/Source/Mobile.cs:L1994 Timer CustomTimerSubclass access=GlobalOrInternal
+- Data/System/Source/Mobile.cs:L2014 Timer CustomTimerSubclass access=GlobalOrInternal
+- Data/System/Source/Mobile.cs:L2034 Timer CustomTimerSubclass access=GlobalOrInternal
+- Data/System/Source/Mobile.cs:L2054 Timer CustomTimerSubclass access=GlobalOrInternal
+- Data/System/Source/Mobile.cs:L2069 Event EventSink access=GlobalOrInternal
+- Data/System/Source/Mobile.cs:L2079 Timer CustomTimerSubclass access=GlobalOrInternal
+- Data/System/Source/Mobile.cs:L2096 Timer CustomTimerSubclass access=GlobalOrInternal
+- Additional hook rows are recorded in runtime-hook-map.csv for this source set.
+
+### Serialization Evidence
+
+- Serialized rows matched: 5.
+- Data/Scripts/Items/Misc/BankCheck.cs:Server.Items.BankCheck version=0 serialize=L33 deserialize=L42 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Mobiles/Civilized/Vendors/Banker.cs:Server.Mobiles.Banker version=0 serialize=L422 deserialize=L429 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Mobiles/Civilized/Vendors/GypsyBanker.cs:Server.Mobiles.GypsyBanker version=0 serialize=L89 deserialize=L96 alignment=AlignedByCountAndKnownTypes
+- Data/System/Source/Items/Containers.cs:Server.Items.BankBox version=0 serialize=L76 deserialize=L86 alignment=AlignedByCountAndKnownTypes
+- Data/System/Source/Mobile.cs:Server.Mobile version=35 serialize=L6183 deserialize=L5700 alignment=CountMismatch:Writes=98;Reads=104
+
+### Project And Runtime Coverage
+
+- Data/Scripts/Items/Misc/BankCheck.cs=Keep
+- Data/Scripts/Items/Misc/BankCheck.cs=Keep
+- Data/Scripts/Mobiles/Civilized/Vendors/Banker.cs=Keep
+- Data/Scripts/Mobiles/Civilized/Vendors/Banker.cs=Keep
+- Data/Scripts/Mobiles/Civilized/Vendors/GypsyBanker.cs=Keep
+- Data/Scripts/Mobiles/Civilized/Vendors/GypsyBanker.cs=Keep
+- Data/Scripts/System/Misc/ContextMenu.cs=Keep
+- Data/Scripts/System/Misc/ContextMenu.cs=Keep
+
+No C# source, project files, XML/config/data files, namespaces, serializers, gameplay behavior, or migration policy were changed in POST-BATCH-T.

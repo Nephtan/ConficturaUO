@@ -142,3 +142,62 @@ Other notes:
 
 ## Code-Verified Rework Notes
 - `PlayerGovernmentSystem.ForensicsRequirement` is declared as a configurable value, but `CheckIfCanBeMayor()` still hard-codes `35.0` Forensics. Mayor eligibility is therefore not actually driven by the configuration field.
+
+## Source Trace
+
+POST-BATCH-T reviewed this page on 2026-06-14T21:09:11.0049244-05:00 against current source and audit registers.
+
+- Canonical status: Canonical.
+- Queue rows: PBN-0018.
+- Backlog rows: RB-06697.
+- Audit registers used: documentation-truth-table.csv, runtime-hook-map.csv, serialization-register.csv, and project-truth-register.csv.
+
+### Source Files Reviewed
+
+- Data/Scripts/Custom/Government System/PlayerGovernmentSystem.cs (CurrentFile)
+- Data/Scripts/Custom/Government System/Items/Deeds/CityDeed.cs (CurrentFile)
+- Data/Scripts/Custom/Government System/Items/Stones/CityManagementStone.cs (CurrentFile)
+- Data/Scripts/Custom/Government System/Items/Stones/CityVotingStone.cs (CurrentFile)
+- Data/Scripts/Custom/Government System/Regions/PlayerCityRegion.cs (CurrentFile)
+- Data/Scripts/Custom/Government System/Commands/GovHelp.cs (CurrentFile)
+
+### Runtime Evidence
+
+- Hook summary: Command=2; Gump=7; Initialize=3; Region=3; Speech=2; Timer=2.
+- Data/Scripts/Custom/Government System/Commands/GovHelp.cs:L14 Initialize Initialize access=GlobalOrInternal
+- Data/Scripts/Custom/Government System/Commands/GovHelp.cs:L16 Command CommandSystem.Register access=Unknown
+- Data/Scripts/Custom/Government System/Commands/GovHelp.cs:L27 Gump SendGump access=Internal
+- Data/Scripts/Custom/Government System/Items/Stones/CityManagementStone.cs:L59 Gump SendGump access=Internal
+- Data/Scripts/Custom/Government System/Items/Stones/CityManagementStone.cs:L105 Gump SendGump access=Internal
+- Data/Scripts/Custom/Government System/Items/Stones/CityManagementStone.cs:L463 Initialize Initialize access=GlobalOrInternal
+- Data/Scripts/Custom/Government System/Items/Stones/CityManagementStone.cs:L465 Command CommandSystem.Register access=Unknown
+- Data/Scripts/Custom/Government System/Items/Stones/CityManagementStone.cs:L527 Gump SendGump access=Internal
+- Data/Scripts/Custom/Government System/Items/Stones/CityManagementStone.cs:L564 Gump SendGump access=Internal
+- Data/Scripts/Custom/Government System/Items/Stones/CityManagementStone.cs:L2112 Timer CustomTimerSubclass access=GlobalOrInternal
+- Data/Scripts/Custom/Government System/Items/Stones/CityVotingStone.cs:L94 Gump SendGump access=Internal
+- Data/Scripts/Custom/Government System/Items/Stones/CityVotingStone.cs:L302 Timer CustomTimerSubclass access=GlobalOrInternal
+- Additional hook rows are recorded in runtime-hook-map.csv for this source set.
+
+### Serialization Evidence
+
+- Serialized rows matched: 3.
+- Data/Scripts/Custom/Government System/Items/Deeds/CityDeed.cs:Server.Items.CityDeed version=2 serialize=L3619 deserialize=L3632 alignment=CountMatchNeedsTypeReview:UnknownWrites=2
+- Data/Scripts/Custom/Government System/Items/Stones/CityManagementStone.cs:Server.Items.CityManagementStone version=6 serialize=L1918 deserialize=L2010 alignment=CountMatchNeedsTypeReview:UnknownWrites=27
+- Data/Scripts/Custom/Government System/Items/Stones/CityVotingStone.cs:Server.Items.CityVotingStone version=0 serialize=L261 deserialize=L276 alignment=CountMatchNeedsTypeReview:UnknownWrites=5
+
+### Project And Runtime Coverage
+
+- Data/Scripts/Custom/Government System/Commands/GovHelp.cs=Keep
+- Data/Scripts/Custom/Government System/Commands/GovHelp.cs=Keep
+- Data/Scripts/Custom/Government System/Items/Deeds/CityDeed.cs=Keep
+- Data/Scripts/Custom/Government System/Items/Deeds/CityDeed.cs=Keep
+- Data/Scripts/Custom/Government System/Items/Stones/CityManagementStone.cs=Keep
+- Data/Scripts/Custom/Government System/Items/Stones/CityManagementStone.cs=Keep
+- Data/Scripts/Custom/Government System/Items/Stones/CityVotingStone.cs=Keep
+- Data/Scripts/Custom/Government System/Items/Stones/CityVotingStone.cs=Keep
+- Data/Scripts/Custom/Government System/PlayerGovernmentSystem.cs=Keep
+- Data/Scripts/Custom/Government System/PlayerGovernmentSystem.cs=Keep
+- Data/Scripts/Custom/Government System/Regions/PlayerCityRegion.cs=Keep
+- Data/Scripts/Custom/Government System/Regions/PlayerCityRegion.cs=Keep
+
+No C# source, project files, XML/config/data files, namespaces, serializers, gameplay behavior, or migration policy were changed in POST-BATCH-T.

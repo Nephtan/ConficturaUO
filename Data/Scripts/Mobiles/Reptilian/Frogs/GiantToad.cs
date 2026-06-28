@@ -135,22 +135,31 @@ namespace Server.Mobiles
 
                 Mobile toTeleport = null;
 
-                foreach (Mobile m in m_Owner.GetMobilesInRange(10))
+                IPooledEnumerable eable = m_Owner.GetMobilesInRange(10);
+
+                try
                 {
-                    if (
-                        !((BaseCreature)m_Owner).Controlled
-                        && m != m_Owner
-                        && m.Player
-                        && m_Owner.InLOS(m)
-                        && m_Owner.CanBeHarmful(m)
-                        && m_Owner.CanSee(m)
-                        && m.AccessLevel == AccessLevel.Player
-                        && ((BaseCreature)m_Owner).IsEnemy(m)
-                    )
+                    foreach (Mobile m in eable)
                     {
-                        toTeleport = m;
-                        break;
+                        if (
+                            !((BaseCreature)m_Owner).Controlled
+                            && m != m_Owner
+                            && m.Player
+                            && m_Owner.InLOS(m)
+                            && m_Owner.CanBeHarmful(m)
+                            && m_Owner.CanSee(m)
+                            && m.AccessLevel == AccessLevel.Player
+                            && ((BaseCreature)m_Owner).IsEnemy(m)
+                        )
+                        {
+                            toTeleport = m;
+                            break;
+                        }
                     }
+                }
+                finally
+                {
+                    eable.Free();
                 }
 
                 if (toTeleport != null)

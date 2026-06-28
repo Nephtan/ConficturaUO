@@ -2073,26 +2073,35 @@ namespace Server.Items
 
             int inPack = 1;
 
-            foreach (Mobile m in defender.GetMobilesInRange(1))
+            IPooledEnumerable eable = defender.GetMobilesInRange(1);
+
+            try
             {
-                if (m != attacker && m is BaseCreature)
+                foreach (Mobile m in eable)
                 {
-                    BaseCreature tc = (BaseCreature)m;
+                    if (m != attacker && m is BaseCreature)
+                    {
+                        BaseCreature tc = (BaseCreature)m;
 
-                    if (
-                        (tc.PackInstinct & bc.PackInstinct) == 0
-                        || (!tc.Controlled && !tc.Summoned)
-                    )
-                        continue;
+                        if (
+                            (tc.PackInstinct & bc.PackInstinct) == 0
+                            || (!tc.Controlled && !tc.Summoned)
+                        )
+                            continue;
 
-                    Mobile theirMaster = tc.ControlMaster;
+                        Mobile theirMaster = tc.ControlMaster;
 
-                    if (theirMaster == null)
-                        theirMaster = tc.SummonMaster;
+                        if (theirMaster == null)
+                            theirMaster = tc.SummonMaster;
 
-                    if (master == theirMaster && tc.Combatant == defender)
-                        ++inPack;
+                        if (master == theirMaster && tc.Combatant == defender)
+                            ++inPack;
+                    }
                 }
+            }
+            finally
+            {
+                eable.Free();
             }
 
             if (inPack >= 5)
@@ -2168,17 +2177,26 @@ namespace Server.Items
             {
                 Clone bc;
 
-                foreach (Mobile m in defender.GetMobilesInRange(4))
-                {
-                    bc = m as Clone;
+                IPooledEnumerable eable = defender.GetMobilesInRange(4);
 
-                    if (bc != null && bc.Summoned && bc.SummonMaster == defender)
+                try
+                {
+                    foreach (Mobile m in eable)
                     {
-                        attacker.SendLocalizedMessage(1063141); // Your attack has been diverted to a nearby mirror image of your target!
-                        defender.SendLocalizedMessage(1063140); // You manage to divert the attack onto one of your nearby mirror images.
-                        defender = m;
-                        break;
+                        bc = m as Clone;
+
+                        if (bc != null && bc.Summoned && bc.SummonMaster == defender)
+                        {
+                            attacker.SendLocalizedMessage(1063141); // Your attack has been diverted to a nearby mirror image of your target!
+                            defender.SendLocalizedMessage(1063140); // You manage to divert the attack onto one of your nearby mirror images.
+                            defender = m;
+                            break;
+                        }
                     }
+                }
+                finally
+                {
+                    eable.Free();
                 }
             }
 
@@ -2999,16 +3017,25 @@ namespace Server.Items
 
             List<Mobile> list = new List<Mobile>();
 
-            foreach (Mobile m in from.GetMobilesInRange(10))
+            IPooledEnumerable eable = from.GetMobilesInRange(10);
+
+            try
             {
-                if (
-                    from != m
-                    && defender != m
-                    && SpellHelper.ValidIndirectTarget(from, m)
-                    && from.CanBeHarmful(m, false)
-                    && (!Core.ML || from.InLOS(m))
-                )
-                    list.Add(m);
+                foreach (Mobile m in eable)
+                {
+                    if (
+                        from != m
+                        && defender != m
+                        && SpellHelper.ValidIndirectTarget(from, m)
+                        && from.CanBeHarmful(m, false)
+                        && (!Core.ML || from.InLOS(m))
+                    )
+                        list.Add(m);
+                }
+            }
+            finally
+            {
+                eable.Free();
             }
 
             if (list.Count == 0)

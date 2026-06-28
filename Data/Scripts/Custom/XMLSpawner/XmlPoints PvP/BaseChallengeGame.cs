@@ -253,19 +253,28 @@ namespace Server.Engines.XmlSpawner2
             ArrayList mlist = new ArrayList();
 
             // who is currently within the arena
-            foreach (Mobile p in this.GetMobilesInRange(ArenaSize))
+            IPooledEnumerable eable = this.GetMobilesInRange(ArenaSize);
+
+            try
             {
-                if (p == null)
-                    continue;
-
-                IChallengeEntry entry = GetParticipant(p);
-
-                // if this is not a current participant then move them
-                if (entry == null)
+                foreach (Mobile p in eable)
                 {
-                    // prepare to move them off
-                    mlist.Add(p);
+                    if (p == null)
+                        continue;
+
+                    IChallengeEntry entry = GetParticipant(p);
+
+                    // if this is not a current participant then move them
+                    if (entry == null)
+                    {
+                        // prepare to move them off
+                        mlist.Add(p);
+                    }
                 }
+            }
+            finally
+            {
+                eable.Free();
             }
 
             // move non-participants

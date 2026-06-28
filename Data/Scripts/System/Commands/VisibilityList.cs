@@ -33,9 +33,17 @@ namespace Server.Commands
 
         public static void OnLogin(LoginEventArgs e)
         {
-            if (e.Mobile is PlayerMobile)
+            if (e == null)
+                return;
+
+            Mobile mobile = e.Mobile;
+
+            if (mobile == null || mobile.Deleted)
+                return;
+
+            if (mobile is PlayerMobile)
             {
-                PlayerMobile pm = (PlayerMobile)e.Mobile;
+                PlayerMobile pm = (PlayerMobile)mobile;
 
                 pm.VisibilityList.Clear();
             }

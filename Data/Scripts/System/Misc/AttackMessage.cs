@@ -23,8 +23,14 @@ namespace Server.Misc
 
         public static void EventSink_AggressiveAction(AggressiveActionEventArgs e)
         {
+            if (e == null)
+                return;
+
             Mobile aggressor = e.Aggressor;
             Mobile aggressed = e.Aggressed;
+
+            if (aggressor == null || aggressed == null || aggressor.Deleted || aggressed.Deleted)
+                return;
 
             if (!aggressor.Player || !aggressed.Player)
                 return;

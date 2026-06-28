@@ -17,6 +17,9 @@ namespace Server.Misc
 
         public static void EventSink_ChangeProfileRequest(ChangeProfileRequestEventArgs e)
         {
+            if (e == null || e.Beholder == null || e.Beholder.Deleted || e.Beheld == null || e.Beheld.Deleted)
+                return;
+
             Mobile from = e.Beholder;
 
             if (from.ProfileLocked)
@@ -27,6 +30,9 @@ namespace Server.Misc
 
         public static void EventSink_ProfileRequest(ProfileRequestEventArgs e)
         {
+            if (e == null || e.Beholder == null || e.Beholder.Deleted || e.Beheld == null || e.Beheld.Deleted)
+                return;
+
             Mobile beholder = e.Beholder;
             Mobile beheld = e.Beheld;
 

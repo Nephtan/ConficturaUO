@@ -226,3 +226,72 @@ Most command utilities are static handlers or `Gump` classes and do not serializ
 | `corpseclear` says it removes the caller's corpses in the land, but the deletion condition is `Worlds.ItemOnBoat(body)`, so it only deletes owned corpses that satisfy the boat check. |
 | `ReplaceBankers_OnCommand` scans `m.GetItemsInRange(0)` without freeing the pooled enumerable. |
 | Several player commands and Gump constructors assume `PlayerMobile` or a non-null backpack without local guards (`bandself`, `bandother`, `quickbar`, `regbar`, and multiple play-style toggles). These are player commands in normal use, but the handlers themselves are not defensive. |
+
+## Source Trace
+
+POST-BATCH-T reviewed this page on 2026-06-14T21:09:11.0049244-05:00 against current source and audit registers.
+
+- Canonical status: Canonical.
+- Queue rows: PBN-0086.
+- Backlog rows: RB-06679.
+- Audit registers used: documentation-truth-table.csv, runtime-hook-map.csv, serialization-register.csv, and project-truth-register.csv.
+
+### Source Files Reviewed
+
+- Data/Scripts/System/Commands (CurrentDirectory)
+- Data/System/Source/Commands.cs (CurrentFile)
+
+### Runtime Evidence
+
+- Hook summary: Command=232; Event=7; Gump=1166; Initialize=135; Login=1; Logout=1; Speech=1; Timer=8; WorldSave=1.
+- Data/Scripts/System/Commands/Add.cs:L15 Initialize Initialize access=GlobalOrInternal
+- Data/Scripts/System/Commands/Add.cs:L17 Command CommandSystem.Register access=Unknown
+- Data/Scripts/System/Commands/Add.cs:L22 Command CommandSystem.Register access=Unknown
+- Data/Scripts/System/Commands/Add.cs:L27 Command CommandSystem.Register access=Unknown
+- Data/Scripts/System/Commands/Add.cs:L32 Command CommandSystem.Register access=Unknown
+- Data/Scripts/System/Commands/AddonGenerator.cs:L166 Initialize Initialize access=GlobalOrInternal
+- Data/Scripts/System/Commands/AddonGenerator.cs:L168 Command CommandSystem.Register access=Unknown
+- Data/Scripts/System/Commands/AddonGenerator.cs:L207 Gump SendGump access=Internal
+- Data/Scripts/System/Commands/AddonGenerator.cs:L434 Gump SendGump access=Internal
+- Data/Scripts/System/Commands/AddonGenerator.cs:L965 Gump OnResponse access=Internal
+- Data/Scripts/System/Commands/AddonGenerator.cs:L998 Gump SendGump access=Internal
+- Data/Scripts/System/Commands/AddToBank.cs:L31 Initialize Initialize access=GlobalOrInternal
+- Additional hook rows are recorded in runtime-hook-map.csv for this source set.
+
+### Serialization Evidence
+
+- Serialized rows matched: 8.
+- Data/Scripts/System/Commands/AddonGenerator.cs:Arya.Misc.AddonGenerator version=0 serialize=L150 deserialize=L156 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/System/Commands/AddonGenerator.cs:Arya.Misc.CEOIdentifyAddon version=0 serialize=L1088 deserialize=L1094 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/System/Commands/MultiMaker.cs:Arya.Misc.MultiIdentifyAddon version=0 serialize=L861 deserialize=L867 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/System/Commands/Player/CorpseSearch.cs:Server.Misc.CorpseCritter version=0 serialize=L289 deserialize=L295 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/System/Commands/Player/Emote.cs:Server.Commands.Puke version=0 serialize=L746 deserialize=L752 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/System/Commands/Player/MoonSearch.cs:Server.Misc.MoonCritter version=0 serialize=L255 deserialize=L261 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/System/Commands/Statics.cs:Unknown version=Unknown serialize=L deserialize=L alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/System/Commands/WandOfColors.cs:Server.Items.WandOfColors version=0 serialize=L84 deserialize=L90 alignment=AlignedByCountAndKnownTypes
+
+### Project And Runtime Coverage
+
+- Data/Scripts/System/Commands/Add.cs=Keep
+- Data/Scripts/System/Commands/Add.cs=Keep
+- Data/Scripts/System/Commands/AddonGenerator.cs=Keep
+- Data/Scripts/System/Commands/AddonGenerator.cs=Keep
+- Data/Scripts/System/Commands/AddToBank.cs=Keep
+- Data/Scripts/System/Commands/AddToBank.cs=Keep
+- Data/Scripts/System/Commands/AddTrap.cs=Keep
+- Data/Scripts/System/Commands/AddTrap.cs=Keep
+- Data/Scripts/System/Commands/AreaLog.cs=Keep
+- Data/Scripts/System/Commands/AreaLog.cs=Keep
+- Data/Scripts/System/Commands/Attributes.cs=Keep
+- Data/Scripts/System/Commands/Attributes.cs=Keep
+- Data/Scripts/System/Commands/Batch.cs=Keep
+- Data/Scripts/System/Commands/Batch.cs=Keep
+- Data/Scripts/System/Commands/BodyValues.cs=Keep
+- Data/Scripts/System/Commands/BodyValues.cs=Keep
+- Data/Scripts/System/Commands/BoundingBoxPicker.cs=Keep
+- Data/Scripts/System/Commands/BoundingBoxPicker.cs=Keep
+- Data/Scripts/System/Commands/Commands/BaseCommand.cs=Keep
+- Data/Scripts/System/Commands/Commands/BaseCommand.cs=Keep
+- Additional project-truth rows are recorded in project-truth-register.csv for this source set.
+
+No C# source, project files, XML/config/data files, namespaces, serializers, gameplay behavior, or migration policy were changed in POST-BATCH-T.

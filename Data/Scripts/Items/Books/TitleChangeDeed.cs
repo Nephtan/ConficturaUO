@@ -61,7 +61,11 @@ namespace Server.Items
 
             public override void OnResponse(Mobile from, string text)
             {
-                PlayerMobile pm = (PlayerMobile)from;
+                PlayerMobile pm = from as PlayerMobile;
+
+                if (pm == null || pm.Deleted || m_from == null || m_from.Deleted || from != m_from || text == null)
+                    return;
+
                 pm.Title = text;
                 pm.SendMessage("Your Title be hence forth know as {0}", text);
             }

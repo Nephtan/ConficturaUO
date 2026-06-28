@@ -20,6 +20,9 @@ namespace Server.Prompts
 
         public override void OnCancel(Mobile from)
         {
+            if (from == null || from.Deleted || m_From == null || m_From.Deleted || from != m_From || m_Stone == null || m_Stone.Deleted)
+                return;
+
             if (from == m_Stone.Mayor)
             {
                 m_From.CloseGump(typeof(CityManagementGump));
@@ -34,6 +37,9 @@ namespace Server.Prompts
 
         public override void OnResponse(Mobile from, string text)
         {
+            if (from == null || from.Deleted || text == null || m_From == null || m_From.Deleted || from != m_From || m_Stone == null || m_Stone.Deleted)
+                return;
+
             text = text.Trim();
 
             if (text.Length > 40)

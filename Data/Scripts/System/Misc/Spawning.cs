@@ -1465,13 +1465,21 @@ namespace Server.Mobiles
             {
                 bool run = true;
 
-                foreach (Item item in m.GetItemsInRange(10))
+                IPooledEnumerable eable = m.GetItemsInRange(10);
+                try
                 {
-                    if (item is PremiumSpawner && item.Serial == ((BaseCreature)m).SpawnerID)
+                    foreach (Item item in eable)
                     {
-                        ((PremiumSpawner)item).Running = true;
-                        run = false;
+                        if (item is PremiumSpawner && item.Serial == ((BaseCreature)m).SpawnerID)
+                        {
+                            ((PremiumSpawner)item).Running = true;
+                            run = false;
+                        }
                     }
+                }
+                finally
+                {
+                    eable.Free();
                 }
 
                 if (run)

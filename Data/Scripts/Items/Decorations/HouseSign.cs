@@ -95,6 +95,9 @@ namespace Server.Items
 
             public override void OnResponse(Mobile from, string text)
             {
+                if (from == null || from.Deleted || text == null || m_Sign == null || m_Sign.Deleted)
+                    return;
+
                 m_Sign.Name = text;
                 from.SendMessage("The Name has been changed");
             }
@@ -149,6 +152,9 @@ namespace Server.Items
 
             public override void OnResponse(Mobile from, string text)
             {
+                if (from == null || from.Deleted || text == null || m_Sign == null || m_Sign.Deleted)
+                    return;
+
                 m_Sign.Name = text;
                 from.SendMessage("The Name has been changed");
             }
@@ -203,6 +209,9 @@ namespace Server.Items
 
             public override void OnResponse(Mobile from, string text)
             {
+                if (from == null || from.Deleted || text == null || m_Sign == null || m_Sign.Deleted)
+                    return;
+
                 m_Sign.Name = text;
                 from.SendMessage("The Name has been changed");
             }
@@ -257,6 +266,9 @@ namespace Server.Items
 
             public override void OnResponse(Mobile from, string text)
             {
+                if (from == null || from.Deleted || text == null || m_Sign == null || m_Sign.Deleted)
+                    return;
+
                 m_Sign.Name = text;
                 from.SendMessage("The Name has been changed");
             }
@@ -311,6 +323,9 @@ namespace Server.Items
 
             public override void OnResponse(Mobile from, string text)
             {
+                if (from == null || from.Deleted || text == null || m_Sign == null || m_Sign.Deleted)
+                    return;
+
                 m_Sign.Name = text;
                 from.SendMessage("The Name has been changed");
             }
@@ -365,6 +380,9 @@ namespace Server.Items
 
             public override void OnResponse(Mobile from, string text)
             {
+                if (from == null || from.Deleted || text == null || m_Sign == null || m_Sign.Deleted)
+                    return;
+
                 m_Sign.Name = text;
                 from.SendMessage("The Name has been changed");
             }
@@ -419,6 +437,9 @@ namespace Server.Items
 
             public override void OnResponse(Mobile from, string text)
             {
+                if (from == null || from.Deleted || text == null || m_Sign == null || m_Sign.Deleted)
+                    return;
+
                 m_Sign.Name = text;
                 from.SendMessage("The Name has been changed");
             }
@@ -473,6 +494,9 @@ namespace Server.Items
 
             public override void OnResponse(Mobile from, string text)
             {
+                if (from == null || from.Deleted || text == null || m_Sign == null || m_Sign.Deleted)
+                    return;
+
                 m_Sign.Name = text;
                 from.SendMessage("The Name has been changed");
             }
@@ -527,6 +551,9 @@ namespace Server.Items
 
             public override void OnResponse(Mobile from, string text)
             {
+                if (from == null || from.Deleted || text == null || m_Sign == null || m_Sign.Deleted)
+                    return;
+
                 m_Sign.Name = text;
                 from.SendMessage("The Name has been changed");
             }
@@ -581,6 +608,9 @@ namespace Server.Items
 
             public override void OnResponse(Mobile from, string text)
             {
+                if (from == null || from.Deleted || text == null || m_Sign == null || m_Sign.Deleted)
+                    return;
+
                 m_Sign.Name = text;
                 from.SendMessage("The Name has been changed");
             }
@@ -635,6 +665,9 @@ namespace Server.Items
 
             public override void OnResponse(Mobile from, string text)
             {
+                if (from == null || from.Deleted || text == null || m_Sign == null || m_Sign.Deleted)
+                    return;
+
                 m_Sign.Name = text;
                 from.SendMessage("The Name has been changed");
             }
@@ -689,6 +722,9 @@ namespace Server.Items
 
             public override void OnResponse(Mobile from, string text)
             {
+                if (from == null || from.Deleted || text == null || m_Sign == null || m_Sign.Deleted)
+                    return;
+
                 m_Sign.Name = text;
                 from.SendMessage("The Name has been changed");
             }
@@ -743,6 +779,9 @@ namespace Server.Items
 
             public override void OnResponse(Mobile from, string text)
             {
+                if (from == null || from.Deleted || text == null || m_Sign == null || m_Sign.Deleted)
+                    return;
+
                 m_Sign.Name = text;
                 from.SendMessage("The Name has been changed");
             }
@@ -797,6 +836,9 @@ namespace Server.Items
 
             public override void OnResponse(Mobile from, string text)
             {
+                if (from == null || from.Deleted || text == null || m_Sign == null || m_Sign.Deleted)
+                    return;
+
                 m_Sign.Name = text;
                 from.SendMessage("The Name has been changed");
             }
@@ -851,6 +893,9 @@ namespace Server.Items
 
             public override void OnResponse(Mobile from, string text)
             {
+                if (from == null || from.Deleted || text == null || m_Sign == null || m_Sign.Deleted)
+                    return;
+
                 m_Sign.Name = text;
                 from.SendMessage("The Name has been changed");
             }
@@ -905,6 +950,9 @@ namespace Server.Items
 
             public override void OnResponse(Mobile from, string text)
             {
+                if (from == null || from.Deleted || text == null || m_Sign == null || m_Sign.Deleted)
+                    return;
+
                 m_Sign.Name = text;
                 from.SendMessage("The Name has been changed");
             }
@@ -959,6 +1007,9 @@ namespace Server.Items
 
             public override void OnResponse(Mobile from, string text)
             {
+                if (from == null || from.Deleted || text == null || m_Sign == null || m_Sign.Deleted)
+                    return;
+
                 m_Sign.Name = text;
                 from.SendMessage("The Name has been changed");
             }
@@ -1013,6 +1064,9 @@ namespace Server.Items
 
             public override void OnResponse(Mobile from, string text)
             {
+                if (from == null || from.Deleted || text == null || m_Sign == null || m_Sign.Deleted)
+                    return;
+
                 m_Sign.Name = text;
                 from.SendMessage("The Name has been changed");
             }
@@ -1067,6 +1121,9 @@ namespace Server.Items
 
             public override void OnResponse(Mobile from, string text)
             {
+                if (from == null || from.Deleted || text == null || m_Sign == null || m_Sign.Deleted)
+                    return;
+
                 m_Sign.Name = text;
                 from.SendMessage("The Name has been changed");
             }
@@ -1121,6 +1178,9 @@ namespace Server.Items
 
             public override void OnResponse(Mobile from, string text)
             {
+                if (from == null || from.Deleted || text == null || m_Sign == null || m_Sign.Deleted)
+                    return;
+
                 m_Sign.Name = text;
                 from.SendMessage("The Name has been changed");
             }
@@ -1175,6 +1235,9 @@ namespace Server.Items
 
             public override void OnResponse(Mobile from, string text)
             {
+                if (from == null || from.Deleted || text == null || m_Sign == null || m_Sign.Deleted)
+                    return;
+
                 m_Sign.Name = text;
                 from.SendMessage("The Name has been changed");
             }
@@ -1229,6 +1292,9 @@ namespace Server.Items
 
             public override void OnResponse(Mobile from, string text)
             {
+                if (from == null || from.Deleted || text == null || m_Sign == null || m_Sign.Deleted)
+                    return;
+
                 m_Sign.Name = text;
                 from.SendMessage("The Name has been changed");
             }

@@ -287,3 +287,74 @@ No taxidermy-specific `[Command]`, `[Usage]`, or `[Description]` registration ex
 * `MagicSkulls.MakeSkull` checks `Dracolich` and `SkeletalDragon` in the bone 4 great-dragon group before later bone 6 branches for the same types, so the bone 6 branches are unreachable.
 * The passive skull gate is written as `90 < Utility.Random(100)`, which yields 9 percent, not the more typical 10 percent threshold.
 * `TrophyBase`, `MountingBase`, and `StuffingBasket` allocate `Region reg = Region.Find(...)` but do not use `reg`.
+
+## Source Trace
+
+POST-BATCH-T reviewed this page on 2026-06-14T21:09:11.0049244-05:00 against current source and audit registers.
+
+- Canonical status: Canonical.
+- Queue rows: PBN-0008.
+- Backlog rows: RB-06784.
+- Audit registers used: documentation-truth-table.csv, runtime-hook-map.csv, serialization-register.csv, and project-truth-register.csv.
+
+### Source Files Reviewed
+
+- Data/Scripts/Items/Trades/Carpenter Items/TaxidermyKit.cs (CurrentFile)
+- Data/Scripts/Trades/Taxidermy/TrophyBase.cs (CurrentFile)
+- Data/Scripts/Trades/Taxidermy/MountingBase.cs (CurrentFile)
+- Data/Scripts/Trades/Taxidermy/StuffingBasket.cs (CurrentFile)
+- Data/Scripts/Trades/Taxidermy/MountedTrophyHead.cs (CurrentFile)
+- Data/Scripts/Trades/Taxidermy/StuffedBear.cs (CurrentFile)
+- Data/Scripts/Trades/Taxidermy/MagicSkulls.cs (CurrentFile)
+- Data/Scripts/Mobiles/Base/DropRelic.cs (CurrentFile)
+- Data/Scripts/Items/Misc/Bodies/Corpses/Corpse.cs (CurrentFile)
+
+### Runtime Evidence
+
+- Hook summary: Gump=3; Initialize=1; Timer=2.
+- Data/Scripts/Items/Misc/Bodies/Corpses/Corpse.cs:L436 Timer CustomTimerSubclass access=GlobalOrInternal
+- Data/Scripts/Items/Misc/Bodies/Corpses/Corpse.cs:L520 Initialize Initialize access=GlobalOrInternal
+- Data/Scripts/Items/Trades/Carpenter Items/TaxidermyKit.cs:L343 Timer Timer.DelayCall access=GlobalOrInternal
+- Data/Scripts/Trades/Taxidermy/MountingBase.cs:L68 Gump SendGump access=Internal
+- Data/Scripts/Trades/Taxidermy/StuffingBasket.cs:L68 Gump SendGump access=Internal
+- Data/Scripts/Trades/Taxidermy/TrophyBase.cs:L69 Gump SendGump access=Internal
+
+### Serialization Evidence
+
+- Serialized rows matched: 22.
+- Data/Scripts/Items/Misc/Bodies/Corpses/Corpse.cs:Server.Items.Corpse version=11 serialize=L700 deserialize=L759 alignment=CountMismatch:Writes=18;Reads=37
+- Data/Scripts/Items/Trades/Carpenter Items/TaxidermyKit.cs:Server.Items.TaxidermyKit version=0 serialize=L27 deserialize=L34 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Items/Trades/Carpenter Items/TaxidermyKit.cs:Server.Items.TrophyAddon version=1 serialize=L304 deserialize=L319 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Items/Trades/Carpenter Items/TaxidermyKit.cs:Server.Items.TrophyDeed version=1 serialize=L514 deserialize=L529 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Trades/Taxidermy/MagicSkulls.cs:Server.Misc.DeamonHeadA version=0 serialize=L1385 deserialize=L1393 alignment=CountMatchNeedsTypeReview:UnknownWrites=2
+- Data/Scripts/Trades/Taxidermy/MagicSkulls.cs:Server.Misc.DeamonHeadB version=0 serialize=L1449 deserialize=L1457 alignment=CountMatchNeedsTypeReview:UnknownWrites=2
+- Data/Scripts/Trades/Taxidermy/MagicSkulls.cs:Server.Misc.DeamonHeadC version=0 serialize=L1513 deserialize=L1521 alignment=CountMatchNeedsTypeReview:UnknownWrites=2
+- Data/Scripts/Trades/Taxidermy/MagicSkulls.cs:Server.Misc.HeartOfFire version=0 serialize=L873 deserialize=L881 alignment=CountMatchNeedsTypeReview:UnknownWrites=2
+- Data/Scripts/Trades/Taxidermy/MagicSkulls.cs:Server.Misc.HeartOfIce version=0 serialize=L809 deserialize=L817 alignment=CountMatchNeedsTypeReview:UnknownWrites=2
+- Data/Scripts/Trades/Taxidermy/MagicSkulls.cs:Server.Misc.SkullDemon version=0 serialize=L1257 deserialize=L1265 alignment=CountMatchNeedsTypeReview:UnknownWrites=2
+- Data/Scripts/Trades/Taxidermy/MagicSkulls.cs:Server.Misc.SkullDinosaur version=0 serialize=L1001 deserialize=L1009 alignment=CountMatchNeedsTypeReview:UnknownWrites=2
+- Data/Scripts/Trades/Taxidermy/MagicSkulls.cs:Server.Misc.SkullDragon version=0 serialize=L1193 deserialize=L1201 alignment=CountMatchNeedsTypeReview:UnknownWrites=2
+- Additional serializer rows are recorded in serialization-register.csv for this source set.
+
+### Project And Runtime Coverage
+
+- Data/Scripts/Items/Misc/Bodies/Corpses/Corpse.cs=Keep
+- Data/Scripts/Items/Misc/Bodies/Corpses/Corpse.cs=Keep
+- Data/Scripts/Items/Trades/Carpenter Items/TaxidermyKit.cs=Keep
+- Data/Scripts/Items/Trades/Carpenter Items/TaxidermyKit.cs=Keep
+- Data/Scripts/Mobiles/Base/DropRelic.cs=Keep
+- Data/Scripts/Mobiles/Base/DropRelic.cs=Keep
+- Data/Scripts/Trades/Taxidermy/MagicSkulls.cs=Keep
+- Data/Scripts/Trades/Taxidermy/MagicSkulls.cs=Keep
+- Data/Scripts/Trades/Taxidermy/MountedTrophyHead.cs=Keep
+- Data/Scripts/Trades/Taxidermy/MountedTrophyHead.cs=Keep
+- Data/Scripts/Trades/Taxidermy/MountingBase.cs=Keep
+- Data/Scripts/Trades/Taxidermy/MountingBase.cs=Keep
+- Data/Scripts/Trades/Taxidermy/StuffedBear.cs=Keep
+- Data/Scripts/Trades/Taxidermy/StuffedBear.cs=Keep
+- Data/Scripts/Trades/Taxidermy/StuffingBasket.cs=Keep
+- Data/Scripts/Trades/Taxidermy/StuffingBasket.cs=Keep
+- Data/Scripts/Trades/Taxidermy/TrophyBase.cs=Keep
+- Data/Scripts/Trades/Taxidermy/TrophyBase.cs=Keep
+
+No C# source, project files, XML/config/data files, namespaces, serializers, gameplay behavior, or migration policy were changed in POST-BATCH-T.

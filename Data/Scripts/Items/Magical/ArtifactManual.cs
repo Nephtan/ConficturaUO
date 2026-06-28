@@ -61,11 +61,16 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
+            if (from == null || from.Deleted || Deleted)
+            {
+                return;
+            }
+
             if (Charges > 0)
             {
                 Target t;
 
-                if (!IsChildOf(from.Backpack))
+                if (from.Backpack == null || !IsChildOf(from.Backpack))
                 {
                     from.SendLocalizedMessage(1060640); // The item must be in your backpack to use it.
                 }
@@ -95,6 +100,17 @@ namespace Server.Items
 
             protected override void OnTarget(Mobile from, object targeted)
             {
+                if (from == null || from.Deleted)
+                {
+                    return;
+                }
+
+                if (m_Book == null || m_Book.Deleted || from.Backpack == null || !m_Book.IsChildOf(from.Backpack))
+                {
+                    from.SendLocalizedMessage(1060640); // The item must be in your backpack to use it.
+                    return;
+                }
+
                 if (Server.Items.ArtifactManual.LookupTheItem(from, targeted))
                 {
                     m_Book.Charges = m_Book.Charges - 1;
@@ -106,11 +122,20 @@ namespace Server.Items
         {
             bool useCharges = false;
 
+            if (from == null || from.Deleted || from.Backpack == null)
+            {
+                return false;
+            }
+
             if (targeted is Item)
             {
                 Item iBook = targeted as Item;
 
-                if (!iBook.IsChildOf(from.Backpack))
+                if (iBook == null || iBook.Deleted)
+                {
+                    from.SendMessage("You cannot find any information on that.");
+                }
+                else if (!iBook.IsChildOf(from.Backpack))
                 {
                     from.SendMessage("You can only examine an item in your pack.");
                 }

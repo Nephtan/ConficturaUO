@@ -55,3 +55,63 @@ Bard song magic is implemented as a dedicated `SongBook` spellbook type with 16 
 ## Audit Notes
 - Older documentation that described `SheepfoeMambo` as an attack-speed buff was stale. The actual compiled spell is `Shepherd's Dance` and applies a Dexterity stat bonus.
 - Older documentation that described `Magic Finale` as a damage spell was stale. The compiled implementation only deletes summoned or special `ControlSlots == 666` creatures in range.
+
+## Source Trace
+
+POST-BATCH-T reviewed this page on 2026-06-14T21:09:11.0049244-05:00 against current source and audit registers.
+
+- Canonical status: Canonical.
+- Queue rows: PBN-0033.
+- Backlog rows: RB-06664.
+- Audit registers used: documentation-truth-table.csv, runtime-hook-map.csv, serialization-register.csv, and project-truth-register.csv.
+
+### Source Files Reviewed
+
+- Data/Scripts/Magic/Bard/Spells/ (CurrentDirectory)
+
+### Runtime Evidence
+
+- Hook summary: Timer=19.
+- Data/Scripts/Magic/Bard/Spells/ArmysPaeonSong.cs:L154 Timer CustomTimerSubclass access=GlobalOrInternal
+- Data/Scripts/Magic/Bard/Spells/ArmysPaeonSong.cs:L194 Timer CustomTimerSubclass access=GlobalOrInternal
+- Data/Scripts/Magic/Bard/Spells/ArmysPaeonSong.cs:L234 Timer CustomTimerSubclass access=GlobalOrInternal
+- Data/Scripts/Magic/Bard/Spells/ArmysPaeonSong.cs:L274 Timer CustomTimerSubclass access=GlobalOrInternal
+- Data/Scripts/Magic/Bard/Spells/ArmysPaeonSong.cs:L314 Timer CustomTimerSubclass access=GlobalOrInternal
+- Data/Scripts/Magic/Bard/Spells/EnergyCarolSong.cs:L126 Timer CustomTimerSubclass access=GlobalOrInternal
+- Data/Scripts/Magic/Bard/Spells/EnergyThrenodySong.cs:L138 Timer CustomTimerSubclass access=GlobalOrInternal
+- Data/Scripts/Magic/Bard/Spells/FireCarolSong.cs:L133 Timer CustomTimerSubclass access=GlobalOrInternal
+- Data/Scripts/Magic/Bard/Spells/FireThrenodySong.cs:L136 Timer CustomTimerSubclass access=GlobalOrInternal
+- Data/Scripts/Magic/Bard/Spells/IceCarolSong.cs:L124 Timer CustomTimerSubclass access=GlobalOrInternal
+- Data/Scripts/Magic/Bard/Spells/IceThrenodySong.cs:L137 Timer CustomTimerSubclass access=GlobalOrInternal
+- Data/Scripts/Magic/Bard/Spells/KnightsMinneSong.cs:L126 Timer CustomTimerSubclass access=GlobalOrInternal
+- Additional hook rows are recorded in runtime-hook-map.csv for this source set.
+
+### Serialization Evidence
+
+- No serialized classes matched the reviewed source set in serialization-register.csv.
+
+### Project And Runtime Coverage
+
+- Data/Scripts/Magic/Bard/Spells/ArmysPaeonSong.cs=Keep
+- Data/Scripts/Magic/Bard/Spells/ArmysPaeonSong.cs=Keep
+- Data/Scripts/Magic/Bard/Spells/EnchantingEtudeSong.cs=Keep
+- Data/Scripts/Magic/Bard/Spells/EnchantingEtudeSong.cs=Keep
+- Data/Scripts/Magic/Bard/Spells/EnergyCarolSong.cs=Keep
+- Data/Scripts/Magic/Bard/Spells/EnergyCarolSong.cs=Keep
+- Data/Scripts/Magic/Bard/Spells/EnergyThrenodySong.cs=Keep
+- Data/Scripts/Magic/Bard/Spells/EnergyThrenodySong.cs=Keep
+- Data/Scripts/Magic/Bard/Spells/FireCarolSong.cs=Keep
+- Data/Scripts/Magic/Bard/Spells/FireCarolSong.cs=Keep
+- Data/Scripts/Magic/Bard/Spells/FireThrenodySong.cs=Keep
+- Data/Scripts/Magic/Bard/Spells/FireThrenodySong.cs=Keep
+- Data/Scripts/Magic/Bard/Spells/FoeRequiemSong.cs=Keep
+- Data/Scripts/Magic/Bard/Spells/FoeRequiemSong.cs=Keep
+- Data/Scripts/Magic/Bard/Spells/IceCarolSong.cs=Keep
+- Data/Scripts/Magic/Bard/Spells/IceCarolSong.cs=Keep
+- Data/Scripts/Magic/Bard/Spells/IceThrenodySong.cs=Keep
+- Data/Scripts/Magic/Bard/Spells/IceThrenodySong.cs=Keep
+- Data/Scripts/Magic/Bard/Spells/KnightsMinneSong.cs=Keep
+- Data/Scripts/Magic/Bard/Spells/KnightsMinneSong.cs=Keep
+- Additional project-truth rows are recorded in project-truth-register.csv for this source set.
+
+No C# source, project files, XML/config/data files, namespaces, serializers, gameplay behavior, or migration policy were changed in POST-BATCH-T.

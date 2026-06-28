@@ -69,15 +69,24 @@ namespace Server.Spells.Song
                 {
                     ArrayList targets = new ArrayList();
 
-                    foreach (Mobile m in Caster.GetMobilesInRange(3))
+                    IPooledEnumerable eable = Caster.GetMobilesInRange(3);
+
+                    try
                     {
-                        if (
-                            Caster.CanBeBeneficial(m, false, true)
-                            && !(m is Golem)
-                            && !(m is BaseCreature)
-                        )
-                            targets.Add(m);
-                        //added: && !(m is BaseCreature ) , if it compiles. add to others
+                        foreach (Mobile m in eable)
+                        {
+                            if (
+                                Caster.CanBeBeneficial(m, false, true)
+                                && !(m is Golem)
+                                && !(m is BaseCreature)
+                            )
+                                targets.Add(m);
+                            //added: && !(m is BaseCreature ) , if it compiles. add to others
+                        }
+                    }
+                    finally
+                    {
+                        eable.Free();
                     }
 
                     for (int i = 0; i < targets.Count; ++i)

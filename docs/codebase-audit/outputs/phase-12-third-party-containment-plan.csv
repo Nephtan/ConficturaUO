@@ -1,0 +1,5 @@
+"Package","CurrentPath","ProposedContainment","Policy","Evidence"
+"XMLSpawner","Data/Scripts/Custom/XMLSpawner","Data/Scripts/Custom/ThirdParty/XMLSpawner","Contain only as a package; no style rewrites; no namespace/type rename.","Shared service with packet handlers, world hooks, attachments, and 84 serialized files."
+"Homestead","Data/Scripts/Custom/Vhaerun's CRL Homestead System [2.0]","Data/Scripts/Custom/ThirdParty/Vhaerun's CRL Homestead System [2.0]","Preserve imported subpackage names and local style; move only as whole package with explicit approval.","Imported package with 402 files and 372 serialized files."
+"Staff Toolbar","Data/Scripts/Custom/Staff Toolbar [2.0]","Data/Scripts/Custom/ThirdParty/Staff Toolbar [2.0]","Preserve imported package; verify staff access before move.","StaffEventTool and imported package naming."
+"OmniAI","Data/Scripts/Custom/OmniAI","Data/Scripts/Custom/ThirdParty/OmniAI","Contain or keep in place; do not merge with AI Overhaul until behavior ownership is reviewed.","ImportedPackage classification and Phase 9 AI overlap risk."

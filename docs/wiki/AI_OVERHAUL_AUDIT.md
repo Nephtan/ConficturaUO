@@ -13,6 +13,19 @@ This document is a static-analysis audit of the current AI surface in the Confic
 
 This audit is based on source review and codewide search only. It does not rely on a live server run.
 
+## Source Trace
+
+- `Data/Scripts/Mobiles/Base/BaseCreature.cs`
+- `Data/Scripts/Mobiles/Base/Behavior.cs`
+- `Data/Scripts/Mobiles/Base/BaseVendor.cs`
+- `Data/Scripts/Mobiles/Base/BaseHealer.cs`
+- `Data/Scripts/System/Regions/BaseRegion.cs`
+- `Data/Scripts/Custom/PvE/RandomEncounters/Import.cs`
+- `Data/Scripts/Custom/PvE/RandomEncounters/EncounterEngine.cs`
+- `Data/Scripts/Mobiles/Civilized/Citizens/Citizens.cs`
+- `Data/Scripts/Mobiles/Civilized/Vendors/Mage.cs`
+- `Data/Scripts/Mobiles/Civilized/Vendors/Banker.cs`
+
 ## Executive Summary
 
 The shard does not have one AI system. It has a layered behavior stack:
@@ -50,8 +63,8 @@ These files were read directly because they define the framework or high-risk be
 - `Data/Scripts/Mobiles/Base/BaseHealer.cs`
 - `Data/System/Source/Sector.cs`
 - `Data/System/Source/Region.cs`
-- `Data/Scripts/Custom/OmniAI/OmniAI Core.cs`
-- `Data/Scripts/Custom/OmniAI/OmniAI Shared.cs`
+- `Data/Scripts/Custom/ThirdParty/OmniAI/OmniAI Core.cs`
+- `Data/Scripts/Custom/ThirdParty/OmniAI/OmniAI Shared.cs`
 - key exception files for clones, summons, pirates, champions, and scripted bosses
 
 Facts in the core-framework, timer, control-order, movement/pathing, legality, and engine-hook sections should be treated as high-confidence findings because they are grounded in direct source review.
@@ -1164,8 +1177,8 @@ This list is exact for non-obsolete gameplay code reviewed through search.
 
 ### Live `ForcedAI` overrides
 
-- `Data/Scripts/Custom/CloneOfflinePlayerCharacters/CharacterClone.cs`
-- `Data/Scripts/Custom/OmniAI/AITester.cs`
+- `Data/Scripts/Custom/PvE/CloneOfflinePlayerCharacters/CharacterClone.cs`
+- `Data/Scripts/Custom/ThirdParty/OmniAI/AITester.cs`
 - `Data/Scripts/Magic/Jester/Spells/Clowns.cs`
 - `Data/Scripts/Magic/Ninjitsu/MirrorImage.cs`
 
@@ -1556,7 +1569,7 @@ rg -n -F "override void OnGotMeleeAttack(" Data/Scripts
 
 ### Assignment and switching surfaces
 
-```powershell
+~~~powershell
 rg -n "AI\\s*=\\s*AIType\\." Data/Scripts
 rg -n "ChangeAIType\\(" Data/Scripts
 rg -n "CurrentAI\\s*=|DefaultAI\\s*=" Data/Scripts
@@ -1564,9 +1577,9 @@ rg -n -F "AIObject" Data/Scripts
 rg -n -F "AIObject." Data/Scripts
 rg -n --glob '!Data/Scripts/System/Obsolete/**' --glob '!Data/Scripts/Custom/XMLSpawner/**' ": base\\(AIType\\.AI_" Data/Scripts
 rg -n --glob '!Data/Scripts/System/Obsolete/**' --glob '!Data/Scripts/Custom/XMLSpawner/**' "AI\\s*=\\s*AIType\\." Data/Scripts
-rg -n "AIType\\.AI_(Vendor|Healer|Citizen|Predator)" Data/Scripts/Mobiles/Base/BaseVendor.cs Data/Scripts/Mobiles/Base/BaseHealer.cs Data/Scripts/Custom/RandomEncounters/Import.cs Data/Scripts/Custom/RandomEncounters/EncounterEngine.cs
+rg -n "AIType\\.AI_(Vendor|Healer|Citizen|Predator)" Data/Scripts/Mobiles/Base/BaseVendor.cs Data/Scripts/Mobiles/Base/BaseHealer.cs Data/Scripts/Custom/PvE/RandomEncounters/Import.cs Data/Scripts/Custom/PvE/RandomEncounters/EncounterEngine.cs
 rg -n -F "AIType.AI_Citizen" Data/Scripts/Mobiles/Base Data/Scripts/System Data/Scripts/Mobiles/Civilized
-```
+~~~
 
 ### Suggested exclusions when refreshing counts
 

@@ -92,10 +92,19 @@ namespace Server.Mobiles
 
             int dreadspiders = 0;
 
-            foreach (Mobile m in this.GetMobilesInRange(10))
+            IPooledEnumerable eable = this.GetMobilesInRange(10);
+
+            try
             {
-                if (m is DreadSpider)
-                    ++dreadspiders;
+                foreach (Mobile m in eable)
+                {
+                    if (m is DreadSpider)
+                        ++dreadspiders;
+                }
+            }
+            finally
+            {
+                eable.Free();
             }
 
             if (dreadspiders < 10)

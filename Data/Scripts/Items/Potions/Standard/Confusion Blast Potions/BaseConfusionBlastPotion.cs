@@ -125,23 +125,32 @@ namespace Server.Items
                 new object[] { loc, map }
             );
 
-            foreach (Mobile mobile in map.GetMobilesInRange(loc, Radius))
-            {
-                if (mobile is BaseCreature && !(mobile is RuneGuardian))
-                {
-                    BaseCreature mon = (BaseCreature)mobile;
+            IPooledEnumerable eable = map.GetMobilesInRange(loc, Radius);
 
-                    mon.Pacify(from, DateTime.Now + TimeSpan.FromSeconds(5.0)); // TODO check
-                }
-                else if (
-                    mobile.Alive
-                    && from != mobile
-                    && mobile.Blessed == false
-                    && from.CanBeHarmful(mobile, true)
-                )
+            try
+            {
+                foreach (Mobile mobile in eable)
                 {
-                    mobile.Paralyze(TimeSpan.FromSeconds(5.0));
+                    if (mobile is BaseCreature && !(mobile is RuneGuardian))
+                    {
+                        BaseCreature mon = (BaseCreature)mobile;
+
+                        mon.Pacify(from, DateTime.Now + TimeSpan.FromSeconds(5.0)); // TODO check
+                    }
+                    else if (
+                        mobile.Alive
+                        && from != mobile
+                        && mobile.Blessed == false
+                        && from.CanBeHarmful(mobile, true)
+                    )
+                    {
+                        mobile.Paralyze(TimeSpan.FromSeconds(5.0));
+                    }
                 }
+            }
+            finally
+            {
+                eable.Free();
             }
         }
 

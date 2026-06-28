@@ -3331,20 +3331,36 @@ namespace Server.Mobiles
                                 // count nearby players
                                 if (refobject is Item)
                                 {
-                                    foreach (Mobile p in ((Item)refobject).GetMobilesInRange(range))
+                                    IPooledEnumerable eable = ((Item)refobject).GetMobilesInRange(range);
+
+                                    try
                                     {
-                                        if (p.Player && p.AccessLevel == AccessLevel.Player)
-                                            nplayers++;
+                                        foreach (Mobile p in eable)
+                                        {
+                                            if (p.Player && p.AccessLevel == AccessLevel.Player)
+                                                nplayers++;
+                                        }
+                                    }
+                                    finally
+                                    {
+                                        eable.Free();
                                     }
                                 }
                                 else if (refobject is Mobile)
                                 {
-                                    foreach (
-                                        Mobile p in ((Mobile)refobject).GetMobilesInRange(range)
-                                    )
+                                    IPooledEnumerable eable = ((Mobile)refobject).GetMobilesInRange(range);
+
+                                    try
                                     {
-                                        if (p.Player && p.AccessLevel == AccessLevel.Player)
-                                            nplayers++;
+                                        foreach (Mobile p in eable)
+                                        {
+                                            if (p.Player && p.AccessLevel == AccessLevel.Player)
+                                                nplayers++;
+                                        }
+                                    }
+                                    finally
+                                    {
+                                        eable.Free();
                                     }
                                 }
 
@@ -5377,18 +5393,36 @@ namespace Server.Mobiles
 
                     if (o is Item)
                     {
-                        foreach (Mobile p in ((Item)o).GetMobilesInRange(range))
+                        IPooledEnumerable eable = ((Item)o).GetMobilesInRange(range);
+
+                        try
                         {
-                            if (p.Player && p.AccessLevel == AccessLevel.Player)
-                                nplayers++;
+                            foreach (Mobile p in eable)
+                            {
+                                if (p.Player && p.AccessLevel == AccessLevel.Player)
+                                    nplayers++;
+                            }
+                        }
+                        finally
+                        {
+                            eable.Free();
                         }
                     }
                     else if (o is Mobile)
                     {
-                        foreach (Mobile p in ((Mobile)o).GetMobilesInRange(range))
+                        IPooledEnumerable eable = ((Mobile)o).GetMobilesInRange(range);
+
+                        try
                         {
-                            if (p.Player && p.AccessLevel == AccessLevel.Player)
-                                nplayers++;
+                            foreach (Mobile p in eable)
+                            {
+                                if (p.Player && p.AccessLevel == AccessLevel.Player)
+                                    nplayers++;
+                            }
+                        }
+                        finally
+                        {
+                            eable.Free();
                         }
                     }
 

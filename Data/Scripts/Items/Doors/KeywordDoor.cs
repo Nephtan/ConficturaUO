@@ -184,6 +184,9 @@ namespace Server.Items
 
         public override void OnSpeech(SpeechEventArgs e)
         {
+            if (e == null || e.Mobile == null || e.Mobile.Deleted || e.Speech == null)
+                return;
+
             if (!e.Handled && m_Active)
             {
                 Mobile m = e.Mobile;
@@ -219,7 +222,12 @@ namespace Server.Items
                 m.SendMessage(1154, "The door has been opened.");
 
                 if (m_QuickClose)
+                {
+                    if (m_Timer == null)
+                        m_Timer = new InternalTimer(this, m_CloseDelay);
+
                     m_Timer.Start();
+                }
             }
         }
 

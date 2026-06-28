@@ -463,6 +463,9 @@ namespace Knives.Chat3
 
         private void Client()
         {
+            if (Owner == null || Owner.Deleted || c_Target == null || c_Target.Deleted)
+                return;
+
             NewGump();
 
             if (c_Target.NetState == null)

@@ -20,6 +20,9 @@ namespace Server.Gumps
 
         public override void OnCancel(Mobile from)
         {
+            if (from == null || from.Deleted || m_Mobile == null || m_Mobile.Deleted || from != m_Mobile || m_Guild == null)
+                return;
+
             if (GuildGump.BadLeader(m_Mobile, m_Guild))
                 return;
 
@@ -29,6 +32,9 @@ namespace Server.Gumps
 
         public override void OnResponse(Mobile from, string text)
         {
+            if (from == null || from.Deleted || text == null || m_Mobile == null || m_Mobile.Deleted || from != m_Mobile || m_Guild == null)
+                return;
+
             if (GuildGump.BadLeader(m_Mobile, m_Guild))
                 return;
 

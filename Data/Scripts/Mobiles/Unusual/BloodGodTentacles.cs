@@ -186,22 +186,30 @@ namespace Server.Mobiles
                     return;
                 }
 
-                foreach (Mobile m in m_Owner.GetMobilesInRange(9))
+                IPooledEnumerable eable = m_Owner.GetMobilesInRange(9);
+                try
                 {
-                    if (m == m_Owner || m == m_Owner.Harrower || !m_Owner.CanBeHarmful(m))
-                        continue;
-
-                    if (m is BaseCreature)
+                    foreach (Mobile m in eable)
                     {
-                        BaseCreature bc = m as BaseCreature;
+                        if (m == m_Owner || m == m_Owner.Harrower || !m_Owner.CanBeHarmful(m))
+                            continue;
 
-                        if (bc.Controlled || bc.Summoned)
+                        if (m is BaseCreature)
+                        {
+                            BaseCreature bc = m as BaseCreature;
+
+                            if (bc.Controlled || bc.Summoned)
+                                m_ToDrain.Add(m);
+                        }
+                        else if (m.Player)
+                        {
                             m_ToDrain.Add(m);
+                        }
                     }
-                    else if (m.Player)
-                    {
-                        m_ToDrain.Add(m);
-                    }
+                }
+                finally
+                {
+                    eable.Free();
                 }
 
                 foreach (Mobile m in m_ToDrain)

@@ -6,7 +6,7 @@ Apiculture is a beehive addon and wax-crafting system. A placed `apiBeeHive` gro
 
 There are no custom `CommandSystem.Register` commands, `[Usage]` attributes, packet handlers, or XMLSpawner attachments in this system. Administration uses standard RunUO constructable placement such as `[add apiBeeHiveDeed]`, `[add apiBeeHive]`, `[add HiveTool]`, `[add apiSmallWaxPot]`, `[add apiLargeWaxPot]`, and `[add WaxingPot]`.
 
-## Script Inventory
+## Source Trace
 
 | Script | Purpose |
 | --- | --- |
@@ -22,7 +22,13 @@ There are no custom `CommandSystem.Register` commands, `[Usage]` attributes, pac
 | `Data/Scripts/Items/Misc/Beeswax.cs` | Stackable rendered wax item used by wax crafting and other trade recipes. |
 | `Data/Scripts/Trades/Apiculture/WaxCrafting.cs` | `WaxingPot` `BaseTool` entry point. |
 | `Data/Scripts/Trades/Apiculture/DefWaxCrafting.cs` | Cooking-based wax craft system. |
-| `Data/Scripts/Trades/Apiculture/Craft/*.cs` | Candles, wax polish, paint canvas, wax paintings, and wax sculptors. |
+| `Data/Scripts/Trades/Apiculture/Craft/CandleReligious.cs` | Religious candle wax craft output. |
+| `Data/Scripts/Trades/Apiculture/Craft/ColorCandleLong.cs` | Long colored candle wax craft output. |
+| `Data/Scripts/Trades/Apiculture/Craft/ColorCandleShort.cs` | Short colored candle wax craft output. |
+| `Data/Scripts/Trades/Apiculture/Craft/JarsOfWax.cs` | Jarred wax craft output. |
+| `Data/Scripts/Trades/Apiculture/Craft/PaintCanvas.cs` | Paint canvas wax craft output. |
+| `Data/Scripts/Trades/Apiculture/Craft/WaxPaintings.cs` | Wax painting craft output. |
+| `Data/Scripts/Trades/Apiculture/Craft/WaxSculptors.cs` | Wax sculpture craft output. |
 | `Data/Scripts/Mobiles/Civilized/Vendors/Beekeeper.cs` | Beekeeper vendor using `SBBeekeeper`. |
 | `Data/Scripts/Mobiles/Base/StoreSalesList.cs` | Buy/sell entries for beekeeping goods. |
 

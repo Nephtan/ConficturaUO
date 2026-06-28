@@ -212,7 +212,10 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
-            if (!this.IsChildOf(from.Backpack))
+            if (from == null || from.Deleted)
+                return;
+
+            if (Deleted || from.Backpack == null || !this.IsChildOf(from.Backpack))
             {
                 from.SendLocalizedMessage(501661); // That key is unreachable.
                 return;
@@ -340,7 +343,10 @@ namespace Server.Items
 
             public override void OnResponse(Mobile from, string text)
             {
-                if (m_Key.Deleted || !m_Key.IsChildOf(from.Backpack))
+                if (from == null || from.Deleted)
+                    return;
+
+                if (m_Key == null || m_Key.Deleted || from.Backpack == null || !m_Key.IsChildOf(from.Backpack))
                 {
                     from.SendLocalizedMessage(501661); // That key is unreachable.
                     return;
@@ -363,7 +369,10 @@ namespace Server.Items
 
             protected override void OnTarget(Mobile from, object targeted)
             {
-                if (m_Key.Deleted || !m_Key.IsChildOf(from.Backpack))
+                if (from == null || from.Deleted)
+                    return;
+
+                if (m_Key == null || m_Key.Deleted || from.Backpack == null || !m_Key.IsChildOf(from.Backpack))
                 {
                     from.SendLocalizedMessage(501661); // That key is unreachable.
                     return;
@@ -376,6 +385,10 @@ namespace Server.Items
                     number = 501665; // Enter a description for this key.
 
                     from.Prompt = new RenamePrompt(m_Key);
+                }
+                else if (targeted is Item && ((Item)targeted).Deleted)
+                {
+                    number = 501666; // You can't unlock that!
                 }
                 else if (targeted is ILockable)
                 {
@@ -408,7 +421,10 @@ namespace Server.Items
 
             protected override void OnTarget(Mobile from, object targeted)
             {
-                if (m_Key.Deleted || !m_Key.IsChildOf(from.Backpack))
+                if (from == null || from.Deleted)
+                    return;
+
+                if (m_Key == null || m_Key.Deleted || from.Backpack == null || !m_Key.IsChildOf(from.Backpack))
                 {
                     from.SendLocalizedMessage(501661); // That key is unreachable.
                     return;
@@ -420,7 +436,11 @@ namespace Server.Items
                 {
                     Key k = (Key)targeted;
 
-                    if (k.m_KeyVal == 0)
+                    if (k.Deleted)
+                    {
+                        number = 501688; // Not a key.
+                    }
+                    else if (k.m_KeyVal == 0)
                     {
                         number = 501675; // This key is also blank.
                     }

@@ -57,28 +57,37 @@ namespace Server.Spells.Chivalry
             {
                 List<Mobile> targets = new List<Mobile>();
 
-                foreach (Mobile m in Caster.GetMobilesInRange(8))
+                IPooledEnumerable eable = Caster.GetMobilesInRange(8);
+
+                try
                 {
-                    if (m is BaseCreature)
+                    foreach (Mobile m in eable)
                     {
-                        BaseCreature mn = m as BaseCreature;
-                        if (mn.ControlSlots == 666)
-                            targets.Add(m);
+                        if (m is BaseCreature)
+                        {
+                            BaseCreature mn = m as BaseCreature;
+                            if (mn.ControlSlots == 666)
+                                targets.Add(m);
+                            else if (
+                                Caster != m
+                                && SpellHelper.ValidIndirectTarget(Caster, m)
+                                && Caster.CanBeHarmful(m, false)
+                            )
+                                targets.Add(m);
+                        }
                         else if (
                             Caster != m
                             && SpellHelper.ValidIndirectTarget(Caster, m)
                             && Caster.CanBeHarmful(m, false)
                         )
+                        {
                             targets.Add(m);
+                        }
                     }
-                    else if (
-                        Caster != m
-                        && SpellHelper.ValidIndirectTarget(Caster, m)
-                        && Caster.CanBeHarmful(m, false)
-                    )
-                    {
-                        targets.Add(m);
-                    }
+                }
+                finally
+                {
+                    eable.Free();
                 }
 
                 Caster.PlaySound(0xF5);

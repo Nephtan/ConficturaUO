@@ -132,6 +132,10 @@ namespace Server.Items
             public override void OnResponse(NetState state, RelayInfo info)
             {
                 Mobile from = state.Mobile;
+
+                if (from == null || from.Deleted)
+                    return;
+
                 from.PlaySound(0x249);
             }
         }

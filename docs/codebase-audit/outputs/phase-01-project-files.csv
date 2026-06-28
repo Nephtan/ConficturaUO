@@ -1,0 +1,6 @@
+"Path","Kind"
+"ConficturaUO.sln","Solution"
+"Data/Scripts/Scripts.csproj","Project"
+"Data/System/Source/Server.csproj","Project"
+"docs/CCWM/tools/CCWM.Tools.sln","Solution"
+"docs/CCWM/tools/live-state-exporter/CCWMLiveStateExporter.csproj","Project"

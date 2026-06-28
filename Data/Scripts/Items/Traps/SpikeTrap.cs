@@ -180,15 +180,24 @@ namespace Server.Items
 
             int itHurts = 0;
 
-            foreach (Mobile mob in GetMobilesInRange(0))
+            IPooledEnumerable eable = GetMobilesInRange(0);
+
+            try
             {
-                if (mob.Alive && !mob.IsDeadBondedPet && mob.Player)
+                foreach (Mobile mob in eable)
                 {
-                    itHurts = (int)(
-                        (Utility.RandomMinMax(50, 200) * (100 - mob.PhysicalResistance)) / 100
-                    );
-                    Spells.SpellHelper.Damage(TimeSpan.FromTicks(1), mob, mob, itHurts);
+                    if (mob.Alive && !mob.IsDeadBondedPet && mob.Player)
+                    {
+                        itHurts = (int)(
+                            (Utility.RandomMinMax(50, 200) * (100 - mob.PhysicalResistance)) / 100
+                        );
+                        Spells.SpellHelper.Damage(TimeSpan.FromTicks(1), mob, mob, itHurts);
+                    }
                 }
+            }
+            finally
+            {
+                eable.Free();
             }
 
             Timer.DelayCall(TimeSpan.FromSeconds(1.0), new TimerCallback(OnSpikeExtended));

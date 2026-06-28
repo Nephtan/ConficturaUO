@@ -247,3 +247,69 @@ Core `Mobile.PlaySound()` always passes through `RaceSound()`, which remaps many
 * `BaseRace.CreateRace()`, `BaseRace.BackToHuman()`, and `NPCRace.CreateRace()` delete whatever item is currently on `Layer.Special`; only some paths first verify that the item is a race token. Any unrelated special-layer item on the mobile can be destroyed by race changes or human reset.
 * `BaseRace.OnEquip()` and `NPCRace.OnEquip()` call `base.OnEquip(m)` once for the condition and again for the return value. The current base implementation only calls `ProcessClothing()`, but this double invocation is brittle and can repeat future base side effects.
 * `RacePotionsGump.OnResponse()` immediately dereferences `state.Mobile` and closes/sends gumps without guarding null, deleted, or non-player state.
+
+## Source Trace
+
+POST-BATCH-T reviewed this page on 2026-06-14T21:09:11.0049244-05:00 against current source and audit registers.
+
+- Canonical status: Canonical.
+- Queue rows: PBN-0060.
+- Backlog rows: RB-06753.
+- Audit registers used: documentation-truth-table.csv, runtime-hook-map.csv, serialization-register.csv, and project-truth-register.csv.
+
+### Source Files Reviewed
+
+- Data/Scripts/Mobiles/Races/BaseRace.cs (CurrentFile)
+- Data/Scripts/Mobiles/Races/RacePotions.cs (CurrentFile)
+- Data/Scripts/Mobiles/Races/NPCRace.cs (CurrentFile)
+- Data/System/Source/Mobile.cs (CurrentFile)
+- Data/Scripts/Mobiles/Base/PlayerMobile.cs (CurrentFile)
+- Data/Scripts/System/Help/Gumps/HelpGump.cs (CurrentFile)
+- Data/Scripts/System/Misc/Settings.cs (CurrentFile)
+- Data/Scripts/System/Commands/Player/CreatureHelp.cs (CurrentFile)
+- Data/Scripts/Scripts.csproj (CurrentFile)
+
+### Runtime Evidence
+
+- Hook summary: Event=15; Gump=90; Initialize=2; Login=1; Logout=1; Movement=3; Speech=8; Timer=22; WorldLoad=1.
+- Data/Scripts/Mobiles/Base/PlayerMobile.cs:L798 Initialize Initialize access=GlobalOrInternal
+- Data/Scripts/Mobiles/Base/PlayerMobile.cs:L806 Event EventSink access=GlobalOrInternal
+- Data/Scripts/Mobiles/Base/PlayerMobile.cs:L807 Event EventSink access=GlobalOrInternal
+- Data/Scripts/Mobiles/Base/PlayerMobile.cs:L808 Event EventSink access=GlobalOrInternal
+- Data/Scripts/Mobiles/Base/PlayerMobile.cs:L809 Event EventSink access=GlobalOrInternal
+- Data/Scripts/Mobiles/Base/PlayerMobile.cs:L813 Timer Timer.DelayCall access=GlobalOrInternal
+- Data/Scripts/Mobiles/Base/PlayerMobile.cs:L1003 Login OnLogin access=Internal
+- Data/Scripts/Mobiles/Base/PlayerMobile.cs:L1030 Timer Timer.DelayCall access=GlobalOrInternal
+- Data/Scripts/Mobiles/Base/PlayerMobile.cs:L1047 Gump SendGump access=Internal
+- Data/Scripts/Mobiles/Base/PlayerMobile.cs:L1068 Timer Timer.DelayCall access=GlobalOrInternal
+- Data/Scripts/Mobiles/Base/PlayerMobile.cs:L1328 Logout OnLogout access=Internal
+- Data/Scripts/Mobiles/Base/PlayerMobile.cs:L1367 Timer Timer.DelayCall access=GlobalOrInternal
+- Additional hook rows are recorded in runtime-hook-map.csv for this source set.
+
+### Serialization Evidence
+
+- Serialized rows matched: 5.
+- Data/Scripts/Mobiles/Base/PlayerMobile.cs:Server.Mobiles.PlayerMobile version=37 serialize=L5042 deserialize=L4577 alignment=CountMismatch:Writes=120;Reads=119
+- Data/Scripts/Mobiles/Races/BaseRace.cs:Server.Items.BaseRace version=0 serialize=L3975 deserialize=L4003 alignment=CountMatchNeedsTypeReview:UnknownWrites=18
+- Data/Scripts/Mobiles/Races/NPCRace.cs:Server.Items.NPCRace version=0 serialize=L669 deserialize=L683 alignment=CountMatchNeedsTypeReview:UnknownWrites=8
+- Data/Scripts/Mobiles/Races/RacePotions.cs:Server.Items.RacePotions version=1 serialize=L47 deserialize=L53 alignment=AlignedByCountAndKnownTypes
+- Data/System/Source/Mobile.cs:Server.Mobile version=35 serialize=L6183 deserialize=L5700 alignment=CountMismatch:Writes=98;Reads=104
+
+### Project And Runtime Coverage
+
+- Data/Scripts/Mobiles/Base/PlayerMobile.cs=Keep
+- Data/Scripts/Mobiles/Base/PlayerMobile.cs=Keep
+- Data/Scripts/Mobiles/Races/BaseRace.cs=Keep
+- Data/Scripts/Mobiles/Races/BaseRace.cs=Keep
+- Data/Scripts/Mobiles/Races/NPCRace.cs=Keep
+- Data/Scripts/Mobiles/Races/NPCRace.cs=Keep
+- Data/Scripts/Mobiles/Races/RacePotions.cs=Keep
+- Data/Scripts/Mobiles/Races/RacePotions.cs=Keep
+- Data/Scripts/System/Commands/Player/CreatureHelp.cs=Keep
+- Data/Scripts/System/Commands/Player/CreatureHelp.cs=Keep
+- Data/Scripts/System/Help/Gumps/HelpGump.cs=Keep
+- Data/Scripts/System/Help/Gumps/HelpGump.cs=Keep
+- Data/Scripts/System/Misc/Settings.cs=Keep
+- Data/Scripts/System/Misc/Settings.cs=Keep
+
+No C# source, project files, XML/config/data files, namespaces, serializers, gameplay behavior, or migration policy were changed in POST-BATCH-T.

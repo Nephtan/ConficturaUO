@@ -66,6 +66,9 @@ namespace Server.Gumps
 
         public override void OnResponse(NetState sender, RelayInfo info)
         {
+            if (sender == null || info == null || sender.Mobile == null || sender.Mobile.Deleted)
+                return;
+
             Mobile from = sender.Mobile;
             from.SendSound(0x59);
         }

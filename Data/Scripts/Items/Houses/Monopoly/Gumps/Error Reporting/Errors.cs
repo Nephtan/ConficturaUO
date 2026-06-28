@@ -49,13 +49,21 @@ namespace Knives.TownHouses
 
         private static void OnLogin(LoginEventArgs e)
         {
+            if (e == null)
+                return;
+
+            Mobile from = e.Mobile;
+
+            if (from == null || from.Deleted)
+                return;
+
             if (
-                e.Mobile.AccessLevel != AccessLevel.Player
+                from.AccessLevel != AccessLevel.Player
                 && s_ErrorLog.Count != 0
-                && !s_Checked.Contains(e.Mobile)
+                && !s_Checked.Contains(from)
             )
             {
-                new ErrorsNotifyGump(e.Mobile);
+                new ErrorsNotifyGump(from);
             }
         }
 

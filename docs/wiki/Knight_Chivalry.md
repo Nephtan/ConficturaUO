@@ -152,3 +152,55 @@ No Knight-specific `[Command]`, `[Usage]`, or `[Description]` handlers were foun
 | `DispelEvilSpell`, `HolyLightSpell`, `NobleSacrificeSpell`, and `PlayerMobile.DeltaEnemies()` iterate `GetMobilesInRange(...)` without freeing the pooled enumerable. | Repeated casts or Enemy of One target changes can leak pooled range enumerables in the RunUO range-scan infrastructure. |
 | Sacred Journey's runebook charge path is effectively unused by current callers. | `RunebookGump` constructs `new SacredJourneySpell(from, null, e, null)`, and targeting a `Runebook` also calls `Effect(...)` without assigning `m_Book`, so `m_Book.CurCharges` is not decremented by the compiled Chivalry travel path. |
 | `Spellbook.OnEquip` rejects `BookOfChivalry` only when the `Mobile` has both low Knightship and negative Karma. | The code permits low-Knightship nonnegative-Karma users and negative-Karma users with at least `30.0` Knightship to equip the book, which is narrower than the rejection message implies. |
+
+## Source Trace
+
+POST-BATCH-T reviewed this page on 2026-06-14T21:09:11.0049244-05:00 against current source and audit registers.
+
+- Canonical status: Canonical.
+- Queue rows: PBN-0097.
+- Backlog rows: RB-06712.
+- Audit registers used: documentation-truth-table.csv, runtime-hook-map.csv, serialization-register.csv, and project-truth-register.csv.
+
+### Source Files Reviewed
+
+- Data/Scripts/Magic/Knight/ (CurrentDirectory)
+
+### Runtime Evidence
+
+- Hook summary: Gump=1; Timer=3.
+- Data/Scripts/Magic/Knight/ConsecrateWeapon.cs:L140 Timer CustomTimerSubclass access=GlobalOrInternal
+- Data/Scripts/Magic/Knight/DivineFury.cs:L66 Timer Timer.DelayCall access=GlobalOrInternal
+- Data/Scripts/Magic/Knight/EnemyOfOne.cs:L66 Timer Timer.DelayCall access=GlobalOrInternal
+- Data/Scripts/Magic/Knight/NobleSacrifice.cs:L107 Gump SendGump access=Internal
+
+### Serialization Evidence
+
+- Serialized rows matched: 1.
+- Data/Scripts/Magic/Knight/BookOfChivalry.cs:Server.Items.BookOfChivalry version=1 serialize=L37 deserialize=L43 alignment=AlignedByCountAndKnownTypes
+
+### Project And Runtime Coverage
+
+- Data/Scripts/Magic/Knight/BookOfChivalry.cs=Keep
+- Data/Scripts/Magic/Knight/BookOfChivalry.cs=Keep
+- Data/Scripts/Magic/Knight/CleanseByFire.cs=Keep
+- Data/Scripts/Magic/Knight/CleanseByFire.cs=Keep
+- Data/Scripts/Magic/Knight/CloseWounds.cs=Keep
+- Data/Scripts/Magic/Knight/CloseWounds.cs=Keep
+- Data/Scripts/Magic/Knight/ConsecrateWeapon.cs=Keep
+- Data/Scripts/Magic/Knight/ConsecrateWeapon.cs=Keep
+- Data/Scripts/Magic/Knight/DispelEvil.cs=Keep
+- Data/Scripts/Magic/Knight/DispelEvil.cs=Keep
+- Data/Scripts/Magic/Knight/DivineFury.cs=Keep
+- Data/Scripts/Magic/Knight/DivineFury.cs=Keep
+- Data/Scripts/Magic/Knight/EnemyOfOne.cs=Keep
+- Data/Scripts/Magic/Knight/EnemyOfOne.cs=Keep
+- Data/Scripts/Magic/Knight/HolyLight.cs=Keep
+- Data/Scripts/Magic/Knight/HolyLight.cs=Keep
+- Data/Scripts/Magic/Knight/NobleSacrifice.cs=Keep
+- Data/Scripts/Magic/Knight/NobleSacrifice.cs=Keep
+- Data/Scripts/Magic/Knight/PaladinSpell.cs=Keep
+- Data/Scripts/Magic/Knight/PaladinSpell.cs=Keep
+- Additional project-truth rows are recorded in project-truth-register.csv for this source set.
+
+No C# source, project files, XML/config/data files, namespaces, serializers, gameplay behavior, or migration policy were changed in POST-BATCH-T.

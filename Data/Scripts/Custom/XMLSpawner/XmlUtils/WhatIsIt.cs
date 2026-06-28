@@ -65,7 +65,7 @@ namespace Server.Commands
         [Usage("WhatIsIt")]
         public static void GenericCommand_OnCommand(CommandEventArgs e)
         {
-            if (e == null || e.Mobile == null)
+            if (e == null || e.Mobile == null || e.Mobile.Deleted)
                 return;
 
             e.Mobile.Target = new WhatIsItTarget();

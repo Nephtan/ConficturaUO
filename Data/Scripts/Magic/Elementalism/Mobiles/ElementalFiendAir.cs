@@ -87,13 +87,22 @@ namespace Server.Mobiles
             {
                 ArrayList spirtsOrVortexes = new ArrayList();
 
-                foreach (Mobile m in GetMobilesInRange(5))
+                IPooledEnumerable eable = GetMobilesInRange(5);
+
+                try
                 {
-                    if (BaseCreature.isVortex(m))
+                    foreach (Mobile m in eable)
                     {
-                        if (((BaseCreature)m).Summoned)
-                            spirtsOrVortexes.Add(m);
+                        if (BaseCreature.isVortex(m))
+                        {
+                            if (((BaseCreature)m).Summoned)
+                                spirtsOrVortexes.Add(m);
+                        }
                     }
+                }
+                finally
+                {
+                    eable.Free();
                 }
 
                 while (spirtsOrVortexes.Count > 6)

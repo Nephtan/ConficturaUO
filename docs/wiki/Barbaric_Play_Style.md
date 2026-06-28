@@ -162,3 +162,65 @@ Because this block runs before the later Archmage, monk, Jedi, Syth, Jester, Ori
 * `BarbaricSatchel` writes serialization version `1`, but `Deserialize` unconditionally reads `owner` for every version value. If any version `0` satchel save exists without that field, the read order would be wrong.
 * Amazon/Valkyrie title behavior is based on `CharacterBarbaric > 1`, not on current gender. The player command only sets value `2` through the female branch, but GameMaster property edits or later gender changes can leave value `2` on any `PlayerMobile`.
 * The generated gloves name fragment is spelled `guantlets` in two direct conversion branches.
+
+## Source Trace
+
+POST-BATCH-T reviewed this page on 2026-06-14T21:09:11.0049244-05:00 against current source and audit registers.
+
+- Canonical status: Canonical.
+- Queue rows: PBN-0054.
+- Backlog rows: RB-06663.
+- Audit registers used: documentation-truth-table.csv, runtime-hook-map.csv, serialization-register.csv, and project-truth-register.csv.
+
+### Source Files Reviewed
+
+- Data/Scripts/System/Commands/Player/PlayBarbaric.cs (CurrentFile)
+- Data/Scripts/System/Help/Gumps/HelpGump.cs (CurrentFile)
+- Data/Scripts/Items/Special/BarbaricSatchel.cs (CurrentFile)
+- Data/Scripts/System/Misc/Players.cs (CurrentFile)
+- Data/System/Source/Skills.cs (CurrentFile)
+- Data/Scripts/Mobiles/Base/PlayerMobile.cs (CurrentFile)
+- Data/Scripts/Mobiles/Base/PlayerSettings.cs (CurrentFile)
+- Data/Scripts/Scripts.csproj (CurrentFile)
+
+### Runtime Evidence
+
+- Hook summary: Command=3; Event=6; Gump=86; Initialize=5; Login=1; Logout=1; Speech=1; Timer=8.
+- Data/Scripts/Items/Special/BarbaricSatchel.cs:L47 Gump SendGump access=Internal
+- Data/Scripts/Items/Special/BarbaricSatchel.cs:L243 Gump SendGump access=Internal
+- Data/Scripts/Items/Special/BarbaricSatchel.cs:L451 Gump OnResponse access=Internal
+- Data/Scripts/Items/Special/BarbaricSatchel.cs:L695 Gump OnResponse access=Internal
+- Data/Scripts/Mobiles/Base/PlayerMobile.cs:L798 Initialize Initialize access=GlobalOrInternal
+- Data/Scripts/Mobiles/Base/PlayerMobile.cs:L806 Event EventSink access=GlobalOrInternal
+- Data/Scripts/Mobiles/Base/PlayerMobile.cs:L807 Event EventSink access=GlobalOrInternal
+- Data/Scripts/Mobiles/Base/PlayerMobile.cs:L808 Event EventSink access=GlobalOrInternal
+- Data/Scripts/Mobiles/Base/PlayerMobile.cs:L809 Event EventSink access=GlobalOrInternal
+- Data/Scripts/Mobiles/Base/PlayerMobile.cs:L813 Timer Timer.DelayCall access=GlobalOrInternal
+- Data/Scripts/Mobiles/Base/PlayerMobile.cs:L1003 Login OnLogin access=Internal
+- Data/Scripts/Mobiles/Base/PlayerMobile.cs:L1030 Timer Timer.DelayCall access=GlobalOrInternal
+- Additional hook rows are recorded in runtime-hook-map.csv for this source set.
+
+### Serialization Evidence
+
+- Serialized rows matched: 4.
+- Data/Scripts/Items/Special/BarbaricSatchel.cs:Server.Items.BarbaricSatchel version=1 serialize=L265 deserialize=L272 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Mobiles/Base/PlayerMobile.cs:Server.Mobiles.PlayerMobile version=37 serialize=L5042 deserialize=L4577 alignment=CountMismatch:Writes=120;Reads=119
+- Data/System/Source/Skills.cs:Server.Skill version=Unknown serialize=L492 deserialize=L alignment=CountMismatch:Writes=5;Reads=0
+- Data/System/Source/Skills.cs:Server.Skills version=3 serialize=L1573 deserialize=L alignment=CountMismatch:Writes=3;Reads=0
+
+### Project And Runtime Coverage
+
+- Data/Scripts/Items/Special/BarbaricSatchel.cs=Keep
+- Data/Scripts/Items/Special/BarbaricSatchel.cs=Keep
+- Data/Scripts/Mobiles/Base/PlayerMobile.cs=Keep
+- Data/Scripts/Mobiles/Base/PlayerMobile.cs=Keep
+- Data/Scripts/Mobiles/Base/PlayerSettings.cs=Keep
+- Data/Scripts/Mobiles/Base/PlayerSettings.cs=Keep
+- Data/Scripts/System/Commands/Player/PlayBarbaric.cs=Keep
+- Data/Scripts/System/Commands/Player/PlayBarbaric.cs=Keep
+- Data/Scripts/System/Help/Gumps/HelpGump.cs=Keep
+- Data/Scripts/System/Help/Gumps/HelpGump.cs=Keep
+- Data/Scripts/System/Misc/Players.cs=Keep
+- Data/Scripts/System/Misc/Players.cs=Keep
+
+No C# source, project files, XML/config/data files, namespaces, serializers, gameplay behavior, or migration policy were changed in POST-BATCH-T.

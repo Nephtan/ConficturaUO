@@ -130,3 +130,66 @@ Temporary field and visual items use mixed persistence behavior. Some write a re
 | `SwarmOfInsectsSpell` calls `CheckResisted(m)` but ignores the return value. | Magic Resist can gain/check, but resistance never reduces or blocks Swarm damage. |
 | `ProtectiveFairySpell.CheckCast` requires room for `Followers + 3`, while `DruidFairy.ControlSlots` is `2`. | The spell rejects some casters who actually have enough follower slots for the summoned fairy. |
 | `RestorativeSoilSpell` assumes `pet.GetMaster()` is non-null before calling `CloseGump` and `SendGump`. | Resurrecting a dead `BaseCreature` without a master can throw a null-reference exception. |
+
+## Source Trace
+
+POST-BATCH-T reviewed this page on 2026-06-14T21:09:11.0049244-05:00 against current source and audit registers.
+
+- Canonical status: Canonical.
+- Queue rows: PBN-0088.
+- Backlog rows: RB-06686.
+- Audit registers used: documentation-truth-table.csv, runtime-hook-map.csv, serialization-register.csv, and project-truth-register.csv.
+
+### Source Files Reviewed
+
+- Data/Scripts/Magic/Druidism/HerbalistSpell.cs (CurrentFile)
+- Data/Scripts/Magic/Druidism/HerbalistPotions.cs (CurrentFile)
+- Data/Scripts/Magic/Druidism/DruidPouch.cs (CurrentFile)
+- Data/Scripts/Magic/Druidism/BookDruidBrewing.cs (CurrentFile)
+
+### Runtime Evidence
+
+- Hook summary: Gump=16.
+- Data/Scripts/Magic/Druidism/BookDruidBrewing.cs:L403 Gump OnResponse access=Internal
+- Data/Scripts/Magic/Druidism/BookDruidBrewing.cs:L418 Gump SendGump access=Internal
+- Data/Scripts/Magic/Druidism/BookDruidBrewing.cs:L649 Gump SendGump access=Internal
+- Data/Scripts/Magic/Druidism/DruidPouch.cs:L437 Gump OnResponse access=Internal
+- Data/Scripts/Magic/Druidism/DruidPouch.cs:L447 Gump SendGump access=Internal
+- Data/Scripts/Magic/Druidism/DruidPouch.cs:L450 Gump SendGump access=Internal
+- Data/Scripts/Magic/Druidism/DruidPouch.cs:L454 Gump SendGump access=Internal
+- Data/Scripts/Magic/Druidism/DruidPouch.cs:L461 Gump SendGump access=Internal
+- Data/Scripts/Magic/Druidism/DruidPouch.cs:L475 Gump SendGump access=Internal
+- Data/Scripts/Magic/Druidism/DruidPouch.cs:L489 Gump SendGump access=Internal
+- Data/Scripts/Magic/Druidism/DruidPouch.cs:L672 Gump SendGump access=Internal
+- Data/Scripts/Magic/Druidism/DruidPouch.cs:L684 Gump SendGump access=Internal
+- Additional hook rows are recorded in runtime-hook-map.csv for this source set.
+
+### Serialization Evidence
+
+- Serialized rows matched: 18.
+- Data/Scripts/Magic/Druidism/BookDruidBrewing.cs:Server.Items.BookDruidBrewing version=0 serialize=L656 deserialize=L662 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Magic/Druidism/DruidPouch.cs:Server.Items.DruidPouch version=0 serialize=L1128 deserialize=L1152 alignment=CountMatchNeedsTypeReview:UnknownWrites=18
+- Data/Scripts/Magic/Druidism/HerbalistPotions.cs:Server.Items.BlendWithForestPotion version=0 serialize=L200 deserialize=L206 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Magic/Druidism/HerbalistPotions.cs:Server.Items.DruidicRunePotion version=0 serialize=L371 deserialize=L377 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Magic/Druidism/HerbalistPotions.cs:Server.Items.FireflyPotion version=0 serialize=L543 deserialize=L549 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Magic/Druidism/HerbalistPotions.cs:Server.Items.GraspingRootsPotion version=0 serialize=L166 deserialize=L172 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Magic/Druidism/HerbalistPotions.cs:Server.Items.HerbalHealingPotion version=0 serialize=L132 deserialize=L138 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Magic/Druidism/HerbalistPotions.cs:Server.Items.LureStonePotion version=0 serialize=L405 deserialize=L411 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Magic/Druidism/HerbalistPotions.cs:Server.Items.MushroomGatewayPotion version=0 serialize=L474 deserialize=L480 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Magic/Druidism/HerbalistPotions.cs:Server.Items.NaturesPassagePotion version=0 serialize=L440 deserialize=L446 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Magic/Druidism/HerbalistPotions.cs:Server.Items.ProtectiveFairyPotion version=0 serialize=L97 deserialize=L103 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Magic/Druidism/HerbalistPotions.cs:Server.Items.RestorativeSoilPotion version=0 serialize=L508 deserialize=L514 alignment=AlignedByCountAndKnownTypes
+- Additional serializer rows are recorded in serialization-register.csv for this source set.
+
+### Project And Runtime Coverage
+
+- Data/Scripts/Magic/Druidism/BookDruidBrewing.cs=Keep
+- Data/Scripts/Magic/Druidism/BookDruidBrewing.cs=Keep
+- Data/Scripts/Magic/Druidism/DruidPouch.cs=Keep
+- Data/Scripts/Magic/Druidism/DruidPouch.cs=Keep
+- Data/Scripts/Magic/Druidism/HerbalistPotions.cs=Keep
+- Data/Scripts/Magic/Druidism/HerbalistPotions.cs=Keep
+- Data/Scripts/Magic/Druidism/HerbalistSpell.cs=Keep
+- Data/Scripts/Magic/Druidism/HerbalistSpell.cs=Keep
+
+No C# source, project files, XML/config/data files, namespaces, serializers, gameplay behavior, or migration policy were changed in POST-BATCH-T.

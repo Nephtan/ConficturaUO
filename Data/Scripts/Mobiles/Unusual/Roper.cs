@@ -139,19 +139,27 @@ namespace Server.Mobiles
 
                 Mobile toTeleport = null;
 
-                foreach (Mobile m in m_Owner.GetMobilesInRange(16))
+                IPooledEnumerable eable = m_Owner.GetMobilesInRange(16);
+                try
                 {
-                    if (
-                        m != m_Owner
-                        && m.Player
-                        && m_Owner.CanBeHarmful(m)
-                        && m_Owner.CanSee(m)
-                        && m.AccessLevel == AccessLevel.Player
-                    )
+                    foreach (Mobile m in eable)
                     {
-                        toTeleport = m;
-                        break;
+                        if (
+                            m != m_Owner
+                            && m.Player
+                            && m_Owner.CanBeHarmful(m)
+                            && m_Owner.CanSee(m)
+                            && m.AccessLevel == AccessLevel.Player
+                        )
+                        {
+                            toTeleport = m;
+                            break;
+                        }
                     }
+                }
+                finally
+                {
+                    eable.Free();
                 }
 
                 if (toTeleport != null)

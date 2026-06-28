@@ -105,27 +105,35 @@ namespace Server.SkillHandlers
 
                                 bool calmed = false;
 
-                                foreach (Mobile m in from.GetMobilesInRange(range))
+                                IPooledEnumerable eable = from.GetMobilesInRange(range);
+                                try
                                 {
-                                    if (
-                                        (m is BaseCreature && ((BaseCreature)m).Uncalmable)
-                                        || (m is BaseCreature && ((BaseCreature)m).AreaPeaceImmune)
-                                        || m == from
-                                        || !from.CanBeHarmful(m, false)
-                                    )
-                                        continue;
+                                    foreach (Mobile m in eable)
+                                    {
+                                        if (
+                                            (m is BaseCreature && ((BaseCreature)m).Uncalmable)
+                                            || (m is BaseCreature && ((BaseCreature)m).AreaPeaceImmune)
+                                            || m == from
+                                            || !from.CanBeHarmful(m, false)
+                                        )
+                                            continue;
 
-                                    calmed = true;
+                                        calmed = true;
 
-                                    m.SendLocalizedMessage(500616); // You hear lovely music, and forget to continue battling!
-                                    m.Combatant = null;
-                                    m.Warmode = false;
+                                        m.SendLocalizedMessage(500616); // You hear lovely music, and forget to continue battling!
+                                        m.Combatant = null;
+                                        m.Warmode = false;
 
-                                    if (m is BaseCreature && !((BaseCreature)m).BardPacified)
-                                        ((BaseCreature)m).Pacify(
-                                            from,
-                                            DateTime.Now + TimeSpan.FromSeconds(seconds)
-                                        );
+                                        if (m is BaseCreature && !((BaseCreature)m).BardPacified)
+                                            ((BaseCreature)m).Pacify(
+                                                from,
+                                                DateTime.Now + TimeSpan.FromSeconds(seconds)
+                                            );
+                                    }
+                                }
+                                finally
+                                {
+                                    eable.Free();
                                 }
 
                                 if (!calmed)

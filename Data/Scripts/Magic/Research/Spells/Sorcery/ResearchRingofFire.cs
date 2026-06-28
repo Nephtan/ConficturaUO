@@ -49,10 +49,19 @@ namespace Server.Spells.Research
         {
             int fires = 0;
 
-            foreach (Item m in Caster.GetItemsInRange(10))
+            IPooledEnumerable eable = Caster.GetItemsInRange(10);
+
+            try
             {
-                if (m is RingOfFire)
-                    ++fires;
+                foreach (Item m in eable)
+                {
+                    if (m is RingOfFire)
+                        ++fires;
+                }
+            }
+            finally
+            {
+                eable.Free();
             }
 
             if (fires > 23)

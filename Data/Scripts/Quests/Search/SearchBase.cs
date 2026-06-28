@@ -409,17 +409,25 @@ namespace Server.Items
         public override void OnComponentUsed(AddonComponent ac, Mobile from)
         {
             int monsters = 0;
-            foreach (Mobile monster in this.GetMobilesInRange(5))
+            IPooledEnumerable eable = this.GetMobilesInRange(5);
+            try
             {
-                if (monster is BaseCreature)
+                foreach (Mobile monster in eable)
                 {
-                    Mobile leader = ((BaseCreature)monster).GetMaster();
-                    if (leader is PlayerMobile) { }
-                    else
+                    if (monster is BaseCreature)
                     {
-                        ++monsters;
+                        Mobile leader = ((BaseCreature)monster).GetMaster();
+                        if (leader is PlayerMobile) { }
+                        else
+                        {
+                            ++monsters;
+                        }
                     }
                 }
+            }
+            finally
+            {
+                eable.Free();
             }
 
             if (from.Blessed)

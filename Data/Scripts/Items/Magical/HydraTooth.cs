@@ -24,10 +24,13 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
+            if (from == null || from.Deleted)
+                return;
+
             if (!Multis.DesignContext.Check(from))
                 return; // They are customizing
 
-            if (!IsChildOf(from.Backpack))
+            if (Deleted || from.Backpack == null || !IsChildOf(from.Backpack))
             {
                 from.SendLocalizedMessage(1042001); // That must be in your pack for you to use it.
                 return;

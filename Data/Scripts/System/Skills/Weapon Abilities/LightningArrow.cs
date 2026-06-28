@@ -47,8 +47,16 @@ namespace Server.Items
                 attacker.Name.ToLower().EndsWith("s") ? "'" : "'s"
             );
 
-            foreach (Mobile m in defender.GetMobilesInRange(1))
-                list.Add(m);
+            IPooledEnumerable eable = defender.GetMobilesInRange(1);
+            try
+            {
+                foreach (Mobile m in eable)
+                    list.Add(m);
+            }
+            finally
+            {
+                eable.Free();
+            }
 
             ArrayList targets = new ArrayList();
 

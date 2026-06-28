@@ -706,16 +706,24 @@ namespace Server.Misc
             int KeepSearching = 0;
             bool IsOnShip = false;
 
-            foreach (Item boatman in m.GetItemsInRange(15))
+            IPooledEnumerable eable = m.GetItemsInRange(15);
+            try
             {
-                if (KeepSearching != 1)
+                foreach (Item boatman in eable)
                 {
-                    if (boatman is TillerMan)
+                    if (KeepSearching != 1)
                     {
-                        IsOnShip = true;
-                        if (IsOnShip == true) { KeepSearching = 1; }
+                        if (boatman is TillerMan)
+                        {
+                            IsOnShip = true;
+                            if (IsOnShip == true) { KeepSearching = 1; }
+                        }
                     }
                 }
+            }
+            finally
+            {
+                eable.Free();
             }
             return IsOnShip;
         }
@@ -728,28 +736,44 @@ namespace Server.Misc
             int KeepSearching = 0;
             bool IsOnShip = false;
 
-            foreach (Item boatman in i.GetItemsInRange(15))
+            IPooledEnumerable eable = i.GetItemsInRange(15);
+            try
             {
-                if (KeepSearching != 1)
+                foreach (Item boatman in eable)
                 {
-                    if (boatman is TillerMan)
+                    if (KeepSearching != 1)
                     {
-                        IsOnShip = true;
-                        if (IsOnShip == true) { KeepSearching = 1; }
+                        if (boatman is TillerMan)
+                        {
+                            IsOnShip = true;
+                            if (IsOnShip == true) { KeepSearching = 1; }
+                        }
                     }
                 }
+            }
+            finally
+            {
+                eable.Free();
             }
             return IsOnShip;
         }
 
         public static bool BoatToCloseToTown(Mobile m)
         {
-            foreach (Mobile landlover in m.GetMobilesInRange(50))
+            IPooledEnumerable eable = m.GetMobilesInRange(50);
+            try
             {
-                if (landlover is BaseVendor || landlover is BasePerson || landlover is BaseNPC)
+                foreach (Mobile landlover in eable)
                 {
-                    return true;
+                    if (landlover is BaseVendor || landlover is BasePerson || landlover is BaseNPC)
+                    {
+                        return true;
+                    }
                 }
+            }
+            finally
+            {
+                eable.Free();
             }
             return false;
         }
@@ -2579,6 +2603,9 @@ namespace Server.Misc
         [Description("Tells you what world you are in.")]
         public static void WhereWorld_OnCommand(CommandEventArgs e)
         {
+            if (e == null || e.Mobile == null || e.Mobile.Deleted)
+                return;
+
             Mobile from = e.Mobile;
             string sMap = Worlds.GetMyWorld(from.Map, from.Location, from.X, from.Y);
             from.SendMessage("You are currently in " + sMap + ".");

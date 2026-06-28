@@ -5,7 +5,7 @@ The gardening system lives in `Server.Engines.Plants` and centers on `PlantBowl`
 
 There are no in-game commands registered by this system. Runtime entry points are item double-clicks, targeting callbacks, `Gump` replies, and `PlantSystem.Configure`, which hooks RunUO world/load/save/login events.
 
-## Core Scripts
+## Source Trace
 | Script | Role |
 | --- | --- |
 | `Data/Scripts/Trades/Gardening/PlantBowl.cs` | Empty plant bowl item, dirt targeting, fertile dirt consumption, and dirt-patch tile matching. |
@@ -22,7 +22,10 @@ There are no in-game commands registered by this system. Runtime entry points ar
 | `Data/Scripts/Trades/Gardening/Gumps/SetToDecorativeGump.cs` | Confirmation gump that prunes a stage 9 plant into decorative mode. |
 | `Data/Scripts/Trades/Gardening/Gumps/EmptyTheBowlGump.cs` | Confirmation gump that returns an empty `PlantBowl` and, for pre-plant growth stages, the seed. |
 | `Data/Scripts/Trades/Gardening/Network/DisplayHelpTopic.cs` | Packet `0xBF` helper used by the plant gumps to open client help topics. |
-| `Data/Scripts/Trades/Gardening/MiscItems/*.cs` | Harvested resources: `RedLeaves`, `OrangePetals`, `GreenThorns`, and `FertileDirt`. |
+| `Data/Scripts/Trades/Gardening/MiscItems/RedLeaves.cs` | Harvested red-leaf plant resource. |
+| `Data/Scripts/Trades/Gardening/MiscItems/OrangePetals.cs` | Harvested orange-petal plant resource. |
+| `Data/Scripts/Trades/Gardening/MiscItems/GreenThorns.cs` | Harvested green-thorn plant resource. |
+| `Data/Scripts/Trades/Gardening/MiscItems/FertileDirt.cs` | Fertile dirt resource used when filling plant bowls. |
 
 ## Player Entry Flow
 1. A player double-clicks a `PlantBowl` in their backpack.

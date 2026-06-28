@@ -1,19 +1,19 @@
 # Random Encounter Engine
 
-This page documents the random encounter engine as the compiled C# currently behaves. The live encounter tables come from `Data/Scripts/Custom/RandomEncounters/RandomEncounters.xml`; the wiki is not the source of truth for per-region spawn lists.
+This page documents the random encounter engine as the compiled C# currently behaves. The live encounter tables come from `Data/Scripts/Custom/PvE/RandomEncounters/RandomEncounters.xml`; the wiki is not the source of truth for per-region spawn lists.
 
 ## Key Scripts
-- `Data/Scripts/Custom/RandomEncounters/EncounterEngine.cs`
-- `Data/Scripts/Custom/RandomEncounters/Timers.cs`
-- `Data/Scripts/Custom/RandomEncounters/SpawnFinder.cs`
-- `Data/Scripts/Custom/RandomEncounters/Helpers.cs`
-- `Data/Scripts/Custom/RandomEncounters/Records.cs`
-- `Data/Scripts/Custom/RandomEncounters/Commands.cs`
-- `Data/Scripts/Custom/RandomEncounters/RandomEncounters.xml`
-- `Data/Scripts/Custom/CharacterLevel/CharacterLevelService.cs`
+- `Data/Scripts/Custom/PvE/RandomEncounters/EncounterEngine.cs`
+- `Data/Scripts/Custom/PvE/RandomEncounters/Timers.cs`
+- `Data/Scripts/Custom/PvE/RandomEncounters/SpawnFinder.cs`
+- `Data/Scripts/Custom/PvE/RandomEncounters/Helpers.cs`
+- `Data/Scripts/Custom/PvE/RandomEncounters/Records.cs`
+- `Data/Scripts/Custom/PvE/RandomEncounters/Commands.cs`
+- `Data/Scripts/Custom/PvE/RandomEncounters/RandomEncounters.xml`
+- `Data/Scripts/Custom/Progression/CharacterLevel/CharacterLevelService.cs`
 
 ## Runtime Summary
-- The engine loads `Data/Scripts/Custom/RandomEncounters/RandomEncounters.xml` on initialization.
+- The engine loads `Data/Scripts/Custom/PvE/RandomEncounters/RandomEncounters.xml` on initialization.
 - A reinitialize timer checks that file every 15 seconds and reloads the system after the file write time changes.
 - Encounter timers are always created for `DungeonRegion`, `CaveRegion`, `BardDungeonRegion`, `OutDoorRegion`, and `VillageRegion`, even if the XML only defines some of those region types.
 - Spawned mobiles and items receive a `RandomEncountersCreated` XML attachment so the cleanup timer can track them later.
@@ -141,3 +141,58 @@ Encounter selection then works like this:
 - Match `Map.Name`, region type, and region name strings exactly.
 - Use `name="default"` only for the fallback table of a facet/region-type pair.
 - Do not rely on `<Prop>` tags until the engine code is completed.
+
+## Source Trace
+
+POST-BATCH-T reviewed this page on 2026-06-14T21:09:11.0049244-05:00 against current source and audit registers.
+
+- Canonical status: Canonical.
+- Queue rows: PBN-0012; PBN-0063.
+- Backlog rows: RB-06754; RB-06755.
+- Audit registers used: documentation-truth-table.csv, runtime-hook-map.csv, serialization-register.csv, and project-truth-register.csv.
+
+### Source Files Reviewed
+
+- Data/Scripts/Custom/PvE/RandomEncounters/RandomEncounters.xml (CurrentFile)
+- Data/Scripts/Custom/PvE/RandomEncounters/EncounterEngine.cs (CurrentFile)
+- Data/Scripts/Custom/PvE/RandomEncounters/Timers.cs (CurrentFile)
+- Data/Scripts/Custom/PvE/RandomEncounters/SpawnFinder.cs (CurrentFile)
+- Data/Scripts/Custom/PvE/RandomEncounters/Helpers.cs (CurrentFile)
+- Data/Scripts/Custom/PvE/RandomEncounters/Records.cs (CurrentFile)
+- Data/Scripts/Custom/PvE/RandomEncounters/Commands.cs (CurrentFile)
+- Data/Scripts/Custom/Progression/CharacterLevel/CharacterLevelService.cs (CurrentFile)
+
+### Runtime Evidence
+
+- Hook summary: Command=1; Initialize=3; Timer=4.
+- Data/Scripts/Custom/PvE/RandomEncounters/Commands.cs:L21 Initialize Initialize access=GlobalOrInternal
+- Data/Scripts/Custom/PvE/RandomEncounters/Commands.cs:L23 Command CommandSystem.Register access=Unknown
+- Data/Scripts/Custom/PvE/RandomEncounters/EncounterEngine.cs:L99 Initialize Initialize access=GlobalOrInternal
+- Data/Scripts/Custom/PvE/RandomEncounters/Helpers.cs:L30 Initialize Initialize access=GlobalOrInternal
+- Data/Scripts/Custom/PvE/RandomEncounters/Timers.cs:L28 Timer CustomTimerSubclass access=GlobalOrInternal
+- Data/Scripts/Custom/PvE/RandomEncounters/Timers.cs:L53 Timer CustomTimerSubclass access=GlobalOrInternal
+- Data/Scripts/Custom/PvE/RandomEncounters/Timers.cs:L85 Timer CustomTimerSubclass access=GlobalOrInternal
+- Data/Scripts/Custom/PvE/RandomEncounters/Timers.cs:L303 Timer CustomTimerSubclass access=GlobalOrInternal
+
+### Serialization Evidence
+
+- No serialized classes matched the reviewed source set in serialization-register.csv.
+
+### Project And Runtime Coverage
+
+- Data/Scripts/Custom/Progression/CharacterLevel/CharacterLevelService.cs=Keep
+- Data/Scripts/Custom/Progression/CharacterLevel/CharacterLevelService.cs=Keep
+- Data/Scripts/Custom/PvE/RandomEncounters/Commands.cs=Keep
+- Data/Scripts/Custom/PvE/RandomEncounters/Commands.cs=Keep
+- Data/Scripts/Custom/PvE/RandomEncounters/EncounterEngine.cs=Keep
+- Data/Scripts/Custom/PvE/RandomEncounters/EncounterEngine.cs=Keep
+- Data/Scripts/Custom/PvE/RandomEncounters/Helpers.cs=Keep
+- Data/Scripts/Custom/PvE/RandomEncounters/Helpers.cs=Keep
+- Data/Scripts/Custom/PvE/RandomEncounters/Records.cs=Keep
+- Data/Scripts/Custom/PvE/RandomEncounters/Records.cs=Keep
+- Data/Scripts/Custom/PvE/RandomEncounters/SpawnFinder.cs=Keep
+- Data/Scripts/Custom/PvE/RandomEncounters/SpawnFinder.cs=Keep
+- Data/Scripts/Custom/PvE/RandomEncounters/Timers.cs=Keep
+- Data/Scripts/Custom/PvE/RandomEncounters/Timers.cs=Keep
+
+No C# source, project files, XML/config/data files, namespaces, serializers, gameplay behavior, or migration policy were changed in POST-BATCH-T.

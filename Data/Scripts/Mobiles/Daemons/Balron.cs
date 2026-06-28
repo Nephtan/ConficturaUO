@@ -335,12 +335,20 @@ namespace Server.Mobiles
             {
                 int goo = 0;
 
-                foreach (Item splash in this.GetItemsInRange(10))
+                IPooledEnumerable eable1 = this.GetItemsInRange(10);
+                try
                 {
-                    if (splash is MonsterSplatter)
+                    foreach (Item splash in eable1)
                     {
-                        goo++;
+                        if (splash is MonsterSplatter)
+                        {
+                            goo++;
+                        }
                     }
+                }
+                finally
+                {
+                    eable1.Free();
                 }
 
                 if (goo == 0)
@@ -4016,12 +4024,20 @@ namespace Server.Items
 
         public static void MakeDemonGate(Mobile m)
         {
-            foreach (Item gate in m.GetItemsInRange(20))
+            IPooledEnumerable eable2 = m.GetItemsInRange(20);
+            try
             {
-                if (gate is DemonGate)
+                foreach (Item gate in eable2)
                 {
-                    gate.Visible = false;
+                    if (gate is DemonGate)
+                    {
+                        gate.Visible = false;
+                    }
                 }
+            }
+            finally
+            {
+                eable2.Free();
             }
 
             string color = "red";

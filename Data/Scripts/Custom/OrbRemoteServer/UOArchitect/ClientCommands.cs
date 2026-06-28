@@ -20,6 +20,9 @@ namespace System.Scripts.Commands
 		[Description( "Decreases your z by the specified amount." )]
 		private static void NudgeSelfDown_OnCommand( CommandEventArgs e )
 		{
+			if(e == null || e.Mobile == null || e.Mobile.Deleted)
+				return;
+
 			if(e.Arguments.Length > 0)
 			{
 				int zoffset = e.GetInt32(0);
@@ -31,6 +34,9 @@ namespace System.Scripts.Commands
 		[Description( "Increases your z by the specified amount." )]
 		private static void NudgeSelfUp_OnCommand( CommandEventArgs e )
 		{
+			if(e == null || e.Mobile == null || e.Mobile.Deleted)
+				return;
+
 			if(e.Arguments.Length > 0)
 			{
 				int zoffset = e.GetInt32(0);
@@ -53,6 +59,9 @@ namespace System.Scripts.Commands
 		[Description( "Allows you to delete items until you press ESC." )]
 		private static void MultiRemove_OnCommand( CommandEventArgs e )
 		{
+			if(e == null || e.Mobile == null || e.Mobile.Deleted)
+				return;
+
 			UOAR_ObjectTarget target = new UOAR_ObjectTarget();
 			target.OnTargetObject += new UOAR_ObjectTarget.TargetObjectEvent(OnTargetObject);
 				
@@ -66,6 +75,9 @@ namespace System.Scripts.Commands
 
 		private static void OnTargetObject(object obj)
 		{
+			if(_mobile == null || _mobile.Deleted)
+				return;
+
 			if( (obj is Item)  &&  !((obj is BaseMulti) || (obj is HouseSign)) )
 			{
 				(obj as Item).Delete();

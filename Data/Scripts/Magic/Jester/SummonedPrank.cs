@@ -147,18 +147,27 @@ namespace Server.Mobiles
 
             if (map != null && from != null)
             {
-                foreach (Mobile m in from.GetMobilesInRange(from.RawDex))
+                IPooledEnumerable eable = from.GetMobilesInRange(from.RawDex);
+
+                try
                 {
-                    if (
-                        from.InLOS(m)
-                        && m.Alive
-                        && from.CanBeHarmful(m)
-                        && !m.Blessed
-                        && from != m
-                        && bc.ControlMaster != m
-                        && bc.SummonMaster != m
-                    )
-                        targets.Add(m);
+                    foreach (Mobile m in eable)
+                    {
+                        if (
+                            from.InLOS(m)
+                            && m.Alive
+                            && from.CanBeHarmful(m)
+                            && !m.Blessed
+                            && from != m
+                            && bc.ControlMaster != m
+                            && bc.SummonMaster != m
+                        )
+                            targets.Add(m);
+                    }
+                }
+                finally
+                {
+                    eable.Free();
                 }
                 for (int i = 0; i < targets.Count; ++i)
                 {

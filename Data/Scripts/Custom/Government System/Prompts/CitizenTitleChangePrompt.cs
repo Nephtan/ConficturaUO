@@ -22,12 +22,20 @@ namespace Server.Prompts
 
         public override void OnCancel(Mobile from)
         {
+            if (m_Mayor == null || m_Mayor.Deleted || m_Stone == null || m_Stone.Deleted)
+                return;
+
             m_Mayor.CloseGump(typeof(CityManagementGump));
             m_Mayor.SendGump(new CityManagementGump(m_Stone, m_Mayor));
         }
 
         public override void OnResponse(Mobile from, string text)
         {
+            PlayerMobile pm = m_Citizen as PlayerMobile;
+
+            if (from == null || from.Deleted || text == null || m_Mayor == null || m_Mayor.Deleted || from != m_Mayor || pm == null || pm.Deleted || m_Stone == null || m_Stone.Deleted)
+                return;
+
             text = text.Trim();
 
             if (text.Length > 25)
@@ -35,7 +43,6 @@ namespace Server.Prompts
 
             if (text.Length > 0)
             {
-                PlayerMobile pm = (PlayerMobile)m_Citizen;
                 pm.CityTitle = text;
                 pm.ShowCityTitle = true;
                 m_Citizen.SendMessage("Your title has been changed to {0}.", text);

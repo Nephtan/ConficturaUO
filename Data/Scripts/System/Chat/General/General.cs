@@ -77,10 +77,15 @@ namespace Knives.Chat3
             GumpInfo.Save();
 
             foreach (Data data in Data.Datas.Values)
+            {
+                if (data == null || data.Messages == null)
+                    continue;
+
                 if (data.SevenDays)
                     foreach (Message msg in new ArrayList(data.Messages))
-                        if (msg.Received < DateTime.Now - TimeSpan.FromDays(7))
+                        if (msg != null && msg.Received < DateTime.Now - TimeSpan.FromDays(7))
                             data.Messages.Remove(msg);
+            }
 
             if (Data.Debug)
             {
@@ -97,69 +102,109 @@ namespace Knives.Chat3
 
         private static void OnSpeech(SpeechEventArgs args)
         {
-            if (Data.GetData(args.Mobile).Recording is SendMessageGump)
+            if (args == null)
+                return;
+
+            Mobile from = args.Mobile;
+
+            if (from == null || from.Deleted || args.Speech == null)
+                return;
+
+            Data fromData = Data.GetData(from);
+            SendMessageGump recording = fromData.Recording as SendMessageGump;
+
+            if (recording != null)
             {
-                if (!args.Mobile.HasGump(typeof(SendMessageGump)))
+                if (!from.HasGump(typeof(SendMessageGump)))
                 {
-                    Data.GetData(args.Mobile).Recording = null;
+                    fromData.Recording = null;
                     return;
                 }
 
-                args.Mobile.CloseGump(typeof(SendMessageGump));
-                ((SendMessageGump)Data.GetData(args.Mobile).Recording).AddText(" " + args.Speech);
+                from.CloseGump(typeof(SendMessageGump));
+                recording.AddText(" " + args.Speech);
                 args.Handled = true;
                 args.Speech = "";
                 return;
             }
 
             if (Data.FilterSpeech)
-                args.Speech = Filter.FilterText(args.Mobile, args.Speech, false);
+                args.Speech = Filter.FilterText(from, args.Speech, false);
 
             foreach (Data data in Data.Datas.Values)
+            {
                 if (
-                    data.Mobile.AccessLevel >= args.Mobile.AccessLevel
+                    data == null
+                    || data.Mobile == null
+                    || data.Mobile.Deleted
+                    || data.GIgnores == null
+                    || data.GListens == null
+                )
+                    continue;
+
+                if (
+                    data.Mobile.AccessLevel >= from.AccessLevel
                     && (
-                        (data.GlobalW && !data.GIgnores.Contains(args.Mobile))
-                        || data.GListens.Contains(args.Mobile)
+                        (data.GlobalW && !data.GIgnores.Contains(from))
+                        || data.GListens.Contains(from)
                     )
-                    && !data.Mobile.InRange(args.Mobile.Location, 10)
+                    && !data.Mobile.InRange(from.Location, 10)
                 )
                     data.Mobile.SendMessage(
                         data.GlobalWC,
-                        String.Format("(Global) <World> {0}: {1}", args.Mobile.RawName, args.Speech)
+                        String.Format("(Global) <World> {0}: {1}", from.RawName, args.Speech)
                     );
+            }
         }
 
         private static void OnLogin(LoginEventArgs args)
         {
-            if (Data.GetData(args.Mobile).NewMsg())
-                PmNotify(args.Mobile);
+            if (args == null)
+                return;
 
-            if (!Data.GetData(args.Mobile).WhenFull)
-                args.Mobile.SendMessage(
-                    Data.GetData(args.Mobile).SystemC,
+            Mobile from = args.Mobile;
+            if (from == null || from.Deleted)
+                return;
+
+            Data fromData = Data.GetData(from);
+
+            if (fromData.NewMsg())
+                PmNotify(from);
+
+            if (!fromData.WhenFull)
+                from.SendMessage(
+                    fromData.SystemC,
                     General.Local(258),
-                    Data.GetData(args.Mobile).Messages.Count,
+                    fromData.Messages.Count,
                     Data.MaxMsgs
                 );
 
             foreach (Data data in Data.Datas.Values)
             {
-                if (data.Friends.Contains(args.Mobile) && data.FriendAlert)
-                    data.Mobile.SendMessage(data.SystemC, args.Mobile.RawName + " " + Local(173));
+                if (
+                    data == null
+                    || data.Mobile == null
+                    || data.Mobile.Deleted
+                    || data.Friends == null
+                )
+                    continue;
+
+                if (data.Friends.Contains(from) && data.FriendAlert)
+                    data.Mobile.SendMessage(data.SystemC, from.RawName + " " + Local(173));
             }
         }
 
         private static void OnCreate(CharacterCreatedEventArgs args)
         {
-            if (args.Mobile == null)
+            if (args == null || args.Mobile == null || args.Mobile.Deleted)
                 return;
 
-            Data data = Data.GetData(args.Mobile);
+            Mobile from = args.Mobile;
+            Data.GetData(from);
 
             foreach (Channel c in Channel.Channels)
-                if (c.NewChars)
-                    c.Join(args.Mobile);
+                if (c != null && c.NewChars)
+                    c.Join(from);
         }
 
         public static void LoadLocalFile()

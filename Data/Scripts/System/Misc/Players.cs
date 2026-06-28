@@ -1889,6 +1889,9 @@ namespace Server.Engines.Quests
 
         public static void EventSink_QuestGumpRequest(QuestGumpRequestArgs e)
         {
+            if (e == null || e.Mobile == null || e.Mobile.Deleted)
+                return;
+
             Mobile from = e.Mobile;
             from.CloseGump(typeof(StatsGump));
             from.SendGump(new StatsGump(from, from, 0));

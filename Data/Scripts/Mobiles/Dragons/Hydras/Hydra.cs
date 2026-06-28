@@ -174,12 +174,20 @@ namespace Server.Mobiles
             if (Utility.RandomMinMax(1, 4) == 1 && this.Fame > 12500)
             {
                 int goo = 0;
-                foreach (Item splash in this.GetItemsInRange(10))
+                IPooledEnumerable eable1 = this.GetItemsInRange(10);
+                try
                 {
-                    if (splash is MonsterSplatter && splash.Name == "green blood")
+                    foreach (Item splash in eable1)
                     {
-                        goo++;
+                        if (splash is MonsterSplatter && splash.Name == "green blood")
+                        {
+                            goo++;
+                        }
                     }
+                }
+                finally
+                {
+                    eable1.Free();
                 }
                 if (goo == 0)
                 {

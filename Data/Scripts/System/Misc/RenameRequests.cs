@@ -12,6 +12,9 @@ namespace Server.Misc
 
         private static void EventSink_RenameRequest(RenameRequestEventArgs e)
         {
+            if (e == null || e.From == null || e.From.Deleted || e.Target == null || e.Target.Deleted || e.Name == null)
+                return;
+
             Mobile from = e.From;
             Mobile targ = e.Target;
             string name = e.Name;

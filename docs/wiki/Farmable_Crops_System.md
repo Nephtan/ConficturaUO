@@ -100,3 +100,80 @@ The base class has an `Unlink()` helper that removes a crop from its spawner, bu
 Use this package for simple static harvest nodes rather than player-run agriculture.
 For seed planting, crop growth, harvest skills, and player-owned field behavior, use the Homestead crop package.
 For plant bowls, plant care, pollination, and rare plant resources, use the Gardening package.
+
+## Source Trace
+
+POST-BATCH-T reviewed this page on 2026-06-14T21:09:11.0049244-05:00 against current source and audit registers.
+
+- Canonical status: Canonical.
+- Queue rows: PBN-0020; PBN-0025.
+- Backlog rows: RB-06689; RB-06690.
+- Audit registers used: documentation-truth-table.csv, runtime-hook-map.csv, serialization-register.csv, and project-truth-register.csv.
+
+### Source Files Reviewed
+
+- Data/Scripts/Items/Farming/ (CurrentDirectory)
+- Data/Scripts/Items/Farming/FarmableCrop.cs (CurrentFile)
+- Data/Scripts/Items/Farming/FarmableCabbage.cs (CurrentFile)
+- Data/Scripts/Items/Farming/FarmableCarrot.cs (CurrentFile)
+- Data/Scripts/Items/Farming/FarmableCorn.cs (CurrentFile)
+- Data/Scripts/Items/Farming/FarmableCotton.cs (CurrentFile)
+- Data/Scripts/Items/Farming/FarmableFlax.cs (CurrentFile)
+- Data/Scripts/Items/Farming/FarmableLettuce.cs (CurrentFile)
+- Data/Scripts/Items/Farming/FarmableOnion.cs (CurrentFile)
+- Data/Scripts/Items/Farming/FarmablePumpkin.cs (CurrentFile)
+- Data/Scripts/Items/Farming/FarmableTomato.cs (CurrentFile)
+- Data/Scripts/Items/Farming/FarmableTurnip.cs (CurrentFile)
+- Data/Scripts/Items/Farming/FarmableWatermelon.cs (CurrentFile)
+- Data/Scripts/Items/Farming/FarmableWheat.cs (CurrentFile)
+- Data/Scripts/Items/Trades/Resources/Reagents/Farm/FarmableGarlic.cs (CurrentFile)
+- Data/Scripts/Items/Trades/Resources/Reagents/Farm/FarmableGinseng.cs (CurrentFile)
+- Data/Scripts/Items/Trades/Resources/Reagents/Farm/FarmableMandrakeRoot.cs (CurrentFile)
+- Data/Scripts/Items/Trades/Resources/Reagents/Farm/FarmableNightshade.cs (CurrentFile)
+
+### Runtime Evidence
+
+- No runtime hook rows matched the reviewed source set in runtime-hook-map.csv.
+
+### Serialization Evidence
+
+- Serialized rows matched: 21.
+- Data/Scripts/Items/Farming/FarmableCabbage.cs:Server.Items.FarmableCabbage version=Unknown serialize=L35 deserialize=L42 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Items/Farming/FarmableCarrot.cs:Server.Items.FarmableCarrot version=Unknown serialize=L35 deserialize=L42 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Items/Farming/FarmableCorn.cs:Server.Items.FarmableCorn version=Unknown serialize=L35 deserialize=L42 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Items/Farming/FarmableCotton.cs:Server.Items.FarmableCotton version=Unknown serialize=L34 deserialize=L41 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Items/Farming/FarmableCrop.cs:Server.Items.FarmableCrop version=Unknown serialize=L107 deserialize=L114 alignment=CountMatchNeedsTypeReview:UnknownWrites=1
+- Data/Scripts/Items/Farming/FarmableFlax.cs:Server.Items.FarmableFlax version=Unknown serialize=L36 deserialize=L42 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Items/Farming/FarmableLettuce.cs:Server.Items.FarmableLettuce version=Unknown serialize=L35 deserialize=L42 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Items/Farming/FarmableOnion.cs:Server.Items.FarmableOnion version=Unknown serialize=L35 deserialize=L42 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Items/Farming/FarmablePumpkin.cs:Server.Items.FarmablePumpkin version=Unknown serialize=L35 deserialize=L41 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Items/Farming/FarmablePumpkin.cs:Server.Items.FarmablePumpkinGiant version=Unknown serialize=L199 deserialize=L205 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Items/Farming/FarmablePumpkin.cs:Server.Items.FarmablePumpkinGreen version=Unknown serialize=L158 deserialize=L164 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Items/Farming/FarmablePumpkin.cs:Server.Items.FarmablePumpkinLarge version=Unknown serialize=L76 deserialize=L82 alignment=AlignedByCountAndKnownTypes
+- Additional serializer rows are recorded in serialization-register.csv for this source set.
+
+### Project And Runtime Coverage
+
+- Data/Scripts/Items/Farming/FarmableCabbage.cs=Keep
+- Data/Scripts/Items/Farming/FarmableCabbage.cs=Keep
+- Data/Scripts/Items/Farming/FarmableCarrot.cs=Keep
+- Data/Scripts/Items/Farming/FarmableCarrot.cs=Keep
+- Data/Scripts/Items/Farming/FarmableCorn.cs=Keep
+- Data/Scripts/Items/Farming/FarmableCorn.cs=Keep
+- Data/Scripts/Items/Farming/FarmableCotton.cs=Keep
+- Data/Scripts/Items/Farming/FarmableCotton.cs=Keep
+- Data/Scripts/Items/Farming/FarmableCrop.cs=Keep
+- Data/Scripts/Items/Farming/FarmableCrop.cs=Keep
+- Data/Scripts/Items/Farming/FarmableFlax.cs=Keep
+- Data/Scripts/Items/Farming/FarmableFlax.cs=Keep
+- Data/Scripts/Items/Farming/FarmableLettuce.cs=Keep
+- Data/Scripts/Items/Farming/FarmableLettuce.cs=Keep
+- Data/Scripts/Items/Farming/FarmableOnion.cs=Keep
+- Data/Scripts/Items/Farming/FarmableOnion.cs=Keep
+- Data/Scripts/Items/Farming/FarmablePumpkin.cs=Keep
+- Data/Scripts/Items/Farming/FarmablePumpkin.cs=Keep
+- Data/Scripts/Items/Farming/FarmableTomato.cs=Keep
+- Data/Scripts/Items/Farming/FarmableTomato.cs=Keep
+- Additional project-truth rows are recorded in project-truth-register.csv for this source set.
+
+No C# source, project files, XML/config/data files, namespaces, serializers, gameplay behavior, or migration policy were changed in POST-BATCH-T.

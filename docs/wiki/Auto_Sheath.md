@@ -151,3 +151,34 @@ The static `PlayerWeapons` dictionary is not serialized. It is only an in-memory
 * `DisabledPlayers` is declared but never read or written after initialization.
 * `PlayerWeapons` stores a static in-memory `Item` reference keyed only by serial. Logout removes the entry, but other item lifecycle events do not. The warmode equip path guards deleted, invisible, immovable, and non-backpack items, so stale references usually fail safely, but the cache can still retain irrelevant references until overwritten or logout.
 * The system tracks only one cached item per player. It intentionally leaves allowlisted off-hand items such as shields equipped, but it does not preserve a full equipment set or support multiple sheathed weapons.
+
+## Source Trace
+
+POST-BATCH-T reviewed this page on 2026-06-14T21:09:11.0049244-05:00 against current source and audit registers.
+
+- Canonical status: Canonical.
+- Queue rows: PBN-0078.
+- Backlog rows: RB-06661.
+- Audit registers used: documentation-truth-table.csv, runtime-hook-map.csv, serialization-register.csv, and project-truth-register.csv.
+
+### Source Files Reviewed
+
+- Data/Scripts/System/Commands/Player/AutoSheatheWeapon.cs (CurrentFile)
+
+### Runtime Evidence
+
+- Hook summary: Command=1; Event=1; Initialize=1.
+- Data/Scripts/System/Commands/Player/AutoSheatheWeapon.cs:L37 Initialize Initialize access=GlobalOrInternal
+- Data/Scripts/System/Commands/Player/AutoSheatheWeapon.cs:L39 Event EventSink access=GlobalOrInternal
+- Data/Scripts/System/Commands/Player/AutoSheatheWeapon.cs:L42 Command CommandSystem.Register access=Unknown
+
+### Serialization Evidence
+
+- No serialized classes matched the reviewed source set in serialization-register.csv.
+
+### Project And Runtime Coverage
+
+- Data/Scripts/System/Commands/Player/AutoSheatheWeapon.cs=Keep
+- Data/Scripts/System/Commands/Player/AutoSheatheWeapon.cs=Keep
+
+No C# source, project files, XML/config/data files, namespaces, serializers, gameplay behavior, or migration policy were changed in POST-BATCH-T.

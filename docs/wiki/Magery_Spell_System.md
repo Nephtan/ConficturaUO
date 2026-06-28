@@ -127,3 +127,84 @@ Long-lived state is stored on spellbooks, scrolls, generated items, mobiles, fie
 | `MagicLockSpell` only calls `CheckSequence()` for lockable containers; the dungeon-door and creature-trapping paths perform effects or custom success rolls without the shared final sequence check. | Those paths can bypass the normal Magery reagent, mana, scroll, fizzle, and sequence validation. |
 | `EarthquakeSpell` iterates `Caster.GetMobilesInRange(...)` directly and never frees the pooled enumerable. | Repeated Earthquake casts can leak pooled range enumerables. |
 | `ResurrectionSpell` assumes `BaseCreature.GetMaster()` returns a valid `Mobile` before opening `PetResurrectGump`. | Dead creatures without a master can null-reference in the pet resurrection branch. |
+
+## Source Trace
+
+POST-BATCH-T reviewed this page on 2026-06-14T21:09:11.0049244-05:00 against current source and audit registers.
+
+- Canonical status: Canonical.
+- Queue rows: PBN-0098.
+- Backlog rows: RB-06721.
+- Audit registers used: documentation-truth-table.csv, runtime-hook-map.csv, serialization-register.csv, and project-truth-register.csv.
+
+### Source Files Reviewed
+
+- Data/Scripts/Magic/Magery/ (CurrentDirectory)
+- Data/Scripts/Magic/Magery/MagerySpell.cs (CurrentFile)
+- Data/Scripts/Magic/Magery/Spellbook.cs (CurrentFile)
+- Data/Scripts/Magic/Magery/Scrolls/SpellScroll.cs (CurrentFile)
+- Data/Scripts/Magic/Magery/Magery 1st/ (CurrentDirectory)
+- Data/Scripts/Magic/Magery/Scrolls/First Circle/ (CurrentDirectory)
+- Data/Scripts/Magic/Base/Initializer.cs (CurrentFile)
+- Data/Scripts/Magic/Base/Spell.cs (CurrentFile)
+- Data/Scripts/Magic/Base/SpellHelper.cs (CurrentFile)
+
+### Runtime Evidence
+
+- Hook summary: Command=1; Event=2; Gump=3; Initialize=2; Timer=24.
+- Data/Scripts/Magic/Base/Initializer.cs:L8 Initialize Initialize access=GlobalOrInternal
+- Data/Scripts/Magic/Base/Spell.cs:L1219 Timer CustomTimerSubclass access=GlobalOrInternal
+- Data/Scripts/Magic/Base/Spell.cs:L1251 Timer CustomTimerSubclass access=GlobalOrInternal
+- Data/Scripts/Magic/Base/SpellHelper.cs:L30 Timer CustomTimerSubclass access=GlobalOrInternal
+- Data/Scripts/Magic/Base/SpellHelper.cs:L1357 Timer CustomTimerSubclass access=GlobalOrInternal
+- Data/Scripts/Magic/Base/SpellHelper.cs:L1392 Timer CustomTimerSubclass access=GlobalOrInternal
+- Data/Scripts/Magic/Base/SpellHelper.cs:L1755 Timer CustomTimerSubclass access=GlobalOrInternal
+- Data/Scripts/Magic/Magery/Magery 2nd/Protection.cs:L206 Timer CustomTimerSubclass access=GlobalOrInternal
+- Data/Scripts/Magic/Magery/Magery 3rd/MagicLock.cs:L333 Timer CustomTimerSubclass access=GlobalOrInternal
+- Data/Scripts/Magic/Magery/Magery 3rd/MagicLock.cs:L1082 Timer Timer.DelayCall access=GlobalOrInternal
+- Data/Scripts/Magic/Magery/Magery 3rd/MagicLock.cs:L1241 Timer Timer.DelayCall access=GlobalOrInternal
+- Data/Scripts/Magic/Magery/Magery 3rd/WallOfStone.cs:L205 Timer CustomTimerSubclass access=GlobalOrInternal
+- Additional hook rows are recorded in runtime-hook-map.csv for this source set.
+
+### Serialization Evidence
+
+- Serialized rows matched: 75.
+- Data/Scripts/Magic/Magery/Magery 3rd/MagicLock.cs:Server.Spells.Third.IronFlask version=0 serialize=L387 deserialize=L393 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Magic/Magery/Magery 3rd/MagicLock.cs:Server.Spells.Third.IronFlaskFilled version=0 serialize=L530 deserialize=L571 alignment=CountMatchNeedsTypeReview:UnknownWrites=35
+- Data/Scripts/Magic/Magery/Magery 3rd/MagicLock.cs:Server.Spells.Third.LockedCreature version=0 serialize=L1231 deserialize=L1237 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Magic/Magery/Magery 3rd/WallOfStone.cs:Server.Spells.Third.InternalItem version=1 serialize=L149 deserialize=L158 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Magic/Magery/Magery 4th/FireField.cs:Server.Spells.Fourth.FireFieldItem version=2 serialize=L181 deserialize=L192 alignment=CountMatchNeedsTypeReview:UnknownWrites=2
+- Data/Scripts/Magic/Magery/Magery 5th/PoisonField.cs:Server.Spells.Fifth.InternalItem version=1 serialize=L157 deserialize=L167 alignment=CountMatchNeedsTypeReview:UnknownWrites=1
+- Data/Scripts/Magic/Magery/Magery 6th/ParalyzeField.cs:Server.Spells.Sixth.InternalItem version=0 serialize=L152 deserialize=L162 alignment=CountMatchNeedsTypeReview:UnknownWrites=1
+- Data/Scripts/Magic/Magery/Magery 7th/EnergyField.cs:Server.Spells.Seventh.InternalItem version=0 serialize=L159 deserialize=L166 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Magic/Magery/Magery 7th/GateTravel.cs:Server.Spells.Seventh.InternalItem version=Unknown serialize=L151 deserialize=L156 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Magic/Magery/Scrolls/Eighth Circle/EarthquakeScroll.cs:Server.Items.EarthquakeScroll version=0 serialize=L20 deserialize=L27 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Magic/Magery/Scrolls/Eighth Circle/EnergyVortexScroll.cs:Server.Items.EnergyVortexScroll version=0 serialize=L20 deserialize=L27 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Magic/Magery/Scrolls/Eighth Circle/ResurrectionScroll.cs:Server.Items.ResurrectionScroll version=0 serialize=L20 deserialize=L27 alignment=AlignedByCountAndKnownTypes
+- Additional serializer rows are recorded in serialization-register.csv for this source set.
+
+### Project And Runtime Coverage
+
+- Data/Scripts/Magic/Base/Initializer.cs=Keep
+- Data/Scripts/Magic/Base/Initializer.cs=Keep
+- Data/Scripts/Magic/Base/Spell.cs=Keep
+- Data/Scripts/Magic/Base/Spell.cs=Keep
+- Data/Scripts/Magic/Base/SpellHelper.cs=Keep
+- Data/Scripts/Magic/Base/SpellHelper.cs=Keep
+- Data/Scripts/Magic/Magery/Magery 1st/Clumsy.cs=Keep
+- Data/Scripts/Magic/Magery/Magery 1st/Clumsy.cs=Keep
+- Data/Scripts/Magic/Magery/Magery 1st/CreateFood.cs=Keep
+- Data/Scripts/Magic/Magery/Magery 1st/CreateFood.cs=Keep
+- Data/Scripts/Magic/Magery/Magery 1st/Feeblemind.cs=Keep
+- Data/Scripts/Magic/Magery/Magery 1st/Feeblemind.cs=Keep
+- Data/Scripts/Magic/Magery/Magery 1st/Heal.cs=Keep
+- Data/Scripts/Magic/Magery/Magery 1st/Heal.cs=Keep
+- Data/Scripts/Magic/Magery/Magery 1st/MagicArrow.cs=Keep
+- Data/Scripts/Magic/Magery/Magery 1st/MagicArrow.cs=Keep
+- Data/Scripts/Magic/Magery/Magery 1st/NightSight.cs=Keep
+- Data/Scripts/Magic/Magery/Magery 1st/NightSight.cs=Keep
+- Data/Scripts/Magic/Magery/Magery 1st/ReactiveArmor.cs=Keep
+- Data/Scripts/Magic/Magery/Magery 1st/ReactiveArmor.cs=Keep
+- Additional project-truth rows are recorded in project-truth-register.csv for this source set.
+
+No C# source, project files, XML/config/data files, namespaces, serializers, gameplay behavior, or migration policy were changed in POST-BATCH-T.

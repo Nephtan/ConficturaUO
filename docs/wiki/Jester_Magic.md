@@ -169,3 +169,59 @@ The constructor stores explosion damage in Strength/RawStr, explosion radius in 
 | `JumpAround.CheckCast()` bypasses the shared Jester pre-cast checks. | The override checks overload/travel only and does not call `base.CheckCast()`, so prank-point, Jester, and mana validation is delayed until `CheckSequence()`. |
 | `BagOfTricks` serialization has no version branch. | The class writes version `1`, but `Deserialize` ignores the version value and always reads `PrankPoints`. |
 | The compiled identity check is looser than the bag help text implies. | `isJester` returns true at `points > 2`, so a player with a bag and enough qualifying clothing layers can qualify even if neither Begging nor Psychology is above 10. |
+
+## Source Trace
+
+POST-BATCH-T reviewed this page on 2026-06-14T21:09:11.0049244-05:00 against current source and audit registers.
+
+- Canonical status: Canonical.
+- Queue rows: PBN-0096.
+- Backlog rows: RB-06711.
+- Audit registers used: documentation-truth-table.csv, runtime-hook-map.csv, serialization-register.csv, and project-truth-register.csv.
+
+### Source Files Reviewed
+
+- Data/Scripts/Magic/Jester/JesterSpell.cs (CurrentFile)
+- Data/Scripts/Magic/Jester/JesterCommandList.cs (CurrentFile)
+- Data/Scripts/Magic/Jester/BagOfTricks.cs (CurrentFile)
+- Data/Scripts/Magic/Jester/SummonedJoke.cs (CurrentFile)
+- Data/Scripts/Magic/Jester/SummonedPrank.cs (CurrentFile)
+
+### Runtime Evidence
+
+- Hook summary: Command=1; Gump=17; Initialize=1; Timer=4.
+- Data/Scripts/Magic/Jester/BagOfTricks.cs:L57 Gump SendGump access=Internal
+- Data/Scripts/Magic/Jester/BagOfTricks.cs:L698 Gump OnResponse access=Internal
+- Data/Scripts/Magic/Jester/BagOfTricks.cs:L712 Gump SendGump access=Internal
+- Data/Scripts/Magic/Jester/BagOfTricks.cs:L720 Gump SendGump access=Internal
+- Data/Scripts/Magic/Jester/BagOfTricks.cs:L724 Gump SendGump access=Internal
+- Data/Scripts/Magic/Jester/BagOfTricks.cs:L728 Gump SendGump access=Internal
+- Data/Scripts/Magic/Jester/BagOfTricks.cs:L732 Gump SendGump access=Internal
+- Data/Scripts/Magic/Jester/BagOfTricks.cs:L770 Gump OnResponse access=Internal
+- Data/Scripts/Magic/Jester/BagOfTricks.cs:L777 Gump SendGump access=Internal
+- Data/Scripts/Magic/Jester/BagOfTricks.cs:L806 Gump OnResponse access=Internal
+- Data/Scripts/Magic/Jester/BagOfTricks.cs:L813 Gump SendGump access=Internal
+- Data/Scripts/Magic/Jester/BagOfTricks.cs:L842 Gump OnResponse access=Internal
+- Additional hook rows are recorded in runtime-hook-map.csv for this source set.
+
+### Serialization Evidence
+
+- Serialized rows matched: 3.
+- Data/Scripts/Magic/Jester/BagOfTricks.cs:Server.Items.BagOfTricks version=1 serialize=L116 deserialize=L123 alignment=CountMatchNeedsTypeReview:UnknownWrites=1
+- Data/Scripts/Magic/Jester/SummonedJoke.cs:Server.Mobiles.SummonedJoke version=0 serialize=L246 deserialize=L252 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Magic/Jester/SummonedPrank.cs:Server.Mobiles.SummonedPrank version=0 serialize=L226 deserialize=L232 alignment=AlignedByCountAndKnownTypes
+
+### Project And Runtime Coverage
+
+- Data/Scripts/Magic/Jester/BagOfTricks.cs=Keep
+- Data/Scripts/Magic/Jester/BagOfTricks.cs=Keep
+- Data/Scripts/Magic/Jester/JesterCommandList.cs=Keep
+- Data/Scripts/Magic/Jester/JesterCommandList.cs=Keep
+- Data/Scripts/Magic/Jester/JesterSpell.cs=Keep
+- Data/Scripts/Magic/Jester/JesterSpell.cs=Keep
+- Data/Scripts/Magic/Jester/SummonedJoke.cs=Keep
+- Data/Scripts/Magic/Jester/SummonedJoke.cs=Keep
+- Data/Scripts/Magic/Jester/SummonedPrank.cs=Keep
+- Data/Scripts/Magic/Jester/SummonedPrank.cs=Keep
+
+No C# source, project files, XML/config/data files, namespaces, serializers, gameplay behavior, or migration policy were changed in POST-BATCH-T.
