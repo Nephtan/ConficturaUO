@@ -2172,3 +2172,12 @@ To run a gated batch, provide explicit approval naming:
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-208-snowpile-guard-repair-closeout.md.
 - SOURCE-BATCH-209+ remains pending SB206-CAND-004 AppleBobbingBarrel from source-batch-206-candidate-discovery.csv.
 - Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-209 Update
+
+- SOURCE-BATCH-209 implemented the AppleBobbingBarrel guard repair in Data/Scripts/Items/Gifts/Holiday/Halloween/Decorations/AppleBobbingBarrel.cs.
+- SOURCE-BATCH-209 is now Committed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv pending final git commit.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-209-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-209-applebobbingbarrel-guard-repair-closeout.md.
+- The source-batch-206-candidate-discovery.csv implementation queue is exhausted; SOURCE-BATCH-210+ requires fresh non-gated candidate discovery.
+- Gated roadmap batches remain blocked pending explicit approval.
