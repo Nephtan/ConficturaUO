@@ -631,3 +631,5 @@ The Phase 0 baseline output, Phase 1 reproducible inventory outputs, Phase 2 pro
 | source-batch-104-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-104 candidate discovery with the recommended Cloth target and next-candidate notes. | Complete |
 | source-batch-104-target.md | Source batches | Durable target for SOURCE-BATCH-104 Cloth guard repair, including fence result, active overlay result, and unchanged behavior. | Complete |
 | source-batch-104-cloth-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-104 with Cloth guard changes, POST-BATCH-Y fence evidence, serializer preservation evidence, verification, and artifact restoration notes. | Complete |
+| source-batch-105-target.md | Source batches | Durable target for SOURCE-BATCH-105 BoltOfCloth guard repair, including fence result, active overlay result, and unchanged behavior. | Complete |
+| source-batch-105-boltofcloth-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-105 with BoltOfCloth guard changes, POST-BATCH-Y fence evidence, serializer preservation evidence, verification, and artifact restoration notes. | Complete |
