@@ -1240,3 +1240,12 @@ To run a gated batch, provide explicit approval naming:
 - The source-batch closeout is `docs/codebase-audit/outputs/source-batch-107-caddelliteore-guard-repair-closeout.md`.
 - `SOURCE-BATCH-108+` remains pending the next concrete non-gated source target from `source-batch-107-candidate-discovery.csv`.
 - Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-108 Update
+
+- `SOURCE-BATCH-108` implemented the RareMetals guard repair in `Data/Scripts/Items/Trades/Resources/Blacksmithing/RareMetals.cs`.
+- `SOURCE-BATCH-108` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-108-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-108-raremetals-guard-repair-closeout.md`.
+- `SOURCE-BATCH-109+` remains pending the next concrete non-gated source target from `source-batch-107-candidate-discovery.csv`.
+- Gated roadmap batches remain blocked pending explicit approval.
