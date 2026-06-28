@@ -94,6 +94,9 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
+            if (from == null || from.Deleted || Deleted || m_stonewell == null || m_stonewell.Deleted)
+                return;
+
             if (from.InRange(m_stonewell.GetWorldLocation(), 4))
             {
                 if (from.Thirst >= 20)

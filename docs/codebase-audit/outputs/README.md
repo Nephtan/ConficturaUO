@@ -923,3 +923,7 @@ The Phase 0 baseline output, Phase 1 reproducible inventory outputs, Phase 2 pro
 | source-batch-224-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-224 discovery with recommended WoodWell target. | Complete |
 | source-batch-224-target.md | Source batches | Durable target for SOURCE-BATCH-224 WoodWell guard repair, including fence result, active overlay result, and unchanged behavior. | Complete |
 | source-batch-224-woodwell-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-224 with WoodWell guard changes, POST-BATCH-Y fence evidence, serializer preservation evidence, verification, and artifact restoration notes. | Complete |
+| source-batch-225-candidate-discovery.csv | Source batches | Fresh SOURCE-BATCH-225 candidate discovery for a zero-gate, zero-overlay construction well component guard repair. | Complete |
+| source-batch-225-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-225 discovery with recommended StoneWell target. | Complete |
+| source-batch-225-target.md | Source batches | Durable target for SOURCE-BATCH-225 StoneWell guard repair, including fence result, active overlay result, and unchanged behavior. | Complete |
+| source-batch-225-stonewell-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-225 with StoneWell guard changes, POST-BATCH-Y fence evidence, serializer preservation evidence, verification, and artifact restoration notes. | Complete |
