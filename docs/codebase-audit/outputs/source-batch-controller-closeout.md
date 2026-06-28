@@ -1631,3 +1631,12 @@ To run a gated batch, provide explicit approval naming:
 - The source-batch closeout is `docs/codebase-audit/outputs/source-batch-150-movingbox-guard-repair-closeout.md`.
 - `SOURCE-BATCH-151+` remains pending the next concrete non-gated source target from `source-batch-144-candidate-discovery.csv`.
 - Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-151 Update
+
+- `SOURCE-BATCH-151` implemented the AlchemistPouch guard repair in `Data/Scripts/Items/Containers/AlchemistPouch.cs`.
+- `SOURCE-BATCH-151` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-151-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-151-alchemistpouch-guard-repair-closeout.md`.
+- `SOURCE-BATCH-152+` remains pending the next concrete non-gated source target from `source-batch-144-candidate-discovery.csv`.
+- Gated roadmap batches remain blocked pending explicit approval.
