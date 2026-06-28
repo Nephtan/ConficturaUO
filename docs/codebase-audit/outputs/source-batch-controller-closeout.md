@@ -1880,3 +1880,12 @@ To run a gated batch, provide explicit approval naming:
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-177-sheepfoemamboscroll-guard-repair-closeout.md.
 - SOURCE-BATCH-178+ remains pending the next concrete non-gated source target from source-batch-163-candidate-discovery.csv.
 - Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-178 Update
+
+- SOURCE-BATCH-178 implemented the SinewyEtudeScroll guard repair in Data/Scripts/Magic/Bard/Scrolls/SinewyEtude.cs.
+- SOURCE-BATCH-178 is now Committed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-178-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-178-sinewyetudescroll-guard-repair-closeout.md.
+- The source-batch-163-candidate-discovery.csv implementation queue is exhausted; SOURCE-BATCH-179+ requires fresh non-gated candidate discovery.
+- Gated roadmap batches remain blocked pending explicit approval.
