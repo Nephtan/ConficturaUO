@@ -2079,3 +2079,12 @@ To run a gated batch, provide explicit approval naming:
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-198-eobsidianpillar-guard-repair-closeout.md.
 - SOURCE-BATCH-199+ remains pending SB198-CAND-002 EObsidianRock from source-batch-198-candidate-discovery.csv.
 - Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-199 Update
+
+- SOURCE-BATCH-199 implemented the EObsidianRock guard repair in Data/Scripts/Items/Gifts/ShadowDeeds/EObsidianRock.cs.
+- SOURCE-BATCH-199 is now Committed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv pending final git commit.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-199-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-199-eobsidianrock-guard-repair-closeout.md.
+- SOURCE-BATCH-200+ remains pending SB198-CAND-003 EShadowFirePit from source-batch-198-candidate-discovery.csv.
+- Gated roadmap batches remain blocked pending explicit approval.
