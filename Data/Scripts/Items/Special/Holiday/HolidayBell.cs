@@ -91,6 +91,9 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
+            if (from == null || from.Deleted || Deleted)
+                return;
+
             if (!from.InRange(GetWorldLocation(), 2))
             {
                 from.SendLocalizedMessage(500446); // That is too far away.
