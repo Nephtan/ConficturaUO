@@ -605,3 +605,5 @@ The Phase 0 baseline output, Phase 1 reproducible inventory outputs, Phase 2 pro
 | source-batch-093-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-093 candidate discovery with the recommended BloodDrink target and next-candidate notes. | Complete |
 | source-batch-093-target.md | Source batches | Durable target for SOURCE-BATCH-093 BloodDrink guard repair, including fence result, active overlay result, and unchanged behavior. | Complete |
 | source-batch-093-blooddrink-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-093 with BloodDrink guard changes, POST-BATCH-Y fence evidence, serializer preservation evidence, verification, and artifact restoration notes. | Complete |
+| source-batch-094-target.md | Source batches | Durable target for SOURCE-BATCH-094 FreshBrain guard repair, including fence result, active overlay result, and unchanged behavior. | Complete |
+| source-batch-094-freshbrain-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-094 with FreshBrain guard changes, POST-BATCH-Y fence evidence, serializer preservation evidence, verification, and artifact restoration notes. | Complete |

@@ -21,12 +21,18 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
+            if (from == null || from.Deleted || Deleted)
+                return;
+
             if (!Server.Items.BaseRace.BrainEater(from.RaceID))
             {
                 from.SendMessage("This looks like something zombies would eat.");
                 return;
             }
-            if (!IsChildOf(from.Backpack) && Server.Items.BaseRace.BrainEater(from.RaceID))
+            if (
+                (from.Backpack == null || !IsChildOf(from.Backpack))
+                && Server.Items.BaseRace.BrainEater(from.RaceID)
+            )
             {
                 from.SendMessage("This must be in your backpack to eat.");
                 return;
