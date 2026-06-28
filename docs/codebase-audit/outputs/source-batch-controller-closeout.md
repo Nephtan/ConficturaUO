@@ -2041,3 +2041,13 @@ To run a gated batch, provide explicit approval naming:
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-194-ninthanniversarycoin-guard-repair-closeout.md.
 - The source-batch-194-candidate-discovery.csv implementation queue is exhausted; SOURCE-BATCH-195+ requires fresh non-gated candidate discovery.
 - Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-195 Update
+
+- SOURCE-BATCH-195 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-195-candidate-discovery.csv.
+- SOURCE-BATCH-195 implemented the ECrystalAltar guard repair in Data/Scripts/Items/Gifts/CrystalDeeds/ECrystalAltar.cs.
+- SOURCE-BATCH-195 is now Committed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv pending final git commit.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-195-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-195-ecrystalaltar-guard-repair-closeout.md.
+- SOURCE-BATCH-196+ remains pending SB195-CAND-002 ECrystalBrazier from source-batch-195-candidate-discovery.csv.
+- Gated roadmap batches remain blocked pending explicit approval.
