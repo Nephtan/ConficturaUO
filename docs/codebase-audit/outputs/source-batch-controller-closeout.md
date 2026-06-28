@@ -1689,3 +1689,12 @@ To run a gated batch, provide explicit approval naming:
 - The source-batch closeout is `docs/codebase-audit/outputs/source-batch-156-createrobescroll-guard-repair-closeout.md`.
 - `SOURCE-BATCH-157+` remains pending the next concrete non-gated source target from `source-batch-154-candidate-discovery.csv`.
 - Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-157 Update
+
+- `SOURCE-BATCH-157` implemented the GentleTouchScroll guard repair in `Data/Scripts/Magic/Mystic/Scrolls/GentleTouchScroll.cs`.
+- `SOURCE-BATCH-157` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-157-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-157-gentletouchscroll-guard-repair-closeout.md`.
+- `SOURCE-BATCH-158+` remains pending the next concrete non-gated source target from `source-batch-154-candidate-discovery.csv`.
+- Gated roadmap batches remain blocked pending explicit approval.
