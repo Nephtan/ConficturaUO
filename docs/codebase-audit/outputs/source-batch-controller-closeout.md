@@ -2181,3 +2181,13 @@ To run a gated batch, provide explicit approval naming:
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-209-applebobbingbarrel-guard-repair-closeout.md.
 - The source-batch-206-candidate-discovery.csv implementation queue is exhausted; SOURCE-BATCH-210+ requires fresh non-gated candidate discovery.
 - Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-210 Update
+
+- SOURCE-BATCH-210 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-210-candidate-discovery.csv.
+- SOURCE-BATCH-210 implemented the Artifact_HammerofThor guard repair in Data/Scripts/Items/Magical/Artifacts/Artifact_HammerofThor.cs.
+- SOURCE-BATCH-210 is now Committed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv pending final git commit.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-210-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-210-artifact-hammerofthor-guard-repair-closeout.md.
+- SOURCE-BATCH-211+ remains pending SB210-CAND-002 Artifact_HelmOfBrilliance from source-batch-210-candidate-discovery.csv.
+- Gated roadmap batches remain blocked pending explicit approval.
