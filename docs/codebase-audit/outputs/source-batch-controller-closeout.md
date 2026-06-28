@@ -1790,3 +1790,12 @@ To run a gated batch, provide explicit approval naming:
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-167-firecarolscroll-guard-repair-closeout.md.
 - SOURCE-BATCH-168+ remains pending the next concrete non-gated source target from source-batch-163-candidate-discovery.csv.
 - Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-168 Update
+
+- SOURCE-BATCH-168 implemented the FireThrenodyScroll guard repair in Data/Scripts/Magic/Bard/Scrolls/FireThrenody.cs.
+- SOURCE-BATCH-168 is now Committed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-168-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-168-firethrenodyscroll-guard-repair-closeout.md.
+- SOURCE-BATCH-169+ remains pending the next concrete non-gated source target from source-batch-163-candidate-discovery.csv.
+- Gated roadmap batches remain blocked pending explicit approval.
