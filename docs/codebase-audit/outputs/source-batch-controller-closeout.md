@@ -2303,3 +2303,13 @@ To run a gated batch, provide explicit approval naming:
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-222-unknownwand-guard-repair-closeout.md.
 - The source-batch-220-candidate-discovery.csv implementation queue is exhausted; SOURCE-BATCH-223+ requires fresh non-gated candidate discovery.
 - Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-223 Update
+
+- SOURCE-BATCH-223 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-223-candidate-discovery.csv.
+- SOURCE-BATCH-223 implemented the HugeWaterTub guard repair in Data/Scripts/Items/Special/Rares/Containers/HugeWaterTub.cs.
+- SOURCE-BATCH-223 is now Committed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv pending final git commit.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-223-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-223-hugewatertub-guard-repair-closeout.md.
+- SOURCE-BATCH-224+ requires fresh non-gated candidate discovery after SOURCE-BATCH-223 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.

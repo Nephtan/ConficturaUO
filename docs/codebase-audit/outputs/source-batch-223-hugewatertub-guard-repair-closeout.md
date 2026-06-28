@@ -1,0 +1,31 @@
+# SOURCE-BATCH-223 HugeWaterTub Guard Repair Closeout
+
+## Summary
+
+`SOURCE-BATCH-223` created fresh candidate discovery and implemented `SB223-CAND-001` in `Data/Scripts/Items/Special/Rares/Containers/HugeWaterTub.cs`.
+
+`HugeWaterTub.OnDoubleClick(Mobile from)` now guards stale/null/deleted interaction state before reading thirst state, mutating thirst, sending drink messages, animating, or playing sounds.
+
+## Preserved Behavior
+
+- Thirst thresholds and mutation, drink and quenched messages, human/unmounted animation rule, sound playback, furniture metadata, serialization layout/versioning, namespace/type/file layout, project/config/data files, staff/access behavior, economy/reward tuning, region/map policy, and reorganization state were preserved.
+
+## Gate Evidence
+
+- POST-BATCH-Y exact-file gate hits for `Data/Scripts/Items/Special/Rares/Containers/HugeWaterTub.cs`: `0`
+- Exact-file active overlay rows: `0`
+- No gated approval crossed.
+
+## Verification
+
+- Targeted source scan: passed; confirmed the new mobile/source guard and preserved thirst reads, thirst mutation, drink messages, quenched message, human/unmounted animation rule, sound playback, and serialization methods.
+- Serializer diff scan: passed; no `Serial`, `Serialize`, `Deserialize`, `writer.Write`, or `reader.Read` changes.
+- Forbidden-surface diff scan: passed; no command, event hook, gump, timer, packet handler, region, startup, project, XML/config/data, or reorganization changes.
+- `Data/System/Source/Server.csproj` Debug/x86 build: passed.
+- `.\ConficturaServer.exe -compileonly -nocache`: passed; runtime script compile completed successfully.
+- `git diff --check`: passed with only expected CRLF working-copy warnings.
+- Generated root build artifacts restoration: completed before staging.
+
+## Result
+
+Verified and ready for commit.
