@@ -30,7 +30,10 @@ namespace Server.Items
         {
             Target t;
 
-            if (!IsChildOf(from.Backpack))
+            if (from == null || from.Deleted || Deleted)
+                return;
+
+            if (from.Backpack == null || !IsChildOf(from.Backpack))
             {
                 from.SendLocalizedMessage(1060640); // The item must be in your backpack to use it.
             }
@@ -61,11 +64,27 @@ namespace Server.Items
 
             protected override void OnTarget(Mobile from, object targeted)
             {
-                if (!m_Key.IsChildOf(from.Backpack))
+                if (from == null || from.Deleted)
+                    return;
+
+                if (m_Key == null || m_Key.Deleted)
+                    return;
+
+                if (from.Backpack == null || !m_Key.IsChildOf(from.Backpack))
                 {
                     from.SendLocalizedMessage(1060640); // The item must be in your backpack to use it.
+                    return;
                 }
-                else if (targeted == m_Key)
+
+                Item targetItem = targeted as Item;
+
+                if (targetItem != null && targetItem.Deleted)
+                {
+                    from.SendMessage("This acid is to dissolve locks and traps on most chests.");
+                    return;
+                }
+
+                if (targeted == m_Key)
                 {
                     from.SendMessage("This acid is to dissolve locks and traps on most chests.");
                 }
