@@ -161,13 +161,25 @@ namespace Server.Engines.Craft
             CraftItem realCraftItem
         )
         {
+            CreateItem(from, type, typeRes, tool, realCraftItem, 1);
+        }
+
+        public void CreateItem(
+            Mobile from,
+            Type type,
+            Type typeRes,
+            BaseTool tool,
+            CraftItem realCraftItem,
+            int makeAmount
+        )
+        {
             // Verify if the type is in the list of the craftable item
             CraftItem craftItem = m_CraftItems.SearchFor(type);
             if (craftItem != null)
             {
                 // The item is in the list, try to create it
                 // Test code: items like sextant parts can be crafted either directly from ingots, or from different parts
-                realCraftItem.Craft(from, this, typeRes, tool);
+                realCraftItem.Craft(from, this, typeRes, tool, makeAmount);
                 //craftItem.Craft( from, this, typeRes, tool );
             }
         }

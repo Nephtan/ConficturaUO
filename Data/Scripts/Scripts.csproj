@@ -358,6 +358,7 @@
     <Compile Include="Custom\Government System\Vendor\CityRentedVendor.cs" />
     <Compile Include="Custom\Government System\Vendor\SBCityLandLord.cs" />
     <Compile Include="Custom\Government System\Vendor\SBCityManager.cs" />
+    <Compile Include="Custom\LoreBooks\LoreBookCatalog.cs" />
     <Compile Include="Custom\Invasion System\Add Ins\BaseSpecialCreature.cs" />
     <Compile Include="Custom\Invasion System\Add Ins\Lord BlackThorn Clone.cs" />
     <Compile Include="Custom\Invasion System\Add Ins\Metal Assemblies\Assembly Analyzer.cs" />
@@ -6414,6 +6415,7 @@
     <Compile Include="System\Skills\Stealing.cs" />
     <Compile Include="System\Skills\Stealth.cs" />
     <Compile Include="System\Skills\Taming.cs" />
+    <Compile Include="System\Skills\TamingLoopController.cs" />
     <Compile Include="System\Skills\Tasting.cs" />
     <Compile Include="System\Skills\Tracking.cs" />
     <Compile Include="System\Skills\Weapon Abilities\AbilityBook.cs" />
@@ -6524,8 +6526,10 @@
     <Compile Include="Trades\Core\CraftContext.cs" />
     <Compile Include="Trades\Core\CraftGroup.cs" />
     <Compile Include="Trades\Core\CraftGroupCol.cs" />
+    <Compile Include="Trades\Core\Gumps\CraftBatchStatusGump.cs" />
     <Compile Include="Trades\Core\Gumps\CraftGump.cs" />
     <Compile Include="Trades\Core\Gumps\CraftGumpItem.cs" />
+    <Compile Include="Trades\Core\Gumps\CraftQueueGump.cs" />
     <Compile Include="Trades\Core\CraftItem.cs" />
     <Compile Include="Trades\Core\CraftItemCol.cs" />
     <Compile Include="Trades\Core\CraftItemIDAttribute.cs" />
@@ -6593,6 +6597,7 @@
     <Compile Include="Trades\Harvest\HarvestBank.cs" />
     <Compile Include="Trades\Harvest\HarvestDefinition.cs" />
     <Compile Include="Trades\Harvest\HarvestResource.cs" />
+    <Compile Include="Trades\Harvest\HarvestLoopController.cs" />
     <Compile Include="Trades\Harvest\HarvestSoundTimer.cs" />
     <Compile Include="Trades\Harvest\HarvestSystem.cs" />
     <Compile Include="Trades\Harvest\HarvestTarget.cs" />
