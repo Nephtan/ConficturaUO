@@ -1304,3 +1304,12 @@ To run a gated batch, provide explicit approval naming:
 - The source-batch closeout is `docs/codebase-audit/outputs/source-batch-114-weeditem-guard-repair-closeout.md`.
 - `SOURCE-BATCH-115+` remains pending the next concrete non-gated source target from `source-batch-111-candidate-discovery.csv`.
 - Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-115 Update
+
+- `SOURCE-BATCH-115` implemented the SlimeItem guard repair in `Data/Scripts/Items/Traps/SlimeItem.cs`.
+- `SOURCE-BATCH-115` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-115-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-115-slimeitem-guard-repair-closeout.md`.
+- `SOURCE-BATCH-116+` remains pending the next concrete non-gated source target from `source-batch-111-candidate-discovery.csv`.
+- Gated roadmap batches remain blocked pending explicit approval.
