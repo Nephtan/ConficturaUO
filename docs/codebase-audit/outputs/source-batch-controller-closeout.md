@@ -1230,3 +1230,13 @@ To run a gated batch, provide explicit approval naming:
 - The source-batch closeout is `docs/codebase-audit/outputs/source-batch-106-uncutcloth-guard-repair-closeout.md`.
 - The `source-batch-104-candidate-discovery.csv` implementation queue is exhausted; `SOURCE-BATCH-107+` requires fresh candidate discovery.
 - Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-107 Update
+
+- `SOURCE-BATCH-107+` discovery created `docs/codebase-audit/outputs/source-batch-107-candidate-discovery.csv`.
+- `SOURCE-BATCH-107` implemented the CaddelliteOre guard repair in `Data/Scripts/Items/Trades/Resources/Blacksmithing/CaddelliteOre.cs`.
+- `SOURCE-BATCH-107` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-107-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-107-caddelliteore-guard-repair-closeout.md`.
+- `SOURCE-BATCH-108+` remains pending the next concrete non-gated source target from `source-batch-107-candidate-discovery.csv`.
+- Gated roadmap batches remain blocked pending explicit approval.
