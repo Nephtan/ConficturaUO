@@ -2144,3 +2144,13 @@ To run a gated batch, provide explicit approval naming:
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-205-espikepostsouth-guard-repair-closeout.md.
 - The source-batch-204-candidate-discovery.csv implementation queue is exhausted; SOURCE-BATCH-206+ requires fresh non-gated candidate discovery.
 - Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-206 Update
+
+- SOURCE-BATCH-206 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-206-candidate-discovery.csv.
+- SOURCE-BATCH-206 implemented the QuestSouvenir guard repair in Data/Scripts/Items/Gifts/Rewards/QuestSouvenir.cs.
+- SOURCE-BATCH-206 is now Committed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv pending final git commit.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-206-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-206-questsouvenir-guard-repair-closeout.md.
+- SOURCE-BATCH-207+ remains pending SB206-CAND-002 PileOfGlacialSnow from source-batch-206-candidate-discovery.csv.
+- Gated roadmap batches remain blocked pending explicit approval.
