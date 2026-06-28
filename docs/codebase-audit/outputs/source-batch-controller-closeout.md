@@ -1458,3 +1458,12 @@ To run a gated batch, provide explicit approval naming:
 - The source-batch closeout is `docs/codebase-audit/outputs/source-batch-131-decoginsengroot-guard-repair-closeout.md`.
 - `SOURCE-BATCH-132+` remains pending the next concrete non-gated source target from `source-batch-119-candidate-discovery.csv`.
 - Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-132 Update
+
+- `SOURCE-BATCH-132` implemented the DecoGinsengRoot2 guard repair in `Data/Scripts/Items/Special/Rares/PaganReagents/DecoGinsengRoot2.cs`.
+- `SOURCE-BATCH-132` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-132-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-132-decoginsengroot2-guard-repair-closeout.md`.
+- `SOURCE-BATCH-133+` remains pending the next concrete non-gated source target from `source-batch-119-candidate-discovery.csv`.
+- Gated roadmap batches remain blocked pending explicit approval.
