@@ -1017,3 +1017,13 @@ To run a gated batch, provide explicit approval naming:
 - The source-batch closeout is `docs/codebase-audit/outputs/source-batch-083-hairrestylingdeed-guard-repair-closeout.md`.
 - The `source-batch-082-candidate-discovery.csv` implementation queue is exhausted; `SOURCE-BATCH-084+` requires fresh candidate discovery.
 - Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-084 Update
+
+- `SOURCE-BATCH-084+` discovery created `docs/codebase-audit/outputs/source-batch-084-candidate-discovery.csv`.
+- `SOURCE-BATCH-084` implemented the PotionOfWisdom guard repair in `Data/Scripts/Items/Potions/Special/PotionOfWisdom.cs`.
+- `SOURCE-BATCH-084` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-084-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-084-potionofwisdom-guard-repair-closeout.md`.
+- `SOURCE-BATCH-085+` remains pending the next concrete non-gated source target from `source-batch-084-candidate-discovery.csv`.
+- Gated roadmap batches remain blocked pending explicit approval.
