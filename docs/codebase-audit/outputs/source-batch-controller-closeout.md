@@ -2219,3 +2219,13 @@ To run a gated batch, provide explicit approval naming:
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-213-towerlantern-guard-repair-closeout.md.
 - The source-batch-212-candidate-discovery.csv implementation queue is exhausted; SOURCE-BATCH-214+ requires fresh non-gated candidate discovery.
 - Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-214 Update
+
+- SOURCE-BATCH-214 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-214-candidate-discovery.csv.
+- SOURCE-BATCH-214 implemented the GemOfSeeing guard repair in Data/Scripts/Items/Magical/Artifacts/Minor/GemOfSeeing.cs.
+- SOURCE-BATCH-214 is now Committed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv pending final git commit.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-214-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-214-gemofseeing-guard-repair-closeout.md.
+- SOURCE-BATCH-215+ remains pending SB214-CAND-002 GiftThrowingGloves from source-batch-214-candidate-discovery.csv.
+- Gated roadmap batches remain blocked pending explicit approval.
