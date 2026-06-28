@@ -1763,3 +1763,12 @@ To run a gated batch, provide explicit approval naming:
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-164-enchantingetudescroll-guard-repair-closeout.md.
 - SOURCE-BATCH-165+ remains pending the next concrete non-gated source target from source-batch-163-candidate-discovery.csv.
 - Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-165 Update
+
+- SOURCE-BATCH-165 implemented the EnergyCarolScroll guard repair in Data/Scripts/Magic/Bard/Scrolls/EnergyCarol.cs.
+- SOURCE-BATCH-165 is now Committed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-165-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-165-energycarolscroll-guard-repair-closeout.md.
+- SOURCE-BATCH-166+ remains pending the next concrete non-gated source target from source-batch-163-candidate-discovery.csv.
+- Gated roadmap batches remain blocked pending explicit approval.
