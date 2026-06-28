@@ -2210,3 +2210,12 @@ To run a gated batch, provide explicit approval naming:
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-212-baselight-guard-repair-closeout.md.
 - SOURCE-BATCH-213+ remains pending SB212-CAND-002 TowerLantern from source-batch-212-candidate-discovery.csv.
 - Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-213 Update
+
+- SOURCE-BATCH-213 implemented the TowerLantern guard repair in Data/Scripts/Items/Construction/Lights/TowerLantern.cs.
+- SOURCE-BATCH-213 is now Committed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv pending final git commit.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-213-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-213-towerlantern-guard-repair-closeout.md.
+- The source-batch-212-candidate-discovery.csv implementation queue is exhausted; SOURCE-BATCH-214+ requires fresh non-gated candidate discovery.
+- Gated roadmap batches remain blocked pending explicit approval.

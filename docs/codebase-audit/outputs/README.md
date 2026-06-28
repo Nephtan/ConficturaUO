@@ -889,3 +889,5 @@ The Phase 0 baseline output, Phase 1 reproducible inventory outputs, Phase 2 pro
 | source-batch-212-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-212 discovery with recommended BaseLight target and queued TowerLantern target. | Complete |
 | source-batch-212-target.md | Source batches | Durable target for SOURCE-BATCH-212 BaseLight guard repair, including fence result, active overlay result, and unchanged behavior. | Complete |
 | source-batch-212-baselight-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-212 with BaseLight guard changes, POST-BATCH-Y fence evidence, serializer preservation evidence, verification, and artifact restoration notes. | Complete |
+| source-batch-213-target.md | Source batches | Durable target for SOURCE-BATCH-213 TowerLantern guard repair, including fence result, active overlay result, and unchanged behavior. | Complete |
+| source-batch-213-towerlantern-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-213 with TowerLantern guard changes, POST-BATCH-Y fence evidence, serializer preservation evidence, verification, and artifact restoration notes. | Complete |
