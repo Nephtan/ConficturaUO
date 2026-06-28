@@ -1286,3 +1286,12 @@ To run a gated batch, provide explicit approval naming:
 - The source-batch closeout is `docs/codebase-audit/outputs/source-batch-112-curseitem-guard-repair-closeout.md`.
 - `SOURCE-BATCH-113+` remains pending the next concrete non-gated source target from `source-batch-111-candidate-discovery.csv`.
 - Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-113 Update
+
+- `SOURCE-BATCH-113` implemented the TaintedBandage guard repair in `Data/Scripts/Items/Traps/TaintedBandage.cs`.
+- `SOURCE-BATCH-113` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-113-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-113-taintedbandage-guard-repair-closeout.md`.
+- `SOURCE-BATCH-114+` remains pending the next concrete non-gated source target from `source-batch-111-candidate-discovery.csv`.
+- Gated roadmap batches remain blocked pending explicit approval.
