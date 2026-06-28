@@ -65,6 +65,11 @@ namespace Server.Items
 
         public override bool OnDragLift(Mobile from)
         {
+            if (from == null || from.Deleted || Deleted)
+            {
+                return false;
+            }
+
             if (this.Weight > 10)
             {
                 Movable = true;
