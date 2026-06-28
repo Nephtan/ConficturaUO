@@ -1557,3 +1557,13 @@ To run a gated batch, provide explicit approval naming:
 - The source-batch closeout is `docs/codebase-audit/outputs/source-batch-142-decopumice-guard-repair-closeout.md`.
 - `SOURCE-BATCH-143+` remains pending the next concrete non-gated source target from `source-batch-119-candidate-discovery.csv`.
 - Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-143 Update
+
+- `SOURCE-BATCH-143` implemented the DecoWyrmsHeart guard repair in `Data/Scripts/Items/Special/Rares/PaganReagents/DecoWyrmsHeart.cs`.
+- `SOURCE-BATCH-143` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-143-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-143-decowyrmsheart-guard-repair-closeout.md`.
+- The `source-batch-119-candidate-discovery.csv` implementation queue is exhausted.
+- `SOURCE-BATCH-144+` requires fresh non-gated candidate discovery.
+- Gated roadmap batches remain blocked pending explicit approval.
