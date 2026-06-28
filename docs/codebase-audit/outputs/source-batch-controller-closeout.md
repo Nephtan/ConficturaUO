@@ -2285,3 +2285,12 @@ To run a gated batch, provide explicit approval naming:
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-220-unidentifiedartifact-guard-repair-closeout.md.
 - SOURCE-BATCH-221+ remains pending SB220-CAND-002 UnidentifiedItem from source-batch-220-candidate-discovery.csv.
 - Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-221 Update
+
+- SOURCE-BATCH-221 implemented the UnidentifiedItem guard repair in Data/Scripts/Items/Unknown/UnidentifiedItem.cs.
+- SOURCE-BATCH-221 is now Committed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv pending final git commit.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-221-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-221-unidentifieditem-guard-repair-closeout.md.
+- SOURCE-BATCH-222+ remains pending SB220-CAND-003 UnknownWand from source-batch-220-candidate-discovery.csv.
+- Gated roadmap batches remain blocked pending explicit approval.
