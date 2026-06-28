@@ -40,7 +40,10 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
-            if (!IsChildOf(from.Backpack))
+            if (from == null || from.Deleted || Deleted)
+                return;
+
+            if (from.Backpack == null || !IsChildOf(from.Backpack))
             {
                 from.SendLocalizedMessage(1042001); // That must be in your pack for you to use it.
             }
@@ -111,7 +114,10 @@ namespace Server.Items
 
             protected override void OnTarget(Mobile from, object targeted)
             {
-                if (m_Kit.Deleted)
+                if (from == null || from.Deleted)
+                    return;
+
+                if (m_Kit == null || m_Kit.Deleted)
                     return;
 
                 if (!(targeted is Corpse) && !(targeted is BigFish))
@@ -122,7 +128,7 @@ namespace Server.Items
                 {
                     from.SendLocalizedMessage(1042596); // That corpse seems to have been visited by a taxidermist already.
                 }
-                else if (!m_Kit.IsChildOf(from.Backpack))
+                else if (from.Backpack == null || !m_Kit.IsChildOf(from.Backpack))
                 {
                     from.SendLocalizedMessage(1042001); // That must be in your pack for you to use it.
                 }
