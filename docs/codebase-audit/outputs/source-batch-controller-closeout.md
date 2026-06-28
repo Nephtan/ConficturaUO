@@ -2097,3 +2097,13 @@ To run a gated batch, provide explicit approval naming:
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-200-eshadowfirepit-guard-repair-closeout.md.
 - The source-batch-198-candidate-discovery.csv implementation queue is exhausted; SOURCE-BATCH-201+ requires fresh non-gated candidate discovery.
 - Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-201 Update
+
+- SOURCE-BATCH-201 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-201-candidate-discovery.csv.
+- SOURCE-BATCH-201 implemented the EShadowFirePitCross guard repair in Data/Scripts/Items/Gifts/ShadowDeeds/EShadowFirePitCross.cs.
+- SOURCE-BATCH-201 is now Committed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv pending final git commit.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-201-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-201-eshadowfirepitcross-guard-repair-closeout.md.
+- SOURCE-BATCH-202+ remains pending SB201-CAND-002 EShadowPillar from source-batch-201-candidate-discovery.csv.
+- Gated roadmap batches remain blocked pending explicit approval.
