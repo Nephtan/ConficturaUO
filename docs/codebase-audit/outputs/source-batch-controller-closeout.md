@@ -1368,3 +1368,12 @@ To run a gated batch, provide explicit approval naming:
 - The source-batch closeout is `docs/codebase-audit/outputs/source-batch-121-decobrimstone-guard-repair-closeout.md`.
 - `SOURCE-BATCH-122+` remains pending the next concrete non-gated source target from `source-batch-119-candidate-discovery.csv`.
 - Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-122 Update
+
+- `SOURCE-BATCH-122` implemented the DecoDragonsBlood guard repair in `Data/Scripts/Items/Special/Rares/PaganReagents/DecoDragonsBlood.cs`.
+- `SOURCE-BATCH-122` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-122-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-122-decodragonsblood-guard-repair-closeout.md`.
+- `SOURCE-BATCH-123+` remains pending the next concrete non-gated source target from `source-batch-119-candidate-discovery.csv`.
+- Gated roadmap batches remain blocked pending explicit approval.
