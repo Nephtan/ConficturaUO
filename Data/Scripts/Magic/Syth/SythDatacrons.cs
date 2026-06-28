@@ -23,6 +23,11 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
+            if (from == null || from.Deleted || Deleted)
+            {
+                return;
+            }
+
             from.SendMessage("This mysticron contains the knowledge of a long dead Syth Lord.");
         }
 
@@ -62,6 +67,11 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
+            if (from == null || from.Deleted || Deleted)
+            {
+                return;
+            }
+
             from.SendMessage("This mysticron contains the knowledge of a long dead Syth Lord.");
         }
 
@@ -101,6 +111,11 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
+            if (from == null || from.Deleted || Deleted)
+            {
+                return;
+            }
+
             from.SendMessage("This mysticron contains the knowledge of a long dead Syth Lord.");
         }
 
@@ -140,6 +155,11 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
+            if (from == null || from.Deleted || Deleted)
+            {
+                return;
+            }
+
             from.SendMessage("This mysticron contains the knowledge of a long dead Syth Lord.");
         }
 
@@ -179,6 +199,11 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
+            if (from == null || from.Deleted || Deleted)
+            {
+                return;
+            }
+
             from.SendMessage("This mysticron contains the knowledge of a long dead Syth Lord.");
         }
 
@@ -218,6 +243,11 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
+            if (from == null || from.Deleted || Deleted)
+            {
+                return;
+            }
+
             from.SendMessage("This mysticron contains the knowledge of a long dead Syth Lord.");
         }
 
@@ -257,6 +287,11 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
+            if (from == null || from.Deleted || Deleted)
+            {
+                return;
+            }
+
             from.SendMessage("This mysticron contains the knowledge of a long dead Syth Lord.");
         }
 
@@ -296,6 +331,11 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
+            if (from == null || from.Deleted || Deleted)
+            {
+                return;
+            }
+
             from.SendMessage("This mysticron contains the knowledge of a long dead Syth Lord.");
         }
 
@@ -335,6 +375,11 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
+            if (from == null || from.Deleted || Deleted)
+            {
+                return;
+            }
+
             from.SendMessage("This mysticron contains the knowledge of a long dead Syth Lord.");
         }
 
@@ -374,6 +419,11 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
+            if (from == null || from.Deleted || Deleted)
+            {
+                return;
+            }
+
             from.SendMessage("This mysticron contains the knowledge of a long dead Syth Lord.");
         }
 
