@@ -2069,3 +2069,13 @@ To run a gated batch, provide explicit approval naming:
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-197-eglobeofsosaria-guard-repair-closeout.md.
 - The source-batch-195-candidate-discovery.csv implementation queue is exhausted; SOURCE-BATCH-198+ requires fresh non-gated candidate discovery.
 - Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-198 Update
+
+- SOURCE-BATCH-198 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-198-candidate-discovery.csv.
+- SOURCE-BATCH-198 implemented the EObsidianPillar guard repair in Data/Scripts/Items/Gifts/ShadowDeeds/EObsidianPillar.cs.
+- SOURCE-BATCH-198 is now Committed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv pending final git commit.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-198-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-198-eobsidianpillar-guard-repair-closeout.md.
+- SOURCE-BATCH-199+ remains pending SB198-CAND-002 EObsidianRock from source-batch-198-candidate-discovery.csv.
+- Gated roadmap batches remain blocked pending explicit approval.
