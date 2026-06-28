@@ -35,7 +35,10 @@ namespace Server.Items
         {
             Target t;
 
-            if (!IsChildOf(from.Backpack))
+            if (from == null || from.Deleted || Deleted)
+                return;
+
+            if (from.Backpack == null || !IsChildOf(from.Backpack))
             {
                 from.SendLocalizedMessage(1060640); // The item must be in your backpack to use it.
             }
@@ -83,9 +86,27 @@ namespace Server.Items
 
             protected override void OnTarget(Mobile from, object targeted)
             {
+                if (from == null || from.Deleted)
+                    return;
+
+                if (m_Jar == null || m_Jar.Deleted)
+                    return;
+
+                if (from.Backpack == null || !m_Jar.IsChildOf(from.Backpack))
+                {
+                    from.SendLocalizedMessage(1060640); // The item must be in your backpack to use it.
+                    return;
+                }
+
                 if (targeted is Item)
                 {
                     Item iJar = targeted as Item;
+
+                    if (iJar.Deleted)
+                    {
+                        from.SendMessage("This flask is meant for other substances.");
+                        return;
+                    }
 
                     if (from.GetDistanceToSqrt(new Point3D(iJar.X, iJar.Y, iJar.Z)) > 2)
                     {
@@ -155,14 +176,24 @@ namespace Server.Items
 
             protected override void OnTarget(Mobile from, object targeted)
             {
-                if (m_Potion.Deleted || m_Potion.Map == Map.Internal)
+                if (from == null || from.Deleted)
                     return;
 
+                if (m_Potion == null || m_Potion.Deleted || m_Potion.Map == Map.Internal)
+                    return;
+
+                if (from.Backpack == null || !m_Potion.IsChildOf(from.Backpack))
+                {
+                    from.SendLocalizedMessage(1060640); // The item must be in your backpack to use it.
+                    return;
+                }
+
                 IPoint3D p = targeted as IPoint3D;
-                Point3D d = new Point3D(p);
 
                 if (p == null || from.Map == null)
                     return;
+
+                Point3D d = new Point3D(p);
 
                 SpellHelper.GetSurfaceTop(ref p);
 

@@ -960,3 +960,13 @@ To run a gated batch, provide explicit approval naming:
 - The source-batch closeout is `docs/codebase-audit/outputs/source-batch-077-mysticalpearl-guard-repair-closeout.md`.
 - The `source-batch-077-candidate-discovery.csv` implementation queue is exhausted; `SOURCE-BATCH-078+` requires fresh candidate discovery.
 - Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-078 Update
+
+- `SOURCE-BATCH-078+` discovery created `docs/codebase-audit/outputs/source-batch-078-candidate-discovery.csv`.
+- `SOURCE-BATCH-078` implemented the CrystallineJar guard repair in `Data/Scripts/Items/Potions/Bottles/CrystallineJar.cs`.
+- `SOURCE-BATCH-078` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-078-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-078-crystallinejar-guard-repair-closeout.md`.
+- `SOURCE-BATCH-079+` remains pending the next concrete non-gated source target from `source-batch-078-candidate-discovery.csv`.
+- Gated roadmap batches remain blocked pending explicit approval.
