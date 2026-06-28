@@ -649,3 +649,5 @@ The Phase 0 baseline output, Phase 1 reproducible inventory outputs, Phase 2 pro
 | source-batch-111-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-111 candidate discovery with the recommended BrokenGear target and next-candidate notes. | Complete |
 | source-batch-111-target.md | Source batches | Durable target for SOURCE-BATCH-111 BrokenGear guard repair, including fence result, active overlay result, and unchanged behavior. | Complete |
 | source-batch-111-brokengear-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-111 with BrokenGear guard changes, POST-BATCH-Y fence evidence, serializer preservation evidence, verification, and artifact restoration notes. | Complete |
+| source-batch-112-target.md | Source batches | Durable target for SOURCE-BATCH-112 CurseItem guard repair, including fence result, active overlay result, and unchanged behavior. | Complete |
+| source-batch-112-curseitem-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-112 with CurseItem guard changes, POST-BATCH-Y fence evidence, serializer preservation evidence, verification, and artifact restoration notes. | Complete |
