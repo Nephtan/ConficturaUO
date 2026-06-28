@@ -1539,3 +1539,12 @@ To run a gated batch, provide explicit approval naming:
 - The source-batch closeout is `docs/codebase-audit/outputs/source-batch-140-deconightshade3-guard-repair-closeout.md`.
 - `SOURCE-BATCH-141+` remains pending the next concrete non-gated source target from `source-batch-119-candidate-discovery.csv`.
 - Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-141 Update
+
+- `SOURCE-BATCH-141` implemented the DecoObsidian guard repair in `Data/Scripts/Items/Special/Rares/PaganReagents/DecoObsidian.cs`.
+- `SOURCE-BATCH-141` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-141-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-141-decoobsidian-guard-repair-closeout.md`.
+- `SOURCE-BATCH-142+` remains pending the next concrete non-gated source target from `source-batch-119-candidate-discovery.csv`.
+- Gated roadmap batches remain blocked pending explicit approval.
