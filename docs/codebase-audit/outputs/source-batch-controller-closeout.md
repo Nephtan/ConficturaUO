@@ -1808,3 +1808,12 @@ To run a gated batch, provide explicit approval naming:
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-169-foerequiemscroll-guard-repair-closeout.md.
 - SOURCE-BATCH-170+ remains pending the next concrete non-gated source target from source-batch-163-candidate-discovery.csv.
 - Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-170 Update
+
+- SOURCE-BATCH-170 implemented the IceCarolScroll guard repair in Data/Scripts/Magic/Bard/Scrolls/IceCarol.cs.
+- SOURCE-BATCH-170 is now Committed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-170-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-170-icecarolscroll-guard-repair-closeout.md.
+- SOURCE-BATCH-171+ remains pending the next concrete non-gated source target from source-batch-163-candidate-discovery.csv.
+- Gated roadmap batches remain blocked pending explicit approval.
