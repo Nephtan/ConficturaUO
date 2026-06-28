@@ -1567,3 +1567,13 @@ To run a gated batch, provide explicit approval naming:
 - The `source-batch-119-candidate-discovery.csv` implementation queue is exhausted.
 - `SOURCE-BATCH-144+` requires fresh non-gated candidate discovery.
 - Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-144 Update
+
+- `SOURCE-BATCH-144` created fresh candidate discovery in `docs/codebase-audit/outputs/source-batch-144-candidate-discovery.csv`.
+- `SOURCE-BATCH-144` implemented the CorpseChest guard repair in `Data/Scripts/Items/Containers/CorpseChest.cs`.
+- `SOURCE-BATCH-144` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-144-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-144-corpsechest-guard-repair-closeout.md`.
+- `SOURCE-BATCH-145+` remains pending the next concrete non-gated source target from `source-batch-144-candidate-discovery.csv`.
+- Gated roadmap batches remain blocked pending explicit approval.
