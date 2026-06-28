@@ -44,19 +44,12 @@ namespace Knives.Chat3
 
         private static void OnLogin(LoginEventArgs e)
         {
-            if (e == null)
-                return;
-
-            Mobile from = e.Mobile;
-            if (from == null || from.Deleted)
-                return;
-
             if (
-                from.AccessLevel != AccessLevel.Player
+                e.Mobile.AccessLevel != AccessLevel.Player
                 && s_ErrorLog.Count != 0
-                && !s_Checked.Contains(from)
+                && !s_Checked.Contains(e.Mobile)
             )
-                new ErrorsNotifyGump(from);
+                new ErrorsNotifyGump(e.Mobile);
         }
 
         public static void Report(string error)

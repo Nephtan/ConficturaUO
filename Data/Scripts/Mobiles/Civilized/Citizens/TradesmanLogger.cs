@@ -28,45 +28,37 @@ namespace Server.Mobiles
         {
             if (DateTime.Now >= m_NextTalk)
             {
-                IPooledEnumerable eable1 = this.GetItemsInRange(1);
-                try
+                foreach (Item tree in this.GetItemsInRange(1))
                 {
-                    foreach (Item tree in eable1)
+                    if (tree is TreeHit)
                     {
-                        if (tree is TreeHit)
+                        if (
+                            this.FindItemOnLayer(Layer.FirstValid) != null
+                            && !(this.FindItemOnLayer(Layer.FirstValid) is Hatchet)
+                        )
                         {
-                            if (
-                                this.FindItemOnLayer(Layer.FirstValid) != null
-                                && !(this.FindItemOnLayer(Layer.FirstValid) is Hatchet)
-                            )
-                            {
-                                this.Delete();
-                            }
-                            else if (
-                                this.FindItemOnLayer(Layer.OneHanded) != null
-                                && !(this.FindItemOnLayer(Layer.OneHanded) is Hatchet)
-                            )
-                            {
-                                this.Delete();
-                            }
-                            else if (
-                                this.FindItemOnLayer(Layer.TwoHanded) != null
-                                && !(this.FindItemOnLayer(Layer.TwoHanded) is Hatchet)
-                            )
-                            {
-                                this.Delete();
-                            }
-                            TreeHit log = (TreeHit)tree;
-                            log.OnDoubleClick(this);
-                            m_NextTalk = (
-                                DateTime.Now + TimeSpan.FromSeconds(Utility.RandomMinMax(2, 5))
-                            );
+                            this.Delete();
                         }
+                        else if (
+                            this.FindItemOnLayer(Layer.OneHanded) != null
+                            && !(this.FindItemOnLayer(Layer.OneHanded) is Hatchet)
+                        )
+                        {
+                            this.Delete();
+                        }
+                        else if (
+                            this.FindItemOnLayer(Layer.TwoHanded) != null
+                            && !(this.FindItemOnLayer(Layer.TwoHanded) is Hatchet)
+                        )
+                        {
+                            this.Delete();
+                        }
+                        TreeHit log = (TreeHit)tree;
+                        log.OnDoubleClick(this);
+                        m_NextTalk = (
+                            DateTime.Now + TimeSpan.FromSeconds(Utility.RandomMinMax(2, 5))
+                        );
                     }
-                }
-                finally
-                {
-                    eable1.Free();
                 }
             }
         }

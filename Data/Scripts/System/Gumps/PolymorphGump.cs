@@ -255,9 +255,6 @@ namespace Server.Gumps
 
         public override void OnResponse(NetState state, RelayInfo info)
         {
-            if (state == null || info == null || state.Mobile == null || state.Mobile.Deleted || m_Caster == null || m_Caster.Deleted || state.Mobile != m_Caster || (m_Scroll != null && m_Scroll.Deleted))
-                return;
-
             if (info.ButtonID == 1 && info.Switches.Length > 0)
             {
                 int cnum = info.Switches[0];
@@ -372,9 +369,6 @@ namespace Server.Gumps
 
         public override void OnResponse(NetState sender, RelayInfo info)
         {
-            if (sender == null || info == null || sender.Mobile == null || sender.Mobile.Deleted || m_Caster == null || m_Caster.Deleted || sender.Mobile != m_Caster || (m_Scroll != null && m_Scroll.Deleted))
-                return;
-
             int idx = info.ButtonID - 1;
 
             if (idx < 0 || idx >= m_Entries.Length)

@@ -132,18 +132,10 @@ namespace Server.Mobiles
 
             ArrayList list = new ArrayList();
 
-            IPooledEnumerable eable1 = this.GetMobilesInRange(8);
-            try
+            foreach (Mobile m in this.GetMobilesInRange(8))
             {
-                foreach (Mobile m in eable1)
-                {
-                    if (m != this && m is SavageShaman)
-                        list.Add(m);
-                }
-            }
-            finally
-            {
-                eable1.Free();
+                if (m != this && m is SavageShaman)
+                    list.Add(m);
             }
 
             Animate(111, 5, 1, true, false, 0); // Do a little dance...
@@ -174,18 +166,8 @@ namespace Server.Mobiles
 
             ArrayList list = new ArrayList();
 
-            IPooledEnumerable eable2 = this.GetMobilesInRange(8);
-            try
-            {
-                foreach (Mobile m in eable2)
-                {
-                    list.Add(m);
-                }
-            }
-            finally
-            {
-                eable2.Free();
-            }
+            foreach (Mobile m in this.GetMobilesInRange(8))
+                list.Add(m);
 
             if (list.Count > 0)
             {

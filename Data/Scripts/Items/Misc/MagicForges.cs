@@ -22,14 +22,9 @@ namespace Server.Items
 
         public override void OnSpeech(SpeechEventArgs e)
         {
-            if (e == null || e.Mobile == null || e.Mobile.Deleted || e.Speech == null)
-                return;
-
             if (!e.Handled)
             {
                 Mobile m = e.Mobile;
-                if (m.Region == null)
-                    return;
 
                 string keyword = "";
                 bool priestCheck = true;
@@ -1287,21 +1282,12 @@ namespace Server.Items
                         rock2.Delete();
                         rock3.Delete();
 
-                        IPooledEnumerable nearbyMobiles = this.GetMobilesInRange(20);
-
-                        try
+                        foreach (Mobile who in this.GetMobilesInRange(20))
                         {
-                            foreach (Mobile who in nearbyMobiles)
+                            if (who is EpicCharacter)
                             {
-                                if (who is EpicCharacter)
-                                {
-                                    who.Say("You have maintained the balance between order and chaos.");
-                                }
+                                who.Say("You have maintained the balance between order and chaos.");
                             }
-                        }
-                        finally
-                        {
-                            nearbyMobiles.Free();
                         }
 
                         if (m != null)
@@ -1419,63 +1405,54 @@ namespace Server.Items
                         bool nonProcess = true;
                         int nonCount = 0;
 
-                        IPooledEnumerable darkCoreItems = m.GetItemsInRange(20);
-
-                        try
+                        foreach (Item enchant in m.GetItemsInRange(20))
                         {
-                            foreach (Item enchant in darkCoreItems)
+                            if (enchant.ItemID != 5703)
                             {
-                                if (enchant.ItemID != 5703)
+                                if (
+                                    !Server.Misc.Arty.canEnchant(enchant)
+                                    && enchant.X >= 704
+                                    && enchant.Y >= 2208
+                                    && enchant.X <= 705
+                                    && enchant.Y <= 2209
+                                )
                                 {
-                                    if (
-                                        !Server.Misc.Arty.canEnchant(enchant)
-                                        && enchant.X >= 704
-                                        && enchant.Y >= 2208
-                                        && enchant.X <= 705
-                                        && enchant.Y <= 2209
+                                    canProcess = false;
+                                    TextInfo cultInfo = new CultureInfo("en-US", false).TextInfo;
+                                    arty = "" + cultInfo.ToTitleCase(enchant.Name) + "";
+                                    items = items + "<BR>- " + arty;
+                                    itemCount++;
+                                }
+                                if (
+                                    !(
+                                        enchant is BaseWeapon
+                                        || enchant is BaseArmor
+                                        || enchant is BaseJewel
+                                        || enchant is BaseClothing
                                     )
-                                    {
-                                        canProcess = false;
-                                        TextInfo cultInfo = new CultureInfo("en-US", false).TextInfo;
-                                        arty = "" + cultInfo.ToTitleCase(enchant.Name) + "";
-                                        items = items + "<BR>- " + arty;
-                                        itemCount++;
-                                    }
-                                    if (
-                                        !(
-                                            enchant is BaseWeapon
-                                            || enchant is BaseArmor
-                                            || enchant is BaseJewel
-                                            || enchant is BaseClothing
-                                        )
-                                        && enchant.X >= 704
-                                        && enchant.Y >= 2208
-                                        && enchant.X <= 705
-                                        && enchant.Y <= 2209
-                                    )
-                                    {
-                                        nonCount++;
-                                        if (nonCount > 0)
-                                            nonProcess = false;
-                                    }
-                                    if (
-                                        Server.Misc.Arty.canEnchant(enchant)
-                                        && enchant.X >= 704
-                                        && enchant.Y >= 2208
-                                        && enchant.X <= 705
-                                        && enchant.Y <= 2209
-                                    )
-                                    {
-                                        legitCount++;
-                                        if (legitCount > 1)
-                                            legitProcess = false;
-                                    }
+                                    && enchant.X >= 704
+                                    && enchant.Y >= 2208
+                                    && enchant.X <= 705
+                                    && enchant.Y <= 2209
+                                )
+                                {
+                                    nonCount++;
+                                    if (nonCount > 0)
+                                        nonProcess = false;
+                                }
+                                if (
+                                    Server.Misc.Arty.canEnchant(enchant)
+                                    && enchant.X >= 704
+                                    && enchant.Y >= 2208
+                                    && enchant.X <= 705
+                                    && enchant.Y <= 2209
+                                )
+                                {
+                                    legitCount++;
+                                    if (legitCount > 1)
+                                        legitProcess = false;
                                 }
                             }
-                        }
-                        finally
-                        {
-                            darkCoreItems.Free();
                         }
 
                         m.CloseGump(typeof(DarkCoreGump));
@@ -1544,25 +1521,21 @@ namespace Server.Items
 
                             int Change = 0;
 
-                            IPooledEnumerable darkCoreEnchantItems = m.GetItemsInRange(20);
-
-                            try
+                            foreach (Item enchant in m.GetItemsInRange(20))
                             {
-                                foreach (Item enchant in darkCoreEnchantItems)
+                                if (enchant.ItemID != 5703)
                                 {
-                                    if (enchant.ItemID != 5703)
+                                    if (
+                                        Server.Misc.Arty.canEnchant(enchant)
+                                        && enchant.X >= 704
+                                        && enchant.Y >= 2208
+                                        && enchant.X <= 705
+                                        && enchant.Y <= 2209
+                                        && Change == 0
+                                    )
                                     {
-                                        if (
-                                            Server.Misc.Arty.canEnchant(enchant)
-                                            && enchant.X >= 704
-                                            && enchant.Y >= 2208
-                                            && enchant.X <= 705
-                                            && enchant.Y <= 2209
-                                            && Change == 0
-                                        )
-                                        {
-                                            int min = 50;
-                                            int max = 200;
+                                        int min = 50;
+                                        int max = 200;
 
                                         int props = 5 + Utility.RandomMinMax(0, 10);
 
@@ -1689,11 +1662,6 @@ namespace Server.Items
                                         }
                                     }
                                 }
-                            }
-                            }
-                            finally
-                            {
-                                darkCoreEnchantItems.Free();
                             }
 
                             Party p = Engines.PartySystem.Party.Get(m);
@@ -1985,105 +1953,96 @@ namespace Server.Items
                             GoldenFeathers goldfeather = (GoldenFeathers)feath;
                             if (goldfeather.owner == m)
                             {
-                                IPooledEnumerable rangerItems = m.GetItemsInRange(20);
-
-                                try
+                                foreach (Item enchant in m.GetItemsInRange(20))
                                 {
-                                    foreach (Item enchant in rangerItems)
+                                    if (
+                                        enchant.X >= 5203
+                                        && enchant.Y >= 1301
+                                        && enchant.X <= 5205
+                                        && enchant.Y <= 1305
+                                    )
                                     {
-                                        if (
-                                            enchant.X >= 5203
-                                            && enchant.Y >= 1301
-                                            && enchant.X <= 5205
-                                            && enchant.Y <= 1305
-                                        )
+                                        if (enchant is BaseWeapon)
                                         {
-                                            if (enchant is BaseWeapon)
-                                            {
-                                                BaseWeapon weapon = (BaseWeapon)enchant;
-                                                if (
-                                                    Server.Misc.MaterialInfo.IsAnyKindOfMetalItem(
-                                                        enchant
-                                                    )
-                                                    || Server.Misc.MaterialInfo.IsAnyKindOfClothItem(
-                                                        enchant
-                                                    )
-                                                    || Server.Misc.MaterialInfo.IsAnyKindOfWoodItem(
-                                                        enchant
-                                                    )
+                                            BaseWeapon weapon = (BaseWeapon)enchant;
+                                            if (
+                                                Server.Misc.MaterialInfo.IsAnyKindOfMetalItem(
+                                                    enchant
                                                 )
-                                                {
-                                                    MorphingItem.MorphMyItem(
-                                                        weapon,
-                                                        "Blessed by the Rangers",
-                                                        "Golden Ranger",
-                                                        "IGNORED",
-                                                        MorphingTemplates.TemplateRanger("weapons")
-                                                    );
-                                                    Effects.SendLocationParticles(
-                                                        EffectItem.Create(
-                                                            weapon.Location,
-                                                            weapon.Map,
-                                                            EffectItem.DefaultDuration
-                                                        ),
-                                                        0x376A,
-                                                        9,
-                                                        32,
-                                                        5008
-                                                    );
-                                                    Effects.PlaySound(
+                                                || Server.Misc.MaterialInfo.IsAnyKindOfClothItem(
+                                                    enchant
+                                                )
+                                                || Server.Misc.MaterialInfo.IsAnyKindOfWoodItem(
+                                                    enchant
+                                                )
+                                            )
+                                            {
+                                                MorphingItem.MorphMyItem(
+                                                    weapon,
+                                                    "Blessed by the Rangers",
+                                                    "Golden Ranger",
+                                                    "IGNORED",
+                                                    MorphingTemplates.TemplateRanger("weapons")
+                                                );
+                                                Effects.SendLocationParticles(
+                                                    EffectItem.Create(
                                                         weapon.Location,
                                                         weapon.Map,
-                                                        0x1ED
-                                                    );
-                                                }
-
-                                                RidOf = 1;
+                                                        EffectItem.DefaultDuration
+                                                    ),
+                                                    0x376A,
+                                                    9,
+                                                    32,
+                                                    5008
+                                                );
+                                                Effects.PlaySound(
+                                                    weapon.Location,
+                                                    weapon.Map,
+                                                    0x1ED
+                                                );
                                             }
-                                            else if (enchant is BaseArmor)
-                                            {
-                                                BaseArmor armor = (BaseArmor)enchant;
-                                                if (
-                                                    Server.Misc.MaterialInfo.IsAnyKindOfMetalItem(
-                                                        enchant
-                                                    )
-                                                    || Server.Misc.MaterialInfo.IsAnyKindOfClothItem(
-                                                        enchant
-                                                    )
-                                                    || Server.Misc.MaterialInfo.IsAnyKindOfWoodItem(
-                                                        enchant
-                                                    )
+
+                                            RidOf = 1;
+                                        }
+                                        else if (enchant is BaseArmor)
+                                        {
+                                            BaseArmor armor = (BaseArmor)enchant;
+                                            if (
+                                                Server.Misc.MaterialInfo.IsAnyKindOfMetalItem(
+                                                    enchant
                                                 )
-                                                {
-                                                    MorphingItem.MorphMyItem(
-                                                        armor,
-                                                        "IGNORED",
-                                                        "Golden Ranger",
-                                                        "IGNORED",
-                                                        MorphingTemplates.TemplateRanger("armors")
-                                                    );
-                                                    Effects.SendLocationParticles(
-                                                        EffectItem.Create(
-                                                            armor.Location,
-                                                            armor.Map,
-                                                            EffectItem.DefaultDuration
-                                                        ),
-                                                        0x376A,
-                                                        9,
-                                                        32,
-                                                        5008
-                                                    );
-                                                    Effects.PlaySound(armor.Location, armor.Map, 0x1ED);
-                                                }
-
-                                                RidOf = 1;
+                                                || Server.Misc.MaterialInfo.IsAnyKindOfClothItem(
+                                                    enchant
+                                                )
+                                                || Server.Misc.MaterialInfo.IsAnyKindOfWoodItem(
+                                                    enchant
+                                                )
+                                            )
+                                            {
+                                                MorphingItem.MorphMyItem(
+                                                    armor,
+                                                    "IGNORED",
+                                                    "Golden Ranger",
+                                                    "IGNORED",
+                                                    MorphingTemplates.TemplateRanger("armors")
+                                                );
+                                                Effects.SendLocationParticles(
+                                                    EffectItem.Create(
+                                                        armor.Location,
+                                                        armor.Map,
+                                                        EffectItem.DefaultDuration
+                                                    ),
+                                                    0x376A,
+                                                    9,
+                                                    32,
+                                                    5008
+                                                );
+                                                Effects.PlaySound(armor.Location, armor.Map, 0x1ED);
                                             }
+
+                                            RidOf = 1;
                                         }
                                     }
-                                }
-                                finally
-                                {
-                                    rangerItems.Free();
                                 }
 
                                 if (RidOf > 0)
@@ -2185,11 +2144,7 @@ namespace Server.Items
                 }
                 else if (m.Map == Map.SavagedEmpire) // POISON FORGE
                 {
-                    IPooledEnumerable poisonForgeItems = m.GetItemsInRange(20);
-
-                    try
-                    {
-                    foreach (Item enchant in poisonForgeItems)
+                    foreach (Item enchant in m.GetItemsInRange(20))
                     {
                         if (
                             Server.Misc.Arty.canEnchant(enchant)
@@ -2330,19 +2285,10 @@ namespace Server.Items
                             }
                         }
                     }
-                    }
-                    finally
-                    {
-                        poisonForgeItems.Free();
-                    }
                 }
                 else if (m.Map == Map.Lodor) // COLD FORGE
                 {
-                    IPooledEnumerable coldForgeItems = m.GetItemsInRange(20);
-
-                    try
-                    {
-                    foreach (Item enchant in coldForgeItems)
+                    foreach (Item enchant in m.GetItemsInRange(20))
                     {
                         if (
                             Server.Misc.Arty.canEnchant(enchant)
@@ -2485,19 +2431,10 @@ namespace Server.Items
                             }
                         }
                     }
-                    }
-                    finally
-                    {
-                        coldForgeItems.Free();
-                    }
                 }
                 else if (m.Map == Map.Sosaria) // ENERGY FORGE
                 {
-                    IPooledEnumerable energyForgeItems = m.GetItemsInRange(20);
-
-                    try
-                    {
-                    foreach (Item enchant in energyForgeItems)
+                    foreach (Item enchant in m.GetItemsInRange(20))
                     {
                         if (
                             Server.Misc.Arty.canEnchant(enchant)
@@ -2638,19 +2575,10 @@ namespace Server.Items
                             }
                         }
                     }
-                    }
-                    finally
-                    {
-                        energyForgeItems.Free();
-                    }
                 }
                 else if (m.Map == Map.SerpentIsland) // FIRE FORGE
                 {
-                    IPooledEnumerable fireForgeItems = m.GetItemsInRange(20);
-
-                    try
-                    {
-                    foreach (Item enchant in fireForgeItems)
+                    foreach (Item enchant in m.GetItemsInRange(20))
                     {
                         if (
                             Server.Misc.Arty.canEnchant(enchant)
@@ -2792,11 +2720,6 @@ namespace Server.Items
                                 }
                             }
                         }
-                    }
-                    }
-                    finally
-                    {
-                        fireForgeItems.Free();
                     }
                 }
             }

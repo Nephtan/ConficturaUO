@@ -36,11 +36,8 @@ namespace Server.ContextMenus
 
         public override void OnClick()
         {
-            if (m_From == null || m_From.Deleted || m_Item == null || m_Item.Deleted)
-                return;
-
-            m_From.CloseGump(typeof(GiftGump));
-            m_From.SendGump(new GiftGump(m_From, m_Item, m_Cat));
+            Owner.From.CloseGump(typeof(GiftGump));
+            Owner.From.SendGump(new GiftGump(m_From, m_Item, m_Cat));
         }
     }
 }

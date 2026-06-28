@@ -28,42 +28,34 @@ namespace Server.Mobiles
         {
             if (DateTime.Now >= m_NextTalk)
             {
-                IPooledEnumerable eable1 = this.GetItemsInRange(1);
-                try
+                foreach (Item carcass in this.GetItemsInRange(1))
                 {
-                    foreach (Item carcass in eable1)
+                    if (carcass is ButcherHit)
                     {
-                        if (carcass is ButcherHit)
+                        if (
+                            this.FindItemOnLayer(Layer.FirstValid) != null
+                            && !(this.FindItemOnLayer(Layer.FirstValid) is Cleaver)
+                        )
                         {
-                            if (
-                                this.FindItemOnLayer(Layer.FirstValid) != null
-                                && !(this.FindItemOnLayer(Layer.FirstValid) is Cleaver)
-                            )
-                            {
-                                this.Delete();
-                            }
-                            else if (
-                                this.FindItemOnLayer(Layer.OneHanded) != null
-                                && !(this.FindItemOnLayer(Layer.OneHanded) is Cleaver)
-                            )
-                            {
-                                this.Delete();
-                            }
-                            else if (this.FindItemOnLayer(Layer.TwoHanded) != null)
-                            {
-                                this.FindItemOnLayer(Layer.TwoHanded).Delete();
-                            }
-                            ButcherHit carcas = (ButcherHit)carcass;
-                            carcas.OnDoubleClick(this);
-                            m_NextTalk = (
-                                DateTime.Now + TimeSpan.FromSeconds(Utility.RandomMinMax(2, 5))
-                            );
+                            this.Delete();
                         }
+                        else if (
+                            this.FindItemOnLayer(Layer.OneHanded) != null
+                            && !(this.FindItemOnLayer(Layer.OneHanded) is Cleaver)
+                        )
+                        {
+                            this.Delete();
+                        }
+                        else if (this.FindItemOnLayer(Layer.TwoHanded) != null)
+                        {
+                            this.FindItemOnLayer(Layer.TwoHanded).Delete();
+                        }
+                        ButcherHit carcas = (ButcherHit)carcass;
+                        carcas.OnDoubleClick(this);
+                        m_NextTalk = (
+                            DateTime.Now + TimeSpan.FromSeconds(Utility.RandomMinMax(2, 5))
+                        );
                     }
-                }
-                finally
-                {
-                    eable1.Free();
                 }
             }
         }

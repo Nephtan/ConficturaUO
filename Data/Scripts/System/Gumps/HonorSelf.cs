@@ -31,9 +31,6 @@ honor points on yourself?",
 
         public override void OnResponse(NetState sender, RelayInfo info)
         {
-            if (sender == null || info == null || sender.Mobile == null || sender.Mobile.Deleted || m_from == null || m_from.Deleted || sender.Mobile != m_from)
-                return;
-
             if (info.ButtonID == 1)
             {
                 HonorVirtue.ActivateEmbrace(m_from);

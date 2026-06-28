@@ -136,19 +136,10 @@ namespace Server.Spells.Second
             {
                 int traps = 0;
 
-                IPooledEnumerable eable = Caster.GetItemsInRange(10);
-
-                try
+                foreach (Item m in Caster.GetItemsInRange(10))
                 {
-                    foreach (Item m in eable)
-                    {
-                        if (m is SpellTrap)
-                            ++traps;
-                    }
-                }
-                finally
-                {
-                    eable.Free();
+                    if (m is SpellTrap)
+                        ++traps;
                 }
 
                 if (traps > 2)

@@ -17,14 +17,8 @@ namespace Server.Misc
 
         public static void EventSink_Speech(SpeechEventArgs args)
         {
-            if (args == null)
-                return;
-
             Mobile from = args.Mobile;
             int[] keywords = args.Keywords;
-
-            if (from == null || from.Deleted || from.Backpack == null || args.Speech == null)
-                return;
 
             if (from is PlayerMobile)
             {
@@ -46,75 +40,63 @@ namespace Server.Misc
                         {
                             if (tb.Uses > 0)
                             {
-                                IPooledEnumerable eable = from.GetMobilesInRange(2); // TODO: Validate range
-
-                                try
+                                foreach (Mobile m in from.GetMobilesInRange(2)) // TODO: Validate range
                                 {
-                                    foreach (Mobile m in eable)
+                                    Container cont = m.Backpack;
+
+                                    if (cont != null && cont.ConsumeTotal(typeof(Gold), 1))
                                     {
-                                        if (m == null || m.Deleted)
-                                            continue;
-
-                                        Container cont = m.Backpack;
-
-                                        if (cont != null && cont.ConsumeTotal(typeof(Gold), 1))
+                                        if (m is KungFu)
                                         {
-                                            if (m is KungFu)
-                                            {
-                                                from.Direction = from.GetDirectionTo(m);
-                                                m.Direction = m.GetDirectionTo(from);
-                                                m.Say("Sorry, I do not celebrate Halloween.");
-                                            }
-                                            else if ((m is BaseVendor) && (player.BodyMod == 0))
-                                            {
-                                                from.Direction = from.GetDirectionTo(m);
-                                                m.Direction = m.GetDirectionTo(from);
-                                                m.Say(
-                                                    "You are not in costume so how can you go trick or treating?"
-                                                );
-                                            }
-                                            else if ((m is BaseVendor) && (Utility.Random(100) > 80))
-                                            {
-                                                Gold m_Gold = (Gold)
-                                                    m.Backpack.FindItemByType(typeof(Gold));
-                                                int m_Amount = m.Backpack.GetAmount(typeof(Gold));
-                                                from.Direction = from.GetDirectionTo(m);
-                                                m.Direction = m.GetDirectionTo(from);
-                                                cont.ConsumeTotal(typeof(Gold), m_Amount);
-                                                m.Say(
-                                                    "Sorry, I don't have anything to give you at the moment."
-                                                );
-                                            }
-                                            else if (
-                                                (m is BaseVendor)
-                                                && (cont.ConsumeTotal(typeof(Gold), 1))
-                                            )
-                                            {
-                                                Gold m_Gold = (Gold)
-                                                    m.Backpack.FindItemByType(typeof(Gold));
-                                                int m_Amount = m.Backpack.GetAmount(typeof(Gold));
-                                                from.Direction = from.GetDirectionTo(m);
-                                                m.Direction = m.GetDirectionTo(from);
-                                                TrickOrTreat.GiveTreat(from, m, tb);
-                                                tb.ConsumeUse(from);
-                                                cont.ConsumeTotal(typeof(Gold), m_Amount);
+                                            from.Direction = from.GetDirectionTo(m);
+                                            m.Direction = m.GetDirectionTo(from);
+                                            m.Say("Sorry, I do not celebrate Halloween.");
+                                        }
+                                        else if ((m is BaseVendor) && (player.BodyMod == 0))
+                                        {
+                                            from.Direction = from.GetDirectionTo(m);
+                                            m.Direction = m.GetDirectionTo(from);
+                                            m.Say(
+                                                "You are not in costume so how can you go trick or treating?"
+                                            );
+                                        }
+                                        else if ((m is BaseVendor) && (Utility.Random(100) > 80))
+                                        {
+                                            Gold m_Gold = (Gold)
+                                                m.Backpack.FindItemByType(typeof(Gold));
+                                            int m_Amount = m.Backpack.GetAmount(typeof(Gold));
+                                            from.Direction = from.GetDirectionTo(m);
+                                            m.Direction = m.GetDirectionTo(from);
+                                            cont.ConsumeTotal(typeof(Gold), m_Amount);
+                                            m.Say(
+                                                "Sorry, I don't have anything to give you at the moment."
+                                            );
+                                        }
+                                        else if (
+                                            (m is BaseVendor)
+                                            && (cont.ConsumeTotal(typeof(Gold), 1))
+                                        )
+                                        {
+                                            Gold m_Gold = (Gold)
+                                                m.Backpack.FindItemByType(typeof(Gold));
+                                            int m_Amount = m.Backpack.GetAmount(typeof(Gold));
+                                            from.Direction = from.GetDirectionTo(m);
+                                            m.Direction = m.GetDirectionTo(from);
+                                            TrickOrTreat.GiveTreat(from, m, tb);
+                                            tb.ConsumeUse(from);
+                                            cont.ConsumeTotal(typeof(Gold), m_Amount);
 
-                                                return;
-                                            }
-                                            else if (m is BaseVendor)
-                                            {
-                                                from.Direction = from.GetDirectionTo(m);
-                                                m.Direction = m.GetDirectionTo(from);
-                                                m.Say(
-                                                    "Sorry, I don't have anything to give you at the moment."
-                                                );
-                                            }
+                                            return;
+                                        }
+                                        else if (m is BaseVendor)
+                                        {
+                                            from.Direction = from.GetDirectionTo(m);
+                                            m.Direction = m.GetDirectionTo(from);
+                                            m.Say(
+                                                "Sorry, I don't have anything to give you at the moment."
+                                            );
                                         }
                                     }
-                                }
-                                finally
-                                {
-                                    eable.Free();
                                 }
 
                                 foundbag = true;

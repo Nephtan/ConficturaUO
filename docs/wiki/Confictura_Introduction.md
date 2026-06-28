@@ -121,15 +121,15 @@ The canonical service defines internal archetype lanes for Confictura's broad
 class ecosystem: martial, archer, assassin, ninja, samurai, knight, death
 knight, arcane mage, elementalist, necromancer, witch, druid, holy man, mystic
 monk, Jedi, Syth, researcher, ranger, bard, thief, jester, crafter, gatherer,
-merchant, seafarer, creature race, and alien. ?F:Data/Scripts/Custom/Progression/CharacterLevel/CharacterLevelService.cs†L11-L40??
+merchant, seafarer, creature race, and alien. ?F:Data/Scripts/Custom/CharacterLevel/CharacterLevelService.cs†L11-L40??
 It exposes overall level, archetype level, encounter alias level, and diagnostic
 reporting rather than treating total skill alone as the whole character.
-?F:Data/Scripts/Custom/Progression/CharacterLevel/CharacterLevelService.cs†L99-L224??
+?F:Data/Scripts/Custom/CharacterLevel/CharacterLevelService.cs†L99-L224??
 
 The overall score intentionally blends focused adventure power, total skill
-progress, stat progress, and bounded fame/karma reputation. ?F:Data/Scripts/Custom/Progression/CharacterLevel/CharacterLevelService.cs†L258-L265??
+progress, stat progress, and bounded fame/karma reputation. ?F:Data/Scripts/Custom/CharacterLevel/CharacterLevelService.cs†L258-L265??
 Skill and stat progress are normalized against the character's actual skill and
-stat caps, not a universal default. ?F:Data/Scripts/Custom/Progression/CharacterLevel/CharacterLevelService.cs†L566-L615??
+stat caps, not a universal default. ?F:Data/Scripts/Custom/CharacterLevel/CharacterLevelService.cs†L566-L615??
 That matters because Confictura has real alternate progression paths, and the
 same raw skill total does not mean the same thing for a default, savage,
 fugitive, alien, or Ether character.
@@ -147,18 +147,18 @@ staff-visible and encounter-visible archetypes. Martial combat checks weapon
 skills with tactics, anatomy, parry, focus, and healing. Archery blends
 marksmanship, bowcraft, tactics, anatomy, and focus. Assassin and thief lanes
 value stealth, stealing, snooping, lockpicking, hiding, and remove trap.
-?F:Data/Scripts/Custom/Progression/CharacterLevel/CharacterLevelService.cs†L284-L323?? ?F:Data/Scripts/Custom/Progression/CharacterLevel/CharacterLevelService.cs†L461-L480??
+?F:Data/Scripts/Custom/CharacterLevel/CharacterLevelService.cs†L284-L323?? ?F:Data/Scripts/Custom/CharacterLevel/CharacterLevelService.cs†L461-L480??
 
 Magic and spiritual paths are similarly plural. Arcane mage uses magery,
 alchemy, inscription, meditation, magic resist, and psychology; elementalist
 uses elementalism with meditation, psychology, and focus; necromancer and witch
 care about necromancy, spiritualism, poison, forensics, tasting, and dark
 karma; holy man and knight paths reward positive karma; Syth and death knight
-reward negative karma. ?F:Data/Scripts/Custom/Progression/CharacterLevel/CharacterLevelService.cs†L331-L444??
+reward negative karma. ?F:Data/Scripts/Custom/CharacterLevel/CharacterLevelService.cs†L331-L444??
 
 Nature, support, trade, travel, and oddball roles have a place too. Druid,
 ranger, bard, crafter, gatherer, merchant, seafarer, creature race, and alien
-all have explicit scoring lanes. ?F:Data/Scripts/Custom/Progression/CharacterLevel/CharacterLevelService.cs†L391-L460?? ?F:Data/Scripts/Custom/Progression/CharacterLevel/CharacterLevelService.cs†L482-L545??
+all have explicit scoring lanes. ?F:Data/Scripts/Custom/CharacterLevel/CharacterLevelService.cs†L391-L460?? ?F:Data/Scripts/Custom/CharacterLevel/CharacterLevelService.cs†L482-L545??
 
 The practical player takeaway is simple: Confictura is friendly to focused
 characters. It wants a fighter to feel like a fighter, a bard to feel like a
@@ -185,11 +185,11 @@ elite tables around `65:<alias>`, and rare spikes around `85:<alias>`.
 
 The XML itself shows those tiered gates in practice, including rare
 `85:Necromancer` and elite `65:Ranger` entries, followed by `45`, `25`, and `1`
-tiers with `scaleUp="false"`. ?F:Data/Scripts/Custom/PvE/RandomEncounters/RandomEncounters.xml†L17-L35??
+tiers with `scaleUp="false"`. ?F:Data/Scripts/Custom/RandomEncounters/RandomEncounters.xml†L17-L35??
 At runtime, the encounter engine calculates the chosen player's level against
-the encounter's `LevelType` before spawning that tier. ?F:Data/Scripts/Custom/PvE/RandomEncounters/EncounterEngine.cs†L944-L964??
+the encounter's `LevelType` before spawning that tier. ?F:Data/Scripts/Custom/RandomEncounters/EncounterEngine.cs†L944-L964??
 For players, the helper now routes encounter level checks into the canonical
-character level service. ?F:Data/Scripts/Custom/PvE/RandomEncounters/Helpers.cs†L113-L121??
+character level service. ?F:Data/Scripts/Custom/RandomEncounters/Helpers.cs†L113-L121??
 
 Champion spawns provide another style of PvE escalation. They build waves that
 advance an altar toward a champion boss, reward eligible participants with
@@ -211,14 +211,14 @@ Confictura's AI surface is best understood as an ecosystem. The AI overhaul
 audit says the shard does not have one AI system: `BaseCreature`, `BaseAI`,
 `Behavior.cs`, engine activation, sector logic, constructor-assigned AI,
 `ForcedAI`, and bespoke `OnThink` or combat hooks all combine to define how
-creatures behave. ?F:docs/wiki/AI_OVERHAUL_AUDIT.md†L16-L35??
+creatures behave. ?F:docs/AI_OVERHAUL_AUDIT.md†L16-L35??
 
 That means combat feel is not controlled by one class replacement. Target
 selection, activation, pathing, home behavior, perception, bard/control states,
 custom encounter hooks, and script-specific logic all matter. The audit calls
 `AcquireFocusMob` a targeting choke point, `ChangeAIType` a central assignment
 seam for stock shells, and `OnThink` plus combat hooks the main way bespoke
-encounter behavior piggybacks on AI timers. ?F:docs/wiki/AI_OVERHAUL_AUDIT.md†L27-L35??
+encounter behavior piggybacks on AI timers. ?F:docs/AI_OVERHAUL_AUDIT.md†L27-L35??
 
 OmniAI is the modular custom combat AI layer. It lets creatures react to field
 spells, swap weapons, heal themselves, and invoke skill-system abilities such
@@ -295,7 +295,7 @@ Key operational commands include:
 | Area | Commands | Purpose |
 | --- | --- | --- |
 | Random encounters | `[rand init]`, `[rand stop]`, `[rand now <RegionType>]`, `[rand import]` | Load, stop, force-check, or import encounter data. ?F:docs/wiki/Random_Encounter_Engine.md†L20-L28?? |
-| Character level | `[CharLevel]`, `[CharLevelTarget]` | Show canonical level diagnostics for yourself or a targeted mobile. ?F:Data/Scripts/Custom/Progression/CharacterLevel/CharacterLevelCommands.cs†L12-L35?? |
+| Character level | `[CharLevel]`, `[CharLevelTarget]` | Show canonical level diagnostics for yourself or a targeted mobile. ?F:Data/Scripts/Custom/CharacterLevel/CharacterLevelCommands.cs†L12-L35?? |
 | Government | `GovHelp`, `AdminAdd`, `FindCities`, `GovTesting`, `UpgradeCitySystem` | Player help, admin item creation, city discovery, testing timers, and city upgrades. ?F:docs/wiki/Government_System.md†L45-L52?? |
 | Invasions | `[invasion]` | Open the city invasion gump and start or stop city assaults. ?F:docs/wiki/Invasion_System.md†L6-L21?? |
 | XMLSpawner | `[XmlAdd]`, `[XmlEdit]`, `[XmlFind]`, `[XmlHome]`, `[XmlLoad]`, `[XmlLoadHere]`, `[XmlSave]`, `[XmlSaveAll]`, attachment commands | Create, edit, find, load, save, and attach XML-driven spawner content. ?F:docs/wiki/XML_Spawner_Enhancements.md†L3-L18?? |
@@ -315,17 +315,17 @@ First, character level is now canonical. The recon report describes the live
 service, player level display routing, player random encounter routing, and the
 remaining creature legacy path. ?F:docs/wiki/Character_Level_Recon_Report.md†L3-L10??
 The current code routes visible player level and random encounter player level
-checks through that service. ?F:Data/Scripts/Custom/Progression/CharacterLevel/CharacterLevelService.cs†L99-L224?? ?F:Data/Scripts/System/Misc/Players.cs†L893-L901?? ?F:Data/Scripts/Custom/PvE/RandomEncounters/Helpers.cs†L113-L121??
+checks through that service. ?F:Data/Scripts/Custom/CharacterLevel/CharacterLevelService.cs†L99-L224?? ?F:Data/Scripts/System/Misc/Players.cs†L893-L901?? ?F:Data/Scripts/Custom/RandomEncounters/Helpers.cs†L113-L121??
 
 Second, random encounters have been moved from placeholder-ish low gates toward
 a real 1-100 dungeon curve, while player checks now honor the encounter alias
 mapping. ?F:docs/wiki/Character_Level_Recon_Report.md†L76-L89??
-The current XML and documentation show that curve in live tables. ?F:Data/Scripts/Custom/PvE/RandomEncounters/RandomEncounters.xml†L17-L35?? ?F:docs/wiki/Random_Encounter_Engine.md†L68-L75??
+The current XML and documentation show that curve in live tables. ?F:Data/Scripts/Custom/RandomEncounters/RandomEncounters.xml†L17-L35?? ?F:docs/wiki/Random_Encounter_Engine.md†L68-L75??
 
 Third, AI work is being treated with caution and respect for the shard's
 complexity. The AI audit explicitly frames AI as layered behavior rather than
 one replaceable class, and warns that global AI changes affect different
-mobiles and encounters unevenly. ?F:docs/wiki/AI_OVERHAUL_AUDIT.md†L16-L35??
+mobiles and encounters unevenly. ?F:docs/AI_OVERHAUL_AUDIT.md†L16-L35??
 
 Fourth, documentation is actively catching up to systems. The wiki index now
 collects documented systems such as point commands, range-sensitive
@@ -356,8 +356,8 @@ The safest first reads are:
 
 - `docs/wiki/Random_Encounter_Engine.md` for the current live dynamic PvE model.
 - `docs/wiki/Character_Level_Recon_Report.md` plus
-  `Data/Scripts/Custom/Progression/CharacterLevel/CharacterLevelService.cs` for progression.
-- `docs/wiki/AI_OVERHAUL_AUDIT.md` before touching creature AI.
+  `Data/Scripts/Custom/CharacterLevel/CharacterLevelService.cs` for progression.
+- `docs/AI_OVERHAUL_AUDIT.md` before touching creature AI.
 - `docs/SystemAudit.md` for the full system inventory and documentation gaps.
 - `docs/wiki/Government_System.md`, `docs/wiki/Homestead_System.md`,
   `docs/wiki/Bard_Song_Magic.md`, and `docs/wiki/XML_Spawner_Enhancements.md`
@@ -370,77 +370,3 @@ a multi-world RPG sandbox: players choose strange fates, grow through
 skill-cap-aware archetypes, face curated dynamic PvE, build cities and
 homesteads, explore by land and sea, and rely on a deep staff toolchain that
 keeps the world adjustable, inspectable, and alive.
-
-## Source Trace
-
-POST-BATCH-T reviewed this page on 2026-06-14T21:09:11.0049244-05:00 against current source and audit registers.
-
-- Canonical status: Canonical.
-- Queue rows: PBN-0011.
-- Backlog rows: RB-06680.
-- Audit registers used: documentation-truth-table.csv, runtime-hook-map.csv, serialization-register.csv, and project-truth-register.csv.
-
-### Source Files Reviewed
-
-- Data/Scripts/Custom (CurrentDirectory)
-- Data/Scripts/Custom/Progression/CharacterLevel/CharacterLevelService.cs (CurrentFile)
-
-### Runtime Evidence
-
-- Hook summary: Command=139; Event=20; Gump=1032; Initialize=99; Login=4; Logout=2; Movement=33; Packet=3; Region=9; Speech=45; Timer=250; WorldLoad=1; WorldSave=3.
-- Data/Scripts/Custom/AnimalSystem/ShapeShiftStones/DragonShapeChangeStone-body.cs:L73 Speech OnSpeech access=GlobalOrInternal
-- Data/Scripts/Custom/AnimalSystem/ShapeShiftStones/DragonShapeChangeStone-body.cs:L79 Speech OnSpeech access=GlobalOrInternal
-- Data/Scripts/Custom/AnimalSystem/ShapeShiftStones/DragonShapeChangeStone-body.cs:L109 Speech OnSpeech access=GlobalOrInternal
-- Data/Scripts/Custom/AnimalSystem/ShapeShiftStones/DragonShapeChangeStone-body.cs:L196 Gump OnResponse access=Internal
-- Data/Scripts/Custom/AnimalSystem/ShapeShiftStones/DragonShapeChangeStone-body.cs:L245 Gump SendGump access=Internal
-- Data/Scripts/Custom/AnimalSystem/ShapeShiftStones/FaeryShapeChangeStone.cs:L61 Speech OnSpeech access=GlobalOrInternal
-- Data/Scripts/Custom/AnimalSystem/ShapeShiftStones/FaeryShapeChangeStone.cs:L92 Speech OnSpeech access=GlobalOrInternal
-- Data/Scripts/Custom/AnimalSystem/ShapeShiftStones/FelinusShapeChangeStone.cs:L73 Speech OnSpeech access=GlobalOrInternal
-- Data/Scripts/Custom/AnimalSystem/ShapeShiftStones/FelinusShapeChangeStone.cs:L104 Speech OnSpeech access=GlobalOrInternal
-- Data/Scripts/Custom/AnimalSystem/ShapeShiftStones/FelinusShapeChangeStone.cs:L188 Gump OnResponse access=Internal
-- Data/Scripts/Custom/AnimalSystem/ShapeShiftStones/FelinusShapeChangeStone.cs:L245 Gump SendGump access=Internal
-- Data/Scripts/Custom/AnimalSystem/ShapeShiftStones/RatShapeChangeStone.cs:L73 Speech OnSpeech access=GlobalOrInternal
-- Additional hook rows are recorded in runtime-hook-map.csv for this source set.
-
-### Serialization Evidence
-
-- Serialized rows matched: 1435.
-- Data/Scripts/Custom/Access Level Stone [2.0]/AccessLevelStone.cs:Server.Items.AccessLevelStone version=1 serialize=L82 deserialize=L96 alignment=CountMatchNeedsTypeReview:UnknownWrites=2
-- Data/Scripts/Custom/AnimalSystem/ShapeShiftStones/DragonShapeChangeStone-body.cs:Server.Items.DragonShapeShiftStone version=1 serialize=L134 deserialize=L145 alignment=AlignedByCountAndKnownTypes
-- Data/Scripts/Custom/AnimalSystem/ShapeShiftStones/FaeryShapeChangeStone.cs:Server.Items.FaerieShapeShiftStone version=0 serialize=L119 deserialize=L129 alignment=AlignedByCountAndKnownTypes
-- Data/Scripts/Custom/AnimalSystem/ShapeShiftStones/FelinusShapeChangeStone.cs:Server.Items.FelinusShapeShiftStone version=1 serialize=L126 deserialize=L137 alignment=AlignedByCountAndKnownTypes
-- Data/Scripts/Custom/AnimalSystem/ShapeShiftStones/RatShapeChangeStone.cs:Server.Items.RatShapeShiftStone version=1 serialize=L126 deserialize=L137 alignment=AlignedByCountAndKnownTypes
-- Data/Scripts/Custom/AnimalSystem/ShapeShiftStones/WolvenShapeChangeStone.cs:Server.Items.WolvenShapeShiftStone version=1 serialize=L126 deserialize=L137 alignment=AlignedByCountAndKnownTypes
-- Data/Scripts/Custom/Book Publisher [2.0]/PublishedBook.cs:Server.Items.PublishedBook version=0 serialize=L215 deserialize=L193 alignment=CountMismatch:Writes=6;Reads=5
-- Data/Scripts/Custom/Book Publisher [2.0]/Publisher.cs:Server.Mobiles.Publisher version=0 serialize=L32 deserialize=L39 alignment=AlignedByCountAndKnownTypes
-- Data/Scripts/Custom/CEO's GM Hiding Stone [2.0]/gmhidingstone.cs:Server.Items.GMHidingStone version=2 serialize=L748 deserialize=L758 alignment=CountMismatch:Writes=4;Reads=6
-- Data/Scripts/Custom/Champions/Items/PlagueBeastBackpack.cs:Server.Items.PlagueBeastBackpack version=Unknown serialize=L209 deserialize=L216 alignment=AlignedByCountAndKnownTypes
-- Data/Scripts/Custom/Champions/Items/PlagueBeastBlood.cs:Server.Items.PlagueBeastBlood version=Unknown serialize=L118 deserialize=L125 alignment=AlignedByCountAndKnownTypes
-- Data/Scripts/Custom/Champions/Items/PlagueBeastGland.cs:Server.Items.PlagueBeastGland version=Unknown serialize=L20 deserialize=L27 alignment=AlignedByCountAndKnownTypes
-- Additional serializer rows are recorded in serialization-register.csv for this source set.
-
-### Project And Runtime Coverage
-
-- Data/Scripts/Custom/Access Level Stone [2.0]/AccessLevelStone.cs=Keep
-- Data/Scripts/Custom/Access Level Stone [2.0]/AccessLevelStone.cs=Keep
-- Data/Scripts/Custom/AnimalSystem/ShapeShiftStones/DragonShapeChangeStone-body.cs=Keep
-- Data/Scripts/Custom/AnimalSystem/ShapeShiftStones/DragonShapeChangeStone-body.cs=Keep
-- Data/Scripts/Custom/AnimalSystem/ShapeShiftStones/FaeryShapeChangeStone.cs=Keep
-- Data/Scripts/Custom/AnimalSystem/ShapeShiftStones/FaeryShapeChangeStone.cs=Keep
-- Data/Scripts/Custom/AnimalSystem/ShapeShiftStones/FelinusShapeChangeStone.cs=Keep
-- Data/Scripts/Custom/AnimalSystem/ShapeShiftStones/FelinusShapeChangeStone.cs=Keep
-- Data/Scripts/Custom/AnimalSystem/ShapeShiftStones/RatShapeChangeStone.cs=Keep
-- Data/Scripts/Custom/AnimalSystem/ShapeShiftStones/RatShapeChangeStone.cs=Keep
-- Data/Scripts/Custom/AnimalSystem/ShapeShiftStones/WolvenShapeChangeStone.cs=Keep
-- Data/Scripts/Custom/AnimalSystem/ShapeShiftStones/WolvenShapeChangeStone.cs=Keep
-- Data/Scripts/Custom/BoatNavigationTotem/BoatNavigationTotam.cs=Keep
-- Data/Scripts/Custom/BoatNavigationTotem/BoatNavigationTotam.cs=Keep
-- Data/Scripts/Custom/BondInfo/BondInfo.cs=Keep
-- Data/Scripts/Custom/BondInfo/BondInfo.cs=Keep
-- Data/Scripts/Custom/Book Publisher [2.0]/BookBuyInfo.cs=Keep
-- Data/Scripts/Custom/Book Publisher [2.0]/BookBuyInfo.cs=Keep
-- Data/Scripts/Custom/Book Publisher [2.0]/PublishedBook.cs=Keep
-- Data/Scripts/Custom/Book Publisher [2.0]/PublishedBook.cs=Keep
-- Additional project-truth rows are recorded in project-truth-register.csv for this source set.
-
-No C# source, project files, XML/config/data files, namespaces, serializers, gameplay behavior, or migration policy were changed in POST-BATCH-T.

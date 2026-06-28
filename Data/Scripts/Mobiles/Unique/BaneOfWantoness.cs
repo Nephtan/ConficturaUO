@@ -145,35 +145,26 @@ namespace Server.Mobiles
             int CanDie = 0;
             Mobile winner = this;
 
-            IPooledEnumerable eable1 = this.GetMobilesInRange(30);
-
-            try
+            foreach (Mobile m in this.GetMobilesInRange(30))
             {
-                foreach (Mobile m in eable1)
+                if (m is PlayerMobile && m.Map == this.Map && !m.Blessed)
                 {
-                    if (m is PlayerMobile && m.Map == this.Map && !m.Blessed)
+                    Item flame = m.Backpack.FindItemByType(typeof(LanternOfDiscipline));
+                    if (flame != null)
                     {
-                        Item flame = m.Backpack.FindItemByType(typeof(LanternOfDiscipline));
-                        if (flame != null)
-                        {
-                            CanDie = 1;
-                            winner = m;
-                            m.SendMessage(
-                                "The Lantern of Discipline has vanished after dispatching the Chaos Bane."
-                            );
-                            Server.Items.QuestSouvenir.GiveReward(
-                                m,
-                                flame.Name,
-                                flame.Hue,
-                                flame.ItemID
-                            );
-                        }
+                        CanDie = 1;
+                        winner = m;
+                        m.SendMessage(
+                            "The Lantern of Discipline has vanished after dispatching the Chaos Bane."
+                        );
+                        Server.Items.QuestSouvenir.GiveReward(
+                            m,
+                            flame.Name,
+                            flame.Hue,
+                            flame.ItemID
+                        );
                     }
                 }
-            }
-            finally
-            {
-                eable1.Free();
             }
 
             if (CanDie == 0)

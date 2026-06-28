@@ -71,23 +71,16 @@ namespace Server.Gumps
 
         public override void OnResponse(NetState sender, RelayInfo info)
         {
-            if (sender == null || info == null || sender.Mobile == null || sender.Mobile.Deleted)
-                return;
-
             Mobile from = sender.Mobile;
-            PlayerMobile pm = from as PlayerMobile;
-
-            if (pm == null)
-                return;
 
             if (info.ButtonID == 99)
             {
-                pm.CharacterSkill = 0;
+                ((PlayerMobile)from).CharacterSkill = 0;
                 from.SendSound(0x4A);
             }
             else if (info.ButtonID > 0)
             {
-                pm.CharacterSkill = info.ButtonID;
+                ((PlayerMobile)from).CharacterSkill = info.ButtonID;
                 from.SendSound(0x4A);
             }
 

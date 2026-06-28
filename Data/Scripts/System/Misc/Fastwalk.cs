@@ -25,16 +25,11 @@ namespace Server.Misc
 
         public static void OnFastWalk(FastWalkEventArgs e)
         {
-            if (e == null || e.NetState == null || e.NetState.Mobile == null || e.NetState.Mobile.Deleted)
-                return;
-
-            Mobile mobile = e.NetState.Mobile;
-
             e.Blocked = true; //disallow this fastwalk
             Console.WriteLine(
                 "Client: {0}: Fast movement detected (name={1})",
                 e.NetState,
-                mobile.Name
+                e.NetState.Mobile.Name
             );
         }
     }

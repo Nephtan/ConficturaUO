@@ -26,10 +26,7 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
-            if (from == null || from.Deleted)
-                return;
-
-            if (Deleted || from.Backpack == null || !IsChildOf(from.Backpack))
+            if (!IsChildOf(from.Backpack))
             {
                 from.SendLocalizedMessage(1042001); // That must be in your pack for you to use it.
             }
@@ -56,10 +53,7 @@ namespace Server.Items
 
         public void OnTarget(Mobile from, object obj)
         {
-            if (from == null || from.Deleted)
-                return;
-
-            if (Deleted || from.Backpack == null || !IsChildOf(from.Backpack))
+            if (!IsChildOf(from.Backpack))
             {
                 from.SendLocalizedMessage(1042001); // That must be in your pack for you to use it.
                 return;
@@ -68,13 +62,6 @@ namespace Server.Items
             if (obj is IArcaneEquip && obj is Item)
             {
                 Item item = (Item)obj;
-
-                if (item.Deleted || !item.IsChildOf(from.Backpack))
-                {
-                    from.SendLocalizedMessage(1042001); // That must be in your pack for you to use it.
-                    return;
-                }
-
                 CraftResource resource = CraftResource.None;
 
                 if (item is BaseClothing)
@@ -86,7 +73,12 @@ namespace Server.Items
 
                 IArcaneEquip eq = (IArcaneEquip)obj;
 
-                if (item.LootType == LootType.Blessed)
+                if (!item.IsChildOf(from.Backpack))
+                {
+                    from.SendLocalizedMessage(1042001); // That must be in your pack for you to use it.
+                    return;
+                }
+                else if (item.LootType == LootType.Blessed)
                 {
                     from.SendMessage(
                         "You can only use this on exceptionally crafted robes, thigh boots, cloaks, or leather gloves."

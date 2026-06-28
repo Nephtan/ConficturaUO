@@ -56,9 +56,6 @@ namespace Server.Misc
 
         public static void EventSink_Movement(MovementEventArgs e)
         {
-            if (e == null || e.Mobile == null || e.Mobile.Deleted)
-                return;
-
             Mobile from = e.Mobile;
 
             if (!from.Alive || from.AccessLevel > AccessLevel.Player)

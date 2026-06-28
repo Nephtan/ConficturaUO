@@ -28,36 +28,28 @@ namespace Server.Mobiles
         {
             if (DateTime.Now >= m_NextTalk)
             {
-                IPooledEnumerable eable1 = this.GetItemsInRange(2);
-                try
+                foreach (Item pot in this.GetItemsInRange(2))
                 {
-                    foreach (Item pot in eable1)
+                    if (pot is CauldronHit)
                     {
-                        if (pot is CauldronHit)
+                        if (this.FindItemOnLayer(Layer.FirstValid) != null)
                         {
-                            if (this.FindItemOnLayer(Layer.FirstValid) != null)
-                            {
-                                this.Delete();
-                            }
-                            else if (this.FindItemOnLayer(Layer.TwoHanded) != null)
-                            {
-                                this.Delete();
-                            }
-                            else if (this.FindItemOnLayer(Layer.OneHanded) != null)
-                            {
-                                this.Delete();
-                            }
-                            CauldronHit chemist = (CauldronHit)pot;
-                            chemist.OnDoubleClick(this);
-                            m_NextTalk = (
-                                DateTime.Now + TimeSpan.FromSeconds(Utility.RandomMinMax(6, 12))
-                            );
+                            this.Delete();
                         }
+                        else if (this.FindItemOnLayer(Layer.TwoHanded) != null)
+                        {
+                            this.Delete();
+                        }
+                        else if (this.FindItemOnLayer(Layer.OneHanded) != null)
+                        {
+                            this.Delete();
+                        }
+                        CauldronHit chemist = (CauldronHit)pot;
+                        chemist.OnDoubleClick(this);
+                        m_NextTalk = (
+                            DateTime.Now + TimeSpan.FromSeconds(Utility.RandomMinMax(6, 12))
+                        );
                     }
-                }
-                finally
-                {
-                    eable1.Free();
                 }
             }
         }

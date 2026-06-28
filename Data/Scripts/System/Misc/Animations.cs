@@ -12,9 +12,6 @@ namespace Server.Misc
 
         private static void EventSink_AnimateRequest(AnimateRequestEventArgs e)
         {
-            if (e == null || e.Mobile == null || e.Mobile.Deleted || e.Action == null)
-                return;
-
             Mobile from = e.Mobile;
 
             int action;

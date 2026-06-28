@@ -25,9 +25,6 @@ namespace Server.Misc
 
         public static void CrashGuard_OnCrash(CrashedEventArgs e)
         {
-            if (e == null)
-                return;
-
             if (GenerateReport)
                 GenerateCrashReport(e);
 

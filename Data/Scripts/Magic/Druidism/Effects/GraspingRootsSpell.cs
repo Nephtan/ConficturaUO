@@ -124,11 +124,6 @@ namespace Server.Spells.Herbalist
             {
                 base.Deserialize(reader);
                 int version = reader.ReadInt();
-
-                if (version >= 1)
-                    reader.ReadTimeSpan();
-
-                this.Delete();
             }
 
             public override void OnAfterDelete()

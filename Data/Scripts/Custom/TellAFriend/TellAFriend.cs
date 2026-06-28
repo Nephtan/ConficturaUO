@@ -56,14 +56,8 @@ namespace Server
 
         private static void TAFLogin(LoginEventArgs args)
         {
-            if (args == null || args.Mobile == null || args.Mobile.Deleted)
-                return;
-
             Mobile m = args.Mobile;
-            Account ac = m.Account as Account;
-            if (ac == null)
-                return;
-
+            Account ac = (Account)m.Account;
             bool toldfriend = ToldAFriend(m);
             bool gotfriend = GotAFriend(m);
             if (ac.Created >= age)

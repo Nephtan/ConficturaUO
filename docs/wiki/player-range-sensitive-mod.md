@@ -70,33 +70,3 @@ The command is functionally incomplete as an admin-facing setting because invali
 * Wiki omitted activation rules -> traced `BaseCreature.PlayerRangeSensitive` and overrides -> code excludes waypoint-following creatures by default and has several explicit overrides.
 * Wiki omitted spawn return behavior -> traced `BaseAI.Deactivate` and `SpawnEntry.ReturnOnDeactivate` -> code can return uncontrolled region spawns home during AI deactivation.
 * Serialization check -> traced the command-only script -> no custom save version exists because the delay is runtime static state.
-
-## Source Trace
-
-POST-BATCH-T reviewed this page on 2026-06-14T21:09:11.0049244-05:00 against current source and audit registers.
-
-- Canonical status: Canonical.
-- Queue rows: PBN-0103.
-- Backlog rows: RB-06744.
-- Audit registers used: documentation-truth-table.csv, runtime-hook-map.csv, serialization-register.csv, and project-truth-register.csv.
-
-### Source Files Reviewed
-
-- Data/Scripts/Custom/Player Range Sensitive Mod/setdeactivation.cs (CurrentFile)
-
-### Runtime Evidence
-
-- Hook summary: Command=1; Initialize=1.
-- Data/Scripts/Custom/Player Range Sensitive Mod/setdeactivation.cs:L13 Initialize Initialize access=GlobalOrInternal
-- Data/Scripts/Custom/Player Range Sensitive Mod/setdeactivation.cs:L15 Command CommandSystem.Register access=Unknown
-
-### Serialization Evidence
-
-- No serialized classes matched the reviewed source set in serialization-register.csv.
-
-### Project And Runtime Coverage
-
-- Data/Scripts/Custom/Player Range Sensitive Mod/setdeactivation.cs=Keep
-- Data/Scripts/Custom/Player Range Sensitive Mod/setdeactivation.cs=Keep
-
-No C# source, project files, XML/config/data files, namespaces, serializers, gameplay behavior, or migration policy were changed in POST-BATCH-T.

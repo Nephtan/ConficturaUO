@@ -2293,18 +2293,10 @@ namespace Server.Factions
 
             if (Core.ML)
             {
-                IPooledEnumerable eable = m.GetItemsInRange(p, 0);
-                try
+                foreach (Item item in m.GetItemsInRange(p, 0))
                 {
-                    foreach (Item item in eable)
-                    {
-                        if (item is BaseFactionTrap && ((BaseFactionTrap)item).Faction == this.Faction)
-                            return 1075263; // There is already a trap belonging to your faction at this location.;
-                    }
-                }
-                finally
-                {
-                    eable.Free();
+                    if (item is BaseFactionTrap && ((BaseFactionTrap)item).Faction == this.Faction)
+                        return 1075263; // There is already a trap belonging to your faction at this location.;
                 }
             }
 
@@ -2345,9 +2337,6 @@ namespace Server.Factions
 
         public override void OnMovement(Mobile m, Point3D oldLocation)
         {
-            if (m == null || m.Deleted)
-                return;
-
             base.OnMovement(m, oldLocation);
 
             if (!CheckDecay() && CheckRange(m.Location, oldLocation, 6))
@@ -3577,35 +3566,27 @@ namespace Server.Ethics.Hero
 
             SpellHelper.GetSurfaceTop(ref p);
 
-            IPooledEnumerable eable = from.Mobile.GetMobilesInRange(6);
-            try
+            foreach (Mobile mob in from.Mobile.GetMobilesInRange(6))
             {
-                foreach (Mobile mob in eable)
-                {
-                    if (mob != from.Mobile && SpellHelper.ValidIndirectTarget(from.Mobile, mob))
-                        continue;
+                if (mob != from.Mobile && SpellHelper.ValidIndirectTarget(from.Mobile, mob))
+                    continue;
 
-                    if (mob.GetStatMod("Holy Bless") != null)
-                        continue;
+                if (mob.GetStatMod("Holy Bless") != null)
+                    continue;
 
-                    if (!from.Mobile.CanBeBeneficial(mob, false))
-                        continue;
+                if (!from.Mobile.CanBeBeneficial(mob, false))
+                    continue;
 
-                    from.Mobile.DoBeneficial(mob);
+                from.Mobile.DoBeneficial(mob);
 
-                    mob.AddStatMod(
-                        new StatMod(StatType.All, "Holy Bless", 10, TimeSpan.FromMinutes(30.0))
-                    );
+                mob.AddStatMod(
+                    new StatMod(StatType.All, "Holy Bless", 10, TimeSpan.FromMinutes(30.0))
+                );
 
-                    mob.FixedParticles(0x373A, 10, 15, 5018, EffectLayer.Waist);
-                    mob.PlaySound(0x1EA);
+                mob.FixedParticles(0x373A, 10, 15, 5018, EffectLayer.Waist);
+                mob.PlaySound(0x1EA);
 
-                    powerFunctioned = true;
-                }
-            }
-            finally
-            {
-                eable.Free();
+                powerFunctioned = true;
             }
 
             if (powerFunctioned)
@@ -3669,35 +3650,27 @@ namespace Server.Ethics.Evil
 
             SpellHelper.GetSurfaceTop(ref p);
 
-            IPooledEnumerable eable = from.Mobile.GetMobilesInRange(6);
-            try
+            foreach (Mobile mob in from.Mobile.GetMobilesInRange(6))
             {
-                foreach (Mobile mob in eable)
-                {
-                    if (mob == from.Mobile || !SpellHelper.ValidIndirectTarget(from.Mobile, mob))
-                        continue;
+                if (mob == from.Mobile || !SpellHelper.ValidIndirectTarget(from.Mobile, mob))
+                    continue;
 
-                    if (mob.GetStatMod("Holy Curse") != null)
-                        continue;
+                if (mob.GetStatMod("Holy Curse") != null)
+                    continue;
 
-                    if (!from.Mobile.CanBeHarmful(mob, false))
-                        continue;
+                if (!from.Mobile.CanBeHarmful(mob, false))
+                    continue;
 
-                    from.Mobile.DoHarmful(mob, true);
+                from.Mobile.DoHarmful(mob, true);
 
-                    mob.AddStatMod(
-                        new StatMod(StatType.All, "Holy Curse", -10, TimeSpan.FromMinutes(30.0))
-                    );
+                mob.AddStatMod(
+                    new StatMod(StatType.All, "Holy Curse", -10, TimeSpan.FromMinutes(30.0))
+                );
 
-                    mob.FixedParticles(0x374A, 10, 15, 5028, EffectLayer.Waist);
-                    mob.PlaySound(0x1FB);
+                mob.FixedParticles(0x374A, 10, 15, 5028, EffectLayer.Waist);
+                mob.PlaySound(0x1FB);
 
-                    powerFunctioned = true;
-                }
-            }
-            finally
-            {
-                eable.Free();
+                powerFunctioned = true;
             }
 
             if (powerFunctioned)
@@ -9931,9 +9904,6 @@ namespace Server.Ethics
 
         public static void EventSink_Speech(SpeechEventArgs e)
         {
-            if (e == null || e.Mobile == null || e.Mobile.Deleted)
-                return;
-
             if (e.Blocked || e.Handled)
                 return;
 
@@ -9953,21 +9923,13 @@ namespace Server.Ethics
 
                     bool isNearAnkh = false;
 
-                    IPooledEnumerable eable = e.Mobile.GetItemsInRange(2);
-                    try
+                    foreach (Item item in e.Mobile.GetItemsInRange(2))
                     {
-                        foreach (Item item in eable)
+                        if (item is Items.AnkhNorth || item is Items.AnkhWest)
                         {
-                            if (item is Items.AnkhNorth || item is Items.AnkhWest)
-                            {
-                                isNearAnkh = true;
-                                break;
-                            }
+                            isNearAnkh = true;
+                            break;
                         }
-                    }
-                    finally
-                    {
-                        eable.Free();
                     }
 
                     if (!isNearAnkh)
@@ -11539,9 +11501,6 @@ namespace Server.Factions
 
         private static void EventSink_Logout(LogoutEventArgs e)
         {
-            if (e == null || e.Mobile == null || e.Mobile.Deleted)
-                return;
-
             Mobile mob = e.Mobile;
 
             Container pack = mob.Backpack;
@@ -11557,9 +11516,6 @@ namespace Server.Factions
 
         private static void EventSink_Login(LoginEventArgs e)
         {
-            if (e == null || e.Mobile == null || e.Mobile.Deleted)
-                return;
-
             Mobile mob = e.Mobile;
 
             CheckLeaveTimer(mob);
@@ -15496,18 +15452,10 @@ namespace Server.Factions
 
         private static bool CheckExistance(Point3D loc, Map facet, Type type)
         {
-            IPooledEnumerable eable = facet.GetItemsInRange(loc, 0);
-            try
+            foreach (Item item in facet.GetItemsInRange(loc, 0))
             {
-                foreach (Item item in eable)
-                {
-                    if (type.IsAssignableFrom(item.GetType()))
-                        return true;
-                }
-            }
-            finally
-            {
-                eable.Free();
+                if (type.IsAssignableFrom(item.GetType()))
+                    return true;
             }
 
             return false;
@@ -15571,20 +15519,12 @@ namespace Server.Mobiles
             {
                 int goo = 0;
 
-                IPooledEnumerable eable = this.GetItemsInRange(10);
-                try
+                foreach (Item splash in this.GetItemsInRange(10))
                 {
-                    foreach (Item splash in eable)
+                    if (splash is MonsterSplatter && splash.Name == "glowing goo")
                     {
-                        if (splash is MonsterSplatter && splash.Name == "glowing goo")
-                        {
-                            goo++;
-                        }
+                        goo++;
                     }
-                }
-                finally
-                {
-                    eable.Free();
                 }
 
                 if (goo == 0)
@@ -15779,30 +15719,22 @@ namespace Server.Mobiles
         {
             ArrayList list = new ArrayList();
 
-            IPooledEnumerable eable = this.GetMobilesInRange(2);
-            try
+            foreach (Mobile m in this.GetMobilesInRange(2))
             {
-                foreach (Mobile m in eable)
-                {
-                    if (m == this || !CanBeHarmful(m))
-                        continue;
+                if (m == this || !CanBeHarmful(m))
+                    continue;
 
-                    if (
-                        m is BaseCreature
-                        && (
-                            ((BaseCreature)m).Controlled
-                            || ((BaseCreature)m).Summoned
-                            || ((BaseCreature)m).Team != this.Team
-                        )
+                if (
+                    m is BaseCreature
+                    && (
+                        ((BaseCreature)m).Controlled
+                        || ((BaseCreature)m).Summoned
+                        || ((BaseCreature)m).Team != this.Team
                     )
-                        list.Add(m);
-                    else if (m.Player)
-                        list.Add(m);
-                }
-            }
-            finally
-            {
-                eable.Free();
+                )
+                    list.Add(m);
+                else if (m.Player)
+                    list.Add(m);
             }
 
             foreach (Mobile m in list)
@@ -17319,35 +17251,27 @@ namespace Server.Factions
                         actPrio = inactPrio = m_Mobile.GetDistanceToSqrt(comb);
                     }
 
-                    IPooledEnumerable eable = m_Mobile.GetMobilesInRange(12);
-                    try
+                    foreach (Mobile m in m_Mobile.GetMobilesInRange(12))
                     {
-                        foreach (Mobile m in eable)
+                        if (m != m_Mobile && CanDispel(m))
                         {
-                            if (m != m_Mobile && CanDispel(m))
+                            double prio = m_Mobile.GetDistanceToSqrt(m);
+
+                            if (!activeOnly && (inactive == null || prio < inactPrio))
                             {
-                                double prio = m_Mobile.GetDistanceToSqrt(m);
+                                inactive = m;
+                                inactPrio = prio;
+                            }
 
-                                if (!activeOnly && (inactive == null || prio < inactPrio))
-                                {
-                                    inactive = m;
-                                    inactPrio = prio;
-                                }
-
-                                if (
-                                    (m_Mobile.Combatant == m || m.Combatant == m_Mobile)
-                                    && (active == null || prio < actPrio)
-                                )
-                                {
-                                    active = m;
-                                    actPrio = prio;
-                                }
+                            if (
+                                (m_Mobile.Combatant == m || m.Combatant == m_Mobile)
+                                && (active == null || prio < actPrio)
+                            )
+                            {
+                                active = m;
+                                actPrio = prio;
                             }
                         }
-                    }
-                    finally
-                    {
-                        eable.Free();
                     }
 
                     return active != null ? active : inactive;
@@ -19981,9 +19905,6 @@ namespace Server.Factions
 
         private static void EventSink_Speech(SpeechEventArgs e)
         {
-            if (e == null || e.Mobile == null || e.Mobile.Deleted || e.Keywords == null)
-                return;
-
             Mobile from = e.Mobile;
             int[] keywords = e.Keywords;
 
@@ -25297,9 +25218,6 @@ namespace Server.Engines.Quests
 
         public override void OnEnter(Mobile m)
         {
-            if (m == null || m.Deleted)
-                return;
-
             base.OnEnter(m);
 
             if (m_Quest != null && m_Objective != null)
@@ -29140,9 +29058,6 @@ namespace Server.Engines.VeteranRewards
 
         private static void EventSink_Login(LoginEventArgs e)
         {
-            if (e == null || e.Mobile == null || e.Mobile.Deleted)
-                return;
-
             if (!e.Mobile.Alive)
                 return;
 
@@ -36344,30 +36259,22 @@ namespace Server.Mobiles
         {
             ArrayList list = new ArrayList();
 
-            IPooledEnumerable eable = this.GetMobilesInRange(2);
-            try
+            foreach (Mobile m in this.GetMobilesInRange(2))
             {
-                foreach (Mobile m in eable)
-                {
-                    if (m == this || !CanBeHarmful(m))
-                        continue;
+                if (m == this || !CanBeHarmful(m))
+                    continue;
 
-                    if (
-                        m is BaseCreature
-                        && (
-                            ((BaseCreature)m).Controlled
-                            || ((BaseCreature)m).Summoned
-                            || ((BaseCreature)m).Team != this.Team
-                        )
+                if (
+                    m is BaseCreature
+                    && (
+                        ((BaseCreature)m).Controlled
+                        || ((BaseCreature)m).Summoned
+                        || ((BaseCreature)m).Team != this.Team
                     )
-                        list.Add(m);
-                    else if (m.Player)
-                        list.Add(m);
-                }
-            }
-            finally
-            {
-                eable.Free();
+                )
+                    list.Add(m);
+                else if (m.Player)
+                    list.Add(m);
             }
 
             foreach (Mobile m in list)
@@ -37785,20 +37692,12 @@ namespace Server.Items
                     }
 
                     bool nearBook = false;
-                    IPooledEnumerable eable = from.GetItemsInRange(10);
-                    try
+                    foreach (Item tome in from.GetItemsInRange(10))
                     {
-                        foreach (Item tome in eable)
+                        if (tome == m_Book)
                         {
-                            if (tome == m_Book)
-                            {
-                                nearBook = true;
-                            }
+                            nearBook = true;
                         }
-                    }
-                    finally
-                    {
-                        eable.Free();
                     }
 
                     if (sName != "" && nearBook == true)
@@ -37864,203 +37763,187 @@ namespace Server.Items
 
                             int OneSay = 0;
 
-                            IPooledEnumerable eable2 = from.GetMobilesInRange(10);
-                            try
+                            foreach (Mobile who in from.GetMobilesInRange(10))
                             {
-                                foreach (Mobile who in eable2)
+                                if (
+                                    (
+                                        who is IronWorker
+                                        || who is Weaponsmith
+                                        || who is Armorer
+                                        || who is Blacksmith
+                                    )
+                                    && OneSay == 0
+                                    && m_Book.Name == "Steel Crafted Items"
+                                )
                                 {
-                                    if (
-                                        (
-                                            who is IronWorker
-                                            || who is Weaponsmith
-                                            || who is Armorer
-                                            || who is Blacksmith
-                                        )
-                                        && OneSay == 0
-                                        && m_Book.Name == "Steel Crafted Items"
-                                    )
+                                    who.PlaySound(0x2A);
+
+                                    switch (Utility.Random(2))
                                     {
-                                        who.PlaySound(0x2A);
-
-                                        switch (Utility.Random(2))
-                                        {
-                                            case 0:
-                                                who.Say(
-                                                    "I have spent years learning the art of steel."
-                                                );
-                                                break;
-                                            case 1:
-                                                who.Say("Let me see what I can make here.");
-                                                break;
-                                            case 2:
-                                                who.Say("People come from afar for orkish steel.");
-                                                break;
-                                            case 3:
-                                                who.Say("You won't see many items like this.");
-                                                break;
-                                            case 4:
-                                                who.Say("I think I can forge that for you.");
-                                                break;
-                                            case 5:
-                                                who.Say(
-                                                    "The fires are hot so I am ready to forge steel."
-                                                );
-                                                break;
-                                        }
-
-                                        OneSay = 1;
+                                        case 0:
+                                            who.Say(
+                                                "I have spent years learning the art of steel."
+                                            );
+                                            break;
+                                        case 1:
+                                            who.Say("Let me see what I can make here.");
+                                            break;
+                                        case 2:
+                                            who.Say("People come from afar for orkish steel.");
+                                            break;
+                                        case 3:
+                                            who.Say("You won't see many items like this.");
+                                            break;
+                                        case 4:
+                                            who.Say("I think I can forge that for you.");
+                                            break;
+                                        case 5:
+                                            who.Say(
+                                                "The fires are hot so I am ready to forge steel."
+                                            );
+                                            break;
                                     }
-                                    else if (
-                                        (
-                                            who is IronWorker
-                                            || who is Weaponsmith
-                                            || who is Armorer
-                                            || who is Blacksmith
-                                        )
-                                        && OneSay == 0
-                                        && m_Book.Name == "Mithril Crafted Items"
-                                    )
-                                    {
-                                        who.PlaySound(0x2A);
 
-                                        switch (Utility.Random(2))
-                                        {
-                                            case 0:
-                                                who.Say(
-                                                    "I have spent years learning the art of mithril."
-                                                );
-                                                break;
-                                            case 1:
-                                                who.Say("Let me see what I can make here.");
-                                                break;
-                                            case 2:
-                                                who.Say("People find their way here for our mithril.");
-                                                break;
-                                            case 3:
-                                                who.Say("You won't see many items like this.");
-                                                break;
-                                            case 4:
-                                                who.Say("I think I can forge that for you.");
-                                                break;
-                                            case 5:
-                                                who.Say(
-                                                    "The fires are hot so I am ready to forge mithril."
-                                                );
-                                                break;
-                                        }
-
-                                        OneSay = 1;
-                                    }
-                                    else if (
-                                        (
-                                            who is IronWorker
-                                            || who is Weaponsmith
-                                            || who is Armorer
-                                            || who is Blacksmith
-                                        )
-                                        && OneSay == 0
-                                        && m_Book.Name == "Brass Crafted Items"
-                                    )
-                                    {
-                                        who.PlaySound(0x2A);
-
-                                        switch (Utility.Random(2))
-                                        {
-                                            case 0:
-                                                who.Say(
-                                                    "I have spent years learning the art of brass."
-                                                );
-                                                break;
-                                            case 1:
-                                                who.Say("Let me see what I can make here.");
-                                                break;
-                                            case 2:
-                                                who.Say("People find their way here for our brass.");
-                                                break;
-                                            case 3:
-                                                who.Say("You won't see many items like this.");
-                                                break;
-                                            case 4:
-                                                who.Say("I think I can forge that for you.");
-                                                break;
-                                            case 5:
-                                                who.Say(
-                                                    "The fires are hot so I am ready to forge brass."
-                                                );
-                                                break;
-                                        }
-
-                                        OneSay = 1;
-                                    }
+                                    OneSay = 1;
                                 }
-                            }
-                            finally
-                            {
-                                eable2.Free();
+                                else if (
+                                    (
+                                        who is IronWorker
+                                        || who is Weaponsmith
+                                        || who is Armorer
+                                        || who is Blacksmith
+                                    )
+                                    && OneSay == 0
+                                    && m_Book.Name == "Mithril Crafted Items"
+                                )
+                                {
+                                    who.PlaySound(0x2A);
+
+                                    switch (Utility.Random(2))
+                                    {
+                                        case 0:
+                                            who.Say(
+                                                "I have spent years learning the art of mithril."
+                                            );
+                                            break;
+                                        case 1:
+                                            who.Say("Let me see what I can make here.");
+                                            break;
+                                        case 2:
+                                            who.Say("People find their way here for our mithril.");
+                                            break;
+                                        case 3:
+                                            who.Say("You won't see many items like this.");
+                                            break;
+                                        case 4:
+                                            who.Say("I think I can forge that for you.");
+                                            break;
+                                        case 5:
+                                            who.Say(
+                                                "The fires are hot so I am ready to forge mithril."
+                                            );
+                                            break;
+                                    }
+
+                                    OneSay = 1;
+                                }
+                                else if (
+                                    (
+                                        who is IronWorker
+                                        || who is Weaponsmith
+                                        || who is Armorer
+                                        || who is Blacksmith
+                                    )
+                                    && OneSay == 0
+                                    && m_Book.Name == "Brass Crafted Items"
+                                )
+                                {
+                                    who.PlaySound(0x2A);
+
+                                    switch (Utility.Random(2))
+                                    {
+                                        case 0:
+                                            who.Say(
+                                                "I have spent years learning the art of brass."
+                                            );
+                                            break;
+                                        case 1:
+                                            who.Say("Let me see what I can make here.");
+                                            break;
+                                        case 2:
+                                            who.Say("People find their way here for our brass.");
+                                            break;
+                                        case 3:
+                                            who.Say("You won't see many items like this.");
+                                            break;
+                                        case 4:
+                                            who.Say("I think I can forge that for you.");
+                                            break;
+                                        case 5:
+                                            who.Say(
+                                                "The fires are hot so I am ready to forge brass."
+                                            );
+                                            break;
+                                    }
+
+                                    OneSay = 1;
+                                }
                             }
                         }
                         else
                         {
                             int NoGold = 0;
 
-                            IPooledEnumerable eable3 = from.GetMobilesInRange(10);
-                            try
+                            foreach (Mobile who in from.GetMobilesInRange(10))
                             {
-                                foreach (Mobile who in eable3)
+                                if (
+                                    (
+                                        who is IronWorker
+                                        || who is Weaponsmith
+                                        || who is Armorer
+                                        || who is Blacksmith
+                                    )
+                                    && NoGold == 0
+                                    && m_Book.Name == "Steel Crafted Items"
+                                )
                                 {
-                                    if (
-                                        (
-                                            who is IronWorker
-                                            || who is Weaponsmith
-                                            || who is Armorer
-                                            || who is Blacksmith
-                                        )
-                                        && NoGold == 0
-                                        && m_Book.Name == "Steel Crafted Items"
-                                    )
-                                    {
-                                        who.Say(
-                                            "You don't seem to have enough gold for me to make that."
-                                        );
-                                        NoGold = 1;
-                                    }
-                                    else if (
-                                        (
-                                            who is IronWorker
-                                            || who is Weaponsmith
-                                            || who is Armorer
-                                            || who is Blacksmith
-                                        )
-                                        && NoGold == 0
-                                        && m_Book.Name == "Mithril Crafted Items"
-                                    )
-                                    {
-                                        who.Say(
-                                            "You don't seem to have enough gold for me to make that."
-                                        );
-                                        NoGold = 1;
-                                    }
-                                    else if (
-                                        (
-                                            who is IronWorker
-                                            || who is Weaponsmith
-                                            || who is Armorer
-                                            || who is Blacksmith
-                                        )
-                                        && NoGold == 0
-                                        && m_Book.Name == "Brass Crafted Items"
-                                    )
-                                    {
-                                        who.Say(
-                                            "You don't seem to have enough gold for me to make that."
-                                        );
-                                        NoGold = 1;
-                                    }
+                                    who.Say(
+                                        "You don't seem to have enough gold for me to make that."
+                                    );
+                                    NoGold = 1;
                                 }
-                            }
-                            finally
-                            {
-                                eable3.Free();
+                                else if (
+                                    (
+                                        who is IronWorker
+                                        || who is Weaponsmith
+                                        || who is Armorer
+                                        || who is Blacksmith
+                                    )
+                                    && NoGold == 0
+                                    && m_Book.Name == "Mithril Crafted Items"
+                                )
+                                {
+                                    who.Say(
+                                        "You don't seem to have enough gold for me to make that."
+                                    );
+                                    NoGold = 1;
+                                }
+                                else if (
+                                    (
+                                        who is IronWorker
+                                        || who is Weaponsmith
+                                        || who is Armorer
+                                        || who is Blacksmith
+                                    )
+                                    && NoGold == 0
+                                    && m_Book.Name == "Brass Crafted Items"
+                                )
+                                {
+                                    who.Say(
+                                        "You don't seem to have enough gold for me to make that."
+                                    );
+                                    NoGold = 1;
+                                }
                             }
                         }
                     }

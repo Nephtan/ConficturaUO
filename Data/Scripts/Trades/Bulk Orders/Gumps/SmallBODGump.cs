@@ -70,20 +70,7 @@ namespace Server.Engines.BulkOrders
 
         public override void OnResponse(NetState sender, RelayInfo info)
         {
-            if (sender == null)
-                return;
-
-            Mobile from = sender.Mobile;
-
-            if (
-                from == null
-                || from.Deleted
-                || from != m_From
-                || m_Deed == null
-                || m_Deed.Deleted
-                || from.Backpack == null
-                || !m_Deed.IsChildOf(from.Backpack)
-            )
+            if (m_Deed.Deleted || !m_Deed.IsChildOf(m_From.Backpack))
                 return;
 
             if (info.ButtonID == 2) // Combine

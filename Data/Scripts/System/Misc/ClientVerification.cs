@@ -110,18 +110,11 @@ namespace Server.Misc
 
         private static void EventSink_ClientVersionReceived(ClientVersionReceivedArgs e)
         {
-            if (e == null || e.State == null || e.Version == null)
-                return;
-
             string kickMessage = null;
             NetState state = e.State;
             ClientVersion version = e.Version;
-            Mobile mobile = state.Mobile;
 
-            if (mobile == null || mobile.Deleted)
-                return;
-
-            if (mobile.AccessLevel > AccessLevel.Player)
+            if (state.Mobile.AccessLevel > AccessLevel.Player)
                 return;
 
             if (
@@ -131,9 +124,9 @@ namespace Server.Misc
                     m_OldClientResponse == OldClientResponse.Kick
                     || (
                         m_OldClientResponse == OldClientResponse.LenientKick
-                        && (DateTime.Now - mobile.CreationTime) > m_AgeLeniency
-                        && mobile is PlayerMobile
-                        && ((PlayerMobile)mobile).GameTime > m_GameTimeLeniency
+                        && (DateTime.Now - state.Mobile.CreationTime) > m_AgeLeniency
+                        && state.Mobile is PlayerMobile
+                        && ((PlayerMobile)state.Mobile).GameTime > m_GameTimeLeniency
                     )
                 )
             )
@@ -173,8 +166,8 @@ namespace Server.Misc
 
             if (kickMessage != null)
             {
-                mobile.SendMessage(0x22, kickMessage);
-                mobile.SendMessage(
+                state.Mobile.SendMessage(0x22, kickMessage);
+                state.Mobile.SendMessage(
                     0x22,
                     "You will be disconnected in {0} seconds.",
                     KickDelay.TotalSeconds
@@ -198,12 +191,12 @@ namespace Server.Misc
                 {
                     case OldClientResponse.Warn:
                     {
-                        mobile.SendMessage(
+                        state.Mobile.SendMessage(
                             0x22,
                             "Your client is out of date. Please update your client.",
                             Required
                         );
-                        mobile.SendMessage(
+                        state.Mobile.SendMessage(
                             0x22,
                             "This server reccomends that your client version be at least {0}.",
                             Required
@@ -213,7 +206,7 @@ namespace Server.Misc
                     case OldClientResponse.LenientKick:
                     case OldClientResponse.Annoy:
                     {
-                        SendAnnoyGump(mobile);
+                        SendAnnoyGump(state.Mobile);
                         break;
                     }
                 }

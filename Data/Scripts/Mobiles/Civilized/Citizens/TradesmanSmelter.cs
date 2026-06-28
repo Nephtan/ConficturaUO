@@ -28,36 +28,28 @@ namespace Server.Mobiles
         {
             if (DateTime.Now >= m_NextTalk)
             {
-                IPooledEnumerable eable1 = this.GetItemsInRange(1);
-                try
+                foreach (Item forge in this.GetItemsInRange(1))
                 {
-                    foreach (Item forge in eable1)
+                    if (forge is ForgeHit)
                     {
-                        if (forge is ForgeHit)
+                        if (this.FindItemOnLayer(Layer.FirstValid) != null)
                         {
-                            if (this.FindItemOnLayer(Layer.FirstValid) != null)
-                            {
-                                this.Delete();
-                            }
-                            else if (this.FindItemOnLayer(Layer.TwoHanded) != null)
-                            {
-                                this.Delete();
-                            }
-                            else if (this.FindItemOnLayer(Layer.OneHanded) != null)
-                            {
-                                this.Delete();
-                            }
-                            ForgeHit smith = (ForgeHit)forge;
-                            smith.OnDoubleClick(this);
-                            m_NextTalk = (
-                                DateTime.Now + TimeSpan.FromSeconds(Utility.RandomMinMax(6, 12))
-                            );
+                            this.Delete();
                         }
+                        else if (this.FindItemOnLayer(Layer.TwoHanded) != null)
+                        {
+                            this.Delete();
+                        }
+                        else if (this.FindItemOnLayer(Layer.OneHanded) != null)
+                        {
+                            this.Delete();
+                        }
+                        ForgeHit smith = (ForgeHit)forge;
+                        smith.OnDoubleClick(this);
+                        m_NextTalk = (
+                            DateTime.Now + TimeSpan.FromSeconds(Utility.RandomMinMax(6, 12))
+                        );
                     }
-                }
-                finally
-                {
-                    eable1.Free();
                 }
             }
         }

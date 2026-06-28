@@ -24,10 +24,7 @@ namespace Server.Items
         {
             Target t;
 
-            if (from == null || from.Deleted || Deleted)
-                return;
-
-            if (from.Backpack == null || !IsChildOf(from.Backpack))
+            if (!IsChildOf(from.Backpack))
             {
                 from.SendLocalizedMessage(1060640); // The item must be in your backpack to use it.
             }
@@ -58,19 +55,13 @@ namespace Server.Items
 
             protected override void OnTarget(Mobile from, object targeted)
             {
-                if (from == null || from.Deleted)
-                    return;
-
-                if (m_Key == null || m_Key.Deleted)
-                    return;
-
                 bool trash = false;
                 if (Utility.RandomMinMax(1, 10) == 1)
                 {
                     trash = false;
                 }
 
-                if (from.Backpack == null || !m_Key.IsChildOf(from.Backpack))
+                if (!m_Key.IsChildOf(from.Backpack))
                 {
                     from.SendLocalizedMessage(1060640); // The item must be in your backpack to use it.
                 }

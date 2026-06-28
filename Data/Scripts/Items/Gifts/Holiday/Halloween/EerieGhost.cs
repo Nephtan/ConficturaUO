@@ -79,9 +79,6 @@ namespace Server.Items
 
         public override void OnMovement(Mobile m, Point3D oldLocation)
         {
-            if (m == null || m.Deleted)
-                return;
-
             if (
                 ((ItemID >= 0x5755 && ItemID <= 0x5759) || (ItemID >= 0x575B && ItemID <= 0x575F))
                 && IsLockedDown

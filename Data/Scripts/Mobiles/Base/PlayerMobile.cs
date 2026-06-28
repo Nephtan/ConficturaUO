@@ -1002,13 +1002,7 @@ namespace Server.Mobiles
 
         private static void OnLogin(LoginEventArgs e)
         {
-            if (e == null)
-                return;
-
             Mobile from = e.Mobile;
-
-            if (from == null || from.Deleted)
-                return;
 
             CheckAtrophies(from);
 
@@ -1327,29 +1321,13 @@ namespace Server.Mobiles
 
         private static void OnLogout(LogoutEventArgs e)
         {
-            if (e == null)
-                return;
-
-            Mobile mobile = e.Mobile;
-
-            if (mobile == null || mobile.Deleted)
-                return;
-
-            if (mobile is PlayerMobile)
-                ((PlayerMobile)mobile).AutoStablePets();
+            if (e.Mobile is PlayerMobile)
+                ((PlayerMobile)e.Mobile).AutoStablePets();
         }
 
         private static void EventSink_Connected(ConnectedEventArgs e)
         {
-            if (e == null)
-                return;
-
-            Mobile mobile = e.Mobile;
-
-            if (mobile == null || mobile.Deleted)
-                return;
-
-            PlayerMobile pm = mobile as PlayerMobile;
+            PlayerMobile pm = e.Mobile as PlayerMobile;
 
             if (pm != null)
             {
@@ -1362,12 +1340,12 @@ namespace Server.Mobiles
                 pm.LastOnline = DateTime.Now;
             }
 
-            DisguiseTimers.StartTimer(mobile);
+            DisguiseTimers.StartTimer(e.Mobile);
 
             Timer.DelayCall(
                 TimeSpan.Zero,
                 new TimerStateCallback(ClearSpecialMovesCallback),
-                mobile
+                e.Mobile
             );
         }
 
@@ -1380,14 +1358,7 @@ namespace Server.Mobiles
 
         private static void EventSink_Disconnected(DisconnectedEventArgs e)
         {
-            if (e == null)
-                return;
-
             Mobile from = e.Mobile;
-
-            if (from == null || from.Deleted)
-                return;
-
             DesignContext context = DesignContext.Find(from);
 
             if (context != null)
@@ -1414,7 +1385,7 @@ namespace Server.Mobiles
                 context.Foundation.RestoreRelocatedEntities();
             }
 
-            PlayerMobile pm = from as PlayerMobile;
+            PlayerMobile pm = e.Mobile as PlayerMobile;
 
             if (pm != null)
             {
@@ -3535,41 +3506,32 @@ namespace Server.Mobiles
         {
             Packet p = null;
 
-            IPooledEnumerable eable = from.GetClientsInRange(8);
-
-            try
+            foreach (NetState ns in from.GetClientsInRange(8))
             {
-                foreach (NetState ns in eable)
+                Mobile mob = ns.Mobile;
+
+                if (
+                    mob != null
+                    && mob.AccessLevel >= AccessLevel.GameMaster
+                    && mob.AccessLevel > from.AccessLevel
+                )
                 {
-                    Mobile mob = ns.Mobile;
+                    if (p == null)
+                        p = Packet.Acquire(
+                            new UnicodeMessage(
+                                from.Serial,
+                                from.Body,
+                                MessageType.Regular,
+                                from.SpeechHue,
+                                3,
+                                from.Language,
+                                from.Name,
+                                text
+                            )
+                        );
 
-                    if (
-                        mob != null
-                        && mob.AccessLevel >= AccessLevel.GameMaster
-                        && mob.AccessLevel > from.AccessLevel
-                    )
-                    {
-                        if (p == null)
-                            p = Packet.Acquire(
-                                new UnicodeMessage(
-                                    from.Serial,
-                                    from.Body,
-                                    MessageType.Regular,
-                                    from.SpeechHue,
-                                    3,
-                                    from.Language,
-                                    from.Name,
-                                    text
-                                )
-                            );
-
-                        ns.Send(p);
-                    }
+                    ns.Send(p);
                 }
-            }
-            finally
-            {
-                eable.Free();
             }
 
             Packet.Release(p);
@@ -4579,9 +4541,6 @@ namespace Server.Mobiles
             base.Deserialize(reader);
             int version = reader.ReadInt();
 
-            // Save format: this fall-through mirrors Serialize below; PlayerMobile is a
-            // cross-system state hub, so preserve field order unless a migration covers
-            // every dependent system.
             switch (version)
             {
                 case 37:
@@ -5867,35 +5826,26 @@ namespace Server.Mobiles
 
         private void DeltaEnemies(Type oldType, Type newType)
         {
-            IPooledEnumerable eable = this.GetMobilesInRange(18);
-
-            try
+            foreach (Mobile m in this.GetMobilesInRange(18))
             {
-                foreach (Mobile m in eable)
+                Type t = m.GetType();
+
+                if (t == oldType || t == newType)
                 {
-                    Type t = m.GetType();
+                    NetState ns = this.NetState;
 
-                    if (t == oldType || t == newType)
+                    if (ns != null)
                     {
-                        NetState ns = this.NetState;
-
-                        if (ns != null)
+                        if (ns.StygianAbyss)
                         {
-                            if (ns.StygianAbyss)
-                            {
-                                ns.Send(new MobileMoving(m, Notoriety.Compute(this, m)));
-                            }
-                            else
-                            {
-                                ns.Send(new MobileMovingOld(m, Notoriety.Compute(this, m)));
-                            }
+                            ns.Send(new MobileMoving(m, Notoriety.Compute(this, m)));
+                        }
+                        else
+                        {
+                            ns.Send(new MobileMovingOld(m, Notoriety.Compute(this, m)));
                         }
                     }
                 }
-            }
-            finally
-            {
-                eable.Free();
             }
         }
 

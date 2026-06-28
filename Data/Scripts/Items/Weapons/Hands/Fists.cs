@@ -269,12 +269,7 @@ namespace Server.Items
 
         private static void EventSink_DisarmRequest(DisarmRequestEventArgs e)
         {
-            if (e == null)
-                return;
-
             Mobile m = e.Mobile;
-            if (m == null || m.Deleted)
-                return;
 
             double armsValue = m.Skills[SkillName.ArmsLore].Value;
             double wresValue = m.Skills[SkillName.FistFighting].Value;
@@ -299,12 +294,7 @@ namespace Server.Items
 
         private static void EventSink_StunRequest(StunRequestEventArgs e)
         {
-            if (e == null)
-                return;
-
             Mobile m = e.Mobile;
-            if (m == null || m.Deleted)
-                return;
 
             double anatValue = m.Skills[SkillName.Anatomy].Value;
             double wresValue = m.Skills[SkillName.FistFighting].Value;

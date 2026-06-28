@@ -26,9 +26,6 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
-            if (from == null || from.Deleted || Deleted)
-                return;
-
             if (!from.InRange(this.GetWorldLocation(), 2))
                 return;
 
@@ -37,9 +34,6 @@ namespace Server.Items
 
         public void OnTelekinesis(Mobile from)
         {
-            if (from == null || from.Deleted || Deleted)
-                return;
-
             Effects.SendLocationParticles(
                 EffectItem.Create(Location, Map, EffectItem.DefaultDuration),
                 0x376A,

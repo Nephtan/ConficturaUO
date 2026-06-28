@@ -36,24 +36,15 @@ namespace Server.Spells.Bushido
 
             List<Mobile> targets = new List<Mobile>();
 
-            IPooledEnumerable eable = attacker.GetMobilesInRange(weapon.MaxRange);
-
-            try
+            foreach (Mobile m in attacker.GetMobilesInRange(weapon.MaxRange))
             {
-                foreach (Mobile m in eable)
-                {
-                    if (m == defender)
-                        continue;
+                if (m == defender)
+                    continue;
 
-                    if (m.Combatant != attacker)
-                        continue;
+                if (m.Combatant != attacker)
+                    continue;
 
-                    targets.Add(m);
-                }
-            }
-            finally
-            {
-                eable.Free();
+                targets.Add(m);
             }
 
             if (targets.Count > 0)

@@ -36,21 +36,13 @@ namespace Server.Items
                 int runes = 0;
 
                 ArrayList runic = new ArrayList();
-                IPooledEnumerable eable = from.GetItemsInRange(20);
-                try
+                foreach (Item boulders in from.GetItemsInRange(20))
                 {
-                    foreach (Item boulders in eable)
+                    if (boulders is RuneStoneGate)
                     {
-                        if (boulders is RuneStoneGate)
-                        {
-                            ++runes;
-                            runic.Add(boulders);
-                        }
+                        ++runes;
+                        runic.Add(boulders);
                     }
-                }
-                finally
-                {
-                    eable.Free();
                 }
 
                 if (runes > 0)

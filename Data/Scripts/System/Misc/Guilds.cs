@@ -797,11 +797,8 @@ namespace Server.Guilds
         #region EventSinks
         public static void EventSink_GuildGumpRequest(GuildGumpRequestArgs args)
         {
-            if (!NewGuildSystem || args == null || args.Mobile == null || args.Mobile.Deleted)
-                return;
-
             PlayerMobile pm = args.Mobile as PlayerMobile;
-            if (pm == null)
+            if (!NewGuildSystem || pm == null)
                 return;
 
             if (pm.Guild == null)
@@ -812,9 +809,6 @@ namespace Server.Guilds
 
         public static BaseGuild EventSink_CreateGuild(CreateGuildEventArgs args)
         {
-            if (args == null)
-                return null;
-
             return (BaseGuild)(new Guild(args.Id));
         }
         #endregion

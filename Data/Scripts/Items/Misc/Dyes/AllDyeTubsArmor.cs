@@ -65,10 +65,7 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
-            if (from == null || from.Deleted || Deleted)
-                return;
-
-            if (from.Backpack != null && this.IsChildOf(from.Backpack))
+            if (this.IsChildOf(from.Backpack))
             {
                 DoPack(from);
             }
@@ -80,9 +77,6 @@ namespace Server.Items
 
         public void DoPack(Mobile from)
         {
-            if (from == null || from.Deleted || Deleted)
-                return;
-
             if (AllowPack)
             {
                 DoOut(from);
@@ -95,9 +89,6 @@ namespace Server.Items
 
         public void DoOut(Mobile from)
         {
-            if (from == null || from.Deleted || Deleted)
-                return;
-
             if (from.InRange(this.GetWorldLocation(), 1))
             {
                 from.SendMessage("Select the item to dye");
@@ -149,21 +140,9 @@ namespace Server.Items
 
             protected override void OnTarget(Mobile from, object targeted)
             {
-                if (from == null || from.Deleted)
-                    return;
-
-                if (m_Tub == null || m_Tub.Deleted)
-                    return;
-
                 if (targeted is Item)
                 {
                     Item item = (Item)targeted;
-
-                    if (item.Deleted)
-                    {
-                        from.SendMessage("You cannot dye that.");
-                        return;
-                    }
 
                     if (
                         (item is BaseArmor)

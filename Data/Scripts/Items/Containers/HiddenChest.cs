@@ -27,9 +27,6 @@ namespace Server.Items
 
         public override bool OnMoveOver(Mobile m)
         {
-            if (m == null || m.Deleted || m.Map == null)
-                return true;
-
             if (m is PlayerMobile && m.Alive && m.AccessLevel == AccessLevel.Player && !m.Blessed)
             {
                 bool foundIt = false;
@@ -191,9 +188,6 @@ namespace Server.Items
 
         public override void OnMovement(Mobile m, Point3D oldLocation)
         {
-            if (m == null || m.Deleted || m.Map == null)
-                return;
-
             if (m is PlayerMobile && MyServerSettings.EnableDungeonSoundEffects())
             {
                 if (DateTime.Now >= m_NextSound && Utility.InRange(m.Location, this.Location, 10))

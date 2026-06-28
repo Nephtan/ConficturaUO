@@ -71,24 +71,16 @@ namespace Server.Mobiles
 
             ArrayList list = new ArrayList();
 
-            IPooledEnumerable eable1 = this.GetMobilesInRange(5);
-            try
+            foreach (Mobile m in this.GetMobilesInRange(5))
             {
-                foreach (Mobile m in eable1)
-                {
-                    if (
-                        m.Player
-                        && m.Alive
-                        && !m.IsDeadBondedPet
-                        && m.Karma <= 0
-                        && m.AccessLevel < AccessLevel.Counselor
-                    )
-                        list.Add(m);
-                }
-            }
-            finally
-            {
-                eable1.Free();
+                if (
+                    m.Player
+                    && m.Alive
+                    && !m.IsDeadBondedPet
+                    && m.Karma <= 0
+                    && m.AccessLevel < AccessLevel.Counselor
+                )
+                    list.Add(m);
             }
 
             for (int i = 0; i < list.Count; ++i)

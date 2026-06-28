@@ -198,19 +198,10 @@ namespace Server.Mobiles
 
             int rats = 0;
 
-            IPooledEnumerable eable = this.GetMobilesInRange(10);
-
-            try
+            foreach (Mobile m in this.GetMobilesInRange(10))
             {
-                foreach (Mobile m in eable)
-                {
-                    if (m is Ratman || m is RatmanArcher || m is RatmanMage)
-                        ++rats;
-                }
-            }
-            finally
-            {
-                eable.Free();
+                if (m is Ratman || m is RatmanArcher || m is RatmanMage)
+                    ++rats;
             }
 
             if (rats < 16)

@@ -19,25 +19,6 @@ namespace Server.Items
 
         protected override void OnTarget(Mobile from, object target)
         {
-            if (from == null || from.Deleted)
-            {
-                return;
-            }
-
-            if (m_Deed == null || m_Deed.Deleted || from.Backpack == null || !m_Deed.IsChildOf(from.Backpack))
-            {
-                from.SendLocalizedMessage(1042001);
-                return;
-            }
-
-            Item targetItem = target as Item;
-
-            if (targetItem != null && targetItem.Deleted)
-            {
-                from.SendMessage("You cannot enhance that item with luck.");
-                return;
-            }
-
             if (target is BaseWeapon)
             {
                 BaseWeapon item = (BaseWeapon)target;
@@ -213,12 +194,7 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
-            if (from == null || from.Deleted)
-            {
-                return;
-            }
-
-            if (Deleted || from.Backpack == null || !IsChildOf(from.Backpack))
+            if (!IsChildOf(from.Backpack))
             {
                 from.SendLocalizedMessage(1042001);
             }

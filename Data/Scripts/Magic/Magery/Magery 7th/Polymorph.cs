@@ -39,9 +39,6 @@ namespace Server.Spells.Seventh
 
         public override bool CheckCast()
         {
-            if (Caster == null || Caster.Deleted)
-                return false;
-
             if (Factions.Sigil.ExistsOn(Caster))
             {
                 Caster.SendLocalizedMessage(1010521); // You cannot polymorph while you have a Town Sigil
@@ -74,12 +71,6 @@ namespace Server.Spells.Seventh
 
         public override void OnCast()
         {
-            if (Caster == null || Caster.Deleted)
-            {
-                FinishSequence();
-                return;
-            }
-
             if (Factions.Sigil.ExistsOn(Caster))
             {
                 Caster.SendLocalizedMessage(1010521); // You cannot polymorph while you have a Town Sigil

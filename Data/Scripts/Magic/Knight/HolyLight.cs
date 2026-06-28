@@ -50,24 +50,13 @@ namespace Server.Spells.Chivalry
             {
                 List<Mobile> targets = new List<Mobile>();
 
-                IPooledEnumerable eable = Caster.GetMobilesInRange(3);
-
-                try
-                {
-                    foreach (Mobile m in eable)
-                    {
-                        if (
-                            Caster != m
-                            && SpellHelper.ValidIndirectTarget(Caster, m)
-                            && Caster.CanBeHarmful(m, false)
-                        )
-                            targets.Add(m);
-                    }
-                }
-                finally
-                {
-                    eable.Free();
-                }
+                foreach (Mobile m in Caster.GetMobilesInRange(3))
+                    if (
+                        Caster != m
+                        && SpellHelper.ValidIndirectTarget(Caster, m)
+                        && Caster.CanBeHarmful(m, false)
+                    )
+                        targets.Add(m);
 
                 Caster.PlaySound(0x212);
                 Caster.PlaySound(0x206);

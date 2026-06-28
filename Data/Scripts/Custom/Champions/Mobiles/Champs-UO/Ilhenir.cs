@@ -317,23 +317,12 @@ namespace Server.Mobiles
                     p = GetSpawnPosition(2);
                     bool found = false;
 
-                    IPooledEnumerable eable = Map.GetItemsInRange(p, 0);
-
-                    try
-                    {
-                        foreach (Item item in eable)
+                    foreach (Item item in Map.GetItemsInRange(p, 0))
+                        if (item is StainedOoze)
                         {
-                            if (item is StainedOoze)
-                            {
-                                found = true;
-                                break;
-                            }
+                            found = true;
+                            break;
                         }
-                    }
-                    finally
-                    {
-                        eable.Free();
-                    }
 
                     if (!found)
                         break;
@@ -416,31 +405,22 @@ namespace Server.Mobiles
         {
             List<Mobile> toDamage = new List<Mobile>();
 
-            IPooledEnumerable eable = GetMobilesInRange(0);
-
-            try
+            foreach (Mobile m in GetMobilesInRange(0))
             {
-                foreach (Mobile m in eable)
+                if (m is BaseCreature)
                 {
-                    if (m is BaseCreature)
-                    {
-                        BaseCreature bc = (BaseCreature)m;
+                    BaseCreature bc = (BaseCreature)m;
 
-                        if (!bc.Controlled && !bc.Summoned)
-                            continue;
-                    }
-                    else if (!m.Player)
-                    {
+                    if (!bc.Controlled && !bc.Summoned)
                         continue;
-                    }
-
-                    if (m.Alive && !m.IsDeadBondedPet && m.CanBeDamaged())
-                        toDamage.Add(m);
                 }
-            }
-            finally
-            {
-                eable.Free();
+                else if (!m.Player)
+                {
+                    continue;
+                }
+
+                if (m.Alive && !m.IsDeadBondedPet && m.CanBeDamaged())
+                    toDamage.Add(m);
             }
 
             for (int i = 0; i < toDamage.Count; ++i)

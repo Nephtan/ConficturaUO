@@ -57,9 +57,6 @@ namespace Server.Items
 
                 public override void OnResponse(int hue)
                 {
-                    if (m_Mixture == null || m_Mixture.Deleted)
-                        return;
-
                     m_Mixture.Hue = hue;
                     m_Mixture.InvalidateProperties();
                 }

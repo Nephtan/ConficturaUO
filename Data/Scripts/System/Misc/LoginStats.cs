@@ -15,9 +15,6 @@ namespace Server.Misc
 
         private static void EventSink_Login(LoginEventArgs args)
         {
-            if (args == null || args.Mobile == null || args.Mobile.Deleted)
-                return;
-
             int userCount = NetState.Instances.Count;
             int itemCount = World.Items.Count;
             int mobileCount = World.Mobiles.Count;
@@ -31,10 +28,7 @@ namespace Server.Misc
                     "You can use the 'Help' button on your paperdoll for more information."
                 );
 
-            PlayerMobile pm = m as PlayerMobile;
-
-            if (pm == null)
-                return;
+            PlayerMobile pm = (PlayerMobile)m;
 
             if (pm.OwesBackTaxes == true)
             {

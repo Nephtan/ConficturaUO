@@ -78,14 +78,9 @@ namespace Server.Gumps
 
         public override void OnResponse(Network.NetState sender, RelayInfo info)
         {
-            if (sender == null || info == null || sender.Mobile == null || sender.Mobile.Deleted || Process == null)
-                return;
-
-            int index = info.ButtonID - 1000;
-
-            if (index >= 0 && index < AttributeHandler.Definitions.Count)
+            if (info.ButtonID >= 1000)
             {
-                AttributeHandler handler = AttributeHandler.Definitions[index];
+                AttributeHandler handler = AttributeHandler.Definitions[info.ButtonID - 1000];
                 Process.BeginUpgrade(handler);
             }
         }

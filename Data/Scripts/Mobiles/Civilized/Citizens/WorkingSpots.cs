@@ -37,60 +37,44 @@ namespace Server.Items
         public static void Cleanup(Item spot)
         {
             ArrayList clean = new ArrayList();
-            IPooledEnumerable eable1 = spot.GetItemsInRange(5);
-            try
+            foreach (Item item in spot.GetItemsInRange(5))
             {
-                foreach (Item item in eable1)
+                if (
+                    !(item is WorkingSpots)
+                    && item.X == spot.X
+                    && item.Y == spot.Y
+                    && item.Map == spot.Map
+                )
                 {
-                    if (
-                        !(item is WorkingSpots)
-                        && item.X == spot.X
-                        && item.Y == spot.Y
-                        && item.Map == spot.Map
-                    )
-                    {
-                        clean.Add(item);
-                    }
+                    clean.Add(item);
                 }
             }
-            finally
+            foreach (Mobile mobile in spot.GetMobilesInRange(0))
             {
-                eable1.Free();
-            }
-            IPooledEnumerable eable2 = spot.GetMobilesInRange(0);
-            try
-            {
-                foreach (Mobile mobile in eable2)
-                {
-                    if (
-                        mobile.Location == spot.Location
-                        && mobile.Map == spot.Map
-                        && (
-                            mobile is SpellCritter
-                            || mobile is TradesmanAlchemist
-                            || mobile is TradesmanLeather
-                            || mobile is TradesmanLogger
-                            || mobile is TradesmanLumber
-                            || mobile is TradesmanMiner
-                            || mobile is TradesmanSmelter
-                            || mobile is TradesmanCook
-                            || mobile is TradesmanSmith
-                            || mobile is TradesmanButcher
-                            || mobile is TradesmanBard
-                            || mobile is TrainingBow
-                            || mobile is TrainingFishing
-                            || mobile is TrainingMagery
-                            || mobile is TrainingSingle
-                            || mobile is TrainingSpirits
-                            || mobile is Warriors
-                        )
+                if (
+                    mobile.Location == spot.Location
+                    && mobile.Map == spot.Map
+                    && (
+                        mobile is SpellCritter
+                        || mobile is TradesmanAlchemist
+                        || mobile is TradesmanLeather
+                        || mobile is TradesmanLogger
+                        || mobile is TradesmanLumber
+                        || mobile is TradesmanMiner
+                        || mobile is TradesmanSmelter
+                        || mobile is TradesmanCook
+                        || mobile is TradesmanSmith
+                        || mobile is TradesmanButcher
+                        || mobile is TradesmanBard
+                        || mobile is TrainingBow
+                        || mobile is TrainingFishing
+                        || mobile is TrainingMagery
+                        || mobile is TrainingSingle
+                        || mobile is TrainingSpirits
+                        || mobile is Warriors
                     )
-                        clean.Add(mobile);
-                }
-            }
-            finally
-            {
-                eable2.Free();
+                )
+                    clean.Add(mobile);
             }
             for (int i = 0; i < clean.Count; ++i)
             {
@@ -276,21 +260,13 @@ namespace Server.Items
             bool hasCitizen = false;
 
             ArrayList items = new ArrayList();
-            IPooledEnumerable eable3 = spots.GetItemsInRange(range);
-            try
+            foreach (Item item in spots.GetItemsInRange(range))
             {
-                foreach (Item item in eable3)
+                if (item is WorkingSpots && item != spots)
                 {
-                    if (item is WorkingSpots && item != spots)
-                    {
-                        hasCitizen = true;
-                        items.Add(item);
-                    }
+                    hasCitizen = true;
+                    items.Add(item);
                 }
-            }
-            finally
-            {
-                eable3.Free();
             }
             for (int i = 0; i < items.Count; ++i)
             {

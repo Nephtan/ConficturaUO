@@ -86,30 +86,19 @@ namespace Server.Misc
             )
             {
                 ArrayList mobiles = new ArrayList();
-
-                IPooledEnumerable eable = item.GetMobilesInRange(2);
-
-                try
+                foreach (Mobile m in item.GetMobilesInRange(2))
                 {
-                    foreach (Mobile m in eable)
+                    if (
+                        m != null
+                        && m.Karma != 1
+                        && m is HouseVisitor
+                        && !(m.Region is HouseRegion)
+                        && m.Map == item.Map
+                    )
                     {
-                        if (
-                            m != null
-                            && m.Karma != 1
-                            && m is HouseVisitor
-                            && !(m.Region is HouseRegion)
-                            && m.Map == item.Map
-                        )
-                        {
-                            mobiles.Add(m);
-                        }
+                        mobiles.Add(m);
                     }
                 }
-                finally
-                {
-                    eable.Free();
-                }
-
                 for (int i = 0; i < mobiles.Count; ++i)
                 {
                     Mobile from = (Mobile)mobiles[i];

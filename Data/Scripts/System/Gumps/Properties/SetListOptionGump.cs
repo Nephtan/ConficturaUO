@@ -219,9 +219,6 @@ namespace Server.Gumps
 
         public override void OnResponse(NetState sender, RelayInfo info)
         {
-            if (sender == null || info == null || sender.Mobile == null || sender.Mobile.Deleted || m_Mobile == null || m_Mobile.Deleted || sender.Mobile != m_Mobile || m_Object == null || m_Property == null || m_Values == null)
-                return;
-
             int index = info.ButtonID - 1;
 
             if (index >= 0 && index < m_Values.Length)

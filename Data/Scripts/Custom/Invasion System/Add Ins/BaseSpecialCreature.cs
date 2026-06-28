@@ -604,31 +604,22 @@ namespace Server.Mobiles
 
             List<Mobile> targets = new List<Mobile>();
 
-            IPooledEnumerable eable = this.GetMobilesInRange(6);
-
-            try
+            foreach (Mobile m in this.GetMobilesInRange(6))
             {
-                foreach (Mobile m in eable)
-                {
-                    if (m == this || !CanBeHarmful(m) || m.AccessLevel >= AccessLevel.Counselor)
-                        continue;
+                if (m == this || !CanBeHarmful(m) || m.AccessLevel >= AccessLevel.Counselor)
+                    continue;
 
-                    if (
-                        m is BaseCreature
-                        && (
-                            ((BaseCreature)m).Controlled
-                            || ((BaseCreature)m).Summoned
-                            || ((BaseCreature)m).Team != this.Team
-                        )
+                if (
+                    m is BaseCreature
+                    && (
+                        ((BaseCreature)m).Controlled
+                        || ((BaseCreature)m).Summoned
+                        || ((BaseCreature)m).Team != this.Team
                     )
-                        targets.Add(m);
-                    else if (m.Player)
-                        targets.Add(m);
-                }
-            }
-            finally
-            {
-                eable.Free();
+                )
+                    targets.Add(m);
+                else if (m.Player)
+                    targets.Add(m);
             }
 
             PlaySound(0x2F3);
@@ -666,29 +657,18 @@ namespace Server.Mobiles
 
             List<Mobile> posibleTgts = new List<Mobile>();
 
-            IPooledEnumerable eable = target.Map.GetMobilesInRange(target.Location, BreathMaxRange);
-
-            try
-            {
-                foreach (Mobile m in eable)
-                {
-                    if (
-                        m != null
-                        && !m.Deleted
-                        && m != target
-                        && m.Alive
-                        && !m.IsDeadBondedPet
-                        && (m.AccessLevel < AccessLevel.Counselor || CanSee(m))
-                        && CanBeHarmful(m)
-                        && (m.Player || (m is BaseCreature && ((BaseCreature)m).Controlled))
-                    )
-                        posibleTgts.Add(m);
-                }
-            }
-            finally
-            {
-                eable.Free();
-            }
+            foreach (Mobile m in target.Map.GetMobilesInRange(target.Location, BreathMaxRange))
+                if (
+                    m != null
+                    && !m.Deleted
+                    && m != target
+                    && m.Alive
+                    && !m.IsDeadBondedPet
+                    && (m.AccessLevel < AccessLevel.Counselor || CanSee(m))
+                    && CanBeHarmful(m)
+                    && (m.Player || (m is BaseCreature && ((BaseCreature)m).Controlled))
+                )
+                    posibleTgts.Add(m);
 
             int maxTgts = BreathMaxTargets - 1; //BreathMaxTargets - 1 + el primer firebreath que va al target original.
             int mt = 0;
@@ -941,31 +921,22 @@ namespace Server.Mobiles
 
             List<Mobile> targets = new List<Mobile>();
 
-            IPooledEnumerable eable = target.GetMobilesInRange(8);
-
-            try
+            foreach (Mobile m in target.GetMobilesInRange(8))
             {
-                foreach (Mobile m in eable)
-                {
-                    if (m == this || !CanBeHarmful(m) || m.AccessLevel >= AccessLevel.Counselor)
-                        continue;
+                if (m == this || !CanBeHarmful(m) || m.AccessLevel >= AccessLevel.Counselor)
+                    continue;
 
-                    if (
-                        m is BaseCreature
-                        && (
-                            ((BaseCreature)m).Controlled
-                            || ((BaseCreature)m).Summoned
-                            || ((BaseCreature)m).Team != this.Team
-                        )
+                if (
+                    m is BaseCreature
+                    && (
+                        ((BaseCreature)m).Controlled
+                        || ((BaseCreature)m).Summoned
+                        || ((BaseCreature)m).Team != this.Team
                     )
-                        targets.Add(m);
-                    else if (m.Player && m.Alive)
-                        targets.Add(m);
-                }
-            }
-            finally
-            {
-                eable.Free();
+                )
+                    targets.Add(m);
+                else if (m.Player && m.Alive)
+                    targets.Add(m);
             }
 
             for (int i = 0; i < targets.Count; ++i)

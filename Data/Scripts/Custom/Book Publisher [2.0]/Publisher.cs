@@ -64,9 +64,6 @@ namespace Server.Mobiles
 
         public override bool HandlesOnSpeech(Mobile from)
         {
-            if (from == null || from.Deleted)
-                return false;
-
             if (from.InRange(this.Location, 12))
                 return true;
 
@@ -76,9 +73,6 @@ namespace Server.Mobiles
         public override void OnSpeech(SpeechEventArgs e)
         {
             // TODO: read keywords and respond with information on publishing
-
-            if (e == null || e.Mobile == null || e.Mobile.Deleted)
-                return;
 
             if (e.Mobile.Criminal)
             {

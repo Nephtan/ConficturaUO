@@ -19,22 +19,20 @@ namespace Server.Items
 
         protected override void OnTarget(Mobile from, object target)
         {
-            if (from == null || from.Deleted)
-                return;
-
-            if (m_Deed == null || m_Deed.Deleted || m_Deed.RootParent != from)
+            if (m_Deed.Deleted || m_Deed.RootParent != from)
             {
                 from.SendMessage("You cannot add velocity to that.");
                 return;
             }
-
-            BaseRanged item = target as BaseRanged;
-
-            if (item != null && !item.Deleted)
+            if (target is BaseRanged)
             {
-                item.Velocity += 10;
-                from.SendMessage("Velocity successfully added to item.");
-                m_Deed.Delete();
+                BaseRanged item = (BaseRanged)target;
+                if (item is BaseRanged)
+                {
+                    ((BaseRanged)item).Velocity += 10;
+                    from.SendMessage("Velocity successfully added to item.");
+                    m_Deed.Delete();
+                }
             }
             else
             {
@@ -71,10 +69,7 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
-            if (from == null || from.Deleted)
-                return;
-
-            if (Deleted || from.Backpack == null || !IsChildOf(from.Backpack))
+            if (!IsChildOf(from.Backpack))
             {
                 from.SendMessage("The item needs to be in your pack");
             }

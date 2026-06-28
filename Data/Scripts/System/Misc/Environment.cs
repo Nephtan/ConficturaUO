@@ -21,9 +21,6 @@ namespace Server.Items
 
         public override void OnMovement(Mobile m, Point3D oldLocation)
         {
-            if (m == null || m.Deleted || m.Map == null)
-                return;
-
             if (m is PlayerMobile)
             {
                 if (DateTime.Now >= m_NextSound && Utility.InRange(m.Location, this.Location, 10))
@@ -79,9 +76,6 @@ namespace Server.Items
 
         public override void OnMovement(Mobile m, Point3D oldLocation)
         {
-            if (m == null || m.Deleted || m.Map == null)
-                return;
-
             if (m is PlayerMobile)
             {
                 if (DateTime.Now >= m_NextSound && Utility.InRange(m.Location, this.Location, 10))
@@ -136,9 +130,6 @@ namespace Server.Items
 
         public override void OnMovement(Mobile m, Point3D oldLocation)
         {
-            if (m == null || m.Deleted || m.Map == null)
-                return;
-
             if (m is PlayerMobile)
             {
                 if (DateTime.Now >= m_NextSound && Utility.InRange(m.Location, this.Location, 10))
@@ -194,9 +185,6 @@ namespace Server.Items
 
         public override void OnMovement(Mobile m, Point3D oldLocation)
         {
-            if (m == null || m.Deleted || m.Map == null)
-                return;
-
             if (m is PlayerMobile)
             {
                 if (DateTime.Now >= m_NextSound && Utility.InRange(m.Location, this.Location, 15))
@@ -254,9 +242,6 @@ namespace Server.Items
 
         public override void OnMovement(Mobile m, Point3D oldLocation)
         {
-            if (m == null || m.Deleted || m.Map == null)
-                return;
-
             if (m is PlayerMobile)
             {
                 if (DateTime.Now >= m_NextSound && Utility.InRange(m.Location, this.Location, 10))
@@ -314,9 +299,6 @@ namespace Server.Items
 
         public override void OnMovement(Mobile m, Point3D oldLocation)
         {
-            if (m == null || m.Deleted || m.Map == null)
-                return;
-
             if (m is PlayerMobile)
             {
                 if (DateTime.Now >= m_NextSound && Utility.InRange(m.Location, this.Location, 10))
@@ -380,9 +362,6 @@ namespace Server.Items
 
         public override void OnMovement(Mobile m, Point3D oldLocation)
         {
-            if (m == null || m.Deleted || m.Map == null)
-                return;
-
             if (m is PlayerMobile)
             {
                 if (DateTime.Now >= m_NextSound && Utility.InRange(m.Location, this.Location, 10))
@@ -430,9 +409,6 @@ namespace Server.Items
 
         public override void OnMovement(Mobile m, Point3D oldLocation)
         {
-            if (m == null || m.Deleted || m.Map == null)
-                return;
-
             if (m is PlayerMobile)
             {
                 if (Utility.InRange(m.Location, this.Location, 10))
@@ -487,9 +463,6 @@ namespace Server.Items
 
         public override void OnMovement(Mobile m, Point3D oldLocation)
         {
-            if (m == null || m.Deleted || m.Map == null)
-                return;
-
             if (m is PlayerMobile)
             {
                 if (DateTime.Now >= m_NextSound && Utility.InRange(m.Location, this.Location, 8))
@@ -554,9 +527,6 @@ namespace Server.Items
 
         public override void OnMovement(Mobile m, Point3D oldLocation)
         {
-            if (m == null || m.Deleted || m.Map == null)
-                return;
-
             if (m is PlayerMobile)
             {
                 if (DateTime.Now >= m_NextSound && Utility.InRange(m.Location, this.Location, 5))

@@ -359,19 +359,10 @@ namespace Server.Mobiles
                 int count = 0;
                 if (ProximityRange >= 0)
                 {
-                    IPooledEnumerable eable = GetMobilesInRange(ProximityRange);
-
-                    try
+                    foreach (Mobile m in GetMobilesInRange(ProximityRange))
                     {
-                        foreach (Mobile m in eable)
-                        {
-                            if (m != null && m.Player)
-                                count++;
-                        }
-                    }
-                    finally
-                    {
-                        eable.Free();
+                        if (m != null && m.Player)
+                            count++;
                     }
                 }
                 return count;
@@ -3942,9 +3933,6 @@ namespace Server.Mobiles
 
         public override void OnSpeech(SpeechEventArgs e)
         {
-            if (e == null || e.Speech == null)
-                return;
-
             if ( /*!e.Handled && */
                 m_Running
                 && m_ProximityRange >= 0
@@ -4671,9 +4659,6 @@ namespace Server.Mobiles
         [Description("Returns value of the property on the targeted object.")]
         public static void XmlGetValue_OnCommand(CommandEventArgs e)
         {
-            if (e == null || e.Mobile == null || e.Mobile.Deleted)
-                return;
-
             e.Mobile.Target = new GetValueTarget(e);
         }
 
@@ -4742,9 +4727,6 @@ namespace Server.Mobiles
         [Description("Lists the keyword taglist for a spawner")]
         public static void ShowTagList_OnCommand(CommandEventArgs e)
         {
-            if (e == null || e.Mobile == null || e.Mobile.Deleted)
-                return;
-
             e.Mobile.Target = new TagListTarget(e);
         }
 
@@ -4878,9 +4860,6 @@ namespace Server.Mobiles
         )]
         public static void XmlHome_OnCommand(CommandEventArgs e)
         {
-            if (e == null || e.Mobile == null || e.Mobile.Deleted)
-                return;
-
             e.Mobile.Target = new XmlHomeTarget(e);
         }
 
@@ -5093,9 +5072,6 @@ namespace Server.Mobiles
         [Description("Returns or changes the default settings of the spawner.")]
         public static void XmlDefaults_OnCommand(CommandEventArgs e)
         {
-            if (e == null || e.Arguments == null)
-                return;
-
             Mobile m = e.Mobile;
             if (m == null || m.Deleted)
                 return;
@@ -5480,13 +5456,13 @@ namespace Server.Mobiles
         )]
         private static void SpawnEditorGo_OnCommand(CommandEventArgs e)
         {
-            if (e == null || e.Mobile == null || e.Mobile.Deleted || e.Arguments == null)
+            if (e == null)
                 return;
 
             Mobile from = e.Mobile;
 
             // Make sure a map name was given at least
-            if (e.Length >= 1)
+            if (from != null && e.Length >= 1)
             {
                 // Get the map
                 Map NewMap = null;
@@ -5547,7 +5523,7 @@ namespace Server.Mobiles
         [Description("Returns the spawn reduction due to SmartSpawning.")]
         public static void SmartStat_OnCommand(CommandEventArgs e)
         {
-            if (e == null || e.Mobile == null || e.Mobile.Deleted || e.Arguments == null)
+            if (e == null || e.Mobile == null)
                 return;
 
             if (
@@ -5652,9 +5628,6 @@ namespace Server.Mobiles
         )]
         public static void OptimalSmartSpawning_OnCommand(CommandEventArgs e)
         {
-            if (e == null || e.Mobile == null || e.Mobile.Deleted || e.Arguments == null)
-                return;
-
             int maxdiff = 1;
             if (e.Arguments.Length > 0)
             {
@@ -6131,9 +6104,6 @@ namespace Server.Mobiles
         )]
         public static void UnLoad_OnCommand(CommandEventArgs e)
         {
-            if (e == null || e.Mobile == null || e.Mobile.Deleted || e.Arguments == null)
-                return;
-
             if (e.Mobile.AccessLevel >= DiskAccessLevel)
             {
                 if (e.Arguments.Length >= 1)
@@ -6167,9 +6137,6 @@ namespace Server.Mobiles
         [Description("Loads spawner definitions from a .map file")]
         public static void XmlImportMap_OnCommand(CommandEventArgs e)
         {
-            if (e == null || e.Mobile == null || e.Mobile.Deleted || e.Arguments == null)
-                return;
-
             if (e.Mobile.AccessLevel >= DiskAccessLevel)
             {
                 if (e.Arguments.Length >= 1)
@@ -7101,9 +7068,6 @@ namespace Server.Mobiles
         [Description("Loads xml files created by Sno's xml exporter as xmlspawners.")]
         public static void XmlImportSpawners_OnCommand(CommandEventArgs e)
         {
-            if (e == null || e.Mobile == null || e.Mobile.Deleted || e.Arguments == null)
-                return;
-
             if (e.Arguments.Length >= 1)
             {
                 string filename = e.GetString(0);
@@ -7302,9 +7266,6 @@ namespace Server.Mobiles
         [Description("Loads msf files created by Morxeton's megaspawner as xmlspawners.")]
         public static void XmlImportMSF_OnCommand(CommandEventArgs e)
         {
-            if (e == null || e.Mobile == null || e.Mobile.Deleted || e.Arguments == null)
-                return;
-
             if (e.Arguments.Length >= 1)
             {
                 /*
@@ -9309,9 +9270,6 @@ namespace Server.Mobiles
         )]
         public static void NewLoad_OnCommand(CommandEventArgs e)
         {
-            if (e == null || e.Mobile == null || e.Mobile.Deleted || e.Arguments == null)
-                return;
-
             if (e.Mobile.AccessLevel >= DiskAccessLevel)
             {
                 if (e.Arguments.Length >= 1)
@@ -9354,9 +9312,6 @@ namespace Server.Mobiles
         )]
         public static void Load_OnCommand(CommandEventArgs e)
         {
-            if (e == null || e.Mobile == null || e.Mobile.Deleted || e.Arguments == null)
-                return;
-
             if (e.Mobile.AccessLevel >= DiskAccessLevel)
             {
                 if (e.Arguments.Length >= 1)
@@ -9399,9 +9354,6 @@ namespace Server.Mobiles
         )]
         public static void NewLoadHere_OnCommand(CommandEventArgs e)
         {
-            if (e == null || e.Mobile == null || e.Mobile.Deleted || e.Arguments == null)
-                return;
-
             if (e.Mobile.AccessLevel >= DiskAccessLevel)
             {
                 if (e.Arguments.Length >= 1)
@@ -9472,9 +9424,6 @@ namespace Server.Mobiles
         )]
         public static void LoadHere_OnCommand(CommandEventArgs e)
         {
-            if (e == null || e.Mobile == null || e.Mobile.Deleted || e.Arguments == null)
-                return;
-
             if (e.Mobile.AccessLevel >= DiskAccessLevel)
             {
                 if (e.Arguments.Length >= 1)
@@ -9563,7 +9512,7 @@ namespace Server.Mobiles
 
         private static void SaveSpawns(CommandEventArgs e, bool SaveAllMaps, bool oldformat)
         {
-            if (e == null || e.Mobile == null || e.Mobile.Deleted || e.Arguments == null || e.Arguments.Length < 1)
+            if (e == null || e.Mobile == null || e.Arguments == null || e.Arguments.Length < 1)
                 return;
 
             if (e.Mobile.AccessLevel < DiskAccessLevel)
@@ -10028,7 +9977,7 @@ namespace Server.Mobiles
 
         private static void WipeSpawners(CommandEventArgs e, bool WipeAll)
         {
-            if (e == null || e.Mobile == null || e.Mobile.Deleted)
+            if (e == null || e.Mobile == null)
                 return;
 
             if (e.Mobile.AccessLevel >= AccessLevel.Administrator)
@@ -10126,7 +10075,7 @@ namespace Server.Mobiles
 
         private static void RespawnSpawners(CommandEventArgs e, bool RespawnAll)
         {
-            if (e == null || e.Mobile == null || e.Mobile.Deleted)
+            if (e == null || e.Mobile == null)
                 return;
 
             if (e.Mobile.AccessLevel >= AccessLevel.Administrator)
@@ -10219,9 +10168,6 @@ namespace Server.Mobiles
 #if(TRACE)
         public static void XmlMake_OnCommand(CommandEventArgs e)
         {
-            if (e == null || e.Mobile == null || e.Mobile.Deleted || e.Arguments == null)
-                return;
-
             if (e.Arguments.Length > 0)
             {
                 int count = 0;
@@ -10321,9 +10267,6 @@ namespace Server.Mobiles
 
         public static void XmlResetTrace_OnCommand(CommandEventArgs e)
         {
-            if (e == null || e.Arguments == null)
-                return;
-
             if (e.Arguments.Length >= 0)
             {
                 for (int i = 0; i < MaxTraces; i++)
@@ -11665,19 +11608,10 @@ namespace Server.Mobiles
                 if (m_ProximityRange >= 0 && CanSpawn)
                 {
                     // check all nearby players
-                    IPooledEnumerable eable = GetMobilesInRange(m_ProximityRange);
-
-                    try
+                    foreach (Mobile p in GetMobilesInRange(m_ProximityRange))
                     {
-                        foreach (Mobile p in eable)
-                        {
-                            if (ValidPlayerTrig(p))
-                                CheckTriggers(p, null, true);
-                        }
-                    }
-                    finally
-                    {
-                        eable.Free();
+                        if (ValidPlayerTrig(p))
+                            CheckTriggers(p, null, true);
                     }
                 }
 

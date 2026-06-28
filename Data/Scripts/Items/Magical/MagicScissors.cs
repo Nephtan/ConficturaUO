@@ -31,10 +31,7 @@ namespace Server.Items
         {
             Target t;
 
-            if (from == null || from.Deleted)
-                return;
-
-            if (Deleted || from.Backpack == null || !IsChildOf(from.Backpack))
+            if (!IsChildOf(from.Backpack))
             {
                 from.SendLocalizedMessage(1060640); // The item must be in your backpack to use it.
             }
@@ -58,22 +55,10 @@ namespace Server.Items
 
             protected override void OnTarget(Mobile from, object targeted)
             {
-                if (from == null || from.Deleted)
-                    return;
-
-                Container pack = from.Backpack;
-
-                if (m_Wear == null || m_Wear.Deleted || pack == null || !m_Wear.IsChildOf(pack))
-                {
-                    from.SendLocalizedMessage(1060640); // The item must be in your backpack to use it.
-                    return;
-                }
-
-                Item iWear = targeted as Item;
-
-                if (iWear != null && !iWear.Deleted)
+                if (targeted is Item)
                 {
                     bool DoEffects = false;
+                    Item iWear = targeted as Item;
 
                     string OldName = null;
                     string NewName = null;

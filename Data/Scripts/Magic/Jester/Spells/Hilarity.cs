@@ -72,43 +72,34 @@ namespace Server.Spells.Jester
 
                 List<Mobile> targets = new List<Mobile>();
 
-                IPooledEnumerable eable = Caster.GetMobilesInRange(TotalRange);
-
-                try
+                foreach (Mobile v in Caster.GetMobilesInRange(TotalRange))
                 {
-                    foreach (Mobile v in eable)
+                    BaseCreature bc = v as BaseCreature;
+                    if (bc != null)
                     {
-                        BaseCreature bc = v as BaseCreature;
-                        if (bc != null)
-                        {
-                            if (
-                                Caster.InLOS(v)
-                                && v.Alive
-                                && Caster.CanBeHarmful(v)
-                                && !v.Blessed
-                                && Caster != v
-                                && bc.ControlMaster != Caster
-                                && bc.SummonMaster != Caster
-                                && v != m
-                            )
-                                targets.Add(v);
-                        }
-                        else if (
+                        if (
                             Caster.InLOS(v)
                             && v.Alive
                             && Caster.CanBeHarmful(v)
                             && !v.Blessed
                             && Caster != v
+                            && bc.ControlMaster != Caster
+                            && bc.SummonMaster != Caster
                             && v != m
                         )
-                        {
                             targets.Add(v);
-                        }
                     }
-                }
-                finally
-                {
-                    eable.Free();
+                    else if (
+                        Caster.InLOS(v)
+                        && v.Alive
+                        && Caster.CanBeHarmful(v)
+                        && !v.Blessed
+                        && Caster != v
+                        && v != m
+                    )
+                    {
+                        targets.Add(v);
+                    }
                 }
 
                 for (int i = 0; i < targets.Count; ++i)

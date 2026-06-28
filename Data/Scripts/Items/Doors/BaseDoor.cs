@@ -43,19 +43,10 @@ namespace Server.Items
         public static void LockDoors(BaseDoor door)
         {
             ArrayList list = new ArrayList();
-            IPooledEnumerable eable = door.GetItemsInRange(1);
-
-            try
+            foreach (Item item in door.GetItemsInRange(1))
             {
-                foreach (Item item in eable)
-                {
-                    if (item is BaseDoor)
-                        list.Add(item);
-                }
-            }
-            finally
-            {
-                eable.Free();
+                if (item is BaseDoor)
+                    list.Add(item);
             }
             foreach (Item item in list)
             {
@@ -67,19 +58,10 @@ namespace Server.Items
         public static void UnlockDoors(BaseDoor door)
         {
             ArrayList list = new ArrayList();
-            IPooledEnumerable eable = door.GetItemsInRange(1);
-
-            try
+            foreach (Item item in door.GetItemsInRange(1))
             {
-                foreach (Item item in eable)
-                {
-                    if (item is BaseDoor)
-                        list.Add(item);
-                }
-            }
-            finally
-            {
-                eable.Free();
+                if (item is BaseDoor)
+                    list.Add(item);
             }
             foreach (Item item in list)
             {
@@ -294,13 +276,7 @@ namespace Server.Items
 
         private static void EventSink_OpenDoorMacroUsed(OpenDoorMacroEventArgs args)
         {
-            if (args == null)
-                return;
-
             Mobile m = args.Mobile;
-
-            if (m == null || m.Deleted)
-                return;
 
             if (m.Map != null)
             {

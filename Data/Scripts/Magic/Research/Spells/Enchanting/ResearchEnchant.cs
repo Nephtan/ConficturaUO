@@ -59,15 +59,7 @@ namespace Server.Spells.Research
 
         private void OnLogout(LogoutEventArgs e)
         {
-            if (e == null)
-                return;
-
-            Mobile mobile = e.Mobile;
-
-            if (mobile == null || mobile.Deleted)
-                return;
-
-            ResearchEnchant.EndEffects(mobile);
+            ResearchEnchant.EndEffects(e.Mobile);
         }
 
         public void Target(object o, int spellID)

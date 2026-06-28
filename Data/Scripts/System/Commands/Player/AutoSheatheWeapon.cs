@@ -66,15 +66,7 @@ namespace Server.Items
 
         private static void OnPlayerLogout(LogoutEventArgs args)
         {
-            if (args == null)
-                return;
-
-            Mobile mobile = args.Mobile;
-
-            if (mobile == null)
-                return;
-
-            PlayerWeapons.Remove(mobile.Serial.Value);
+            PlayerWeapons.Remove(args.Mobile.Serial.Value);
         }
 
         private static bool AllowedToKeep(Item item)

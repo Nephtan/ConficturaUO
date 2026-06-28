@@ -47,25 +47,16 @@ namespace Server.Items
             )
                 return true;
 
-            IPooledEnumerable eable = from.GetMobilesInRange(20);
-
-            try
+            foreach (Mobile m in from.GetMobilesInRange(20))
             {
-                foreach (Mobile m in eable)
-                {
-                    if (
-                        m is BaseCreature
-                        && !BaseCreature.IsCitizen(m)
-                        && !((BaseCreature)m).Controlled
-                        && !((BaseCreature)m).Summoned
-                        && ((BaseCreature)m).FightMode == FightMode.Closest
-                    )
-                        return true;
-                }
-            }
-            finally
-            {
-                eable.Free();
+                if (
+                    m is BaseCreature
+                    && !BaseCreature.IsCitizen(m)
+                    && !((BaseCreature)m).Controlled
+                    && !((BaseCreature)m).Summoned
+                    && ((BaseCreature)m).FightMode == FightMode.Closest
+                )
+                    return true;
             }
 
             return false;
@@ -90,24 +81,15 @@ namespace Server.Items
 
         private bool CampsNearby()
         {
-            IPooledEnumerable eable = GetItemsInRange(20);
-
-            try
+            foreach (Item i in GetItemsInRange(20))
             {
-                foreach (Item i in eable)
+                if (i is Campfire)
                 {
-                    if (i is Campfire)
-                    {
-                        Campfire fire = (Campfire)i;
+                    Campfire fire = (Campfire)i;
 
-                        if (fire.Status != CampfireStatus.Off)
-                            return true;
-                    }
+                    if (fire.Status != CampfireStatus.Off)
+                        return true;
                 }
-            }
-            finally
-            {
-                eable.Free();
             }
 
             return false;

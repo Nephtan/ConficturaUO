@@ -28,45 +28,37 @@ namespace Server.Mobiles
         {
             if (DateTime.Now >= m_NextTalk)
             {
-                IPooledEnumerable eable1 = this.GetItemsInRange(2);
-                try
+                foreach (Item forge in this.GetItemsInRange(2))
                 {
-                    foreach (Item forge in eable1)
+                    if (forge is SawHit)
                     {
-                        if (forge is SawHit)
+                        if (
+                            this.FindItemOnLayer(Layer.FirstValid) != null
+                            && !(this.FindItemOnLayer(Layer.FirstValid) is Club)
+                        )
                         {
-                            if (
-                                this.FindItemOnLayer(Layer.FirstValid) != null
-                                && !(this.FindItemOnLayer(Layer.FirstValid) is Club)
-                            )
-                            {
-                                this.Delete();
-                            }
-                            else if (
-                                this.FindItemOnLayer(Layer.OneHanded) != null
-                                && !(this.FindItemOnLayer(Layer.OneHanded) is Club)
-                            )
-                            {
-                                this.Delete();
-                            }
-                            else if (
-                                this.FindItemOnLayer(Layer.TwoHanded) != null
-                                && !(this.FindItemOnLayer(Layer.TwoHanded) is Club)
-                            )
-                            {
-                                this.Delete();
-                            }
-                            SawHit smith = (SawHit)forge;
-                            smith.OnDoubleClick(this);
-                            m_NextTalk = (
-                                DateTime.Now + TimeSpan.FromSeconds(Utility.RandomMinMax(8, 14))
-                            );
+                            this.Delete();
                         }
+                        else if (
+                            this.FindItemOnLayer(Layer.OneHanded) != null
+                            && !(this.FindItemOnLayer(Layer.OneHanded) is Club)
+                        )
+                        {
+                            this.Delete();
+                        }
+                        else if (
+                            this.FindItemOnLayer(Layer.TwoHanded) != null
+                            && !(this.FindItemOnLayer(Layer.TwoHanded) is Club)
+                        )
+                        {
+                            this.Delete();
+                        }
+                        SawHit smith = (SawHit)forge;
+                        smith.OnDoubleClick(this);
+                        m_NextTalk = (
+                            DateTime.Now + TimeSpan.FromSeconds(Utility.RandomMinMax(8, 14))
+                        );
                     }
-                }
-                finally
-                {
-                    eable1.Free();
                 }
             }
         }

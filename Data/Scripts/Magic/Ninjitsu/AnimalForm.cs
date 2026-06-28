@@ -19,16 +19,10 @@ namespace Server.Spells.Ninjitsu
 
         public static void OnLogin(LoginEventArgs e)
         {
-            if (e == null)
-                return;
+            AnimalFormContext context = AnimalForm.GetContext(e.Mobile);
 
-            Mobile mobile = e.Mobile;
-            if (mobile == null || mobile.Deleted)
-                return;
-
-            AnimalFormContext context = AnimalForm.GetContext(mobile);
             if (context != null && context.SpeedBoost)
-                mobile.Send(SpeedControl.MountSpeed);
+                e.Mobile.Send(SpeedControl.MountSpeed);
         }
 
         private static SpellInfo m_Info = new SpellInfo("Animal Form", null, -1, 9002);

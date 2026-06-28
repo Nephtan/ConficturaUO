@@ -856,23 +856,14 @@ namespace Server.Items
         {
             int splatter = 0;
 
-            IPooledEnumerable eable = from.GetItemsInRange(10);
-
-            try
+            foreach (Item i in from.GetItemsInRange(10))
             {
-                foreach (Item i in eable)
+                if (i is MonsterSplatter)
                 {
-                    if (i is MonsterSplatter)
-                    {
-                        MonsterSplatter splat = (MonsterSplatter)i;
-                        if (splat.owner != from)
-                            splatter++;
-                    }
+                    MonsterSplatter splat = (MonsterSplatter)i;
+                    if (splat.owner != from)
+                        splatter++;
                 }
-            }
-            finally
-            {
-                eable.Free();
             }
 
             if (splatter > 16)

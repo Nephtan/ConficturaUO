@@ -24,10 +24,7 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
-            if (from == null || from.Deleted)
-                return;
-
-            if (Deleted || from.Backpack == null || !IsChildOf(from.Backpack))
+            if (!IsChildOf(from.Backpack))
             {
                 // The item must be in your backpack to use it.
                 from.SendLocalizedMessage(1060640);

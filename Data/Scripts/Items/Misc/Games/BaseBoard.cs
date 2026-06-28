@@ -109,17 +109,8 @@ namespace Server.Items
                 }
                 else
                 {
-                    IPooledEnumerable eable = this.GetClientsInRange(2);
-
-                    try
-                    {
-                        foreach (NetState state in eable)
-                            state.Send(p);
-                    }
-                    finally
-                    {
-                        eable.Free();
-                    }
+                    foreach (NetState state in this.GetClientsInRange(2))
+                        state.Send(p);
                 }
 
                 p.Release();

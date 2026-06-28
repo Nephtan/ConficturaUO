@@ -28,16 +28,9 @@ namespace Server
 
         private static void World_Login(LoginEventArgs args)
         {
-            if (args == null || args.Mobile == null || args.Mobile.Deleted)
-                return;
-
             Mobile m = args.Mobile;
-            PlayerMobile pm = m as PlayerMobile;
-
-            if (pm == null)
-                return;
-
-            PlayerMobile z = pm;
+            PlayerMobile pm = (PlayerMobile)m;
+            PlayerMobile z = (PlayerMobile)m;
             Mobile s = args.Mobile;
 
             if (m.Hue >= 33770)
@@ -214,9 +207,6 @@ namespace Server
 
         private static void World_Leave(DisconnectedEventArgs args)
         {
-            if (args == null || args.Mobile == null)
-                return;
-
             if (Server.Misc.MyServerSettings.SaveOnCharacterLogout())
             {
                 World.Save(true, false);
@@ -225,18 +215,12 @@ namespace Server
 
         private static void World_Logout(LogoutEventArgs args)
         {
-            if (args == null || args.Mobile == null || args.Mobile.Deleted)
-                return;
-
             Mobile m = args.Mobile;
             LoggingFunctions.LogAccess(m, "logout");
         }
 
         public static void OnDeath(PlayerDeathEventArgs args)
         {
-            if (args == null || args.Mobile == null || args.Mobile.Deleted)
-                return;
-
             Mobile m = args.Mobile;
             GhostHelper.OnGhostWalking(m);
         }

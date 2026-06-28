@@ -79,21 +79,12 @@ namespace Server.Spells.Jester
                 {
                     int goo = 0;
 
-                    IPooledEnumerable eable = m.GetItemsInRange(10);
-
-                    try
+                    foreach (Item splash in m.GetItemsInRange(10))
                     {
-                        foreach (Item splash in eable)
+                        if (splash is MonsterSplatter)
                         {
-                            if (splash is MonsterSplatter)
-                            {
-                                goo++;
-                            }
+                            goo++;
                         }
-                    }
-                    finally
-                    {
-                        eable.Free();
                     }
 
                     if (goo == 0)

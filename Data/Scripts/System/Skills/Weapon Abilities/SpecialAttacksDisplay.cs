@@ -27,9 +27,6 @@ namespace Server.Commands
         [Description("Opens your Weapons Special Attacks Display.")]
         private static void SpecialAttacksDisplay_Command(CommandEventArgs e)
         {
-            if (e == null || e.Mobile == null || e.Mobile.Deleted)
-                return;
-
             double sk1 = Server.Misc.MyServerSettings.SpecialWeaponAbilSkill();
             double sk2 = sk1 + 10;
             double sk3 = sk2 + 10;
@@ -37,13 +34,7 @@ namespace Server.Commands
             double sk5 = sk4 + 10;
 
             PlayerMobile pm = e.Mobile as PlayerMobile;
-            if (pm == null)
-                return;
-
-            BaseWeapon weapon = pm.Weapon as BaseWeapon;
-            if (weapon == null)
-                return;
-
+            BaseWeapon weapon = (BaseWeapon)(pm.Weapon);
             int number = 0;
             if (
                 (weapon.PrimaryAbility != null)

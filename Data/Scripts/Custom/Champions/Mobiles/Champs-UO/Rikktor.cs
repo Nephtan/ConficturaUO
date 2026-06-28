@@ -126,31 +126,22 @@ namespace Server.Mobiles
 
             ArrayList targets = new ArrayList();
 
-            IPooledEnumerable eable = this.GetMobilesInRange(8);
-
-            try
+            foreach (Mobile m in this.GetMobilesInRange(8))
             {
-                foreach (Mobile m in eable)
-                {
-                    if (m == this || !CanBeHarmful(m))
-                        continue;
+                if (m == this || !CanBeHarmful(m))
+                    continue;
 
-                    if (
-                        m is BaseCreature
-                        && (
-                            ((BaseCreature)m).Controlled
-                            || ((BaseCreature)m).Summoned
-                            || ((BaseCreature)m).Team != this.Team
-                        )
+                if (
+                    m is BaseCreature
+                    && (
+                        ((BaseCreature)m).Controlled
+                        || ((BaseCreature)m).Summoned
+                        || ((BaseCreature)m).Team != this.Team
                     )
-                        targets.Add(m);
-                    else if (m.Player)
-                        targets.Add(m);
-                }
-            }
-            finally
-            {
-                eable.Free();
+                )
+                    targets.Add(m);
+                else if (m.Player)
+                    targets.Add(m);
             }
 
             PlaySound(0x2F3);

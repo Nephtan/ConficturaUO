@@ -769,9 +769,6 @@ namespace Server.Mobiles
         [Description("Opens a gump that can add Xmlspawners with specified default settings")]
         public static void XmlAdd_OnCommand(CommandEventArgs e)
         {
-            if (e == null || e.Mobile == null || e.Mobile.Deleted || e.Arguments == null)
-                return;
-
             Account acct = e.Mobile.Account as Account;
             int x = 440;
             int y = 0;

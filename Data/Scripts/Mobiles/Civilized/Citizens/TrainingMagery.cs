@@ -35,44 +35,36 @@ namespace Server.Mobiles
         {
             if (DateTime.Now >= m_NextTalk)
             {
-                IPooledEnumerable eable1 = this.GetItemsInRange(4);
-                try
+                foreach (Item pentagram in this.GetItemsInRange(4))
                 {
-                    foreach (Item pentagram in eable1)
+                    if (pentagram is MagicHit)
                     {
-                        if (pentagram is MagicHit)
+                        if (
+                            this.FindItemOnLayer(Layer.FirstValid) != null
+                            && !(this.FindItemOnLayer(Layer.FirstValid) is Club)
+                        )
                         {
-                            if (
-                                this.FindItemOnLayer(Layer.FirstValid) != null
-                                && !(this.FindItemOnLayer(Layer.FirstValid) is Club)
-                            )
-                            {
-                                this.Delete();
-                            }
-                            else if (
-                                this.FindItemOnLayer(Layer.TwoHanded) != null
-                                && !(this.FindItemOnLayer(Layer.TwoHanded) is Club)
-                            )
-                            {
-                                this.Delete();
-                            }
-                            else if (
-                                this.FindItemOnLayer(Layer.OneHanded) != null
-                                && !(this.FindItemOnLayer(Layer.OneHanded) is Club)
-                            )
-                            {
-                                this.Delete();
-                            }
-                            pentagram.OnDoubleClick(this);
-                            m_NextTalk = (
-                                DateTime.Now + TimeSpan.FromSeconds(Utility.RandomMinMax(10, 15))
-                            );
+                            this.Delete();
                         }
+                        else if (
+                            this.FindItemOnLayer(Layer.TwoHanded) != null
+                            && !(this.FindItemOnLayer(Layer.TwoHanded) is Club)
+                        )
+                        {
+                            this.Delete();
+                        }
+                        else if (
+                            this.FindItemOnLayer(Layer.OneHanded) != null
+                            && !(this.FindItemOnLayer(Layer.OneHanded) is Club)
+                        )
+                        {
+                            this.Delete();
+                        }
+                        pentagram.OnDoubleClick(this);
+                        m_NextTalk = (
+                            DateTime.Now + TimeSpan.FromSeconds(Utility.RandomMinMax(10, 15))
+                        );
                     }
-                }
-                finally
-                {
-                    eable1.Free();
                 }
             }
         }
@@ -138,20 +130,12 @@ namespace Server.Items
         public override void OnDoubleClick(Mobile from)
         {
             Mobile mSp = null;
-            IPooledEnumerable eable2 = this.GetMobilesInRange(1);
-            try
+            foreach (Mobile mouse in this.GetMobilesInRange(1))
             {
-                foreach (Mobile mouse in eable2)
+                if (mouse is SpellCritter)
                 {
-                    if (mouse is SpellCritter)
-                    {
-                        mSp = mouse;
-                    }
+                    mSp = mouse;
                 }
-            }
-            finally
-            {
-                eable2.Free();
             }
             if (mSp != null)
             {

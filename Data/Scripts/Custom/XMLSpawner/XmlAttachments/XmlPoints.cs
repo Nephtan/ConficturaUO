@@ -240,19 +240,10 @@ namespace Server.Engines.XmlSpawner2
             if (duelloc.DuelRange <= 0)
                 duelrange = 16;
 
-            IPooledEnumerable eable = duelloc.DuelMap.GetMobilesInRange(duelloc.DuelLocation, duelrange);
-
-            try
+            foreach (Mobile m in duelloc.DuelMap.GetMobilesInRange(duelloc.DuelLocation, duelrange))
             {
-                foreach (Mobile m in eable)
-                {
-                    if (m.Player)
-                        return false;
-                }
-            }
-            finally
-            {
-                eable.Free();
+                if (m.Player)
+                    return false;
             }
 
             return true;
@@ -748,12 +739,9 @@ namespace Server.Engines.XmlSpawner2
 
         public static void EventSink_Speech(SpeechEventArgs args)
         {
-            if (args == null)
-                return;
-
             Mobile from = args.Mobile;
 
-            if (from == null || from.Deleted || from.Map == null || !from.Player)
+            if (from == null || from.Map == null || !from.Player)
                 return;
 
             if (args.Speech != null && args.Speech.ToLower() == "showpoints")
@@ -892,14 +880,6 @@ namespace Server.Engines.XmlSpawner2
                     }
                 }
             }
-        }
-
-        private static Mobile GetCommandMobile(CommandEventArgs e)
-        {
-            if (e == null || e.Mobile == null || e.Mobile.Deleted)
-                return null;
-
-            return e.Mobile;
         }
 
         public static void WriteLeaderboardXml(string filename, int nranks)
@@ -1189,10 +1169,6 @@ namespace Server.Engines.XmlSpawner2
         [Description("Periodically save .xml leaderboard information to the specified file")]
         public static void LeaderboardSave_OnCommand(CommandEventArgs e)
         {
-            Mobile from = GetCommandMobile(e);
-            if (from == null || e.Arguments == null)
-                return;
-
             if (e.Arguments.Length > 0)
             {
                 if (m_LeaderboardTimer != null)
@@ -1233,7 +1209,7 @@ namespace Server.Engines.XmlSpawner2
 
             if (m_LeaderboardTimer != null && m_LeaderboardTimer.Running)
             {
-                from.SendMessage(
+                e.Mobile.SendMessage(
                     "Leaderboard is saving to {0} every {1} minutes. Nranks = {2}",
                     m_LeaderboardFile,
                     m_LeaderboardSaveInterval.TotalMinutes,
@@ -1242,7 +1218,7 @@ namespace Server.Engines.XmlSpawner2
             }
             else
             {
-                from.SendMessage("Leaderboard saving is off.");
+                e.Mobile.SendMessage("Leaderboard saving is off.");
             }
         }
 
@@ -1319,13 +1295,9 @@ namespace Server.Engines.XmlSpawner2
         [Description("Displays or sets the language used by the points system")]
         public static void Language_OnCommand(CommandEventArgs e)
         {
-            Mobile from = GetCommandMobile(e);
-            if (from == null || e.Arguments == null)
-                return;
+            XmlPoints a = (XmlPoints)XmlAttach.FindAttachment(e.Mobile, typeof(XmlPoints));
 
-            XmlPoints a = (XmlPoints)XmlAttach.FindAttachment(from, typeof(XmlPoints));
-
-            if (a == null)
+            if (a == null || e.Mobile == null)
                 return;
 
             if (e.Arguments.Length > 0)
@@ -1338,37 +1310,29 @@ namespace Server.Engines.XmlSpawner2
                 catch { }
             }
 
-            from.SendMessage("Current language is {0}", a.CurrentLanguage);
+            e.Mobile.SendMessage("Current language is {0}", a.CurrentLanguage);
         }
 
         [Usage("CheckPoints")]
         [Description("Displays the players points and ranking")]
         public static void CheckPoints_OnCommand(CommandEventArgs e)
         {
-            Mobile from = GetCommandMobile(e);
-            if (from == null)
-                return;
-
             string msg = null;
 
-            ArrayList list = XmlAttach.FindAttachments(from, typeof(XmlPoints));
+            ArrayList list = XmlAttach.FindAttachments(e.Mobile, typeof(XmlPoints));
             if (list != null && list.Count > 0)
             {
-                msg = ((XmlPoints)list[0]).OnIdentify(from);
+                msg = ((XmlPoints)list[0]).OnIdentify(e.Mobile);
             }
             if (msg != null)
-                from.SendMessage(msg);
+                e.Mobile.SendMessage(msg);
         }
 
         [Usage("SeeKills [true/false]")]
         [Description("Determines whether a player sees others pvp broadcast results.")]
         public static void SeeKills_OnCommand(CommandEventArgs e)
         {
-            Mobile from = GetCommandMobile(e);
-            if (from == null || e.Arguments == null)
-                return;
-
-            ArrayList list = XmlAttach.FindAttachments(from, typeof(XmlPoints));
+            ArrayList list = XmlAttach.FindAttachments(e.Mobile, typeof(XmlPoints));
             if (list != null && list.Count > 0)
             {
                 if (e.Arguments.Length > 0)
@@ -1380,7 +1344,7 @@ namespace Server.Engines.XmlSpawner2
                     catch { }
                 }
 
-                from.SendMessage("SeeKills is {0}", ((XmlPoints)list[0]).ReceiveBroadcasts);
+                e.Mobile.SendMessage("SeeKills is {0}", ((XmlPoints)list[0]).ReceiveBroadcasts);
             }
         }
 
@@ -1390,11 +1354,7 @@ namespace Server.Engines.XmlSpawner2
         )]
         public static void BroadcastKills_OnCommand(CommandEventArgs e)
         {
-            Mobile from = GetCommandMobile(e);
-            if (from == null || e.Arguments == null)
-                return;
-
-            ArrayList list = XmlAttach.FindAttachments(from, typeof(XmlPoints));
+            ArrayList list = XmlAttach.FindAttachments(e.Mobile, typeof(XmlPoints));
             if (list != null && list.Count > 0)
             {
                 if (e.Arguments.Length > 0)
@@ -1406,7 +1366,7 @@ namespace Server.Engines.XmlSpawner2
                     catch { }
                 }
 
-                from.SendMessage("BroadcastKills is {0}", ((XmlPoints)list[0]).Broadcast);
+                e.Mobile.SendMessage("BroadcastKills is {0}", ((XmlPoints)list[0]).Broadcast);
             }
         }
 
@@ -1416,10 +1376,6 @@ namespace Server.Engines.XmlSpawner2
         )]
         public static void SystemBroadcastKills_OnCommand(CommandEventArgs e)
         {
-            Mobile from = GetCommandMobile(e);
-            if (from == null || e.Arguments == null)
-                return;
-
             if (e.Arguments.Length > 0)
             {
                 try
@@ -1429,27 +1385,23 @@ namespace Server.Engines.XmlSpawner2
                 catch { }
             }
 
-            from.SendMessage("SystemBroadcastKills is {0}.", m_SystemBroadcast);
+            e.Mobile.SendMessage("SystemBroadcastKills is {0}.", m_SystemBroadcast);
         }
 
         [Usage("TopPlayers")]
         [Description("Displays the top players in points")]
         public static void TopPlayers_OnCommand(CommandEventArgs e)
         {
-            Mobile from = GetCommandMobile(e);
-            if (from == null)
-                return;
-
             XmlPoints attachment = null;
             // if this player has an XmlPoints attachment, find it
-            ArrayList list = XmlAttach.FindAttachments(from, typeof(XmlPoints));
+            ArrayList list = XmlAttach.FindAttachments(e.Mobile, typeof(XmlPoints));
             if (list != null && list.Count > 0)
             {
                 attachment = (XmlPoints)list[0];
             }
 
-            from.CloseGump(typeof(TopPlayersGump));
-            from.SendGump(new TopPlayersGump(attachment));
+            e.Mobile.CloseGump(typeof(TopPlayersGump));
+            e.Mobile.SendGump(new TopPlayersGump(attachment));
         }
 
         public static bool AreChallengers(Mobile from, Mobile target)
@@ -1850,121 +1802,77 @@ namespace Server.Engines.XmlSpawner2
         [Description("Challenge another player to a duel for points")]
         public static void Challenge_OnCommand(CommandEventArgs e)
         {
-            Mobile from = GetCommandMobile(e);
-            if (from == null)
-                return;
-
             // target the player you wish to challenge
-            from.Target = new ChallengeTarget(from);
+            e.Mobile.Target = new ChallengeTarget(e.Mobile);
         }
 
         [Usage("LMSChallenge")]
         [Description("Creates a Last Man Standing challenge game")]
         public static void LMSChallenge_OnCommand(CommandEventArgs e)
         {
-            Mobile from = GetCommandMobile(e);
-            if (from == null)
-                return;
-
-            BaseChallengeGame.DoSetupChallenge(from, 100302, typeof(LastManStandingGauntlet));
+            BaseChallengeGame.DoSetupChallenge(e.Mobile, 100302, typeof(LastManStandingGauntlet));
         }
 
         [Usage("TeamLMSChallenge")]
         [Description("Creates a Team Last Man Standing challenge game")]
         public static void TeamLMSChallenge_OnCommand(CommandEventArgs e)
         {
-            Mobile from = GetCommandMobile(e);
-            if (from == null)
-                return;
-
-            BaseChallengeGame.DoSetupChallenge(from, 100413, typeof(TeamLMSGauntlet));
+            BaseChallengeGame.DoSetupChallenge(e.Mobile, 100413, typeof(TeamLMSGauntlet));
         }
 
         [Usage("Deathmatch")]
         [Description("Creates a Deathmatch challenge game")]
         public static void Deathmatch_OnCommand(CommandEventArgs e)
         {
-            Mobile from = GetCommandMobile(e);
-            if (from == null)
-                return;
-
-            BaseChallengeGame.DoSetupChallenge(from, 100400, typeof(DeathmatchGauntlet));
+            BaseChallengeGame.DoSetupChallenge(e.Mobile, 100400, typeof(DeathmatchGauntlet));
         }
 
         [Usage("TeamDeathmatch")]
         [Description("Creates a Team Deathmatch challenge game")]
         public static void TeamDeathmatch_OnCommand(CommandEventArgs e)
         {
-            Mobile from = GetCommandMobile(e);
-            if (from == null)
-                return;
-
-            BaseChallengeGame.DoSetupChallenge(from, 100415, typeof(TeamDeathmatchGauntlet));
+            BaseChallengeGame.DoSetupChallenge(e.Mobile, 100415, typeof(TeamDeathmatchGauntlet));
         }
 
         [Usage("DeathBall")]
         [Description("Creates a DeathBall challenge game")]
         public static void DeathBall_OnCommand(CommandEventArgs e)
         {
-            Mobile from = GetCommandMobile(e);
-            if (from == null)
-                return;
-
-            BaseChallengeGame.DoSetupChallenge(from, 100411, typeof(DeathBallGauntlet));
+            BaseChallengeGame.DoSetupChallenge(e.Mobile, 100411, typeof(DeathBallGauntlet));
         }
 
         [Usage("TeamDeathball")]
         [Description("Creates a Team Deathball challenge game")]
         public static void TeamDeathBall_OnCommand(CommandEventArgs e)
         {
-            Mobile from = GetCommandMobile(e);
-            if (from == null)
-                return;
-
-            BaseChallengeGame.DoSetupChallenge(from, 100416, typeof(TeamDeathballGauntlet));
+            BaseChallengeGame.DoSetupChallenge(e.Mobile, 100416, typeof(TeamDeathballGauntlet));
         }
 
         [Usage("KingOfTheHill")]
         [Description("Creates a King of the Hill challenge game")]
         public static void KingOfTheHill_OnCommand(CommandEventArgs e)
         {
-            Mobile from = GetCommandMobile(e);
-            if (from == null)
-                return;
-
-            BaseChallengeGame.DoSetupChallenge(from, 100410, typeof(KingOfTheHillGauntlet));
+            BaseChallengeGame.DoSetupChallenge(e.Mobile, 100410, typeof(KingOfTheHillGauntlet));
         }
 
         [Usage("TeamKotH")]
         [Description("Creates a Team King of the Hill challenge game")]
         public static void TeamKotH_OnCommand(CommandEventArgs e)
         {
-            Mobile from = GetCommandMobile(e);
-            if (from == null)
-                return;
-
-            BaseChallengeGame.DoSetupChallenge(from, 100417, typeof(TeamKotHGauntlet));
+            BaseChallengeGame.DoSetupChallenge(e.Mobile, 100417, typeof(TeamKotHGauntlet));
         }
 
         [Usage("CTFChallenge")]
         [Description("Creates a CTF challenge game")]
         public static void CTFChallenge_OnCommand(CommandEventArgs e)
         {
-            Mobile from = GetCommandMobile(e);
-            if (from == null)
-                return;
-
-            BaseChallengeGame.DoSetupChallenge(from, 100418, typeof(CTFGauntlet));
+            BaseChallengeGame.DoSetupChallenge(e.Mobile, 100418, typeof(CTFGauntlet));
         }
 
         [Usage("AddAllPoints")]
         [Description("Adds the XmlPoints attachment to all players")]
         public static void AddAllPoints_OnCommand(CommandEventArgs e)
         {
-            Mobile from = GetCommandMobile(e);
-            if (from == null)
-                return;
-
             int count = 0;
             foreach (Mobile m in World.Mobiles.Values)
             {
@@ -1975,22 +1883,18 @@ namespace Server.Engines.XmlSpawner2
                     if (list == null || list.Count == 0)
                     {
                         XmlAttachment x = new XmlPoints();
-                        XmlAttach.AttachTo(from, m, x);
+                        XmlAttach.AttachTo(e.Mobile, m, x);
                         count++;
                     }
                 }
             }
-            from.SendMessage("Added XmlPoints attachments to {0} players", count);
+            e.Mobile.SendMessage("Added XmlPoints attachments to {0} players", count);
         }
 
         [Usage("RemoveAllPoints")]
         [Description("Removes the XmlPoints attachment from all players")]
         public static void RemoveAllPoints_OnCommand(CommandEventArgs e)
         {
-            Mobile from = GetCommandMobile(e);
-            if (from == null)
-                return;
-
             int count = 0;
             foreach (Mobile m in World.Mobiles.Values)
             {
@@ -2011,7 +1915,7 @@ namespace Server.Engines.XmlSpawner2
                     count++;
                 }
             }
-            from.SendMessage("Removed XmlPoints attachments from {0} players", count);
+            e.Mobile.SendMessage("Removed XmlPoints attachments from {0} players", count);
         }
 
         // These are the various ways in which the message attachment can be constructed.
@@ -2424,38 +2328,19 @@ namespace Server.Engines.XmlSpawner2
                 // if there were nearby pets/mounts then tele those as well
 
                 ArrayList petlist = new ArrayList();
-                IPooledEnumerable eable = killer.GetMobilesInRange(16);
-
-                try
+                foreach (Mobile m in killer.GetMobilesInRange(16))
                 {
-                    foreach (Mobile m in eable)
+                    if (m is BaseCreature && ((BaseCreature)m).ControlMaster == killer)
                     {
-                        if (m is BaseCreature && ((BaseCreature)m).ControlMaster == killer)
-                        {
-                            petlist.Add(m);
-                        }
+                        petlist.Add(m);
                     }
                 }
-                finally
+                foreach (Mobile m in killed.GetMobilesInRange(16))
                 {
-                    eable.Free();
-                }
-
-                eable = killed.GetMobilesInRange(16);
-
-                try
-                {
-                    foreach (Mobile m in eable)
+                    if (m is BaseCreature && ((BaseCreature)m).ControlMaster == killed)
                     {
-                        if (m is BaseCreature && ((BaseCreature)m).ControlMaster == killed)
-                        {
-                            petlist.Add(m);
-                        }
+                        petlist.Add(m);
                     }
-                }
-                finally
-                {
-                    eable.Free();
                 }
 
                 // port the pets

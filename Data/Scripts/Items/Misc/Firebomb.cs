@@ -44,10 +44,7 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
-            if (Deleted || from == null || from.Deleted)
-                return;
-
-            if (from.Backpack == null || !IsChildOf(from.Backpack))
+            if (!IsChildOf(from.Backpack))
             {
                 from.SendLocalizedMessage(1042001); // That must be in your pack for you to use it.
                 return;
@@ -178,15 +175,7 @@ namespace Server.Items
 
         private void OnFirebombTarget(Mobile from, object obj)
         {
-            if (
-                Deleted
-                || from == null
-                || from.Deleted
-                || from.Backpack == null
-                || !IsChildOf(from.Backpack)
-                || Map == null
-                || Map == Map.Internal
-            )
+            if (Deleted || Map == Map.Internal || !IsChildOf(from.Backpack))
                 return;
 
             IPoint3D p = obj as IPoint3D;

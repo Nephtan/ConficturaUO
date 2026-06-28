@@ -25,9 +25,6 @@ namespace Server.Regions
 
         public override void OnEnter(Mobile m)
         {
-            if (m == null || m.Deleted)
-                return;
-
             base.OnEnter(m);
             if (m is PlayerMobile)
             {
@@ -39,9 +36,6 @@ namespace Server.Regions
 
         public override void OnExit(Mobile m)
         {
-            if (m == null || m.Deleted)
-                return;
-
             base.OnExit(m);
             if (
                 m is BaseCreature

@@ -350,19 +350,10 @@ namespace Server.Items
             if (map == null || Deleted)
                 return false;
 
-            IPooledEnumerable eable = this.GetObjectsInRange(0);
-
-            try
+            foreach (object o in this.GetObjectsInRange(0))
             {
-                foreach (object o in eable)
-                {
-                    if (o != this)
-                        return false;
-                }
-            }
-            finally
-            {
-                eable.Free();
+                if (o != this)
+                    return false;
             }
 
             return true;

@@ -281,16 +281,11 @@ namespace Server.Items
 
             writer.Write((int)1); // version
 
-            int ghostCount = (m_ghosts == null) ? 0 : m_ghosts.Count;
-            writer.Write((int)ghostCount);
-
-            if (m_ghosts != null)
+            writer.Write((int)m_ghosts.Count);
+            foreach (DictionaryEntry de in m_ghosts)
             {
-                foreach (DictionaryEntry de in m_ghosts)
-                {
-                    writer.Write((Mobile)de.Key);
-                    writer.Write((int)de.Value);
-                }
+                writer.Write((Mobile)de.Key);
+                writer.Write((int)de.Value);
             }
 
             writer.Write(m_Sign);

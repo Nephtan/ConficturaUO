@@ -19,15 +19,9 @@ namespace Server.Items
 
         public override void OnSpeech(SpeechEventArgs e)
         {
-            if (e == null || e.Mobile == null || e.Mobile.Deleted || e.Speech == null)
-                return;
-
             if (!e.Handled)
             {
                 Mobile m = e.Mobile;
-                PlayerMobile pm = m as PlayerMobile;
-                if (pm == null)
-                    return;
 
                 string keyword = "culara";
 
@@ -47,7 +41,7 @@ namespace Server.Items
 
                 e.Handled = true;
 
-                if (Name == "fire" && pm.CharacterElement == 2)
+                if (Name == "fire" && ((PlayerMobile)m).CharacterElement == 2)
                 {
                     m.FixedParticles(0x3709, 10, 30, 5052, 0, 0, EffectLayer.LeftFoot);
                     m.PlaySound(0x208);
@@ -58,7 +52,7 @@ namespace Server.Items
                     );
                     m.SendMessage("Your equipment is burned with elemental fire.");
                 }
-                else if (Name == "water" && pm.CharacterElement == 3)
+                else if (Name == "water" && ((PlayerMobile)m).CharacterElement == 3)
                 {
                     Effects.SendLocationEffect(m.Location, m.Map, 0x23B2, 30, 10, 0, 0);
                     Effects.PlaySound(m.Location, m.Map, 0x026);
@@ -69,7 +63,7 @@ namespace Server.Items
                     );
                     m.SendMessage("Your equipment is soaked with elemental water.");
                 }
-                else if (Name == "air" && pm.CharacterElement == 0)
+                else if (Name == "air" && ((PlayerMobile)m).CharacterElement == 0)
                 {
                     Effects.SendLocationEffect(m.Location, m.Map, 0x5590, 30, 10, 0xB24, 0);
                     m.PlaySound(0x10B);
@@ -80,7 +74,7 @@ namespace Server.Items
                     );
                     m.SendMessage("Your equipment is gusted with elemental air.");
                 }
-                else if (Name == "earth" && pm.CharacterElement == 1)
+                else if (Name == "earth" && ((PlayerMobile)m).CharacterElement == 1)
                 {
                     Point3D hands = new Point3D((m.X), (m.Y), (m.Z + 5));
                     Effects.SendLocationEffect(hands, m.Map, 0x3837, 23, 10, 0, 0);
@@ -109,9 +103,6 @@ namespace Server.Items
 
         public override bool OnMoveOver(Mobile m)
         {
-            if (m == null || m.Deleted)
-                return true;
-
             if (m is PlayerMobile && m.Skills[SkillName.Elementalism].Base >= 5.0)
             {
                 bool newWindows = false;

@@ -126,19 +126,10 @@ namespace Server.Items
             {
                 List<WarningItem> list = new List<WarningItem>();
 
-                IPooledEnumerable eable = GetItemsInRange(NeighborRange);
-
-                try
+                foreach (Item item in GetItemsInRange(NeighborRange))
                 {
-                    foreach (Item item in eable)
-                    {
-                        if (item != this && item is WarningItem)
-                            list.Add((WarningItem)item);
-                    }
-                }
-                finally
-                {
-                    eable.Free();
+                    if (item != this && item is WarningItem)
+                        list.Add((WarningItem)item);
                 }
 
                 for (int i = 0; i < list.Count; i++)

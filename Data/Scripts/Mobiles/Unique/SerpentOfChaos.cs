@@ -87,33 +87,24 @@ namespace Server.Mobiles
             int CanDie2 = 0;
             Mobile winner = this;
 
-            IPooledEnumerable eable1 = this.GetMobilesInRange(30);
-
-            try
+            foreach (Mobile m in this.GetMobilesInRange(30))
             {
-                foreach (Mobile m in eable1)
+                if (m is PlayerMobile && !m.Blessed)
                 {
-                    if (m is PlayerMobile && !m.Blessed)
+                    Item rock = m.Backpack.FindItemByType(typeof(BlackrockSerpentChaos));
+                    if (rock != null)
                     {
-                        Item rock = m.Backpack.FindItemByType(typeof(BlackrockSerpentChaos));
-                        if (rock != null)
-                        {
-                            CanDie = 1;
-                            winner = m;
-                            rock.Delete();
-                        }
+                        CanDie = 1;
+                        winner = m;
+                        rock.Delete();
+                    }
 
-                        Item balance = m.Backpack.FindItemByType(typeof(SerpentCapturedBalance));
-                        if (balance != null)
-                        {
-                            CanDie2 = 1;
-                        }
+                    Item balance = m.Backpack.FindItemByType(typeof(SerpentCapturedBalance));
+                    if (balance != null)
+                    {
+                        CanDie2 = 1;
                     }
                 }
-            }
-            finally
-            {
-                eable1.Free();
             }
 
             if (CanDie != 1 || CanDie2 != 1)

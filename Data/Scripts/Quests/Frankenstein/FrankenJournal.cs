@@ -379,21 +379,13 @@ namespace Server.Items
                     Map map = m_From.Map;
 
                     bool nearCoil = false;
-                    IPooledEnumerable eable = m_From.GetItemsInRange(10);
-                    try
+                    foreach (Item coil in m_From.GetItemsInRange(10))
                     {
-                        foreach (Item coil in eable)
+                        if (coil is PowerCoil)
                         {
-                            if (coil is PowerCoil)
-                            {
-                                nearCoil = true;
-                                loc = new Point3D(coil.X, coil.Y, (coil.Z + 20));
-                            }
+                            nearCoil = true;
+                            loc = new Point3D(coil.X, coil.Y, (coil.Z + 20));
                         }
-                    }
-                    finally
-                    {
-                        eable.Free();
                     }
 
                     if (nearCoil)

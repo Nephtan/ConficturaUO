@@ -37,34 +37,3 @@ Access level: `Administrator`
 
 ## Audience
 Staff
-
-## Source Trace
-
-POST-BATCH-T reviewed this page on 2026-06-14T21:09:11.0049244-05:00 against current source and audit registers.
-
-- Canonical status: Canonical.
-- Queue rows: PBN-0082.
-- Backlog rows: RB-06673.
-- Audit registers used: documentation-truth-table.csv, runtime-hook-map.csv, serialization-register.csv, and project-truth-register.csv.
-
-### Source Files Reviewed
-
-- Data/Scripts/Custom/ChangeSeason/ChangeSeason.cs (CurrentFile)
-- Data/System/Source/Network/Packets.cs (CurrentFile)
-
-### Runtime Evidence
-
-- Hook summary: Command=1; Initialize=1.
-- Data/Scripts/Custom/ChangeSeason/ChangeSeason.cs:L10 Initialize Initialize access=GlobalOrInternal
-- Data/Scripts/Custom/ChangeSeason/ChangeSeason.cs:L12 Command CommandSystem.Register access=Unknown
-
-### Serialization Evidence
-
-- No serialized classes matched the reviewed source set in serialization-register.csv.
-
-### Project And Runtime Coverage
-
-- Data/Scripts/Custom/ChangeSeason/ChangeSeason.cs=Keep
-- Data/Scripts/Custom/ChangeSeason/ChangeSeason.cs=Keep
-
-No C# source, project files, XML/config/data files, namespaces, serializers, gameplay behavior, or migration policy were changed in POST-BATCH-T.

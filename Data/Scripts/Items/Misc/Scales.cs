@@ -32,9 +32,6 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
-            if (from == null || from.Deleted || Deleted)
-                return;
-
             from.SendLocalizedMessage(502431); // What would you like to weigh?
             from.Target = new InternalTarget(this);
         }
@@ -51,22 +48,15 @@ namespace Server.Items
 
             protected override void OnTarget(Mobile from, object targeted)
             {
-                if (from == null || from.Deleted || m_Item == null || m_Item.Deleted)
-                    return;
-
                 string message;
-                Item item = targeted as Item;
 
-                if (item == null || item.Deleted)
-                {
-                    message = "You cannot weigh that object.";
-                }
-                else if (item == m_Item)
+                if (targeted == m_Item)
                 {
                     message = "It cannot weight itself.";
                 }
-                else
+                else if (targeted is Item)
                 {
+                    Item item = (Item)targeted;
                     object root = item.RootParent;
 
                     if ((root != null && root != from) || item.Parent == from)
@@ -93,6 +83,11 @@ namespace Server.Items
                         message = "You cannot weigh that object.";
                     }
                 }
+                else
+                {
+                    message = "You cannot weigh that object.";
+                }
+
                 from.SendMessage(message);
             }
         }

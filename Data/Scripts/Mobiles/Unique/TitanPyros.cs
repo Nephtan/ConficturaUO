@@ -115,64 +115,46 @@ namespace Server.Mobiles
             Mobile winner = this;
             int RewardColor = 0x779;
 
-            IPooledEnumerable eable1 = this.GetMobilesInRange(30);
-
-            try
+            foreach (Mobile m in this.GetMobilesInRange(30))
             {
-                foreach (Mobile m in eable1)
+                if (m is PlayerMobile && m.Map == this.Map && !m.Blessed)
                 {
-                    if (m is PlayerMobile && m.Map == this.Map && !m.Blessed)
+                    Item obelisk = m.Backpack.FindItemByType(typeof(ObeliskTip));
+                    if (obelisk != null)
+                    {
+                        ObeliskTip tip = (ObeliskTip)obelisk;
+                        if (tip.ObeliskOwner == m && tip.HasFire > 0 && tip.WonFire < 1)
+                        {
+                            CanDie = 1;
+                            winner = m;
+                            tip.WonFire = 1;
+                            m.SendMessage("You absord the Titan's power into the Tongue of Flame.");
+                            m.PlaySound(0x65A);
+                            m.FixedParticles(0x375A, 1, 30, 9966, 33, 2, EffectLayer.Head);
+                        }
+                    }
+                }
+            }
+            if (CanDie == 0)
+            {
+                foreach (Mobile m in this.GetMobilesInRange(30))
+                {
+                    if (m is PlayerMobile && m.Map == this.Map && !m.Blessed && m.StatCap >= 300) // TITANS OF ETHER CAN KILL IT
+                    {
+                        CanKillIt = 1;
+                    }
+                    if (m is PlayerMobile && m.Map == this.Map && !m.Blessed) // ANYONE WITH THE BLACKROCK CAN KILL IT
                     {
                         Item obelisk = m.Backpack.FindItemByType(typeof(ObeliskTip));
                         if (obelisk != null)
                         {
                             ObeliskTip tip = (ObeliskTip)obelisk;
-                            if (tip.ObeliskOwner == m && tip.HasFire > 0 && tip.WonFire < 1)
+                            if (tip.ObeliskOwner == m && tip.HasFire > 0 && tip.WonFire > 0)
                             {
-                                CanDie = 1;
-                                winner = m;
-                                tip.WonFire = 1;
-                                m.SendMessage("You absord the Titan's power into the Tongue of Flame.");
-                                m.PlaySound(0x65A);
-                                m.FixedParticles(0x375A, 1, 30, 9966, 33, 2, EffectLayer.Head);
+                                CanKillIt = 1;
                             }
                         }
                     }
-                }
-            }
-            finally
-            {
-                eable1.Free();
-            }
-            if (CanDie == 0)
-            {
-                IPooledEnumerable eable2 = this.GetMobilesInRange(30);
-
-                try
-                {
-                    foreach (Mobile m in eable2)
-                    {
-                        if (m is PlayerMobile && m.Map == this.Map && !m.Blessed && m.StatCap >= 300) // TITANS OF ETHER CAN KILL IT
-                        {
-                            CanKillIt = 1;
-                        }
-                        if (m is PlayerMobile && m.Map == this.Map && !m.Blessed) // ANYONE WITH THE BLACKROCK CAN KILL IT
-                        {
-                            Item obelisk = m.Backpack.FindItemByType(typeof(ObeliskTip));
-                            if (obelisk != null)
-                            {
-                                ObeliskTip tip = (ObeliskTip)obelisk;
-                                if (tip.ObeliskOwner == m && tip.HasFire > 0 && tip.WonFire > 0)
-                                {
-                                    CanKillIt = 1;
-                                }
-                            }
-                        }
-                    }
-                }
-                finally
-                {
-                    eable2.Free();
                 }
             }
 

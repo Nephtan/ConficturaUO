@@ -399,40 +399,31 @@ namespace Server.Mobiles
             if (target == null || Deleted || !Alive || m_NextProvoke > DateTime.Now)
                 return;
 
-            IPooledEnumerable eable = GetMobilesInRange(RangePerception);
-
-            try
+            foreach (Mobile m in GetMobilesInRange(RangePerception))
             {
-                foreach (Mobile m in eable)
+                if (m is BaseCreature)
                 {
-                    if (m is BaseCreature)
-                    {
-                        BaseCreature c = (BaseCreature)m;
+                    BaseCreature c = (BaseCreature)m;
 
-                        if (
-                            c == this
-                            || c == target
-                            || c.Unprovokable
-                            || c.IsParagon
-                            || c.BardProvoked
-                            || c.AccessLevel != AccessLevel.Player
-                            || !c.CanBeHarmful(target)
-                        )
-                            continue;
+                    if (
+                        c == this
+                        || c == target
+                        || c.Unprovokable
+                        || c.IsParagon
+                        || c.BardProvoked
+                        || c.AccessLevel != AccessLevel.Player
+                        || !c.CanBeHarmful(target)
+                    )
+                        continue;
 
-                        c.Provoke(this, target, true);
+                    c.Provoke(this, target, true);
 
-                        if (target.Player)
-                            target.SendLocalizedMessage(1072062); // You hear angry music, and start to fight.
+                    if (target.Player)
+                        target.SendLocalizedMessage(1072062); // You hear angry music, and start to fight.
 
-                        PlaySound(SpeechHue);
-                        break;
-                    }
+                    PlaySound(SpeechHue);
+                    break;
                 }
-            }
-            finally
-            {
-                eable.Free();
             }
 
             m_NextProvoke = DateTime.Now + TimeSpan.FromSeconds(10);

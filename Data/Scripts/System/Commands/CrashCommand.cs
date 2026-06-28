@@ -16,11 +16,11 @@ namespace Server.Commands
         [Description("Intentionally crashes the server process to test crash recovery and auto-restart.")]
         private static void Crash_OnCommand(CommandEventArgs e)
         {
-            Mobile mobile = e != null ? e.Mobile : null;
-            string mobileName = mobile != null && !mobile.Deleted ? mobile.Name : "Unknown";
+            Mobile mobile = e.Mobile;
+            string mobileName = mobile != null ? mobile.Name : "Unknown";
             string accountName = "Unknown";
 
-            Account account = mobile != null && !mobile.Deleted ? mobile.Account as Account : null;
+            Account account = mobile != null ? mobile.Account as Account : null;
             if (account != null)
                 accountName = account.Username;
 

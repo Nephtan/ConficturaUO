@@ -144,12 +144,9 @@ namespace Server.Gumps
 
         public override void OnResponse(NetState sender, RelayInfo info)
         {
-            if (sender == null || info == null)
-                return;
-
             int adjustedID = info.ButtonID - 100;
 
-            if (Buttons != null && adjustedID >= 0 && adjustedID < Buttons.Length)
+            if (adjustedID >= 0 && adjustedID < Buttons.Length)
                 HandleButtonResponse(sender, adjustedID, Buttons[adjustedID]);
             else
                 HandleCancel(sender);

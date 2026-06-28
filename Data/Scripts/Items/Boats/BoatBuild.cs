@@ -91,19 +91,10 @@ namespace Server.Items
             {
                 int builder = 0;
 
-                IPooledEnumerable eable = this.GetMobilesInRange(20);
-
-                try
+                foreach (Mobile m in this.GetMobilesInRange(20))
                 {
-                    foreach (Mobile m in eable)
-                    {
-                        if (m is Shipwright)
-                            ++builder;
-                    }
-                }
-                finally
-                {
-                    eable.Free();
+                    if (m is Shipwright)
+                        ++builder;
                 }
 
                 if (builder < 1)

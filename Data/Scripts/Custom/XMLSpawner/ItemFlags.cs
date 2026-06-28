@@ -60,9 +60,6 @@ namespace Server.Items
         [Description("Gets the state of the specified SavedFlag on any item")]
         public static void GetFlag_OnCommand(CommandEventArgs e)
         {
-            if (e == null || e.Mobile == null || e.Mobile.Deleted || e.Arguments == null)
-                return;
-
             int flag = 0;
             bool error = false;
             if (e.Arguments.Length > 0)
@@ -135,9 +132,6 @@ namespace Server.Items
         [Description("Sets/gets the stealable flag on any item")]
         public static void SetStealable_OnCommand(CommandEventArgs e)
         {
-            if (e == null || e.Mobile == null || e.Mobile.Deleted || e.Arguments == null)
-                return;
-
             bool state = false;
             bool error = false;
             if (e.Arguments.Length > 0)

@@ -86,36 +86,3 @@ Current saves write version `2`, followed by:
 4. `HideEffectHue` as an `int`
 
 Deserialization supports version `1`, which only reads the appear and hide effects, and version `2`, which also reads both hue values.
-
-## Source Trace
-
-POST-BATCH-T reviewed this page on 2026-06-14T21:09:11.0049244-05:00 against current source and audit registers.
-
-- Canonical status: Canonical.
-- Queue rows: PBN-0091.
-- Backlog rows: RB-06695.
-- Audit registers used: documentation-truth-table.csv, runtime-hook-map.csv, serialization-register.csv, and project-truth-register.csv.
-
-### Source Files Reviewed
-
-- Data/Scripts/Custom/CEO's GM Hiding Stone [2.0]/gmhidingstone.cs (CurrentFile)
-- Data/Scripts/Scripts.csproj (CurrentFile)
-
-### Runtime Evidence
-
-- Hook summary: Timer=3.
-- Data/Scripts/Custom/CEO's GM Hiding Stone [2.0]/gmhidingstone.cs:L144 Timer Timer.DelayCall access=GlobalOrInternal
-- Data/Scripts/Custom/CEO's GM Hiding Stone [2.0]/gmhidingstone.cs:L149 Timer Timer.DelayCall access=GlobalOrInternal
-- Data/Scripts/Custom/CEO's GM Hiding Stone [2.0]/gmhidingstone.cs:L618 Timer CustomTimerSubclass access=GlobalOrInternal
-
-### Serialization Evidence
-
-- Serialized rows matched: 1.
-- Data/Scripts/Custom/CEO's GM Hiding Stone [2.0]/gmhidingstone.cs:Server.Items.GMHidingStone version=2 serialize=L748 deserialize=L758 alignment=CountMismatch:Writes=4;Reads=6
-
-### Project And Runtime Coverage
-
-- Data/Scripts/Custom/CEO's GM Hiding Stone [2.0]/gmhidingstone.cs=Keep
-- Data/Scripts/Custom/CEO's GM Hiding Stone [2.0]/gmhidingstone.cs=Keep
-
-No C# source, project files, XML/config/data files, namespaces, serializers, gameplay behavior, or migration policy were changed in POST-BATCH-T.

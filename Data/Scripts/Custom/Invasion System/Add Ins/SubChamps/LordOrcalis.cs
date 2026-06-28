@@ -138,19 +138,10 @@ namespace Server.Mobiles
 
             int orcs = 0;
 
-            IPooledEnumerable eable = this.GetMobilesInRange(10);
-
-            try
+            foreach (Mobile m in this.GetMobilesInRange(10))
             {
-                foreach (Mobile m in eable)
-                {
-                    if (m is OrcishLord)
-                        ++orcs;
-                }
-            }
-            finally
-            {
-                eable.Free();
+                if (m is OrcishLord)
+                    ++orcs;
             }
 
             if (orcs < 10)
@@ -189,19 +180,10 @@ namespace Server.Mobiles
 
             int morcs = 0;
 
-            IPooledEnumerable eable = this.GetMobilesInRange(10);
-
-            try
+            foreach (Mobile m in this.GetMobilesInRange(10))
             {
-                foreach (Mobile m in eable)
-                {
-                    if (m is OrcishMage)
-                        ++morcs;
-                }
-            }
-            finally
-            {
-                eable.Free();
+                if (m is OrcishMage)
+                    ++morcs;
             }
 
             if (morcs < 10)

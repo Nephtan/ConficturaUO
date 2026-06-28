@@ -46,34 +46,34 @@ namespace Server.Misc
 
         private static void OnSpeech(SpeechEventArgs args)
         {
-            if (args == null || args.Mobile == null || args.Mobile.Deleted || !Hearconsole)
-                return;
-
-            Mobile mobile = args.Mobile;
-
-            try
+            if (args.Mobile != null && Hearconsole)
             {
-                string regionName = "";
-
-                if (mobile.Map != null)
-                    regionName = Server.Misc.Worlds.GetRegionName(mobile.Map, mobile.Location);
-
-                if (regionName != null && regionName.Length > 0)
-                    Console.WriteLine(
-                        ""
-                            + mobile.Name
-                            + " ("
-                            + regionName
-                            + "): "
-                            + args.Speech
-                            + ""
-                    );
-                else
-                    Console.WriteLine("" + mobile.Name + ": " + args.Speech + "");
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
+                try
+                {
+                    if (
+                        (
+                            Server.Misc.Worlds.GetRegionName(args.Mobile.Map, args.Mobile.Location)
+                        ).Length > 0
+                    )
+                        Console.WriteLine(
+                            ""
+                                + args.Mobile.Name
+                                + " ("
+                                + Server.Misc.Worlds.GetRegionName(
+                                    args.Mobile.Map,
+                                    args.Mobile.Location
+                                )
+                                + "): "
+                                + args.Speech
+                                + ""
+                        );
+                    else
+                        Console.WriteLine("" + args.Mobile.Name + ": " + args.Speech + "");
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                }
             }
         }
 

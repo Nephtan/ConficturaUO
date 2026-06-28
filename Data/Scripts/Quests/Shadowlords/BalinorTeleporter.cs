@@ -26,21 +26,13 @@ namespace Server.Items
             {
                 int CanTeleport = 1;
 
-                IPooledEnumerable eable = this.GetMobilesInRange(30);
-                try
+                foreach (Mobile c in this.GetMobilesInRange(30))
                 {
-                    foreach (Mobile c in eable)
+                    if (c is Daemon && c.Name == "Balinor")
                     {
-                        if (c is Daemon && c.Name == "Balinor")
-                        {
-                            CanTeleport = 0;
-                            m.SendMessage("You cannot enter as Balinor is protecting the entrance!");
-                        }
+                        CanTeleport = 0;
+                        m.SendMessage("You cannot enter as Balinor is protecting the entrance!");
                     }
-                }
-                finally
-                {
-                    eable.Free();
                 }
 
                 if (!m.Alive) // DEAD CAN GO IN

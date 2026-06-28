@@ -154,17 +154,11 @@ namespace Server.Customs
 
         public void EventSink_CharacterCreated(CharacterCreatedEventArgs e)
         {
-            if (e == null)
-                return;
-
             TryGift(e.Mobile);
         }
 
         public void EventSink_Login(LoginEventArgs e)
         {
-            if (e == null)
-                return;
-
             TryGift(e.Mobile);
         }
 
@@ -251,10 +245,8 @@ namespace Server.Customs
         {
             if (
                 m == null
-                || m.Deleted
                 || m.Backpack == null
                 || m.BankBox == null
-                || m.Account == null
                 || !m_Active
                 || Items.Count <= 0
             )

@@ -43,30 +43,19 @@ namespace Server.Spells.Eighth
                 Map map = Caster.Map;
 
                 if (map != null)
-                {
-                    IPooledEnumerable eable = Caster.GetMobilesInRange(
-                        1 + (int)(Caster.Skills[SkillName.Magery].Value / 15.0)
-                    );
-
-                    try
-                    {
-                        foreach (Mobile m in eable)
-                        {
-                            if (
-                                Caster.Region == m.Region
-                                && Caster != m
-                                && SpellHelper.ValidIndirectTarget(Caster, m)
-                                && Caster.CanBeHarmful(m, false)
-                                && (!Core.AOS || Caster.InLOS(m))
-                            )
-                                targets.Add(m);
-                        }
-                    }
-                    finally
-                    {
-                        eable.Free();
-                    }
-                }
+                    foreach (
+                        Mobile m in Caster.GetMobilesInRange(
+                            1 + (int)(Caster.Skills[SkillName.Magery].Value / 15.0)
+                        )
+                    )
+                        if (
+                            Caster.Region == m.Region
+                            && Caster != m
+                            && SpellHelper.ValidIndirectTarget(Caster, m)
+                            && Caster.CanBeHarmful(m, false)
+                            && (!Core.AOS || Caster.InLOS(m))
+                        )
+                            targets.Add(m);
 
                 Caster.PlaySound(0x220);
 

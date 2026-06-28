@@ -395,17 +395,8 @@ namespace Server.Items
                     List<Mobile> mobiles = new List<Mobile>();
 
                     // Get all mobiles in range of the explosion.
-                    IPooledEnumerable eable = m_Item.GetMobilesInRange(0);
-
-                    try
-                    {
-                        foreach (Mobile mobile in eable)
-                            mobiles.Add(mobile);
-                    }
-                    finally
-                    {
-                        eable.Free();
-                    }
+                    foreach (Mobile mobile in m_Item.GetMobilesInRange(0))
+                        mobiles.Add(mobile);
 
                     for (int i = 0; i < mobiles.Count; i++)
                     {

@@ -28,42 +28,34 @@ namespace Server.Mobiles
         {
             if (DateTime.Now >= m_NextTalk)
             {
-                IPooledEnumerable eable1 = this.GetItemsInRange(1);
-                try
+                foreach (Item anvil in this.GetItemsInRange(1))
                 {
-                    foreach (Item anvil in eable1)
+                    if (anvil is RockHit)
                     {
-                        if (anvil is RockHit)
+                        if (
+                            this.FindItemOnLayer(Layer.FirstValid) != null
+                            && !(this.FindItemOnLayer(Layer.FirstValid) is Pickaxe)
+                        )
                         {
-                            if (
-                                this.FindItemOnLayer(Layer.FirstValid) != null
-                                && !(this.FindItemOnLayer(Layer.FirstValid) is Pickaxe)
-                            )
-                            {
-                                this.Delete();
-                            }
-                            else if (
-                                this.FindItemOnLayer(Layer.OneHanded) != null
-                                && !(this.FindItemOnLayer(Layer.OneHanded) is Pickaxe)
-                            )
-                            {
-                                this.Delete();
-                            }
-                            else if (this.FindItemOnLayer(Layer.TwoHanded) != null)
-                            {
-                                this.FindItemOnLayer(Layer.TwoHanded).Delete();
-                            }
-                            RockHit smith = (RockHit)anvil;
-                            smith.OnDoubleClick(this);
-                            m_NextTalk = (
-                                DateTime.Now + TimeSpan.FromSeconds(Utility.RandomMinMax(2, 5))
-                            );
+                            this.Delete();
                         }
+                        else if (
+                            this.FindItemOnLayer(Layer.OneHanded) != null
+                            && !(this.FindItemOnLayer(Layer.OneHanded) is Pickaxe)
+                        )
+                        {
+                            this.Delete();
+                        }
+                        else if (this.FindItemOnLayer(Layer.TwoHanded) != null)
+                        {
+                            this.FindItemOnLayer(Layer.TwoHanded).Delete();
+                        }
+                        RockHit smith = (RockHit)anvil;
+                        smith.OnDoubleClick(this);
+                        m_NextTalk = (
+                            DateTime.Now + TimeSpan.FromSeconds(Utility.RandomMinMax(2, 5))
+                        );
                     }
-                }
-                finally
-                {
-                    eable1.Free();
                 }
             }
         }

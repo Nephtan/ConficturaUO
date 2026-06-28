@@ -69,15 +69,9 @@ namespace Server.Multis
 
         public override void OnResponse(NetState state, RelayInfo info)
         {
-            Mobile from = state.Mobile;
-
-            if (from == null || from.Deleted || from != m_From || m_Boat == null || m_Boat.Deleted)
-                return;
-
-            from.SendSound(0x4A);
-
+            m_From.SendSound(0x4A);
             if (info.ButtonID == 2)
-                m_Boat.EndDryDock(from, m_Hue);
+                m_Boat.EndDryDock(m_From, m_Hue);
         }
     }
 }

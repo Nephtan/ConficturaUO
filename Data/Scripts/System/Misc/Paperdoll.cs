@@ -18,9 +18,6 @@ namespace Server.Misc
 
         public static void EventSink_PaperdollRequest(PaperdollRequestEventArgs e)
         {
-            if (e == null || e.Beholder == null || e.Beholder.Deleted || e.Beheld == null || e.Beheld.Deleted)
-                return;
-
             Mobile beholder = e.Beholder;
             Mobile beheld = e.Beheld;
 
@@ -36,16 +33,8 @@ namespace Server.Misc
             {
                 List<Item> items = beheld.Items;
 
-                if (items == null)
-                    return;
-
                 for (int i = 0; i < items.Count; ++i)
-                {
-                    Item item = items[i];
-
-                    if (item != null && !item.Deleted)
-                        beholder.Send(item.OPLPacket);
-                }
+                    beholder.Send(items[i].OPLPacket);
             }
         }
     }

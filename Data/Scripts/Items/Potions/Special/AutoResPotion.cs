@@ -90,9 +90,6 @@ namespace Server.Items
 
         private static void EventSink_Death(PlayerDeathEventArgs e)
         {
-            if (e == null)
-                return;
-
             PlayerMobile owner = e.Mobile as PlayerMobile;
 
             if (owner != null && !owner.Deleted)

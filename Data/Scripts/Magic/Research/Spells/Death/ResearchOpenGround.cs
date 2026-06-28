@@ -68,19 +68,10 @@ namespace Server.Spells.Research
             {
                 int pits = 0;
 
-                IPooledEnumerable eable = Caster.GetItemsInRange(10);
-
-                try
+                foreach (Item m in Caster.GetItemsInRange(10))
                 {
-                    foreach (Item m in eable)
-                    {
-                        if (m is OpenGround)
-                            ++pits;
-                    }
-                }
-                finally
-                {
-                    eable.Free();
+                    if (m is OpenGround)
+                        ++pits;
                 }
 
                 if (pits > 0)

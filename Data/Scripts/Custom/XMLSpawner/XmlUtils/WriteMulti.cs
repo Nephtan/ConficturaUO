@@ -48,7 +48,7 @@ namespace Server.Engines.XmlSpawner2
         )]
         public static void WriteMulti_OnCommand(CommandEventArgs e)
         {
-            if (e == null || e.Mobile == null || e.Mobile.Deleted || e.Arguments == null)
+            if (e == null || e.Mobile == null)
                 return;
 
             if (e.Mobile.AccessLevel < XmlSpawner.DiskAccessLevel)
@@ -57,7 +57,7 @@ namespace Server.Engines.XmlSpawner2
                 return;
             }
 
-            if (e.Arguments.Length < 1)
+            if (e.Arguments != null && e.Arguments.Length < 1)
             {
                 e.Mobile.SendMessage(
                     "Usage:  {0} <MultiFile> [zmin zmax][-noitems][-nostatics][-nomultis][-noaddons][-invisible]",

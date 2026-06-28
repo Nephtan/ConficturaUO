@@ -137,36 +137,3 @@ Deserialization reads version `0` in the same order, except `m_SkillMaxLevel` is
 * The point affordability check uses `newSkillValue * 10`, while the actual deduction uses `(newSkillValue - currentSkill) * 10`. This can block legitimate incremental raises after the stone has been partially spent.
 * `SetSkillsGump.OnResponse` uses stored `m_Player` and `m_SkillStone` references and does not re-check `state.Mobile`, stone deletion, assignment ownership, or item containment before changing skills.
 * `SkillMaxLevel` serialization truncates the `double` value to an `int`.
-
-## Source Trace
-
-POST-BATCH-T reviewed this page on 2026-06-14T21:09:11.0049244-05:00 against current source and audit registers.
-
-- Canonical status: Canonical.
-- Queue rows: PBN-0108.
-- Backlog rows: RB-06773.
-- Audit registers used: documentation-truth-table.csv, runtime-hook-map.csv, serialization-register.csv, and project-truth-register.csv.
-
-### Source Files Reviewed
-
-- Data/Scripts/Custom/Skill Stone/SkillStone.cs (CurrentFile)
-- Data/Scripts/Scripts.csproj (CurrentFile)
-
-### Runtime Evidence
-
-- Hook summary: Gump=3.
-- Data/Scripts/Custom/Skill Stone/SkillStone.cs:L162 Gump SendGump access=Internal
-- Data/Scripts/Custom/Skill Stone/SkillStone.cs:L369 Gump OnResponse access=Internal
-- Data/Scripts/Custom/Skill Stone/SkillStone.cs:L517 Gump SendGump access=Internal
-
-### Serialization Evidence
-
-- Serialized rows matched: 1.
-- Data/Scripts/Custom/Skill Stone/SkillStone.cs:Server.Items.SkillStone version=0 serialize=L168 deserialize=L183 alignment=TypeMismatch:#3:Write=PlayerMobile/Read=Mobile
-
-### Project And Runtime Coverage
-
-- Data/Scripts/Custom/Skill Stone/SkillStone.cs=Keep
-- Data/Scripts/Custom/Skill Stone/SkillStone.cs=Keep
-
-No C# source, project files, XML/config/data files, namespaces, serializers, gameplay behavior, or migration policy were changed in POST-BATCH-T.

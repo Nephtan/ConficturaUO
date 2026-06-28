@@ -1152,19 +1152,10 @@ namespace Server.Multis
                 if (sailors.EmoteHue > 10000)
                 {
                     keepMe = false;
-                    IPooledEnumerable eable = sailors.GetItemsInRange(20);
-
-                    try
+                    foreach (Item i in sailors.GetItemsInRange(20))
                     {
-                        foreach (Item i in eable)
-                        {
-                            if (i is BaseBoat && i.Serial == sailors.EmoteHue)
-                                keepMe = true;
-                        }
-                    }
-                    finally
-                    {
-                        eable.Free();
+                        if (i is BaseBoat && i.Serial == sailors.EmoteHue)
+                            keepMe = true;
                     }
 
                     if (!keepMe)
@@ -1314,28 +1305,19 @@ namespace Server.Multis
         public static bool IsNearOtherShip(Mobile from)
         {
             int obstacle = 0;
-            IPooledEnumerable eable = from.GetMobilesInRange(20);
-
-            try
+            foreach (Mobile m in from.GetMobilesInRange(20))
             {
-                foreach (Mobile m in eable)
+                if (
+                    m is BaseCreature
+                    && m != from
+                    && m.YellHue != from.YellHue
+                    && m.EmoteHue != m.EmoteHue
+                )
                 {
-                    if (
-                        m is BaseCreature
-                        && m != from
-                        && m.YellHue != from.YellHue
-                        && m.EmoteHue != m.EmoteHue
-                    )
-                    {
-                        BaseCreature bc = (BaseCreature)m;
-                        if (bc.ControlMaster == null && !bc.CanSwim)
-                            ++obstacle;
-                    }
+                    BaseCreature bc = (BaseCreature)m;
+                    if (bc.ControlMaster == null && !bc.CanSwim)
+                        ++obstacle;
                 }
-            }
-            finally
-            {
-                eable.Free();
             }
 
             if (obstacle > 0)
@@ -1350,21 +1332,12 @@ namespace Server.Multis
 
             if (bc.ControlMaster == null && bc.EmoteHue > 0)
             {
-                IPooledEnumerable eable = bc.GetItemsInRange(10);
-
-                try
+                foreach (Item i in bc.GetItemsInRange(10))
                 {
-                    foreach (Item i in eable)
+                    if (i is BoatDoor && i.Name == "enemy ship")
                     {
-                        if (i is BoatDoor && i.Name == "enemy ship")
-                        {
-                            loc = new Point3D(i.X, i.Y, i.Z);
-                        }
+                        loc = new Point3D(i.X, i.Y, i.Z);
                     }
-                }
-                finally
-                {
-                    eable.Free();
                 }
             }
             return loc;
@@ -1758,11 +1731,10 @@ namespace Server.Multis
                 return;
 
             BaseDockedBoat boat = DockedBoat;
+            boat.Hue = hue;
 
             if (boat == null)
                 return;
-
-            boat.Hue = hue;
 
             foreach (Mobile stow in World.Mobiles.Values)
                 if (stow is PlayerMobile && stow.Region.Name == "the Ship's Lower Deck")

@@ -538,16 +538,10 @@ namespace Server.Gumps
 
         public override void OnResponse(NetState sender, RelayInfo info)
         {
-            if (sender == null || info == null || sender.Mobile == null || sender.Mobile.Deleted || m_From == null || m_From.Deleted || sender.Mobile != m_From || m_Item == null || m_Item.Deleted)
-                return;
-
             if (info.ButtonID <= 0)
                 return; // Canceled
 
-            ILevelable levitem = m_Item as ILevelable;
-
-            if (levitem == null)
-                return;
+            ILevelable levitem = (ILevelable)m_Item;
 
             int buttonID = info.ButtonID - 1;
             int type = buttonID % 7;
@@ -651,9 +645,6 @@ namespace Server.Gumps
 
                 case 2: // Attribute selected
                 {
-                    if (index < 0 || index >= LevelAttributes.m_Attributes.Length)
-                        return;
-
                     cost = GetPointCost(m_Item, LevelAttributes.m_Attributes[index].m_XP);
 
                     if ((levitem.Points - cost) >= 0)
@@ -739,9 +730,6 @@ namespace Server.Gumps
                 }
                 case 3: // WeaponAttribute selected
                 {
-                    if (index < 0 || index >= LevelAttributes.m_WeaponAttributes.Length)
-                        return;
-
                     cost = GetPointCost(m_Item, LevelAttributes.m_WeaponAttributes[index].m_XP);
 
                     if ((levitem.Points - cost) >= 0)
@@ -798,9 +786,6 @@ namespace Server.Gumps
                 }
                 case 4: // Armor Attributes Selected
                 {
-                    if (index < 0 || index >= LevelAttributes.m_ArmorAttributes.Length)
-                        return;
-
                     cost = GetPointCost(m_Item, LevelAttributes.m_ArmorAttributes[index].m_XP);
                     if ((levitem.Points - cost) >= 0)
                     {
@@ -857,9 +842,6 @@ namespace Server.Gumps
                 }
                 case 5: // Armor Resists Selected
                 {
-                    if (index < 0 || index >= LevelAttributes.m_ResistanceTypes.Length)
-                        return;
-
                     cost = GetPointCost(m_Item, LevelAttributes.m_ResistanceTypes[index].m_XP);
                     if ((levitem.Points - cost) >= 0)
                     {
@@ -956,9 +938,6 @@ namespace Server.Gumps
                 }
                 case 6: // Jewelry & Clothing Resists Selected
                 {
-                    if (index < 0 || index >= LevelAttributes.m_ElementAttributes.Length)
-                        return;
-
                     cost = GetPointCost(m_Item, LevelAttributes.m_ElementAttributes[index].m_XP);
                     if ((levitem.Points - cost) >= 0)
                     {

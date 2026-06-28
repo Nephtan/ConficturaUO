@@ -72,23 +72,6 @@ namespace Server.Spells.Research
 
             protected override void OnTarget(Mobile from, object targeted)
             {
-                if (m_Owner == null)
-                    return;
-
-                if (from == null || from.Deleted)
-                {
-                    m_Owner.FinishSequence();
-                    return;
-                }
-
-                Mobile targetedMobile = targeted as Mobile;
-                if (targetedMobile != null && targetedMobile.Deleted)
-                {
-                    from.SendMessage("This spell doesn't seem to work on that.");
-                    m_Owner.FinishSequence();
-                    return;
-                }
-
                 bool success = false;
 
                 if (targeted is PlayerMobile)
@@ -131,20 +114,21 @@ namespace Server.Spells.Research
                         "This spell can really tell you nothing of importance for this one."
                     );
                 }
-                else if (targetedMobile != null)
+                else if (targeted is Mobile)
                 {
-                    Mobile m = targetedMobile;
-                    BaseCreature c = m as BaseCreature;
+                    Mobile m = (Mobile)targeted;
 
-                    if (c != null && Server.Items.PlayersHandbook.IsPeople(m))
+                    if (Server.Items.PlayersHandbook.IsPeople(m))
                     {
+                        BaseCreature c = (BaseCreature)m;
                         from.CloseGump(typeof(Server.SkillHandlers.DruidismGump));
                         from.SendGump(new Server.SkillHandlers.DruidismGump(from, c, 4));
                         from.SendSound(0x0F9);
                         success = true;
                     }
-                    else if (c != null)
+                    else if (m is BaseCreature)
                     {
+                        BaseCreature c = (BaseCreature)m;
                         from.CloseGump(typeof(Server.SkillHandlers.DruidismGump));
                         from.SendGump(new Server.SkillHandlers.DruidismGump(from, c, 3));
                         from.SendSound(0x0F9);
@@ -171,8 +155,7 @@ namespace Server.Spells.Research
 
             protected override void OnTargetFinish(Mobile from)
             {
-                if (m_Owner != null)
-                    m_Owner.FinishSequence();
+                m_Owner.FinishSequence();
             }
         }
     }

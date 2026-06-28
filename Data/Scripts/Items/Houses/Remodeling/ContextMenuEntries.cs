@@ -42,9 +42,6 @@ namespace Server.Misc
 
         public override void OnClick()
         {
-            if (m_From == null || m_From.Deleted || m_Gate == null || m_Gate.Deleted)
-                return;
-
             m_From.SendGump(new LawnSecurityGump(m_From, m_Gate));
         }
     }
@@ -103,9 +100,6 @@ namespace Server.Misc
 
         public override void OnClick()
         {
-            if (m_From == null || m_From.Deleted || m_Gate == null || m_Gate.Deleted)
-                return;
-
             m_From.SendGump(new ShantySecurityGump(m_From, m_Gate));
         }
     }

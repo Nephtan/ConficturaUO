@@ -194,7 +194,7 @@ namespace Server.Engines.XmlSpawner2
         [Description("Displays the players quest points and ranking")]
         public static void CheckQuestPoints_OnCommand(CommandEventArgs e)
         {
-            if (e == null || e.Mobile == null || e.Mobile.Deleted)
+            if (e == null || e.Mobile == null)
                 return;
 
             string msg = null;
@@ -214,7 +214,7 @@ namespace Server.Engines.XmlSpawner2
         [Description("Displays players quest history")]
         public static void QuestLog_OnCommand(CommandEventArgs e)
         {
-            if (e == null || e.Mobile == null || e.Mobile.Deleted)
+            if (e == null || e.Mobile == null)
                 return;
 
             e.Mobile.CloseGump(typeof(QuestLogGump));

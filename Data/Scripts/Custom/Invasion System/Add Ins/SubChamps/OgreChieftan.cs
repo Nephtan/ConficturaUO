@@ -90,19 +90,10 @@ namespace Server.Mobiles
 
             int ogrelords = 0;
 
-            IPooledEnumerable eable = this.GetMobilesInRange(10);
-
-            try
+            foreach (Mobile m in this.GetMobilesInRange(10))
             {
-                foreach (Mobile m in eable)
-                {
-                    if (m is OgreLord)
-                        ++ogrelords;
-                }
-            }
-            finally
-            {
-                eable.Free();
+                if (m is OgreLord)
+                    ++ogrelords;
             }
 
             if (ogrelords < 3)

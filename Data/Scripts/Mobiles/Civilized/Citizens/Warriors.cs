@@ -49,20 +49,12 @@ namespace Server.Mobiles
         {
             if (Combatant == null)
             {
-                IPooledEnumerable eable1 = this.GetMobilesInRange(1);
-                try
+                foreach (Mobile man in this.GetMobilesInRange(1))
                 {
-                    foreach (Mobile man in eable1)
+                    if (man is Warriors)
                     {
-                        if (man is Warriors)
-                        {
-                            Combatant = man;
-                        }
+                        Combatant = man;
                     }
-                }
-                finally
-                {
-                    eable1.Free();
                 }
             }
             Hits = HitsMax;

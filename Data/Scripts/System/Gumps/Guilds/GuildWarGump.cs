@@ -104,9 +104,6 @@ namespace Server.Gumps
 
         public override void OnResponse(NetState state, RelayInfo info)
         {
-            if (state == null || info == null || state.Mobile == null || state.Mobile.Deleted || m_Mobile == null || m_Mobile.Deleted || state.Mobile != m_Mobile || m_Guild == null)
-                return;
-
             if (GuildGump.BadMember(m_Mobile, m_Guild))
                 return;
 

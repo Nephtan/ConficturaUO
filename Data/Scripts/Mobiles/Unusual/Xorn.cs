@@ -71,20 +71,12 @@ namespace Server.Mobiles
             int nGold = 0;
             int toEat = 0;
 
-            IPooledEnumerable eable = this.GetMobilesInRange(2);
-            try
+            foreach (Mobile m in this.GetMobilesInRange(2))
             {
-                foreach (Mobile m in eable)
-                {
-                    if (m == this || !CanBeHarmful(m))
-                        continue;
-                    else if (m.Player && m.TotalGold > 0)
-                        list.Add(m);
-                }
-            }
-            finally
-            {
-                eable.Free();
+                if (m == this || !CanBeHarmful(m))
+                    continue;
+                else if (m.Player && m.TotalGold > 0)
+                    list.Add(m);
             }
 
             foreach (Mobile m in list)

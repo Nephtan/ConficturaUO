@@ -94,31 +94,22 @@ namespace Server.Items
 
             bool foundPlayer = false;
 
-            IPooledEnumerable eable = GetMobilesInRange(3);
-
-            try
+            foreach (Mobile mob in GetMobilesInRange(3))
             {
-                foreach (Mobile mob in eable)
+                if (!mob.Player || !mob.Alive || mob.AccessLevel > AccessLevel.Player)
+                    continue;
+
+                if (
+                    Server.Misc.SeeIfGemInBag.GemInPocket(mob) == true
+                    || Server.Misc.SeeIfJewelInBag.JewelInPocket(mob) == true
+                )
+                    return;
+
+                if (((this.Z + 8) >= mob.Z && (mob.Z + 16) > this.Z))
                 {
-                    if (!mob.Player || !mob.Alive || mob.AccessLevel > AccessLevel.Player)
-                        continue;
-
-                    if (
-                        Server.Misc.SeeIfGemInBag.GemInPocket(mob) == true
-                        || Server.Misc.SeeIfJewelInBag.JewelInPocket(mob) == true
-                    )
-                        return;
-
-                    if (((this.Z + 8) >= mob.Z && (mob.Z + 16) > this.Z))
-                    {
-                        foundPlayer = true;
-                        break;
-                    }
+                    foundPlayer = true;
+                    break;
                 }
-            }
-            finally
-            {
-                eable.Free();
             }
 
             if (!foundPlayer)
@@ -139,9 +130,6 @@ namespace Server.Items
 
         public override bool OnMoveOver(Mobile m)
         {
-            if (m == null || m.Deleted)
-                return true;
-
             if (!m.Alive || !m.Player || m.AccessLevel > AccessLevel.Player)
                 return true;
 
@@ -181,9 +169,6 @@ namespace Server.Items
 
         public override void OnMovement(Mobile m, Point3D oldLocation)
         {
-            if (m == null || m.Deleted)
-                return;
-
             base.OnMovement(m, oldLocation);
 
             if (

@@ -33,10 +33,7 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
-            if (from == null || from.Deleted)
-                return;
-
-            if (Deleted || from.Backpack == null || !IsChildOf(from.Backpack))
+            if (!IsChildOf(from.Backpack))
             {
                 from.SendLocalizedMessage(1062334); // This item must be in your backpack to be used.
             }
@@ -109,26 +106,14 @@ namespace Server.Items
 
             public override void OnResponse(NetState sender, RelayInfo info)
             {
-                if (sender == null || info == null || info.ButtonID != 1)
+                if (info.ButtonID != 1)
                     return;
 
                 Mobile from = sender.Mobile;
 
-                if (from == null || from.Deleted)
-                    return;
-
-                if (
-                    m_Token == null
-                    || m_Token.Deleted
-                    || from.Backpack == null
-                    || !m_Token.IsChildOf(from.Backpack)
-                )
+                if (!m_Token.IsChildOf(from.Backpack))
                 {
                     from.SendLocalizedMessage(1062334); // This item must be in your backpack to be used.
-                }
-                else if (from.BankBox == null)
-                {
-                    return;
                 }
                 else
                 {

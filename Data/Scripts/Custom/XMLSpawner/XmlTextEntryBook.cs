@@ -212,12 +212,7 @@ namespace Server.Items
             // then try it as a text entry book
             BaseEntryBook book = bookitem as BaseEntryBook;
 
-            if (
-                book == null
-                || !book.Writable
-                || !from.InRange(book.GetWorldLocation(), 1)
-                || !book.IsAccessibleTo(from)
-            )
+            if (book == null)
                 return;
 
             // get the number of available pages in the book
@@ -281,12 +276,7 @@ namespace Server.Items
         {
             Mobile from = state.Mobile;
 
-            if (
-                book == null
-                || !book.Writable
-                || !from.InRange(book.GetWorldLocation(), 1)
-                || !book.IsAccessibleTo(from)
-            )
+            if (book == null || !book.Writable || !from.InRange(book.GetWorldLocation(), 1))
                 return;
 
             int pageCount = pvSrc.ReadUInt16();

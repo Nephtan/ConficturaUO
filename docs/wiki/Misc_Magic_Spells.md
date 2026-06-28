@@ -42,7 +42,7 @@ Several runtime paths bypass numeric registry lookup and construct these spell c
 
 | Entry point | Behavior |
 | --- | --- |
-| `Data/Scripts/Custom/ThirdParty/OmniAI/OmniAI Magery.cs` and `Data/Scripts/Mobiles/Base/Behavior.cs` | Return `new AttackSpells(m_Mobile, null)` for some AI spell choices. |
+| `Data/Scripts/Custom/OmniAI/OmniAI Magery.cs` and `Data/Scripts/Mobiles/Base/Behavior.cs` | Return `new AttackSpells(m_Mobile, null)` for some AI spell choices. |
 | `Data/Scripts/Items/Magical/Artifacts/Artifact_GandalfsStaff.cs` | Casts `SummonDragonSpell` from Merlin's Mystical Staff after the staff cooldown check. |
 | `Data/Scripts/Items/Magical/Artifacts/Artifact_StaffofSnakes.cs` | Casts `SummonSnakesSpell` from Staff of the Serpent after the staff cooldown check. |
 | `Data/Scripts/Items/Magical/HydraTooth.cs` | Casts `SummonSkeletonSpell` directly from the hydra tooth scroll item. |
@@ -145,94 +145,3 @@ The default use path opens a `MagicObjectTarget`; obsolete staff subclasses inst
 When testing these spells, check the entry point first.
 Some are registry IDs, some are direct item constructors, and `AttackSpells` is normally reached through AI spell selection rather than through player spellbooks.
 For rune-bag failures, inspect the exact contained rune classes and item count before debugging the target spell.
-
-## Source Trace
-
-POST-BATCH-T reviewed this page on 2026-06-14T21:09:11.0049244-05:00 against current source and audit registers.
-
-- Canonical status: Canonical.
-- Queue rows: PBN-0051.
-- Backlog rows: RB-06725.
-- Audit registers used: documentation-truth-table.csv, runtime-hook-map.csv, serialization-register.csv, and project-truth-register.csv.
-
-### Source Files Reviewed
-
-- Data/Scripts/Magic/Misc/ (CurrentDirectory)
-- Data/Scripts/Magic/Misc/MagicalSpell.cs (CurrentFile)
-- Data/Scripts/Magic/Misc/AttackSpells.cs (CurrentFile)
-- Data/Scripts/Magic/Misc/TravelSpell.cs (CurrentFile)
-- Data/Scripts/Magic/Misc/IdentifySpell.cs (CurrentFile)
-- Data/Scripts/Magic/Misc/ThorLightningSpell.cs (CurrentFile)
-- Data/Scripts/Magic/Misc/SummonDragonSpell.cs (CurrentFile)
-- Data/Scripts/Magic/Misc/SummonSnakesSpell.cs (CurrentFile)
-- Data/Scripts/Magic/Misc/SummonSkeleton.cs (CurrentFile)
-- Data/Scripts/Magic/Misc/BaseMagicObject.cs (CurrentFile)
-- Data/Scripts/Magic/Misc/MagicCastingItems.cs (CurrentFile)
-- Data/Scripts/Magic/Misc/MagicObjectTarget.cs (CurrentFile)
-- Data/Scripts/Magic/Misc/RuneMagic.cs (CurrentFile)
-- Data/Scripts/Custom/ThirdParty/OmniAI/OmniAI Magery.cs (CurrentFile)
-- Data/Scripts/Mobiles/Base/Behavior.cs (CurrentFile)
-- Data/Scripts/Items/Magical/Artifacts/Artifact_GandalfsStaff.cs (CurrentFile)
-- Data/Scripts/Items/Magical/Artifacts/Artifact_StaffofSnakes.cs (CurrentFile)
-- Data/Scripts/Items/Magical/HydraTooth.cs (CurrentFile)
-- Data/Scripts/System/Gumps/RunebookGump.cs (CurrentFile)
-
-### Runtime Evidence
-
-- Hook summary: Event=2; Gump=9; Speech=3; Timer=4; WorldLoad=1.
-- Data/Scripts/Magic/Misc/BaseMagicObject.cs:L115 Timer Timer.DelayCall access=GlobalOrInternal
-- Data/Scripts/Mobiles/Base/Behavior.cs:L9665 WorldLoad WorldLoad access=GlobalOrInternal
-- Data/Scripts/Mobiles/Base/Behavior.cs:L9779 Gump SendGump access=Internal
-- Data/Scripts/Mobiles/Base/Behavior.cs:L10029 Speech OnSpeech access=GlobalOrInternal
-- Data/Scripts/Mobiles/Base/Behavior.cs:L10397 Gump SendGump access=Internal
-- Data/Scripts/Mobiles/Base/Behavior.cs:L13063 Timer Timer.DelayCall access=GlobalOrInternal
-- Data/Scripts/Mobiles/Base/Behavior.cs:L13068 Timer Timer.DelayCall access=GlobalOrInternal
-- Data/Scripts/Mobiles/Base/Behavior.cs:L13120 Timer CustomTimerSubclass access=GlobalOrInternal
-- Data/Scripts/Mobiles/Base/Behavior.cs:L14200 Event EventSink access=GlobalOrInternal
-- Data/Scripts/Mobiles/Base/Behavior.cs:L15092 Event EventSink access=GlobalOrInternal
-- Data/Scripts/Mobiles/Base/Behavior.cs:L15624 Speech OnSpeech access=GlobalOrInternal
-- Data/Scripts/Mobiles/Base/Behavior.cs:L15626 Speech OnSpeech access=GlobalOrInternal
-- Additional hook rows are recorded in runtime-hook-map.csv for this source set.
-
-### Serialization Evidence
-
-- Serialized rows matched: 40.
-- Data/Scripts/Items/Magical/Artifacts/Artifact_GandalfsStaff.cs:Server.Items.Artifact_GandalfsStaff version=1 serialize=L78 deserialize=L85 alignment=CountMatchNeedsTypeReview:UnknownWrites=1
-- Data/Scripts/Items/Magical/Artifacts/Artifact_StaffofSnakes.cs:Server.Items.Artifact_StaffofSnakes version=1 serialize=L73 deserialize=L80 alignment=CountMatchNeedsTypeReview:UnknownWrites=1
-- Data/Scripts/Items/Magical/HydraTooth.cs:Server.Items.HydraTooth version=0 serialize=L43 deserialize=L49 alignment=AlignedByCountAndKnownTypes
-- Data/Scripts/Magic/Misc/BaseMagicObject.cs:Server.Items.BaseMagicObject version=0 serialize=L146 deserialize=L154 alignment=AlignedByCountAndKnownTypes
-- Data/Scripts/Magic/Misc/RuneMagic.cs:Server.Items.An version=0 serialize=L678 deserialize=L684 alignment=AlignedByCountAndKnownTypes
-- Data/Scripts/Magic/Misc/RuneMagic.cs:Server.Items.Bet version=0 serialize=L704 deserialize=L710 alignment=AlignedByCountAndKnownTypes
-- Data/Scripts/Magic/Misc/RuneMagic.cs:Server.Items.Corp version=0 serialize=L730 deserialize=L736 alignment=AlignedByCountAndKnownTypes
-- Data/Scripts/Magic/Misc/RuneMagic.cs:Server.Items.Des version=0 serialize=L756 deserialize=L762 alignment=AlignedByCountAndKnownTypes
-- Data/Scripts/Magic/Misc/RuneMagic.cs:Server.Items.Ex version=0 serialize=L782 deserialize=L788 alignment=AlignedByCountAndKnownTypes
-- Data/Scripts/Magic/Misc/RuneMagic.cs:Server.Items.Flam version=0 serialize=L808 deserialize=L814 alignment=AlignedByCountAndKnownTypes
-- Data/Scripts/Magic/Misc/RuneMagic.cs:Server.Items.FullRuneBag version=0 serialize=L612 deserialize=L618 alignment=AlignedByCountAndKnownTypes
-- Data/Scripts/Magic/Misc/RuneMagic.cs:Server.Items.Grav version=0 serialize=L834 deserialize=L840 alignment=AlignedByCountAndKnownTypes
-- Additional serializer rows are recorded in serialization-register.csv for this source set.
-
-### Project And Runtime Coverage
-
-- Data/Scripts/Custom/ThirdParty/OmniAI/OmniAI Magery.cs=Keep
-- Data/Scripts/Custom/ThirdParty/OmniAI/OmniAI Magery.cs=Keep
-- Data/Scripts/Items/Magical/Artifacts/Artifact_GandalfsStaff.cs=Keep
-- Data/Scripts/Items/Magical/Artifacts/Artifact_GandalfsStaff.cs=Keep
-- Data/Scripts/Items/Magical/Artifacts/Artifact_StaffofSnakes.cs=Keep
-- Data/Scripts/Items/Magical/Artifacts/Artifact_StaffofSnakes.cs=Keep
-- Data/Scripts/Items/Magical/HydraTooth.cs=Keep
-- Data/Scripts/Items/Magical/HydraTooth.cs=Keep
-- Data/Scripts/Magic/Misc/AttackSpells.cs=Keep
-- Data/Scripts/Magic/Misc/AttackSpells.cs=Keep
-- Data/Scripts/Magic/Misc/BaseMagicObject.cs=Keep
-- Data/Scripts/Magic/Misc/BaseMagicObject.cs=Keep
-- Data/Scripts/Magic/Misc/IdentifySpell.cs=Keep
-- Data/Scripts/Magic/Misc/IdentifySpell.cs=Keep
-- Data/Scripts/Magic/Misc/MagicalSpell.cs=Keep
-- Data/Scripts/Magic/Misc/MagicalSpell.cs=Keep
-- Data/Scripts/Magic/Misc/MagicCastingItems.cs=Keep
-- Data/Scripts/Magic/Misc/MagicCastingItems.cs=Keep
-- Data/Scripts/Magic/Misc/MagicObjectTarget.cs=Keep
-- Data/Scripts/Magic/Misc/MagicObjectTarget.cs=Keep
-- Additional project-truth rows are recorded in project-truth-register.csv for this source set.
-
-No C# source, project files, XML/config/data files, namespaces, serializers, gameplay behavior, or migration policy were changed in POST-BATCH-T.

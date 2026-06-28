@@ -72,10 +72,7 @@ namespace Server.Items
 
         public override void OnSpeech(SpeechEventArgs e)
         {
-            if (e == null || e.Mobile == null || e.Mobile.Deleted)
-                return;
-
-            if (!e.Handled && e.Mobile.Backpack != null && !e.Mobile.Backpack.Deleted && this.IsChildOf(e.Mobile.Backpack))
+            if (!e.Handled && this.IsChildOf(e.Mobile.Backpack))
             {
                 string keyword = e.Speech;
                 switch (keyword)
@@ -187,18 +184,6 @@ namespace Server.Items
 
             public override void OnResponse(NetState sender, RelayInfo info)
             {
-                if (
-                    sender == null
-                    || sender.Mobile == null
-                    || sender.Mobile.Deleted
-                    || user == null
-                    || user.Deleted
-                    || sender.Mobile != user
-                    || wss == null
-                    || wss.Deleted
-                )
-                    return;
-
                 Mobile from = sender.Mobile;
 
                 switch (info.ButtonID)
@@ -217,9 +202,6 @@ namespace Server.Items
         //public override void GetContextMenuEntries( Mobile from, ArrayList list )
         public override void GetContextMenuEntries(Mobile from, List<ContextMenuEntry> list)
         {
-            if (from == null || from.Deleted)
-                return;
-
             if (from.Alive)
                 list.Add(new ChangeHue(this, from));
 
@@ -239,9 +221,6 @@ namespace Server.Items
 
             public override void OnClick()
             {
-                if (m_From == null || m_From.Deleted || WSS == null || WSS.Deleted)
-                    return;
-
                 m_From.SendGump(new HueGump(WSS, m_From));
             }
         }

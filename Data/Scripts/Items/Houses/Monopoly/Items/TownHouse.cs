@@ -237,11 +237,6 @@ namespace Knives.TownHouses
 
         public override void OnSpeech(SpeechEventArgs e)
         {
-            if (e == null || e.Mobile == null || e.Mobile.Deleted || e.Speech == null)
-            {
-                return;
-            }
-
             if (e.Mobile != Owner || !IsInside(e.Mobile))
             {
                 return;
@@ -249,10 +244,7 @@ namespace Knives.TownHouses
 
             if (e.Speech.ToLower() == "check house rent")
             {
-                if (c_Sign != null && !c_Sign.Deleted)
-                {
-                    c_Sign.CheckRentTimer();
-                }
+                c_Sign.CheckRentTimer();
             }
 
             Timer.DelayCall(TimeSpan.Zero, new TimerStateCallback(AfterSpeech), e.Mobile);
@@ -261,7 +253,7 @@ namespace Knives.TownHouses
         private void AfterSpeech(object o)
         {
             Mobile m = o as Mobile; // Attempt to cast o to Mobile
-            if (m == null || m.Deleted) // Check if the cast failed or the mobile went stale.
+            if (m == null) // Check if the cast failed
             {
                 return;
             }
@@ -280,21 +272,12 @@ namespace Knives.TownHouses
                 c_Hanger.Delete();
             }
 
-            IPooledEnumerable eable = Sign.GetItemsInRange(0);
-
-            try
+            foreach (Item item in Sign.GetItemsInRange(0))
             {
-                foreach (Item item in eable)
+                if (item != Sign)
                 {
-                    if (item != Sign)
-                    {
-                        item.Visible = true;
-                    }
+                    item.Visible = true;
                 }
-            }
-            finally
-            {
-                eable.Free();
             }
 
             c_Sign.ClearHouse();

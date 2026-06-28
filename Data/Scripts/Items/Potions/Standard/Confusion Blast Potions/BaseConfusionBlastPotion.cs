@@ -125,32 +125,23 @@ namespace Server.Items
                 new object[] { loc, map }
             );
 
-            IPooledEnumerable eable = map.GetMobilesInRange(loc, Radius);
-
-            try
+            foreach (Mobile mobile in map.GetMobilesInRange(loc, Radius))
             {
-                foreach (Mobile mobile in eable)
+                if (mobile is BaseCreature && !(mobile is RuneGuardian))
                 {
-                    if (mobile is BaseCreature && !(mobile is RuneGuardian))
-                    {
-                        BaseCreature mon = (BaseCreature)mobile;
+                    BaseCreature mon = (BaseCreature)mobile;
 
-                        mon.Pacify(from, DateTime.Now + TimeSpan.FromSeconds(5.0)); // TODO check
-                    }
-                    else if (
-                        mobile.Alive
-                        && from != mobile
-                        && mobile.Blessed == false
-                        && from.CanBeHarmful(mobile, true)
-                    )
-                    {
-                        mobile.Paralyze(TimeSpan.FromSeconds(5.0));
-                    }
+                    mon.Pacify(from, DateTime.Now + TimeSpan.FromSeconds(5.0)); // TODO check
                 }
-            }
-            finally
-            {
-                eable.Free();
+                else if (
+                    mobile.Alive
+                    && from != mobile
+                    && mobile.Blessed == false
+                    && from.CanBeHarmful(mobile, true)
+                )
+                {
+                    mobile.Paralyze(TimeSpan.FromSeconds(5.0));
+                }
             }
         }
 

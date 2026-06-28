@@ -131,18 +131,13 @@ namespace Server.Mobiles
         {
             base.OnMovement(m, oldLocation);
 
-            Container pack = Backpack;
-
             if (
-                m != null
-                && !m.Deleted
-                && pack != null
-                && !pack.Deleted
+                Backpack != null
                 && IsAccessibleTo(m)
                 && m.InRange(oldLocation, 3)
                 && !m.InRange(this, 3)
             )
-                pack.SendRemovePacket();
+                Backpack.SendRemovePacket();
         }
 
         public override bool CheckNonlocalLift(Mobile from, Item item)
@@ -234,27 +229,18 @@ namespace Server.Mobiles
                 AddItem(pack);
                 pack.Initialize();
 
-                IPooledEnumerable eable = GetClientsInRange(12);
-
-                try
+                foreach (NetState state in GetClientsInRange(12))
                 {
-                    foreach (NetState state in eable)
-                    {
-                        Mobile m = state.Mobile;
+                    Mobile m = state.Mobile;
 
-                        if (m != null && m.Player && m != from)
-                            PrivateOverheadMessage(
-                                MessageType.Regular,
-                                0x3B2,
-                                1071919,
-                                from.Name,
-                                m.NetState
-                            ); // * ~1_VAL~ slices through the plague beast's amorphous tissue *
-                    }
-                }
-                finally
-                {
-                    eable.Free();
+                    if (m != null && m.Player && m != from)
+                        PrivateOverheadMessage(
+                            MessageType.Regular,
+                            0x3B2,
+                            1071919,
+                            from.Name,
+                            m.NetState
+                        ); // * ~1_VAL~ slices through the plague beast's amorphous tissue *
                 }
 
                 from.LocalOverheadMessage(MessageType.Regular, 0x21, 1071904); // * You slice through the plague beast's amorphous tissue *

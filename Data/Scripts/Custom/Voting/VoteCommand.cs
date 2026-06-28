@@ -24,7 +24,7 @@ namespace Server.Voting
         [Description("Cast a vote for your shard.")]
         private static void Vote_OnCommand(CommandEventArgs e)
         {
-            if (e == null || e.Mobile == null || e.Mobile.Deleted)
+            if (e.Mobile == null || e.Mobile.Deleted)
             {
                 return;
             }
@@ -36,7 +36,7 @@ namespace Server.Voting
         [Description("Gets the property list for the internal Vote Item instance.")]
         private static void VoteInstance_OnCommand(CommandEventArgs e)
         {
-            if (e == null || e.Mobile == null || e.Mobile.Deleted)
+            if (e.Mobile == null || e.Mobile.Deleted)
             {
                 return;
             }
@@ -48,7 +48,7 @@ namespace Server.Voting
         [Description("Gets the property list for the Vote System config.")]
         private static void VoteConfig_OnCommand(CommandEventArgs e)
         {
-            if (e == null || e.Mobile == null || e.Mobile.Deleted)
+            if (e.Mobile == null || e.Mobile.Deleted)
             {
                 return;
             }

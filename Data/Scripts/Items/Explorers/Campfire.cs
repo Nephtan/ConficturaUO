@@ -100,19 +100,10 @@ namespace Server.Items
 
             List<Mobile> toRest = new List<Mobile>();
 
-            IPooledEnumerable eable = GetMobilesInRange(3);
-
-            try
+            foreach (Mobile m in GetMobilesInRange(3))
             {
-                foreach (Mobile m in eable)
-                {
-                    if (m is PlayerMobile && !Server.Items.Kindling.EnemiesNearby(m))
-                        toRest.Add(m);
-                }
-            }
-            finally
-            {
-                eable.Free();
+                if (m is PlayerMobile && !Server.Items.Kindling.EnemiesNearby(m))
+                    toRest.Add(m);
             }
 
             for (int i = 0; i < toRest.Count; i++)

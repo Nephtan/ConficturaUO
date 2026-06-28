@@ -28,9 +28,6 @@ namespace Server.Commands
         [Description("Add different varieties of grape vines for winecrafting.")]
         public static void gv_OnCommand(CommandEventArgs e)
         {
-            if (e == null || e.Mobile == null || e.Mobile.Deleted)
-                return;
-
             e.Mobile.SendGump(new AddGrapeVineGump(e.Mobile, null, 0));
         }
     }

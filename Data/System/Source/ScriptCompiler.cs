@@ -596,15 +596,7 @@ namespace Server
         public static void GetScripts(List<string> list, string path, string filter)
         {
             foreach (string dir in Directory.GetDirectories(path))
-            {
-                string dirName = Path.GetFileName(dir);
-
-                // Project output folders can contain generated .cs files that are not shard scripts.
-                if (Insensitive.Equals(dirName, "bin") || Insensitive.Equals(dirName, "obj"))
-                    continue;
-
                 GetScripts(list, dir, filter);
-            }
 
             list.AddRange(Directory.GetFiles(path, filter));
         }

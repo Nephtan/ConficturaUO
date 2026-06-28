@@ -89,20 +89,12 @@ namespace Server.Mobiles
             {
                 int goo = 0;
 
-                IPooledEnumerable eable = this.GetItemsInRange(10);
-                try
+                foreach (Item splash in this.GetItemsInRange(10))
                 {
-                    foreach (Item splash in eable)
+                    if (splash is MonsterSplatter && splash.Name == "alien blood")
                     {
-                        if (splash is MonsterSplatter && splash.Name == "alien blood")
-                        {
-                            goo++;
-                        }
+                        goo++;
                     }
-                }
-                finally
-                {
-                    eable.Free();
                 }
 
                 if (goo == 0)
@@ -130,20 +122,12 @@ namespace Server.Mobiles
                 Region foeReg = Region.Find(m.Location, m.Map);
 
                 bool isNearby = false;
-                IPooledEnumerable eable = this.GetMobilesInRange(1);
-                try
+                foreach (Mobile foe in this.GetMobilesInRange(1))
                 {
-                    foreach (Mobile foe in eable)
+                    if (foe == m)
                     {
-                        if (foe == m)
-                        {
-                            isNearby = true;
-                        }
+                        isNearby = true;
                     }
-                }
-                finally
-                {
-                    eable.Free();
                 }
 
                 if (isNearby == false && myReg == foeReg)

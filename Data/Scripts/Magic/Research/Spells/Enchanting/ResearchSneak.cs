@@ -56,19 +56,7 @@ namespace Server.Spells.Research
 
         private void OnLogout(LogoutEventArgs e)
         {
-            if (e == null)
-            {
-                return;
-            }
-
-            Mobile mobile = e.Mobile;
-
-            if (mobile == null || mobile.Deleted)
-            {
-                return;
-            }
-
-            ResearchSneak.RemoveEffect(mobile);
+            ResearchSneak.RemoveEffect(e.Mobile);
         }
 
         private static Hashtable m_Table = new Hashtable();

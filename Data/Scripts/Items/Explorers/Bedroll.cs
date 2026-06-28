@@ -35,24 +35,15 @@ namespace Server.Items
 
         private bool BedsNearby(Mobile from)
         {
-            IPooledEnumerable eable = GetItemsInRange(20);
-
-            try
+            foreach (Item i in GetItemsInRange(20))
             {
-                foreach (Item i in eable)
+                if (i is BedrolledOut)
                 {
-                    if (i is BedrolledOut)
-                    {
-                        BedrolledOut bed = (BedrolledOut)i;
+                    BedrolledOut bed = (BedrolledOut)i;
 
-                        if (bed.Owner == from)
-                            return true;
-                    }
+                    if (bed.Owner == from)
+                        return true;
                 }
-            }
-            finally
-            {
-                eable.Free();
             }
 
             return false;

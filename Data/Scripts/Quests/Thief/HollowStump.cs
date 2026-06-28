@@ -41,30 +41,22 @@ namespace Server.Items
             }
             else
             {
-                IPooledEnumerable eable = stump.GetMobilesInRange(200);
-                try
+                foreach (Mobile citizen in stump.GetMobilesInRange(200))
                 {
-                    foreach (Mobile citizen in eable)
+                    if (
+                        citizen is BaseVendor
+                        || citizen is TownGuards
+                        || (citizen is Citizens && !(citizen is HouseVisitor))
+                    )
                     {
-                        if (
-                            citizen is BaseVendor
-                            || citizen is TownGuards
-                            || (citizen is Citizens && !(citizen is HouseVisitor))
-                        )
+                        if (citizen.Region.Name != null)
                         {
-                            if (citizen.Region.Name != null)
-                            {
-                                stump.StumpTown = Server.Misc.Worlds.GetRegionName(
-                                    citizen.Map,
-                                    citizen.Location
-                                );
-                            }
+                            stump.StumpTown = Server.Misc.Worlds.GetRegionName(
+                                citizen.Map,
+                                citizen.Location
+                            );
                         }
                     }
-                }
-                finally
-                {
-                    eable.Free();
                 }
             }
 

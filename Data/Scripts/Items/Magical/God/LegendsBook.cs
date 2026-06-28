@@ -428,9 +428,6 @@ namespace Server.Items
 
             public override void OnResponse(NetState state, RelayInfo info)
             {
-                if (state == null || info == null || state.Mobile == null || state.Mobile.Deleted || m_Book == null || m_Book.Deleted)
-                    return;
-
                 Mobile from = state.Mobile;
                 Container pack = from.Backpack;
                 from.SendSound(0x55);
@@ -459,7 +456,6 @@ namespace Server.Items
                     canChoose == true
                     && info.ButtonID > 0
                     && info.ButtonID < 300
-                    && pack != null
                     && pack.ConsumeTotal(typeof(Gold), 10000)
                 )
                 {
@@ -483,10 +479,6 @@ namespace Server.Items
                     {
                         Item reward = null;
                         Type itemType = ScriptCompiler.FindTypeByName(sType);
-
-                        if (itemType == null || !typeof(Item).IsAssignableFrom(itemType))
-                            return;
-
                         from.Fame = 0;
                         from.Karma = 0;
                         reward = (Item)Activator.CreateInstance(itemType);

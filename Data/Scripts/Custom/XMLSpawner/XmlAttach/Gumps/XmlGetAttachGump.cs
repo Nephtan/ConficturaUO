@@ -176,9 +176,6 @@ namespace Server.Mobiles
         [Description("Gets attachments on an object")]
         public static void XmlGetAtt_OnCommand(CommandEventArgs e)
         {
-            if (e == null || e.Mobile == null || e.Mobile.Deleted)
-                return;
-
             e.Mobile.Target = new GetAttachTarget(e);
         }
 

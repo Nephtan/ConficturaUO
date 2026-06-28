@@ -29,9 +29,6 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
-            if (from == null || from.Deleted || Deleted)
-                return;
-
             from.Hunger = 20;
             from.SendMessage("You take a healthy bite from the bread...and it magically reforms.");
 

@@ -56,47 +56,39 @@ namespace Server.Misc
             ArrayList bodies = new ArrayList();
             ArrayList empty = new ArrayList();
             ArrayList mice = new ArrayList();
-            IPooledEnumerable eable = from.GetItemsInRange(range);
-            try
-            {
-                foreach (Item body in eable)
-                    if (body is Corpse)
+            foreach (Item body in from.GetItemsInRange(range))
+                if (body is Corpse)
+                {
+                    Corpse cadaver = (Corpse)body;
+
+                    if (cadaver.Owner == from)
                     {
-                        Corpse cadaver = (Corpse)body;
+                        int carrying = body.GetTotal(TotalType.Items);
 
-                        if (cadaver.Owner == from)
+                        Mobile mSp = new CorpseCritter();
+                        mSp.MoveToWorld(new Point3D(body.X, body.Y, body.Z), body.Map);
+
+                        if (
+                            GhostHelper.SameArea(from, mSp) == true
+                            && cadaver.Owner == from
+                            && carrying > 0
+                        )
                         {
-                            int carrying = body.GetTotal(TotalType.Items);
-
-                            Mobile mSp = new CorpseCritter();
-                            mSp.MoveToWorld(new Point3D(body.X, body.Y, body.Z), body.Map);
-
-                            if (
-                                GhostHelper.SameArea(from, mSp) == true
-                                && cadaver.Owner == from
-                                && carrying > 0
-                            )
+                            distchk++;
+                            bodies.Add(mSp);
+                            if (GhostHelper.HowFar(from.X, from.Y, mSp.X, mSp.Y) < TheClosest)
                             {
-                                distchk++;
-                                bodies.Add(mSp);
-                                if (GhostHelper.HowFar(from.X, from.Y, mSp.X, mSp.Y) < TheClosest)
-                                {
-                                    TheClosest = GhostHelper.HowFar(from.X, from.Y, mSp.X, mSp.Y);
-                                    IsClosest = distchk;
-                                }
-                            }
-                            else
-                            {
-                                mice.Add(mSp);
-                                empty.Add(cadaver);
+                                TheClosest = GhostHelper.HowFar(from.X, from.Y, mSp.X, mSp.Y);
+                                IsClosest = distchk;
                             }
                         }
+                        else
+                        {
+                            mice.Add(mSp);
+                            empty.Add(cadaver);
+                        }
                     }
-            }
-            finally
-            {
-                eable.Free();
-            }
+                }
 
             for (int h = 0; h < bodies.Count; ++h)
             {

@@ -118,26 +118,18 @@ namespace Server.Items
         {
             int animalfriend = 0;
 
-            IPooledEnumerable eable1 = this.GetMobilesInRange(20);
-            try
+            foreach (Mobile m in this.GetMobilesInRange(20))
             {
-                foreach (Mobile m in eable1)
-                {
-                    if (
-                        m is DruidGuildmaster
-                        || m is DruidTree
-                        || m is Druid
-                        || m is AnimalTrainer
-                        || m is Rancher
-                        || m is GypsyAnimalTrainer
-                        || m is Veterinarian
-                    )
-                        ++animalfriend;
-                }
-            }
-            finally
-            {
-                eable1.Free();
+                if (
+                    m is DruidGuildmaster
+                    || m is DruidTree
+                    || m is Druid
+                    || m is AnimalTrainer
+                    || m is Rancher
+                    || m is GypsyAnimalTrainer
+                    || m is Veterinarian
+                )
+                    ++animalfriend;
             }
 
             if (animalfriend == 0)

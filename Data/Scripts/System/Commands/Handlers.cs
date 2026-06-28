@@ -517,29 +517,21 @@ namespace Server.Commands
                 {
                     bool hasBankerSpawner = false;
 
-                    IPooledEnumerable eable = m.GetItemsInRange(0);
-                    try
+                    foreach (Item item in m.GetItemsInRange(0))
                     {
-                        foreach (Item item in eable)
+                        if (item is Spawner)
                         {
-                            if (item is Spawner)
-                            {
-                                Spawner spawner = (Spawner)item;
+                            Spawner spawner = (Spawner)item;
 
-                                for (int i = 0; !hasBankerSpawner && i < spawner.SpawnNames.Count; ++i)
-                                    hasBankerSpawner = Insensitive.Equals(
-                                        (string)spawner.SpawnNames[i],
-                                        "banker"
-                                    );
+                            for (int i = 0; !hasBankerSpawner && i < spawner.SpawnNames.Count; ++i)
+                                hasBankerSpawner = Insensitive.Equals(
+                                    (string)spawner.SpawnNames[i],
+                                    "banker"
+                                );
 
-                                if (hasBankerSpawner)
-                                    break;
-                            }
+                            if (hasBankerSpawner)
+                                break;
                         }
-                    }
-                    finally
-                    {
-                        eable.Free();
                     }
 
                     if (!hasBankerSpawner)
@@ -725,18 +717,10 @@ namespace Server.Commands
 
             p.Acquire();
 
-            IPooledEnumerable eable = m.GetClientsInRange(12);
-            try
+            foreach (NetState state in m.GetClientsInRange(12))
             {
-                foreach (NetState state in eable)
-                {
-                    if (toAll || state.Mobile.CanSee(m))
-                        state.Send(p);
-                }
-            }
-            finally
-            {
-                eable.Free();
+                if (toAll || state.Mobile.CanSee(m))
+                    state.Send(p);
             }
 
             p.Release();

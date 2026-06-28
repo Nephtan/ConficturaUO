@@ -271,31 +271,21 @@ namespace Server.Items
         {
             List<Mobile> targets = new List<Mobile>();
 
-            IPooledEnumerable eable = table.GetMobilesInRange(1);
-
-            try
+            foreach (Mobile m in table.GetMobilesInRange(1))
             {
-                foreach (Mobile m in eable)
-                {
-                    if (
-                        m.Map == table.Map
-                        && m.Karma > 0
-                        && m is HouseVisitor
-                        && (
-                            m == table.DrinkerNorth
-                            || m == table.DrinkerSouth
-                            || m == table.DrinkerEast
-                            || m == table.DrinkerWest
-                        )
+                if (
+                    m.Map == table.Map
+                    && m.Karma > 0
+                    && m is HouseVisitor
+                    && (
+                        m == table.DrinkerNorth
+                        || m == table.DrinkerSouth
+                        || m == table.DrinkerEast
+                        || m == table.DrinkerWest
                     )
-                        targets.Add(m);
-                }
+                )
+                    targets.Add(m);
             }
-            finally
-            {
-                eable.Free();
-            }
-
             for (int i = 0; i < targets.Count; ++i)
             {
                 Mobile m = targets[i];
@@ -306,71 +296,51 @@ namespace Server.Items
         public static int CountPatrons(Mobile m)
         {
             int count = 0;
-
-            IPooledEnumerable eable = m.GetItemsInRange(1);
-
-            try
+            foreach (Item i in m.GetItemsInRange(1))
             {
-                foreach (Item i in eable)
-                {
-                    if (
-                        i.Map == m.Map
-                        && !(i.Movable)
-                        && m.Karma > 0
-                        && i is TavernTable
-                        && (
-                            m == ((TavernTable)i).DrinkerNorth
-                            || m == ((TavernTable)i).DrinkerSouth
-                            || m == ((TavernTable)i).DrinkerEast
-                            || m == ((TavernTable)i).DrinkerWest
-                        )
+                if (
+                    i.Map == m.Map
+                    && !(i.Movable)
+                    && m.Karma > 0
+                    && i is TavernTable
+                    && (
+                        m == ((TavernTable)i).DrinkerNorth
+                        || m == ((TavernTable)i).DrinkerSouth
+                        || m == ((TavernTable)i).DrinkerEast
+                        || m == ((TavernTable)i).DrinkerWest
                     )
-                    {
-                        if (((TavernTable)i).PatronNorth > 0)
-                            count++;
+                )
+                {
+                    if (((TavernTable)i).PatronNorth > 0)
+                        count++;
 
-                        if (((TavernTable)i).PatronSouth > 0)
-                            count++;
+                    if (((TavernTable)i).PatronSouth > 0)
+                        count++;
 
-                        if (((TavernTable)i).PatronEast > 0)
-                            count++;
+                    if (((TavernTable)i).PatronEast > 0)
+                        count++;
 
-                        if (((TavernTable)i).PatronWest > 0)
-                            count++;
-                    }
+                    if (((TavernTable)i).PatronWest > 0)
+                        count++;
                 }
             }
-            finally
-            {
-                eable.Free();
-            }
-
             return count;
         }
 
         public static bool isLawnVisitor(Mobile m)
         {
-            IPooledEnumerable eable = m.GetItemsInRange(2);
-
-            try
+            foreach (Item i in m.GetItemsInRange(2))
             {
-                foreach (Item i in eable)
-                {
-                    if (
-                        i is LawnItem
-                        && m.Karma != 1
-                        && (
-                            i.Name == "huge fire"
-                            || i.Name == "burning pit"
-                            || i.Name == "summoning pentagram"
-                        )
+                if (
+                    i is LawnItem
+                    && m.Karma != 1
+                    && (
+                        i.Name == "huge fire"
+                        || i.Name == "burning pit"
+                        || i.Name == "summoning pentagram"
                     )
-                        return true;
-                }
-            }
-            finally
-            {
-                eable.Free();
+                )
+                    return true;
             }
 
             return false;
@@ -378,27 +348,18 @@ namespace Server.Items
 
         public static bool isShantyVisitor(Mobile m)
         {
-            IPooledEnumerable eable = m.GetItemsInRange(2);
-
-            try
+            foreach (Item i in m.GetItemsInRange(2))
             {
-                foreach (Item i in eable)
-                {
-                    if (
-                        i is ShantyItem
-                        && m.Karma != 1
-                        && (
-                            i.Name == "huge fire"
-                            || i.Name == "burning pit"
-                            || i.Name == "summoning pentagram"
-                        )
+                if (
+                    i is ShantyItem
+                    && m.Karma != 1
+                    && (
+                        i.Name == "huge fire"
+                        || i.Name == "burning pit"
+                        || i.Name == "summoning pentagram"
                     )
-                        return true;
-                }
-            }
-            finally
-            {
-                eable.Free();
+                )
+                    return true;
             }
 
             return false;

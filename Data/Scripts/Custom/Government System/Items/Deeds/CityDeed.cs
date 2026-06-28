@@ -3126,23 +3126,14 @@ namespace Server.Items
                 spwn.MoveToWorld(new Point3D(p.X - 4, p.Y, p.Z), from.Map);
                 spwn.Respawn();
                 CityLandLord lord = null;
-                IPooledEnumerable spawnerMobiles = spwn.GetMobilesInRange(0);
-
-                try
+                foreach (Mobile m in spwn.GetMobilesInRange(0))
                 {
-                    foreach (Mobile m in spawnerMobiles)
+                    if (m is CityLandLord)
                     {
-                        if (m is CityLandLord)
-                        {
-                            lord = (CityLandLord)m;
-                            lord.Initialize(pm.City, area, sign, p, from.Map);
-                            break;
-                        }
+                        lord = (CityLandLord)m;
+                        lord.Initialize(pm.City, area, sign, p, from.Map);
+                        break;
                     }
-                }
-                finally
-                {
-                    spawnerMobiles.Free();
                 }
 
                 //Remove List
@@ -3190,23 +3181,14 @@ namespace Server.Items
                 spwn.MoveToWorld(new Point3D(p.X - 4, p.Y, p.Z), from.Map);
                 spwn.Respawn();
                 CityLandLord lord = null;
-                IPooledEnumerable spawnerMobiles = spwn.GetMobilesInRange(0);
-
-                try
+                foreach (Mobile m in spwn.GetMobilesInRange(0))
                 {
-                    foreach (Mobile m in spawnerMobiles)
+                    if (m is CityLandLord)
                     {
-                        if (m is CityLandLord)
-                        {
-                            lord = (CityLandLord)m;
-                            lord.Initialize(pm.City, area, sign, p, from.Map);
-                            break;
-                        }
+                        lord = (CityLandLord)m;
+                        lord.Initialize(pm.City, area, sign, p, from.Map);
+                        break;
                     }
-                }
-                finally
-                {
-                    spawnerMobiles.Free();
                 }
 
                 //Remove List
@@ -3254,23 +3236,14 @@ namespace Server.Items
                 spwn.MoveToWorld(new Point3D(p.X - 4, p.Y, p.Z), from.Map);
                 spwn.Respawn();
                 CityLandLord lord = null;
-                IPooledEnumerable spawnerMobiles = spwn.GetMobilesInRange(0);
-
-                try
+                foreach (Mobile m in spwn.GetMobilesInRange(0))
                 {
-                    foreach (Mobile m in spawnerMobiles)
+                    if (m is CityLandLord)
                     {
-                        if (m is CityLandLord)
-                        {
-                            lord = (CityLandLord)m;
-                            lord.Initialize(pm.City, area, sign, p, from.Map);
-                            break;
-                        }
+                        lord = (CityLandLord)m;
+                        lord.Initialize(pm.City, area, sign, p, from.Map);
+                        break;
                     }
-                }
-                finally
-                {
-                    spawnerMobiles.Free();
                 }
 
                 //Remove List
@@ -3318,23 +3291,14 @@ namespace Server.Items
                 spwn.MoveToWorld(new Point3D(p.X - 4, p.Y, p.Z), from.Map);
                 spwn.Respawn();
                 CityLandLord lord = null;
-                IPooledEnumerable spawnerMobiles = spwn.GetMobilesInRange(0);
-
-                try
+                foreach (Mobile m in spwn.GetMobilesInRange(0))
                 {
-                    foreach (Mobile m in spawnerMobiles)
+                    if (m is CityLandLord)
                     {
-                        if (m is CityLandLord)
-                        {
-                            lord = (CityLandLord)m;
-                            lord.Initialize(pm.City, area, sign, p, from.Map);
-                            break;
-                        }
+                        lord = (CityLandLord)m;
+                        lord.Initialize(pm.City, area, sign, p, from.Map);
+                        break;
                     }
-                }
-                finally
-                {
-                    spawnerMobiles.Free();
                 }
 
                 //Remove List
@@ -3382,23 +3346,14 @@ namespace Server.Items
                 spwn.MoveToWorld(new Point3D(p.X - 4, p.Y, p.Z), from.Map);
                 spwn.Respawn();
                 CityLandLord lord = null;
-                IPooledEnumerable spawnerMobiles = spwn.GetMobilesInRange(0);
-
-                try
+                foreach (Mobile m in spwn.GetMobilesInRange(0))
                 {
-                    foreach (Mobile m in spawnerMobiles)
+                    if (m is CityLandLord)
                     {
-                        if (m is CityLandLord)
-                        {
-                            lord = (CityLandLord)m;
-                            lord.Initialize(pm.City, area, sign, p, from.Map);
-                            break;
-                        }
+                        lord = (CityLandLord)m;
+                        lord.Initialize(pm.City, area, sign, p, from.Map);
+                        break;
                     }
-                }
-                finally
-                {
-                    spawnerMobiles.Free();
                 }
 
                 //Remove List
@@ -3446,23 +3401,14 @@ namespace Server.Items
                 spwn.MoveToWorld(new Point3D(p.X - 4, p.Y, p.Z), from.Map);
                 spwn.Respawn();
                 CityLandLord lord = null;
-                IPooledEnumerable spawnerMobiles = spwn.GetMobilesInRange(0);
-
-                try
+                foreach (Mobile m in spwn.GetMobilesInRange(0))
                 {
-                    foreach (Mobile m in spawnerMobiles)
+                    if (m is CityLandLord)
                     {
-                        if (m is CityLandLord)
-                        {
-                            lord = (CityLandLord)m;
-                            lord.Initialize(pm.City, area, sign, p, from.Map);
-                            break;
-                        }
+                        lord = (CityLandLord)m;
+                        lord.Initialize(pm.City, area, sign, p, from.Map);
+                        break;
                     }
-                }
-                finally
-                {
-                    spawnerMobiles.Free();
                 }
 
                 //Remove List
@@ -3510,23 +3456,14 @@ namespace Server.Items
                 spwn.MoveToWorld(new Point3D(p.X - 4, p.Y, p.Z), from.Map);
                 spwn.Respawn();
                 CityLandLord lord = null;
-                IPooledEnumerable spawnerMobiles = spwn.GetMobilesInRange(0);
-
-                try
+                foreach (Mobile m in spwn.GetMobilesInRange(0))
                 {
-                    foreach (Mobile m in spawnerMobiles)
+                    if (m is CityLandLord)
                     {
-                        if (m is CityLandLord)
-                        {
-                            lord = (CityLandLord)m;
-                            lord.Initialize(pm.City, area, sign, p, from.Map);
-                            break;
-                        }
+                        lord = (CityLandLord)m;
+                        lord.Initialize(pm.City, area, sign, p, from.Map);
+                        break;
                     }
-                }
-                finally
-                {
-                    spawnerMobiles.Free();
                 }
 
                 //Remove List
@@ -3574,23 +3511,14 @@ namespace Server.Items
                 spwn.MoveToWorld(new Point3D(p.X - 4, p.Y, p.Z), from.Map);
                 spwn.Respawn();
                 CityLandLord lord = null;
-                IPooledEnumerable spawnerMobiles = spwn.GetMobilesInRange(0);
-
-                try
+                foreach (Mobile m in spwn.GetMobilesInRange(0))
                 {
-                    foreach (Mobile m in spawnerMobiles)
+                    if (m is CityLandLord)
                     {
-                        if (m is CityLandLord)
-                        {
-                            lord = (CityLandLord)m;
-                            lord.Initialize(pm.City, area, sign, p, from.Map);
-                            break;
-                        }
+                        lord = (CityLandLord)m;
+                        lord.Initialize(pm.City, area, sign, p, from.Map);
+                        break;
                     }
-                }
-                finally
-                {
-                    spawnerMobiles.Free();
                 }
 
                 //Remove List

@@ -91,19 +91,10 @@ namespace Server.Mobiles
 
             int mage = 0;
 
-            IPooledEnumerable eable = this.GetMobilesInRange(10);
-
-            try
+            foreach (Mobile m in this.GetMobilesInRange(10))
             {
-                foreach (Mobile m in eable)
-                {
-                    if (m is LizardmanMage)
-                        ++mage;
-                }
-            }
-            finally
-            {
-                eable.Free();
+                if (m is LizardmanMage)
+                    ++mage;
             }
 
             if (mage < 3)

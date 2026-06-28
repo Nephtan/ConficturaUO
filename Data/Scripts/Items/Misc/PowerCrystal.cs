@@ -29,10 +29,7 @@ namespace Server.Items
         {
             Target t;
 
-            if (from == null || from.Deleted)
-                return;
-
-            if (Deleted || from.Backpack == null || !IsChildOf(from.Backpack))
+            if (!IsChildOf(from.Backpack))
             {
                 from.SendLocalizedMessage(1060640); // The item must be in your backpack to use it.
             }
@@ -56,61 +53,44 @@ namespace Server.Items
 
             protected override void OnTarget(Mobile from, object targeted)
             {
-                if (from == null || from.Deleted)
-                    return;
-
-                if (
-                    m_Crystal == null
-                    || m_Crystal.Deleted
-                    || from.Backpack == null
-                    || !m_Crystal.IsChildOf(from.Backpack)
-                )
-                {
-                    from.SendLocalizedMessage(1060640); // The item must be in your backpack to use it.
-                    return;
-                }
-
                 Item iCrystal = targeted as Item;
 
                 if (iCrystal is GolemPorterItem)
                 {
-                    if (iCrystal.Deleted || !iCrystal.IsChildOf(from.Backpack))
+                    GolemPorterItem xCrystal = (GolemPorterItem)iCrystal;
+
+                    int myCharges = xCrystal.m_Charges;
+
+                    if (!iCrystal.IsChildOf(from.Backpack))
                     {
                         from.SendMessage("You can only use this crystal on items in your pack.");
                     }
+                    else if (myCharges < 100)
+                    {
+                        int UpMe = 5;
+                        if (xCrystal.PorterType > 0)
+                        {
+                            UpMe = 1;
+                        }
+
+                        xCrystal.m_Charges = xCrystal.m_Charges + UpMe;
+
+                        if (xCrystal.m_Charges > 100)
+                        {
+                            xCrystal.m_Charges = 100;
+                        }
+
+                        from.SendMessage("You charge your golem with the power crystal.");
+                        from.RevealingAction();
+                        from.PlaySound(0x652);
+
+                        xCrystal.InvalidateProperties();
+
+                        m_Crystal.Delete();
+                    }
                     else
                     {
-                        GolemPorterItem xCrystal = (GolemPorterItem)iCrystal;
-
-                        int myCharges = xCrystal.m_Charges;
-
-                        if (myCharges < 100)
-                        {
-                            int UpMe = 5;
-                            if (xCrystal.PorterType > 0)
-                            {
-                                UpMe = 1;
-                            }
-
-                            xCrystal.m_Charges = xCrystal.m_Charges + UpMe;
-
-                            if (xCrystal.m_Charges > 100)
-                            {
-                                xCrystal.m_Charges = 100;
-                            }
-
-                            from.SendMessage("You charge your golem with the power crystal.");
-                            from.RevealingAction();
-                            from.PlaySound(0x652);
-
-                            xCrystal.InvalidateProperties();
-
-                            m_Crystal.Delete();
-                        }
-                        else
-                        {
-                            from.SendMessage("That golem is already fully charged.");
-                        }
+                        from.SendMessage("That golem is already fully charged.");
                     }
                 }
                 else

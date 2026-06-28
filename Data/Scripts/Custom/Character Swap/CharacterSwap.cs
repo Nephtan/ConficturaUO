@@ -24,9 +24,6 @@ namespace Server.Gumps
         )]
         private static void CharControl_OnCommand(CommandEventArgs e)
         {
-            if (e == null || e.Mobile == null || e.Mobile.Deleted)
-                return;
-
             e.Mobile.SendGump(new CharacterControlGump());
         }
 

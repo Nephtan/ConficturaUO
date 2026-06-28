@@ -862,65 +862,56 @@ namespace Server.Items
                 {
                     bool run = false;
 
-                    IPooledEnumerable eable = from.GetMobilesInRange(15);
-
-                    try
+                    foreach (Mobile who in from.GetMobilesInRange(15))
                     {
-                        foreach (Mobile who in eable)
+                        if (
+                            (
+                                who is BlacksmithGuildmaster
+                                || who is Garth
+                                || who is IronWorker
+                                || who is Weaponsmith
+                                || who is Armorer
+                                || who is Blacksmith
+                            )
+                            && m_Book.MaterialType == "metal"
+                        )
                         {
-                            if (
-                                (
-                                    who is BlacksmithGuildmaster
-                                    || who is Garth
-                                    || who is IronWorker
-                                    || who is Weaponsmith
-                                    || who is Armorer
-                                    || who is Blacksmith
-                                )
-                                && m_Book.MaterialType == "metal"
-                            )
-                            {
-                                run = true;
-                            }
-                            else if (
-                                (who is Carpenter || who is CarpenterGuildmaster)
-                                && m_Book.MaterialType == "wood"
-                            )
-                            {
-                                run = true;
-                            }
-                            else if (
-                                (
-                                    who is Tanner
-                                    || who is Cobbler
-                                    || who is Furtrader
-                                    || who is LeatherWorker
-                                    || who is Tailor
-                                    || who is TailorGuildmaster
-                                )
-                                && m_Book.MaterialType == "leather"
-                            )
-                            {
-                                run = true;
-                            }
-                            else if (
-                                (
-                                    (who.Name == "Iolo" && who.Title == "the Bowman")
-                                    || who is Ranger
-                                    || who is RangerGuildmaster
-                                    || who is Bowyer
-                                    || who is ArcherGuildmaster
-                                )
-                                && m_Book.MaterialType == "bows"
-                            )
-                            {
-                                run = true;
-                            }
+                            run = true;
                         }
-                    }
-                    finally
-                    {
-                        eable.Free();
+                        else if (
+                            (who is Carpenter || who is CarpenterGuildmaster)
+                            && m_Book.MaterialType == "wood"
+                        )
+                        {
+                            run = true;
+                        }
+                        else if (
+                            (
+                                who is Tanner
+                                || who is Cobbler
+                                || who is Furtrader
+                                || who is LeatherWorker
+                                || who is Tailor
+                                || who is TailorGuildmaster
+                            )
+                            && m_Book.MaterialType == "leather"
+                        )
+                        {
+                            run = true;
+                        }
+                        else if (
+                            (
+                                (who.Name == "Iolo" && who.Title == "the Bowman")
+                                || who is Ranger
+                                || who is RangerGuildmaster
+                                || who is Bowyer
+                                || who is ArcherGuildmaster
+                            )
+                            && m_Book.MaterialType == "bows"
+                        )
+                        {
+                            run = true;
+                        }
                     }
 
                     if (run)
@@ -945,21 +936,12 @@ namespace Server.Items
                         }
 
                         bool nearBook = false;
-                        eable = from.GetItemsInRange(10);
-
-                        try
+                        foreach (Item tome in from.GetItemsInRange(10))
                         {
-                            foreach (Item tome in eable)
+                            if (tome == m_Book)
                             {
-                                if (tome == m_Book)
-                                {
-                                    nearBook = true;
-                                }
+                                nearBook = true;
                             }
-                        }
-                        finally
-                        {
-                            eable.Free();
                         }
 
                         if (sName != "" && nearBook == true)
@@ -1417,11 +1399,7 @@ namespace Server.Items
 
                                 int OneSay = 0;
 
-                                eable = from.GetMobilesInRange(10);
-
-                                try
-                                {
-                                foreach (Mobile who in eable)
+                                foreach (Mobile who in from.GetMobilesInRange(10))
                                 {
                                     if (
                                         (
@@ -1596,21 +1574,12 @@ namespace Server.Items
                                         OneSay = 1;
                                     }
                                 }
-                                }
-                                finally
-                                {
-                                    eable.Free();
-                                }
                             }
                             else
                             {
                                 int NoGold = 0;
 
-                                eable = from.GetMobilesInRange(10);
-
-                                try
-                                {
-                                foreach (Mobile who in eable)
+                                foreach (Mobile who in from.GetMobilesInRange(10))
                                 {
                                     if (
                                         (
@@ -1676,11 +1645,6 @@ namespace Server.Items
                                         );
                                         NoGold = 1;
                                     }
-                                }
-                                }
-                                finally
-                                {
-                                    eable.Free();
                                 }
                             }
                         }

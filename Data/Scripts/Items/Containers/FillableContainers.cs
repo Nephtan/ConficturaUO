@@ -1490,31 +1490,22 @@ namespace Server.Items
             Mobile nearest = null;
             FillableContent content = null;
 
-            IPooledEnumerable eable = map.GetMobilesInRange(loc, 20);
-
-            try
+            foreach (Mobile mob in map.GetMobilesInRange(loc, 20))
             {
-                foreach (Mobile mob in eable)
+                if (
+                    nearest != null
+                    && mob.GetDistanceToSqrt(loc) > nearest.GetDistanceToSqrt(loc)
+                    && !(nearest is Cobbler && mob is Provisioner)
+                )
+                    continue;
+
+                FillableContent check = m_AcquireTable[mob.GetType()] as FillableContent;
+
+                if (check != null)
                 {
-                    if (
-                        nearest != null
-                        && mob.GetDistanceToSqrt(loc) > nearest.GetDistanceToSqrt(loc)
-                        && !(nearest is Cobbler && mob is Provisioner)
-                    )
-                        continue;
-
-                    FillableContent check = m_AcquireTable[mob.GetType()] as FillableContent;
-
-                    if (check != null)
-                    {
-                        nearest = mob;
-                        content = check;
-                    }
+                    nearest = mob;
+                    content = check;
                 }
-            }
-            finally
-            {
-                eable.Free();
             }
 
             return content;

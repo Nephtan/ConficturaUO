@@ -72,10 +72,7 @@ namespace Server.Items
         {
             Target t;
 
-            if (from == null || from.Deleted)
-                return;
-
-            if (Deleted || from.Backpack == null || !IsChildOf(from.Backpack))
+            if (!IsChildOf(from.Backpack))
             {
                 from.SendLocalizedMessage(1060640); // The item must be in your backpack to use it.
             }
@@ -99,25 +96,6 @@ namespace Server.Items
 
             protected override void OnTarget(Mobile from, object targeted)
             {
-                if (from == null || from.Deleted)
-                    return;
-
-                Container pack = from.Backpack;
-
-                if (m_Dye == null || m_Dye.Deleted || pack == null || !m_Dye.IsChildOf(pack))
-                {
-                    from.SendLocalizedMessage(1060640); // The item must be in your backpack to use it.
-                    return;
-                }
-
-                Item targetItem = targeted as Item;
-
-                if (targetItem == null || targetItem.Deleted)
-                {
-                    from.SendLocalizedMessage(500857); // Use this on a dye tub.
-                    return;
-                }
-
                 int color = m_Dye.DyeColor;
 
                 if (targeted is DyeTub)

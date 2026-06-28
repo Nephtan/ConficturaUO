@@ -113,66 +113,48 @@ namespace Server.Mobiles
             Mobile winner = this;
             int RewardColor = 0xB46;
 
-            IPooledEnumerable eable1 = this.GetMobilesInRange(30);
-
-            try
+            foreach (Mobile m in this.GetMobilesInRange(30))
             {
-                foreach (Mobile m in eable1)
+                if (m is PlayerMobile && m.Map == this.Map && !m.Blessed)
                 {
-                    if (m is PlayerMobile && m.Map == this.Map && !m.Blessed)
+                    Item obelisk = m.Backpack.FindItemByType(typeof(ObeliskTip));
+                    if (obelisk != null)
+                    {
+                        ObeliskTip tip = (ObeliskTip)obelisk;
+                        if (tip.ObeliskOwner == m && tip.HasWater > 0 && tip.WonWater < 1)
+                        {
+                            CanDie = 1;
+                            winner = m;
+                            tip.WonWater = 1;
+                            m.SendMessage(
+                                "You absord the Titan's power into the Tear of the Seas."
+                            );
+                            m.PlaySound(0x65A);
+                            m.FixedParticles(0x375A, 1, 30, 9966, 33, 2, EffectLayer.Head);
+                        }
+                    }
+                }
+            }
+            if (CanDie == 0)
+            {
+                foreach (Mobile m in this.GetMobilesInRange(30))
+                {
+                    if (m is PlayerMobile && m.Map == this.Map && !m.Blessed && m.StatCap >= 300) // TITANS OF ETHER CAN KILL IT
+                    {
+                        CanKillIt = 1;
+                    }
+                    if (m is PlayerMobile && m.Map == this.Map && !m.Blessed) // ANYONE WITH THE BLACKROCK CAN KILL IT
                     {
                         Item obelisk = m.Backpack.FindItemByType(typeof(ObeliskTip));
                         if (obelisk != null)
                         {
                             ObeliskTip tip = (ObeliskTip)obelisk;
-                            if (tip.ObeliskOwner == m && tip.HasWater > 0 && tip.WonWater < 1)
+                            if (tip.ObeliskOwner == m && tip.HasWater > 0 && tip.WonWater > 0)
                             {
-                                CanDie = 1;
-                                winner = m;
-                                tip.WonWater = 1;
-                                m.SendMessage(
-                                    "You absord the Titan's power into the Tear of the Seas."
-                                );
-                                m.PlaySound(0x65A);
-                                m.FixedParticles(0x375A, 1, 30, 9966, 33, 2, EffectLayer.Head);
+                                CanKillIt = 1;
                             }
                         }
                     }
-                }
-            }
-            finally
-            {
-                eable1.Free();
-            }
-            if (CanDie == 0)
-            {
-                IPooledEnumerable eable2 = this.GetMobilesInRange(30);
-
-                try
-                {
-                    foreach (Mobile m in eable2)
-                    {
-                        if (m is PlayerMobile && m.Map == this.Map && !m.Blessed && m.StatCap >= 300) // TITANS OF ETHER CAN KILL IT
-                        {
-                            CanKillIt = 1;
-                        }
-                        if (m is PlayerMobile && m.Map == this.Map && !m.Blessed) // ANYONE WITH THE BLACKROCK CAN KILL IT
-                        {
-                            Item obelisk = m.Backpack.FindItemByType(typeof(ObeliskTip));
-                            if (obelisk != null)
-                            {
-                                ObeliskTip tip = (ObeliskTip)obelisk;
-                                if (tip.ObeliskOwner == m && tip.HasWater > 0 && tip.WonWater > 0)
-                                {
-                                    CanKillIt = 1;
-                                }
-                            }
-                        }
-                    }
-                }
-                finally
-                {
-                    eable2.Free();
                 }
             }
 
@@ -328,21 +310,12 @@ namespace Server.Mobiles
             {
                 int goo = 0;
 
-                IPooledEnumerable eable3 = this.GetItemsInRange(10);
-
-                try
+                foreach (Item splash in this.GetItemsInRange(10))
                 {
-                    foreach (Item splash in eable3)
+                    if (splash is MonsterSplatter && splash.Name == "deep water")
                     {
-                        if (splash is MonsterSplatter && splash.Name == "deep water")
-                        {
-                            goo++;
-                        }
+                        goo++;
                     }
-                }
-                finally
-                {
-                    eable3.Free();
                 }
 
                 if (goo == 0)

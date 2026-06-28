@@ -1399,229 +1399,220 @@ namespace Server.Misc
 
                 int monsters = 0;
 
-                IPooledEnumerable eable = from.GetMobilesInRange(10);
-
-                try
+                foreach (Mobile m in from.GetMobilesInRange(10))
                 {
-                    foreach (Mobile m in eable)
+                    if (from.EmoteHue == 1)
                     {
-                        if (from.EmoteHue == 1)
-                        {
-                            if (m is EvilBladeSpirits || m is Imp || m is Slime)
-                                ++monsters;
-                        }
-                        else if (from.EmoteHue == 2)
-                        {
-                            if (
-                                m is BloodWorm
-                                || m is BloodSnake
-                                || m is Viscera
-                                || m is BloodSpawn
-                                || m is GiantLeech
-                            )
-                                ++monsters;
-                        }
-                        else if (from.EmoteHue == 3)
-                        {
-                            if (
-                                m is LesserDemon
-                                || m is Imp
-                                || m is ShadowHound
-                                || m is Gargoyle
-                                || m is SoulWorm
-                            )
-                                ++monsters;
+                        if (m is EvilBladeSpirits || m is Imp || m is Slime)
+                            ++monsters;
+                    }
+                    else if (from.EmoteHue == 2)
+                    {
+                        if (
+                            m is BloodWorm
+                            || m is BloodSnake
+                            || m is Viscera
+                            || m is BloodSpawn
+                            || m is GiantLeech
+                        )
+                            ++monsters;
+                    }
+                    else if (from.EmoteHue == 3)
+                    {
+                        if (
+                            m is LesserDemon
+                            || m is Imp
+                            || m is ShadowHound
+                            || m is Gargoyle
+                            || m is SoulWorm
+                        )
+                            ++monsters;
 
-                            if (m is LowerDemon)
-                            {
-                                ++monsters;
-                                ++monsters;
-                            }
-                        }
-                        else if (from.EmoteHue == 4)
+                        if (m is LowerDemon)
                         {
-                            if (
-                                m is GarnetElemental
-                                || m is TopazElemental
-                                || m is QuartzElemental
-                                || m is SpinelElemental
-                                || m is StarRubyElemental
-                                || m is EarthElemental
-                                || m is AgapiteElemental
-                                || m is BronzeElemental
-                                || m is CopperElemental
-                                || m is DullCopperElemental
-                                || m is GoldenElemental
-                                || m is ShadowIronElemental
-                                || m is ValoriteElemental
-                                || m is VeriteElemental
-                                || m is WaterElemental
-                            )
-                                ++monsters;
-
-                            if (
-                                m is PoisonElemental
-                                || m is ToxicElemental
-                                || m is AirElemental
-                                || m is BloodElemental
-                                || m is FireElemental
-                                || m is ElectricalElemental
-                            )
-                            {
-                                ++monsters;
-                                ++monsters;
-                            }
-                        }
-                        else if (from.EmoteHue == 5)
-                        {
-                            if (
-                                m is Bodak
-                                || m is BoneKnight
-                                || m is BoneMagi
-                                || m is Ghoul
-                                || m is Mummy
-                                || m is Shade
-                                || m is SkeletalKnight
-                                || m is SkeletalMage
-                                || m is Skeleton
-                                || m is Spectre
-                                || m is Wraith
-                                || m is Phantom
-                                || m is Zombie
-                            )
-                                ++monsters;
-                        }
-                        else if (from.EmoteHue == 6)
-                        {
-                            if (m is WeedElemental || m is DireWolf || m is DireBear || m is DireBoar)
-                                ++monsters;
-                        }
-                        else if (from.EmoteHue == 7)
-                        {
-                            if (
-                                m is SnowElemental
-                                || m is IceSerpent
-                                || m is WinterWolf
-                                || m is IceElemental
-                                || m is FrostOoze
-                                || m is FrostSpider
-                                || m is IceGolem
-                                || m is IceToad
-                                || m is IceSerpent
-                            )
-                                ++monsters;
-                        }
-                        else if (from.EmoteHue == 8)
-                        {
-                            if (
-                                m is FireDemon
-                                || m is LavaPuddle
-                                || m is CinderElemental
-                                || m is FireBat
-                                || m is FireElemental
-                                || m is FireMephit
-                            )
-                                ++monsters;
-                        }
-                        else if (from.EmoteHue == 9)
-                        {
-                            if (
-                                m is GiantSerpent
-                                || m is GiantAdder
-                                || m is JungleViper
-                                || m is LargeSnake
-                                || m is Snake
-                            )
-                                ++monsters;
-
-                            if (m is SilverSerpent)
-                            {
-                                ++monsters;
-                                ++monsters;
-                            }
-                        }
-                        else if (from.EmoteHue == 10)
-                        {
-                            if (
-                                m is WaterWeird
-                                || m is Typhoon
-                                || m is WaterElemental
-                                || m is StormCloud
-                                || m is WaterSpawn
-                            )
-                                ++monsters;
-                        }
-                        else if (from.EmoteHue == 11 || from.EmoteHue == 505)
-                        {
-                            if (
-                                m is EvilIcyVortex
-                                || m is EvilPlagueVortex
-                                || m is EvilEnergyVortex
-                                || m is EvilBladeSpirits
-                                || m is EvilScorchingVortex
-                            )
-                                ++monsters;
-                        }
-                        else if (from.EmoteHue == 12)
-                        {
-                            if (m is WineElemental || m is ManureGolem || m is Fairy)
-                                ++monsters;
-                        }
-                        else if (from.EmoteHue == 13)
-                        {
-                            if (
-                                m is GhostWarrior
-                                || m is WalkingCorpse
-                                || m is Wight
-                                || m is Spirit
-                                || m is Phantom
-                                || m is FrailSkeleton
-                                || m is Zombie
-                                || m is Skeleton
-                                || m is SkeletalKnight
-                                || m is BoneKnight
-                                || m is SkeletalWarrior
-                            )
-                                ++monsters;
-                        }
-                        else if (from.EmoteHue == 14)
-                        {
-                            if (m is DeathBear || m is DeathWolf || m is DarkReaper)
-                                ++monsters;
-                        }
-                        else if (from.EmoteHue == 15)
-                        {
-                            if (
-                                m is Bat
-                                || m is Ghoul
-                                || m is Wraith
-                                || m is WalkingCorpse
-                                || m is VampireBat
-                                || m is Zombie
-                            )
-                                ++monsters;
-                        }
-                        else if (from.EmoteHue == 16)
-                        {
-                            if (m is EvilIcyVortex || m is IceBladeSpirits)
-                                ++monsters;
-                        }
-                        else if (from.EmoteHue == 17)
-                        {
-                            if (
-                                m is Scorpion
-                                || m is SandVortex
-                                || m is SandSpider
-                                || m is DustElemental
-                                || m is GiantAdder
-                            )
-                                ++monsters;
+                            ++monsters;
+                            ++monsters;
                         }
                     }
-                }
-                finally
-                {
-                    eable.Free();
+                    else if (from.EmoteHue == 4)
+                    {
+                        if (
+                            m is GarnetElemental
+                            || m is TopazElemental
+                            || m is QuartzElemental
+                            || m is SpinelElemental
+                            || m is StarRubyElemental
+                            || m is EarthElemental
+                            || m is AgapiteElemental
+                            || m is BronzeElemental
+                            || m is CopperElemental
+                            || m is DullCopperElemental
+                            || m is GoldenElemental
+                            || m is ShadowIronElemental
+                            || m is ValoriteElemental
+                            || m is VeriteElemental
+                            || m is WaterElemental
+                        )
+                            ++monsters;
+
+                        if (
+                            m is PoisonElemental
+                            || m is ToxicElemental
+                            || m is AirElemental
+                            || m is BloodElemental
+                            || m is FireElemental
+                            || m is ElectricalElemental
+                        )
+                        {
+                            ++monsters;
+                            ++monsters;
+                        }
+                    }
+                    else if (from.EmoteHue == 5)
+                    {
+                        if (
+                            m is Bodak
+                            || m is BoneKnight
+                            || m is BoneMagi
+                            || m is Ghoul
+                            || m is Mummy
+                            || m is Shade
+                            || m is SkeletalKnight
+                            || m is SkeletalMage
+                            || m is Skeleton
+                            || m is Spectre
+                            || m is Wraith
+                            || m is Phantom
+                            || m is Zombie
+                        )
+                            ++monsters;
+                    }
+                    else if (from.EmoteHue == 6)
+                    {
+                        if (m is WeedElemental || m is DireWolf || m is DireBear || m is DireBoar)
+                            ++monsters;
+                    }
+                    else if (from.EmoteHue == 7)
+                    {
+                        if (
+                            m is SnowElemental
+                            || m is IceSerpent
+                            || m is WinterWolf
+                            || m is IceElemental
+                            || m is FrostOoze
+                            || m is FrostSpider
+                            || m is IceGolem
+                            || m is IceToad
+                            || m is IceSerpent
+                        )
+                            ++monsters;
+                    }
+                    else if (from.EmoteHue == 8)
+                    {
+                        if (
+                            m is FireDemon
+                            || m is LavaPuddle
+                            || m is CinderElemental
+                            || m is FireBat
+                            || m is FireElemental
+                            || m is FireMephit
+                        )
+                            ++monsters;
+                    }
+                    else if (from.EmoteHue == 9)
+                    {
+                        if (
+                            m is GiantSerpent
+                            || m is GiantAdder
+                            || m is JungleViper
+                            || m is LargeSnake
+                            || m is Snake
+                        )
+                            ++monsters;
+
+                        if (m is SilverSerpent)
+                        {
+                            ++monsters;
+                            ++monsters;
+                        }
+                    }
+                    else if (from.EmoteHue == 10)
+                    {
+                        if (
+                            m is WaterWeird
+                            || m is Typhoon
+                            || m is WaterElemental
+                            || m is StormCloud
+                            || m is WaterSpawn
+                        )
+                            ++monsters;
+                    }
+                    else if (from.EmoteHue == 11 || from.EmoteHue == 505)
+                    {
+                        if (
+                            m is EvilIcyVortex
+                            || m is EvilPlagueVortex
+                            || m is EvilEnergyVortex
+                            || m is EvilBladeSpirits
+                            || m is EvilScorchingVortex
+                        )
+                            ++monsters;
+                    }
+                    else if (from.EmoteHue == 12)
+                    {
+                        if (m is WineElemental || m is ManureGolem || m is Fairy)
+                            ++monsters;
+                    }
+                    else if (from.EmoteHue == 13)
+                    {
+                        if (
+                            m is GhostWarrior
+                            || m is WalkingCorpse
+                            || m is Wight
+                            || m is Spirit
+                            || m is Phantom
+                            || m is FrailSkeleton
+                            || m is Zombie
+                            || m is Skeleton
+                            || m is SkeletalKnight
+                            || m is BoneKnight
+                            || m is SkeletalWarrior
+                        )
+                            ++monsters;
+                    }
+                    else if (from.EmoteHue == 14)
+                    {
+                        if (m is DeathBear || m is DeathWolf || m is DarkReaper)
+                            ++monsters;
+                    }
+                    else if (from.EmoteHue == 15)
+                    {
+                        if (
+                            m is Bat
+                            || m is Ghoul
+                            || m is Wraith
+                            || m is WalkingCorpse
+                            || m is VampireBat
+                            || m is Zombie
+                        )
+                            ++monsters;
+                    }
+                    else if (from.EmoteHue == 16)
+                    {
+                        if (m is EvilIcyVortex || m is IceBladeSpirits)
+                            ++monsters;
+                    }
+                    else if (from.EmoteHue == 17)
+                    {
+                        if (
+                            m is Scorpion
+                            || m is SandVortex
+                            || m is SandSpider
+                            || m is DustElemental
+                            || m is GiantAdder
+                        )
+                            ++monsters;
+                    }
                 }
 
                 if (monsters < 3 && from.Mana > 39)
@@ -4816,27 +4807,18 @@ namespace Server.Misc
         {
             ArrayList targets = new ArrayList();
 
-            IPooledEnumerable eable = from.GetMobilesInRange(30);
-
-            try
+            foreach (Mobile myPet in from.GetMobilesInRange(30))
             {
-                foreach (Mobile myPet in eable)
+                if (myPet is BaseCreature)
                 {
-                    if (myPet is BaseCreature)
+                    if (
+                        ((BaseCreature)myPet).YellHue == from.Serial
+                        && ((BaseCreature)myPet).ControlSlots == 666
+                    )
                     {
-                        if (
-                            ((BaseCreature)myPet).YellHue == from.Serial
-                            && ((BaseCreature)myPet).ControlSlots == 666
-                        )
-                        {
-                            targets.Add(myPet);
-                        }
+                        targets.Add(myPet);
                     }
                 }
-            }
-            finally
-            {
-                eable.Free();
             }
 
             for (int i = 0; i < targets.Count; ++i)
@@ -6003,21 +5985,12 @@ namespace Server.Misc
                 Region foeReg = Region.Find(m.Location, m.Map);
 
                 bool isNearby = false;
-                IPooledEnumerable eable = from.GetMobilesInRange(1);
-
-                try
+                foreach (Mobile foe in from.GetMobilesInRange(1))
                 {
-                    foreach (Mobile foe in eable)
+                    if (foe == m)
                     {
-                        if (foe == m)
-                        {
-                            isNearby = true;
-                        }
+                        isNearby = true;
                     }
-                }
-                finally
-                {
-                    eable.Free();
                 }
 
                 if (isNearby == false && myReg == foeReg)
@@ -11278,74 +11251,65 @@ namespace Server.Mobiles
 
             if (combatant == null && MyServerSettings.FriendsGuardFriends())
             {
-                IPooledEnumerable eable = m_Mobile.GetMobilesInRange(m_Mobile.RangePerception);
-
-                try
+                foreach (Mobile friend in m_Mobile.GetMobilesInRange(m_Mobile.RangePerception))
                 {
-                    foreach (Mobile friend in eable)
+                    if (
+                        friend is BaseCreature
+                        && ((BaseCreature)friend).Controlled
+                        && ((BaseCreature)friend).ControlMaster == controlMaster
+                    )
                     {
-                        if (
-                            friend is BaseCreature
-                            && ((BaseCreature)friend).Controlled
-                            && ((BaseCreature)friend).ControlMaster == controlMaster
-                        )
+                        List<AggressorInfo> enemies = friend.Aggressors;
+
+                        if (enemies.Count > 0)
                         {
-                            List<AggressorInfo> enemies = friend.Aggressors;
-
-                            if (enemies.Count > 0)
+                            for (int i = 0; i < enemies.Count; ++i)
                             {
-                                for (int i = 0; i < enemies.Count; ++i)
-                                {
-                                    AggressorInfo data = enemies[i];
-                                    Mobile foe = data.Attacker;
+                                AggressorInfo data = enemies[i];
+                                Mobile foe = data.Attacker;
 
+                                if (
+                                    foe != null
+                                    && !foe.Deleted
+                                    && foe.GetDistanceToSqrt(m_Mobile) <= m_Mobile.RangePerception
+                                )
+                                {
                                     if (
-                                        foe != null
-                                        && !foe.Deleted
-                                        && foe.GetDistanceToSqrt(m_Mobile) <= m_Mobile.RangePerception
+                                        combatant == null
+                                        || foe.GetDistanceToSqrt(controlMaster)
+                                            < combatant.GetDistanceToSqrt(controlMaster)
                                     )
-                                    {
-                                        if (
-                                            combatant == null
-                                            || foe.GetDistanceToSqrt(controlMaster)
-                                                < combatant.GetDistanceToSqrt(controlMaster)
-                                        )
-                                            combatant = foe;
-                                    }
+                                        combatant = foe;
                                 }
                             }
+                        }
 
-                            List<AggressorInfo> bullies = friend.Aggressed;
+                        List<AggressorInfo> bullies = friend.Aggressed;
 
-                            if (bullies.Count > 0)
+                        if (bullies.Count > 0)
+                        {
+                            for (int i = 0; i < bullies.Count; ++i)
                             {
-                                for (int i = 0; i < bullies.Count; ++i)
-                                {
-                                    AggressorInfo info = bullies[i];
-                                    Mobile defender = info.Defender;
+                                AggressorInfo info = bullies[i];
+                                Mobile defender = info.Defender;
 
+                                if (
+                                    defender != null
+                                    && !defender.Deleted
+                                    && defender.GetDistanceToSqrt(m_Mobile)
+                                        <= m_Mobile.RangePerception
+                                )
+                                {
                                     if (
-                                        defender != null
-                                        && !defender.Deleted
-                                        && defender.GetDistanceToSqrt(m_Mobile)
-                                            <= m_Mobile.RangePerception
+                                        combatant == null
+                                        || defender.GetDistanceToSqrt(controlMaster)
+                                            < combatant.GetDistanceToSqrt(controlMaster)
                                     )
-                                    {
-                                        if (
-                                            combatant == null
-                                            || defender.GetDistanceToSqrt(controlMaster)
-                                                < combatant.GetDistanceToSqrt(controlMaster)
-                                        )
-                                            combatant = defender;
-                                    }
+                                        combatant = defender;
                                 }
                             }
                         }
                     }
-                }
-                finally
-                {
-                    eable.Free();
                 }
             }
 
@@ -11414,34 +11378,25 @@ namespace Server.Mobiles
                     Mobile newCombatant = null;
                     double newScore = 0.0;
 
-                    IPooledEnumerable eable = m_Mobile.GetMobilesInRange(m_Mobile.RangePerception);
-
-                    try
+                    foreach (Mobile aggr in m_Mobile.GetMobilesInRange(m_Mobile.RangePerception))
                     {
-                        foreach (Mobile aggr in eable)
+                        if (!m_Mobile.CanSee(aggr) || aggr.Combatant != m_Mobile)
+                            continue;
+
+                        if (aggr.IsDeadBondedPet || !aggr.Alive)
+                            continue;
+
+                        double aggrScore = m_Mobile.GetFightModeRanking(
+                            aggr,
+                            FightMode.Closest,
+                            false
+                        );
+
+                        if ((newCombatant == null || aggrScore > newScore) && m_Mobile.InLOS(aggr))
                         {
-                            if (!m_Mobile.CanSee(aggr) || aggr.Combatant != m_Mobile)
-                                continue;
-
-                            if (aggr.IsDeadBondedPet || !aggr.Alive)
-                                continue;
-
-                            double aggrScore = m_Mobile.GetFightModeRanking(
-                                aggr,
-                                FightMode.Closest,
-                                false
-                            );
-
-                            if ((newCombatant == null || aggrScore > newScore) && m_Mobile.InLOS(aggr))
-                            {
-                                newCombatant = aggr;
-                                newScore = aggrScore;
-                            }
+                            newCombatant = aggr;
+                            newScore = aggrScore;
                         }
-                    }
-                    finally
-                    {
-                        eable.Free();
                     }
 
                     if (newCombatant != null)
@@ -12583,30 +12538,21 @@ namespace Server.Mobiles
             if (m is PlayerMobile && m.Alive)
             {
                 int cycle = 5;
-                IPooledEnumerable eable = m.GetMobilesInRange(12);
-
-                try
+                foreach (Mobile friend in m.GetMobilesInRange(12))
                 {
-                    foreach (Mobile friend in eable)
+                    if (
+                        friend is BaseCreature
+                        && ((BaseCreature)friend).Controlled
+                        && ((BaseCreature)friend).ControlMaster == m
+                    )
                     {
-                        if (
-                            friend is BaseCreature
-                            && ((BaseCreature)friend).Controlled
-                            && ((BaseCreature)friend).ControlMaster == m
-                        )
+                        if (cycle > 9)
                         {
-                            if (cycle > 9)
-                            {
-                                cycle = 5;
-                            }
-                            cycle++;
-                            friend.FollowersMax = cycle;
+                            cycle = 5;
                         }
+                        cycle++;
+                        friend.FollowersMax = cycle;
                     }
-                }
-                finally
-                {
-                    eable.Free();
                 }
             }
         }
@@ -13026,42 +12972,33 @@ namespace Server.Mobiles
             if (srcSkill <= 0)
                 return;
 
-            IPooledEnumerable eable = m_Mobile.GetMobilesInRange(m_Mobile.RangePerception);
-
-            try
+            foreach (Mobile trg in m_Mobile.GetMobilesInRange(m_Mobile.RangePerception))
             {
-                foreach (Mobile trg in eable)
+                if (trg != m_Mobile && trg.Player && trg.Alive && trg.Hidden && trg.AccessLevel == AccessLevel.Player && m_Mobile.InLOS(trg))
                 {
-                    if (trg != m_Mobile && trg.Player && trg.Alive && trg.Hidden && trg.AccessLevel == AccessLevel.Player && m_Mobile.InLOS(trg))
+                    m_Mobile.DebugSay("Trying to detect {0}", trg.Name);
+
+                    double trgHiding = trg.Skills[SkillName.Hiding].Value;
+                    double trgStealth = trg.Skills[SkillName.Stealth].Value;
+
+                    double effectiveHiding = trgHiding / 4.0; // Slightly reduce the divisor for more impact
+                    double effectiveStealth = trgStealth / 2.5; // Adjusting back for more balance
+
+                    double stealthBonus = trg.Skills[SkillName.Stealth].Base > 100 ? (trg.Skills[SkillName.Stealth].Base - 100) / 5.0 : 0;
+
+                    // Revise the formula to incorporate feedback and achieve the 30% detection chance goal
+                    double baseChance = srcSkill - Math.Min(effectiveHiding, effectiveStealth) - stealthBonus;
+                    double chance = baseChance / 250.0; // Adjusting divisor for overall chance calculation
+
+                    // Introduce a normalization factor to ensure chance does not exceed expected bounds
+                    chance = Math.Max(0.05, Math.Min(chance, 0.95)); // Ensures chance remains within 5% to 95%
+
+                    if (chance > Utility.RandomDouble())
                     {
-                        m_Mobile.DebugSay("Trying to detect {0}", trg.Name);
-
-                        double trgHiding = trg.Skills[SkillName.Hiding].Value;
-                        double trgStealth = trg.Skills[SkillName.Stealth].Value;
-
-                        double effectiveHiding = trgHiding / 4.0; // Slightly reduce the divisor for more impact
-                        double effectiveStealth = trgStealth / 2.5; // Adjusting back for more balance
-
-                        double stealthBonus = trg.Skills[SkillName.Stealth].Base > 100 ? (trg.Skills[SkillName.Stealth].Base - 100) / 5.0 : 0;
-
-                        // Revise the formula to incorporate feedback and achieve the 30% detection chance goal
-                        double baseChance = srcSkill - Math.Min(effectiveHiding, effectiveStealth) - stealthBonus;
-                        double chance = baseChance / 250.0; // Adjusting divisor for overall chance calculation
-
-                        // Introduce a normalization factor to ensure chance does not exceed expected bounds
-                        chance = Math.Max(0.05, Math.Min(chance, 0.95)); // Ensures chance remains within 5% to 95%
-
-                        if (chance > Utility.RandomDouble())
-                        {
-                            trg.RevealingAction();
-                            trg.SendLocalizedMessage(500814); // You have been revealed!
-                        }
+                        trg.RevealingAction();
+                        trg.SendLocalizedMessage(500814); // You have been revealed!
                     }
                 }
-            }
-            finally
-            {
-                eable.Free();
             }
         }
 
@@ -13379,39 +13316,30 @@ namespace Server.Mobiles
                 double prio = 0.0;
                 Mobile found = null;
 
-                IPooledEnumerable eable = m_Mobile.GetMobilesInRange(m_Mobile.RangePerception);
-
-                try
+                foreach (Mobile m in m_Mobile.GetMobilesInRange(m_Mobile.RangePerception))
                 {
-                    foreach (Mobile m in eable)
+                    if (
+                        !m_Mobile.CanSee(m)
+                        || !(m is BaseCreature)
+                        || ((BaseCreature)m).Team != m_Mobile.Team
+                    )
+                        continue;
+
+                    for (int i = 0; i < funcs.Length; ++i)
                     {
-                        if (
-                            !m_Mobile.CanSee(m)
-                            || !(m is BaseCreature)
-                            || ((BaseCreature)m).Team != m_Mobile.Team
-                        )
-                            continue;
-
-                        for (int i = 0; i < funcs.Length; ++i)
+                        if (funcs[i](m))
                         {
-                            if (funcs[i](m))
+                            double val = -m_Mobile.GetDistanceToSqrt(m);
+
+                            if (found == null || val > prio)
                             {
-                                double val = -m_Mobile.GetDistanceToSqrt(m);
-
-                                if (found == null || val > prio)
-                                {
-                                    prio = val;
-                                    found = m;
-                                }
-
-                                break;
+                                prio = val;
+                                found = m;
                             }
+
+                            break;
                         }
                     }
-                }
-                finally
-                {
-                    eable.Free();
                 }
 
                 return found;
@@ -14578,36 +14506,27 @@ namespace Server.Mobiles
                         actPrio = inactPrio = m_Mobile.GetDistanceToSqrt(comb);
                     }
 
-                    IPooledEnumerable eable = m_Mobile.GetMobilesInRange(Core.ML ? 10 : 12);
-
-                    try
+                    foreach (Mobile m in m_Mobile.GetMobilesInRange(Core.ML ? 10 : 12))
                     {
-                        foreach (Mobile m in eable)
+                        if (m != m_Mobile && CanDispel(m))
                         {
-                            if (m != m_Mobile && CanDispel(m))
+                            double prio = m_Mobile.GetDistanceToSqrt(m);
+
+                            if (!activeOnly && (inactive == null || prio < inactPrio))
                             {
-                                double prio = m_Mobile.GetDistanceToSqrt(m);
+                                inactive = m;
+                                inactPrio = prio;
+                            }
 
-                                if (!activeOnly && (inactive == null || prio < inactPrio))
-                                {
-                                    inactive = m;
-                                    inactPrio = prio;
-                                }
-
-                                if (
-                                    (m_Mobile.Combatant == m || m.Combatant == m_Mobile)
-                                    && (active == null || prio < actPrio)
-                                )
-                                {
-                                    active = m;
-                                    actPrio = prio;
-                                }
+                            if (
+                                (m_Mobile.Combatant == m || m.Combatant == m_Mobile)
+                                && (active == null || prio < actPrio)
+                            )
+                            {
+                                active = m;
+                                actPrio = prio;
                             }
                         }
-                    }
-                    finally
-                    {
-                        eable.Free();
                     }
 
                     return active != null ? active : inactive;

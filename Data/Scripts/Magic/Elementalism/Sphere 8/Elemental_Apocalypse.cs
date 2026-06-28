@@ -39,30 +39,19 @@ namespace Server.Spells.Elementalism
                 Map map = Caster.Map;
 
                 if (map != null)
-                {
-                    IPooledEnumerable eable = Caster.GetMobilesInRange(
-                        1 + (int)(Caster.Skills[CastSkill].Value / 15.0)
-                    );
-
-                    try
-                    {
-                        foreach (Mobile m in eable)
-                        {
-                            if (
-                                Caster.Region == m.Region
-                                && Caster != m
-                                && SpellHelper.ValidIndirectTarget(Caster, m)
-                                && Caster.CanBeHarmful(m, false)
-                                && Caster.InLOS(m)
-                            )
-                                targets.Add(m);
-                        }
-                    }
-                    finally
-                    {
-                        eable.Free();
-                    }
-                }
+                    foreach (
+                        Mobile m in Caster.GetMobilesInRange(
+                            1 + (int)(Caster.Skills[CastSkill].Value / 15.0)
+                        )
+                    )
+                        if (
+                            Caster.Region == m.Region
+                            && Caster != m
+                            && SpellHelper.ValidIndirectTarget(Caster, m)
+                            && Caster.CanBeHarmful(m, false)
+                            && Caster.InLOS(m)
+                        )
+                            targets.Add(m);
 
                 string elm = ElementalSpell.GetElement(Caster);
                 int sound = 0;

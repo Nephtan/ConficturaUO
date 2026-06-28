@@ -6,17 +6,13 @@
 
 This file is not a command package. Most player-facing commands live under `Data/Scripts/System/Commands/Player/` and read or mutate the public `PlayerMobile` fields documented here. The core class itself is reached through engine lifecycle events, `Mobile` overrides, context menu entries, packet throttling, serialization, and other systems casting a `Mobile` to `PlayerMobile`.
 
-## Source Trace
+## Source Files
 
 | File | Type | Purpose |
 | --- | --- | --- |
 | `Data/Scripts/Mobiles/Base/PlayerMobile.cs` | `Mobile` subclass | Core player character implementation and persistence. |
 | `Data/Scripts/Mobiles/Base/PlayerSettings.cs` | helper class | String-slot helpers for player settings, quest flags, discovered worlds, keys, gump hue, loot choices, and related UI state. |
-| `Data/Scripts/System/Commands/Player/AutoSheatheWeapon.cs` | command and helper script | Player command entry point for `PlayerMobile.CharacterSheath`. |
-| `Data/Scripts/System/Commands/Player/ClassicPoisoning.cs` | command script | Player command entry point for `PlayerMobile.ClassicPoisoning`. |
-| `Data/Scripts/System/Commands/Player/SkillListing.cs` | command and gump script | Player command entry point for compact skill display behavior. |
-| `Data/Scripts/System/Commands/Player/SpellBarsFunctions.cs` | player settings helper script | Reads and writes string-backed `PlayerMobile` spellbar settings. |
-| `Data/Scripts/System/Commands/Player/QuickBar.cs` | command and gump script | Player quickbar entry point using `PlayerMobile.QuickBar` state. |
+| `Data/Scripts/System/Commands/Player/*.cs` | command and gump scripts | Player command entry points that change `PlayerMobile` fields such as `CharacterSheath`, `ClassicPoisoning`, `SkillDisplay`, spell bars, quick bars, music, loot settings, and play-style flags. |
 | `Data/Scripts/Mobiles/Base/BaseCreature.cs` | shared creature base | Adds and removes controlled and summoned creatures from `PlayerMobile.AllFollowers`. |
 
 ## Core Entry Points

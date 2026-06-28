@@ -153,9 +153,6 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
-            if (from == null || from.Deleted || Deleted)
-                return;
-
             if (from.InRange(this.GetWorldLocation(), 1))
             {
                 from.SendLocalizedMessage(TargetMessage);
@@ -179,18 +176,9 @@ namespace Server.Items
 
             protected override void OnTarget(Mobile from, object targeted)
             {
-                if (from == null || from.Deleted || m_Tub == null || m_Tub.Deleted)
-                    return;
-
                 if (targeted is Item)
                 {
                     Item item = (Item)targeted;
-
-                    if (item.Deleted)
-                    {
-                        from.SendLocalizedMessage(m_Tub.FailMessage);
-                        return;
-                    }
 
                     if (item is IDyable && m_Tub.AllowDyables)
                     {
@@ -215,7 +203,7 @@ namespace Server.Items
                         }
                         else
                         {
-                            bool okay = (from.Backpack != null && item.IsChildOf(from.Backpack));
+                            bool okay = (item.IsChildOf(from.Backpack));
 
                             if (!okay)
                             {

@@ -6,7 +6,7 @@ Runic tools are `BaseRunicTool` items that open a normal `CraftGump` for a speci
 
 The shared tool behavior comes from `BaseTool` and `BaseRunicTool`. The normal crafting hooks that consume runic bonuses are `BaseWeapon.OnCraft` and `BaseArmor.OnCraft`; the static `BaseRunicTool.ApplyAttributesTo(...)` overloads are also used by loot, artifacts, fishing rewards, containers, and special crafting code outside the runic-tool item path.
 
-## Source Trace
+## Core Scripts
 
 | Script | Role |
 | --- | --- |
@@ -17,11 +17,7 @@ The shared tool behavior comes from `BaseTool` and `BaseRunicTool`. The normal c
 | `Data/Scripts/Items/Trades/Tools/RunicHammer.cs` | Classic BOD runic smithy hammer item. |
 | `Data/Scripts/Items/Trades/Tools/RunicSewingKit.cs` | Classic BOD runic sewing kit item. |
 | `Data/Scripts/Items/Trades/Tools/RunicDovetailSaw.cs` | Classic runic carpentry saw item. |
-| `Data/Scripts/Trades/Runics/BaseRunicHammer.cs` | Custom constructable smithing runic tool classes. |
-| `Data/Scripts/Trades/Runics/BaseRunicSewingKit.cs` | Custom constructable tailoring runic tool classes. |
-| `Data/Scripts/Trades/Runics/BaseRunicTinkerTools.cs` | Custom constructable tinkering runic tool classes. |
-| `Data/Scripts/Trades/Runics/BaseRunicSaw.cs` | Custom constructable carpentry runic tool classes. |
-| `Data/Scripts/Trades/Runics/BaseRunicFletcherTools.cs` | Custom constructable bowcraft/fletching runic tool classes. |
+| `Data/Scripts/Trades/Runics/*.cs` | Custom constructable runic smithing, tailoring, tinkering, carpentry, and bowcraft/fletching tool classes. |
 | `Data/Scripts/System/Misc/ResourceInfo.cs` | `CraftAttributeInfo` runic attribute count and intensity definitions by resource. |
 | `Data/Scripts/Trades/Bulk Orders/Rewards.cs` | Blacksmith and tailor BOD reward construction for classic runic hammers and sewing kits. |
 

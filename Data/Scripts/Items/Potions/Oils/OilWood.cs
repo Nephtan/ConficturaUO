@@ -81,10 +81,7 @@ namespace Server.Items
         {
             Target t;
 
-            if (from == null || from.Deleted)
-                return;
-
-            if (Deleted || from.Backpack == null || !IsChildOf(from.Backpack))
+            if (!IsChildOf(from.Backpack))
             {
                 from.SendLocalizedMessage(1060640); // The item must be in your backpack to use it.
             }
@@ -115,32 +112,11 @@ namespace Server.Items
 
             protected override void OnTarget(Mobile from, object targeted)
             {
-                if (from == null || from.Deleted)
-                    return;
-
-                if (
-                    m_Oil == null
-                    || m_Oil.Deleted
-                    || from.Backpack == null
-                    || !m_Oil.IsChildOf(from.Backpack)
-                )
-                {
-                    from.SendLocalizedMessage(1060640); // The item must be in your backpack to use it.
-                    return;
-                }
-
                 if (targeted is Item)
                 {
                     Item iOil = targeted as Item;
-                    Item oilCloth = from.Backpack.FindItemByType(typeof(OilCloth));
 
-                    if (iOil.Deleted)
-                    {
-                        from.SendMessage("You cannot rub this oil on that.");
-                        return;
-                    }
-
-                    if (oilCloth == null || oilCloth.Deleted)
+                    if (from.Backpack.FindItemByType(typeof(OilCloth)) == null)
                     {
                         from.SendMessage("You need an oil cloth to apply this.");
                     }
@@ -207,7 +183,7 @@ namespace Server.Items
                             from.PlaySound(0x23E);
                             from.AddToBackpack(new Bottle());
                             m_Oil.Consume();
-                            oilCloth.Delete();
+                            from.Backpack.FindItemByType(typeof(OilCloth)).Delete();
                         }
                         else
                         {
@@ -273,7 +249,7 @@ namespace Server.Items
                             from.PlaySound(0x23E);
                             from.AddToBackpack(new Bottle());
                             m_Oil.Consume();
-                            oilCloth.Delete();
+                            from.Backpack.FindItemByType(typeof(OilCloth)).Delete();
                         }
                         else
                         {

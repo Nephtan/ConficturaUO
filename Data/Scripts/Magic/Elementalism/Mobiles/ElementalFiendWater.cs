@@ -86,30 +86,21 @@ namespace Server.Mobiles
             {
                 ArrayList spirtsOrVortexes = new ArrayList();
 
-                IPooledEnumerable eable = GetMobilesInRange(5);
-
-                try
+                foreach (Mobile m in GetMobilesInRange(5))
                 {
-                    foreach (Mobile m in eable)
+                    if (
+                        m is SummonSnakes
+                        || m is ElementalFiendWater
+                        || m is GasCloud
+                        || m is DeathVortex
+                        || m is SummonedTreefellow
+                        || m is EnergyVortex
+                        || m is SummonDragon
+                    )
                     {
-                        if (
-                            m is SummonSnakes
-                            || m is ElementalFiendWater
-                            || m is GasCloud
-                            || m is DeathVortex
-                            || m is SummonedTreefellow
-                            || m is EnergyVortex
-                            || m is SummonDragon
-                        )
-                        {
-                            if (((BaseCreature)m).Summoned)
-                                spirtsOrVortexes.Add(m);
-                        }
+                        if (((BaseCreature)m).Summoned)
+                            spirtsOrVortexes.Add(m);
                     }
-                }
-                finally
-                {
-                    eable.Free();
                 }
 
                 while (spirtsOrVortexes.Count > 6)

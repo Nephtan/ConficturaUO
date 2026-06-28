@@ -47,12 +47,7 @@ namespace Knives.TownHouses
                     continue;
                 }
 
-                TownHouse house = TownHouse.AllTownHouses[townHouseCount] as TownHouse; // Line 50
-
-                if (house == null || house.Deleted || house.ForSaleSign == null || house.ForSaleSign.Deleted)
-                {
-                    continue;
-                }
+                TownHouse house = (TownHouse)TownHouse.AllTownHouses[townHouseCount];  // Line 50
 
                 house.InitSectorDefinition();
 
@@ -71,12 +66,7 @@ namespace Knives.TownHouses
                     continue;
                 }
 
-                TownHouseSign sign = TownHouseSign.AllSigns[signCount] as TownHouseSign; // Line 69
-
-                if (sign == null || sign.Deleted)
-                {
-                    continue;
-                }
+                TownHouseSign sign = (TownHouseSign)TownHouseSign.AllSigns[signCount];  // Line 69
 
                 sign.ValidateOwnership();
             }
@@ -84,15 +74,7 @@ namespace Knives.TownHouses
 
         private static void OnLogin(LoginEventArgs e)
         {
-            if (e == null)
-                return;
-
-            Mobile from = e.Mobile;
-
-            if (from == null || from.Deleted)
-                return;
-
-            ArrayList houses = new ArrayList(BaseHouse.GetHouses(from));
+            ArrayList houses = new ArrayList(BaseHouse.GetHouses(e.Mobile));
 
             if (houses == null)
             {
@@ -101,31 +83,16 @@ namespace Knives.TownHouses
 
             foreach (BaseHouse house in houses)
             {
-                TownHouse townHouse = house as TownHouse;
-
-                if (
-                    townHouse != null
-                    && !townHouse.Deleted
-                    && townHouse.ForSaleSign != null
-                    && !townHouse.ForSaleSign.Deleted
-                )
+                if (house is TownHouse)
                 {
-                    townHouse.ForSaleSign.CheckDemolishTimer();
+                    ((TownHouse)house).ForSaleSign.CheckDemolishTimer();
                 }
             }
         }
 
         private static void HandleSpeech(SpeechEventArgs e)
         {
-            if (e == null)
-                return;
-
-            Mobile from = e.Mobile;
-
-            if (from == null || from.Deleted || e.Speech == null)
-                return;
-
-            ArrayList houses = new ArrayList(BaseHouse.GetHouses(from));
+            ArrayList houses = new ArrayList(BaseHouse.GetHouses(e.Mobile));
 
             if (houses == null)
             {
@@ -136,7 +103,7 @@ namespace Knives.TownHouses
             {
                 try
                 {
-                    if (house == null || house.Deleted || !RUOVersion.RegionContains(house.Region, from))
+                    if (!RUOVersion.RegionContains(house.Region, e.Mobile))
                     {
                         continue;
                     }
@@ -146,16 +113,16 @@ namespace Knives.TownHouses
                         house.OnSpeech(e);
                     }
 
-                    if (house.Owner == from && e.Speech.ToLower() == "create rental contract" && CanRent(from, house, true))
+                    if (house.Owner == e.Mobile && e.Speech.ToLower() == "create rental contract" && CanRent(e.Mobile, house, true))
                     {
-                        from.AddToBackpack(new RentalContract());
-                        from.SendMessage("A rental contract has been placed in your bag.");
+                        e.Mobile.AddToBackpack(new RentalContract());
+                        e.Mobile.SendMessage("A rental contract has been placed in your bag.");
                     }
-                    else if (house.Owner == from && e.Speech.ToLower() == "check storage")
+                    else if (house.Owner == e.Mobile && e.Speech.ToLower() == "check storage")
                     {
                         int count = 0;
 
-                        from.SendMessage(
+                        e.Mobile.SendMessage(
                             "You have {0} lockdowns and {1} secures available.",
                             RemainingSecures(house),
                             RemainingLocks(house)
@@ -163,7 +130,7 @@ namespace Knives.TownHouses
 
                         if ((count = AllRentalLocks(house)) != 0)
                         {
-                            from.SendMessage(
+                            e.Mobile.SendMessage(
                                 "Current rentals are using {0} of your lockdowns.",
                                 count
                             );
@@ -171,7 +138,7 @@ namespace Knives.TownHouses
 
                         if ((count = AllRentalSecures(house)) != 0)
                         {
-                            from.SendMessage(
+                            e.Mobile.SendMessage(
                                 "Current rentals are using {0} of your secures.",
                                 count
                             );

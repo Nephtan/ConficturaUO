@@ -54,23 +54,14 @@ namespace Server.Spells.Necromancy
                 {
                     List<Mobile> targets = new List<Mobile>();
 
-                    IPooledEnumerable eable = Caster.GetMobilesInRange(Core.ML ? 4 : 5);
-
-                    try
-                    {
-                        foreach (Mobile m in eable)
-                            if (
-                                Caster != m
-                                && Caster.InLOS(m)
-                                && SpellHelper.ValidIndirectTarget(Caster, m)
-                                && Caster.CanBeHarmful(m, false)
-                            )
-                                targets.Add(m);
-                    }
-                    finally
-                    {
-                        eable.Free();
-                    }
+                    foreach (Mobile m in Caster.GetMobilesInRange(Core.ML ? 4 : 5))
+                        if (
+                            Caster != m
+                            && Caster.InLOS(m)
+                            && SpellHelper.ValidIndirectTarget(Caster, m)
+                            && Caster.CanBeHarmful(m, false)
+                        )
+                            targets.Add(m);
 
                     Effects.PlaySound(Caster.Location, map, 0x1FB);
                     Effects.PlaySound(Caster.Location, map, 0x10B);

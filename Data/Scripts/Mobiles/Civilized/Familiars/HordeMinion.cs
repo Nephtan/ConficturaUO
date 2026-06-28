@@ -75,18 +75,10 @@ namespace Server.Mobiles
 
             ArrayList list = new ArrayList();
 
-            IPooledEnumerable eable1 = this.GetItemsInRange(2);
-            try
+            foreach (Item item in this.GetItemsInRange(2))
             {
-                foreach (Item item in eable1)
-                {
-                    if (item.Movable && item.Stackable)
-                        list.Add(item);
-                }
-            }
-            finally
-            {
-                eable1.Free();
+                if (item.Movable && item.Stackable)
+                    list.Add(item);
             }
 
             int pickedUp = 0;

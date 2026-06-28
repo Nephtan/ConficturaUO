@@ -61,35 +61,26 @@ namespace Server.Spells.Research
                     bonus = 2;
                 }
 
-                IPooledEnumerable eable = Caster.GetItemsInRange(3);
-
-                try
+                foreach (Item item in Caster.GetItemsInRange(3))
                 {
-                    foreach (Item item in eable)
+                    if (item is Corpse && !((Corpse)item).Channeled && !((Corpse)item).Animated)
                     {
-                        if (item is Corpse && !((Corpse)item).Channeled && !((Corpse)item).Animated)
-                        {
-                            Corpse body = (Corpse)item;
+                        Corpse body = (Corpse)item;
 
-                            if (!(body.m_Owner is PlayerMobile))
+                        if (!(body.m_Owner is PlayerMobile))
+                        {
+                            if (body.m_Owner is BaseCreature)
                             {
-                                if (body.m_Owner is BaseCreature)
+                                SlayerEntry undead = SlayerGroup.GetEntryByName(SlayerName.Silver);
+                                if (undead.Slays(body.m_Owner))
                                 {
-                                    SlayerEntry undead = SlayerGroup.GetEntryByName(SlayerName.Silver);
-                                    if (undead.Slays(body.m_Owner))
-                                    {
-                                        toChannel = (Corpse)item;
-                                        regenerate = (int)(((body.m_Owner).Fame) / 50) + bonus;
-                                        break;
-                                    }
+                                    toChannel = (Corpse)item;
+                                    regenerate = (int)(((body.m_Owner).Fame) / 50) + bonus;
+                                    break;
                                 }
                             }
                         }
                     }
-                }
-                finally
-                {
-                    eable.Free();
                 }
 
                 if (regenerate > 0)

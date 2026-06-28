@@ -129,23 +129,12 @@ namespace Server.Mobiles
                     p = GetSpawnPosition(2);
                     bool found = false;
 
-                    IPooledEnumerable eable = Map.GetItemsInRange(p, 0);
-
-                    try
-                    {
-                        foreach (Item item in eable)
+                    foreach (Item item in Map.GetItemsInRange(p, 0))
+                        if (item is StainedOoze)
                         {
-                            if (item is StainedOoze)
-                            {
-                                found = true;
-                                break;
-                            }
+                            found = true;
+                            break;
                         }
-                    }
-                    finally
-                    {
-                        eable.Free();
-                    }
 
                     if (!found)
                         break;

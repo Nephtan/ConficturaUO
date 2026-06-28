@@ -30,9 +30,7 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile e)
         {
-            PlayerMobile pm = e as PlayerMobile;
-            if (pm == null || pm.Deleted)
-                return;
+            PlayerMobile pm = (PlayerMobile)e;
 
             if (pm.NpcGuild != NpcGuild.ThievesGuild)
             {

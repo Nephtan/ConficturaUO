@@ -226,21 +226,12 @@ namespace Server.Mobiles
             {
                 int goo = 0;
 
-                IPooledEnumerable eable = this.GetItemsInRange(10);
-
-                try
+                foreach (Item splash in this.GetItemsInRange(10))
                 {
-                    foreach (Item splash in eable)
+                    if (splash is MonsterSplatter && splash.Name == "swamp muck")
                     {
-                        if (splash is MonsterSplatter && splash.Name == "swamp muck")
-                        {
-                            goo++;
-                        }
+                        goo++;
                     }
-                }
-                finally
-                {
-                    eable.Free();
                 }
 
                 if (goo == 0)

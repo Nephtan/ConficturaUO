@@ -19,13 +19,7 @@ namespace Server.Gumps
 
         public static void EventSink_PlayerDeath(PlayerDeathEventArgs e)
         {
-            if (e == null)
-                return;
-
             Mobile m = e.Mobile;
-
-            if (m == null || m.Deleted)
-                return;
 
             List<Mobile> killers = new List<Mobile>();
             List<Mobile> toGive = new List<Mobile>();

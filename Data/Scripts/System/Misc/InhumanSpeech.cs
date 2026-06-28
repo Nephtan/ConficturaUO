@@ -1027,9 +1027,6 @@ namespace Server.Misc
 
         public bool OnSpeech(Mobile mob, Mobile speaker, string text)
         {
-            if (mob == null || mob.Deleted || speaker == null || speaker.Deleted || text == null)
-                return false;
-
             if (
                 (m_Flags & IHSFlags.OnSpeech) == 0
                 || m_Keywords == null

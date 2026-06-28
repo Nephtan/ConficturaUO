@@ -261,9 +261,6 @@ namespace Server.Mobiles
 
         public override void OnMovement(Mobile m, Point3D oldLocation)
         {
-            if (m == null || m.Deleted)
-                return;
-
             if (
                 this.Hits > 30
                 && Utility.RandomMinMax(1, 5) == 1

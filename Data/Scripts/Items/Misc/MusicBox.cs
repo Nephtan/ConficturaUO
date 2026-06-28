@@ -35,9 +35,6 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile m)
         {
-            if (m == null || m.Deleted || Deleted)
-                return;
-
             if (Mplay == 1)
             {
                 m.Send(PlayMusic.GetInstance(MusicName.Ultima));

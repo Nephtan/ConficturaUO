@@ -66,23 +66,9 @@ namespace Server
 
         private static void EventSink_SocketConnect(SocketConnectEventArgs e)
         {
-            if (e == null)
-                return;
-
             try
             {
-                IPEndPoint endPoint = null;
-
-                if (e.Socket != null)
-                    endPoint = e.Socket.RemoteEndPoint as IPEndPoint;
-
-                if (endPoint == null)
-                {
-                    e.AllowConnection = false;
-                    return;
-                }
-
-                IPAddress ip = endPoint.Address;
+                IPAddress ip = ((IPEndPoint)e.Socket.RemoteEndPoint).Address;
 
                 if (Firewall.IsBlocked(ip))
                 {
@@ -455,14 +441,7 @@ namespace Server.Misc
 
         private static void EventSink_DeleteRequest(DeleteRequestEventArgs e)
         {
-            if (e == null)
-                return;
-
             NetState state = e.State;
-
-            if (state == null)
-                return;
-
             int index = e.Index;
 
             Account acct = state.Account as Account;
@@ -599,9 +578,6 @@ namespace Server.Misc
 
         public static void EventSink_AccountLogin(AccountLoginEventArgs e)
         {
-            if (e == null || e.State == null)
-                return;
-
             if (!IPLimiter.SocketBlock && !IPLimiter.Verify(e.State.Address))
             {
                 e.Accepted = false;
@@ -615,8 +591,8 @@ namespace Server.Misc
                 return;
             }
 
-            string un = e.Username == null ? "" : e.Username;
-            string pw = e.Password == null ? "" : e.Password;
+            string un = e.Username;
+            string pw = e.Password;
 
             e.Accepted = false;
             Account acct = Accounts.GetAccount(un) as Account;
@@ -669,9 +645,6 @@ namespace Server.Misc
 
         public static void EventSink_GameLogin(GameLoginEventArgs e)
         {
-            if (e == null || e.State == null)
-                return;
-
             if (!IPLimiter.SocketBlock && !IPLimiter.Verify(e.State.Address))
             {
                 e.Accepted = false;
@@ -684,8 +657,8 @@ namespace Server.Misc
                 return;
             }
 
-            string un = e.Username == null ? "" : e.Username;
-            string pw = e.Password == null ? "" : e.Password;
+            string un = e.Username;
+            string pw = e.Password;
 
             Account acct = Accounts.GetAccount(un) as Account;
 
@@ -1338,11 +1311,7 @@ namespace Server.Accounting
 
         private static void EventSink_Connected(ConnectedEventArgs e)
         {
-            if (e == null || e.Mobile == null || e.Mobile.Deleted)
-                return;
-
-            Mobile mobile = e.Mobile;
-            Account acc = mobile.Account as Account;
+            Account acc = e.Mobile.Account as Account;
 
             if (acc == null)
                 return;
@@ -1356,11 +1325,7 @@ namespace Server.Accounting
 
         private static void EventSink_Disconnected(DisconnectedEventArgs e)
         {
-            if (e == null || e.Mobile == null)
-                return;
-
-            Mobile mobile = e.Mobile;
-            Account acc = mobile.Account as Account;
+            Account acc = e.Mobile.Account as Account;
 
             if (acc == null)
                 return;
@@ -1371,7 +1336,7 @@ namespace Server.Accounting
                 acc.m_YoungTimer = null;
             }
 
-            PlayerMobile m = mobile as PlayerMobile;
+            PlayerMobile m = e.Mobile as PlayerMobile;
             if (m == null)
                 return;
 
@@ -1380,9 +1345,6 @@ namespace Server.Accounting
 
         private static void EventSink_Login(LoginEventArgs e)
         {
-            if (e == null || e.Mobile == null || e.Mobile.Deleted)
-                return;
-
             PlayerMobile m = e.Mobile as PlayerMobile;
 
             if (m == null)

@@ -165,26 +165,18 @@ namespace Server.SkillHandlers
             {
                 Corpse toChannel = null;
 
-                IPooledEnumerable eable = Caster.GetItemsInRange(3);
-                try
+                foreach (Item item in Caster.GetItemsInRange(3))
                 {
-                    foreach (Item item in eable)
+                    if (
+                        item is Corpse
+                        && !((Corpse)item).Channeled
+                        && !((Corpse)item).Animated
+                        && Caster.Karma < 0
+                    )
                     {
-                        if (
-                            item is Corpse
-                            && !((Corpse)item).Channeled
-                            && !((Corpse)item).Animated
-                            && Caster.Karma < 0
-                        )
-                        {
-                            toChannel = (Corpse)item;
-                            break;
-                        }
+                        toChannel = (Corpse)item;
+                        break;
                     }
-                }
-                finally
-                {
-                    eable.Free();
                 }
 
                 int max,

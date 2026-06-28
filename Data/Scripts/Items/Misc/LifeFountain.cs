@@ -28,9 +28,6 @@ namespace Server.Items
 
         public override void OnMovement(Mobile m, Point3D oldLocation)
         {
-            if (m == null || m.Deleted)
-                return;
-
             if (Utility.InRange(Location, m.Location, 15) && m is PlayerMobile && !m.Alive)
             {
                 m.PlaySound(0x214);

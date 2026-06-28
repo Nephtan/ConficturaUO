@@ -19,7 +19,7 @@ This page covers the compiled standard trade-skill catalogs:
 
 The same folder also contains specialized catalogs such as `DefDruidism`, `DefGodCrafting`, `DefShelves`, `DefWands`, and `DefWitchery`. Those are not part of this standard crafting pass.
 
-## Source Trace
+## Core Scripts
 | Script | Role |
 | --- | --- |
 | `Data/Scripts/Trades/Crafting/DefAlchemy.cs` | Alchemy potions, elixirs, mixtures, and hair potions. |
@@ -34,22 +34,8 @@ The same folder also contains specialized catalogs such as `DefDruidism`, `DefGo
 | `Data/Scripts/Trades/Crafting/DefTailoring.cs` | Fur, cloth, leather, studded, bone, bags, leather resource selection, repair, and enhance support. |
 | `Data/Scripts/Trades/Crafting/DefTinkering.cs` | Components, jewelry, tools, utensils, traps, utility items, metal resource selection, repair, and enhance support. |
 | `Data/Scripts/Items/Trades/Tools/BaseTool.cs` | Shared `Item` entry point, durability persistence, maker quality persistence, and `CraftGump` launch path. |
-| `Data/Scripts/Items/Trades/Tools/MortarPestle.cs` | Concrete alchemy player tool. |
-| `Data/Scripts/Items/Trades/Tools/SmithHammer.cs` | Concrete blacksmith player tool. |
-| `Data/Scripts/Items/Trades/Tools/FletcherTools.cs` | Concrete bowcraft/fletching player tool. |
-| `Data/Scripts/Items/Trades/Tools/Saw.cs` | Concrete carpentry player tool. |
-| `Data/Scripts/Items/Trades/Tools/SewingKit.cs` | Concrete tailoring player tool. |
-| `Data/Scripts/Items/Trades/Tools/TinkerTools.cs` | Concrete tinkering player tool. |
-| `Data/Scripts/Items/Trades/Tools/ScribesPen.cs` | Concrete inscription player tool. |
-| `Data/Scripts/Items/Trades/Tools/MapmakersPen.cs` | Concrete cartography player tool. |
-| `Data/Scripts/Items/Trades/Tools/Skillet.cs` | Concrete cooking player tool. |
-| `Data/Scripts/Items/Trades/Tools/Blowpipe.cs` | Concrete glassblowing player tool. |
-| `Data/Scripts/Items/Trades/Tools/MalletAndChisel.cs` | Concrete masonry player tool. |
-| `Data/Scripts/Trades/Runics/BaseRunicHammer.cs` | Runic smithing variants that bind back to `DefBlacksmithy`. |
-| `Data/Scripts/Trades/Runics/BaseRunicSewingKit.cs` | Runic tailoring variants that bind back to `DefTailoring`. |
-| `Data/Scripts/Trades/Runics/BaseRunicSaw.cs` | Runic carpentry variants that bind back to `DefCarpentry`. |
-| `Data/Scripts/Trades/Runics/BaseRunicFletcherTools.cs` | Runic bowcraft/fletching variants that bind back to `DefBowFletching`. |
-| `Data/Scripts/Trades/Runics/BaseRunicTinkerTools.cs` | Runic tinkering variants that bind back to `DefTinkering`. |
+| `Data/Scripts/Items/Trades/Tools/*.cs` | Concrete player tools such as `MortarPestle`, `SmithHammer`, `FletcherTools`, `Saw`, `SewingKit`, `TinkerTools`, `ScribesPen`, `MapmakersPen`, `Skillet`, `Blowpipe`, and `MalletAndChisel`. |
+| `Data/Scripts/Trades/Runics/*.cs` | Runic tool variants that bind back to standard `CraftSystem` singletons. |
 
 ## Entry Points
 Each standard system exposes a lazy static `CraftSystem` singleton. The constructor passes `(1, 1, 1.25)` to the `CraftSystem` base class, which means one craft-effect tick with a 1.25 second delay before completion.

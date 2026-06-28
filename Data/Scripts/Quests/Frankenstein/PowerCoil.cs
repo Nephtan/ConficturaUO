@@ -19,9 +19,6 @@ namespace Server.Items
 
         public override void OnSpeech(SpeechEventArgs e)
         {
-            if (e == null || e.Mobile == null || e.Mobile.Deleted || e.Speech == null)
-                return;
-
             if (!e.Handled)
             {
                 Mobile m = e.Mobile;

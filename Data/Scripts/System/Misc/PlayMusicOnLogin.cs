@@ -22,9 +22,6 @@ namespace Felladrin.Automations
 
         static void OnLogin(LoginEventArgs args)
         {
-            if (args == null || args.Mobile == null || args.Mobile.Deleted)
-                return;
-
             Mobile from = args.Mobile;
 
             MusicName toPlay = Config.SingleMusic;

@@ -50,19 +50,10 @@ namespace Server.Spells.Research
         {
             int fires = 0;
 
-            IPooledEnumerable eable = Caster.GetItemsInRange(10);
-
-            try
+            foreach (Item m in Caster.GetItemsInRange(10))
             {
-                foreach (Item m in eable)
-                {
-                    if (m is MagicalFire)
-                        ++fires;
-                }
-            }
-            finally
-            {
-                eable.Free();
+                if (m is MagicalFire)
+                    ++fires;
             }
 
             if (fires > 1)

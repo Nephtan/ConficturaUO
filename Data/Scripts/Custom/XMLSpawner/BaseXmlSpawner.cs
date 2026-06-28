@@ -3331,36 +3331,20 @@ namespace Server.Mobiles
                                 // count nearby players
                                 if (refobject is Item)
                                 {
-                                    IPooledEnumerable eable = ((Item)refobject).GetMobilesInRange(range);
-
-                                    try
+                                    foreach (Mobile p in ((Item)refobject).GetMobilesInRange(range))
                                     {
-                                        foreach (Mobile p in eable)
-                                        {
-                                            if (p.Player && p.AccessLevel == AccessLevel.Player)
-                                                nplayers++;
-                                        }
-                                    }
-                                    finally
-                                    {
-                                        eable.Free();
+                                        if (p.Player && p.AccessLevel == AccessLevel.Player)
+                                            nplayers++;
                                     }
                                 }
                                 else if (refobject is Mobile)
                                 {
-                                    IPooledEnumerable eable = ((Mobile)refobject).GetMobilesInRange(range);
-
-                                    try
+                                    foreach (
+                                        Mobile p in ((Mobile)refobject).GetMobilesInRange(range)
+                                    )
                                     {
-                                        foreach (Mobile p in eable)
-                                        {
-                                            if (p.Player && p.AccessLevel == AccessLevel.Player)
-                                                nplayers++;
-                                        }
-                                    }
-                                    finally
-                                    {
-                                        eable.Free();
+                                        if (p.Player && p.AccessLevel == AccessLevel.Player)
+                                            nplayers++;
                                     }
                                 }
 
@@ -5393,36 +5377,18 @@ namespace Server.Mobiles
 
                     if (o is Item)
                     {
-                        IPooledEnumerable eable = ((Item)o).GetMobilesInRange(range);
-
-                        try
+                        foreach (Mobile p in ((Item)o).GetMobilesInRange(range))
                         {
-                            foreach (Mobile p in eable)
-                            {
-                                if (p.Player && p.AccessLevel == AccessLevel.Player)
-                                    nplayers++;
-                            }
-                        }
-                        finally
-                        {
-                            eable.Free();
+                            if (p.Player && p.AccessLevel == AccessLevel.Player)
+                                nplayers++;
                         }
                     }
                     else if (o is Mobile)
                     {
-                        IPooledEnumerable eable = ((Mobile)o).GetMobilesInRange(range);
-
-                        try
+                        foreach (Mobile p in ((Mobile)o).GetMobilesInRange(range))
                         {
-                            foreach (Mobile p in eable)
-                            {
-                                if (p.Player && p.AccessLevel == AccessLevel.Player)
-                                    nplayers++;
-                            }
-                        }
-                        finally
-                        {
-                            eable.Free();
+                            if (p.Player && p.AccessLevel == AccessLevel.Player)
+                                nplayers++;
                         }
                     }
 

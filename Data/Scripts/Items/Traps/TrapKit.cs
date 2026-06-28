@@ -65,19 +65,10 @@ namespace Server.Items
             {
                 int traps = 0;
 
-                IPooledEnumerable eable = from.GetItemsInRange(10);
-
-                try
+                foreach (Item m in from.GetItemsInRange(10))
                 {
-                    foreach (Item m in eable)
-                    {
-                        if (m is SetTrap)
-                            ++traps;
-                    }
-                }
-                finally
-                {
-                    eable.Free();
+                    if (m is SetTrap)
+                        ++traps;
                 }
 
                 if (traps > 2)

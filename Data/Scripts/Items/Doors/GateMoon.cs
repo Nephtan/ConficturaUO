@@ -158,21 +158,12 @@ namespace Server.Items
 
             public bool NearGate(Mobile from)
             {
-                IPooledEnumerable eable = from.GetItemsInRange(10);
-
-                try
+                foreach (Item i in from.GetItemsInRange(10))
                 {
-                    foreach (Item i in eable)
+                    if ((i is ObsidianGate || i is GateMoon) && i.Map == from.Map)
                     {
-                        if ((i is ObsidianGate || i is GateMoon) && i.Map == from.Map)
-                        {
-                            return true;
-                        }
+                        return true;
                     }
-                }
-                finally
-                {
-                    eable.Free();
                 }
                 return false;
             }
