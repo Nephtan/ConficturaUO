@@ -2229,3 +2229,12 @@ To run a gated batch, provide explicit approval naming:
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-214-gemofseeing-guard-repair-closeout.md.
 - SOURCE-BATCH-215+ remains pending SB214-CAND-002 GiftThrowingGloves from source-batch-214-candidate-discovery.csv.
 - Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-215 Update
+
+- SOURCE-BATCH-215 implemented the GiftThrowingGloves guard repair in Data/Scripts/Items/Magical/Gifts/Weapons/GiftThrowingGloves.cs.
+- SOURCE-BATCH-215 is now Committed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv pending final git commit.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-215-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-215-giftthrowinggloves-guard-repair-closeout.md.
+- SOURCE-BATCH-216+ remains pending SB214-CAND-003 GiftShepherdsCrook from source-batch-214-candidate-discovery.csv.
+- Gated roadmap batches remain blocked pending explicit approval.
