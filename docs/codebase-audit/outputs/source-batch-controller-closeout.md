@@ -2135,3 +2135,12 @@ To run a gated batch, provide explicit approval naming:
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-204-espikeposteast-guard-repair-closeout.md.
 - SOURCE-BATCH-205+ remains pending SB204-CAND-002 ESpikePostSouth from source-batch-204-candidate-discovery.csv.
 - Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-205 Update
+
+- SOURCE-BATCH-205 implemented the ESpikePostSouth guard repair in Data/Scripts/Items/Gifts/ShadowDeeds/ESpikePostSouth.cs.
+- SOURCE-BATCH-205 is now Committed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv pending final git commit.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-205-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-205-espikepostsouth-guard-repair-closeout.md.
+- The source-batch-204-candidate-discovery.csv implementation queue is exhausted; SOURCE-BATCH-206+ requires fresh non-gated candidate discovery.
+- Gated roadmap batches remain blocked pending explicit approval.
