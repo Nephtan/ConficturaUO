@@ -2060,3 +2060,12 @@ To run a gated batch, provide explicit approval naming:
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-196-ecrystalbrazier-guard-repair-closeout.md.
 - SOURCE-BATCH-197+ remains pending SB195-CAND-003 EGlobeOfSosaria from source-batch-195-candidate-discovery.csv.
 - Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-197 Update
+
+- SOURCE-BATCH-197 implemented the EGlobeOfSosaria guard repair in Data/Scripts/Items/Gifts/ShadowDeeds/EGlobeOfSosaria.cs.
+- SOURCE-BATCH-197 is now Committed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv pending final git commit.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-197-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-197-eglobeofsosaria-guard-repair-closeout.md.
+- The source-batch-195-candidate-discovery.csv implementation queue is exhausted; SOURCE-BATCH-198+ requires fresh non-gated candidate discovery.
+- Gated roadmap batches remain blocked pending explicit approval.
