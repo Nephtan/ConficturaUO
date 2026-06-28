@@ -1267,3 +1267,13 @@ To run a gated batch, provide explicit approval naming:
 - The source-batch closeout is `docs/codebase-audit/outputs/source-batch-110-hardcrystals-guard-repair-closeout.md`.
 - The `source-batch-107-candidate-discovery.csv` implementation queue is exhausted; `SOURCE-BATCH-111+` requires fresh candidate discovery.
 - Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-111 Update
+
+- `SOURCE-BATCH-111+` discovery created `docs/codebase-audit/outputs/source-batch-111-candidate-discovery.csv`.
+- `SOURCE-BATCH-111` implemented the BrokenGear guard repair in `Data/Scripts/Items/Traps/BrokenGear.cs`.
+- `SOURCE-BATCH-111` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-111-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-111-brokengear-guard-repair-closeout.md`.
+- `SOURCE-BATCH-112+` remains pending the next concrete non-gated source target from `source-batch-111-candidate-discovery.csv`.
+- Gated roadmap batches remain blocked pending explicit approval.
