@@ -1744,3 +1744,13 @@ To run a gated batch, provide explicit approval naming:
 - The `source-batch-154-candidate-discovery.csv` implementation queue is exhausted.
 - `SOURCE-BATCH-163+` requires fresh non-gated candidate discovery.
 - Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-163 Update
+
+- `SOURCE-BATCH-163` created fresh candidate discovery in `docs/codebase-audit/outputs/source-batch-163-candidate-discovery.csv`.
+- `SOURCE-BATCH-163` implemented the ArmysPaeonScroll guard repair in `Data/Scripts/Magic/Bard/Scrolls/ArmysPaeon.cs`.
+- `SOURCE-BATCH-163` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-163-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-163-armyspaeonscroll-guard-repair-closeout.md`.
+- `SOURCE-BATCH-164+` remains pending the next concrete non-gated source target from `source-batch-163-candidate-discovery.csv`.
+- Gated roadmap batches remain blocked pending explicit approval.
