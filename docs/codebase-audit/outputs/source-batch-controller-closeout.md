@@ -2238,3 +2238,12 @@ To run a gated batch, provide explicit approval naming:
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-215-giftthrowinggloves-guard-repair-closeout.md.
 - SOURCE-BATCH-216+ remains pending SB214-CAND-003 GiftShepherdsCrook from source-batch-214-candidate-discovery.csv.
 - Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-216 Update
+
+- SOURCE-BATCH-216 implemented the GiftShepherdsCrook guard repair in Data/Scripts/Items/Magical/Gifts/Weapons/Staves/GiftShepherdsCrook.cs.
+- SOURCE-BATCH-216 is now Committed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv pending final git commit.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-216-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-216-giftshepherdscrook-guard-repair-closeout.md.
+- The source-batch-214-candidate-discovery.csv implementation queue is exhausted; SOURCE-BATCH-217+ requires fresh non-gated candidate discovery.
+- Gated roadmap batches remain blocked pending explicit approval.
