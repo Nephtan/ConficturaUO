@@ -1993,3 +1993,12 @@ To run a gated batch, provide explicit approval naming:
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-189-wrappedcandy-guard-repair-closeout.md.
 - SOURCE-BATCH-190+ remains pending the next concrete non-gated source target from source-batch-189-candidate-discovery.csv.
 - Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-190 Update
+
+- SOURCE-BATCH-190 implemented the HalloweenPack guard repair in Data/Scripts/Items/Gifts/Holiday/Halloween/HalloweenPack.cs.
+- SOURCE-BATCH-190 is now Committed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv pending final git commit.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-190-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-190-halloweenpack-guard-repair-closeout.md.
+- SOURCE-BATCH-191+ remains pending the next concrete non-gated source target from source-batch-189-candidate-discovery.csv.
+- Gated roadmap batches remain blocked pending explicit approval.
