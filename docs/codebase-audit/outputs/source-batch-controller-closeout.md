@@ -2333,3 +2333,13 @@ To run a gated batch, provide explicit approval naming:
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-225-stonewell-guard-repair-closeout.md.
 - SOURCE-BATCH-226+ requires fresh non-gated candidate discovery after SOURCE-BATCH-225 is committed.
 - Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-226 Update
+
+- SOURCE-BATCH-226 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-226-candidate-discovery.csv.
+- SOURCE-BATCH-226 implemented the RedWell guard repair in Data/Scripts/Items/Construction/Wells/redwell.cs.
+- SOURCE-BATCH-226 is now Committed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv pending final git commit.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-226-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-226-redwell-guard-repair-closeout.md.
+- SOURCE-BATCH-227+ requires fresh non-gated candidate discovery after SOURCE-BATCH-226 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.
