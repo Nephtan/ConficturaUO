@@ -1586,3 +1586,12 @@ To run a gated batch, provide explicit approval naming:
 - The source-batch closeout is `docs/codebase-audit/outputs/source-batch-145-corpsesailor-guard-repair-closeout.md`.
 - `SOURCE-BATCH-146+` remains pending the next concrete non-gated source target from `source-batch-144-candidate-discovery.csv`.
 - Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-146 Update
+
+- `SOURCE-BATCH-146` implemented the LootBag guard repair in `Data/Scripts/Items/Containers/LootBag.cs`.
+- `SOURCE-BATCH-146` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-146-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-146-lootbag-guard-repair-closeout.md`.
+- `SOURCE-BATCH-147+` remains pending the next concrete non-gated source target from `source-batch-144-candidate-discovery.csv`.
+- Gated roadmap batches remain blocked pending explicit approval.
