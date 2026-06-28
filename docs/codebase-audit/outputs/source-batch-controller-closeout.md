@@ -1494,3 +1494,12 @@ To run a gated batch, provide explicit approval naming:
 - The source-batch closeout is `docs/codebase-audit/outputs/source-batch-135-decomandrake3-guard-repair-closeout.md`.
 - `SOURCE-BATCH-136+` remains pending the next concrete non-gated source target from `source-batch-119-candidate-discovery.csv`.
 - Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-136 Update
+
+- `SOURCE-BATCH-136` implemented the DecoMandrakeRoot guard repair in `Data/Scripts/Items/Special/Rares/PaganReagents/DecoMandrakeRoot.cs`.
+- `SOURCE-BATCH-136` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-136-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-136-decomandrakeroot-guard-repair-closeout.md`.
+- `SOURCE-BATCH-137+` remains pending the next concrete non-gated source target from `source-batch-119-candidate-discovery.csv`.
+- Gated roadmap batches remain blocked pending explicit approval.
