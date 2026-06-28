@@ -44,6 +44,9 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
+            if (from == null || from.Deleted || Deleted)
+                return;
+
             if (from.InRange(this.GetWorldLocation(), 2))
             {
                 string sCount = "charges";
@@ -86,11 +89,20 @@ namespace Server.Items
 
             protected override void OnTarget(Mobile from, object targeted)
             {
+                if (from == null || from.Deleted || m_Dye == null || m_Dye.Deleted)
+                    return;
+
                 object obj = targeted;
 
                 if (obj is HueStone)
                 {
                     Item iStone = targeted as Item;
+
+                    if (iStone == null || iStone.Deleted)
+                    {
+                        from.SendMessage("You cannot use the stone on that.");
+                        return;
+                    }
 
                     from.RevealingAction();
                     from.PlaySound(0x1FA);
@@ -343,6 +355,12 @@ namespace Server.Items
                 else if (obj is Item)
                 {
                     Item iDye = targeted as Item;
+
+                    if (iDye == null || iDye.Deleted)
+                    {
+                        from.SendMessage("You cannot use the stone on that.");
+                        return;
+                    }
 
                     bool backpack = false;
                     if (iDye is Backpack && from.FindItemOnLayer(Layer.Backpack) == iDye)

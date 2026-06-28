@@ -1091,3 +1091,13 @@ To run a gated batch, provide explicit approval naming:
 - The source-batch closeout is `docs/codebase-audit/outputs/source-batch-091-hairoilpotion-guard-repair-closeout.md`.
 - The `source-batch-087-candidate-discovery.csv` implementation queue is exhausted; `SOURCE-BATCH-092+` requires fresh candidate discovery.
 - Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-092 Update
+
+- `SOURCE-BATCH-092+` discovery created `docs/codebase-audit/outputs/source-batch-092-candidate-discovery.csv`.
+- `SOURCE-BATCH-092` implemented the HueStone guard repair in `Data/Scripts/Items/Misc/Dyes/HueStone.cs`.
+- `SOURCE-BATCH-092` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-092-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-092-huestone-guard-repair-closeout.md`.
+- The `source-batch-092-candidate-discovery.csv` implementation queue is exhausted; `SOURCE-BATCH-093+` requires fresh candidate discovery.
+- Gated roadmap batches remain blocked pending explicit approval.
