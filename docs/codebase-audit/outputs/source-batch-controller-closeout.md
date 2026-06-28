@@ -1936,3 +1936,12 @@ To run a gated batch, provide explicit approval naming:
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-183-sythdatacrons-guard-repair-closeout.md.
 - SOURCE-BATCH-184+ remains pending the next concrete non-gated source target from source-batch-183-candidate-discovery.csv.
 - Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-184 Update
+
+- SOURCE-BATCH-184 implemented the JediDatacrons guard repair in Data/Scripts/Magic/Jedi/JediDatacrons.cs.
+- SOURCE-BATCH-184 is now Committed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-184-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-184-jedidatacrons-guard-repair-closeout.md.
+- SOURCE-BATCH-185+ remains pending the next concrete non-gated source target from source-batch-183-candidate-discovery.csv.
+- Gated roadmap batches remain blocked pending explicit approval.

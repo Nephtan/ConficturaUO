@@ -23,6 +23,11 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
+            if (from == null || from.Deleted || Deleted)
+            {
+                return;
+            }
+
             from.SendMessage("This holocron contains the wisdom of a Jedi Master from long ago.");
         }
 
@@ -62,6 +67,11 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
+            if (from == null || from.Deleted || Deleted)
+            {
+                return;
+            }
+
             from.SendMessage("This holocron contains the wisdom of a Jedi Master from long ago.");
         }
 
@@ -101,6 +111,11 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
+            if (from == null || from.Deleted || Deleted)
+            {
+                return;
+            }
+
             from.SendMessage("This holocron contains the wisdom of a Jedi Master from long ago.");
         }
 
@@ -140,6 +155,11 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
+            if (from == null || from.Deleted || Deleted)
+            {
+                return;
+            }
+
             from.SendMessage("This holocron contains the wisdom of a Jedi Master from long ago.");
         }
 
@@ -179,6 +199,11 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
+            if (from == null || from.Deleted || Deleted)
+            {
+                return;
+            }
+
             from.SendMessage("This holocron contains the wisdom of a Jedi Master from long ago.");
         }
 
@@ -218,6 +243,11 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
+            if (from == null || from.Deleted || Deleted)
+            {
+                return;
+            }
+
             from.SendMessage("This holocron contains the wisdom of a Jedi Master from long ago.");
         }
 
@@ -257,6 +287,11 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
+            if (from == null || from.Deleted || Deleted)
+            {
+                return;
+            }
+
             from.SendMessage("This holocron contains the wisdom of a Jedi Master from long ago.");
         }
 
@@ -296,6 +331,11 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
+            if (from == null || from.Deleted || Deleted)
+            {
+                return;
+            }
+
             from.SendMessage("This holocron contains the wisdom of a Jedi Master from long ago.");
         }
 
@@ -335,6 +375,11 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
+            if (from == null || from.Deleted || Deleted)
+            {
+                return;
+            }
+
             from.SendMessage("This holocron contains the wisdom of a Jedi Master from long ago.");
         }
 
@@ -374,6 +419,11 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
+            if (from == null || from.Deleted || Deleted)
+            {
+                return;
+            }
+
             from.SendMessage("This holocron contains the wisdom of a Jedi Master from long ago.");
         }
 
