@@ -1853,3 +1853,12 @@ To run a gated batch, provide explicit approval naming:
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-174-magicfinalescroll-guard-repair-closeout.md.
 - SOURCE-BATCH-175+ remains pending the next concrete non-gated source target from source-batch-163-candidate-discovery.csv.
 - Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-175 Update
+
+- SOURCE-BATCH-175 implemented the PoisonCarolScroll guard repair in Data/Scripts/Magic/Bard/Scrolls/PoisonCarol.cs.
+- SOURCE-BATCH-175 is now Committed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-175-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-175-poisoncarolscroll-guard-repair-closeout.md.
+- SOURCE-BATCH-176+ remains pending the next concrete non-gated source target from source-batch-163-candidate-discovery.csv.
+- Gated roadmap batches remain blocked pending explicit approval.
