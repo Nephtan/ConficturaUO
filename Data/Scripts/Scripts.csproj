@@ -6395,6 +6395,7 @@
     <Compile Include="System\Skills\Stealing.cs" />
     <Compile Include="System\Skills\Stealth.cs" />
     <Compile Include="System\Skills\Taming.cs" />
+    <Compile Include="System\Skills\TamingLoopController.cs" />
     <Compile Include="System\Skills\Tasting.cs" />
     <Compile Include="System\Skills\Tracking.cs" />
     <Compile Include="System\Skills\Weapon Abilities\AbilityBook.cs" />
