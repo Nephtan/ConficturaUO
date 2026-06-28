@@ -2266,3 +2266,12 @@ To run a gated batch, provide explicit approval naming:
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-218-holidaybell-guard-repair-closeout.md.
 - SOURCE-BATCH-219+ remains pending SB217-CAND-003 ValentinesCard from source-batch-217-candidate-discovery.csv.
 - Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-219 Update
+
+- SOURCE-BATCH-219 implemented the ValentinesCard guard repair in Data/Scripts/Items/Special/ValentinesCard.cs.
+- SOURCE-BATCH-219 is now Committed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv pending final git commit.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-219-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-219-valentinescard-guard-repair-closeout.md.
+- The source-batch-217-candidate-discovery.csv implementation queue is exhausted; SOURCE-BATCH-220+ requires fresh non-gated candidate discovery.
+- Gated roadmap batches remain blocked pending explicit approval.
