@@ -17,6 +17,11 @@ namespace Server.Items
 
         public override bool OnDragLift(Mobile from)
         {
+            if (from == null || from.Deleted || Deleted)
+            {
+                return false;
+            }
+
             from.SendMessage(
                 "This pagan reagent cannot be used in alchemy, but it is rare and collectible."
             );
