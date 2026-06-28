@@ -48,6 +48,9 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
+            if (from == null || from.Deleted || Deleted)
+                return;
+
             if (!from.InRange(this.GetWorldLocation(), 1))
             {
                 from.LocalOverheadMessage(MessageType.Regular, 906, 1019045); // I can't reach that.
