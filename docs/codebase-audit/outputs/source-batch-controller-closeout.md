@@ -1082,3 +1082,12 @@ To run a gated batch, provide explicit approval naming:
 - The source-batch closeout is `docs/codebase-audit/outputs/source-batch-090-necroskinpotion-guard-repair-closeout.md`.
 - `SOURCE-BATCH-091+` remains pending the next concrete non-gated source target from `source-batch-087-candidate-discovery.csv`.
 - Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-091 Update
+
+- `SOURCE-BATCH-091` implemented the HairOilPotion guard repair in `Data/Scripts/Items/Potions/Special/HairOilPotion.cs`.
+- `SOURCE-BATCH-091` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-091-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-091-hairoilpotion-guard-repair-closeout.md`.
+- The `source-batch-087-candidate-discovery.csv` implementation queue is exhausted; `SOURCE-BATCH-092+` requires fresh candidate discovery.
+- Gated roadmap batches remain blocked pending explicit approval.
