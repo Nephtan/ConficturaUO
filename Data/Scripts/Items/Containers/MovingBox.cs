@@ -121,6 +121,11 @@ namespace Server.Items
 
         public override bool OnDragLift(Mobile from)
         {
+            if (from == null || from.Deleted || Deleted)
+            {
+                return false;
+            }
+
             if (owner == null)
             {
                 owner = from;
