@@ -1640,3 +1640,14 @@ To run a gated batch, provide explicit approval naming:
 - The source-batch closeout is `docs/codebase-audit/outputs/source-batch-151-alchemistpouch-guard-repair-closeout.md`.
 - `SOURCE-BATCH-152+` remains pending the next concrete non-gated source target from `source-batch-144-candidate-discovery.csv`.
 - Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-152 Update
+
+- `SOURCE-BATCH-152` skipped the BaseMagicStaff guard repair before source edits.
+- Fresh preflight found `Data/Scripts/Items/Wands/BaseMagicStaff.cs` has 0 POST-BATCH-Y gate hits and 4 active overlay matches: `RB-06714`, `RB-06715`, `RB-06731`, `RB-06782`.
+- `SOURCE-BATCH-152` is now `SkippedOverlayConflict` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-152-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-152-basemagicstaff-skip-closeout.md`.
+- No source/project/XML/config/data files were changed.
+- `SOURCE-BATCH-153+` remains pending the next concrete non-gated source target from `source-batch-144-candidate-discovery.csv`.
+- Gated roadmap batches remain blocked pending explicit approval.
