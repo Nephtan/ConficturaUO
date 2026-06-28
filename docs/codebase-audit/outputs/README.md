@@ -831,3 +831,7 @@ The Phase 0 baseline output, Phase 1 reproducible inventory outputs, Phase 2 pro
 | source-batch-192-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-192 candidate discovery with the recommended CrystalToken target. | Complete |
 | source-batch-192-target.md | Source batches | Durable target for SOURCE-BATCH-192 CrystalToken guard repair, including fence result, active overlay result, and unchanged behavior. | Complete |
 | source-batch-192-crystaltoken-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-192 with CrystalToken guard changes, POST-BATCH-Y fence evidence, serializer preservation evidence, verification, and artifact restoration notes. | Complete |
+| source-batch-193-candidate-discovery.csv | Source batches | Candidate discovery for SOURCE-BATCH-193+ after the CrystalToken queue was exhausted; includes one zero-gate, zero-overlay ShadowToken guard candidate. | Complete |
+| source-batch-193-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-193 candidate discovery with the recommended ShadowToken target. | Complete |
+| source-batch-193-target.md | Source batches | Durable target for SOURCE-BATCH-193 ShadowToken guard repair, including fence result, active overlay result, and unchanged behavior. | Complete |
+| source-batch-193-shadowtoken-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-193 with ShadowToken guard changes, POST-BATCH-Y fence evidence, serializer preservation evidence, verification, and artifact restoration notes. | Complete |
