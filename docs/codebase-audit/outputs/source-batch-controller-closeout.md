@@ -2116,3 +2116,12 @@ To run a gated batch, provide explicit approval naming:
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-202-eshadowpillar-guard-repair-closeout.md.
 - SOURCE-BATCH-203+ remains pending SB201-CAND-003 ESpikeColumn from source-batch-201-candidate-discovery.csv.
 - Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-203 Update
+
+- SOURCE-BATCH-203 implemented the ESpikeColumn guard repair in Data/Scripts/Items/Gifts/ShadowDeeds/ESpikeColumn.cs.
+- SOURCE-BATCH-203 is now Committed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv pending final git commit.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-203-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-203-espikecolumn-guard-repair-closeout.md.
+- The source-batch-201-candidate-discovery.csv implementation queue is exhausted; SOURCE-BATCH-204+ requires fresh non-gated candidate discovery.
+- Gated roadmap batches remain blocked pending explicit approval.
