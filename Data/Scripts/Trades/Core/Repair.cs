@@ -217,7 +217,11 @@ namespace Server.Engines.Craft
 
                 //TODO: Make a IRepairable
 
-                if (m_CraftSystem.CanCraft(from, m_Tool, targeted.GetType()) == 1044267)
+                if (targeted == null)
+                {
+                    number = 500426; // You can't repair that.
+                }
+                else if (m_CraftSystem.CanCraft(from, m_Tool, targeted.GetType()) == 1044267)
                 {
                     number = 1044282; // You must be near a forge and and anvil to repair items. * Yes, there are two and's *
                 }

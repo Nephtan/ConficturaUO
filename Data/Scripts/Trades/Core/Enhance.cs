@@ -413,6 +413,10 @@ namespace Server.Engines.Craft
 
                     from.SendGump(new CraftGump(from, m_CraftSystem, m_Tool, message));
                 }
+                else
+                {
+                    from.SendGump(new CraftGump(from, m_CraftSystem, m_Tool, 1061011));
+                }
             }
         }
     }

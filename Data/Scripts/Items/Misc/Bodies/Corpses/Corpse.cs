@@ -462,6 +462,7 @@ namespace Server.Items
             if (m is ElfRogue || m is Rogue || m is OrkRogue || m is Bandit || m is Brigand)
             {
                 string called = m.Name + " the thief";
+                string title = m.Title;
 
                 if (m is Bandit)
                 {
@@ -471,15 +472,15 @@ namespace Server.Items
                 {
                     called = m.Name + " the brigand";
                 }
-                else if (m.Title.Contains(" assassin"))
+                else if (title != null && title.Contains(" assassin"))
                 {
                     called = m.Name + " the assassin";
                 }
-                else if (m.Title.Contains(" hunter"))
+                else if (title != null && title.Contains(" hunter"))
                 {
                     called = m.Name + " the assassin";
                 }
-                else if (m.Title.Contains(" ninja"))
+                else if (title != null && title.Contains(" ninja"))
                 {
                     called = m.Name + " the assassin";
                 }

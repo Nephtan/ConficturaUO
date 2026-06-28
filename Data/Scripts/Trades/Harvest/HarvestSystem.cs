@@ -171,9 +171,13 @@ namespace Server.Engines.Harvest
         )
         {
             from.EndAction(locked);
+            bool continueLoop = true;
 
             if (!CheckHarvest(from, tool))
+            {
+                HarvestLoopController.StopLoop(from);
                 return;
+            }
 
             int tileID;
             Map map;
@@ -182,28 +186,45 @@ namespace Server.Engines.Harvest
             if (!GetHarvestDetails(from, tool, toHarvest, out tileID, out map, out loc))
             {
                 OnBadHarvestTarget(from, tool, toHarvest);
+                HarvestLoopController.StopLoop(from);
                 return;
             }
             else if (!def.Validate(tileID))
             {
                 OnBadHarvestTarget(from, tool, toHarvest);
+                HarvestLoopController.StopLoop(from);
                 return;
             }
 
             if (!CheckRange(from, tool, def, map, loc, true))
+            {
+                HarvestLoopController.StopLoop(from);
                 return;
+            }
             else if (!CheckResources(from, tool, def, map, loc, true))
+            {
+                HarvestLoopController.StopLoop(from);
                 return;
+            }
             else if (!CheckHarvest(from, tool, def, toHarvest))
+            {
+                HarvestLoopController.StopLoop(from);
                 return;
+            }
 
             if (SpecialHarvest(from, tool, def, map, loc))
+            {
+                HarvestLoopController.StopLoop(from);
                 return;
+            }
 
             HarvestBank bank = def.GetBank(map, loc.X, loc.Y);
 
             if (bank == null)
+            {
+                HarvestLoopController.StopLoop(from);
                 return;
+            }
 
             HarvestVein vein = bank.Vein;
 
@@ -211,7 +232,10 @@ namespace Server.Engines.Harvest
                 vein = MutateVein(from, tool, def, bank, toHarvest, vein);
 
             if (vein == null)
+            {
+                HarvestLoopController.StopLoop(from);
                 return;
+            }
 
             HarvestResource primary = vein.PrimaryResource;
             HarvestResource fallback = vein.FallbackResource;
@@ -803,6 +827,7 @@ namespace Server.Engines.Harvest
                             SendPackFullTo(from, item, def, resource);
                             item.Map = from.Map;
                             item.Location = from.Location;
+                            continueLoop = false;
                         }
 
                         BonusHarvestResource bonus = def.GetBonusResource();
@@ -811,13 +836,17 @@ namespace Server.Engines.Harvest
                         {
                             Item bonusItem = Construct(bonus.Type, from);
 
-                            if (Give(from, bonusItem, true)) //Bonuses always allow placing at feet, even if pack is full irregrdless of def
+                            if (
+                                bonusItem != null
+                                && Give(from, bonusItem, true)
+                            ) //Bonuses always allow placing at feet, even if pack is full irregrdless of def
                             {
                                 bonus.SendSuccessTo(from);
                             }
                             else
                             {
-                                item.Delete();
+                                if (bonusItem != null)
+                                    bonusItem.Delete();
                             }
                         }
 
@@ -834,6 +863,7 @@ namespace Server.Engines.Harvest
                             {
                                 tool.Delete();
                                 def.SendMessageTo(from, def.ToolBrokeMessage);
+                                continueLoop = false;
                             }
                         }
                     }
@@ -844,6 +874,7 @@ namespace Server.Engines.Harvest
                 def.SendMessageTo(from, def.FailMessage);
 
             OnHarvestFinished(from, tool, def, vein, bank, resource, toHarvest);
+            HarvestLoopController.OnHarvestFinished(from, tool, this, toHarvest, continueLoop);
         }
 
         public virtual void OnHarvestFinished(
@@ -908,6 +939,9 @@ namespace Server.Engines.Harvest
 
         public virtual bool Give(Mobile m, Item item, bool placeAtFeet)
         {
+            if (m == null || item == null)
+                return false;
+
             if (m.PlaceInBackpack(item))
                 return true;
 
@@ -920,8 +954,8 @@ namespace Server.Engines.Harvest
                 return false;
 
             List<Item> atFeet = new List<Item>();
-
             IPooledEnumerable eable = m.GetItemsInRange(0);
+
             try
             {
                 foreach (Item obj in eable)
@@ -1015,6 +1049,7 @@ namespace Server.Engines.Harvest
             if (!CheckHarvest(from, tool))
             {
                 from.EndAction(locked);
+                HarvestLoopController.StopLoop(from);
                 return false;
             }
 
@@ -1026,27 +1061,32 @@ namespace Server.Engines.Harvest
             {
                 from.EndAction(locked);
                 OnBadHarvestTarget(from, tool, toHarvest);
+                HarvestLoopController.StopLoop(from);
                 return false;
             }
             else if (!def.Validate(tileID))
             {
                 from.EndAction(locked);
                 OnBadHarvestTarget(from, tool, toHarvest);
+                HarvestLoopController.StopLoop(from);
                 return false;
             }
             else if (!CheckRange(from, tool, def, map, loc, true))
             {
                 from.EndAction(locked);
+                HarvestLoopController.StopLoop(from);
                 return false;
             }
             else if (!CheckResources(from, tool, def, map, loc, true))
             {
                 from.EndAction(locked);
+                HarvestLoopController.StopLoop(from);
                 return false;
             }
             else if (!CheckHarvest(from, tool, def, toHarvest))
             {
                 from.EndAction(locked);
+                HarvestLoopController.StopLoop(from);
                 return false;
             }
 
@@ -1099,17 +1139,41 @@ namespace Server.Engines.Harvest
 
         public virtual void StartHarvesting(Mobile from, Item tool, object toHarvest)
         {
-            if (!CheckHarvest(from, tool))
-                return;
-
-            int tileID;
             Map map;
             Point3D loc;
+
+            if (TryStartHarvesting(from, tool, toHarvest, out map, out loc))
+                HarvestLoopController.BeginLoop(from, tool, this, toHarvest, from.Map, from.Location);
+        }
+
+        internal bool StartHarvestingFromLoop(Mobile from, Item tool, object toHarvest)
+        {
+            Map map;
+            Point3D loc;
+
+            return TryStartHarvesting(from, tool, toHarvest, out map, out loc);
+        }
+
+        private bool TryStartHarvesting(
+            Mobile from,
+            Item tool,
+            object toHarvest,
+            out Map map,
+            out Point3D loc
+        )
+        {
+            map = null;
+            loc = Point3D.Zero;
+
+            if (!CheckHarvest(from, tool))
+                return false;
+
+            int tileID;
 
             if (!GetHarvestDetails(from, tool, toHarvest, out tileID, out map, out loc))
             {
                 OnBadHarvestTarget(from, tool, toHarvest);
-                return;
+                return false;
             }
 
             HarvestDefinition def = GetDefinition(tileID);
@@ -1117,26 +1181,27 @@ namespace Server.Engines.Harvest
             if (def == null)
             {
                 OnBadHarvestTarget(from, tool, toHarvest);
-                return;
+                return false;
             }
 
             if (!CheckRange(from, tool, def, map, loc, false))
-                return;
+                return false;
             else if (!CheckResources(from, tool, def, map, loc, false))
-                return;
+                return false;
             else if (!CheckHarvest(from, tool, def, toHarvest))
-                return;
+                return false;
 
             object toLock = GetLock(from, tool, def, toHarvest);
 
             if (!from.BeginAction(toLock))
             {
                 OnConcurrentHarvest(from, tool, def, toHarvest);
-                return;
+                return false;
             }
 
             new HarvestTimer(from, tool, this, def, toHarvest, toLock).Start();
             OnHarvestStarted(from, tool, def, toHarvest);
+            return true;
         }
 
         public virtual bool GetHarvestDetails(

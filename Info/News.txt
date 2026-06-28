@@ -1,3 +1,36 @@
+[*]June 28th, 2026
+Nephtan
+Announcements:
+
+Recent shard updates are live, covering crafting quality-of-life, gathering and taming automation, lore books, and several cleanup fixes.
+
+- Crafting menus now support Make Amount, up to 100 attempts, while preserving normal timers, skill checks, materials, tool use, maker's mark prompts, and failure chances.
+- Batch crafting now shows status with attempt counts, successes, failures, and a Stop option that lets the current attempt finish before stopping.
+- Crafting now supports selected source and output containers, including accessible nearby house containers where valid, with backpack fallback when a selected container is no longer usable.
+- The crafting queue is live from item detail pages, with recipe rows, target attempt counts, start/stop, row management, and the same one-attempt-at-a-time crafting rules.
+- Harvesting tools now keep working on the targeted spot after the first attempt until normal stop conditions occur, such as empty resources, tool loss, movement, death, logout, combat, pack-full handling, or captcha requirements. Use [StopHarvest to stop an active harvesting loop.
+- Animal taming now continues repeat attempts on the selected creature until it is tamed or a normal stop condition occurs, such as the creature becoming controlled, losing range or line of sight, combat, death, logout, or [StopTaming/[StopTame.
+- Lore books now use a dynamic catalog, making newer lore books available through loot and the player library system.
+- New-character starting land discovery, Elementalism guild skill handling, custom mobile titles, and rogue/assassin corpse or note title checks received cleanup fixes.
+- Behind the scenes, wiki, development-history, and CCWM documentation/tooling were expanded.
+
+Please report crafting queues or loops that continue when they should stop, confusing status messages, inaccessible containers being accepted, or any new lore books that fail to unlock in your library.
+
+[*]June 16th, 2026
+Nephtan
+Announcements:
+
+Godfrey's new content is live.
+
+- This release adds 20+ new dungeons and adventure areas.
+- More than 100 new enemies and bosses are available to fight.
+- New map, static, spawn, and decoration data have been added for areas such as Atlantis, Buried Ruins, Castle Dio, Dark Dragon Temple, Elemental Chaos, Forgotten Library, Goblin Caves, Lair of Exodus, Tower of Runes, Tree Hollow, Wolfgangs Crypt, Black Pyramid, and related entrances.
+- Several new areas are tied into dungeon danger handling and random encounter support.
+- Numerous puzzles, clues, hidden routes, and lore hooks are part of the release. Read carefully and expect some discoveries to require more than combat.
+- New lore books have been added to help point players toward the mysteries, challenges, and rules of these areas.
+
+Use the launcher before exploring so your client has the required map and static updates.
+
 [*]May 8th, 2026, 3:30pm Central Time
 Nephtan
 Announcements:
@@ -6,7 +39,7 @@ A new update is available through the recently announced launcher.
 
 - The launcher update includes a ClassicUO update.
 - This update fixes issues where books and some text could disappear in places.
-
+ 
 Please update through the launcher before continuing your adventures.
 
 [*]May 2nd, 2026, 12:41pm Central Time
