@@ -18,8 +18,19 @@ namespace Server.Items
 
         protected override void OnTarget(Mobile from, object target) // Override the protected OnTarget() for our feature
         {
-            if (m_Deed.Deleted || m_Deed.RootParent != from)
+            if (from == null || from.Deleted || m_Deed == null || m_Deed.Deleted)
                 return;
+
+            if (from.Backpack == null || !m_Deed.IsChildOf(from.Backpack) || m_Deed.RootParent != from)
+                return;
+
+            Item targetedItem = target as Item;
+
+            if (targetedItem != null && targetedItem.Deleted)
+            {
+                from.SendLocalizedMessage(500509); // You cannot bless that object
+                return;
+            }
 
             if (target is BaseClothing)
             {
@@ -134,7 +145,10 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from) // Override double click of the deed to call our target
         {
-            if (!IsChildOf(from.Backpack)) // Make sure its in their pack
+            if (from == null || from.Deleted || Deleted)
+                return;
+
+            if (from.Backpack == null || !IsChildOf(from.Backpack)) // Make sure its in their pack
             {
                 from.SendLocalizedMessage(1042001); // That must be in your pack for you to use it.
             }
