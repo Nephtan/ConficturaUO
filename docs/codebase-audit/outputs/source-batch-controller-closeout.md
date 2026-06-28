@@ -1422,3 +1422,12 @@ To run a gated batch, provide explicit approval naming:
 - The source-batch closeout is `docs/codebase-audit/outputs/source-batch-127-decogarlicbulb-guard-repair-closeout.md`.
 - `SOURCE-BATCH-128+` remains pending the next concrete non-gated source target from `source-batch-119-candidate-discovery.csv`.
 - Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-128 Update
+
+- `SOURCE-BATCH-128` implemented the DecoGarlicBulb2 guard repair in `Data/Scripts/Items/Special/Rares/PaganReagents/DecoGarlicBulb2.cs`.
+- `SOURCE-BATCH-128` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-128-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-128-decogarlicbulb2-guard-repair-closeout.md`.
+- `SOURCE-BATCH-129+` remains pending the next concrete non-gated source target from `source-batch-119-candidate-discovery.csv`.
+- Gated roadmap batches remain blocked pending explicit approval.
