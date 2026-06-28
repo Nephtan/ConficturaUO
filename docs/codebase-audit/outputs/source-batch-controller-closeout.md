@@ -1899,3 +1899,12 @@ To run a gated batch, provide explicit approval naming:
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-179-deathskulls-guard-repair-closeout.md.
 - SOURCE-BATCH-180+ remains pending the next concrete non-gated source target from source-batch-179-candidate-discovery.csv.
 - Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-180 Update
+
+- SOURCE-BATCH-180 implemented the HolySymbols guard repair in Data/Scripts/Magic/Holy Man/HolySymbols.cs.
+- SOURCE-BATCH-180 is now Committed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-180-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-180-holysymbols-guard-repair-closeout.md.
+- SOURCE-BATCH-181+ remains pending the next concrete non-gated source target from source-batch-179-candidate-discovery.csv.
+- Gated roadmap batches remain blocked pending explicit approval.
