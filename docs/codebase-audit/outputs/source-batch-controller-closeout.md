@@ -1166,3 +1166,12 @@ To run a gated batch, provide explicit approval naming:
 - The source-batch closeout is `docs/codebase-audit/outputs/source-batch-099-wool-guard-repair-closeout.md`.
 - `SOURCE-BATCH-100+` remains pending the next concrete non-gated source target from `source-batch-099-candidate-discovery.csv`.
 - Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-100 Update
+
+- `SOURCE-BATCH-100` implemented the Cotton guard repair in `Data/Scripts/Items/Trades/Resources/Tailor/Cotton.cs`.
+- `SOURCE-BATCH-100` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-100-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-100-cotton-guard-repair-closeout.md`.
+- `SOURCE-BATCH-101+` remains pending the next concrete non-gated source target from `source-batch-099-candidate-discovery.csv`.
+- Gated roadmap batches remain blocked pending explicit approval.

@@ -619,3 +619,5 @@ The Phase 0 baseline output, Phase 1 reproducible inventory outputs, Phase 2 pro
 | source-batch-099-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-099 candidate discovery with the recommended Wool target and exclusion notes. | Complete |
 | source-batch-099-target.md | Source batches | Durable target for SOURCE-BATCH-099 Wool guard repair, including fence result, active overlay result, and unchanged behavior. | Complete |
 | source-batch-099-wool-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-099 with Wool guard changes, POST-BATCH-Y fence evidence, serializer preservation evidence, verification, and artifact restoration notes. | Complete |
+| source-batch-100-target.md | Source batches | Durable target for SOURCE-BATCH-100 Cotton guard repair, including fence result, active overlay result, and unchanged behavior. | Complete |
+| source-batch-100-cotton-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-100 with Cotton guard changes, POST-BATCH-Y fence evidence, serializer preservation evidence, verification, and artifact restoration notes. | Complete |
