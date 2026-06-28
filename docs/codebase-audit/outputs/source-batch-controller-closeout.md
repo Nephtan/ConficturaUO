@@ -1954,3 +1954,12 @@ To run a gated batch, provide explicit approval naming:
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-185-sythspellbook-guard-repair-closeout.md.
 - SOURCE-BATCH-186+ remains pending the next concrete non-gated source target from source-batch-183-candidate-discovery.csv.
 - Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-186 Update
+
+- SOURCE-BATCH-186 implemented the JediSpellbook guard repair in Data/Scripts/Magic/Jedi/JediSpellbook.cs.
+- SOURCE-BATCH-186 is now Committed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-186-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-186-jedispellbook-guard-repair-closeout.md.
+- The source-batch-183-candidate-discovery.csv implementation queue is exhausted; SOURCE-BATCH-187+ requires fresh non-gated candidate discovery.
+- Gated roadmap batches remain blocked pending explicit approval.
