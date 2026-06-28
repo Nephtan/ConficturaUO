@@ -1651,3 +1651,13 @@ To run a gated batch, provide explicit approval naming:
 - No source/project/XML/config/data files were changed.
 - `SOURCE-BATCH-153+` remains pending the next concrete non-gated source target from `source-batch-144-candidate-discovery.csv`.
 - Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-153 Update
+
+- `SOURCE-BATCH-153` implemented the WindRunnerScroll guard repair in `Data/Scripts/Magic/Mystic/Scrolls/WindRunnerScroll.cs`.
+- `SOURCE-BATCH-153` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-153-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-153-windrunnerscroll-guard-repair-closeout.md`.
+- The `source-batch-144-candidate-discovery.csv` implementation queue is exhausted.
+- `SOURCE-BATCH-154+` requires fresh non-gated candidate discovery.
+- Gated roadmap batches remain blocked pending explicit approval.
