@@ -2275,3 +2275,13 @@ To run a gated batch, provide explicit approval naming:
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-219-valentinescard-guard-repair-closeout.md.
 - The source-batch-217-candidate-discovery.csv implementation queue is exhausted; SOURCE-BATCH-220+ requires fresh non-gated candidate discovery.
 - Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-220 Update
+
+- SOURCE-BATCH-220 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-220-candidate-discovery.csv.
+- SOURCE-BATCH-220 implemented the UnidentifiedArtifact guard repair in Data/Scripts/Items/Unknown/UnidentifiedArtifact.cs.
+- SOURCE-BATCH-220 is now Committed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv pending final git commit.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-220-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-220-unidentifiedartifact-guard-repair-closeout.md.
+- SOURCE-BATCH-221+ remains pending SB220-CAND-002 UnidentifiedItem from source-batch-220-candidate-discovery.csv.
+- Gated roadmap batches remain blocked pending explicit approval.
