@@ -1064,3 +1064,12 @@ To run a gated batch, provide explicit approval naming:
 - The source-batch closeout is `docs/codebase-audit/outputs/source-batch-088-hairdyebottle-guard-repair-closeout.md`.
 - `SOURCE-BATCH-089+` remains pending the next concrete non-gated source target from `source-batch-087-candidate-discovery.csv`.
 - Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-089 Update
+
+- `SOURCE-BATCH-089` implemented the GenderPotion guard repair in `Data/Scripts/Items/Potions/Special/GenderPotion.cs`.
+- `SOURCE-BATCH-089` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-089-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-089-genderpotion-guard-repair-closeout.md`.
+- `SOURCE-BATCH-090+` remains pending the next concrete non-gated source target from `source-batch-087-candidate-discovery.csv`.
+- Gated roadmap batches remain blocked pending explicit approval.
