@@ -2843,3 +2843,13 @@ To run a gated batch, provide explicit approval naming:
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-276-blankmap-guard-repair-closeout.md.
 - SOURCE-BATCH-277+ requires fresh non-gated candidate discovery after SOURCE-BATCH-276 is committed.
 - Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-277 Update
+
+- SOURCE-BATCH-277 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-277-candidate-discovery.csv.
+- SOURCE-BATCH-277 implemented the BankChest guard repair in Data/Scripts/Items/Containers/BankChest.cs.
+- SOURCE-BATCH-277 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and final git commit pending.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-277-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-277-bankchest-guard-repair-closeout.md.
+- SOURCE-BATCH-278+ requires fresh non-gated candidate discovery after SOURCE-BATCH-277 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.

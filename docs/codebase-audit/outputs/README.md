@@ -1131,3 +1131,7 @@ The Phase 0 baseline output, Phase 1 reproducible inventory outputs, Phase 2 pro
 | source-batch-276-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-276 discovery with recommended BlankMap target. | Complete |
 | source-batch-276-target.md | Source batches | Durable target for SOURCE-BATCH-276 BlankMap guard repair, including fence result, active overlay result, and unchanged behavior. | Complete |
 | source-batch-276-blankmap-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-276 with BlankMap guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |
+| source-batch-277-candidate-discovery.csv | Source batches | Fresh SOURCE-BATCH-277 candidate discovery for a zero-gate, zero-overlay BankChest guard repair. | Complete |
+| source-batch-277-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-277 discovery with recommended BankChest target. | Complete |
+| source-batch-277-target.md | Source batches | Durable target for SOURCE-BATCH-277 BankChest guard repair, including fence result, active overlay result, and unchanged behavior. | Complete |
+| source-batch-277-bankchest-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-277 with BankChest guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |
