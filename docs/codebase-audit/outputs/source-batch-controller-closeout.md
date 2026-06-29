@@ -3023,3 +3023,13 @@ To run a gated batch, provide explicit approval naming:
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-294-pandorasbox-guard-repair-closeout.md.
 - SOURCE-BATCH-295+ requires fresh non-gated candidate discovery after SOURCE-BATCH-294 is committed.
 - Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-295 Update
+
+- SOURCE-BATCH-295 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-295-candidate-discovery.csv.
+- SOURCE-BATCH-295 implemented the EvilSkull guard repair in Data/Scripts/Items/Potions/Special/EvilSkull.cs.
+- SOURCE-BATCH-295 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and final git commit pending.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-295-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-295-evilskull-guard-repair-closeout.md.
+- SOURCE-BATCH-296+ requires fresh non-gated candidate discovery after SOURCE-BATCH-295 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.
