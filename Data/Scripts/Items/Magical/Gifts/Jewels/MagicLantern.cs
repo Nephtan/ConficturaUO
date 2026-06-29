@@ -53,6 +53,9 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
+            if (from == null || from.Deleted || Deleted)
+                return;
+
             Item lantern = from.FindItemOnLayer(Layer.TwoHanded);
             if (lantern == this)
             {
