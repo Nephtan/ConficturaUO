@@ -971,3 +971,7 @@ The Phase 0 baseline output, Phase 1 reproducible inventory outputs, Phase 2 pro
 | source-batch-236-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-236 discovery with recommended PatchBoard target. | Complete |
 | source-batch-236-target.md | Source batches | Durable target for SOURCE-BATCH-236 PatchBoard guard repair, including fence result, active overlay result, and unchanged behavior. | Complete |
 | source-batch-236-patchboard-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-236 with PatchBoard guard changes, POST-BATCH-Y fence evidence, serializer preservation evidence, verification, and artifact restoration notes. | Complete |
+| source-batch-237-candidate-discovery.csv | Source batches | Fresh SOURCE-BATCH-237 candidate discovery for a zero-gate, zero-overlay Pillows guard repair. | Complete |
+| source-batch-237-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-237 discovery with recommended Pillows target. | Complete |
+| source-batch-237-target.md | Source batches | Durable target for SOURCE-BATCH-237 Pillows guard repair, including fence result, active overlay result, and unchanged behavior. | Complete |
+| source-batch-237-pillows-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-237 with Pillows guard changes, POST-BATCH-Y fence evidence, serializer preservation evidence, verification, and artifact restoration notes. | Complete |

@@ -2443,3 +2443,13 @@ To run a gated batch, provide explicit approval naming:
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-236-patchboard-guard-repair-closeout.md.
 - SOURCE-BATCH-237+ requires fresh non-gated candidate discovery after SOURCE-BATCH-236 is committed.
 - Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-237 Update
+
+- SOURCE-BATCH-237 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-237-candidate-discovery.csv.
+- SOURCE-BATCH-237 implemented the Pillows guard repair in Data/Scripts/Items/Decorations/Pillows.cs.
+- SOURCE-BATCH-237 is now Committed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv pending final git commit.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-237-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-237-pillows-guard-repair-closeout.md.
+- SOURCE-BATCH-238+ requires fresh non-gated candidate discovery after SOURCE-BATCH-237 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.
