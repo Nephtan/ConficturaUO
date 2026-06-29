@@ -2603,3 +2603,13 @@ To run a gated batch, provide explicit approval naming:
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-252-levellantern-guard-repair-closeout.md.
 - SOURCE-BATCH-253+ requires fresh non-gated candidate discovery after SOURCE-BATCH-252 is committed.
 - Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-253 Update
+
+- SOURCE-BATCH-253 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-253-candidate-discovery.csv.
+- SOURCE-BATCH-253 implemented the LevelTorch guard repair in Data/Scripts/Items/Magical/God/Jewels/MagicTorch.cs.
+- SOURCE-BATCH-253 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and final git commit pending.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-253-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-253-leveltorch-guard-repair-closeout.md.
+- SOURCE-BATCH-254+ requires fresh non-gated candidate discovery after SOURCE-BATCH-253 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.
