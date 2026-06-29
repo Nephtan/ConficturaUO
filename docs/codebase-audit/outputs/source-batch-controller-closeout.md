@@ -3163,3 +3163,13 @@ To run a gated batch, provide explicit approval naming:
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-308-waxpaintings-guard-repair-closeout.md.
 - SOURCE-BATCH-309+ requires fresh non-gated candidate discovery after SOURCE-BATCH-308 is committed.
 - Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-309 Update
+
+- SOURCE-BATCH-309 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-309-candidate-discovery.csv.
+- SOURCE-BATCH-309 implemented the LargeWaxPot guard repair in Data/Scripts/Trades/Apiculture/Items/LargeWaxPot.cs.
+- SOURCE-BATCH-309 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and final git commit pending.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-309-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-309-largewaxpot-guard-repair-closeout.md.
+- SOURCE-BATCH-310+ requires fresh non-gated candidate discovery after SOURCE-BATCH-309 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.
