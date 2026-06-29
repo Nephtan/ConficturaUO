@@ -43,11 +43,21 @@ namespace Server.Items
 
         public virtual void DisplayDurabilityTo(Mobile m)
         {
+            if (m == null || m.Deleted || Deleted)
+            {
+                return;
+            }
+
             LabelToAffix(m, 1017323, AffixType.Append, ": " + m_UsesRemaining.ToString()); // Durability
         }
 
         public override void OnSingleClick(Mobile from)
         {
+            if (from == null || from.Deleted || Deleted)
+            {
+                return;
+            }
+
             DisplayDurabilityTo(from);
 
             base.OnSingleClick(from);
@@ -55,6 +65,11 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
+            if (from == null || from.Deleted || Deleted)
+            {
+                return;
+            }
+
             from.PrivateOverheadMessage(
                 0,
                 1154,

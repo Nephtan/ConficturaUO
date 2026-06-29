@@ -2893,3 +2893,13 @@ To run a gated batch, provide explicit approval naming:
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-281-foodchest-guard-repair-closeout.md.
 - SOURCE-BATCH-282+ requires fresh non-gated candidate discovery after SOURCE-BATCH-281 is committed.
 - Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-282 Update
+
+- SOURCE-BATCH-282 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-282-candidate-discovery.csv.
+- SOURCE-BATCH-282 implemented the HiveTool guard repair in Data/Scripts/Trades/Apiculture/Items/HiveTool.cs.
+- SOURCE-BATCH-282 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and final git commit pending.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-282-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-282-hivetool-guard-repair-closeout.md.
+- SOURCE-BATCH-283+ requires fresh non-gated candidate discovery after SOURCE-BATCH-282 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.
