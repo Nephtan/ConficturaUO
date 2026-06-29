@@ -1159,3 +1159,7 @@ The Phase 0 baseline output, Phase 1 reproducible inventory outputs, Phase 2 pro
 | source-batch-283-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-283 discovery with recommended SpellScroll target. | Complete |
 | source-batch-283-target.md | Source batches | Durable target for SOURCE-BATCH-283 SpellScroll guard repair, including fence result, active overlay result, and unchanged behavior. | Complete |
 | source-batch-283-spellscroll-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-283 with SpellScroll guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |
+| source-batch-284-candidate-discovery.csv | Source batches | Fresh SOURCE-BATCH-284 candidate discovery for a zero-gate, zero-unresolved-overlay Artifact_AcidProofRobe guard repair with resolved FalsePositive overlay evidence. | Complete |
+| source-batch-284-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-284 discovery with recommended Artifact_AcidProofRobe target. | Complete |
+| source-batch-284-target.md | Source batches | Durable target for SOURCE-BATCH-284 Artifact_AcidProofRobe guard repair, including fence result, resolved overlay evidence, and unchanged behavior. | Complete |
+| source-batch-284-artifact-acidproofrobe-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-284 with Artifact_AcidProofRobe guard changes, POST-BATCH-Y fence evidence, resolved FalsePositive overlay evidence, verification, and artifact restoration notes. | Complete |
