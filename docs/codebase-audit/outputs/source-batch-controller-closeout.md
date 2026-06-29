@@ -2923,3 +2923,13 @@ To run a gated batch, provide explicit approval naming:
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-284-artifact-acidproofrobe-guard-repair-closeout.md.
 - SOURCE-BATCH-285+ requires fresh non-gated candidate discovery after SOURCE-BATCH-284 is committed.
 - Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-285 Update
+
+- SOURCE-BATCH-285 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-285-candidate-discovery.csv.
+- SOURCE-BATCH-285 implemented the obsolete AcidProofRobe guard repair in Data/Scripts/Items/Magical/Artifacts/Obsolete/Obsolete_AcidProofRobe.cs.
+- SOURCE-BATCH-285 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and final git commit pending.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-285-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-285-obsolete-acidproofrobe-guard-repair-closeout.md.
+- SOURCE-BATCH-286+ requires fresh non-gated candidate discovery after SOURCE-BATCH-285 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.
