@@ -2903,3 +2903,13 @@ To run a gated batch, provide explicit approval naming:
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-282-hivetool-guard-repair-closeout.md.
 - SOURCE-BATCH-283+ requires fresh non-gated candidate discovery after SOURCE-BATCH-282 is committed.
 - Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-283 Update
+
+- SOURCE-BATCH-283 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-283-candidate-discovery.csv.
+- SOURCE-BATCH-283 implemented the SpellScroll guard repair in Data/Scripts/Magic/Magery/Scrolls/SpellScroll.cs.
+- SOURCE-BATCH-283 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and final git commit pending.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-283-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-283-spellscroll-guard-repair-closeout.md.
+- SOURCE-BATCH-284+ requires fresh non-gated candidate discovery after SOURCE-BATCH-283 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.
