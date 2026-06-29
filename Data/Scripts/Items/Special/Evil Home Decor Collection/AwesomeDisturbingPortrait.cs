@@ -30,6 +30,9 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
+            if (from == null || from.Deleted || Deleted)
+                return;
+
             if (Utility.InRange(Location, from.Location, 2))
             {
                 int hours;
