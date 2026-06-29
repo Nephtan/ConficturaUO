@@ -34,6 +34,9 @@ namespace Server.Items
 
         public override void Drink(Mobile m)
         {
+            if (m == null || m.Deleted || Deleted)
+                return;
+
             if (m.InRange(this.GetWorldLocation(), 1))
             {
                 m.SendMessage("What would you like to pour this on!");
@@ -47,6 +50,9 @@ namespace Server.Items
 
         public static void ConsumeCharge(RepairPotion potion, Mobile from)
         {
+            if (potion == null || potion.Deleted || from == null || from.Deleted)
+                return;
+
             potion.Consume();
             from.RevealingAction();
             from.PlaySound(0x23E);
@@ -66,10 +72,24 @@ namespace Server.Items
 
             protected override void OnTarget(Mobile from, object targeted)
             {
+                if (
+                    from == null
+                    || from.Deleted
+                    || m_From == null
+                    || m_From.Deleted
+                    || m_Potion == null
+                    || m_Potion.Deleted
+                )
+                    return;
+
                 if (targeted is BaseArmor)
                 {
                     BaseArmor repairing = (BaseArmor)targeted;
-                    if (!repairing.IsChildOf(from.Backpack))
+                    if (
+                        repairing.Deleted
+                        || from.Backpack == null
+                        || !repairing.IsChildOf(from.Backpack)
+                    )
                     {
                         from.SendLocalizedMessage(1044275); // The item must be in your backpack to repair it.
                     }
@@ -91,7 +111,11 @@ namespace Server.Items
                 else if (targeted is BaseWeapon)
                 {
                     BaseWeapon repairing2 = (BaseWeapon)targeted;
-                    if (!repairing2.IsChildOf(from.Backpack))
+                    if (
+                        repairing2.Deleted
+                        || from.Backpack == null
+                        || !repairing2.IsChildOf(from.Backpack)
+                    )
                     {
                         from.SendLocalizedMessage(1044275); // The item must be in your backpack to repair it.
                     }
