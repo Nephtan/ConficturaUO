@@ -1255,3 +1255,7 @@ The Phase 0 baseline output, Phase 1 reproducible inventory outputs, Phase 2 pro
 | source-batch-307-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-307 discovery with recommended WaxSculptors target and deferred WaxPaintings candidate. | Complete |
 | source-batch-307-target.md | Source batches | Durable target for SOURCE-BATCH-307 WaxSculptors guard repair, including fence result and unchanged behavior. | Complete |
 | source-batch-307-waxsculptors-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-307 with WaxSculptors guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |
+| source-batch-308-candidate-discovery.csv | Source batches | Fresh SOURCE-BATCH-308 candidate discovery for a zero-gate, zero-overlay WaxPaintings guard repair, with LargeWaxPot deferred as a sibling candidate. | Complete |
+| source-batch-308-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-308 discovery with recommended WaxPaintings target and deferred LargeWaxPot candidate. | Complete |
+| source-batch-308-target.md | Source batches | Durable target for SOURCE-BATCH-308 WaxPaintings guard repair, including fence result and unchanged behavior. | Complete |
+| source-batch-308-waxpaintings-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-308 with WaxPaintings guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |
