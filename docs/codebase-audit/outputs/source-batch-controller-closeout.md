@@ -2783,3 +2783,13 @@ To run a gated batch, provide explicit approval naming:
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-270-plasmatorch-guard-repair-closeout.md.
 - SOURCE-BATCH-271+ requires fresh non-gated candidate discovery after SOURCE-BATCH-270 is committed.
 - Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-271 Update
+
+- SOURCE-BATCH-271 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-271-candidate-discovery.csv.
+- SOURCE-BATCH-271 implemented the SpaceDyes guard repair in Data/Scripts/Items/Technology/SpaceDyes.cs.
+- SOURCE-BATCH-271 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and final git commit pending.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-271-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-271-spacedyes-guard-repair-closeout.md.
+- SOURCE-BATCH-272+ requires fresh non-gated candidate discovery after SOURCE-BATCH-271 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.
