@@ -979,3 +979,7 @@ The Phase 0 baseline output, Phase 1 reproducible inventory outputs, Phase 2 pro
 | source-batch-238-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-238 discovery with recommended MountedPixieLime target. | Complete |
 | source-batch-238-target.md | Source batches | Durable target for SOURCE-BATCH-238 MountedPixieLime guard repair, including fence result, active overlay result, and unchanged behavior. | Complete |
 | source-batch-238-mountedpixielime-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-238 with MountedPixieLime guard changes, POST-BATCH-Y fence evidence, serializer preservation evidence, verification, and artifact restoration notes. | Complete |
+| source-batch-239-candidate-discovery.csv | Source batches | Fresh SOURCE-BATCH-239 candidate discovery for a zero-gate, zero-overlay MountedPixieBlue guard repair. | Complete |
+| source-batch-239-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-239 discovery with recommended MountedPixieBlue target. | Complete |
+| source-batch-239-target.md | Source batches | Durable target for SOURCE-BATCH-239 MountedPixieBlue guard repair, including fence result, active overlay result, and unchanged behavior. | Complete |
+| source-batch-239-mountedpixieblue-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-239 with MountedPixieBlue guard changes, POST-BATCH-Y fence evidence, serializer preservation evidence, verification, and artifact restoration notes. | Complete |

@@ -2463,3 +2463,13 @@ To run a gated batch, provide explicit approval naming:
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-238-mountedpixielime-guard-repair-closeout.md.
 - SOURCE-BATCH-239+ requires fresh non-gated candidate discovery after SOURCE-BATCH-238 is committed.
 - Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-239 Update
+
+- SOURCE-BATCH-239 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-239-candidate-discovery.csv.
+- SOURCE-BATCH-239 implemented the MountedPixieBlue guard repair in Data/Scripts/Items/Special/Evil Home Decor Collection/MountedPixieBlue.cs.
+- SOURCE-BATCH-239 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and final git commit pending.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-239-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-239-mountedpixieblue-guard-repair-closeout.md.
+- SOURCE-BATCH-240+ requires fresh non-gated candidate discovery after SOURCE-BATCH-239 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.
