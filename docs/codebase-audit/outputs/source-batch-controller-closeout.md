@@ -3213,3 +3213,13 @@ To run a gated batch, provide explicit approval naming:
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-313-weaponengravingtool-guard-repair-closeout.md.
 - SOURCE-BATCH-314+ requires fresh non-gated candidate discovery after SOURCE-BATCH-313 is committed.
 - Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-314 Update
+
+- SOURCE-BATCH-314 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-314-candidate-discovery.csv.
+- SOURCE-BATCH-314 implemented the JukaBow guard repair in Data/Scripts/Items/Weapons/Bows/JukaBow.cs.
+- SOURCE-BATCH-314 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and final git commit pending.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-314-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-314-jukabow-guard-repair-closeout.md.
+- SOURCE-BATCH-315+ requires fresh non-gated candidate discovery after SOURCE-BATCH-314 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.
