@@ -1019,3 +1019,7 @@ The Phase 0 baseline output, Phase 1 reproducible inventory outputs, Phase 2 pro
 | source-batch-248-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-248 discovery with recommended Dices target. | Complete |
 | source-batch-248-target.md | Source batches | Durable target for SOURCE-BATCH-248 Dices guard repair, including fence result, active overlay result, and unchanged behavior. | Complete |
 | source-batch-248-dices-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-248 with Dices guard changes, POST-BATCH-Y fence evidence, serializer preservation evidence, verification, and artifact restoration notes. | Complete |
+| source-batch-249-candidate-discovery.csv | Source batches | Fresh SOURCE-BATCH-249 candidate discovery for a zero-gate, zero-overlay PearlSkull guard repair. | Complete |
+| source-batch-249-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-249 discovery with recommended PearlSkull target. | Complete |
+| source-batch-249-target.md | Source batches | Durable target for SOURCE-BATCH-249 PearlSkull guard repair, including fence result, active overlay result, and unchanged behavior. | Complete |
+| source-batch-249-pearlskull-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-249 with PearlSkull guard changes, POST-BATCH-Y fence evidence, serializer preservation evidence, verification, and artifact restoration notes. | Complete |

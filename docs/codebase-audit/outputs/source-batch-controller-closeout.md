@@ -2563,3 +2563,13 @@ To run a gated batch, provide explicit approval naming:
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-248-dices-guard-repair-closeout.md.
 - SOURCE-BATCH-249+ requires fresh non-gated candidate discovery after SOURCE-BATCH-248 is committed.
 - Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-249 Update
+
+- SOURCE-BATCH-249 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-249-candidate-discovery.csv.
+- SOURCE-BATCH-249 implemented the PearlSkull guard repair in Data/Scripts/Items/Trades/Fishing/PearlSkull.cs.
+- SOURCE-BATCH-249 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and final git commit pending.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-249-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-249-pearlskull-guard-repair-closeout.md.
+- SOURCE-BATCH-250+ requires fresh non-gated candidate discovery after SOURCE-BATCH-249 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.
