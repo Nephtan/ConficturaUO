@@ -1199,3 +1199,7 @@ The Phase 0 baseline output, Phase 1 reproducible inventory outputs, Phase 2 pro
 | source-batch-293-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-293 discovery with recommended BaseWaterContainer target. | Complete |
 | source-batch-293-target.md | Source batches | Durable target for SOURCE-BATCH-293 BaseWaterContainer guard repair, including fence result, active overlay result, and unchanged behavior. | Complete |
 | source-batch-293-basewatercontainer-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-293 with BaseWaterContainer guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |
+| source-batch-294-candidate-discovery.csv | Source batches | Fresh SOURCE-BATCH-294 candidate discovery for a zero-gate, zero-overlay PandorasBox guard repair. | Complete |
+| source-batch-294-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-294 discovery with recommended PandorasBox target. | Complete |
+| source-batch-294-target.md | Source batches | Durable target for SOURCE-BATCH-294 PandorasBox guard repair, including fence result, active overlay result, and unchanged behavior. | Complete |
+| source-batch-294-pandorasbox-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-294 with PandorasBox guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |

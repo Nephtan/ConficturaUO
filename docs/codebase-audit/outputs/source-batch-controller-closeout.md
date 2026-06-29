@@ -3013,3 +3013,13 @@ To run a gated batch, provide explicit approval naming:
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-293-basewatercontainer-guard-repair-closeout.md.
 - SOURCE-BATCH-294+ requires fresh non-gated candidate discovery after SOURCE-BATCH-293 is committed.
 - Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-294 Update
+
+- SOURCE-BATCH-294 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-294-candidate-discovery.csv.
+- SOURCE-BATCH-294 implemented the PandorasBox guard repair in Data/Scripts/Items/Magical/Artifacts/Minor/PandorasBox.cs.
+- SOURCE-BATCH-294 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and final git commit pending.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-294-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-294-pandorasbox-guard-repair-closeout.md.
+- SOURCE-BATCH-295+ requires fresh non-gated candidate discovery after SOURCE-BATCH-294 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.
