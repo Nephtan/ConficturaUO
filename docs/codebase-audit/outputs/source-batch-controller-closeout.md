@@ -3298,8 +3298,18 @@ To run a gated batch, provide explicit approval naming:
 
 - SOURCE-BATCH-322 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-322-candidate-discovery.csv.
 - SOURCE-BATCH-322 implemented the DDRelicPainting guard repair in Data/Scripts/Items/Relics/DDRelicPainting.cs.
-- SOURCE-BATCH-322 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and final git commit pending.
+- SOURCE-BATCH-322 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and committed as fab7862d.
 - The source-batch target is docs/codebase-audit/outputs/source-batch-322-target.md.
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-322-ddrelicpainting-guard-repair-closeout.md.
 - SOURCE-BATCH-323+ requires fresh non-gated candidate discovery after SOURCE-BATCH-322 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-323 Update
+
+- SOURCE-BATCH-323 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-323-candidate-discovery.csv.
+- SOURCE-BATCH-323 implemented the DDRelicStatue guard repair in Data/Scripts/Items/Relics/DDRelicStatue.cs.
+- SOURCE-BATCH-323 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and final git commit pending.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-323-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-323-ddrelicstatue-guard-repair-closeout.md.
+- SOURCE-BATCH-324+ requires fresh non-gated candidate discovery after SOURCE-BATCH-323 is committed.
 - Gated roadmap batches remain blocked pending explicit approval.

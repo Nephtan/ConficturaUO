@@ -1315,3 +1315,7 @@ The Phase 0 baseline output, Phase 1 reproducible inventory outputs, Phase 2 pro
 | source-batch-322-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-322 discovery with recommended DDRelicPainting target. | Complete |
 | source-batch-322-target.md | Source batches | Durable target for SOURCE-BATCH-322 DDRelicPainting guard repair, including fence result and unchanged behavior. | Complete |
 | source-batch-322-ddrelicpainting-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-322 with DDRelicPainting guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |
+| source-batch-323-candidate-discovery.csv | Source batches | Fresh SOURCE-BATCH-323 candidate discovery for a zero-gate, zero-overlay DDRelicStatue guard repair. | Complete |
+| source-batch-323-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-323 discovery with recommended DDRelicStatue target. | Complete |
+| source-batch-323-target.md | Source batches | Durable target for SOURCE-BATCH-323 DDRelicStatue guard repair, including fence result and unchanged behavior. | Complete |
+| source-batch-323-ddrelicstatue-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-323 with DDRelicStatue guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |
