@@ -2763,3 +2763,13 @@ To run a gated batch, provide explicit approval naming:
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-268-spacejunk-guard-repair-closeout.md.
 - SOURCE-BATCH-269+ requires fresh non-gated candidate discovery after SOURCE-BATCH-268 is committed.
 - Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-269 Update
+
+- SOURCE-BATCH-269 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-269-candidate-discovery.csv.
+- SOURCE-BATCH-269 implemented the RomulanAle guard repair in Data/Scripts/Items/Technology/RomulanAle.cs.
+- SOURCE-BATCH-269 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and final git commit pending.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-269-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-269-romulanale-guard-repair-closeout.md.
+- SOURCE-BATCH-270+ requires fresh non-gated candidate discovery after SOURCE-BATCH-269 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.

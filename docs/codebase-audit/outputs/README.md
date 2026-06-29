@@ -1099,3 +1099,7 @@ The Phase 0 baseline output, Phase 1 reproducible inventory outputs, Phase 2 pro
 | source-batch-268-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-268 discovery with recommended SpaceJunk target. | Complete |
 | source-batch-268-target.md | Source batches | Durable target for SOURCE-BATCH-268 SpaceJunk guard repair, including fence result, active overlay result, and unchanged behavior. | Complete |
 | source-batch-268-spacejunk-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-268 with SpaceJunk guard changes, POST-BATCH-Y fence evidence, resolved Documented overlay evidence, verification, and artifact restoration notes. | Complete |
+| source-batch-269-candidate-discovery.csv | Source batches | Fresh SOURCE-BATCH-269 candidate discovery for a zero-gate, zero-overlay RomulanAle guard repair. | Complete |
+| source-batch-269-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-269 discovery with recommended RomulanAle target. | Complete |
+| source-batch-269-target.md | Source batches | Durable target for SOURCE-BATCH-269 RomulanAle guard repair, including fence result, active overlay result, and unchanged behavior. | Complete |
+| source-batch-269-romulanale-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-269 with RomulanAle guard changes, POST-BATCH-Y fence evidence, resolved Documented overlay evidence, verification, and artifact restoration notes. | Complete |
