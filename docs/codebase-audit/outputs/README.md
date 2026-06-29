@@ -1007,3 +1007,7 @@ The Phase 0 baseline output, Phase 1 reproducible inventory outputs, Phase 2 pro
 | source-batch-245-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-245 discovery with recommended AwesomeDisturbingPortrait target. | Complete |
 | source-batch-245-target.md | Source batches | Durable target for SOURCE-BATCH-245 AwesomeDisturbingPortrait guard repair, including fence result, active overlay result, and unchanged behavior. | Complete |
 | source-batch-245-awesomedisturbingportrait-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-245 with AwesomeDisturbingPortrait guard changes, POST-BATCH-Y fence evidence, serializer and timer preservation evidence, verification, and artifact restoration notes. | Complete |
+| source-batch-246-candidate-discovery.csv | Source batches | Fresh SOURCE-BATCH-246 candidate discovery for a zero-gate, zero-overlay CreepyPortrait guard repair. | Complete |
+| source-batch-246-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-246 discovery with recommended CreepyPortrait target. | Complete |
+| source-batch-246-target.md | Source batches | Durable target for SOURCE-BATCH-246 CreepyPortrait guard repair, including fence result, active overlay result, and unchanged behavior. | Complete |
+| source-batch-246-creepyportrait-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-246 with CreepyPortrait guard changes, POST-BATCH-Y fence evidence, serializer plus movement/timer preservation evidence, verification, and artifact restoration notes. | Complete |
