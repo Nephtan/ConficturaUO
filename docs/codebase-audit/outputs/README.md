@@ -951,3 +951,7 @@ The Phase 0 baseline output, Phase 1 reproducible inventory outputs, Phase 2 pro
 | source-batch-231-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-231 discovery with recommended UnknownReagent target. | Complete |
 | source-batch-231-target.md | Source batches | Durable target for SOURCE-BATCH-231 UnknownReagent identification guard repair, including fence result, active overlay result, and unchanged behavior. | Complete |
 | source-batch-231-unknownreagent-identification-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-231 with UnknownReagent guard changes, POST-BATCH-Y fence evidence, serializer preservation evidence, verification, and artifact restoration notes. | Complete |
+| source-batch-232-candidate-discovery.csv | Source batches | Fresh SOURCE-BATCH-232 candidate discovery for a zero-gate, zero-overlay UnknownLiquid identification guard repair. | Complete |
+| source-batch-232-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-232 discovery with recommended UnknownLiquid target. | Complete |
+| source-batch-232-target.md | Source batches | Durable target for SOURCE-BATCH-232 UnknownLiquid identification guard repair, including fence result, active overlay result, and unchanged behavior. | Complete |
+| source-batch-232-unknownliquid-identification-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-232 with UnknownLiquid guard changes, POST-BATCH-Y fence evidence, serializer preservation evidence, verification, and artifact restoration notes. | Complete |
