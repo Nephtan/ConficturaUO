@@ -238,6 +238,9 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
+            if (from == null || from.Deleted || Deleted)
+                return;
+
             if (!Movable)
             {
                 from.SendMessage("That cannot move so you cannot identify it.");

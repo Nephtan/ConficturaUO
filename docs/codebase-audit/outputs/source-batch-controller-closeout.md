@@ -2413,3 +2413,13 @@ To run a gated batch, provide explicit approval naming:
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-233-unknownkeg-identification-guard-repair-closeout.md.
 - SOURCE-BATCH-234+ requires fresh non-gated candidate discovery after SOURCE-BATCH-233 is committed.
 - Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-234 Update
+
+- SOURCE-BATCH-234 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-234-candidate-discovery.csv.
+- SOURCE-BATCH-234 implemented the UnknownScroll identification guard repair in Data/Scripts/Items/Unknown/UnknownScroll.cs.
+- SOURCE-BATCH-234 is now Committed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv pending final git commit.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-234-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-234-unknownscroll-identification-guard-repair-closeout.md.
+- SOURCE-BATCH-235+ requires fresh non-gated candidate discovery after SOURCE-BATCH-234 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.
