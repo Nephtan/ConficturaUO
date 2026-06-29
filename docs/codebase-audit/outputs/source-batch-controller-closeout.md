@@ -2993,3 +2993,13 @@ To run a gated batch, provide explicit approval naming:
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-291-uncutcloth-guard-repair-closeout.md.
 - SOURCE-BATCH-292+ requires fresh non-gated candidate discovery after SOURCE-BATCH-291 is committed.
 - Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-292 Update
+
+- SOURCE-BATCH-292 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-292-candidate-discovery.csv.
+- SOURCE-BATCH-292 implemented the ShipwreckedItem guard repair in Data/Scripts/Items/Trades/Fishing/Misc/ShipwreckedItem.cs.
+- SOURCE-BATCH-292 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and final git commit pending.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-292-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-292-shipwreckeditem-guard-repair-closeout.md.
+- SOURCE-BATCH-293+ requires fresh non-gated candidate discovery after SOURCE-BATCH-292 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.
