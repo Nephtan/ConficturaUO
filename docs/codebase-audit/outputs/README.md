@@ -1195,3 +1195,7 @@ The Phase 0 baseline output, Phase 1 reproducible inventory outputs, Phase 2 pro
 | source-batch-292-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-292 discovery with recommended ShipwreckedItem target. | Complete |
 | source-batch-292-target.md | Source batches | Durable target for SOURCE-BATCH-292 ShipwreckedItem guard repair, including fence result, active overlay result, and unchanged behavior. | Complete |
 | source-batch-292-shipwreckeditem-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-292 with ShipwreckedItem guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |
+| source-batch-293-candidate-discovery.csv | Source batches | Fresh SOURCE-BATCH-293 candidate discovery for a zero-gate, zero-overlay BaseWaterContainer guard repair. | Complete |
+| source-batch-293-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-293 discovery with recommended BaseWaterContainer target. | Complete |
+| source-batch-293-target.md | Source batches | Durable target for SOURCE-BATCH-293 BaseWaterContainer guard repair, including fence result, active overlay result, and unchanged behavior. | Complete |
+| source-batch-293-basewatercontainer-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-293 with BaseWaterContainer guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |
