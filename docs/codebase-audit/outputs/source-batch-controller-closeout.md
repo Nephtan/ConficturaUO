@@ -2503,3 +2503,13 @@ To run a gated batch, provide explicit approval naming:
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-242-mountedpixiewhite-guard-repair-closeout.md.
 - SOURCE-BATCH-243+ requires fresh non-gated candidate discovery after SOURCE-BATCH-242 is committed.
 - Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-243 Update
+
+- SOURCE-BATCH-243 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-243-candidate-discovery.csv.
+- SOURCE-BATCH-243 implemented the DisturbingPortrait guard repair in Data/Scripts/Items/Special/Evil Home Decor Collection/DisturbingPortrait.cs.
+- SOURCE-BATCH-243 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and final git commit pending.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-243-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-243-disturbingportrait-guard-repair-closeout.md.
+- SOURCE-BATCH-244+ requires fresh non-gated candidate discovery after SOURCE-BATCH-243 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.
