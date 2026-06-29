@@ -1211,3 +1211,7 @@ The Phase 0 baseline output, Phase 1 reproducible inventory outputs, Phase 2 pro
 | source-batch-296-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-296 discovery with recommended DragonBardingDeed target. | Complete |
 | source-batch-296-target.md | Source batches | Durable target for SOURCE-BATCH-296 DragonBardingDeed guard repair, including fence result, resolved overlay evidence, and unchanged behavior. | Complete |
 | source-batch-296-dragonbardingdeed-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-296 with DragonBardingDeed guard changes, POST-BATCH-Y fence evidence, resolved IntentionalLegacy overlay evidence, verification, and artifact restoration notes. | Complete |
+| source-batch-297-candidate-discovery.csv | Source batches | Fresh SOURCE-BATCH-297 candidate discovery for a zero-gate, zero-unresolved-overlay Seed guard repair with resolved docs-trace overlay evidence. | Complete |
+| source-batch-297-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-297 discovery with recommended Seed target. | Complete |
+| source-batch-297-target.md | Source batches | Durable target for SOURCE-BATCH-297 Seed guard repair, including fence result, resolved overlay evidence, and unchanged behavior. | Complete |
+| source-batch-297-seed-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-297 with Seed guard changes, POST-BATCH-Y fence evidence, resolved docs-trace overlay evidence, verification, and artifact restoration notes. | Complete |

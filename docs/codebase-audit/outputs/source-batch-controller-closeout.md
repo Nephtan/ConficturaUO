@@ -3043,3 +3043,13 @@ To run a gated batch, provide explicit approval naming:
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-296-dragonbardingdeed-guard-repair-closeout.md.
 - SOURCE-BATCH-297+ requires fresh non-gated candidate discovery after SOURCE-BATCH-296 is committed.
 - Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-297 Update
+
+- SOURCE-BATCH-297 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-297-candidate-discovery.csv.
+- SOURCE-BATCH-297 implemented the Seed guard repair in Data/Scripts/Trades/Gardening/Seed.cs.
+- SOURCE-BATCH-297 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and final git commit pending.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-297-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-297-seed-guard-repair-closeout.md.
+- SOURCE-BATCH-298+ requires fresh non-gated candidate discovery after SOURCE-BATCH-297 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.
