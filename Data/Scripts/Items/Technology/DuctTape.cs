@@ -35,6 +35,9 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile m)
         {
+            if (m == null || m.Deleted || Deleted)
+                return;
+
             if (m.InRange(this.GetWorldLocation(), 1))
             {
                 m.SendMessage("What would you like to use the tape on!");
@@ -48,6 +51,9 @@ namespace Server.Items
 
         public static void ConsumeCharge(DuctTape tape, Mobile from)
         {
+            if (tape == null || tape.Deleted || from == null || from.Deleted)
+                return;
+
             tape.Consume();
             from.RevealingAction();
             from.PlaySound(0x3E4);
@@ -67,10 +73,24 @@ namespace Server.Items
 
             protected override void OnTarget(Mobile from, object targeted)
             {
+                if (
+                    from == null
+                    || from.Deleted
+                    || m_From == null
+                    || m_From.Deleted
+                    || m_Tape == null
+                    || m_Tape.Deleted
+                )
+                    return;
+
                 if (targeted is BaseArmor)
                 {
                     BaseArmor repairing = (BaseArmor)targeted;
-                    if (!repairing.IsChildOf(from.Backpack))
+                    if (
+                        repairing.Deleted
+                        || from.Backpack == null
+                        || !repairing.IsChildOf(from.Backpack)
+                    )
                     {
                         from.SendLocalizedMessage(1044275); // The item must be in your backpack to repair it.
                     }
@@ -92,7 +112,11 @@ namespace Server.Items
                 else if (targeted is BaseWeapon)
                 {
                     BaseWeapon repairing2 = (BaseWeapon)targeted;
-                    if (!repairing2.IsChildOf(from.Backpack))
+                    if (
+                        repairing2.Deleted
+                        || from.Backpack == null
+                        || !repairing2.IsChildOf(from.Backpack)
+                    )
                     {
                         from.SendLocalizedMessage(1044275); // The item must be in your backpack to repair it.
                     }
