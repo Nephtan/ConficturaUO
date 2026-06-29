@@ -1023,3 +1023,7 @@ The Phase 0 baseline output, Phase 1 reproducible inventory outputs, Phase 2 pro
 | source-batch-249-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-249 discovery with recommended PearlSkull target. | Complete |
 | source-batch-249-target.md | Source batches | Durable target for SOURCE-BATCH-249 PearlSkull guard repair, including fence result, active overlay result, and unchanged behavior. | Complete |
 | source-batch-249-pearlskull-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-249 with PearlSkull guard changes, POST-BATCH-Y fence evidence, serializer preservation evidence, verification, and artifact restoration notes. | Complete |
+| source-batch-250-candidate-discovery.csv | Source batches | Fresh SOURCE-BATCH-250 candidate discovery for a zero-gate, zero-overlay AuraOfShadows guard repair. | Complete |
+| source-batch-250-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-250 discovery with recommended AuraOfShadows target. | Complete |
+| source-batch-250-target.md | Source batches | Durable target for SOURCE-BATCH-250 AuraOfShadows guard repair, including fence result, active overlay result, and unchanged behavior. | Complete |
+| source-batch-250-auraofshadows-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-250 with AuraOfShadows guard changes, POST-BATCH-Y fence evidence, serializer preservation evidence, verification, and artifact restoration notes. | Complete |

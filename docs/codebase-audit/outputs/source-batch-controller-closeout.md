@@ -2573,3 +2573,13 @@ To run a gated batch, provide explicit approval naming:
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-249-pearlskull-guard-repair-closeout.md.
 - SOURCE-BATCH-250+ requires fresh non-gated candidate discovery after SOURCE-BATCH-249 is committed.
 - Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-250 Update
+
+- SOURCE-BATCH-250 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-250-candidate-discovery.csv.
+- SOURCE-BATCH-250 implemented the AuraOfShadows guard repair in Data/Scripts/Items/Magical/Artifacts/Obsolete/Obsolete_AuraOfShadows.cs.
+- SOURCE-BATCH-250 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and final git commit pending.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-250-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-250-auraofshadows-guard-repair-closeout.md.
+- SOURCE-BATCH-251+ requires fresh non-gated candidate discovery after SOURCE-BATCH-250 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.
