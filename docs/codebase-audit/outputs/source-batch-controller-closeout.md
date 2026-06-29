@@ -3223,3 +3223,13 @@ To run a gated batch, provide explicit approval naming:
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-314-jukabow-guard-repair-closeout.md.
 - SOURCE-BATCH-315+ requires fresh non-gated candidate discovery after SOURCE-BATCH-314 is committed.
 - Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-315 Update
+
+- SOURCE-BATCH-315 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-315-candidate-discovery.csv.
+- SOURCE-BATCH-315 implemented the Waterskin guard repair in Data/Scripts/Items/Food/Waterskin.cs.
+- SOURCE-BATCH-315 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and final git commit pending.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-315-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-315-waterskin-guard-repair-closeout.md.
+- SOURCE-BATCH-316+ requires fresh non-gated candidate discovery after SOURCE-BATCH-315 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.

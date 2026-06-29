@@ -1283,3 +1283,7 @@ The Phase 0 baseline output, Phase 1 reproducible inventory outputs, Phase 2 pro
 | source-batch-314-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-314 discovery with recommended JukaBow target. | Complete |
 | source-batch-314-target.md | Source batches | Durable target for SOURCE-BATCH-314 JukaBow guard repair, including fence result and unchanged behavior. | Complete |
 | source-batch-314-jukabow-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-314 with JukaBow guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |
+| source-batch-315-candidate-discovery.csv | Source batches | Fresh SOURCE-BATCH-315 candidate discovery for a zero-gate, zero-overlay Waterskin guard repair. | Complete |
+| source-batch-315-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-315 discovery with recommended Waterskin target. | Complete |
+| source-batch-315-target.md | Source batches | Durable target for SOURCE-BATCH-315 Waterskin guard repair, including fence result and unchanged behavior. | Complete |
+| source-batch-315-waterskin-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-315 with Waterskin guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |
