@@ -1111,3 +1111,7 @@ The Phase 0 baseline output, Phase 1 reproducible inventory outputs, Phase 2 pro
 | source-batch-271-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-271 discovery with recommended SpaceDyes target. | Complete |
 | source-batch-271-target.md | Source batches | Durable target for SOURCE-BATCH-271 SpaceDyes guard repair, including fence result, active overlay result, and unchanged behavior. | Complete |
 | source-batch-271-spacedyes-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-271 with SpaceDyes guard changes, POST-BATCH-Y fence evidence, resolved Documented overlay evidence, verification, and artifact restoration notes. | Complete |
+| source-batch-272-candidate-discovery.csv | Source batches | Fresh SOURCE-BATCH-272 candidate discovery for a zero-gate, zero-overlay Chainsaw guard repair. | Complete |
+| source-batch-272-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-272 discovery with recommended Chainsaw target. | Complete |
+| source-batch-272-target.md | Source batches | Durable target for SOURCE-BATCH-272 Chainsaw guard repair, including fence result, active overlay result, and unchanged behavior. | Complete |
+| source-batch-272-chainsaw-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-272 with Chainsaw guard changes, POST-BATCH-Y fence evidence, resolved Documented overlay evidence, verification, and artifact restoration notes. | Complete |

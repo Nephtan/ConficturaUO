@@ -2793,3 +2793,13 @@ To run a gated batch, provide explicit approval naming:
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-271-spacedyes-guard-repair-closeout.md.
 - SOURCE-BATCH-272+ requires fresh non-gated candidate discovery after SOURCE-BATCH-271 is committed.
 - Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-272 Update
+
+- SOURCE-BATCH-272 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-272-candidate-discovery.csv.
+- SOURCE-BATCH-272 implemented the Chainsaw guard repair in Data/Scripts/Items/Technology/Chainsaw.cs.
+- SOURCE-BATCH-272 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and final git commit pending.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-272-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-272-chainsaw-guard-repair-closeout.md.
+- SOURCE-BATCH-273+ requires fresh non-gated candidate discovery after SOURCE-BATCH-272 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.
