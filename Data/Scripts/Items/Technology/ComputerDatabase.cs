@@ -19,6 +19,11 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
+            if (from == null || from.Deleted || Deleted)
+            {
+                return;
+            }
+
             if (from.InRange(this.GetWorldLocation(), 4))
             {
                 from.CloseGump(typeof(ComputerDatabaseGump));
@@ -153,7 +158,17 @@ namespace Server.Items
 
             public override void OnResponse(NetState state, RelayInfo info)
             {
+                if (state == null || info == null)
+                {
+                    return;
+                }
+
                 Mobile from = state.Mobile;
+
+                if (from == null || from.Deleted)
+                {
+                    return;
+                }
 
                 int skinColor = 0;
                 int hairColor = 0;

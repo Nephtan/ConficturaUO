@@ -2813,3 +2813,13 @@ To run a gated batch, provide explicit approval naming:
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-273-portablesmelter-guard-repair-closeout.md.
 - SOURCE-BATCH-274+ requires fresh non-gated candidate discovery after SOURCE-BATCH-273 is committed.
 - Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-274 Update
+
+- SOURCE-BATCH-274 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-274-candidate-discovery.csv.
+- SOURCE-BATCH-274 implemented the ComputerDatabase guard repair in Data/Scripts/Items/Technology/ComputerDatabase.cs.
+- SOURCE-BATCH-274 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and final git commit pending.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-274-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-274-computerdatabase-guard-repair-closeout.md.
+- SOURCE-BATCH-275+ requires fresh non-gated candidate discovery after SOURCE-BATCH-274 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.

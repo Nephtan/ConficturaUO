@@ -1119,3 +1119,7 @@ The Phase 0 baseline output, Phase 1 reproducible inventory outputs, Phase 2 pro
 | source-batch-273-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-273 discovery with recommended PortableSmelter target. | Complete |
 | source-batch-273-target.md | Source batches | Durable target for SOURCE-BATCH-273 PortableSmelter guard repair, including fence result, active overlay result, and unchanged behavior. | Complete |
 | source-batch-273-portablesmelter-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-273 with PortableSmelter guard changes, POST-BATCH-Y fence evidence, resolved Documented overlay evidence, verification, and artifact restoration notes. | Complete |
+| source-batch-274-candidate-discovery.csv | Source batches | Fresh SOURCE-BATCH-274 candidate discovery for a zero-gate, zero-overlay ComputerDatabase guard repair. | Complete |
+| source-batch-274-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-274 discovery with recommended ComputerDatabase target. | Complete |
+| source-batch-274-target.md | Source batches | Durable target for SOURCE-BATCH-274 ComputerDatabase guard repair, including fence result, active overlay result, and unchanged behavior. | Complete |
+| source-batch-274-computerdatabase-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-274 with ComputerDatabase guard changes, POST-BATCH-Y fence evidence, resolved Documented/ReviewedNoChange/SafeNoChange overlay evidence, verification, and artifact restoration notes. | Complete |
