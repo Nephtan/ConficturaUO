@@ -1263,3 +1263,7 @@ The Phase 0 baseline output, Phase 1 reproducible inventory outputs, Phase 2 pro
 | source-batch-309-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-309 discovery with recommended LargeWaxPot target. | Complete |
 | source-batch-309-target.md | Source batches | Durable target for SOURCE-BATCH-309 LargeWaxPot guard repair, including fence result and unchanged behavior. | Complete |
 | source-batch-309-largewaxpot-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-309 with LargeWaxPot guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |
+| source-batch-310-candidate-discovery.csv | Source batches | Fresh SOURCE-BATCH-310 candidate discovery for a zero-gate, zero-overlay WizardStaff guard repair, with LevelStave and GiftStave deferred as sibling candidates. | Complete |
+| source-batch-310-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-310 discovery with recommended WizardStaff target and deferred staff-family candidates. | Complete |
+| source-batch-310-target.md | Source batches | Durable target for SOURCE-BATCH-310 WizardStaff guard repair, including fence result and unchanged behavior. | Complete |
+| source-batch-310-wizardstaff-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-310 with WizardStaff guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |
