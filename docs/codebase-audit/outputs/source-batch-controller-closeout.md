@@ -3113,3 +3113,13 @@ To run a gated batch, provide explicit approval naming:
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-303-repairpotion-guard-repair-closeout.md.
 - SOURCE-BATCH-304+ requires fresh non-gated candidate discovery after SOURCE-BATCH-303 is committed.
 - Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-304 Update
+
+- SOURCE-BATCH-304 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-304-candidate-discovery.csv.
+- SOURCE-BATCH-304 implemented the DurabilityPotion guard repair in Data/Scripts/Items/Potions/Special/DurabilityPotion.cs.
+- SOURCE-BATCH-304 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and final git commit pending.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-304-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-304-durabilitypotion-guard-repair-closeout.md.
+- SOURCE-BATCH-305+ requires fresh non-gated candidate discovery after SOURCE-BATCH-304 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.

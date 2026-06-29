@@ -1239,3 +1239,7 @@ The Phase 0 baseline output, Phase 1 reproducible inventory outputs, Phase 2 pro
 | source-batch-303-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-303 discovery with recommended RepairPotion target and deferred DurabilityPotion candidate. | Complete |
 | source-batch-303-target.md | Source batches | Durable target for SOURCE-BATCH-303 RepairPotion guard repair, including fence result and unchanged behavior. | Complete |
 | source-batch-303-repairpotion-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-303 with RepairPotion guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |
+| source-batch-304-candidate-discovery.csv | Source batches | Fresh SOURCE-BATCH-304 candidate discovery for a zero-gate, zero-overlay DurabilityPotion guard repair. | Complete |
+| source-batch-304-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-304 discovery with recommended DurabilityPotion target. | Complete |
+| source-batch-304-target.md | Source batches | Durable target for SOURCE-BATCH-304 DurabilityPotion guard repair, including fence result and unchanged behavior. | Complete |
+| source-batch-304-durabilitypotion-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-304 with DurabilityPotion guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |
