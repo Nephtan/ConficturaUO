@@ -480,6 +480,11 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
+            if (from == null || from.Deleted || Deleted)
+            {
+                return;
+            }
+
             from.SendMessage("Trinkets are worn in the upper right slot.");
             return;
         }

@@ -1091,3 +1091,7 @@ The Phase 0 baseline output, Phase 1 reproducible inventory outputs, Phase 2 pro
 | source-batch-266-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-266 discovery with recommended DDRelicMoney target. | Complete |
 | source-batch-266-target.md | Source batches | Durable target for SOURCE-BATCH-266 DDRelicMoney guard repair, including fence result, active overlay result, and unchanged behavior. | Complete |
 | source-batch-266-ddrelicmoney-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-266 with DDRelicMoney guard changes, POST-BATCH-Y fence evidence, resolved Documented overlay evidence, verification, and artifact restoration notes. | Complete |
+| source-batch-267-candidate-discovery.csv | Source batches | Fresh SOURCE-BATCH-267 candidate discovery for a zero-gate, zero-overlay MagicTalisman guard repair. | Complete |
+| source-batch-267-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-267 discovery with recommended MagicTalisman target. | Complete |
+| source-batch-267-target.md | Source batches | Durable target for SOURCE-BATCH-267 MagicTalisman guard repair, including fence result, active overlay result, and unchanged behavior. | Complete |
+| source-batch-267-magictalisman-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-267 with MagicTalisman guard changes, POST-BATCH-Y fence evidence, resolved SafeNoChange overlay evidence, verification, and artifact restoration notes. | Complete |

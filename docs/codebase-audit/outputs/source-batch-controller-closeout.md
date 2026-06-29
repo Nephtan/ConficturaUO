@@ -2743,3 +2743,13 @@ To run a gated batch, provide explicit approval naming:
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-266-ddrelicmoney-guard-repair-closeout.md.
 - SOURCE-BATCH-267+ requires fresh non-gated candidate discovery after SOURCE-BATCH-266 is committed.
 - Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-267 Update
+
+- SOURCE-BATCH-267 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-267-candidate-discovery.csv.
+- SOURCE-BATCH-267 implemented the MagicTalisman guard repair in Data/Scripts/Items/Magical/MagicTalisman.cs.
+- SOURCE-BATCH-267 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and final git commit pending.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-267-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-267-magictalisman-guard-repair-closeout.md.
+- SOURCE-BATCH-268+ requires fresh non-gated candidate discovery after SOURCE-BATCH-267 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.
