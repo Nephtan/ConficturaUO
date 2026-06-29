@@ -1247,3 +1247,7 @@ The Phase 0 baseline output, Phase 1 reproducible inventory outputs, Phase 2 pro
 | source-batch-305-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-305 discovery with recommended PowderOfTemperament target and deferred JarsOfWax candidate. | Complete |
 | source-batch-305-target.md | Source batches | Durable target for SOURCE-BATCH-305 PowderOfTemperament guard repair, including fence result and unchanged behavior. | Complete |
 | source-batch-305-powderoftemperament-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-305 with PowderOfTemperament guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |
+| source-batch-306-candidate-discovery.csv | Source batches | Fresh SOURCE-BATCH-306 candidate discovery for a zero-gate, zero-overlay JarsOfWax guard repair. | Complete |
+| source-batch-306-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-306 discovery with recommended JarsOfWax target. | Complete |
+| source-batch-306-target.md | Source batches | Durable target for SOURCE-BATCH-306 JarsOfWax guard repair, including fence result and unchanged behavior. | Complete |
+| source-batch-306-jarsofwax-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-306 with JarsOfWax guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |

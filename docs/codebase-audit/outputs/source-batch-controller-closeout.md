@@ -3133,3 +3133,13 @@ To run a gated batch, provide explicit approval naming:
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-305-powderoftemperament-guard-repair-closeout.md.
 - SOURCE-BATCH-306+ requires fresh non-gated candidate discovery after SOURCE-BATCH-305 is committed.
 - Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-306 Update
+
+- SOURCE-BATCH-306 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-306-candidate-discovery.csv.
+- SOURCE-BATCH-306 implemented the JarsOfWax guard repair in Data/Scripts/Trades/Apiculture/Craft/JarsOfWax.cs.
+- SOURCE-BATCH-306 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and final git commit pending.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-306-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-306-jarsofwax-guard-repair-closeout.md.
+- SOURCE-BATCH-307+ requires fresh non-gated candidate discovery after SOURCE-BATCH-306 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.
