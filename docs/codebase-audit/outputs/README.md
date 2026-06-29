@@ -939,3 +939,7 @@ The Phase 0 baseline output, Phase 1 reproducible inventory outputs, Phase 2 pro
 | source-batch-228-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-228 discovery with recommended BrownWell target. | Complete |
 | source-batch-228-target.md | Source batches | Durable target for SOURCE-BATCH-228 BrownWell guard repair, including fence result, active overlay result, and unchanged behavior. | Complete |
 | source-batch-228-brownwell-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-228 with BrownWell guard changes, POST-BATCH-Y fence evidence, serializer preservation evidence, verification, and artifact restoration notes. | Complete |
+| source-batch-229-candidate-discovery.csv | Source batches | Fresh SOURCE-BATCH-229 candidate discovery for a zero-gate, zero-overlay construction well component guard repair. | Complete |
+| source-batch-229-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-229 discovery with recommended BlackWell target. | Complete |
+| source-batch-229-target.md | Source batches | Durable target for SOURCE-BATCH-229 BlackWell guard repair, including fence result, active overlay result, and unchanged behavior. | Complete |
+| source-batch-229-blackwell-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-229 with BlackWell guard changes, POST-BATCH-Y fence evidence, serializer preservation evidence, verification, and artifact restoration notes. | Complete |
