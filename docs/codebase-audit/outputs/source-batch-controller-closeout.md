@@ -3183,3 +3183,13 @@ To run a gated batch, provide explicit approval naming:
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-310-wizardstaff-guard-repair-closeout.md.
 - SOURCE-BATCH-311+ requires fresh non-gated candidate discovery after SOURCE-BATCH-310 is committed.
 - Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-311 Update
+
+- SOURCE-BATCH-311 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-311-candidate-discovery.csv.
+- SOURCE-BATCH-311 implemented the LevelStave guard repair in Data/Scripts/Items/Magical/God/Weapons/LevelStave.cs.
+- SOURCE-BATCH-311 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and final git commit pending.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-311-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-311-levelstave-guard-repair-closeout.md.
+- SOURCE-BATCH-312+ requires fresh non-gated candidate discovery after SOURCE-BATCH-311 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.
