@@ -2663,3 +2663,13 @@ To run a gated batch, provide explicit approval naming:
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-258-magiclantern-guard-repair-closeout.md.
 - SOURCE-BATCH-259+ requires fresh non-gated candidate discovery after SOURCE-BATCH-258 is committed.
 - Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-259 Update
+
+- SOURCE-BATCH-259 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-259-candidate-discovery.csv.
+- SOURCE-BATCH-259 implemented the MagicTorch guard repair in Data/Scripts/Items/Magical/MagicTorch.cs.
+- SOURCE-BATCH-259 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and final git commit pending.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-259-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-259-magictorch-guard-repair-closeout.md.
+- SOURCE-BATCH-260+ requires fresh non-gated candidate discovery after SOURCE-BATCH-259 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.
