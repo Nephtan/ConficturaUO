@@ -3053,3 +3053,13 @@ To run a gated batch, provide explicit approval naming:
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-297-seed-guard-repair-closeout.md.
 - SOURCE-BATCH-298+ requires fresh non-gated candidate discovery after SOURCE-BATCH-297 is committed.
 - Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-298 Update
+
+- SOURCE-BATCH-298 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-298-candidate-discovery.csv.
+- SOURCE-BATCH-298 implemented the RedLeaves guard repair in Data/Scripts/Trades/Gardening/MiscItems/RedLeaves.cs.
+- SOURCE-BATCH-298 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and final git commit pending.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-298-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-298-redleaves-guard-repair-closeout.md.
+- SOURCE-BATCH-299+ requires fresh non-gated candidate discovery after SOURCE-BATCH-298 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.

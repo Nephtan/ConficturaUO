@@ -1215,3 +1215,7 @@ The Phase 0 baseline output, Phase 1 reproducible inventory outputs, Phase 2 pro
 | source-batch-297-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-297 discovery with recommended Seed target. | Complete |
 | source-batch-297-target.md | Source batches | Durable target for SOURCE-BATCH-297 Seed guard repair, including fence result, resolved overlay evidence, and unchanged behavior. | Complete |
 | source-batch-297-seed-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-297 with Seed guard changes, POST-BATCH-Y fence evidence, resolved docs-trace overlay evidence, verification, and artifact restoration notes. | Complete |
+| source-batch-298-candidate-discovery.csv | Source batches | Fresh SOURCE-BATCH-298 candidate discovery for a zero-gate, zero-overlay RedLeaves guard repair, with OrangePetals and GreenThorns deferred for separate focused review. | Complete |
+| source-batch-298-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-298 discovery with recommended RedLeaves target and deferred gardening candidates. | Complete |
+| source-batch-298-target.md | Source batches | Durable target for SOURCE-BATCH-298 RedLeaves guard repair, including fence result and unchanged behavior. | Complete |
+| source-batch-298-redleaves-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-298 with RedLeaves guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |
