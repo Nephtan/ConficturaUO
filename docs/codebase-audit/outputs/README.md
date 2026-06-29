@@ -1187,3 +1187,7 @@ The Phase 0 baseline output, Phase 1 reproducible inventory outputs, Phase 2 pro
 | source-batch-290-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-290 discovery with recommended BoltOfCloth target. | Complete |
 | source-batch-290-target.md | Source batches | Durable target for SOURCE-BATCH-290 BoltOfCloth guard repair, including fence result, active overlay result, and unchanged behavior. | Complete |
 | source-batch-290-boltofcloth-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-290 with BoltOfCloth guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |
+| source-batch-291-candidate-discovery.csv | Source batches | Fresh SOURCE-BATCH-291 candidate discovery for a zero-gate, zero-overlay UncutCloth guard repair. | Complete |
+| source-batch-291-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-291 discovery with recommended UncutCloth target. | Complete |
+| source-batch-291-target.md | Source batches | Durable target for SOURCE-BATCH-291 UncutCloth guard repair, including fence result, active overlay result, and unchanged behavior. | Complete |
+| source-batch-291-uncutcloth-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-291 with UncutCloth guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |
