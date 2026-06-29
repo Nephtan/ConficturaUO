@@ -2673,3 +2673,13 @@ To run a gated batch, provide explicit approval naming:
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-259-magictorch-guard-repair-closeout.md.
 - SOURCE-BATCH-260+ requires fresh non-gated candidate discovery after SOURCE-BATCH-259 is committed.
 - Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-260 Update
+
+- SOURCE-BATCH-260 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-260-candidate-discovery.csv.
+- SOURCE-BATCH-260 implemented the WallTorch guard repair in Data/Scripts/Items/Special/Heritage Items/WallTorch.cs.
+- SOURCE-BATCH-260 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and final git commit pending.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-260-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-260-walltorch-guard-repair-closeout.md.
+- SOURCE-BATCH-261+ requires fresh non-gated candidate discovery after SOURCE-BATCH-260 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.

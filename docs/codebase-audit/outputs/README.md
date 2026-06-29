@@ -1063,3 +1063,7 @@ The Phase 0 baseline output, Phase 1 reproducible inventory outputs, Phase 2 pro
 | source-batch-259-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-259 discovery with recommended MagicTorch target. | Complete |
 | source-batch-259-target.md | Source batches | Durable target for SOURCE-BATCH-259 MagicTorch guard repair, including fence result, active overlay result, and unchanged behavior. | Complete |
 | source-batch-259-magictorch-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-259 with MagicTorch guard changes, POST-BATCH-Y fence evidence, serializer preservation evidence, verification, and artifact restoration notes. | Complete |
+| source-batch-260-candidate-discovery.csv | Source batches | Fresh SOURCE-BATCH-260 candidate discovery for a zero-gate, zero-overlay WallTorch guard repair. | Complete |
+| source-batch-260-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-260 discovery with recommended WallTorch target. | Complete |
+| source-batch-260-target.md | Source batches | Durable target for SOURCE-BATCH-260 WallTorch guard repair, including fence result, active overlay result, and unchanged behavior. | Complete |
+| source-batch-260-walltorch-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-260 with WallTorch guard changes, POST-BATCH-Y fence evidence, resolved IntentionalLegacy serializer overlay evidence, verification, and artifact restoration notes. | Complete |
