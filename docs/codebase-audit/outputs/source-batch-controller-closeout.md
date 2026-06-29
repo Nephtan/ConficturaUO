@@ -3193,3 +3193,13 @@ To run a gated batch, provide explicit approval naming:
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-311-levelstave-guard-repair-closeout.md.
 - SOURCE-BATCH-312+ requires fresh non-gated candidate discovery after SOURCE-BATCH-311 is committed.
 - Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-312 Update
+
+- SOURCE-BATCH-312 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-312-candidate-discovery.csv.
+- SOURCE-BATCH-312 implemented the GiftStave guard repair in Data/Scripts/Items/Magical/Gifts/Weapons/GiftStave.cs.
+- SOURCE-BATCH-312 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and final git commit pending.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-312-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-312-giftstave-guard-repair-closeout.md.
+- SOURCE-BATCH-313+ requires fresh non-gated candidate discovery after SOURCE-BATCH-312 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.
