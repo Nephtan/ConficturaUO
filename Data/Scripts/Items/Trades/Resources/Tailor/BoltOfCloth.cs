@@ -70,6 +70,11 @@ namespace Server.Items
 
         public override void OnSingleClick(Mobile from)
         {
+            if (from == null || from.Deleted || Deleted)
+            {
+                return;
+            }
+
             int number = (Amount == 1) ? 1049122 : 1049121;
 
             from.Send(

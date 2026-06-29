@@ -2973,3 +2973,13 @@ To run a gated batch, provide explicit approval naming:
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-289-candelabra-guard-repair-closeout.md.
 - SOURCE-BATCH-290+ requires fresh non-gated candidate discovery after SOURCE-BATCH-289 is committed.
 - Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-290 Update
+
+- SOURCE-BATCH-290 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-290-candidate-discovery.csv.
+- SOURCE-BATCH-290 implemented the BoltOfCloth guard repair in Data/Scripts/Items/Trades/Resources/Tailor/BoltOfCloth.cs.
+- SOURCE-BATCH-290 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and final git commit pending.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-290-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-290-boltofcloth-guard-repair-closeout.md.
+- SOURCE-BATCH-291+ requires fresh non-gated candidate discovery after SOURCE-BATCH-290 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.
