@@ -1031,3 +1031,7 @@ The Phase 0 baseline output, Phase 1 reproducible inventory outputs, Phase 2 pro
 | source-batch-251-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-251 discovery with recommended LevelCandle target. | Complete |
 | source-batch-251-target.md | Source batches | Durable target for SOURCE-BATCH-251 LevelCandle guard repair, including fence result, active overlay result, and unchanged behavior. | Complete |
 | source-batch-251-levelcandle-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-251 with LevelCandle guard changes, POST-BATCH-Y fence evidence, serializer preservation evidence, verification, and artifact restoration notes. | Complete |
+| source-batch-252-candidate-discovery.csv | Source batches | Fresh SOURCE-BATCH-252 candidate discovery for a zero-gate, zero-overlay LevelLantern guard repair. | Complete |
+| source-batch-252-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-252 discovery with recommended LevelLantern target. | Complete |
+| source-batch-252-target.md | Source batches | Durable target for SOURCE-BATCH-252 LevelLantern guard repair, including fence result, active overlay result, and unchanged behavior. | Complete |
+| source-batch-252-levellantern-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-252 with LevelLantern guard changes, POST-BATCH-Y fence evidence, serializer preservation evidence, verification, and artifact restoration notes. | Complete |
