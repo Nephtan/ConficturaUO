@@ -1207,3 +1207,7 @@ The Phase 0 baseline output, Phase 1 reproducible inventory outputs, Phase 2 pro
 | source-batch-295-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-295 discovery with recommended EvilSkull target. | Complete |
 | source-batch-295-target.md | Source batches | Durable target for SOURCE-BATCH-295 EvilSkull guard repair, including fence result, active overlay result, and unchanged behavior. | Complete |
 | source-batch-295-evilskull-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-295 with EvilSkull guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |
+| source-batch-296-candidate-discovery.csv | Source batches | Fresh SOURCE-BATCH-296 candidate discovery for a zero-gate, zero-unresolved-overlay DragonBardingDeed guard repair with resolved IntentionalLegacy overlay evidence. | Complete |
+| source-batch-296-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-296 discovery with recommended DragonBardingDeed target. | Complete |
+| source-batch-296-target.md | Source batches | Durable target for SOURCE-BATCH-296 DragonBardingDeed guard repair, including fence result, resolved overlay evidence, and unchanged behavior. | Complete |
+| source-batch-296-dragonbardingdeed-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-296 with DragonBardingDeed guard changes, POST-BATCH-Y fence evidence, resolved IntentionalLegacy overlay evidence, verification, and artifact restoration notes. | Complete |

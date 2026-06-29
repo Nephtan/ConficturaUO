@@ -68,7 +68,10 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
-            if (IsChildOf(from.Backpack))
+            if (from == null || from.Deleted || Deleted)
+                return;
+
+            if (from.Backpack != null && IsChildOf(from.Backpack))
             {
                 from.BeginTarget(6, false, TargetFlags.None, new TargetCallback(OnTarget));
                 from.SendLocalizedMessage(1053024); // Select the swamp dragon you wish to place the barding on.
@@ -81,12 +84,12 @@ namespace Server.Items
 
         public virtual void OnTarget(Mobile from, object obj)
         {
-            if (Deleted)
+            if (from == null || from.Deleted || Deleted)
                 return;
 
             SwampDragon pet = obj as SwampDragon;
 
-            if (pet == null || pet.HasBarding)
+            if (pet == null || pet.Deleted || pet.HasBarding)
             {
                 from.SendLocalizedMessage(1053025); // That is not an unarmored swamp dragon.
             }
@@ -94,7 +97,7 @@ namespace Server.Items
             {
                 from.SendLocalizedMessage(1053026); // You can only put barding on a tamed swamp dragon that you own.
             }
-            else if (!IsChildOf(from.Backpack))
+            else if (from.Backpack == null || !IsChildOf(from.Backpack))
             {
                 from.SendLocalizedMessage(1060640); // The item must be in your backpack to use it.
             }
