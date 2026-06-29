@@ -1175,3 +1175,7 @@ The Phase 0 baseline output, Phase 1 reproducible inventory outputs, Phase 2 pro
 | source-batch-287-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-287 discovery with recommended DecorativeTopiary target. | Complete |
 | source-batch-287-target.md | Source batches | Durable target for SOURCE-BATCH-287 DecorativeTopiary guard repair, including fence result, active overlay result, and unchanged behavior. | Complete |
 | source-batch-287-decorativetopiary-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-287 with DecorativeTopiary guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |
+| source-batch-288-candidate-discovery.csv | Source batches | Fresh SOURCE-BATCH-288 candidate discovery for a zero-gate, zero-overlay SnowyTree guard repair. | Complete |
+| source-batch-288-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-288 discovery with recommended SnowyTree target. | Complete |
+| source-batch-288-target.md | Source batches | Durable target for SOURCE-BATCH-288 SnowyTree guard repair, including fence result, active overlay result, and unchanged behavior. | Complete |
+| source-batch-288-snowytree-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-288 with SnowyTree guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |
