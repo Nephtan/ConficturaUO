@@ -33,6 +33,9 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
+            if (from == null || from.Deleted || Deleted)
+                return;
+
             Direction dir;
             if (from.Location != this.Location)
                 dir = from.GetDirectionTo(this);
@@ -62,6 +65,9 @@ namespace Server.Items
 
         public void Throw(Mobile from)
         {
+            if (from == null || from.Deleted || Deleted)
+                return;
+
             BaseKnife knife = from.Weapon as BaseKnife;
 
             if (knife == null)
