@@ -2403,3 +2403,13 @@ To run a gated batch, provide explicit approval naming:
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-232-unknownliquid-identification-guard-repair-closeout.md.
 - SOURCE-BATCH-233+ requires fresh non-gated candidate discovery after SOURCE-BATCH-232 is committed.
 - Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-233 Update
+
+- SOURCE-BATCH-233 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-233-candidate-discovery.csv.
+- SOURCE-BATCH-233 implemented the UnknownKeg identification guard repair in Data/Scripts/Items/Unknown/UnknownKeg.cs.
+- SOURCE-BATCH-233 is now Committed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv pending final git commit.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-233-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-233-unknownkeg-identification-guard-repair-closeout.md.
+- SOURCE-BATCH-234+ requires fresh non-gated candidate discovery after SOURCE-BATCH-233 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.
