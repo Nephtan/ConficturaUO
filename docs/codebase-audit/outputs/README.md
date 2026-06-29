@@ -1143,3 +1143,7 @@ The Phase 0 baseline output, Phase 1 reproducible inventory outputs, Phase 2 pro
 | source-batch-279-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-279 discovery with recommended DDRelicAlchemy target. | Complete |
 | source-batch-279-target.md | Source batches | Durable target for SOURCE-BATCH-279 DDRelicAlchemy guard repair, including fence result, active overlay result, and unchanged behavior. | Complete |
 | source-batch-279-ddrelicalchemy-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-279 with DDRelicAlchemy guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |
+| source-batch-280-candidate-discovery.csv | Source batches | Fresh SOURCE-BATCH-280 candidate discovery for a zero-gate, zero-overlay SavageTalisman guard repair. | Complete |
+| source-batch-280-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-280 discovery with recommended SavageTalisman target. | Complete |
+| source-batch-280-target.md | Source batches | Durable target for SOURCE-BATCH-280 SavageTalisman guard repair, including fence result, active overlay result, and unchanged behavior. | Complete |
+| source-batch-280-savagetalisman-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-280 with SavageTalisman guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |

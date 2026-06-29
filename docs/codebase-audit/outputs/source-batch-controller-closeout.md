@@ -2873,3 +2873,13 @@ To run a gated batch, provide explicit approval naming:
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-279-ddrelicalchemy-guard-repair-closeout.md.
 - SOURCE-BATCH-280+ requires fresh non-gated candidate discovery after SOURCE-BATCH-279 is committed.
 - Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-280 Update
+
+- SOURCE-BATCH-280 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-280-candidate-discovery.csv.
+- SOURCE-BATCH-280 implemented the SavageTalisman guard repair in Data/Scripts/Items/Magical/SavageTalisman.cs.
+- SOURCE-BATCH-280 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and final git commit pending.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-280-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-280-savagetalisman-guard-repair-closeout.md.
+- SOURCE-BATCH-281+ requires fresh non-gated candidate discovery after SOURCE-BATCH-280 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.
