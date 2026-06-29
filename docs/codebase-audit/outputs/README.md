@@ -967,3 +967,7 @@ The Phase 0 baseline output, Phase 1 reproducible inventory outputs, Phase 2 pro
 | source-batch-235-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-235 discovery with recommended SwordsAndShackles target. | Complete |
 | source-batch-235-target.md | Source batches | Durable target for SOURCE-BATCH-235 SwordsAndShackles book/gump guard repair, including fence result, active overlay result, and unchanged behavior. | Complete |
 | source-batch-235-swordsandshackles-book-gump-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-235 with SwordsAndShackles guard changes, POST-BATCH-Y fence evidence, serializer preservation evidence, verification, and artifact restoration notes. | Complete |
+| source-batch-236-candidate-discovery.csv | Source batches | Fresh SOURCE-BATCH-236 candidate discovery for a zero-gate, zero-overlay PatchBoard guard repair. | Complete |
+| source-batch-236-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-236 discovery with recommended PatchBoard target. | Complete |
+| source-batch-236-target.md | Source batches | Durable target for SOURCE-BATCH-236 PatchBoard guard repair, including fence result, active overlay result, and unchanged behavior. | Complete |
+| source-batch-236-patchboard-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-236 with PatchBoard guard changes, POST-BATCH-Y fence evidence, serializer preservation evidence, verification, and artifact restoration notes. | Complete |

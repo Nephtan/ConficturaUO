@@ -2433,3 +2433,13 @@ To run a gated batch, provide explicit approval naming:
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-235-swordsandshackles-book-gump-guard-repair-closeout.md.
 - SOURCE-BATCH-236+ requires fresh non-gated candidate discovery after SOURCE-BATCH-235 is committed.
 - Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-236 Update
+
+- SOURCE-BATCH-236 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-236-candidate-discovery.csv.
+- SOURCE-BATCH-236 implemented the PatchBoard guard repair in Data/Scripts/Items/Books/BulletinBoards/PatchBoard.cs.
+- SOURCE-BATCH-236 is now Committed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv pending final git commit.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-236-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-236-patchboard-guard-repair-closeout.md.
+- SOURCE-BATCH-237+ requires fresh non-gated candidate discovery after SOURCE-BATCH-236 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.
