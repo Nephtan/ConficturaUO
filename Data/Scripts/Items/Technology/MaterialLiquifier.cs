@@ -47,7 +47,12 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
-            if (!IsChildOf(from.Backpack))
+            if (from == null || from.Deleted || Deleted)
+            {
+                return;
+            }
+
+            if (from.Backpack == null || !IsChildOf(from.Backpack))
             {
                 from.SendLocalizedMessage(1060640); // The item must be in your backpack to use it.
             }
@@ -61,10 +66,15 @@ namespace Server.Items
 
         public override bool OnDragDrop(Mobile from, Item dropped)
         {
+            if (from == null || from.Deleted || Deleted || dropped == null || dropped.Deleted)
+            {
+                return false;
+            }
+
             from.PlaySound(0x55B);
             from.RevealingAction();
 
-            if (from.Backpack.FindItemByType(typeof(Bottle)) == null)
+            if (from.Backpack == null || from.Backpack.FindItemByType(typeof(Bottle)) == null)
             {
                 from.SendMessage("The item has been destroyed.");
             }
@@ -85,6 +95,11 @@ namespace Server.Items
 
         public static bool GetColor(Item item, Mobile from)
         {
+            if (item == null || item.Deleted || from == null || from.Deleted || from.Backpack == null)
+            {
+                return false;
+            }
+
             bool machineWorked = false;
             string name = "";
             int color = 0;
@@ -356,6 +371,11 @@ namespace Server.Items
                 from.RevealingAction();
                 from.PlaySound(0x23E);
                 Item bottle = from.Backpack.FindItemByType(typeof(Bottle));
+                if (bottle == null || bottle.Deleted)
+                {
+                    return false;
+                }
+
                 if (bottle.Amount > 1)
                 {
                     bottle.Amount = bottle.Amount - 1;
@@ -438,7 +458,17 @@ namespace Server.Items
 
             public override void OnResponse(NetState state, RelayInfo info)
             {
+                if (state == null)
+                {
+                    return;
+                }
+
                 Mobile from = state.Mobile;
+                if (from == null || from.Deleted)
+                {
+                    return;
+                }
+
                 from.SendSound(0x54D);
             }
         }

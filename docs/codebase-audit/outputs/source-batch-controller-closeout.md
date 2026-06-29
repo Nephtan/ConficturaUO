@@ -2823,3 +2823,13 @@ To run a gated batch, provide explicit approval naming:
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-274-computerdatabase-guard-repair-closeout.md.
 - SOURCE-BATCH-275+ requires fresh non-gated candidate discovery after SOURCE-BATCH-274 is committed.
 - Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-275 Update
+
+- SOURCE-BATCH-275 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-275-candidate-discovery.csv.
+- SOURCE-BATCH-275 implemented the MaterialLiquifier guard repair in Data/Scripts/Items/Technology/MaterialLiquifier.cs.
+- SOURCE-BATCH-275 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and final git commit pending.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-275-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-275-materialliquifier-guard-repair-closeout.md.
+- SOURCE-BATCH-276+ requires fresh non-gated candidate discovery after SOURCE-BATCH-275 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.
