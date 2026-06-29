@@ -3083,3 +3083,13 @@ To run a gated batch, provide explicit approval naming:
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-300-largebodtarget-guard-repair-closeout.md.
 - SOURCE-BATCH-301+ requires fresh non-gated candidate discovery after SOURCE-BATCH-300 is committed.
 - Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-301 Update
+
+- SOURCE-BATCH-301 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-301-candidate-discovery.csv.
+- SOURCE-BATCH-301 implemented the SmallBODTarget guard repair in Data/Scripts/Trades/Bulk Orders/SmallBODTarget.cs.
+- SOURCE-BATCH-301 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and final git commit pending.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-301-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-301-smallbodtarget-guard-repair-closeout.md.
+- SOURCE-BATCH-302+ requires fresh non-gated candidate discovery after SOURCE-BATCH-301 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.

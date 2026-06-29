@@ -1227,3 +1227,7 @@ The Phase 0 baseline output, Phase 1 reproducible inventory outputs, Phase 2 pro
 | source-batch-300-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-300 discovery with recommended LargeBODTarget target and deferred SmallBODTarget candidate. | Complete |
 | source-batch-300-target.md | Source batches | Durable target for SOURCE-BATCH-300 LargeBODTarget guard repair, including fence result and unchanged behavior. | Complete |
 | source-batch-300-largebodtarget-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-300 with LargeBODTarget guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |
+| source-batch-301-candidate-discovery.csv | Source batches | Fresh SOURCE-BATCH-301 candidate discovery for a zero-gate, zero-overlay SmallBODTarget guard repair. | Complete |
+| source-batch-301-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-301 discovery with recommended SmallBODTarget target. | Complete |
+| source-batch-301-target.md | Source batches | Durable target for SOURCE-BATCH-301 SmallBODTarget guard repair, including fence result and unchanged behavior. | Complete |
+| source-batch-301-smallbodtarget-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-301 with SmallBODTarget guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |
