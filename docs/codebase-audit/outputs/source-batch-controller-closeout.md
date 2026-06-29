@@ -2883,3 +2883,13 @@ To run a gated batch, provide explicit approval naming:
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-280-savagetalisman-guard-repair-closeout.md.
 - SOURCE-BATCH-281+ requires fresh non-gated candidate discovery after SOURCE-BATCH-280 is committed.
 - Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-281 Update
+
+- SOURCE-BATCH-281 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-281-candidate-discovery.csv.
+- SOURCE-BATCH-281 implemented the FoodChest guard repair in Data/Scripts/Items/Containers/FoodChest.cs.
+- SOURCE-BATCH-281 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and final git commit pending.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-281-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-281-foodchest-guard-repair-closeout.md.
+- SOURCE-BATCH-282+ requires fresh non-gated candidate discovery after SOURCE-BATCH-281 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.
