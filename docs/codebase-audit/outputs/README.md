@@ -1167,3 +1167,7 @@ The Phase 0 baseline output, Phase 1 reproducible inventory outputs, Phase 2 pro
 | source-batch-285-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-285 discovery with recommended obsolete AcidProofRobe target. | Complete |
 | source-batch-285-target.md | Source batches | Durable target for SOURCE-BATCH-285 obsolete AcidProofRobe guard repair, including fence result, resolved overlay evidence, and unchanged behavior. | Complete |
 | source-batch-285-obsolete-acidproofrobe-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-285 with obsolete AcidProofRobe guard changes, POST-BATCH-Y fence evidence, resolved FalsePositive/IntentionalLegacy overlay evidence, verification, and artifact restoration notes. | Complete |
+| source-batch-286-candidate-discovery.csv | Source batches | Fresh SOURCE-BATCH-286 candidate discovery for a zero-gate, zero-overlay FestiveCactus guard repair. | Complete |
+| source-batch-286-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-286 discovery with recommended FestiveCactus target. | Complete |
+| source-batch-286-target.md | Source batches | Durable target for SOURCE-BATCH-286 FestiveCactus guard repair, including fence result, active overlay result, and unchanged behavior. | Complete |
+| source-batch-286-festivecactus-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-286 with FestiveCactus guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |
