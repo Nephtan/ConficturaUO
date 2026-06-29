@@ -943,3 +943,7 @@ The Phase 0 baseline output, Phase 1 reproducible inventory outputs, Phase 2 pro
 | source-batch-229-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-229 discovery with recommended BlackWell target. | Complete |
 | source-batch-229-target.md | Source batches | Durable target for SOURCE-BATCH-229 BlackWell guard repair, including fence result, active overlay result, and unchanged behavior. | Complete |
 | source-batch-229-blackwell-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-229 with BlackWell guard changes, POST-BATCH-Y fence evidence, serializer preservation evidence, verification, and artifact restoration notes. | Complete |
+| source-batch-230-candidate-discovery.csv | Source batches | Fresh SOURCE-BATCH-230 candidate discovery for a zero-gate, zero-overlay Crystals bank conversion guard repair. | Complete |
+| source-batch-230-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-230 discovery with recommended Crystals target. | Complete |
+| source-batch-230-target.md | Source batches | Durable target for SOURCE-BATCH-230 Crystals bank conversion guard repair, including fence result, active overlay result, and unchanged behavior. | Complete |
+| source-batch-230-crystals-bank-conversion-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-230 with Crystals guard changes, POST-BATCH-Y fence evidence, serializer preservation evidence, verification, and artifact restoration notes. | Complete |

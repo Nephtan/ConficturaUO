@@ -2373,3 +2373,13 @@ To run a gated batch, provide explicit approval naming:
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-229-blackwell-guard-repair-closeout.md.
 - SOURCE-BATCH-230+ requires fresh non-gated candidate discovery after SOURCE-BATCH-229 is committed.
 - Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-230 Update
+
+- SOURCE-BATCH-230 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-230-candidate-discovery.csv.
+- SOURCE-BATCH-230 implemented the Crystals bank conversion guard repair in Data/Scripts/Items/Gems/Crystals.cs.
+- SOURCE-BATCH-230 is now Committed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv pending final git commit.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-230-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-230-crystals-bank-conversion-guard-repair-closeout.md.
+- SOURCE-BATCH-231+ requires fresh non-gated candidate discovery after SOURCE-BATCH-230 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.
