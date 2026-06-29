@@ -1291,3 +1291,7 @@ The Phase 0 baseline output, Phase 1 reproducible inventory outputs, Phase 2 pro
 | source-batch-316-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-316 discovery with recommended DDRelicCoins target. | Complete |
 | source-batch-316-target.md | Source batches | Durable target for SOURCE-BATCH-316 DDRelicCoins guard repair, including fence result and unchanged behavior. | Complete |
 | source-batch-316-ddreliccoins-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-316 with DDRelicCoins guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |
+| source-batch-317-candidate-discovery.csv | Source batches | Fresh SOURCE-BATCH-317 candidate discovery for a zero-gate, zero-overlay DDRelicWeapon guard repair. | Complete |
+| source-batch-317-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-317 discovery with recommended DDRelicWeapon target. | Complete |
+| source-batch-317-target.md | Source batches | Durable target for SOURCE-BATCH-317 DDRelicWeapon guard repair, including fence result and unchanged behavior. | Complete |
+| source-batch-317-ddrelicweapon-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-317 with DDRelicWeapon guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |
