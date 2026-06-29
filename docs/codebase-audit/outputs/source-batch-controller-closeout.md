@@ -2733,3 +2733,13 @@ To run a gated batch, provide explicit approval naming:
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-265-magicfish-guard-repair-closeout.md.
 - SOURCE-BATCH-266+ requires fresh non-gated candidate discovery after SOURCE-BATCH-265 is committed.
 - Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-266 Update
+
+- SOURCE-BATCH-266 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-266-candidate-discovery.csv.
+- SOURCE-BATCH-266 implemented the DDRelicMoney guard repair in Data/Scripts/Items/Relics/DDRelicMoney.cs.
+- SOURCE-BATCH-266 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and final git commit pending.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-266-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-266-ddrelicmoney-guard-repair-closeout.md.
+- SOURCE-BATCH-267+ requires fresh non-gated candidate discovery after SOURCE-BATCH-266 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.

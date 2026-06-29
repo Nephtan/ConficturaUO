@@ -1087,3 +1087,7 @@ The Phase 0 baseline output, Phase 1 reproducible inventory outputs, Phase 2 pro
 | source-batch-265-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-265 discovery with recommended MagicFish target. | Complete |
 | source-batch-265-target.md | Source batches | Durable target for SOURCE-BATCH-265 MagicFish guard repair, including fence result, active overlay result, and unchanged behavior. | Complete |
 | source-batch-265-magicfish-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-265 with MagicFish guard changes, POST-BATCH-Y fence evidence, serializer preservation evidence, verification, and artifact restoration notes. | Complete |
+| source-batch-266-candidate-discovery.csv | Source batches | Fresh SOURCE-BATCH-266 candidate discovery for a zero-gate, zero-overlay DDRelicMoney guard repair. | Complete |
+| source-batch-266-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-266 discovery with recommended DDRelicMoney target. | Complete |
+| source-batch-266-target.md | Source batches | Durable target for SOURCE-BATCH-266 DDRelicMoney guard repair, including fence result, active overlay result, and unchanged behavior. | Complete |
+| source-batch-266-ddrelicmoney-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-266 with DDRelicMoney guard changes, POST-BATCH-Y fence evidence, resolved Documented overlay evidence, verification, and artifact restoration notes. | Complete |
