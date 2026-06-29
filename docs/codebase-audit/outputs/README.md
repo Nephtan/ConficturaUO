@@ -1055,3 +1055,7 @@ The Phase 0 baseline output, Phase 1 reproducible inventory outputs, Phase 2 pro
 | source-batch-257-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-257 discovery with recommended MagicCandle target. | Complete |
 | source-batch-257-target.md | Source batches | Durable target for SOURCE-BATCH-257 MagicCandle guard repair, including fence result, active overlay result, and unchanged behavior. | Complete |
 | source-batch-257-magiccandle-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-257 with MagicCandle guard changes, POST-BATCH-Y fence evidence, serializer preservation evidence, verification, and artifact restoration notes. | Complete |
+| source-batch-258-candidate-discovery.csv | Source batches | Fresh SOURCE-BATCH-258 candidate discovery for a zero-gate, zero-overlay MagicLantern guard repair. | Complete |
+| source-batch-258-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-258 discovery with recommended MagicLantern target. | Complete |
+| source-batch-258-target.md | Source batches | Durable target for SOURCE-BATCH-258 MagicLantern guard repair, including fence result, active overlay result, and unchanged behavior. | Complete |
+| source-batch-258-magiclantern-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-258 with MagicLantern guard changes, POST-BATCH-Y fence evidence, serializer preservation evidence, verification, and artifact restoration notes. | Complete |
