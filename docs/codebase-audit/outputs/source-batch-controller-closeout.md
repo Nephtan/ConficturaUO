@@ -3203,3 +3203,13 @@ To run a gated batch, provide explicit approval naming:
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-312-giftstave-guard-repair-closeout.md.
 - SOURCE-BATCH-313+ requires fresh non-gated candidate discovery after SOURCE-BATCH-312 is committed.
 - Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-313 Update
+
+- SOURCE-BATCH-313 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-313-candidate-discovery.csv.
+- SOURCE-BATCH-313 implemented the WeaponEngravingTool guard repair in Data/Scripts/Items/Special/Veteran Rewards/WeaponEngravingTool.cs.
+- SOURCE-BATCH-313 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and final git commit pending.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-313-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-313-weaponengravingtool-guard-repair-closeout.md.
+- SOURCE-BATCH-314+ requires fresh non-gated candidate discovery after SOURCE-BATCH-313 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.
