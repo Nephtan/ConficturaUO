@@ -2773,3 +2773,13 @@ To run a gated batch, provide explicit approval naming:
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-269-romulanale-guard-repair-closeout.md.
 - SOURCE-BATCH-270+ requires fresh non-gated candidate discovery after SOURCE-BATCH-269 is committed.
 - Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-270 Update
+
+- SOURCE-BATCH-270 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-270-candidate-discovery.csv.
+- SOURCE-BATCH-270 implemented the PlasmaTorch guard repair in Data/Scripts/Items/Technology/PlasmaTorch.cs.
+- SOURCE-BATCH-270 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and final git commit pending.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-270-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-270-plasmatorch-guard-repair-closeout.md.
+- SOURCE-BATCH-271+ requires fresh non-gated candidate discovery after SOURCE-BATCH-270 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.

@@ -1103,3 +1103,7 @@ The Phase 0 baseline output, Phase 1 reproducible inventory outputs, Phase 2 pro
 | source-batch-269-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-269 discovery with recommended RomulanAle target. | Complete |
 | source-batch-269-target.md | Source batches | Durable target for SOURCE-BATCH-269 RomulanAle guard repair, including fence result, active overlay result, and unchanged behavior. | Complete |
 | source-batch-269-romulanale-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-269 with RomulanAle guard changes, POST-BATCH-Y fence evidence, resolved Documented overlay evidence, verification, and artifact restoration notes. | Complete |
+| source-batch-270-candidate-discovery.csv | Source batches | Fresh SOURCE-BATCH-270 candidate discovery for a zero-gate, zero-overlay PlasmaTorch guard repair. | Complete |
+| source-batch-270-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-270 discovery with recommended PlasmaTorch target. | Complete |
+| source-batch-270-target.md | Source batches | Durable target for SOURCE-BATCH-270 PlasmaTorch guard repair, including fence result, active overlay result, and unchanged behavior. | Complete |
+| source-batch-270-plasmatorch-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-270 with PlasmaTorch guard changes, POST-BATCH-Y fence evidence, resolved Documented overlay evidence, verification, and artifact restoration notes. | Complete |
