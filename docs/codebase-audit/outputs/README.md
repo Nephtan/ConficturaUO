@@ -1075,3 +1075,7 @@ The Phase 0 baseline output, Phase 1 reproducible inventory outputs, Phase 2 pro
 | source-batch-262-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-262 discovery with recommended VenomSack target. | Complete |
 | source-batch-262-target.md | Source batches | Durable target for SOURCE-BATCH-262 VenomSack guard repair, including fence result, active overlay result, and unchanged behavior. | Complete |
 | source-batch-262-venomsack-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-262 with VenomSack guard changes, POST-BATCH-Y fence evidence, serializer preservation evidence, verification, and artifact restoration notes. | Complete |
+| source-batch-263-candidate-discovery.csv | Source batches | Fresh SOURCE-BATCH-263 candidate discovery for a zero-gate, zero-overlay Reagent Jars guard repair. | Complete |
+| source-batch-263-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-263 discovery with recommended Reagent Jars target. | Complete |
+| source-batch-263-target.md | Source batches | Durable target for SOURCE-BATCH-263 Reagent Jars guard repair, including fence result, active overlay result, and unchanged behavior. | Complete |
+| source-batch-263-reagent-jars-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-263 with Reagent Jars guard changes, POST-BATCH-Y fence evidence, serializer preservation evidence, verification, and artifact restoration notes. | Complete |
