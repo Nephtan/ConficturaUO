@@ -2943,3 +2943,13 @@ To run a gated batch, provide explicit approval naming:
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-286-festivecactus-guard-repair-closeout.md.
 - SOURCE-BATCH-287+ requires fresh non-gated candidate discovery after SOURCE-BATCH-286 is committed.
 - Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-287 Update
+
+- SOURCE-BATCH-287 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-287-candidate-discovery.csv.
+- SOURCE-BATCH-287 implemented the DecorativeTopiary guard repair in Data/Scripts/Items/Gifts/Holiday/Christmas/Christmas Gifts/DecorativeTopiary.cs.
+- SOURCE-BATCH-287 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and final git commit pending.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-287-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-287-decorativetopiary-guard-repair-closeout.md.
+- SOURCE-BATCH-288+ requires fresh non-gated candidate discovery after SOURCE-BATCH-287 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.

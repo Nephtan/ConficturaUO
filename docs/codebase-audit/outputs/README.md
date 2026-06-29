@@ -1171,3 +1171,7 @@ The Phase 0 baseline output, Phase 1 reproducible inventory outputs, Phase 2 pro
 | source-batch-286-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-286 discovery with recommended FestiveCactus target. | Complete |
 | source-batch-286-target.md | Source batches | Durable target for SOURCE-BATCH-286 FestiveCactus guard repair, including fence result, active overlay result, and unchanged behavior. | Complete |
 | source-batch-286-festivecactus-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-286 with FestiveCactus guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |
+| source-batch-287-candidate-discovery.csv | Source batches | Fresh SOURCE-BATCH-287 candidate discovery for a zero-gate, zero-overlay DecorativeTopiary guard repair. | Complete |
+| source-batch-287-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-287 discovery with recommended DecorativeTopiary target. | Complete |
+| source-batch-287-target.md | Source batches | Durable target for SOURCE-BATCH-287 DecorativeTopiary guard repair, including fence result, active overlay result, and unchanged behavior. | Complete |
+| source-batch-287-decorativetopiary-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-287 with DecorativeTopiary guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |
