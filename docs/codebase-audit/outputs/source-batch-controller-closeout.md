@@ -3228,8 +3228,18 @@ To run a gated batch, provide explicit approval naming:
 
 - SOURCE-BATCH-315 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-315-candidate-discovery.csv.
 - SOURCE-BATCH-315 implemented the Waterskin guard repair in Data/Scripts/Items/Food/Waterskin.cs.
-- SOURCE-BATCH-315 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and final git commit pending.
+- SOURCE-BATCH-315 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and committed as 494a37d3.
 - The source-batch target is docs/codebase-audit/outputs/source-batch-315-target.md.
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-315-waterskin-guard-repair-closeout.md.
 - SOURCE-BATCH-316+ requires fresh non-gated candidate discovery after SOURCE-BATCH-315 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-316 Update
+
+- SOURCE-BATCH-316 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-316-candidate-discovery.csv.
+- SOURCE-BATCH-316 implemented the DDRelicCoins guard repair in Data/Scripts/Items/Relics/DDRelicCoins.cs.
+- SOURCE-BATCH-316 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and final git commit pending.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-316-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-316-ddreliccoins-guard-repair-closeout.md.
+- SOURCE-BATCH-317+ requires fresh non-gated candidate discovery after SOURCE-BATCH-316 is committed.
 - Gated roadmap batches remain blocked pending explicit approval.
