@@ -2853,3 +2853,13 @@ To run a gated batch, provide explicit approval naming:
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-277-bankchest-guard-repair-closeout.md.
 - SOURCE-BATCH-278+ requires fresh non-gated candidate discovery after SOURCE-BATCH-277 is committed.
 - Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-278 Update
+
+- SOURCE-BATCH-278 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-278-candidate-discovery.csv.
+- SOURCE-BATCH-278 implemented the DDRelicBook guard repair in Data/Scripts/Items/Relics/DDRelicBook.cs.
+- SOURCE-BATCH-278 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and final git commit pending.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-278-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-278-ddrelicbook-guard-repair-closeout.md.
+- SOURCE-BATCH-279+ requires fresh non-gated candidate discovery after SOURCE-BATCH-278 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.
