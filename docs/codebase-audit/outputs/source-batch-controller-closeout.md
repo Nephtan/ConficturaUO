@@ -2683,3 +2683,13 @@ To run a gated batch, provide explicit approval naming:
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-260-walltorch-guard-repair-closeout.md.
 - SOURCE-BATCH-261+ requires fresh non-gated candidate discovery after SOURCE-BATCH-260 is committed.
 - Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-261 Update
+
+- SOURCE-BATCH-261 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-261-candidate-discovery.csv.
+- SOURCE-BATCH-261 implemented the FirstAidKit guard repair in Data/Scripts/Items/Technology/FirstAidKit.cs.
+- SOURCE-BATCH-261 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and final git commit pending.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-261-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-261-firstaidkit-guard-repair-closeout.md.
+- SOURCE-BATCH-262+ requires fresh non-gated candidate discovery after SOURCE-BATCH-261 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.
