@@ -2383,3 +2383,13 @@ To run a gated batch, provide explicit approval naming:
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-230-crystals-bank-conversion-guard-repair-closeout.md.
 - SOURCE-BATCH-231+ requires fresh non-gated candidate discovery after SOURCE-BATCH-230 is committed.
 - Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-231 Update
+
+- SOURCE-BATCH-231 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-231-candidate-discovery.csv.
+- SOURCE-BATCH-231 implemented the UnknownReagent identification guard repair in Data/Scripts/Items/Unknown/UnknownReagent.cs.
+- SOURCE-BATCH-231 is now Committed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv pending final git commit.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-231-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-231-unknownreagent-identification-guard-repair-closeout.md.
+- SOURCE-BATCH-232+ requires fresh non-gated candidate discovery after SOURCE-BATCH-231 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.
