@@ -24,6 +24,9 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
+            if (from == null || from.Deleted || Deleted)
+                return;
+
             int nSkill = 0;
             if (this.Name == "lesser venom sack")
             {
@@ -48,7 +51,7 @@ namespace Server.Items
 
             if (from.CheckSkill(SkillName.Poisoning, nSkill, 125))
             {
-                if (!from.Backpack.ConsumeTotal(typeof(Bottle), 1))
+                if (from.Backpack == null || !from.Backpack.ConsumeTotal(typeof(Bottle), 1))
                 {
                     from.SendMessage("You need an empty bottle to drain the venom from the sack.");
                     return;
