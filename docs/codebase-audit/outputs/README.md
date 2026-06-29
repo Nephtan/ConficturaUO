@@ -1047,3 +1047,7 @@ The Phase 0 baseline output, Phase 1 reproducible inventory outputs, Phase 2 pro
 | source-batch-255-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-255 discovery with recommended GiftLantern target. | Complete |
 | source-batch-255-target.md | Source batches | Durable target for SOURCE-BATCH-255 GiftLantern guard repair, including fence result, active overlay result, and unchanged behavior. | Complete |
 | source-batch-255-giftlantern-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-255 with GiftLantern guard changes, POST-BATCH-Y fence evidence, serializer preservation evidence, verification, and artifact restoration notes. | Complete |
+| source-batch-256-candidate-discovery.csv | Source batches | Fresh SOURCE-BATCH-256 candidate discovery for a zero-gate, zero-overlay GiftTorch guard repair. | Complete |
+| source-batch-256-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-256 discovery with recommended GiftTorch target. | Complete |
+| source-batch-256-target.md | Source batches | Durable target for SOURCE-BATCH-256 GiftTorch guard repair, including fence result, active overlay result, and unchanged behavior. | Complete |
+| source-batch-256-gifttorch-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-256 with GiftTorch guard changes, POST-BATCH-Y fence evidence, serializer preservation evidence, verification, and artifact restoration notes. | Complete |

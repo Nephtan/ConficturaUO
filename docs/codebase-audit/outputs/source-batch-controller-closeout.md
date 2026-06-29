@@ -2633,3 +2633,13 @@ To run a gated batch, provide explicit approval naming:
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-255-giftlantern-guard-repair-closeout.md.
 - SOURCE-BATCH-256+ requires fresh non-gated candidate discovery after SOURCE-BATCH-255 is committed.
 - Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-256 Update
+
+- SOURCE-BATCH-256 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-256-candidate-discovery.csv.
+- SOURCE-BATCH-256 implemented the GiftTorch guard repair in Data/Scripts/Items/Magical/Gifts/Jewels/MagicTorch.cs.
+- SOURCE-BATCH-256 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and final git commit pending.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-256-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-256-gifttorch-guard-repair-closeout.md.
+- SOURCE-BATCH-257+ requires fresh non-gated candidate discovery after SOURCE-BATCH-256 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.
