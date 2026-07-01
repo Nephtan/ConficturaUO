@@ -35,7 +35,10 @@ namespace Server.Items
         {
             Target t;
 
-            if (!IsChildOf(from.Backpack))
+            if (from == null || from.Deleted)
+                return;
+
+            if (Deleted || from.Backpack == null || !IsChildOf(from.Backpack))
             {
                 from.SendLocalizedMessage(1060640); // The item must be in your backpack to use it.
             }
@@ -59,11 +62,29 @@ namespace Server.Items
 
             protected override void OnTarget(Mobile from, object targeted)
             {
+                if (from == null || from.Deleted)
+                    return;
+
+                if (
+                    m_Net == null
+                    || m_Net.Deleted
+                    || from.Backpack == null
+                    || !m_Net.IsChildOf(from.Backpack)
+                )
+                {
+                    from.SendLocalizedMessage(1060640); // The item must be in your backpack to use it.
+                    return;
+                }
+
                 if (targeted is Mobile)
                 {
                     Mobile o_Net = targeted as Mobile;
 
-                    if (o_Net is BaseCreature)
+                    if (o_Net == null || o_Net.Deleted)
+                    {
+                        from.SendMessage("You cannot capture that!");
+                    }
+                    else if (o_Net is BaseCreature)
                     {
                         BaseCreature i_Net = (BaseCreature)o_Net;
                         int slots = i_Net.ControlSlots + 2;

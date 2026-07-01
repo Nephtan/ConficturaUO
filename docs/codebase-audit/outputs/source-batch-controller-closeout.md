@@ -3403,3 +3403,13 @@ To run a gated batch, provide explicit approval naming:
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-332-embalmingfluid-guard-repair-closeout.md.
 - SOURCE-BATCH-333+ requires fresh non-gated candidate discovery after SOURCE-BATCH-332 is committed.
 - Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-333 Update
+
+- SOURCE-BATCH-333 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-333-candidate-discovery.csv.
+- SOURCE-BATCH-333 implemented the SlaversNet guard repair in Data/Scripts/Items/Special/SlaversNet.cs.
+- SOURCE-BATCH-333 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and commit hash pending the current source-batch commit.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-333-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-333-slaversnet-guard-repair-closeout.md.
+- SOURCE-BATCH-334+ requires fresh non-gated candidate discovery after SOURCE-BATCH-333 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.

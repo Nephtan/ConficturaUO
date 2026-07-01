@@ -1355,3 +1355,7 @@ The Phase 0 baseline output, Phase 1 reproducible inventory outputs, Phase 2 pro
 | source-batch-332-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-332 discovery with recommended EmbalmingFluid target. | Complete |
 | source-batch-332-target.md | Source batches | Durable target for SOURCE-BATCH-332 EmbalmingFluid guard repair, including fence result and unchanged behavior. | Complete |
 | source-batch-332-embalmingfluid-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-332 with EmbalmingFluid guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |
+| source-batch-333-candidate-discovery.csv | Source batches | Fresh SOURCE-BATCH-333 candidate discovery for a zero-gate, zero-overlay SlaversNet guard repair. | Complete |
+| source-batch-333-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-333 discovery with recommended SlaversNet target. | Complete |
+| source-batch-333-target.md | Source batches | Durable target for SOURCE-BATCH-333 SlaversNet guard repair, including fence result and unchanged behavior. | Complete |
+| source-batch-333-slaversnet-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-333 with SlaversNet guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |
