@@ -36,4 +36,4 @@
 
 ## Result
 
-`SOURCE-BATCH-346` is ready to commit as `fix: guard CandleOfLove interactions`. `SOURCE-BATCH-347+` should continue with `BellOfCourage` if exact-file preflight remains clean.
+`SOURCE-BATCH-346` committed as `359d6b2e` with `fix: guard CandleOfLove interactions`. `SOURCE-BATCH-347+` should continue with `BellOfCourage` if exact-file preflight remains clean.
