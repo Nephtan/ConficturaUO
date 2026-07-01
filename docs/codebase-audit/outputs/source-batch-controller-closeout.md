@@ -3483,3 +3483,13 @@ To run a gated batch, provide explicit approval naming:
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-340-runestonegate-guard-repair-closeout.md.
 - SOURCE-BATCH-341+ requires fresh non-gated candidate discovery after SOURCE-BATCH-340 is committed.
 - Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-341 Update
+
+- SOURCE-BATCH-341 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-341-candidate-discovery.csv.
+- SOURCE-BATCH-341 implemented the JokeBook guard repair in Data/Scripts/Quests/Jester/JokeBook.cs.
+- SOURCE-BATCH-341 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and pending commit hash update.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-341-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-341-jokebook-guard-repair-closeout.md.
+- SOURCE-BATCH-342+ requires fresh non-gated candidate discovery after SOURCE-BATCH-341 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.

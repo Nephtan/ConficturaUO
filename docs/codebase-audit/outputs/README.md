@@ -1387,3 +1387,7 @@ The Phase 0 baseline output, Phase 1 reproducible inventory outputs, Phase 2 pro
 | source-batch-340-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-340 discovery with recommended RuneStoneGate target. | Complete |
 | source-batch-340-target.md | Source batches | Durable target for SOURCE-BATCH-340 RuneStoneGate guard repair, including fence result and unchanged behavior. | Complete |
 | source-batch-340-runestonegate-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-340 with RuneStoneGate guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |
+| source-batch-341-candidate-discovery.csv | Source batches | Fresh SOURCE-BATCH-341 candidate discovery for a zero-gate, zero-overlay JokeBook guard repair. | Complete |
+| source-batch-341-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-341 discovery with recommended JokeBook target. | Complete |
+| source-batch-341-target.md | Source batches | Durable target for SOURCE-BATCH-341 JokeBook guard repair, including fence result and unchanged behavior. | Complete |
+| source-batch-341-jokebook-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-341 with JokeBook guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |
