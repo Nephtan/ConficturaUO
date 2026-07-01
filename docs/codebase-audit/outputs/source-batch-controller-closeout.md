@@ -3348,8 +3348,18 @@ To run a gated batch, provide explicit approval naming:
 
 - SOURCE-BATCH-327 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-327-candidate-discovery.csv.
 - SOURCE-BATCH-327 implemented the BasePoisonPotion guard repair in Data/Scripts/Items/Potions/Standard/Poison Potions/BasePoisonPotion.cs.
-- SOURCE-BATCH-327 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and final git commit pending.
+- SOURCE-BATCH-327 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and committed as 3abdaabc.
 - The source-batch target is docs/codebase-audit/outputs/source-batch-327-target.md.
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-327-basepoisonpotion-guard-repair-closeout.md.
 - SOURCE-BATCH-328+ requires fresh non-gated candidate discovery after SOURCE-BATCH-327 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-328 Update
+
+- SOURCE-BATCH-328 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-328-candidate-discovery.csv.
+- SOURCE-BATCH-328 implemented the HorseArmor guard repair in Data/Scripts/Items/Armor/HorseArmor.cs.
+- SOURCE-BATCH-328 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and final git commit pending.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-328-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-328-horsearmor-guard-repair-closeout.md.
+- SOURCE-BATCH-329+ requires fresh non-gated candidate discovery after SOURCE-BATCH-328 is committed.
 - Gated roadmap batches remain blocked pending explicit approval.

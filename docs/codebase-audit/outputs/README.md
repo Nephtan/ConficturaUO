@@ -1335,3 +1335,7 @@ The Phase 0 baseline output, Phase 1 reproducible inventory outputs, Phase 2 pro
 | source-batch-327-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-327 discovery with recommended BasePoisonPotion target. | Complete |
 | source-batch-327-target.md | Source batches | Durable target for SOURCE-BATCH-327 BasePoisonPotion guard repair, including fence result and unchanged behavior. | Complete |
 | source-batch-327-basepoisonpotion-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-327 with BasePoisonPotion guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |
+| source-batch-328-candidate-discovery.csv | Source batches | Fresh SOURCE-BATCH-328 candidate discovery for a zero-gate, zero-overlay HorseArmor guard repair. | Complete |
+| source-batch-328-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-328 discovery with recommended HorseArmor target. | Complete |
+| source-batch-328-target.md | Source batches | Durable target for SOURCE-BATCH-328 HorseArmor guard repair, including fence result and unchanged behavior. | Complete |
+| source-batch-328-horsearmor-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-328 with HorseArmor guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |

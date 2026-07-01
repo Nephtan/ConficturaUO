@@ -162,7 +162,10 @@ namespace Server.Items
         {
             Target t;
 
-            if (!IsChildOf(from.Backpack))
+            if (from == null || from.Deleted || Deleted)
+                return;
+
+            if (from.Backpack == null || !IsChildOf(from.Backpack))
             {
                 from.SendLocalizedMessage(1060640); // The item must be in your backpack to use it.
             }
@@ -188,9 +191,27 @@ namespace Server.Items
 
             protected override void OnTarget(Mobile from, object targeted)
             {
+                if (from == null || from.Deleted)
+                    return;
+
+                if (m_Horse == null || m_Horse.Deleted)
+                    return;
+
+                if (from.Backpack == null || !m_Horse.IsChildOf(from.Backpack))
+                {
+                    from.SendLocalizedMessage(1060640); // The item must be in your backpack to use it.
+                    return;
+                }
+
                 if (targeted is Mobile)
                 {
                     Mobile iArmor = targeted as Mobile;
+
+                    if (iArmor.Deleted)
+                    {
+                        from.SendMessage("This armor is only for horses you own.");
+                        return;
+                    }
 
                     if (iArmor is BaseCreature)
                     {
