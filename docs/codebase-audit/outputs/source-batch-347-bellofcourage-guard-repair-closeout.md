@@ -37,4 +37,4 @@
 
 ## Result
 
-`SOURCE-BATCH-347` is ready to commit as `fix: guard BellOfCourage interactions`. `SOURCE-BATCH-348+` should continue with `ShardOfHatred` if exact-file preflight remains clean.
+`SOURCE-BATCH-347` was committed as `def0aa20` with `fix: guard BellOfCourage interactions`. `SOURCE-BATCH-348+` should continue with `ShardOfHatred` if exact-file preflight remains clean.
