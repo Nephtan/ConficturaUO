@@ -36,4 +36,4 @@
 
 ## Result
 
-`SOURCE-BATCH-345` is ready to commit as `fix: guard BookOfTruth interactions`. `SOURCE-BATCH-346+` should continue with `CandleOfLove` if exact-file preflight remains clean.
+`SOURCE-BATCH-345` committed as `c6d8aeee` with `fix: guard BookOfTruth interactions`. `SOURCE-BATCH-346+` should continue with `CandleOfLove` if exact-file preflight remains clean.
