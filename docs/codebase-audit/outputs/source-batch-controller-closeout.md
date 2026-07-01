@@ -3573,3 +3573,13 @@ To run a gated batch, provide explicit approval naming:
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-349-shardoffalsehood-guard-repair-closeout.md.
 - SOURCE-BATCH-350+ should continue with the next deferred sibling candidate from source-batch-349-candidate-discovery.csv or run fresh discovery if that queue is exhausted.
 - Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-350 Update
+
+- SOURCE-BATCH-350 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-350-candidate-discovery.csv.
+- SOURCE-BATCH-350 implemented the ShardOfCowardice guard repair in Data/Scripts/Quests/Shadowlords/ShardOfCowardice.cs.
+- SOURCE-BATCH-350 is closed pending commit hash update in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-350-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-350-shardofcowardice-guard-repair-closeout.md.
+- SOURCE-BATCH-351+ should run fresh candidate discovery because the deferred sibling queue is exhausted.
+- Gated roadmap batches remain blocked pending explicit approval.

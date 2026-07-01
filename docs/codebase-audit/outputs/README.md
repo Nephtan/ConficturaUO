@@ -1423,3 +1423,7 @@ The Phase 0 baseline output, Phase 1 reproducible inventory outputs, Phase 2 pro
 | source-batch-349-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-349 discovery with recommended ShardOfFalsehood target and deferred sibling queue. | Complete |
 | source-batch-349-target.md | Source batches | Durable target for SOURCE-BATCH-349 ShardOfFalsehood guard repair, including fence result and unchanged behavior. | Complete |
 | source-batch-349-shardoffalsehood-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-349 with ShardOfFalsehood guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |
+| source-batch-350-candidate-discovery.csv | Source batches | Fresh SOURCE-BATCH-350 candidate discovery for a zero-gate, zero-overlay ShardOfCowardice guard repair. | Complete |
+| source-batch-350-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-350 discovery with recommended ShardOfCowardice target and exhausted deferred sibling queue. | Complete |
+| source-batch-350-target.md | Source batches | Durable target for SOURCE-BATCH-350 ShardOfCowardice guard repair, including fence result and unchanged behavior. | Complete |
+| source-batch-350-shardofcowardice-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-350 with ShardOfCowardice guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |
