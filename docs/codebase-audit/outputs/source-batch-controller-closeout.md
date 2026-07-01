@@ -3398,7 +3398,7 @@ To run a gated batch, provide explicit approval naming:
 
 - SOURCE-BATCH-332 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-332-candidate-discovery.csv.
 - SOURCE-BATCH-332 implemented the EmbalmingFluid guard repair in Data/Scripts/Quests/Frankenstein/EmbalmingFluid.cs.
-- SOURCE-BATCH-332 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and commit hash pending the current source-batch commit.
+- SOURCE-BATCH-332 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and committed as 6f7a9f34.
 - The source-batch target is docs/codebase-audit/outputs/source-batch-332-target.md.
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-332-embalmingfluid-guard-repair-closeout.md.
 - SOURCE-BATCH-333+ requires fresh non-gated candidate discovery after SOURCE-BATCH-332 is committed.
