@@ -36,4 +36,4 @@
 
 ## Result
 
-`SOURCE-BATCH-349` is ready to commit as `fix: guard ShardOfFalsehood interactions`. `SOURCE-BATCH-350+` should continue with `ShardOfCowardice` if exact-file preflight remains clean.
+`SOURCE-BATCH-349` was committed as `9b2e2495` with `fix: guard ShardOfFalsehood interactions`. `SOURCE-BATCH-350+` should continue with `ShardOfCowardice` if exact-file preflight remains clean.
