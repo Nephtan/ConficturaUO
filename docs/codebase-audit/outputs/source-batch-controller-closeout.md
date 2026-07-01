@@ -3378,7 +3378,7 @@ To run a gated batch, provide explicit approval naming:
 
 - SOURCE-BATCH-330 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-330-candidate-discovery.csv.
 - SOURCE-BATCH-330 implemented the BoatStain guard repair in Data/Scripts/Items/Boats/BoatStain.cs.
-- SOURCE-BATCH-330 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and final git commit pending.
+- SOURCE-BATCH-330 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and committed as 50f2afcf.
 - The source-batch target is docs/codebase-audit/outputs/source-batch-330-target.md.
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-330-boatstain-guard-repair-closeout.md.
 - SOURCE-BATCH-331+ requires fresh non-gated candidate discovery after SOURCE-BATCH-330 is committed.
