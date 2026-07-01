@@ -1411,3 +1411,7 @@ The Phase 0 baseline output, Phase 1 reproducible inventory outputs, Phase 2 pro
 | source-batch-346-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-346 discovery with recommended CandleOfLove target and deferred sibling queue. | Complete |
 | source-batch-346-target.md | Source batches | Durable target for SOURCE-BATCH-346 CandleOfLove guard repair, including fence result and unchanged behavior. | Complete |
 | source-batch-346-candleoflove-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-346 with CandleOfLove guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |
+| source-batch-347-candidate-discovery.csv | Source batches | Fresh SOURCE-BATCH-347 candidate discovery for a zero-gate, zero-overlay BellOfCourage guard repair and deferred sibling candidates. | Complete |
+| source-batch-347-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-347 discovery with recommended BellOfCourage target and deferred sibling queue. | Complete |
+| source-batch-347-target.md | Source batches | Durable target for SOURCE-BATCH-347 BellOfCourage guard repair, including fence result and unchanged behavior. | Complete |
+| source-batch-347-bellofcourage-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-347 with BellOfCourage guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |
