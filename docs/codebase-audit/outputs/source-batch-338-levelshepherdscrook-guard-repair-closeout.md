@@ -39,4 +39,4 @@
 
 ## Result
 
-`SOURCE-BATCH-338` is ready to commit as `fix: guard LevelShepherdsCrook interactions`. `SOURCE-BATCH-339+` should run fresh candidate discovery before any further source edits.
+`SOURCE-BATCH-338` committed as `93d639ab` with `fix: guard LevelShepherdsCrook interactions`. `SOURCE-BATCH-339+` should run fresh candidate discovery before any further source edits.
