@@ -3558,7 +3558,7 @@ To run a gated batch, provide explicit approval naming:
 
 - SOURCE-BATCH-348 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-348-candidate-discovery.csv.
 - SOURCE-BATCH-348 implemented the ShardOfHatred guard repair in Data/Scripts/Quests/Shadowlords/ShardOfHatred.cs.
-- SOURCE-BATCH-348 is closed pending commit hash update in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed.
+- SOURCE-BATCH-348 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and committed as 7458628b.
 - The source-batch target is docs/codebase-audit/outputs/source-batch-348-target.md.
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-348-shardofhatred-guard-repair-closeout.md.
 - SOURCE-BATCH-349+ should continue with the next deferred sibling candidate from source-batch-348-candidate-discovery.csv or run fresh discovery if that queue is exhausted.
