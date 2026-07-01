@@ -1363,3 +1363,7 @@ The Phase 0 baseline output, Phase 1 reproducible inventory outputs, Phase 2 pro
 | source-batch-334-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-334 discovery with recommended RobotSheetMetal target. | Complete |
 | source-batch-334-target.md | Source batches | Durable target for SOURCE-BATCH-334 RobotSheetMetal guard repair, including fence result and unchanged behavior. | Complete |
 | source-batch-334-robotsheetmetal-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-334 with RobotSheetMetal guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |
+| source-batch-335-candidate-discovery.csv | Source batches | Fresh SOURCE-BATCH-335 candidate discovery for a zero-gate, zero-overlay RustyJunk guard repair. | Complete |
+| source-batch-335-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-335 discovery with recommended RustyJunk target. | Complete |
+| source-batch-335-target.md | Source batches | Durable target for SOURCE-BATCH-335 RustyJunk guard repair, including fence result and unchanged behavior. | Complete |
+| source-batch-335-rustyjunk-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-335 with RustyJunk guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |
