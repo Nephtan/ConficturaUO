@@ -3413,3 +3413,13 @@ To run a gated batch, provide explicit approval naming:
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-333-slaversnet-guard-repair-closeout.md.
 - SOURCE-BATCH-334+ requires fresh non-gated candidate discovery after SOURCE-BATCH-333 is committed.
 - Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-334 Update
+
+- SOURCE-BATCH-334 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-334-candidate-discovery.csv.
+- SOURCE-BATCH-334 implemented the RobotSheetMetal guard repair in Data/Scripts/Quests/Robots/RobotSheetMetal.cs.
+- SOURCE-BATCH-334 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and commit hash pending the current source-batch commit.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-334-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-334-robotsheetmetal-guard-repair-closeout.md.
+- SOURCE-BATCH-335+ requires fresh non-gated candidate discovery after SOURCE-BATCH-334 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.

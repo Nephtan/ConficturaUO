@@ -22,15 +22,20 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
+            if (from == null || from.Deleted)
+                return;
+
+            if (Deleted || from.Backpack == null || !IsChildOf(from.Backpack))
+            {
+                from.SendLocalizedMessage(1060640); // The item must be in your backpack to use it.
+                return;
+            }
+
             bool anvil,
                 forge;
             Server.Engines.Craft.DefBlacksmithy.CheckAnvilAndForge(from, 2, out anvil, out forge);
 
-            if (!IsChildOf(from.Backpack))
-            {
-                from.SendLocalizedMessage(1060640); // The item must be in your backpack to use it.
-            }
-            else if (!forge)
+            if (!forge)
             {
                 from.SendMessage("You need to be near a forge to smelt that.");
             }

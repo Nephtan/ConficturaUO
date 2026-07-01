@@ -1359,3 +1359,7 @@ The Phase 0 baseline output, Phase 1 reproducible inventory outputs, Phase 2 pro
 | source-batch-333-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-333 discovery with recommended SlaversNet target. | Complete |
 | source-batch-333-target.md | Source batches | Durable target for SOURCE-BATCH-333 SlaversNet guard repair, including fence result and unchanged behavior. | Complete |
 | source-batch-333-slaversnet-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-333 with SlaversNet guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |
+| source-batch-334-candidate-discovery.csv | Source batches | Fresh SOURCE-BATCH-334 candidate discovery for a zero-gate, zero-overlay RobotSheetMetal guard repair. | Complete |
+| source-batch-334-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-334 discovery with recommended RobotSheetMetal target. | Complete |
+| source-batch-334-target.md | Source batches | Durable target for SOURCE-BATCH-334 RobotSheetMetal guard repair, including fence result and unchanged behavior. | Complete |
+| source-batch-334-robotsheetmetal-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-334 with RobotSheetMetal guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |
