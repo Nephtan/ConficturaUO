@@ -107,6 +107,9 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
+            if (from == null || from.Deleted || Deleted)
+                return;
+
             from.SendLocalizedMessage(502464); // Target the animal you wish to herd.
             from.Target = new HerdingTarget();
         }
@@ -118,9 +121,15 @@ namespace Server.Items
 
             protected override void OnTarget(Mobile from, object targ)
             {
+                if (from == null || from.Deleted)
+                    return;
+
                 if (targ is BaseCreature)
                 {
                     BaseCreature bc = (BaseCreature)targ;
+
+                    if (bc.Deleted)
+                        return;
 
                     if (IsHerdable(bc))
                     {
@@ -173,6 +182,9 @@ namespace Server.Items
 
                 protected override void OnTarget(Mobile from, object targ)
                 {
+                    if (from == null || from.Deleted || m_Creature == null || m_Creature.Deleted)
+                        return;
+
                     if (targ is IPoint2D)
                     {
                         double min = m_Creature.MinTameSkill - 30;

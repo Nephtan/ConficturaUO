@@ -3443,3 +3443,13 @@ To run a gated batch, provide explicit approval naming:
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-336-holidayfoods-guard-repair-closeout.md.
 - SOURCE-BATCH-337+ requires fresh non-gated candidate discovery after SOURCE-BATCH-336 is committed.
 - Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-337 Update
+
+- SOURCE-BATCH-337 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-337-candidate-discovery.csv.
+- SOURCE-BATCH-337 implemented the ShepherdsCrook guard repair in Data/Scripts/Items/Weapons/Staves/ShepherdsCrook.cs.
+- SOURCE-BATCH-337 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and pending commit hash update.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-337-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-337-shepherdscrook-guard-repair-closeout.md.
+- SOURCE-BATCH-338+ requires fresh non-gated candidate discovery after SOURCE-BATCH-337 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.
