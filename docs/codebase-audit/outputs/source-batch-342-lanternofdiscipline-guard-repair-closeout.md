@@ -36,4 +36,4 @@
 
 ## Result
 
-`SOURCE-BATCH-342` source commit is pending. `SOURCE-BATCH-343+` should continue with the next clean deferred sibling candidate after this batch is committed.
+`SOURCE-BATCH-342` committed as `a87b4f25` with `fix: guard LanternOfDiscipline interactions`. `SOURCE-BATCH-343+` should continue with the next clean deferred sibling candidate.

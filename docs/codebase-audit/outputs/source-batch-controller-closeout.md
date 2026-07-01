@@ -3498,7 +3498,7 @@ To run a gated batch, provide explicit approval naming:
 
 - SOURCE-BATCH-342 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-342-candidate-discovery.csv.
 - SOURCE-BATCH-342 implemented the LanternOfDiscipline guard repair in Data/Scripts/Quests/Serpents/LanternOfDiscipline.cs.
-- SOURCE-BATCH-342 is closed pending commit hash update in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed.
+- SOURCE-BATCH-342 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and committed as a87b4f25.
 - The source-batch target is docs/codebase-audit/outputs/source-batch-342-target.md.
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-342-lanternofdiscipline-guard-repair-closeout.md.
 - SOURCE-BATCH-343+ should continue with the next deferred sibling candidate from source-batch-342-candidate-discovery.csv or run fresh discovery if that queue is exhausted.
