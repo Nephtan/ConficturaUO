@@ -3453,3 +3453,13 @@ To run a gated batch, provide explicit approval naming:
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-337-shepherdscrook-guard-repair-closeout.md.
 - SOURCE-BATCH-338+ requires fresh non-gated candidate discovery after SOURCE-BATCH-337 is committed.
 - Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-338 Update
+
+- SOURCE-BATCH-338 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-338-candidate-discovery.csv.
+- SOURCE-BATCH-338 implemented the LevelShepherdsCrook guard repair in Data/Scripts/Items/Magical/God/Weapons/Staves/LevelShepherdsCrook.cs.
+- SOURCE-BATCH-338 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and pending commit hash update.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-338-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-338-levelshepherdscrook-guard-repair-closeout.md.
+- SOURCE-BATCH-339+ requires fresh non-gated candidate discovery after SOURCE-BATCH-338 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.

@@ -1375,3 +1375,7 @@ The Phase 0 baseline output, Phase 1 reproducible inventory outputs, Phase 2 pro
 | source-batch-337-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-337 discovery with recommended ShepherdsCrook target. | Complete |
 | source-batch-337-target.md | Source batches | Durable target for SOURCE-BATCH-337 ShepherdsCrook guard repair, including fence result and unchanged behavior. | Complete |
 | source-batch-337-shepherdscrook-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-337 with ShepherdsCrook guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |
+| source-batch-338-candidate-discovery.csv | Source batches | Fresh SOURCE-BATCH-338 candidate discovery for a zero-gate, zero-overlay LevelShepherdsCrook guard repair. | Complete |
+| source-batch-338-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-338 discovery with recommended LevelShepherdsCrook target. | Complete |
+| source-batch-338-target.md | Source batches | Durable target for SOURCE-BATCH-338 LevelShepherdsCrook guard repair, including fence result and unchanged behavior. | Complete |
+| source-batch-338-levelshepherdscrook-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-338 with LevelShepherdsCrook guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |
