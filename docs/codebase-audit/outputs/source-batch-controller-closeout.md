@@ -3428,7 +3428,7 @@ To run a gated batch, provide explicit approval naming:
 
 - SOURCE-BATCH-335 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-335-candidate-discovery.csv.
 - SOURCE-BATCH-335 implemented the RustyJunk guard repair in Data/Scripts/Items/Trades/Fishing/RustyJunk.cs.
-- SOURCE-BATCH-335 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and pending commit hash update.
+- SOURCE-BATCH-335 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and committed as ea17703e.
 - The source-batch target is docs/codebase-audit/outputs/source-batch-335-target.md.
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-335-rustyjunk-guard-repair-closeout.md.
 - SOURCE-BATCH-336+ requires fresh non-gated candidate discovery after SOURCE-BATCH-335 is committed.

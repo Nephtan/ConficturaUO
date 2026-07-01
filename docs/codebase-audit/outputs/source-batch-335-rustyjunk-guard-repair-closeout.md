@@ -45,4 +45,4 @@
 
 ## Result
 
-`SOURCE-BATCH-335` is ready to commit as `fix: guard RustyJunk interactions`. `SOURCE-BATCH-336+` should run fresh candidate discovery before any further source edits.
+`SOURCE-BATCH-335` committed as `ea17703e` with `fix: guard RustyJunk interactions`. `SOURCE-BATCH-336+` should run fresh candidate discovery before any further source edits.
