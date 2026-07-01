@@ -3508,7 +3508,7 @@ To run a gated batch, provide explicit approval naming:
 
 - SOURCE-BATCH-343 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-343-candidate-discovery.csv.
 - SOURCE-BATCH-343 implemented the OrbOfLogic guard repair in Data/Scripts/Quests/Serpents/OrbOfLogic.cs.
-- SOURCE-BATCH-343 is closed pending commit hash update in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed.
+- SOURCE-BATCH-343 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and committed as af555889.
 - The source-batch target is docs/codebase-audit/outputs/source-batch-343-target.md.
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-343-orboflogic-guard-repair-closeout.md.
 - SOURCE-BATCH-344+ should continue with the next deferred sibling candidate from source-batch-343-candidate-discovery.csv or run fresh discovery if that queue is exhausted.
