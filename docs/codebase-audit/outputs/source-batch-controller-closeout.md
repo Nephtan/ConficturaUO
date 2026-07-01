@@ -3388,7 +3388,7 @@ To run a gated batch, provide explicit approval naming:
 
 - SOURCE-BATCH-331 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-331-candidate-discovery.csv.
 - SOURCE-BATCH-331 implemented the RobotBatteries guard repair in Data/Scripts/Quests/Robots/RobotBatteries.cs.
-- SOURCE-BATCH-331 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and commit hash pending the current source-batch commit.
+- SOURCE-BATCH-331 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and committed as 9c2ecd5a.
 - The source-batch target is docs/codebase-audit/outputs/source-batch-331-target.md.
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-331-robotbatteries-guard-repair-closeout.md.
 - SOURCE-BATCH-332+ requires fresh non-gated candidate discovery after SOURCE-BATCH-331 is committed.
