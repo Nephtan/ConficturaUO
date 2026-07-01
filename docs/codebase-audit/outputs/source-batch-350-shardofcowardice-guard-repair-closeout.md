@@ -36,4 +36,4 @@
 
 ## Result
 
-`SOURCE-BATCH-350` is ready to commit as `fix: guard ShardOfCowardice interactions`. `SOURCE-BATCH-351+` should run fresh candidate discovery after the commit because this deferred sibling queue is exhausted.
+`SOURCE-BATCH-350` was committed as `a6777fbe` with `fix: guard ShardOfCowardice interactions`. `SOURCE-BATCH-351+` should run fresh candidate discovery because this deferred sibling queue is exhausted.
