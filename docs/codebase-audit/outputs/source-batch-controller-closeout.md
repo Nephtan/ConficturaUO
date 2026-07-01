@@ -3523,3 +3523,13 @@ To run a gated batch, provide explicit approval naming:
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-344-scalesofethicality-guard-repair-closeout.md.
 - SOURCE-BATCH-345+ should continue with the next deferred sibling candidate from source-batch-344-candidate-discovery.csv or run fresh discovery if that queue is exhausted.
 - Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-345 Update
+
+- SOURCE-BATCH-345 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-345-candidate-discovery.csv.
+- SOURCE-BATCH-345 implemented the BookOfTruth guard repair in Data/Scripts/Quests/Shadowlords/BookOfTruth.cs.
+- SOURCE-BATCH-345 is closed pending commit hash update in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-345-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-345-bookoftruth-guard-repair-closeout.md.
+- SOURCE-BATCH-346+ should continue with the next deferred sibling candidate from source-batch-345-candidate-discovery.csv or run fresh discovery if that queue is exhausted.
+- Gated roadmap batches remain blocked pending explicit approval.
