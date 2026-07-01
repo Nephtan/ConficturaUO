@@ -3328,8 +3328,18 @@ To run a gated batch, provide explicit approval naming:
 
 - SOURCE-BATCH-325 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-325-candidate-discovery.csv.
 - SOURCE-BATCH-325 implemented the BaseLiquid guard repair in Data/Scripts/Items/Potions/Mixtures/BaseLiquid.cs.
-- SOURCE-BATCH-325 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and final git commit pending.
+- SOURCE-BATCH-325 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and committed as 8e2ec5b8.
 - The source-batch target is docs/codebase-audit/outputs/source-batch-325-target.md.
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-325-baseliquid-guard-repair-closeout.md.
 - SOURCE-BATCH-326+ requires fresh non-gated candidate discovery after SOURCE-BATCH-325 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-326 Update
+
+- SOURCE-BATCH-326 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-326-candidate-discovery.csv.
+- SOURCE-BATCH-326 implemented the BaseMixture guard repair in Data/Scripts/Items/Potions/Mixtures/BaseMixture.cs.
+- SOURCE-BATCH-326 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and final git commit pending.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-326-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-326-basemixture-guard-repair-closeout.md.
+- SOURCE-BATCH-327+ requires fresh non-gated candidate discovery after SOURCE-BATCH-326 is committed.
 - Gated roadmap batches remain blocked pending explicit approval.
