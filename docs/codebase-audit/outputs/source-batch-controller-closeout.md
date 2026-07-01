@@ -3468,7 +3468,7 @@ To run a gated batch, provide explicit approval naming:
 
 - SOURCE-BATCH-339 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-339-candidate-discovery.csv.
 - SOURCE-BATCH-339 implemented the BottleOil guard repair in Data/Scripts/Quests/Golems/BottleOil.cs.
-- SOURCE-BATCH-339 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and pending commit hash update.
+- SOURCE-BATCH-339 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and committed as bdbcd137.
 - The source-batch target is docs/codebase-audit/outputs/source-batch-339-target.md.
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-339-bottleoil-guard-repair-closeout.md.
 - SOURCE-BATCH-340+ requires fresh non-gated candidate discovery after SOURCE-BATCH-339 is committed.

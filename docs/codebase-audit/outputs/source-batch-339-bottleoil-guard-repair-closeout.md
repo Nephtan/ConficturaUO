@@ -34,4 +34,4 @@
 
 ## Result
 
-`SOURCE-BATCH-339` is ready to commit as `fix: guard BottleOil interactions`. `SOURCE-BATCH-340+` should run fresh candidate discovery before any further source edits.
+`SOURCE-BATCH-339` committed as `bdbcd137` with `fix: guard BottleOil interactions`. `SOURCE-BATCH-340+` should run fresh candidate discovery before any further source edits.
