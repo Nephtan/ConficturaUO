@@ -38,4 +38,4 @@
 
 ## Result
 
-`SOURCE-BATCH-336` is ready to commit as `fix: guard HolidayFoods interactions`. `SOURCE-BATCH-337+` should run fresh candidate discovery before any further source edits.
+`SOURCE-BATCH-336` committed as `f025916b` with `fix: guard HolidayFoods interactions`. `SOURCE-BATCH-337+` should run fresh candidate discovery before any further source edits.
