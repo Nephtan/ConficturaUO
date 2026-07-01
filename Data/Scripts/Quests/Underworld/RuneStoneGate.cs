@@ -15,6 +15,9 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
+            if (from == null || from.Deleted || Deleted)
+                return;
+
             from.SendMessage("This large stone door is covered in strange runes.");
         }
 
