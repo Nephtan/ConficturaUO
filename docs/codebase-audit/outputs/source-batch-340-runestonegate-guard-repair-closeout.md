@@ -35,4 +35,4 @@
 
 ## Result
 
-`SOURCE-BATCH-340` is ready to commit as `fix: guard RuneStoneGate interactions`. `SOURCE-BATCH-341+` should run fresh candidate discovery before any further source edits.
+`SOURCE-BATCH-340` committed as `dd20c825` with `fix: guard RuneStoneGate interactions`. `SOURCE-BATCH-341+` should run fresh candidate discovery before any further source edits.
