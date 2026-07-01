@@ -3368,8 +3368,18 @@ To run a gated batch, provide explicit approval naming:
 
 - SOURCE-BATCH-329 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-329-candidate-discovery.csv.
 - SOURCE-BATCH-329 implemented the GrapplingHook guard repair in Data/Scripts/Items/Boats/GrapplingHook.cs.
-- SOURCE-BATCH-329 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and final git commit pending.
+- SOURCE-BATCH-329 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and committed as f25b1252.
 - The source-batch target is docs/codebase-audit/outputs/source-batch-329-target.md.
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-329-grapplinghook-guard-repair-closeout.md.
 - SOURCE-BATCH-330+ requires fresh non-gated candidate discovery after SOURCE-BATCH-329 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-330 Update
+
+- SOURCE-BATCH-330 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-330-candidate-discovery.csv.
+- SOURCE-BATCH-330 implemented the BoatStain guard repair in Data/Scripts/Items/Boats/BoatStain.cs.
+- SOURCE-BATCH-330 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and final git commit pending.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-330-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-330-boatstain-guard-repair-closeout.md.
+- SOURCE-BATCH-331+ requires fresh non-gated candidate discovery after SOURCE-BATCH-330 is committed.
 - Gated roadmap batches remain blocked pending explicit approval.
