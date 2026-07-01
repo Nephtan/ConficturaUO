@@ -82,6 +82,9 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
+            if (from == null || from.Deleted || Deleted)
+                return;
+
             if (IsChildOf(from.Backpack) || from.InRange(this, 1))
             {
                 from.PlaySound(0x3a + Utility.Random(3));
@@ -143,6 +146,9 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
+            if (from == null || from.Deleted || Deleted)
+                return;
+
             if (IsChildOf(from.Backpack) || from.InRange(this, 1))
             {
                 int result;

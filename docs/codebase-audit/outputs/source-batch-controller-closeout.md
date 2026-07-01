@@ -3433,3 +3433,13 @@ To run a gated batch, provide explicit approval naming:
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-335-rustyjunk-guard-repair-closeout.md.
 - SOURCE-BATCH-336+ requires fresh non-gated candidate discovery after SOURCE-BATCH-335 is committed.
 - Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-336 Update
+
+- SOURCE-BATCH-336 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-336-candidate-discovery.csv.
+- SOURCE-BATCH-336 implemented the HolidayFoods guard repair in Data/Scripts/Items/Special/Holiday/HolidayFoods.cs.
+- SOURCE-BATCH-336 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and pending commit hash update.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-336-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-336-holidayfoods-guard-repair-closeout.md.
+- SOURCE-BATCH-337+ requires fresh non-gated candidate discovery after SOURCE-BATCH-336 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.
