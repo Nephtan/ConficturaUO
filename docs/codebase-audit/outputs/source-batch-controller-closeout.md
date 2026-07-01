@@ -3518,7 +3518,7 @@ To run a gated batch, provide explicit approval naming:
 
 - SOURCE-BATCH-344 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-344-candidate-discovery.csv.
 - SOURCE-BATCH-344 implemented the ScalesOfEthicality guard repair in Data/Scripts/Quests/Serpents/ScalesOfEthicality.cs.
-- SOURCE-BATCH-344 is closed pending commit hash update in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed.
+- SOURCE-BATCH-344 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and committed as 145facd9.
 - The source-batch target is docs/codebase-audit/outputs/source-batch-344-target.md.
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-344-scalesofethicality-guard-repair-closeout.md.
 - SOURCE-BATCH-345+ should continue with the next deferred sibling candidate from source-batch-344-candidate-discovery.csv or run fresh discovery if that queue is exhausted.

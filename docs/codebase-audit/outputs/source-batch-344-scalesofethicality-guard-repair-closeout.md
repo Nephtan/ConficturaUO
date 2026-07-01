@@ -36,4 +36,4 @@
 
 ## Result
 
-`SOURCE-BATCH-344` is ready to commit as `fix: guard ScalesOfEthicality interactions`. `SOURCE-BATCH-345+` should continue with `BookOfTruth` if exact-file preflight remains clean.
+`SOURCE-BATCH-344` committed as `145facd9` with `fix: guard ScalesOfEthicality interactions`. `SOURCE-BATCH-345+` should continue with `BookOfTruth` if exact-file preflight remains clean.
