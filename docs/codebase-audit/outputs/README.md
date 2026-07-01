@@ -1395,3 +1395,7 @@ The Phase 0 baseline output, Phase 1 reproducible inventory outputs, Phase 2 pro
 | source-batch-342-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-342 discovery with recommended LanternOfDiscipline target and deferred sibling queue. | Complete |
 | source-batch-342-target.md | Source batches | Durable target for SOURCE-BATCH-342 LanternOfDiscipline guard repair, including fence result and unchanged behavior. | Complete |
 | source-batch-342-lanternofdiscipline-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-342 with LanternOfDiscipline guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |
+| source-batch-343-candidate-discovery.csv | Source batches | Fresh SOURCE-BATCH-343 candidate discovery for a zero-gate, zero-overlay OrbOfLogic guard repair and deferred sibling candidates. | Complete |
+| source-batch-343-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-343 discovery with recommended OrbOfLogic target and deferred sibling queue. | Complete |
+| source-batch-343-target.md | Source batches | Durable target for SOURCE-BATCH-343 OrbOfLogic guard repair, including fence result and unchanged behavior. | Complete |
+| source-batch-343-orboflogic-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-343 with OrbOfLogic guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |
