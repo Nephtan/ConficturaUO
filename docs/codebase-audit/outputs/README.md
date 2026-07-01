@@ -1391,3 +1391,7 @@ The Phase 0 baseline output, Phase 1 reproducible inventory outputs, Phase 2 pro
 | source-batch-341-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-341 discovery with recommended JokeBook target. | Complete |
 | source-batch-341-target.md | Source batches | Durable target for SOURCE-BATCH-341 JokeBook guard repair, including fence result and unchanged behavior. | Complete |
 | source-batch-341-jokebook-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-341 with JokeBook guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |
+| source-batch-342-candidate-discovery.csv | Source batches | Fresh SOURCE-BATCH-342 candidate discovery for a zero-gate, zero-overlay LanternOfDiscipline guard repair and deferred sibling candidates. | Complete |
+| source-batch-342-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-342 discovery with recommended LanternOfDiscipline target and deferred sibling queue. | Complete |
+| source-batch-342-target.md | Source batches | Durable target for SOURCE-BATCH-342 LanternOfDiscipline guard repair, including fence result and unchanged behavior. | Complete |
+| source-batch-342-lanternofdiscipline-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-342 with LanternOfDiscipline guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |
