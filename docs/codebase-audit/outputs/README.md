@@ -1339,3 +1339,7 @@ The Phase 0 baseline output, Phase 1 reproducible inventory outputs, Phase 2 pro
 | source-batch-328-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-328 discovery with recommended HorseArmor target. | Complete |
 | source-batch-328-target.md | Source batches | Durable target for SOURCE-BATCH-328 HorseArmor guard repair, including fence result and unchanged behavior. | Complete |
 | source-batch-328-horsearmor-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-328 with HorseArmor guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |
+| source-batch-329-candidate-discovery.csv | Source batches | Fresh SOURCE-BATCH-329 candidate discovery for a zero-gate, zero-overlay GrapplingHook guard repair. | Complete |
+| source-batch-329-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-329 discovery with recommended GrapplingHook target. | Complete |
+| source-batch-329-target.md | Source batches | Durable target for SOURCE-BATCH-329 GrapplingHook guard repair, including fence result and unchanged behavior. | Complete |
+| source-batch-329-grapplinghook-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-329 with GrapplingHook guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |

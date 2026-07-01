@@ -24,7 +24,10 @@ namespace Server.Items
         {
             Target t;
 
-            if (!IsChildOf(from.Backpack))
+            if (from == null || from.Deleted || Deleted)
+                return;
+
+            if (from.Backpack == null || !IsChildOf(from.Backpack))
             {
                 from.SendLocalizedMessage(1060640); // The item must be in your backpack to use it.
             }
@@ -43,9 +46,19 @@ namespace Server.Items
 
             protected override void OnTarget(Mobile from, object targeted)
             {
+                if (from == null || from.Deleted || from.Map == null)
+                    return;
+
                 if (targeted is BaseCreature)
                 {
                     BaseCreature pirate = targeted as BaseCreature;
+
+                    if (pirate.Deleted)
+                    {
+                        from.SendMessage("You cannot use the hook on this.");
+                        return;
+                    }
+
                     Point3D loc = Server.Multis.BaseBoat.GetPirateShip(pirate);
 
                     if (loc.X > 0 && loc.Y > 0)
