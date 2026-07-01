@@ -51,7 +51,10 @@ namespace Server.Items
 
         public override void Drink(Mobile from)
         {
-            if (!IsChildOf(from.Backpack))
+            if (from == null || from.Deleted || Deleted)
+                return;
+
+            if (from.Backpack == null || !IsChildOf(from.Backpack))
             {
                 from.SendLocalizedMessage(1060640); // The item must be in your backpack to use it.
             }
@@ -99,14 +102,18 @@ namespace Server.Items
 
             protected override void OnTarget(Mobile from, object targeted)
             {
-                if (m_Potion.Deleted || m_Potion.Map == Map.Internal)
+                if (from == null || from.Deleted)
+                    return;
+
+                if (m_Potion == null || m_Potion.Deleted || m_Potion.Map == Map.Internal)
                     return;
 
                 IPoint3D p = targeted as IPoint3D;
-                Point3D d = new Point3D(p);
 
                 if (p == null || from.Map == null)
                     return;
+
+                Point3D d = new Point3D(p);
 
                 SpellHelper.GetSurfaceTop(ref p);
 

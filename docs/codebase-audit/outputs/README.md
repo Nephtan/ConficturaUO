@@ -1323,3 +1323,7 @@ The Phase 0 baseline output, Phase 1 reproducible inventory outputs, Phase 2 pro
 | source-batch-324-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-324 discovery with recommended Bola target. | Complete |
 | source-batch-324-target.md | Source batches | Durable target for SOURCE-BATCH-324 Bola guard repair, including fence result and unchanged behavior. | Complete |
 | source-batch-324-bola-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-324 with Bola guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |
+| source-batch-325-candidate-discovery.csv | Source batches | Fresh SOURCE-BATCH-325 candidate discovery for a zero-gate, zero-overlay BaseLiquid guard repair. | Complete |
+| source-batch-325-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-325 discovery with recommended BaseLiquid target. | Complete |
+| source-batch-325-target.md | Source batches | Durable target for SOURCE-BATCH-325 BaseLiquid guard repair, including fence result and unchanged behavior. | Complete |
+| source-batch-325-baseliquid-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-325 with BaseLiquid guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |
