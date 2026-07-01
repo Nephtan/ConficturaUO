@@ -1351,3 +1351,7 @@ The Phase 0 baseline output, Phase 1 reproducible inventory outputs, Phase 2 pro
 | source-batch-331-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-331 discovery with recommended RobotBatteries target. | Complete |
 | source-batch-331-target.md | Source batches | Durable target for SOURCE-BATCH-331 RobotBatteries guard repair, including fence result and unchanged behavior. | Complete |
 | source-batch-331-robotbatteries-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-331 with RobotBatteries guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |
+| source-batch-332-candidate-discovery.csv | Source batches | Fresh SOURCE-BATCH-332 candidate discovery for a zero-gate, zero-overlay EmbalmingFluid guard repair. | Complete |
+| source-batch-332-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-332 discovery with recommended EmbalmingFluid target. | Complete |
+| source-batch-332-target.md | Source batches | Durable target for SOURCE-BATCH-332 EmbalmingFluid guard repair, including fence result and unchanged behavior. | Complete |
+| source-batch-332-embalmingfluid-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-332 with EmbalmingFluid guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |
