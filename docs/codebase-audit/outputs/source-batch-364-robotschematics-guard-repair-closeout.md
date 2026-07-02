@@ -34,4 +34,4 @@ Schematic requirement setup, resource counters, `OnDragDrop` behavior, `TinkerLo
 
 ## Commit
 
-`SOURCE-BATCH-364` is ready to commit as `fix: guard RobotSchematics interactions`. `SOURCE-BATCH-365+` should run fresh candidate discovery after the commit.
+`SOURCE-BATCH-364` committed as `8b0812d9` (`fix: guard RobotSchematics interactions`). `SOURCE-BATCH-365+` should run fresh candidate discovery.

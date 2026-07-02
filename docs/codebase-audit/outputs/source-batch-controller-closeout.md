@@ -3718,8 +3718,8 @@ To run a gated batch, provide explicit approval naming:
 
 - SOURCE-BATCH-364 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-364-candidate-discovery.csv.
 - SOURCE-BATCH-364 implemented the RobotSchematics guard repair in Data/Scripts/Quests/Robots/RobotSchematics.cs.
-- SOURCE-BATCH-364 is closed pending commit hash update in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed.
+- SOURCE-BATCH-364 is closed as commit 8b0812d9 with verification passed.
 - The source-batch target is docs/codebase-audit/outputs/source-batch-364-target.md.
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-364-robotschematics-guard-repair-closeout.md.
-- SOURCE-BATCH-365+ should run fresh candidate discovery after SOURCE-BATCH-364 commits.
+- SOURCE-BATCH-365+ should run fresh candidate discovery after SOURCE-BATCH-364.
 - Gated roadmap batches remain blocked pending explicit approval.
