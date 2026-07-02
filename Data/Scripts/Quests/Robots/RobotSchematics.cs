@@ -54,6 +54,9 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
+            if (from == null || from.Deleted || Deleted)
+                return;
+
             from.SendSound(0x54D);
             from.CloseGump(typeof(RobotSchematicsGump));
             from.SendGump(new RobotSchematicsGump(from, this));

@@ -3713,3 +3713,13 @@ To run a gated batch, provide explicit approval naming:
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-363-prisoner-guard-repair-closeout.md.
 - SOURCE-BATCH-364+ should run fresh candidate discovery after SOURCE-BATCH-363.
 - Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-364 Update
+
+- SOURCE-BATCH-364 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-364-candidate-discovery.csv.
+- SOURCE-BATCH-364 implemented the RobotSchematics guard repair in Data/Scripts/Quests/Robots/RobotSchematics.cs.
+- SOURCE-BATCH-364 is closed pending commit hash update in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-364-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-364-robotschematics-guard-repair-closeout.md.
+- SOURCE-BATCH-365+ should run fresh candidate discovery after SOURCE-BATCH-364 commits.
+- Gated roadmap batches remain blocked pending explicit approval.
