@@ -34,4 +34,4 @@ LiarsDice item ID, name, weight, hue, `GOLD_PER_GAME`, `GAME_BALANCE_MIN`, `GAME
 
 ## Commit
 
-`SOURCE-BATCH-391` commit hash pending. `SOURCE-BATCH-392+` should run fresh candidate discovery after `SOURCE-BATCH-391`.
+`SOURCE-BATCH-391` committed as `e257619d`. `SOURCE-BATCH-392+` should run fresh candidate discovery after `SOURCE-BATCH-391`.

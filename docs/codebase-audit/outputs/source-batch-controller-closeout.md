@@ -3988,7 +3988,7 @@ To run a gated batch, provide explicit approval naming:
 
 - SOURCE-BATCH-391 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-391-candidate-discovery.csv.
 - SOURCE-BATCH-391 implemented the LiarsDice guard repair in Data/Scripts/Items/Misc/Games/LiarsDice/LiarsDice.cs.
-- SOURCE-BATCH-391 verification passed and commit is pending.
+- SOURCE-BATCH-391 is closed as commit e257619d with verification passed.
 - The source-batch target is docs/codebase-audit/outputs/source-batch-391-target.md.
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-391-liarsdice-guard-repair-closeout.md.
 - SOURCE-BATCH-392+ should run fresh candidate discovery after SOURCE-BATCH-391.
