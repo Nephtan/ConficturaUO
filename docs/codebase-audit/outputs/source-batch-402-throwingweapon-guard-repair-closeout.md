@@ -29,4 +29,4 @@
 
 ## Commit
 
-`SOURCE-BATCH-402` source commit: pending. `SOURCE-BATCH-403+` should run fresh candidate discovery after `SOURCE-BATCH-402`.
+`SOURCE-BATCH-402` source commit: `03599b66` (`fix: guard ThrowingWeapon interactions`). `SOURCE-BATCH-403+` should run fresh candidate discovery after `SOURCE-BATCH-402`.
