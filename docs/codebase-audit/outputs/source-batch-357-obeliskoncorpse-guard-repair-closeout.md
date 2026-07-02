@@ -34,4 +34,4 @@ Item metadata, `OnDragLift` delegation, `PlayerMobile` eligibility, Titan `StatC
 
 ## Commit
 
-`SOURCE-BATCH-357` is ready to commit as `fix: guard ObeliskOnCorpse interactions`. `SOURCE-BATCH-358+` should run fresh candidate discovery after the commit.
+`SOURCE-BATCH-357` committed as `0a6c9819` with message `fix: guard ObeliskOnCorpse interactions`. `SOURCE-BATCH-358+` should run fresh candidate discovery next.

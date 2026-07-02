@@ -3648,8 +3648,8 @@ To run a gated batch, provide explicit approval naming:
 
 - SOURCE-BATCH-357 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-357-candidate-discovery.csv.
 - SOURCE-BATCH-357 implemented the ObeliskOnCorpse guard repair in Data/Scripts/Quests/Pagan/ObeliskOnCorpse.cs.
-- SOURCE-BATCH-357 is closed pending commit hash update in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed.
+- SOURCE-BATCH-357 is closed with commit `0a6c9819` recorded in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv; verification passed.
 - The source-batch target is docs/codebase-audit/outputs/source-batch-357-target.md.
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-357-obeliskoncorpse-guard-repair-closeout.md.
-- SOURCE-BATCH-358+ should run fresh candidate discovery after SOURCE-BATCH-357 commits.
+- SOURCE-BATCH-358+ should run fresh candidate discovery after SOURCE-BATCH-357.
 - Gated roadmap batches remain blocked pending explicit approval.
