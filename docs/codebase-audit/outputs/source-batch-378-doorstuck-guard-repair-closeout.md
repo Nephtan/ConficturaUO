@@ -34,4 +34,4 @@ Door item ID/name, locked-door message text, valid-mobile message behavior, seri
 
 ## Commit
 
-`SOURCE-BATCH-378` commit is pending. `SOURCE-BATCH-379+` should run fresh candidate discovery after `SOURCE-BATCH-378`.
+`SOURCE-BATCH-378` committed as `03a05bc1`. `SOURCE-BATCH-379+` should run fresh candidate discovery after `SOURCE-BATCH-378`.

@@ -3858,7 +3858,7 @@ To run a gated batch, provide explicit approval naming:
 
 - SOURCE-BATCH-378 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-378-candidate-discovery.csv.
 - SOURCE-BATCH-378 implemented the DoorStuck guard repair in Data/Scripts/Items/Doors/DoorStuck.cs.
-- SOURCE-BATCH-378 verification passed; commit is pending.
+- SOURCE-BATCH-378 is closed as commit 03a05bc1 with verification passed.
 - The source-batch target is docs/codebase-audit/outputs/source-batch-378-target.md.
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-378-doorstuck-guard-repair-closeout.md.
 - SOURCE-BATCH-379+ should run fresh candidate discovery after SOURCE-BATCH-378.
