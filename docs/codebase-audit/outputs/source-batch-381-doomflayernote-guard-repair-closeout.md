@@ -34,4 +34,4 @@ DoomFlayerNote item ID/name/weight/hue, `ClueGump` text and layout, range requir
 
 ## Commit
 
-`SOURCE-BATCH-381` commit is pending. `SOURCE-BATCH-382+` should run fresh candidate discovery after `SOURCE-BATCH-381`.
+`SOURCE-BATCH-381` committed as `514c8bdb`. `SOURCE-BATCH-382+` should run fresh candidate discovery after `SOURCE-BATCH-381`.
