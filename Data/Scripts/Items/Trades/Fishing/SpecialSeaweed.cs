@@ -196,6 +196,17 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
+            if (from == null || from.Deleted || Deleted)
+                return;
+
+            if (from.Backpack == null)
+            {
+                from.SendMessage(
+                    "You need an empty bottle to drain the fluid from the seaweed."
+                );
+                return;
+            }
+
             if (from.CheckSkill(SkillName.Seafaring, SkillNeeded, 125))
             {
                 if (!from.Backpack.ConsumeTotal(typeof(Bottle), 1))
