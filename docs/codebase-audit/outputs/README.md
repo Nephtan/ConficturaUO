@@ -1531,3 +1531,7 @@ The Phase 0 baseline output, Phase 1 reproducible inventory outputs, Phase 2 pro
 | source-batch-376-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-376 discovery with recommended DDRelicDrink target and skipped candidate notes. | Complete |
 | source-batch-376-target.md | Source batches | Durable target for SOURCE-BATCH-376 DDRelicDrink guard repair, including fence result and unchanged behavior. | Complete |
 | source-batch-376-ddrelicdrink-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-376 with DDRelicDrink guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |
+| source-batch-377-candidate-discovery.csv | Source batches | Fresh SOURCE-BATCH-377 candidate discovery for a zero-gate, zero-overlay DDRelicOrbs guard repair. | Complete |
+| source-batch-377-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-377 discovery with recommended DDRelicOrbs target and skipped candidate notes. | Complete |
+| source-batch-377-target.md | Source batches | Durable target for SOURCE-BATCH-377 DDRelicOrbs guard repair, including fence result and unchanged behavior. | Complete |
+| source-batch-377-ddrelicorbs-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-377 with DDRelicOrbs guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |
