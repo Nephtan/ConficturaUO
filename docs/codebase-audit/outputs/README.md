@@ -1639,3 +1639,7 @@ The Phase 0 baseline output, Phase 1 reproducible inventory outputs, Phase 2 pro
 | source-batch-403-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-403 discovery with recommended ThrowingGloves target and skipped candidate notes. | Complete |
 | source-batch-403-target.md | Source batches | Durable target for SOURCE-BATCH-403 ThrowingGloves guard repair, including fence result and unchanged behavior. | Complete |
 | source-batch-403-throwinggloves-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-403 with ThrowingGloves guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |
+| source-batch-404-candidate-discovery.csv | Source batches | Fresh SOURCE-BATCH-404 candidate discovery for a zero-gate, zero-overlay LevelThrowingGloves guard repair. | Complete |
+| source-batch-404-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-404 discovery with recommended LevelThrowingGloves target and skipped candidate notes. | Complete |
+| source-batch-404-target.md | Source batches | Durable target for SOURCE-BATCH-404 LevelThrowingGloves guard repair, including fence result and unchanged behavior. | Complete |
+| source-batch-404-levelthrowinggloves-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-404 with LevelThrowingGloves guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |

@@ -4113,3 +4113,13 @@ To run a gated batch, provide explicit approval naming:
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-403-throwinggloves-guard-repair-closeout.md.
 - SOURCE-BATCH-404+ should run fresh candidate discovery after SOURCE-BATCH-403.
 - Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-404 Update
+
+- SOURCE-BATCH-404 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-404-candidate-discovery.csv.
+- SOURCE-BATCH-404 implemented the LevelThrowingGloves guard repair in Data/Scripts/Items/Magical/God/Weapons/LevelThrowingGloves.cs.
+- SOURCE-BATCH-404 source commit is pending; verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-404-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-404-levelthrowinggloves-guard-repair-closeout.md.
+- SOURCE-BATCH-405+ should run fresh candidate discovery after SOURCE-BATCH-404.
+- Gated roadmap batches remain blocked pending explicit approval.
