@@ -3623,3 +3623,13 @@ To run a gated batch, provide explicit approval naming:
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-354-museumbook-guard-repair-closeout.md.
 - SOURCE-BATCH-355+ should run fresh candidate discovery next.
 - Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-355 Update
+
+- SOURCE-BATCH-355 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-355-candidate-discovery.csv.
+- SOURCE-BATCH-355 implemented the ThiefNote guard repair in Data/Scripts/Quests/Thief/ThiefNote.cs.
+- SOURCE-BATCH-355 is closed pending commit hash update in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-355-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-355-thiefnote-guard-repair-closeout.md.
+- SOURCE-BATCH-356+ should run fresh candidate discovery after SOURCE-BATCH-355 commits.
+- Gated roadmap batches remain blocked pending explicit approval.

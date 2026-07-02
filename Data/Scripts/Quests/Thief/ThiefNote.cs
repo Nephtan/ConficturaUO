@@ -166,6 +166,9 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
+            if (from == null || from.Deleted || Deleted)
+                return;
+
             if (ThiefAllowed(from) != null)
             {
                 from.SendMessage(
@@ -174,7 +177,7 @@ namespace Server.Items
                         + " minutes."
                 );
             }
-            else if (!IsChildOf(from.Backpack))
+            else if (from.Backpack == null || !IsChildOf(from.Backpack))
             {
                 from.SendLocalizedMessage(1060640); // The item must be in your backpack to use it.
             }
