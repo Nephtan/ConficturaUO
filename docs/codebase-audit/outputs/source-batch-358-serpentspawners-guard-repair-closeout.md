@@ -35,4 +35,4 @@ Item metadata, item hues/names/weights, `BlackrockSerpentOrder` and `BlackrockSe
 
 ## Commit
 
-`SOURCE-BATCH-358` is ready to commit as `fix: guard SerpentSpawners interactions`. `SOURCE-BATCH-359+` should run fresh candidate discovery after the commit.
+`SOURCE-BATCH-358` committed as `b4e4a92b` with message `fix: guard SerpentSpawners interactions`. `SOURCE-BATCH-359+` should run fresh candidate discovery next.

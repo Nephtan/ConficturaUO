@@ -3658,8 +3658,8 @@ To run a gated batch, provide explicit approval naming:
 
 - SOURCE-BATCH-358 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-358-candidate-discovery.csv.
 - SOURCE-BATCH-358 implemented the SerpentSpawners guard repair in Data/Scripts/Quests/Serpents/SerpentSpawners.cs.
-- SOURCE-BATCH-358 is closed pending commit hash update in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed.
+- SOURCE-BATCH-358 is closed with commit `b4e4a92b` recorded in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv; verification passed.
 - The source-batch target is docs/codebase-audit/outputs/source-batch-358-target.md.
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-358-serpentspawners-guard-repair-closeout.md.
-- SOURCE-BATCH-359+ should run fresh candidate discovery after SOURCE-BATCH-358 commits.
+- SOURCE-BATCH-359+ should run fresh candidate discovery after SOURCE-BATCH-358.
 - Gated roadmap batches remain blocked pending explicit approval.
