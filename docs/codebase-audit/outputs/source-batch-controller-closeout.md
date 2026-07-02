@@ -4058,7 +4058,7 @@ To run a gated batch, provide explicit approval naming:
 
 - SOURCE-BATCH-398 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-398-candidate-discovery.csv.
 - SOURCE-BATCH-398 implemented the BaseHat cowl hood guard repair in Data/Scripts/Items/Clothing/Hats.cs.
-- SOURCE-BATCH-398 source commit is pending; verification passed.
+- SOURCE-BATCH-398 source commit is 183bf23c; verification passed.
 - The source-batch target is docs/codebase-audit/outputs/source-batch-398-target.md.
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-398-basehat-cowl-hood-guard-repair-closeout.md.
 - SOURCE-BATCH-399+ should run fresh candidate discovery after SOURCE-BATCH-398.

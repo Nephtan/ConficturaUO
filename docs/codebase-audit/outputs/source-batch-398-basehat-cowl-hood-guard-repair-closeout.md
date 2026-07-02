@@ -30,4 +30,4 @@
 
 ## Commit
 
-`SOURCE-BATCH-398` source commit is pending. `SOURCE-BATCH-399+` should run fresh candidate discovery after `SOURCE-BATCH-398`.
+`SOURCE-BATCH-398` source commit: `183bf23c` (`fix: guard BaseHat cowl hood interactions`). `SOURCE-BATCH-399+` should run fresh candidate discovery after `SOURCE-BATCH-398`.
