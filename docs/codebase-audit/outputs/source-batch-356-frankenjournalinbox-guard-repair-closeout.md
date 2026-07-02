@@ -34,4 +34,4 @@ Item metadata, `AddNameProperties` text, `PlayerMobile` eligibility, duplicate `
 
 ## Commit
 
-`SOURCE-BATCH-356` is ready to commit as `fix: guard FrankenJournalInBox interactions`. `SOURCE-BATCH-357+` should run fresh candidate discovery after the commit.
+`SOURCE-BATCH-356` committed as `6694a9a3` with message `fix: guard FrankenJournalInBox interactions`. `SOURCE-BATCH-357+` should run fresh candidate discovery next.

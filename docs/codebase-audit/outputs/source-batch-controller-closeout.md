@@ -3638,8 +3638,8 @@ To run a gated batch, provide explicit approval naming:
 
 - SOURCE-BATCH-356 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-356-candidate-discovery.csv.
 - SOURCE-BATCH-356 implemented the FrankenJournalInBox guard repair in Data/Scripts/Quests/Frankenstein/FrankenJournalInBox.cs.
-- SOURCE-BATCH-356 is closed pending commit hash update in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed.
+- SOURCE-BATCH-356 is closed with commit `6694a9a3` recorded in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv; verification passed.
 - The source-batch target is docs/codebase-audit/outputs/source-batch-356-target.md.
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-356-frankenjournalinbox-guard-repair-closeout.md.
-- SOURCE-BATCH-357+ should run fresh candidate discovery after SOURCE-BATCH-356 commits.
+- SOURCE-BATCH-357+ should run fresh candidate discovery after SOURCE-BATCH-356.
 - Gated roadmap batches remain blocked pending explicit approval.
