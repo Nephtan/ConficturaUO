@@ -3813,3 +3813,13 @@ To run a gated batch, provide explicit approval naming:
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-373-ddrelicscrolls-guard-repair-closeout.md.
 - SOURCE-BATCH-374+ should run fresh candidate discovery after SOURCE-BATCH-373.
 - Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-374 Update
+
+- SOURCE-BATCH-374 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-374-candidate-discovery.csv.
+- SOURCE-BATCH-374 implemented the DDRelicVase guard repair in Data/Scripts/Items/Relics/DDRelicVase.cs.
+- SOURCE-BATCH-374 verification passed; commit is pending.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-374-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-374-ddrelicvase-guard-repair-closeout.md.
+- SOURCE-BATCH-375+ should run fresh candidate discovery after SOURCE-BATCH-374.
+- Gated roadmap batches remain blocked pending explicit approval.
