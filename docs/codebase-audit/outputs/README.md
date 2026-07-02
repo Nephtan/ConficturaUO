@@ -1539,3 +1539,7 @@ The Phase 0 baseline output, Phase 1 reproducible inventory outputs, Phase 2 pro
 | source-batch-378-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-378 discovery with recommended DoorStuck target and skipped candidate notes. | Complete |
 | source-batch-378-target.md | Source batches | Durable target for SOURCE-BATCH-378 DoorStuck guard repair, including fence result and unchanged behavior. | Complete |
 | source-batch-378-doorstuck-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-378 with DoorStuck guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |
+| source-batch-379-candidate-discovery.csv | Source batches | Fresh SOURCE-BATCH-379 candidate discovery for a zero-gate, zero-overlay GypsyShelf guard repair. | Complete |
+| source-batch-379-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-379 discovery with recommended GypsyShelf target and skipped candidate notes. | Complete |
+| source-batch-379-target.md | Source batches | Durable target for SOURCE-BATCH-379 GypsyShelf guard repair, including fence result and unchanged behavior. | Complete |
+| source-batch-379-gypsyshelf-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-379 with GypsyShelf guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |

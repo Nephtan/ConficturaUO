@@ -3863,3 +3863,13 @@ To run a gated batch, provide explicit approval naming:
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-378-doorstuck-guard-repair-closeout.md.
 - SOURCE-BATCH-379+ should run fresh candidate discovery after SOURCE-BATCH-378.
 - Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-379 Update
+
+- SOURCE-BATCH-379 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-379-candidate-discovery.csv.
+- SOURCE-BATCH-379 implemented the GypsyShelf guard repair in Data/Scripts/Items/Containers/GypsyShelf.cs.
+- SOURCE-BATCH-379 verification passed; commit is pending.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-379-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-379-gypsyshelf-guard-repair-closeout.md.
+- SOURCE-BATCH-380+ should run fresh candidate discovery after SOURCE-BATCH-379.
+- Gated roadmap batches remain blocked pending explicit approval.
