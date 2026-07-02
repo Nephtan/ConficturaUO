@@ -51,6 +51,9 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
+            if (from == null || from.Deleted || Deleted)
+                return;
+
             if (!from.InRange(this.GetWorldLocation(), 2))
                 return;
             int val = Banker.GetBalance(from);
