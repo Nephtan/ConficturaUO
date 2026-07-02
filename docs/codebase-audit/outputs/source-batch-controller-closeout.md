@@ -3958,7 +3958,7 @@ To run a gated batch, provide explicit approval naming:
 
 - SOURCE-BATCH-388 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-388-candidate-discovery.csv.
 - SOURCE-BATCH-388 implemented the WetClothes guard repair in Data/Scripts/Items/Trades/Fishing/WetClothes.cs.
-- SOURCE-BATCH-388 verification passed and commit is pending.
+- SOURCE-BATCH-388 is closed as commit aa8ab2f1 with verification passed.
 - The source-batch target is docs/codebase-audit/outputs/source-batch-388-target.md.
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-388-wetclothes-guard-repair-closeout.md.
 - SOURCE-BATCH-389+ should run fresh candidate discovery after SOURCE-BATCH-388.

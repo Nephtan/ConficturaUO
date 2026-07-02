@@ -34,4 +34,4 @@ WetClothes randomized adjective, clothing type, item ID, hue, name, weight, sque
 
 ## Commit
 
-`SOURCE-BATCH-388` commit hash pending. `SOURCE-BATCH-389+` should run fresh candidate discovery after `SOURCE-BATCH-388`.
+`SOURCE-BATCH-388` committed as `aa8ab2f1`. `SOURCE-BATCH-389+` should run fresh candidate discovery after `SOURCE-BATCH-388`.
