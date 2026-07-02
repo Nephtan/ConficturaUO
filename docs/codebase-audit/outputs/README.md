@@ -1575,3 +1575,7 @@ The Phase 0 baseline output, Phase 1 reproducible inventory outputs, Phase 2 pro
 | source-batch-387-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-387 discovery with recommended MedicalRecord target and skipped candidate notes. | Complete |
 | source-batch-387-target.md | Source batches | Durable target for SOURCE-BATCH-387 MedicalRecord guard repair, including fence result and unchanged behavior. | Complete |
 | source-batch-387-medicalrecord-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-387 with MedicalRecord guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |
+| source-batch-388-candidate-discovery.csv | Source batches | Fresh SOURCE-BATCH-388 candidate discovery for a zero-gate, zero-overlay WetClothes guard repair. | Complete |
+| source-batch-388-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-388 discovery with recommended WetClothes target and skipped candidate notes. | Complete |
+| source-batch-388-target.md | Source batches | Durable target for SOURCE-BATCH-388 WetClothes guard repair, including fence result and unchanged behavior. | Complete |
+| source-batch-388-wetclothes-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-388 with WetClothes guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |
