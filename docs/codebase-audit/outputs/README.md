@@ -1507,3 +1507,7 @@ The Phase 0 baseline output, Phase 1 reproducible inventory outputs, Phase 2 pro
 | source-batch-370-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-370 discovery with recommended DDRelicLeather target and skipped candidate notes. | Complete |
 | source-batch-370-target.md | Source batches | Durable target for SOURCE-BATCH-370 DDRelicLeather guard repair, including fence result and unchanged behavior. | Complete |
 | source-batch-370-ddrelicleather-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-370 with DDRelicLeather guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |
+| source-batch-371-candidate-discovery.csv | Source batches | Fresh SOURCE-BATCH-371 candidate discovery for a zero-gate, zero-overlay DDRelicLight guard repair. | Complete |
+| source-batch-371-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-371 discovery with recommended DDRelicLight target and skipped candidate notes. | Complete |
+| source-batch-371-target.md | Source batches | Durable target for SOURCE-BATCH-371 DDRelicLight guard repair, including fence result and unchanged behavior. | Complete |
+| source-batch-371-ddreliclight-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-371 with DDRelicLight guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |
