@@ -28,4 +28,4 @@
 
 ## Commit
 
-`SOURCE-BATCH-401` source commit: pending. `SOURCE-BATCH-402+` should run fresh candidate discovery after `SOURCE-BATCH-401`.
+`SOURCE-BATCH-401` source commit: `18a59ad1` (`fix: guard BaseSword interactions`). `SOURCE-BATCH-402+` should run fresh candidate discovery after `SOURCE-BATCH-401`.
