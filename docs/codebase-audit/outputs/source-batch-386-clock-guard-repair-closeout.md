@@ -34,4 +34,4 @@ Clock item IDs, flipable variants, weight, server start initialization, time and
 
 ## Commit
 
-`SOURCE-BATCH-386` source commit is pending. `SOURCE-BATCH-387+` should run fresh candidate discovery after `SOURCE-BATCH-386`.
+`SOURCE-BATCH-386` committed as `2aa0c17e`. `SOURCE-BATCH-387+` should run fresh candidate discovery after `SOURCE-BATCH-386`.
