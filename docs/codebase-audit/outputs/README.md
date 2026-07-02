@@ -1627,3 +1627,7 @@ The Phase 0 baseline output, Phase 1 reproducible inventory outputs, Phase 2 pro
 | source-batch-400-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-400 discovery with recommended BaseKnife target and skipped candidate notes. | Complete |
 | source-batch-400-target.md | Source batches | Durable target for SOURCE-BATCH-400 BaseKnife guard repair, including fence result and unchanged behavior. | Complete |
 | source-batch-400-baseknife-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-400 with BaseKnife guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |
+| source-batch-401-candidate-discovery.csv | Source batches | Fresh SOURCE-BATCH-401 candidate discovery for a zero-gate, zero-overlay BaseSword guard repair. | Complete |
+| source-batch-401-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-401 discovery with recommended BaseSword target and skipped candidate notes. | Complete |
+| source-batch-401-target.md | Source batches | Durable target for SOURCE-BATCH-401 BaseSword guard repair, including fence result and unchanged behavior. | Complete |
+| source-batch-401-basesword-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-401 with BaseSword guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |

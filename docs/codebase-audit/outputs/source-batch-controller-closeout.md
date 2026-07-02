@@ -4083,3 +4083,13 @@ To run a gated batch, provide explicit approval naming:
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-400-baseknife-guard-repair-closeout.md.
 - SOURCE-BATCH-401+ should run fresh candidate discovery after SOURCE-BATCH-400.
 - Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-401 Update
+
+- SOURCE-BATCH-401 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-401-candidate-discovery.csv.
+- SOURCE-BATCH-401 implemented the BaseSword guard repair in Data/Scripts/Items/Weapons/Swords/BaseSword.cs.
+- SOURCE-BATCH-401 source commit is pending; verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-401-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-401-basesword-guard-repair-closeout.md.
+- SOURCE-BATCH-402+ should run fresh candidate discovery after SOURCE-BATCH-401.
+- Gated roadmap batches remain blocked pending explicit approval.
