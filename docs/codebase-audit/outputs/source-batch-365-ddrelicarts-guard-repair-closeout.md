@@ -34,4 +34,4 @@
 
 ## Commit
 
-`SOURCE-BATCH-365` commit is pending. `SOURCE-BATCH-366+` should run fresh candidate discovery after `SOURCE-BATCH-365`.
+`SOURCE-BATCH-365` committed as `23febd1b` (`fix: guard DDRelicArts interactions`). `SOURCE-BATCH-366+` should run fresh candidate discovery.
