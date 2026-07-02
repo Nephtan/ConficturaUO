@@ -35,4 +35,4 @@ Item metadata, `NoteOwner` behavior, cooldown timing/message behavior, localized
 
 ## Commit
 
-`SOURCE-BATCH-355` is ready to commit as `fix: guard ThiefNote interactions`. `SOURCE-BATCH-356+` should run fresh candidate discovery after the commit.
+`SOURCE-BATCH-355` committed as `8b73bee4` with message `fix: guard ThiefNote interactions`. `SOURCE-BATCH-356+` should run fresh candidate discovery next.
