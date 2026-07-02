@@ -1435,3 +1435,7 @@ The Phase 0 baseline output, Phase 1 reproducible inventory outputs, Phase 2 pro
 | source-batch-352-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-352 discovery with recommended SpecialSeaweed target and skipped candidate notes. | Complete |
 | source-batch-352-target.md | Source batches | Durable target for SOURCE-BATCH-352 SpecialSeaweed guard repair, including fence result and unchanged behavior. | Complete |
 | source-batch-352-specialseaweed-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-352 with SpecialSeaweed guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |
+| source-batch-353-candidate-discovery.csv | Source batches | Fresh SOURCE-BATCH-353 candidate discovery for a zero-gate, zero-overlay ObeliskTip guard repair. | Complete |
+| source-batch-353-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-353 discovery with recommended ObeliskTip target and skipped candidate notes. | Complete |
+| source-batch-353-target.md | Source batches | Durable target for SOURCE-BATCH-353 ObeliskTip guard repair, including fence result and unchanged behavior. | Complete |
+| source-batch-353-obelisktip-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-353 with ObeliskTip guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |
