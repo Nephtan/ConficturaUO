@@ -3698,8 +3698,8 @@ To run a gated batch, provide explicit approval naming:
 
 - SOURCE-BATCH-362 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-362-candidate-discovery.csv.
 - SOURCE-BATCH-362 implemented the SearchBook guard repair in Data/Scripts/Quests/Search/SearchBook.cs.
-- SOURCE-BATCH-362 is closed pending commit hash update in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed.
+- SOURCE-BATCH-362 is closed as commit afd987f0 with verification passed.
 - The source-batch target is docs/codebase-audit/outputs/source-batch-362-target.md.
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-362-searchbook-guard-repair-closeout.md.
-- SOURCE-BATCH-363+ should run fresh candidate discovery after SOURCE-BATCH-362 commits.
+- SOURCE-BATCH-363+ should run fresh candidate discovery after SOURCE-BATCH-362.
 - Gated roadmap batches remain blocked pending explicit approval.

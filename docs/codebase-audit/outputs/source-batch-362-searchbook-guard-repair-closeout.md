@@ -35,4 +35,4 @@ Owner assignment, `LegendLore`, `AddNameProperties` text, backpack-use message, 
 
 ## Commit
 
-`SOURCE-BATCH-362` is ready to commit as `fix: guard SearchBook interactions`. `SOURCE-BATCH-363+` should run fresh candidate discovery after the commit.
+`SOURCE-BATCH-362` committed as `afd987f0` (`fix: guard SearchBook interactions`). `SOURCE-BATCH-363+` should run fresh candidate discovery.
