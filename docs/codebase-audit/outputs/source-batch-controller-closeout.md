@@ -3778,7 +3778,7 @@ To run a gated batch, provide explicit approval naming:
 
 - SOURCE-BATCH-370 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-370-candidate-discovery.csv.
 - SOURCE-BATCH-370 implemented the DDRelicLeather guard repair in Data/Scripts/Items/Relics/DDRelicLeather.cs.
-- SOURCE-BATCH-370 verification passed; commit is pending.
+- SOURCE-BATCH-370 is closed as commit 44e42eaa with verification passed.
 - The source-batch target is docs/codebase-audit/outputs/source-batch-370-target.md.
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-370-ddrelicleather-guard-repair-closeout.md.
 - SOURCE-BATCH-371+ should run fresh candidate discovery after SOURCE-BATCH-370.

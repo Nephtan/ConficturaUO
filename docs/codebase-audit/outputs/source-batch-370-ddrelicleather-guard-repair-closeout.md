@@ -34,4 +34,4 @@
 
 ## Commit
 
-`SOURCE-BATCH-370` commit is pending. `SOURCE-BATCH-371+` should run fresh candidate discovery after `SOURCE-BATCH-370`.
+`SOURCE-BATCH-370` committed as `44e42eaa`. `SOURCE-BATCH-371+` should run fresh candidate discovery after `SOURCE-BATCH-370`.
