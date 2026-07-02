@@ -3878,7 +3878,7 @@ To run a gated batch, provide explicit approval naming:
 
 - SOURCE-BATCH-380 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-380-candidate-discovery.csv.
 - SOURCE-BATCH-380 implemented the Safe guard repair in Data/Scripts/Items/Containers/Safe.cs.
-- SOURCE-BATCH-380 verification passed; commit is pending.
+- SOURCE-BATCH-380 is closed as commit e970df96 with verification passed.
 - The source-batch target is docs/codebase-audit/outputs/source-batch-380-target.md.
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-380-safe-guard-repair-closeout.md.
 - SOURCE-BATCH-381+ should run fresh candidate discovery after SOURCE-BATCH-380.

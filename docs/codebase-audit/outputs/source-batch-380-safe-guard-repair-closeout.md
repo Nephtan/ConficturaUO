@@ -35,4 +35,4 @@ Safe item ID/name/weight, movable-secured failure message, range/visibility/line
 
 ## Commit
 
-`SOURCE-BATCH-380` commit is pending. `SOURCE-BATCH-381+` should run fresh candidate discovery after `SOURCE-BATCH-380`.
+`SOURCE-BATCH-380` committed as `e970df96`. `SOURCE-BATCH-381+` should run fresh candidate discovery after `SOURCE-BATCH-380`.
