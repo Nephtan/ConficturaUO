@@ -1599,3 +1599,7 @@ The Phase 0 baseline output, Phase 1 reproducible inventory outputs, Phase 2 pro
 | source-batch-393-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-393 discovery with recommended PlayersHandbook target and skipped candidate notes. | Complete |
 | source-batch-393-target.md | Source batches | Durable target for SOURCE-BATCH-393 PlayersHandbook guard repair, including fence result and unchanged behavior. | Complete |
 | source-batch-393-playershandbook-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-393 with PlayersHandbook guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |
+| source-batch-394-candidate-discovery.csv | Source batches | Fresh SOURCE-BATCH-394 candidate discovery for a zero-gate, zero-overlay MonsterManual guard repair. | Complete |
+| source-batch-394-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-394 discovery with recommended MonsterManual target and skipped candidate notes. | Complete |
+| source-batch-394-target.md | Source batches | Durable target for SOURCE-BATCH-394 MonsterManual guard repair, including fence result and unchanged behavior. | Complete |
+| source-batch-394-monstermanual-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-394 with MonsterManual guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |

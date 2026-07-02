@@ -29,6 +29,9 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
+            if (from == null || from.Deleted || Deleted)
+                return;
+
             from.SendMessage("What creature do you want to look up?");
             Target t = new BookTarget(this);
             from.Target = t;
@@ -47,6 +50,17 @@ namespace Server.Items
 
             protected override void OnTarget(Mobile from, object targeted)
             {
+                if (from == null || from.Deleted || m_Book == null || m_Book.Deleted)
+                    return;
+
+                Mobile mobile = targeted as Mobile;
+
+                if (mobile != null && mobile.Deleted)
+                {
+                    from.SendMessage("That doesn't seem to be in this book.");
+                    return;
+                }
+
                 if (targeted is PlayerMobile)
                 {
                     from.SendMessage("You would probably need the Players Handbook for that.");
