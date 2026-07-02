@@ -38,4 +38,4 @@
 
 ## Result
 
-`SOURCE-BATCH-351` is ready to commit as `fix: guard HighSeasRelic interactions`. `SOURCE-BATCH-352+` should run fresh candidate discovery after the commit.
+`SOURCE-BATCH-351` was committed as `7eaca282` with `fix: guard HighSeasRelic interactions`. `SOURCE-BATCH-352+` should run fresh candidate discovery next.

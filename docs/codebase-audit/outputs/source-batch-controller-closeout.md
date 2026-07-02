@@ -3588,8 +3588,8 @@ To run a gated batch, provide explicit approval naming:
 
 - SOURCE-BATCH-351 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-351-candidate-discovery.csv.
 - SOURCE-BATCH-351 implemented the HighSeasRelic guard repair in Data/Scripts/Items/Trades/Fishing/HighSeasRelic.cs.
-- SOURCE-BATCH-351 is closed pending commit hash update in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed.
+- SOURCE-BATCH-351 is closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and committed as 7eaca282.
 - The source-batch target is docs/codebase-audit/outputs/source-batch-351-target.md.
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-351-highseasrelic-guard-repair-closeout.md.
-- SOURCE-BATCH-352+ should run fresh candidate discovery after SOURCE-BATCH-351 commits.
+- SOURCE-BATCH-352+ should run fresh candidate discovery next.
 - Gated roadmap batches remain blocked pending explicit approval.
