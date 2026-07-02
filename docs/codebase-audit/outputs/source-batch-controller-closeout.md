@@ -4073,3 +4073,13 @@ To run a gated batch, provide explicit approval naming:
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-399-sextant-guard-repair-closeout.md.
 - SOURCE-BATCH-400+ should run fresh candidate discovery after SOURCE-BATCH-399.
 - Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-400 Update
+
+- SOURCE-BATCH-400 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-400-candidate-discovery.csv.
+- SOURCE-BATCH-400 implemented the BaseKnife guard repair in Data/Scripts/Items/Weapons/Knives/BaseKnife.cs.
+- SOURCE-BATCH-400 source commit is pending; verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-400-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-400-baseknife-guard-repair-closeout.md.
+- SOURCE-BATCH-401+ should run fresh candidate discovery after SOURCE-BATCH-400.
+- Gated roadmap batches remain blocked pending explicit approval.
