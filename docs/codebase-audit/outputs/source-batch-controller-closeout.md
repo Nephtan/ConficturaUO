@@ -4008,7 +4008,7 @@ To run a gated batch, provide explicit approval naming:
 
 - SOURCE-BATCH-393 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-393-candidate-discovery.csv.
 - SOURCE-BATCH-393 implemented the PlayersHandbook guard repair in Data/Scripts/Items/Misc/Games/DandD/PlayersHandbook.cs.
-- SOURCE-BATCH-393 source commit is pending; verification passed.
+- SOURCE-BATCH-393 is closed as commit 3e87c803 with verification passed.
 - The source-batch target is docs/codebase-audit/outputs/source-batch-393-target.md.
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-393-playershandbook-guard-repair-closeout.md.
 - SOURCE-BATCH-394+ should run fresh candidate discovery after SOURCE-BATCH-393.

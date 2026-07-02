@@ -36,4 +36,4 @@ PlayersHandbook item ID, name, weight, Dungeons & Dragons property label, target
 
 ## Commit
 
-`SOURCE-BATCH-393` source commit is pending. `SOURCE-BATCH-394+` should run fresh candidate discovery after `SOURCE-BATCH-393`.
+`SOURCE-BATCH-393` committed as `3e87c803`. `SOURCE-BATCH-394+` should run fresh candidate discovery after `SOURCE-BATCH-393`.
