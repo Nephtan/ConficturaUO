@@ -242,6 +242,9 @@ namespace Server.Engines.Mahjong
 
         public override void OnDoubleClick(Mobile from)
         {
+            if (from == null || from.Deleted || Deleted)
+                return;
+
             m_Players.CheckPlayers();
 
             m_Players.Join(from);

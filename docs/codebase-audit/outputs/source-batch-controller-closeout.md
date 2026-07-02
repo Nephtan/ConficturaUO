@@ -3993,3 +3993,13 @@ To run a gated batch, provide explicit approval naming:
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-391-liarsdice-guard-repair-closeout.md.
 - SOURCE-BATCH-392+ should run fresh candidate discovery after SOURCE-BATCH-391.
 - Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-392 Update
+
+- SOURCE-BATCH-392 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-392-candidate-discovery.csv.
+- SOURCE-BATCH-392 implemented the MahjongGame guard repair in Data/Scripts/Items/Misc/Games/Mahjong/MahjongGame.cs.
+- SOURCE-BATCH-392 source commit is pending; verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-392-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-392-mahjonggame-guard-repair-closeout.md.
+- SOURCE-BATCH-393+ should run fresh candidate discovery after SOURCE-BATCH-392.
+- Gated roadmap batches remain blocked pending explicit approval.
