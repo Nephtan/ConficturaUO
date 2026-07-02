@@ -34,4 +34,4 @@ HalloweenMaiden item IDs `0x124B` and `0x1249`, `Name = "Iron Maiden"`, `Weight 
 
 ## Commit
 
-`SOURCE-BATCH-389` commit hash pending. `SOURCE-BATCH-390+` should run fresh candidate discovery after `SOURCE-BATCH-389`.
+`SOURCE-BATCH-389` committed as `15e86646`. `SOURCE-BATCH-390+` should run fresh candidate discovery after `SOURCE-BATCH-389`.

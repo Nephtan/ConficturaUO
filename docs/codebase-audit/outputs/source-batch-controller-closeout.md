@@ -3968,7 +3968,7 @@ To run a gated batch, provide explicit approval naming:
 
 - SOURCE-BATCH-389 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-389-candidate-discovery.csv.
 - SOURCE-BATCH-389 implemented the HalloweenMaiden guard repair in Data/Scripts/Items/Gifts/Holiday/Halloween/Rewards/HalloweenMaiden.cs.
-- SOURCE-BATCH-389 verification passed and commit is pending.
+- SOURCE-BATCH-389 is closed as commit 15e86646 with verification passed.
 - The source-batch target is docs/codebase-audit/outputs/source-batch-389-target.md.
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-389-halloweenmaiden-guard-repair-closeout.md.
 - SOURCE-BATCH-390+ should run fresh candidate discovery after SOURCE-BATCH-389.
