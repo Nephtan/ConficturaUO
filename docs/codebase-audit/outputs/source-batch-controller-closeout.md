@@ -4033,3 +4033,13 @@ To run a gated batch, provide explicit approval naming:
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-395-tarot-guard-repair-closeout.md.
 - SOURCE-BATCH-396+ should run fresh candidate discovery after SOURCE-BATCH-395.
 - Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-396 Update
+
+- SOURCE-BATCH-396 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-396-candidate-discovery.csv.
+- SOURCE-BATCH-396 implemented the Tarot Poker guard repair in Data/Scripts/Items/Misc/Games/tarotpoker.cs.
+- SOURCE-BATCH-396 source commit is pending; verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-396-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-396-tarotpoker-guard-repair-closeout.md.
+- SOURCE-BATCH-397+ should run fresh candidate discovery after SOURCE-BATCH-396.
+- Gated roadmap batches remain blocked pending explicit approval.
