@@ -28,4 +28,4 @@
 
 ## Commit
 
-`SOURCE-BATCH-399` source commit: pending. `SOURCE-BATCH-400+` should run fresh candidate discovery after `SOURCE-BATCH-399`.
+`SOURCE-BATCH-399` source commit: `86cf559a` (`fix: guard Sextant interactions`). `SOURCE-BATCH-400+` should run fresh candidate discovery after `SOURCE-BATCH-399`.

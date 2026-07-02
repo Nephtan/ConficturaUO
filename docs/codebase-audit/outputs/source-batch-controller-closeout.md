@@ -4068,7 +4068,7 @@ To run a gated batch, provide explicit approval naming:
 
 - SOURCE-BATCH-399 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-399-candidate-discovery.csv.
 - SOURCE-BATCH-399 implemented the Sextant guard repair in Data/Scripts/Items/Trades/Fishing/Misc/Sextant.cs.
-- SOURCE-BATCH-399 source commit is pending; verification passed.
+- SOURCE-BATCH-399 source commit is 86cf559a; verification passed.
 - The source-batch target is docs/codebase-audit/outputs/source-batch-399-target.md.
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-399-sextant-guard-repair-closeout.md.
 - SOURCE-BATCH-400+ should run fresh candidate discovery after SOURCE-BATCH-399.
