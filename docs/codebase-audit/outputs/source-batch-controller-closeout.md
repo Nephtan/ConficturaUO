@@ -3618,8 +3618,8 @@ To run a gated batch, provide explicit approval naming:
 
 - SOURCE-BATCH-354 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-354-candidate-discovery.csv.
 - SOURCE-BATCH-354 implemented the MuseumBook guard repair in Data/Scripts/Quests/Museum/MuseumBook.cs.
-- SOURCE-BATCH-354 is closed pending commit hash update in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed.
+- SOURCE-BATCH-354 is closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and committed as 464c8bf3.
 - The source-batch target is docs/codebase-audit/outputs/source-batch-354-target.md.
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-354-museumbook-guard-repair-closeout.md.
-- SOURCE-BATCH-355+ should run fresh candidate discovery after SOURCE-BATCH-354 commits.
+- SOURCE-BATCH-355+ should run fresh candidate discovery next.
 - Gated roadmap batches remain blocked pending explicit approval.

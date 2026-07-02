@@ -34,4 +34,4 @@ Item ID, Hue, Name, `ArtOwner` assignment/check behavior, ownership denial messa
 
 ## Commit
 
-`SOURCE-BATCH-354` is ready to commit as `fix: guard MuseumBook interactions` after verification passes. `SOURCE-BATCH-355+` should run fresh candidate discovery after the commit.
+`SOURCE-BATCH-354` was committed as `464c8bf3` with `fix: guard MuseumBook interactions`. `SOURCE-BATCH-355+` should run fresh candidate discovery next.
