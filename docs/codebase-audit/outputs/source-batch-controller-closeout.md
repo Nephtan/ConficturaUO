@@ -4063,3 +4063,13 @@ To run a gated batch, provide explicit approval naming:
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-398-basehat-cowl-hood-guard-repair-closeout.md.
 - SOURCE-BATCH-399+ should run fresh candidate discovery after SOURCE-BATCH-398.
 - Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-399 Update
+
+- SOURCE-BATCH-399 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-399-candidate-discovery.csv.
+- SOURCE-BATCH-399 implemented the Sextant guard repair in Data/Scripts/Items/Trades/Fishing/Misc/Sextant.cs.
+- SOURCE-BATCH-399 source commit is pending; verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-399-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-399-sextant-guard-repair-closeout.md.
+- SOURCE-BATCH-400+ should run fresh candidate discovery after SOURCE-BATCH-399.
+- Gated roadmap batches remain blocked pending explicit approval.

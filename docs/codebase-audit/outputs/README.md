@@ -1619,3 +1619,7 @@ The Phase 0 baseline output, Phase 1 reproducible inventory outputs, Phase 2 pro
 | source-batch-398-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-398 discovery with recommended BaseHat target and skipped candidate notes. | Complete |
 | source-batch-398-target.md | Source batches | Durable target for SOURCE-BATCH-398 BaseHat cowl hood guard repair, including fence result and unchanged behavior. | Complete |
 | source-batch-398-basehat-cowl-hood-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-398 with BaseHat cowl hood guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |
+| source-batch-399-candidate-discovery.csv | Source batches | Fresh SOURCE-BATCH-399 candidate discovery for a zero-gate, zero-overlay Sextant guard repair. | Complete |
+| source-batch-399-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-399 discovery with recommended Sextant target and skipped candidate notes. | Complete |
+| source-batch-399-target.md | Source batches | Durable target for SOURCE-BATCH-399 Sextant guard repair, including fence result and unchanged behavior. | Complete |
+| source-batch-399-sextant-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-399 with Sextant guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |
