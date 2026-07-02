@@ -36,4 +36,4 @@ StatusBoard item ID/name/weight/hue, range requirement, localized too-far messag
 
 ## Commit
 
-`SOURCE-BATCH-385` source commit is pending. `SOURCE-BATCH-386+` should run fresh candidate discovery after `SOURCE-BATCH-385`.
+`SOURCE-BATCH-385` committed as `def3fe0e`. `SOURCE-BATCH-386+` should run fresh candidate discovery after `SOURCE-BATCH-385`.
