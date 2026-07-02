@@ -34,4 +34,4 @@ MahjongGame item ID, name, weight, `MahjongPlayers` initialization, context menu
 
 ## Commit
 
-`SOURCE-BATCH-392` source commit is pending. `SOURCE-BATCH-393+` should run fresh candidate discovery after `SOURCE-BATCH-392`.
+`SOURCE-BATCH-392` committed as `4059e74b`. `SOURCE-BATCH-393+` should run fresh candidate discovery after `SOURCE-BATCH-392`.
