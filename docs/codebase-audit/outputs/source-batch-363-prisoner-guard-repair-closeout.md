@@ -34,4 +34,4 @@ Prisoner randomized setup, `PrisonerReward`, `PrisonerJoin`, `PrisonerType`, `Pr
 
 ## Commit
 
-`SOURCE-BATCH-363` is ready to commit as `fix: guard Prisoner interactions`. `SOURCE-BATCH-364+` should run fresh candidate discovery after the commit.
+`SOURCE-BATCH-363` committed as `5af0a66a` (`fix: guard Prisoner interactions`). `SOURCE-BATCH-364+` should run fresh candidate discovery.
