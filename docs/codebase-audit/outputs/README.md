@@ -1471,3 +1471,7 @@ The Phase 0 baseline output, Phase 1 reproducible inventory outputs, Phase 2 pro
 | source-batch-361-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-361 discovery with recommended PaganArtifact target and skipped candidate notes. | Complete |
 | source-batch-361-target.md | Source batches | Durable target for SOURCE-BATCH-361 PaganArtifact guard repair, including fence result and unchanged behavior. | Complete |
 | source-batch-361-paganartifact-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-361 with PaganArtifact guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |
+| source-batch-362-candidate-discovery.csv | Source batches | Fresh SOURCE-BATCH-362 candidate discovery for a zero-gate, zero-overlay SearchBook guard repair. | Complete |
+| source-batch-362-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-362 discovery with recommended SearchBook target and skipped candidate notes. | Complete |
+| source-batch-362-target.md | Source batches | Durable target for SOURCE-BATCH-362 SearchBook guard repair, including fence result and unchanged behavior. | Complete |
+| source-batch-362-searchbook-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-362 with SearchBook guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |
