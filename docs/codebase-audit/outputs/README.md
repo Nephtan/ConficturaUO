@@ -1463,3 +1463,7 @@ The Phase 0 baseline output, Phase 1 reproducible inventory outputs, Phase 2 pro
 | source-batch-359-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-359 discovery with recommended Museums target and skipped candidate notes. | Complete |
 | source-batch-359-target.md | Source batches | Durable target for SOURCE-BATCH-359 Museums guard repair, including fence result and unchanged behavior. | Complete |
 | source-batch-359-museums-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-359 with Museums guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |
+| source-batch-360-candidate-discovery.csv | Source batches | Fresh SOURCE-BATCH-360 candidate discovery for a zero-gate, zero-overlay QuestChests guard repair. | Complete |
+| source-batch-360-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-360 discovery with recommended QuestChests target and skipped candidate notes. | Complete |
+| source-batch-360-target.md | Source batches | Durable target for SOURCE-BATCH-360 QuestChests guard repair, including fence result and unchanged behavior. | Complete |
+| source-batch-360-questchests-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-360 with QuestChests guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |
