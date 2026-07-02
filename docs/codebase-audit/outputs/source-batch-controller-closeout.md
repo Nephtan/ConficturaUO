@@ -3868,7 +3868,7 @@ To run a gated batch, provide explicit approval naming:
 
 - SOURCE-BATCH-379 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-379-candidate-discovery.csv.
 - SOURCE-BATCH-379 implemented the GypsyShelf guard repair in Data/Scripts/Items/Containers/GypsyShelf.cs.
-- SOURCE-BATCH-379 verification passed; commit is pending.
+- SOURCE-BATCH-379 is closed as commit b59794bf with verification passed.
 - The source-batch target is docs/codebase-audit/outputs/source-batch-379-target.md.
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-379-gypsyshelf-guard-repair-closeout.md.
 - SOURCE-BATCH-380+ should run fresh candidate discovery after SOURCE-BATCH-379.

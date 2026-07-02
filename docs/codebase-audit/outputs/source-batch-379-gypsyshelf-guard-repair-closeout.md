@@ -34,4 +34,4 @@ Shelf item ID/name, duplicate-book message, `GetRidOf` behavior, `BookGuideToAdv
 
 ## Commit
 
-`SOURCE-BATCH-379` commit is pending. `SOURCE-BATCH-380+` should run fresh candidate discovery after `SOURCE-BATCH-379`.
+`SOURCE-BATCH-379` committed as `b59794bf`. `SOURCE-BATCH-380+` should run fresh candidate discovery after `SOURCE-BATCH-379`.
