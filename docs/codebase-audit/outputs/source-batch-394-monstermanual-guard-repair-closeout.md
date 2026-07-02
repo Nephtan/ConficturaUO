@@ -36,4 +36,4 @@ MonsterManual item ID, name, weight, Dungeons & Dragons property label, target r
 
 ## Commit
 
-`SOURCE-BATCH-394` source commit is pending. `SOURCE-BATCH-395+` should run fresh candidate discovery after `SOURCE-BATCH-394`.
+`SOURCE-BATCH-394` committed as `aacd93c9`. `SOURCE-BATCH-395+` should run fresh candidate discovery after `SOURCE-BATCH-394`.

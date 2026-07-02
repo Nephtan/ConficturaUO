@@ -4018,7 +4018,7 @@ To run a gated batch, provide explicit approval naming:
 
 - SOURCE-BATCH-394 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-394-candidate-discovery.csv.
 - SOURCE-BATCH-394 implemented the MonsterManual guard repair in Data/Scripts/Items/Misc/Games/DandD/MonsterManual.cs.
-- SOURCE-BATCH-394 source commit is pending; verification passed.
+- SOURCE-BATCH-394 is closed as commit aacd93c9 with verification passed.
 - The source-batch target is docs/codebase-audit/outputs/source-batch-394-target.md.
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-394-monstermanual-guard-repair-closeout.md.
 - SOURCE-BATCH-395+ should run fresh candidate discovery after SOURCE-BATCH-394.
