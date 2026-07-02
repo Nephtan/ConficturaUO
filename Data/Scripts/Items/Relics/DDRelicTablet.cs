@@ -490,6 +490,9 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile e)
         {
+            if (e == null || e.Deleted || Deleted)
+                return;
+
             bool CanFlip = true;
 
             BaseHouse house = BaseHouse.FindHouseAt(this);
