@@ -206,6 +206,9 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
+            if (from == null || from.Deleted || Deleted)
+                return;
+
             from.CloseGump(typeof(TarotGump));
             int MyFortune = Utility.Random(22);
 
@@ -309,6 +312,9 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
+            if (from == null || from.Deleted || Deleted)
+                return;
+
             switch (((Item)this).ItemID)
             {
                 case 0x12AB: // Closed north

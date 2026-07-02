@@ -1603,3 +1603,7 @@ The Phase 0 baseline output, Phase 1 reproducible inventory outputs, Phase 2 pro
 | source-batch-394-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-394 discovery with recommended MonsterManual target and skipped candidate notes. | Complete |
 | source-batch-394-target.md | Source batches | Durable target for SOURCE-BATCH-394 MonsterManual guard repair, including fence result and unchanged behavior. | Complete |
 | source-batch-394-monstermanual-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-394 with MonsterManual guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |
+| source-batch-395-candidate-discovery.csv | Source batches | Fresh SOURCE-BATCH-395 candidate discovery for a zero-gate, zero-overlay Tarot guard repair. | Complete |
+| source-batch-395-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-395 discovery with recommended Tarot target and skipped candidate notes. | Complete |
+| source-batch-395-target.md | Source batches | Durable target for SOURCE-BATCH-395 Tarot guard repair, including fence result and unchanged behavior. | Complete |
+| source-batch-395-tarot-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-395 with Tarot guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |
