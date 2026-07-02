@@ -21,11 +21,17 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile m)
         {
+            if (m == null || m.Deleted || Deleted)
+                return;
+
             m.SendMessage("This door seems to be locked from the other side.");
         }
 
         public override void OnDoubleClickDead(Mobile m)
         {
+            if (m == null || m.Deleted || Deleted)
+                return;
+
             m.SendMessage("This door seems to be locked from the other side.");
         }
 
