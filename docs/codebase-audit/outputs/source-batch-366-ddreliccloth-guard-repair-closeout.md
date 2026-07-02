@@ -34,4 +34,4 @@
 
 ## Commit
 
-`SOURCE-BATCH-366` commit is pending. `SOURCE-BATCH-367+` should run fresh candidate discovery after `SOURCE-BATCH-366`.
+`SOURCE-BATCH-366` committed as `f4fd5b15` (`fix: guard DDRelicCloth interactions`). `SOURCE-BATCH-367+` should run fresh candidate discovery.
