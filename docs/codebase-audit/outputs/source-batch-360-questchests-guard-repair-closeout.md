@@ -34,4 +34,4 @@ Quest chest/book item IDs, names, hues, `Movable` settings, BardsTale and key fl
 
 ## Commit
 
-`SOURCE-BATCH-360` is ready to commit as `fix: guard QuestChests interactions`. `SOURCE-BATCH-361+` should run fresh candidate discovery after the commit.
+`SOURCE-BATCH-360` committed as `2087cb74` (`fix: guard QuestChests interactions`). `SOURCE-BATCH-361+` should run fresh candidate discovery.

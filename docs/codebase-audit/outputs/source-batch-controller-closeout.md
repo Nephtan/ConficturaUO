@@ -3678,8 +3678,8 @@ To run a gated batch, provide explicit approval naming:
 
 - SOURCE-BATCH-360 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-360-candidate-discovery.csv.
 - SOURCE-BATCH-360 implemented the QuestChests guard repair in Data/Scripts/Quests/QuestChests.cs.
-- SOURCE-BATCH-360 is closed pending commit hash update in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed.
+- SOURCE-BATCH-360 is closed as commit 2087cb74 with verification passed.
 - The source-batch target is docs/codebase-audit/outputs/source-batch-360-target.md.
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-360-questchests-guard-repair-closeout.md.
-- SOURCE-BATCH-361+ should run fresh candidate discovery after SOURCE-BATCH-360 commits.
+- SOURCE-BATCH-361+ should run fresh candidate discovery after SOURCE-BATCH-360.
 - Gated roadmap batches remain blocked pending explicit approval.
