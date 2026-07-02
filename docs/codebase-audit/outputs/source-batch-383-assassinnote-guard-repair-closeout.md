@@ -34,4 +34,4 @@ AssassinNote item ID/name/weight/hue, `LetterMessage` persistence, `KillGump` te
 
 ## Commit
 
-`SOURCE-BATCH-383` commit is pending. `SOURCE-BATCH-384+` should run fresh candidate discovery after `SOURCE-BATCH-383`.
+`SOURCE-BATCH-383` committed as `a1df70a0`. `SOURCE-BATCH-384+` should run fresh candidate discovery after `SOURCE-BATCH-383`.
