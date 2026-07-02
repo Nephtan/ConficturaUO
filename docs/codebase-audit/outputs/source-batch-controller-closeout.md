@@ -3583,3 +3583,13 @@ To run a gated batch, provide explicit approval naming:
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-350-shardofcowardice-guard-repair-closeout.md.
 - SOURCE-BATCH-351+ should run fresh candidate discovery because the deferred sibling queue is exhausted.
 - Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-351 Update
+
+- SOURCE-BATCH-351 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-351-candidate-discovery.csv.
+- SOURCE-BATCH-351 implemented the HighSeasRelic guard repair in Data/Scripts/Items/Trades/Fishing/HighSeasRelic.cs.
+- SOURCE-BATCH-351 is closed pending commit hash update in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-351-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-351-highseasrelic-guard-repair-closeout.md.
+- SOURCE-BATCH-352+ should run fresh candidate discovery after SOURCE-BATCH-351 commits.
+- Gated roadmap batches remain blocked pending explicit approval.
