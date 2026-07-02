@@ -34,4 +34,4 @@ tarotpoker item IDs, `Flipable` behavior, name, weight, `Stackable = false`, `Is
 
 ## Commit
 
-`SOURCE-BATCH-396` source commit is pending. `SOURCE-BATCH-397+` should run fresh candidate discovery after `SOURCE-BATCH-396`.
+`SOURCE-BATCH-396` source commit: `c78f2bed` (`fix: guard Tarot Poker interactions`). `SOURCE-BATCH-397+` should run fresh candidate discovery after `SOURCE-BATCH-396`.
