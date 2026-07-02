@@ -35,4 +35,4 @@ BardsTaleNote randomized item ID/name/hue/weight, clue message choices, `ScrollM
 
 ## Commit
 
-`SOURCE-BATCH-382` commit is pending. `SOURCE-BATCH-383+` should run fresh candidate discovery after `SOURCE-BATCH-382`.
+`SOURCE-BATCH-382` committed as `e35abb78`. `SOURCE-BATCH-383+` should run fresh candidate discovery after `SOURCE-BATCH-382`.
