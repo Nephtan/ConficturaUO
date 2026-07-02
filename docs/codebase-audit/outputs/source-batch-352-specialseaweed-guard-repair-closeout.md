@@ -36,4 +36,4 @@ Randomized seaweed names, hues, `SkillNeeded` values, `Stackable`, `Amount`, `Se
 
 ## Commit
 
-`SOURCE-BATCH-352` is ready to commit as `fix: guard SpecialSeaweed interactions` after verification passes. `SOURCE-BATCH-353+` should run fresh candidate discovery after the commit.
+`SOURCE-BATCH-352` was committed as `d0db52d7` with `fix: guard SpecialSeaweed interactions`. `SOURCE-BATCH-353+` should run fresh candidate discovery next.
