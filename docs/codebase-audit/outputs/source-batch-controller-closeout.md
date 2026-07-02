@@ -3668,8 +3668,8 @@ To run a gated batch, provide explicit approval naming:
 
 - SOURCE-BATCH-359 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-359-candidate-discovery.csv.
 - SOURCE-BATCH-359 implemented the Museums guard repair in Data/Scripts/Quests/Museum/Museum.cs.
-- SOURCE-BATCH-359 is closed pending commit hash update in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed.
+- SOURCE-BATCH-359 is closed as commit 1f11e738 with verification passed.
 - The source-batch target is docs/codebase-audit/outputs/source-batch-359-target.md.
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-359-museums-guard-repair-closeout.md.
-- SOURCE-BATCH-360+ should run fresh candidate discovery after SOURCE-BATCH-359 commits.
+- SOURCE-BATCH-360+ should run fresh candidate discovery after SOURCE-BATCH-359.
 - Gated roadmap batches remain blocked pending explicit approval.

@@ -34,4 +34,4 @@ Item metadata, `AddNameProperties` behavior, `DiscoverName`, `DiscoverOwner`, `T
 
 ## Commit
 
-`SOURCE-BATCH-359` is ready to commit as `fix: guard Museums interactions`. `SOURCE-BATCH-360+` should run fresh candidate discovery after the commit.
+`SOURCE-BATCH-359` committed as `1f11e738` (`fix: guard Museums interactions`). `SOURCE-BATCH-360+` should run fresh candidate discovery.
