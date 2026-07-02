@@ -3848,7 +3848,7 @@ To run a gated batch, provide explicit approval naming:
 
 - SOURCE-BATCH-377 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-377-candidate-discovery.csv.
 - SOURCE-BATCH-377 implemented the DDRelicOrbs guard repair in Data/Scripts/Items/Relics/DDRelicOrbs.cs.
-- SOURCE-BATCH-377 verification passed; commit is pending.
+- SOURCE-BATCH-377 is closed as commit cf6726e0 with verification passed.
 - The source-batch target is docs/codebase-audit/outputs/source-batch-377-target.md.
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-377-ddrelicorbs-guard-repair-closeout.md.
 - SOURCE-BATCH-378+ should run fresh candidate discovery after SOURCE-BATCH-377.
