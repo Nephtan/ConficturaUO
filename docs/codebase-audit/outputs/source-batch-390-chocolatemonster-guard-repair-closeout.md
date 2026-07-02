@@ -34,4 +34,4 @@ ChocolateMonster randomized candy names, item IDs, hues, weight, sound `Utility.
 
 ## Commit
 
-`SOURCE-BATCH-390` commit hash pending. `SOURCE-BATCH-391+` should run fresh candidate discovery after `SOURCE-BATCH-390`.
+`SOURCE-BATCH-390` committed as `1f95e98b`. `SOURCE-BATCH-391+` should run fresh candidate discovery after `SOURCE-BATCH-390`.

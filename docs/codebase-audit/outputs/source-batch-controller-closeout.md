@@ -3978,7 +3978,7 @@ To run a gated batch, provide explicit approval naming:
 
 - SOURCE-BATCH-390 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-390-candidate-discovery.csv.
 - SOURCE-BATCH-390 implemented the ChocolateMonster guard repair in Data/Scripts/Items/Gifts/Holiday/Halloween/HalloweenBag.cs.
-- SOURCE-BATCH-390 verification passed and commit is pending.
+- SOURCE-BATCH-390 is closed as commit 1f95e98b with verification passed.
 - The source-batch target is docs/codebase-audit/outputs/source-batch-390-target.md.
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-390-chocolatemonster-guard-repair-closeout.md.
 - SOURCE-BATCH-391+ should run fresh candidate discovery after SOURCE-BATCH-390.
