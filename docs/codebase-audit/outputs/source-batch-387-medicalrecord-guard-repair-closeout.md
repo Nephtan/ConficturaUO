@@ -35,4 +35,4 @@ MedicalRecord item ID/name/weight/light/hue, randomized patient/planet setup, `M
 
 ## Commit
 
-`SOURCE-BATCH-387` source commit is pending. `SOURCE-BATCH-388+` should run fresh candidate discovery after `SOURCE-BATCH-387`.
+`SOURCE-BATCH-387` committed as `164d39cf`. `SOURCE-BATCH-388+` should run fresh candidate discovery after `SOURCE-BATCH-387`.
