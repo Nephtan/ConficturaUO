@@ -35,4 +35,4 @@ Item ID, Name, Weight, LightType, owner properties, existing localized backpack-
 
 ## Commit
 
-`SOURCE-BATCH-353` is ready to commit as `fix: guard ObeliskTip interactions` after verification passes. `SOURCE-BATCH-354+` should run fresh candidate discovery after the commit.
+`SOURCE-BATCH-353` was committed as `592406df` with `fix: guard ObeliskTip interactions`. `SOURCE-BATCH-354+` should run fresh candidate discovery next.
