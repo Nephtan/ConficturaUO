@@ -4028,7 +4028,7 @@ To run a gated batch, provide explicit approval naming:
 
 - SOURCE-BATCH-395 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-395-candidate-discovery.csv.
 - SOURCE-BATCH-395 implemented the Tarot guard repair in Data/Scripts/Items/Misc/Games/Tarot.cs.
-- SOURCE-BATCH-395 source commit is pending; verification passed.
+- SOURCE-BATCH-395 is closed as commit 89627fd0 with verification passed.
 - The source-batch target is docs/codebase-audit/outputs/source-batch-395-target.md.
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-395-tarot-guard-repair-closeout.md.
 - SOURCE-BATCH-396+ should run fresh candidate discovery after SOURCE-BATCH-395.

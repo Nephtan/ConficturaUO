@@ -34,4 +34,4 @@ TarotDeck and DecoTarotDeck item IDs, `Flipable` behavior, fortune randomization
 
 ## Commit
 
-`SOURCE-BATCH-395` source commit is pending. `SOURCE-BATCH-396+` should run fresh candidate discovery after `SOURCE-BATCH-395`.
+`SOURCE-BATCH-395` committed as `89627fd0`. `SOURCE-BATCH-396+` should run fresh candidate discovery after `SOURCE-BATCH-395`.
