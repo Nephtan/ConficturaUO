@@ -32,4 +32,4 @@
 
 ## Commit
 
-`SOURCE-BATCH-397` source commit is pending. `SOURCE-BATCH-398+` should run fresh candidate discovery after `SOURCE-BATCH-397`.
+`SOURCE-BATCH-397` source commit: `14faa7f6` (`fix: guard FireworksWand interactions`). `SOURCE-BATCH-398+` should run fresh candidate discovery after `SOURCE-BATCH-397`.

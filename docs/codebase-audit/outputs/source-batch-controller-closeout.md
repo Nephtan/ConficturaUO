@@ -4048,7 +4048,7 @@ To run a gated batch, provide explicit approval naming:
 
 - SOURCE-BATCH-397 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-397-candidate-discovery.csv.
 - SOURCE-BATCH-397 implemented the FireworksWand guard repair in Data/Scripts/Items/Weapons/Maces/FireworksWand.cs.
-- SOURCE-BATCH-397 source commit is pending; verification passed.
+- SOURCE-BATCH-397 source commit is 14faa7f6; verification passed.
 - The source-batch target is docs/codebase-audit/outputs/source-batch-397-target.md.
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-397-fireworkswand-guard-repair-closeout.md.
 - SOURCE-BATCH-398+ should run fresh candidate discovery after SOURCE-BATCH-397.
