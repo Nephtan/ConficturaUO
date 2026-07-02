@@ -3918,7 +3918,7 @@ To run a gated batch, provide explicit approval naming:
 
 - SOURCE-BATCH-384 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-384-candidate-discovery.csv.
 - SOURCE-BATCH-384 implemented the GuardNote guard repair in Data/Scripts/Items/Books/BulletinBoards/GuardNote.cs.
-- SOURCE-BATCH-384 verification passed; commit is pending.
+- SOURCE-BATCH-384 is closed as commit 7fd55c7b with verification passed.
 - The source-batch target is docs/codebase-audit/outputs/source-batch-384-target.md.
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-384-guardnote-guard-repair-closeout.md.
 - SOURCE-BATCH-385+ should run fresh candidate discovery after SOURCE-BATCH-384.

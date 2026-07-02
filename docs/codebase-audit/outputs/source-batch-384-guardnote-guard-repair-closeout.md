@@ -35,4 +35,4 @@ GuardNote item ID/name/weight/hue, `ScrollText` persistence, `ReadGump` text and
 
 ## Commit
 
-`SOURCE-BATCH-384` commit is pending. `SOURCE-BATCH-385+` should run fresh candidate discovery after `SOURCE-BATCH-384`.
+`SOURCE-BATCH-384` committed as `7fd55c7b`. `SOURCE-BATCH-385+` should run fresh candidate discovery after `SOURCE-BATCH-384`.
