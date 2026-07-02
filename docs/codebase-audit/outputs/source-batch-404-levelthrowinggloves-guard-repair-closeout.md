@@ -29,4 +29,4 @@
 
 ## Commit
 
-`SOURCE-BATCH-404` source commit: pending. `SOURCE-BATCH-405+` should run fresh candidate discovery after `SOURCE-BATCH-404`.
+`SOURCE-BATCH-404` source commit: `a5a1fb30` (`fix: guard LevelThrowingGloves interactions`). `SOURCE-BATCH-405+` should run fresh candidate discovery after `SOURCE-BATCH-404`.

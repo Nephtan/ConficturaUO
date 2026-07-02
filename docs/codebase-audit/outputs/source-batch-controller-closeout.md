@@ -4118,7 +4118,7 @@ To run a gated batch, provide explicit approval naming:
 
 - SOURCE-BATCH-404 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-404-candidate-discovery.csv.
 - SOURCE-BATCH-404 implemented the LevelThrowingGloves guard repair in Data/Scripts/Items/Magical/God/Weapons/LevelThrowingGloves.cs.
-- SOURCE-BATCH-404 source commit is pending; verification passed.
+- SOURCE-BATCH-404 source commit is a5a1fb30; verification passed.
 - The source-batch target is docs/codebase-audit/outputs/source-batch-404-target.md.
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-404-levelthrowinggloves-guard-repair-closeout.md.
 - SOURCE-BATCH-405+ should run fresh candidate discovery after SOURCE-BATCH-404.
