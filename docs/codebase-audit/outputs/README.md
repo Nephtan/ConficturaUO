@@ -1475,3 +1475,7 @@ The Phase 0 baseline output, Phase 1 reproducible inventory outputs, Phase 2 pro
 | source-batch-362-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-362 discovery with recommended SearchBook target and skipped candidate notes. | Complete |
 | source-batch-362-target.md | Source batches | Durable target for SOURCE-BATCH-362 SearchBook guard repair, including fence result and unchanged behavior. | Complete |
 | source-batch-362-searchbook-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-362 with SearchBook guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |
+| source-batch-363-candidate-discovery.csv | Source batches | Fresh SOURCE-BATCH-363 candidate discovery for a zero-gate, zero-overlay Prisoner guard repair. | Complete |
+| source-batch-363-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-363 discovery with recommended Prisoner target and skipped candidate notes. | Complete |
+| source-batch-363-target.md | Source batches | Durable target for SOURCE-BATCH-363 Prisoner guard repair, including fence result and unchanged behavior. | Complete |
+| source-batch-363-prisoner-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-363 with Prisoner guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |
