@@ -3933,3 +3933,13 @@ To run a gated batch, provide explicit approval naming:
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-385-statusboard-guard-repair-closeout.md.
 - SOURCE-BATCH-386+ should run fresh candidate discovery after SOURCE-BATCH-385.
 - Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-386 Update
+
+- SOURCE-BATCH-386 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-386-candidate-discovery.csv.
+- SOURCE-BATCH-386 implemented the Clock guard repair in Data/Scripts/Items/Trades/Tinkering/Clocks.cs.
+- SOURCE-BATCH-386 verification passed; source commit is pending.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-386-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-386-clock-guard-repair-closeout.md.
+- SOURCE-BATCH-387+ should run fresh candidate discovery after SOURCE-BATCH-386.
+- Gated roadmap batches remain blocked pending explicit approval.
