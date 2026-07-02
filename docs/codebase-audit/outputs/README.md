@@ -1579,3 +1579,7 @@ The Phase 0 baseline output, Phase 1 reproducible inventory outputs, Phase 2 pro
 | source-batch-388-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-388 discovery with recommended WetClothes target and skipped candidate notes. | Complete |
 | source-batch-388-target.md | Source batches | Durable target for SOURCE-BATCH-388 WetClothes guard repair, including fence result and unchanged behavior. | Complete |
 | source-batch-388-wetclothes-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-388 with WetClothes guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |
+| source-batch-389-candidate-discovery.csv | Source batches | Fresh SOURCE-BATCH-389 candidate discovery for a zero-gate, zero-overlay HalloweenMaiden guard repair. | Complete |
+| source-batch-389-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-389 discovery with recommended HalloweenMaiden target and skipped candidate notes. | Complete |
+| source-batch-389-target.md | Source batches | Durable target for SOURCE-BATCH-389 HalloweenMaiden guard repair, including fence result and unchanged behavior. | Complete |
+| source-batch-389-halloweenmaiden-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-389 with HalloweenMaiden guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |

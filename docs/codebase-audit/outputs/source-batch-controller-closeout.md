@@ -3963,3 +3963,13 @@ To run a gated batch, provide explicit approval naming:
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-388-wetclothes-guard-repair-closeout.md.
 - SOURCE-BATCH-389+ should run fresh candidate discovery after SOURCE-BATCH-388.
 - Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-389 Update
+
+- SOURCE-BATCH-389 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-389-candidate-discovery.csv.
+- SOURCE-BATCH-389 implemented the HalloweenMaiden guard repair in Data/Scripts/Items/Gifts/Holiday/Halloween/Rewards/HalloweenMaiden.cs.
+- SOURCE-BATCH-389 verification passed and commit is pending.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-389-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-389-halloweenmaiden-guard-repair-closeout.md.
+- SOURCE-BATCH-390+ should run fresh candidate discovery after SOURCE-BATCH-389.
+- Gated roadmap batches remain blocked pending explicit approval.
