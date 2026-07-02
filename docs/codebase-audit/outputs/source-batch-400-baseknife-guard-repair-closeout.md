@@ -28,4 +28,4 @@
 
 ## Commit
 
-`SOURCE-BATCH-400` source commit: pending. `SOURCE-BATCH-401+` should run fresh candidate discovery after `SOURCE-BATCH-400`.
+`SOURCE-BATCH-400` source commit: `c92a7ac1` (`fix: guard BaseKnife interactions`). `SOURCE-BATCH-401+` should run fresh candidate discovery after `SOURCE-BATCH-400`.
