@@ -3873,3 +3873,13 @@ To run a gated batch, provide explicit approval naming:
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-379-gypsyshelf-guard-repair-closeout.md.
 - SOURCE-BATCH-380+ should run fresh candidate discovery after SOURCE-BATCH-379.
 - Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-380 Update
+
+- SOURCE-BATCH-380 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-380-candidate-discovery.csv.
+- SOURCE-BATCH-380 implemented the Safe guard repair in Data/Scripts/Items/Containers/Safe.cs.
+- SOURCE-BATCH-380 verification passed; commit is pending.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-380-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-380-safe-guard-repair-closeout.md.
+- SOURCE-BATCH-381+ should run fresh candidate discovery after SOURCE-BATCH-380.
+- Gated roadmap batches remain blocked pending explicit approval.

@@ -41,6 +41,9 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
+            if (from == null || from.Deleted || Deleted)
+                return;
+
             if (Movable)
             {
                 from.SendMessage("This must be secured down in a home to use.");
@@ -77,6 +80,9 @@ namespace Server.Items
 
         public bool CheckAccess(Mobile m)
         {
+            if (m == null || m.Deleted || Deleted)
+                return false;
+
             BaseHouse house = BaseHouse.FindHouseAt(this);
 
             if (house != null && (house.Public ? house.IsBanned(m) : !house.HasAccess(m)))

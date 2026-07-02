@@ -1543,3 +1543,7 @@ The Phase 0 baseline output, Phase 1 reproducible inventory outputs, Phase 2 pro
 | source-batch-379-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-379 discovery with recommended GypsyShelf target and skipped candidate notes. | Complete |
 | source-batch-379-target.md | Source batches | Durable target for SOURCE-BATCH-379 GypsyShelf guard repair, including fence result and unchanged behavior. | Complete |
 | source-batch-379-gypsyshelf-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-379 with GypsyShelf guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |
+| source-batch-380-candidate-discovery.csv | Source batches | Fresh SOURCE-BATCH-380 candidate discovery for a zero-gate, zero-overlay Safe guard repair. | Complete |
+| source-batch-380-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-380 discovery with recommended Safe target and skipped candidate notes. | Complete |
+| source-batch-380-target.md | Source batches | Durable target for SOURCE-BATCH-380 Safe guard repair, including fence result and unchanged behavior. | Complete |
+| source-batch-380-safe-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-380 with Safe guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |
