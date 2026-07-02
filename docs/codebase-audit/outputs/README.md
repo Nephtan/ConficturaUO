@@ -1499,3 +1499,7 @@ The Phase 0 baseline output, Phase 1 reproducible inventory outputs, Phase 2 pro
 | source-batch-368-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-368 discovery with recommended DDRelicGem target and skipped candidate notes. | Complete |
 | source-batch-368-target.md | Source batches | Durable target for SOURCE-BATCH-368 DDRelicGem guard repair, including fence result and unchanged behavior. | Complete |
 | source-batch-368-ddrelicgem-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-368 with DDRelicGem guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |
+| source-batch-369-candidate-discovery.csv | Source batches | Fresh SOURCE-BATCH-369 candidate discovery for a zero-gate, zero-overlay DDRelicJewels guard repair. | Complete |
+| source-batch-369-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-369 discovery with recommended DDRelicJewels target and skipped candidate notes. | Complete |
+| source-batch-369-target.md | Source batches | Durable target for SOURCE-BATCH-369 DDRelicJewels guard repair, including fence result and unchanged behavior. | Complete |
+| source-batch-369-ddrelicjewels-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-369 with DDRelicJewels guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |
