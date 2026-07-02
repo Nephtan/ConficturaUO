@@ -3758,7 +3758,7 @@ To run a gated batch, provide explicit approval naming:
 
 - SOURCE-BATCH-368 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-368-candidate-discovery.csv.
 - SOURCE-BATCH-368 implemented the DDRelicGem guard repair in Data/Scripts/Items/Relics/DDRelicGem.cs.
-- SOURCE-BATCH-368 verification passed; commit is pending.
+- SOURCE-BATCH-368 is closed as commit 7311db5b with verification passed.
 - The source-batch target is docs/codebase-audit/outputs/source-batch-368-target.md.
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-368-ddrelicgem-guard-repair-closeout.md.
 - SOURCE-BATCH-369+ should run fresh candidate discovery after SOURCE-BATCH-368.

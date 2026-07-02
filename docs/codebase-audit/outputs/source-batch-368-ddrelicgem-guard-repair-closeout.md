@@ -34,4 +34,4 @@
 
 ## Commit
 
-`SOURCE-BATCH-368` commit is pending. `SOURCE-BATCH-369+` should run fresh candidate discovery after `SOURCE-BATCH-368`.
+`SOURCE-BATCH-368` committed as `7311db5b` (`fix: guard DDRelicGem interactions`). `SOURCE-BATCH-369+` should run fresh candidate discovery.
