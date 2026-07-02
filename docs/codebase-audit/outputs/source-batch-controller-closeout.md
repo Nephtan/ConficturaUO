@@ -3688,8 +3688,8 @@ To run a gated batch, provide explicit approval naming:
 
 - SOURCE-BATCH-361 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-361-candidate-discovery.csv.
 - SOURCE-BATCH-361 implemented the PaganArtifact guard repair in Data/Scripts/Quests/Pagan/PaganArtifact.cs.
-- SOURCE-BATCH-361 is closed pending commit hash update in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed.
+- SOURCE-BATCH-361 is closed as commit 1335213b with verification passed.
 - The source-batch target is docs/codebase-audit/outputs/source-batch-361-target.md.
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-361-paganartifact-guard-repair-closeout.md.
-- SOURCE-BATCH-362+ should run fresh candidate discovery after SOURCE-BATCH-361 commits.
+- SOURCE-BATCH-362+ should run fresh candidate discovery after SOURCE-BATCH-361.
 - Gated roadmap batches remain blocked pending explicit approval.

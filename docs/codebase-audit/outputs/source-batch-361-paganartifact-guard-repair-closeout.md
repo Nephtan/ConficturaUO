@@ -35,4 +35,4 @@ Artifact setup, random item/color/name behavior, `PaganItem`, `PaganColor`, `Pag
 
 ## Commit
 
-`SOURCE-BATCH-361` is ready to commit as `fix: guard PaganArtifact interactions`. `SOURCE-BATCH-362+` should run fresh candidate discovery after the commit.
+`SOURCE-BATCH-361` committed as `1335213b` (`fix: guard PaganArtifact interactions`). `SOURCE-BATCH-362+` should run fresh candidate discovery.
