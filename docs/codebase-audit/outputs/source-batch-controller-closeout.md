@@ -4043,3 +4043,13 @@ To run a gated batch, provide explicit approval naming:
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-396-tarotpoker-guard-repair-closeout.md.
 - SOURCE-BATCH-397+ should run fresh candidate discovery after SOURCE-BATCH-396.
 - Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-397 Update
+
+- SOURCE-BATCH-397 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-397-candidate-discovery.csv.
+- SOURCE-BATCH-397 implemented the FireworksWand guard repair in Data/Scripts/Items/Weapons/Maces/FireworksWand.cs.
+- SOURCE-BATCH-397 source commit is pending; verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-397-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-397-fireworkswand-guard-repair-closeout.md.
+- SOURCE-BATCH-398+ should run fresh candidate discovery after SOURCE-BATCH-397.
+- Gated roadmap batches remain blocked pending explicit approval.
