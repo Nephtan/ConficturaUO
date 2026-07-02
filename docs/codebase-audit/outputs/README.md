@@ -1483,3 +1483,7 @@ The Phase 0 baseline output, Phase 1 reproducible inventory outputs, Phase 2 pro
 | source-batch-364-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-364 discovery with recommended RobotSchematics target and skipped candidate notes. | Complete |
 | source-batch-364-target.md | Source batches | Durable target for SOURCE-BATCH-364 RobotSchematics guard repair, including fence result and unchanged behavior. | Complete |
 | source-batch-364-robotschematics-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-364 with RobotSchematics guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |
+| source-batch-365-candidate-discovery.csv | Source batches | Fresh SOURCE-BATCH-365 candidate discovery for a zero-gate, zero-overlay DDRelicArts guard repair. | Complete |
+| source-batch-365-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-365 discovery with recommended DDRelicArts target and skipped candidate notes. | Complete |
+| source-batch-365-target.md | Source batches | Durable target for SOURCE-BATCH-365 DDRelicArts guard repair, including fence result and unchanged behavior. | Complete |
+| source-batch-365-ddrelicarts-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-365 with DDRelicArts guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |

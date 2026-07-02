@@ -3723,3 +3723,13 @@ To run a gated batch, provide explicit approval naming:
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-364-robotschematics-guard-repair-closeout.md.
 - SOURCE-BATCH-365+ should run fresh candidate discovery after SOURCE-BATCH-364.
 - Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-365 Update
+
+- SOURCE-BATCH-365 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-365-candidate-discovery.csv.
+- SOURCE-BATCH-365 implemented the DDRelicArts guard repair in Data/Scripts/Items/Relics/DDRelicArts.cs.
+- SOURCE-BATCH-365 verification passed; commit is pending.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-365-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-365-ddrelicarts-guard-repair-closeout.md.
+- SOURCE-BATCH-366+ should run fresh candidate discovery after SOURCE-BATCH-365.
+- Gated roadmap batches remain blocked pending explicit approval.
