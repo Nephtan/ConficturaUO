@@ -3893,3 +3893,13 @@ To run a gated batch, provide explicit approval naming:
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-381-doomflayernote-guard-repair-closeout.md.
 - SOURCE-BATCH-382+ should run fresh candidate discovery after SOURCE-BATCH-381.
 - Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-382 Update
+
+- SOURCE-BATCH-382 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-382-candidate-discovery.csv.
+- SOURCE-BATCH-382 implemented the BardsTaleNote guard repair in Data/Scripts/Items/Books/BardsTaleNote.cs.
+- SOURCE-BATCH-382 verification passed; commit is pending.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-382-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-382-bardstalenote-guard-repair-closeout.md.
+- SOURCE-BATCH-383+ should run fresh candidate discovery after SOURCE-BATCH-382.
+- Gated roadmap batches remain blocked pending explicit approval.
