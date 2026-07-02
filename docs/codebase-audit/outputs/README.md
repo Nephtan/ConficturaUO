@@ -1455,3 +1455,7 @@ The Phase 0 baseline output, Phase 1 reproducible inventory outputs, Phase 2 pro
 | source-batch-357-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-357 discovery with recommended ObeliskOnCorpse target and skipped candidate notes. | Complete |
 | source-batch-357-target.md | Source batches | Durable target for SOURCE-BATCH-357 ObeliskOnCorpse guard repair, including fence result and unchanged behavior. | Complete |
 | source-batch-357-obeliskoncorpse-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-357 with ObeliskOnCorpse guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |
+| source-batch-358-candidate-discovery.csv | Source batches | Fresh SOURCE-BATCH-358 candidate discovery for a zero-gate, zero-overlay SerpentSpawners guard repair. | Complete |
+| source-batch-358-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-358 discovery with recommended SerpentSpawners target and skipped candidate notes. | Complete |
+| source-batch-358-target.md | Source batches | Durable target for SOURCE-BATCH-358 SerpentSpawners guard repair, including fence result and unchanged behavior. | Complete |
+| source-batch-358-serpentspawners-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-358 with SerpentSpawners guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |
