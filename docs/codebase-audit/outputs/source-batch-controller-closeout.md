@@ -3923,3 +3923,13 @@ To run a gated batch, provide explicit approval naming:
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-384-guardnote-guard-repair-closeout.md.
 - SOURCE-BATCH-385+ should run fresh candidate discovery after SOURCE-BATCH-384.
 - Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-385 Update
+
+- SOURCE-BATCH-385 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-385-candidate-discovery.csv.
+- SOURCE-BATCH-385 implemented the StatusBoard guard repair in Data/Scripts/Items/Books/BulletinBoards/StatusBoard.cs.
+- SOURCE-BATCH-385 verification passed; source commit is pending.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-385-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-385-statusboard-guard-repair-closeout.md.
+- SOURCE-BATCH-386+ should run fresh candidate discovery after SOURCE-BATCH-385.
+- Gated roadmap batches remain blocked pending explicit approval.
