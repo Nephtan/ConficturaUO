@@ -4538,7 +4538,7 @@ To run a gated batch, provide explicit approval naming:
 
 - SOURCE-BATCH-446 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-446-candidate-discovery.csv.
 - SOURCE-BATCH-446 implemented the CustomHuePickerGump guard repair in Data/Scripts/Items/Misc/Dyes/CustomHuePicker.cs.
-- SOURCE-BATCH-446 source commit is pending; verification passed.
+- SOURCE-BATCH-446 source commit is 5198e2bb; verification passed.
 - The source-batch target is docs/codebase-audit/outputs/source-batch-446-target.md.
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-446-customhuepicker-guard-repair-closeout.md.
 - SOURCE-BATCH-447+ should run fresh candidate discovery after SOURCE-BATCH-446.
