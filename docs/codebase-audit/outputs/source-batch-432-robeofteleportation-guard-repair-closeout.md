@@ -28,4 +28,4 @@ Wearing requirement `Parent == from`, message `You must be wearing the robe to t
 
 ## Commit
 
-`SOURCE-BATCH-432` source commit: pending. `SOURCE-BATCH-433+` should run fresh candidate discovery after `SOURCE-BATCH-432`.
+`SOURCE-BATCH-432` source commit: `7023f0c7`. `SOURCE-BATCH-433+` should run fresh candidate discovery after `SOURCE-BATCH-432`.
