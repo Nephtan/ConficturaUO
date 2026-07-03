@@ -28,4 +28,4 @@ Backpack-use localized message `1060640`, `RuneLook` name/item ID cycle, moralit
 
 ## Commit
 
-`SOURCE-BATCH-427` source commit: pending. `SOURCE-BATCH-428+` should run fresh candidate discovery after `SOURCE-BATCH-427`.
+`SOURCE-BATCH-427` source commit: `22464be5` (`fix: guard RuneOfVirtue interactions`). `SOURCE-BATCH-428+` should run fresh candidate discovery after `SOURCE-BATCH-427`.
