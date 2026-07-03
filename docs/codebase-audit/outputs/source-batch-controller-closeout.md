@@ -4183,3 +4183,13 @@ To run a gated batch, provide explicit approval naming:
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-410-basebook-guard-repair-closeout.md.
 - SOURCE-BATCH-411+ should run fresh candidate discovery after SOURCE-BATCH-410.
 - Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-411 Update
+
+- SOURCE-BATCH-411 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-411-candidate-discovery.csv.
+- SOURCE-BATCH-411 implemented the SackOfHolding guard repair in Data/Scripts/Items/Containers/SackOfHolding.cs.
+- SOURCE-BATCH-411 source commit is pending; verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-411-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-411-sackofholding-guard-repair-closeout.md.
+- SOURCE-BATCH-412+ should run fresh candidate discovery after SOURCE-BATCH-411.
+- Gated roadmap batches remain blocked pending explicit approval.
