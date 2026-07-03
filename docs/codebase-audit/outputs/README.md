@@ -1715,3 +1715,7 @@ The Phase 0 baseline output, Phase 1 reproducible inventory outputs, Phase 2 pro
 | source-batch-422-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-422 discovery with recommended BaseImprisonedMobile target and skipped candidate notes. | Complete |
 | source-batch-422-target.md | Source batches | Durable target for SOURCE-BATCH-422 BaseImprisonedMobile guard repair, including fence result and unchanged behavior. | Complete |
 | source-batch-422-baseimprisonedmobile-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-422 with BaseImprisonedMobile guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |
+| source-batch-423-candidate-discovery.csv | Source batches | Fresh SOURCE-BATCH-423 candidate discovery for a zero-gate, zero-overlay PowderOfTranslocation guard repair. | Complete |
+| source-batch-423-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-423 discovery with recommended PowderOfTranslocation target and skipped candidate notes. | Complete |
+| source-batch-423-target.md | Source batches | Durable target for SOURCE-BATCH-423 PowderOfTranslocation guard repair, including fence result and unchanged behavior. | Complete |
+| source-batch-423-powderoftranslocation-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-423 with PowderOfTranslocation guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |

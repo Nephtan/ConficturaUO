@@ -4303,3 +4303,13 @@ To run a gated batch, provide explicit approval naming:
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-422-baseimprisonedmobile-guard-repair-closeout.md.
 - SOURCE-BATCH-423+ should run fresh candidate discovery after SOURCE-BATCH-422.
 - Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-423 Update
+
+- SOURCE-BATCH-423 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-423-candidate-discovery.csv.
+- SOURCE-BATCH-423 implemented the PowderOfTranslocation guard repair in Data/Scripts/Items/Special/Solen Items/PowderOfTranslocation.cs.
+- SOURCE-BATCH-423 source commit is pending; verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-423-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-423-powderoftranslocation-guard-repair-closeout.md.
+- SOURCE-BATCH-424+ should run fresh candidate discovery after SOURCE-BATCH-423.
+- Gated roadmap batches remain blocked pending explicit approval.
