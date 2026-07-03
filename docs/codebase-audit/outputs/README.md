@@ -1751,3 +1751,7 @@ The Phase 0 baseline output, Phase 1 reproducible inventory outputs, Phase 2 pro
 | source-batch-431-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-431 discovery with recommended MagicObjectTarget target and skipped candidate notes. | Complete |
 | source-batch-431-target.md | Source batches | Durable target for SOURCE-BATCH-431 MagicObjectTarget guard repair, including fence result and unchanged behavior. | Complete |
 | source-batch-431-magicobjecttarget-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-431 with MagicObjectTarget guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |
+| source-batch-432-candidate-discovery.csv | Source batches | Fresh SOURCE-BATCH-432 candidate discovery for a zero-gate, zero-overlay RobeOfTeleportation guard repair. | Complete |
+| source-batch-432-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-432 discovery with recommended RobeOfTeleportation target and skipped candidate notes. | Complete |
+| source-batch-432-target.md | Source batches | Durable target for SOURCE-BATCH-432 RobeOfTeleportation guard repair, including fence result and unchanged behavior. | Complete |
+| source-batch-432-robeofteleportation-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-432 with RobeOfTeleportation guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |
