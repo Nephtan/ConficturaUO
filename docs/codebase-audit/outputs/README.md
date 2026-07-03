@@ -1747,3 +1747,7 @@ The Phase 0 baseline output, Phase 1 reproducible inventory outputs, Phase 2 pro
 | source-batch-430-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-430 discovery with recommended SongBook target and skipped candidate notes. | Complete |
 | source-batch-430-target.md | Source batches | Durable target for SOURCE-BATCH-430 SongBook guard repair, including fence result and unchanged behavior. | Complete |
 | source-batch-430-songbook-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-430 with SongBook guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |
+| source-batch-431-candidate-discovery.csv | Source batches | Fresh SOURCE-BATCH-431 candidate discovery for a zero-gate, zero-overlay MagicObjectTarget guard repair. | Complete |
+| source-batch-431-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-431 discovery with recommended MagicObjectTarget target and skipped candidate notes. | Complete |
+| source-batch-431-target.md | Source batches | Durable target for SOURCE-BATCH-431 MagicObjectTarget guard repair, including fence result and unchanged behavior. | Complete |
+| source-batch-431-magicobjecttarget-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-431 with MagicObjectTarget guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |
