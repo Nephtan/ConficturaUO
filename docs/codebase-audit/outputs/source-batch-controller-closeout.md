@@ -4423,3 +4423,13 @@ To run a gated batch, provide explicit approval naming:
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-434-mysticpack-guard-repair-closeout.md.
 - SOURCE-BATCH-435+ should run fresh candidate discovery after SOURCE-BATCH-434.
 - Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-435 Update
+
+- SOURCE-BATCH-435 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-435-candidate-discovery.csv.
+- SOURCE-BATCH-435 implemented the Fukiya guard repair in Data/Scripts/Items/Trades/Ninjitsu/Fukiya.cs.
+- SOURCE-BATCH-435 source commit is pending; verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-435-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-435-fukiya-guard-repair-closeout.md.
+- SOURCE-BATCH-436+ should run fresh candidate discovery after SOURCE-BATCH-435.
+- Gated roadmap batches remain blocked pending explicit approval.

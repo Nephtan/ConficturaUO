@@ -1763,3 +1763,7 @@ The Phase 0 baseline output, Phase 1 reproducible inventory outputs, Phase 2 pro
 | source-batch-434-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-434 discovery with recommended MysticPack target and skipped candidate notes. | Complete |
 | source-batch-434-target.md | Source batches | Durable target for SOURCE-BATCH-434 MysticPack guard repair, including fence result and unchanged behavior. | Complete |
 | source-batch-434-mysticpack-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-434 with MysticPack guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |
+| source-batch-435-candidate-discovery.csv | Source batches | Fresh SOURCE-BATCH-435 candidate discovery for a zero-gate, zero-overlay Fukiya guard repair. | Complete |
+| source-batch-435-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-435 discovery with recommended Fukiya target and skipped candidate notes. | Complete |
+| source-batch-435-target.md | Source batches | Durable target for SOURCE-BATCH-435 Fukiya guard repair, including fence result and unchanged behavior. | Complete |
+| source-batch-435-fukiya-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-435 with Fukiya guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |
