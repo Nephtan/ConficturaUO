@@ -76,11 +76,14 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
+            if (from == null || from.Deleted || Deleted)
+                return;
+
             if (from != m_Owner)
             {
                 from.SendLocalizedMessage(501926); // This isn't your ticket! Shame on you! You have to use YOUR ticket.
             }
-            else if (!IsChildOf(from.Backpack))
+            else if (from.Backpack == null || !IsChildOf(from.Backpack))
             {
                 from.SendLocalizedMessage(1042001); // That must be in your pack for you to use it.
             }
@@ -103,6 +106,9 @@ namespace Server.Items
 
             protected override void OnTarget(Mobile from, object targeted)
             {
+                if (from == null || from.Deleted || m_Ticket == null || m_Ticket.Deleted)
+                    return;
+
                 if (targeted == m_Ticket)
                 {
                     from.SendLocalizedMessage(501928); // You can't target the same ticket!
@@ -110,16 +116,24 @@ namespace Server.Items
                 else if (targeted is NewPlayerTicket)
                 {
                     NewPlayerTicket theirTicket = targeted as NewPlayerTicket;
-                    Mobile them = theirTicket.m_Owner;
 
-                    if (them == null || them.Deleted)
+                    if (theirTicket.Deleted)
                     {
                         from.SendLocalizedMessage(501930); // That is not a valid ticket.
                     }
                     else
                     {
-                        from.SendGump(new InternalGump(from, m_Ticket));
-                        them.SendGump(new InternalGump(them, theirTicket));
+                        Mobile them = theirTicket.m_Owner;
+
+                        if (them == null || them.Deleted)
+                        {
+                            from.SendLocalizedMessage(501930); // That is not a valid ticket.
+                        }
+                        else
+                        {
+                            from.SendGump(new InternalGump(from, m_Ticket));
+                            them.SendGump(new InternalGump(them, theirTicket));
+                        }
                     }
                 }
                 else if (targeted is Item && ((Item)targeted).ItemID == 0x14F0)
@@ -172,7 +186,7 @@ namespace Server.Items
 
             public override void OnResponse(NetState sender, RelayInfo info)
             {
-                if (m_Ticket.Deleted)
+                if (sender == null || m_From == null || m_From.Deleted || m_Ticket == null || m_Ticket.Deleted)
                     return;
 
                 int number = 0;
