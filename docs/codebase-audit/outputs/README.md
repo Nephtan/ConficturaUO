@@ -1687,3 +1687,7 @@ The Phase 0 baseline output, Phase 1 reproducible inventory outputs, Phase 2 pro
 | source-batch-415-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-415 discovery with recommended WindChimes target and skipped candidate notes. | Complete |
 | source-batch-415-target.md | Source batches | Durable target for SOURCE-BATCH-415 WindChimes guard repair, including fence result and unchanged behavior. | Complete |
 | source-batch-415-windchimes-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-415 with WindChimes guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |
+| source-batch-416-candidate-discovery.csv | Source batches | Fresh SOURCE-BATCH-416 candidate discovery for a zero-gate, zero-overlay HouseSign rename guard repair. | Complete |
+| source-batch-416-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-416 discovery with recommended HouseSign target and skipped candidate notes. | Complete |
+| source-batch-416-target.md | Source batches | Durable target for SOURCE-BATCH-416 HouseSign rename guard repair, including fence result and unchanged behavior. | Complete |
+| source-batch-416-housesign-rename-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-416 with HouseSign rename guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |
