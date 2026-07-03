@@ -4278,7 +4278,7 @@ To run a gated batch, provide explicit approval naming:
 
 - SOURCE-BATCH-420 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-420-candidate-discovery.csv.
 - SOURCE-BATCH-420 implemented the HalloweenGraves rename guard repair in Data/Scripts/Items/Gifts/Holiday/Halloween/Rewards/HalloweenGrave1.cs, Data/Scripts/Items/Gifts/Holiday/Halloween/Rewards/HalloweenGrave2.cs, and Data/Scripts/Items/Gifts/Holiday/Halloween/Rewards/HalloweenGrave3.cs.
-- SOURCE-BATCH-420 source commit is pending; verification passed.
+- SOURCE-BATCH-420 source commit is 5e053a11; verification passed.
 - The source-batch target is docs/codebase-audit/outputs/source-batch-420-target.md.
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-420-halloweengraves-rename-guard-repair-closeout.md.
 - SOURCE-BATCH-421+ should run fresh candidate discovery after SOURCE-BATCH-420.
