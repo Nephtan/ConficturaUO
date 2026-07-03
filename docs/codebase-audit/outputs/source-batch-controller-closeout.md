@@ -4453,3 +4453,13 @@ To run a gated batch, provide explicit approval naming:
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-437-gandalfsstaff-guard-repair-closeout.md.
 - SOURCE-BATCH-438+ should run fresh candidate discovery after SOURCE-BATCH-437.
 - Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-438 Update
+
+- SOURCE-BATCH-438 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-438-candidate-discovery.csv.
+- SOURCE-BATCH-438 implemented the StaffofSnakes guard repair in Data/Scripts/Items/Magical/Artifacts/Artifact_StaffofSnakes.cs.
+- SOURCE-BATCH-438 source commit is pending; verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-438-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-438-staffofsnakes-guard-repair-closeout.md.
+- SOURCE-BATCH-439+ should run fresh candidate discovery after SOURCE-BATCH-438.
+- Gated roadmap batches remain blocked pending explicit approval.
