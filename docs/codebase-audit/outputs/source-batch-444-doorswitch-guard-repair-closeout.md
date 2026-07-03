@@ -73,4 +73,4 @@ Passed:
 
 ## Commit
 
-`SOURCE-BATCH-444` source commit: pending. `SOURCE-BATCH-445+` should run fresh candidate discovery after `SOURCE-BATCH-444`.
+`SOURCE-BATCH-444` source commit: `b3e72fcd`. `SOURCE-BATCH-445+` should run fresh candidate discovery after `SOURCE-BATCH-444`.
