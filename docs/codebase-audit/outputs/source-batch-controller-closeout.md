@@ -4188,7 +4188,7 @@ To run a gated batch, provide explicit approval naming:
 
 - SOURCE-BATCH-411 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-411-candidate-discovery.csv.
 - SOURCE-BATCH-411 implemented the SackOfHolding guard repair in Data/Scripts/Items/Containers/SackOfHolding.cs.
-- SOURCE-BATCH-411 source commit is pending; verification passed.
+- SOURCE-BATCH-411 source commit is e0651a81; verification passed.
 - The source-batch target is docs/codebase-audit/outputs/source-batch-411-target.md.
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-411-sackofholding-guard-repair-closeout.md.
 - SOURCE-BATCH-412+ should run fresh candidate discovery after SOURCE-BATCH-411.
