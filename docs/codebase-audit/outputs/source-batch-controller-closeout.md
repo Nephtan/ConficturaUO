@@ -4478,7 +4478,7 @@ To run a gated batch, provide explicit approval naming:
 
 - SOURCE-BATCH-440 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-440-candidate-discovery.csv.
 - SOURCE-BATCH-440 implemented the EssenceOrb guard repair in Data/Scripts/Items/Misc/Dyes/Essence/EssenceOrb.cs.
-- SOURCE-BATCH-440 source commit is pending; verification passed.
+- SOURCE-BATCH-440 source commit is e2b9b79a; verification passed.
 - The source-batch target is docs/codebase-audit/outputs/source-batch-440-target.md.
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-440-essenceorb-guard-repair-closeout.md.
 - SOURCE-BATCH-441+ should run fresh candidate discovery after SOURCE-BATCH-440.
