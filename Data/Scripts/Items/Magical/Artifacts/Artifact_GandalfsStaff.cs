@@ -48,6 +48,9 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
+            if (from == null || from.Deleted || Deleted)
+                return;
+
             DateTime TimeNow = DateTime.Now;
             long ticksThen = TimeUsed.Ticks;
             long ticksNow = TimeNow.Ticks;
