@@ -29,4 +29,4 @@
 
 ## Commit
 
-`SOURCE-BATCH-424` source commit: pending. `SOURCE-BATCH-425+` should run fresh candidate discovery after `SOURCE-BATCH-424`.
+`SOURCE-BATCH-424` source commit: `45f03b5a` (`fix: guard HairDye interactions`). `SOURCE-BATCH-425+` should run fresh candidate discovery after `SOURCE-BATCH-424`.

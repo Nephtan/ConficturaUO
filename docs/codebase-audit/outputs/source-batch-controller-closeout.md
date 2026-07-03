@@ -4318,7 +4318,7 @@ To run a gated batch, provide explicit approval naming:
 
 - SOURCE-BATCH-424 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-424-candidate-discovery.csv.
 - SOURCE-BATCH-424 implemented the HairDye guard repair in Data/Scripts/Items/Misc/HairDye.cs.
-- SOURCE-BATCH-424 source commit is pending; verification passed.
+- SOURCE-BATCH-424 source commit is 45f03b5a; verification passed.
 - The source-batch target is docs/codebase-audit/outputs/source-batch-424-target.md.
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-424-hairdye-guard-repair-closeout.md.
 - SOURCE-BATCH-425+ should run fresh candidate discovery after SOURCE-BATCH-424.
