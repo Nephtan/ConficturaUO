@@ -4528,7 +4528,7 @@ To run a gated batch, provide explicit approval naming:
 
 - SOURCE-BATCH-445 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-445-candidate-discovery.csv.
 - SOURCE-BATCH-445 implemented the MagicStaffTarget guard repair in Data/Scripts/Items/Wands/MagicStaffTarget.cs.
-- SOURCE-BATCH-445 source commit is pending; verification passed.
+- SOURCE-BATCH-445 source commit is c8a6ede1; verification passed.
 - The source-batch target is docs/codebase-audit/outputs/source-batch-445-target.md.
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-445-magicstafftarget-guard-repair-closeout.md.
 - SOURCE-BATCH-446+ should run fresh candidate discovery after SOURCE-BATCH-445.
