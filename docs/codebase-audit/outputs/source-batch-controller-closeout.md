@@ -4533,3 +4533,13 @@ To run a gated batch, provide explicit approval naming:
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-445-magicstafftarget-guard-repair-closeout.md.
 - SOURCE-BATCH-446+ should run fresh candidate discovery after SOURCE-BATCH-445.
 - Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-446 Update
+
+- SOURCE-BATCH-446 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-446-candidate-discovery.csv.
+- SOURCE-BATCH-446 implemented the CustomHuePickerGump guard repair in Data/Scripts/Items/Misc/Dyes/CustomHuePicker.cs.
+- SOURCE-BATCH-446 source commit is pending; verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-446-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-446-customhuepicker-guard-repair-closeout.md.
+- SOURCE-BATCH-447+ should run fresh candidate discovery after SOURCE-BATCH-446.
+- Gated roadmap batches remain blocked pending explicit approval.

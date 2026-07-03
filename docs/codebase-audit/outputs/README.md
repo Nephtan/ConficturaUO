@@ -1807,3 +1807,7 @@ The Phase 0 baseline output, Phase 1 reproducible inventory outputs, Phase 2 pro
 | source-batch-445-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-445 discovery with recommended MagicStaffTarget target and skipped candidate notes. | Complete |
 | source-batch-445-target.md | Source batches | Durable target for SOURCE-BATCH-445 MagicStaffTarget guard repair, including fence result and unchanged behavior. | Complete |
 | source-batch-445-magicstafftarget-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-445 with MagicStaffTarget guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |
+| source-batch-446-candidate-discovery.csv | Source batches | Fresh SOURCE-BATCH-446 candidate discovery for a zero-gate, zero-overlay CustomHuePickerGump guard repair. | Complete |
+| source-batch-446-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-446 discovery with recommended CustomHuePickerGump target and skipped candidate notes. | Complete |
+| source-batch-446-target.md | Source batches | Durable target for SOURCE-BATCH-446 CustomHuePickerGump guard repair, including fence result and unchanged behavior. | Complete |
+| source-batch-446-customhuepicker-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-446 with CustomHuePickerGump guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |
