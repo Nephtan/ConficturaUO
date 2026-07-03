@@ -4138,7 +4138,7 @@ To run a gated batch, provide explicit approval naming:
 
 - SOURCE-BATCH-406 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-406-candidate-discovery.csv.
 - SOURCE-BATCH-406 implemented the Scissors guard repair in Data/Scripts/Items/Trades/Tailor Items/Scissors.cs.
-- SOURCE-BATCH-406 source commit is pending; verification passed.
+- SOURCE-BATCH-406 source commit is df625beb; verification passed.
 - The source-batch target is docs/codebase-audit/outputs/source-batch-406-target.md.
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-406-scissors-guard-repair-closeout.md.
 - SOURCE-BATCH-407+ should run fresh candidate discovery after SOURCE-BATCH-406.

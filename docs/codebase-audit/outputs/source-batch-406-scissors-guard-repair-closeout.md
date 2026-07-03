@@ -29,4 +29,4 @@
 
 ## Commit
 
-`SOURCE-BATCH-406` source commit: pending. `SOURCE-BATCH-407+` should run fresh candidate discovery after `SOURCE-BATCH-406`.
+`SOURCE-BATCH-406` source commit: `df625beb` (`fix: guard Scissors interactions`). `SOURCE-BATCH-407+` should run fresh candidate discovery after `SOURCE-BATCH-406`.
