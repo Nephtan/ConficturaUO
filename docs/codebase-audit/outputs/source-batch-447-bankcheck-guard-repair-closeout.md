@@ -60,4 +60,4 @@ Passed:
 
 ## Commit
 
-`SOURCE-BATCH-447` source commit: pending. `SOURCE-BATCH-448+` should run fresh candidate discovery after `SOURCE-BATCH-447`.
+`SOURCE-BATCH-447` source commit: `3ff3cc22`. `SOURCE-BATCH-448+` should run fresh candidate discovery after `SOURCE-BATCH-447`.
