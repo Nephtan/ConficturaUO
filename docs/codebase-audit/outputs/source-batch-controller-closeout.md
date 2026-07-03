@@ -4683,3 +4683,13 @@ To run a gated batch, provide explicit approval naming:
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-460-learngranitebook-guard-repair-closeout.md.
 - SOURCE-BATCH-461+ should run fresh candidate discovery after SOURCE-BATCH-460.
 - Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-461 Update
+
+- SOURCE-BATCH-461 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-461-candidate-discovery.csv.
+- SOURCE-BATCH-461 implemented the SearchPage guard repair in Data/Scripts/Quests/Search/SearchPage.cs.
+- SOURCE-BATCH-461 source commit is pending; verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-461-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-461-searchpage-guard-repair-closeout.md.
+- SOURCE-BATCH-462+ should run fresh candidate discovery after SOURCE-BATCH-461.
+- Gated roadmap batches remain blocked pending explicit approval.
