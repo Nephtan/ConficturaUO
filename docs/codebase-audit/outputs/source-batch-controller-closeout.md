@@ -4498,7 +4498,7 @@ To run a gated batch, provide explicit approval naming:
 
 - SOURCE-BATCH-442 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-442-candidate-discovery.csv.
 - SOURCE-BATCH-442 implemented the TowerLanternArtifact guard repair in Data/Scripts/Items/Decorations/Artifacts/SEDecorationArtifacts.cs.
-- SOURCE-BATCH-442 source commit is pending; verification passed.
+- SOURCE-BATCH-442 source commit is 1e2b63a4; verification passed.
 - The source-batch target is docs/codebase-audit/outputs/source-batch-442-target.md.
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-442-towerlanternartifact-guard-repair-closeout.md.
 - SOURCE-BATCH-443+ should run fresh candidate discovery after SOURCE-BATCH-442.
