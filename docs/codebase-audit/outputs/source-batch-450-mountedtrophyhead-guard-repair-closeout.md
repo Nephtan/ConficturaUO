@@ -57,4 +57,4 @@ Passed:
 
 ## Result
 
-`SOURCE-BATCH-450` source commit: pending. `SOURCE-BATCH-451+` should run fresh candidate discovery after `SOURCE-BATCH-450`.
+`SOURCE-BATCH-450` source commit: `469123b8`. `SOURCE-BATCH-451+` should run fresh candidate discovery after `SOURCE-BATCH-450`.
