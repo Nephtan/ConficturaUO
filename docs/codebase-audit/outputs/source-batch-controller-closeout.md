@@ -4643,3 +4643,13 @@ To run a gated batch, provide explicit approval naming:
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-456-learnscalesbook-guard-repair-closeout.md.
 - SOURCE-BATCH-457+ should run fresh candidate discovery after SOURCE-BATCH-456.
 - Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-457 Update
+
+- SOURCE-BATCH-457 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-457-candidate-discovery.csv.
+- SOURCE-BATCH-457 implemented the LearnReagentsBook guard repair in Data/Scripts/Items/Books/LearnReagents.cs.
+- SOURCE-BATCH-457 source commit is pending; verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-457-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-457-learnreagentsbook-guard-repair-closeout.md.
+- SOURCE-BATCH-458+ should run fresh candidate discovery after SOURCE-BATCH-457.
+- Gated roadmap batches remain blocked pending explicit approval.
