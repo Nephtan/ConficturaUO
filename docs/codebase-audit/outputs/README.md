@@ -1683,3 +1683,7 @@ The Phase 0 baseline output, Phase 1 reproducible inventory outputs, Phase 2 pro
 | source-batch-414-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-414 discovery with recommended HintItem target and skipped candidate notes. | Complete |
 | source-batch-414-target.md | Source batches | Durable target for SOURCE-BATCH-414 HintItem guard repair, including fence result and unchanged behavior. | Complete |
 | source-batch-414-hintitem-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-414 with HintItem guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |
+| source-batch-415-candidate-discovery.csv | Source batches | Fresh SOURCE-BATCH-415 candidate discovery for a zero-gate, zero-overlay WindChimes guard repair. | Complete |
+| source-batch-415-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-415 discovery with recommended WindChimes target and skipped candidate notes. | Complete |
+| source-batch-415-target.md | Source batches | Durable target for SOURCE-BATCH-415 WindChimes guard repair, including fence result and unchanged behavior. | Complete |
+| source-batch-415-windchimes-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-415 with WindChimes guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |
