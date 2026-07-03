@@ -1703,3 +1703,7 @@ The Phase 0 baseline output, Phase 1 reproducible inventory outputs, Phase 2 pro
 | source-batch-419-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-419 discovery with recommended DartBoards target and skipped candidate notes. | Complete |
 | source-batch-419-target.md | Source batches | Durable target for SOURCE-BATCH-419 DartBoards guard repair, including fence result and unchanged behavior. | Complete |
 | source-batch-419-dartboards-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-419 with DartBoards guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |
+| source-batch-420-candidate-discovery.csv | Source batches | Fresh SOURCE-BATCH-420 candidate discovery for a zero-gate, zero-overlay HalloweenGraves rename guard repair. | Complete |
+| source-batch-420-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-420 discovery with recommended HalloweenGraves target and skipped candidate notes. | Complete |
+| source-batch-420-target.md | Source batches | Durable target for SOURCE-BATCH-420 HalloweenGraves rename guard repair, including fence result and unchanged behavior. | Complete |
+| source-batch-420-halloweengraves-rename-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-420 with HalloweenGraves guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |

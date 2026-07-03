@@ -21,6 +21,9 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
+            if (from == null || from.Deleted || Deleted)
+                return;
+
             from.SendMessage("Please Enter The New Name For This Grave");
             from.Prompt = new RenamePrompt(this);
         }
