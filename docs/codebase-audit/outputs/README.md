@@ -1735,3 +1735,7 @@ The Phase 0 baseline output, Phase 1 reproducible inventory outputs, Phase 2 pro
 | source-batch-427-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-427 discovery with recommended RuneOfVirtue target and skipped candidate notes. | Complete |
 | source-batch-427-target.md | Source batches | Durable target for SOURCE-BATCH-427 RuneOfVirtue guard repair, including fence result and unchanged behavior. | Complete |
 | source-batch-427-runeofvirtue-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-427 with RuneOfVirtue guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |
+| source-batch-428-candidate-discovery.csv | Source batches | Fresh SOURCE-BATCH-428 candidate discovery for a zero-gate, zero-overlay SoulLantern guard repair. | Complete |
+| source-batch-428-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-428 discovery with recommended SoulLantern target and skipped candidate notes. | Complete |
+| source-batch-428-target.md | Source batches | Durable target for SOURCE-BATCH-428 SoulLantern guard repair, including fence result and unchanged behavior. | Complete |
+| source-batch-428-soullantern-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-428 with SoulLantern guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |
