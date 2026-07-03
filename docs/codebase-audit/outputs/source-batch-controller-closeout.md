@@ -4503,3 +4503,13 @@ To run a gated batch, provide explicit approval naming:
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-442-towerlanternartifact-guard-repair-closeout.md.
 - SOURCE-BATCH-443+ should run fresh candidate discovery after SOURCE-BATCH-442.
 - Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-443 Update
+
+- SOURCE-BATCH-443 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-443-candidate-discovery.csv.
+- SOURCE-BATCH-443 implemented the Lockpick guard repair in Data/Scripts/Items/Trades/Thieving/LockPick.cs.
+- SOURCE-BATCH-443 source commit is pending; verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-443-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-443-lockpick-guard-repair-closeout.md.
+- SOURCE-BATCH-444+ should run fresh candidate discovery after SOURCE-BATCH-443.
+- Gated roadmap batches remain blocked pending explicit approval.

@@ -1795,3 +1795,7 @@ The Phase 0 baseline output, Phase 1 reproducible inventory outputs, Phase 2 pro
 | source-batch-442-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-442 discovery with recommended TowerLanternArtifact target and skipped candidate notes. | Complete |
 | source-batch-442-target.md | Source batches | Durable target for SOURCE-BATCH-442 TowerLanternArtifact guard repair, including fence result and unchanged behavior. | Complete |
 | source-batch-442-towerlanternartifact-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-442 with TowerLanternArtifact guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |
+| source-batch-443-candidate-discovery.csv | Source batches | Fresh SOURCE-BATCH-443 candidate discovery for a zero-gate, zero-overlay Lockpick guard repair. | Complete |
+| source-batch-443-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-443 discovery with recommended Lockpick target and skipped candidate notes. | Complete |
+| source-batch-443-target.md | Source batches | Durable target for SOURCE-BATCH-443 Lockpick guard repair, including fence result and unchanged behavior. | Complete |
+| source-batch-443-lockpick-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-443 with Lockpick guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |

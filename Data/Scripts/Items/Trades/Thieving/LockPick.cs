@@ -54,6 +54,9 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
+            if (from == null || from.Deleted || Deleted)
+                return;
+
             from.SendLocalizedMessage(502068); // What do you want to pick?
             from.Target = new InternalTarget(this);
         }
@@ -70,7 +73,12 @@ namespace Server.Items
 
             protected override void OnTarget(Mobile from, object targeted)
             {
-                if (m_Item.Deleted)
+                if (from == null || from.Deleted || m_Item == null || m_Item.Deleted)
+                    return;
+
+                Item targetItem = targeted as Item;
+
+                if (targetItem != null && targetItem.Deleted)
                     return;
 
                 if (targeted is BaseDoor && from.Skills[SkillName.Lockpicking].Value >= 30)
@@ -123,7 +131,11 @@ namespace Server.Items
                 }
                 else if (targeted is ILockpickable)
                 {
-                    Item item = (Item)targeted;
+                    Item item = targetItem;
+
+                    if (item == null)
+                        return;
+
                     from.Direction = from.GetDirectionTo(item);
 
                     if (
@@ -218,7 +230,19 @@ namespace Server.Items
 
                 protected override void OnTick()
                 {
-                    Item item = (Item)m_Item;
+                    if (
+                        m_From == null
+                        || m_From.Deleted
+                        || m_Item == null
+                        || m_Lockpick == null
+                        || m_Lockpick.Deleted
+                    )
+                        return;
+
+                    Item item = m_Item as Item;
+
+                    if (item == null || item.Deleted)
+                        return;
 
                     if (m_From.Skills[SkillName.Lockpicking].Base < 1)
                     {
