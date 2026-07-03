@@ -4433,3 +4433,13 @@ To run a gated batch, provide explicit approval naming:
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-435-fukiya-guard-repair-closeout.md.
 - SOURCE-BATCH-436+ should run fresh candidate discovery after SOURCE-BATCH-435.
 - Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-436 Update
+
+- SOURCE-BATCH-436 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-436-candidate-discovery.csv.
+- SOURCE-BATCH-436 implemented the LeatherNinjaBelt guard repair in Data/Scripts/Items/Trades/Ninjitsu/LeatherNinjaBelt.cs.
+- SOURCE-BATCH-436 source commit is pending; verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-436-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-436-leatherninjabelt-guard-repair-closeout.md.
+- SOURCE-BATCH-437+ should run fresh candidate discovery after SOURCE-BATCH-436.
+- Gated roadmap batches remain blocked pending explicit approval.

@@ -1767,3 +1767,7 @@ The Phase 0 baseline output, Phase 1 reproducible inventory outputs, Phase 2 pro
 | source-batch-435-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-435 discovery with recommended Fukiya target and skipped candidate notes. | Complete |
 | source-batch-435-target.md | Source batches | Durable target for SOURCE-BATCH-435 Fukiya guard repair, including fence result and unchanged behavior. | Complete |
 | source-batch-435-fukiya-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-435 with Fukiya guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |
+| source-batch-436-candidate-discovery.csv | Source batches | Fresh SOURCE-BATCH-436 candidate discovery for a zero-gate, zero-overlay LeatherNinjaBelt guard repair. | Complete |
+| source-batch-436-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-436 discovery with recommended LeatherNinjaBelt target and skipped candidate notes. | Complete |
+| source-batch-436-target.md | Source batches | Durable target for SOURCE-BATCH-436 LeatherNinjaBelt guard repair, including fence result and unchanged behavior. | Complete |
+| source-batch-436-leatherninjabelt-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-436 with LeatherNinjaBelt guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |
