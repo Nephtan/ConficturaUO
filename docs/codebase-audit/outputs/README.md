@@ -1719,3 +1719,7 @@ The Phase 0 baseline output, Phase 1 reproducible inventory outputs, Phase 2 pro
 | source-batch-423-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-423 discovery with recommended PowderOfTranslocation target and skipped candidate notes. | Complete |
 | source-batch-423-target.md | Source batches | Durable target for SOURCE-BATCH-423 PowderOfTranslocation guard repair, including fence result and unchanged behavior. | Complete |
 | source-batch-423-powderoftranslocation-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-423 with PowderOfTranslocation guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |
+| source-batch-424-candidate-discovery.csv | Source batches | Fresh SOURCE-BATCH-424 candidate discovery for a zero-gate, zero-overlay HairDye guard repair. | Complete |
+| source-batch-424-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-424 discovery with recommended HairDye target and skipped candidate notes. | Complete |
+| source-batch-424-target.md | Source batches | Durable target for SOURCE-BATCH-424 HairDye guard repair, including fence result and unchanged behavior. | Complete |
+| source-batch-424-hairdye-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-424 with HairDye guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |
