@@ -4163,3 +4163,13 @@ To run a gated batch, provide explicit approval naming:
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-408-titlechangedeed-guard-repair-closeout.md.
 - SOURCE-BATCH-409+ should run fresh candidate discovery after SOURCE-BATCH-408.
 - Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-409 Update
+
+- SOURCE-BATCH-409 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-409-candidate-discovery.csv.
+- SOURCE-BATCH-409 implemented the BaseStatue guard repair in Data/Scripts/Trades/Stone/BaseStatue.cs.
+- SOURCE-BATCH-409 source commit is pending; verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-409-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-409-basestatue-guard-repair-closeout.md.
+- SOURCE-BATCH-410+ should run fresh candidate discovery after SOURCE-BATCH-409.
+- Gated roadmap batches remain blocked pending explicit approval.
