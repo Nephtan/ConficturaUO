@@ -31,4 +31,4 @@
 
 ## Commit
 
-`SOURCE-BATCH-407` source commit: pending. `SOURCE-BATCH-408+` should run fresh candidate discovery after `SOURCE-BATCH-407`.
+`SOURCE-BATCH-407` source commit: `880a4142`. `SOURCE-BATCH-408+` should run fresh candidate discovery after `SOURCE-BATCH-407`.

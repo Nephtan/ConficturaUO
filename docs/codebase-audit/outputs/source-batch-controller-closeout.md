@@ -4148,7 +4148,7 @@ To run a gated batch, provide explicit approval naming:
 
 - SOURCE-BATCH-407 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-407-candidate-discovery.csv.
 - SOURCE-BATCH-407 implemented the NewPlayerTicket guard repair in Data/Scripts/Items/Deeds/NewPlayerTicket.cs.
-- SOURCE-BATCH-407 source commit is pending; verification passed.
+- SOURCE-BATCH-407 source commit is 880a4142; verification passed.
 - The source-batch target is docs/codebase-audit/outputs/source-batch-407-target.md.
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-407-newplayerticket-guard-repair-closeout.md.
 - SOURCE-BATCH-408+ should run fresh candidate discovery after SOURCE-BATCH-407.
