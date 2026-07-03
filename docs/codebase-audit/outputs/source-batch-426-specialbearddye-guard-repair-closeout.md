@@ -29,4 +29,4 @@ Range requirement, `SpecialBeardDyeGump` layout, hue entry table, selected hue c
 
 ## Commit
 
-`SOURCE-BATCH-426` source commit: pending. `SOURCE-BATCH-427+` should run fresh candidate discovery after `SOURCE-BATCH-426`.
+`SOURCE-BATCH-426` source commit: `9de620cc` (`fix: guard SpecialBeardDye interactions`). `SOURCE-BATCH-427+` should run fresh candidate discovery after `SOURCE-BATCH-426`.
