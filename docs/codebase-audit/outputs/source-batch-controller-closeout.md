@@ -4358,7 +4358,7 @@ To run a gated batch, provide explicit approval naming:
 
 - SOURCE-BATCH-428 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-428-candidate-discovery.csv.
 - SOURCE-BATCH-428 implemented the SoulLantern guard repair in Data/Scripts/Magic/Death Knight/SoulLantern.cs.
-- SOURCE-BATCH-428 source commit is pending; verification passed.
+- SOURCE-BATCH-428 source commit is fe3737e9; verification passed.
 - The source-batch target is docs/codebase-audit/outputs/source-batch-428-target.md.
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-428-soullantern-guard-repair-closeout.md.
 - SOURCE-BATCH-429+ should run fresh candidate discovery after SOURCE-BATCH-428.

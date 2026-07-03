@@ -28,4 +28,4 @@ Owner comparison, equipped-layer detection, backpack-use localized message `1042
 
 ## Commit
 
-`SOURCE-BATCH-428` source commit: pending. `SOURCE-BATCH-429+` should run fresh candidate discovery after `SOURCE-BATCH-428`.
+`SOURCE-BATCH-428` source commit: `fe3737e9` (`fix: guard SoulLantern interactions`). `SOURCE-BATCH-429+` should run fresh candidate discovery after `SOURCE-BATCH-428`.
