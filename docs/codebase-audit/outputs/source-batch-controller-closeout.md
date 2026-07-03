@@ -4268,7 +4268,7 @@ To run a gated batch, provide explicit approval naming:
 
 - SOURCE-BATCH-419 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-419-candidate-discovery.csv.
 - SOURCE-BATCH-419 implemented the Halloween dart boards guard repair in Data/Scripts/Items/Gifts/Holiday/Halloween/Rewards/MongbatDartBoard.cs and Data/Scripts/Items/Gifts/Holiday/Halloween/Rewards/DaemonDartBoard.cs.
-- SOURCE-BATCH-419 source commit is pending; verification passed.
+- SOURCE-BATCH-419 source commit is c8a06efe; verification passed.
 - The source-batch target is docs/codebase-audit/outputs/source-batch-419-target.md.
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-419-dartboards-guard-repair-closeout.md.
 - SOURCE-BATCH-420+ should run fresh candidate discovery after SOURCE-BATCH-419.
