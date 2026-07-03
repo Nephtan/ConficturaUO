@@ -1819,3 +1819,7 @@ The Phase 0 baseline output, Phase 1 reproducible inventory outputs, Phase 2 pro
 | source-batch-448-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-448 discovery with recommended Wreath target and skipped candidate notes. | Complete |
 | source-batch-448-target.md | Source batches | Durable target for SOURCE-BATCH-448 Wreath guard repair, including fence result and unchanged behavior. | Complete |
 | source-batch-448-wreath-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-448 with Wreath guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |
+| source-batch-449-candidate-discovery.csv | Source batches | Fresh SOURCE-BATCH-449 candidate discovery for a zero-gate, zero-overlay Mistletoe guard repair. | Complete |
+| source-batch-449-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-449 discovery with recommended Mistletoe target and skipped candidate notes. | Complete |
+| source-batch-449-target.md | Source batches | Durable target for SOURCE-BATCH-449 Mistletoe guard repair, including fence result and unchanged behavior. | Complete |
+| source-batch-449-mistletoe-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-449 with Mistletoe guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |
