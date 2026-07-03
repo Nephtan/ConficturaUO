@@ -29,4 +29,4 @@
 
 ## Commit
 
-`SOURCE-BATCH-415` source commit: pending. `SOURCE-BATCH-416+` should run fresh candidate discovery after `SOURCE-BATCH-415`.
+`SOURCE-BATCH-415` source commit: `e10d3ed9`. `SOURCE-BATCH-416+` should run fresh candidate discovery after `SOURCE-BATCH-415`.

@@ -4228,7 +4228,7 @@ To run a gated batch, provide explicit approval naming:
 
 - SOURCE-BATCH-415 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-415-candidate-discovery.csv.
 - SOURCE-BATCH-415 implemented the WindChimes guard repair in Data/Scripts/Items/Misc/WindChimes.cs.
-- SOURCE-BATCH-415 source commit is pending; verification passed.
+- SOURCE-BATCH-415 source commit is e10d3ed9; verification passed.
 - The source-batch target is docs/codebase-audit/outputs/source-batch-415-target.md.
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-415-windchimes-guard-repair-closeout.md.
 - SOURCE-BATCH-416+ should run fresh candidate discovery after SOURCE-BATCH-415.
