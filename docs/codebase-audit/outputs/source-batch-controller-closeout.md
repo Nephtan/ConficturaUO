@@ -4448,7 +4448,7 @@ To run a gated batch, provide explicit approval naming:
 
 - SOURCE-BATCH-437 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-437-candidate-discovery.csv.
 - SOURCE-BATCH-437 implemented the GandalfsStaff guard repair in Data/Scripts/Items/Magical/Artifacts/Artifact_GandalfsStaff.cs.
-- SOURCE-BATCH-437 source commit is pending; verification passed.
+- SOURCE-BATCH-437 source commit is e055c0f4; verification passed.
 - The source-batch target is docs/codebase-audit/outputs/source-batch-437-target.md.
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-437-gandalfsstaff-guard-repair-closeout.md.
 - SOURCE-BATCH-438+ should run fresh candidate discovery after SOURCE-BATCH-437.
