@@ -4378,7 +4378,7 @@ To run a gated batch, provide explicit approval naming:
 
 - SOURCE-BATCH-430 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-430-candidate-discovery.csv.
 - SOURCE-BATCH-430 implemented the SongBook guard repair in Data/Scripts/Magic/Bard/SongBook.cs.
-- SOURCE-BATCH-430 source commit is pending; verification passed.
+- SOURCE-BATCH-430 source commit is 6b067895; verification passed.
 - The source-batch target is docs/codebase-audit/outputs/source-batch-430-target.md.
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-430-songbook-guard-repair-closeout.md.
 - SOURCE-BATCH-431+ should run fresh candidate discovery after SOURCE-BATCH-430.

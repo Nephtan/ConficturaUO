@@ -28,4 +28,4 @@
 
 ## Commit
 
-`SOURCE-BATCH-430` source commit: pending. `SOURCE-BATCH-431+` should run fresh candidate discovery after `SOURCE-BATCH-430`.
+`SOURCE-BATCH-430` source commit: `6b067895` (`fix: guard SongBook interactions`). `SOURCE-BATCH-431+` should run fresh candidate discovery after `SOURCE-BATCH-430`.
