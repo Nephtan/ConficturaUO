@@ -4468,7 +4468,7 @@ To run a gated batch, provide explicit approval naming:
 
 - SOURCE-BATCH-439 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-439-candidate-discovery.csv.
 - SOURCE-BATCH-439 implemented the Head guard repair in Data/Scripts/Items/Misc/Bodies/Head.cs.
-- SOURCE-BATCH-439 source commit is pending; verification passed.
+- SOURCE-BATCH-439 source commit is 03b9a84d; verification passed.
 - The source-batch target is docs/codebase-audit/outputs/source-batch-439-target.md.
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-439-head-guard-repair-closeout.md.
 - SOURCE-BATCH-440+ should run fresh candidate discovery after SOURCE-BATCH-439.
