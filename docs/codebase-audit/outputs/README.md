@@ -1663,3 +1663,7 @@ The Phase 0 baseline output, Phase 1 reproducible inventory outputs, Phase 2 pro
 | source-batch-409-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-409 discovery with recommended BaseStatue target and skipped candidate notes. | Complete |
 | source-batch-409-target.md | Source batches | Durable target for SOURCE-BATCH-409 BaseStatue guard repair, including fence result and unchanged behavior. | Complete |
 | source-batch-409-basestatue-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-409 with BaseStatue guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |
+| source-batch-410-candidate-discovery.csv | Source batches | Fresh SOURCE-BATCH-410 candidate discovery for a zero-gate, zero-overlay BaseBook guard repair. | Complete |
+| source-batch-410-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-410 discovery with recommended BaseBook target and skipped candidate notes. | Complete |
+| source-batch-410-target.md | Source batches | Durable target for SOURCE-BATCH-410 BaseBook guard repair, including fence result and unchanged behavior. | Complete |
+| source-batch-410-basebook-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-410 with BaseBook guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |

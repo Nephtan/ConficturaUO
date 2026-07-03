@@ -4173,3 +4173,13 @@ To run a gated batch, provide explicit approval naming:
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-409-basestatue-guard-repair-closeout.md.
 - SOURCE-BATCH-410+ should run fresh candidate discovery after SOURCE-BATCH-409.
 - Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-410 Update
+
+- SOURCE-BATCH-410 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-410-candidate-discovery.csv.
+- SOURCE-BATCH-410 implemented the BaseBook guard repair in Data/Scripts/Items/Books/BaseBook.cs.
+- SOURCE-BATCH-410 source commit is pending; verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-410-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-410-basebook-guard-repair-closeout.md.
+- SOURCE-BATCH-411+ should run fresh candidate discovery after SOURCE-BATCH-410.
+- Gated roadmap batches remain blocked pending explicit approval.
