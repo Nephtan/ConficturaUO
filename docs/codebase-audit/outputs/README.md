@@ -1739,3 +1739,7 @@ The Phase 0 baseline output, Phase 1 reproducible inventory outputs, Phase 2 pro
 | source-batch-428-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-428 discovery with recommended SoulLantern target and skipped candidate notes. | Complete |
 | source-batch-428-target.md | Source batches | Durable target for SOURCE-BATCH-428 SoulLantern guard repair, including fence result and unchanged behavior. | Complete |
 | source-batch-428-soullantern-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-428 with SoulLantern guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |
+| source-batch-429-candidate-discovery.csv | Source batches | Fresh SOURCE-BATCH-429 candidate discovery for a zero-gate, zero-overlay ForgetfulGem guard repair. | Complete |
+| source-batch-429-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-429 discovery with recommended ForgetfulGem target and skipped candidate notes. | Complete |
+| source-batch-429-target.md | Source batches | Durable target for SOURCE-BATCH-429 ForgetfulGem guard repair, including fence result and unchanged behavior. | Complete |
+| source-batch-429-forgetfulgem-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-429 with ForgetfulGem guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |
