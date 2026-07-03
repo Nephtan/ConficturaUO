@@ -29,4 +29,4 @@ Owner comparison, FistFighting `>= 100` threshold, `Server.Misc.GetPlayerInfo.is
 
 ## Commit
 
-`SOURCE-BATCH-434` source commit: pending. `SOURCE-BATCH-435+` should run fresh candidate discovery after `SOURCE-BATCH-434`.
+`SOURCE-BATCH-434` source commit: `0dbe8aaa`. `SOURCE-BATCH-435+` should run fresh candidate discovery after `SOURCE-BATCH-434`.

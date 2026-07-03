@@ -4418,7 +4418,7 @@ To run a gated batch, provide explicit approval naming:
 
 - SOURCE-BATCH-434 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-434-candidate-discovery.csv.
 - SOURCE-BATCH-434 implemented the MysticPack guard repair in Data/Scripts/Magic/Mystic/MysticPack.cs.
-- SOURCE-BATCH-434 source commit is pending; verification passed.
+- SOURCE-BATCH-434 source commit is 0dbe8aaa; verification passed.
 - The source-batch target is docs/codebase-audit/outputs/source-batch-434-target.md.
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-434-mysticpack-guard-repair-closeout.md.
 - SOURCE-BATCH-435+ should run fresh candidate discovery after SOURCE-BATCH-434.
