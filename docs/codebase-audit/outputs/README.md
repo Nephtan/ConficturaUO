@@ -1655,3 +1655,7 @@ The Phase 0 baseline output, Phase 1 reproducible inventory outputs, Phase 2 pro
 | source-batch-407-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-407 discovery with recommended NewPlayerTicket target and skipped candidate notes. | Complete |
 | source-batch-407-target.md | Source batches | Durable target for SOURCE-BATCH-407 NewPlayerTicket guard repair, including fence result and unchanged behavior. | Complete |
 | source-batch-407-newplayerticket-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-407 with NewPlayerTicket guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |
+| source-batch-408-candidate-discovery.csv | Source batches | Fresh SOURCE-BATCH-408 candidate discovery for a zero-gate, zero-overlay TitleChangeDeed guard repair. | Complete |
+| source-batch-408-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-408 discovery with recommended TitleChangeDeed target and skipped candidate notes. | Complete |
+| source-batch-408-target.md | Source batches | Durable target for SOURCE-BATCH-408 TitleChangeDeed guard repair, including fence result and unchanged behavior. | Complete |
+| source-batch-408-titlechangedeed-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-408 with TitleChangeDeed guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |

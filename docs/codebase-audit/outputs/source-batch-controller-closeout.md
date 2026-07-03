@@ -4153,3 +4153,13 @@ To run a gated batch, provide explicit approval naming:
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-407-newplayerticket-guard-repair-closeout.md.
 - SOURCE-BATCH-408+ should run fresh candidate discovery after SOURCE-BATCH-407.
 - Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-408 Update
+
+- SOURCE-BATCH-408 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-408-candidate-discovery.csv.
+- SOURCE-BATCH-408 implemented the TitleChangeDeed guard repair in Data/Scripts/Items/Books/TitleChangeDeed.cs.
+- SOURCE-BATCH-408 source commit is pending; verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-408-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-408-titlechangedeed-guard-repair-closeout.md.
+- SOURCE-BATCH-409+ should run fresh candidate discovery after SOURCE-BATCH-408.
+- Gated roadmap batches remain blocked pending explicit approval.
