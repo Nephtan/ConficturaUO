@@ -1843,3 +1843,7 @@ The Phase 0 baseline output, Phase 1 reproducible inventory outputs, Phase 2 pro
 | source-batch-454-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-454 discovery with recommended LearnTailorBook target and skipped/deferred candidate notes. | Complete |
 | source-batch-454-target.md | Source batches | Durable target for SOURCE-BATCH-454 LearnTailorBook guard repair, including fence result and unchanged behavior. | Complete |
 | source-batch-454-learntailorbook-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-454 with LearnTailorBook guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |
+| source-batch-455-candidate-discovery.csv | Source batches | Fresh SOURCE-BATCH-455 candidate discovery for a zero-gate, zero-overlay LearnStealingBook guard repair. | Complete |
+| source-batch-455-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-455 discovery with recommended LearnStealingBook target and skipped/deferred candidate notes. | Complete |
+| source-batch-455-target.md | Source batches | Durable target for SOURCE-BATCH-455 LearnStealingBook guard repair, including fence result and unchanged behavior. | Complete |
+| source-batch-455-learnstealingbook-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-455 with LearnStealingBook guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |
