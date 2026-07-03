@@ -4588,7 +4588,7 @@ To run a gated batch, provide explicit approval naming:
 
 - SOURCE-BATCH-451 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-451-candidate-discovery.csv.
 - SOURCE-BATCH-451 implemented the SomeRandomNote guard repair in Data/Scripts/Quests/SomeRandomNote.cs.
-- SOURCE-BATCH-451 source commit is pending; verification passed.
+- SOURCE-BATCH-451 source commit is 72d36986; verification passed.
 - The source-batch target is docs/codebase-audit/outputs/source-batch-451-target.md.
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-451-somerandomnote-guard-repair-closeout.md.
 - SOURCE-BATCH-452+ should run fresh candidate discovery after SOURCE-BATCH-451.
