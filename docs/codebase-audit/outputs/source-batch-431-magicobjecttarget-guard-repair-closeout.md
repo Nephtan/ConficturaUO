@@ -28,4 +28,4 @@ Target range `6`, harmful flag `false`, `TargetFlags.None`, `BaseMagicObject.DoM
 
 ## Commit
 
-`SOURCE-BATCH-431` source commit: pending. `SOURCE-BATCH-432+` should run fresh candidate discovery after `SOURCE-BATCH-431`.
+`SOURCE-BATCH-431` source commit: `7dc34d16` (`fix: guard MagicObjectTarget interactions`). `SOURCE-BATCH-432+` should run fresh candidate discovery after `SOURCE-BATCH-431`.
