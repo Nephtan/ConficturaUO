@@ -1647,3 +1647,7 @@ The Phase 0 baseline output, Phase 1 reproducible inventory outputs, Phase 2 pro
 | source-batch-405-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-405 discovery with recommended ThrowingDagger target and skipped candidate notes. | Complete |
 | source-batch-405-target.md | Source batches | Durable target for SOURCE-BATCH-405 ThrowingDagger guard repair, including fence result and unchanged behavior. | Complete |
 | source-batch-405-throwingdagger-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-405 with ThrowingDagger guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |
+| source-batch-406-candidate-discovery.csv | Source batches | Fresh SOURCE-BATCH-406 candidate discovery for a zero-gate, zero-overlay Scissors guard repair. | Complete |
+| source-batch-406-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-406 discovery with recommended Scissors target and skipped candidate notes. | Complete |
+| source-batch-406-target.md | Source batches | Durable target for SOURCE-BATCH-406 Scissors guard repair, including fence result and unchanged behavior. | Complete |
+| source-batch-406-scissors-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-406 with Scissors guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |
