@@ -4248,7 +4248,7 @@ To run a gated batch, provide explicit approval naming:
 
 - SOURCE-BATCH-417 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-417-candidate-discovery.csv.
 - SOURCE-BATCH-417 implemented the TarotCards guard repair in the nine Data/Scripts/Items/Special/Rares/TarotCards/*.cs files.
-- SOURCE-BATCH-417 source commit is pending; verification passed.
+- SOURCE-BATCH-417 source commit is dc9df648; verification passed.
 - The source-batch target is docs/codebase-audit/outputs/source-batch-417-target.md.
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-417-tarotcards-guard-repair-closeout.md.
 - SOURCE-BATCH-418+ should run fresh candidate discovery after SOURCE-BATCH-417.
