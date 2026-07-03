@@ -38,6 +38,9 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile m)
         {
+            if (m == null || m.Deleted || Deleted)
+                return;
+
             InvalidateProperties();
             m.SendMessage(
                 "Please target a door to add/remove or this item to open/close the doors."
@@ -52,6 +55,10 @@ namespace Server.Items
             foreach (Item i in m_doors)
             {
                 oc = i as BaseDoor;
+
+                if (oc == null || oc.Deleted)
+                    continue;
+
                 if (oc.Open)
                 {
                     oc.Open = false;
@@ -79,6 +86,10 @@ namespace Server.Items
                 foreach (Item i in door)
                 {
                     oc = i as BaseDoor;
+
+                    if (oc == null || oc.Deleted)
+                        continue;
+
                     if (oc.Open)
                     {
                         oc.Open = false;
@@ -92,6 +103,9 @@ namespace Server.Items
 
             protected override void OnTarget(Mobile from, object targ)
             {
+                if (from == null || from.Deleted || door == null)
+                    return;
+
                 if (targ is DoorSwitch)
                 {
                     switchit();
@@ -104,6 +118,13 @@ namespace Server.Items
                 }
                 BaseDoor d = targ as BaseDoor;
                 Item targ1 = targ as Item;
+
+                if (targ1 == null || targ1.Deleted)
+                {
+                    from.SendMessage("That is not a door");
+                    return;
+                }
+
                 if (!door.Contains(targ1))
                 {
                     door.Add(targ1);

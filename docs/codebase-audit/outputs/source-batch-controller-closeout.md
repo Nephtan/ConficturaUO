@@ -4513,3 +4513,13 @@ To run a gated batch, provide explicit approval naming:
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-443-lockpick-guard-repair-closeout.md.
 - SOURCE-BATCH-444+ should run fresh candidate discovery after SOURCE-BATCH-443.
 - Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-444 Update
+
+- SOURCE-BATCH-444 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-444-candidate-discovery.csv.
+- SOURCE-BATCH-444 implemented the DoorSwitch guard repair in Data/Scripts/Items/Doors/DoorSwitch.cs.
+- SOURCE-BATCH-444 source commit is pending; verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-444-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-444-doorswitch-guard-repair-closeout.md.
+- SOURCE-BATCH-445+ should run fresh candidate discovery after SOURCE-BATCH-444.
+- Gated roadmap batches remain blocked pending explicit approval.
