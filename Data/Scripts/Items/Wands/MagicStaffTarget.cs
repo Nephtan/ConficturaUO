@@ -21,6 +21,9 @@ namespace Server.Targeting
 
         protected override void OnTarget(Mobile from, object targeted)
         {
+            if (from == null || from.Deleted || m_Item == null || m_Item.Deleted)
+                return;
+
             m_Item.DoMagicStaffTarget(from, targeted);
         }
     }

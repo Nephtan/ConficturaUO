@@ -1803,3 +1803,7 @@ The Phase 0 baseline output, Phase 1 reproducible inventory outputs, Phase 2 pro
 | source-batch-444-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-444 discovery with recommended DoorSwitch target and skipped candidate notes. | Complete |
 | source-batch-444-target.md | Source batches | Durable target for SOURCE-BATCH-444 DoorSwitch guard repair, including fence result and unchanged behavior. | Complete |
 | source-batch-444-doorswitch-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-444 with DoorSwitch guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |
+| source-batch-445-candidate-discovery.csv | Source batches | Fresh SOURCE-BATCH-445 candidate discovery for a zero-gate, zero-overlay MagicStaffTarget guard repair. | Complete |
+| source-batch-445-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-445 discovery with recommended MagicStaffTarget target and skipped candidate notes. | Complete |
+| source-batch-445-target.md | Source batches | Durable target for SOURCE-BATCH-445 MagicStaffTarget guard repair, including fence result and unchanged behavior. | Complete |
+| source-batch-445-magicstafftarget-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-445 with MagicStaffTarget guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |
