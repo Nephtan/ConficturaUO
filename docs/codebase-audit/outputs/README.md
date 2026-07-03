@@ -1731,3 +1731,7 @@ The Phase 0 baseline output, Phase 1 reproducible inventory outputs, Phase 2 pro
 | source-batch-426-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-426 discovery with recommended SpecialBeardDye target and skipped candidate notes. | Complete |
 | source-batch-426-target.md | Source batches | Durable target for SOURCE-BATCH-426 SpecialBeardDye guard repair, including fence result and unchanged behavior. | Complete |
 | source-batch-426-specialbearddye-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-426 with SpecialBeardDye guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |
+| source-batch-427-candidate-discovery.csv | Source batches | Fresh SOURCE-BATCH-427 candidate discovery for a zero-gate, zero-overlay RuneOfVirtue guard repair. | Complete |
+| source-batch-427-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-427 discovery with recommended RuneOfVirtue target and skipped candidate notes. | Complete |
+| source-batch-427-target.md | Source batches | Durable target for SOURCE-BATCH-427 RuneOfVirtue guard repair, including fence result and unchanged behavior. | Complete |
+| source-batch-427-runeofvirtue-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-427 with RuneOfVirtue guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |

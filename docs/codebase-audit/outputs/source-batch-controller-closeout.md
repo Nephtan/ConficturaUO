@@ -4343,3 +4343,13 @@ To run a gated batch, provide explicit approval naming:
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-426-specialbearddye-guard-repair-closeout.md.
 - SOURCE-BATCH-427+ should run fresh candidate discovery after SOURCE-BATCH-426.
 - Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-427 Update
+
+- SOURCE-BATCH-427 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-427-candidate-discovery.csv.
+- SOURCE-BATCH-427 implemented the RuneOfVirtue guard repair in Data/Scripts/Items/Magical/RuneOfVirtue.cs.
+- SOURCE-BATCH-427 source commit is pending; verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-427-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-427-runeofvirtue-guard-repair-closeout.md.
+- SOURCE-BATCH-428+ should run fresh candidate discovery after SOURCE-BATCH-427.
+- Gated roadmap batches remain blocked pending explicit approval.
