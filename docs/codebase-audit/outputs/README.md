@@ -1723,3 +1723,7 @@ The Phase 0 baseline output, Phase 1 reproducible inventory outputs, Phase 2 pro
 | source-batch-424-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-424 discovery with recommended HairDye target and skipped candidate notes. | Complete |
 | source-batch-424-target.md | Source batches | Durable target for SOURCE-BATCH-424 HairDye guard repair, including fence result and unchanged behavior. | Complete |
 | source-batch-424-hairdye-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-424 with HairDye guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |
+| source-batch-425-candidate-discovery.csv | Source batches | Fresh SOURCE-BATCH-425 candidate discovery for a zero-gate, zero-overlay SpecialHairDye guard repair. | Complete |
+| source-batch-425-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-425 discovery with recommended SpecialHairDye target and skipped candidate notes. | Complete |
+| source-batch-425-target.md | Source batches | Durable target for SOURCE-BATCH-425 SpecialHairDye guard repair, including fence result and unchanged behavior. | Complete |
+| source-batch-425-specialhairdye-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-425 with SpecialHairDye guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |
