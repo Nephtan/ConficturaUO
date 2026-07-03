@@ -1679,3 +1679,7 @@ The Phase 0 baseline output, Phase 1 reproducible inventory outputs, Phase 2 pro
 | source-batch-413-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-413 discovery with recommended ColoringBook target and skipped candidate notes. | Complete |
 | source-batch-413-target.md | Source batches | Durable target for SOURCE-BATCH-413 ColoringBook guard repair, including fence result and unchanged behavior. | Complete |
 | source-batch-413-coloringbook-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-413 with ColoringBook guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |
+| source-batch-414-candidate-discovery.csv | Source batches | Fresh SOURCE-BATCH-414 candidate discovery for a zero-gate, zero-overlay HintItem guard repair. | Complete |
+| source-batch-414-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-414 discovery with recommended HintItem target and skipped candidate notes. | Complete |
+| source-batch-414-target.md | Source batches | Durable target for SOURCE-BATCH-414 HintItem guard repair, including fence result and unchanged behavior. | Complete |
+| source-batch-414-hintitem-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-414 with HintItem guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |

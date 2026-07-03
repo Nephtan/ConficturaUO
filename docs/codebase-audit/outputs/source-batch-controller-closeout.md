@@ -4213,3 +4213,13 @@ To run a gated batch, provide explicit approval naming:
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-413-coloringbook-guard-repair-closeout.md.
 - SOURCE-BATCH-414+ should run fresh candidate discovery after SOURCE-BATCH-413.
 - Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-414 Update
+
+- SOURCE-BATCH-414 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-414-candidate-discovery.csv.
+- SOURCE-BATCH-414 implemented the HintItem guard repair in Data/Scripts/Items/Misc/WarningItem.cs.
+- SOURCE-BATCH-414 source commit is pending; verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-414-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-414-hintitem-guard-repair-closeout.md.
+- SOURCE-BATCH-415+ should run fresh candidate discovery after SOURCE-BATCH-414.
+- Gated roadmap batches remain blocked pending explicit approval.

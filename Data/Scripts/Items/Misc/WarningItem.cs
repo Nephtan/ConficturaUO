@@ -245,6 +245,9 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
+            if (from == null || from.Deleted || Deleted)
+                return;
+
             SendMessage(from, true, m_HintString, m_HintNumber);
         }
 
