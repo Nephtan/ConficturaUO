@@ -4238,7 +4238,7 @@ To run a gated batch, provide explicit approval naming:
 
 - SOURCE-BATCH-416 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-416-candidate-discovery.csv.
 - SOURCE-BATCH-416 implemented the HouseSign rename guard repair in Data/Scripts/Items/Decorations/HouseSign.cs.
-- SOURCE-BATCH-416 source commit is pending; verification passed.
+- SOURCE-BATCH-416 source commit is e84ae272; verification passed.
 - The source-batch target is docs/codebase-audit/outputs/source-batch-416-target.md.
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-416-housesign-rename-guard-repair-closeout.md.
 - SOURCE-BATCH-417+ should run fresh candidate discovery after SOURCE-BATCH-416.
