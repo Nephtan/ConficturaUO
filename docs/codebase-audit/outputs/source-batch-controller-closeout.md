@@ -4488,7 +4488,7 @@ To run a gated batch, provide explicit approval naming:
 
 - SOURCE-BATCH-441 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-441-candidate-discovery.csv.
 - SOURCE-BATCH-441 implemented the TapestryOfSosaria guard repair in Data/Scripts/Items/Special/TapestryOfSosaria.cs.
-- SOURCE-BATCH-441 source commit is pending; verification passed.
+- SOURCE-BATCH-441 source commit is a09b0db1; verification passed.
 - The source-batch target is docs/codebase-audit/outputs/source-batch-441-target.md.
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-441-tapestryofsosaria-guard-repair-closeout.md.
 - SOURCE-BATCH-442+ should run fresh candidate discovery after SOURCE-BATCH-441.
