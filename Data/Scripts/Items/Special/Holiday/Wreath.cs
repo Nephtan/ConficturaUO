@@ -82,6 +82,9 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
+            if (from == null || from.Deleted || Deleted)
+                return;
+
             BaseHouse house = BaseHouse.FindHouseAt(this);
 
             if (house != null && house.IsCoOwner(from))
@@ -100,7 +103,7 @@ namespace Server.Items
 
         public virtual bool Dye(Mobile from, DyeTub sender)
         {
-            if (Deleted)
+            if (Deleted || from == null || from.Deleted || sender == null || sender.Deleted)
                 return false;
 
             BaseHouse house = BaseHouse.FindHouseAt(this);
@@ -148,7 +151,14 @@ namespace Server.Items
 
             public override void OnResponse(NetState sender, RelayInfo info)
             {
-                if (m_Addon.Deleted)
+                if (
+                    sender == null
+                    || info == null
+                    || m_From == null
+                    || m_From.Deleted
+                    || m_Addon == null
+                    || m_Addon.Deleted
+                )
                     return;
 
                 if (info.ButtonID == 1)
@@ -207,7 +217,10 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
-            if (IsChildOf(from.Backpack))
+            if (from == null || from.Deleted || Deleted)
+                return;
+
+            if (from.Backpack != null && IsChildOf(from.Backpack))
             {
                 BaseHouse house = BaseHouse.FindHouseAt(from);
 
@@ -235,6 +248,9 @@ namespace Server.Items
 
         public void Placement_OnTarget(Mobile from, object targeted, object state)
         {
+            if (from == null || from.Deleted || Deleted)
+                return;
+
             IPoint3D p = targeted as IPoint3D;
 
             if (p == null)
@@ -262,7 +278,7 @@ namespace Server.Items
 
         private void PlaceAddon(Mobile from, Point3D loc, bool northWall, bool westWall)
         {
-            if (Deleted)
+            if (Deleted || from == null || from.Deleted)
                 return;
 
             BaseHouse house = BaseHouse.FindHouseAt(loc, from.Map, 16);
@@ -319,7 +335,14 @@ namespace Server.Items
 
             public override void OnResponse(NetState sender, RelayInfo info)
             {
-                if (m_Deed.Deleted)
+                if (
+                    sender == null
+                    || info == null
+                    || m_From == null
+                    || m_From.Deleted
+                    || m_Deed == null
+                    || m_Deed.Deleted
+                )
                     return;
 
                 switch (info.ButtonID)
