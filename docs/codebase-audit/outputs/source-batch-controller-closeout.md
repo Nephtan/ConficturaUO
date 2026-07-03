@@ -4618,7 +4618,7 @@ To run a gated batch, provide explicit approval naming:
 
 - SOURCE-BATCH-454 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-454-candidate-discovery.csv.
 - SOURCE-BATCH-454 implemented the LearnTailorBook guard repair in Data/Scripts/Items/Books/LearnTailor.cs.
-- SOURCE-BATCH-454 source commit is pending; verification passed.
+- SOURCE-BATCH-454 source commit is d71856ab; verification passed.
 - The source-batch target is docs/codebase-audit/outputs/source-batch-454-target.md.
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-454-learntailorbook-guard-repair-closeout.md.
 - SOURCE-BATCH-455+ should run fresh candidate discovery after SOURCE-BATCH-454.
