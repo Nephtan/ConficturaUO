@@ -1675,3 +1675,7 @@ The Phase 0 baseline output, Phase 1 reproducible inventory outputs, Phase 2 pro
 | source-batch-412-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-412 discovery with recommended Watcher target and skipped candidate notes. | Complete |
 | source-batch-412-target.md | Source batches | Durable target for SOURCE-BATCH-412 Watcher guard repair, including fence result and unchanged behavior. | Complete |
 | source-batch-412-watcher-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-412 with Watcher guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |
+| source-batch-413-candidate-discovery.csv | Source batches | Fresh SOURCE-BATCH-413 candidate discovery for a zero-gate, zero-overlay ColoringBook guard repair. | Complete |
+| source-batch-413-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-413 discovery with recommended ColoringBook target and skipped candidate notes. | Complete |
+| source-batch-413-target.md | Source batches | Durable target for SOURCE-BATCH-413 ColoringBook guard repair, including fence result and unchanged behavior. | Complete |
+| source-batch-413-coloringbook-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-413 with ColoringBook guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |
