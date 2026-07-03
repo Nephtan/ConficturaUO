@@ -4508,7 +4508,7 @@ To run a gated batch, provide explicit approval naming:
 
 - SOURCE-BATCH-443 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-443-candidate-discovery.csv.
 - SOURCE-BATCH-443 implemented the Lockpick guard repair in Data/Scripts/Items/Trades/Thieving/LockPick.cs.
-- SOURCE-BATCH-443 source commit is pending; verification passed.
+- SOURCE-BATCH-443 source commit is 7136d0ce; verification passed.
 - The source-batch target is docs/codebase-audit/outputs/source-batch-443-target.md.
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-443-lockpick-guard-repair-closeout.md.
 - SOURCE-BATCH-444+ should run fresh candidate discovery after SOURCE-BATCH-443.

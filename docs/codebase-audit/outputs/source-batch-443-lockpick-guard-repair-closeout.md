@@ -78,4 +78,4 @@ Passed:
 
 ## Commit
 
-`SOURCE-BATCH-443` source commit: pending. `SOURCE-BATCH-444+` should run fresh candidate discovery after `SOURCE-BATCH-443`.
+`SOURCE-BATCH-443` source commit: `7136d0ce`. `SOURCE-BATCH-444+` should run fresh candidate discovery after `SOURCE-BATCH-443`.
