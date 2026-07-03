@@ -1707,3 +1707,7 @@ The Phase 0 baseline output, Phase 1 reproducible inventory outputs, Phase 2 pro
 | source-batch-420-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-420 discovery with recommended HalloweenGraves target and skipped candidate notes. | Complete |
 | source-batch-420-target.md | Source batches | Durable target for SOURCE-BATCH-420 HalloweenGraves rename guard repair, including fence result and unchanged behavior. | Complete |
 | source-batch-420-halloweengraves-rename-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-420 with HalloweenGraves guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |
+| source-batch-421-candidate-discovery.csv | Source batches | Fresh SOURCE-BATCH-421 candidate discovery for a zero-gate, zero-overlay Guillotine guard repair. | Complete |
+| source-batch-421-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-421 discovery with recommended Guillotine target and skipped candidate notes. | Complete |
+| source-batch-421-target.md | Source batches | Durable target for SOURCE-BATCH-421 Guillotine guard repair, including fence result and unchanged behavior. | Complete |
+| source-batch-421-guillotine-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-421 with Guillotine guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |

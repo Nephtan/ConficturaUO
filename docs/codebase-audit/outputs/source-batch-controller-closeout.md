@@ -4283,3 +4283,13 @@ To run a gated batch, provide explicit approval naming:
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-420-halloweengraves-rename-guard-repair-closeout.md.
 - SOURCE-BATCH-421+ should run fresh candidate discovery after SOURCE-BATCH-420.
 - Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-421 Update
+
+- SOURCE-BATCH-421 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-421-candidate-discovery.csv.
+- SOURCE-BATCH-421 implemented the Guillotine guard repair in Data/Scripts/Items/Misc/Guillotine.cs.
+- SOURCE-BATCH-421 source commit is pending; verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-421-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-421-guillotine-guard-repair-closeout.md.
+- SOURCE-BATCH-422+ should run fresh candidate discovery after SOURCE-BATCH-421.
+- Gated roadmap batches remain blocked pending explicit approval.

@@ -19,6 +19,9 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
+            if (from == null || from.Deleted || Deleted)
+                return;
+
             if (!from.InRange(this.GetWorldLocation(), 2) || !from.InLOS(this))
             {
                 from.LocalOverheadMessage(MessageType.Regular, 0x3B2, 1019045); // I can't reach that
@@ -51,11 +54,17 @@ namespace Server.Items
 
         private void Down1()
         {
+            if (Deleted)
+                return;
+
             ItemID = (ItemID == 4656 ? 4678 : 4712);
         }
 
         private void Down2()
         {
+            if (Deleted)
+                return;
+
             ItemID = (ItemID == 4678 ? 4679 : 4713);
 
             Point3D p = this.GetWorldLocation();
@@ -86,6 +95,9 @@ namespace Server.Items
 
         private void BackUp()
         {
+            if (Deleted)
+                return;
+
             if (ItemID == 4678 || ItemID == 4679)
                 ItemID = 4656;
             else if (ItemID == 4712 || ItemID == 4713)
