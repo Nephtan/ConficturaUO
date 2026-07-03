@@ -4368,7 +4368,7 @@ To run a gated batch, provide explicit approval naming:
 
 - SOURCE-BATCH-429 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-429-candidate-discovery.csv.
 - SOURCE-BATCH-429 implemented the ForgetfulGem guard repair in Data/Scripts/Magic/Base/ForgetfulGem.cs.
-- SOURCE-BATCH-429 source commit is pending; verification passed.
+- SOURCE-BATCH-429 source commit is d33ddc40; verification passed.
 - The source-batch target is docs/codebase-audit/outputs/source-batch-429-target.md.
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-429-forgetfulgem-guard-repair-closeout.md.
 - SOURCE-BATCH-430+ should run fresh candidate discovery after SOURCE-BATCH-429.

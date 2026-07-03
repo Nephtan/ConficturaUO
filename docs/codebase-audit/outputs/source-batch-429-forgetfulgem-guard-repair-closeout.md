@@ -29,4 +29,4 @@ Magery/Necromancy/Elementalism skill checks, `CrystalGump` text/page navigation,
 
 ## Commit
 
-`SOURCE-BATCH-429` source commit: pending. `SOURCE-BATCH-430+` should run fresh candidate discovery after `SOURCE-BATCH-429`.
+`SOURCE-BATCH-429` source commit: `d33ddc40` (`fix: guard ForgetfulGem interactions`). `SOURCE-BATCH-430+` should run fresh candidate discovery after `SOURCE-BATCH-429`.
