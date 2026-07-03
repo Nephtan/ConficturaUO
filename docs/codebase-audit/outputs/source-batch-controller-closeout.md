@@ -4678,7 +4678,7 @@ To run a gated batch, provide explicit approval naming:
 
 - SOURCE-BATCH-460 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-460-candidate-discovery.csv.
 - SOURCE-BATCH-460 implemented the LearnGraniteBook guard repair in Data/Scripts/Items/Books/LearnGranite.cs.
-- SOURCE-BATCH-460 source commit is pending; verification passed.
+- SOURCE-BATCH-460 source commit: e199d125; verification passed.
 - The source-batch target is docs/codebase-audit/outputs/source-batch-460-target.md.
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-460-learngranitebook-guard-repair-closeout.md.
 - SOURCE-BATCH-461+ should run fresh candidate discovery after SOURCE-BATCH-460.

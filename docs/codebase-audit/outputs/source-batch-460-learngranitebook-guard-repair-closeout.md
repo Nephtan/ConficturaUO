@@ -59,4 +59,4 @@ Passed:
 
 ## Result
 
-`SOURCE-BATCH-460` source commit pending. `SOURCE-BATCH-461+` should run fresh candidate discovery after `SOURCE-BATCH-460`.
+`SOURCE-BATCH-460` source commit: `e199d125`. `SOURCE-BATCH-461+` should run fresh candidate discovery after `SOURCE-BATCH-460`.
