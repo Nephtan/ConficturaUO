@@ -4193,3 +4193,13 @@ To run a gated batch, provide explicit approval naming:
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-411-sackofholding-guard-repair-closeout.md.
 - SOURCE-BATCH-412+ should run fresh candidate discovery after SOURCE-BATCH-411.
 - Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-412 Update
+
+- SOURCE-BATCH-412 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-412-candidate-discovery.csv.
+- SOURCE-BATCH-412 implemented the Watcher guard repair in Data/Scripts/Mobiles/Unusual/Watcher.cs.
+- SOURCE-BATCH-412 source commit is pending; verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-412-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-412-watcher-guard-repair-closeout.md.
+- SOURCE-BATCH-413+ should run fresh candidate discovery after SOURCE-BATCH-412.
+- Gated roadmap batches remain blocked pending explicit approval.
