@@ -1711,3 +1711,7 @@ The Phase 0 baseline output, Phase 1 reproducible inventory outputs, Phase 2 pro
 | source-batch-421-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-421 discovery with recommended Guillotine target and skipped candidate notes. | Complete |
 | source-batch-421-target.md | Source batches | Durable target for SOURCE-BATCH-421 Guillotine guard repair, including fence result and unchanged behavior. | Complete |
 | source-batch-421-guillotine-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-421 with Guillotine guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |
+| source-batch-422-candidate-discovery.csv | Source batches | Fresh SOURCE-BATCH-422 candidate discovery for a zero-gate, zero-overlay BaseImprisonedMobile guard repair. | Complete |
+| source-batch-422-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-422 discovery with recommended BaseImprisonedMobile target and skipped candidate notes. | Complete |
+| source-batch-422-target.md | Source batches | Durable target for SOURCE-BATCH-422 BaseImprisonedMobile guard repair, including fence result and unchanged behavior. | Complete |
+| source-batch-422-baseimprisonedmobile-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-422 with BaseImprisonedMobile guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |

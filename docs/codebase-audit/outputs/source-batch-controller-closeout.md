@@ -4293,3 +4293,13 @@ To run a gated batch, provide explicit approval naming:
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-421-guillotine-guard-repair-closeout.md.
 - SOURCE-BATCH-422+ should run fresh candidate discovery after SOURCE-BATCH-421.
 - Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-422 Update
+
+- SOURCE-BATCH-422 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-422-candidate-discovery.csv.
+- SOURCE-BATCH-422 implemented the BaseImprisonedMobile guard repair in Data/Scripts/Items/Special/BaseImprisonedMobile.cs.
+- SOURCE-BATCH-422 source commit is pending; verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-422-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-422-baseimprisonedmobile-guard-repair-closeout.md.
+- SOURCE-BATCH-423+ should run fresh candidate discovery after SOURCE-BATCH-422.
+- Gated roadmap batches remain blocked pending explicit approval.
