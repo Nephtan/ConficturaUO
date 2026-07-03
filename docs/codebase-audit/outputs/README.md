@@ -1699,3 +1699,7 @@ The Phase 0 baseline output, Phase 1 reproducible inventory outputs, Phase 2 pro
 | source-batch-418-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-418 discovery with recommended HolidayBells target and skipped candidate notes. | Complete |
 | source-batch-418-target.md | Source batches | Durable target for SOURCE-BATCH-418 HolidayBells guard repair, including fence result and unchanged behavior. | Complete |
 | source-batch-418-holidaybells-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-418 with HolidayBells guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |
+| source-batch-419-candidate-discovery.csv | Source batches | Fresh SOURCE-BATCH-419 candidate discovery for a zero-gate, zero-overlay Halloween dart boards guard repair. | Complete |
+| source-batch-419-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-419 discovery with recommended DartBoards target and skipped candidate notes. | Complete |
+| source-batch-419-target.md | Source batches | Durable target for SOURCE-BATCH-419 DartBoards guard repair, including fence result and unchanged behavior. | Complete |
+| source-batch-419-dartboards-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-419 with DartBoards guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |
