@@ -4408,7 +4408,7 @@ To run a gated batch, provide explicit approval naming:
 
 - SOURCE-BATCH-433 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-433-candidate-discovery.csv.
 - SOURCE-BATCH-433 implemented the RecipeScroll guard repair in Data/Scripts/Items/Trades/Misc/RecipeScroll.cs.
-- SOURCE-BATCH-433 source commit is pending; verification passed.
+- SOURCE-BATCH-433 source commit is c08e7e82; verification passed.
 - The source-batch target is docs/codebase-audit/outputs/source-batch-433-target.md.
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-433-recipescroll-guard-repair-closeout.md.
 - SOURCE-BATCH-434+ should run fresh candidate discovery after SOURCE-BATCH-433.

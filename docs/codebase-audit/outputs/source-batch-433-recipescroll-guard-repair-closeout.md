@@ -28,4 +28,4 @@ Range 2 rule, localized reach failure `1019045`, `Recipe` property lookup, `Play
 
 ## Commit
 
-`SOURCE-BATCH-433` source commit: pending. `SOURCE-BATCH-434+` should run fresh candidate discovery after `SOURCE-BATCH-433`.
+`SOURCE-BATCH-433` source commit: `c08e7e82`. `SOURCE-BATCH-434+` should run fresh candidate discovery after `SOURCE-BATCH-433`.
