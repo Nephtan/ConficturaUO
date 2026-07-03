@@ -4128,7 +4128,7 @@ To run a gated batch, provide explicit approval naming:
 
 - SOURCE-BATCH-405 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-405-candidate-discovery.csv.
 - SOURCE-BATCH-405 implemented the ThrowingDagger guard repair in Data/Scripts/Items/Weapons/Knives/ThrowingDagger.cs.
-- SOURCE-BATCH-405 source commit is pending; verification passed.
+- SOURCE-BATCH-405 source commit is adb027dd; verification passed.
 - The source-batch target is docs/codebase-audit/outputs/source-batch-405-target.md.
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-405-throwingdagger-guard-repair-closeout.md.
 - SOURCE-BATCH-406+ should run fresh candidate discovery after SOURCE-BATCH-405.

@@ -29,4 +29,4 @@
 
 ## Commit
 
-`SOURCE-BATCH-405` source commit: pending. `SOURCE-BATCH-406+` should run fresh candidate discovery after `SOURCE-BATCH-405`.
+`SOURCE-BATCH-405` source commit: `adb027dd` (`fix: guard ThrowingDagger interactions`). `SOURCE-BATCH-406+` should run fresh candidate discovery after `SOURCE-BATCH-405`.
