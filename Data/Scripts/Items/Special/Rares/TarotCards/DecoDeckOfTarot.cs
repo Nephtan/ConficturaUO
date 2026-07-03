@@ -19,6 +19,9 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
+            if (from == null || from.Deleted || Deleted)
+                return;
+
             if (!from.InRange(this.GetWorldLocation(), 4))
                 from.LocalOverheadMessage(MessageType.Regular, 0x3B2, 1019045); // I can't reach that.
             else
@@ -105,9 +108,18 @@ namespace Server.Gumps
 
         public override void OnResponse(NetState state, RelayInfo info)
         {
+            if (state == null || info == null)
+                return;
+
             Mobile from = state.Mobile;
 
+            if (from == null || from.Deleted)
+                return;
+
             from.CloseGump(typeof(TarotCardsGump));
+
+            if (m_Cards == null || m_Cards.Deleted)
+                return;
 
             if (info.ButtonID > 0)
             {
@@ -862,6 +874,9 @@ namespace Server.Gumps
 
         public static void SendGump(Mobile from, Item cards)
         {
+            if (from == null || from.Deleted || cards == null || cards.Deleted)
+                return;
+
             from.CloseGump(typeof(TarotCardsGump));
             from.SendGump(new TarotCardsGump(from, cards));
             if (cards.Name == "gypsy tarot cards")

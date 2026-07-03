@@ -1691,3 +1691,7 @@ The Phase 0 baseline output, Phase 1 reproducible inventory outputs, Phase 2 pro
 | source-batch-416-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-416 discovery with recommended HouseSign target and skipped candidate notes. | Complete |
 | source-batch-416-target.md | Source batches | Durable target for SOURCE-BATCH-416 HouseSign rename guard repair, including fence result and unchanged behavior. | Complete |
 | source-batch-416-housesign-rename-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-416 with HouseSign rename guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |
+| source-batch-417-candidate-discovery.csv | Source batches | Fresh SOURCE-BATCH-417 candidate discovery for a zero-gate, zero-overlay TarotCards guard repair. | Complete |
+| source-batch-417-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-417 discovery with recommended TarotCards target and skipped candidate notes. | Complete |
+| source-batch-417-target.md | Source batches | Durable target for SOURCE-BATCH-417 TarotCards guard repair, including fence result and unchanged behavior. | Complete |
+| source-batch-417-tarotcards-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-417 with TarotCards guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |
