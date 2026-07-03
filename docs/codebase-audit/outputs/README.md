@@ -1859,3 +1859,7 @@ The Phase 0 baseline output, Phase 1 reproducible inventory outputs, Phase 2 pro
 | source-batch-458-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-458 discovery with recommended LearnMetalBook target and skipped/deferred candidate notes. | Complete |
 | source-batch-458-target.md | Source batches | Durable target for SOURCE-BATCH-458 LearnMetalBook guard repair, including fence result and unchanged behavior. | Complete |
 | source-batch-458-learnmetalbook-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-458 with LearnMetalBook guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |
+| source-batch-459-candidate-discovery.csv | Source batches | Fresh SOURCE-BATCH-459 candidate discovery for a zero-gate, zero-overlay LearnLeatherBook guard repair. | Complete |
+| source-batch-459-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-459 discovery with recommended LearnLeatherBook target and skipped/deferred candidate notes. | Complete |
+| source-batch-459-target.md | Source batches | Durable target for SOURCE-BATCH-459 LearnLeatherBook guard repair, including fence result and unchanged behavior. | Complete |
+| source-batch-459-learnleatherbook-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-459 with LearnLeatherBook guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |
