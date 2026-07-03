@@ -4473,3 +4473,13 @@ To run a gated batch, provide explicit approval naming:
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-439-head-guard-repair-closeout.md.
 - SOURCE-BATCH-440+ should run fresh candidate discovery after SOURCE-BATCH-439.
 - Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-440 Update
+
+- SOURCE-BATCH-440 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-440-candidate-discovery.csv.
+- SOURCE-BATCH-440 implemented the EssenceOrb guard repair in Data/Scripts/Items/Misc/Dyes/Essence/EssenceOrb.cs.
+- SOURCE-BATCH-440 source commit is pending; verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-440-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-440-essenceorb-guard-repair-closeout.md.
+- SOURCE-BATCH-441+ should run fresh candidate discovery after SOURCE-BATCH-440.
+- Gated roadmap batches remain blocked pending explicit approval.
