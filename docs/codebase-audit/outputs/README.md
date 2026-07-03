@@ -1863,3 +1863,7 @@ The Phase 0 baseline output, Phase 1 reproducible inventory outputs, Phase 2 pro
 | source-batch-459-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-459 discovery with recommended LearnLeatherBook target and skipped/deferred candidate notes. | Complete |
 | source-batch-459-target.md | Source batches | Durable target for SOURCE-BATCH-459 LearnLeatherBook guard repair, including fence result and unchanged behavior. | Complete |
 | source-batch-459-learnleatherbook-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-459 with LearnLeatherBook guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |
+| source-batch-460-candidate-discovery.csv | Source batches | Fresh SOURCE-BATCH-460 candidate discovery for a zero-gate, zero-overlay LearnGraniteBook guard repair. | Complete |
+| source-batch-460-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-460 discovery with recommended LearnGraniteBook target and skipped/deferred candidate notes. | Complete |
+| source-batch-460-target.md | Source batches | Durable target for SOURCE-BATCH-460 LearnGraniteBook guard repair, including fence result and unchanged behavior. | Complete |
+| source-batch-460-learngranitebook-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-460 with LearnGraniteBook guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |
