@@ -1779,3 +1779,7 @@ The Phase 0 baseline output, Phase 1 reproducible inventory outputs, Phase 2 pro
 | source-batch-438-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-438 discovery with recommended StaffofSnakes target and skipped candidate notes. | Complete |
 | source-batch-438-target.md | Source batches | Durable target for SOURCE-BATCH-438 StaffofSnakes guard repair, including fence result and unchanged behavior. | Complete |
 | source-batch-438-staffofsnakes-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-438 with StaffofSnakes guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |
+| source-batch-439-candidate-discovery.csv | Source batches | Fresh SOURCE-BATCH-439 candidate discovery for a zero-gate, zero-overlay Head guard repair. | Complete |
+| source-batch-439-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-439 discovery with recommended Head target and skipped candidate notes. | Complete |
+| source-batch-439-target.md | Source batches | Durable target for SOURCE-BATCH-439 Head guard repair, including fence result and unchanged behavior. | Complete |
+| source-batch-439-head-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-439 with Head guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |
