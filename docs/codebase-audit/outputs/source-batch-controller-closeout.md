@@ -4688,7 +4688,7 @@ To run a gated batch, provide explicit approval naming:
 
 - SOURCE-BATCH-461 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-461-candidate-discovery.csv.
 - SOURCE-BATCH-461 implemented the SearchPage guard repair in Data/Scripts/Quests/Search/SearchPage.cs.
-- SOURCE-BATCH-461 source commit is pending; verification passed.
+- SOURCE-BATCH-461 source commit: c3b30c43; verification passed.
 - The source-batch target is docs/codebase-audit/outputs/source-batch-461-target.md.
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-461-searchpage-guard-repair-closeout.md.
 - SOURCE-BATCH-462+ should run fresh candidate discovery after SOURCE-BATCH-461.
