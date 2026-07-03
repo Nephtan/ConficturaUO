@@ -4298,7 +4298,7 @@ To run a gated batch, provide explicit approval naming:
 
 - SOURCE-BATCH-422 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-422-candidate-discovery.csv.
 - SOURCE-BATCH-422 implemented the BaseImprisonedMobile guard repair in Data/Scripts/Items/Special/BaseImprisonedMobile.cs.
-- SOURCE-BATCH-422 source commit is pending; verification passed.
+- SOURCE-BATCH-422 source commit is e7e94692; verification passed.
 - The source-batch target is docs/codebase-audit/outputs/source-batch-422-target.md.
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-422-baseimprisonedmobile-guard-repair-closeout.md.
 - SOURCE-BATCH-423+ should run fresh candidate discovery after SOURCE-BATCH-422.
