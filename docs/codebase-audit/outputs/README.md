@@ -1787,3 +1787,7 @@ The Phase 0 baseline output, Phase 1 reproducible inventory outputs, Phase 2 pro
 | source-batch-440-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-440 discovery with recommended EssenceOrb target and skipped candidate notes. | Complete |
 | source-batch-440-target.md | Source batches | Durable target for SOURCE-BATCH-440 EssenceOrb guard repair, including fence result and unchanged behavior. | Complete |
 | source-batch-440-essenceorb-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-440 with EssenceOrb guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |
+| source-batch-441-candidate-discovery.csv | Source batches | Fresh SOURCE-BATCH-441 candidate discovery for a zero-gate, zero-overlay TapestryOfSosaria guard repair. | Complete |
+| source-batch-441-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-441 discovery with recommended TapestryOfSosaria target and skipped candidate notes. | Complete |
+| source-batch-441-target.md | Source batches | Durable target for SOURCE-BATCH-441 TapestryOfSosaria guard repair, including fence result and unchanged behavior. | Complete |
+| source-batch-441-tapestryofsosaria-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-441 with TapestryOfSosaria guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |
