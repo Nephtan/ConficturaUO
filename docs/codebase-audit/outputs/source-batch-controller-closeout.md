@@ -4884,7 +4884,7 @@ To run a gated batch, provide explicit approval naming:
 ### SOURCE-BATCH-481 Update
 
 - SOURCE-BATCH-481 implemented the LightOfTheWinterSolstice label guard repair in Data/Scripts/Items/Gifts/Holiday/Christmas/Christmas Gifts/LightOfTheWinterSolstice.cs.
-- SOURCE-BATCH-481 source commit: pending; verification passed.
+- SOURCE-BATCH-481 source commit: 32e9c54b; verification passed.
 - The source-batch target is docs/codebase-audit/outputs/source-batch-481-target.md.
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-481-lightofthewintersolstice-label-guard-repair-closeout.md.
 - SOURCE-BATCH-482+ should run fresh candidate discovery after SOURCE-BATCH-481.
