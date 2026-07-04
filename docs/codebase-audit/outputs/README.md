@@ -1935,3 +1935,7 @@ The Phase 0 baseline output, Phase 1 reproducible inventory outputs, Phase 2 pro
 | source-batch-477-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-477 discovery with recommended Dolphin target and skipped candidate notes. | Complete |
 | source-batch-477-target.md | Source batches | Durable target for SOURCE-BATCH-477 Dolphin guard repair, including fence result and unchanged behavior. | Complete |
 | source-batch-477-dolphin-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-477 with Dolphin guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |
+| source-batch-478-candidate-discovery.csv | Source batches | Fresh SOURCE-BATCH-478 candidate discovery for a zero-gate, zero-overlay GraveStones rename guard repair. | Complete |
+| source-batch-478-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-478 discovery with recommended GraveStones target and skipped candidate notes. | Complete |
+| source-batch-478-target.md | Source batches | Durable target for SOURCE-BATCH-478 GraveStones rename guard repair, including fence result and unchanged behavior. | Complete |
+| source-batch-478-gravestones-rename-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-478 with GraveStones rename guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |

@@ -271,6 +271,9 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
+            if (from == null || from.Deleted || Deleted)
+                return;
+
             from.SendMessage("Please enter a new name for this grave stone.");
             from.Prompt = new RenamePrompt(this);
         }
@@ -286,6 +289,9 @@ namespace Server.Items
 
             public override void OnResponse(Mobile from, string text)
             {
+                if (from == null || from.Deleted || m_Sign == null || m_Sign.Deleted)
+                    return;
+
                 m_Sign.Name = text;
                 from.SendMessage("The grave stone has been changed.");
             }
