@@ -4858,7 +4858,7 @@ To run a gated batch, provide explicit approval naming:
 
 - SOURCE-BATCH-478 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-478-candidate-discovery.csv.
 - SOURCE-BATCH-478 implemented the GraveStones rename guard repair in Data/Scripts/Mobiles/Elementals/Necromental.cs.
-- SOURCE-BATCH-478 source commit: pending; verification passed.
+- SOURCE-BATCH-478 source commit: dd574cee; verification passed.
 - The source-batch target is docs/codebase-audit/outputs/source-batch-478-target.md.
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-478-gravestones-rename-guard-repair-closeout.md.
 - SOURCE-BATCH-479+ should run fresh candidate discovery after SOURCE-BATCH-478.
