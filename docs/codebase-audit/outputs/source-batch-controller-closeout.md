@@ -4718,7 +4718,7 @@ To run a gated batch, provide explicit approval naming:
 
 - SOURCE-BATCH-464 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-464-candidate-discovery.csv.
 - SOURCE-BATCH-464 implemented the BookDruidBrewing guard repair in Data/Scripts/Magic/Druidism/BookDruidBrewing.cs.
-- SOURCE-BATCH-464 source commit is pending; verification passed.
+- SOURCE-BATCH-464 source commit: 7e7dab8f; verification passed.
 - The source-batch target is docs/codebase-audit/outputs/source-batch-464-target.md.
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-464-bookdruidbrewing-guard-repair-closeout.md.
 - SOURCE-BATCH-465+ should run fresh candidate discovery after SOURCE-BATCH-464.
