@@ -1871,3 +1871,7 @@ The Phase 0 baseline output, Phase 1 reproducible inventory outputs, Phase 2 pro
 | source-batch-461-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-461 discovery with recommended SearchPage target and skipped/deferred candidate notes. | Complete |
 | source-batch-461-target.md | Source batches | Durable target for SOURCE-BATCH-461 SearchPage guard repair, including fence result and unchanged behavior. | Complete |
 | source-batch-461-searchpage-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-461 with SearchPage guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |
+| source-batch-462-candidate-discovery.csv | Source batches | Fresh SOURCE-BATCH-462 candidate discovery for a zero-gate, zero-overlay CourierMail guard repair. | Complete |
+| source-batch-462-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-462 discovery with recommended CourierMail target and skipped/deferred candidate notes. | Complete |
+| source-batch-462-target.md | Source batches | Durable target for SOURCE-BATCH-462 CourierMail guard repair, including fence result and unchanged behavior. | Complete |
+| source-batch-462-couriermail-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-462 with CourierMail guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |
