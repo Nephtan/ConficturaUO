@@ -4896,4 +4896,12 @@ To run a gated batch, provide explicit approval naming:
 - The source-batch target is docs/codebase-audit/outputs/source-batch-482-target.md.
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-482-puke-label-guard-repair-closeout.md.
 - SOURCE-BATCH-483+ should run fresh candidate discovery after SOURCE-BATCH-482.
+
+### SOURCE-BATCH-483 Update
+
+- SOURCE-BATCH-483 implemented the BasePiece label guard repair in Data/Scripts/Items/Misc/Games/BasePiece.cs.
+- SOURCE-BATCH-483 source commit: pending; verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-483-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-483-basepiece-label-guard-repair-closeout.md.
+- SOURCE-BATCH-484+ should run fresh candidate discovery after SOURCE-BATCH-483.
 - Gated roadmap batches remain blocked pending explicit approval.

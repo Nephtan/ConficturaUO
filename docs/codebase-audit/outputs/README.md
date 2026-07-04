@@ -1955,3 +1955,7 @@ The Phase 0 baseline output, Phase 1 reproducible inventory outputs, Phase 2 pro
 | source-batch-482-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-482 discovery with recommended Puke target and skipped candidate notes. | Complete |
 | source-batch-482-target.md | Source batches | Durable target for SOURCE-BATCH-482 Puke label guard repair, including fence result and unchanged behavior. | Complete |
 | source-batch-482-puke-label-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-482 with Puke label guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |
+| source-batch-483-candidate-discovery.csv | Source batches | Fresh SOURCE-BATCH-483 candidate discovery for a zero-gate, zero-overlay BasePiece label guard repair. | Complete |
+| source-batch-483-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-483 discovery with recommended BasePiece target and skipped candidate notes. | Complete |
+| source-batch-483-target.md | Source batches | Durable target for SOURCE-BATCH-483 BasePiece label guard repair, including fence result and unchanged behavior. | Complete |
+| source-batch-483-basepiece-label-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-483 with BasePiece label guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |
