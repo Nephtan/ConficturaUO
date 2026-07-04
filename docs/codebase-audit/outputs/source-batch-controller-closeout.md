@@ -4793,3 +4793,13 @@ To run a gated batch, provide explicit approval naming:
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-471-dyes-guard-repair-closeout.md.
 - SOURCE-BATCH-472+ should run fresh candidate discovery after SOURCE-BATCH-471.
 - Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-472 Update
+
+- SOURCE-BATCH-472 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-472-candidate-discovery.csv.
+- SOURCE-BATCH-472 implemented the Spellbook guard repair in Data/Scripts/Magic/Magery/Spellbook.cs.
+- SOURCE-BATCH-472 source commit: pending; verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-472-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-472-spellbook-guard-repair-closeout.md.
+- SOURCE-BATCH-473+ should run fresh candidate discovery after SOURCE-BATCH-472.
+- Gated roadmap batches remain blocked pending explicit approval.

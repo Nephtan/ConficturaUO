@@ -1911,3 +1911,7 @@ The Phase 0 baseline output, Phase 1 reproducible inventory outputs, Phase 2 pro
 | source-batch-471-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-471 discovery with recommended Dyes target and skipped candidate notes. | Complete |
 | source-batch-471-target.md | Source batches | Durable target for SOURCE-BATCH-471 Dyes guard repair, including fence result and unchanged behavior. | Complete |
 | source-batch-471-dyes-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-471 with Dyes guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |
+| source-batch-472-candidate-discovery.csv | Source batches | Fresh SOURCE-BATCH-472 candidate discovery for a zero-gate, zero-overlay Spellbook guard repair. | Complete |
+| source-batch-472-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-472 discovery with recommended Spellbook target and skipped candidate notes. | Complete |
+| source-batch-472-target.md | Source batches | Durable target for SOURCE-BATCH-472 Spellbook guard repair, including fence result and unchanged behavior. | Complete |
+| source-batch-472-spellbook-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-472 with Spellbook guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |
