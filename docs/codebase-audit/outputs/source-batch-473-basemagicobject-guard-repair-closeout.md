@@ -66,4 +66,4 @@ Passed before source commit:
 
 ## Result
 
-`SOURCE-BATCH-473` source commit: pending. `SOURCE-BATCH-474+` should run fresh candidate discovery after `SOURCE-BATCH-473`.
+`SOURCE-BATCH-473` source commit: `1dcf4fa5`. `SOURCE-BATCH-474+` should run fresh candidate discovery after `SOURCE-BATCH-473`.
