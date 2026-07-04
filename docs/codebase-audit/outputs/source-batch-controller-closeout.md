@@ -4917,7 +4917,7 @@ To run a gated batch, provide explicit approval naming:
 ### SOURCE-BATCH-485 Update
 
 - SOURCE-BATCH-485 implemented the BaseTool guard repair in Data/Scripts/Items/Trades/Tools/BaseTool.cs.
-- SOURCE-BATCH-485 source commit: pending; verification passed.
+- SOURCE-BATCH-485 source commit: 44b627f8; verification passed.
 - The source-batch target is docs/codebase-audit/outputs/source-batch-485-target.md.
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-485-basetool-guard-repair-closeout.md.
 - SOURCE-BATCH-486+ should run fresh candidate discovery after SOURCE-BATCH-485.
