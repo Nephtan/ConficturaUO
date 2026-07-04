@@ -1895,3 +1895,7 @@ The Phase 0 baseline output, Phase 1 reproducible inventory outputs, Phase 2 pro
 | source-batch-467-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-467 discovery with recommended LandmineSetup target and excluded candidate notes. | Complete |
 | source-batch-467-target.md | Source batches | Durable target for SOURCE-BATCH-467 LandmineSetup guard repair, including fence result and unchanged behavior. | Complete |
 | source-batch-467-landminesetup-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-467 with LandmineSetup guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |
+| source-batch-468-candidate-discovery.csv | Source batches | Fresh SOURCE-BATCH-468 candidate discovery for a zero-gate, zero-overlay TrapKit guard repair. | Complete |
+| source-batch-468-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-468 discovery with recommended TrapKit target and excluded candidate notes. | Complete |
+| source-batch-468-target.md | Source batches | Durable target for SOURCE-BATCH-468 TrapKit guard repair, including fence result and unchanged behavior. | Complete |
+| source-batch-468-trapkit-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-468 with TrapKit guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |
