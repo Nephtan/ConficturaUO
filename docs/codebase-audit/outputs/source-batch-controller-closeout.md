@@ -4958,3 +4958,12 @@ To run a gated batch, provide explicit approval naming:
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-489-paragonchest-label-guard-repair-closeout.md.
 - SOURCE-BATCH-490+ should run fresh candidate discovery after SOURCE-BATCH-489.
 - Gated roadmap batches remain blocked pending explicit approval.
+
+### SOURCE-BATCH-490 Update
+
+- SOURCE-BATCH-490+ ran candidate discovery after SOURCE-BATCH-489.
+- No source edit was selected.
+- Discovery found no remaining safe narrow non-gated candidate for automatic sequential repair under the current executive fences.
+- The discovery closeout is docs/codebase-audit/outputs/source-batch-490-candidate-discovery-closeout.md.
+- The sequential automatic non-gated runner stops until a narrower target or explicit approval is supplied.
+- Gated roadmap batches remain blocked pending explicit approval.
