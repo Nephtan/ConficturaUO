@@ -4926,7 +4926,7 @@ To run a gated batch, provide explicit approval naming:
 ### SOURCE-BATCH-486 Update
 
 - SOURCE-BATCH-486 implemented the BrewCauldron guard repair in Data/Scripts/Items/Potions/Special/BrewCauldron.cs.
-- SOURCE-BATCH-486 source commit: pending; verification passed.
+- SOURCE-BATCH-486 source commit: 675cfa9b; verification passed.
 - The source-batch target is docs/codebase-audit/outputs/source-batch-486-target.md.
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-486-brewcauldron-guard-repair-closeout.md.
 - SOURCE-BATCH-487+ should run fresh candidate discovery after SOURCE-BATCH-486.
