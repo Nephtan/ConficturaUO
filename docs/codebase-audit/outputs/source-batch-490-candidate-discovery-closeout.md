@@ -47,4 +47,4 @@ Passed for docs-only discovery:
 
 ## Result
 
-`SOURCE-BATCH-490+` is closed as no safe non-gated candidate found under the current executive fences. The sequential automatic runner should not continue until a narrower target or approval is supplied.
+`SOURCE-BATCH-490+` is closed as no safe non-gated candidate found under the current executive fences. Closeout commit: `c3809769`. The sequential automatic runner should not continue until a narrower target or approval is supplied.

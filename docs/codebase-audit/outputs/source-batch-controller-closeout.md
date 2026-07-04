@@ -4964,6 +4964,7 @@ To run a gated batch, provide explicit approval naming:
 - SOURCE-BATCH-490+ ran candidate discovery after SOURCE-BATCH-489.
 - No source edit was selected.
 - Discovery found no remaining safe narrow non-gated candidate for automatic sequential repair under the current executive fences.
+- SOURCE-BATCH-490+ closeout commit: c3809769.
 - The discovery closeout is docs/codebase-audit/outputs/source-batch-490-candidate-discovery-closeout.md.
 - The sequential automatic non-gated runner stops until a narrower target or explicit approval is supplied.
 - Gated roadmap batches remain blocked pending explicit approval.
