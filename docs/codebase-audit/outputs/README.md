@@ -1903,3 +1903,7 @@ The Phase 0 baseline output, Phase 1 reproducible inventory outputs, Phase 2 pro
 | source-batch-469-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-469 discovery with recommended BasePoleArm target and skipped candidate notes. | Complete |
 | source-batch-469-target.md | Source batches | Durable target for SOURCE-BATCH-469 BasePoleArm guard repair, including fence result and unchanged behavior. | Complete |
 | source-batch-469-basepolearm-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-469 with BasePoleArm guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |
+| source-batch-470-candidate-discovery.csv | Source batches | Fresh SOURCE-BATCH-470 candidate discovery for a zero-gate, zero-overlay RejuvinationAnkh guard repair. | Complete |
+| source-batch-470-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-470 discovery with recommended RejuvinationAnkh target and skipped candidate notes. | Complete |
+| source-batch-470-target.md | Source batches | Durable target for SOURCE-BATCH-470 RejuvinationAnkh guard repair, including fence result and unchanged behavior. | Complete |
+| source-batch-470-rejuvinationankh-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-470 with RejuvinationAnkh guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |
