@@ -4953,7 +4953,7 @@ To run a gated batch, provide explicit approval naming:
 ### SOURCE-BATCH-489 Update
 
 - SOURCE-BATCH-489 implemented the ParagonChest label guard repair in Data/Scripts/Items/Containers/ParagonChest.cs.
-- SOURCE-BATCH-489 source commit: pending; verification passed.
+- SOURCE-BATCH-489 source commit: 7fa6fb26; verification passed.
 - The source-batch target is docs/codebase-audit/outputs/source-batch-489-target.md.
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-489-paragonchest-label-guard-repair-closeout.md.
 - SOURCE-BATCH-490+ should run fresh candidate discovery after SOURCE-BATCH-489.
