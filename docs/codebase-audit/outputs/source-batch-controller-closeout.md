@@ -4698,7 +4698,7 @@ To run a gated batch, provide explicit approval naming:
 
 - SOURCE-BATCH-462 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-462-candidate-discovery.csv.
 - SOURCE-BATCH-462 implemented the CourierMail guard repair in Data/Scripts/Quests/Epic/CourierMail.cs.
-- SOURCE-BATCH-462 source commit is pending; verification passed.
+- SOURCE-BATCH-462 source commit: 753cf941; verification passed.
 - The source-batch target is docs/codebase-audit/outputs/source-batch-462-target.md.
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-462-couriermail-guard-repair-closeout.md.
 - SOURCE-BATCH-463+ should run fresh candidate discovery after SOURCE-BATCH-462.
