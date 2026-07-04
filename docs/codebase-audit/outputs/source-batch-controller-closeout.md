@@ -4863,3 +4863,13 @@ To run a gated batch, provide explicit approval naming:
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-478-gravestones-rename-guard-repair-closeout.md.
 - SOURCE-BATCH-479+ should run fresh candidate discovery after SOURCE-BATCH-478.
 - Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-479 Update
+
+- SOURCE-BATCH-479 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-479-candidate-discovery.csv.
+- SOURCE-BATCH-479 implemented the Furs label guard repair in Data/Scripts/Items/Trades/Tailor Items/Furs.cs.
+- SOURCE-BATCH-479 source commit: pending; verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-479-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-479-furs-label-guard-repair-closeout.md.
+- SOURCE-BATCH-480+ should run fresh candidate discovery after SOURCE-BATCH-479.
+- Gated roadmap batches remain blocked pending explicit approval.

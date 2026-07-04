@@ -24,6 +24,9 @@ namespace Server.Items
 
         public override void OnSingleClick(Mobile from)
         {
+            if (from == null || from.Deleted || Deleted)
+                return;
+
             if (this.Name != null)
             {
                 if (Amount >= 2)
@@ -107,6 +110,9 @@ namespace Server.Items
 
         public override void OnSingleClick(Mobile from)
         {
+            if (from == null || from.Deleted || Deleted)
+                return;
+
             if (this.Name != null)
             {
                 if (Amount >= 2)
