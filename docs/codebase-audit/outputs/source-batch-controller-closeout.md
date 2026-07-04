@@ -4904,4 +4904,12 @@ To run a gated batch, provide explicit approval naming:
 - The source-batch target is docs/codebase-audit/outputs/source-batch-483-target.md.
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-483-basepiece-label-guard-repair-closeout.md.
 - SOURCE-BATCH-484+ should run fresh candidate discovery after SOURCE-BATCH-483.
+
+### SOURCE-BATCH-484 Update
+
+- SOURCE-BATCH-484 implemented the DecayedCorpse label guard repair in Data/Scripts/Items/Misc/Bodies/Corpses/DecayedCorpse.cs.
+- SOURCE-BATCH-484 source commit: pending; verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-484-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-484-decayedcorpse-label-guard-repair-closeout.md.
+- SOURCE-BATCH-485+ should run fresh candidate discovery after SOURCE-BATCH-484.
 - Gated roadmap batches remain blocked pending explicit approval.

@@ -1959,3 +1959,7 @@ The Phase 0 baseline output, Phase 1 reproducible inventory outputs, Phase 2 pro
 | source-batch-483-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-483 discovery with recommended BasePiece target and skipped candidate notes. | Complete |
 | source-batch-483-target.md | Source batches | Durable target for SOURCE-BATCH-483 BasePiece label guard repair, including fence result and unchanged behavior. | Complete |
 | source-batch-483-basepiece-label-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-483 with BasePiece label guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |
+| source-batch-484-candidate-discovery.csv | Source batches | Fresh SOURCE-BATCH-484 candidate discovery for a zero-gate, zero-overlay DecayedCorpse label guard repair. | Complete |
+| source-batch-484-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-484 discovery with recommended DecayedCorpse target and skipped candidate notes. | Complete |
+| source-batch-484-target.md | Source batches | Durable target for SOURCE-BATCH-484 DecayedCorpse label guard repair, including fence result and unchanged behavior. | Complete |
+| source-batch-484-decayedcorpse-label-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-484 with DecayedCorpse label guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |
