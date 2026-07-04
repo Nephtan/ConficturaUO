@@ -30,6 +30,9 @@ namespace Server.Items
 
         public override void OnSingleClick(Mobile from)
         {
+            if (from == null || from.Deleted || Deleted)
+                return;
+
             string v = " ";
 
             if (!CraftResources.IsStandard(Resource))

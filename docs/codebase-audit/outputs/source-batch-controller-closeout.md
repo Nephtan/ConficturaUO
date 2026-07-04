@@ -4872,4 +4872,12 @@ To run a gated batch, provide explicit approval naming:
 - The source-batch target is docs/codebase-audit/outputs/source-batch-479-target.md.
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-479-furs-label-guard-repair-closeout.md.
 - SOURCE-BATCH-480+ should run fresh candidate discovery after SOURCE-BATCH-479.
+
+### SOURCE-BATCH-480 Update
+
+- SOURCE-BATCH-480 implemented the RunicSewingKit label guard repair in Data/Scripts/Items/Trades/Tools/RunicSewingKit.cs.
+- SOURCE-BATCH-480 source commit: pending; verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-480-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-480-runicsewingkit-label-guard-repair-closeout.md.
+- SOURCE-BATCH-481+ should run fresh candidate discovery after SOURCE-BATCH-480.
 - Gated roadmap batches remain blocked pending explicit approval.
