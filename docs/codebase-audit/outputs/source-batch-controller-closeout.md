@@ -4743,3 +4743,13 @@ To run a gated batch, provide explicit approval naming:
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-466-researchbag-guard-repair-closeout.md.
 - SOURCE-BATCH-467+ should run fresh candidate discovery after SOURCE-BATCH-466.
 - Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-467 Update
+
+- SOURCE-BATCH-467 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-467-candidate-discovery.csv.
+- SOURCE-BATCH-467 implemented the LandmineSetup guard repair in Data/Scripts/Items/Technology/Landmine.cs.
+- SOURCE-BATCH-467 source commit: pending; verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-467-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-467-landminesetup-guard-repair-closeout.md.
+- SOURCE-BATCH-468+ should run fresh candidate discovery after SOURCE-BATCH-467.
+- Gated roadmap batches remain blocked pending explicit approval.
