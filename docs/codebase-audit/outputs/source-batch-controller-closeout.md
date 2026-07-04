@@ -4848,7 +4848,7 @@ To run a gated batch, provide explicit approval naming:
 
 - SOURCE-BATCH-477 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-477-candidate-discovery.csv.
 - SOURCE-BATCH-477 implemented the Dolphin guard repair in Data/Scripts/Mobiles/Animals/Misc/Dolphin.cs.
-- SOURCE-BATCH-477 source commit: pending; verification passed.
+- SOURCE-BATCH-477 source commit: a38542e2; verification passed.
 - The source-batch target is docs/codebase-audit/outputs/source-batch-477-target.md.
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-477-dolphin-guard-repair-closeout.md.
 - SOURCE-BATCH-478+ should run fresh candidate discovery after SOURCE-BATCH-477.
