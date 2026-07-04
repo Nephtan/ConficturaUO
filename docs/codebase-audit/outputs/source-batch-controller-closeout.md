@@ -4803,3 +4803,13 @@ To run a gated batch, provide explicit approval naming:
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-472-spellbook-guard-repair-closeout.md.
 - SOURCE-BATCH-473+ should run fresh candidate discovery after SOURCE-BATCH-472.
 - Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-473 Update
+
+- SOURCE-BATCH-473 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-473-candidate-discovery.csv.
+- SOURCE-BATCH-473 implemented the BaseMagicObject guard repair in Data/Scripts/Magic/Misc/BaseMagicObject.cs.
+- SOURCE-BATCH-473 source commit: pending; verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-473-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-473-basemagicobject-guard-repair-closeout.md.
+- SOURCE-BATCH-474+ should run fresh candidate discovery after SOURCE-BATCH-473.
+- Gated roadmap batches remain blocked pending explicit approval.
