@@ -4922,3 +4922,12 @@ To run a gated batch, provide explicit approval naming:
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-485-basetool-guard-repair-closeout.md.
 - SOURCE-BATCH-486+ should run fresh candidate discovery after SOURCE-BATCH-485.
 - Gated roadmap batches remain blocked pending explicit approval.
+
+### SOURCE-BATCH-486 Update
+
+- SOURCE-BATCH-486 implemented the BrewCauldron guard repair in Data/Scripts/Items/Potions/Special/BrewCauldron.cs.
+- SOURCE-BATCH-486 source commit: pending; verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-486-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-486-brewcauldron-guard-repair-closeout.md.
+- SOURCE-BATCH-487+ should run fresh candidate discovery after SOURCE-BATCH-486.
+- Gated roadmap batches remain blocked pending explicit approval.
