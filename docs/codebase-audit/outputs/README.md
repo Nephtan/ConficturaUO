@@ -1971,3 +1971,7 @@ The Phase 0 baseline output, Phase 1 reproducible inventory outputs, Phase 2 pro
 | source-batch-486-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-486 discovery with recommended BrewCauldron target and skipped candidate notes. | Complete |
 | source-batch-486-target.md | Source batches | Durable target for SOURCE-BATCH-486 BrewCauldron guard repair, including fence result and unchanged behavior. | Complete |
 | source-batch-486-brewcauldron-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-486 with BrewCauldron guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |
+| source-batch-487-candidate-discovery.csv | Source batches | Fresh SOURCE-BATCH-487 candidate discovery for a zero-gate, zero-overlay CookableFood guard repair. | Complete |
+| source-batch-487-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-487 discovery with recommended CookableFood target and skipped candidate notes. | Complete |
+| source-batch-487-target.md | Source batches | Durable target for SOURCE-BATCH-487 CookableFood guard repair, including fence result and unchanged behavior. | Complete |
+| source-batch-487-cookablefood-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-487 with CookableFood guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |
