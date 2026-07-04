@@ -4733,3 +4733,13 @@ To run a gated batch, provide explicit approval naming:
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-465-bagoftricks-guard-repair-closeout.md.
 - SOURCE-BATCH-466+ should run fresh candidate discovery after SOURCE-BATCH-465.
 - Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-466 Update
+
+- SOURCE-BATCH-466 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-466-candidate-discovery.csv.
+- SOURCE-BATCH-466 implemented the ResearchBag guard repair in Data/Scripts/Magic/Research/ResearchBag.cs.
+- SOURCE-BATCH-466 source commit is pending; verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-466-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-466-researchbag-guard-repair-closeout.md.
+- SOURCE-BATCH-467+ should run fresh candidate discovery after SOURCE-BATCH-466.
+- Gated roadmap batches remain blocked pending explicit approval.
