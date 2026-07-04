@@ -135,6 +135,9 @@ namespace Server.Items
 
         public override void OnSingleClick(Mobile from)
         {
+            if (from == null || from.Deleted || Deleted)
+                return;
+
             DisplayDurabilityTo(from);
 
             base.OnSingleClick(from);
@@ -142,6 +145,9 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
+            if (from == null || from.Deleted || Deleted)
+                return;
+
             if (!Server.Misc.MyServerSettings.AllowMacroResources())
             {
                 CaptchaGump.sendCaptcha(from, BaseTool.OnDoubleClickRedirected, this);
@@ -176,10 +182,13 @@ namespace Server.Items
 
         public static void OnDoubleClickRedirected(Mobile from, object o)
         {
-            if (o == null || (!(o is BaseTool)))
+            if (from == null || from.Deleted || o == null || (!(o is BaseTool)))
                 return;
 
             BaseTool tool = (BaseTool)o;
+
+            if (tool.Deleted)
+                return;
 
             if (tool.IsChildOf(from.Backpack) || tool.Parent == from)
             {
