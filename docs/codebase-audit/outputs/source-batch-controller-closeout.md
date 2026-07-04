@@ -4935,7 +4935,7 @@ To run a gated batch, provide explicit approval naming:
 ### SOURCE-BATCH-487 Update
 
 - SOURCE-BATCH-487 implemented the CookableFood guard repair in Data/Scripts/Items/Food/CookableFood.cs.
-- SOURCE-BATCH-487 source commit: pending; verification passed.
+- SOURCE-BATCH-487 source commit: 412f3b4d; verification passed.
 - The source-batch target is docs/codebase-audit/outputs/source-batch-487-target.md.
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-487-cookablefood-guard-repair-closeout.md.
 - SOURCE-BATCH-488+ should run fresh candidate discovery after SOURCE-BATCH-487.
