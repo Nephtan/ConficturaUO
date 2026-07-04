@@ -4944,7 +4944,7 @@ To run a gated batch, provide explicit approval naming:
 ### SOURCE-BATCH-488 Update
 
 - SOURCE-BATCH-488 implemented the WheatSheaf guard repair in Data/Scripts/Items/Food/Cooking.cs.
-- SOURCE-BATCH-488 source commit: pending; verification passed.
+- SOURCE-BATCH-488 source commit: 720c28fb; verification passed.
 - The source-batch target is docs/codebase-audit/outputs/source-batch-488-target.md.
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-488-wheatsheaf-guard-repair-closeout.md.
 - SOURCE-BATCH-489+ should run fresh candidate discovery after SOURCE-BATCH-488.
