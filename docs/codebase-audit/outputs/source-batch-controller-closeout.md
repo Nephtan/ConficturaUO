@@ -4778,7 +4778,7 @@ To run a gated batch, provide explicit approval naming:
 
 - SOURCE-BATCH-470 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-470-candidate-discovery.csv.
 - SOURCE-BATCH-470 implemented the RejuvinationAnkh guard repair in Data/Scripts/Items/Construction/Addons/RejuvinationAnkhs.cs.
-- SOURCE-BATCH-470 source commit: pending; verification passed.
+- SOURCE-BATCH-470 source commit: 92a06143; verification passed.
 - The source-batch target is docs/codebase-audit/outputs/source-batch-470-target.md.
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-470-rejuvinationankh-guard-repair-closeout.md.
 - SOURCE-BATCH-471+ should run fresh candidate discovery after SOURCE-BATCH-470.
