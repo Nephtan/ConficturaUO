@@ -1879,3 +1879,7 @@ The Phase 0 baseline output, Phase 1 reproducible inventory outputs, Phase 2 pro
 | source-batch-463-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-463 discovery with recommended BookWitchBrewing target and skipped/deferred candidate notes. | Complete |
 | source-batch-463-target.md | Source batches | Durable target for SOURCE-BATCH-463 BookWitchBrewing guard repair, including fence result and unchanged behavior. | Complete |
 | source-batch-463-bookwitchbrewing-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-463 with BookWitchBrewing guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |
+| source-batch-464-candidate-discovery.csv | Source batches | Fresh SOURCE-BATCH-464 candidate discovery for a zero-gate, zero-overlay BookDruidBrewing guard repair. | Complete |
+| source-batch-464-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-464 discovery with recommended BookDruidBrewing target and skipped/deferred candidate notes. | Complete |
+| source-batch-464-target.md | Source batches | Durable target for SOURCE-BATCH-464 BookDruidBrewing guard repair, including fence result and unchanged behavior. | Complete |
+| source-batch-464-bookdruidbrewing-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-464 with BookDruidBrewing guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |
