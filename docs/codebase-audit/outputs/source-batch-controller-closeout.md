@@ -4949,3 +4949,12 @@ To run a gated batch, provide explicit approval naming:
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-488-wheatsheaf-guard-repair-closeout.md.
 - SOURCE-BATCH-489+ should run fresh candidate discovery after SOURCE-BATCH-488.
 - Gated roadmap batches remain blocked pending explicit approval.
+
+### SOURCE-BATCH-489 Update
+
+- SOURCE-BATCH-489 implemented the ParagonChest label guard repair in Data/Scripts/Items/Containers/ParagonChest.cs.
+- SOURCE-BATCH-489 source commit: pending; verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-489-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-489-paragonchest-label-guard-repair-closeout.md.
+- SOURCE-BATCH-490+ should run fresh candidate discovery after SOURCE-BATCH-489.
+- Gated roadmap batches remain blocked pending explicit approval.
