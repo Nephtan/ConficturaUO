@@ -4783,3 +4783,13 @@ To run a gated batch, provide explicit approval naming:
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-470-rejuvinationankh-guard-repair-closeout.md.
 - SOURCE-BATCH-471+ should run fresh candidate discovery after SOURCE-BATCH-470.
 - Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-471 Update
+
+- SOURCE-BATCH-471 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-471-candidate-discovery.csv.
+- SOURCE-BATCH-471 implemented the Dyes guard repair in Data/Scripts/Items/Trades/Tailor Items/Dyes.cs.
+- SOURCE-BATCH-471 source commit: pending; verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-471-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-471-dyes-guard-repair-closeout.md.
+- SOURCE-BATCH-472+ should run fresh candidate discovery after SOURCE-BATCH-471.
+- Gated roadmap batches remain blocked pending explicit approval.
