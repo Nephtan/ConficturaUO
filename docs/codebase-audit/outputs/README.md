@@ -1899,3 +1899,7 @@ The Phase 0 baseline output, Phase 1 reproducible inventory outputs, Phase 2 pro
 | source-batch-468-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-468 discovery with recommended TrapKit target and excluded candidate notes. | Complete |
 | source-batch-468-target.md | Source batches | Durable target for SOURCE-BATCH-468 TrapKit guard repair, including fence result and unchanged behavior. | Complete |
 | source-batch-468-trapkit-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-468 with TrapKit guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |
+| source-batch-469-candidate-discovery.csv | Source batches | Fresh SOURCE-BATCH-469 candidate discovery for a zero-gate, zero-overlay BasePoleArm guard repair. | Complete |
+| source-batch-469-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-469 discovery with recommended BasePoleArm target and skipped candidate notes. | Complete |
+| source-batch-469-target.md | Source batches | Durable target for SOURCE-BATCH-469 BasePoleArm guard repair, including fence result and unchanged behavior. | Complete |
+| source-batch-469-basepolearm-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-469 with BasePoleArm guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |

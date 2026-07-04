@@ -74,6 +74,9 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
+            if (from == null || from.Deleted || Deleted)
+                return;
+
             if (HarvestSystem == null)
                 return;
 
