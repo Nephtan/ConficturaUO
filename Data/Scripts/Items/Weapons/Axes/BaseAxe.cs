@@ -106,7 +106,10 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
-            if (HarvestSystem == null || Deleted)
+            if (from == null || from.Deleted || Deleted)
+                return;
+
+            if (HarvestSystem == null)
                 return;
 
             Point3D loc = this.GetWorldLocation();

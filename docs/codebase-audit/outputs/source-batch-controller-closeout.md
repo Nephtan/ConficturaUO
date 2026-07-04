@@ -4823,3 +4823,13 @@ To run a gated batch, provide explicit approval naming:
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-474-basemagicstaff-guard-repair-closeout.md.
 - SOURCE-BATCH-475+ should run fresh candidate discovery after SOURCE-BATCH-474.
 - Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-475 Update
+
+- SOURCE-BATCH-475 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-475-candidate-discovery.csv.
+- SOURCE-BATCH-475 implemented the BaseAxe guard repair in Data/Scripts/Items/Weapons/Axes/BaseAxe.cs.
+- SOURCE-BATCH-475 source commit: pending; verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-475-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-475-baseaxe-guard-repair-closeout.md.
+- SOURCE-BATCH-476+ should run fresh candidate discovery after SOURCE-BATCH-475.
+- Gated roadmap batches remain blocked pending explicit approval.

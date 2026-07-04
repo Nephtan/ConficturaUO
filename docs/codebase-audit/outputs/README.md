@@ -1923,3 +1923,7 @@ The Phase 0 baseline output, Phase 1 reproducible inventory outputs, Phase 2 pro
 | source-batch-474-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-474 discovery with recommended BaseMagicStaff target and skipped candidate notes. | Complete |
 | source-batch-474-target.md | Source batches | Durable target for SOURCE-BATCH-474 BaseMagicStaff guard repair, including fence result and unchanged behavior. | Complete |
 | source-batch-474-basemagicstaff-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-474 with BaseMagicStaff guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |
+| source-batch-475-candidate-discovery.csv | Source batches | Fresh SOURCE-BATCH-475 candidate discovery for a zero-gate, zero-overlay BaseAxe guard repair. | Complete |
+| source-batch-475-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-475 discovery with recommended BaseAxe target and skipped candidate notes. | Complete |
+| source-batch-475-target.md | Source batches | Durable target for SOURCE-BATCH-475 BaseAxe guard repair, including fence result and unchanged behavior. | Complete |
+| source-batch-475-baseaxe-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-475 with BaseAxe guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |
