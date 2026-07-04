@@ -4768,7 +4768,7 @@ To run a gated batch, provide explicit approval naming:
 
 - SOURCE-BATCH-469 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-469-candidate-discovery.csv.
 - SOURCE-BATCH-469 implemented the BasePoleArm guard repair in Data/Scripts/Items/Weapons/PoleArms/BasePoleArm.cs.
-- SOURCE-BATCH-469 source commit: pending; verification passed.
+- SOURCE-BATCH-469 source commit: 7f638b6b; verification passed.
 - The source-batch target is docs/codebase-audit/outputs/source-batch-469-target.md.
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-469-basepolearm-guard-repair-closeout.md.
 - SOURCE-BATCH-470+ should run fresh candidate discovery after SOURCE-BATCH-469.
