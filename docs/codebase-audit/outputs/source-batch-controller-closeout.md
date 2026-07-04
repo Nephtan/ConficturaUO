@@ -4728,7 +4728,7 @@ To run a gated batch, provide explicit approval naming:
 
 - SOURCE-BATCH-465 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-465-candidate-discovery.csv.
 - SOURCE-BATCH-465 implemented the BagOfTricks guard repair in Data/Scripts/Magic/Jester/BagOfTricks.cs.
-- SOURCE-BATCH-465 source commit is pending; verification passed.
+- SOURCE-BATCH-465 source commit: 452ebfac; verification passed.
 - The source-batch target is docs/codebase-audit/outputs/source-batch-465-target.md.
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-465-bagoftricks-guard-repair-closeout.md.
 - SOURCE-BATCH-466+ should run fresh candidate discovery after SOURCE-BATCH-465.
