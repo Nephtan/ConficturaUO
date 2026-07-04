@@ -4888,4 +4888,12 @@ To run a gated batch, provide explicit approval naming:
 - The source-batch target is docs/codebase-audit/outputs/source-batch-481-target.md.
 - The source-batch closeout is docs/codebase-audit/outputs/source-batch-481-lightofthewintersolstice-label-guard-repair-closeout.md.
 - SOURCE-BATCH-482+ should run fresh candidate discovery after SOURCE-BATCH-481.
+
+### SOURCE-BATCH-482 Update
+
+- SOURCE-BATCH-482 implemented the Puke label guard repair in Data/Scripts/Items/Misc/Puke.cs.
+- SOURCE-BATCH-482 source commit: pending; verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-482-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-482-puke-label-guard-repair-closeout.md.
+- SOURCE-BATCH-483+ should run fresh candidate discovery after SOURCE-BATCH-482.
 - Gated roadmap batches remain blocked pending explicit approval.

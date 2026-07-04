@@ -1951,3 +1951,7 @@ The Phase 0 baseline output, Phase 1 reproducible inventory outputs, Phase 2 pro
 | source-batch-481-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-481 discovery with recommended LightOfTheWinterSolstice target and skipped candidate notes. | Complete |
 | source-batch-481-target.md | Source batches | Durable target for SOURCE-BATCH-481 LightOfTheWinterSolstice label guard repair, including fence result and unchanged behavior. | Complete |
 | source-batch-481-lightofthewintersolstice-label-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-481 with LightOfTheWinterSolstice label guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |
+| source-batch-482-candidate-discovery.csv | Source batches | Fresh SOURCE-BATCH-482 candidate discovery for a zero-gate, zero-overlay Puke label guard repair. | Complete |
+| source-batch-482-candidate-discovery-closeout.md | Source batches | Close out SOURCE-BATCH-482 discovery with recommended Puke target and skipped candidate notes. | Complete |
+| source-batch-482-target.md | Source batches | Durable target for SOURCE-BATCH-482 Puke label guard repair, including fence result and unchanged behavior. | Complete |
+| source-batch-482-puke-label-guard-repair-closeout.md | Source batches | Close out SOURCE-BATCH-482 with Puke label guard changes, POST-BATCH-Y fence evidence, verification, and artifact restoration notes. | Complete |

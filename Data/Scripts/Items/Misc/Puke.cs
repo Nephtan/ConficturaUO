@@ -21,6 +21,9 @@ namespace Server.Items
 
         public override void OnSingleClick(Mobile from)
         {
+            if (from == null || from.Deleted || Deleted)
+                return;
+
             this.LabelTo(from, this.Name);
         }
 
