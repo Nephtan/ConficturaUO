@@ -1,0 +1,6 @@
+DropRule,Meaning,Status
+NeedsDecision,Staff must choose semantics before implementation.,PolicyRequired
+ChancePercentOnCorpse,Roll ChancePercent when the mobile dies and add the item on success.,Ready
+GuaranteedAlwaysDrop,Always add the listed item on death.,Ready
+GuaranteedOneOfGroup,Choose one item from a grouped assignment; probability semantics need implementation detail.,PolicyRequired
+ManualSpecial,Requires custom drop code outside a normal corpse roll.,PolicyRequired
