@@ -51,7 +51,7 @@ debugEffect="true">
     <Region type="BardDungeonRegion" name="default">
       <Encounter p="0.20" distance="8:12" landType="AnyLand" time="AnyTime" level="85:Overall" scaleUp="false">
         <Mobile p="1.0" pick="EvilMageLord,Fiend,FireElemental,FireGiant,FrostGiant,Kraken" n="1" effect="None" forceAttack="true">
-          <Mobile p="0.70" pick="Berserker,EvilMage,Rogue,Monks,Gazer,Skeleton" n="1:2" effect="None" forceAttack="true"/>
+          <Mobile p="0.70" pick="Berserker,EvilMage,Brigand,Monks,Gazer,Skeleton" n="1:2" effect="None" forceAttack="true"/>
         </Mobile>
       </Encounter>
       <Encounter p="0.35" distance="7:11" landType="AnyLand" time="AnyTime" level="65:Ranger" scaleUp="false">
@@ -61,10 +61,10 @@ debugEffect="true">
         <Mobile p="1.0" pick="Ghoul,Phantom,Spectre,Spirit,Vampire,Wight" n="1:2" effect="None" forceAttack="true"/>
       </Encounter>
       <Encounter p="0.70" distance="6:10" landType="AnyLand" time="AnyTime" level="25:Overall" scaleUp="false">
-        <Mobile p="1.0" pick="Rogue,Monks,Gazer,Skeleton,GiantSpider,SkeletonArcher" n="1:2" effect="None" forceAttack="true"/>
+        <Mobile p="1.0" pick="Brigand,Monks,Gazer,Skeleton,GiantSpider,SkeletonArcher" n="1:2" effect="None" forceAttack="true"/>
       </Encounter>
       <Encounter p="0.90" distance="6:10" landType="AnyLand" time="AnyTime" level="1:Overall" scaleUp="false">
-        <Mobile p="1.0" pick="Berserker,EvilMage,Rogue,Monks,Gazer,Skeleton" n="1:2" effect="None" forceAttack="true"/>
+        <Mobile p="1.0" pick="Berserker,EvilMage,Brigand,Monks,Gazer,Skeleton" n="1:2" effect="None" forceAttack="true"/>
       </Encounter>
     </Region>
     <Region type="DungeonRegion" name="the Undersea Pass">
@@ -77,7 +77,7 @@ debugEffect="true">
         <Mobile p="1.0" pick="EarthElemental,MagmaElemental,RidingDragon,Urk,Alligator,Bogling" n="1" effect="None" forceAttack="true"/>
       </Encounter>
       <Encounter p="0.50" distance="6:10" landType="AnyLand" time="AnyTime" level="45:Overall" scaleUp="false">
-        <Mobile p="1.0" pick="WaterElemental,ElfBerserker,ElfMonks,ElfRogue,Ghoul,Shade" n="1:2" effect="None" forceAttack="true"/>
+        <Mobile p="1.0" pick="WaterElemental,ElfBerserker,ElfMonks,ElfMinstrel,Ghoul,Shade" n="1:2" effect="None" forceAttack="true"/>
       </Encounter>
       <Encounter p="0.70" distance="6:10" landType="AnyLand" time="AnyTime" level="25:Overall" scaleUp="false">
         <Mobile p="1.0" pick="CaveBearRiding,Ettin,HugeLizard,Neanderthal,Ogre,Grathek" n="1:2" effect="None" forceAttack="true"/>
@@ -417,10 +417,10 @@ debugEffect="true">
         </Mobile>
       </Encounter>
       <Encounter p="0.35" distance="7:11" landType="AnyLand" time="AnyTime" level="65:Fighter" scaleUp="false">
-        <Mobile p="1.0" pick="Ratman,Neanderthal,Ogre,Troll,Executioner,BloodGodTentacles" n="1" effect="None" forceAttack="true"/>
+        <Mobile p="1.0" pick="Ratman,Neanderthal,Ogre,Troll,Executioner,BloodElemental" n="1" effect="None" forceAttack="true"/>
       </Encounter>
       <Encounter p="0.50" distance="6:10" landType="AnyLand" time="AnyTime" level="45:Fighter" scaleUp="false">
-        <Mobile p="1.0" pick="ElfRogue,ElfBerserker,ElfMonks,ElfMinstrel,Lizardman,Orc" n="1:2" effect="None" forceAttack="true"/>
+        <Mobile p="1.0" pick="ElfMage,ElfBerserker,ElfMonks,ElfMinstrel,Lizardman,Orc" n="1:2" effect="None" forceAttack="true"/>
       </Encounter>
       <Encounter p="0.70" distance="6:10" landType="AnyLand" time="AnyTime" level="25:Overall" scaleUp="false">
         <Mobile p="1.0" pick="BoneMagi,Revenant,ShadowFiend,SkeletalKnight,SkeletalMage,SoulWorm" n="1:2" effect="None" forceAttack="true"/>
@@ -436,7 +436,7 @@ debugEffect="true">
         </Mobile>
       </Encounter>
       <Encounter p="0.35" distance="7:11" landType="AnyLand" time="AnyTime" level="65:Overall" scaleUp="false">
-        <Mobile p="1.0" pick="ObsidianElemental,ElfMage,FireGiant,RidingDragon,Daemon,Dragoon" n="1" effect="None" forceAttack="true"/>
+        <Mobile p="1.0" pick="ObsidianElemental,ElfMage,LavaGiant,RidingDragon,Daemon,Dragoon" n="1" effect="None" forceAttack="true"/>
       </Encounter>
       <Encounter p="0.50" distance="6:10" landType="AnyLand" time="AnyTime" level="45:Overall" scaleUp="false">
         <Mobile p="1.0" pick="HellHound,LavaElemental,LavaLizard,LavaPuddle,LavaSerpent,ObsidianElemental" n="1:2" effect="None" forceAttack="true"/>
@@ -450,12 +450,12 @@ debugEffect="true">
     </Region>
     <Region type="DungeonRegion" name="Terathan Keep">
       <Encounter p="0.20" distance="8:12" landType="AnyLand" time="AnyTime" level="85:Ranger" scaleUp="false">
-        <Mobile p="1.0" pick="Dragoon,Wyrm,Archfiend,Balron,BlackDragon,Devil" n="1" effect="None" forceAttack="true">
+        <Mobile p="1.0" pick="Dragoon,Wyrm,Archfiend,Balron,AncientWyrm,Devil" n="1" effect="None" forceAttack="true">
           <Mobile p="0.70" pick="TerathanDrone,TerathanWarrior,DreadSpider,GiantSpider,TerathanAvenger,TerathanMatriarch" n="1:2" effect="None" forceAttack="true"/>
         </Mobile>
       </Encounter>
       <Encounter p="0.35" distance="7:11" landType="AnyLand" time="AnyTime" level="65:Ranger" scaleUp="false">
-        <Mobile p="1.0" pick="Drake,Dragoon,Wyrm,Archfiend,Balron,BlackDragon" n="1" effect="None" forceAttack="true"/>
+        <Mobile p="1.0" pick="Drake,Dragoon,Wyrm,Archfiend,Balron,AncientWyrm" n="1" effect="None" forceAttack="true"/>
       </Encounter>
       <Encounter p="0.50" distance="6:10" landType="AnyLand" time="AnyTime" level="45:Ranger" scaleUp="false">
         <Mobile p="1.0" pick="TerathanAvenger,TerathanMatriarch,Nightmare,RidingDragon,Drake,Dragoon" n="1:2" effect="None" forceAttack="true"/>
@@ -480,7 +480,7 @@ debugEffect="true">
         <Mobile p="1.0" pick="DeadlyScorpion,DustElemental,EarthElemental,MudElemental,MudMan,Scorpion" n="1:2" effect="None" forceAttack="true"/>
       </Encounter>
       <Encounter p="0.70" distance="6:10" landType="AnyLand" time="AnyTime" level="25:Overall" scaleUp="false">
-        <Mobile p="1.0" pick="FireElemental,BloodElemental,CrystalGoliath,PoisonElemental,ToxicElemental,WaterElemental" n="1:2" effect="None" forceAttack="true"/>
+        <Mobile p="1.0" pick="FireElemental,BloodElemental,CrystalGoliath,PoisonElemental,ToxicElemental,AirElemental" n="1:2" effect="None" forceAttack="true"/>
       </Encounter>
       <Encounter p="0.90" distance="6:10" landType="AnyLand" time="AnyTime" level="1:Overall" scaleUp="false">
         <Mobile p="1.0" pick="AirElemental,ElectricalElemental,FireElemental,BloodElemental,CrystalGoliath,PoisonElemental" n="1:2" effect="None" forceAttack="true"/>
@@ -488,13 +488,13 @@ debugEffect="true">
     </Region>
     <Region type="DungeonRegion" name="the Ice Fiend Lair">
       <Encounter p="0.50" distance="6:10" landType="AnyLand" time="AnyTime" level="45:Necromancer" scaleUp="false">
-        <Mobile p="1.0" pick="Imp,Daemon,Fiend" n="1:2" effect="None" forceAttack="true"/>
+        <Mobile p="1.0" pick="Imp,Archfiend,Fiend" n="1:2" effect="None" forceAttack="true"/>
       </Encounter>
       <Encounter p="0.70" distance="6:10" landType="AnyLand" time="AnyTime" level="25:Overall" scaleUp="false">
-        <Mobile p="1.0" pick="Daemon,Fiend" n="1:2" effect="None" forceAttack="true"/>
+        <Mobile p="1.0" pick="Archfiend,Fiend" n="1:2" effect="None" forceAttack="true"/>
       </Encounter>
       <Encounter p="0.90" distance="6:10" landType="AnyLand" time="AnyTime" level="1:Overall" scaleUp="false">
-        <Mobile p="1.0" pick="ElfMage,Imp,Daemon,Fiend" n="1:2" effect="None" forceAttack="true"/>
+        <Mobile p="1.0" pick="ElfMage,Imp,Archfiend,Fiend" n="1:2" effect="None" forceAttack="true"/>
       </Encounter>
     </Region>
     <Region type="DungeonRegion" name="the Frozen Hells">
@@ -518,7 +518,7 @@ debugEffect="true">
     </Region>
     <Region type="DungeonRegion" name="Dungeon Hythloth">
       <Encounter p="0.20" distance="8:12" landType="AnyLand" time="AnyTime" level="85:Overall" scaleUp="false">
-        <Mobile p="1.0" pick="ElfMage,ElfMinstrel,ElfMonks,ElfRogue,SkeletalDragon" n="1" effect="None" forceAttack="true">
+        <Mobile p="1.0" pick="ElfMage,ElfMinstrel,ElfMonks,ElfBerserker,SkeletalDragon" n="1" effect="None" forceAttack="true">
           <Mobile p="0.70" pick="FireBat,FireElemental,FireGargoyle,Gargoyle,GorgonRiding,HellHound" n="1:2" effect="None" forceAttack="true"/>
         </Mobile>
       </Encounter>
@@ -537,18 +537,18 @@ debugEffect="true">
     </Region>
     <Region type="DungeonRegion" name="the Mind Flayer City">
       <Encounter p="0.20" distance="8:12" landType="AnyLand" time="AnyTime" level="85:Overall" scaleUp="false">
-        <Mobile p="1.0" pick="Wyrm,Drake,BlackGateDemon,Daemon,Fiend,Orc" n="1" effect="None" forceAttack="true">
+        <Mobile p="1.0" pick="Wyrm,Drake,Archfiend,Daemon,Fiend,Orc" n="1" effect="None" forceAttack="true">
           <Mobile p="0.70" pick="MindFlayer,ElfMage,Beholder,ElfBerserker,ElfMinstrel,ElfMonks" n="1:2" effect="None" forceAttack="true"/>
         </Mobile>
       </Encounter>
       <Encounter p="0.35" distance="7:11" landType="AnyLand" time="AnyTime" level="65:Ranger" scaleUp="false">
-        <Mobile p="1.0" pick="ShadowFiend,RidingDragon,Dragoon,Wyrm,Drake,BlackGateDemon" n="1" effect="None" forceAttack="true"/>
+        <Mobile p="1.0" pick="ShadowFiend,RidingDragon,Dragoon,Wyrm,Drake,Archfiend" n="1" effect="None" forceAttack="true"/>
       </Encounter>
       <Encounter p="0.50" distance="6:10" landType="AnyLand" time="AnyTime" level="45:Ranger" scaleUp="false">
-        <Mobile p="1.0" pick="ElfRogue,BlackPudding,CaveLizard,GorgonRiding,Naga,ShadowFiend" n="1:2" effect="None" forceAttack="true"/>
+        <Mobile p="1.0" pick="ElfMinstrel,BlackPudding,CaveLizard,GorgonRiding,Naga,ShadowFiend" n="1:2" effect="None" forceAttack="true"/>
       </Encounter>
       <Encounter p="0.70" distance="6:10" landType="AnyLand" time="AnyTime" level="25:Overall" scaleUp="false">
-        <Mobile p="1.0" pick="Beholder,ElfBerserker,ElfMinstrel,ElfMonks,ElfRogue,BlackPudding" n="1:2" effect="None" forceAttack="true"/>
+        <Mobile p="1.0" pick="Beholder,ElfBerserker,ElfMinstrel,ElfMonks,ElfMage,BlackPudding" n="1:2" effect="None" forceAttack="true"/>
       </Encounter>
       <Encounter p="0.90" distance="6:10" landType="AnyLand" time="AnyTime" level="1:Overall" scaleUp="false">
         <Mobile p="1.0" pick="MindFlayer,ElfMage,Beholder,ElfBerserker,ElfMinstrel,ElfMonks" n="1:2" effect="None" forceAttack="true"/>
@@ -561,7 +561,7 @@ debugEffect="true">
         </Mobile>
       </Encounter>
       <Encounter p="0.35" distance="7:11" landType="AnyLand" time="AnyTime" level="65:Overall" scaleUp="false">
-        <Mobile p="1.0" pick="ElfMage,BoneKnight,ElfBerserker,ElfMonks,ElfRogue,Ghostly" n="1" effect="None" forceAttack="true"/>
+        <Mobile p="1.0" pick="ElfMage,BoneKnight,ElfBerserker,ElfMonks,ElfMinstrel,Ghostly" n="1" effect="None" forceAttack="true"/>
       </Encounter>
       <Encounter p="0.50" distance="6:10" landType="AnyLand" time="AnyTime" level="45:Ranger" scaleUp="false">
         <Mobile p="1.0" pick="Ifreet,LavaElemental,LavaLizard,LavaSerpent,LavaSnake,PredatorHellCatRiding" n="1:2" effect="None" forceAttack="true"/>
@@ -575,7 +575,7 @@ debugEffect="true">
     </Region>
     <Region type="DungeonRegion" name="Dungeon Destard">
       <Encounter p="0.20" distance="8:12" landType="AnyLand" time="AnyTime" level="85:Ranger" scaleUp="false">
-        <Mobile p="1.0" pick="PrimevalSilverDragon,SeaDragon,ShadowWyrm,SkeletalDragon,VampiricDragon,ZombieDragon" n="1" effect="None" forceAttack="true">
+        <Mobile p="1.0" pick="PrimevalSilverDragon,SeaDragon,AncientWyrm,SkeletalDragon,VampiricDragon,ZombieDragon" n="1" effect="None" forceAttack="true">
           <Mobile p="0.70" pick="Drakkul,Drake,Wyvern,DrakkulChief,DrakkulMage,BabyDragon" n="1:2" effect="None" forceAttack="true"/>
         </Mobile>
       </Encounter>
@@ -595,7 +595,7 @@ debugEffect="true">
     <Region type="DungeonRegion" name="Dungeon Despise">
       <Encounter p="0.20" distance="8:12" landType="AnyLand" time="AnyTime" level="85:Overall" scaleUp="false">
         <Mobile p="1.0" pick="LavaGiant,OgreMagi,Scorpion,SeaDragon,ToxicElemental,Wyrm" n="1" effect="None" forceAttack="true">
-          <Mobile p="0.70" pick="Troll,Ogre,Ettin,Cyclops,ShamanicCyclops,Neanderthal" n="1:2" effect="None" forceAttack="true"/>
+          <Mobile p="0.70" pick="OgreLord,Ogre,Ettin,Cyclops,ShamanicCyclops,Neanderthal" n="1:2" effect="None" forceAttack="true"/>
         </Mobile>
       </Encounter>
       <Encounter p="0.35" distance="7:11" landType="AnyLand" time="AnyTime" level="65:Mage" scaleUp="false">
@@ -608,12 +608,12 @@ debugEffect="true">
         <Mobile p="1.0" pick="Ettin,Cyclops,ShamanicCyclops,Neanderthal,CaveBearRiding,GiantSerpent" n="1:2" effect="None" forceAttack="true"/>
       </Encounter>
       <Encounter p="0.90" distance="6:10" landType="AnyLand" time="AnyTime" level="1:Overall" scaleUp="false">
-        <Mobile p="1.0" pick="Troll,Ogre,Ettin,Cyclops,ShamanicCyclops,Neanderthal" n="1:2" effect="None" forceAttack="true"/>
+        <Mobile p="1.0" pick="OgreLord,Ogre,Ettin,Cyclops,ShamanicCyclops,Neanderthal" n="1:2" effect="None" forceAttack="true"/>
       </Encounter>
     </Region>
     <Region type="DungeonRegion" name="Dungeon Deceit">
       <Encounter p="0.20" distance="8:12" landType="AnyLand" time="AnyTime" level="85:Necromancer" scaleUp="false">
-        <Mobile p="1.0" pick="Ghostly,Nazghoul,Shroud,BoneDemon,LichLord,Zombie" n="1" effect="None" forceAttack="true">
+        <Mobile p="1.0" pick="Ghostly,Nazghoul,Shroud,BoneDemon,AncientLich,Zombie" n="1" effect="None" forceAttack="true">
           <Mobile p="0.70" pick="BoneKnight,FrozenCorpse,Ghoul,IceGhoul,Mummy,Shade" n="1:2" effect="None" forceAttack="true"/>
         </Mobile>
       </Encounter>
@@ -632,7 +632,7 @@ debugEffect="true">
     </Region>
     <Region type="DungeonRegion" name="Dungeon Covetous">
       <Encounter p="0.20" distance="8:12" landType="AnyLand" time="AnyTime" level="85:Ranger" scaleUp="false">
-        <Mobile p="1.0" pick="HippogriffRiding,DreadSpider,ElderGazer,SwampTentacle,WaterElemental,HarpyHen" n="1" effect="None" forceAttack="true">
+        <Mobile p="1.0" pick="HippogriffRiding,DreadSpider,ElderGazer,SwampTentacle,WaterElemental,HarpyElder" n="1" effect="None" forceAttack="true">
           <Mobile p="0.70" pick="Harpy,Gazer,StoneHarpy,Corpser,HarpyElder,AxeBeakRiding" n="1:2" effect="None" forceAttack="true"/>
         </Mobile>
       </Encounter>
@@ -651,7 +651,7 @@ debugEffect="true">
     </Region>
     <Region type="DungeonRegion" name="the Lodoria Catacombs">
       <Encounter p="0.20" distance="8:12" landType="AnyLand" time="AnyTime" level="85:Necromancer" scaleUp="false">
-        <Mobile p="1.0" pick="Lich,Ghostly,LichLord,Shroud,RottingCorpse,ZombieDragon" n="1" effect="None" forceAttack="true">
+        <Mobile p="1.0" pick="Lich,Ghostly,LichLord,Shroud,WalkingCorpse,ZombieDragon" n="1" effect="None" forceAttack="true">
           <Mobile p="0.70" pick="ShadowWisp,BoneKnight,BoneMagi,Ghoul,Mummy,Shade" n="1:2" effect="None" forceAttack="true"/>
         </Mobile>
       </Encounter>
@@ -670,7 +670,7 @@ debugEffect="true">
     </Region>
     <Region type="DungeonRegion" name="the Halls of Undermountain">
       <Encounter p="0.20" distance="8:12" landType="AnyLand" time="AnyTime" level="85:Necromancer" scaleUp="false">
-        <Mobile p="1.0" pick="Nazghoul,ShadowDemon,Shroud,Vampire,VampireLord,WeedElemental" n="1" effect="None" forceAttack="true">
+        <Mobile p="1.0" pick="Nazghoul,ShadowDemon,Shroud,Vampire,VampireLord,AncientEnt" n="1" effect="None" forceAttack="true">
           <Mobile p="0.70" pick="GhostWizard,SkeletalMage,SkeletalKnight,BlackPudding,BoneGolem,DarkWisp" n="1:2" effect="None" forceAttack="true"/>
         </Mobile>
       </Encounter>
@@ -678,7 +678,7 @@ debugEffect="true">
         <Mobile p="1.0" pick="SandVortex,Archfiend,Balron,Beholder,BoneKnight,Daemon" n="1" effect="None" forceAttack="true"/>
       </Encounter>
       <Encounter p="0.50" distance="6:10" landType="AnyLand" time="AnyTime" level="45:Overall" scaleUp="false">
-        <Mobile p="1.0" pick="ElfBerserker,ElfMinstrel,ElfMonks,ElfRogue,ElfMage,DreadSpider" n="1:2" effect="None" forceAttack="true"/>
+        <Mobile p="1.0" pick="ElfBerserker,ElfMinstrel,ElfMonks,DarkWisp,ElfMage,DreadSpider" n="1:2" effect="None" forceAttack="true"/>
       </Encounter>
       <Encounter p="0.70" distance="6:10" landType="AnyLand" time="AnyTime" level="25:Overall" scaleUp="false">
         <Mobile p="1.0" pick="SkeletalKnight,BlackPudding,BoneGolem,DarkWisp,Gargoyle,Gazer" n="1:2" effect="None" forceAttack="true"/>
@@ -689,15 +689,15 @@ debugEffect="true">
     </Region>
     <Region type="DungeonRegion" name="the Vault of the Black Knight">
       <Encounter p="0.20" distance="8:12" landType="AnyLand" time="AnyTime" level="85:Overall" scaleUp="false">
-        <Mobile p="1.0" pick="GrundulVarg,JungleGiant,OgreMagi,SandGiant,UndeadGiant,Wyrms" n="1" effect="None" forceAttack="true">
+        <Mobile p="1.0" pick="BlackKnight,JungleGiant,OgreMagi,SandGiant,UndeadGiant,Wyrms" n="1" effect="None" forceAttack="true">
           <Mobile p="0.70" pick="Zombie,Skeleton,SkeletalKnight,Ghoul,Shade,SkeletalMage" n="1:2" effect="None" forceAttack="true"/>
         </Mobile>
       </Encounter>
       <Encounter p="0.35" distance="7:11" landType="AnyLand" time="AnyTime" level="65:Overall" scaleUp="false">
-        <Mobile p="1.0" pick="SnowElemental,Titan,WaxSculpture,Archfiend,Balron,BloodAssassin" n="1" effect="None" forceAttack="true"/>
+        <Mobile p="1.0" pick="SnowElemental,Titan,LivingIronStatue,Archfiend,Balron,BloodAssassin" n="1" effect="None" forceAttack="true"/>
       </Encounter>
       <Encounter p="0.50" distance="6:10" landType="AnyLand" time="AnyTime" level="45:Mage" scaleUp="false">
-        <Mobile p="1.0" pick="Rogue,AcidPuddle,CinderElemental,EvilMageLord,Executioner,LavaElemental" n="1:2" effect="None" forceAttack="true"/>
+        <Mobile p="1.0" pick="Brigand,AcidPuddle,CinderElemental,EvilMageLord,Executioner,LavaElemental" n="1:2" effect="None" forceAttack="true"/>
       </Encounter>
       <Encounter p="0.70" distance="6:10" landType="AnyLand" time="AnyTime" level="25:Overall" scaleUp="false">
         <Mobile p="1.0" pick="SkeletalKnight,Ghoul,Shade,SkeletalMage,SkeletonArcher,Spectre" n="1:2" effect="None" forceAttack="true"/>
@@ -708,7 +708,7 @@ debugEffect="true">
     </Region>
     <Region type="DungeonRegion" name="the Crypts of Dracula">
       <Encounter p="0.20" distance="8:12" landType="AnyLand" time="AnyTime" level="85:Necromancer" scaleUp="false">
-        <Mobile p="1.0" pick="VampirePrince,EvilMage,Executioner,BloodElemental,Dracula,ZombieDragon" n="1" effect="None" forceAttack="true">
+        <Mobile p="1.0" pick="VampireLord,EvilMage,Executioner,BloodElemental,VampiricDragon,ZombieDragon" n="1" effect="None" forceAttack="true">
           <Mobile p="0.70" pick="Vampire,Bat,BloodLotus,BloodSnake,Bodak,BoneKnight" n="1:2" effect="None" forceAttack="true"/>
         </Mobile>
       </Encounter>
@@ -918,7 +918,7 @@ debugEffect="true">
     <Region type="DungeonRegion" name="the Sanctum of Saltmarsh">
       <Encounter p="0.20" distance="8:12" landType="AnyLand" time="AnyTime" level="85:Ranger" scaleUp="false">
         <Mobile p="1.0" pick="HillGiant,OgreLord,PrimevalBlackDragon,PrimevalGreenDragon,SwampThing,Wyrm" n="1" effect="None" forceAttack="true">
-          <Mobile p="0.70" pick="Grathek,Sleestax,Sakleth,SaklethArcher,SaklethMage,GiantToad" n="1:2" effect="None" forceAttack="true"/>
+          <Mobile p="0.70" pick="Grathek,Reptalar,Sakleth,SaklethArcher,SaklethMage,GiantToad" n="1:2" effect="None" forceAttack="true"/>
         </Mobile>
       </Encounter>
       <Encounter p="0.35" distance="7:11" landType="AnyLand" time="AnyTime" level="65:Overall" scaleUp="false">
@@ -931,7 +931,7 @@ debugEffect="true">
         <Mobile p="1.0" pick="Sakleth,SaklethArcher,SaklethMage,GiantToad,HugeLizard,JungleViper" n="1:2" effect="None" forceAttack="true"/>
       </Encounter>
       <Encounter p="0.90" distance="6:10" landType="AnyLand" time="AnyTime" level="1:Overall" scaleUp="false">
-        <Mobile p="1.0" pick="Grathek,Sleestax,Sakleth,SaklethArcher,SaklethMage,GiantToad" n="1:2" effect="None" forceAttack="true"/>
+        <Mobile p="1.0" pick="Grathek,Reptalar,Sakleth,SaklethArcher,SaklethMage,GiantToad" n="1:2" effect="None" forceAttack="true"/>
       </Encounter>
     </Region>
     <Region type="BardDungeonRegion" name="Mangar&apos;s Tower">
@@ -944,10 +944,10 @@ debugEffect="true">
         <Mobile p="1.0" pick="Skeleton,RidingDragon,Lich,Dragoon,StormGiant,Wyrm" n="1" effect="None" forceAttack="true"/>
       </Encounter>
       <Encounter p="0.50" distance="6:10" landType="AnyLand" time="AnyTime" level="45:Overall" scaleUp="false">
-        <Mobile p="1.0" pick="Rogue,SoulSucker,VampireLord,WereWolf,Ogre,OgreMagi" n="1:2" effect="None" forceAttack="true"/>
+        <Mobile p="1.0" pick="Brigand,SoulSucker,VampireLord,WereWolf,Ogre,OgreMagi" n="1:2" effect="None" forceAttack="true"/>
       </Encounter>
       <Encounter p="0.70" distance="6:10" landType="AnyLand" time="AnyTime" level="25:Overall" scaleUp="false">
-        <Mobile p="1.0" pick="EvilMage,Gazer,GiantSpider,Monks,Rogue,SoulSucker" n="1:2" effect="None" forceAttack="true"/>
+        <Mobile p="1.0" pick="EvilMage,Gazer,GiantSpider,Monks,Brigand,SoulSucker" n="1:2" effect="None" forceAttack="true"/>
       </Encounter>
       <Encounter p="0.90" distance="6:10" landType="AnyLand" time="AnyTime" level="1:Overall" scaleUp="false">
         <Mobile p="1.0" pick="Berserker,BasiliskRiding,EvilMage,Gazer,GiantSpider,Monks" n="1:2" effect="None" forceAttack="true"/>
@@ -971,7 +971,7 @@ debugEffect="true">
         <Mobile p="1.0" pick="LowerDemon,StrangleVine,Dragoon,ElderTitan,StoneGiant,Titan" n="1" effect="None" forceAttack="true"/>
       </Encounter>
       <Encounter p="0.50" distance="6:10" landType="AnyLand" time="AnyTime" level="45:Overall" scaleUp="false">
-        <Mobile p="1.0" pick="Ogre,Rogue,StoneElemental,WereWolf,Xorn,RidingDragon" n="1:2" effect="None" forceAttack="true"/>
+        <Mobile p="1.0" pick="Ogre,Brigand,StoneElemental,WereWolf,Xorn,RidingDragon" n="1:2" effect="None" forceAttack="true"/>
       </Encounter>
       <Encounter p="0.70" distance="6:10" landType="AnyLand" time="AnyTime" level="25:Overall" scaleUp="false">
         <Mobile p="1.0" pick="DreadSpider,Gazer,Goblin,GoblinArcher,Monks,Ogre" n="1:2" effect="None" forceAttack="true"/>
@@ -990,10 +990,10 @@ debugEffect="true">
         <Mobile p="1.0" pick="RidingDragon,WaterElemental,Demon,Dragoon,StrangleVine,Wyrm" n="1" effect="None" forceAttack="true"/>
       </Encounter>
       <Encounter p="0.50" distance="6:10" landType="AnyLand" time="AnyTime" level="45:Overall" scaleUp="false">
-        <Mobile p="1.0" pick="Monks,Rogue,StoneElemental,Troll,RidingDragon,WaterElemental" n="1:2" effect="None" forceAttack="true"/>
+        <Mobile p="1.0" pick="Monks,Brigand,StoneElemental,Troll,RidingDragon,WaterElemental" n="1:2" effect="None" forceAttack="true"/>
       </Encounter>
       <Encounter p="0.70" distance="6:10" landType="AnyLand" time="AnyTime" level="25:Overall" scaleUp="false">
-        <Mobile p="1.0" pick="Gazer,LivingStoneStatue,MadDog,Monks,Rogue,StoneElemental" n="1:2" effect="None" forceAttack="true"/>
+        <Mobile p="1.0" pick="Gazer,LivingStoneStatue,MadDog,Monks,Brigand,StoneElemental" n="1:2" effect="None" forceAttack="true"/>
       </Encounter>
       <Encounter p="0.90" distance="6:10" landType="AnyLand" time="AnyTime" level="1:Overall" scaleUp="false">
         <Mobile p="1.0" pick="Berserker,EvilMage,Gazer,LivingStoneStatue,MadDog,Monks" n="1:2" effect="None" forceAttack="true"/>
@@ -1002,52 +1002,52 @@ debugEffect="true">
     <Region type="BardDungeonRegion" name="the Catacombs">
       <Encounter p="0.20" distance="8:12" landType="AnyLand" time="AnyTime" level="85:Necromancer" scaleUp="false">
         <Mobile p="1.0" pick="Vampire,Wight,Wraith,Zombie,EvilMageLord,Lich" n="1" effect="None" forceAttack="true">
-          <Mobile p="0.70" pick="Berserker,EvilMage,Ghoul,Monks,Phantom,Rogue" n="1:2" effect="None" forceAttack="true"/>
+          <Mobile p="0.70" pick="Berserker,EvilMage,Ghoul,Monks,Phantom,Brigand" n="1:2" effect="None" forceAttack="true"/>
         </Mobile>
       </Encounter>
       <Encounter p="0.35" distance="7:11" landType="AnyLand" time="AnyTime" level="65:Necromancer" scaleUp="false">
         <Mobile p="1.0" pick="Spectre,Spirit,Vampire,Wight,Wraith,Zombie" n="1" effect="None" forceAttack="true"/>
       </Encounter>
       <Encounter p="0.50" distance="6:10" landType="AnyLand" time="AnyTime" level="45:Necromancer" scaleUp="false">
-        <Mobile p="1.0" pick="Phantom,Rogue,Skeleton,SkeletonArcher,Spectre,Spirit" n="1:2" effect="None" forceAttack="true"/>
+        <Mobile p="1.0" pick="Phantom,Brigand,Skeleton,SkeletonArcher,Spectre,Spirit" n="1:2" effect="None" forceAttack="true"/>
       </Encounter>
       <Encounter p="0.70" distance="6:10" landType="AnyLand" time="AnyTime" level="25:Overall" scaleUp="false">
-        <Mobile p="1.0" pick="Ghoul,Monks,Phantom,Rogue,Skeleton,SkeletonArcher" n="1:2" effect="None" forceAttack="true"/>
+        <Mobile p="1.0" pick="Ghoul,Monks,Phantom,Brigand,Skeleton,SkeletonArcher" n="1:2" effect="None" forceAttack="true"/>
       </Encounter>
       <Encounter p="0.90" distance="6:10" landType="AnyLand" time="AnyTime" level="1:Overall" scaleUp="false">
-        <Mobile p="1.0" pick="Berserker,EvilMage,Ghoul,Monks,Phantom,Rogue" n="1:2" effect="None" forceAttack="true"/>
+        <Mobile p="1.0" pick="Berserker,EvilMage,Ghoul,Monks,Phantom,Brigand" n="1:2" effect="None" forceAttack="true"/>
       </Encounter>
     </Region>
     <Region type="BardDungeonRegion" name="the Lower Catacombs">
       <Encounter p="0.20" distance="8:12" landType="AnyLand" time="AnyTime" level="85:Necromancer" scaleUp="false">
         <Mobile p="1.0" pick="Spirit,Vampire,Wight,Wraith,Zombie,VampireLord" n="1" effect="None" forceAttack="true">
-          <Mobile p="0.70" pick="Berserker,EvilMage,Ghoul,Monks,Phantom,Rogue" n="1:2" effect="None" forceAttack="true"/>
+          <Mobile p="0.70" pick="Berserker,EvilMage,Ghoul,Monks,Phantom,Brigand" n="1:2" effect="None" forceAttack="true"/>
         </Mobile>
       </Encounter>
       <Encounter p="0.35" distance="7:11" landType="AnyLand" time="AnyTime" level="65:Necromancer" scaleUp="false">
         <Mobile p="1.0" pick="Spectre,Spirit,Vampire,Wight,Wraith,Zombie" n="1" effect="None" forceAttack="true"/>
       </Encounter>
       <Encounter p="0.50" distance="6:10" landType="AnyLand" time="AnyTime" level="45:Necromancer" scaleUp="false">
-        <Mobile p="1.0" pick="Phantom,Rogue,Skeleton,SkeletonArcher,Spectre,Spirit" n="1:2" effect="None" forceAttack="true"/>
+        <Mobile p="1.0" pick="Phantom,Brigand,Skeleton,SkeletonArcher,Spectre,Spirit" n="1:2" effect="None" forceAttack="true"/>
       </Encounter>
       <Encounter p="0.70" distance="6:10" landType="AnyLand" time="AnyTime" level="25:Overall" scaleUp="false">
-        <Mobile p="1.0" pick="Ghoul,Monks,Phantom,Rogue,Skeleton,SkeletonArcher" n="1:2" effect="None" forceAttack="true"/>
+        <Mobile p="1.0" pick="Ghoul,Monks,Phantom,Brigand,Skeleton,SkeletonArcher" n="1:2" effect="None" forceAttack="true"/>
       </Encounter>
       <Encounter p="0.90" distance="6:10" landType="AnyLand" time="AnyTime" level="1:Overall" scaleUp="false">
-        <Mobile p="1.0" pick="Berserker,EvilMage,Ghoul,Monks,Phantom,Rogue" n="1:2" effect="None" forceAttack="true"/>
+        <Mobile p="1.0" pick="Berserker,EvilMage,Ghoul,Monks,Phantom,Brigand" n="1:2" effect="None" forceAttack="true"/>
       </Encounter>
     </Region>
     <Region type="BardDungeonRegion" name="the Sewers">
       <Encounter p="0.20" distance="8:12" landType="AnyLand" time="AnyTime" level="85:Overall" scaleUp="false">
-        <Mobile p="1.0" pick="MadDog,Rogue,Skeleton,SkeletonArcher,Slime,Zombie" n="1" effect="None" forceAttack="true">
+        <Mobile p="1.0" pick="MadDog,Brigand,Skeleton,SkeletonArcher,Slime,Zombie" n="1" effect="None" forceAttack="true">
           <Mobile p="0.70" pick="Berserker,EvilMage,GiantLeech,GiantSerpent,GiantSpider,Goblin" n="1:2" effect="None" forceAttack="true"/>
         </Mobile>
       </Encounter>
       <Encounter p="0.35" distance="7:11" landType="AnyLand" time="AnyTime" level="65:Necromancer" scaleUp="false">
-        <Mobile p="1.0" pick="MadDog,Rogue,Skeleton,SkeletonArcher,Slime,Zombie" n="1" effect="None" forceAttack="true"/>
+        <Mobile p="1.0" pick="MadDog,Brigand,Skeleton,SkeletonArcher,Slime,Zombie" n="1" effect="None" forceAttack="true"/>
       </Encounter>
       <Encounter p="0.50" distance="6:10" landType="AnyLand" time="AnyTime" level="45:Ranger" scaleUp="false">
-        <Mobile p="1.0" pick="GiantSerpent,GiantSpider,Goblin,Lizardman,MadDog,Rogue" n="1:2" effect="None" forceAttack="true"/>
+        <Mobile p="1.0" pick="GiantSerpent,GiantSpider,Goblin,Lizardman,MadDog,Brigand" n="1:2" effect="None" forceAttack="true"/>
       </Encounter>
       <Encounter p="0.70" distance="6:10" landType="AnyLand" time="AnyTime" level="25:Overall" scaleUp="false">
         <Mobile p="1.0" pick="GiantLeech,GiantSerpent,GiantSpider,Goblin,Lizardman,MadDog" n="1:2" effect="None" forceAttack="true"/>
@@ -1059,7 +1059,7 @@ debugEffect="true">
     <Region type="BardDungeonRegion" name="the Mines">
       <Encounter p="0.20" distance="8:12" landType="AnyLand" time="AnyTime" level="85:Overall" scaleUp="false">
         <Mobile p="1.0" pick="EvilMageLord,Fiend,FireElemental,FireGiant,FrostGiant,Kraken" n="1" effect="None" forceAttack="true">
-          <Mobile p="0.70" pick="Berserker,EvilMage,Rogue,Monks,Gazer,Skeleton" n="1:2" effect="None" forceAttack="true"/>
+          <Mobile p="0.70" pick="Berserker,EvilMage,Brigand,Monks,Gazer,Skeleton" n="1:2" effect="None" forceAttack="true"/>
         </Mobile>
       </Encounter>
       <Encounter p="0.35" distance="7:11" landType="AnyLand" time="AnyTime" level="65:Ranger" scaleUp="false">
@@ -1069,23 +1069,23 @@ debugEffect="true">
         <Mobile p="1.0" pick="Ghoul,Phantom,Spectre,Spirit,Vampire,Wight" n="1:2" effect="None" forceAttack="true"/>
       </Encounter>
       <Encounter p="0.70" distance="6:10" landType="AnyLand" time="AnyTime" level="25:Overall" scaleUp="false">
-        <Mobile p="1.0" pick="Rogue,Monks,Gazer,Skeleton,GiantSpider,SkeletonArcher" n="1:2" effect="None" forceAttack="true"/>
+        <Mobile p="1.0" pick="Brigand,Monks,Gazer,Skeleton,GiantSpider,SkeletonArcher" n="1:2" effect="None" forceAttack="true"/>
       </Encounter>
       <Encounter p="0.90" distance="6:10" landType="AnyLand" time="AnyTime" level="1:Overall" scaleUp="false">
-        <Mobile p="1.0" pick="Berserker,EvilMage,Rogue,Monks,Gazer,Skeleton" n="1:2" effect="None" forceAttack="true"/>
+        <Mobile p="1.0" pick="Berserker,EvilMage,Brigand,Monks,Gazer,Skeleton" n="1:2" effect="None" forceAttack="true"/>
       </Encounter>
     </Region>
     <Region type="BardDungeonRegion" name="the Cellar">
       <Encounter p="0.20" distance="8:12" landType="AnyLand" time="AnyTime" level="85:Overall" scaleUp="false">
-        <Mobile p="1.0" pick="Rogue,Skeleton,SkeletonArcher,Zombie,Kraken,WaterElemental" n="1" effect="None" forceAttack="true">
+        <Mobile p="1.0" pick="Brigand,Skeleton,SkeletonArcher,Zombie,Kraken,WaterElemental" n="1" effect="None" forceAttack="true">
           <Mobile p="0.70" pick="Berserker,EvilMage,GiantSpider,Gnome,GnomeMage,GnomeWarrior" n="1:2" effect="None" forceAttack="true"/>
         </Mobile>
       </Encounter>
       <Encounter p="0.35" distance="7:11" landType="AnyLand" time="AnyTime" level="65:Necromancer" scaleUp="false">
-        <Mobile p="1.0" pick="Orc,Rogue,Skeleton,SkeletonArcher,Zombie,Kraken" n="1" effect="None" forceAttack="true"/>
+        <Mobile p="1.0" pick="Orc,Brigand,Skeleton,SkeletonArcher,Zombie,Kraken" n="1" effect="None" forceAttack="true"/>
       </Encounter>
       <Encounter p="0.50" distance="6:10" landType="AnyLand" time="AnyTime" level="45:Overall" scaleUp="false">
-        <Mobile p="1.0" pick="GnomeMage,GnomeWarrior,Kobold,MadDog,Orc,Rogue" n="1:2" effect="None" forceAttack="true"/>
+        <Mobile p="1.0" pick="GnomeMage,GnomeWarrior,Kobold,MadDog,Orc,Brigand" n="1:2" effect="None" forceAttack="true"/>
       </Encounter>
       <Encounter p="0.70" distance="6:10" landType="AnyLand" time="AnyTime" level="25:Overall" scaleUp="false">
         <Mobile p="1.0" pick="GiantSpider,Gnome,GnomeMage,GnomeWarrior,Kobold,MadDog" n="1:2" effect="None" forceAttack="true"/>
@@ -1137,7 +1137,7 @@ debugEffect="true">
   <Facet name="Sosaria">
     <Region type="DungeonRegion" name="default">
       <Encounter p="0.20" distance="8:12" landType="AnyLand" time="AnyTime" level="85:Overall" scaleUp="false">
-        <Mobile p="1.0" pick="VoidDragon,Vordo,Vulcrum,WaterNaga,Xurtzar,ZombieSpider" n="1" effect="None" forceAttack="true">
+        <Mobile p="1.0" pick="VoidDragon,Vordo,Balron,WaterNaga,Archfiend,ZombieSpider" n="1" effect="None" forceAttack="true">
           <Mobile p="0.70" pick="Zombie,BoneKnight,Spectre,Gazer,Mummy,BoneMagi" n="1:2" effect="None" forceAttack="true"/>
         </Mobile>
       </Encounter>
@@ -1767,7 +1767,7 @@ debugEffect="true">
         <Mobile p="1.0" pick="Skeleton,StoneElemental,Xorn,Zombie,Daemon,Executioner" n="1" effect="None" forceAttack="true"/>
       </Encounter>
       <Encounter p="0.50" distance="6:10" landType="AnyLand" time="AnyTime" level="45:Fighter" scaleUp="false">
-        <Mobile p="1.0" pick="Goblin,GoblinArcher,Kobold,Monks,Orc,Rogue" n="1:2" effect="None" forceAttack="true"/>
+        <Mobile p="1.0" pick="Goblin,GoblinArcher,Kobold,Monks,Orc,Brigand" n="1:2" effect="None" forceAttack="true"/>
       </Encounter>
       <Encounter p="0.70" distance="6:10" landType="AnyLand" time="AnyTime" level="25:Overall" scaleUp="false">
         <Mobile p="1.0" pick="Gazer,GiantSpider,Gnome,GnomeMage,GnomeWarrior,Goblin" n="1:2" effect="None" forceAttack="true"/>
@@ -1778,7 +1778,7 @@ debugEffect="true">
     </Region>
     <Region type="DungeonRegion" name="the Caverns of Poseidon">
       <Encounter p="0.20" distance="8:12" landType="AnyLand" time="AnyTime" level="85:Ranger" scaleUp="false">
-        <Mobile p="1.0" pick="LichLord,Murk,SeaDragon,SeaGiant,StormGiant,WaterNaga" n="1" effect="None" forceAttack="true">
+        <Mobile p="1.0" pick="LichLord,DemonOfTheSea,SeaDragon,SeaGiant,StormGiant,SeaHagGreater" n="1" effect="None" forceAttack="true">
           <Mobile p="0.70" pick="AquaticGhoul,BoneKnight,WaterElemental,WaterWeird,EyeOfTheDeep,FloatingEye" n="1:2" effect="None" forceAttack="true"/>
         </Mobile>
       </Encounter>
@@ -1797,7 +1797,7 @@ debugEffect="true">
     </Region>
     <Region type="DungeonRegion" name="the Ancient Pyramid">
       <Encounter p="0.20" distance="8:12" landType="AnyLand" time="AnyTime" level="85:Necromancer" scaleUp="false">
-        <Mobile p="1.0" pick="SkeletalMage,SandSpider,Vampire,EvilMage,Imp,Lich" n="1" effect="None" forceAttack="true">
+        <Mobile p="1.0" pick="SkeletalMage,SandSpider,Vampire,EvilMage,Imp,LichLord" n="1" effect="None" forceAttack="true">
           <Mobile p="0.70" pick="Mummy,Ghoul,Shade,Spectre,Skeleton,Wraith" n="1:2" effect="None" forceAttack="true"/>
         </Mobile>
       </Encounter>
@@ -1821,7 +1821,7 @@ debugEffect="true">
         </Mobile>
       </Encounter>
       <Encounter p="0.35" distance="7:11" landType="AnyLand" time="AnyTime" level="65:Necromancer" scaleUp="false">
-        <Mobile p="1.0" pick="LavaSerpent,HellSteed,Cyclops,Daemon,Archfiend,Balron" n="1" effect="None" forceAttack="true"/>
+        <Mobile p="1.0" pick="LavaSerpent,HellSteed,Cyclops,FireDemon,Archfiend,Balron" n="1" effect="None" forceAttack="true"/>
       </Encounter>
       <Encounter p="0.50" distance="6:10" landType="AnyLand" time="AnyTime" level="45:Mage" scaleUp="false">
         <Mobile p="1.0" pick="EarthElemental,GoldenElemental,ShadowIronElemental,StoneElemental,ValoriteElemental,VeriteElemental" n="1:2" effect="None" forceAttack="true"/>
@@ -1836,7 +1836,7 @@ debugEffect="true">
     <Region type="DungeonRegion" name="Dungeon Clues">
       <Encounter p="0.20" distance="8:12" landType="AnyLand" time="AnyTime" level="85:Overall" scaleUp="false">
         <Mobile p="1.0" pick="ElderTitan,Orc,OrcCaptain,OrcishMage,Wyrm,Wyverns" n="1" effect="None" forceAttack="true">
-          <Mobile p="0.70" pick="Gazer,Berserker,EvilMage,Rogue,GiantSpider,Slime" n="1:2" effect="None" forceAttack="true"/>
+          <Mobile p="0.70" pick="Gazer,Berserker,EvilMage,Brigand,GiantSpider,Slime" n="1:2" effect="None" forceAttack="true"/>
         </Mobile>
       </Encounter>
       <Encounter p="0.35" distance="7:11" landType="AnyLand" time="AnyTime" level="65:Overall" scaleUp="false">
@@ -1846,16 +1846,16 @@ debugEffect="true">
         <Mobile p="1.0" pick="CopperElemental,DreadSpider,DullCopperElemental,ElderGazer,EvilMageLord,Ghoul" n="1:2" effect="None" forceAttack="true"/>
       </Encounter>
       <Encounter p="0.70" distance="6:10" landType="AnyLand" time="AnyTime" level="25:Overall" scaleUp="false">
-        <Mobile p="1.0" pick="EvilMage,Rogue,GiantSpider,Slime,AirElemental,EarthElemental" n="1:2" effect="None" forceAttack="true"/>
+        <Mobile p="1.0" pick="EvilMage,Brigand,GiantSpider,Slime,AirElemental,EarthElemental" n="1:2" effect="None" forceAttack="true"/>
       </Encounter>
       <Encounter p="0.90" distance="6:10" landType="AnyLand" time="AnyTime" level="1:Overall" scaleUp="false">
-        <Mobile p="1.0" pick="Gazer,Berserker,EvilMage,Rogue,GiantSpider,Slime" n="1:2" effect="None" forceAttack="true"/>
+        <Mobile p="1.0" pick="Gazer,Berserker,EvilMage,Brigand,GiantSpider,Slime" n="1:2" effect="None" forceAttack="true"/>
       </Encounter>
     </Region>
     <Region type="DungeonRegion" name="Dardin&apos;s Pit">
       <Encounter p="0.20" distance="8:12" landType="AnyLand" time="AnyTime" level="85:Overall" scaleUp="false">
-        <Mobile p="1.0" pick="Wraith,Zombie,OrcishMage,WaterElemental,OgreLord,WalkingReaper" n="1" effect="None" forceAttack="true">
-          <Mobile p="0.70" pick="Orc,Slime,EvilMage,Berserker,Rogue,GiantSerpent" n="1:2" effect="None" forceAttack="true"/>
+        <Mobile p="1.0" pick="Wraith,Zombie,OrcishMage,WaterElemental,OgreLord,DarkReaper" n="1" effect="None" forceAttack="true">
+          <Mobile p="0.70" pick="Orc,Slime,EvilMage,Berserker,Brigand,GiantSerpent" n="1:2" effect="None" forceAttack="true"/>
         </Mobile>
       </Encounter>
       <Encounter p="0.35" distance="7:11" landType="AnyLand" time="AnyTime" level="65:Overall" scaleUp="false">
@@ -1865,10 +1865,10 @@ debugEffect="true">
         <Mobile p="1.0" pick="Ettin,Ogre,Troll,Brigand,GiantSpider,Lizardman" n="1:2" effect="None" forceAttack="true"/>
       </Encounter>
       <Encounter p="0.70" distance="6:10" landType="AnyLand" time="AnyTime" level="25:Overall" scaleUp="false">
-        <Mobile p="1.0" pick="EvilMage,Berserker,Rogue,GiantSerpent,HugeLizard,CaveBearRiding" n="1:2" effect="None" forceAttack="true"/>
+        <Mobile p="1.0" pick="EvilMage,Berserker,Brigand,GiantSerpent,HugeLizard,CaveBearRiding" n="1:2" effect="None" forceAttack="true"/>
       </Encounter>
       <Encounter p="0.90" distance="6:10" landType="AnyLand" time="AnyTime" level="1:Overall" scaleUp="false">
-        <Mobile p="1.0" pick="Orc,Slime,EvilMage,Berserker,Rogue,GiantSerpent" n="1:2" effect="None" forceAttack="true"/>
+        <Mobile p="1.0" pick="Orc,Slime,EvilMage,Berserker,Brigand,GiantSerpent" n="1:2" effect="None" forceAttack="true"/>
       </Encounter>
     </Region>
     <Region type="DungeonRegion" name="Frostwall Caverns">
@@ -1881,7 +1881,7 @@ debugEffect="true">
         <Mobile p="1.0" pick="Shade,SkeletalKnight,Skeleton,SkeletonArcher,Spectre,Wraith" n="1" effect="None" forceAttack="true"/>
       </Encounter>
       <Encounter p="0.50" distance="6:10" landType="AnyLand" time="AnyTime" level="45:Overall" scaleUp="false">
-        <Mobile p="1.0" pick="SnowHarpy,Yeti,Rogue,EvilMage,Berserker,BoneKnight" n="1:2" effect="None" forceAttack="true"/>
+        <Mobile p="1.0" pick="SnowHarpy,Yeti,Brigand,EvilMage,Berserker,BoneKnight" n="1:2" effect="None" forceAttack="true"/>
       </Encounter>
       <Encounter p="0.70" distance="6:10" landType="AnyLand" time="AnyTime" level="25:Overall" scaleUp="false">
         <Mobile p="1.0" pick="FrostOoze,FrostSpider,FrostTroll,IceSerpent,IceSnake,IceToad" n="1:2" effect="None" forceAttack="true"/>
@@ -1892,12 +1892,12 @@ debugEffect="true">
     </Region>
     <Region type="DungeonRegion" name="Dungeon Doom">
       <Encounter p="0.20" distance="8:12" landType="AnyLand" time="AnyTime" level="85:Overall" scaleUp="false">
-        <Mobile p="1.0" pick="Efreet,FireElemental,Imp,Lich,Rogue,WaterElemental" n="1" effect="None" forceAttack="true">
+        <Mobile p="1.0" pick="Efreet,FireElemental,Imp,Lich,Brigand,WaterElemental" n="1" effect="None" forceAttack="true">
           <Mobile p="0.70" pick="BoneKnight,BoneMagi,FleshGolem,RestlessSoul,SkeletalKnight,SkeletalMage" n="1:2" effect="None" forceAttack="true"/>
         </Mobile>
       </Encounter>
       <Encounter p="0.35" distance="7:11" landType="AnyLand" time="AnyTime" level="65:Necromancer" scaleUp="false">
-        <Mobile p="1.0" pick="Fiend,Gazer,Archfiend,Balron,Berserker,BloodElemental" n="1" effect="None" forceAttack="true"/>
+        <Mobile p="1.0" pick="Fiend,Gazer,Archfiend,Balron,Berserker,ToxicElemental" n="1" effect="None" forceAttack="true"/>
       </Encounter>
       <Encounter p="0.50" distance="6:10" landType="AnyLand" time="AnyTime" level="45:Necromancer" scaleUp="false">
         <Mobile p="1.0" pick="WailingBanshee,Zombie,HellSteed,EvilMageLord,RottingCorpse,Executioner" n="1:2" effect="None" forceAttack="true"/>
@@ -1916,7 +1916,7 @@ debugEffect="true">
         </Mobile>
       </Encounter>
       <Encounter p="0.35" distance="7:11" landType="AnyLand" time="AnyTime" level="65:Necromancer" scaleUp="false">
-        <Mobile p="1.0" pick="Daemon,DreadSpider,EvilMage,EvilMageLord,Fiend,RottingCorpse" n="1" effect="None" forceAttack="true"/>
+        <Mobile p="1.0" pick="Archfiend,DreadSpider,EvilMage,EvilMageLord,Fiend,RottingCorpse" n="1" effect="None" forceAttack="true"/>
       </Encounter>
       <Encounter p="0.50" distance="6:10" landType="AnyLand" time="AnyTime" level="45:Necromancer" scaleUp="false">
         <Mobile p="1.0" pick="PredatorHellCatRiding,Shade,StoneGargoyle,Wraith,Zombie,Skeleton" n="1:2" effect="None" forceAttack="true"/>
@@ -1957,7 +1957,7 @@ debugEffect="true">
         <Mobile p="1.0" pick="SnowHarpy,Ogre,ArcticOgreLord,RidingDragon,Daemon,Dragoon" n="1" effect="None" forceAttack="true"/>
       </Encounter>
       <Encounter p="0.50" distance="6:10" landType="AnyLand" time="AnyTime" level="45:Overall" scaleUp="false">
-        <Mobile p="1.0" pick="IceElemental,SnowElemental,FrozenCorpse,IceSnake,Berserker,Rogue" n="1:2" effect="None" forceAttack="true"/>
+        <Mobile p="1.0" pick="IceElemental,SnowElemental,FrozenCorpse,IceSnake,Berserker,Brigand" n="1:2" effect="None" forceAttack="true"/>
       </Encounter>
       <Encounter p="0.70" distance="6:10" landType="AnyLand" time="AnyTime" level="25:Overall" scaleUp="false">
         <Mobile p="1.0" pick="FrostOoze,FrostSpider,IceGhoul,FrostTroll,IceElemental,SnowElemental" n="1:2" effect="None" forceAttack="true"/>
@@ -1968,7 +1968,7 @@ debugEffect="true">
     </Region>
     <Region type="DungeonRegion" name="the Mines of Morinia">
       <Encounter p="0.20" distance="8:12" landType="AnyLand" time="AnyTime" level="85:Overall" scaleUp="false">
-        <Mobile p="1.0" pick="SpinelElemental,StarRubyElemental,TopazElemental,AntaurKing,RuneBeetle,ZombieSpider" n="1" effect="None" forceAttack="true">
+        <Mobile p="1.0" pick="SpinelElemental,StarRubyElemental,TopazElemental,TerathanMatriarch,RuneBeetle,ZombieSpider" n="1" effect="None" forceAttack="true">
           <Mobile p="0.70" pick="Anhkheg,AntaurWorker,GlowBeetleRiding,Mantis,TigerBeetleRiding,CrystalElemental" n="1:2" effect="None" forceAttack="true"/>
         </Mobile>
       </Encounter>
@@ -1987,7 +1987,7 @@ debugEffect="true">
     </Region>
     <Region type="DungeonRegion" name="the Perinian Depths">
       <Encounter p="0.20" distance="8:12" landType="AnyLand" time="AnyTime" level="85:Overall" scaleUp="false">
-        <Mobile p="1.0" pick="HeadlessOne,VampireLord,RidingDragon,Dragoon,RottingCorpse,Wyrm" n="1" effect="None" forceAttack="true">
+        <Mobile p="1.0" pick="HeadlessOne,VampiricDragon,RidingDragon,Dragoon,RottingCorpse,Wyrm" n="1" effect="None" forceAttack="true">
           <Mobile p="0.70" pick="Ghoul,Gazer,StoneHarpy,ElderGazer,BoneKnight,BoneMagi" n="1:2" effect="None" forceAttack="true"/>
         </Mobile>
       </Encounter>
@@ -2017,7 +2017,7 @@ debugEffect="true">
     </Region>
     <Region type="DungeonRegion" name="the Dungeon of Time Awaits">
       <Encounter p="0.20" distance="8:12" landType="AnyLand" time="AnyTime" level="85:Necromancer" scaleUp="false">
-        <Mobile p="1.0" pick="HellCat,LichLord,RottingCorpse,Surtaz,VampireLord,Vulcrum" n="1" effect="None" forceAttack="true">
+        <Mobile p="1.0" pick="HellCat,LichLord,RottingCorpse,AncientLich,VampireLord,Balron" n="1" effect="None" forceAttack="true">
           <Mobile p="0.70" pick="HellHound,BoneKnight,BoneMagi,Efreet,ElderGazer,Gargoyle" n="1:2" effect="None" forceAttack="true"/>
         </Mobile>
       </Encounter>
@@ -2036,7 +2036,7 @@ debugEffect="true">
     </Region>
     <Region type="DungeonRegion" name="the Dragon&apos;s Maw">
       <Encounter p="0.20" distance="8:12" landType="AnyLand" time="AnyTime" level="85:Ranger" scaleUp="false">
-        <Mobile p="1.0" pick="DeepSeaDragon,ElderDragon,Kull,RadiationDragon,SeaDragon,VoidDragon" n="1" effect="None" forceAttack="true">
+        <Mobile p="1.0" pick="DeepSeaDragon,ElderDragon,Dragoon,RadiationDragon,SeaDragon,VoidDragon" n="1" effect="None" forceAttack="true">
           <Mobile p="0.70" pick="AirElemental,BabyDragon,CaveBearRiding,CaveLizard,EarthElemental,EvilMage" n="1:2" effect="None" forceAttack="true"/>
         </Mobile>
       </Encounter>
@@ -2291,7 +2291,7 @@ debugEffect="true">
     </Region>
     <Region type="DungeonRegion" name="the Valley of Dark Druids">
       <Encounter p="0.20" distance="8:12" landType="AnyLand" time="AnyTime" level="85:Ranger" scaleUp="false">
-        <Mobile p="1.0" pick="WaterWeird,DarkUnicornRiding,Daemon,Fiend,PoisonFrog,TheAncientTree" n="1" effect="None" forceAttack="true">
+        <Mobile p="1.0" pick="WaterWeird,DarkUnicornRiding,Daemon,Fiend,PoisonFrog,AncientEnt" n="1" effect="None" forceAttack="true">
           <Mobile p="0.70" pick="Bird,EvilMage,Xatyr,BlackBear,Boar,BrownBear" n="1:2" effect="None" forceAttack="true"/>
         </Mobile>
       </Encounter>
@@ -2310,7 +2310,7 @@ debugEffect="true">
     </Region>
     <Region type="DungeonRegion" name="the Castle of Vordo">
       <Encounter p="0.20" distance="8:12" landType="AnyLand" time="AnyTime" level="85:Overall" scaleUp="false">
-        <Mobile p="1.0" pick="VoidDragon,Vordo,Vulcrum,WaterNaga,Xurtzar,ZombieSpider" n="1" effect="None" forceAttack="true">
+        <Mobile p="1.0" pick="VoidDragon,Vordo,Balron,WaterNaga,Archfiend,ZombieSpider" n="1" effect="None" forceAttack="true">
           <Mobile p="0.70" pick="Zombie,BoneKnight,Spectre,Gazer,Mummy,BoneMagi" n="1:2" effect="None" forceAttack="true"/>
         </Mobile>
       </Encounter>
@@ -2402,7 +2402,7 @@ debugEffect="true">
         </Mobile>
       </Encounter>
       <Encounter p="0.35" distance="7:11" landType="AnyLand" time="AnyTime" level="65:Overall" scaleUp="false">
-        <Mobile p="1.0" pick="Imp,Berserker,DarkReaper,EvilMage,Rogue,Daemon" n="1" effect="None" forceAttack="true"/>
+        <Mobile p="1.0" pick="Imp,Berserker,DarkReaper,EvilMage,Brigand,Daemon" n="1" effect="None" forceAttack="true"/>
       </Encounter>
       <Encounter p="0.50" distance="6:10" landType="AnyLand" time="AnyTime" level="45:Necromancer" scaleUp="false">
         <Mobile p="1.0" pick="SkeletonArcher,SpectralGargoyle,Spectre,Wight,Wraith,HellSteed" n="1:2" effect="None" forceAttack="true"/>
@@ -2459,7 +2459,7 @@ debugEffect="true">
         </Mobile>
       </Encounter>
       <Encounter p="0.35" distance="7:11" landType="AnyLand" time="AnyTime" level="65:Overall" scaleUp="false">
-        <Mobile p="1.0" pick="SpectralGargoyle,Wight,Wraith,EvilMage,Berserker,Rogue" n="1" effect="None" forceAttack="true"/>
+        <Mobile p="1.0" pick="SpectralGargoyle,Wight,Wraith,EvilMage,Berserker,Brigand" n="1" effect="None" forceAttack="true"/>
       </Encounter>
       <Encounter p="0.50" distance="6:10" landType="AnyLand" time="AnyTime" level="45:Necromancer" scaleUp="false">
         <Mobile p="1.0" pick="StoneElemental,StoneGargoyle,Xorn,Skeleton,Ghoul,Spectre" n="1:2" effect="None" forceAttack="true"/>
@@ -2473,12 +2473,12 @@ debugEffect="true">
     </Region>
     <Region type="DungeonRegion" name="Vordo&apos;s Dungeon">
       <Encounter p="0.20" distance="8:12" landType="AnyLand" time="AnyTime" level="85:Necromancer" scaleUp="false">
-        <Mobile p="1.0" pick="SeaSerpent,SlimeDevil,SwampTroll,UndeadDruid,WalkingReaper,Xurtzar" n="1" effect="None" forceAttack="true">
+        <Mobile p="1.0" pick="SeaSerpent,SlimeDevil,SwampTroll,UndeadDruid,WalkingReaper,Archfiend" n="1" effect="None" forceAttack="true">
           <Mobile p="0.70" pick="SkeletalMage,GhostWizard,GhostWarrior,Orc,Zombie,Ghoul" n="1:2" effect="None" forceAttack="true"/>
         </Mobile>
       </Encounter>
       <Encounter p="0.35" distance="7:11" landType="AnyLand" time="AnyTime" level="65:Necromancer" scaleUp="false">
-        <Mobile p="1.0" pick="GoldenSerpent,HellSteed,LichLord,MagmaElemental,Nazghoul,Sunlyte" n="1" effect="None" forceAttack="true"/>
+        <Mobile p="1.0" pick="GoldenSerpent,HellSteed,LichLord,LavaElemental,Nazghoul,Sunlyte" n="1" effect="None" forceAttack="true"/>
       </Encounter>
       <Encounter p="0.50" distance="6:10" landType="AnyLand" time="AnyTime" level="45:Overall" scaleUp="false">
         <Mobile p="1.0" pick="Brigand,StoneElemental,DreadSpider,GiantBlackWidow,ShadowIronElemental,OrcCaptain" n="1:2" effect="None" forceAttack="true"/>
@@ -2492,7 +2492,7 @@ debugEffect="true">
     </Region>
     <Region type="DungeonRegion" name="Tower of Runes">
       <Encounter p="0.20" distance="8:12" landType="AnyLand" time="AnyTime" level="85:Overall" scaleUp="false">
-        <Mobile p="1.0" pick="VoidDragon,Vordo,Vulcrum,WaterNaga,Xurtzar,ZombieSpider" n="1" effect="None" forceAttack="true">
+        <Mobile p="1.0" pick="VoidDragon,Vordo,Balron,WaterNaga,Archfiend,ZombieSpider" n="1" effect="None" forceAttack="true">
           <Mobile p="0.70" pick="Zombie,BoneKnight,Spectre,Gazer,Mummy,BoneMagi" n="1:2" effect="None" forceAttack="true"/>
         </Mobile>
       </Encounter>
@@ -2511,7 +2511,7 @@ debugEffect="true">
     </Region>
     <Region type="DungeonRegion" name="Elemental Chaos">
       <Encounter p="0.20" distance="8:12" landType="AnyLand" time="AnyTime" level="85:Overall" scaleUp="false">
-        <Mobile p="1.0" pick="VoidDragon,Vordo,Vulcrum,WaterNaga,Xurtzar,ZombieSpider" n="1" effect="None" forceAttack="true">
+        <Mobile p="1.0" pick="VoidDragon,Vordo,Balron,WaterNaga,Archfiend,ZombieSpider" n="1" effect="None" forceAttack="true">
           <Mobile p="0.70" pick="Zombie,BoneKnight,Spectre,Gazer,Mummy,BoneMagi" n="1:2" effect="None" forceAttack="true"/>
         </Mobile>
       </Encounter>
@@ -2530,7 +2530,7 @@ debugEffect="true">
     </Region>
     <Region type="DungeonRegion" name="Dark Dragon Temple">
       <Encounter p="0.20" distance="8:12" landType="AnyLand" time="AnyTime" level="85:Overall" scaleUp="false">
-        <Mobile p="1.0" pick="VoidDragon,Vordo,Vulcrum,WaterNaga,Xurtzar,ZombieSpider" n="1" effect="None" forceAttack="true">
+        <Mobile p="1.0" pick="VoidDragon,Vordo,Balron,WaterNaga,Archfiend,ZombieSpider" n="1" effect="None" forceAttack="true">
           <Mobile p="0.70" pick="Zombie,BoneKnight,Spectre,Gazer,Mummy,BoneMagi" n="1:2" effect="None" forceAttack="true"/>
         </Mobile>
       </Encounter>
@@ -2549,7 +2549,7 @@ debugEffect="true">
     </Region>
     <Region type="DungeonRegion" name="Wolfgangs Crypt">
       <Encounter p="0.20" distance="8:12" landType="AnyLand" time="AnyTime" level="85:Overall" scaleUp="false">
-        <Mobile p="1.0" pick="VoidDragon,Vordo,Vulcrum,WaterNaga,Xurtzar,ZombieSpider" n="1" effect="None" forceAttack="true">
+        <Mobile p="1.0" pick="VoidDragon,Vordo,Balron,WaterNaga,Archfiend,ZombieSpider" n="1" effect="None" forceAttack="true">
           <Mobile p="0.70" pick="Zombie,BoneKnight,Spectre,Gazer,Mummy,BoneMagi" n="1:2" effect="None" forceAttack="true"/>
         </Mobile>
       </Encounter>
@@ -2568,7 +2568,7 @@ debugEffect="true">
     </Region>
     <Region type="DungeonRegion" name="Lair of Exodus">
       <Encounter p="0.20" distance="8:12" landType="AnyLand" time="AnyTime" level="85:Overall" scaleUp="false">
-        <Mobile p="1.0" pick="VoidDragon,Vordo,Vulcrum,WaterNaga,Xurtzar,ZombieSpider" n="1" effect="None" forceAttack="true">
+        <Mobile p="1.0" pick="VoidDragon,Vordo,Balron,WaterNaga,Archfiend,ZombieSpider" n="1" effect="None" forceAttack="true">
           <Mobile p="0.70" pick="Zombie,BoneKnight,Spectre,Gazer,Mummy,BoneMagi" n="1:2" effect="None" forceAttack="true"/>
         </Mobile>
       </Encounter>
@@ -2587,7 +2587,7 @@ debugEffect="true">
     </Region>
     <Region type="DungeonRegion" name="Mad Dukes Manor">
       <Encounter p="0.20" distance="8:12" landType="AnyLand" time="AnyTime" level="85:Overall" scaleUp="false">
-        <Mobile p="1.0" pick="VoidDragon,Vordo,Vulcrum,WaterNaga,Xurtzar,ZombieSpider" n="1" effect="None" forceAttack="true">
+        <Mobile p="1.0" pick="VoidDragon,Vordo,Balron,WaterNaga,Archfiend,ZombieSpider" n="1" effect="None" forceAttack="true">
           <Mobile p="0.70" pick="Zombie,BoneKnight,Spectre,Gazer,Mummy,BoneMagi" n="1:2" effect="None" forceAttack="true"/>
         </Mobile>
       </Encounter>
@@ -2606,7 +2606,7 @@ debugEffect="true">
     </Region>
     <Region type="DungeonRegion" name="Buried Ruins">
       <Encounter p="0.20" distance="8:12" landType="AnyLand" time="AnyTime" level="85:Overall" scaleUp="false">
-        <Mobile p="1.0" pick="VoidDragon,Vordo,Vulcrum,WaterNaga,Xurtzar,ZombieSpider" n="1" effect="None" forceAttack="true">
+        <Mobile p="1.0" pick="VoidDragon,Vordo,Balron,WaterNaga,Archfiend,ZombieSpider" n="1" effect="None" forceAttack="true">
           <Mobile p="0.70" pick="Zombie,BoneKnight,Spectre,Gazer,Mummy,BoneMagi" n="1:2" effect="None" forceAttack="true"/>
         </Mobile>
       </Encounter>
@@ -2625,7 +2625,7 @@ debugEffect="true">
     </Region>
     <Region type="DungeonRegion" name="Tree Hollow">
       <Encounter p="0.20" distance="8:12" landType="AnyLand" time="AnyTime" level="85:Overall" scaleUp="false">
-        <Mobile p="1.0" pick="VoidDragon,Vordo,Vulcrum,WaterNaga,Xurtzar,ZombieSpider" n="1" effect="None" forceAttack="true">
+        <Mobile p="1.0" pick="VoidDragon,Vordo,Balron,WaterNaga,Archfiend,ZombieSpider" n="1" effect="None" forceAttack="true">
           <Mobile p="0.70" pick="Zombie,BoneKnight,Spectre,Gazer,Mummy,BoneMagi" n="1:2" effect="None" forceAttack="true"/>
         </Mobile>
       </Encounter>
@@ -2644,7 +2644,7 @@ debugEffect="true">
     </Region>
     <Region type="DungeonRegion" name="Castle Dio">
       <Encounter p="0.20" distance="8:12" landType="AnyLand" time="AnyTime" level="85:Overall" scaleUp="false">
-        <Mobile p="1.0" pick="VoidDragon,Vordo,Vulcrum,WaterNaga,Xurtzar,ZombieSpider" n="1" effect="None" forceAttack="true">
+        <Mobile p="1.0" pick="VoidDragon,Vordo,Balron,WaterNaga,Archfiend,ZombieSpider" n="1" effect="None" forceAttack="true">
           <Mobile p="0.70" pick="Zombie,BoneKnight,Spectre,Gazer,Mummy,BoneMagi" n="1:2" effect="None" forceAttack="true"/>
         </Mobile>
       </Encounter>
@@ -2712,7 +2712,7 @@ debugEffect="true">
         <Mobile p="1.0" pick="SpinelElemental,StarRubyElemental,TopazElemental,CaddelliteElemental,FireElemental,ObsidianElemental" n="1" effect="None" forceAttack="true"/>
       </Encounter>
       <Encounter p="0.50" distance="6:10" landType="AnyLand" time="AnyTime" level="45:Overall" scaleUp="false">
-        <Mobile p="1.0" pick="ElfMage,ElfBerserker,ElfMinstrel,ElfMonks,ElfRogue,StygianGargoyle" n="1:2" effect="None" forceAttack="true"/>
+        <Mobile p="1.0" pick="ElfMage,ElfBerserker,ElfMinstrel,ElfMonks,DarkWisp,StygianGargoyle" n="1:2" effect="None" forceAttack="true"/>
       </Encounter>
       <Encounter p="0.70" distance="6:10" landType="AnyLand" time="AnyTime" level="25:Overall" scaleUp="false">
         <Mobile p="1.0" pick="Ghoul,Bodak,BoneKnight,BoneMagi,BoneSlasher,Grathek" n="1:2" effect="None" forceAttack="true"/>
@@ -2731,7 +2731,7 @@ debugEffect="true">
         <Mobile p="1.0" pick="Locathah,ArcticOgreLord,Daemon,Fiend,IceColossus,RidingDragon" n="1" effect="None" forceAttack="true"/>
       </Encounter>
       <Encounter p="0.50" distance="6:10" landType="AnyLand" time="AnyTime" level="45:Ranger" scaleUp="false">
-        <Mobile p="1.0" pick="IceSteed,IceToad,SapphireElemental,WinterWolf,Yeti,FrostGiant" n="1:2" effect="None" forceAttack="true"/>
+        <Mobile p="1.0" pick="IceSteed,IceToad,SapphireElemental,WinterWolf,Yeti,IceGiant" n="1:2" effect="None" forceAttack="true"/>
       </Encounter>
       <Encounter p="0.70" distance="6:10" landType="AnyLand" time="AnyTime" level="25:Overall" scaleUp="false">
         <Mobile p="1.0" pick="IceSerpent,ElderPolarBearRiding,IceElemental,SnowElemental,TundraOgre,ArcticEttin" n="1:2" effect="None" forceAttack="true"/>
@@ -3049,7 +3049,7 @@ debugEffect="true">
     </Region>
     <Region type="DungeonRegion" name="the Ancient Prison">
       <Encounter p="0.20" distance="8:12" landType="AnyLand" time="AnyTime" level="85:Necromancer" scaleUp="false">
-        <Mobile p="1.0" pick="SkeletalMage,Skeleton,SkeletonArcher,Spectre,Wraith,DeadWizard" n="1" effect="None" forceAttack="true">
+        <Mobile p="1.0" pick="SkeletalMage,Skeleton,SkeletonArcher,Spectre,Wraith,SkeletalWizard" n="1" effect="None" forceAttack="true">
           <Mobile p="0.70" pick="GargoyleBones,SkeletalGargoyle,ZombieGargoyle,BoneKnight,BoneMagi,Ghoul" n="1:2" effect="None" forceAttack="true"/>
         </Mobile>
       </Encounter>
@@ -3068,12 +3068,12 @@ debugEffect="true">
     </Region>
     <Region type="DungeonRegion" name="the Cave of Fire">
       <Encounter p="0.20" distance="8:12" landType="AnyLand" time="AnyTime" level="85:Overall" scaleUp="false">
-        <Mobile p="1.0" pick="HellHound,LavaElemental,LavaLizard,LavaSerpent,PredatorHellCatRiding,RidingDragon" n="1" effect="None" forceAttack="true">
+        <Mobile p="1.0" pick="HellHound,LavaElemental,LavaLizard,LavaSerpent,PredatorHellCatRiding,VolcanicDragon" n="1" effect="None" forceAttack="true">
           <Mobile p="0.70" pick="Efreet,FireBat,FireBeetle,FireElemental,FireGargoyle,FireSteed" n="1:2" effect="None" forceAttack="true"/>
         </Mobile>
       </Encounter>
       <Encounter p="0.35" distance="7:11" landType="AnyLand" time="AnyTime" level="65:Ranger" scaleUp="false">
-        <Mobile p="1.0" pick="HellHound,LavaElemental,LavaLizard,LavaSerpent,PredatorHellCatRiding,RidingDragon" n="1" effect="None" forceAttack="true"/>
+        <Mobile p="1.0" pick="HellHound,LavaElemental,LavaLizard,LavaSerpent,PredatorHellCatRiding,VolcanicDragon" n="1" effect="None" forceAttack="true"/>
       </Encounter>
       <Encounter p="0.50" distance="6:10" landType="AnyLand" time="AnyTime" level="45:Mage" scaleUp="false">
         <Mobile p="1.0" pick="FireElemental,FireGargoyle,FireSteed,FireToad,HellHound,LavaElemental" n="1:2" effect="None" forceAttack="true"/>
@@ -3087,7 +3087,7 @@ debugEffect="true">
     </Region>
     <Region type="DungeonRegion" name="the Cave of Souls">
       <Encounter p="0.20" distance="8:12" landType="AnyLand" time="AnyTime" level="85:Necromancer" scaleUp="false">
-        <Mobile p="1.0" pick="Bodak,Shroud,Ghostly,Wight,LichLord,RottingCorpse" n="1" effect="None" forceAttack="true">
+        <Mobile p="1.0" pick="Bodak,Shroud,Ghostly,Wight,LichLord,WalkingCorpse" n="1" effect="None" forceAttack="true">
           <Mobile p="0.70" pick="Ghoul,Zombie,BoneKnight,BoneMagi,GargoyleBones,Mummy" n="1:2" effect="None" forceAttack="true"/>
         </Mobile>
       </Encounter>
@@ -3106,7 +3106,7 @@ debugEffect="true">
     </Region>
     <Region type="DungeonRegion" name="Dungeon Ankh">
       <Encounter p="0.20" distance="8:12" landType="AnyLand" time="AnyTime" level="85:Necromancer" scaleUp="false">
-        <Mobile p="1.0" pick="ZombieGargoyle,RottingCorpse,Daemon,DeadWizard,Fiend,Lich" n="1" effect="None" forceAttack="true">
+        <Mobile p="1.0" pick="ZombieGargoyle,RottingCorpse,Daemon,SkeletalWizard,Fiend,Lich" n="1" effect="None" forceAttack="true">
           <Mobile p="0.70" pick="BoneKnight,BoneMagi,Gargoyle,GargoyleBones,HellHound,Imp" n="1:2" effect="None" forceAttack="true"/>
         </Mobile>
       </Encounter>
@@ -3125,7 +3125,7 @@ debugEffect="true">
     </Region>
     <Region type="DungeonRegion" name="Dungeon Bane">
       <Encounter p="0.20" distance="8:12" landType="AnyLand" time="AnyTime" level="85:Overall" scaleUp="false">
-        <Mobile p="1.0" pick="StrangleVine,PoisonElemental,ToxicElemental,WaterElemental,Lich,RottingCorpse" n="1" effect="None" forceAttack="true">
+        <Mobile p="1.0" pick="StrangleVine,PoisonElemental,SewageElemental,WaterElemental,Lich,RottingCorpse" n="1" effect="None" forceAttack="true">
           <Mobile p="0.70" pick="CaveLizard,Gargoyle,GargoyleBones,GiantSerpent,SkeletalGargoyle,Zombie" n="1:2" effect="None" forceAttack="true"/>
         </Mobile>
       </Encounter>
@@ -3144,7 +3144,7 @@ debugEffect="true">
     </Region>
     <Region type="DungeonRegion" name="Dungeon Hate">
       <Encounter p="0.20" distance="8:12" landType="AnyLand" time="AnyTime" level="85:Overall" scaleUp="false">
-        <Mobile p="1.0" pick="Drake,LichLord,RottingCorpse,VampireLord,Wyrm,Wyverns" n="1" effect="None" forceAttack="true">
+        <Mobile p="1.0" pick="Drake,LichLord,RottingCorpse,VampiricDragon,Wyrm,Wyverns" n="1" effect="None" forceAttack="true">
           <Mobile p="0.70" pick="BlackPudding,DustElemental,ElderGazer,Gargoyle,Gazer,IronCobra" n="1:2" effect="None" forceAttack="true"/>
         </Mobile>
       </Encounter>
@@ -3164,20 +3164,20 @@ debugEffect="true">
     <Region type="DungeonRegion" name="Dungeon Scorn">
       <Encounter p="0.20" distance="8:12" landType="AnyLand" time="AnyTime" level="85:Overall" scaleUp="false">
         <Mobile p="1.0" pick="OphidianKnight,Daemon,Fiend,OphidianMatriarch,ShadowWyrm,StrangleVine" n="1" effect="None" forceAttack="true">
-          <Mobile p="0.70" pick="OphidianWarrior,GiantSerpent,Naga,OphidianMage,OphidianArchmage,Lizardman" n="1:2" effect="None" forceAttack="true"/>
+          <Mobile p="0.70" pick="OphidianWarrior,GiantSerpent,Naga,OphidianMage,OphidianMatriarch,Lizardman" n="1:2" effect="None" forceAttack="true"/>
         </Mobile>
       </Encounter>
       <Encounter p="0.35" distance="7:11" landType="AnyLand" time="AnyTime" level="65:Overall" scaleUp="false">
         <Mobile p="1.0" pick="OphidianKnight,Daemon,Fiend,OphidianMatriarch,ShadowWyrm,StrangleVine" n="1" effect="None" forceAttack="true"/>
       </Encounter>
       <Encounter p="0.50" distance="6:10" landType="AnyLand" time="AnyTime" level="45:Overall" scaleUp="false">
-        <Mobile p="1.0" pick="OphidianMage,OphidianArchmage,Lizardman,OphidianKnight,Daemon,Fiend" n="1:2" effect="None" forceAttack="true"/>
+        <Mobile p="1.0" pick="OphidianMage,OphidianMatriarch,Lizardman,OphidianKnight,Daemon,Fiend" n="1:2" effect="None" forceAttack="true"/>
       </Encounter>
       <Encounter p="0.70" distance="6:10" landType="AnyLand" time="AnyTime" level="25:Overall" scaleUp="false">
-        <Mobile p="1.0" pick="Naga,OphidianMage,OphidianArchmage,Lizardman,OphidianKnight,Daemon" n="1:2" effect="None" forceAttack="true"/>
+        <Mobile p="1.0" pick="Naga,OphidianMage,OphidianMatriarch,Lizardman,OphidianKnight,Daemon" n="1:2" effect="None" forceAttack="true"/>
       </Encounter>
       <Encounter p="0.90" distance="6:10" landType="AnyLand" time="AnyTime" level="1:Overall" scaleUp="false">
-        <Mobile p="1.0" pick="OphidianWarrior,GiantSerpent,Naga,OphidianMage,OphidianArchmage,Lizardman" n="1:2" effect="None" forceAttack="true"/>
+        <Mobile p="1.0" pick="OphidianWarrior,GiantSerpent,Naga,OphidianMage,OphidianMatriarch,Lizardman" n="1:2" effect="None" forceAttack="true"/>
       </Encounter>
     </Region>
     <Region type="DungeonRegion" name="Dungeon Torment">
@@ -3185,19 +3185,19 @@ debugEffect="true">
         <Mobile p="1.0" pick="Fiend,FireElemental,Archfiend,Balron,Devil" n="1" effect="None" forceAttack="true"/>
       </Encounter>
       <Encounter p="0.50" distance="6:10" landType="AnyLand" time="AnyTime" level="45:Necromancer" scaleUp="false">
-        <Mobile p="1.0" pick="PredatorHellCatRiding,Succubus,Daemon,Fiend,FireElemental,Archfiend" n="1:2" effect="None" forceAttack="true"/>
+        <Mobile p="1.0" pick="PredatorHellCatRiding,Vrock,Daemon,Fiend,FireElemental,Archfiend" n="1:2" effect="None" forceAttack="true"/>
       </Encounter>
       <Encounter p="0.70" distance="6:10" landType="AnyLand" time="AnyTime" level="25:Overall" scaleUp="false">
-        <Mobile p="1.0" pick="Imp,PredatorHellCatRiding,Succubus,Daemon,Fiend,FireElemental" n="1:2" effect="None" forceAttack="true"/>
+        <Mobile p="1.0" pick="Imp,PredatorHellCatRiding,Vrock,Daemon,Fiend,FireElemental" n="1:2" effect="None" forceAttack="true"/>
       </Encounter>
       <Encounter p="0.90" distance="6:10" landType="AnyLand" time="AnyTime" level="1:Overall" scaleUp="false">
-        <Mobile p="1.0" pick="HellCat,HellHound,Imp,PredatorHellCatRiding,Succubus,Daemon" n="1:2" effect="None" forceAttack="true"/>
+        <Mobile p="1.0" pick="HellCat,HellHound,Imp,PredatorHellCatRiding,Vrock,Daemon" n="1:2" effect="None" forceAttack="true"/>
       </Encounter>
     </Region>
     <Region type="DungeonRegion" name="Dungeon Vile">
       <Encounter p="0.20" distance="8:12" landType="AnyLand" time="AnyTime" level="85:Overall" scaleUp="false">
         <Mobile p="1.0" pick="Gargoyle,HellCat,Lizardman,Orc,Ratman,Savage" n="1" effect="None" forceAttack="true">
-          <Mobile p="0.70" pick="Berserker,Rogue,EvilMage,EvilMageLord,Executioner,Imp" n="1:2" effect="None" forceAttack="true"/>
+          <Mobile p="0.70" pick="Berserker,Brigand,BloodAssassin,EvilMageLord,Executioner,Imp" n="1:2" effect="None" forceAttack="true"/>
         </Mobile>
       </Encounter>
       <Encounter p="0.35" distance="7:11" landType="AnyLand" time="AnyTime" level="65:Overall" scaleUp="false">
@@ -3207,18 +3207,18 @@ debugEffect="true">
         <Mobile p="1.0" pick="Executioner,Imp,Daemon,Fiend,Gargoyle,HellCat" n="1:2" effect="None" forceAttack="true"/>
       </Encounter>
       <Encounter p="0.70" distance="6:10" landType="AnyLand" time="AnyTime" level="25:Overall" scaleUp="false">
-        <Mobile p="1.0" pick="EvilMage,EvilMageLord,Executioner,Imp,Daemon,Fiend" n="1:2" effect="None" forceAttack="true"/>
+        <Mobile p="1.0" pick="BloodAssassin,EvilMageLord,Executioner,Imp,Daemon,Fiend" n="1:2" effect="None" forceAttack="true"/>
       </Encounter>
       <Encounter p="0.90" distance="6:10" landType="AnyLand" time="AnyTime" level="1:Overall" scaleUp="false">
-        <Mobile p="1.0" pick="Berserker,Rogue,EvilMage,EvilMageLord,Executioner,Imp" n="1:2" effect="None" forceAttack="true"/>
+        <Mobile p="1.0" pick="Berserker,Brigand,BloodAssassin,EvilMageLord,Executioner,Imp" n="1:2" effect="None" forceAttack="true"/>
       </Encounter>
     </Region>
     <Region type="DungeonRegion" name="Dungeon Wicked">
       <Encounter p="0.35" distance="7:11" landType="AnyLand" time="AnyTime" level="65:Mage" scaleUp="false">
-        <Mobile p="1.0" pick="SkeletalMage,WaterElemental,PoisonElemental,ToxicElemental,EvilMageLord" n="1" effect="None" forceAttack="true"/>
+        <Mobile p="1.0" pick="SkeletalMage,WaterElemental,AcidPuddle,ToxicElemental,EvilMageLord" n="1" effect="None" forceAttack="true"/>
       </Encounter>
       <Encounter p="0.50" distance="6:10" landType="AnyLand" time="AnyTime" level="45:Mage" scaleUp="false">
-        <Mobile p="1.0" pick="MudElemental,MudMan,FireElemental,SkeletalMage,WaterElemental,PoisonElemental" n="1:2" effect="None" forceAttack="true"/>
+        <Mobile p="1.0" pick="MudElemental,MudMan,FireElemental,SkeletalMage,WaterElemental,ToxicElemental" n="1:2" effect="None" forceAttack="true"/>
       </Encounter>
       <Encounter p="0.70" distance="6:10" landType="AnyLand" time="AnyTime" level="25:Overall" scaleUp="false">
         <Mobile p="1.0" pick="DustElemental,MudElemental,MudMan,FireElemental,SkeletalMage,WaterElemental" n="1:2" effect="None" forceAttack="true"/>
@@ -3229,7 +3229,7 @@ debugEffect="true">
     </Region>
     <Region type="DungeonRegion" name="Dungeon Wrath">
       <Encounter p="0.20" distance="8:12" landType="AnyLand" time="AnyTime" level="85:Ranger" scaleUp="false">
-        <Mobile p="1.0" pick="Dragoon,Lizardman,Ratman,RatmanMage,Reaper,Wyrm" n="1" effect="None" forceAttack="true">
+        <Mobile p="1.0" pick="Dragoon,Lizardman,Ratman,RatmanMage,DarkReaper,Wyrm" n="1" effect="None" forceAttack="true">
           <Mobile p="0.70" pick="Orc,OrcishMage,WolfDire,GiantSerpent,GiantToad,CarcassWorm" n="1:2" effect="None" forceAttack="true"/>
         </Mobile>
       </Encounter>
@@ -3248,22 +3248,22 @@ debugEffect="true">
     </Region>
     <Region type="DungeonRegion" name="the Flooded Temple">
       <Encounter p="0.35" distance="7:11" landType="AnyLand" time="AnyTime" level="65:Ranger" scaleUp="false">
-        <Mobile p="1.0" pick="GiantCrab,Kraken,Leviathan,SeaSerpent" n="1" effect="None" forceAttack="true"/>
+        <Mobile p="1.0" pick="GiantCrab,GiantSquid,Leviathan,SeaSerpent" n="1" effect="None" forceAttack="true"/>
       </Encounter>
       <Encounter p="0.50" distance="6:10" landType="AnyLand" time="AnyTime" level="45:Ranger" scaleUp="false">
-        <Mobile p="1.0" pick="WaterElemental,GiantCrab,Kraken,Leviathan,SeaSerpent" n="1:2" effect="None" forceAttack="true"/>
+        <Mobile p="1.0" pick="WaterElemental,GiantCrab,GiantSquid,Leviathan,SeaSerpent" n="1:2" effect="None" forceAttack="true"/>
       </Encounter>
       <Encounter p="0.70" distance="6:10" landType="AnyLand" time="AnyTime" level="25:Overall" scaleUp="false">
-        <Mobile p="1.0" pick="WaterElemental,GiantCrab,Kraken,Leviathan,SeaSerpent" n="1:2" effect="None" forceAttack="true"/>
+        <Mobile p="1.0" pick="WaterElemental,GiantCrab,GiantSquid,Leviathan,SeaSerpent" n="1:2" effect="None" forceAttack="true"/>
       </Encounter>
       <Encounter p="0.90" distance="6:10" landType="AnyLand" time="AnyTime" level="1:Overall" scaleUp="false">
-        <Mobile p="1.0" pick="Lizardman,LizardmanArcher,WaterElemental,GiantCrab,Kraken,Leviathan" n="1:2" effect="None" forceAttack="true"/>
+        <Mobile p="1.0" pick="Lizardman,LizardmanArcher,WaterElemental,GiantCrab,GiantSquid,Leviathan" n="1:2" effect="None" forceAttack="true"/>
       </Encounter>
     </Region>
     <Region type="DungeonRegion" name="the Gargoyle Crypts">
       <Encounter p="0.20" distance="8:12" landType="AnyLand" time="AnyTime" level="85:Necromancer" scaleUp="false">
         <Mobile p="1.0" pick="Gargoyle,Shade,Spectre,StoneGargoyle,Wraith,Lich" n="1" effect="None" forceAttack="true">
-          <Mobile p="0.70" pick="GhostGargoyle,SpectralGargoyle,GargoyleBones,SkeletalGargoyle,ZombieGargoyle,BoneKnight" n="1:2" effect="None" forceAttack="true"/>
+          <Mobile p="0.70" pick="GhostGargoyle,StygianGargoyle,GargoyleBones,SkeletalGargoyle,ZombieGargoyle,BoneKnight" n="1:2" effect="None" forceAttack="true"/>
         </Mobile>
       </Encounter>
       <Encounter p="0.35" distance="7:11" landType="AnyLand" time="AnyTime" level="65:Necromancer" scaleUp="false">
@@ -3276,12 +3276,12 @@ debugEffect="true">
         <Mobile p="1.0" pick="GargoyleBones,SkeletalGargoyle,ZombieGargoyle,BoneKnight,BoneMagi,Gargoyle" n="1:2" effect="None" forceAttack="true"/>
       </Encounter>
       <Encounter p="0.90" distance="6:10" landType="AnyLand" time="AnyTime" level="1:Overall" scaleUp="false">
-        <Mobile p="1.0" pick="GhostGargoyle,SpectralGargoyle,GargoyleBones,SkeletalGargoyle,ZombieGargoyle,BoneKnight" n="1:2" effect="None" forceAttack="true"/>
+        <Mobile p="1.0" pick="GhostGargoyle,StygianGargoyle,GargoyleBones,SkeletalGargoyle,ZombieGargoyle,BoneKnight" n="1:2" effect="None" forceAttack="true"/>
       </Encounter>
     </Region>
     <Region type="DungeonRegion" name="the Serpent Sanctum">
       <Encounter p="0.20" distance="8:12" landType="AnyLand" time="AnyTime" level="85:Ranger" scaleUp="false">
-        <Mobile p="1.0" pick="LizardmanArcher,OrcishMage,Ratman,Rogue,SwampDragon,Wyrm" n="1" effect="None" forceAttack="true">
+        <Mobile p="1.0" pick="LizardmanArcher,OrcishMage,Ratman,Brigand,SwampDragon,Wyrm" n="1" effect="None" forceAttack="true">
           <Mobile p="0.70" pick="OphidianMage,GiantSerpent,LargeSnake,Naga,OphidianWarrior,SwampTentacle" n="1:2" effect="None" forceAttack="true"/>
         </Mobile>
       </Encounter>
@@ -3289,7 +3289,7 @@ debugEffect="true">
         <Mobile p="1.0" pick="OphidianMatriarch,RidingDragon,Dragoon,LizardmanArcher,OrcishMage,Ratman" n="1" effect="None" forceAttack="true"/>
       </Encounter>
       <Encounter p="0.50" distance="6:10" landType="AnyLand" time="AnyTime" level="45:Ranger" scaleUp="false">
-        <Mobile p="1.0" pick="SwampTentacle,Drake,OphidianArchmage,OphidianKnight,OphidianMatriarch,RidingDragon" n="1:2" effect="None" forceAttack="true"/>
+        <Mobile p="1.0" pick="SwampTentacle,Drake,OphidianArchmage,OphidianWarrior,OphidianMatriarch,RidingDragon" n="1:2" effect="None" forceAttack="true"/>
       </Encounter>
       <Encounter p="0.70" distance="6:10" landType="AnyLand" time="AnyTime" level="25:Overall" scaleUp="false">
         <Mobile p="1.0" pick="LargeSnake,Naga,OphidianWarrior,SwampTentacle,Drake,OphidianArchmage" n="1:2" effect="None" forceAttack="true"/>
@@ -3355,16 +3355,16 @@ debugEffect="true">
     </Region>
     <Region type="DungeonRegion" name="the Blood Temple">
       <Encounter p="0.35" distance="7:11" landType="AnyLand" time="AnyTime" level="65:Necromancer" scaleUp="false">
-        <Mobile p="1.0" pick="Balron,BloodDemigod,BloodDemon,Daemon,Devil" n="1" effect="None" forceAttack="true"/>
+        <Mobile p="1.0" pick="Balron,Archfiend,BloodDemon,Daemon,Devil" n="1" effect="None" forceAttack="true"/>
       </Encounter>
       <Encounter p="0.50" distance="6:10" landType="AnyLand" time="AnyTime" level="45:Overall" scaleUp="false">
-        <Mobile p="1.0" pick="Viscera,BloodElemental,EvilMage,Balron,BloodDemigod,BloodDemon" n="1:2" effect="None" forceAttack="true"/>
+        <Mobile p="1.0" pick="Viscera,BloodAssassin,EvilMage,Balron,Archfiend,BloodDemon" n="1:2" effect="None" forceAttack="true"/>
       </Encounter>
       <Encounter p="0.70" distance="6:10" landType="AnyLand" time="AnyTime" level="25:Overall" scaleUp="false">
-        <Mobile p="1.0" pick="GiantLeech,Viscera,BloodElemental,EvilMage,Balron,BloodDemigod" n="1:2" effect="None" forceAttack="true"/>
+        <Mobile p="1.0" pick="GiantLeech,Viscera,BloodDemon,EvilMage,Balron,Archfiend" n="1:2" effect="None" forceAttack="true"/>
       </Encounter>
       <Encounter p="0.90" distance="6:10" landType="AnyLand" time="AnyTime" level="1:Overall" scaleUp="false">
-        <Mobile p="1.0" pick="BloodAssassin,BloodWorm,GiantLeech,Viscera,BloodElemental,EvilMage" n="1:2" effect="None" forceAttack="true"/>
+        <Mobile p="1.0" pick="BloodAssassin,BloodWorm,GiantLeech,Viscera,BloodDemon,EvilMage" n="1:2" effect="None" forceAttack="true"/>
       </Encounter>
     </Region>
     <Region type="DungeonRegion" name="the Tombs">
@@ -3426,13 +3426,13 @@ debugEffect="true">
     </Region>
     <Region type="DungeonRegion" name="the Great Pyramid">
       <Encounter p="0.35" distance="7:11" landType="AnyLand" time="AnyTime" level="65:Overall" scaleUp="false">
-        <Mobile p="1.0" pick="OrkWarrior,ShamanicCyclops,OrkRogue,OrkDemigod,OrkMage" n="1" effect="None" forceAttack="true"/>
+        <Mobile p="1.0" pick="OrkWarrior,ShamanicCyclops,OrkMonks,AbysmalOgre,OrkMage" n="1" effect="None" forceAttack="true"/>
       </Encounter>
       <Encounter p="0.50" distance="6:10" landType="AnyLand" time="AnyTime" level="45:Fighter" scaleUp="false">
-        <Mobile p="1.0" pick="Ogre,OrkMonks,OrkWarrior,ShamanicCyclops,OrkRogue,OrkDemigod" n="1:2" effect="None" forceAttack="true"/>
+        <Mobile p="1.0" pick="Ogre,OrkMonks,OrkWarrior,ShamanicCyclops,OrkMage,AbysmalOgre" n="1:2" effect="None" forceAttack="true"/>
       </Encounter>
       <Encounter p="0.70" distance="6:10" landType="AnyLand" time="AnyTime" level="25:Overall" scaleUp="false">
-        <Mobile p="1.0" pick="Ogre,OrkMonks,OrkWarrior,ShamanicCyclops,OrkRogue,OrkDemigod" n="1:2" effect="None" forceAttack="true"/>
+        <Mobile p="1.0" pick="Ogre,OrkMonks,OrkWarrior,ShamanicCyclops,OrkMage,AbysmalOgre" n="1:2" effect="None" forceAttack="true"/>
       </Encounter>
       <Encounter p="0.90" distance="6:10" landType="AnyLand" time="AnyTime" level="1:Overall" scaleUp="false">
         <Mobile p="1.0" pick="Cyclops,Ettin,Ogre,OrkMonks,OrkWarrior,ShamanicCyclops" n="1:2" effect="None" forceAttack="true"/>
@@ -3453,13 +3453,13 @@ debugEffect="true">
         </Mobile>
       </Encounter>
       <Encounter p="0.35" distance="7:11" landType="AnyLand" time="AnyTime" level="65:Overall" scaleUp="false">
-        <Mobile p="1.0" pick="IceColossus,ArcticOgreLord,EvilMageLord,FrostGiant,FrozenCorpse,IceGhoul" n="1" effect="None" forceAttack="true"/>
+        <Mobile p="1.0" pick="IceGiant,ArcticOgreLord,EvilMageLord,FrostGiant,FrozenCorpse,IceGhoul" n="1" effect="None" forceAttack="true"/>
       </Encounter>
       <Encounter p="0.50" distance="6:10" landType="AnyLand" time="AnyTime" level="45:Overall" scaleUp="false">
-        <Mobile p="1.0" pick="IceSerpent,Daemon,Fiend,IceColossus,ArcticOgreLord,EvilMageLord" n="1:2" effect="None" forceAttack="true"/>
+        <Mobile p="1.0" pick="IceSerpent,Daemon,Fiend,IceGiant,ArcticOgreLord,EvilMageLord" n="1:2" effect="None" forceAttack="true"/>
       </Encounter>
       <Encounter p="0.70" distance="6:10" landType="AnyLand" time="AnyTime" level="25:Overall" scaleUp="false">
-        <Mobile p="1.0" pick="IceElemental,SnowElemental,IceSerpent,Daemon,Fiend,IceColossus" n="1:2" effect="None" forceAttack="true"/>
+        <Mobile p="1.0" pick="IceElemental,SnowElemental,IceSerpent,Daemon,Fiend,IceGiant" n="1:2" effect="None" forceAttack="true"/>
       </Encounter>
       <Encounter p="0.90" distance="6:10" landType="AnyLand" time="AnyTime" level="1:Overall" scaleUp="false">
         <Mobile p="1.0" pick="ArcticEttin,IceGolem,IceElemental,SnowElemental,IceSerpent,Daemon" n="1:2" effect="None" forceAttack="true"/>
@@ -3467,7 +3467,7 @@ debugEffect="true">
     </Region>
     <Region type="DungeonRegion" name="the Dungeon of the Lich King">
       <Encounter p="0.20" distance="8:12" landType="AnyLand" time="AnyTime" level="85:Necromancer" scaleUp="false">
-        <Mobile p="1.0" pick="Lich,LichLord,BloodElemental,LichKing,Nazghoul,ShadowDemon" n="1" effect="None" forceAttack="true">
+        <Mobile p="1.0" pick="Lich,LichLord,BloodElemental,AncientLich,Nazghoul,ShadowDemon" n="1" effect="None" forceAttack="true">
           <Mobile p="0.70" pick="BoneMagi,SkeletalMage,BoneKnight,Ghoul,Mummy,Phantom" n="1:2" effect="None" forceAttack="true"/>
         </Mobile>
       </Encounter>
@@ -3506,7 +3506,7 @@ debugEffect="true">
     <Region type="DungeonRegion" name="the Halls of Ogrimar">
       <Encounter p="0.20" distance="8:12" landType="AnyLand" time="AnyTime" level="85:Necromancer" scaleUp="false">
         <Mobile p="1.0" pick="SkeletalWizard,AncientLich,Daemon,Demon,RottingCorpse,ShadowDemon" n="1" effect="None" forceAttack="true">
-          <Mobile p="0.70" pick="OrkMage,OrkMonks,OrkWarrior,OrkRogue,Zombie,BoneKnight" n="1:2" effect="None" forceAttack="true"/>
+          <Mobile p="0.70" pick="UrkShaman,OrkMonks,OrkWarrior,ShamanicCyclops,Zombie,BoneKnight" n="1:2" effect="None" forceAttack="true"/>
         </Mobile>
       </Encounter>
       <Encounter p="0.35" distance="7:11" landType="AnyLand" time="AnyTime" level="65:Fighter" scaleUp="false">
@@ -3516,10 +3516,10 @@ debugEffect="true">
         <Mobile p="1.0" pick="Skeleton,SkeletonArcher,Spectre,Wraith,LivingBronzeStatue,LivingGoldStatue" n="1:2" effect="None" forceAttack="true"/>
       </Encounter>
       <Encounter p="0.70" distance="6:10" landType="AnyLand" time="AnyTime" level="25:Overall" scaleUp="false">
-        <Mobile p="1.0" pick="OrkWarrior,OrkRogue,Zombie,BoneKnight,BoneMagi,Ghoul" n="1:2" effect="None" forceAttack="true"/>
+        <Mobile p="1.0" pick="OrkWarrior,OrkMonks,Zombie,BoneKnight,BoneMagi,Ghoul" n="1:2" effect="None" forceAttack="true"/>
       </Encounter>
       <Encounter p="0.90" distance="6:10" landType="AnyLand" time="AnyTime" level="1:Overall" scaleUp="false">
-        <Mobile p="1.0" pick="OrkMage,OrkMonks,OrkWarrior,OrkRogue,Zombie,BoneKnight" n="1:2" effect="None" forceAttack="true"/>
+        <Mobile p="1.0" pick="UrkShaman,OrkMonks,OrkWarrior,ShamanicCyclops,Zombie,BoneKnight" n="1:2" effect="None" forceAttack="true"/>
       </Encounter>
     </Region>
     <Region type="DungeonRegion" name="the Pixie Cave">
@@ -3527,7 +3527,7 @@ debugEffect="true">
         <Mobile p="1.0" pick="ElderBrownBearRiding" n="1:2" effect="None" forceAttack="true"/>
       </Encounter>
       <Encounter p="0.90" distance="6:10" landType="AnyLand" time="AnyTime" level="1:Overall" scaleUp="false">
-        <Mobile p="1.0" pick="Pixie,ElderBrownBearRiding" n="1:2" effect="None" forceAttack="true"/>
+        <Mobile p="1.0" pick="Faerie,ElderBrownBearRiding" n="1:2" effect="None" forceAttack="true"/>
       </Encounter>
     </Region>
     <Region type="DungeonRegion" name="the Ratmen Mines">
@@ -3547,20 +3547,20 @@ debugEffect="true">
     <Region type="DungeonRegion" name="Dungeon Rock">
       <Encounter p="0.20" distance="8:12" landType="AnyLand" time="AnyTime" level="85:Mage" scaleUp="false">
         <Mobile p="1.0" pick="GargoyleRuby,GargoyleSapphire,AncientGargoyle,GhostGargoyle,SpectralGargoyle,ZombieGargoyle" n="1" effect="None" forceAttack="true">
-          <Mobile p="0.70" pick="Gargoyle,GargoyleMarble,StoneGargoyle,GargoyleOnyx,GargoyleAmethyst,GargoyleEmerald" n="1:2" effect="None" forceAttack="true"/>
+          <Mobile p="0.70" pick="Gargoyle,GargoyleMarble,StoneGargoyle,GargoyleRuby,GargoyleAmethyst,GargoyleEmerald" n="1:2" effect="None" forceAttack="true"/>
         </Mobile>
       </Encounter>
       <Encounter p="0.35" distance="7:11" landType="AnyLand" time="AnyTime" level="65:Mage" scaleUp="false">
         <Mobile p="1.0" pick="GargoyleRuby,GargoyleSapphire,AncientGargoyle,GhostGargoyle,SpectralGargoyle,ZombieGargoyle" n="1" effect="None" forceAttack="true"/>
       </Encounter>
       <Encounter p="0.50" distance="6:10" landType="AnyLand" time="AnyTime" level="45:Mage" scaleUp="false">
-        <Mobile p="1.0" pick="GargoyleOnyx,GargoyleAmethyst,GargoyleEmerald,GargoyleRuby,GargoyleSapphire,AncientGargoyle" n="1:2" effect="None" forceAttack="true"/>
+        <Mobile p="1.0" pick="GargoyleMarble,GargoyleAmethyst,GargoyleEmerald,GargoyleRuby,GargoyleSapphire,AncientGargoyle" n="1:2" effect="None" forceAttack="true"/>
       </Encounter>
       <Encounter p="0.70" distance="6:10" landType="AnyLand" time="AnyTime" level="25:Overall" scaleUp="false">
-        <Mobile p="1.0" pick="StoneGargoyle,GargoyleOnyx,GargoyleAmethyst,GargoyleEmerald,GargoyleRuby,GargoyleSapphire" n="1:2" effect="None" forceAttack="true"/>
+        <Mobile p="1.0" pick="StoneGargoyle,AncientGargoyle,GargoyleAmethyst,GargoyleEmerald,GargoyleRuby,GargoyleSapphire" n="1:2" effect="None" forceAttack="true"/>
       </Encounter>
       <Encounter p="0.90" distance="6:10" landType="AnyLand" time="AnyTime" level="1:Overall" scaleUp="false">
-        <Mobile p="1.0" pick="Gargoyle,GargoyleMarble,StoneGargoyle,GargoyleOnyx,GargoyleAmethyst,GargoyleEmerald" n="1:2" effect="None" forceAttack="true"/>
+        <Mobile p="1.0" pick="Gargoyle,GargoyleMarble,StoneGargoyle,GargoyleRuby,GargoyleAmethyst,GargoyleEmerald" n="1:2" effect="None" forceAttack="true"/>
       </Encounter>
     </Region>
     <Region type="DungeonRegion" name="the Sakkhra Tunnel">
@@ -3622,7 +3622,7 @@ debugEffect="true">
         </Mobile>
       </Encounter>
       <Encounter p="0.35" distance="7:11" landType="AnyLand" time="AnyTime" level="65:Fighter" scaleUp="false">
-        <Mobile p="1.0" pick="SwampTentacle,EvilMage,Berserker,Monks,Rogue,Ogre" n="1" effect="None" forceAttack="true"/>
+        <Mobile p="1.0" pick="SwampTentacle,EvilMage,Berserker,Monks,Brigand,Ogre" n="1" effect="None" forceAttack="true"/>
       </Encounter>
       <Encounter p="0.50" distance="6:10" landType="AnyLand" time="AnyTime" level="45:Necromancer" scaleUp="false">
         <Mobile p="1.0" pick="GhostWizard,Ghoul,Shade,SkeletalMage,Skeleton,SoulWorm" n="1:2" effect="None" forceAttack="true"/>
@@ -3650,12 +3650,12 @@ debugEffect="true">
     </Region>
     <Region type="DungeonRegion" name="the Undersea Castle">
       <Encounter p="0.20" distance="8:12" landType="AnyLand" time="AnyTime" level="85:Ranger" scaleUp="false">
-        <Mobile p="1.0" pick="SeaDragon,SeaDrake,DeepSeaDevil,DeepSeaDragon,DeepWaterElemental,WaterNaga" n="1" effect="None" forceAttack="true">
+        <Mobile p="1.0" pick="DemonOfTheSea,SeaDrake,DeepSeaDevil,DeepSeaDragon,DeepWaterElemental,WaterNaga" n="1" effect="None" forceAttack="true">
           <Mobile p="0.70" pick="EvilMage,Locathah,WaterElemental,WaterWeird,SeaSnake,DriftwoodElemental" n="1:2" effect="None" forceAttack="true"/>
         </Mobile>
       </Encounter>
       <Encounter p="0.35" distance="7:11" landType="AnyLand" time="AnyTime" level="65:Ranger" scaleUp="false">
-        <Mobile p="1.0" pick="Typhoon,WaterBeetleRiding,WaterStrider,DemonOfTheSea,SeaDragon,SeaDrake" n="1" effect="None" forceAttack="true"/>
+        <Mobile p="1.0" pick="Typhoon,WaterBeetleRiding,WaterStrider,DemonOfTheSea,SeaGiant,SeaDrake" n="1" effect="None" forceAttack="true"/>
       </Encounter>
       <Encounter p="0.50" distance="6:10" landType="AnyLand" time="AnyTime" level="45:Overall" scaleUp="false">
         <Mobile p="1.0" pick="FloatingEye,SeaTroll,SeaweedElemental,SeaWeeder,StormCloud,Tritun" n="1:2" effect="None" forceAttack="true"/>
@@ -3669,7 +3669,7 @@ debugEffect="true">
     </Region>
     <Region type="DungeonRegion" name="the Tomb of Kazibal">
       <Encounter p="0.20" distance="8:12" landType="AnyLand" time="AnyTime" level="85:Necromancer" scaleUp="false">
-        <Mobile p="1.0" pick="Zombie,AncientLich,BloodElemental,DiseasedMummy,Fiend,MummyLord" n="1" effect="None" forceAttack="true">
+        <Mobile p="1.0" pick="Zombie,AncientLich,BloodElemental,DiseasedMummy,Archfiend,MummyLord" n="1" effect="None" forceAttack="true">
           <Mobile p="0.70" pick="Mummy,EvilMage,Berserker,DeadlyScorpion,DustElemental,Ghoul" n="1:2" effect="None" forceAttack="true"/>
         </Mobile>
       </Encounter>
@@ -3688,12 +3688,12 @@ debugEffect="true">
     </Region>
     <Region type="DungeonRegion" name="the Catacombs of Azerok">
       <Encounter p="0.20" distance="8:12" landType="AnyLand" time="AnyTime" level="85:Necromancer" scaleUp="false">
-        <Mobile p="1.0" pick="Shroud,DeadWizard,Lich,RottingCorpse,RottingSquid,VampirePrince" n="1" effect="None" forceAttack="true">
+        <Mobile p="1.0" pick="Shroud,SkeletalWizard,Lich,RottingCorpse,RottingSquid,VampirePrince" n="1" effect="None" forceAttack="true">
           <Mobile p="0.70" pick="Shade,Vampire,Zombie,BoneKnight,DeadKnight,BoneSlasher" n="1:2" effect="None" forceAttack="true"/>
         </Mobile>
       </Encounter>
       <Encounter p="0.35" distance="7:11" landType="AnyLand" time="AnyTime" level="65:Overall" scaleUp="false">
-        <Mobile p="1.0" pick="OrkMonks,OrkRogue,OrkWarrior,Sakleth,SaklethArcher,SaklethMage" n="1" effect="None" forceAttack="true"/>
+        <Mobile p="1.0" pick="OrkMonks,OrkMage,OrkWarrior,Sakleth,SaklethArcher,SaklethMage" n="1" effect="None" forceAttack="true"/>
       </Encounter>
       <Encounter p="0.50" distance="6:10" landType="AnyLand" time="AnyTime" level="45:Necromancer" scaleUp="false">
         <Mobile p="1.0" pick="Spectre,Spirit,Wight,Wraith,BlackPudding,DarkReaper" n="1:2" effect="None" forceAttack="true"/>
@@ -3707,7 +3707,7 @@ debugEffect="true">
     </Region>
     <Region type="DungeonRegion" name="the Azure Castle">
       <Encounter p="0.20" distance="8:12" landType="AnyLand" time="AnyTime" level="85:Overall" scaleUp="false">
-        <Mobile p="1.0" pick="Nazghoul,WaterElemental,WaterWeird,CrystalGoliath,Ifreet,Wyrms" n="1" effect="None" forceAttack="true">
+        <Mobile p="1.0" pick="Nazghoul,WaterElemental,WaterWeird,CrystalGoliath,Afreet,Wyrms" n="1" effect="None" forceAttack="true">
           <Mobile p="0.70" pick="OrkWarrior,OrkMage,Ghoul,Phantom,Shade,Skeleton" n="1:2" effect="None" forceAttack="true"/>
         </Mobile>
       </Encounter>
@@ -3726,7 +3726,7 @@ debugEffect="true">
     </Region>
     <Region type="DungeonRegion" name="the Scurvy Reef">
       <Encounter p="0.20" distance="8:12" landType="AnyLand" time="AnyTime" level="85:Ranger" scaleUp="false">
-        <Mobile p="1.0" pick="WaterNaga,DeepSeaDevil,DemonOfTheSea,SeaDragon,DeepSeaDragon,DeepSeaGiant" n="1" effect="None" forceAttack="true">
+        <Mobile p="1.0" pick="WaterNaga,SeaHagGreater,DemonOfTheSea,SeaDragon,DeepSeaDragon,DeepSeaGiant" n="1" effect="None" forceAttack="true">
           <Mobile p="0.70" pick="DriftwoodElemental,FloatingEye,GhostPirate,SeaHag,SeaSnake,SeaTroll" n="1:2" effect="None" forceAttack="true"/>
         </Mobile>
       </Encounter>
