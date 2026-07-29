@@ -562,6 +562,11 @@
     <Compile Include="Custom\Mobiles\Vendors\Gort.cs" />
     <Compile Include="Custom\Mobiles\Vendors\Siddo.cs" />
     <Compile Include="Custom\Mobiles\Vendors\SirGideon.cs" />
+    <Compile Include="Custom\PvE\MobileBalance\MobileBalanceCatalog.cs" />
+    <Compile Include="Custom\PvE\MobileBalance\MobileBalanceItems.Armor.cs" />
+    <Compile Include="Custom\PvE\MobileBalance\MobileBalanceItems.TalismansAndTrophies.cs" />
+    <Compile Include="Custom\PvE\MobileBalance\MobileBalanceItems.Weapons.cs" />
+    <Compile Include="Custom\PvE\MobileBalance\SignedEquipSkillModController.cs" />
     <Compile Include="Custom\PvE\MonsterNests\MonsterNest.cs" />
     <Compile Include="Custom\PvE\MonsterNests\MonsterNestEntity.cs" />
     <Compile Include="Custom\PvE\MonsterNests\MonsterNestLoot.cs" />

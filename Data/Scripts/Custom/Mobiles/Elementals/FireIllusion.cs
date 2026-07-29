@@ -1,5 +1,6 @@
 using System;
 using Server;
+using Server.Custom.Confictura.PvE.MobileBalance;
 using Server.Items;
 using Server.Mobiles;
 
@@ -28,6 +29,7 @@ namespace Server.Custom.Confictura.Mobiles
 
             // Damage
             SetDamage(190, 260);
+            MobileBalanceCatalog.ApplyProfile(this);
         }
 
         public FireIllusion(Serial serial)
@@ -38,13 +40,18 @@ namespace Server.Custom.Confictura.Mobiles
         public override void Serialize(GenericWriter writer)
         {
             base.Serialize(writer);
-            writer.Write(0); // version
+            writer.Write(1); // version
         }
 
         public override void Deserialize(GenericReader reader)
         {
             base.Deserialize(reader);
-            reader.ReadInt(); // version
+            int version = reader.ReadInt();
+
+            if (version < 1)
+            {
+                MobileBalanceCatalog.ApplyProfile(this);
+            }
         }
     }
 }
