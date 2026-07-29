@@ -337,7 +337,7 @@ namespace Server.Custom.Confictura.PvE.MobileBalance
 
     internal static class MobileBalanceItemSupport
     {
-        public static void Initialize(
+        public static void ApplyMetadata(
             Item item,
             string name,
             int itemID,

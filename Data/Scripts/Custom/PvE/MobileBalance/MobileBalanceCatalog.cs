@@ -684,7 +684,7 @@ namespace Server.Custom.Confictura.PvE.MobileBalance
             int amount
         )
         {
-            MobileBalanceItemSupport.Initialize(item, name, itemID, hue, layer, propertyLabel);
+            MobileBalanceItemSupport.ApplyMetadata(item, name, itemID, hue, layer, propertyLabel);
             item.Amount = amount;
         }
     }

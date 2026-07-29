@@ -9,7 +9,7 @@ namespace Server.Custom.Confictura.Items
         [Constructable]
         public GuardianShield()
         {
-            MobileBalanceItemSupport.Initialize(this, "Shield of the Guardian", 0x1B74, 1152, Layer.TwoHanded, "Artefact");
+            MobileBalanceItemSupport.ApplyMetadata(this, "Shield of the Guardian", 0x1B74, 1152, Layer.TwoHanded, "Artefact");
 
             EnergyBonus = 75;
             Attributes.LowerRegCost = 50;
@@ -68,7 +68,7 @@ namespace Server.Custom.Confictura.Items
         [Constructable]
         public RobeoftheVoid()
         {
-            MobileBalanceItemSupport.Initialize(this, "Robe of the Void", 0x1F03, 1175, Layer.OuterTorso, "Legendary Artefact");
+            MobileBalanceItemSupport.ApplyMetadata(this, "Robe of the Void", 0x1F03, 1175, Layer.OuterTorso, "Legendary Artefact");
 
             Attributes.BonusMana = 100;
             Attributes.LowerRegCost = 100;
@@ -122,7 +122,7 @@ namespace Server.Custom.Confictura.Items
         [Constructable]
         public ArmoroftheTitans()
         {
-            MobileBalanceItemSupport.Initialize(this, "Titan Slayer Armor", 0x2B08, 2843, Layer.InnerTorso, "Artefact");
+            MobileBalanceItemSupport.ApplyMetadata(this, "Titan Slayer Armor", 0x2B08, 2843, Layer.InnerTorso, "Artefact");
 
             PhysicalBonus = 50;
             ArmorAttributes.MageArmor = 1;
@@ -176,7 +176,7 @@ namespace Server.Custom.Confictura.Items
         [Constructable]
         public ArmorofthefalseGods()
         {
-            MobileBalanceItemSupport.Initialize(this, "God Slayer Armor", 0x2B08, 1152, Layer.InnerTorso, "Legendary Artefact");
+            MobileBalanceItemSupport.ApplyMetadata(this, "God Slayer Armor", 0x2B08, 1152, Layer.InnerTorso, "Legendary Artefact");
 
             PhysicalBonus = 50;
             EnergyBonus = 50;
@@ -235,7 +235,7 @@ namespace Server.Custom.Confictura.Items
         [Constructable]
         public ExodusArmor()
         {
-            MobileBalanceItemSupport.Initialize(this, "Exodus Ribcage", 0x144F, 1175, Layer.InnerTorso, "Legendary Artefact");
+            MobileBalanceItemSupport.ApplyMetadata(this, "Exodus Ribcage", 0x144F, 1175, Layer.InnerTorso, "Legendary Artefact");
 
             PhysicalBonus = 75;
             FireBonus = 75;
@@ -294,7 +294,7 @@ namespace Server.Custom.Confictura.Items
         [Constructable]
         public ExodusHead()
         {
-            MobileBalanceItemSupport.Initialize(this, "Exodus Skull", 0x1451, 1175, Layer.Helm, "Legendary Artefact");
+            MobileBalanceItemSupport.ApplyMetadata(this, "Exodus Skull", 0x1451, 1175, Layer.Helm, "Legendary Artefact");
 
             EnergyBonus = 75;
             ColdBonus = 75;
@@ -354,7 +354,7 @@ namespace Server.Custom.Confictura.Items
         [Constructable]
         public ExodusHands()
         {
-            MobileBalanceItemSupport.Initialize(this, "Exodus Claws", 0x2643, 1175, Layer.Gloves, "Legendary Artefact");
+            MobileBalanceItemSupport.ApplyMetadata(this, "Exodus Claws", 0x2643, 1175, Layer.Gloves, "Legendary Artefact");
 
             FireBonus = 75;
             ArmorAttributes.MageArmor = 1;

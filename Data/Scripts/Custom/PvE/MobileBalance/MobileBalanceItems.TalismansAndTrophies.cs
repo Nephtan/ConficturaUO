@@ -10,7 +10,7 @@ namespace Server.Custom.Confictura.Items
         public MindOverMatterTalisman()
         {
             MobileBalanceItemSupport.ClearRandomTalismanProperties(this);
-            MobileBalanceItemSupport.Initialize(this, "Mindful Talisman", 0x2F5B, 0, Layer.Talisman, "Artefact");
+            MobileBalanceItemSupport.ApplyMetadata(this, "Mindful Talisman", 0x2F5B, 0, Layer.Talisman, "Artefact");
 
             Attributes.BonusMana = 200;
             Attributes.LowerRegCost = 100;
@@ -68,7 +68,7 @@ namespace Server.Custom.Confictura.Items
         [Constructable]
         public GoldenDragonStatue()
         {
-            MobileBalanceItemSupport.Initialize(this, "Golden Dragon Statue", 0x4C2D, 2843, Layer.Invalid, "Artefact");
+            MobileBalanceItemSupport.ApplyMetadata(this, "Golden Dragon Statue", 0x4C2D, 2843, Layer.Invalid, "Artefact");
         }
 
         public GoldenDragonStatue(Serial serial)
@@ -92,7 +92,7 @@ namespace Server.Custom.Confictura.Items
         [Constructable]
         public MemorialofVirtue()
         {
-            MobileBalanceItemSupport.Initialize(this, "Memorial of Virtue", 0x4FC7, 0, Layer.Invalid, "Artefact");
+            MobileBalanceItemSupport.ApplyMetadata(this, "Memorial of Virtue", 0x4FC7, 0, Layer.Invalid, "Artefact");
         }
 
         public MemorialofVirtue(Serial serial)
@@ -117,7 +117,7 @@ namespace Server.Custom.Confictura.Items
         public HeartofFire()
         {
             MobileBalanceItemSupport.ClearRandomTalismanProperties(this);
-            MobileBalanceItemSupport.Initialize(this, "Heart of Fire", 0x4D16, 2227, Layer.Talisman, "Legendary Artefact");
+            MobileBalanceItemSupport.ApplyMetadata(this, "Heart of Fire", 0x4D16, 2227, Layer.Talisman, "Legendary Artefact");
 
             Attributes.SpellDamage = 200;
             Attributes.LowerRegCost = 50;
@@ -174,7 +174,7 @@ namespace Server.Custom.Confictura.Items
         public LampofBadWishes()
         {
             MobileBalanceItemSupport.ClearRandomTalismanProperties(this);
-            MobileBalanceItemSupport.Initialize(this, "Lamp of Bad Wishes", 0x2C82, 2843, Layer.Talisman, "Legendary Artefact");
+            MobileBalanceItemSupport.ApplyMetadata(this, "Lamp of Bad Wishes", 0x2C82, 2843, Layer.Talisman, "Legendary Artefact");
 
             Attributes.BonusMana = 200;
             Attributes.LowerRegCost = 100;

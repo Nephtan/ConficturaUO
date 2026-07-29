@@ -9,7 +9,7 @@ namespace Server.Custom.Confictura.Items
         [Constructable]
         public RuneSword()
         {
-            MobileBalanceItemSupport.Initialize(this, "Rune Sword", 0x26CE, 0, Layer.OneHanded, "Artefact");
+            MobileBalanceItemSupport.ApplyMetadata(this, "Rune Sword", 0x26CE, 0, Layer.OneHanded, "Artefact");
 
             MinDamage = 45;
             MaxDamage = 70;
@@ -64,7 +64,7 @@ namespace Server.Custom.Confictura.Items
         [Constructable]
         public TridentofAtlantis()
         {
-            MobileBalanceItemSupport.Initialize(this, "Trident of Atlantis", 0xE87, 2843, Layer.TwoHanded, "Legendary Artefact");
+            MobileBalanceItemSupport.ApplyMetadata(this, "Trident of Atlantis", 0xE87, 2843, Layer.TwoHanded, "Legendary Artefact");
 
             MinDamage = 75;
             MaxDamage = 90;
@@ -120,7 +120,7 @@ namespace Server.Custom.Confictura.Items
         [Constructable]
         public SwordofDarkness()
         {
-            MobileBalanceItemSupport.Initialize(this, "Sword of Darkness", 0x26CE, 1175, Layer.OneHanded, "Artefact");
+            MobileBalanceItemSupport.ApplyMetadata(this, "Sword of Darkness", 0x26CE, 1175, Layer.OneHanded, "Artefact");
 
             MinDamage = 35;
             MaxDamage = 50;
@@ -176,7 +176,7 @@ namespace Server.Custom.Confictura.Items
         [Constructable]
         public SwordofLight()
         {
-            MobileBalanceItemSupport.Initialize(this, "Sword of Light", 0x26CE, 1152, Layer.OneHanded, "Legendary Artefact");
+            MobileBalanceItemSupport.ApplyMetadata(this, "Sword of Light", 0x26CE, 1152, Layer.OneHanded, "Legendary Artefact");
 
             MinDamage = 35;
             MaxDamage = 50;
@@ -234,7 +234,7 @@ namespace Server.Custom.Confictura.Items
         [Constructable]
         public WolfgangSword()
         {
-            MobileBalanceItemSupport.Initialize(this, "Sword of Kings", 0x27A2, 2843, Layer.TwoHanded, "Legendary Artefact");
+            MobileBalanceItemSupport.ApplyMetadata(this, "Sword of Kings", 0x27A2, 2843, Layer.TwoHanded, "Legendary Artefact");
 
             MinDamage = 55;
             MaxDamage = 80;
@@ -266,7 +266,7 @@ namespace Server.Custom.Confictura.Items
         [Constructable]
         public Weightoftheworld()
         {
-            MobileBalanceItemSupport.Initialize(this, "Weight of the World", 0x27A6, 0, Layer.TwoHanded, "Legendary Artefact");
+            MobileBalanceItemSupport.ApplyMetadata(this, "Weight of the World", 0x27A6, 0, Layer.TwoHanded, "Legendary Artefact");
 
             MinDamage = 85;
             MaxDamage = 100;
@@ -295,7 +295,7 @@ namespace Server.Custom.Confictura.Items
         [Constructable]
         public DeathPenalty()
         {
-            MobileBalanceItemSupport.Initialize(this, "Death Penalty", 0xF50, 1175, Layer.TwoHanded, "Legendary Artefact");
+            MobileBalanceItemSupport.ApplyMetadata(this, "Death Penalty", 0xF50, 1175, Layer.TwoHanded, "Legendary Artefact");
 
             MinDamage = 35;
             MaxDamage = 60;
@@ -349,7 +349,7 @@ namespace Server.Custom.Confictura.Items
         [Constructable]
         public Disintegrator()
         {
-            MobileBalanceItemSupport.Initialize(this, "Disintegrator", 0x3F65, 0, Layer.TwoHanded, "Legendary Artefact");
+            MobileBalanceItemSupport.ApplyMetadata(this, "Disintegrator", 0x3F65, 0, Layer.TwoHanded, "Legendary Artefact");
 
             MinDamage = 75;
             MaxDamage = 90;
@@ -402,7 +402,7 @@ namespace Server.Custom.Confictura.Items
         [Constructable]
         public DreadMace()
         {
-            MobileBalanceItemSupport.Initialize(this, "The Dread Mace", 0x2681, 1175, Layer.OneHanded, "Legendary Artefact");
+            MobileBalanceItemSupport.ApplyMetadata(this, "The Dread Mace", 0x2681, 1175, Layer.OneHanded, "Legendary Artefact");
 
             MinDamage = 35;
             MaxDamage = 60;
@@ -458,7 +458,7 @@ namespace Server.Custom.Confictura.Items
         [Constructable]
         public ExodusMaul()
         {
-            MobileBalanceItemSupport.Initialize(this, "Exodus Spine", 0x27A6, 1175, Layer.TwoHanded, "Legendary Artefact");
+            MobileBalanceItemSupport.ApplyMetadata(this, "Exodus Spine", 0x27A6, 1175, Layer.TwoHanded, "Legendary Artefact");
 
             MinDamage = 55;
             MaxDamage = 80;
@@ -512,7 +512,7 @@ namespace Server.Custom.Confictura.Items
         [Constructable]
         public DoomBlade()
         {
-            MobileBalanceItemSupport.Initialize(this, "Doom Blade", 0x27A2, 1175, Layer.TwoHanded, "Legendary Artefact");
+            MobileBalanceItemSupport.ApplyMetadata(this, "Doom Blade", 0x27A2, 1175, Layer.TwoHanded, "Legendary Artefact");
 
             MinDamage = 55;
             MaxDamage = 80;
