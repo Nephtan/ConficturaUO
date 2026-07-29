@@ -636,8 +636,8 @@ if ($script:Errors.Count -eq 0) {
     if (@($itemSkills | Where-Object { $_.ItemId -eq "ITEM-014" -and $_.CanonicalSkillName -eq "Knightship" -and $_.Value -eq "-10" }).Count -ne 1) {
         Add-Error "DreadMace is missing the Knightship=-10 signed skill modifier."
     }
-    if (@($refItems | Where-Object { $_.ClassName -eq "DreadMace" -and $_.Kind -eq "ProposedItemClass" -and $_.Status -eq "Proposed" }).Count -ne 1) {
-        Add-Error "Ref_ItemClasses does not contain DreadMace as one proposed class."
+    if (@($refItems | Where-Object { $_.ClassName -eq "DreadMace" -and (($_.Kind -eq "ProposedItemClass" -and $_.Status -eq "Proposed") -or $_.Status -eq "SourceVerified") }).Count -ne 1) {
+        Add-Error "Ref_ItemClasses does not contain exactly one proposed or source-verified DreadMace class."
     }
     if (@($itemSkills | Where-Object { $_.CanonicalClassName -eq "Pestilence" }).Count -ne 0 -or @($itemBonuses | Where-Object { $_.CanonicalClassName -eq "Pestilence" }).Count -ne 0 -or @($assignments | Where-Object { $_.CanonicalItemClass -eq "Pestilence" }).Count -ne 0) {
         Add-Error "Stale Pestilence references remain in normalized sheets."
@@ -650,9 +650,16 @@ if ($script:Errors.Count -eq 0) {
 
     foreach ($changeId in @("MC-034", "MC-035")) {
         $row = @($mobileChanges | Where-Object { $_.ChangeId -eq $changeId })
-        if ($row.Count -ne 1 -or $row[0].Priority -ne "" -or $row[0].ReviewStatus -ne "Ready" -or $row[0].ImplementationStatus -ne "Pending") {
-            Add-Error "$changeId must remain priority-unresolved with Ready/Pending statuses."
+        if ($row.Count -ne 1 -or $row[0].Priority -ne "High" -or $row[0].ReviewStatus -ne "Ready" -or $row[0].ImplementationStatus -notin @("Pending", "Implemented")) {
+            Add-Error "$changeId must have approved High priority with Ready and Pending/Implemented statuses."
         }
+    }
+
+    $implementedMobileCount = @($mobileChanges | Where-Object { $_.ImplementationStatus -eq "Implemented" }).Count
+    $implementedItemCount = @($items | Where-Object { $_.ImplementationStatus -eq "Implemented" }).Count
+    $implementationComplete = $implementedMobileCount -eq 35 -and $implementedItemCount -eq 39
+    if (($implementedMobileCount -notin @(0, 35)) -or ($implementedItemCount -notin @(0, 39))) {
+        Add-Error "Implementation statuses must be uniformly Pending or Implemented. Mobiles=$implementedMobileCount Items=$implementedItemCount."
     }
 
     $csvFiles = @{
@@ -678,15 +685,17 @@ if ($script:Errors.Count -eq 0) {
     }
     else {
         $issues = @(Import-Csv -LiteralPath $issuesPath)
-        if ($issues.Count -ne 3) {
-            Add-Error "review-issues.csv must contain one signed-skill constraint and two priority decisions. Actual=$($issues.Count)."
+        if ($implementationComplete) {
+            if ($issues.Count -ne 0) {
+                Add-Error "review-issues.csv must be empty after verified implementation. Actual=$($issues.Count)."
+            }
         }
-        if (@($issues | Where-Object { $_.Status -eq "ImplementationConstraint" }).Count -ne 1) {
-            Add-Error "review-issues.csv is missing the signed-skill implementation constraint."
-        }
-        foreach ($changeId in @("MC-034", "MC-035")) {
-            if (@($issues | Where-Object { $_.RowKey -eq $changeId -and $_.Status -eq "NeedsDecision" }).Count -ne 1) {
-                Add-Error "review-issues.csv is missing the priority decision for $changeId."
+        else {
+            if ($issues.Count -ne 1) {
+                Add-Error "review-issues.csv must contain only the approved signed-skill implementation constraint before implementation. Actual=$($issues.Count)."
+            }
+            if (@($issues | Where-Object { $_.Status -eq "ImplementationConstraint" }).Count -ne 1) {
+                Add-Error "review-issues.csv is missing the signed-skill implementation constraint."
             }
         }
     }
@@ -701,9 +710,10 @@ if ($script:Errors.Count -eq 0) {
     Write-Host "Resolved policy:"
     Write-Host "  Loot assignments: 39 independent corpse percentage rolls"
     Write-Host "  Owner binding: 39 items not owner-bound"
-    Write-Host "Open decisions:"
-    Write-Host "  Signed skills: 36 negative modifiers across 19 items"
-    Write-Host "  Priorities: MC-034 and MC-035"
+    Write-Host "Approved implementation:"
+    Write-Host "  Signed skills: reusable equip/unequip SkillMod handling"
+    Write-Host "  Priorities: MC-034 and MC-035 are High"
+    Write-Host "  Completion status: $(if ($implementationComplete) { 'Implemented' } else { 'Pending source verification' })"
 }
 
 if ($script:Warnings.Count -gt 0) {

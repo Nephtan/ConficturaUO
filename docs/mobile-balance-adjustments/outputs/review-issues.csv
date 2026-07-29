@@ -1,4 +1,1 @@
 IssueId,Severity,Sheet,RowKey,Issue,Recommendation,Status
-MBR-001,P1,ItemSkillMods,All negative or over-five skill-mod items,Signed skill modifiers cannot use stock AosSkillBonuses packing,Implement custom equip/unequip SkillMod handling for those items.,ImplementationConstraint
-MBR-002,P2,MobileChanges,MC-034,Priority is blank for a new EpicBossCandidate row,"Choose High, Medium, or Low. High matches 22 of the other 24 EpicBossCandidate rows.",NeedsDecision
-MBR-003,P2,MobileChanges,MC-035,Priority is blank for a new EpicBossCandidate row,"Choose High, Medium, or Low. High matches 22 of the other 24 EpicBossCandidate rows.",NeedsDecision

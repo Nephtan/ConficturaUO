@@ -2,9 +2,12 @@
 
 Review date: July 28, 2026.
 
-Current source workbook: `docs/mobile-balance-adjustments/source/MobileBalanceTemplate.staff-revised-2026-07-28.xlsx`
+Current approved source workbook: `docs/mobile-balance-adjustments/source/MobileBalanceTemplate.staff-approved-2026-07-28.xlsx`
 
-Original source workbook: `docs/mobile-balance-adjustments/source/MobileBalanceTemplate.staff-filled-2026-07-15.xlsx`
+Earlier source workbooks remain immutable:
+
+- `docs/mobile-balance-adjustments/source/MobileBalanceTemplate.staff-revised-2026-07-28.xlsx`
+- `docs/mobile-balance-adjustments/source/MobileBalanceTemplate.staff-filled-2026-07-15.xlsx`
 
 Canonical workbook: `docs/mobile-balance-adjustments/workbooks/MobileBalanceTemplate.xlsx`
 
@@ -20,9 +23,13 @@ The staff-filled `MobileChanges` data is populated correctly:
 - The normalized sheets contain 64 mobile skill rows, 73 item skill rows, and 110 item bonus rows.
 - `Reference` is an instructional sheet; all structured tables use row 4 for headers and row 5 onward for data.
 
-## P1 Findings
+## Current Findings
 
-### Signed Skill Modifiers Need Custom Handling
+There are no unresolved workbook review issues. `outputs/review-issues.csv` contains its header and no data rows.
+
+## Resolved Implementation Requirements
+
+### Signed Skill Modifiers Use Custom Handling
 
 Many requested item skill modifiers are negative, and several items have more than five skill-mod entries. These cannot be represented safely as stock `AosSkillBonuses.SetValues` data.
 
@@ -33,13 +40,7 @@ Evidence:
 - `Data/Scripts/System/Misc/AOS.cs` processes only five stock skill-bonus slots.
 - The AOS skill-bonus packing reads bonus values back as positive packed values, so signed values should not be stored there.
 
-Decision required:
-
-1. Preserve all signed values with a reusable custom equip/unequip `SkillMod` implementation.
-2. Remove the negative modifiers.
-3. Return the 19 affected items for redesign.
-
-The recommended implementation choice is option 1 because it preserves the staff-authored balance data without misusing stock packed skill bonuses.
+Decision: preserve all signed values with reusable equip/unequip `EquipedSkillMod` instances, `ObeyCap=false`, idempotent removal/recreation, and post-deserialization rehydration. The implementation applies all 70 custom rows, including positive modifiers on mixed-benefit/drawback items. Only the three explicitly stock-positive rows use `SkillBonuses.SetValues`.
 
 ## Resolved Decisions
 
@@ -60,19 +61,26 @@ No requested item is owner-bound:
 
 ### Mace Class Conflict
 
-`ITEM-014` is now the proposed class `DreadMace` with display name `The Dread Mace`. Stale `Pestilence` references were removed from assignments, skill rows, bonus rows, and references.
+`ITEM-014` is implemented as `DreadMace` with display name `The Dread Mace`. Stale `Pestilence` references were removed from assignments, skill rows, bonus rows, and references.
 
 ### New Mobile Loot
 
 Blank loot links on `MC-034 Fire Illusion` and `MC-035 Lovecraftian` mean no loot change requested.
 
-## P2 Findings
+### New Mobile Priorities
 
-### New Mobile Priorities Need Staff Decision
+`MC-034 Fire Illusion` and `MC-035 Lovecraftian` are approved as `High` priority.
 
-`MC-034 Fire Illusion` and `MC-035 Lovecraftian` intentionally have blank `Priority` values. Choose `High`, `Medium`, or `Low` for each.
+### Source Implementation
 
-Recommendation: `High`, because 22 of the other 24 `EpicBossCandidate` rows are already `High`.
+- All 35 profiles and 64 skill changes are implemented.
+- All 39 independent loot assignments are implemented as additional corpse rolls.
+- Twenty-three new item classes and 16 configured existing-item drops are implemented.
+- All 73 item skill rows and 110 item bonus rows are source-verified.
+- All target mobiles use version 1 serialization; version-0 instances apply the shared profile once during deserialization.
+- “Legendary Registry of Heroes” is accepted by the existing legal census interface.
+
+## Normalization Findings
 
 ### Canonical Name Cleanup Applied
 

@@ -1,6 +1,6 @@
 # Mobile Balance Outputs
 
-This directory stores CSV exports normalized from `source/MobileBalanceTemplate.staff-revised-2026-07-28.xlsx` and checked against `workbooks/MobileBalanceTemplate.xlsx`.
+This directory stores CSV exports normalized from `source/MobileBalanceTemplate.staff-approved-2026-07-28.xlsx` and checked against `workbooks/MobileBalanceTemplate.xlsx`.
 
 Use these files for Codex implementation planning and validation. They are easier to parse than workbook free text and preserve normalized values, policy flags, and source-backed references.
 
@@ -15,7 +15,7 @@ Use these files for Codex implementation planning and validation. They are easie
 | `itemskillmods.csv` | One row per normalized item skill modifier. |
 | `itembonuses.csv` | One row per normalized item bonus/property. |
 | `ref-skills.csv` | Source-generated skill names. |
-| `ref-itemclasses.csv` | Source-generated item candidate classes plus proposed classes. |
+| `ref-itemclasses.csv` | Source-generated item classes, including all 23 implemented balance classes. |
 | `ref-mobileclasses.csv` | Source-generated mobile candidate classes and display names. |
 | `ref-bonusnames.csv` | Canonical item bonus names and implementation surfaces. |
 | `ref-droprules.csv` | Allowed drop-rule semantics. |
@@ -31,9 +31,9 @@ Use these files for Codex implementation planning and validation. They are easie
 | `mobileskillchanges.csv` | 64 |
 | `itemskillmods.csv` | 73 |
 | `itembonuses.csv` | 110 |
-| `review-issues.csv` | 3 |
+| `review-issues.csv` | 0 |
 
-The three review issues are the signed-skill implementation choice and the blank priorities for `MC-034` and `MC-035`. Loot semantics, owner binding, and the `DreadMace` class name are resolved.
+There are no current review issues. The CSV retains its header so consumers can import it without special handling. All 35 mobile rows and all 39 item rows have `ImplementationStatus=Implemented`.
 
 ## Reading Tips
 
@@ -53,3 +53,9 @@ Import-Csv docs/mobile-balance-adjustments/outputs/itemskillmods.csv |
 ```
 
 Do not edit generated CSVs by hand. Update the source workbook or generator, then regenerate and validate.
+
+Final regeneration command:
+
+```powershell
+python docs/mobile-balance-adjustments/tools/New-MobileBalanceWorkbook.py --implementation-complete --csv-only
+```

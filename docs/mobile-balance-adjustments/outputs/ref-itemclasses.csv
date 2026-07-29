@@ -224,8 +224,8 @@ ArmorGiftAttributeInfo,,Data/Scripts/Items/Magical/Gifts/GiftAttributes.cs,ItemC
 ArmorOfFortune,StuddedChest,Data/Scripts/Items/Magical/Artifacts/Obsolete/Obsolete_ArmorOfFortune.cs,ItemCandidate,SourceVerified,
 ArmorOfInsight,PlateChest,Data/Scripts/Items/Magical/Artifacts/Obsolete/Obsolete_ArmorOfInsight.cs,ItemCandidate,SourceVerified,
 ArmorOfNobility,RingmailChest,Data/Scripts/Items/Magical/Artifacts/Obsolete/Obsolete_ArmorOfNobility.cs,ItemCandidate,SourceVerified,
-ArmoroftheTitans,RoyalChest,,ProposedItemClass,Proposed,New class should inherit from the resolved base item class.
-ArmorofthefalseGods,RoyalChest,,ProposedItemClass,Proposed,New class should inherit from the resolved base item class.
+ArmoroftheTitans,RoyalChest,Data/Scripts/Custom/PvE/MobileBalance/MobileBalanceItems.Armor.cs,SourceClass,SourceVerified,
+ArmorofthefalseGods,RoyalChest,Data/Scripts/Custom/PvE/MobileBalance/MobileBalanceItems.Armor.cs,SourceClass,SourceVerified,
 ArmsBarrel,LockableContainer,Data/Scripts/Items/Containers/Container.cs,ItemCandidate,SourceVerified,
 ArmsCrate,LockableContainer,Data/Scripts/Items/Containers/Container.cs,ItemCandidate,SourceVerified,
 ArmsOfAegis,PlateArms,Data/Scripts/Items/Magical/Artifacts/Obsolete/Obsolete_ArmsOfAegis.cs,ItemCandidate,SourceVerified,
@@ -1889,7 +1889,7 @@ DeamonHeadA,Item,Data/Scripts/Trades/Taxidermy/MagicSkulls.cs,ItemCandidate,Sour
 DeamonHeadB,Item,Data/Scripts/Trades/Taxidermy/MagicSkulls.cs,ItemCandidate,SourceVerified,
 DeamonHeadC,Item,Data/Scripts/Trades/Taxidermy/MagicSkulls.cs,ItemCandidate,SourceVerified,
 DeathKnightWarhorse,EtherealMount,Data/Scripts/Items/Gifts/Mounts/DeathKnightWarhorse.cs,ItemCandidate,SourceVerified,
-DeathPenalty,Crossbow,,ProposedItemClass,Proposed,New class should inherit from the resolved base item class.
+DeathPenalty,Crossbow,Data/Scripts/Custom/PvE/MobileBalance/MobileBalanceItems.Weapons.cs,SourceClass,SourceVerified,
 DeathRobe,Robe,Data/Scripts/Items/Clothing/OuterTorso.cs,ItemCandidate,SourceVerified,
 DeathShroud,BaseSuit,Data/Scripts/Items/Clothing/Suits/DeathShroud.cs,ItemCandidate,SourceVerified,
 DeathsMask,BoneHelm,Data/Scripts/Items/Magical/Artifacts/Obsolete/Obsolete_DeathsMask.cs,ItemCandidate,SourceVerified,
@@ -2074,7 +2074,7 @@ DisguiseGump,Gump,Data/Scripts/Items/Trades/Thieving/DisguiseKit.cs,ItemCandidat
 DisguiseKit,Item,Data/Scripts/Items/Trades/Thieving/DisguiseKit.cs,ItemCandidate,SourceVerified,
 DisguisePersistance,Item,Data/Scripts/Items/Trades/Thieving/DisguisePersistance.cs,ItemCandidate,SourceVerified,
 DisguiseTimers,,Data/Scripts/Items/Trades/Thieving/DisguiseKit.cs,ItemCandidate,SourceVerified,
-Disintegrator,KilrathiHeavyGun,,ProposedItemClass,Proposed,New class should inherit from the resolved base item class.
+Disintegrator,KilrathiHeavyGun,Data/Scripts/Custom/PvE/MobileBalance/MobileBalanceItems.Weapons.cs,SourceClass,SourceVerified,
 DispelFieldMagicStaff,BaseMagicStaff,Data/Scripts/Items/Wands/5th Circle/DispelFieldStaff.cs,ItemCandidate,SourceVerified,
 DispelMagicStaff,BaseMagicStaff,Data/Scripts/Items/Wands/6th Circle/DispelStaff.cs,ItemCandidate,SourceVerified,
 DisplayHelpTopic,Packet,Data/Scripts/Trades/Gardening/Network/DisplayHelpTopic.cs,ItemCandidate,SourceVerified,
@@ -2099,7 +2099,7 @@ DolphinSouthLargeAddon,BaseAddon,Data/Scripts/Items/Trades/Fishing/Sea Artifacts
 DolphinSouthLargeAddonDeed,BaseAddonDeed,Data/Scripts/Items/Trades/Fishing/Sea Artifacts/DolphinSouthLargeAddon.cs,ItemCandidate,SourceVerified,
 DolphinSouthSmallAddon,BaseAddon,Data/Scripts/Items/Trades/Fishing/Sea Artifacts/DolphinSouthSmallAddon.cs,ItemCandidate,SourceVerified,
 DolphinSouthSmallAddonDeed,BaseAddonDeed,Data/Scripts/Items/Trades/Fishing/Sea Artifacts/DolphinSouthSmallAddon.cs,ItemCandidate,SourceVerified,
-DoomBlade,NoDachi,,ProposedItemClass,Proposed,New class should inherit from the resolved base item class.
+DoomBlade,NoDachi,Data/Scripts/Custom/PvE/MobileBalance/MobileBalanceItems.Weapons.cs,SourceClass,SourceVerified,
 DoomFlayerNote,Item,Data/Scripts/Items/Books/DoomFlayerNote.cs,ItemCandidate,SourceVerified,
 DoorBounce,Item,Data/Scripts/Items/Doors/DoorBounce.cs,ItemCandidate,SourceVerified,
 DoorOpener,Item,Data/Scripts/Items/Doors/DoorOpener.cs,ItemCandidate,SourceVerified,
@@ -2140,7 +2140,7 @@ DrawKnife,BaseTool,Data/Scripts/Items/Trades/Tools/DrawKnife.cs,ItemCandidate,So
 Drawer,BaseContainer,Data/Scripts/Items/Containers/FurnitureContainer.cs,ItemCandidate,SourceVerified,
 DreadHelm,BaseArmor,Data/Scripts/Items/Armor/Helmets/DreadHelm.cs,ItemCandidate,SourceVerified,
 DreadHornMane,Item,Data/Scripts/Items/Trades/Resources/MiscMLResources.cs,ItemCandidate,SourceVerified,
-DreadMace,Mace,,ProposedItemClass,Proposed,Conflicting name resolved.
+DreadMace,Mace,Data/Scripts/Custom/PvE/MobileBalance/MobileBalanceItems.Weapons.cs,SourceClass,SourceVerified,
 DreadPirateHat,TricorneHat,Data/Scripts/Items/Magical/Artifacts/Obsolete/Obsolete_DreadPirateHat.cs,ItemCandidate,SourceVerified,
 Dressform,Item,Data/Scripts/Items/Trades/Tailor Items/Dressform.cs,ItemCandidate,SourceVerified,
 DriedHerbs,Item,Data/Scripts/Items/Misc/Rares.cs,ItemCandidate,SourceVerified,
@@ -2435,10 +2435,10 @@ Excalibur,VikingSword,Data/Scripts/Items/Magical/Artifacts/Obsolete/Obsolete_Exc
 ExecutionersAxe,BaseAxe,Data/Scripts/Items/Weapons/Axes/ExecutionersAxe.cs,ItemCandidate,SourceVerified,
 ExecutionersCap,Item,Data/Scripts/Items/Misc/ExecutionersCap.cs,ItemCandidate,SourceVerified,
 ExitDiceGump,Gump,Data/Scripts/Items/Misc/Games/LiarsDice/Gumps/ExitDiceGump.cs,ItemCandidate,SourceVerified,
-ExodusArmor,BoneChest,,ProposedItemClass,Proposed,New class should inherit from the resolved base item class.
-ExodusHands,DragonGloves,,ProposedItemClass,Proposed,New class should inherit from the resolved base item class.
-ExodusHead,BoneHelm,,ProposedItemClass,Proposed,New class should inherit from the resolved base item class.
-ExodusMaul,Tetsubo,,ProposedItemClass,Proposed,New class should inherit from the resolved base item class.
+ExodusArmor,BoneChest,Data/Scripts/Custom/PvE/MobileBalance/MobileBalanceItems.Armor.cs,SourceClass,SourceVerified,
+ExodusHands,DragonGloves,Data/Scripts/Custom/PvE/MobileBalance/MobileBalanceItems.Armor.cs,SourceClass,SourceVerified,
+ExodusHead,BoneHelm,Data/Scripts/Custom/PvE/MobileBalance/MobileBalanceItems.Armor.cs,SourceClass,SourceVerified,
+ExodusMaul,Tetsubo,Data/Scripts/Custom/PvE/MobileBalance/MobileBalanceItems.Weapons.cs,SourceClass,SourceVerified,
 ExplainShopped,Gump,Data/Scripts/Trades/Shoppes/BaseShoppe.cs,ItemCandidate,SourceVerified,
 ExplosionMagicStaff,BaseMagicStaff,Data/Scripts/Items/Wands/6th Circle/ExplosionStaff.cs,ItemCandidate,SourceVerified,
 ExplosionPotion,BaseExplosionPotion,Data/Scripts/Items/Potions/Standard/Explosion Potions/ExplosionPotion.cs,ItemCandidate,SourceVerified,
@@ -3045,7 +3045,7 @@ GoldenAmulet,GoldNecklace,Data/Scripts/Items/Jewels/Tinkered.cs,ItemCandidate,So
 GoldenBracelet,GoldBracelet,Data/Scripts/Items/Jewels/Tinkered.cs,ItemCandidate,SourceVerified,
 GoldenDecorativeRugAddon,BaseAddon,Data/Scripts/Items/Special/Heritage Items/GoldenDecorativeRug.cs,ItemCandidate,SourceVerified,
 GoldenDecorativeRugDeed,BaseAddonDeed,Data/Scripts/Items/Special/Heritage Items/GoldenDecorativeRug.cs,ItemCandidate,SourceVerified,
-GoldenDragonStatue,StatueAdventurer,,ProposedItemClass,Proposed,New class should inherit from the resolved base item class.
+GoldenDragonStatue,StatueAdventurer,Data/Scripts/Custom/PvE/MobileBalance/MobileBalanceItems.TalismansAndTrophies.cs,SourceClass,SourceVerified,
 GoldenEarrings,GoldEarrings,Data/Scripts/Items/Jewels/Tinkered.cs,ItemCandidate,SourceVerified,
 GoldenFeathers,Item,Data/Scripts/Items/Trades/Resources/Unique/GoldenFeathers.cs,ItemCandidate,SourceVerified,
 GoldenOakBoard,BaseWoodBoard,Data/Scripts/Items/Trades/Carpenter Items/Board.cs,ItemCandidate,SourceVerified,
@@ -3134,7 +3134,7 @@ GrizzledMareStatuette,BaseImprisonedMobile,Data/Scripts/Items/Special/GrizzledMa
 GruesomeStandardArtifact,BaseDecorationArtifact,Data/Scripts/Items/Decorations/Artifacts/DoomDecorationArtifacts.cs,ItemCandidate,SourceVerified,
 GuantletsOfAnger,PlateGloves,Data/Scripts/Items/Magical/Artifacts/Obsolete/Obsolete_GuantletsOfAnger.cs,ItemCandidate,SourceVerified,
 GuardNote,Item,Data/Scripts/Items/Books/BulletinBoards/GuardNote.cs,ItemCandidate,SourceVerified,
-GuardianShield,MetalKiteShield,,ProposedItemClass,Proposed,New class should inherit from the resolved base item class.
+GuardianShield,MetalKiteShield,Data/Scripts/Custom/PvE/MobileBalance/MobileBalanceItems.Armor.cs,SourceClass,SourceVerified,
 GuardsmanShield,BaseShield,Data/Scripts/Items/Armor/Shields/GuardsmanShield.cs,ItemCandidate,SourceVerified,
 GuildBoard,Item,Data/Scripts/Items/Books/BulletinBoards/GuildBoard.cs,ItemCandidate,SourceVerified,
 GuildBoardGump,Gump,Data/Scripts/Items/Books/BulletinBoards/GuildBoard.cs,ItemCandidate,SourceVerified,
@@ -3253,7 +3253,7 @@ HeartOfIce,Item,Data/Scripts/Trades/Taxidermy/MagicSkulls.cs,ItemCandidate,Sourc
 HeartOfTheLion,PlateChest,Data/Scripts/Items/Magical/Artifacts/Obsolete/Obsolete_HeartOfTheLion.cs,ItemCandidate,SourceVerified,
 HearthOfHomeFire,BaseAddon,Data/Scripts/Items/Special/HearthOfHomeFire.cs,ItemCandidate,SourceVerified,
 HearthOfHomeFireDeed,BaseAddonDeed,Data/Scripts/Items/Special/HearthOfHomeFire.cs,ItemCandidate,SourceVerified,
-HeartofFire,MagicTalisman,,ProposedItemClass,Proposed,New class should inherit from the resolved base item class.
+HeartofFire,MagicTalisman,Data/Scripts/Custom/PvE/MobileBalance/MobileBalanceItems.TalismansAndTrophies.cs,SourceClass,SourceVerified,
 HeaterShield,BaseShield,Data/Scripts/Items/Armor/Shields/HeaterShield.cs,ItemCandidate,SourceVerified,
 HeatingStand,BaseLight,Data/Scripts/Items/Construction/Lights/HeatingStand.cs,ItemCandidate,SourceVerified,
 HeavyCrossbow,BaseRanged,Data/Scripts/Items/Weapons/Bows/HeavyCrossbow.cs,ItemCandidate,SourceVerified,
@@ -3501,7 +3501,7 @@ LampPost1,BaseLight,Data/Scripts/Items/Construction/Lights/LampPost1.cs,ItemCand
 LampPost2,BaseLight,Data/Scripts/Items/Construction/Lights/LampPost2.cs,ItemCandidate,SourceVerified,
 LampPost3,BaseLight,Data/Scripts/Items/Construction/Lights/LampPost3.cs,ItemCandidate,SourceVerified,
 LampPostArtifact,BaseDecorationArtifact,Data/Scripts/Items/Decorations/Artifacts/DoomDecorationArtifacts.cs,ItemCandidate,SourceVerified,
-LampofBadWishes,MagicTalisman,,ProposedItemClass,Proposed,New class should inherit from the resolved base item class.
+LampofBadWishes,MagicTalisman,Data/Scripts/Custom/PvE/MobileBalance/MobileBalanceItems.TalismansAndTrophies.cs,SourceClass,SourceVerified,
 Lance,BaseSword,Data/Scripts/Items/Weapons/Swords/Lance.cs,ItemCandidate,SourceVerified,
 LandChest,LockableContainer,Data/Scripts/Items/Containers/LandChest.cs,ItemCandidate,SourceVerified,
 Landmine,Item,Data/Scripts/Items/Technology/Landmine.cs,ItemCandidate,SourceVerified,
@@ -4337,7 +4337,7 @@ MedusaStatue,BaseStatue,Data/Scripts/Trades/Stone/Statues.cs,ItemCandidate,Sourc
 MegalodonTooth,Item,Data/Scripts/Items/Misc/MegalodonTooth.cs,ItemCandidate,SourceVerified,
 MelisandesCorrodedHatchet,Hatchet,Data/Scripts/Items/Magical/Artifacts/Obsolete/Obsolete_MelisandesCorrodedHatchet.cs,ItemCandidate,SourceVerified,
 MeltedWax,Item,Data/Scripts/Items/Construction/Misc/MeltedWax.cs,ItemCandidate,SourceVerified,
-MemorialofVirtue,StatueAdventurer,,ProposedItemClass,Proposed,New class should inherit from the resolved base item class.
+MemorialofVirtue,StatueAdventurer,Data/Scripts/Custom/PvE/MobileBalance/MobileBalanceItems.TalismansAndTrophies.cs,SourceClass,SourceVerified,
 MerchantCrate,Container,Data/Scripts/Trades/Shoppes/MerchantCrate.cs,ItemCandidate,SourceVerified,
 MerchantsBook,Item,Data/Scripts/Items/Books/MerchantsBook.cs,ItemCandidate,SourceVerified,
 MerchantsBookGump,Gump,Data/Scripts/Items/Books/MerchantsBook.cs,ItemCandidate,SourceVerified,
@@ -4365,7 +4365,7 @@ MidnightHelm,BoneHelm,Data/Scripts/Items/Magical/Artifacts/Obsolete/Obsolete_Mid
 MidnightLegs,BoneLegs,Data/Scripts/Items/Magical/Artifacts/Obsolete/Obsolete_MidnightLegs.cs,ItemCandidate,SourceVerified,
 MidnightTunic,BoneChest,Data/Scripts/Items/Magical/Artifacts/Obsolete/Obsolete_MidnightTunic.cs,ItemCandidate,SourceVerified,
 MindBlastMagicStaff,BaseMagicStaff,Data/Scripts/Items/Wands/5th Circle/MindBlastStaff.cs,ItemCandidate,SourceVerified,
-MindOverMatterTalisman,MagicTalisman,,ProposedItemClass,Proposed,New class should inherit from the resolved base item class.
+MindOverMatterTalisman,MagicTalisman,Data/Scripts/Custom/PvE/MobileBalance/MobileBalanceItems.TalismansAndTrophies.cs,SourceClass,SourceVerified,
 MinersPickaxe,Pickaxe,Data/Scripts/Items/Magical/Artifacts/Obsolete/Obsolete_MinersPickaxe.cs,ItemCandidate,SourceVerified,
 MiniHouseAddon,BaseAddon,Data/Scripts/Items/Special/MiniHouses.cs,ItemCandidate,SourceVerified,
 MiniHouseDeed,BaseAddonDeed,Data/Scripts/Items/Special/MiniHouses.cs,ItemCandidate,SourceVerified,
@@ -5166,7 +5166,7 @@ RobeOfTeleportation,Robe,Data/Scripts/Items/Magical/Artifacts/Obsolete/Obsolete_
 RobeOfTheEclipse,MagicRobe,Data/Scripts/Items/Magical/Artifacts/Obsolete/Obsolete_RobeOfTheEclipse.cs,ItemCandidate,SourceVerified,
 RobeOfTheEquinox,MagicRobe,Data/Scripts/Items/Magical/Artifacts/Obsolete/Obsolete_RobeOfTheEquinox.cs,ItemCandidate,SourceVerified,
 RobeOfTreason,Robe,Data/Scripts/Items/Magical/Artifacts/Obsolete/Obsolete_RobeOfTreason.cs,ItemCandidate,SourceVerified,
-RobeoftheVoid,Robe,,ProposedItemClass,Proposed,New class should inherit from the resolved base item class.
+RobeoftheVoid,Robe,Data/Scripts/Custom/PvE/MobileBalance/MobileBalanceItems.Armor.cs,SourceClass,SourceVerified,
 RobinHoodsBow,CompositeBow,Data/Scripts/Items/Magical/Artifacts/Obsolete/Obsolete_RobinHoodsBow.cs,ItemCandidate,SourceVerified,
 RobinHoodsFeatheredHat,FeatheredHat,Data/Scripts/Items/Magical/Artifacts/Obsolete/Obsolete_RobinHoodsFeatheredHat.cs,ItemCandidate,SourceVerified,
 RockArtifact,BaseDecorationArtifact,Data/Scripts/Items/Decorations/Artifacts/DoomDecorationArtifacts.cs,ItemCandidate,SourceVerified,
@@ -5249,7 +5249,7 @@ RuneBlade,BaseSword,Data/Scripts/Items/Weapons/Swords/RuneBlade.cs,ItemCandidate
 RuneCarvingKnife,AssassinSpike,Data/Scripts/Items/Magical/Artifacts/Obsolete/Obsolete_RuneCarvingKnife.cs,ItemCandidate,SourceVerified,
 RuneJournal,DynamicBook,Data/Scripts/Items/Books/DynamicBook.cs,ItemCandidate,SourceVerified,
 RuneOfVirtue,LevelTalismanHoly,Data/Scripts/Items/Magical/RuneOfVirtue.cs,ItemCandidate,SourceVerified,
-RuneSword,RoyalSword,,ProposedItemClass,Proposed,New class should inherit from the resolved base item class.
+RuneSword,RoyalSword,Data/Scripts/Custom/PvE/MobileBalance/MobileBalanceItems.Weapons.cs,SourceClass,SourceVerified,
 Runebook,Item,Data/Scripts/Items/Trades/Magical/Runebook.cs,ItemCandidate,SourceVerified,
 RunebookDyeTub,DyeTub,Data/Scripts/Items/Misc/Dyes/RunebookDyeTub.cs,ItemCandidate,SourceVerified,
 RunebookEntry,,Data/Scripts/Items/Trades/Magical/Runebook.cs,ItemCandidate,SourceVerified,
@@ -6065,8 +6065,8 @@ SwordDisplay4NorthArtifact,BaseDecorationArtifact,Data/Scripts/Items/Decorations
 SwordDisplay4WestArtifact,BaseDecorationArtifact,Data/Scripts/Items/Decorations/Artifacts/SEDecorationArtifacts.cs,ItemCandidate,SourceVerified,
 SwordDisplay5NorthArtifact,BaseDecorationArtifact,Data/Scripts/Items/Decorations/Artifacts/SEDecorationArtifacts.cs,ItemCandidate,SourceVerified,
 SwordDisplay5WestArtifact,BaseDecorationArtifact,Data/Scripts/Items/Decorations/Artifacts/SEDecorationArtifacts.cs,ItemCandidate,SourceVerified,
-SwordofDarkness,RoyalSword,,ProposedItemClass,Proposed,New class should inherit from the resolved base item class.
-SwordofLight,RoyalSword,,ProposedItemClass,Proposed,New class should inherit from the resolved base item class.
+SwordofDarkness,RoyalSword,Data/Scripts/Custom/PvE/MobileBalance/MobileBalanceItems.Weapons.cs,SourceClass,SourceVerified,
+SwordofLight,RoyalSword,Data/Scripts/Custom/PvE/MobileBalance/MobileBalanceItems.Weapons.cs,SourceClass,SourceVerified,
 SwordsAndShackles,Item,Data/Scripts/Items/Books/SwordsAndShackles.cs,ItemCandidate,SourceVerified,
 SwordsAndShacklesGump,Gump,Data/Scripts/Items/Books/SwordsAndShackles.cs,ItemCandidate,SourceVerified,
 TableWithBlueClothAddon,BaseAddon,Data/Scripts/Items/Special/Heritage Items/TableWithBlueCloth.cs,ItemCandidate,SourceVerified,
@@ -6258,7 +6258,7 @@ TribalSpear,BaseSpear,Data/Scripts/Items/Weapons/SpearsAndForks/TribalSpear.cs,I
 TrickOrTreat,,Data/Scripts/Items/Gifts/Holiday/Halloween/TrickOrTreat.cs,ItemCandidate,SourceVerified,
 TrickOrTreatBag,BaseContainer,Data/Scripts/Items/Gifts/Holiday/Halloween/TrickOrTreatBag.cs,ItemCandidate,SourceVerified,
 TricorneHat,BaseHat,Data/Scripts/Items/Clothing/Hats.cs,ItemCandidate,SourceVerified,
-TridentofAtlantis,Spear,,ProposedItemClass,Proposed,New class should inherit from the resolved base item class.
+TridentofAtlantis,Spear,Data/Scripts/Custom/PvE/MobileBalance/MobileBalanceItems.Weapons.cs,SourceClass,SourceVerified,
 TripleFanNorthArtifact,BaseDecorationArtifact,Data/Scripts/Items/Decorations/Artifacts/SEDecorationArtifacts.cs,ItemCandidate,SourceVerified,
 TripleFanWestArtifact,BaseDecorationArtifact,Data/Scripts/Items/Decorations/Artifacts/SEDecorationArtifacts.cs,ItemCandidate,SourceVerified,
 TrollSkin,Item,Data/Scripts/Items/Trades/Resources/Tailor/Skin/TrollSkin.cs,ItemCandidate,SourceVerified,
@@ -6440,7 +6440,7 @@ WeaponRenamingTool,Item,Data/Scripts/Items/Magical/WeaponRenamingTool.cs,ItemCan
 Web,Item,Data/Scripts/Items/Decorations/Artifacts/Decorative/Web.cs,ItemCandidate,SourceVerified,
 WeededItem,LockableContainer,Data/Scripts/Items/Traps/WeedItem.cs,ItemCandidate,SourceVerified,
 WeightReductionContainer,Container,Data/Scripts/Items/Containers/WeightReductionContainer.cs,ItemCandidate,SourceVerified,
-Weightoftheworld,Tetsubo,,ProposedItemClass,Proposed,New class should inherit from the resolved base item class.
+Weightoftheworld,Tetsubo,Data/Scripts/Custom/PvE/MobileBalance/MobileBalanceItems.Weapons.cs,SourceClass,SourceVerified,
 WerewolfClaw,BaseReagent,Data/Scripts/Items/Trades/Resources/Reagents/Witch/WerewolfClaw.cs,ItemCandidate,SourceVerified,
 WetClothes,Item,Data/Scripts/Items/Trades/Fishing/WetClothes.cs,ItemCandidate,SourceVerified,
 WheatSheaf,Item,Data/Scripts/Items/Food/Cooking.cs,ItemCandidate,SourceVerified,
@@ -6493,7 +6493,7 @@ WizardsHat,BaseHat,Data/Scripts/Items/Clothing/Hats.cs,ItemCandidate,SourceVerif
 WizardsPants,LeatherLegs,Data/Scripts/Items/Magical/Artifacts/Obsolete/Obsolete_WizardsPants.cs,ItemCandidate,SourceVerified,
 WizardsStatue,Item,Data/Scripts/Items/Special/WizardsStatue.cs,ItemCandidate,SourceVerified,
 WolfMask,BaseHat,Data/Scripts/Items/Clothing/Hats.cs,ItemCandidate,SourceVerified,
-WolfgangSword,NoDachi,,ProposedItemClass,Proposed,New class should inherit from the resolved base item class.
+WolfgangSword,NoDachi,Data/Scripts/Custom/PvE/MobileBalance/MobileBalanceItems.Weapons.cs,SourceClass,SourceVerified,
 Wolfsbane,BaseReagent,Data/Scripts/Items/Trades/Resources/Reagents/Witch/Wolfsbane.cs,ItemCandidate,SourceVerified,
 WomanPortrait1,Item,Data/Scripts/Items/Construction/Decorative/PaintingPortraits.cs,ItemCandidate,SourceVerified,
 WomanPortrait2,Item,Data/Scripts/Items/Construction/Decorative/PaintingPortraits.cs,ItemCandidate,SourceVerified,

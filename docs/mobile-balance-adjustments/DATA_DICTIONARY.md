@@ -113,7 +113,7 @@ One row per parsed item bonus/property from `NewLootItems.AttributesRaw`, plus n
 | Sheet | Purpose |
 | --- | --- |
 | `Ref_Skills` | Source-generated `SkillName` values. |
-| `Ref_ItemClasses` | Source-generated item candidate classes plus proposed item classes. |
+| `Ref_ItemClasses` | Source-generated item classes, including the 23 implemented balance classes. |
 | `Ref_MobileClasses` | Source-generated mobile candidate classes and display names. |
 | `Ref_BonusNames` | Canonical bonus/property names and implementation surfaces. |
 | `Ref_DropRules` | Allowed drop-rule semantics. |
@@ -142,6 +142,7 @@ Reference-backed list formulas use absolute endpoints. They must not drift when 
 | `Blocked` | Cannot safely implement until fixed. |
 | `Pending` | Awaiting implementation. |
 | `ReadyForImplementation` | Approved and ready for code changes. |
+| `Implemented` | Verified source implementation exists and matches normalized data. |
 | `NeedsPolicyDecision` | A policy field is unresolved. |
 | `NeedsClassNameDecision` | Class naming needs a decision. |
 | `BlockedByNameConflict` | Class name conflicts with an existing source type. |
@@ -157,3 +158,17 @@ Reference-backed list formulas use absolute endpoints. They must not drift when 
 | `NewLootItems.OwnerBoundPolicyStatus` | `NotOwnerBound` on all 39 rows |
 | `NewLootItems[ITEM-014].CanonicalClassName` | `DreadMace` |
 | `NewLootItems[ITEM-014].DisplayName` | `The Dread Mace` |
+| `MobileChanges[MC-034].Priority` | `High` |
+| `MobileChanges[MC-035].Priority` | `High` |
+| `MobileChanges.ImplementationStatus` | `Implemented` on all 35 rows |
+| `NewLootItems.ImplementationStatus` | `Implemented` on all 39 rows |
+| `ItemSkillMods.CustomSignedEquipSkillMod` | 70 rows implemented through reusable equip/unequip `SkillMod` handling |
+
+## Implementation Mapping
+
+- `MobileChanges` and `MobileSkillChanges` map to `MobileBalanceCatalog.ApplyProfile`.
+- `LootAssignments` map to independent `MobileBalanceCatalog.DropLoot` rolls; existing loot remains intact.
+- `NewLootItems` map to 23 new public classes or 16 per-drop configurations of existing classes.
+- `ItemSkillMods` contains 70 custom signed rows and three stock positive rows. Only Wolfgang Sword's two positive bonuses and Weight of the World's Anatomy bonus use `SkillBonuses.SetValues`.
+- `ItemBonuses` maps to native AOS, weapon, armor, resistance, direct damage-bound, and item property APIs.
+- All generated drop instances use `LootType.Regular`. Source snapshot text remains unchanged.

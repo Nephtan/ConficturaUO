@@ -216,3 +216,134 @@ Result:
 
 - `git diff --check` passed.
 - No files under `Data/Scripts` changed.
+
+## 2026-07-28 - Approved Implementation
+
+Working directory: `D:\ConficturaUO`
+
+### Approved Source Snapshot
+
+The current staff-approved workbook was preserved without editing:
+
+`docs/mobile-balance-adjustments/source/MobileBalanceTemplate.staff-approved-2026-07-28.xlsx`
+
+Snapshot facts:
+
+- Size: 420,895 bytes.
+- SHA-256: `BFD0435E02EA468B789EC5F60A83311D55020FA2EFA0F75B4B7EC178CD5E3BEA`.
+- The July 15 and earlier July 28 snapshots remain unchanged.
+- The only changes from the repaired submission were `Priority=High` for `MC-034` and `MC-035`.
+
+Commit:
+
+`0a7a8960 docs: approve mobile balance workbook`
+
+### Source Implementation
+
+Implemented and committed:
+
+- 35 exact mobile profiles and 64 mobile skill changes.
+- Version-1 serialization and version-0 profile migration in all 35 target mobiles.
+- 33 corpse-drop hooks and no hooks for `FireIllusion` or `Lovecraftian`.
+- 39 independent percentage rolls, including repeated rows and `PhoenixFeather` quantity 1-3.
+- 23 new public item classes and 16 configured existing-item drops.
+- 70 custom signed equip skill modifiers and three stock positive bonuses.
+- 110 item bonuses through native item, AOS, weapon, armor, resistance, damage, and weight APIs.
+- Legal census behavior for “Legendary Registry of Heroes.”
+
+Commits:
+
+- `5bba73b2 feat: implement mobile balance adjustments`
+- `5333af58 fix: harden mobile balance runtime startup`
+
+The runtime smoke found that public parameterized methods named `Initialize` or `Configure` collide with RunUO's zero-argument reflection hooks. The shared item metadata helper was renamed `ApplyMetadata`, and the implementation validator now rejects future parameterized public methods with either reserved name.
+
+The documented Release x86 server command also exposed a pre-existing `Server.csproj` configuration defect: unsafe framework code was enabled only for Debug. `AllowUnsafeBlocks=true` was added to `Release|x86`.
+
+### Workbook Completion
+
+The connected Excel session was updated and saved through the Excel host API:
+
+- `MC-034` and `MC-035` retain approved `High` priority.
+- All 35 mobile rows and 39 item rows are `ImplementationStatus=Implemented`.
+- All normalized item loot types are `Regular`.
+- The 23 new item classes are `ExistingSourceClass` and `SourceVerified`.
+- `Ref_ItemClasses` records those classes as source classes.
+- Implementation-status dropdowns include `Implemented`.
+- `Reference` keeps its fixed row-14 sections and lists the four additional skill aliases at `D48:E52`.
+
+Final CSV command:
+
+```powershell
+python docs/mobile-balance-adjustments/tools/New-MobileBalanceWorkbook.py --implementation-complete --csv-only
+```
+
+Result:
+
+- `MobileChanges`: 35
+- `NewLootItems`: 39
+- `LootAssignments`: 39
+- `MobileSkillChanges`: 64
+- `ItemSkillMods`: 73
+- `ItemBonuses`: 110
+- `review-issues.csv`: zero data rows
+
+The workbook package contains 12 worksheet parts, zero formula cells, and zero spreadsheet error cells. The connected Excel session confirmed the final used ranges and rendered the changed `MobileChanges` and `NewLootItems` tables without lost formatting or unreadable data.
+
+A full implementation-complete workbook was also generated to an ignored `output/` path and passed `Test-MobileBalanceWorkbook.ps1`. This caught and corrected generator-only drift in the fixed `Reference` layout and defined-name syntax before the final commit.
+
+### Validators
+
+Commands:
+
+```powershell
+pwsh -NoProfile -File docs/mobile-balance-adjustments/tools/Test-MobileBalanceWorkbook.ps1
+pwsh -NoProfile -File docs/mobile-balance-adjustments/tools/Test-MobileBalanceImplementation.ps1
+```
+
+Result:
+
+- Workbook validation passed.
+- Implementation parity passed for 35 profiles, 64 mobile skills, 39 loot assignments, 23 new item classes, 70 custom modifiers, three stock modifiers, 110 item bonuses, 35 migrations, and 33 loot hooks.
+- All five new source files are included in `Data/Scripts/Scripts.csproj`.
+
+### Build Verification
+
+Commands:
+
+```powershell
+msbuild Data/System/Source/Server.csproj /p:Configuration=Debug /p:Platform=x86
+msbuild Data/System/Source/Server.csproj /p:Configuration=Release /p:Platform=x86
+msbuild ConficturaUO.sln /p:Configuration=Release /p:Platform="Any CPU"
+```
+
+Result:
+
+- Debug x86 server build passed.
+- Release x86 server build passed after the Release unsafe-code setting was corrected.
+- Release solution and `Scripts.csproj` project-hygiene build passed.
+- Existing repository warnings remain, including the known `Scripts.csproj` MSIL-to-x86 reference warning; there were no errors.
+
+### Isolated Runtime Verification
+
+Disposable test shards were created under ignored `output/` paths with empty save directories. Production `Saves` was not read or modified.
+
+Command:
+
+```powershell
+.\ConficturaServer.exe -service -nocache
+```
+
+Results:
+
+- Forced runtime script compile completed and the isolated server reached `Console ready`.
+- A temporary, uncommitted runtime verifier instantiated all 35 mobile profiles and all 39 factory items.
+- It verified all 19 signed-mod items through equip, repeated apply, remove, and re-equip.
+- It verified the three stock positive skill bonuses.
+- It saved and reloaded all 19 signed-mod items, then verified delayed rehydration, removal, and re-equip after deserialization.
+- A separate version-0 `FireIllusion` fixture was saved with stale damage and skills. Current source reloaded it as damage 75-120 with `Searching`, `Tactics`, `MagicResist`, `Magery`, and `Psychology` all at 125.
+- Each isolated server process was terminated after its verification milestone.
+
+### Deployment Constraint
+
+Back up the world save before deployment. Once any of the 23 new item types enters a saved world, rollback must retain compatible type stubs or restore the pre-deployment save.

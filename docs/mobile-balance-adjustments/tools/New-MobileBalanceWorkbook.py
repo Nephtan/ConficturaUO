@@ -31,7 +31,7 @@ CONTENT_NS = "http://schemas.openxmlformats.org/package/2006/content-types"
 
 ROOT = Path(__file__).resolve().parents[3]
 WORK_DIR = ROOT / "docs" / "mobile-balance-adjustments"
-SOURCE_XLSX = WORK_DIR / "source" / "MobileBalanceTemplate.staff-revised-2026-07-28.xlsx"
+SOURCE_XLSX = WORK_DIR / "source" / "MobileBalanceTemplate.staff-approved-2026-07-28.xlsx"
 CANONICAL_XLSX = WORK_DIR / "workbooks" / "MobileBalanceTemplate.xlsx"
 OUTPUT_DIR = WORK_DIR / "outputs"
 
@@ -132,7 +132,7 @@ LIST_VALUES = {
     "ScopeList": ["ExactMobile", "ListedMobiles", "EpicBossCandidate"],
     "PriorityList": ["High", "Medium", "Low"],
     "ReviewStatusList": ["Ready", "NeedsDecision", "NeedsNormalization", "Blocked"],
-    "ImplementationStatusList": ["Pending", "ReadyForImplementation", "NeedsPolicyDecision", "NeedsClassNameDecision", "BlockedByNameConflict"],
+    "ImplementationStatusList": ["Pending", "ReadyForImplementation", "Implemented", "NeedsPolicyDecision", "NeedsClassNameDecision", "BlockedByNameConflict"],
     "ClassStatusList": ["ExistingSourceClass", "ExistingSourceClassAfterCorrection", "NewCustomClass", "NameConflict", "NeedsBaseClassReview"],
     "LayerList": ["Talisman", "None", "Other", "OneHanded", "TwoHanded", "Helm", "InnerTorso", "OuterTorso", "Gloves"],
     "LootTypeList": ["Regular", "Blessed", "Cursed", "Newbied"],
@@ -409,7 +409,12 @@ def bonus_surface(name: str, base_item: str) -> Tuple[str, str, str]:
     return group, surface, signed
 
 
-def normalize_data(tables: Dict[str, List[Dict[str, str]]], skills: List[Dict[str, object]], classes: Dict[str, List[ClassInfo]]) -> Dict[str, List[Dict[str, object]]]:
+def normalize_data(
+    tables: Dict[str, List[Dict[str, str]]],
+    skills: List[Dict[str, object]],
+    classes: Dict[str, List[ClassInfo]],
+    implementation_complete: bool = False,
+) -> Dict[str, List[Dict[str, object]]]:
     skill_by_key = {normalize_key(skill["SkillName"]): str(skill["SkillName"]) for skill in skills}
     mobile_rows = tables["MobileChanges"]
     item_rows = tables["NewLootItems"]
@@ -474,7 +479,7 @@ def normalize_data(tables: Dict[str, List[Dict[str, str]]], skills: List[Dict[st
             "LootAssignmentIds": loot_id,
             "Priority": row.get("Priority", ""),
             "ReviewStatus": review_status,
-            "ImplementationStatus": "Pending",
+            "ImplementationStatus": "Implemented" if implementation_complete else "Pending",
             "Notes": row.get("Notes", ""),
             "CodexNotes": " ".join(notes),
         }
@@ -552,7 +557,10 @@ def normalize_data(tables: Dict[str, List[Dict[str, str]]], skills: List[Dict[st
 
         owner_bound = row.get("OwnerBound", "")
         owner_policy = "NeedsOwnerBindingPolicy" if owner_bound == "Yes" else "NotOwnerBound"
-        implementation_status = "BlockedByNameConflict" if status == "NameConflict" else ("NeedsPolicyDecision" if owner_policy == "NeedsOwnerBindingPolicy" else "Pending")
+        if implementation_complete:
+            implementation_status = "Implemented"
+        else:
+            implementation_status = "BlockedByNameConflict" if status == "NameConflict" else ("NeedsPolicyDecision" if owner_policy == "NeedsOwnerBindingPolicy" else "Pending")
         enhanced = {
             "ItemId": item_id,
             "ClassNameRaw": class_name_raw,
@@ -564,7 +572,7 @@ def normalize_data(tables: Dict[str, List[Dict[str, str]]], skills: List[Dict[st
             "ItemIDGraphic": row.get("ItemIDGraphic", ""),
             "Hue": number_value(row.get("Hue", "")),
             "Layer": row.get("Layer", ""),
-            "LootType": row.get("LootType", ""),
+            "LootType": "Regular" if implementation_complete else row.get("LootType", ""),
             "SkillBonusesRaw": skill_bonuses_raw,
             "AttributesRaw": attributes_raw,
             "OwnerBound": owner_bound,
@@ -743,7 +751,7 @@ def normalize_data(tables: Dict[str, List[Dict[str, str]]], skills: List[Dict[st
                     "Status": "NeedsDecision",
                 }
             )
-    if any(row["ModifierKind"] == "CustomSignedEquipSkillMod" for row in item_skill_rows):
+    if not implementation_complete and any(row["ModifierKind"] == "CustomSignedEquipSkillMod" for row in item_skill_rows):
         review_rows.append(
             {
                 "IssueId": f"MBR-{len(review_rows) + 1:03d}",
@@ -777,7 +785,11 @@ def write_csv_outputs(normalized: Dict[str, List[Dict[str, object]]]) -> None:
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
     for name, rows in normalized.items():
         path = OUTPUT_DIR / f"{name.lower().replace('_', '-')}.csv"
-        headers: List[str] = list(rows[0].keys()) if rows else []
+        headers: List[str] = list(rows[0].keys()) if rows else (
+            ["IssueId", "Severity", "Sheet", "RowKey", "Issue", "Recommendation", "Status"]
+            if name == "review-issues"
+            else []
+        )
         with path.open("w", encoding="utf-8", newline="") as stream:
             writer = csv.DictWriter(stream, fieldnames=headers, lineterminator="\n")
             writer.writeheader()
@@ -899,7 +911,9 @@ def reference_sheet_xml(normalized: Dict[str, List[Dict[str, object]]]) -> str:
         ("Merchantile", "Mercantile"),
         ("Aantomy", "Anatomy"),
     ]
-    for offset in range(max(len(guidance), len(aliases))):
+    primary_aliases = aliases[:8]
+    additional_aliases = aliases[8:]
+    for offset in range(max(len(guidance), len(primary_aliases))):
         row_index = 5 + offset
         cells: List[str] = []
         if offset < len(guidance):
@@ -909,11 +923,11 @@ def reference_sheet_xml(normalized: Dict[str, List[Dict[str, object]]]) -> str:
                     cell_xml(row_index, 2, guidance[offset][1]),
                 ]
             )
-        if offset < len(aliases):
+        if offset < len(primary_aliases):
             cells.extend(
                 [
-                    cell_xml(row_index, 4, aliases[offset][0]),
-                    cell_xml(row_index, 5, aliases[offset][1]),
+                    cell_xml(row_index, 4, primary_aliases[offset][0]),
+                    cell_xml(row_index, 5, primary_aliases[offset][1]),
                 ]
             )
         rows[row_index] = cells
@@ -939,6 +953,19 @@ def reference_sheet_xml(normalized: Dict[str, List[Dict[str, object]]]) -> str:
                 ]
             )
         rows[row_index] = cells
+
+    additional_alias_header_row = 15 + len(bonuses) + 1
+    rows.setdefault(additional_alias_header_row, []).append(
+        cell_xml(additional_alias_header_row, 4, "Additional Skill Aliases", 1)
+    )
+    for offset, (alias, canonical) in enumerate(additional_aliases, start=1):
+        row_index = additional_alias_header_row + offset
+        rows.setdefault(row_index, []).extend(
+            [
+                cell_xml(row_index, 4, alias),
+                cell_xml(row_index, 5, canonical),
+            ]
+        )
 
     row_xml = "".join(f'<row r="{row_index}">{"".join(rows[row_index])}</row>' for row_index in sorted(rows))
     return (
@@ -1218,13 +1245,13 @@ def write_workbook(normalized: Dict[str, List[Dict[str, object]]]) -> None:
     specs = build_sheet_specs(normalized)
     sheet_by_name = {spec.name: spec for spec in specs}
     defined_ranges = {
-        "SkillNameList": f"'Ref_Skills'!$B$5:$B${4 + len(sheet_by_name['Ref_Skills'].rows)}",
-        "ItemClassList": f"'Ref_ItemClasses'!$A$5:$A${4 + len(sheet_by_name['Ref_ItemClasses'].rows)}",
-        "MobileClassList": f"'Ref_MobileClasses'!$A$5:$A${4 + len(sheet_by_name['Ref_MobileClasses'].rows)}",
-        "MobileDisplayList": f"'Ref_MobileClasses'!$B$5:$B${4 + len(sheet_by_name['Ref_MobileClasses'].rows)}",
-        "BonusNameList": f"'Ref_BonusNames'!$A$5:$A${4 + len(sheet_by_name['Ref_BonusNames'].rows)}",
-        "BonusGroupList": f"'Ref_BonusNames'!$B$5:$B${4 + len(sheet_by_name['Ref_BonusNames'].rows)}",
-        "DropRuleList": f"'Ref_DropRules'!$A$5:$A${4 + len(sheet_by_name['Ref_DropRules'].rows)}",
+        "SkillNameList": f"Ref_Skills!$B$5:$B${4 + len(sheet_by_name['Ref_Skills'].rows)}",
+        "ItemClassList": f"Ref_ItemClasses!$A$5:$A${4 + len(sheet_by_name['Ref_ItemClasses'].rows)}",
+        "MobileClassList": f"Ref_MobileClasses!$A$5:$A${4 + len(sheet_by_name['Ref_MobileClasses'].rows)}",
+        "MobileDisplayList": f"Ref_MobileClasses!$B$5:$B${4 + len(sheet_by_name['Ref_MobileClasses'].rows)}",
+        "BonusNameList": f"Ref_BonusNames!$A$5:$A${4 + len(sheet_by_name['Ref_BonusNames'].rows)}",
+        "BonusGroupList": f"Ref_BonusNames!$B$5:$B${4 + len(sheet_by_name['Ref_BonusNames'].rows)}",
+        "DropRuleList": f"Ref_DropRules!$A$5:$A${4 + len(sheet_by_name['Ref_DropRules'].rows)}",
     }
 
     with zipfile.ZipFile(CANONICAL_XLSX, "w", compression=zipfile.ZIP_DEFLATED) as zf:
@@ -1246,11 +1273,16 @@ def main() -> int:
         "--source",
         type=Path,
         default=SOURCE_XLSX,
-        help="Source XLSX to normalize. Defaults to the preserved July 28 staff revision.",
+        help="Source XLSX to normalize. Defaults to the preserved July 28 staff-approved snapshot.",
     )
     mode = parser.add_mutually_exclusive_group()
     mode.add_argument("--csv-only", action="store_true", help="Regenerate CSV outputs without replacing the canonical workbook.")
     mode.add_argument("--workbook-only", action="store_true", help="Regenerate the canonical workbook without replacing CSV outputs.")
+    parser.add_argument(
+        "--implementation-complete",
+        action="store_true",
+        help="Mark mobile and item rows Implemented and clear the approved signed-modifier implementation constraint.",
+    )
     args = parser.parse_args()
 
     source_xlsx = args.source if args.source.is_absolute() else ROOT / args.source
@@ -1265,7 +1297,7 @@ def main() -> int:
         return 1
     skills = parse_skills()
     classes = scan_classes()
-    normalized = normalize_data(tables, skills, classes)
+    normalized = normalize_data(tables, skills, classes, args.implementation_complete)
     if not args.workbook_only:
         write_csv_outputs(normalized)
         print(f"Wrote CSV outputs under {rel(OUTPUT_DIR)}")
