@@ -9,7 +9,8 @@ The workflow mirrors the practical parts of `docs/codebase-audit`: keep source e
 | Need | File |
 | --- | --- |
 | Staff-editable workbook | [workbooks/MobileBalanceTemplate.xlsx](workbooks/MobileBalanceTemplate.xlsx) |
-| Exact staff submission snapshot | [source/MobileBalanceTemplate.staff-filled-2026-07-15.xlsx](source/MobileBalanceTemplate.staff-filled-2026-07-15.xlsx) |
+| Current staff submission snapshot | [source/MobileBalanceTemplate.staff-revised-2026-07-28.xlsx](source/MobileBalanceTemplate.staff-revised-2026-07-28.xlsx) |
+| Original staff submission snapshot | [source/MobileBalanceTemplate.staff-filled-2026-07-15.xlsx](source/MobileBalanceTemplate.staff-filled-2026-07-15.xlsx) |
 | Sheet and column definitions | [DATA_DICTIONARY.md](DATA_DICTIONARY.md) |
 | Current review findings and blockers | [REVIEW_FINDINGS.md](REVIEW_FINDINGS.md) |
 | Codex rules for this area | [AGENTS.md](AGENTS.md) |
@@ -27,28 +28,33 @@ The workflow mirrors the practical parts of `docs/codebase-audit`: keep source e
 
 ## Current Workbook State
 
-The canonical workbook was generated from the staff-filled snapshot on July 15, 2026.
+The canonical workbook was repaired from the staff-revised snapshot on July 28, 2026. Every structured sheet uses row 4 for headers and row 5 onward for data. `Reference` is the intentional exception: it is an instructional sheet with separate sections.
 
 | Area | Count |
 | --- | ---: |
-| Mobile change rows | 33 |
+| Mobile change rows | 35 |
 | Loot item rows | 39 |
 | Loot assignment rows | 39 |
-| Normalized mobile skill rows | 58 |
-| Normalized item skill modifier rows | 72 |
+| Normalized mobile skill rows | 64 |
+| Normalized item skill modifier rows | 73 |
 | Normalized item bonus rows | 110 |
 
-Important current blockers are recorded in [REVIEW_FINDINGS.md](REVIEW_FINDINGS.md):
+Staff has resolved these earlier blockers:
 
-- 39 loot rows need a staff decision because `Guaranteed=Yes` is paired with `ChancePercent` below 100.
-- 8 owner-bound items need an owner binding policy.
-- Signed item skill modifiers require custom equip/unequip skill-mod handling instead of stock `SkillBonuses.SetValues`.
-- The requested `Pestilence` mace name conflicts with an existing obsolete `Pestilence` source class.
+- All 39 loot rows are independent `ChancePercentOnCorpse` rolls with `Guaranteed=No`.
+- All 39 items have `OwnerBound=No`.
+- The conflicting mace class is now `DreadMace`, displayed as `The Dread Mace`.
+- Blank loot links for `FireIllusion` and `Lovecraftian` mean no loot change.
+
+Two choices remain in [REVIEW_FINDINGS.md](REVIEW_FINDINGS.md):
+
+- How to handle 36 negative skill modifiers across 19 items.
+- Whether `MC-034 Fire Illusion` and `MC-035 Lovecraftian` are `High`, `Medium`, or `Low` priority.
 
 ## Staff Workflow
 
 1. Open [workbooks/MobileBalanceTemplate.xlsx](workbooks/MobileBalanceTemplate.xlsx).
-2. Use the first three sheets for broad editing: `MobileChanges`, `NewLootItems`, and `LootAssignments`.
+2. Use the first three sheets for broad editing: `MobileChanges`, `NewLootItems`, and `LootAssignments`. Their headers are on row 4.
 3. Use dropdowns where available. The `Ref_*` sheets are source-backed references for class names, skills, bonuses, and drop rules.
 4. Do not edit `source/`. If staff sends a new workbook, save it as a new dated source snapshot.
 5. If a row is marked `NeedsDecision`, resolve the policy question in the workbook notes before asking Codex to implement code changes.
@@ -56,7 +62,7 @@ Important current blockers are recorded in [REVIEW_FINDINGS.md](REVIEW_FINDINGS.
 ## Codex Workflow
 
 1. Read [AGENTS.md](AGENTS.md), [DATA_DICTIONARY.md](DATA_DICTIONARY.md), and [REVIEW_FINDINGS.md](REVIEW_FINDINGS.md).
-2. Use CSVs in [outputs/](outputs/) for implementation planning instead of parsing staff free text.
+2. Use CSVs in [outputs/](outputs/) for implementation planning. The validator checks workbook-to-CSV content parity.
 3. Run the validator:
 
 ```powershell
@@ -68,11 +74,11 @@ powershell -NoProfile -ExecutionPolicy Bypass -File docs/mobile-balance-adjustme
 
 ## Regenerating The Workbook
 
-The generated workbook and CSVs can be rebuilt from the immutable source snapshot:
+The CSVs can be regenerated from the current immutable source snapshot without touching an open workbook:
 
 ```powershell
-python docs/mobile-balance-adjustments/tools/New-MobileBalanceWorkbook.py
+python docs/mobile-balance-adjustments/tools/New-MobileBalanceWorkbook.py --csv-only
 powershell -NoProfile -ExecutionPolicy Bypass -File docs/mobile-balance-adjustments/tools/Test-MobileBalanceWorkbook.ps1
 ```
 
-The generator uses only the Python standard library. It reads the source workbook as an XLSX package, scans source files for skills/classes, normalizes rows, writes CSVs, and writes a fresh workbook with dropdown validations.
+Run the generator without `--csv-only` only when deliberately rebuilding the canonical workbook. It reads the July 28 snapshot by default, accepts both original and enhanced column names, scans source files for current skills/classes, preserves raw staff text, and writes stable source-backed dropdown validations.

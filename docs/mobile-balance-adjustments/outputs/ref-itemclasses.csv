@@ -2140,6 +2140,7 @@ DrawKnife,BaseTool,Data/Scripts/Items/Trades/Tools/DrawKnife.cs,ItemCandidate,So
 Drawer,BaseContainer,Data/Scripts/Items/Containers/FurnitureContainer.cs,ItemCandidate,SourceVerified,
 DreadHelm,BaseArmor,Data/Scripts/Items/Armor/Helmets/DreadHelm.cs,ItemCandidate,SourceVerified,
 DreadHornMane,Item,Data/Scripts/Items/Trades/Resources/MiscMLResources.cs,ItemCandidate,SourceVerified,
+DreadMace,Mace,,ProposedItemClass,Proposed,Conflicting name resolved.
 DreadPirateHat,TricorneHat,Data/Scripts/Items/Magical/Artifacts/Obsolete/Obsolete_DreadPirateHat.cs,ItemCandidate,SourceVerified,
 Dressform,Item,Data/Scripts/Items/Trades/Tailor Items/Dressform.cs,ItemCandidate,SourceVerified,
 DriedHerbs,Item,Data/Scripts/Items/Misc/Rares.cs,ItemCandidate,SourceVerified,

@@ -1,8 +1,10 @@
 # Mobile Balance Review Findings
 
-Review date: July 15, 2026.
+Review date: July 28, 2026.
 
-Source workbook: `docs/mobile-balance-adjustments/source/MobileBalanceTemplate.staff-filled-2026-07-15.xlsx`
+Current source workbook: `docs/mobile-balance-adjustments/source/MobileBalanceTemplate.staff-revised-2026-07-28.xlsx`
+
+Original source workbook: `docs/mobile-balance-adjustments/source/MobileBalanceTemplate.staff-filled-2026-07-15.xlsx`
 
 Canonical workbook: `docs/mobile-balance-adjustments/workbooks/MobileBalanceTemplate.xlsx`
 
@@ -10,11 +12,13 @@ Canonical workbook: `docs/mobile-balance-adjustments/workbooks/MobileBalanceTemp
 
 The staff-filled `MobileChanges` data is populated correctly:
 
-- 33 mobile change rows.
+- 35 mobile change rows.
 - 18 `MobileChanges.Notes` cells match `lower damage` case-insensitively.
-- All 33 mobile rows have `DamageMin` and `DamageMax` values.
+- All 35 mobile rows have `DamageMin` and `DamageMax` values.
 - All `MobileChanges.LootAssignmentIds` resolve to rows in `LootAssignments`.
 - All `LootAssignments.ItemId` values resolve to rows in `NewLootItems`.
+- The normalized sheets contain 64 mobile skill rows, 73 item skill rows, and 110 item bonus rows.
+- `Reference` is an instructional sheet; all structured tables use row 4 for headers and row 5 onward for data.
 
 ## P1 Findings
 
@@ -22,37 +26,53 @@ The staff-filled `MobileChanges` data is populated correctly:
 
 Many requested item skill modifiers are negative, and several items have more than five skill-mod entries. These cannot be represented safely as stock `AosSkillBonuses.SetValues` data.
 
-Use the normalized `ItemSkillMods` sheet and `outputs/itemskillmods.csv`. Rows marked `CustomSignedEquipSkillMod` require custom equip/unequip `SkillMod` logic during source implementation.
+The workbook contains 36 negative skill modifiers across 19 items. Use the normalized `ItemSkillMods` sheet and `outputs/itemskillmods.csv`. Rows marked `CustomSignedEquipSkillMod` require custom equip/unequip `SkillMod` logic during source implementation.
 
 Evidence:
 
 - `Data/Scripts/System/Misc/AOS.cs` processes only five stock skill-bonus slots.
 - The AOS skill-bonus packing reads bonus values back as positive packed values, so signed values should not be stored there.
 
-### Drop Semantics Need Staff Decision
+Decision required:
 
-All 39 loot assignment rows have `Guaranteed=Yes` and `ChancePercent < 100`.
+1. Preserve all signed values with a reusable custom equip/unequip `SkillMod` implementation.
+2. Remove the negative modifiers.
+3. Return the 19 affected items for redesign.
 
-The enhanced workbook preserves both values and flags every row as:
+The recommended implementation choice is option 1 because it preserves the staff-authored balance data without misusing stock packed skill bonuses.
 
-- `DropRule=NeedsDecision`
-- `DropSemanticsStatus=NeedsDecision`
+## Resolved Decisions
 
-Staff must choose whether these are chance-based drops, guaranteed drops, guaranteed group rolls, or another rule before source implementation.
+### Loot Semantics
 
-### Owner-Bound Items Need Binding Policy
+All 39 assignments are independent percentage rolls on the corpse:
 
-Eight item rows have `OwnerBound=Yes`. The workbook flags them as `OwnerBoundPolicyStatus=NeedsOwnerBindingPolicy`.
+- `Guaranteed=No`
+- `DropRule=ChancePercentOnCorpse`
+- `DropSemanticsStatus=Ready`
 
-Staff must choose when ownership binds, such as killer, top damager, looter, first equipper, or another rule.
+### Ownership
 
-### `Pestilence` Name Conflict
+No requested item is owner-bound:
 
-`ITEM-014` requests class `Pestilence` as a mace. The source tree already contains `Server.Items.Pestilence` as an obsolete quiver class.
+- `OwnerBound=No`
+- `OwnerBoundPolicyStatus=NotOwnerBound`
 
-This is flagged as `ExistingClassStatus=NameConflict` and `ImplementationStatus=BlockedByNameConflict`. Choose a new class name before implementation.
+### Mace Class Conflict
+
+`ITEM-014` is now the proposed class `DreadMace` with display name `The Dread Mace`. Stale `Pestilence` references were removed from assignments, skill rows, bonus rows, and references.
+
+### New Mobile Loot
+
+Blank loot links on `MC-034 Fire Illusion` and `MC-035 Lovecraftian` mean no loot change requested.
 
 ## P2 Findings
+
+### New Mobile Priorities Need Staff Decision
+
+`MC-034 Fire Illusion` and `MC-035 Lovecraftian` intentionally have blank `Priority` values. Choose `High`, `Medium`, or `Low` for each.
+
+Recommendation: `High`, because 22 of the other 24 `EpicBossCandidate` rows are already `High`.
 
 ### Canonical Name Cleanup Applied
 

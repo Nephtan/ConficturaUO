@@ -2,6 +2,14 @@
 
 This file defines the canonical workbook sheets and CSV outputs used for mobile balance implementation planning.
 
+## Workbook Layout
+
+- Structured sheet headers are always on row 4.
+- Structured data begins on row 5.
+- Rows 1 and 2 contain the sheet title and staff guidance.
+- `Reference` is not a structured table. It uses separate guidance, skill-alias, canonical-skill, and item-attribute sections.
+- Raw staff text remains in `*Raw` columns. Canonical columns and normalized child sheets are the implementation-facing data.
+
 ## Core Sheets
 
 ### `MobileChanges`
@@ -73,6 +81,8 @@ One row per parsed skill change from `MobileChanges.SkillChangesRaw`.
 
 Canonical skill names come from `Data/System/Source/Skills.cs`.
 
+`SkillMin` and `SkillMax` represent a requested range. `SkillValue` represents a single requested value. `Operation=SetSkill` maps to the mobile's skill-setting surface.
+
 ### `ItemSkillMods`
 
 One row per parsed item skill modifier from `NewLootItems.SkillBonusesRaw`.
@@ -107,6 +117,20 @@ One row per parsed item bonus/property from `NewLootItems.AttributesRaw`, plus n
 | `Ref_MobileClasses` | Source-generated mobile candidate classes and display names. |
 | `Ref_BonusNames` | Canonical bonus/property names and implementation surfaces. |
 | `Ref_DropRules` | Allowed drop-rule semantics. |
+| `Reference` | Staff instructions, common aliases, canonical `SkillName` values, and common item attribute names. |
+
+## Dropdown Sources
+
+| Entry column | Dropdown source |
+| --- | --- |
+| Mobile class/display columns | `Ref_MobileClasses` |
+| Item class/base-item columns | `Ref_ItemClasses` |
+| Canonical skill columns | `Ref_Skills.SkillName` |
+| Canonical bonus and bonus-group columns | `Ref_BonusNames` |
+| Drop rule columns | `Ref_DropRules` |
+| Scope, priority, status, layer, loot type, owner-bound, and modifier-kind columns | Inline controlled lists documented below and enforced by workbook validation. |
+
+Reference-backed list formulas use absolute endpoints. They must not drift when rows are copied or added.
 
 ## Status Values
 
@@ -121,3 +145,15 @@ One row per parsed item bonus/property from `NewLootItems.AttributesRaw`, plus n
 | `NeedsPolicyDecision` | A policy field is unresolved. |
 | `NeedsClassNameDecision` | Class naming needs a decision. |
 | `BlockedByNameConflict` | Class name conflicts with an existing source type. |
+
+## Current Approved Values
+
+| Field | Approved value |
+| --- | --- |
+| `LootAssignments.Guaranteed` | `No` on all 39 rows |
+| `LootAssignments.DropRule` | `ChancePercentOnCorpse` on all 39 rows |
+| `LootAssignments.DropSemanticsStatus` | `Ready` on all 39 rows |
+| `NewLootItems.OwnerBound` | `No` on all 39 rows |
+| `NewLootItems.OwnerBoundPolicyStatus` | `NotOwnerBound` on all 39 rows |
+| `NewLootItems[ITEM-014].CanonicalClassName` | `DreadMace` |
+| `NewLootItems[ITEM-014].DisplayName` | `The Dread Mace` |

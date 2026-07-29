@@ -9,6 +9,7 @@ tables, and writes a fresh XLSX package with dropdown validations.
 
 from __future__ import annotations
 
+import argparse
 import csv
 import os
 import re
@@ -30,7 +31,7 @@ CONTENT_NS = "http://schemas.openxmlformats.org/package/2006/content-types"
 
 ROOT = Path(__file__).resolve().parents[3]
 WORK_DIR = ROOT / "docs" / "mobile-balance-adjustments"
-SOURCE_XLSX = WORK_DIR / "source" / "MobileBalanceTemplate.staff-filled-2026-07-15.xlsx"
+SOURCE_XLSX = WORK_DIR / "source" / "MobileBalanceTemplate.staff-revised-2026-07-28.xlsx"
 CANONICAL_XLSX = WORK_DIR / "workbooks" / "MobileBalanceTemplate.xlsx"
 OUTPUT_DIR = WORK_DIR / "outputs"
 
@@ -180,6 +181,13 @@ def col_letter(index: int) -> str:
 
 def normalize_key(value: object) -> str:
     return re.sub(r"[^a-z0-9]", "", str(value or "").lower())
+
+
+def row_value(row: Dict[str, str], *names: str) -> str:
+    for name in names:
+        if name in row:
+            return row[name]
+    return ""
 
 
 def is_number(value: object) -> bool:
@@ -381,10 +389,12 @@ def item_status(canonical_name: str, canonical_base: str, row: Dict[str, str], c
     if canonical_name == "Pestilence":
         return "NameConflict", "Existing Pestilence is an obsolete quiver; use a new class name for the mace before implementation."
     if canonical_name in classes:
-        if str(row.get("ClassName", "")).strip() != canonical_name:
+        if str(row_value(row, "ClassNameRaw", "ClassName")).strip() != canonical_name:
             return "ExistingSourceClassAfterCorrection", "Class token corrected to existing source class."
         return "ExistingSourceClass", "Existing source class resolved."
     if canonical_base in classes:
+        if canonical_name == "DreadMace":
+            return "NewCustomClass", "Conflicting name resolved."
         return "NewCustomClass", "New class should inherit from the resolved base item class."
     return "NeedsBaseClassReview", "Neither class nor base item resolved to a source class."
 
@@ -414,7 +424,8 @@ def normalize_data(tables: Dict[str, List[Dict[str, str]]], skills: List[Dict[st
     skill_change_id = 1
     for row in mobile_rows:
         resolved_class, path, status = resolve_mobile(row.get("MobileClassOrName", ""), classes)
-        skill_pairs = parse_pairs(row.get("SkillChanges", ""))
+        skill_changes_raw = row_value(row, "SkillChangesRaw", "SkillChanges")
+        skill_pairs = parse_pairs(skill_changes_raw)
         review_status = "Ready"
         notes: List[str] = []
         if status == "Unresolved":
@@ -459,7 +470,7 @@ def normalize_data(tables: Dict[str, List[Dict[str, str]]], skills: List[Dict[st
             "Scope": row.get("Scope", ""),
             "DamageMin": number_value(row.get("DamageMin", "")),
             "DamageMax": number_value(row.get("DamageMax", "")),
-            "SkillChangesRaw": row.get("SkillChanges", ""),
+            "SkillChangesRaw": skill_changes_raw,
             "LootAssignmentIds": loot_id,
             "Priority": row.get("Priority", ""),
             "ReviewStatus": review_status,
@@ -480,11 +491,15 @@ def normalize_data(tables: Dict[str, List[Dict[str, str]]], skills: List[Dict[st
     bonus_id = 1
     for row in item_rows:
         item_id = row.get("ItemId", "")
-        canonical_name = canonical_class(row.get("ClassName", ""))
-        canonical_base = canonical_class(row.get("BaseItem", ""))
+        class_name_raw = row_value(row, "ClassNameRaw", "ClassName")
+        base_item_raw = row_value(row, "BaseItemRaw", "BaseItem")
+        skill_bonuses_raw = row_value(row, "SkillBonusesRaw", "SkillBonuses")
+        attributes_raw = row_value(row, "AttributesRaw", "Attributes")
+        canonical_name = canonical_class(class_name_raw)
+        canonical_base = canonical_class(base_item_raw)
         status, status_notes = item_status(canonical_name, canonical_base, row, classes)
-        skill_pairs = parse_pairs(row.get("SkillBonuses", ""))
-        attribute_pairs = parse_pairs(row.get("Attributes", ""))
+        skill_pairs = parse_pairs(skill_bonuses_raw)
+        attribute_pairs = parse_pairs(attributes_raw)
         skill_like_pairs: List[Tuple[str, str]] = []
         bonus_like_pairs: List[Tuple[str, str, str]] = []
         for name, value in skill_pairs:
@@ -535,13 +550,14 @@ def normalize_data(tables: Dict[str, List[Dict[str, str]]], skills: List[Dict[st
             )
             bonus_id += 1
 
-        owner_policy = "NeedsOwnerBindingPolicy" if row.get("OwnerBound", "") == "Yes" else "NotOwnerBound"
+        owner_bound = row.get("OwnerBound", "")
+        owner_policy = "NeedsOwnerBindingPolicy" if owner_bound == "Yes" else "NotOwnerBound"
         implementation_status = "BlockedByNameConflict" if status == "NameConflict" else ("NeedsPolicyDecision" if owner_policy == "NeedsOwnerBindingPolicy" else "Pending")
         enhanced = {
             "ItemId": item_id,
-            "ClassNameRaw": row.get("ClassName", ""),
+            "ClassNameRaw": class_name_raw,
             "CanonicalClassName": canonical_name,
-            "BaseItemRaw": row.get("BaseItem", ""),
+            "BaseItemRaw": base_item_raw,
             "CanonicalBaseItem": canonical_base,
             "ExistingClassStatus": status,
             "DisplayName": row.get("DisplayName", ""),
@@ -549,9 +565,9 @@ def normalize_data(tables: Dict[str, List[Dict[str, str]]], skills: List[Dict[st
             "Hue": number_value(row.get("Hue", "")),
             "Layer": row.get("Layer", ""),
             "LootType": row.get("LootType", ""),
-            "SkillBonusesRaw": row.get("SkillBonuses", ""),
-            "AttributesRaw": row.get("Attributes", ""),
-            "OwnerBound": row.get("OwnerBound", ""),
+            "SkillBonusesRaw": skill_bonuses_raw,
+            "AttributesRaw": attributes_raw,
+            "OwnerBound": owner_bound,
             "OwnerBoundPolicyStatus": owner_policy,
             "PropertyLabel": row.get("PropertyLabel", ""),
             "ImplementationStatus": implementation_status,
@@ -569,6 +585,17 @@ def normalize_data(tables: Dict[str, List[Dict[str, str]]], skills: List[Dict[st
         chance = number_value(row.get("ChancePercent", ""))
         guaranteed = row.get("Guaranteed", "")
         needs_drop_decision = guaranteed == "Yes" and is_number(chance) and float(chance) < 100
+        explicit_drop_rule = row.get("DropRule", "")
+        explicit_drop_status = row.get("DropSemanticsStatus", "")
+        if needs_drop_decision:
+            drop_rule = "NeedsDecision"
+            drop_status = "NeedsDecision"
+        elif guaranteed == "Yes":
+            drop_rule = explicit_drop_rule or "GuaranteedAlwaysDrop"
+            drop_status = explicit_drop_status or "Ready"
+        else:
+            drop_rule = explicit_drop_rule or "ChancePercentOnCorpse"
+            drop_status = explicit_drop_status or "Ready"
         enhanced_assignments.append(
             {
                 "AssignmentId": assignment_id,
@@ -581,8 +608,8 @@ def normalize_data(tables: Dict[str, List[Dict[str, str]]], skills: List[Dict[st
                 "QuantityMin": number_value(row.get("QuantityMin", "")),
                 "QuantityMax": number_value(row.get("QuantityMax", "")),
                 "Guaranteed": guaranteed,
-                "DropRule": "NeedsDecision" if needs_drop_decision else ("GuaranteedAlwaysDrop" if guaranteed == "Yes" else "ChancePercentOnCorpse"),
-                "DropSemanticsStatus": "NeedsDecision" if needs_drop_decision else "Ready",
+                "DropRule": drop_rule,
+                "DropSemanticsStatus": drop_status,
                 "Notes": row.get("Notes", ""),
                 "CodexNotes": "Guaranteed=Yes conflicts with ChancePercent below 100; staff policy required." if needs_drop_decision else "",
             }
@@ -595,13 +622,18 @@ def normalize_data(tables: Dict[str, List[Dict[str, str]]], skills: List[Dict[st
     normalized["ItemSkillMods"] = item_skill_rows
     normalized["ItemBonuses"] = item_bonus_rows
 
+    submitted_skill_notes = {
+        str(row_value(row, "SkillName")).strip(): str(row_value(row, "Notes")).strip()
+        for row in tables.get("Ref_Skills", [])
+        if str(row_value(row, "SkillName")).strip()
+    }
     normalized["Ref_Skills"] = [
         {
             "SkillId": skill["SkillId"],
             "SkillName": skill["SkillName"],
             "SourcePath": skill["SourcePath"],
             "Status": "SourceVerified",
-            "Notes": "",
+            "Notes": submitted_skill_notes.get(str(skill["SkillName"]), ""),
         }
         for skill in skills
     ]
@@ -637,9 +669,9 @@ def normalize_data(tables: Dict[str, List[Dict[str, str]]], skills: List[Dict[st
         for info in infos:
             if info.kind != "MobileCandidate" or info.class_name in seen_mobile:
                 continue
-            display = info.display_name
+            display = " ".join(info.display_name.split())
             if info.title:
-                display = f"{display} {info.title}".strip()
+                display = " ".join(f"{display} {info.title}".split())
             mobile_ref_rows.append(
                 {
                     "ClassName": info.class_name,
@@ -723,6 +755,19 @@ def normalize_data(tables: Dict[str, List[Dict[str, str]]], skills: List[Dict[st
                 "Status": "ImplementationConstraint",
             }
         )
+    for row in enhanced_mobile:
+        if row["ChangeId"] in {"MC-034", "MC-035"} and not row["Priority"]:
+            review_rows.append(
+                {
+                    "IssueId": f"MBR-{len(review_rows) + 1:03d}",
+                    "Severity": "P2",
+                    "Sheet": "MobileChanges",
+                    "RowKey": row["ChangeId"],
+                    "Issue": "Priority is blank for a new EpicBossCandidate row",
+                    "Recommendation": "Choose High, Medium, or Low. High matches 22 of the other 24 EpicBossCandidate rows.",
+                    "Status": "NeedsDecision",
+                }
+            )
     normalized["review-issues"] = review_rows
 
     return normalized
@@ -817,6 +862,99 @@ def sheet_xml(spec: SheetSpec, defined_names: Dict[str, str]) -> str:
     )
 
 
+def reference_sheet_xml(normalized: Dict[str, List[Dict[str, object]]]) -> str:
+    rows: Dict[int, List[str]] = {
+        1: [cell_xml(1, 1, "Mobile Balance Template Reference", 2)],
+        2: [
+            cell_xml(
+                2,
+                1,
+                "Use these names and formats when filling the data-entry sheets. Structured sheet headers are on row 4 and data begins on row 5.",
+                3,
+            )
+        ],
+        4: [cell_xml(4, 1, "How to Fill", 1), cell_xml(4, 4, "Common Skill Aliases", 1)],
+        14: [cell_xml(14, 1, "Valid SkillName Values", 1), cell_xml(14, 4, "Common Item Attribute Names", 1)],
+    }
+    guidance = [
+        ("Blank cells", "Mean no change or no value requested."),
+        ("Skill syntax", "Use Skill=Value or Skill=Min-Max; separate multiple entries with semicolons."),
+        ("Attribute syntax", "Use Attribute=Value; negative values are allowed when intended as drawbacks."),
+        ("Damage fields", "Fill both DamageMin and DamageMax when changing melee damage."),
+        ("Loot linkage", "Define ItemId on NewLootItems, then reference it from LootAssignments."),
+        ("Drop semantics", "Use Guaranteed=No with ChancePercentOnCorpse for independent percentage rolls."),
+        ("Ownership", "Use OwnerBound=No unless a binding policy has been explicitly approved."),
+    ]
+    aliases = [
+        ("Parrying", "Parry"),
+        ("Wrestling", "FistFighting"),
+        ("Mace Fighting", "Bludgeoning"),
+        ("Archery", "Marksmanship"),
+        ("Eval Int", "Psychology"),
+        ("Detect Hidden", "Searching"),
+        ("Fishing", "Seafaring"),
+        ("Animal Lore", "Druidism"),
+        ("Magic Resist", "MagicResist"),
+        ("Blacksmithing", "Blacksmith"),
+        ("Merchantile", "Mercantile"),
+        ("Aantomy", "Anatomy"),
+    ]
+    for offset in range(max(len(guidance), len(aliases))):
+        row_index = 5 + offset
+        cells: List[str] = []
+        if offset < len(guidance):
+            cells.extend(
+                [
+                    cell_xml(row_index, 1, guidance[offset][0]),
+                    cell_xml(row_index, 2, guidance[offset][1]),
+                ]
+            )
+        if offset < len(aliases):
+            cells.extend(
+                [
+                    cell_xml(row_index, 4, aliases[offset][0]),
+                    cell_xml(row_index, 5, aliases[offset][1]),
+                ]
+            )
+        rows[row_index] = cells
+
+    skills = normalized["Ref_Skills"]
+    bonuses = normalized["Ref_BonusNames"]
+    for offset in range(max(len(skills), len(bonuses))):
+        row_index = 15 + offset
+        cells = []
+        if offset < len(skills):
+            cells.extend(
+                [
+                    cell_xml(row_index, 1, skills[offset]["SkillId"]),
+                    cell_xml(row_index, 2, skills[offset]["SkillName"]),
+                ]
+            )
+        if offset < len(bonuses):
+            bonus_name = str(bonuses[offset]["BonusName"])
+            cells.extend(
+                [
+                    cell_xml(row_index, 4, bonus_name.lower()),
+                    cell_xml(row_index, 5, bonus_name),
+                ]
+            )
+        rows[row_index] = cells
+
+    row_xml = "".join(f'<row r="{row_index}">{"".join(rows[row_index])}</row>' for row_index in sorted(rows))
+    return (
+        f'<?xml version="1.0" encoding="UTF-8" standalone="yes"?>'
+        f'<worksheet xmlns="{MAIN_NS}" xmlns:r="{REL_NS}">'
+        f'<sheetViews><sheetView workbookViewId="0"><pane ySplit="4" topLeftCell="A5" activePane="bottomLeft" state="frozen"/></sheetView></sheetViews>'
+        f'<sheetFormatPr defaultRowHeight="15"/>'
+        f'<cols><col min="1" max="1" width="22" customWidth="1"/><col min="2" max="2" width="70" customWidth="1"/>'
+        f'<col min="3" max="3" width="3" customWidth="1"/><col min="4" max="4" width="28" customWidth="1"/>'
+        f'<col min="5" max="5" width="28" customWidth="1"/><col min="6" max="6" width="3" customWidth="1"/></cols>'
+        f'<sheetData>{row_xml}</sheetData>'
+        f'<pageMargins left="0.7" right="0.7" top="0.75" bottom="0.75" header="0.3" footer="0.3"/>'
+        f'</worksheet>'
+    )
+
+
 def build_sheet_specs(normalized: Dict[str, List[Dict[str, object]]]) -> List[SheetSpec]:
     def vals(name: str) -> str:
         return f'"{",".join(LIST_VALUES[name])}"'
@@ -883,6 +1021,8 @@ def build_sheet_specs(normalized: Dict[str, List[Dict[str, object]]]) -> List[Sh
             [
                 {"column": "ResolvedMobileClass", "type": "list", "formula": "MobileClassList"},
                 {"column": "CanonicalSkillName", "type": "list", "formula": "SkillNameList"},
+                {"column": "Operation", "type": "list", "formula": '"SetSkill"'},
+                {"column": "Status", "type": "list", "formula": '"Ready,NeedsSkillNameMapping,NeedsDecision"'},
             ],
         ),
         SheetSpec(
@@ -895,6 +1035,7 @@ def build_sheet_specs(normalized: Dict[str, List[Dict[str, object]]]) -> List[Sh
                 {"column": "CanonicalClassName", "type": "list", "formula": "ItemClassList"},
                 {"column": "CanonicalSkillName", "type": "list", "formula": "SkillNameList"},
                 {"column": "ModifierKind", "type": "list", "formula": vals("SkillModKindList")},
+                {"column": "Status", "type": "list", "formula": '"Ready,NeedsSkillNameMapping,NeedsDecision"'},
             ],
         ),
         SheetSpec(
@@ -948,6 +1089,14 @@ def build_sheet_specs(normalized: Dict[str, List[Dict[str, object]]]) -> List[Sh
             "Allowed drop rule semantics. NeedsDecision rows require staff policy before code changes.",
             ["DropRule", "Meaning", "Status"],
             normalized["Ref_DropRules"],
+            [],
+        ),
+        SheetSpec(
+            "Reference",
+            "Mobile Balance Template Reference",
+            "Instructional reference sheet with separate sections rather than a row-4 data table.",
+            [],
+            [],
             [],
         ),
     ]
@@ -1069,12 +1218,13 @@ def write_workbook(normalized: Dict[str, List[Dict[str, object]]]) -> None:
     specs = build_sheet_specs(normalized)
     sheet_by_name = {spec.name: spec for spec in specs}
     defined_ranges = {
-        "SkillNameList": f"Ref_Skills!$B$5:$B${4 + len(sheet_by_name['Ref_Skills'].rows)}",
-        "ItemClassList": f"Ref_ItemClasses!$A$5:$A${4 + len(sheet_by_name['Ref_ItemClasses'].rows)}",
-        "MobileClassList": f"Ref_MobileClasses!$A$5:$A${4 + len(sheet_by_name['Ref_MobileClasses'].rows)}",
-        "MobileDisplayList": f"Ref_MobileClasses!$B$5:$B${4 + len(sheet_by_name['Ref_MobileClasses'].rows)}",
-        "BonusNameList": f"Ref_BonusNames!$A$5:$A${4 + len(sheet_by_name['Ref_BonusNames'].rows)}",
-        "DropRuleList": f"Ref_DropRules!$A$5:$A${4 + len(sheet_by_name['Ref_DropRules'].rows)}",
+        "SkillNameList": f"'Ref_Skills'!$B$5:$B${4 + len(sheet_by_name['Ref_Skills'].rows)}",
+        "ItemClassList": f"'Ref_ItemClasses'!$A$5:$A${4 + len(sheet_by_name['Ref_ItemClasses'].rows)}",
+        "MobileClassList": f"'Ref_MobileClasses'!$A$5:$A${4 + len(sheet_by_name['Ref_MobileClasses'].rows)}",
+        "MobileDisplayList": f"'Ref_MobileClasses'!$B$5:$B${4 + len(sheet_by_name['Ref_MobileClasses'].rows)}",
+        "BonusNameList": f"'Ref_BonusNames'!$A$5:$A${4 + len(sheet_by_name['Ref_BonusNames'].rows)}",
+        "BonusGroupList": f"'Ref_BonusNames'!$B$5:$B${4 + len(sheet_by_name['Ref_BonusNames'].rows)}",
+        "DropRuleList": f"'Ref_DropRules'!$A$5:$A${4 + len(sheet_by_name['Ref_DropRules'].rows)}",
     }
 
     with zipfile.ZipFile(CANONICAL_XLSX, "w", compression=zipfile.ZIP_DEFLATED) as zf:
@@ -1086,15 +1236,29 @@ def write_workbook(normalized: Dict[str, List[Dict[str, object]]]) -> None:
         zf.writestr("xl/_rels/workbook.xml.rels", workbook_rels_xml(len(specs)))
         zf.writestr("xl/styles.xml", styles_xml())
         for index, spec in enumerate(specs, start=1):
-            zf.writestr(f"xl/worksheets/sheet{index}.xml", sheet_xml(spec, defined_ranges))
+            xml = reference_sheet_xml(normalized) if spec.name == "Reference" else sheet_xml(spec, defined_ranges)
+            zf.writestr(f"xl/worksheets/sheet{index}.xml", xml)
 
 
 def main() -> int:
-    if not SOURCE_XLSX.exists():
-        print(f"Source workbook not found: {SOURCE_XLSX}", file=sys.stderr)
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument(
+        "--source",
+        type=Path,
+        default=SOURCE_XLSX,
+        help="Source XLSX to normalize. Defaults to the preserved July 28 staff revision.",
+    )
+    mode = parser.add_mutually_exclusive_group()
+    mode.add_argument("--csv-only", action="store_true", help="Regenerate CSV outputs without replacing the canonical workbook.")
+    mode.add_argument("--workbook-only", action="store_true", help="Regenerate the canonical workbook without replacing CSV outputs.")
+    args = parser.parse_args()
+
+    source_xlsx = args.source if args.source.is_absolute() else ROOT / args.source
+    if not source_xlsx.exists():
+        print(f"Source workbook not found: {source_xlsx}", file=sys.stderr)
         return 1
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
-    tables = read_xlsx_tables(SOURCE_XLSX)
+    tables = read_xlsx_tables(source_xlsx)
     missing = [sheet for sheet in CORE_SHEETS if sheet not in tables]
     if missing:
         print(f"Missing required sheets: {', '.join(missing)}", file=sys.stderr)
@@ -1102,10 +1266,13 @@ def main() -> int:
     skills = parse_skills()
     classes = scan_classes()
     normalized = normalize_data(tables, skills, classes)
-    write_csv_outputs(normalized)
-    write_workbook(normalized)
-    print(f"Wrote {rel(CANONICAL_XLSX)}")
-    print(f"Wrote CSV outputs under {rel(OUTPUT_DIR)}")
+    if not args.workbook_only:
+        write_csv_outputs(normalized)
+        print(f"Wrote CSV outputs under {rel(OUTPUT_DIR)}")
+    if not args.csv_only:
+        write_workbook(normalized)
+        print(f"Wrote {rel(CANONICAL_XLSX)}")
+    print(f"Read {rel(source_xlsx)}")
     print(f"MobileChanges rows: {len(normalized['MobileChanges'])}")
     print(f"NewLootItems rows: {len(normalized['NewLootItems'])}")
     print(f"LootAssignments rows: {len(normalized['LootAssignments'])}")

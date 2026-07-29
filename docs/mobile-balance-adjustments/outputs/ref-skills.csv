@@ -54,6 +54,6 @@ SkillId,SkillName,SourcePath,Status,Notes
 52,Bushido,Data/System/Source/Skills.cs,SourceVerified,
 53,Ninjitsu,Data/System/Source/Skills.cs,SourceVerified,
 54,Elementalism,Data/System/Source/Skills.cs,SourceVerified,
-55,Mysticism,Data/System/Source/Skills.cs,SourceVerified,
-56,Imbuing,Data/System/Source/Skills.cs,SourceVerified,
+55,Mysticism,Data/System/Source/Skills.cs,SourceVerified,DO NOT USE
+56,Imbuing,Data/System/Source/Skills.cs,SourceVerified,DO NOT USE
 57,Throwing,Data/System/Source/Skills.cs,SourceVerified,

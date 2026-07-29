@@ -1,40 +1,40 @@
 AssignmentId,MobileClassOrName,ResolvedMobileClass,ItemId,CanonicalItemClass,DropTiming,ChancePercent,QuantityMin,QuantityMax,Guaranteed,DropRule,DropSemanticsStatus,Notes,CodexNotes
-LA-001,Dio's Monster,DiosMonster,ITEM-001,MindOverMatterTalisman,CorpseOnDeath,60,1,1,Yes,NeedsDecision,NeedsDecision,Guaranteed epic boss reward,Guaranteed=Yes conflicts with ChancePercent below 100; staff policy required.
-LA-002,Wolfgang's Dragon,WolfgangsDragon,ITEM-002,GoldenDragonStatue,CorpseOnDeath,70,1,1,Yes,NeedsDecision,NeedsDecision,Guaranteed epic boss reward,Guaranteed=Yes conflicts with ChancePercent below 100; staff policy required.
-LA-003,True Virtue,TrueVirtue,ITEM-003,MemorialofVirtue,CorpseOnDeath,80,1,1,Yes,NeedsDecision,NeedsDecision,Guaranteed epic boss reward,Guaranteed=Yes conflicts with ChancePercent below 100; staff policy required.
-LA-004,Rune Knight,RuneKnight,ITEM-004,RuneSword,CorpseOnDeath,20,1,1,Yes,NeedsDecision,NeedsDecision,Guaranteed epic boss reward,Guaranteed=Yes conflicts with ChancePercent below 100; staff policy required.
-LA-005,Triton,Triton,ITEM-005,TridentofAtlantis,CorpseOnDeath,70,1,1,Yes,NeedsDecision,NeedsDecision,Guaranteed epic boss reward,Guaranteed=Yes conflicts with ChancePercent below 100; staff policy required.
-LA-006,Fallen Angel,FallenAngel,ITEM-006,SwordofDarkness,CorpseOnDeath,50,1,1,Yes,NeedsDecision,NeedsDecision,Guaranteed epic boss reward,Guaranteed=Yes conflicts with ChancePercent below 100; staff policy required.
-LA-007,Olympus,Olympus,ITEM-007,SwordofLight,CorpseOnDeath,20,1,1,Yes,NeedsDecision,NeedsDecision,Guaranteed epic boss reward,Guaranteed=Yes conflicts with ChancePercent below 100; staff policy required.
-LA-008,Old King Wolfgang,OldKingWolfgang,ITEM-008,WolfgangSword,CorpseOnDeath,60,1,1,Yes,NeedsDecision,NeedsDecision,Guaranteed epic boss reward,Guaranteed=Yes conflicts with ChancePercent below 100; staff policy required.
-LA-009,Eternal Guardian,EternalGuardian,ITEM-009,GuardianShield,CorpseOnDeath,30,1,1,Yes,NeedsDecision,NeedsDecision,Guaranteed epic boss reward,Guaranteed=Yes conflicts with ChancePercent below 100; staff policy required.
-LA-010,Atlas,Atlas,ITEM-010,Weightoftheworld,CorpseOnDeath,60,1,1,Yes,NeedsDecision,NeedsDecision,Guaranteed epic boss reward,Guaranteed=Yes conflicts with ChancePercent below 100; staff policy required.
-LA-011,Blackbart Roberts,BlackbartRoberts,ITEM-011,DeathPenalty,CorpseOnDeath,30,1,1,Yes,NeedsDecision,NeedsDecision,Guaranteed epic boss reward,Guaranteed=Yes conflicts with ChancePercent below 100; staff policy required.
-LA-012,Armageddon Engine,ArmageddonEngine,ITEM-012,Disintegrator,CorpseOnDeath,80,1,1,Yes,NeedsDecision,NeedsDecision,Guaranteed epic boss reward,Guaranteed=Yes conflicts with ChancePercent below 100; staff policy required.
-LA-013,Void Wraith,VoidWraith,ITEM-013,RobeoftheVoid,CorpseOnDeath,5,1,1,Yes,NeedsDecision,NeedsDecision,Guaranteed epic boss reward,Guaranteed=Yes conflicts with ChancePercent below 100; staff policy required.
-LA-014,Plague God,PlagueGod,ITEM-014,Pestilence,CorpseOnDeath,60,1,1,Yes,NeedsDecision,NeedsDecision,Guaranteed epic boss reward,Guaranteed=Yes conflicts with ChancePercent below 100; staff policy required.
-LA-015,Dragon Illusion,DragonIllusion,ITEM-015,ArmoroftheTitans,CorpseOnDeath,30,1,1,Yes,NeedsDecision,NeedsDecision,Guaranteed epic boss reward,Guaranteed=Yes conflicts with ChancePercent below 100; staff policy required.
-LA-016,False Fire God,FalseFireGod,ITEM-016,ArmorofthefalseGods,CorpseOnDeath,50,1,1,Yes,NeedsDecision,NeedsDecision,Guaranteed epic boss reward,Guaranteed=Yes conflicts with ChancePercent below 100; staff policy required.
-LA-017,Final Exodus,FinalExodus,ITEM-017,ExodusArmor,CorpseOnDeath,30,1,1,Yes,NeedsDecision,NeedsDecision,Guaranteed epic boss reward,Guaranteed=Yes conflicts with ChancePercent below 100; staff policy required.
-LA-017,Final Exodus,FinalExodus,ITEM-018,ExodusMaul,CorpseOnDeath,30,1,1,Yes,NeedsDecision,NeedsDecision,Guaranteed epic boss reward,Guaranteed=Yes conflicts with ChancePercent below 100; staff policy required.
-LA-017,Final Exodus,FinalExodus,ITEM-019,ExodusHead,CorpseOnDeath,30,1,1,Yes,NeedsDecision,NeedsDecision,Guaranteed epic boss reward,Guaranteed=Yes conflicts with ChancePercent below 100; staff policy required.
-LA-017,Final Exodus,FinalExodus,ITEM-020,ExodusHands,CorpseOnDeath,30,1,1,Yes,NeedsDecision,NeedsDecision,Guaranteed epic boss reward,Guaranteed=Yes conflicts with ChancePercent below 100; staff policy required.
-LA-018,Fire King,FireKing,ITEM-021,HeartofFire,CorpseOnDeath,70,1,1,Yes,NeedsDecision,NeedsDecision,Guaranteed epic boss reward,Guaranteed=Yes conflicts with ChancePercent below 100; staff policy required.
-LA-019,Immortal Genie of the Vase,ImmortalGenie,ITEM-022,LampofBadWishes,CorpseOnDeath,20,1,1,Yes,NeedsDecision,NeedsDecision,Guaranteed epic boss reward,Guaranteed=Yes conflicts with ChancePercent below 100; staff policy required.
-LA-020,Atlantian Paragon,AtlantianParagon,ITEM-023,CrystalToken,CorpseOnDeath,20,1,1,Yes,NeedsDecision,NeedsDecision,Guaranteed epic boss reward,Guaranteed=Yes conflicts with ChancePercent below 100; staff policy required.
-LA-021,Forgotten,Forgotten,ITEM-024,LoreBook,CorpseOnDeath,20,1,1,Yes,NeedsDecision,NeedsDecision,Guaranteed epic boss reward,Guaranteed=Yes conflicts with ChancePercent below 100; staff policy required.
-LA-022,Atlantian,Atlantian,ITEM-025,TrulyRareFish,CorpseOnDeath,30,1,1,Yes,NeedsDecision,NeedsDecision,Guaranteed epic boss reward,Guaranteed=Yes conflicts with ChancePercent below 100; staff policy required.
-LA-023,Red Death,RedDeath,ITEM-026,EvilSkull,CorpseOnDeath,90,1,1,Yes,NeedsDecision,NeedsDecision,Guaranteed epic boss reward,Guaranteed=Yes conflicts with ChancePercent below 100; staff policy required.
-LA-024,Honorguard,Honorguard,ITEM-027,PowderOfTemperament,CorpseOnDeath,10,1,1,Yes,NeedsDecision,NeedsDecision,Guaranteed epic boss reward,Guaranteed=Yes conflicts with ChancePercent below 100; staff policy required.
-LA-025,Scientist,Scientist,ITEM-028,SuperPotion,CorpseOnDeath,10,1,1,Yes,NeedsDecision,NeedsDecision,Guaranteed epic boss reward,Guaranteed=Yes conflicts with ChancePercent below 100; staff policy required.
-LA-026,Dark Cultist,DarkCultist,ITEM-029,ShadowToken,CorpseOnDeath,5,1,1,Yes,NeedsDecision,NeedsDecision,Guaranteed epic boss reward,Guaranteed=Yes conflicts with ChancePercent below 100; staff policy required.
-LA-027,Old Man Willow,OldManWillow,ITEM-030,OrangePetals,CorpseOnDeath,10,1,1,Yes,NeedsDecision,NeedsDecision,Guaranteed epic boss reward,Guaranteed=Yes conflicts with ChancePercent below 100; staff policy required.
-LA-027,Old Man Willow,OldManWillow,ITEM-031,RoseOfMoonPetal,CorpseOnDeath,5,1,1,Yes,NeedsDecision,NeedsDecision,Guaranteed epic boss reward,Guaranteed=Yes conflicts with ChancePercent below 100; staff policy required.
-LA-028,Garuda,Garuda,ITEM-032,PhoenixFeather,CorpseOnDeath,50,1,3,Yes,NeedsDecision,NeedsDecision,Guaranteed epic boss reward,Guaranteed=Yes conflicts with ChancePercent below 100; staff policy required.
-LA-028,Garuda,Garuda,ITEM-033,JewelImmortality,CorpseOnDeath,20,1,1,Yes,NeedsDecision,NeedsDecision,Guaranteed epic boss reward,Guaranteed=Yes conflicts with ChancePercent below 100; staff policy required.
-LA-028,Garuda,Garuda,ITEM-034,RedLeaves,CorpseOnDeath,60,1,1,Yes,NeedsDecision,NeedsDecision,Guaranteed epic boss reward,Guaranteed=Yes conflicts with ChancePercent below 100; staff policy required.
-LA-029,Forgotten Creation,ForgottenCreation,ITEM-035,EnchantedSextant,CorpseOnDeath,5,1,1,Yes,NeedsDecision,NeedsDecision,Guaranteed epic boss reward,Guaranteed=Yes conflicts with ChancePercent below 100; staff policy required.
-LA-030,Dragon Hydra,DragonHydra,ITEM-036,DoomBlade,CorpseOnDeath,40,1,1,Yes,NeedsDecision,NeedsDecision,Guaranteed epic boss reward,Guaranteed=Yes conflicts with ChancePercent below 100; staff policy required.
-LA-031,Vampire Illusion,VampireIllusion,ITEM-037,MetalPigmentsOfIslesDread,CorpseOnDeath,10,1,1,Yes,NeedsDecision,NeedsDecision,Guaranteed epic boss reward,Guaranteed=Yes conflicts with ChancePercent below 100; staff policy required.
-LA-032,Treasure Goblin,TreasureGoblin,ITEM-038,CensusRecords,CorpseOnDeath,5,1,1,Yes,NeedsDecision,NeedsDecision,Guaranteed epic boss reward,Guaranteed=Yes conflicts with ChancePercent below 100; staff policy required.
-LA-033,Skinwalker,Skinwalker,ITEM-039,ClothingBlessDeed,CorpseOnDeath,20,1,1,Yes,NeedsDecision,NeedsDecision,Guaranteed epic boss reward,Guaranteed=Yes conflicts with ChancePercent below 100; staff policy required.
+LA-001,Dio's Monster,DiosMonster,ITEM-001,MindOverMatterTalisman,CorpseOnDeath,60,1,1,No,ChancePercentOnCorpse,Ready,boss reward,
+LA-002,Wolfgang's Dragon,WolfgangsDragon,ITEM-002,GoldenDragonStatue,CorpseOnDeath,70,1,1,No,ChancePercentOnCorpse,Ready,boss reward,
+LA-003,True Virtue,TrueVirtue,ITEM-003,MemorialofVirtue,CorpseOnDeath,80,1,1,No,ChancePercentOnCorpse,Ready,boss reward,
+LA-004,Rune Knight,RuneKnight,ITEM-004,RuneSword,CorpseOnDeath,20,1,1,No,ChancePercentOnCorpse,Ready,boss reward,
+LA-005,Triton,Triton,ITEM-005,TridentofAtlantis,CorpseOnDeath,70,1,1,No,ChancePercentOnCorpse,Ready,boss reward,
+LA-006,Fallen Angel,FallenAngel,ITEM-006,SwordofDarkness,CorpseOnDeath,50,1,1,No,ChancePercentOnCorpse,Ready,boss reward,
+LA-007,Olympus,Olympus,ITEM-007,SwordofLight,CorpseOnDeath,20,1,1,No,ChancePercentOnCorpse,Ready,boss reward,
+LA-008,Old King Wolfgang,OldKingWolfgang,ITEM-008,WolfgangSword,CorpseOnDeath,60,1,1,No,ChancePercentOnCorpse,Ready,boss reward,
+LA-009,Eternal Guardian,EternalGuardian,ITEM-009,GuardianShield,CorpseOnDeath,30,1,1,No,ChancePercentOnCorpse,Ready,boss reward,
+LA-010,Atlas,Atlas,ITEM-010,Weightoftheworld,CorpseOnDeath,60,1,1,No,ChancePercentOnCorpse,Ready,boss reward,
+LA-011,Blackbart Roberts,BlackbartRoberts,ITEM-011,DeathPenalty,CorpseOnDeath,30,1,1,No,ChancePercentOnCorpse,Ready,boss reward,
+LA-012,Armageddon Engine,ArmageddonEngine,ITEM-012,Disintegrator,CorpseOnDeath,80,1,1,No,ChancePercentOnCorpse,Ready,boss reward,
+LA-013,Void Wraith,VoidWraith,ITEM-013,RobeoftheVoid,CorpseOnDeath,5,1,1,No,ChancePercentOnCorpse,Ready,boss reward,
+LA-014,Plague God,PlagueGod,ITEM-014,DreadMace,CorpseOnDeath,60,1,1,No,ChancePercentOnCorpse,Ready,boss reward,
+LA-015,Dragon Illusion,DragonIllusion,ITEM-015,ArmoroftheTitans,CorpseOnDeath,30,1,1,No,ChancePercentOnCorpse,Ready,boss reward,
+LA-016,False Fire God,FalseFireGod,ITEM-016,ArmorofthefalseGods,CorpseOnDeath,50,1,1,No,ChancePercentOnCorpse,Ready,boss reward,
+LA-017,Final Exodus,FinalExodus,ITEM-017,ExodusArmor,CorpseOnDeath,30,1,1,No,ChancePercentOnCorpse,Ready,boss reward,
+LA-017,Final Exodus,FinalExodus,ITEM-018,ExodusMaul,CorpseOnDeath,30,1,1,No,ChancePercentOnCorpse,Ready,boss reward,
+LA-017,Final Exodus,FinalExodus,ITEM-019,ExodusHead,CorpseOnDeath,30,1,1,No,ChancePercentOnCorpse,Ready,boss reward,
+LA-017,Final Exodus,FinalExodus,ITEM-020,ExodusHands,CorpseOnDeath,30,1,1,No,ChancePercentOnCorpse,Ready,boss reward,
+LA-018,Fire King,FireKing,ITEM-021,HeartofFire,CorpseOnDeath,70,1,1,No,ChancePercentOnCorpse,Ready,boss reward,
+LA-019,Immortal Genie of the Vase,ImmortalGenie,ITEM-022,LampofBadWishes,CorpseOnDeath,20,1,1,No,ChancePercentOnCorpse,Ready,boss reward,
+LA-020,Atlantian Paragon,AtlantianParagon,ITEM-023,CrystalToken,CorpseOnDeath,20,1,1,No,ChancePercentOnCorpse,Ready,boss reward,
+LA-021,Forgotten,Forgotten,ITEM-024,LoreBook,CorpseOnDeath,20,1,1,No,ChancePercentOnCorpse,Ready,boss reward,
+LA-022,Atlantian,Atlantian,ITEM-025,TrulyRareFish,CorpseOnDeath,30,1,1,No,ChancePercentOnCorpse,Ready,boss reward,
+LA-023,Red Death,RedDeath,ITEM-026,EvilSkull,CorpseOnDeath,90,1,1,No,ChancePercentOnCorpse,Ready,boss reward,
+LA-024,Honorguard,Honorguard,ITEM-027,PowderOfTemperament,CorpseOnDeath,10,1,1,No,ChancePercentOnCorpse,Ready,boss reward,
+LA-025,Scientist,Scientist,ITEM-028,SuperPotion,CorpseOnDeath,10,1,1,No,ChancePercentOnCorpse,Ready,boss reward,
+LA-026,Dark Cultist,DarkCultist,ITEM-029,ShadowToken,CorpseOnDeath,5,1,1,No,ChancePercentOnCorpse,Ready,boss reward,
+LA-027,Old Man Willow,OldManWillow,ITEM-030,OrangePetals,CorpseOnDeath,10,1,1,No,ChancePercentOnCorpse,Ready,boss reward,
+LA-027,Old Man Willow,OldManWillow,ITEM-031,RoseOfMoonPetal,CorpseOnDeath,5,1,1,No,ChancePercentOnCorpse,Ready,boss reward,
+LA-028,Garuda,Garuda,ITEM-032,PhoenixFeather,CorpseOnDeath,50,1,3,No,ChancePercentOnCorpse,Ready,boss reward,
+LA-028,Garuda,Garuda,ITEM-033,JewelImmortality,CorpseOnDeath,20,1,1,No,ChancePercentOnCorpse,Ready,boss reward,
+LA-028,Garuda,Garuda,ITEM-034,RedLeaves,CorpseOnDeath,60,1,1,No,ChancePercentOnCorpse,Ready,boss reward,
+LA-029,Forgotten Creation,ForgottenCreation,ITEM-035,EnchantedSextant,CorpseOnDeath,5,1,1,No,ChancePercentOnCorpse,Ready,boss reward,
+LA-030,Dragon Hydra,DragonHydra,ITEM-036,DoomBlade,CorpseOnDeath,40,1,1,No,ChancePercentOnCorpse,Ready,boss reward,
+LA-031,Vampire Illusion,VampireIllusion,ITEM-037,MetalPigmentsOfIslesDread,CorpseOnDeath,10,1,1,No,ChancePercentOnCorpse,Ready,boss reward,
+LA-032,Treasure Goblin,TreasureGoblin,ITEM-038,CensusRecords,CorpseOnDeath,5,1,1,No,ChancePercentOnCorpse,Ready,boss reward,
+LA-033,Skinwalker,Skinwalker,ITEM-039,ClothingBlessDeed,CorpseOnDeath,20,1,1,No,ChancePercentOnCorpse,Ready,boss reward,
