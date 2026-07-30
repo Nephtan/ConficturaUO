@@ -1,0 +1,2206 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>Confictura Trap Avoidance Calculator</title>
+  <style>
+    :root {
+      --bg: #f5f1e8;
+      --surface: #fffdf7;
+      --surface-2: #eee7d7;
+      --text: #241f18;
+      --muted: #6b6255;
+      --border: #cfc3ae;
+      --accent: #6c2d23;
+      --accent-2: #b9893f;
+      --accent-text: #fffaf1;
+      --good: #1f6a47;
+      --warn: #8a5414;
+      --bad: #9a2f2a;
+      --focus: #2476a8;
+      --shadow: 0 10px 28px rgba(48, 37, 22, 0.09);
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #171512;
+        --surface: #23201b;
+        --surface-2: #302a22;
+        --text: #f2eadc;
+        --muted: #bfb3a1;
+        --border: #4b4235;
+        --accent: #c9715f;
+        --accent-2: #d1a154;
+        --accent-text: #1b1512;
+        --good: #77c79e;
+        --warn: #e0aa60;
+        --bad: #ee8b84;
+        --focus: #74b9e1;
+        --shadow: 0 10px 28px rgba(0, 0, 0, 0.28);
+      }
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      background:
+        radial-gradient(circle at top right, color-mix(in srgb, var(--accent-2) 13%, transparent), transparent 34rem),
+        var(--bg);
+      color: var(--text);
+      font-family: Georgia, "Times New Roman", serif;
+      line-height: 1.5;
+    }
+
+    button,
+    input,
+    select {
+      font: inherit;
+    }
+
+    button,
+    input,
+    select,
+    summary {
+      outline-color: var(--focus);
+      outline-offset: 3px;
+    }
+
+    button {
+      border: 1px solid var(--border);
+      border-radius: 0.45rem;
+      background: var(--surface);
+      color: var(--text);
+      padding: 0.62rem 0.9rem;
+      cursor: pointer;
+    }
+
+    button:hover {
+      border-color: var(--accent);
+    }
+
+    button[aria-pressed="true"],
+    .primary {
+      border-color: var(--accent);
+      background: var(--accent);
+      color: var(--accent-text);
+    }
+
+    a {
+      color: var(--accent);
+    }
+
+    code {
+      padding: 0.08rem 0.25rem;
+      border-radius: 0.25rem;
+      background: var(--surface-2);
+      font-family: Consolas, "Courier New", monospace;
+      font-size: 0.92em;
+    }
+
+    .page {
+      width: min(78rem, 100%);
+      margin: 0 auto;
+      padding: clamp(1rem, 3vw, 2.4rem);
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 1.5rem;
+      align-items: start;
+      margin-bottom: 1.25rem;
+    }
+
+    h1,
+    h2,
+    h3 {
+      line-height: 1.16;
+      margin-top: 0;
+    }
+
+    h1 {
+      margin-bottom: 0.5rem;
+      font-size: clamp(2rem, 5vw, 3.35rem);
+      letter-spacing: -0.025em;
+    }
+
+    h2 {
+      margin-bottom: 0.75rem;
+      font-size: clamp(1.45rem, 3vw, 2rem);
+    }
+
+    h3 {
+      margin-bottom: 0.55rem;
+      font-size: 1.12rem;
+    }
+
+    p {
+      margin-top: 0;
+    }
+
+    .lede {
+      max-width: 58rem;
+      color: var(--muted);
+      font-size: 1.08rem;
+    }
+
+    .test-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      min-width: max-content;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      background: var(--surface);
+      padding: 0.45rem 0.72rem;
+      box-shadow: var(--shadow);
+      font-size: 0.88rem;
+    }
+
+    .test-badge[data-status="pass"] {
+      border-color: var(--good);
+      color: var(--good);
+    }
+
+    .test-badge[data-status="fail"] {
+      border-color: var(--bad);
+      color: var(--bad);
+    }
+
+    .toolbar,
+    .tabs,
+    .inline-controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      align-items: center;
+    }
+
+    .toolbar {
+      justify-content: space-between;
+      margin-bottom: 1rem;
+    }
+
+    .tabs {
+      margin-bottom: 1.2rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .panel[hidden] {
+      display: none;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(18rem, 0.85fr) minmax(0, 1.4fr);
+      gap: 1rem;
+      align-items: start;
+    }
+
+    .stack {
+      display: grid;
+      gap: 1rem;
+    }
+
+    .card {
+      border: 1px solid var(--border);
+      border-radius: 0.75rem;
+      background: var(--surface);
+      padding: clamp(1rem, 2vw, 1.35rem);
+      box-shadow: var(--shadow);
+    }
+
+    .card.subtle {
+      background: color-mix(in srgb, var(--surface) 80%, var(--surface-2));
+      box-shadow: none;
+    }
+
+    .field-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.8rem;
+    }
+
+    .field-grid.three {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .field {
+      min-width: 0;
+    }
+
+    label,
+    .label {
+      display: block;
+      margin-bottom: 0.28rem;
+      font-weight: 700;
+    }
+
+    input[type="number"],
+    select {
+      width: 100%;
+      min-height: 2.65rem;
+      border: 1px solid var(--border);
+      border-radius: 0.4rem;
+      background: var(--bg);
+      color: var(--text);
+      padding: 0.52rem 0.62rem;
+    }
+
+    input[type="checkbox"] {
+      width: 1.05rem;
+      height: 1.05rem;
+      margin: 0.14rem 0 0;
+      accent-color: var(--accent);
+    }
+
+    .check {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 0.52rem;
+      align-items: start;
+      margin: 0.55rem 0;
+    }
+
+    .check label {
+      margin: 0;
+      font-weight: 400;
+    }
+
+    .hint,
+    .caption,
+    .formula {
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .hint {
+      margin: 0.25rem 0 0;
+    }
+
+    .callout {
+      border-left: 0.28rem solid var(--accent-2);
+      background: color-mix(in srgb, var(--accent-2) 11%, var(--surface));
+      padding: 0.82rem 0.95rem;
+      margin: 0.8rem 0;
+    }
+
+    .callout.warning {
+      border-left-color: var(--warn);
+    }
+
+    .callout.danger {
+      border-left-color: var(--bad);
+    }
+
+    .callout p:last-child {
+      margin-bottom: 0;
+    }
+
+    .metrics {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0.7rem;
+      margin-bottom: 1rem;
+    }
+
+    .metric {
+      min-width: 0;
+      border-top: 0.25rem solid var(--accent-2);
+      background: var(--surface-2);
+      padding: 0.8rem;
+    }
+
+    .metric strong {
+      display: block;
+      margin-top: 0.15rem;
+      font-size: clamp(1.4rem, 3vw, 2.1rem);
+      line-height: 1.1;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .metric small {
+      color: var(--muted);
+    }
+
+    .metric.good {
+      border-top-color: var(--good);
+    }
+
+    .metric.bad {
+      border-top-color: var(--bad);
+    }
+
+    .table-wrap {
+      width: 100%;
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-variant-numeric: tabular-nums;
+    }
+
+    th,
+    td {
+      padding: 0.62rem 0.55rem;
+      border-bottom: 1px solid var(--border);
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      color: var(--muted);
+      font-size: 0.85rem;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+    }
+
+    td.number,
+    th.number {
+      text-align: right;
+      white-space: nowrap;
+    }
+
+    tr:last-child td {
+      border-bottom: 0;
+    }
+
+    details {
+      border-top: 1px solid var(--border);
+      padding-top: 0.7rem;
+      margin-top: 0.8rem;
+    }
+
+    summary {
+      cursor: pointer;
+      font-weight: 700;
+    }
+
+    .result-note {
+      min-height: 1.5rem;
+      margin: 0.4rem 0 0;
+      color: var(--muted);
+    }
+
+    .good-text {
+      color: var(--good);
+    }
+
+    .bad-text,
+    .validation {
+      color: var(--bad);
+    }
+
+    .validation:empty {
+      display: none;
+    }
+
+    .source-list li {
+      margin-bottom: 0.55rem;
+    }
+
+    .source-list code {
+      overflow-wrap: anywhere;
+    }
+
+    .pill {
+      display: inline-block;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 0.16rem 0.48rem;
+      background: var(--surface-2);
+      font-size: 0.82rem;
+      white-space: nowrap;
+    }
+
+    .totals-line {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem 0.9rem;
+      margin-top: 0.65rem;
+    }
+
+    footer {
+      margin-top: 1.4rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 840px) {
+      .layout {
+        grid-template-columns: 1fr;
+      }
+
+      .hero {
+        grid-template-columns: 1fr;
+      }
+
+      .test-badge {
+        justify-self: start;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .field-grid,
+      .field-grid.three,
+      .metrics {
+        grid-template-columns: 1fr;
+      }
+
+      .page {
+        padding: 1rem 0.75rem 1.5rem;
+      }
+
+      th,
+      td {
+        padding: 0.52rem 0.4rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header class="hero">
+      <div>
+        <h1>Trap Avoidance Calculator</h1>
+        <p class="lede">
+          Confictura’s checked-in server math, including poles, Remove Trap, the Magery orb,
+          Luck, Air Walk, immortality items, containers, detection, and post-trigger saves.
+        </p>
+      </div>
+      <div id="testBadge" class="test-badge" data-status="pending" role="status" aria-live="polite">
+        Formula self-tests pending
+      </div>
+    </header>
+
+    <div class="toolbar">
+      <div class="inline-controls">
+        <button type="button" id="exampleButton" class="primary">Load 100-skill example</button>
+        <button type="button" id="resetButton">Reset all</button>
+      </div>
+      <div id="validationMessage" class="validation" role="alert" aria-live="polite"></div>
+    </div>
+
+    <nav class="tabs" aria-label="Calculator sections">
+      <button type="button" class="tab-button" data-panel="avoidancePanel" aria-pressed="true">Dungeon avoidance</button>
+      <button type="button" class="tab-button" data-panel="containerPanel" aria-pressed="false">Containers</button>
+      <button type="button" class="tab-button" data-panel="detectionPanel" aria-pressed="false">Detection &amp; magic</button>
+      <button type="button" class="tab-button" data-panel="sourcePanel" aria-pressed="false">Code trace</button>
+    </nav>
+
+    <main>
+      <section id="avoidancePanel" class="panel">
+        <div class="layout">
+          <div class="stack">
+            <section class="card" aria-labelledby="characterHeading">
+              <h2 id="characterHeading">Character</h2>
+              <div class="field-grid">
+                <div class="field">
+                  <label for="removeBase">Remove Trap real/base</label>
+                  <input id="removeBase" type="number" min="0" max="200" step="0.1" value="100" data-default="100">
+                </div>
+                <div class="field">
+                  <label for="removeTotal">Remove Trap displayed total</label>
+                  <input id="removeTotal" type="number" min="0" max="500" step="0.1" value="100" data-default="100">
+                </div>
+                <div class="field">
+                  <label for="mageryBase">Magery real/base</label>
+                  <input id="mageryBase" type="number" min="0" max="200" step="0.1" value="100" data-default="100">
+                </div>
+                <div class="field">
+                  <label for="mageryTotal">Magery displayed total</label>
+                  <input id="mageryTotal" type="number" min="0" max="500" step="0.1" value="100" data-default="100">
+                </div>
+                <div class="field">
+                  <label for="psychologyBase">Psychology real/base</label>
+                  <input id="psychologyBase" type="number" min="0" max="200" step="0.1" value="0" data-default="0">
+                </div>
+                <div class="field">
+                  <label for="psychologyTotal">Psychology displayed total</label>
+                  <input id="psychologyTotal" type="number" min="0" max="500" step="0.1" value="0" data-default="0">
+                </div>
+                <div class="field">
+                  <label for="luck">Luck</label>
+                  <input id="luck" type="number" min="0" max="5000" step="1" value="0" data-default="0">
+                </div>
+                <div class="field">
+                  <label for="encounters">Trap encounters</label>
+                  <input id="encounters" type="number" min="1" max="10000" step="1" value="10" data-default="10">
+                </div>
+              </div>
+              <p class="hint">
+                Displayed totals are authoritative. Scenario bonuses below are additions for comparison;
+                do not select a bonus already included in the number you entered.
+              </p>
+              <div id="adjustedTotals" class="totals-line" aria-live="polite"></div>
+            </section>
+
+            <section class="card" aria-labelledby="trapHeading">
+              <h2 id="trapHeading">Trap and protections</h2>
+              <div class="field">
+                <label for="trapType">Trap type</label>
+                <select id="trapType" data-default="generic">
+                  <option value="generic">Standard wall/floor trap (common roll only)</option>
+                  <option value="hidden">Random hidden floor trap (HiddenTrap)</option>
+                  <option value="firecolumn">Fire column trap</option>
+                  <option value="flamespurt">Flame-spurt tile crossing</option>
+                  <option value="gas">Poison gas trap</option>
+                  <option value="giantspike">Giant spike trap</option>
+                  <option value="mushroom">Mushroom trap</option>
+                  <option value="saw">Saw trap</option>
+                  <option value="spike">Spike trap</option>
+                  <option value="stoneface">Stone-face trap</option>
+                  <option value="spelltrap">Player SpellTrap</option>
+                  <option value="settrap">Player SetTrap</option>
+                  <option value="killertile">KillerTile</option>
+                  <option value="landmine">Landmine</option>
+                </select>
+              </div>
+
+              <div class="check">
+                <input id="orbActive" type="checkbox" data-default="false">
+                <label for="orbActive">Owned Orb of Trap Finding is active in the backpack</label>
+              </div>
+
+              <div class="field">
+                <label for="poleMaterial">Ten-foot pole</label>
+                <select id="poleMaterial" data-default="none">
+                  <option value="none">No pole</option>
+                  <option value="wood">Wood — 50%</option>
+                  <option value="ash">Ash — 53%</option>
+                  <option value="cherry">Cherry — 56%</option>
+                  <option value="ebony">Ebony — 59%</option>
+                  <option value="golden-oak">Golden oak — 62%</option>
+                  <option value="hickory">Hickory — 65%</option>
+                  <option value="mahogany">Mahogany — 68%</option>
+                  <option value="driftwood">Driftwood — 71%</option>
+                  <option value="oak">Oak — 74%</option>
+                  <option value="pine">Pine — 77%</option>
+                  <option value="ghostwood">Ghostwood — 80%</option>
+                  <option value="rosewood">Rosewood — 83%</option>
+                  <option value="walnut">Walnut — 86%</option>
+                  <option value="petrified">Petrified — 89%</option>
+                  <option value="elven">Elven — 92%</option>
+                </select>
+              </div>
+
+              <div class="check">
+                <input id="airWalkActive" type="checkbox" data-default="false">
+                <label for="airWalkActive">Air Walk is active</label>
+              </div>
+              <div class="check">
+                <input id="immortalityActive" type="checkbox" data-default="false">
+                <label for="immortalityActive">Gem or Jewel of Immortality is in the backpack</label>
+              </div>
+              <div class="check">
+                <input id="ownerActive" type="checkbox" data-default="false">
+                <label for="ownerActive">This is my own player-placed trap</label>
+              </div>
+              <div id="compatibilityNote" class="callout" aria-live="polite"></div>
+            </section>
+
+            <details class="card">
+              <summary>Trap compatibility reference</summary>
+              <div class="table-wrap">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Trap path</th>
+                      <th class="number">Common chain</th>
+                      <th class="number">Air Walk</th>
+                      <th class="number">Immortality</th>
+                      <th class="number">Owner immune</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr><td>Literal HiddenTrap</td><td class="number">Yes + 20% gate</td><td class="number">Yes</td><td class="number">No</td><td class="number">—</td></tr>
+                    <tr><td>Fire column</td><td class="number">Yes</td><td class="number">Yes</td><td class="number">Yes</td><td class="number">—</td></tr>
+                    <tr><td>Flame-spurt tile crossing</td><td class="number">Yes</td><td class="number">Yes</td><td class="number">No</td><td class="number">—</td></tr>
+                    <tr><td>Flame-spurt proximity movement</td><td class="number">No</td><td class="number">No</td><td class="number">No</td><td class="number">—</td></tr>
+                    <tr><td>Gas, giant spike, mushroom, stone face</td><td class="number">Yes</td><td class="number">No</td><td class="number">Yes</td><td class="number">—</td></tr>
+                    <tr><td>Saw, spike</td><td class="number">Yes</td><td class="number">Yes</td><td class="number">Yes</td><td class="number">—</td></tr>
+                    <tr><td>SpellTrap</td><td class="number">Yes + Psychology</td><td class="number">Yes</td><td class="number">Yes</td><td class="number">Yes</td></tr>
+                    <tr><td>SetTrap</td><td class="number">Yes</td><td class="number">Yes</td><td class="number">Yes</td><td class="number">Yes</td></tr>
+                    <tr><td>KillerTile</td><td class="number">No</td><td class="number">Yes</td><td class="number">Yes</td><td class="number">—</td></tr>
+                    <tr><td>Landmine</td><td class="number">No</td><td class="number">No</td><td class="number">Yes</td><td class="number">Yes</td></tr>
+                    <tr><td>Trapped container</td><td class="number">Container chain</td><td class="number">No</td><td class="number">No</td><td class="number">—</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </details>
+
+            <details class="card">
+              <summary>Simulate skill bonuses not already in the totals</summary>
+              <div class="check">
+                <input id="detectiveEnabled" type="checkbox" data-default="false">
+                <label for="detectiveEnabled">Detective Boots</label>
+              </div>
+              <div class="field">
+                <label for="detectiveBonus">Actual boots bonus</label>
+                <input id="detectiveBonus" type="number" min="10" max="25" step="1" value="10" data-default="10">
+              </div>
+              <div class="check">
+                <input id="grayEnabled" type="checkbox" data-default="false">
+                <label for="grayEnabled">Gray Mouser Cloak (+80 Remove Trap)</label>
+              </div>
+              <div class="check">
+                <input id="torchEnabled" type="checkbox" data-default="false">
+                <label for="torchEnabled">Torch of Trap Finding (+100 Remove Trap)</label>
+              </div>
+              <div class="check">
+                <input id="staffEnabled" type="checkbox" data-default="false">
+                <label for="staffEnabled">Wand of Trap Removal equipped (+20 Magery)</label>
+              </div>
+              <div class="check">
+                <input id="elixirEnabled" type="checkbox" data-default="false">
+                <label for="elixirEnabled">Elixir of Removing Trap</label>
+              </div>
+              <div class="field-grid">
+                <div class="field">
+                  <label for="alchemyTotal">Alchemy total</label>
+                  <input id="alchemyTotal" type="number" min="0" max="500" step="0.1" value="0" data-default="0">
+                </div>
+                <div class="field">
+                  <label for="enhancePotions">Item Enhance Potions</label>
+                  <input id="enhancePotions" type="number" min="0" max="100" step="1" value="0" data-default="0">
+                </div>
+                <div class="field">
+                  <label for="cookingTotal">Cooking total</label>
+                  <input id="cookingTotal" type="number" min="0" max="500" step="0.1" value="0" data-default="0">
+                </div>
+                <div class="field">
+                  <label for="tastingTotal">Tasting total</label>
+                  <input id="tastingTotal" type="number" min="0" max="500" step="0.1" value="0" data-default="0">
+                </div>
+              </div>
+              <p id="elixirResult" class="result-note" aria-live="polite"></p>
+            </details>
+          </div>
+
+          <div class="stack">
+            <section class="card" aria-labelledby="avoidanceResultHeading">
+              <h2 id="avoidanceResultHeading">Result</h2>
+              <div class="metrics">
+                <div class="metric good">
+                  <small>Combined trigger avoidance</small>
+                  <strong id="combinedAvoidance">—</strong>
+                </div>
+                <div class="metric bad">
+                  <small>Trigger chance per encounter</small>
+                  <strong id="triggerChance">—</strong>
+                </div>
+                <div class="metric">
+                  <small>At least one trigger</small>
+                  <strong id="multiTriggerChance">—</strong>
+                </div>
+              </div>
+              <p id="encounterSummary" class="caption"></p>
+              <div class="table-wrap">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Method in server order</th>
+                      <th class="number">Alone</th>
+                      <th class="number">Catches</th>
+                      <th class="number">Marginal</th>
+                    </tr>
+                  </thead>
+                  <tbody id="avoidanceBreakdown"></tbody>
+                </table>
+              </div>
+              <p class="formula">
+                “Catches” attributes the remaining attempts to each sequential roll.
+                “Marginal” removes that method while leaving all other selected methods active.
+              </p>
+            </section>
+
+            <section class="card" aria-labelledby="scrollHeading">
+              <h2 id="scrollHeading">Remove Trap power-scroll comparison</h2>
+              <div class="callout warning">
+                A power scroll changes only the cap. These rows assume the skill is actually trained
+                to that value. A nominal 125 check still uses 126 internally, so 125 is 99.2063%, not 100%.
+                Each trained +5 adds 3.9683 percentage points to Remove Trap by itself; the selected-trap
+                gain is smaller when earlier or later protections already catch some encounters.
+              </div>
+              <div class="table-wrap">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Trained value</th>
+                      <th class="number">Skill alone</th>
+                      <th class="number">With simulated bonuses</th>
+                      <th class="number">Selected trap combined</th>
+                      <th class="number">Gain from prior tier</th>
+                    </tr>
+                  </thead>
+                  <tbody id="powerScrollRows"></tbody>
+                </table>
+              </div>
+            </section>
+
+            <section class="card" aria-labelledby="hiddenOutcomeHeading">
+              <h2 id="hiddenOutcomeHeading">HiddenTrap post-trigger save</h2>
+              <p class="caption">
+                This is a second layer after a literal random HiddenTrap triggers. It is not trigger resistance.
+              </p>
+              <div class="field">
+                <label for="hiddenSubtype">Effect selection</label>
+                <select id="hiddenSubtype" data-default="random-general">
+                  <option value="random-general">General random trap (25 equally likely types)</option>
+                  <option value="random-space">Spaceship random set (17 equally likely types)</option>
+                  <option value="1">1 — Revealing trap (Magic)</option>
+                  <option value="2">2 — Trip wire (Agility)</option>
+                  <option value="3">3 — Lead-coin trap (Magic)</option>
+                  <option value="4">4 — Item-loss trap (Magic)</option>
+                  <option value="5">5 — Stat-loss trap (Magic)</option>
+                  <option value="6">6 — Poison trap (Poison)</option>
+                  <option value="7">7 — Drain trap (Magic)</option>
+                  <option value="8">8 — Gemstone trap (Magic)</option>
+                  <option value="9">9 — Reagent trap (Magic)</option>
+                  <option value="10">10 — Book-bound trap (Magic)</option>
+                  <option value="11">11 — Teleport trap (Magic)</option>
+                  <option value="12">12 — Fame trap (Magic)</option>
+                  <option value="13">13 — Curse-item trap (Magic)</option>
+                  <option value="14">14 — Floor spike trap (Physical)</option>
+                  <option value="15">15 — Saw trap (Physical)</option>
+                  <option value="16">16 — Flame trap (Fire)</option>
+                  <option value="17">17 — Giant spike trap (Physical)</option>
+                  <option value="18">18 — Explosion trap (Fire)</option>
+                  <option value="19">19 — Electrical trap (Energy)</option>
+                  <option value="20">20 — Arrow-breaking wire (Agility)</option>
+                  <option value="21">21 — Tainted trap (Poison)</option>
+                  <option value="22">22 — Potion-breaking wire (Agility)</option>
+                  <option value="23">23 — Jewel-melting trap (Magic)</option>
+                  <option value="24">24 — Pit trap (Agility)</option>
+                  <option value="25">25 — Alignment trap (Magic)</option>
+                </select>
+              </div>
+              <div class="field-grid three">
+                <div class="field">
+                  <label for="statStr">Strength</label>
+                  <input id="statStr" type="number" min="0" max="1000" step="1" value="100" data-default="100">
+                </div>
+                <div class="field">
+                  <label for="statDex">Dexterity</label>
+                  <input id="statDex" type="number" min="0" max="1000" step="1" value="100" data-default="100">
+                </div>
+                <div class="field">
+                  <label for="statInt">Intelligence</label>
+                  <input id="statInt" type="number" min="0" max="1000" step="1" value="100" data-default="100">
+                </div>
+                <div class="field">
+                  <label for="magicResistTotal">Magic Resist total</label>
+                  <input id="magicResistTotal" type="number" min="0" max="500" step="0.1" value="0" data-default="0">
+                </div>
+                <div class="field">
+                  <label for="poisoningTotal">Poisoning total</label>
+                  <input id="poisoningTotal" type="number" min="0" max="500" step="0.1" value="0" data-default="0">
+                </div>
+                <div class="field">
+                  <label for="physicalRes">Physical resistance</label>
+                  <input id="physicalRes" type="number" min="0" max="100" step="1" value="0" data-default="0">
+                </div>
+                <div class="field">
+                  <label for="fireRes">Fire resistance</label>
+                  <input id="fireRes" type="number" min="0" max="100" step="1" value="0" data-default="0">
+                </div>
+                <div class="field">
+                  <label for="coldRes">Cold resistance</label>
+                  <input id="coldRes" type="number" min="0" max="100" step="1" value="0" data-default="0">
+                </div>
+                <div class="field">
+                  <label for="poisonRes">Poison resistance</label>
+                  <input id="poisonRes" type="number" min="0" max="100" step="1" value="0" data-default="0">
+                </div>
+                <div class="field">
+                  <label for="energyRes">Energy resistance</label>
+                  <input id="energyRes" type="number" min="0" max="100" step="1" value="0" data-default="0">
+                </div>
+              </div>
+              <div class="check">
+                <input id="karmaNonzero" type="checkbox" checked data-default="true">
+                <label for="karmaNonzero">Karma is nonzero (required for subtype 25 to have an effect)</label>
+              </div>
+              <div class="metrics">
+                <div class="metric good">
+                  <small>Trigger avoided</small>
+                  <strong id="hiddenAvoidMetric">—</strong>
+                </div>
+                <div class="metric">
+                  <small>Effect resisted after trigger</small>
+                  <strong id="hiddenSaveMetric">—</strong>
+                </div>
+                <div class="metric good">
+                  <small>Net avoid-or-resist</small>
+                  <strong id="hiddenNetMetric">—</strong>
+                </div>
+              </div>
+              <div id="savingCategoryRows" class="totals-line"></div>
+              <p id="hiddenSaveNote" class="caption"></p>
+            </section>
+          </div>
+        </div>
+      </section>
+
+      <section id="containerPanel" class="panel" hidden>
+        <div class="layout">
+          <div class="stack">
+            <section class="card" aria-labelledby="containerInputHeading">
+              <h2 id="containerInputHeading">Trapped container</h2>
+              <div class="field-grid">
+                <div class="field">
+                  <label for="containerLevel">Trap level</label>
+                  <input id="containerLevel" type="number" min="1" max="90" step="1" value="5" data-default="5">
+                </div>
+                <div class="field">
+                  <label for="containerTrapType">Trap effect</label>
+                  <select id="containerTrapType" data-default="magic">
+                    <option value="magic">Magic trap</option>
+                    <option value="explosion">Explosion trap</option>
+                    <option value="dart">Dart trap</option>
+                    <option value="poison">Poison trap</option>
+                  </select>
+                </div>
+              </div>
+              <div class="check">
+                <input id="treasureMapChest" type="checkbox" data-default="false">
+                <label for="treasureMapChest">This is a TreasureMapChest</label>
+              </div>
+              <p class="hint">
+                This section reuses the character totals, Luck, orb, pole, and simulated additions
+                from Dungeon avoidance. Air Walk and immortality items do not protect containers.
+              </p>
+              <div id="containerThresholdNote" class="callout"></div>
+            </section>
+
+            <section class="card" aria-labelledby="activeHeading">
+              <h2 id="activeHeading">Active methods</h2>
+              <div class="field-grid">
+                <div class="field">
+                  <label for="forensicsTotal">Forensics total</label>
+                  <input id="forensicsTotal" type="number" min="0" max="500" step="0.1" value="0" data-default="0">
+                </div>
+                <div class="field">
+                  <label for="necromancyTotal">Necromancy total</label>
+                  <input id="necromancyTotal" type="number" min="0" max="500" step="0.1" value="0" data-default="0">
+                </div>
+              </div>
+              <div class="table-wrap">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Method</th>
+                      <th class="number">Success / eligibility</th>
+                      <th>Important condition</th>
+                    </tr>
+                  </thead>
+                  <tbody id="activeMethodRows"></tbody>
+                </table>
+              </div>
+              <p class="caption">
+                Remove Trap skill failure is safe. Spell rows assume the spell’s normal cast sequence succeeds.
+              </p>
+            </section>
+          </div>
+
+          <div class="stack">
+            <section class="card" aria-labelledby="containerResultHeading">
+              <h2 id="containerResultHeading">Passive opening result</h2>
+              <div class="metrics">
+                <div class="metric good">
+                  <small>Combined disable chance</small>
+                  <strong id="containerCombined">—</strong>
+                </div>
+                <div class="metric bad">
+                  <small>Container triggers</small>
+                  <strong id="containerTrigger">—</strong>
+                </div>
+                <div class="metric">
+                  <small>Orb power</small>
+                  <strong id="containerOrbPower">—</strong>
+                </div>
+              </div>
+              <div class="table-wrap">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Method in server order</th>
+                      <th class="number">Alone</th>
+                      <th class="number">Catches</th>
+                      <th class="number">Marginal</th>
+                    </tr>
+                  </thead>
+                  <tbody id="containerBreakdown"></tbody>
+                </table>
+              </div>
+            </section>
+
+            <section class="card" aria-labelledby="mitigationHeading">
+              <h2 id="mitigationHeading">If the container triggers</h2>
+              <div class="field-grid">
+                <div class="field">
+                  <label for="containerEnergyRes">Energy resistance</label>
+                  <input id="containerEnergyRes" type="number" min="0" max="100" step="1" value="0" data-default="0">
+                </div>
+                <div class="field">
+                  <label for="containerFireRes">Fire resistance</label>
+                  <input id="containerFireRes" type="number" min="0" max="100" step="1" value="0" data-default="0">
+                </div>
+                <div class="field">
+                  <label for="containerPhysicalRes">Physical resistance</label>
+                  <input id="containerPhysicalRes" type="number" min="0" max="100" step="1" value="0" data-default="0">
+                </div>
+                <div class="field">
+                  <label for="containerPoisonRes">Poison resistance</label>
+                  <input id="containerPoisonRes" type="number" min="0" max="100" step="1" value="0" data-default="0">
+                </div>
+              </div>
+              <div id="containerMitigation"></div>
+              <p class="caption">
+                Damage ranges and averages enumerate every equally likely base roll from 50 through 200,
+                applying the same integer truncation as the server.
+              </p>
+            </section>
+          </div>
+        </div>
+      </section>
+
+      <section id="detectionPanel" class="panel" hidden>
+        <div class="layout">
+          <div class="stack">
+            <section class="card" aria-labelledby="searchHeading">
+              <h2 id="searchHeading">Searching</h2>
+              <div class="field-grid">
+                <div class="field">
+                  <label for="searchingBase">Searching real/base</label>
+                  <input id="searchingBase" type="number" min="0" max="200" step="0.1" value="100" data-default="100">
+                </div>
+                <div class="field">
+                  <label for="searchingTotal">Searching displayed total</label>
+                  <input id="searchingTotal" type="number" min="0" max="500" step="0.1" value="100" data-default="100">
+                </div>
+                <div class="field">
+                  <label for="searchDistance">Trap distance from targeted point</label>
+                  <input id="searchDistance" type="number" min="0" max="100" step="1" value="6" data-default="6">
+                </div>
+                <div class="field">
+                  <label for="ninjitsuTotal">Ninjitsu displayed total</label>
+                  <input id="ninjitsuTotal" type="number" min="0" max="500" step="0.1" value="0" data-default="0">
+                </div>
+              </div>
+              <div class="check">
+                <input id="friendlyHouse" type="checkbox" data-default="false">
+                <label for="friendlyHouse">Targeted point is in a house where I am a friend</label>
+              </div>
+              <div class="callout">
+                Searching reveals a trap within the realized scan radius. It does not disable the trap
+                or enter any trigger-avoidance multiplication.
+              </div>
+            </section>
+
+            <section class="card" aria-labelledby="airHeading">
+              <h2 id="airHeading">Air Walk duration</h2>
+              <div class="field-grid">
+                <div class="field">
+                  <label for="spiritualismTotal">Spiritualism displayed total</label>
+                  <input id="spiritualismTotal" type="number" min="0" max="500" step="0.1" value="0" data-default="0">
+                </div>
+                <div class="field">
+                  <span class="label">Other inputs</span>
+                  <p class="hint">Uses the Magery, Psychology, and Necromancy totals already entered.</p>
+                </div>
+              </div>
+              <div class="metric">
+                <small>Code-calculated duration</small>
+                <strong id="airDuration">—</strong>
+              </div>
+              <div class="callout warning">
+                The spell lore says 20–80 minutes, but the implementation creates a
+                <code>TimeSpan.FromSeconds</code> using this value.
+              </div>
+            </section>
+          </div>
+
+          <div class="stack">
+            <section class="card" aria-labelledby="detectionResultHeading">
+              <h2 id="detectionResultHeading">Detection result</h2>
+              <div class="metrics">
+                <div class="metric good">
+                  <small>Searching chance at distance</small>
+                  <strong id="searchDetectChance">—</strong>
+                </div>
+                <div class="metric">
+                  <small>Full / failed radius</small>
+                  <strong id="searchRadii">—</strong>
+                </div>
+                <div class="metric">
+                  <small>Full-radius roll</small>
+                  <strong id="searchFullRoll">—</strong>
+                </div>
+              </div>
+              <p id="searchExplanation" class="caption"></p>
+              <div class="table-wrap">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Method</th>
+                      <th class="number">Guaranteed radius after a successful cast/use</th>
+                      <th>Skill used</th>
+                    </tr>
+                  </thead>
+                  <tbody id="detectionMethodRows"></tbody>
+                </table>
+              </div>
+              <p class="caption">
+                Searching targets within 12 tiles, then scans around the chosen point. Gem of Seeing uses
+                a hard-coded effective search skill of 100, producing radius 10.
+              </p>
+            </section>
+
+            <section class="card" aria-labelledby="detectionLimitsHeading">
+              <h2 id="detectionLimitsHeading">What detection does not do</h2>
+              <ul>
+                <li>Particles and messages reveal the location; the trap item is not deleted or disabled.</li>
+                <li>Night Sight is not a passive trap-resistance roll in active Searching.</li>
+                <li>The Remove Trap handler contains a HiddenTrap target path, but detection does not make the invisible item a normal client target.</li>
+                <li>Spell-casting chances and resource costs are outside this avoidance calculator.</li>
+              </ul>
+            </section>
+          </div>
+        </div>
+      </section>
+
+      <section id="sourcePanel" class="panel" hidden>
+        <div class="stack">
+          <details class="card" open>
+            <summary>How the server calculates this</summary>
+            <ul class="source-list">
+              <li>
+                <code>Data/Scripts/Items/Traps/HiddenTrap.cs — CheckTrapAvoidance</code>:
+                common wall/floor sequence, the literal HiddenTrap setting gate, orb ownership,
+                Luck, pole charges, and the post-trigger saving throws.
+              </li>
+              <li>
+                <code>Data/Scripts/System/Misc/Settings.cs — FloorTrapTrigger</code> and
+                <code>Data/Scripts/System/Misc/Players.cs — LuckyPlayer</code>:
+                the checked-in 20 setting and the capped, integer-truncated Luck roll.
+              </li>
+              <li>
+                <code>Data/Scripts/Items/Magical/Artifacts/Artifact_DetectiveBoots.cs</code>,
+                <code>Artifact_GrayMouserCloak.cs</code>, <code>Artifact_TorchOfTrapFinding.cs</code>,
+                <code>Data/Scripts/Items/Potions/Elixirs/BaseElixir.cs — Buff</code>,
+                <code>Data/Scripts/Items/Potions/BasePotion.cs — EnhancePotions</code>, and
+                <code>Data/Scripts/Items/Wands/2nd Circle/MagicUntrapStaff.cs</code>:
+                optional Remove Trap and Magery scenario modifiers.
+              </li>
+              <li>
+                <code>Data/System/Source/Mobile.cs — CheckSkill / CheckTargetSkill</code> and
+                <code>Data/Scripts/System/Skills/SkillCheck.cs</code>:
+                any requested maximum of at least 100 is replaced by 126; chance is
+                <code>(value − min) / (max − min)</code>.
+              </li>
+              <li>
+                <code>Data/System/Source/Skills.cs — Skill.Value</code>:
+                formulas read total skill, including applicable skill modifiers. Power scrolls set only
+                <code>Skill.Cap</code>.
+              </li>
+              <li>
+                <code>Data/Scripts/Items/Traps/TenFootPole.cs — TapChance</code>:
+                material weight maps to 50–92%. A charge is removed only on a successful pole save.
+              </li>
+              <li>
+                <code>Data/Scripts/Magic/Magery/Magery 2nd/RemoveTrap.cs</code> and
+                <code>Data/Scripts/Items/Traps/TrapWand.cs</code>:
+                the self-targeted spell creates the owned, 30-minute orb and sets its power from Magery.
+              </li>
+              <li>
+                <code>Data/Scripts/Items/Containers/TrapableContainer.cs — ExecuteTrap</code>:
+                level threshold, Remove Trap, Luck, discrete orb/pole rolls, and post-trigger mitigation.
+              </li>
+              <li>
+                <code>Data/Scripts/System/Skills/RemoveTrap.cs</code>:
+                active container disarming uses the same level-based check and fails without setting off the trap.
+              </li>
+              <li>
+                <code>Data/Scripts/System/Skills/Searching.cs</code>,
+                Magery <code>Reveal</code>, Shinobi <code>EagleEye</code>, Jedi <code>MindsEye</code>,
+                and <code>GemOfSeeing</code>: detection radii and reveal-only behavior.
+              </li>
+              <li>
+                <code>Data/Scripts/Magic/Research/Spells/Theurgy/ResearchAirWalk.cs</code> and
+                <code>ResearchSpell.DamagingSkill</code>: supported trap bypasses and the duration calculation.
+              </li>
+              <li>
+                <code>Data/Scripts/Quests/Shadowlords/GemImmortality.cs</code> and
+                <code>Data/Scripts/Magic/Research/Spells/Death/ResearchWithstandDeath.cs — JewelInPocket</code>:
+                the trap classes that short-circuit when either item is present.
+              </li>
+              <li>
+                <code>Data/Scripts/Magic/Witch/Effects/Phantasm.cs</code>,
+                <code>BottleOfAcid.cs</code>, and <code>PlasmaTorch.cs</code>:
+                active container alternatives.
+              </li>
+            </ul>
+          </details>
+
+          <section class="card">
+            <h2>Important implementation quirks</h2>
+            <div class="field-grid">
+              <div class="callout warning">
+                <h3>125 means 126</h3>
+                <p>Checks written as 0–125 are changed to 0–126. Total skill 125 therefore leaves a 0.7937% failure chance.</p>
+              </div>
+              <div class="callout warning">
+                <h3>Floor setting is reversed in use</h3>
+                <p>The checked-in setting says “20% trigger,” but <code>CheckTrapAvoidance</code> treats its successful 1–100 roll as avoidance.</p>
+              </div>
+              <div class="callout warning">
+                <h3>Air Walk seconds</h3>
+                <p>The displayed lore says minutes; the timer is constructed with seconds.</p>
+              </div>
+              <div class="callout warning">
+                <h3>Flame-spurt proximity hit</h3>
+                <p>Its separate <code>OnMovement</code> 1–10 damage path has no Remove Trap, orb, Luck, pole, Air Walk, or immortality check.</p>
+              </div>
+            </div>
+          </section>
+
+          <section class="card">
+            <h2>Scope</h2>
+            <p>
+              Results assume a living, non-blessed player character. They calculate the selected player’s own
+              trigger check. Some traps can damage nearby characters after someone else triggers them; no
+              probability is invented for that collateral event.
+            </p>
+            <p>
+              All magical protection percentages assume the effect or item already exists and is valid.
+              Normal spell-casting success, mana, reagents, research materials, and line-of-sight checks are separate.
+            </p>
+          </section>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      Standalone and offline. Formulas mirror the checked-in Confictura source and run an internal test suite whenever this page loads.
+    </footer>
+  </div>
+
+  <script>
+    "use strict";
+
+    const POLE_MATERIALS = {
+      "wood": { label: "Wood", weight: 40, chance: 50 },
+      "ash": { label: "Ash", weight: 39, chance: 53 },
+      "cherry": { label: "Cherry", weight: 38, chance: 56 },
+      "ebony": { label: "Ebony", weight: 37, chance: 59 },
+      "golden-oak": { label: "Golden oak", weight: 36, chance: 62 },
+      "hickory": { label: "Hickory", weight: 35, chance: 65 },
+      "mahogany": { label: "Mahogany", weight: 34, chance: 68 },
+      "driftwood": { label: "Driftwood", weight: 33, chance: 71 },
+      "oak": { label: "Oak", weight: 32, chance: 74 },
+      "pine": { label: "Pine", weight: 31, chance: 77 },
+      "ghostwood": { label: "Ghostwood", weight: 30, chance: 80 },
+      "rosewood": { label: "Rosewood", weight: 29, chance: 83 },
+      "walnut": { label: "Walnut", weight: 28, chance: 86 },
+      "petrified": { label: "Petrified", weight: 27, chance: 89 },
+      "elven": { label: "Elven", weight: 26, chance: 92 }
+    };
+
+    const METHOD_LABELS = {
+      owner: "Owner immunity",
+      air: "Air Walk",
+      immortal: "Gem/Jewel of Immortality",
+      global: "HiddenTrap setting gate",
+      remove: "Remove Trap total",
+      orb: "Orb of Trap Finding",
+      luck: "Luck",
+      pole: "Ten-foot pole",
+      psych: "Psychology"
+    };
+
+    const COMMON_STEPS = ["remove", "orb", "luck", "pole"];
+
+    const TRAPS = {
+      generic: {
+        label: "Standard wall/floor trap",
+        steps: COMMON_STEPS,
+        note: "Uses the shared Remove Trap → orb → Luck → pole sequence."
+      },
+      hidden: {
+        label: "Random hidden floor trap",
+        steps: ["global", ...COMMON_STEPS, "air"],
+        note: "Literal HiddenTrap uses the checked-in 20% setting as an initial avoidance roll. Air Walk is checked after the common rolls."
+      },
+      firecolumn: {
+        label: "Fire column trap",
+        steps: ["immortal", ...COMMON_STEPS, "air"],
+        note: "Immortality is checked first; Air Walk is checked after the common rolls."
+      },
+      flamespurt: {
+        label: "Flame-spurt tile crossing",
+        steps: ["air", ...COMMON_STEPS],
+        note: "Air Walk protects the direct tile crossing. The separate proximity OnMovement hit bypasses every listed protection."
+      },
+      gas: {
+        label: "Poison gas trap",
+        steps: ["immortal", ...COMMON_STEPS],
+        note: "Gem/Jewel works. Air Walk does not."
+      },
+      giantspike: {
+        label: "Giant spike trap",
+        steps: ["immortal", ...COMMON_STEPS],
+        note: "Gem/Jewel works. Air Walk does not."
+      },
+      mushroom: {
+        label: "Mushroom trap",
+        steps: ["immortal", ...COMMON_STEPS],
+        note: "Gem/Jewel works. Air Walk does not."
+      },
+      saw: {
+        label: "Saw trap",
+        steps: ["immortal", ...COMMON_STEPS, "air"],
+        note: "Immortality is checked first; Air Walk is checked after the common rolls."
+      },
+      spike: {
+        label: "Spike trap",
+        steps: ["immortal", ...COMMON_STEPS, "air"],
+        note: "Immortality is checked first; Air Walk is checked after the common rolls."
+      },
+      stoneface: {
+        label: "Stone-face trap",
+        steps: ["immortal", ...COMMON_STEPS],
+        note: "Gem/Jewel works. Air Walk does not."
+      },
+      spelltrap: {
+        label: "Player SpellTrap",
+        steps: ["owner", "air", "immortal", ...COMMON_STEPS, "psych"],
+        note: "Owner, Air Walk, and immortality short-circuit first. Psychology gets one final 0–126 check after the common chain."
+      },
+      settrap: {
+        label: "Player SetTrap",
+        steps: ["owner", "air", "immortal", ...COMMON_STEPS],
+        note: "Owner, Air Walk, and immortality short-circuit before the common chain."
+      },
+      killertile: {
+        label: "KillerTile",
+        steps: ["air", "immortal"],
+        note: "Only Air Walk or an immortality item protects a normal player. Common avoidance methods are never called."
+      },
+      landmine: {
+        label: "Landmine",
+        steps: ["owner", "immortal"],
+        note: "Only owner immunity or an immortality item applies. Air Walk and common avoidance are never called."
+      }
+    };
+
+    const HIDDEN_TYPES = {
+      1: { category: "Magic", label: "Revealing" },
+      2: { category: "Agility", label: "Trip wire" },
+      3: { category: "Magic", label: "Lead coins" },
+      4: { category: "Magic", label: "Item loss" },
+      5: { category: "Magic", label: "Stat loss" },
+      6: { category: "Poison", label: "Poison" },
+      7: { category: "Magic", label: "Drain" },
+      8: { category: "Magic", label: "Gemstone" },
+      9: { category: "Magic", label: "Reagent" },
+      10: { category: "Magic", label: "Book bound" },
+      11: { category: "Magic", label: "Teleport" },
+      12: { category: "Magic", label: "Fame" },
+      13: { category: "Magic", label: "Curse item" },
+      14: { category: "Physical", label: "Floor spike" },
+      15: { category: "Physical", label: "Saw" },
+      16: { category: "Fire", label: "Flame" },
+      17: { category: "Physical", label: "Giant spike" },
+      18: { category: "Fire", label: "Explosion" },
+      19: { category: "Energy", label: "Electrical" },
+      20: { category: "Agility", label: "Arrow-breaking wire" },
+      21: { category: "Poison", label: "Tainted" },
+      22: { category: "Agility", label: "Potion-breaking wire" },
+      23: { category: "Magic", label: "Melt jewels" },
+      24: { category: "Agility", label: "Pit" },
+      25: { category: "Magic", label: "Alignment" }
+    };
+
+    const GENERAL_HIDDEN_SET = Array.from({ length: 25 }, (_, index) => index + 1);
+    const SPACESHIP_HIDDEN_SET = [1, 2, 3, 4, 5, 6, 7, 8, 9, 11, 16, 18, 19, 20, 21, 22, 23];
+
+    function byId(id) {
+      return document.getElementById(id);
+    }
+
+    function csharpTrunc(value) {
+      return value < 0 ? Math.ceil(value) : Math.floor(value);
+    }
+
+    function clamp(value, minimum, maximum) {
+      return Math.min(maximum, Math.max(minimum, value));
+    }
+
+    function finite(value, fallback = 0) {
+      const parsed = Number(value);
+      return Number.isFinite(parsed) ? parsed : fallback;
+    }
+
+    function inputNumber(id, fallback = 0) {
+      return finite(byId(id).value, fallback);
+    }
+
+    function checked(id) {
+      return byId(id).checked;
+    }
+
+    function sourceAdjustedMaximum(maximum) {
+      return maximum >= 100 ? 126 : maximum;
+    }
+
+    function skillCheckChance(value, minimum, maximum) {
+      const adjustedMaximum = sourceAdjustedMaximum(maximum);
+      if (value < minimum) {
+        return 0;
+      }
+      if (value >= adjustedMaximum) {
+        return 1;
+      }
+      return clamp((value - minimum) / (adjustedMaximum - minimum), 0, 1);
+    }
+
+    function removeTrapChance(total) {
+      return skillCheckChance(total, 0, 125);
+    }
+
+    function luckChance(luck) {
+      if (luck <= 0) {
+        return 0;
+      }
+      const bounded = Math.min(luck, 2000);
+      return csharpTrunc(bounded * 0.04) / 100;
+    }
+
+    function orbPower(mageryTotal) {
+      return clamp(csharpTrunc(mageryTotal / 2) + 25, 0, 100);
+    }
+
+    function poleChanceFromWeight(weight) {
+      let chance = 50;
+      if (weight < 40) {
+        if (weight > 38) chance = 53;
+        else if (weight > 37) chance = 56;
+        else if (weight > 36) chance = 59;
+        else if (weight > 35) chance = 62;
+        else if (weight > 34) chance = 65;
+        else if (weight > 33) chance = 68;
+        else if (weight > 32) chance = 71;
+        else if (weight > 31) chance = 74;
+        else if (weight > 30) chance = 77;
+        else if (weight > 29) chance = 80;
+        else if (weight > 28) chance = 83;
+        else if (weight > 27) chance = 86;
+        else if (weight > 26) chance = 89;
+        else if (weight > 25) chance = 92;
+      }
+      return chance;
+    }
+
+    function elixirDetails(values) {
+      const alchemyFixed = csharpTrunc(Math.max(0, values.alchemyTotal) * 10);
+      let alchemyBonus = 0;
+      if (alchemyFixed >= 99) alchemyBonus = 30;
+      else if (alchemyFixed >= 66) alchemyBonus = 20;
+      else if (alchemyFixed >= 33) alchemyBonus = 10;
+
+      const effectiveEnhance = Math.min(Math.max(0, csharpTrunc(values.enhancePotions)), 50) + alchemyBonus;
+      const totalBuff =
+        10
+        + csharpTrunc(effectiveEnhance / 8)
+        + csharpTrunc(Math.max(0, values.cookingTotal) / 5)
+        + csharpTrunc(Math.max(0, values.tastingTotal) / 5);
+
+      let remainingTo125 = 125 - csharpTrunc(Math.max(0, values.removeBase));
+      if (remainingTo125 < 1) {
+        remainingTo125 = 1;
+      }
+      const bonus = Math.min(remainingTo125, totalBuff);
+      const durationMinutes = csharpTrunc(
+        (
+          120
+          + (2 * effectiveEnhance)
+          + (2 * csharpTrunc(Math.max(0, values.cookingTotal)))
+          + (2 * csharpTrunc(Math.max(0, values.tastingTotal)))
+        ) / 120
+      );
+
+      return { bonus, durationMinutes, totalBuff, effectiveEnhance, alchemyBonus };
+    }
+
+    function scenarioBonuses() {
+      const elixir = elixirDetails({
+        removeBase: inputNumber("removeBase"),
+        alchemyTotal: inputNumber("alchemyTotal"),
+        enhancePotions: inputNumber("enhancePotions"),
+        cookingTotal: inputNumber("cookingTotal"),
+        tastingTotal: inputNumber("tastingTotal")
+      });
+
+      let remove = 0;
+      if (checked("detectiveEnabled")) {
+        remove += clamp(csharpTrunc(inputNumber("detectiveBonus", 10)), 10, 25);
+      }
+      if (checked("grayEnabled")) remove += 80;
+      if (checked("torchEnabled")) remove += 100;
+      if (checked("elixirEnabled")) remove += elixir.bonus;
+
+      return {
+        remove,
+        magery: checked("staffEnabled") ? 20 : 0,
+        elixir
+      };
+    }
+
+    function currentState(overrides = {}) {
+      const bonuses = scenarioBonuses();
+      const poleKey = byId("poleMaterial").value;
+      const pole = POLE_MATERIALS[poleKey] || null;
+
+      return {
+        removeTotal: overrides.removeTotal ?? Math.max(0, inputNumber("removeTotal")) + bonuses.remove,
+        mageryTotal: overrides.mageryTotal ?? Math.max(0, inputNumber("mageryTotal")) + bonuses.magery,
+        psychologyTotal: overrides.psychologyTotal ?? Math.max(0, inputNumber("psychologyTotal")),
+        luck: overrides.luck ?? Math.max(0, inputNumber("luck")),
+        orbActive: overrides.orbActive ?? checked("orbActive"),
+        poleChance: overrides.poleChance ?? (pole ? pole.chance / 100 : 0),
+        poleLabel: pole ? pole.label : "No pole",
+        airActive: overrides.airActive ?? checked("airWalkActive"),
+        immortalityActive: overrides.immortalityActive ?? checked("immortalityActive"),
+        ownerActive: overrides.ownerActive ?? checked("ownerActive")
+      };
+    }
+
+    function methodChance(method, state) {
+      switch (method) {
+        case "owner": return state.ownerActive ? 1 : 0;
+        case "air": return state.airActive ? 1 : 0;
+        case "immortal": return state.immortalityActive ? 1 : 0;
+        case "global": return 0.20;
+        case "remove": return removeTrapChance(state.removeTotal);
+        case "orb": return state.orbActive ? orbPower(state.mageryTotal) / 100 : 0;
+        case "luck": return luckChance(state.luck);
+        case "pole": return state.poleChance;
+        case "psych": return removeTrapChance(state.psychologyTotal);
+        default: return 0;
+      }
+    }
+
+    function combineSteps(stepNames, state, excludedMethod = null) {
+      let remaining = 1;
+      const rows = [];
+
+      for (const method of stepNames) {
+        const probability = method === excludedMethod ? 0 : methodChance(method, state);
+        const attributed = remaining * probability;
+        rows.push({ method, probability, attributed });
+        remaining *= (1 - probability);
+      }
+
+      return { combined: 1 - remaining, rows };
+    }
+
+    function calculateTrap(trapKey, state) {
+      const trap = TRAPS[trapKey] || TRAPS.generic;
+      const result = combineSteps(trap.steps, state);
+      result.rows = result.rows.map((row) => {
+        const without = combineSteps(trap.steps, state, row.method).combined;
+        return { ...row, marginal: result.combined - without };
+      });
+      result.trap = trap;
+      return result;
+    }
+
+    function inclusiveIntegerChance(power, low, high) {
+      const integerPower = csharpTrunc(power);
+      const count = high - low + 1;
+      return clamp(integerPower - low + 1, 0, count) / count;
+    }
+
+    function containerSkillChance(removeTotal, level) {
+      const low = level * 10;
+      const high = low + 20;
+      if (csharpTrunc(removeTotal) < low) {
+        return 0;
+      }
+      return skillCheckChance(removeTotal, 0, high);
+    }
+
+    function calculateContainer(level, state) {
+      const low = level * 10;
+      const high = low + 20;
+      const orb = state.orbActive ? inclusiveIntegerChance(orbPower(state.mageryTotal), low, high) : 0;
+      const pole = state.poleChance > 0
+        ? inclusiveIntegerChance(csharpTrunc(state.poleChance * 100), low, high)
+        : 0;
+      const probabilities = {
+        remove: containerSkillChance(state.removeTotal, level),
+        luck: luckChance(state.luck),
+        orb,
+        pole
+      };
+      const steps = ["remove", "luck", "orb", "pole"];
+      let remaining = 1;
+      const rows = steps.map((method) => {
+        const probability = probabilities[method];
+        const attributed = remaining * probability;
+        remaining *= (1 - probability);
+        return { method, probability, attributed };
+      });
+      const combined = 1 - remaining;
+
+      for (const row of rows) {
+        let withoutRemaining = 1;
+        for (const method of steps) {
+          withoutRemaining *= (1 - (method === row.method ? 0 : probabilities[method]));
+        }
+        row.marginal = combined - (1 - withoutRemaining);
+      }
+
+      return { low, high, combined, rows, probabilities };
+    }
+
+    function searchDetection(searchingTotal, distance, friendlyHouse) {
+      if (friendlyHouse) {
+        return {
+          chance: distance <= 22 ? 1 : 0,
+          fullRadius: 22,
+          failedRadius: 22,
+          fullRoll: 1
+        };
+      }
+
+      const fullRadius = Math.max(0, csharpTrunc(searchingTotal / 10));
+      const failedRadius = csharpTrunc(fullRadius / 2);
+      const fullRoll = removeTrapChance(searchingTotal);
+      const successCovers = fullRadius > 0 && distance <= fullRadius;
+      const failureCovers = failedRadius > 0 && distance <= failedRadius;
+      const chance = (fullRoll * (successCovers ? 1 : 0))
+        + ((1 - fullRoll) * (failureCovers ? 1 : 0));
+
+      return { chance, fullRadius, failedRadius, fullRoll };
+    }
+
+    function airWalkDuration(values) {
+      return csharpTrunc(
+        (
+          values.necromancy
+          + values.magery
+          + values.spiritualism
+          + values.psychology
+        ) / 6
+      );
+    }
+
+    function savingChances(values) {
+      const capped = (value) => clamp(csharpTrunc(value), 0, 60) / 100;
+      return {
+        Magic: capped((values.intelligence + values.magicResist + values.energyRes) / 4),
+        Physical: capped((values.strength + values.physicalRes) / 3),
+        Agility: capped(values.dexterity),
+        Cold: capped((values.dexterity + values.coldRes) / 3),
+        Fire: capped((values.dexterity + values.fireRes) / 3),
+        Poison: capped((values.strength + values.poisoning + values.poisonRes) / 4),
+        Energy: capped((values.intelligence + values.energyRes) / 3)
+      };
+    }
+
+    function hiddenSaveChance(selection, chances, karmaNonzero) {
+      let typeIds;
+      if (selection === "random-general") typeIds = GENERAL_HIDDEN_SET;
+      else if (selection === "random-space") typeIds = SPACESHIP_HIDDEN_SET;
+      else typeIds = [csharpTrunc(finite(selection, 1))];
+
+      let total = 0;
+      for (const typeId of typeIds) {
+        if (typeId === 25 && !karmaNonzero) {
+          total += 1;
+        } else {
+          total += chances[HIDDEN_TYPES[typeId].category];
+        }
+      }
+      return total / typeIds.length;
+    }
+
+    function transformedDamage(reductionPercent) {
+      const reduction = clamp(csharpTrunc(reductionPercent), 0, 100);
+      const rolls = [];
+      for (let base = 50; base <= 200; base += 1) {
+        rolls.push(csharpTrunc((base * (100 - reduction)) / 100));
+      }
+      return {
+        reduction,
+        minimum: Math.min(...rolls),
+        maximum: Math.max(...rolls),
+        average: rolls.reduce((sum, value) => sum + value, 0) / rolls.length
+      };
+    }
+
+    function poisonDistribution(poisonResistance) {
+      const resistance = csharpTrunc(poisonResistance);
+      let count;
+      if (resistance >= 70) count = 1;
+      else if (resistance >= 50) count = 2;
+      else if (resistance >= 30) count = 3;
+      else if (resistance >= 10) count = 4;
+      else count = 5;
+      const names = ["Lesser", "Regular", "Greater", "Deadly", "Lethal"];
+      return names.slice(0, count).map((name) => ({ name, chance: 1 / count }));
+    }
+
+    function percent(value, digits = 2) {
+      return `${(clamp(value, 0, 1) * 100).toFixed(digits)}%`;
+    }
+
+    function signedPoints(value) {
+      const points = value * 100;
+      return `${points >= 0 ? "+" : ""}${points.toFixed(2)} pp`;
+    }
+
+    function renderBreakdown(targetId, rows, state, isContainer = false) {
+      byId(targetId).innerHTML = rows.map((row) => {
+        let detail = "";
+        if (row.method === "orb") {
+          detail = state.orbActive ? ` <span class="pill">${orbPower(state.mageryTotal)} power</span>` : " <span class=\"pill\">inactive</span>";
+        } else if (row.method === "pole") {
+          detail = state.poleChance > 0 ? ` <span class="pill">${state.poleLabel}</span>` : " <span class=\"pill\">none</span>";
+        } else if (row.method === "global") {
+          detail = " <span class=\"pill\">setting 20</span>";
+        } else if (isContainer && row.method === "remove") {
+          detail = " <span class=\"pill\">level gate</span>";
+        }
+        return `
+          <tr>
+            <td>${METHOD_LABELS[row.method]}${detail}</td>
+            <td class="number">${percent(row.probability, 4)}</td>
+            <td class="number">${percent(row.attributed, 4)}</td>
+            <td class="number">${signedPoints(row.marginal)}</td>
+          </tr>
+        `;
+      }).join("");
+    }
+
+    function renderAdjustedTotals(state, bonuses) {
+      byId("adjustedTotals").innerHTML = `
+        <span class="pill">Used Remove Trap: ${state.removeTotal.toFixed(1)}</span>
+        <span class="pill">Used Magery: ${state.mageryTotal.toFixed(1)}</span>
+        <span class="pill">Used Psychology: ${state.psychologyTotal.toFixed(1)}</span>
+        <span class="pill">Scenario RT bonus: +${bonuses.remove.toFixed(1)}</span>
+      `;
+
+      const elixir = bonuses.elixir;
+      byId("elixirResult").textContent =
+        `Elixir preview: +${elixir.bonus} Remove Trap for ${elixir.durationMinutes} minute(s). `
+        + `Effective Enhance Potions ${elixir.effectiveEnhance}; raw buff ceiling ${elixir.totalBuff}.`;
+    }
+
+    function renderCompatibility(trapKey, state) {
+      const trap = TRAPS[trapKey];
+      const notes = [trap.note];
+      if (state.airActive && !trap.steps.includes("air")) {
+        notes.push("Air Walk is active but this trap never checks it.");
+      }
+      if (state.immortalityActive && !trap.steps.includes("immortal")) {
+        notes.push("The immortality item is present but this trap path does not use it.");
+      }
+      if (state.ownerActive && !trap.steps.includes("owner")) {
+        notes.push("Owner immunity is not part of this trap path.");
+      }
+      byId("compatibilityNote").innerHTML = `<strong>${trap.label}</strong><br>${notes.join(" ")}`;
+      byId("compatibilityNote").className = trapKey === "flamespurt" ? "callout danger" : "callout";
+    }
+
+    function renderPowerScrolls(trapKey, state, bonuses) {
+      const tiers = [100, 105, 110, 115, 120, 125];
+      let priorCombined = null;
+      byId("powerScrollRows").innerHTML = tiers.map((tier) => {
+        const scenarioTotal = tier + bonuses.remove;
+        const scenarioState = { ...state, removeTotal: scenarioTotal };
+        const combined = calculateTrap(trapKey, scenarioState).combined;
+        const gain = priorCombined === null ? "Baseline" : signedPoints(combined - priorCombined);
+        priorCombined = combined;
+        return `
+          <tr>
+            <td>${tier.toFixed(1)}</td>
+            <td class="number">${percent(removeTrapChance(tier), 4)}</td>
+            <td class="number">${percent(removeTrapChance(scenarioTotal), 4)}</td>
+            <td class="number">${percent(combined, 4)}</td>
+            <td class="number">${gain}</td>
+          </tr>
+        `;
+      }).join("");
+    }
+
+    function readSavingInputs() {
+      return {
+        strength: Math.max(0, inputNumber("statStr")),
+        dexterity: Math.max(0, inputNumber("statDex")),
+        intelligence: Math.max(0, inputNumber("statInt")),
+        magicResist: Math.max(0, inputNumber("magicResistTotal")),
+        poisoning: Math.max(0, inputNumber("poisoningTotal")),
+        physicalRes: clamp(inputNumber("physicalRes"), 0, 100),
+        fireRes: clamp(inputNumber("fireRes"), 0, 100),
+        coldRes: clamp(inputNumber("coldRes"), 0, 100),
+        poisonRes: clamp(inputNumber("poisonRes"), 0, 100),
+        energyRes: clamp(inputNumber("energyRes"), 0, 100)
+      };
+    }
+
+    function renderHiddenSave(currentAvoidance, trapKey) {
+      const chances = savingChances(readSavingInputs());
+      const selection = byId("hiddenSubtype").value;
+      const saveChance = hiddenSaveChance(selection, chances, checked("karmaNonzero"));
+      const hiddenAvoidance = calculateTrap("hidden", currentState()).combined;
+      const net = hiddenAvoidance + ((1 - hiddenAvoidance) * saveChance);
+
+      byId("hiddenAvoidMetric").textContent = percent(hiddenAvoidance, 4);
+      byId("hiddenSaveMetric").textContent = percent(saveChance, 4);
+      byId("hiddenNetMetric").textContent = percent(net, 4);
+      byId("savingCategoryRows").innerHTML = Object.entries(chances)
+        .map(([category, chance]) => `<span class="pill">${category}: ${percent(chance, 0)}</span>`)
+        .join("");
+
+      const selectionText = selection === "random-general"
+        ? "Weighted over all 25 equally likely general subtypes."
+        : selection === "random-space"
+          ? "Weighted over the 17-type spaceship list."
+          : `Subtype ${selection}: ${HIDDEN_TYPES[Number(selection)].label}, using the ${HIDDEN_TYPES[Number(selection)].category} save.`;
+      const context = trapKey === "hidden"
+        ? "The main result currently uses this same HiddenTrap avoidance."
+        : "The main result is a different trap type; this panel always computes literal HiddenTrap.";
+      byId("hiddenSaveNote").textContent = `${selectionText} ${context} Effect-specific prerequisites other than subtype 25 Karma are not simulated.`;
+    }
+
+    function renderAvoidance() {
+      const bonuses = scenarioBonuses();
+      const state = currentState();
+      const trapKey = byId("trapType").value;
+      const result = calculateTrap(trapKey, state);
+      const encounters = clamp(csharpTrunc(inputNumber("encounters", 1)), 1, 10000);
+      const trigger = 1 - result.combined;
+      const atLeastOne = 1 - Math.pow(result.combined, encounters);
+      const expected = encounters * trigger;
+
+      byId("combinedAvoidance").textContent = percent(result.combined, 4);
+      byId("triggerChance").textContent = percent(trigger, 4);
+      byId("multiTriggerChance").textContent = percent(atLeastOne, 2);
+      byId("encounterSummary").textContent =
+        `Across ${encounters} independent encounter(s): ${expected.toFixed(2)} expected triggers; `
+        + `${percent(atLeastOne, 2)} chance of at least one trigger.`;
+
+      renderBreakdown("avoidanceBreakdown", result.rows, state);
+      renderAdjustedTotals(state, bonuses);
+      renderCompatibility(trapKey, state);
+      renderPowerScrolls(trapKey, state, bonuses);
+      renderHiddenSave(result.combined, trapKey);
+    }
+
+    function renderContainer() {
+      const state = currentState();
+      const level = clamp(csharpTrunc(inputNumber("containerLevel", 1)), 1, 90);
+      const result = calculateContainer(level, state);
+      const denominator = sourceAdjustedMaximum(result.high);
+
+      byId("containerCombined").textContent = percent(result.combined, 4);
+      byId("containerTrigger").textContent = percent(1 - result.combined, 4);
+      byId("containerOrbPower").textContent = state.orbActive ? `${orbPower(state.mageryTotal)} / 100` : "Inactive";
+      renderBreakdown("containerBreakdown", result.rows, state, true);
+
+      byId("containerThresholdNote").innerHTML =
+        `<strong>Level ${level}</strong>: the skill threshold is ${result.low}; `
+        + `the rolled range is ${result.low}–${result.high} inclusive. `
+        + `The Remove Trap check denominator is ${denominator}${result.high >= 100 ? " because maxima ≥100 become 126" : ""}.`;
+
+      const treasureMap = checked("treasureMapChest");
+      const mageryEligible = csharpTrunc(state.mageryTotal) > (level * 12);
+      const forensics = Math.max(0, inputNumber("forensicsTotal"));
+      const necromancy = Math.max(0, inputNumber("necromancyTotal"));
+      const phantasmEligible = necromancy >= 25 && level <= csharpTrunc(forensics);
+      const toolEligible = !treasureMap && level > 0;
+
+      byId("activeMethodRows").innerHTML = `
+        <tr>
+          <td>Remove Trap skill</td>
+          <td class="number">${percent(result.probabilities.remove, 4)}</td>
+          <td>Requires integer total ≥ ${result.low}; failure does not trigger the trap.</td>
+        </tr>
+        <tr>
+          <td>Magery Remove Trap</td>
+          <td class="number">${mageryEligible ? "Eligible (100% after cast)" : "Not eligible"}</td>
+          <td>Requires floor(Magery) &gt; ${level * 12}; current used Magery ${state.mageryTotal.toFixed(1)}.</td>
+        </tr>
+        <tr>
+          <td>Phantasm</td>
+          <td class="number">${phantasmEligible ? "Eligible (100% after cast)" : "Not eligible"}</td>
+          <td>Requires Necromancy ≥25 and floor(Forensics) ≥ ${level}.</td>
+        </tr>
+        <tr>
+          <td>Bottle of Acid / Plasma Torch</td>
+          <td class="number">${toolEligible ? "Eligible (100%)" : "Blocked"}</td>
+          <td>${treasureMap ? "TreasureMapChest explicitly resists these tools." : "Eligible trapped non-treasure-map container."}</td>
+        </tr>
+      `;
+
+      renderContainerMitigation(state);
+    }
+
+    function renderContainerMitigation(state) {
+      const trapType = byId("containerTrapType").value;
+      const values = {
+        energyRes: clamp(inputNumber("containerEnergyRes"), 0, 100),
+        fireRes: clamp(inputNumber("containerFireRes"), 0, 100),
+        physicalRes: clamp(inputNumber("containerPhysicalRes"), 0, 100),
+        poisonRes: clamp(inputNumber("containerPoisonRes"), 0, 100)
+      };
+      let html;
+
+      if (trapType === "magic") {
+        const magicAvoid = Math.min(90, csharpTrunc((state.removeTotal + values.energyRes) / 3));
+        const damage = transformedDamage(magicAvoid);
+        html = `
+          <div class="callout">
+            <strong>MagicAvoid: ${magicAvoid}%</strong><br>
+            <code>min(90, floor((Remove Trap total + Energy resistance) / 3))</code>
+          </div>
+          <p>Post-trigger damage: ${damage.minimum}–${damage.maximum}; exact average ${damage.average.toFixed(2)}.</p>
+        `;
+      } else if (trapType === "explosion") {
+        const damage = transformedDamage(values.fireRes);
+        html = `
+          <div class="callout"><strong>Fire resistance reduction: ${damage.reduction}%</strong></div>
+          <p>Post-trigger damage: ${damage.minimum}–${damage.maximum}; exact average ${damage.average.toFixed(2)}.</p>
+        `;
+      } else if (trapType === "dart") {
+        const damage = transformedDamage(values.physicalRes);
+        html = `
+          <div class="callout"><strong>Physical resistance reduction: ${damage.reduction}%</strong></div>
+          <p>Post-trigger damage: ${damage.minimum}–${damage.maximum}; exact average ${damage.average.toFixed(2)}.</p>
+        `;
+      } else {
+        const distribution = poisonDistribution(values.poisonRes);
+        html = `
+          <div class="callout">
+            <strong>Poison resistance ${csharpTrunc(values.poisonRes)}</strong><br>
+            The server chooses uniformly from ${distribution.length} possible poison level(s).
+          </div>
+          <div class="totals-line">
+            ${distribution.map((entry) => `<span class="pill">${entry.name}: ${percent(entry.chance, 2)}</span>`).join("")}
+          </div>
+        `;
+      }
+
+      byId("containerMitigation").innerHTML = html;
+    }
+
+    function renderDetection() {
+      const searching = Math.max(0, inputNumber("searchingTotal"));
+      const distance = Math.max(0, inputNumber("searchDistance"));
+      const result = searchDetection(searching, distance, checked("friendlyHouse"));
+      const state = currentState();
+      const ninjitsu = Math.max(0, inputNumber("ninjitsuTotal"));
+      const spiritualism = Math.max(0, inputNumber("spiritualismTotal"));
+      const necromancy = Math.max(0, inputNumber("necromancyTotal"));
+
+      byId("searchDetectChance").textContent = percent(result.chance, 4);
+      byId("searchRadii").textContent = `${result.fullRadius} / ${result.failedRadius}`;
+      byId("searchFullRoll").textContent = percent(result.fullRoll, 4);
+
+      if (checked("friendlyHouse")) {
+        byId("searchExplanation").textContent = "Friendly-house logic overrides either roll outcome to radius 22.";
+      } else if (distance <= result.failedRadius && result.failedRadius > 0) {
+        byId("searchExplanation").textContent = "The trap is inside both possible radii, so detection is guaranteed.";
+      } else if (distance <= result.fullRadius && result.fullRadius > 0) {
+        byId("searchExplanation").textContent = "The trap is outside the failed half-radius, so detection requires the full-radius skill roll.";
+      } else {
+        byId("searchExplanation").textContent = "The trap is outside the full scan radius.";
+      }
+
+      const reveal = 1 + csharpTrunc(state.mageryTotal / 20);
+      const eagle = 1 + csharpTrunc(ninjitsu / 20);
+      const mind = 1 + csharpTrunc(state.psychologyTotal / 20);
+      byId("detectionMethodRows").innerHTML = `
+        <tr><td>Magery Reveal</td><td class="number">${reveal}</td><td>Magery ${state.mageryTotal.toFixed(1)}</td></tr>
+        <tr><td>Shinobi Eagle Eye</td><td class="number">${eagle}</td><td>Ninjitsu ${ninjitsu.toFixed(1)}</td></tr>
+        <tr><td>Jedi Mind’s Eye</td><td class="number">${mind}</td><td>Psychology ${state.psychologyTotal.toFixed(1)}</td></tr>
+        <tr><td>Gem of Seeing</td><td class="number">10</td><td>Hard-coded effective skill 100</td></tr>
+      `;
+
+      const duration = airWalkDuration({
+        necromancy,
+        magery: state.mageryTotal,
+        spiritualism,
+        psychology: state.psychologyTotal
+      });
+      byId("airDuration").textContent = `${duration} second${duration === 1 ? "" : "s"}`;
+    }
+
+    function validateInputs() {
+      const invalid = [];
+      document.querySelectorAll('input[type="number"]').forEach((input) => {
+        const value = Number(input.value);
+        const minimum = input.min === "" ? -Infinity : Number(input.min);
+        const maximum = input.max === "" ? Infinity : Number(input.max);
+        if (!Number.isFinite(value) || value < minimum || value > maximum) {
+          const label = document.querySelector(`label[for="${input.id}"]`);
+          invalid.push(label ? label.textContent : input.id);
+        }
+      });
+      byId("validationMessage").textContent = invalid.length
+        ? `Check input range: ${invalid.join(", ")}. Calculations use safe bounds.`
+        : "";
+    }
+
+    function renderAll() {
+      validateInputs();
+      renderAvoidance();
+      renderContainer();
+      renderDetection();
+    }
+
+    function resetAll() {
+      document.querySelectorAll("[data-default]").forEach((element) => {
+        if (element.type === "checkbox") {
+          element.checked = element.dataset.default === "true";
+        } else {
+          element.value = element.dataset.default;
+        }
+      });
+      renderAll();
+    }
+
+    function loadExample() {
+      resetAll();
+      byId("removeBase").value = "100";
+      byId("removeTotal").value = "100";
+      byId("mageryBase").value = "100";
+      byId("mageryTotal").value = "100";
+      byId("trapType").value = "hidden";
+      byId("orbActive").checked = true;
+      byId("poleMaterial").value = "wood";
+      byId("encounters").value = "10";
+      renderAll();
+    }
+
+    function activatePanel(panelId) {
+      document.querySelectorAll(".panel").forEach((panel) => {
+        panel.hidden = panel.id !== panelId;
+      });
+      document.querySelectorAll(".tab-button").forEach((button) => {
+        button.setAttribute("aria-pressed", button.dataset.panel === panelId ? "true" : "false");
+      });
+    }
+
+    function approximately(actual, expected, epsilon = 1e-9) {
+      return Math.abs(actual - expected) <= epsilon;
+    }
+
+    function runSelfTests() {
+      const failures = [];
+      const assertNear = (name, actual, expected, epsilon = 1e-9) => {
+        if (!approximately(actual, expected, epsilon)) {
+          failures.push(`${name}: got ${actual}, expected ${expected}`);
+        }
+      };
+      const assertEqual = (name, actual, expected) => {
+        if (actual !== expected) {
+          failures.push(`${name}: got ${actual}, expected ${expected}`);
+        }
+      };
+
+      assertNear("Remove Trap 0", removeTrapChance(0), 0);
+      assertNear("Remove Trap 100", removeTrapChance(100), 100 / 126);
+      assertNear("Remove Trap 105", removeTrapChance(105), 105 / 126);
+      assertNear("Remove Trap 110", removeTrapChance(110), 110 / 126);
+      assertNear("Remove Trap 115", removeTrapChance(115), 115 / 126);
+      assertNear("Remove Trap 120", removeTrapChance(120), 120 / 126);
+      assertNear("Remove Trap 125", removeTrapChance(125), 125 / 126);
+      assertNear("Remove Trap 126", removeTrapChance(126), 1);
+      assertNear("Hand vector 100", removeTrapChance(100), 0.7936507936507936);
+      assertNear("Hand vector 125", removeTrapChance(125), 0.9920634920634921);
+      assertNear("Hand vector 126", removeTrapChance(126), 1);
+
+      for (const [key, material] of Object.entries(POLE_MATERIALS)) {
+        assertEqual(`Pole ${key}`, poleChanceFromWeight(material.weight), material.chance);
+      }
+
+      assertEqual("Orb 0 Magery", orbPower(0), 25);
+      assertEqual("Orb 100 Magery", orbPower(100), 75);
+      assertEqual("Orb just below cap", orbPower(149), 99);
+      assertEqual("Orb capped", orbPower(150), 100);
+      assertNear("Luck 24", luckChance(24), 0);
+      assertNear("Luck 25", luckChance(25), 0.01);
+      assertNear("Luck 1999", luckChance(1999), 0.79);
+      assertNear("Luck 2000", luckChance(2000), 0.80);
+      assertNear("Luck clamp", luckChance(3000), 0.80);
+
+      const baseState = {
+        removeTotal: 100,
+        mageryTotal: 0,
+        psychologyTotal: 0,
+        luck: 0,
+        orbActive: false,
+        poleChance: 0.5,
+        poleLabel: "Wood",
+        airActive: false,
+        immortalityActive: false,
+        ownerActive: false
+      };
+      assertNear("Generic 100 plus wood", calculateTrap("generic", baseState).combined, 113 / 126);
+      assertNear("Hand vector 100 plus wood", calculateTrap("generic", baseState).combined, 0.8968253968253969);
+      assertNear(
+        "Literal Hidden 100 only",
+        calculateTrap("hidden", { ...baseState, poleChance: 0 }).combined,
+        1 - (0.8 * (1 - (100 / 126)))
+      );
+      assertNear(
+        "SpellTrap Psychology chain",
+        calculateTrap("spelltrap", { ...baseState, poleChance: 0, psychologyTotal: 100 }).combined,
+        1 - Math.pow(1 - (100 / 126), 2)
+      );
+      assertNear("Air Walk Hidden", calculateTrap("hidden", { ...baseState, airActive: true }).combined, 1);
+      assertNear("Air Walk unsupported gas", calculateTrap("gas", { ...baseState, removeTotal: 0, poleChance: 0, airActive: true }).combined, 0);
+      assertNear("Immortality gas", calculateTrap("gas", { ...baseState, immortalityActive: true }).combined, 1);
+      assertNear(
+        "Immortality unsupported Hidden",
+        calculateTrap("hidden", { ...baseState, removeTotal: 0, poleChance: 0, immortalityActive: true }).combined,
+        0.2
+      );
+      assertNear("Owner landmine", calculateTrap("landmine", { ...baseState, ownerActive: true }).combined, 1);
+
+      const zeroState = {
+        ...baseState,
+        removeTotal: 0,
+        poleChance: 0
+      };
+      const airProtected = new Set(["hidden", "firecolumn", "flamespurt", "saw", "spike", "spelltrap", "settrap", "killertile"]);
+      const immortalProtected = new Set(["firecolumn", "gas", "giantspike", "mushroom", "saw", "spike", "stoneface", "spelltrap", "settrap", "killertile", "landmine"]);
+      const ownerProtected = new Set(["spelltrap", "settrap", "landmine"]);
+      for (const trapKey of Object.keys(TRAPS)) {
+        const baseline = trapKey === "hidden" ? 0.2 : 0;
+        assertNear(
+          `Air compatibility ${trapKey}`,
+          calculateTrap(trapKey, { ...zeroState, airActive: true }).combined,
+          airProtected.has(trapKey) ? 1 : baseline
+        );
+        assertNear(
+          `Immortality compatibility ${trapKey}`,
+          calculateTrap(trapKey, { ...zeroState, immortalityActive: true }).combined,
+          immortalProtected.has(trapKey) ? 1 : baseline
+        );
+        assertNear(
+          `Owner compatibility ${trapKey}`,
+          calculateTrap(trapKey, { ...zeroState, ownerActive: true }).combined,
+          ownerProtected.has(trapKey) ? 1 : baseline
+        );
+      }
+
+      for (let level = 1; level <= 13; level += 1) {
+        const low = level * 10;
+        const high = low + 20;
+        const maximum = high >= 100 ? 126 : high;
+        const expectedAtGate = low >= maximum ? 1 : low / maximum;
+        assertNear(`Container level ${level} below gate`, containerSkillChance(low - 0.1, level), 0);
+        assertNear(`Container level ${level} at gate`, containerSkillChance(low, level), expectedAtGate);
+      }
+      assertNear("Container level 7 skill", containerSkillChance(100, 7), 1);
+      assertNear("Container level 8 skill", containerSkillChance(100, 8), 100 / 126);
+      assertNear("Container level 13 below gate", containerSkillChance(125, 13), 0);
+      assertNear("Container level 13 boosted", containerSkillChance(130, 13), 1);
+      assertNear("Inclusive low", inclusiveIntegerChance(70, 70, 90), 1 / 21);
+      assertNear("Inclusive high", inclusiveIntegerChance(90, 70, 90), 1);
+      assertNear("Inclusive miss", inclusiveIntegerChance(69, 70, 90), 0);
+
+      assertNear("Search half radius", searchDetection(100, 5, false).chance, 1);
+      assertNear("Search full-only radius", searchDetection(100, 6, false).chance, 100 / 126);
+      assertNear("Search outside", searchDetection(100, 11, false).chance, 0);
+      assertNear("Search friendly house", searchDetection(0, 22, true).chance, 1);
+      assertEqual(
+        "Air Walk duration",
+        airWalkDuration({ necromancy: 100, magery: 100, spiritualism: 100, psychology: 100 }),
+        66
+      );
+
+      const cappedSaves = savingChances({
+        strength: 300,
+        dexterity: 300,
+        intelligence: 300,
+        magicResist: 300,
+        poisoning: 300,
+        physicalRes: 100,
+        fireRes: 100,
+        coldRes: 100,
+        poisonRes: 100,
+        energyRes: 100
+      });
+      for (const [category, chance] of Object.entries(cappedSaves)) {
+        assertNear(`Save cap ${category}`, chance, 0.60);
+      }
+      const weightedSaves = {
+        Magic: 0.10,
+        Physical: 0.20,
+        Agility: 0.30,
+        Cold: 0.40,
+        Fire: 0.50,
+        Poison: 0.60,
+        Energy: 0.70
+      };
+      assertNear(
+        "General weighted subtype result",
+        hiddenSaveChance("random-general", weightedSaves, true),
+        ((13 * 0.10) + (3 * 0.20) + (4 * 0.30) + (2 * 0.50) + (2 * 0.60) + (1 * 0.70)) / 25
+      );
+      assertNear(
+        "Spaceship weighted subtype result",
+        hiddenSaveChance("random-space", weightedSaves, true),
+        ((9 * 0.10) + (3 * 0.30) + (2 * 0.50) + (2 * 0.60) + (1 * 0.70)) / 17
+      );
+      assertNear(
+        "Zero-Karma subtype 25 no-effect result",
+        hiddenSaveChance("25", weightedSaves, false),
+        1
+      );
+
+      const badge = byId("testBadge");
+      if (failures.length === 0) {
+        badge.dataset.status = "pass";
+        badge.textContent = "Formula self-tests passed";
+      } else {
+        badge.dataset.status = "fail";
+        badge.textContent = `${failures.length} formula self-test(s) failed`;
+        console.error("Trap calculator self-test failures:", failures);
+      }
+      return failures;
+    }
+
+    document.addEventListener("input", renderAll);
+    document.addEventListener("change", renderAll);
+    byId("resetButton").addEventListener("click", resetAll);
+    byId("exampleButton").addEventListener("click", loadExample);
+    document.querySelectorAll(".tab-button").forEach((button) => {
+      button.addEventListener("click", () => activatePanel(button.dataset.panel));
+    });
+
+    renderAll();
+    runSelfTests();
+  </script>
+</body>
+</html>

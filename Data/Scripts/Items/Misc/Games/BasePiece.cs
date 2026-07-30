@@ -61,6 +61,8 @@ namespace Server.Items
                 Delete();
             else if (!IsChildOf(m_Board))
                 m_Board.DropItem(this);
+            else if (from == null || from.Deleted || Deleted)
+                return;
             else
                 base.OnSingleClick(from);
         }

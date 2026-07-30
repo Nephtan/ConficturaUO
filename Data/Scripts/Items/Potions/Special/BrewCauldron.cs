@@ -184,6 +184,9 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
+            if (from == null || from.Deleted || Deleted)
+                return;
+
             if (!from.InRange(GetWorldLocation(), 3))
             {
                 from.SendMessage("You will have to get closer to take liquid from the cauldron.");

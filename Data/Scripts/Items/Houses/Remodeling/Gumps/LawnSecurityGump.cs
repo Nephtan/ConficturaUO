@@ -74,6 +74,9 @@ namespace Server.Gumps
 
         public override void OnResponse(NetState state, RelayInfo info)
         {
+            if (state == null || info == null || state.Mobile == null || state.Mobile.Deleted || m_From == null || m_From.Deleted || state.Mobile != m_From || m_Gate == null || m_Gate.Deleted)
+                return;
+
             m_From.SendSound(0x4A);
             switch (info.ButtonID)
             {

@@ -1,0 +1,4970 @@
+# SOURCE-BATCH-CONTROLLER Closeout
+
+Reviewed at: 2026-06-16T19:08:27.3028568-05:00
+
+## Summary
+
+The source batch controller processed the POST-BATCH-AA roadmap in order, then later recorded the SOURCE-BATCH-001 through SOURCE-BATCH-018 intake/source execution updates.
+
+Initial controller result before SOURCE-BATCH-001 intake:
+
+- `SOURCE-BATCH-001` is still the only immediate source-change boundary, but no concrete source behavior/system/files are present in the thread, so it is recorded as `PendingConcreteSourceTarget`.
+- `SOURCE-BATCH-002+` has no concrete later requests and is not opened.
+- `GATED-SOURCE-BATCH-STAFF`, `GATED-SOURCE-BATCH-BALANCE`, `GATED-SOURCE-BATCH-REGION`, `GATED-SOURCE-BATCH-HOUSEFOUNDATION`, and `GATED-SOURCE-BATCH-REORG` are recorded as `BlockedPendingApproval`.
+- No source, project, XML/config/data, serializer, namespace, gameplay, staff workflow, region, or reorganization files changed.
+
+Intake update at 2026-06-15T15:45:07.1199481-05:00:
+
+- `SOURCE-BATCH-001` target details are now recorded in `docs/codebase-audit/outputs/source-batch-001-target.md`.
+- `SOURCE-BATCH-001` is now `ReadyForSourceBatch` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The intake register is `docs/codebase-audit/outputs/source-batch-intake-register.csv`.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+Source execution update at 2026-06-15T16:44:08.0818812-05:00:
+
+- `SOURCE-BATCH-001` implemented the OilCloth guard repair in `Data/Scripts/Items/Misc/OilCloth.cs`.
+- `SOURCE-BATCH-001` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-001-oilcloth-guard-repair-closeout.md`.
+- `SOURCE-BATCH-002+` remains pending a concrete non-gated source target.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+Source execution update at 2026-06-15T18:45:22.3593239-05:00:
+
+- `SOURCE-BATCH-002` implemented the OilCloth dye/scissor guard repair in `Data/Scripts/Items/Misc/OilCloth.cs`.
+- `SOURCE-BATCH-002` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-002-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-002-oilcloth-dye-scissor-guard-repair-closeout.md`.
+- `SOURCE-BATCH-003+` remains pending a concrete non-gated source target.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+Source execution update at 2026-06-15T19:36:50.2500868-05:00:
+
+- `SOURCE-BATCH-003` implemented the Firebomb interaction guard repair in `Data/Scripts/Items/Misc/Firebomb.cs`.
+- `SOURCE-BATCH-003` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-003-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-003-firebomb-interaction-guard-repair-closeout.md`.
+- The source-batch commit is `daca74d1` (`fix: guard Firebomb interactions`).
+- `SOURCE-BATCH-004+` remains pending a concrete non-gated source target.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+Runner closeout update at 2026-06-15T19:41:56.9271291-05:00:
+
+- Current controller state has three committed non-gated source batches: `SOURCE-BATCH-001`, `SOURCE-BATCH-002`, and `SOURCE-BATCH-003`.
+- `SOURCE-BATCH-004+` is not opened because no concrete non-gated source target exists after the Firebomb batch.
+- Remaining conditional lanes are gated by POST-BATCH-Y fences and still require explicit approval before source edits.
+- All currently approved source-safe batches discoverable from the controller artifacts are complete.
+
+Source execution update at 2026-06-16T11:15:37.0000000-05:00:
+
+- `SOURCE-BATCH-004` implemented the ArcaneGem interaction guard repair in `Data/Scripts/Items/Misc/ArcaneGem.cs`.
+- `SOURCE-BATCH-004` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-004-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-004-arcanegem-interaction-guard-repair-closeout.md`.
+- `SOURCE-BATCH-005+` remains pending the next concrete non-gated source target.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+Source execution update at 2026-06-16T11:22:52.2093583-05:00:
+
+- `SOURCE-BATCH-005` implemented the PowerCrystal target guard repair in `Data/Scripts/Items/Misc/PowerCrystal.cs`.
+- `SOURCE-BATCH-005` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-005-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-005-powercrystal-target-guard-repair-closeout.md`.
+- `SOURCE-BATCH-006+` remains pending the next concrete non-gated source target.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+Source execution update at 2026-06-16T11:29:34.9621783-05:00:
+
+- `SOURCE-BATCH-006` implemented the ClockworkAssembly guard repair in `Data/Scripts/Items/Misc/ClockworkAssembly.cs`.
+- `SOURCE-BATCH-006` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-006-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-006-clockworkassembly-guard-repair-closeout.md`.
+- `SOURCE-BATCH-007+` remains pending the next concrete non-gated source target.
+- Origami and KeyRing were intentionally not opened in this sweep because active save-compat overlay rows exist.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+Source execution update at 2026-06-16T14:53:11.7853163-05:00:
+
+- `SOURCE-BATCH-007` implemented the UnusualDyes target guard repair in `Data/Scripts/Items/Misc/Dyes/UnusualDyes.cs`.
+- `SOURCE-BATCH-007` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-007-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-007-unusualdyes-target-guard-repair-closeout.md`.
+- `SOURCE-BATCH-008+` remains pending the next concrete non-gated source target.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+Source execution update at 2026-06-16T18:08:44.8478282-05:00:
+
+- `SOURCE-BATCH-008` implemented the VelocityDeed guard repair in `Data/Scripts/Items/Magical/VelocityDeed.cs`.
+- `SOURCE-BATCH-008` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-008-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-008-velocitydeed-guard-repair-closeout.md`.
+- `SOURCE-BATCH-009+` remains pending the next concrete non-gated source target.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+Source execution update at 2026-06-16T18:14:26.8607304-05:00:
+
+- `SOURCE-BATCH-009` implemented the WeaponRenamingTool guard repair in `Data/Scripts/Items/Magical/WeaponRenamingTool.cs`.
+- `SOURCE-BATCH-009` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-009-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-009-weaponrenamingtool-guard-repair-closeout.md`.
+- `SOURCE-BATCH-010+` remains pending the next concrete non-gated source target.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+Source execution update at 2026-06-16T18:18:35.5080479-05:00:
+
+- `SOURCE-BATCH-010` implemented the Scales guard repair in `Data/Scripts/Items/Misc/Scales.cs`.
+- `SOURCE-BATCH-010` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-010-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-010-scales-guard-repair-closeout.md`.
+- `SOURCE-BATCH-011+` remains pending the next concrete non-gated source target.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+Source execution update at 2026-06-16T18:22:39.1548451-05:00:
+
+- `SOURCE-BATCH-011` implemented the MagicScissors guard repair in `Data/Scripts/Items/Magical/MagicScissors.cs`.
+- `SOURCE-BATCH-011` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-011-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-011-magicscissors-guard-repair-closeout.md`.
+- The `source-batch-007-candidate-discovery.csv` implementation queue is exhausted.
+- `SOURCE-BATCH-012+` remains pending a discovery-only pass before any further implementation opens.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+Source execution update at 2026-06-16T18:32:00.1198582-05:00:
+
+- `SOURCE-BATCH-012` implemented the BalancingDeed guard repair in `Data/Scripts/Items/Magical/BalancingDeed.cs`.
+- `SOURCE-BATCH-012` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-012-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-012-balancingdeed-guard-repair-closeout.md`.
+- `SOURCE-BATCH-013+` remains pending the next concrete non-gated source target.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+Source execution update at 2026-06-16T18:37:56.3208151-05:00:
+
+- `SOURCE-BATCH-013` implemented the HydraTooth guard repair in `Data/Scripts/Items/Magical/HydraTooth.cs`.
+- `SOURCE-BATCH-013` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-013-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-013-hydratooth-guard-repair-closeout.md`.
+- `SOURCE-BATCH-014+` remains pending the next concrete non-gated source target.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+Source execution update at 2026-06-16T18:43:10.0827741-05:00:
+
+- `SOURCE-BATCH-014` implemented the MagicHammer guard repair in `Data/Scripts/Items/Magical/MagicHammer.cs`.
+- `SOURCE-BATCH-014` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-014-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-014-magichammer-guard-repair-closeout.md`.
+- `SOURCE-BATCH-015+` remains pending the next concrete non-gated source target.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+Source execution update at 2026-06-16T18:47:37.0216166-05:00:
+
+- `SOURCE-BATCH-015` implemented the BookofDead guard repair in `Data/Scripts/Items/Misc/Bodies/LivingDead/BookofDead.cs`.
+- `SOURCE-BATCH-015` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-015-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-015-bookofdead-guard-repair-closeout.md`.
+- `SOURCE-BATCH-016+` remains pending the next concrete non-gated source target.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+Source execution update at 2026-06-16T18:52:04.9029004-05:00:
+
+- `SOURCE-BATCH-016` implemented the MagicPigment guard repair in `Data/Scripts/Items/Misc/Dyes/MagicPigment.cs`.
+- `SOURCE-BATCH-016` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-016-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-016-magicpigment-guard-repair-closeout.md`.
+- The `source-batch-012-candidate-discovery.csv` implementation queue is exhausted.
+- `SOURCE-BATCH-017+` remains pending a discovery-only pass before any further implementation opens.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+Candidate discovery update at 2026-06-16T18:59:28.2920934-05:00:
+
+- `SOURCE-BATCH-017` discovery produced `docs/codebase-audit/outputs/source-batch-017-candidate-discovery.csv`.
+- The recommended next non-gated target is `SB017-CAND-001` / `SOURCE-BATCH-017 PromotionalToken Guard Repair`.
+- `SOURCE-BATCH-017+` remains `PendingConcreteSourceTarget`, but now has a concrete candidate to open after preflight.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+Source execution update at 2026-06-16T19:03:28.5856904-05:00:
+
+- `SOURCE-BATCH-017` implemented the PromotionalToken guard repair in `Data/Scripts/Items/Misc/PromotionalToken.cs`.
+- `SOURCE-BATCH-017` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-017-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-017-promotionaltoken-guard-repair-closeout.md`.
+- `SOURCE-BATCH-018+` remains pending the next concrete non-gated source target.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+Source execution update at 2026-06-16T19:08:27.3028568-05:00:
+
+- `SOURCE-BATCH-018` implemented the MagicalDyes guard repair in `Data/Scripts/Items/Misc/Dyes/MagicalDyes.cs`.
+- `SOURCE-BATCH-018` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-018-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-018-magicaldyes-guard-repair-closeout.md`.
+- `SOURCE-BATCH-019+` remains pending the next concrete non-gated source target.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+Source execution update at 2026-06-16T19:13:19.7195952-05:00:
+
+- `SOURCE-BATCH-019` implemented the AllDyeTubsArmor guard repair in `Data/Scripts/Items/Misc/Dyes/AllDyeTubsArmor.cs`.
+- `SOURCE-BATCH-019` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-019-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-019-alldyetubsarmor-guard-repair-closeout.md`.
+- `SOURCE-BATCH-020+` remains pending the next concrete non-gated source target.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+Source execution update at 2026-06-16T19:19:55.8367442-05:00:
+
+- `SOURCE-BATCH-020` implemented the AllDyeTubsWeapon guard repair in `Data/Scripts/Items/Misc/Dyes/AllDyeTubsWeapon.cs`.
+- `SOURCE-BATCH-020` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-020-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-020-alldyetubsweapon-guard-repair-closeout.md`.
+- `SOURCE-BATCH-021+` remains pending the next concrete non-gated source target.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+Source execution update at 2026-06-16T19:24:10.9554142-05:00:
+
+- `SOURCE-BATCH-021` implemented the AllDyeTubsFurniture guard repair in `Data/Scripts/Items/Misc/Dyes/AllDyeTubsFurniture.cs`.
+- `SOURCE-BATCH-021` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-021-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-021-alldyetubsfurniture-guard-repair-closeout.md`.
+- The `source-batch-017-candidate-discovery.csv` implementation queue is exhausted.
+- `SOURCE-BATCH-022+` remains pending candidate discovery for the next clean non-gated target.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+Source execution update at 2026-06-16T19:31:49.9389645-05:00:
+
+- `SOURCE-BATCH-022` implemented the AllDyeTubsBookRune guard repair in `Data/Scripts/Items/Misc/Dyes/AllDyeTubsBookRune.cs`.
+- `SOURCE-BATCH-022` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-022-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-022-alldyetubsbookrune-guard-repair-closeout.md`.
+- `SOURCE-BATCH-023+` remains pending the next concrete non-gated source target.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+Source execution update at 2026-06-16T19:35:56.9822424-05:00:
+
+- `SOURCE-BATCH-023` implemented the AllDyeTubsBookSpell guard repair in `Data/Scripts/Items/Misc/Dyes/AllDyeTubsBookSpell.cs`.
+- `SOURCE-BATCH-023` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-023-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-023-alldyetubsbookspell-guard-repair-closeout.md`.
+- `SOURCE-BATCH-024+` remains pending the next concrete non-gated source target.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+Source execution update at 2026-06-16T19:40:06.2516530-05:00:
+
+- `SOURCE-BATCH-024` implemented the AllDyeTubsMountEthereal guard repair in `Data/Scripts/Items/Misc/Dyes/AllDyeTubsMountEthereal.cs`.
+- `SOURCE-BATCH-024` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-024-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-024-alldyetubsmountethereal-guard-repair-closeout.md`.
+- The `source-batch-022-candidate-discovery.csv` implementation queue is exhausted.
+- `SOURCE-BATCH-025+` remains pending candidate discovery for the next clean non-gated target.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## Controller Status
+
+| Order | Batch | Controller status | Source edits allowed now |
+| ---: | --- | --- | --- |
+| 1 | `SOURCE-BATCH-001` | `Committed` | No |
+| 2 | `SOURCE-BATCH-002` | `Committed` | No |
+| 3 | `SOURCE-BATCH-003` | `Committed` | No |
+| 4 | `SOURCE-BATCH-004` | `Committed` | No |
+| 5 | `SOURCE-BATCH-005` | `Committed` | No |
+| 6 | `SOURCE-BATCH-006` | `Committed` | No |
+| 7 | `SOURCE-BATCH-007` | `Committed` | No |
+| 8 | `SOURCE-BATCH-008` | `Committed` | No |
+| 9 | `SOURCE-BATCH-009` | `Committed` | No |
+| 10 | `SOURCE-BATCH-010` | `Committed` | No |
+| 11 | `SOURCE-BATCH-011` | `Committed` | No |
+| 12 | `SOURCE-BATCH-012` | `Committed` | No |
+| 13 | `SOURCE-BATCH-013` | `Committed` | No |
+| 14 | `SOURCE-BATCH-014` | `Committed` | No |
+| 15 | `SOURCE-BATCH-015` | `Committed` | No |
+| 16 | `SOURCE-BATCH-016` | `Committed` | No |
+| 17 | `SOURCE-BATCH-017` | `Committed` | No |
+| 18 | `SOURCE-BATCH-018` | `Committed` | No |
+| 19 | `SOURCE-BATCH-019` | `Committed` | No |
+| 20 | `SOURCE-BATCH-020` | `Committed` | No |
+| 21 | `SOURCE-BATCH-021` | `Committed` | No |
+| 22 | `SOURCE-BATCH-022` | `Committed` | No |
+| 23 | `SOURCE-BATCH-023` | `Committed` | No |
+| 24 | `SOURCE-BATCH-024` | `Committed` | No |
+| 25 | `SOURCE-BATCH-025+` | `PendingConcreteSourceTarget` | No |
+| 26 | `GATED-SOURCE-BATCH-STAFF` | `BlockedPendingApproval` | No |
+| 27 | `GATED-SOURCE-BATCH-BALANCE` | `BlockedPendingApproval` | No |
+| 28 | `GATED-SOURCE-BATCH-REGION` | `BlockedPendingApproval` | No |
+| 29 | `GATED-SOURCE-BATCH-HOUSEFOUNDATION` | `BlockedPendingApproval` | No |
+| 30 | `GATED-SOURCE-BATCH-REORG` | `BlockedPendingApproval` | No |
+
+## Evidence
+
+| Check | Result |
+| --- | --- |
+| Active overlay unresolved pre-source statuses | 0 |
+| POST-BATCH-AA roadmap rows | 7 |
+| Immediate executable roadmap rows | 1 |
+| Selected immediate boundary rows | 1 |
+| Conditional gated roadmap rows | 5 |
+| Controller rows after SOURCE-BATCH-003 | 9 |
+| Controller rows after SOURCE-BATCH-004 | 10 |
+| Controller rows after SOURCE-BATCH-005 | 11 |
+| Controller rows after SOURCE-BATCH-006 | 12 |
+| Controller rows after SOURCE-BATCH-007 | 13 |
+| Controller rows after SOURCE-BATCH-008 | 14 |
+| Controller rows after SOURCE-BATCH-009 | 15 |
+| Controller rows after SOURCE-BATCH-010 | 16 |
+| Controller rows after SOURCE-BATCH-011 | 17 |
+| Controller rows after SOURCE-BATCH-012 | 18 |
+| Controller rows after SOURCE-BATCH-013 | 19 |
+| Controller rows after SOURCE-BATCH-014 | 20 |
+| Controller rows after SOURCE-BATCH-015 | 21 |
+| Controller rows after SOURCE-BATCH-016 | 22 |
+| Controller rows after SOURCE-BATCH-017 | 23 |
+| Controller rows after SOURCE-BATCH-018 | 24 |
+| Controller rows after SOURCE-BATCH-019 | 25 |
+| Controller rows after SOURCE-BATCH-020 | 26 |
+| Controller rows after SOURCE-BATCH-021 | 27 |
+| Controller rows after SOURCE-BATCH-022 | 28 |
+| Controller rows after SOURCE-BATCH-023 | 29 |
+| Controller rows after SOURCE-BATCH-024 | 30 |
+| Committed non-gated source batches | 24 |
+| Pending repeatable non-gated source batch row | 1 |
+| POST-BATCH-Y `AcceptedFence` rows | 83 |
+| POST-BATCH-Y `BlocksOnlyThisDomain` rows | 7 |
+| POST-BATCH-Y `BlocksSourceWork` rows | 0 |
+| Concrete approved source-safe targets after SOURCE-BATCH-024 | 0 |
+
+## Required Next Input
+
+To run the next non-gated source batch, provide:
+
+```text
+SOURCE-BATCH-025 discovery:
+- Run discovery-only pass for the next clean zero-gate, zero-overlay non-gated guard candidate.
+- Exclude gated, active-overlay, serializer-migration, staff/access, balance/economy, region/map, project/config/data, XML/config/data, and reorganization work.
+```
+
+To run a gated batch, provide explicit approval naming:
+
+- the exact gate type or gate rows,
+- the systems/files involved,
+- the intended behavior or policy change,
+- any migration, rollback, or compatibility expectations required by the matching POST-BATCH-AA goal template.
+
+## Verification
+
+- `git status --short` was clean before controller documentation edits.
+- Applicable `AGENTS.md` files were re-read for `docs/codebase-audit/`.
+- Roadmap and gate reconciliation were checked from current CSV files.
+- Initial controller source verification, source build, and runtime compile-only verification were not required because the initial controller run did not change source/project/XML/config/data behavior.
+- `SOURCE-BATCH-001` source verification is recorded in `source-batch-001-oilcloth-guard-repair-closeout.md`.
+- `SOURCE-BATCH-002` source verification is recorded in `source-batch-002-oilcloth-dye-scissor-guard-repair-closeout.md`.
+- `SOURCE-BATCH-003` source verification is recorded in `source-batch-003-firebomb-interaction-guard-repair-closeout.md`.
+- `SOURCE-BATCH-004` source verification is recorded in `source-batch-004-arcanegem-interaction-guard-repair-closeout.md`.
+- `SOURCE-BATCH-005` source verification is recorded in `source-batch-005-powercrystal-target-guard-repair-closeout.md`.
+- `SOURCE-BATCH-006` source verification is recorded in `source-batch-006-clockworkassembly-guard-repair-closeout.md`.
+- `SOURCE-BATCH-007` source verification is recorded in `source-batch-007-unusualdyes-target-guard-repair-closeout.md`.
+- `SOURCE-BATCH-008` source verification is recorded in `source-batch-008-velocitydeed-guard-repair-closeout.md`.
+- `SOURCE-BATCH-009` source verification is recorded in `source-batch-009-weaponrenamingtool-guard-repair-closeout.md`.
+- `SOURCE-BATCH-010` source verification is recorded in `source-batch-010-scales-guard-repair-closeout.md`.
+- `SOURCE-BATCH-011` source verification is recorded in `source-batch-011-magicscissors-guard-repair-closeout.md`.
+- `SOURCE-BATCH-012` source verification is recorded in `source-batch-012-balancingdeed-guard-repair-closeout.md`.
+- `SOURCE-BATCH-013` source verification is recorded in `source-batch-013-hydratooth-guard-repair-closeout.md`.
+- `SOURCE-BATCH-014` source verification is recorded in `source-batch-014-magichammer-guard-repair-closeout.md`.
+- `SOURCE-BATCH-015` source verification is recorded in `source-batch-015-bookofdead-guard-repair-closeout.md`.
+- `SOURCE-BATCH-016` source verification is recorded in `source-batch-016-magicpigment-guard-repair-closeout.md`.
+- `SOURCE-BATCH-017` discovery verification is recorded in `source-batch-017-candidate-discovery-closeout.md`.
+- `SOURCE-BATCH-017` source verification is recorded in `source-batch-017-promotionaltoken-guard-repair-closeout.md`.
+- `SOURCE-BATCH-018` source verification is recorded in `source-batch-018-magicaldyes-guard-repair-closeout.md`.
+- `SOURCE-BATCH-019` source verification is recorded in `source-batch-019-alldyetubsarmor-guard-repair-closeout.md`.
+- `SOURCE-BATCH-020` source verification is recorded in `source-batch-020-alldyetubsweapon-guard-repair-closeout.md`.
+- `SOURCE-BATCH-021` source verification is recorded in `source-batch-021-alldyetubsfurniture-guard-repair-closeout.md`.
+- `SOURCE-BATCH-022` discovery verification is recorded in `source-batch-022-candidate-discovery-closeout.md`.
+- `SOURCE-BATCH-022` source verification is recorded in `source-batch-022-alldyetubsbookrune-guard-repair-closeout.md`.
+- `SOURCE-BATCH-023` source verification is recorded in `source-batch-023-alldyetubsbookspell-guard-repair-closeout.md`.
+- `SOURCE-BATCH-024` source verification is recorded in `source-batch-024-alldyetubsmountethereal-guard-repair-closeout.md`.
+- `SOURCE-BATCH-025` discovery verification is recorded in `source-batch-025-candidate-discovery-closeout.md`.
+- `SOURCE-BATCH-025` source verification is recorded in `source-batch-025-luckyhorseshoes-guard-repair-closeout.md`.
+- `SOURCE-BATCH-026` source verification is recorded in `source-batch-026-slayerdeed-guard-repair-closeout.md`.
+- `SOURCE-BATCH-027` source verification is recorded in `source-batch-027-artifactmanual-guard-repair-closeout.md`.
+- The latest source-batch verification passed targeted source scan, POST-BATCH-Y gate scan, active overlay scan, serializer diff scan, forbidden-surface diff scan, `Server.csproj` Debug/x86 build, runtime compile-only verification, generated artifact restoration, and `git diff --check`.
+
+## Outputs
+
+- `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`
+- `docs/codebase-audit/outputs/source-batch-controller-closeout.md`
+- `docs/codebase-audit/outputs/source-batch-001-oilcloth-guard-repair-closeout.md`
+- `docs/codebase-audit/outputs/source-batch-002-target.md`
+- `docs/codebase-audit/outputs/source-batch-002-oilcloth-dye-scissor-guard-repair-closeout.md`
+- `docs/codebase-audit/outputs/source-batch-003-target.md`
+- `docs/codebase-audit/outputs/source-batch-003-firebomb-interaction-guard-repair-closeout.md`
+- `docs/codebase-audit/outputs/source-batch-004-target.md`
+- `docs/codebase-audit/outputs/source-batch-004-arcanegem-interaction-guard-repair-closeout.md`
+- `docs/codebase-audit/outputs/source-batch-005-target.md`
+- `docs/codebase-audit/outputs/source-batch-005-powercrystal-target-guard-repair-closeout.md`
+- `docs/codebase-audit/outputs/source-batch-006-target.md`
+- `docs/codebase-audit/outputs/source-batch-006-clockworkassembly-guard-repair-closeout.md`
+- `docs/codebase-audit/outputs/source-batch-007-target.md`
+- `docs/codebase-audit/outputs/source-batch-007-unusualdyes-target-guard-repair-closeout.md`
+- `docs/codebase-audit/outputs/source-batch-008-target.md`
+- `docs/codebase-audit/outputs/source-batch-008-velocitydeed-guard-repair-closeout.md`
+- `docs/codebase-audit/outputs/source-batch-009-target.md`
+- `docs/codebase-audit/outputs/source-batch-009-weaponrenamingtool-guard-repair-closeout.md`
+- `docs/codebase-audit/outputs/source-batch-010-target.md`
+- `docs/codebase-audit/outputs/source-batch-010-scales-guard-repair-closeout.md`
+- `docs/codebase-audit/outputs/source-batch-011-target.md`
+- `docs/codebase-audit/outputs/source-batch-011-magicscissors-guard-repair-closeout.md`
+- `docs/codebase-audit/outputs/source-batch-012-target.md`
+- `docs/codebase-audit/outputs/source-batch-012-balancingdeed-guard-repair-closeout.md`
+- `docs/codebase-audit/outputs/source-batch-013-target.md`
+- `docs/codebase-audit/outputs/source-batch-013-hydratooth-guard-repair-closeout.md`
+- `docs/codebase-audit/outputs/source-batch-014-target.md`
+- `docs/codebase-audit/outputs/source-batch-014-magichammer-guard-repair-closeout.md`
+- `docs/codebase-audit/outputs/source-batch-015-target.md`
+- `docs/codebase-audit/outputs/source-batch-015-bookofdead-guard-repair-closeout.md`
+- `docs/codebase-audit/outputs/source-batch-016-target.md`
+- `docs/codebase-audit/outputs/source-batch-016-magicpigment-guard-repair-closeout.md`
+- `docs/codebase-audit/outputs/source-batch-017-candidate-discovery.csv`
+- `docs/codebase-audit/outputs/source-batch-017-candidate-discovery-closeout.md`
+- `docs/codebase-audit/outputs/source-batch-017-target.md`
+- `docs/codebase-audit/outputs/source-batch-017-promotionaltoken-guard-repair-closeout.md`
+- `docs/codebase-audit/outputs/source-batch-018-target.md`
+- `docs/codebase-audit/outputs/source-batch-018-magicaldyes-guard-repair-closeout.md`
+- `docs/codebase-audit/outputs/source-batch-019-target.md`
+- `docs/codebase-audit/outputs/source-batch-019-alldyetubsarmor-guard-repair-closeout.md`
+- `docs/codebase-audit/outputs/source-batch-020-target.md`
+- `docs/codebase-audit/outputs/source-batch-020-alldyetubsweapon-guard-repair-closeout.md`
+- `docs/codebase-audit/outputs/source-batch-021-target.md`
+- `docs/codebase-audit/outputs/source-batch-021-alldyetubsfurniture-guard-repair-closeout.md`
+- `docs/codebase-audit/outputs/source-batch-022-candidate-discovery.csv`
+- `docs/codebase-audit/outputs/source-batch-022-candidate-discovery-closeout.md`
+- `docs/codebase-audit/outputs/source-batch-022-target.md`
+- `docs/codebase-audit/outputs/source-batch-022-alldyetubsbookrune-guard-repair-closeout.md`
+- `docs/codebase-audit/outputs/source-batch-023-target.md`
+- `docs/codebase-audit/outputs/source-batch-023-alldyetubsbookspell-guard-repair-closeout.md`
+- `docs/codebase-audit/outputs/source-batch-024-target.md`
+- `docs/codebase-audit/outputs/source-batch-024-alldyetubsmountethereal-guard-repair-closeout.md`
+- `docs/codebase-audit/outputs/source-batch-025-candidate-discovery.csv`
+- `docs/codebase-audit/outputs/source-batch-025-candidate-discovery-closeout.md`
+- `docs/codebase-audit/outputs/source-batch-025-target.md`
+- `docs/codebase-audit/outputs/source-batch-025-luckyhorseshoes-guard-repair-closeout.md`
+- `docs/codebase-audit/outputs/source-batch-026-target.md`
+- `docs/codebase-audit/outputs/source-batch-026-slayerdeed-guard-repair-closeout.md`
+- `docs/codebase-audit/outputs/source-batch-027-target.md`
+- `docs/codebase-audit/outputs/source-batch-027-artifactmanual-guard-repair-closeout.md`
+- `docs/codebase-audit/outputs/source-batch-028-candidate-discovery.csv`
+- `docs/codebase-audit/outputs/source-batch-028-candidate-discovery-closeout.md`
+- `docs/codebase-audit/outputs/source-batch-028-target.md`
+- `docs/codebase-audit/outputs/source-batch-028-dyetub-guard-repair-closeout.md`
+- `docs/codebase-audit/outputs/source-batch-029-target.md`
+- `docs/codebase-audit/outputs/source-batch-029-key-interaction-guard-repair-closeout.md`
+- `docs/codebase-audit/outputs/source-batch-030-target.md`
+- `docs/codebase-audit/outputs/source-batch-030-puzzlecube-guard-repair-closeout.md`
+- `docs/codebase-audit/outputs/source-batch-031-candidate-discovery.csv`
+- `docs/codebase-audit/outputs/source-batch-031-candidate-discovery-closeout.md`
+- `docs/codebase-audit/outputs/source-batch-031-target.md`
+- `docs/codebase-audit/outputs/source-batch-031-dice4-guard-repair-closeout.md`
+- `docs/codebase-audit/outputs/source-batch-032-target.md`
+- `docs/codebase-audit/outputs/source-batch-032-dice6-guard-repair-closeout.md`
+- `docs/codebase-audit/outputs/source-batch-033-target.md`
+- `docs/codebase-audit/outputs/source-batch-033-dice8-guard-repair-closeout.md`
+- `docs/codebase-audit/outputs/source-batch-034-target.md`
+- `docs/codebase-audit/outputs/source-batch-034-dice10-guard-repair-closeout.md`
+
+## SOURCE-BATCH-028 Update
+
+- `SOURCE-BATCH-028` implemented the DyeTub guard repair in `Data/Scripts/Items/Misc/Dyes/DyeTub.cs`.
+- `SOURCE-BATCH-028` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-028-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-028-dyetub-guard-repair-closeout.md`.
+- `SOURCE-BATCH-029+` remains pending the next concrete non-gated source target from `source-batch-028-candidate-discovery.csv`.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-029 Update
+
+- `SOURCE-BATCH-029` implemented the Key interaction guard repair in `Data/Scripts/Items/Misc/Key.cs`.
+- `SOURCE-BATCH-029` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-029-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-029-key-interaction-guard-repair-closeout.md`.
+- `SOURCE-BATCH-030+` remains pending the next concrete non-gated source target from `source-batch-028-candidate-discovery.csv`.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-030 Update
+
+- `SOURCE-BATCH-030` implemented the PuzzleCube guard repair in `Data/Scripts/Items/Misc/Games/PuzzleCube.cs`.
+- `SOURCE-BATCH-030` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-030-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-030-puzzlecube-guard-repair-closeout.md`.
+- The `source-batch-028-candidate-discovery.csv` implementation queue is exhausted.
+- `SOURCE-BATCH-031+` remains pending candidate discovery for the next clean non-gated target.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-031 Update
+
+- `SOURCE-BATCH-031` candidate discovery identified six D&D dice guard candidates and implemented the first one, Dice4.
+- `SOURCE-BATCH-031` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-031-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-031-dice4-guard-repair-closeout.md`.
+- `SOURCE-BATCH-032+` remains pending the next concrete non-gated source target from `source-batch-031-candidate-discovery.csv`.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-032 Update
+
+- `SOURCE-BATCH-032` implemented the Dice6 guard repair in `Data/Scripts/Items/Misc/Games/DandD/Dice6.cs`.
+- `SOURCE-BATCH-032` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-032-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-032-dice6-guard-repair-closeout.md`.
+- `SOURCE-BATCH-033+` remains pending the next concrete non-gated source target from `source-batch-031-candidate-discovery.csv`.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-033 Update
+
+- `SOURCE-BATCH-033` implemented the Dice8 guard repair in `Data/Scripts/Items/Misc/Games/DandD/Dice8.cs`.
+- `SOURCE-BATCH-033` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-033-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-033-dice8-guard-repair-closeout.md`.
+- `SOURCE-BATCH-034+` remains pending the next concrete non-gated source target from `source-batch-031-candidate-discovery.csv`.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-034 Update
+
+- `SOURCE-BATCH-034` implemented the Dice10 guard repair in `Data/Scripts/Items/Misc/Games/DandD/Dice10.cs`.
+- `SOURCE-BATCH-034` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-034-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-034-dice10-guard-repair-closeout.md`.
+- `SOURCE-BATCH-035+` remains pending the next concrete non-gated source target from `source-batch-031-candidate-discovery.csv`.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-035 Update
+
+- `SOURCE-BATCH-035` implemented the Dice12 guard repair in `Data/Scripts/Items/Misc/Games/DandD/Dice12.cs`.
+- `SOURCE-BATCH-035` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-035-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-035-dice12-guard-repair-closeout.md`.
+- `SOURCE-BATCH-036+` remains pending the next concrete non-gated source target from `source-batch-031-candidate-discovery.csv`.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-036 Update
+
+- `SOURCE-BATCH-036` implemented the Dice20 guard repair in `Data/Scripts/Items/Misc/Games/DandD/Dice20.cs`.
+- `SOURCE-BATCH-036` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-036-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-036-dice20-guard-repair-closeout.md`.
+- The `source-batch-031-candidate-discovery.csv` implementation queue is exhausted.
+- `SOURCE-BATCH-037+` remains pending candidate discovery for the next clean non-gated target.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-037 Candidate Discovery Update
+
+- `SOURCE-BATCH-037` candidate discovery identified three clean guard candidates: EverlastingBottle, EverlastingLoaf, and MusicBox.
+- The candidate discovery output is `docs/codebase-audit/outputs/source-batch-037-candidate-discovery.csv`.
+- The candidate discovery closeout is `docs/codebase-audit/outputs/source-batch-037-candidate-discovery-closeout.md`.
+- `SOURCE-BATCH-037+` remains pending implementation of `SB037-CAND-001` / EverlastingBottle Guard Repair.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-037 Update
+
+- `SOURCE-BATCH-037` implemented the EverlastingBottle guard repair in `Data/Scripts/Items/Magical/Artifacts/Minor/EverlastingBottle.cs`.
+- `SOURCE-BATCH-037` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-037-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-037-everlastingbottle-guard-repair-closeout.md`.
+- `SOURCE-BATCH-038+` remains pending the next concrete non-gated source target from `source-batch-037-candidate-discovery.csv`.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-038 Update
+
+- `SOURCE-BATCH-038` implemented the EverlastingLoaf guard repair in `Data/Scripts/Items/Magical/Artifacts/Minor/EverlastingLoaf.cs`.
+- `SOURCE-BATCH-038` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-038-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-038-everlastingloaf-guard-repair-closeout.md`.
+- `SOURCE-BATCH-039+` remains pending the next concrete non-gated source target from `source-batch-037-candidate-discovery.csv`.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-039 Update
+
+- `SOURCE-BATCH-039` implemented the MusicBox guard repair in `Data/Scripts/Items/Misc/MusicBox.cs`.
+- `SOURCE-BATCH-039` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-039-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-039-musicbox-guard-repair-closeout.md`.
+- The `source-batch-037-candidate-discovery.csv` implementation queue is exhausted.
+- `SOURCE-BATCH-040+` remains pending candidate discovery for the next clean non-gated target.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-040 Candidate Discovery Update
+
+- `SOURCE-BATCH-040` candidate discovery identified six clean reward dye tub wrapper guard candidates.
+- The candidate discovery output is `docs/codebase-audit/outputs/source-batch-040-candidate-discovery.csv`.
+- The candidate discovery closeout is `docs/codebase-audit/outputs/source-batch-040-candidate-discovery-closeout.md`.
+- `SOURCE-BATCH-040+` remains pending implementation of `SB040-CAND-001` / RewardBlackDyeTub Guard Repair.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-040 Update
+
+- `SOURCE-BATCH-040` implemented the RewardBlackDyeTub guard repair in `Data/Scripts/Items/Misc/Dyes/RewardBlackDyeTub.cs`.
+- `SOURCE-BATCH-040` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-040-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-040-rewardblackdyetub-guard-repair-closeout.md`.
+- `SOURCE-BATCH-041+` remains pending the next concrete non-gated source target from `source-batch-040-candidate-discovery.csv`.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-041 Update
+
+- `SOURCE-BATCH-041` implemented the SpecialDyeTub guard repair in `Data/Scripts/Items/Misc/Dyes/SpecialDyeTub.cs`.
+- `SOURCE-BATCH-041` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-041-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-041-specialdyetub-guard-repair-closeout.md`.
+- `SOURCE-BATCH-042+` remains pending the next concrete non-gated source target from `source-batch-040-candidate-discovery.csv`.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-042 Update
+
+- `SOURCE-BATCH-042` implemented the LeatherDyeTub guard repair in `Data/Scripts/Items/Misc/Dyes/LeatherDyeTub.cs`.
+- `SOURCE-BATCH-042` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-042-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-042-leatherdyetub-guard-repair-closeout.md`.
+- `SOURCE-BATCH-043+` remains pending the next concrete non-gated source target from `source-batch-040-candidate-discovery.csv`.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-043 Update
+
+- `SOURCE-BATCH-043` implemented the FurnitureDyeTub guard repair in `Data/Scripts/Items/Misc/Dyes/FurnitureDyeTub.cs`.
+- `SOURCE-BATCH-043` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-043-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-043-furnituredyetub-guard-repair-closeout.md`.
+- `SOURCE-BATCH-044+` remains pending the next concrete non-gated source target from `source-batch-040-candidate-discovery.csv`.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-044 Update
+
+- `SOURCE-BATCH-044` implemented the RunebookDyeTub guard repair in `Data/Scripts/Items/Misc/Dyes/RunebookDyeTub.cs`.
+- `SOURCE-BATCH-044` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-044-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-044-runebookdyetub-guard-repair-closeout.md`.
+- `SOURCE-BATCH-045+` remains pending the next concrete non-gated source target from `source-batch-040-candidate-discovery.csv`.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-045 Update
+
+- `SOURCE-BATCH-045` implemented the StatuetteDyeTub guard repair in `Data/Scripts/Items/Misc/Dyes/StatuetteDyeTub.cs`.
+- `SOURCE-BATCH-045` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-045-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-045-statuettedyetub-guard-repair-closeout.md`.
+- The `source-batch-040-candidate-discovery.csv` implementation queue is exhausted.
+- `SOURCE-BATCH-046+` remains pending candidate discovery for the next clean non-gated target.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-046 Candidate Discovery Update
+
+- `SOURCE-BATCH-046` candidate discovery identified three clean oil-material guard candidates.
+- The candidate discovery output is `docs/codebase-audit/outputs/source-batch-046-candidate-discovery.csv`.
+- The candidate discovery closeout is `docs/codebase-audit/outputs/source-batch-046-candidate-discovery-closeout.md`.
+- `SOURCE-BATCH-046+` remains pending implementation of `SB046-CAND-001` / OilMetal Guard Repair.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-046 Update
+
+- `SOURCE-BATCH-046` implemented the OilMetal guard repair in `Data/Scripts/Items/Potions/Oils/OilMetal.cs`.
+- `SOURCE-BATCH-046` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-046-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-046-oilmetal-guard-repair-closeout.md`.
+- `SOURCE-BATCH-047+` remains pending the next concrete non-gated source target from `source-batch-046-candidate-discovery.csv`.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-047 Update
+
+- `SOURCE-BATCH-047` implemented the OilLeather guard repair in `Data/Scripts/Items/Potions/Oils/OilLeather.cs`.
+- `SOURCE-BATCH-047` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-047-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-047-oilleather-guard-repair-closeout.md`.
+- `SOURCE-BATCH-048+` remains pending the next concrete non-gated source target from `source-batch-046-candidate-discovery.csv`.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-048 Update
+
+- `SOURCE-BATCH-048` implemented the OilWood guard repair in `Data/Scripts/Items/Potions/Oils/OilWood.cs`.
+- `SOURCE-BATCH-048` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-048-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-048-oilwood-guard-repair-closeout.md`.
+- The `source-batch-046-candidate-discovery.csv` implementation queue is exhausted.
+- `SOURCE-BATCH-049+` remains pending candidate discovery for the next clean non-gated target.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-049 Candidate Discovery Update
+
+- `SOURCE-BATCH-049` candidate discovery identified 15 clean gem-specific oil guard candidates.
+- The candidate discovery output is `docs/codebase-audit/outputs/source-batch-049-candidate-discovery.csv`.
+- The candidate discovery closeout is `docs/codebase-audit/outputs/source-batch-049-candidate-discovery-closeout.md`.
+- `SOURCE-BATCH-049+` remains pending implementation of `SB049-CAND-001` / OilAmethyst Guard Repair.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-049 Update
+
+- `SOURCE-BATCH-049` implemented the OilAmethyst guard repair in `Data/Scripts/Items/Potions/Oils/OilAmethyst.cs`.
+- `SOURCE-BATCH-049` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-049-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-049-oilamethyst-guard-repair-closeout.md`.
+- `SOURCE-BATCH-050+` remains pending the next concrete non-gated source target from `source-batch-049-candidate-discovery.csv`.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-050 Update
+
+- `SOURCE-BATCH-050` implemented the OilCaddellite guard repair in `Data/Scripts/Items/Potions/Oils/OilCaddellite.cs`.
+- `SOURCE-BATCH-050` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-050-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-050-oilcaddellite-guard-repair-closeout.md`.
+- `SOURCE-BATCH-051+` remains pending the next concrete non-gated source target from `source-batch-049-candidate-discovery.csv`.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-051 Update
+
+- `SOURCE-BATCH-051` implemented the OilEmerald guard repair in `Data/Scripts/Items/Potions/Oils/OilEmerald.cs`.
+- `SOURCE-BATCH-051` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-051-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-051-oilemerald-guard-repair-closeout.md`.
+- `SOURCE-BATCH-052+` remains pending the next concrete non-gated source target from `source-batch-049-candidate-discovery.csv`.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-052 Update
+
+- `SOURCE-BATCH-052` implemented the OilGarnet guard repair in `Data/Scripts/Items/Potions/Oils/OilGarnet.cs`.
+- `SOURCE-BATCH-052` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-052-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-052-oilgarnet-guard-repair-closeout.md`.
+- `SOURCE-BATCH-053+` remains pending the next concrete non-gated source target from `source-batch-049-candidate-discovery.csv`.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-053 Update
+
+- `SOURCE-BATCH-053` implemented the OilIce guard repair in `Data/Scripts/Items/Potions/Oils/OilIce.cs`.
+- `SOURCE-BATCH-053` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-053-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-053-oilice-guard-repair-closeout.md`.
+- `SOURCE-BATCH-054+` remains pending the next concrete non-gated source target from `source-batch-049-candidate-discovery.csv`.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-054 Update
+
+- `SOURCE-BATCH-054` implemented the OilJade guard repair in `Data/Scripts/Items/Potions/Oils/OilJade.cs`.
+- `SOURCE-BATCH-054` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-054-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-054-oiljade-guard-repair-closeout.md`.
+- `SOURCE-BATCH-055+` remains pending the next concrete non-gated source target from `source-batch-049-candidate-discovery.csv`.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-055 Update
+
+- `SOURCE-BATCH-055` implemented the OilMarble guard repair in `Data/Scripts/Items/Potions/Oils/OilMarble.cs`.
+- `SOURCE-BATCH-055` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-055-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-055-oilmarble-guard-repair-closeout.md`.
+- `SOURCE-BATCH-056+` remains pending the next concrete non-gated source target from `source-batch-049-candidate-discovery.csv`.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-056 Update
+
+- `SOURCE-BATCH-056` implemented the OilOnyx guard repair in `Data/Scripts/Items/Potions/Oils/OilOnyx.cs`.
+- `SOURCE-BATCH-056` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-056-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-056-oilonyx-guard-repair-closeout.md`.
+- `SOURCE-BATCH-057+` remains pending the next concrete non-gated source target from `source-batch-049-candidate-discovery.csv`.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-057 Update
+
+- `SOURCE-BATCH-057` implemented the OilQuartz guard repair in `Data/Scripts/Items/Potions/Oils/OilQuartz.cs`.
+- `SOURCE-BATCH-057` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-057-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-057-oilquartz-guard-repair-closeout.md`.
+- `SOURCE-BATCH-058+` remains pending the next concrete non-gated source target from `source-batch-049-candidate-discovery.csv`.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-058 Update
+
+- `SOURCE-BATCH-058` implemented the OilRuby guard repair in `Data/Scripts/Items/Potions/Oils/OilRuby.cs`.
+- `SOURCE-BATCH-058` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-058-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-058-oilruby-guard-repair-closeout.md`.
+- `SOURCE-BATCH-059+` remains pending the next concrete non-gated source target from `source-batch-049-candidate-discovery.csv`.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-059 Update
+
+- `SOURCE-BATCH-059` implemented the OilSapphire guard repair in `Data/Scripts/Items/Potions/Oils/OilSapphire.cs`.
+- `SOURCE-BATCH-059` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-059-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-059-oilsapphire-guard-repair-closeout.md`.
+- `SOURCE-BATCH-060+` remains pending the next concrete non-gated source target from `source-batch-049-candidate-discovery.csv`.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-060 Update
+
+- `SOURCE-BATCH-060` implemented the OilSilver guard repair in `Data/Scripts/Items/Potions/Oils/OilSilver.cs`.
+- `SOURCE-BATCH-060` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-060-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-060-oilsilver-guard-repair-closeout.md`.
+- `SOURCE-BATCH-061+` remains pending the next concrete non-gated source target from `source-batch-049-candidate-discovery.csv`.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-061 Update
+
+- `SOURCE-BATCH-061` implemented the OilSpinel guard repair in `Data/Scripts/Items/Potions/Oils/OilSpinel.cs`.
+- `SOURCE-BATCH-061` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-061-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-061-oilspinel-guard-repair-closeout.md`.
+- `SOURCE-BATCH-062+` remains pending the next concrete non-gated source target from `source-batch-049-candidate-discovery.csv`.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-062 Update
+
+- `SOURCE-BATCH-062` implemented the OilStarRuby guard repair in `Data/Scripts/Items/Potions/Oils/OilStarRuby.cs`.
+- `SOURCE-BATCH-062` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-062-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-062-oilstarruby-guard-repair-closeout.md`.
+- `SOURCE-BATCH-063+` remains pending the next concrete non-gated source target from `source-batch-049-candidate-discovery.csv`.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-063 Update
+
+- `SOURCE-BATCH-063` implemented the OilTopaz guard repair in `Data/Scripts/Items/Potions/Oils/OilTopaz.cs`.
+- `SOURCE-BATCH-063` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-063-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-063-oiltopaz-guard-repair-closeout.md`.
+- `SOURCE-BATCH-064+` requires a fresh candidate discovery pass because `source-batch-049-candidate-discovery.csv` is exhausted.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-064 Update
+
+- `SOURCE-BATCH-064+` discovery created `docs/codebase-audit/outputs/source-batch-064-candidate-discovery.csv`.
+- `SOURCE-BATCH-064` implemented the GlassblowingBook guard repair in `Data/Scripts/Items/Trades/Specialized/GlassblowingBook.cs`.
+- `SOURCE-BATCH-064` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-064-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-064-glassblowingbook-guard-repair-closeout.md`.
+- `SOURCE-BATCH-065+` remains pending the next concrete non-gated source target from `source-batch-064-candidate-discovery.csv`.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-065 Update
+
+- `SOURCE-BATCH-065` implemented the SandMiningBook guard repair in `Data/Scripts/Items/Trades/Specialized/SandMiningBook.cs`.
+- `SOURCE-BATCH-065` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-065-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-065-sandminingbook-guard-repair-closeout.md`.
+- `SOURCE-BATCH-066+` remains pending the next concrete non-gated source target from `source-batch-064-candidate-discovery.csv`.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-066 Update
+
+- `SOURCE-BATCH-066` implemented the SmokeBomb guard repair in `Data/Scripts/Items/Trades/Ninjitsu/SmokeBomb.cs`.
+- `SOURCE-BATCH-066` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-066-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-066-smokebomb-guard-repair-closeout.md`.
+- `SOURCE-BATCH-067+` remains pending the next concrete non-gated source target from `source-batch-064-candidate-discovery.csv`.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-067 Update
+
+- `SOURCE-BATCH-067` implemented the EggBomb guard repair in `Data/Scripts/Items/Trades/Ninjitsu/EggBomb.cs`.
+- `SOURCE-BATCH-067` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-067-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-067-eggbomb-guard-repair-closeout.md`.
+- Static verification passed, but `Server.csproj` Debug/x86 build and runtime compile-only verification are recorded as unavailable for this batch because MSBuild escalation was rejected after the session hit its usage limit and the restored tracked executable did not honor `-compileonly`.
+- `SOURCE-BATCH-068+` requires a fresh candidate discovery pass once build verification is available again.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-068 Update
+
+- Verification availability was restored before new source edits: `Data/System/Source/Server.csproj` Debug/x86 build passed and `.\ConficturaServer.exe -compileonly -nocache` passed.
+- `SOURCE-BATCH-068+` discovery created `docs/codebase-audit/outputs/source-batch-068-candidate-discovery.csv`.
+- `SOURCE-BATCH-068` implemented the SkeletonsKey guard repair in `Data/Scripts/Items/Containers/SkeltonsKey.cs`.
+- `SOURCE-BATCH-068` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-068-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-068-skeletonskey-guard-repair-closeout.md`.
+- `SOURCE-BATCH-069+` remains pending the next concrete non-gated source target from `source-batch-068-candidate-discovery.csv`.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-069 Update
+
+- `SOURCE-BATCH-069` implemented the MagicSkeltonsKey guard repair in `Data/Scripts/Items/Containers/MagicSkeltonsKey.cs`.
+- `SOURCE-BATCH-069` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-069-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-069-magicskeltonskey-guard-repair-closeout.md`.
+- `SOURCE-BATCH-070+` remains pending the next concrete non-gated source target from `source-batch-068-candidate-discovery.csv`.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-070 Update
+
+- `SOURCE-BATCH-070` implemented the MasterSkeletonsKey guard repair in `Data/Scripts/Items/Containers/MasterSkeltonsKey.cs`.
+- `SOURCE-BATCH-070` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-070-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-070-masterskeletonskey-guard-repair-closeout.md`.
+- The `source-batch-068-candidate-discovery.csv` implementation queue is exhausted; `SOURCE-BATCH-071+` requires fresh candidate discovery.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-071 Update
+
+- `SOURCE-BATCH-071+` discovery created `docs/codebase-audit/outputs/source-batch-071-candidate-discovery.csv`.
+- `SOURCE-BATCH-071` implemented the DecoStatueDeed guard repair in `Data/Scripts/Items/Decorations/DecoIngotDeed.cs`.
+- `SOURCE-BATCH-071` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-071-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-071-decostatuedeed-guard-repair-closeout.md`.
+- `SOURCE-BATCH-072+` remains pending the next concrete non-gated source target from `source-batch-071-candidate-discovery.csv`.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-072 Update
+
+- `SOURCE-BATCH-072` implemented the MonsterStatueDeed guard repair in `Data/Scripts/Items/Decorations/MonsterStatueDeed.cs`.
+- `SOURCE-BATCH-072` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-072-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-072-monsterstatuedeed-guard-repair-closeout.md`.
+- The `source-batch-071-candidate-discovery.csv` implementation queue is exhausted; `SOURCE-BATCH-073+` requires fresh candidate discovery.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-073 Update
+
+- `SOURCE-BATCH-073+` discovery created `docs/codebase-audit/outputs/source-batch-073-candidate-discovery.csv`.
+- `SOURCE-BATCH-073` implemented the MasonryBook guard repair in `Data/Scripts/Items/Trades/Specialized/MasonryBook.cs`.
+- `SOURCE-BATCH-073` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-073-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-073-masonrybook-guard-repair-closeout.md`.
+- `SOURCE-BATCH-074+` remains pending the next concrete non-gated source target from `source-batch-073-candidate-discovery.csv`.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-074 Update
+
+- `SOURCE-BATCH-074` implemented the StoneMiningBook guard repair in `Data/Scripts/Items/Trades/Specialized/StoneMiningBook.cs`.
+- `SOURCE-BATCH-074` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-074-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-074-stoneminingbook-guard-repair-closeout.md`.
+- The `source-batch-073-candidate-discovery.csv` implementation queue is exhausted; `SOURCE-BATCH-075+` requires fresh candidate discovery.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-075 Update
+
+- `SOURCE-BATCH-075+` discovery created `docs/codebase-audit/outputs/source-batch-075-candidate-discovery.csv`.
+- `SOURCE-BATCH-075` implemented the DwarvenForge guard repair in `Data/Scripts/Items/Trades/Blacksmith Items/DwarvenForge.cs`.
+- `SOURCE-BATCH-075` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-075-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-075-dwarvenforge-guard-repair-closeout.md`.
+- The `source-batch-075-candidate-discovery.csv` implementation queue is exhausted; `SOURCE-BATCH-076+` requires fresh candidate discovery.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-076 Update
+
+- `SOURCE-BATCH-076+` discovery created `docs/codebase-audit/outputs/source-batch-076-candidate-discovery.csv`.
+- `SOURCE-BATCH-076` implemented the TaxidermyKit guard repair in `Data/Scripts/Items/Trades/Carpenter Items/TaxidermyKit.cs`.
+- `SOURCE-BATCH-076` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-076-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-076-taxidermykit-guard-repair-closeout.md`.
+- The `source-batch-076-candidate-discovery.csv` implementation queue is exhausted; `SOURCE-BATCH-077+` requires fresh candidate discovery.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-077 Update
+
+- `SOURCE-BATCH-077+` discovery created `docs/codebase-audit/outputs/source-batch-077-candidate-discovery.csv`.
+- `SOURCE-BATCH-077` implemented the MysticalPearl guard repair in `Data/Scripts/Items/Gems/MysticalPearl.cs`.
+- `SOURCE-BATCH-077` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-077-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-077-mysticalpearl-guard-repair-closeout.md`.
+- The `source-batch-077-candidate-discovery.csv` implementation queue is exhausted; `SOURCE-BATCH-078+` requires fresh candidate discovery.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-078 Update
+
+- `SOURCE-BATCH-078+` discovery created `docs/codebase-audit/outputs/source-batch-078-candidate-discovery.csv`.
+- `SOURCE-BATCH-078` implemented the CrystallineJar guard repair in `Data/Scripts/Items/Potions/Bottles/CrystallineJar.cs`.
+- `SOURCE-BATCH-078` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-078-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-078-crystallinejar-guard-repair-closeout.md`.
+- `SOURCE-BATCH-079+` remains pending the next concrete non-gated source target from `source-batch-078-candidate-discovery.csv`.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-079 Update
+
+- `SOURCE-BATCH-079` implemented the BottleOfAcid guard repair in `Data/Scripts/Items/Potions/Special/BottleOfAcid.cs`.
+- `SOURCE-BATCH-079` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-079-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-079-bottleofacid-guard-repair-closeout.md`.
+- `SOURCE-BATCH-080+` remains pending the next concrete non-gated source target from `source-batch-078-candidate-discovery.csv`.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-080 Update
+
+- `SOURCE-BATCH-080` implemented the RepairDeed guard repair in `Data/Scripts/Items/Trades/Misc/RepairDeed.cs`.
+- `SOURCE-BATCH-080` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-080-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-080-repairdeed-guard-repair-closeout.md`.
+- The `source-batch-078-candidate-discovery.csv` implementation queue is exhausted; `SOURCE-BATCH-081+` requires fresh candidate discovery.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-081 Update
+
+- `SOURCE-BATCH-081+` discovery created `docs/codebase-audit/outputs/source-batch-081-candidate-discovery.csv`.
+- `SOURCE-BATCH-081` implemented the ArrowsAndBolts guard repair in `Data/Scripts/Items/Explorers/ArrowsAndBolts.cs`.
+- `SOURCE-BATCH-081` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-081-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-081-arrowsandbolts-guard-repair-closeout.md`.
+- The `source-batch-081-candidate-discovery.csv` implementation queue is exhausted; `SOURCE-BATCH-082+` requires fresh candidate discovery.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-082 Update
+
+- `SOURCE-BATCH-082+` discovery created `docs/codebase-audit/outputs/source-batch-082-candidate-discovery.csv`.
+- `SOURCE-BATCH-082` implemented the ClothingBlessDeed guard repair in `Data/Scripts/Items/Deeds/ClothingBlessDeed.cs`.
+- `SOURCE-BATCH-082` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-082-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-082-clothingblessdeed-guard-repair-closeout.md`.
+- `SOURCE-BATCH-083+` remains pending the next concrete non-gated source target from `source-batch-082-candidate-discovery.csv`.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-083 Update
+
+- `SOURCE-BATCH-083` implemented the HairRestylingDeed guard repair in `Data/Scripts/Items/Deeds/HairRestylingDeed.cs`.
+- `SOURCE-BATCH-083` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-083-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-083-hairrestylingdeed-guard-repair-closeout.md`.
+- The `source-batch-082-candidate-discovery.csv` implementation queue is exhausted; `SOURCE-BATCH-084+` requires fresh candidate discovery.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-084 Update
+
+- `SOURCE-BATCH-084+` discovery created `docs/codebase-audit/outputs/source-batch-084-candidate-discovery.csv`.
+- `SOURCE-BATCH-084` implemented the PotionOfWisdom guard repair in `Data/Scripts/Items/Potions/Special/PotionOfWisdom.cs`.
+- `SOURCE-BATCH-084` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-084-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-084-potionofwisdom-guard-repair-closeout.md`.
+- `SOURCE-BATCH-085+` remains pending the next concrete non-gated source target from `source-batch-084-candidate-discovery.csv`.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-085 Update
+
+- `SOURCE-BATCH-085` implemented the PotionOfMight guard repair in `Data/Scripts/Items/Potions/Special/PotionOfMight.cs`.
+- `SOURCE-BATCH-085` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-085-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-085-potionofmight-guard-repair-closeout.md`.
+- `SOURCE-BATCH-086+` remains pending the next concrete non-gated source target from `source-batch-084-candidate-discovery.csv`.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-086 Update
+
+- `SOURCE-BATCH-086` implemented the PotionOfDexterity guard repair in `Data/Scripts/Items/Potions/Special/PotionOfDexterity.cs`.
+- `SOURCE-BATCH-086` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-086-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-086-potionofdexterity-guard-repair-closeout.md`.
+- The `source-batch-084-candidate-discovery.csv` implementation queue is exhausted; `SOURCE-BATCH-087+` requires fresh candidate discovery.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-087 Update
+
+- `SOURCE-BATCH-087+` discovery created `docs/codebase-audit/outputs/source-batch-087-candidate-discovery.csv`.
+- `SOURCE-BATCH-087` implemented the HairDyePotion guard repair in `Data/Scripts/Items/Potions/Special/HairDyePotion.cs`.
+- `SOURCE-BATCH-087` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-087-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-087-hairdyepotion-guard-repair-closeout.md`.
+- `SOURCE-BATCH-088+` remains pending the next concrete non-gated source target from `source-batch-087-candidate-discovery.csv`.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-088 Update
+
+- `SOURCE-BATCH-088` implemented the HairDyeBottle guard repair in `Data/Scripts/Items/Potions/Special/HairDyeBottle.cs`.
+- `SOURCE-BATCH-088` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-088-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-088-hairdyebottle-guard-repair-closeout.md`.
+- `SOURCE-BATCH-089+` remains pending the next concrete non-gated source target from `source-batch-087-candidate-discovery.csv`.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-089 Update
+
+- `SOURCE-BATCH-089` implemented the GenderPotion guard repair in `Data/Scripts/Items/Potions/Special/GenderPotion.cs`.
+- `SOURCE-BATCH-089` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-089-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-089-genderpotion-guard-repair-closeout.md`.
+- `SOURCE-BATCH-090+` remains pending the next concrete non-gated source target from `source-batch-087-candidate-discovery.csv`.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-090 Update
+
+- `SOURCE-BATCH-090` implemented the NecroSkinPotion guard repair in `Data/Scripts/Items/Potions/Special/NecroSkinPotion.cs`.
+- `SOURCE-BATCH-090` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-090-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-090-necroskinpotion-guard-repair-closeout.md`.
+- `SOURCE-BATCH-091+` remains pending the next concrete non-gated source target from `source-batch-087-candidate-discovery.csv`.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-091 Update
+
+- `SOURCE-BATCH-091` implemented the HairOilPotion guard repair in `Data/Scripts/Items/Potions/Special/HairOilPotion.cs`.
+- `SOURCE-BATCH-091` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-091-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-091-hairoilpotion-guard-repair-closeout.md`.
+- The `source-batch-087-candidate-discovery.csv` implementation queue is exhausted; `SOURCE-BATCH-092+` requires fresh candidate discovery.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-092 Update
+
+- `SOURCE-BATCH-092+` discovery created `docs/codebase-audit/outputs/source-batch-092-candidate-discovery.csv`.
+- `SOURCE-BATCH-092` implemented the HueStone guard repair in `Data/Scripts/Items/Misc/Dyes/HueStone.cs`.
+- `SOURCE-BATCH-092` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-092-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-092-huestone-guard-repair-closeout.md`.
+- The `source-batch-092-candidate-discovery.csv` implementation queue is exhausted; `SOURCE-BATCH-093+` requires fresh candidate discovery.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-093 Update
+
+- `SOURCE-BATCH-093+` discovery created `docs/codebase-audit/outputs/source-batch-093-candidate-discovery.csv`.
+- `SOURCE-BATCH-093` implemented the BloodDrink guard repair in `Data/Scripts/Items/Food/BloodDrink.cs`.
+- `SOURCE-BATCH-093` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-093-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-093-blooddrink-guard-repair-closeout.md`.
+- `SOURCE-BATCH-094+` remains pending the next concrete non-gated source target from `source-batch-093-candidate-discovery.csv`.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-094 Update
+
+- `SOURCE-BATCH-094` implemented the FreshBrain guard repair in `Data/Scripts/Items/Food/FreshBrain.cs`.
+- `SOURCE-BATCH-094` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-094-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-094-freshbrain-guard-repair-closeout.md`.
+- `SOURCE-BATCH-095+` remains pending the next concrete non-gated source target from `source-batch-093-candidate-discovery.csv`.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-095 Update
+
+- `SOURCE-BATCH-095` implemented the TastyHeart guard repair in `Data/Scripts/Items/Food/TastyHeart.cs`.
+- `SOURCE-BATCH-095` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-095-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-095-tastyheart-guard-repair-closeout.md`.
+- `SOURCE-BATCH-096+` remains pending the next concrete non-gated source target from `source-batch-093-candidate-discovery.csv`.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-096 Update
+
+- `SOURCE-BATCH-096` implemented the BakedBread guard repair in `Data/Scripts/Items/Food/BakedBread.cs`.
+- `SOURCE-BATCH-096` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-096-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-096-bakedbread-guard-repair-closeout.md`.
+- `SOURCE-BATCH-097+` remains pending the next concrete non-gated source target from `source-batch-093-candidate-discovery.csv`.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-097 Update
+
+- `SOURCE-BATCH-097` implemented the WaterFlask guard repair in `Data/Scripts/Items/Food/WaterFlask.cs`.
+- `SOURCE-BATCH-097` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-097-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-097-waterflask-guard-repair-closeout.md`.
+- `SOURCE-BATCH-098+` remains pending the next concrete non-gated source target from `source-batch-093-candidate-discovery.csv`.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-098 Update
+
+- `SOURCE-BATCH-098` implemented the WaterVial guard repair in `Data/Scripts/Items/Food/WaterVial.cs`.
+- `SOURCE-BATCH-098` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-098-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-098-watervial-guard-repair-closeout.md`.
+- The `source-batch-093-candidate-discovery.csv` implementation queue is exhausted; `SOURCE-BATCH-099+` requires fresh candidate discovery.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-099 Update
+
+- `SOURCE-BATCH-099+` discovery created `docs/codebase-audit/outputs/source-batch-099-candidate-discovery.csv`.
+- `SOURCE-BATCH-099` implemented the Wool guard repair in `Data/Scripts/Items/Trades/Resources/Tailor/Wool.cs`.
+- `SOURCE-BATCH-099` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-099-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-099-wool-guard-repair-closeout.md`.
+- `SOURCE-BATCH-100+` remains pending the next concrete non-gated source target from `source-batch-099-candidate-discovery.csv`.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-100 Update
+
+- `SOURCE-BATCH-100` implemented the Cotton guard repair in `Data/Scripts/Items/Trades/Resources/Tailor/Cotton.cs`.
+- `SOURCE-BATCH-100` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-100-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-100-cotton-guard-repair-closeout.md`.
+- `SOURCE-BATCH-101+` remains pending the next concrete non-gated source target from `source-batch-099-candidate-discovery.csv`.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-101 Update
+
+- `SOURCE-BATCH-101` implemented the Flax guard repair in `Data/Scripts/Items/Trades/Resources/Tailor/Flax.cs`.
+- `SOURCE-BATCH-101` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-101-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-101-flax-guard-repair-closeout.md`.
+- `SOURCE-BATCH-102+` remains pending the next concrete non-gated source target from `source-batch-099-candidate-discovery.csv`.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-102 Update
+
+- `SOURCE-BATCH-102` implemented the YarnsAndThreads guard repair in `Data/Scripts/Items/Trades/Resources/Tailor/YarnsAndThreads.cs`.
+- `SOURCE-BATCH-102` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-102-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-102-yarnsandthreads-guard-repair-closeout.md`.
+- `SOURCE-BATCH-103+` remains pending the next concrete non-gated source target from `source-batch-099-candidate-discovery.csv`.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-103 Update
+
+- `SOURCE-BATCH-103` implemented the PolishBoneBrush guard repair in `Data/Scripts/Items/Trades/Resources/Tailor/PolishBoneBrush.cs`.
+- `SOURCE-BATCH-103` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-103-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-103-polishbonebrush-guard-repair-closeout.md`.
+- The `source-batch-099-candidate-discovery.csv` implementation queue is exhausted; `SOURCE-BATCH-104+` requires fresh candidate discovery.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-104 Update
+
+- `SOURCE-BATCH-104+` discovery created `docs/codebase-audit/outputs/source-batch-104-candidate-discovery.csv`.
+- `SOURCE-BATCH-104` implemented the Cloth guard repair in `Data/Scripts/Items/Trades/Resources/Tailor/Cloth.cs`.
+- `SOURCE-BATCH-104` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-104-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-104-cloth-guard-repair-closeout.md`.
+- `SOURCE-BATCH-105+` remains pending the next concrete non-gated source target from `source-batch-104-candidate-discovery.csv`.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-105 Update
+
+- `SOURCE-BATCH-105` implemented the BoltOfCloth guard repair in `Data/Scripts/Items/Trades/Resources/Tailor/BoltOfCloth.cs`.
+- `SOURCE-BATCH-105` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-105-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-105-boltofcloth-guard-repair-closeout.md`.
+- `SOURCE-BATCH-106+` remains pending the next concrete non-gated source target from `source-batch-104-candidate-discovery.csv`.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-106 Update
+
+- `SOURCE-BATCH-106` implemented the UncutCloth guard repair in `Data/Scripts/Items/Trades/Resources/Tailor/UncutCloth.cs`.
+- `SOURCE-BATCH-106` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-106-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-106-uncutcloth-guard-repair-closeout.md`.
+- The `source-batch-104-candidate-discovery.csv` implementation queue is exhausted; `SOURCE-BATCH-107+` requires fresh candidate discovery.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-107 Update
+
+- `SOURCE-BATCH-107+` discovery created `docs/codebase-audit/outputs/source-batch-107-candidate-discovery.csv`.
+- `SOURCE-BATCH-107` implemented the CaddelliteOre guard repair in `Data/Scripts/Items/Trades/Resources/Blacksmithing/CaddelliteOre.cs`.
+- `SOURCE-BATCH-107` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-107-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-107-caddelliteore-guard-repair-closeout.md`.
+- `SOURCE-BATCH-108+` remains pending the next concrete non-gated source target from `source-batch-107-candidate-discovery.csv`.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-108 Update
+
+- `SOURCE-BATCH-108` implemented the RareMetals guard repair in `Data/Scripts/Items/Trades/Resources/Blacksmithing/RareMetals.cs`.
+- `SOURCE-BATCH-108` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-108-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-108-raremetals-guard-repair-closeout.md`.
+- `SOURCE-BATCH-109+` remains pending the next concrete non-gated source target from `source-batch-107-candidate-discovery.csv`.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-109 Update
+
+- `SOURCE-BATCH-109` implemented the HardScales guard repair in `Data/Scripts/Items/Trades/Resources/Blacksmithing/HardScales.cs`.
+- `SOURCE-BATCH-109` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-109-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-109-hardscales-guard-repair-closeout.md`.
+- `SOURCE-BATCH-110+` remains pending the next concrete non-gated source target from `source-batch-107-candidate-discovery.csv`.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-110 Update
+
+- `SOURCE-BATCH-110` implemented the HardCrystals guard repair in `Data/Scripts/Items/Trades/Resources/Blacksmithing/HardCrystals.cs`.
+- `SOURCE-BATCH-110` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-110-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-110-hardcrystals-guard-repair-closeout.md`.
+- The `source-batch-107-candidate-discovery.csv` implementation queue is exhausted; `SOURCE-BATCH-111+` requires fresh candidate discovery.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-111 Update
+
+- `SOURCE-BATCH-111+` discovery created `docs/codebase-audit/outputs/source-batch-111-candidate-discovery.csv`.
+- `SOURCE-BATCH-111` implemented the BrokenGear guard repair in `Data/Scripts/Items/Traps/BrokenGear.cs`.
+- `SOURCE-BATCH-111` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-111-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-111-brokengear-guard-repair-closeout.md`.
+- `SOURCE-BATCH-112+` remains pending the next concrete non-gated source target from `source-batch-111-candidate-discovery.csv`.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-112 Update
+
+- `SOURCE-BATCH-112` implemented the CurseItem guard repair in `Data/Scripts/Items/Traps/CurseItem.cs`.
+- `SOURCE-BATCH-112` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-112-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-112-curseitem-guard-repair-closeout.md`.
+- `SOURCE-BATCH-113+` remains pending the next concrete non-gated source target from `source-batch-111-candidate-discovery.csv`.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-113 Update
+
+- `SOURCE-BATCH-113` implemented the TaintedBandage guard repair in `Data/Scripts/Items/Traps/TaintedBandage.cs`.
+- `SOURCE-BATCH-113` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-113-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-113-taintedbandage-guard-repair-closeout.md`.
+- `SOURCE-BATCH-114+` remains pending the next concrete non-gated source target from `source-batch-111-candidate-discovery.csv`.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-114 Update
+
+- `SOURCE-BATCH-114` implemented the WeedItem guard repair in `Data/Scripts/Items/Traps/WeedItem.cs`.
+- `SOURCE-BATCH-114` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-114-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-114-weeditem-guard-repair-closeout.md`.
+- `SOURCE-BATCH-115+` remains pending the next concrete non-gated source target from `source-batch-111-candidate-discovery.csv`.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-115 Update
+
+- `SOURCE-BATCH-115` implemented the SlimeItem guard repair in `Data/Scripts/Items/Traps/SlimeItem.cs`.
+- `SOURCE-BATCH-115` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-115-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-115-slimeitem-guard-repair-closeout.md`.
+- `SOURCE-BATCH-116+` remains pending the next concrete non-gated source target from `source-batch-111-candidate-discovery.csv`.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-116 Update
+
+- `SOURCE-BATCH-116` implemented the SewageItem guard repair in `Data/Scripts/Items/Traps/SewageItem.cs`.
+- `SOURCE-BATCH-116` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-116-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-116-sewageitem-guard-repair-closeout.md`.
+- `SOURCE-BATCH-117+` remains pending the next concrete non-gated source target from `source-batch-111-candidate-discovery.csv`.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-117 Update
+
+- `SOURCE-BATCH-117` implemented the RottedReagents guard repair in `Data/Scripts/Items/Traps/RottedReagents.cs`.
+- `SOURCE-BATCH-117` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-117-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-117-rottedreagents-guard-repair-closeout.md`.
+- `SOURCE-BATCH-118+` remains pending the next concrete non-gated source target from `source-batch-111-candidate-discovery.csv`.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-118 Update
+
+- `SOURCE-BATCH-118` implemented the RuinedGems guard repair in `Data/Scripts/Items/Traps/RuinedGems.cs`.
+- `SOURCE-BATCH-118` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-118-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-118-ruinedgems-guard-repair-closeout.md`.
+- The `source-batch-111-candidate-discovery.csv` implementation queue is exhausted; `SOURCE-BATCH-119+` requires fresh candidate discovery.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-119 Update
+
+- `SOURCE-BATCH-119+` discovery created `docs/codebase-audit/outputs/source-batch-119-candidate-discovery.csv`.
+- `SOURCE-BATCH-119` implemented the DecoBlackmoor guard repair in `Data/Scripts/Items/Special/Rares/PaganReagents/DecoBlackmoor.cs`.
+- `SOURCE-BATCH-119` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-119-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-119-decoblackmoor-guard-repair-closeout.md`.
+- `SOURCE-BATCH-120+` remains pending the next concrete non-gated source target from `source-batch-119-candidate-discovery.csv`.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-120 Update
+
+- `SOURCE-BATCH-120` implemented the DecoBloodspawn guard repair in `Data/Scripts/Items/Special/Rares/PaganReagents/DecoBloodspawn.cs`.
+- `SOURCE-BATCH-120` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-120-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-120-decobloodspawn-guard-repair-closeout.md`.
+- `SOURCE-BATCH-121+` remains pending the next concrete non-gated source target from `source-batch-119-candidate-discovery.csv`.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-121 Update
+
+- `SOURCE-BATCH-121` implemented the DecoBrimstone guard repair in `Data/Scripts/Items/Special/Rares/PaganReagents/DecoBrimstone.cs`.
+- `SOURCE-BATCH-121` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-121-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-121-decobrimstone-guard-repair-closeout.md`.
+- `SOURCE-BATCH-122+` remains pending the next concrete non-gated source target from `source-batch-119-candidate-discovery.csv`.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-122 Update
+
+- `SOURCE-BATCH-122` implemented the DecoDragonsBlood guard repair in `Data/Scripts/Items/Special/Rares/PaganReagents/DecoDragonsBlood.cs`.
+- `SOURCE-BATCH-122` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-122-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-122-decodragonsblood-guard-repair-closeout.md`.
+- `SOURCE-BATCH-123+` remains pending the next concrete non-gated source target from `source-batch-119-candidate-discovery.csv`.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-123 Update
+
+- `SOURCE-BATCH-123` implemented the DecoDragonsBlood2 guard repair in `Data/Scripts/Items/Special/Rares/PaganReagents/DecoDragonsBlood2.cs`.
+- `SOURCE-BATCH-123` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-123-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-123-decodragonsblood2-guard-repair-closeout.md`.
+- `SOURCE-BATCH-124+` remains pending the next concrete non-gated source target from `source-batch-119-candidate-discovery.csv`.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-124 Update
+
+- `SOURCE-BATCH-124` implemented the DecoEyeOfNewt guard repair in `Data/Scripts/Items/Special/Rares/PaganReagents/DecoEyeOfNewt.cs`.
+- `SOURCE-BATCH-124` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-124-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-124-decoeyeofnewt-guard-repair-closeout.md`.
+- `SOURCE-BATCH-125+` remains pending the next concrete non-gated source target from `source-batch-119-candidate-discovery.csv`.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-125 Update
+
+- `SOURCE-BATCH-125` implemented the DecoGarlic guard repair in `Data/Scripts/Items/Special/Rares/PaganReagents/DecoGarlic.cs`.
+- `SOURCE-BATCH-125` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-125-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-125-decogarlic-guard-repair-closeout.md`.
+- `SOURCE-BATCH-126+` remains pending the next concrete non-gated source target from `source-batch-119-candidate-discovery.csv`.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-126 Update
+
+- `SOURCE-BATCH-126` implemented the DecoGarlic2 guard repair in `Data/Scripts/Items/Special/Rares/PaganReagents/DecoGarlic2.cs`.
+- `SOURCE-BATCH-126` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-126-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-126-decogarlic2-guard-repair-closeout.md`.
+- `SOURCE-BATCH-127+` remains pending the next concrete non-gated source target from `source-batch-119-candidate-discovery.csv`.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-127 Update
+
+- `SOURCE-BATCH-127` implemented the DecoGarlicBulb guard repair in `Data/Scripts/Items/Special/Rares/PaganReagents/DecoGarlicBulb.cs`.
+- `SOURCE-BATCH-127` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-127-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-127-decogarlicbulb-guard-repair-closeout.md`.
+- `SOURCE-BATCH-128+` remains pending the next concrete non-gated source target from `source-batch-119-candidate-discovery.csv`.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-128 Update
+
+- `SOURCE-BATCH-128` implemented the DecoGarlicBulb2 guard repair in `Data/Scripts/Items/Special/Rares/PaganReagents/DecoGarlicBulb2.cs`.
+- `SOURCE-BATCH-128` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-128-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-128-decogarlicbulb2-guard-repair-closeout.md`.
+- `SOURCE-BATCH-129+` remains pending the next concrete non-gated source target from `source-batch-119-candidate-discovery.csv`.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-129 Update
+
+- `SOURCE-BATCH-129` implemented the DecoGinseng guard repair in `Data/Scripts/Items/Special/Rares/PaganReagents/DecoGinseng.cs`.
+- `SOURCE-BATCH-129` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-129-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-129-decoginseng-guard-repair-closeout.md`.
+- `SOURCE-BATCH-130+` remains pending the next concrete non-gated source target from `source-batch-119-candidate-discovery.csv`.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-130 Update
+
+- `SOURCE-BATCH-130` implemented the DecoGinseng2 guard repair in `Data/Scripts/Items/Special/Rares/PaganReagents/DecoGinseng2.cs`.
+- `SOURCE-BATCH-130` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-130-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-130-decoginseng2-guard-repair-closeout.md`.
+- `SOURCE-BATCH-131+` remains pending the next concrete non-gated source target from `source-batch-119-candidate-discovery.csv`.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-131 Update
+
+- `SOURCE-BATCH-131` implemented the DecoGinsengRoot guard repair in `Data/Scripts/Items/Special/Rares/PaganReagents/DecoGinsengRoot.cs`.
+- `SOURCE-BATCH-131` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-131-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-131-decoginsengroot-guard-repair-closeout.md`.
+- `SOURCE-BATCH-132+` remains pending the next concrete non-gated source target from `source-batch-119-candidate-discovery.csv`.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-132 Update
+
+- `SOURCE-BATCH-132` implemented the DecoGinsengRoot2 guard repair in `Data/Scripts/Items/Special/Rares/PaganReagents/DecoGinsengRoot2.cs`.
+- `SOURCE-BATCH-132` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-132-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-132-decoginsengroot2-guard-repair-closeout.md`.
+- `SOURCE-BATCH-133+` remains pending the next concrete non-gated source target from `source-batch-119-candidate-discovery.csv`.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-133 Update
+
+- `SOURCE-BATCH-133` implemented the DecoMandrake guard repair in `Data/Scripts/Items/Special/Rares/PaganReagents/DecoMandrake.cs`.
+- `SOURCE-BATCH-133` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-133-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-133-decomandrake-guard-repair-closeout.md`.
+- `SOURCE-BATCH-134+` remains pending the next concrete non-gated source target from `source-batch-119-candidate-discovery.csv`.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-134 Update
+
+- `SOURCE-BATCH-134` implemented the DecoMandrake2 guard repair in `Data/Scripts/Items/Special/Rares/PaganReagents/DecoMandrake2.cs`.
+- `SOURCE-BATCH-134` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-134-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-134-decomandrake2-guard-repair-closeout.md`.
+- `SOURCE-BATCH-135+` remains pending the next concrete non-gated source target from `source-batch-119-candidate-discovery.csv`.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-135 Update
+
+- `SOURCE-BATCH-135` implemented the DecoMandrake3 guard repair in `Data/Scripts/Items/Special/Rares/PaganReagents/DecoMandrake3.cs`.
+- `SOURCE-BATCH-135` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-135-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-135-decomandrake3-guard-repair-closeout.md`.
+- `SOURCE-BATCH-136+` remains pending the next concrete non-gated source target from `source-batch-119-candidate-discovery.csv`.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-136 Update
+
+- `SOURCE-BATCH-136` implemented the DecoMandrakeRoot guard repair in `Data/Scripts/Items/Special/Rares/PaganReagents/DecoMandrakeRoot.cs`.
+- `SOURCE-BATCH-136` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-136-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-136-decomandrakeroot-guard-repair-closeout.md`.
+- `SOURCE-BATCH-137+` remains pending the next concrete non-gated source target from `source-batch-119-candidate-discovery.csv`.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-137 Update
+
+- `SOURCE-BATCH-137` implemented the DecoMandrakeRoot2 guard repair in `Data/Scripts/Items/Special/Rares/PaganReagents/DecoMandrakeRoot2.cs`.
+- `SOURCE-BATCH-137` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-137-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-137-decomandrakeroot2-guard-repair-closeout.md`.
+- `SOURCE-BATCH-138+` remains pending the next concrete non-gated source target from `source-batch-119-candidate-discovery.csv`.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-138 Update
+
+- `SOURCE-BATCH-138` implemented the DecoNightshade guard repair in `Data/Scripts/Items/Special/Rares/PaganReagents/DecoNightshade.cs`.
+- `SOURCE-BATCH-138` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-138-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-138-deconightshade-guard-repair-closeout.md`.
+- `SOURCE-BATCH-139+` remains pending the next concrete non-gated source target from `source-batch-119-candidate-discovery.csv`.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-139 Update
+
+- `SOURCE-BATCH-139` implemented the DecoNightshade2 guard repair in `Data/Scripts/Items/Special/Rares/PaganReagents/DecoNightshade2.cs`.
+- `SOURCE-BATCH-139` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-139-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-139-deconightshade2-guard-repair-closeout.md`.
+- `SOURCE-BATCH-140+` remains pending the next concrete non-gated source target from `source-batch-119-candidate-discovery.csv`.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-140 Update
+
+- `SOURCE-BATCH-140` implemented the DecoNightshade3 guard repair in `Data/Scripts/Items/Special/Rares/PaganReagents/DecoNightshade3.cs`.
+- `SOURCE-BATCH-140` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-140-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-140-deconightshade3-guard-repair-closeout.md`.
+- `SOURCE-BATCH-141+` remains pending the next concrete non-gated source target from `source-batch-119-candidate-discovery.csv`.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-141 Update
+
+- `SOURCE-BATCH-141` implemented the DecoObsidian guard repair in `Data/Scripts/Items/Special/Rares/PaganReagents/DecoObsidian.cs`.
+- `SOURCE-BATCH-141` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-141-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-141-decoobsidian-guard-repair-closeout.md`.
+- `SOURCE-BATCH-142+` remains pending the next concrete non-gated source target from `source-batch-119-candidate-discovery.csv`.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-142 Update
+
+- `SOURCE-BATCH-142` implemented the DecoPumice guard repair in `Data/Scripts/Items/Special/Rares/PaganReagents/DecoPumice.cs`.
+- `SOURCE-BATCH-142` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-142-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-142-decopumice-guard-repair-closeout.md`.
+- `SOURCE-BATCH-143+` remains pending the next concrete non-gated source target from `source-batch-119-candidate-discovery.csv`.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-143 Update
+
+- `SOURCE-BATCH-143` implemented the DecoWyrmsHeart guard repair in `Data/Scripts/Items/Special/Rares/PaganReagents/DecoWyrmsHeart.cs`.
+- `SOURCE-BATCH-143` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-143-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-143-decowyrmsheart-guard-repair-closeout.md`.
+- The `source-batch-119-candidate-discovery.csv` implementation queue is exhausted.
+- `SOURCE-BATCH-144+` requires fresh non-gated candidate discovery.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-144 Update
+
+- `SOURCE-BATCH-144` created fresh candidate discovery in `docs/codebase-audit/outputs/source-batch-144-candidate-discovery.csv`.
+- `SOURCE-BATCH-144` implemented the CorpseChest guard repair in `Data/Scripts/Items/Containers/CorpseChest.cs`.
+- `SOURCE-BATCH-144` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-144-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-144-corpsechest-guard-repair-closeout.md`.
+- `SOURCE-BATCH-145+` remains pending the next concrete non-gated source target from `source-batch-144-candidate-discovery.csv`.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-145 Update
+
+- `SOURCE-BATCH-145` implemented the CorpseSailor guard repair in `Data/Scripts/Items/Containers/CorpseSailor.cs`.
+- `SOURCE-BATCH-145` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-145-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-145-corpsesailor-guard-repair-closeout.md`.
+- `SOURCE-BATCH-146+` remains pending the next concrete non-gated source target from `source-batch-144-candidate-discovery.csv`.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-146 Update
+
+- `SOURCE-BATCH-146` implemented the LootBag guard repair in `Data/Scripts/Items/Containers/LootBag.cs`.
+- `SOURCE-BATCH-146` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-146-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-146-lootbag-guard-repair-closeout.md`.
+- `SOURCE-BATCH-147+` remains pending the next concrete non-gated source target from `source-batch-144-candidate-discovery.csv`.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-147 Update
+
+- `SOURCE-BATCH-147` implemented the LootChest guard repair in `Data/Scripts/Items/Containers/LootChest.cs`.
+- `SOURCE-BATCH-147` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-147-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-147-lootchest-guard-repair-closeout.md`.
+- `SOURCE-BATCH-148+` remains pending the next concrete non-gated source target from `source-batch-144-candidate-discovery.csv`.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-148 Update
+
+- `SOURCE-BATCH-148` implemented the PirateChest guard repair in `Data/Scripts/Items/Containers/PirateChest.cs`.
+- `SOURCE-BATCH-148` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-148-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-148-piratechest-guard-repair-closeout.md`.
+- `SOURCE-BATCH-149+` remains pending the next concrete non-gated source target from `source-batch-144-candidate-discovery.csv`.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-149 Update
+
+- `SOURCE-BATCH-149` implemented the SunkenBag guard repair in `Data/Scripts/Items/Containers/SunkenBag.cs`.
+- `SOURCE-BATCH-149` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-149-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-149-sunkenbag-guard-repair-closeout.md`.
+- `SOURCE-BATCH-150+` remains pending the next concrete non-gated source target from `source-batch-144-candidate-discovery.csv`.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-150 Update
+
+- `SOURCE-BATCH-150` implemented the MovingBox guard repair in `Data/Scripts/Items/Containers/MovingBox.cs`.
+- `SOURCE-BATCH-150` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-150-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-150-movingbox-guard-repair-closeout.md`.
+- `SOURCE-BATCH-151+` remains pending the next concrete non-gated source target from `source-batch-144-candidate-discovery.csv`.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-151 Update
+
+- `SOURCE-BATCH-151` implemented the AlchemistPouch guard repair in `Data/Scripts/Items/Containers/AlchemistPouch.cs`.
+- `SOURCE-BATCH-151` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-151-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-151-alchemistpouch-guard-repair-closeout.md`.
+- `SOURCE-BATCH-152+` remains pending the next concrete non-gated source target from `source-batch-144-candidate-discovery.csv`.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-152 Update
+
+- `SOURCE-BATCH-152` skipped the BaseMagicStaff guard repair before source edits.
+- Fresh preflight found `Data/Scripts/Items/Wands/BaseMagicStaff.cs` has 0 POST-BATCH-Y gate hits and 4 active overlay matches: `RB-06714`, `RB-06715`, `RB-06731`, `RB-06782`.
+- `SOURCE-BATCH-152` is now `SkippedOverlayConflict` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-152-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-152-basemagicstaff-skip-closeout.md`.
+- No source/project/XML/config/data files were changed.
+- `SOURCE-BATCH-153+` remains pending the next concrete non-gated source target from `source-batch-144-candidate-discovery.csv`.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-153 Update
+
+- `SOURCE-BATCH-153` implemented the WindRunnerScroll guard repair in `Data/Scripts/Magic/Mystic/Scrolls/WindRunnerScroll.cs`.
+- `SOURCE-BATCH-153` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-153-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-153-windrunnerscroll-guard-repair-closeout.md`.
+- The `source-batch-144-candidate-discovery.csv` implementation queue is exhausted.
+- `SOURCE-BATCH-154+` requires fresh non-gated candidate discovery.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-154 Update
+
+- `SOURCE-BATCH-154` created fresh candidate discovery in `docs/codebase-audit/outputs/source-batch-154-candidate-discovery.csv`.
+- `SOURCE-BATCH-154` implemented the AstralProjectionScroll guard repair in `Data/Scripts/Magic/Mystic/Scrolls/AstralProjectionScroll.cs`.
+- `SOURCE-BATCH-154` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-154-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-154-astralprojectionscroll-guard-repair-closeout.md`.
+- `SOURCE-BATCH-155+` remains pending the next concrete non-gated source target from `source-batch-154-candidate-discovery.csv`.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-155 Update
+
+- `SOURCE-BATCH-155` implemented the AstralTravelScroll guard repair in `Data/Scripts/Magic/Mystic/Scrolls/AstralTravelScroll.cs`.
+- `SOURCE-BATCH-155` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-155-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-155-astraltravelscroll-guard-repair-closeout.md`.
+- `SOURCE-BATCH-156+` remains pending the next concrete non-gated source target from `source-batch-154-candidate-discovery.csv`.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-156 Update
+
+- `SOURCE-BATCH-156` implemented the CreateRobeScroll guard repair in `Data/Scripts/Magic/Mystic/Scrolls/CreateRobeScroll.cs`.
+- `SOURCE-BATCH-156` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-156-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-156-createrobescroll-guard-repair-closeout.md`.
+- `SOURCE-BATCH-157+` remains pending the next concrete non-gated source target from `source-batch-154-candidate-discovery.csv`.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-157 Update
+
+- `SOURCE-BATCH-157` implemented the GentleTouchScroll guard repair in `Data/Scripts/Magic/Mystic/Scrolls/GentleTouchScroll.cs`.
+- `SOURCE-BATCH-157` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-157-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-157-gentletouchscroll-guard-repair-closeout.md`.
+- `SOURCE-BATCH-158+` remains pending the next concrete non-gated source target from `source-batch-154-candidate-discovery.csv`.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-158 Update
+
+- `SOURCE-BATCH-158` implemented the LeapScroll guard repair in `Data/Scripts/Magic/Mystic/Scrolls/LeapScroll.cs`.
+- `SOURCE-BATCH-158` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-158-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-158-leapscroll-guard-repair-closeout.md`.
+- `SOURCE-BATCH-159+` remains pending the next concrete non-gated source target from `source-batch-154-candidate-discovery.csv`.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-159 Update
+
+- `SOURCE-BATCH-159` implemented the PsionicBlastScroll guard repair in `Data/Scripts/Magic/Mystic/Scrolls/PsionicBlastScroll.cs`.
+- `SOURCE-BATCH-159` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-159-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-159-psionicblastscroll-guard-repair-closeout.md`.
+- `SOURCE-BATCH-160+` remains pending the next concrete non-gated source target from `source-batch-154-candidate-discovery.csv`.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-160 Update
+
+- `SOURCE-BATCH-160` implemented the PsychicWallScroll guard repair in `Data/Scripts/Magic/Mystic/Scrolls/PsychicWallScroll.cs`.
+- `SOURCE-BATCH-160` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-160-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-160-psychicwallscroll-guard-repair-closeout.md`.
+- `SOURCE-BATCH-161+` remains pending the next concrete non-gated source target from `source-batch-154-candidate-discovery.csv`.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-161 Update
+
+- `SOURCE-BATCH-161` implemented the PurityOfBodyScroll guard repair in `Data/Scripts/Magic/Mystic/Scrolls/PurityOfBodyScroll.cs`.
+- `SOURCE-BATCH-161` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-161-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-161-purityofbodyscroll-guard-repair-closeout.md`.
+- `SOURCE-BATCH-162+` remains pending the next concrete non-gated source target from `source-batch-154-candidate-discovery.csv`.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-162 Update
+
+- `SOURCE-BATCH-162` implemented the QuiveringPalmScroll guard repair in `Data/Scripts/Magic/Mystic/Scrolls/QuiveringPalmScroll.cs`.
+- `SOURCE-BATCH-162` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-162-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-162-quiveringpalmscroll-guard-repair-closeout.md`.
+- The `source-batch-154-candidate-discovery.csv` implementation queue is exhausted.
+- `SOURCE-BATCH-163+` requires fresh non-gated candidate discovery.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-163 Update
+
+- `SOURCE-BATCH-163` created fresh candidate discovery in `docs/codebase-audit/outputs/source-batch-163-candidate-discovery.csv`.
+- `SOURCE-BATCH-163` implemented the ArmysPaeonScroll guard repair in `Data/Scripts/Magic/Bard/Scrolls/ArmysPaeon.cs`.
+- `SOURCE-BATCH-163` is now `Committed` in `docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv`.
+- The source-batch target is `docs/codebase-audit/outputs/source-batch-163-target.md`.
+- The source-batch closeout is `docs/codebase-audit/outputs/source-batch-163-armyspaeonscroll-guard-repair-closeout.md`.
+- `SOURCE-BATCH-164+` remains pending the next concrete non-gated source target from `source-batch-163-candidate-discovery.csv`.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-164 Update
+
+- SOURCE-BATCH-164 implemented the EnchantingEtudeScroll guard repair in Data/Scripts/Magic/Bard/Scrolls/EnchantingEtude.cs.
+- SOURCE-BATCH-164 is now Committed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-164-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-164-enchantingetudescroll-guard-repair-closeout.md.
+- SOURCE-BATCH-165+ remains pending the next concrete non-gated source target from source-batch-163-candidate-discovery.csv.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-165 Update
+
+- SOURCE-BATCH-165 implemented the EnergyCarolScroll guard repair in Data/Scripts/Magic/Bard/Scrolls/EnergyCarol.cs.
+- SOURCE-BATCH-165 is now Committed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-165-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-165-energycarolscroll-guard-repair-closeout.md.
+- SOURCE-BATCH-166+ remains pending the next concrete non-gated source target from source-batch-163-candidate-discovery.csv.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-166 Update
+
+- SOURCE-BATCH-166 implemented the EnergyThrenodyScroll guard repair in Data/Scripts/Magic/Bard/Scrolls/EnergyThrenody.cs.
+- SOURCE-BATCH-166 is now Committed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-166-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-166-energythrenodyscroll-guard-repair-closeout.md.
+- SOURCE-BATCH-167+ remains pending the next concrete non-gated source target from source-batch-163-candidate-discovery.csv.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-167 Update
+
+- SOURCE-BATCH-167 implemented the FireCarolScroll guard repair in Data/Scripts/Magic/Bard/Scrolls/FireCarol.cs.
+- SOURCE-BATCH-167 is now Committed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-167-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-167-firecarolscroll-guard-repair-closeout.md.
+- SOURCE-BATCH-168+ remains pending the next concrete non-gated source target from source-batch-163-candidate-discovery.csv.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-168 Update
+
+- SOURCE-BATCH-168 implemented the FireThrenodyScroll guard repair in Data/Scripts/Magic/Bard/Scrolls/FireThrenody.cs.
+- SOURCE-BATCH-168 is now Committed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-168-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-168-firethrenodyscroll-guard-repair-closeout.md.
+- SOURCE-BATCH-169+ remains pending the next concrete non-gated source target from source-batch-163-candidate-discovery.csv.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-169 Update
+
+- SOURCE-BATCH-169 implemented the FoeRequiemScroll guard repair in Data/Scripts/Magic/Bard/Scrolls/FoeRequiem.cs.
+- SOURCE-BATCH-169 is now Committed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-169-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-169-foerequiemscroll-guard-repair-closeout.md.
+- SOURCE-BATCH-170+ remains pending the next concrete non-gated source target from source-batch-163-candidate-discovery.csv.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-170 Update
+
+- SOURCE-BATCH-170 implemented the IceCarolScroll guard repair in Data/Scripts/Magic/Bard/Scrolls/IceCarol.cs.
+- SOURCE-BATCH-170 is now Committed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-170-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-170-icecarolscroll-guard-repair-closeout.md.
+- SOURCE-BATCH-171+ remains pending the next concrete non-gated source target from source-batch-163-candidate-discovery.csv.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-171 Update
+
+- SOURCE-BATCH-171 implemented the IceThrenodyScroll guard repair in Data/Scripts/Magic/Bard/Scrolls/IceThrenody.cs.
+- SOURCE-BATCH-171 is now Committed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-171-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-171-icethrenodyscroll-guard-repair-closeout.md.
+- SOURCE-BATCH-172+ remains pending the next concrete non-gated source target from source-batch-163-candidate-discovery.csv.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-172 Update
+
+- SOURCE-BATCH-172 implemented the KnightsMinneScroll guard repair in Data/Scripts/Magic/Bard/Scrolls/KnightsMinne.cs.
+- SOURCE-BATCH-172 is now Committed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-172-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-172-knightsminnescroll-guard-repair-closeout.md.
+- SOURCE-BATCH-173+ remains pending the next concrete non-gated source target from source-batch-163-candidate-discovery.csv.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-173 Update
+
+- SOURCE-BATCH-173 implemented the MagesBalladScroll guard repair in Data/Scripts/Magic/Bard/Scrolls/MagesBallad.cs.
+- SOURCE-BATCH-173 is now Committed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-173-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-173-magesballadscroll-guard-repair-closeout.md.
+- SOURCE-BATCH-174+ remains pending the next concrete non-gated source target from source-batch-163-candidate-discovery.csv.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-174 Update
+
+- SOURCE-BATCH-174 implemented the MagicFinaleScroll guard repair in Data/Scripts/Magic/Bard/Scrolls/MagicFinale.cs.
+- SOURCE-BATCH-174 is now Committed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-174-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-174-magicfinalescroll-guard-repair-closeout.md.
+- SOURCE-BATCH-175+ remains pending the next concrete non-gated source target from source-batch-163-candidate-discovery.csv.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-175 Update
+
+- SOURCE-BATCH-175 implemented the PoisonCarolScroll guard repair in Data/Scripts/Magic/Bard/Scrolls/PoisonCarol.cs.
+- SOURCE-BATCH-175 is now Committed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-175-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-175-poisoncarolscroll-guard-repair-closeout.md.
+- SOURCE-BATCH-176+ remains pending the next concrete non-gated source target from source-batch-163-candidate-discovery.csv.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-176 Update
+
+- SOURCE-BATCH-176 implemented the PoisonThrenodyScroll guard repair in Data/Scripts/Magic/Bard/Scrolls/PoisonThrenody.cs.
+- SOURCE-BATCH-176 is now Committed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-176-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-176-poisonthrenodyscroll-guard-repair-closeout.md.
+- SOURCE-BATCH-177+ remains pending the next concrete non-gated source target from source-batch-163-candidate-discovery.csv.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-177 Update
+
+- SOURCE-BATCH-177 implemented the SheepfoeMamboScroll guard repair in Data/Scripts/Magic/Bard/Scrolls/SheepfoeMambo.cs.
+- SOURCE-BATCH-177 is now Committed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-177-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-177-sheepfoemamboscroll-guard-repair-closeout.md.
+- SOURCE-BATCH-178+ remains pending the next concrete non-gated source target from source-batch-163-candidate-discovery.csv.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-178 Update
+
+- SOURCE-BATCH-178 implemented the SinewyEtudeScroll guard repair in Data/Scripts/Magic/Bard/Scrolls/SinewyEtude.cs.
+- SOURCE-BATCH-178 is now Committed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-178-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-178-sinewyetudescroll-guard-repair-closeout.md.
+- The source-batch-163-candidate-discovery.csv implementation queue is exhausted; SOURCE-BATCH-179+ requires fresh non-gated candidate discovery.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-179 Update
+
+- SOURCE-BATCH-179 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-179-candidate-discovery.csv.
+- SOURCE-BATCH-179 implemented the DeathSkulls guard repair in Data/Scripts/Magic/Death Knight/DeathSkulls.cs.
+- SOURCE-BATCH-179 is now Committed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-179-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-179-deathskulls-guard-repair-closeout.md.
+- SOURCE-BATCH-180+ remains pending the next concrete non-gated source target from source-batch-179-candidate-discovery.csv.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-180 Update
+
+- SOURCE-BATCH-180 implemented the HolySymbols guard repair in Data/Scripts/Magic/Holy Man/HolySymbols.cs.
+- SOURCE-BATCH-180 is now Committed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-180-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-180-holysymbols-guard-repair-closeout.md.
+- SOURCE-BATCH-181+ remains pending the next concrete non-gated source target from source-batch-179-candidate-discovery.csv.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-181 Update
+
+- SOURCE-BATCH-181 implemented the DeathKnightSpellbook guard repair in Data/Scripts/Magic/Death Knight/DeathKnightSpellBook.cs.
+- SOURCE-BATCH-181 is now Committed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-181-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-181-deathknightspellbook-guard-repair-closeout.md.
+- SOURCE-BATCH-182+ remains pending the next concrete non-gated source target from source-batch-179-candidate-discovery.csv.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-182 Update
+
+- SOURCE-BATCH-182 implemented the HolyManSpellbook guard repair in Data/Scripts/Magic/Holy Man/HolyManSpellBook.cs.
+- SOURCE-BATCH-182 is now Committed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-182-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-182-holymanspellbook-guard-repair-closeout.md.
+- The source-batch-179-candidate-discovery.csv implementation queue is exhausted; SOURCE-BATCH-183+ requires fresh non-gated candidate discovery.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-183 Update
+
+- SOURCE-BATCH-183 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-183-candidate-discovery.csv.
+- SOURCE-BATCH-183 implemented the SythDatacrons guard repair in Data/Scripts/Magic/Syth/SythDatacrons.cs.
+- SOURCE-BATCH-183 is now Committed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-183-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-183-sythdatacrons-guard-repair-closeout.md.
+- SOURCE-BATCH-184+ remains pending the next concrete non-gated source target from source-batch-183-candidate-discovery.csv.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-184 Update
+
+- SOURCE-BATCH-184 implemented the JediDatacrons guard repair in Data/Scripts/Magic/Jedi/JediDatacrons.cs.
+- SOURCE-BATCH-184 is now Committed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-184-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-184-jedidatacrons-guard-repair-closeout.md.
+- SOURCE-BATCH-185+ remains pending the next concrete non-gated source target from source-batch-183-candidate-discovery.csv.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-185 Update
+
+- SOURCE-BATCH-185 implemented the SythSpellbook guard repair in Data/Scripts/Magic/Syth/SythSpellbook.cs.
+- SOURCE-BATCH-185 is now Committed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-185-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-185-sythspellbook-guard-repair-closeout.md.
+- SOURCE-BATCH-186+ remains pending the next concrete non-gated source target from source-batch-183-candidate-discovery.csv.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-186 Update
+
+- SOURCE-BATCH-186 implemented the JediSpellbook guard repair in Data/Scripts/Magic/Jedi/JediSpellbook.cs.
+- SOURCE-BATCH-186 is now Committed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-186-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-186-jedispellbook-guard-repair-closeout.md.
+- The source-batch-183-candidate-discovery.csv implementation queue is exhausted; SOURCE-BATCH-187+ requires fresh non-gated candidate discovery.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-187 Update
+
+- SOURCE-BATCH-187 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-187-candidate-discovery.csv.
+- SOURCE-BATCH-187 implemented the AncientSpellbook guard repair in Data/Scripts/Magic/Research/AncientSpellBook.cs.
+- SOURCE-BATCH-187 is now Committed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-187-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-187-ancientspellbook-guard-repair-closeout.md.
+- The source-batch-187-candidate-discovery.csv implementation queue is exhausted; SOURCE-BATCH-188+ requires fresh non-gated candidate discovery.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-188 Update
+
+- SOURCE-BATCH-188 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-188-candidate-discovery.csv.
+- SOURCE-BATCH-188 implemented the CarvedPumpkins guard repair in Data/Scripts/Items/Gifts/Holiday/Halloween/Rewards/CarvedPumpkins.cs.
+- SOURCE-BATCH-188 is now Committed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv pending final git commit.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-188-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-188-carvedpumpkins-guard-repair-closeout.md.
+- The source-batch-188-candidate-discovery.csv implementation queue is exhausted; SOURCE-BATCH-189+ requires fresh non-gated candidate discovery.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-189 Update
+
+- SOURCE-BATCH-189 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-189-candidate-discovery.csv.
+- SOURCE-BATCH-189 implemented the WrappedCandy guard repair in Data/Scripts/Items/Gifts/Holiday/Halloween/WrappedCandy.cs.
+- SOURCE-BATCH-189 is now Committed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv pending final git commit.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-189-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-189-wrappedcandy-guard-repair-closeout.md.
+- SOURCE-BATCH-190+ remains pending the next concrete non-gated source target from source-batch-189-candidate-discovery.csv.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-190 Update
+
+- SOURCE-BATCH-190 implemented the HalloweenPack guard repair in Data/Scripts/Items/Gifts/Holiday/Halloween/HalloweenPack.cs.
+- SOURCE-BATCH-190 is now Committed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv pending final git commit.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-190-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-190-halloweenpack-guard-repair-closeout.md.
+- SOURCE-BATCH-191+ remains pending the next concrete non-gated source target from source-batch-189-candidate-discovery.csv.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-191 Update
+
+- SOURCE-BATCH-191 implemented the PackedCostume guard repair in Data/Scripts/Items/Gifts/Holiday/Halloween/PackedCostume.cs.
+- SOURCE-BATCH-191 is now Committed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv pending final git commit.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-191-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-191-packedcostume-guard-repair-closeout.md.
+- The source-batch-189-candidate-discovery.csv implementation queue is exhausted; SOURCE-BATCH-192+ requires fresh non-gated candidate discovery.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-192 Update
+
+- SOURCE-BATCH-192 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-192-candidate-discovery.csv.
+- SOURCE-BATCH-192 implemented the CrystalToken guard repair in Data/Scripts/Items/Gifts/Crystal Token.cs.
+- SOURCE-BATCH-192 is now Committed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv pending final git commit.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-192-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-192-crystaltoken-guard-repair-closeout.md.
+- The source-batch-192-candidate-discovery.csv implementation queue is exhausted; SOURCE-BATCH-193+ requires fresh non-gated candidate discovery.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-193 Update
+
+- SOURCE-BATCH-193 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-193-candidate-discovery.csv.
+- SOURCE-BATCH-193 implemented the ShadowToken guard repair in Data/Scripts/Items/Gifts/Shadow Token.cs.
+- SOURCE-BATCH-193 is now Committed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv pending final git commit.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-193-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-193-shadowtoken-guard-repair-closeout.md.
+- The source-batch-193-candidate-discovery.csv implementation queue is exhausted; SOURCE-BATCH-194+ requires fresh non-gated candidate discovery.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-194 Update
+
+- SOURCE-BATCH-194 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-194-candidate-discovery.csv.
+- SOURCE-BATCH-194 implemented the NinthAnniversaryCoin guard repair in Data/Scripts/Items/Gifts/NinthAnniversaryCoin.cs.
+- SOURCE-BATCH-194 is now Committed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv pending final git commit.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-194-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-194-ninthanniversarycoin-guard-repair-closeout.md.
+- The source-batch-194-candidate-discovery.csv implementation queue is exhausted; SOURCE-BATCH-195+ requires fresh non-gated candidate discovery.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-195 Update
+
+- SOURCE-BATCH-195 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-195-candidate-discovery.csv.
+- SOURCE-BATCH-195 implemented the ECrystalAltar guard repair in Data/Scripts/Items/Gifts/CrystalDeeds/ECrystalAltar.cs.
+- SOURCE-BATCH-195 is now Committed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv pending final git commit.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-195-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-195-ecrystalaltar-guard-repair-closeout.md.
+- SOURCE-BATCH-196+ remains pending SB195-CAND-002 ECrystalBrazier from source-batch-195-candidate-discovery.csv.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-196 Update
+
+- SOURCE-BATCH-196 implemented the ECrystalBrazier guard repair in Data/Scripts/Items/Gifts/CrystalDeeds/ECrystalBrazier.cs.
+- SOURCE-BATCH-196 is now Committed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv pending final git commit.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-196-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-196-ecrystalbrazier-guard-repair-closeout.md.
+- SOURCE-BATCH-197+ remains pending SB195-CAND-003 EGlobeOfSosaria from source-batch-195-candidate-discovery.csv.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-197 Update
+
+- SOURCE-BATCH-197 implemented the EGlobeOfSosaria guard repair in Data/Scripts/Items/Gifts/ShadowDeeds/EGlobeOfSosaria.cs.
+- SOURCE-BATCH-197 is now Committed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv pending final git commit.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-197-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-197-eglobeofsosaria-guard-repair-closeout.md.
+- The source-batch-195-candidate-discovery.csv implementation queue is exhausted; SOURCE-BATCH-198+ requires fresh non-gated candidate discovery.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-198 Update
+
+- SOURCE-BATCH-198 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-198-candidate-discovery.csv.
+- SOURCE-BATCH-198 implemented the EObsidianPillar guard repair in Data/Scripts/Items/Gifts/ShadowDeeds/EObsidianPillar.cs.
+- SOURCE-BATCH-198 is now Committed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv pending final git commit.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-198-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-198-eobsidianpillar-guard-repair-closeout.md.
+- SOURCE-BATCH-199+ remains pending SB198-CAND-002 EObsidianRock from source-batch-198-candidate-discovery.csv.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-199 Update
+
+- SOURCE-BATCH-199 implemented the EObsidianRock guard repair in Data/Scripts/Items/Gifts/ShadowDeeds/EObsidianRock.cs.
+- SOURCE-BATCH-199 is now Committed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv pending final git commit.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-199-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-199-eobsidianrock-guard-repair-closeout.md.
+- SOURCE-BATCH-200+ remains pending SB198-CAND-003 EShadowFirePit from source-batch-198-candidate-discovery.csv.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-200 Update
+
+- SOURCE-BATCH-200 implemented the EShadowFirePit guard repair in Data/Scripts/Items/Gifts/ShadowDeeds/EShadowFirePit.cs.
+- SOURCE-BATCH-200 is now Committed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv pending final git commit.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-200-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-200-eshadowfirepit-guard-repair-closeout.md.
+- The source-batch-198-candidate-discovery.csv implementation queue is exhausted; SOURCE-BATCH-201+ requires fresh non-gated candidate discovery.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-201 Update
+
+- SOURCE-BATCH-201 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-201-candidate-discovery.csv.
+- SOURCE-BATCH-201 implemented the EShadowFirePitCross guard repair in Data/Scripts/Items/Gifts/ShadowDeeds/EShadowFirePitCross.cs.
+- SOURCE-BATCH-201 is now Committed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv pending final git commit.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-201-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-201-eshadowfirepitcross-guard-repair-closeout.md.
+- SOURCE-BATCH-202+ remains pending SB201-CAND-002 EShadowPillar from source-batch-201-candidate-discovery.csv.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-202 Update
+
+- SOURCE-BATCH-202 implemented the EShadowPillar guard repair in Data/Scripts/Items/Gifts/ShadowDeeds/EShadowPillar.cs.
+- SOURCE-BATCH-202 is now Committed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv pending final git commit.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-202-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-202-eshadowpillar-guard-repair-closeout.md.
+- SOURCE-BATCH-203+ remains pending SB201-CAND-003 ESpikeColumn from source-batch-201-candidate-discovery.csv.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-203 Update
+
+- SOURCE-BATCH-203 implemented the ESpikeColumn guard repair in Data/Scripts/Items/Gifts/ShadowDeeds/ESpikeColumn.cs.
+- SOURCE-BATCH-203 is now Committed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv pending final git commit.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-203-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-203-espikecolumn-guard-repair-closeout.md.
+- The source-batch-201-candidate-discovery.csv implementation queue is exhausted; SOURCE-BATCH-204+ requires fresh non-gated candidate discovery.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-204 Update
+
+- SOURCE-BATCH-204 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-204-candidate-discovery.csv.
+- SOURCE-BATCH-204 implemented the ESpikePostEast guard repair in Data/Scripts/Items/Gifts/ShadowDeeds/ESpikePostEast.cs.
+- SOURCE-BATCH-204 is now Committed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv pending final git commit.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-204-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-204-espikeposteast-guard-repair-closeout.md.
+- SOURCE-BATCH-205+ remains pending SB204-CAND-002 ESpikePostSouth from source-batch-204-candidate-discovery.csv.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-205 Update
+
+- SOURCE-BATCH-205 implemented the ESpikePostSouth guard repair in Data/Scripts/Items/Gifts/ShadowDeeds/ESpikePostSouth.cs.
+- SOURCE-BATCH-205 is now Committed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv pending final git commit.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-205-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-205-espikepostsouth-guard-repair-closeout.md.
+- The source-batch-204-candidate-discovery.csv implementation queue is exhausted; SOURCE-BATCH-206+ requires fresh non-gated candidate discovery.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-206 Update
+
+- SOURCE-BATCH-206 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-206-candidate-discovery.csv.
+- SOURCE-BATCH-206 implemented the QuestSouvenir guard repair in Data/Scripts/Items/Gifts/Rewards/QuestSouvenir.cs.
+- SOURCE-BATCH-206 is now Committed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv pending final git commit.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-206-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-206-questsouvenir-guard-repair-closeout.md.
+- SOURCE-BATCH-207+ remains pending SB206-CAND-002 PileOfGlacialSnow from source-batch-206-candidate-discovery.csv.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-207 Update
+
+- SOURCE-BATCH-207 implemented the PileOfGlacialSnow guard repair in Data/Scripts/Items/Gifts/Holiday/Christmas/Christmas Gifts/PileOfGlacialSnow.cs.
+- SOURCE-BATCH-207 is now Committed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv pending final git commit.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-207-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-207-pileofglacialsnow-guard-repair-closeout.md.
+- SOURCE-BATCH-208+ remains pending SB206-CAND-003 SnowPile from source-batch-206-candidate-discovery.csv.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-208 Update
+
+- SOURCE-BATCH-208 implemented the SnowPile guard repair in Data/Scripts/Items/Gifts/Holiday/Christmas/Christmas Gifts/SnowPile.cs.
+- SOURCE-BATCH-208 is now Committed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv pending final git commit.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-208-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-208-snowpile-guard-repair-closeout.md.
+- SOURCE-BATCH-209+ remains pending SB206-CAND-004 AppleBobbingBarrel from source-batch-206-candidate-discovery.csv.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-209 Update
+
+- SOURCE-BATCH-209 implemented the AppleBobbingBarrel guard repair in Data/Scripts/Items/Gifts/Holiday/Halloween/Decorations/AppleBobbingBarrel.cs.
+- SOURCE-BATCH-209 is now Committed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv pending final git commit.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-209-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-209-applebobbingbarrel-guard-repair-closeout.md.
+- The source-batch-206-candidate-discovery.csv implementation queue is exhausted; SOURCE-BATCH-210+ requires fresh non-gated candidate discovery.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-210 Update
+
+- SOURCE-BATCH-210 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-210-candidate-discovery.csv.
+- SOURCE-BATCH-210 implemented the Artifact_HammerofThor guard repair in Data/Scripts/Items/Magical/Artifacts/Artifact_HammerofThor.cs.
+- SOURCE-BATCH-210 is now Committed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv pending final git commit.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-210-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-210-artifact-hammerofthor-guard-repair-closeout.md.
+- SOURCE-BATCH-211+ remains pending SB210-CAND-002 Artifact_HelmOfBrilliance from source-batch-210-candidate-discovery.csv.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-211 Update
+
+- SOURCE-BATCH-211 implemented the Artifact_HelmOfBrilliance guard repair in Data/Scripts/Items/Magical/Artifacts/Artifact_HelmOfBrilliance.cs.
+- SOURCE-BATCH-211 is now Committed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv pending final git commit.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-211-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-211-artifact-helmofbrilliance-guard-repair-closeout.md.
+- The source-batch-210-candidate-discovery.csv implementation queue is exhausted; SOURCE-BATCH-212+ requires fresh non-gated candidate discovery.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-212 Update
+
+- SOURCE-BATCH-212 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-212-candidate-discovery.csv.
+- SOURCE-BATCH-212 implemented the BaseLight guard repair in Data/Scripts/Items/Construction/Lights/BaseLight.cs.
+- SOURCE-BATCH-212 is now Committed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv pending final git commit.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-212-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-212-baselight-guard-repair-closeout.md.
+- SOURCE-BATCH-213+ remains pending SB212-CAND-002 TowerLantern from source-batch-212-candidate-discovery.csv.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-213 Update
+
+- SOURCE-BATCH-213 implemented the TowerLantern guard repair in Data/Scripts/Items/Construction/Lights/TowerLantern.cs.
+- SOURCE-BATCH-213 is now Committed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv pending final git commit.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-213-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-213-towerlantern-guard-repair-closeout.md.
+- The source-batch-212-candidate-discovery.csv implementation queue is exhausted; SOURCE-BATCH-214+ requires fresh non-gated candidate discovery.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-214 Update
+
+- SOURCE-BATCH-214 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-214-candidate-discovery.csv.
+- SOURCE-BATCH-214 implemented the GemOfSeeing guard repair in Data/Scripts/Items/Magical/Artifacts/Minor/GemOfSeeing.cs.
+- SOURCE-BATCH-214 is now Committed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv pending final git commit.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-214-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-214-gemofseeing-guard-repair-closeout.md.
+- SOURCE-BATCH-215+ remains pending SB214-CAND-002 GiftThrowingGloves from source-batch-214-candidate-discovery.csv.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-215 Update
+
+- SOURCE-BATCH-215 implemented the GiftThrowingGloves guard repair in Data/Scripts/Items/Magical/Gifts/Weapons/GiftThrowingGloves.cs.
+- SOURCE-BATCH-215 is now Committed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv pending final git commit.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-215-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-215-giftthrowinggloves-guard-repair-closeout.md.
+- SOURCE-BATCH-216+ remains pending SB214-CAND-003 GiftShepherdsCrook from source-batch-214-candidate-discovery.csv.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-216 Update
+
+- SOURCE-BATCH-216 implemented the GiftShepherdsCrook guard repair in Data/Scripts/Items/Magical/Gifts/Weapons/Staves/GiftShepherdsCrook.cs.
+- SOURCE-BATCH-216 is now Committed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv pending final git commit.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-216-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-216-giftshepherdscrook-guard-repair-closeout.md.
+- The source-batch-214-candidate-discovery.csv implementation queue is exhausted; SOURCE-BATCH-217+ requires fresh non-gated candidate discovery.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-217 Update
+
+- SOURCE-BATCH-217 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-217-candidate-discovery.csv.
+- SOURCE-BATCH-217 implemented the RewardCake guard repair in Data/Scripts/Items/Special/RewardCake.cs.
+- SOURCE-BATCH-217 is now Committed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv pending final git commit.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-217-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-217-rewardcake-guard-repair-closeout.md.
+- SOURCE-BATCH-218+ remains pending SB217-CAND-002 HolidayBell from source-batch-217-candidate-discovery.csv.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-218 Update
+
+- SOURCE-BATCH-218 implemented the HolidayBell guard repair in Data/Scripts/Items/Special/Holiday/HolidayBell.cs.
+- SOURCE-BATCH-218 is now Committed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv pending final git commit.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-218-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-218-holidaybell-guard-repair-closeout.md.
+- SOURCE-BATCH-219+ remains pending SB217-CAND-003 ValentinesCard from source-batch-217-candidate-discovery.csv.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-219 Update
+
+- SOURCE-BATCH-219 implemented the ValentinesCard guard repair in Data/Scripts/Items/Special/ValentinesCard.cs.
+- SOURCE-BATCH-219 is now Committed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv pending final git commit.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-219-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-219-valentinescard-guard-repair-closeout.md.
+- The source-batch-217-candidate-discovery.csv implementation queue is exhausted; SOURCE-BATCH-220+ requires fresh non-gated candidate discovery.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-220 Update
+
+- SOURCE-BATCH-220 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-220-candidate-discovery.csv.
+- SOURCE-BATCH-220 implemented the UnidentifiedArtifact guard repair in Data/Scripts/Items/Unknown/UnidentifiedArtifact.cs.
+- SOURCE-BATCH-220 is now Committed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv pending final git commit.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-220-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-220-unidentifiedartifact-guard-repair-closeout.md.
+- SOURCE-BATCH-221+ remains pending SB220-CAND-002 UnidentifiedItem from source-batch-220-candidate-discovery.csv.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-221 Update
+
+- SOURCE-BATCH-221 implemented the UnidentifiedItem guard repair in Data/Scripts/Items/Unknown/UnidentifiedItem.cs.
+- SOURCE-BATCH-221 is now Committed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv pending final git commit.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-221-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-221-unidentifieditem-guard-repair-closeout.md.
+- SOURCE-BATCH-222+ remains pending SB220-CAND-003 UnknownWand from source-batch-220-candidate-discovery.csv.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-222 Update
+
+- SOURCE-BATCH-222 implemented the UnknownWand guard repair in Data/Scripts/Items/Unknown/UnknownWand.cs.
+- SOURCE-BATCH-222 is now Committed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv pending final git commit.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-222-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-222-unknownwand-guard-repair-closeout.md.
+- The source-batch-220-candidate-discovery.csv implementation queue is exhausted; SOURCE-BATCH-223+ requires fresh non-gated candidate discovery.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-223 Update
+
+- SOURCE-BATCH-223 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-223-candidate-discovery.csv.
+- SOURCE-BATCH-223 implemented the HugeWaterTub guard repair in Data/Scripts/Items/Special/Rares/Containers/HugeWaterTub.cs.
+- SOURCE-BATCH-223 is now Committed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv pending final git commit.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-223-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-223-hugewatertub-guard-repair-closeout.md.
+- SOURCE-BATCH-224+ requires fresh non-gated candidate discovery after SOURCE-BATCH-223 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-224 Update
+
+- SOURCE-BATCH-224 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-224-candidate-discovery.csv.
+- SOURCE-BATCH-224 implemented the WoodWell guard repair in Data/Scripts/Items/Construction/Wells/woodwell.cs.
+- SOURCE-BATCH-224 is now Committed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv pending final git commit.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-224-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-224-woodwell-guard-repair-closeout.md.
+- SOURCE-BATCH-225+ requires fresh non-gated candidate discovery after SOURCE-BATCH-224 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-225 Update
+
+- SOURCE-BATCH-225 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-225-candidate-discovery.csv.
+- SOURCE-BATCH-225 implemented the StoneWell guard repair in Data/Scripts/Items/Construction/Wells/stonewell.cs.
+- SOURCE-BATCH-225 is now Committed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv pending final git commit.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-225-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-225-stonewell-guard-repair-closeout.md.
+- SOURCE-BATCH-226+ requires fresh non-gated candidate discovery after SOURCE-BATCH-225 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-226 Update
+
+- SOURCE-BATCH-226 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-226-candidate-discovery.csv.
+- SOURCE-BATCH-226 implemented the RedWell guard repair in Data/Scripts/Items/Construction/Wells/redwell.cs.
+- SOURCE-BATCH-226 is now Committed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv pending final git commit.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-226-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-226-redwell-guard-repair-closeout.md.
+- SOURCE-BATCH-227+ requires fresh non-gated candidate discovery after SOURCE-BATCH-226 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-227 Update
+
+- SOURCE-BATCH-227 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-227-candidate-discovery.csv.
+- SOURCE-BATCH-227 implemented the MarbleWell guard repair in Data/Scripts/Items/Construction/Wells/marblewell.cs.
+- SOURCE-BATCH-227 is now Committed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv pending final git commit.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-227-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-227-marblewell-guard-repair-closeout.md.
+- SOURCE-BATCH-228+ requires fresh non-gated candidate discovery after SOURCE-BATCH-227 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-228 Update
+
+- SOURCE-BATCH-228 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-228-candidate-discovery.csv.
+- SOURCE-BATCH-228 implemented the BrownWell guard repair in Data/Scripts/Items/Construction/Wells/brownwell.cs.
+- SOURCE-BATCH-228 is now Committed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv pending final git commit.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-228-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-228-brownwell-guard-repair-closeout.md.
+- SOURCE-BATCH-229+ requires fresh non-gated candidate discovery after SOURCE-BATCH-228 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-229 Update
+
+- SOURCE-BATCH-229 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-229-candidate-discovery.csv.
+- SOURCE-BATCH-229 implemented the BlackWell guard repair in Data/Scripts/Items/Construction/Wells/blackwell.cs.
+- SOURCE-BATCH-229 is now Committed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv pending final git commit.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-229-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-229-blackwell-guard-repair-closeout.md.
+- SOURCE-BATCH-230+ requires fresh non-gated candidate discovery after SOURCE-BATCH-229 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-230 Update
+
+- SOURCE-BATCH-230 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-230-candidate-discovery.csv.
+- SOURCE-BATCH-230 implemented the Crystals bank conversion guard repair in Data/Scripts/Items/Gems/Crystals.cs.
+- SOURCE-BATCH-230 is now Committed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv pending final git commit.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-230-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-230-crystals-bank-conversion-guard-repair-closeout.md.
+- SOURCE-BATCH-231+ requires fresh non-gated candidate discovery after SOURCE-BATCH-230 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-231 Update
+
+- SOURCE-BATCH-231 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-231-candidate-discovery.csv.
+- SOURCE-BATCH-231 implemented the UnknownReagent identification guard repair in Data/Scripts/Items/Unknown/UnknownReagent.cs.
+- SOURCE-BATCH-231 is now Committed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv pending final git commit.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-231-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-231-unknownreagent-identification-guard-repair-closeout.md.
+- SOURCE-BATCH-232+ requires fresh non-gated candidate discovery after SOURCE-BATCH-231 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-232 Update
+
+- SOURCE-BATCH-232 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-232-candidate-discovery.csv.
+- SOURCE-BATCH-232 implemented the UnknownLiquid identification guard repair in Data/Scripts/Items/Unknown/UnknownLiquid.cs.
+- SOURCE-BATCH-232 is now Committed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv pending final git commit.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-232-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-232-unknownliquid-identification-guard-repair-closeout.md.
+- SOURCE-BATCH-233+ requires fresh non-gated candidate discovery after SOURCE-BATCH-232 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-233 Update
+
+- SOURCE-BATCH-233 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-233-candidate-discovery.csv.
+- SOURCE-BATCH-233 implemented the UnknownKeg identification guard repair in Data/Scripts/Items/Unknown/UnknownKeg.cs.
+- SOURCE-BATCH-233 is now Committed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv pending final git commit.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-233-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-233-unknownkeg-identification-guard-repair-closeout.md.
+- SOURCE-BATCH-234+ requires fresh non-gated candidate discovery after SOURCE-BATCH-233 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-234 Update
+
+- SOURCE-BATCH-234 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-234-candidate-discovery.csv.
+- SOURCE-BATCH-234 implemented the UnknownScroll identification guard repair in Data/Scripts/Items/Unknown/UnknownScroll.cs.
+- SOURCE-BATCH-234 is now Committed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv pending final git commit.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-234-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-234-unknownscroll-identification-guard-repair-closeout.md.
+- SOURCE-BATCH-235+ requires fresh non-gated candidate discovery after SOURCE-BATCH-234 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-235 Update
+
+- SOURCE-BATCH-235 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-235-candidate-discovery.csv.
+- SOURCE-BATCH-235 implemented the SwordsAndShackles book/gump guard repair in Data/Scripts/Items/Books/SwordsAndShackles.cs.
+- SOURCE-BATCH-235 is now Committed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv pending final git commit.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-235-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-235-swordsandshackles-book-gump-guard-repair-closeout.md.
+- SOURCE-BATCH-236+ requires fresh non-gated candidate discovery after SOURCE-BATCH-235 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-236 Update
+
+- SOURCE-BATCH-236 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-236-candidate-discovery.csv.
+- SOURCE-BATCH-236 implemented the PatchBoard guard repair in Data/Scripts/Items/Books/BulletinBoards/PatchBoard.cs.
+- SOURCE-BATCH-236 is now Committed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv pending final git commit.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-236-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-236-patchboard-guard-repair-closeout.md.
+- SOURCE-BATCH-237+ requires fresh non-gated candidate discovery after SOURCE-BATCH-236 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-237 Update
+
+- SOURCE-BATCH-237 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-237-candidate-discovery.csv.
+- SOURCE-BATCH-237 implemented the Pillows guard repair in Data/Scripts/Items/Decorations/Pillows.cs.
+- SOURCE-BATCH-237 is now Committed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv pending final git commit.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-237-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-237-pillows-guard-repair-closeout.md.
+- SOURCE-BATCH-238+ requires fresh non-gated candidate discovery after SOURCE-BATCH-237 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-238 Update
+
+- SOURCE-BATCH-238 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-238-candidate-discovery.csv.
+- SOURCE-BATCH-238 implemented the MountedPixieLime guard repair in Data/Scripts/Items/Special/Evil Home Decor Collection/MountedPixieLime.cs.
+- SOURCE-BATCH-238 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and final git commit pending.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-238-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-238-mountedpixielime-guard-repair-closeout.md.
+- SOURCE-BATCH-239+ requires fresh non-gated candidate discovery after SOURCE-BATCH-238 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-239 Update
+
+- SOURCE-BATCH-239 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-239-candidate-discovery.csv.
+- SOURCE-BATCH-239 implemented the MountedPixieBlue guard repair in Data/Scripts/Items/Special/Evil Home Decor Collection/MountedPixieBlue.cs.
+- SOURCE-BATCH-239 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and final git commit pending.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-239-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-239-mountedpixieblue-guard-repair-closeout.md.
+- SOURCE-BATCH-240+ requires fresh non-gated candidate discovery after SOURCE-BATCH-239 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-240 Update
+
+- SOURCE-BATCH-240 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-240-candidate-discovery.csv.
+- SOURCE-BATCH-240 implemented the MountedPixieGreen guard repair in Data/Scripts/Items/Special/Evil Home Decor Collection/MountedPixieGreen.cs.
+- SOURCE-BATCH-240 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and final git commit pending.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-240-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-240-mountedpixiegreen-guard-repair-closeout.md.
+- SOURCE-BATCH-241+ requires fresh non-gated candidate discovery after SOURCE-BATCH-240 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-241 Update
+
+- SOURCE-BATCH-241 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-241-candidate-discovery.csv.
+- SOURCE-BATCH-241 implemented the MountedPixieOrange guard repair in Data/Scripts/Items/Special/Evil Home Decor Collection/MountedPixieOrange.cs.
+- SOURCE-BATCH-241 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and final git commit pending.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-241-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-241-mountedpixieorange-guard-repair-closeout.md.
+- SOURCE-BATCH-242+ requires fresh non-gated candidate discovery after SOURCE-BATCH-241 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-242 Update
+
+- SOURCE-BATCH-242 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-242-candidate-discovery.csv.
+- SOURCE-BATCH-242 implemented the MountedPixieWhite guard repair in Data/Scripts/Items/Special/Evil Home Decor Collection/MountedPixieWhite.cs.
+- SOURCE-BATCH-242 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and final git commit pending.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-242-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-242-mountedpixiewhite-guard-repair-closeout.md.
+- SOURCE-BATCH-243+ requires fresh non-gated candidate discovery after SOURCE-BATCH-242 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-243 Update
+
+- SOURCE-BATCH-243 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-243-candidate-discovery.csv.
+- SOURCE-BATCH-243 implemented the DisturbingPortrait guard repair in Data/Scripts/Items/Special/Evil Home Decor Collection/DisturbingPortrait.cs.
+- SOURCE-BATCH-243 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and final git commit pending.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-243-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-243-disturbingportrait-guard-repair-closeout.md.
+- SOURCE-BATCH-244+ requires fresh non-gated candidate discovery after SOURCE-BATCH-243 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-244 Update
+
+- SOURCE-BATCH-244 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-244-candidate-discovery.csv.
+- SOURCE-BATCH-244 implemented the UnsettlingPortrait guard repair in Data/Scripts/Items/Special/Evil Home Decor Collection/UnsettlingPortrait.cs.
+- SOURCE-BATCH-244 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and final git commit pending.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-244-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-244-unsettlingportrait-guard-repair-closeout.md.
+- SOURCE-BATCH-245+ requires fresh non-gated candidate discovery after SOURCE-BATCH-244 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-245 Update
+
+- SOURCE-BATCH-245 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-245-candidate-discovery.csv.
+- SOURCE-BATCH-245 implemented the AwesomeDisturbingPortrait guard repair in Data/Scripts/Items/Special/Evil Home Decor Collection/AwesomeDisturbingPortrait.cs.
+- SOURCE-BATCH-245 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and final git commit pending.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-245-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-245-awesomedisturbingportrait-guard-repair-closeout.md.
+- SOURCE-BATCH-246+ requires fresh non-gated candidate discovery after SOURCE-BATCH-245 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-246 Update
+
+- SOURCE-BATCH-246 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-246-candidate-discovery.csv.
+- SOURCE-BATCH-246 implemented the CreepyPortrait guard repair in Data/Scripts/Items/Special/Evil Home Decor Collection/CreepyPortrait.cs.
+- SOURCE-BATCH-246 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and final git commit pending.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-246-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-246-creepyportrait-guard-repair-closeout.md.
+- SOURCE-BATCH-247+ requires fresh non-gated candidate discovery after SOURCE-BATCH-246 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-247 Update
+
+- SOURCE-BATCH-247 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-247-candidate-discovery.csv.
+- SOURCE-BATCH-247 implemented the IndecipherableMap guard repair in Data/Scripts/Items/Trades/Maps/IndecipherableMap.cs.
+- SOURCE-BATCH-247 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and final git commit pending.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-247-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-247-indecipherablemap-guard-repair-closeout.md.
+- SOURCE-BATCH-248+ requires fresh non-gated candidate discovery after SOURCE-BATCH-247 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-248 Update
+
+- SOURCE-BATCH-248 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-248-candidate-discovery.csv.
+- SOURCE-BATCH-248 implemented the Dices guard repair in Data/Scripts/Items/Misc/Games/Dices.cs.
+- SOURCE-BATCH-248 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and final git commit pending.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-248-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-248-dices-guard-repair-closeout.md.
+- SOURCE-BATCH-249+ requires fresh non-gated candidate discovery after SOURCE-BATCH-248 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-249 Update
+
+- SOURCE-BATCH-249 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-249-candidate-discovery.csv.
+- SOURCE-BATCH-249 implemented the PearlSkull guard repair in Data/Scripts/Items/Trades/Fishing/PearlSkull.cs.
+- SOURCE-BATCH-249 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and final git commit pending.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-249-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-249-pearlskull-guard-repair-closeout.md.
+- SOURCE-BATCH-250+ requires fresh non-gated candidate discovery after SOURCE-BATCH-249 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-250 Update
+
+- SOURCE-BATCH-250 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-250-candidate-discovery.csv.
+- SOURCE-BATCH-250 implemented the AuraOfShadows guard repair in Data/Scripts/Items/Magical/Artifacts/Obsolete/Obsolete_AuraOfShadows.cs.
+- SOURCE-BATCH-250 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and final git commit pending.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-250-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-250-auraofshadows-guard-repair-closeout.md.
+- SOURCE-BATCH-251+ requires fresh non-gated candidate discovery after SOURCE-BATCH-250 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-251 Update
+
+- SOURCE-BATCH-251 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-251-candidate-discovery.csv.
+- SOURCE-BATCH-251 implemented the LevelCandle guard repair in Data/Scripts/Items/Magical/God/Jewels/MagicCandle.cs.
+- SOURCE-BATCH-251 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and final git commit pending.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-251-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-251-levelcandle-guard-repair-closeout.md.
+- SOURCE-BATCH-252+ requires fresh non-gated candidate discovery after SOURCE-BATCH-251 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-252 Update
+
+- SOURCE-BATCH-252 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-252-candidate-discovery.csv.
+- SOURCE-BATCH-252 implemented the LevelLantern guard repair in Data/Scripts/Items/Magical/God/Jewels/MagicLantern.cs.
+- SOURCE-BATCH-252 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and final git commit pending.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-252-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-252-levellantern-guard-repair-closeout.md.
+- SOURCE-BATCH-253+ requires fresh non-gated candidate discovery after SOURCE-BATCH-252 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-253 Update
+
+- SOURCE-BATCH-253 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-253-candidate-discovery.csv.
+- SOURCE-BATCH-253 implemented the LevelTorch guard repair in Data/Scripts/Items/Magical/God/Jewels/MagicTorch.cs.
+- SOURCE-BATCH-253 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and final git commit pending.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-253-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-253-leveltorch-guard-repair-closeout.md.
+- SOURCE-BATCH-254+ requires fresh non-gated candidate discovery after SOURCE-BATCH-253 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-254 Update
+
+- SOURCE-BATCH-254 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-254-candidate-discovery.csv.
+- SOURCE-BATCH-254 implemented the GiftCandle guard repair in Data/Scripts/Items/Magical/Gifts/Jewels/MagicCandle.cs.
+- SOURCE-BATCH-254 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and final git commit pending.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-254-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-254-giftcandle-guard-repair-closeout.md.
+- SOURCE-BATCH-255+ requires fresh non-gated candidate discovery after SOURCE-BATCH-254 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-255 Update
+
+- SOURCE-BATCH-255 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-255-candidate-discovery.csv.
+- SOURCE-BATCH-255 implemented the GiftLantern guard repair in Data/Scripts/Items/Magical/Gifts/Jewels/MagicLantern.cs.
+- SOURCE-BATCH-255 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and final git commit pending.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-255-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-255-giftlantern-guard-repair-closeout.md.
+- SOURCE-BATCH-256+ requires fresh non-gated candidate discovery after SOURCE-BATCH-255 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-256 Update
+
+- SOURCE-BATCH-256 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-256-candidate-discovery.csv.
+- SOURCE-BATCH-256 implemented the GiftTorch guard repair in Data/Scripts/Items/Magical/Gifts/Jewels/MagicTorch.cs.
+- SOURCE-BATCH-256 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and final git commit pending.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-256-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-256-gifttorch-guard-repair-closeout.md.
+- SOURCE-BATCH-257+ requires fresh non-gated candidate discovery after SOURCE-BATCH-256 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-257 Update
+
+- SOURCE-BATCH-257 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-257-candidate-discovery.csv.
+- SOURCE-BATCH-257 implemented the MagicCandle guard repair in Data/Scripts/Items/Magical/MagicCandle.cs.
+- SOURCE-BATCH-257 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and final git commit pending.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-257-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-257-magiccandle-guard-repair-closeout.md.
+- SOURCE-BATCH-258+ requires fresh non-gated candidate discovery after SOURCE-BATCH-257 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-258 Update
+
+- SOURCE-BATCH-258 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-258-candidate-discovery.csv.
+- SOURCE-BATCH-258 implemented the MagicLantern guard repair in Data/Scripts/Items/Magical/MagicLantern.cs.
+- SOURCE-BATCH-258 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and final git commit pending.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-258-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-258-magiclantern-guard-repair-closeout.md.
+- SOURCE-BATCH-259+ requires fresh non-gated candidate discovery after SOURCE-BATCH-258 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-259 Update
+
+- SOURCE-BATCH-259 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-259-candidate-discovery.csv.
+- SOURCE-BATCH-259 implemented the MagicTorch guard repair in Data/Scripts/Items/Magical/MagicTorch.cs.
+- SOURCE-BATCH-259 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and final git commit pending.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-259-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-259-magictorch-guard-repair-closeout.md.
+- SOURCE-BATCH-260+ requires fresh non-gated candidate discovery after SOURCE-BATCH-259 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-260 Update
+
+- SOURCE-BATCH-260 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-260-candidate-discovery.csv.
+- SOURCE-BATCH-260 implemented the WallTorch guard repair in Data/Scripts/Items/Special/Heritage Items/WallTorch.cs.
+- SOURCE-BATCH-260 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and final git commit pending.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-260-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-260-walltorch-guard-repair-closeout.md.
+- SOURCE-BATCH-261+ requires fresh non-gated candidate discovery after SOURCE-BATCH-260 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-261 Update
+
+- SOURCE-BATCH-261 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-261-candidate-discovery.csv.
+- SOURCE-BATCH-261 implemented the FirstAidKit guard repair in Data/Scripts/Items/Technology/FirstAidKit.cs.
+- SOURCE-BATCH-261 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and final git commit pending.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-261-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-261-firstaidkit-guard-repair-closeout.md.
+- SOURCE-BATCH-262+ requires fresh non-gated candidate discovery after SOURCE-BATCH-261 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-262 Update
+
+- SOURCE-BATCH-262 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-262-candidate-discovery.csv.
+- SOURCE-BATCH-262 implemented the VenomSack guard repair in Data/Scripts/Items/Potions/Standard/Poison Potions/VenomSack.cs.
+- SOURCE-BATCH-262 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and final git commit pending.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-262-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-262-venomsack-guard-repair-closeout.md.
+- SOURCE-BATCH-263+ requires fresh non-gated candidate discovery after SOURCE-BATCH-262 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-263 Update
+
+- SOURCE-BATCH-263 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-263-candidate-discovery.csv.
+- SOURCE-BATCH-263 implemented the Reagent Jars guard repair in Data/Scripts/Items/Trades/Resources/Reagents/Reagents.cs.
+- SOURCE-BATCH-263 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and final git commit pending.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-263-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-263-reagent-jars-guard-repair-closeout.md.
+- SOURCE-BATCH-264+ requires fresh non-gated candidate discovery after SOURCE-BATCH-263 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-264 Update
+
+- SOURCE-BATCH-264 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-264-candidate-discovery.csv.
+- SOURCE-BATCH-264 implemented the DartBoard guard repair in Data/Scripts/Items/Construction/Addons/DartBoard.cs.
+- SOURCE-BATCH-264 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and final git commit pending.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-264-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-264-dartboard-guard-repair-closeout.md.
+- SOURCE-BATCH-265+ requires fresh non-gated candidate discovery after SOURCE-BATCH-264 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-265 Update
+
+- SOURCE-BATCH-265 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-265-candidate-discovery.csv.
+- SOURCE-BATCH-265 implemented the MagicFish guard repair in Data/Scripts/Items/Trades/Resources/Fishing/MagicFish.cs.
+- SOURCE-BATCH-265 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and final git commit pending.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-265-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-265-magicfish-guard-repair-closeout.md.
+- SOURCE-BATCH-266+ requires fresh non-gated candidate discovery after SOURCE-BATCH-265 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-266 Update
+
+- SOURCE-BATCH-266 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-266-candidate-discovery.csv.
+- SOURCE-BATCH-266 implemented the DDRelicMoney guard repair in Data/Scripts/Items/Relics/DDRelicMoney.cs.
+- SOURCE-BATCH-266 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and final git commit pending.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-266-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-266-ddrelicmoney-guard-repair-closeout.md.
+- SOURCE-BATCH-267+ requires fresh non-gated candidate discovery after SOURCE-BATCH-266 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-267 Update
+
+- SOURCE-BATCH-267 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-267-candidate-discovery.csv.
+- SOURCE-BATCH-267 implemented the MagicTalisman guard repair in Data/Scripts/Items/Magical/MagicTalisman.cs.
+- SOURCE-BATCH-267 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and final git commit pending.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-267-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-267-magictalisman-guard-repair-closeout.md.
+- SOURCE-BATCH-268+ requires fresh non-gated candidate discovery after SOURCE-BATCH-267 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-268 Update
+
+- SOURCE-BATCH-268 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-268-candidate-discovery.csv.
+- SOURCE-BATCH-268 implemented the SpaceJunk guard repair in Data/Scripts/Items/Technology/SpaceJunk.cs.
+- SOURCE-BATCH-268 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and final git commit pending.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-268-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-268-spacejunk-guard-repair-closeout.md.
+- SOURCE-BATCH-269+ requires fresh non-gated candidate discovery after SOURCE-BATCH-268 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-269 Update
+
+- SOURCE-BATCH-269 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-269-candidate-discovery.csv.
+- SOURCE-BATCH-269 implemented the RomulanAle guard repair in Data/Scripts/Items/Technology/RomulanAle.cs.
+- SOURCE-BATCH-269 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and final git commit pending.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-269-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-269-romulanale-guard-repair-closeout.md.
+- SOURCE-BATCH-270+ requires fresh non-gated candidate discovery after SOURCE-BATCH-269 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-270 Update
+
+- SOURCE-BATCH-270 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-270-candidate-discovery.csv.
+- SOURCE-BATCH-270 implemented the PlasmaTorch guard repair in Data/Scripts/Items/Technology/PlasmaTorch.cs.
+- SOURCE-BATCH-270 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and final git commit pending.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-270-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-270-plasmatorch-guard-repair-closeout.md.
+- SOURCE-BATCH-271+ requires fresh non-gated candidate discovery after SOURCE-BATCH-270 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-271 Update
+
+- SOURCE-BATCH-271 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-271-candidate-discovery.csv.
+- SOURCE-BATCH-271 implemented the SpaceDyes guard repair in Data/Scripts/Items/Technology/SpaceDyes.cs.
+- SOURCE-BATCH-271 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and final git commit pending.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-271-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-271-spacedyes-guard-repair-closeout.md.
+- SOURCE-BATCH-272+ requires fresh non-gated candidate discovery after SOURCE-BATCH-271 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-272 Update
+
+- SOURCE-BATCH-272 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-272-candidate-discovery.csv.
+- SOURCE-BATCH-272 implemented the Chainsaw guard repair in Data/Scripts/Items/Technology/Chainsaw.cs.
+- SOURCE-BATCH-272 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and final git commit pending.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-272-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-272-chainsaw-guard-repair-closeout.md.
+- SOURCE-BATCH-273+ requires fresh non-gated candidate discovery after SOURCE-BATCH-272 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-273 Update
+
+- SOURCE-BATCH-273 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-273-candidate-discovery.csv.
+- SOURCE-BATCH-273 implemented the PortableSmelter guard repair in Data/Scripts/Items/Technology/PortableSmelter.cs.
+- SOURCE-BATCH-273 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and final git commit pending.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-273-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-273-portablesmelter-guard-repair-closeout.md.
+- SOURCE-BATCH-274+ requires fresh non-gated candidate discovery after SOURCE-BATCH-273 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-274 Update
+
+- SOURCE-BATCH-274 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-274-candidate-discovery.csv.
+- SOURCE-BATCH-274 implemented the ComputerDatabase guard repair in Data/Scripts/Items/Technology/ComputerDatabase.cs.
+- SOURCE-BATCH-274 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and final git commit pending.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-274-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-274-computerdatabase-guard-repair-closeout.md.
+- SOURCE-BATCH-275+ requires fresh non-gated candidate discovery after SOURCE-BATCH-274 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-275 Update
+
+- SOURCE-BATCH-275 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-275-candidate-discovery.csv.
+- SOURCE-BATCH-275 implemented the MaterialLiquifier guard repair in Data/Scripts/Items/Technology/MaterialLiquifier.cs.
+- SOURCE-BATCH-275 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and final git commit pending.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-275-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-275-materialliquifier-guard-repair-closeout.md.
+- SOURCE-BATCH-276+ requires fresh non-gated candidate discovery after SOURCE-BATCH-275 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-276 Update
+
+- SOURCE-BATCH-276 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-276-candidate-discovery.csv.
+- SOURCE-BATCH-276 implemented the BlankMap guard repair in Data/Scripts/Items/Trades/Maps/BlankMap.cs.
+- SOURCE-BATCH-276 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and final git commit pending.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-276-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-276-blankmap-guard-repair-closeout.md.
+- SOURCE-BATCH-277+ requires fresh non-gated candidate discovery after SOURCE-BATCH-276 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-277 Update
+
+- SOURCE-BATCH-277 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-277-candidate-discovery.csv.
+- SOURCE-BATCH-277 implemented the BankChest guard repair in Data/Scripts/Items/Containers/BankChest.cs.
+- SOURCE-BATCH-277 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and final git commit pending.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-277-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-277-bankchest-guard-repair-closeout.md.
+- SOURCE-BATCH-278+ requires fresh non-gated candidate discovery after SOURCE-BATCH-277 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-278 Update
+
+- SOURCE-BATCH-278 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-278-candidate-discovery.csv.
+- SOURCE-BATCH-278 implemented the DDRelicBook guard repair in Data/Scripts/Items/Relics/DDRelicBook.cs.
+- SOURCE-BATCH-278 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and final git commit pending.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-278-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-278-ddrelicbook-guard-repair-closeout.md.
+- SOURCE-BATCH-279+ requires fresh non-gated candidate discovery after SOURCE-BATCH-278 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-279 Update
+
+- SOURCE-BATCH-279 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-279-candidate-discovery.csv.
+- SOURCE-BATCH-279 implemented the DDRelicAlchemy guard repair in Data/Scripts/Items/Relics/DDRelicAlchemy.cs.
+- SOURCE-BATCH-279 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and final git commit pending.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-279-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-279-ddrelicalchemy-guard-repair-closeout.md.
+- SOURCE-BATCH-280+ requires fresh non-gated candidate discovery after SOURCE-BATCH-279 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-280 Update
+
+- SOURCE-BATCH-280 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-280-candidate-discovery.csv.
+- SOURCE-BATCH-280 implemented the SavageTalisman guard repair in Data/Scripts/Items/Magical/SavageTalisman.cs.
+- SOURCE-BATCH-280 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and final git commit pending.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-280-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-280-savagetalisman-guard-repair-closeout.md.
+- SOURCE-BATCH-281+ requires fresh non-gated candidate discovery after SOURCE-BATCH-280 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-281 Update
+
+- SOURCE-BATCH-281 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-281-candidate-discovery.csv.
+- SOURCE-BATCH-281 implemented the FoodChest guard repair in Data/Scripts/Items/Containers/FoodChest.cs.
+- SOURCE-BATCH-281 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and final git commit pending.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-281-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-281-foodchest-guard-repair-closeout.md.
+- SOURCE-BATCH-282+ requires fresh non-gated candidate discovery after SOURCE-BATCH-281 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-282 Update
+
+- SOURCE-BATCH-282 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-282-candidate-discovery.csv.
+- SOURCE-BATCH-282 implemented the HiveTool guard repair in Data/Scripts/Trades/Apiculture/Items/HiveTool.cs.
+- SOURCE-BATCH-282 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and final git commit pending.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-282-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-282-hivetool-guard-repair-closeout.md.
+- SOURCE-BATCH-283+ requires fresh non-gated candidate discovery after SOURCE-BATCH-282 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-283 Update
+
+- SOURCE-BATCH-283 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-283-candidate-discovery.csv.
+- SOURCE-BATCH-283 implemented the SpellScroll guard repair in Data/Scripts/Magic/Magery/Scrolls/SpellScroll.cs.
+- SOURCE-BATCH-283 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and final git commit pending.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-283-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-283-spellscroll-guard-repair-closeout.md.
+- SOURCE-BATCH-284+ requires fresh non-gated candidate discovery after SOURCE-BATCH-283 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-284 Update
+
+- SOURCE-BATCH-284 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-284-candidate-discovery.csv.
+- SOURCE-BATCH-284 implemented the Artifact_AcidProofRobe guard repair in Data/Scripts/Items/Magical/Artifacts/Artifact_AcidProofRobe.cs.
+- SOURCE-BATCH-284 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and final git commit pending.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-284-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-284-artifact-acidproofrobe-guard-repair-closeout.md.
+- SOURCE-BATCH-285+ requires fresh non-gated candidate discovery after SOURCE-BATCH-284 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-285 Update
+
+- SOURCE-BATCH-285 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-285-candidate-discovery.csv.
+- SOURCE-BATCH-285 implemented the obsolete AcidProofRobe guard repair in Data/Scripts/Items/Magical/Artifacts/Obsolete/Obsolete_AcidProofRobe.cs.
+- SOURCE-BATCH-285 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and final git commit pending.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-285-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-285-obsolete-acidproofrobe-guard-repair-closeout.md.
+- SOURCE-BATCH-286+ requires fresh non-gated candidate discovery after SOURCE-BATCH-285 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-286 Update
+
+- SOURCE-BATCH-286 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-286-candidate-discovery.csv.
+- SOURCE-BATCH-286 implemented the FestiveCactus guard repair in Data/Scripts/Items/Gifts/Holiday/Christmas/Christmas Gifts/FestiveCactus.cs.
+- SOURCE-BATCH-286 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and final git commit pending.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-286-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-286-festivecactus-guard-repair-closeout.md.
+- SOURCE-BATCH-287+ requires fresh non-gated candidate discovery after SOURCE-BATCH-286 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-287 Update
+
+- SOURCE-BATCH-287 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-287-candidate-discovery.csv.
+- SOURCE-BATCH-287 implemented the DecorativeTopiary guard repair in Data/Scripts/Items/Gifts/Holiday/Christmas/Christmas Gifts/DecorativeTopiary.cs.
+- SOURCE-BATCH-287 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and final git commit pending.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-287-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-287-decorativetopiary-guard-repair-closeout.md.
+- SOURCE-BATCH-288+ requires fresh non-gated candidate discovery after SOURCE-BATCH-287 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-288 Update
+
+- SOURCE-BATCH-288 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-288-candidate-discovery.csv.
+- SOURCE-BATCH-288 implemented the SnowyTree guard repair in Data/Scripts/Items/Gifts/Holiday/Christmas/Christmas Gifts/SnowyTree.cs.
+- SOURCE-BATCH-288 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and final git commit pending.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-288-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-288-snowytree-guard-repair-closeout.md.
+- SOURCE-BATCH-289+ requires fresh non-gated candidate discovery after SOURCE-BATCH-288 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-289 Update
+
+- SOURCE-BATCH-289 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-289-candidate-discovery.csv.
+- SOURCE-BATCH-289 implemented the Candelabra guard repair in Data/Scripts/Items/Construction/Lights/Candelabra.cs.
+- SOURCE-BATCH-289 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and final git commit pending.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-289-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-289-candelabra-guard-repair-closeout.md.
+- SOURCE-BATCH-290+ requires fresh non-gated candidate discovery after SOURCE-BATCH-289 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-290 Update
+
+- SOURCE-BATCH-290 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-290-candidate-discovery.csv.
+- SOURCE-BATCH-290 implemented the BoltOfCloth guard repair in Data/Scripts/Items/Trades/Resources/Tailor/BoltOfCloth.cs.
+- SOURCE-BATCH-290 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and final git commit pending.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-290-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-290-boltofcloth-guard-repair-closeout.md.
+- SOURCE-BATCH-291+ requires fresh non-gated candidate discovery after SOURCE-BATCH-290 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-291 Update
+
+- SOURCE-BATCH-291 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-291-candidate-discovery.csv.
+- SOURCE-BATCH-291 implemented the UncutCloth guard repair in Data/Scripts/Items/Trades/Resources/Tailor/UncutCloth.cs.
+- SOURCE-BATCH-291 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and final git commit pending.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-291-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-291-uncutcloth-guard-repair-closeout.md.
+- SOURCE-BATCH-292+ requires fresh non-gated candidate discovery after SOURCE-BATCH-291 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-292 Update
+
+- SOURCE-BATCH-292 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-292-candidate-discovery.csv.
+- SOURCE-BATCH-292 implemented the ShipwreckedItem guard repair in Data/Scripts/Items/Trades/Fishing/Misc/ShipwreckedItem.cs.
+- SOURCE-BATCH-292 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and final git commit pending.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-292-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-292-shipwreckeditem-guard-repair-closeout.md.
+- SOURCE-BATCH-293+ requires fresh non-gated candidate discovery after SOURCE-BATCH-292 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-293 Update
+
+- SOURCE-BATCH-293 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-293-candidate-discovery.csv.
+- SOURCE-BATCH-293 implemented the BaseWaterContainer guard repair in Data/Scripts/Items/Special/Rares/Containers/BaseWaterContainer.cs.
+- SOURCE-BATCH-293 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and final git commit pending.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-293-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-293-basewatercontainer-guard-repair-closeout.md.
+- SOURCE-BATCH-294+ requires fresh non-gated candidate discovery after SOURCE-BATCH-293 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-294 Update
+
+- SOURCE-BATCH-294 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-294-candidate-discovery.csv.
+- SOURCE-BATCH-294 implemented the PandorasBox guard repair in Data/Scripts/Items/Magical/Artifacts/Minor/PandorasBox.cs.
+- SOURCE-BATCH-294 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and final git commit pending.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-294-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-294-pandorasbox-guard-repair-closeout.md.
+- SOURCE-BATCH-295+ requires fresh non-gated candidate discovery after SOURCE-BATCH-294 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-295 Update
+
+- SOURCE-BATCH-295 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-295-candidate-discovery.csv.
+- SOURCE-BATCH-295 implemented the EvilSkull guard repair in Data/Scripts/Items/Potions/Special/EvilSkull.cs.
+- SOURCE-BATCH-295 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and final git commit pending.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-295-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-295-evilskull-guard-repair-closeout.md.
+- SOURCE-BATCH-296+ requires fresh non-gated candidate discovery after SOURCE-BATCH-295 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-296 Update
+
+- SOURCE-BATCH-296 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-296-candidate-discovery.csv.
+- SOURCE-BATCH-296 implemented the DragonBardingDeed guard repair in Data/Scripts/Items/Deeds/DragonBardingDeed.cs.
+- SOURCE-BATCH-296 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and final git commit pending.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-296-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-296-dragonbardingdeed-guard-repair-closeout.md.
+- SOURCE-BATCH-297+ requires fresh non-gated candidate discovery after SOURCE-BATCH-296 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-297 Update
+
+- SOURCE-BATCH-297 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-297-candidate-discovery.csv.
+- SOURCE-BATCH-297 implemented the Seed guard repair in Data/Scripts/Trades/Gardening/Seed.cs.
+- SOURCE-BATCH-297 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and final git commit pending.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-297-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-297-seed-guard-repair-closeout.md.
+- SOURCE-BATCH-298+ requires fresh non-gated candidate discovery after SOURCE-BATCH-297 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-298 Update
+
+- SOURCE-BATCH-298 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-298-candidate-discovery.csv.
+- SOURCE-BATCH-298 implemented the RedLeaves guard repair in Data/Scripts/Trades/Gardening/MiscItems/RedLeaves.cs.
+- SOURCE-BATCH-298 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and final git commit pending.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-298-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-298-redleaves-guard-repair-closeout.md.
+- SOURCE-BATCH-299+ requires fresh non-gated candidate discovery after SOURCE-BATCH-298 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-299 Update
+
+- SOURCE-BATCH-299 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-299-candidate-discovery.csv.
+- SOURCE-BATCH-299 implemented the OrangePetals guard repair in Data/Scripts/Trades/Gardening/MiscItems/OrangePetals.cs.
+- SOURCE-BATCH-299 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and final git commit pending.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-299-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-299-orangepetals-guard-repair-closeout.md.
+- SOURCE-BATCH-300+ requires fresh non-gated candidate discovery after SOURCE-BATCH-299 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-300 Update
+
+- SOURCE-BATCH-300 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-300-candidate-discovery.csv.
+- SOURCE-BATCH-300 implemented the LargeBODTarget guard repair in Data/Scripts/Trades/Bulk Orders/LargeBODTarget.cs.
+- SOURCE-BATCH-300 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and final git commit pending.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-300-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-300-largebodtarget-guard-repair-closeout.md.
+- SOURCE-BATCH-301+ requires fresh non-gated candidate discovery after SOURCE-BATCH-300 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-301 Update
+
+- SOURCE-BATCH-301 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-301-candidate-discovery.csv.
+- SOURCE-BATCH-301 implemented the SmallBODTarget guard repair in Data/Scripts/Trades/Bulk Orders/SmallBODTarget.cs.
+- SOURCE-BATCH-301 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and final git commit pending.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-301-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-301-smallbodtarget-guard-repair-closeout.md.
+- SOURCE-BATCH-302+ requires fresh non-gated candidate discovery after SOURCE-BATCH-301 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-302 Update
+
+- SOURCE-BATCH-302 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-302-candidate-discovery.csv.
+- SOURCE-BATCH-302 implemented the DuctTape guard repair in Data/Scripts/Items/Technology/DuctTape.cs.
+- SOURCE-BATCH-302 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and final git commit pending.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-302-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-302-ducttape-guard-repair-closeout.md.
+- SOURCE-BATCH-303+ requires fresh non-gated candidate discovery after SOURCE-BATCH-302 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-303 Update
+
+- SOURCE-BATCH-303 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-303-candidate-discovery.csv.
+- SOURCE-BATCH-303 implemented the RepairPotion guard repair in Data/Scripts/Items/Potions/Special/RepairPotion.cs.
+- SOURCE-BATCH-303 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and final git commit pending.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-303-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-303-repairpotion-guard-repair-closeout.md.
+- SOURCE-BATCH-304+ requires fresh non-gated candidate discovery after SOURCE-BATCH-303 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-304 Update
+
+- SOURCE-BATCH-304 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-304-candidate-discovery.csv.
+- SOURCE-BATCH-304 implemented the DurabilityPotion guard repair in Data/Scripts/Items/Potions/Special/DurabilityPotion.cs.
+- SOURCE-BATCH-304 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and final git commit pending.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-304-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-304-durabilitypotion-guard-repair-closeout.md.
+- SOURCE-BATCH-305+ requires fresh non-gated candidate discovery after SOURCE-BATCH-304 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-305 Update
+
+- SOURCE-BATCH-305 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-305-candidate-discovery.csv.
+- SOURCE-BATCH-305 implemented the PowderOfTemperament guard repair in Data/Scripts/Items/Special/Bulk Order Rewards/Blacksmithy/PowderOfTemperament.cs.
+- SOURCE-BATCH-305 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and final git commit pending.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-305-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-305-powderoftemperament-guard-repair-closeout.md.
+- SOURCE-BATCH-306+ requires fresh non-gated candidate discovery after SOURCE-BATCH-305 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-306 Update
+
+- SOURCE-BATCH-306 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-306-candidate-discovery.csv.
+- SOURCE-BATCH-306 implemented the JarsOfWax guard repair in Data/Scripts/Trades/Apiculture/Craft/JarsOfWax.cs.
+- SOURCE-BATCH-306 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and final git commit pending.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-306-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-306-jarsofwax-guard-repair-closeout.md.
+- SOURCE-BATCH-307+ requires fresh non-gated candidate discovery after SOURCE-BATCH-306 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-307 Update
+
+- SOURCE-BATCH-307 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-307-candidate-discovery.csv.
+- SOURCE-BATCH-307 implemented the WaxSculptors guard repair in Data/Scripts/Trades/Apiculture/Craft/WaxSculptors.cs.
+- SOURCE-BATCH-307 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and final git commit pending.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-307-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-307-waxsculptors-guard-repair-closeout.md.
+- SOURCE-BATCH-308+ requires fresh non-gated candidate discovery after SOURCE-BATCH-307 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-308 Update
+
+- SOURCE-BATCH-308 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-308-candidate-discovery.csv.
+- SOURCE-BATCH-308 implemented the WaxPaintings guard repair in Data/Scripts/Trades/Apiculture/Craft/WaxPaintings.cs.
+- SOURCE-BATCH-308 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and final git commit pending.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-308-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-308-waxpaintings-guard-repair-closeout.md.
+- SOURCE-BATCH-309+ requires fresh non-gated candidate discovery after SOURCE-BATCH-308 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-309 Update
+
+- SOURCE-BATCH-309 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-309-candidate-discovery.csv.
+- SOURCE-BATCH-309 implemented the LargeWaxPot guard repair in Data/Scripts/Trades/Apiculture/Items/LargeWaxPot.cs.
+- SOURCE-BATCH-309 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and final git commit pending.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-309-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-309-largewaxpot-guard-repair-closeout.md.
+- SOURCE-BATCH-310+ requires fresh non-gated candidate discovery after SOURCE-BATCH-309 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-310 Update
+
+- SOURCE-BATCH-310 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-310-candidate-discovery.csv.
+- SOURCE-BATCH-310 implemented the WizardStaff guard repair in Data/Scripts/Items/Weapons/Marksman/WizardStaff.cs.
+- SOURCE-BATCH-310 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and final git commit pending.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-310-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-310-wizardstaff-guard-repair-closeout.md.
+- SOURCE-BATCH-311+ requires fresh non-gated candidate discovery after SOURCE-BATCH-310 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-311 Update
+
+- SOURCE-BATCH-311 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-311-candidate-discovery.csv.
+- SOURCE-BATCH-311 implemented the LevelStave guard repair in Data/Scripts/Items/Magical/God/Weapons/LevelStave.cs.
+- SOURCE-BATCH-311 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and final git commit pending.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-311-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-311-levelstave-guard-repair-closeout.md.
+- SOURCE-BATCH-312+ requires fresh non-gated candidate discovery after SOURCE-BATCH-311 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-312 Update
+
+- SOURCE-BATCH-312 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-312-candidate-discovery.csv.
+- SOURCE-BATCH-312 implemented the GiftStave guard repair in Data/Scripts/Items/Magical/Gifts/Weapons/GiftStave.cs.
+- SOURCE-BATCH-312 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and final git commit pending.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-312-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-312-giftstave-guard-repair-closeout.md.
+- SOURCE-BATCH-313+ requires fresh non-gated candidate discovery after SOURCE-BATCH-312 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-313 Update
+
+- SOURCE-BATCH-313 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-313-candidate-discovery.csv.
+- SOURCE-BATCH-313 implemented the WeaponEngravingTool guard repair in Data/Scripts/Items/Special/Veteran Rewards/WeaponEngravingTool.cs.
+- SOURCE-BATCH-313 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and final git commit pending.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-313-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-313-weaponengravingtool-guard-repair-closeout.md.
+- SOURCE-BATCH-314+ requires fresh non-gated candidate discovery after SOURCE-BATCH-313 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-314 Update
+
+- SOURCE-BATCH-314 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-314-candidate-discovery.csv.
+- SOURCE-BATCH-314 implemented the JukaBow guard repair in Data/Scripts/Items/Weapons/Bows/JukaBow.cs.
+- SOURCE-BATCH-314 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and final git commit pending.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-314-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-314-jukabow-guard-repair-closeout.md.
+- SOURCE-BATCH-315+ requires fresh non-gated candidate discovery after SOURCE-BATCH-314 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-315 Update
+
+- SOURCE-BATCH-315 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-315-candidate-discovery.csv.
+- SOURCE-BATCH-315 implemented the Waterskin guard repair in Data/Scripts/Items/Food/Waterskin.cs.
+- SOURCE-BATCH-315 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and committed as 494a37d3.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-315-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-315-waterskin-guard-repair-closeout.md.
+- SOURCE-BATCH-316+ requires fresh non-gated candidate discovery after SOURCE-BATCH-315 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-316 Update
+
+- SOURCE-BATCH-316 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-316-candidate-discovery.csv.
+- SOURCE-BATCH-316 implemented the DDRelicCoins guard repair in Data/Scripts/Items/Relics/DDRelicCoins.cs.
+- SOURCE-BATCH-316 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and committed as b202b455.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-316-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-316-ddreliccoins-guard-repair-closeout.md.
+- SOURCE-BATCH-317+ requires fresh non-gated candidate discovery after SOURCE-BATCH-316 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-317 Update
+
+- SOURCE-BATCH-317 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-317-candidate-discovery.csv.
+- SOURCE-BATCH-317 implemented the DDRelicWeapon guard repair in Data/Scripts/Items/Relics/DDRelicWeapon.cs.
+- SOURCE-BATCH-317 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and committed as 78a6b165.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-317-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-317-ddrelicweapon-guard-repair-closeout.md.
+- SOURCE-BATCH-318+ requires fresh non-gated candidate discovery after SOURCE-BATCH-317 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-318 Update
+
+- SOURCE-BATCH-318 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-318-candidate-discovery.csv.
+- SOURCE-BATCH-318 implemented the DDRelicArmor guard repair in Data/Scripts/Items/Relics/DDRelicArmor.cs.
+- SOURCE-BATCH-318 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and committed as 90c4a046.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-318-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-318-ddrelicarmor-guard-repair-closeout.md.
+- SOURCE-BATCH-319+ requires fresh non-gated candidate discovery after SOURCE-BATCH-318 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-319 Update
+
+- SOURCE-BATCH-319 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-319-candidate-discovery.csv.
+- SOURCE-BATCH-319 implemented the DDRelicBanner guard repair in Data/Scripts/Items/Relics/DDRelicBanner.cs.
+- SOURCE-BATCH-319 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and committed as 8c4c1792.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-319-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-319-ddrelicbanner-guard-repair-closeout.md.
+- SOURCE-BATCH-320+ requires fresh non-gated candidate discovery after SOURCE-BATCH-319 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-320 Update
+
+- SOURCE-BATCH-320 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-320-candidate-discovery.csv.
+- SOURCE-BATCH-320 implemented the DDRelicInstrument guard repair in Data/Scripts/Items/Relics/DDRelicInstrument.cs.
+- SOURCE-BATCH-320 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and committed as 21c077bd.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-320-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-320-ddrelicinstrument-guard-repair-closeout.md.
+- SOURCE-BATCH-321+ requires fresh non-gated candidate discovery after SOURCE-BATCH-320 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-321 Update
+
+- SOURCE-BATCH-321 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-321-candidate-discovery.csv.
+- SOURCE-BATCH-321 implemented the DDRelicGrave guard repair in Data/Scripts/Items/Relics/DDRelicGrave.cs.
+- SOURCE-BATCH-321 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and committed as dca9f2b7.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-321-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-321-ddrelicgrave-guard-repair-closeout.md.
+- SOURCE-BATCH-322+ requires fresh non-gated candidate discovery after SOURCE-BATCH-321 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-322 Update
+
+- SOURCE-BATCH-322 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-322-candidate-discovery.csv.
+- SOURCE-BATCH-322 implemented the DDRelicPainting guard repair in Data/Scripts/Items/Relics/DDRelicPainting.cs.
+- SOURCE-BATCH-322 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and committed as fab7862d.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-322-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-322-ddrelicpainting-guard-repair-closeout.md.
+- SOURCE-BATCH-323+ requires fresh non-gated candidate discovery after SOURCE-BATCH-322 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-323 Update
+
+- SOURCE-BATCH-323 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-323-candidate-discovery.csv.
+- SOURCE-BATCH-323 implemented the DDRelicStatue guard repair in Data/Scripts/Items/Relics/DDRelicStatue.cs.
+- SOURCE-BATCH-323 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and committed as 8039adf2.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-323-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-323-ddrelicstatue-guard-repair-closeout.md.
+- SOURCE-BATCH-324+ requires fresh non-gated candidate discovery after SOURCE-BATCH-323 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-324 Update
+
+- SOURCE-BATCH-324 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-324-candidate-discovery.csv.
+- SOURCE-BATCH-324 implemented the Bola guard repair in Data/Scripts/Items/Misc/Bola.cs.
+- SOURCE-BATCH-324 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and committed as c9ae6688.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-324-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-324-bola-guard-repair-closeout.md.
+- SOURCE-BATCH-325+ requires fresh non-gated candidate discovery after SOURCE-BATCH-324 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-325 Update
+
+- SOURCE-BATCH-325 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-325-candidate-discovery.csv.
+- SOURCE-BATCH-325 implemented the BaseLiquid guard repair in Data/Scripts/Items/Potions/Mixtures/BaseLiquid.cs.
+- SOURCE-BATCH-325 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and committed as 8e2ec5b8.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-325-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-325-baseliquid-guard-repair-closeout.md.
+- SOURCE-BATCH-326+ requires fresh non-gated candidate discovery after SOURCE-BATCH-325 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-326 Update
+
+- SOURCE-BATCH-326 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-326-candidate-discovery.csv.
+- SOURCE-BATCH-326 implemented the BaseMixture guard repair in Data/Scripts/Items/Potions/Mixtures/BaseMixture.cs.
+- SOURCE-BATCH-326 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and committed as 765f51bb.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-326-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-326-basemixture-guard-repair-closeout.md.
+- SOURCE-BATCH-327+ requires fresh non-gated candidate discovery after SOURCE-BATCH-326 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-327 Update
+
+- SOURCE-BATCH-327 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-327-candidate-discovery.csv.
+- SOURCE-BATCH-327 implemented the BasePoisonPotion guard repair in Data/Scripts/Items/Potions/Standard/Poison Potions/BasePoisonPotion.cs.
+- SOURCE-BATCH-327 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and committed as 3abdaabc.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-327-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-327-basepoisonpotion-guard-repair-closeout.md.
+- SOURCE-BATCH-328+ requires fresh non-gated candidate discovery after SOURCE-BATCH-327 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-328 Update
+
+- SOURCE-BATCH-328 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-328-candidate-discovery.csv.
+- SOURCE-BATCH-328 implemented the HorseArmor guard repair in Data/Scripts/Items/Armor/HorseArmor.cs.
+- SOURCE-BATCH-328 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and committed as 0f18143c.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-328-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-328-horsearmor-guard-repair-closeout.md.
+- SOURCE-BATCH-329+ requires fresh non-gated candidate discovery after SOURCE-BATCH-328 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-329 Update
+
+- SOURCE-BATCH-329 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-329-candidate-discovery.csv.
+- SOURCE-BATCH-329 implemented the GrapplingHook guard repair in Data/Scripts/Items/Boats/GrapplingHook.cs.
+- SOURCE-BATCH-329 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and committed as f25b1252.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-329-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-329-grapplinghook-guard-repair-closeout.md.
+- SOURCE-BATCH-330+ requires fresh non-gated candidate discovery after SOURCE-BATCH-329 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-330 Update
+
+- SOURCE-BATCH-330 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-330-candidate-discovery.csv.
+- SOURCE-BATCH-330 implemented the BoatStain guard repair in Data/Scripts/Items/Boats/BoatStain.cs.
+- SOURCE-BATCH-330 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and committed as 50f2afcf.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-330-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-330-boatstain-guard-repair-closeout.md.
+- SOURCE-BATCH-331+ requires fresh non-gated candidate discovery after SOURCE-BATCH-330 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-331 Update
+
+- SOURCE-BATCH-331 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-331-candidate-discovery.csv.
+- SOURCE-BATCH-331 implemented the RobotBatteries guard repair in Data/Scripts/Quests/Robots/RobotBatteries.cs.
+- SOURCE-BATCH-331 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and committed as 9c2ecd5a.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-331-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-331-robotbatteries-guard-repair-closeout.md.
+- SOURCE-BATCH-332+ requires fresh non-gated candidate discovery after SOURCE-BATCH-331 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-332 Update
+
+- SOURCE-BATCH-332 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-332-candidate-discovery.csv.
+- SOURCE-BATCH-332 implemented the EmbalmingFluid guard repair in Data/Scripts/Quests/Frankenstein/EmbalmingFluid.cs.
+- SOURCE-BATCH-332 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and committed as 6f7a9f34.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-332-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-332-embalmingfluid-guard-repair-closeout.md.
+- SOURCE-BATCH-333+ requires fresh non-gated candidate discovery after SOURCE-BATCH-332 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-333 Update
+
+- SOURCE-BATCH-333 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-333-candidate-discovery.csv.
+- SOURCE-BATCH-333 implemented the SlaversNet guard repair in Data/Scripts/Items/Special/SlaversNet.cs.
+- SOURCE-BATCH-333 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and committed as f0086cb5.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-333-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-333-slaversnet-guard-repair-closeout.md.
+- SOURCE-BATCH-334+ requires fresh non-gated candidate discovery after SOURCE-BATCH-333 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-334 Update
+
+- SOURCE-BATCH-334 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-334-candidate-discovery.csv.
+- SOURCE-BATCH-334 implemented the RobotSheetMetal guard repair in Data/Scripts/Quests/Robots/RobotSheetMetal.cs.
+- SOURCE-BATCH-334 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and committed as 5de419df.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-334-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-334-robotsheetmetal-guard-repair-closeout.md.
+- SOURCE-BATCH-335+ requires fresh non-gated candidate discovery after SOURCE-BATCH-334 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-335 Update
+
+- SOURCE-BATCH-335 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-335-candidate-discovery.csv.
+- SOURCE-BATCH-335 implemented the RustyJunk guard repair in Data/Scripts/Items/Trades/Fishing/RustyJunk.cs.
+- SOURCE-BATCH-335 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and committed as ea17703e.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-335-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-335-rustyjunk-guard-repair-closeout.md.
+- SOURCE-BATCH-336+ requires fresh non-gated candidate discovery after SOURCE-BATCH-335 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-336 Update
+
+- SOURCE-BATCH-336 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-336-candidate-discovery.csv.
+- SOURCE-BATCH-336 implemented the HolidayFoods guard repair in Data/Scripts/Items/Special/Holiday/HolidayFoods.cs.
+- SOURCE-BATCH-336 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and committed as f025916b.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-336-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-336-holidayfoods-guard-repair-closeout.md.
+- SOURCE-BATCH-337+ requires fresh non-gated candidate discovery after SOURCE-BATCH-336 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-337 Update
+
+- SOURCE-BATCH-337 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-337-candidate-discovery.csv.
+- SOURCE-BATCH-337 implemented the ShepherdsCrook guard repair in Data/Scripts/Items/Weapons/Staves/ShepherdsCrook.cs.
+- SOURCE-BATCH-337 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and committed as 28480965.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-337-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-337-shepherdscrook-guard-repair-closeout.md.
+- SOURCE-BATCH-338+ requires fresh non-gated candidate discovery after SOURCE-BATCH-337 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-338 Update
+
+- SOURCE-BATCH-338 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-338-candidate-discovery.csv.
+- SOURCE-BATCH-338 implemented the LevelShepherdsCrook guard repair in Data/Scripts/Items/Magical/God/Weapons/Staves/LevelShepherdsCrook.cs.
+- SOURCE-BATCH-338 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and committed as 93d639ab.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-338-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-338-levelshepherdscrook-guard-repair-closeout.md.
+- SOURCE-BATCH-339+ requires fresh non-gated candidate discovery after SOURCE-BATCH-338 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-339 Update
+
+- SOURCE-BATCH-339 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-339-candidate-discovery.csv.
+- SOURCE-BATCH-339 implemented the BottleOil guard repair in Data/Scripts/Quests/Golems/BottleOil.cs.
+- SOURCE-BATCH-339 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and committed as bdbcd137.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-339-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-339-bottleoil-guard-repair-closeout.md.
+- SOURCE-BATCH-340+ requires fresh non-gated candidate discovery after SOURCE-BATCH-339 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-340 Update
+
+- SOURCE-BATCH-340 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-340-candidate-discovery.csv.
+- SOURCE-BATCH-340 implemented the RuneStoneGate guard repair in Data/Scripts/Quests/Underworld/RuneStoneGate.cs.
+- SOURCE-BATCH-340 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and committed as dd20c825.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-340-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-340-runestonegate-guard-repair-closeout.md.
+- SOURCE-BATCH-341+ requires fresh non-gated candidate discovery after SOURCE-BATCH-340 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-341 Update
+
+- SOURCE-BATCH-341 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-341-candidate-discovery.csv.
+- SOURCE-BATCH-341 implemented the JokeBook guard repair in Data/Scripts/Quests/Jester/JokeBook.cs.
+- SOURCE-BATCH-341 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and committed as fc6efb6f.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-341-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-341-jokebook-guard-repair-closeout.md.
+- SOURCE-BATCH-342+ requires fresh non-gated candidate discovery after SOURCE-BATCH-341 is committed.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-342 Update
+
+- SOURCE-BATCH-342 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-342-candidate-discovery.csv.
+- SOURCE-BATCH-342 implemented the LanternOfDiscipline guard repair in Data/Scripts/Quests/Serpents/LanternOfDiscipline.cs.
+- SOURCE-BATCH-342 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and committed as a87b4f25.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-342-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-342-lanternofdiscipline-guard-repair-closeout.md.
+- SOURCE-BATCH-343+ should continue with the next deferred sibling candidate from source-batch-342-candidate-discovery.csv or run fresh discovery if that queue is exhausted.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-343 Update
+
+- SOURCE-BATCH-343 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-343-candidate-discovery.csv.
+- SOURCE-BATCH-343 implemented the OrbOfLogic guard repair in Data/Scripts/Quests/Serpents/OrbOfLogic.cs.
+- SOURCE-BATCH-343 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and committed as af555889.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-343-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-343-orboflogic-guard-repair-closeout.md.
+- SOURCE-BATCH-344+ should continue with the next deferred sibling candidate from source-batch-343-candidate-discovery.csv or run fresh discovery if that queue is exhausted.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-344 Update
+
+- SOURCE-BATCH-344 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-344-candidate-discovery.csv.
+- SOURCE-BATCH-344 implemented the ScalesOfEthicality guard repair in Data/Scripts/Quests/Serpents/ScalesOfEthicality.cs.
+- SOURCE-BATCH-344 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and committed as 145facd9.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-344-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-344-scalesofethicality-guard-repair-closeout.md.
+- SOURCE-BATCH-345+ should continue with the next deferred sibling candidate from source-batch-344-candidate-discovery.csv or run fresh discovery if that queue is exhausted.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-345 Update
+
+- SOURCE-BATCH-345 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-345-candidate-discovery.csv.
+- SOURCE-BATCH-345 implemented the BookOfTruth guard repair in Data/Scripts/Quests/Shadowlords/BookOfTruth.cs.
+- SOURCE-BATCH-345 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and committed as c6d8aeee.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-345-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-345-bookoftruth-guard-repair-closeout.md.
+- SOURCE-BATCH-346+ should continue with the next deferred sibling candidate from source-batch-345-candidate-discovery.csv or run fresh discovery if that queue is exhausted.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-346 Update
+
+- SOURCE-BATCH-346 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-346-candidate-discovery.csv.
+- SOURCE-BATCH-346 implemented the CandleOfLove guard repair in Data/Scripts/Quests/Shadowlords/CandleOfLove.cs.
+- SOURCE-BATCH-346 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and committed as 359d6b2e.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-346-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-346-candleoflove-guard-repair-closeout.md.
+- SOURCE-BATCH-347+ should continue with the next deferred sibling candidate from source-batch-346-candidate-discovery.csv or run fresh discovery if that queue is exhausted.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-347 Update
+
+- SOURCE-BATCH-347 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-347-candidate-discovery.csv.
+- SOURCE-BATCH-347 implemented the BellOfCourage guard repair in Data/Scripts/Quests/Shadowlords/BellOfCourage.cs.
+- SOURCE-BATCH-347 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and committed as def0aa20.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-347-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-347-bellofcourage-guard-repair-closeout.md.
+- SOURCE-BATCH-348+ should continue with the next deferred sibling candidate from source-batch-347-candidate-discovery.csv or run fresh discovery if that queue is exhausted.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-348 Update
+
+- SOURCE-BATCH-348 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-348-candidate-discovery.csv.
+- SOURCE-BATCH-348 implemented the ShardOfHatred guard repair in Data/Scripts/Quests/Shadowlords/ShardOfHatred.cs.
+- SOURCE-BATCH-348 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and committed as 7458628b.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-348-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-348-shardofhatred-guard-repair-closeout.md.
+- SOURCE-BATCH-349+ should continue with the next deferred sibling candidate from source-batch-348-candidate-discovery.csv or run fresh discovery if that queue is exhausted.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-349 Update
+
+- SOURCE-BATCH-349 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-349-candidate-discovery.csv.
+- SOURCE-BATCH-349 implemented the ShardOfFalsehood guard repair in Data/Scripts/Quests/Shadowlords/ShardOfFalsehood.cs.
+- SOURCE-BATCH-349 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and committed as 9b2e2495.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-349-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-349-shardoffalsehood-guard-repair-closeout.md.
+- SOURCE-BATCH-350+ should continue with the next deferred sibling candidate from source-batch-349-candidate-discovery.csv or run fresh discovery if that queue is exhausted.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-350 Update
+
+- SOURCE-BATCH-350 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-350-candidate-discovery.csv.
+- SOURCE-BATCH-350 implemented the ShardOfCowardice guard repair in Data/Scripts/Quests/Shadowlords/ShardOfCowardice.cs.
+- SOURCE-BATCH-350 is now closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and committed as a6777fbe.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-350-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-350-shardofcowardice-guard-repair-closeout.md.
+- SOURCE-BATCH-351+ should run fresh candidate discovery because the deferred sibling queue is exhausted.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-351 Update
+
+- SOURCE-BATCH-351 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-351-candidate-discovery.csv.
+- SOURCE-BATCH-351 implemented the HighSeasRelic guard repair in Data/Scripts/Items/Trades/Fishing/HighSeasRelic.cs.
+- SOURCE-BATCH-351 is closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and committed as 7eaca282.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-351-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-351-highseasrelic-guard-repair-closeout.md.
+- SOURCE-BATCH-352+ should run fresh candidate discovery next.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-352 Update
+
+- SOURCE-BATCH-352 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-352-candidate-discovery.csv.
+- SOURCE-BATCH-352 implemented the SpecialSeaweed guard repair in Data/Scripts/Items/Trades/Fishing/SpecialSeaweed.cs.
+- SOURCE-BATCH-352 is closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and committed as d0db52d7.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-352-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-352-specialseaweed-guard-repair-closeout.md.
+- SOURCE-BATCH-353+ should run fresh candidate discovery next.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-353 Update
+
+- SOURCE-BATCH-353 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-353-candidate-discovery.csv.
+- SOURCE-BATCH-353 implemented the ObeliskTip guard repair in Data/Scripts/Quests/Pagan/ObeliskTip.cs.
+- SOURCE-BATCH-353 is closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and committed as 592406df.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-353-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-353-obelisktip-guard-repair-closeout.md.
+- SOURCE-BATCH-354+ should run fresh candidate discovery next.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-354 Update
+
+- SOURCE-BATCH-354 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-354-candidate-discovery.csv.
+- SOURCE-BATCH-354 implemented the MuseumBook guard repair in Data/Scripts/Quests/Museum/MuseumBook.cs.
+- SOURCE-BATCH-354 is closed in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv with verification passed and committed as 464c8bf3.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-354-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-354-museumbook-guard-repair-closeout.md.
+- SOURCE-BATCH-355+ should run fresh candidate discovery next.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-355 Update
+
+- SOURCE-BATCH-355 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-355-candidate-discovery.csv.
+- SOURCE-BATCH-355 implemented the ThiefNote guard repair in Data/Scripts/Quests/Thief/ThiefNote.cs.
+- SOURCE-BATCH-355 is closed with commit `8b73bee4` recorded in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv; verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-355-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-355-thiefnote-guard-repair-closeout.md.
+- SOURCE-BATCH-356+ should run fresh candidate discovery after SOURCE-BATCH-355.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-356 Update
+
+- SOURCE-BATCH-356 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-356-candidate-discovery.csv.
+- SOURCE-BATCH-356 implemented the FrankenJournalInBox guard repair in Data/Scripts/Quests/Frankenstein/FrankenJournalInBox.cs.
+- SOURCE-BATCH-356 is closed with commit `6694a9a3` recorded in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv; verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-356-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-356-frankenjournalinbox-guard-repair-closeout.md.
+- SOURCE-BATCH-357+ should run fresh candidate discovery after SOURCE-BATCH-356.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-357 Update
+
+- SOURCE-BATCH-357 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-357-candidate-discovery.csv.
+- SOURCE-BATCH-357 implemented the ObeliskOnCorpse guard repair in Data/Scripts/Quests/Pagan/ObeliskOnCorpse.cs.
+- SOURCE-BATCH-357 is closed with commit `0a6c9819` recorded in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv; verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-357-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-357-obeliskoncorpse-guard-repair-closeout.md.
+- SOURCE-BATCH-358+ should run fresh candidate discovery after SOURCE-BATCH-357.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-358 Update
+
+- SOURCE-BATCH-358 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-358-candidate-discovery.csv.
+- SOURCE-BATCH-358 implemented the SerpentSpawners guard repair in Data/Scripts/Quests/Serpents/SerpentSpawners.cs.
+- SOURCE-BATCH-358 is closed with commit `b4e4a92b` recorded in docs/codebase-audit/outputs/source-batch-controller-roadmap-status.csv; verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-358-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-358-serpentspawners-guard-repair-closeout.md.
+- SOURCE-BATCH-359+ should run fresh candidate discovery after SOURCE-BATCH-358.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-359 Update
+
+- SOURCE-BATCH-359 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-359-candidate-discovery.csv.
+- SOURCE-BATCH-359 implemented the Museums guard repair in Data/Scripts/Quests/Museum/Museum.cs.
+- SOURCE-BATCH-359 is closed as commit 1f11e738 with verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-359-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-359-museums-guard-repair-closeout.md.
+- SOURCE-BATCH-360+ should run fresh candidate discovery after SOURCE-BATCH-359.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-360 Update
+
+- SOURCE-BATCH-360 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-360-candidate-discovery.csv.
+- SOURCE-BATCH-360 implemented the QuestChests guard repair in Data/Scripts/Quests/QuestChests.cs.
+- SOURCE-BATCH-360 is closed as commit 2087cb74 with verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-360-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-360-questchests-guard-repair-closeout.md.
+- SOURCE-BATCH-361+ should run fresh candidate discovery after SOURCE-BATCH-360.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-361 Update
+
+- SOURCE-BATCH-361 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-361-candidate-discovery.csv.
+- SOURCE-BATCH-361 implemented the PaganArtifact guard repair in Data/Scripts/Quests/Pagan/PaganArtifact.cs.
+- SOURCE-BATCH-361 is closed as commit 1335213b with verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-361-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-361-paganartifact-guard-repair-closeout.md.
+- SOURCE-BATCH-362+ should run fresh candidate discovery after SOURCE-BATCH-361.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-362 Update
+
+- SOURCE-BATCH-362 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-362-candidate-discovery.csv.
+- SOURCE-BATCH-362 implemented the SearchBook guard repair in Data/Scripts/Quests/Search/SearchBook.cs.
+- SOURCE-BATCH-362 is closed as commit afd987f0 with verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-362-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-362-searchbook-guard-repair-closeout.md.
+- SOURCE-BATCH-363+ should run fresh candidate discovery after SOURCE-BATCH-362.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-363 Update
+
+- SOURCE-BATCH-363 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-363-candidate-discovery.csv.
+- SOURCE-BATCH-363 implemented the Prisoner guard repair in Data/Scripts/Quests/Prisoners/Prisoner.cs.
+- SOURCE-BATCH-363 is closed as commit 5af0a66a with verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-363-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-363-prisoner-guard-repair-closeout.md.
+- SOURCE-BATCH-364+ should run fresh candidate discovery after SOURCE-BATCH-363.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-364 Update
+
+- SOURCE-BATCH-364 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-364-candidate-discovery.csv.
+- SOURCE-BATCH-364 implemented the RobotSchematics guard repair in Data/Scripts/Quests/Robots/RobotSchematics.cs.
+- SOURCE-BATCH-364 is closed as commit 8b0812d9 with verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-364-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-364-robotschematics-guard-repair-closeout.md.
+- SOURCE-BATCH-365+ should run fresh candidate discovery after SOURCE-BATCH-364.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-365 Update
+
+- SOURCE-BATCH-365 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-365-candidate-discovery.csv.
+- SOURCE-BATCH-365 implemented the DDRelicArts guard repair in Data/Scripts/Items/Relics/DDRelicArts.cs.
+- SOURCE-BATCH-365 is closed as commit 23febd1b with verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-365-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-365-ddrelicarts-guard-repair-closeout.md.
+- SOURCE-BATCH-366+ should run fresh candidate discovery after SOURCE-BATCH-365.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-366 Update
+
+- SOURCE-BATCH-366 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-366-candidate-discovery.csv.
+- SOURCE-BATCH-366 implemented the DDRelicCloth guard repair in Data/Scripts/Items/Relics/DDRelicCloth.cs.
+- SOURCE-BATCH-366 is closed as commit f4fd5b15 with verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-366-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-366-ddreliccloth-guard-repair-closeout.md.
+- SOURCE-BATCH-367+ should run fresh candidate discovery after SOURCE-BATCH-366.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-367 Update
+
+- SOURCE-BATCH-367 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-367-candidate-discovery.csv.
+- SOURCE-BATCH-367 implemented the DDRelicFur guard repair in Data/Scripts/Items/Relics/DDRelicFur.cs.
+- SOURCE-BATCH-367 is closed as commit c0808dc9 with verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-367-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-367-ddrelicfur-guard-repair-closeout.md.
+- SOURCE-BATCH-368+ should run fresh candidate discovery after SOURCE-BATCH-367.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-368 Update
+
+- SOURCE-BATCH-368 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-368-candidate-discovery.csv.
+- SOURCE-BATCH-368 implemented the DDRelicGem guard repair in Data/Scripts/Items/Relics/DDRelicGem.cs.
+- SOURCE-BATCH-368 is closed as commit 7311db5b with verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-368-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-368-ddrelicgem-guard-repair-closeout.md.
+- SOURCE-BATCH-369+ should run fresh candidate discovery after SOURCE-BATCH-368.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-369 Update
+
+- SOURCE-BATCH-369 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-369-candidate-discovery.csv.
+- SOURCE-BATCH-369 implemented the DDRelicJewels guard repair in Data/Scripts/Items/Relics/DDRelicJewels.cs.
+- SOURCE-BATCH-369 is closed as commit bc5bd604 with verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-369-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-369-ddrelicjewels-guard-repair-closeout.md.
+- SOURCE-BATCH-370+ should run fresh candidate discovery after SOURCE-BATCH-369.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-370 Update
+
+- SOURCE-BATCH-370 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-370-candidate-discovery.csv.
+- SOURCE-BATCH-370 implemented the DDRelicLeather guard repair in Data/Scripts/Items/Relics/DDRelicLeather.cs.
+- SOURCE-BATCH-370 is closed as commit 44e42eaa with verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-370-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-370-ddrelicleather-guard-repair-closeout.md.
+- SOURCE-BATCH-371+ should run fresh candidate discovery after SOURCE-BATCH-370.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-371 Update
+
+- SOURCE-BATCH-371 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-371-candidate-discovery.csv.
+- SOURCE-BATCH-371 implemented the DDRelicLight guard repair in Data/Scripts/Items/Relics/DDRelicLight.cs.
+- SOURCE-BATCH-371 is closed as commit aee0d8fd with verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-371-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-371-ddreliclight-guard-repair-closeout.md.
+- SOURCE-BATCH-372+ should run fresh candidate discovery after SOURCE-BATCH-371.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-372 Update
+
+- SOURCE-BATCH-372 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-372-candidate-discovery.csv.
+- SOURCE-BATCH-372 implemented the DDRelicReagent guard repair in Data/Scripts/Items/Relics/DDRelicReagent.cs.
+- SOURCE-BATCH-372 is closed as commit 007752df with verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-372-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-372-ddrelicreagent-guard-repair-closeout.md.
+- SOURCE-BATCH-373+ should run fresh candidate discovery after SOURCE-BATCH-372.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-373 Update
+
+- SOURCE-BATCH-373 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-373-candidate-discovery.csv.
+- SOURCE-BATCH-373 implemented the DDRelicScrolls guard repair in Data/Scripts/Items/Relics/DDRelicScrolls.cs.
+- SOURCE-BATCH-373 is closed as commit 585f5549 with verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-373-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-373-ddrelicscrolls-guard-repair-closeout.md.
+- SOURCE-BATCH-374+ should run fresh candidate discovery after SOURCE-BATCH-373.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-374 Update
+
+- SOURCE-BATCH-374 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-374-candidate-discovery.csv.
+- SOURCE-BATCH-374 implemented the DDRelicVase guard repair in Data/Scripts/Items/Relics/DDRelicVase.cs.
+- SOURCE-BATCH-374 is closed as commit cd8dff70 with verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-374-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-374-ddrelicvase-guard-repair-closeout.md.
+- SOURCE-BATCH-375+ should run fresh candidate discovery after SOURCE-BATCH-374.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-375 Update
+
+- SOURCE-BATCH-375 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-375-candidate-discovery.csv.
+- SOURCE-BATCH-375 implemented the DDRelicTablet guard repair in Data/Scripts/Items/Relics/DDRelicTablet.cs.
+- SOURCE-BATCH-375 is closed as commit 71e21682 with verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-375-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-375-ddrelictablet-guard-repair-closeout.md.
+- SOURCE-BATCH-376+ should run fresh candidate discovery after SOURCE-BATCH-375.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-376 Update
+
+- SOURCE-BATCH-376 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-376-candidate-discovery.csv.
+- SOURCE-BATCH-376 implemented the DDRelicDrink guard repair in Data/Scripts/Items/Relics/DDRelicDrink.cs.
+- SOURCE-BATCH-376 is closed as commit 3d461f9d with verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-376-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-376-ddrelicdrink-guard-repair-closeout.md.
+- SOURCE-BATCH-377+ should run fresh candidate discovery after SOURCE-BATCH-376.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-377 Update
+
+- SOURCE-BATCH-377 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-377-candidate-discovery.csv.
+- SOURCE-BATCH-377 implemented the DDRelicOrbs guard repair in Data/Scripts/Items/Relics/DDRelicOrbs.cs.
+- SOURCE-BATCH-377 is closed as commit cf6726e0 with verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-377-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-377-ddrelicorbs-guard-repair-closeout.md.
+- SOURCE-BATCH-378+ should run fresh candidate discovery after SOURCE-BATCH-377.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-378 Update
+
+- SOURCE-BATCH-378 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-378-candidate-discovery.csv.
+- SOURCE-BATCH-378 implemented the DoorStuck guard repair in Data/Scripts/Items/Doors/DoorStuck.cs.
+- SOURCE-BATCH-378 is closed as commit 03a05bc1 with verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-378-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-378-doorstuck-guard-repair-closeout.md.
+- SOURCE-BATCH-379+ should run fresh candidate discovery after SOURCE-BATCH-378.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-379 Update
+
+- SOURCE-BATCH-379 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-379-candidate-discovery.csv.
+- SOURCE-BATCH-379 implemented the GypsyShelf guard repair in Data/Scripts/Items/Containers/GypsyShelf.cs.
+- SOURCE-BATCH-379 is closed as commit b59794bf with verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-379-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-379-gypsyshelf-guard-repair-closeout.md.
+- SOURCE-BATCH-380+ should run fresh candidate discovery after SOURCE-BATCH-379.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-380 Update
+
+- SOURCE-BATCH-380 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-380-candidate-discovery.csv.
+- SOURCE-BATCH-380 implemented the Safe guard repair in Data/Scripts/Items/Containers/Safe.cs.
+- SOURCE-BATCH-380 is closed as commit e970df96 with verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-380-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-380-safe-guard-repair-closeout.md.
+- SOURCE-BATCH-381+ should run fresh candidate discovery after SOURCE-BATCH-380.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-381 Update
+
+- SOURCE-BATCH-381 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-381-candidate-discovery.csv.
+- SOURCE-BATCH-381 implemented the DoomFlayerNote guard repair in Data/Scripts/Items/Books/DoomFlayerNote.cs.
+- SOURCE-BATCH-381 is closed as commit 514c8bdb with verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-381-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-381-doomflayernote-guard-repair-closeout.md.
+- SOURCE-BATCH-382+ should run fresh candidate discovery after SOURCE-BATCH-381.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-382 Update
+
+- SOURCE-BATCH-382 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-382-candidate-discovery.csv.
+- SOURCE-BATCH-382 implemented the BardsTaleNote guard repair in Data/Scripts/Items/Books/BardsTaleNote.cs.
+- SOURCE-BATCH-382 is closed as commit e35abb78 with verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-382-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-382-bardstalenote-guard-repair-closeout.md.
+- SOURCE-BATCH-383+ should run fresh candidate discovery after SOURCE-BATCH-382.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-383 Update
+
+- SOURCE-BATCH-383 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-383-candidate-discovery.csv.
+- SOURCE-BATCH-383 implemented the AssassinNote guard repair in Data/Scripts/Items/Books/BulletinBoards/AssassinNote.cs.
+- SOURCE-BATCH-383 is closed as commit a1df70a0 with verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-383-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-383-assassinnote-guard-repair-closeout.md.
+- SOURCE-BATCH-384+ should run fresh candidate discovery after SOURCE-BATCH-383.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-384 Update
+
+- SOURCE-BATCH-384 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-384-candidate-discovery.csv.
+- SOURCE-BATCH-384 implemented the GuardNote guard repair in Data/Scripts/Items/Books/BulletinBoards/GuardNote.cs.
+- SOURCE-BATCH-384 is closed as commit 7fd55c7b with verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-384-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-384-guardnote-guard-repair-closeout.md.
+- SOURCE-BATCH-385+ should run fresh candidate discovery after SOURCE-BATCH-384.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-385 Update
+
+- SOURCE-BATCH-385 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-385-candidate-discovery.csv.
+- SOURCE-BATCH-385 implemented the StatusBoard guard repair in Data/Scripts/Items/Books/BulletinBoards/StatusBoard.cs.
+- SOURCE-BATCH-385 is closed as commit def3fe0e with verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-385-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-385-statusboard-guard-repair-closeout.md.
+- SOURCE-BATCH-386+ should run fresh candidate discovery after SOURCE-BATCH-385.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-386 Update
+
+- SOURCE-BATCH-386 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-386-candidate-discovery.csv.
+- SOURCE-BATCH-386 implemented the Clock guard repair in Data/Scripts/Items/Trades/Tinkering/Clocks.cs.
+- SOURCE-BATCH-386 is closed as commit 2aa0c17e with verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-386-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-386-clock-guard-repair-closeout.md.
+- SOURCE-BATCH-387+ should run fresh candidate discovery after SOURCE-BATCH-386.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-387 Update
+
+- SOURCE-BATCH-387 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-387-candidate-discovery.csv.
+- SOURCE-BATCH-387 implemented the MedicalRecord guard repair in Data/Scripts/Items/Technology/MedicalRecord.cs.
+- SOURCE-BATCH-387 is closed as commit 164d39cf with verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-387-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-387-medicalrecord-guard-repair-closeout.md.
+- SOURCE-BATCH-388+ should run fresh candidate discovery after SOURCE-BATCH-387.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-388 Update
+
+- SOURCE-BATCH-388 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-388-candidate-discovery.csv.
+- SOURCE-BATCH-388 implemented the WetClothes guard repair in Data/Scripts/Items/Trades/Fishing/WetClothes.cs.
+- SOURCE-BATCH-388 is closed as commit aa8ab2f1 with verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-388-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-388-wetclothes-guard-repair-closeout.md.
+- SOURCE-BATCH-389+ should run fresh candidate discovery after SOURCE-BATCH-388.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-389 Update
+
+- SOURCE-BATCH-389 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-389-candidate-discovery.csv.
+- SOURCE-BATCH-389 implemented the HalloweenMaiden guard repair in Data/Scripts/Items/Gifts/Holiday/Halloween/Rewards/HalloweenMaiden.cs.
+- SOURCE-BATCH-389 is closed as commit 15e86646 with verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-389-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-389-halloweenmaiden-guard-repair-closeout.md.
+- SOURCE-BATCH-390+ should run fresh candidate discovery after SOURCE-BATCH-389.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-390 Update
+
+- SOURCE-BATCH-390 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-390-candidate-discovery.csv.
+- SOURCE-BATCH-390 implemented the ChocolateMonster guard repair in Data/Scripts/Items/Gifts/Holiday/Halloween/HalloweenBag.cs.
+- SOURCE-BATCH-390 is closed as commit 1f95e98b with verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-390-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-390-chocolatemonster-guard-repair-closeout.md.
+- SOURCE-BATCH-391+ should run fresh candidate discovery after SOURCE-BATCH-390.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-391 Update
+
+- SOURCE-BATCH-391 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-391-candidate-discovery.csv.
+- SOURCE-BATCH-391 implemented the LiarsDice guard repair in Data/Scripts/Items/Misc/Games/LiarsDice/LiarsDice.cs.
+- SOURCE-BATCH-391 is closed as commit e257619d with verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-391-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-391-liarsdice-guard-repair-closeout.md.
+- SOURCE-BATCH-392+ should run fresh candidate discovery after SOURCE-BATCH-391.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-392 Update
+
+- SOURCE-BATCH-392 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-392-candidate-discovery.csv.
+- SOURCE-BATCH-392 implemented the MahjongGame guard repair in Data/Scripts/Items/Misc/Games/Mahjong/MahjongGame.cs.
+- SOURCE-BATCH-392 is closed as commit 4059e74b with verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-392-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-392-mahjonggame-guard-repair-closeout.md.
+- SOURCE-BATCH-393+ should run fresh candidate discovery after SOURCE-BATCH-392.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-393 Update
+
+- SOURCE-BATCH-393 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-393-candidate-discovery.csv.
+- SOURCE-BATCH-393 implemented the PlayersHandbook guard repair in Data/Scripts/Items/Misc/Games/DandD/PlayersHandbook.cs.
+- SOURCE-BATCH-393 is closed as commit 3e87c803 with verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-393-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-393-playershandbook-guard-repair-closeout.md.
+- SOURCE-BATCH-394+ should run fresh candidate discovery after SOURCE-BATCH-393.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-394 Update
+
+- SOURCE-BATCH-394 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-394-candidate-discovery.csv.
+- SOURCE-BATCH-394 implemented the MonsterManual guard repair in Data/Scripts/Items/Misc/Games/DandD/MonsterManual.cs.
+- SOURCE-BATCH-394 is closed as commit aacd93c9 with verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-394-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-394-monstermanual-guard-repair-closeout.md.
+- SOURCE-BATCH-395+ should run fresh candidate discovery after SOURCE-BATCH-394.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-395 Update
+
+- SOURCE-BATCH-395 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-395-candidate-discovery.csv.
+- SOURCE-BATCH-395 implemented the Tarot guard repair in Data/Scripts/Items/Misc/Games/Tarot.cs.
+- SOURCE-BATCH-395 is closed as commit 89627fd0 with verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-395-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-395-tarot-guard-repair-closeout.md.
+- SOURCE-BATCH-396+ should run fresh candidate discovery after SOURCE-BATCH-395.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-396 Update
+
+- SOURCE-BATCH-396 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-396-candidate-discovery.csv.
+- SOURCE-BATCH-396 implemented the Tarot Poker guard repair in Data/Scripts/Items/Misc/Games/tarotpoker.cs.
+- SOURCE-BATCH-396 source commit is c78f2bed; verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-396-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-396-tarotpoker-guard-repair-closeout.md.
+- SOURCE-BATCH-397+ should run fresh candidate discovery after SOURCE-BATCH-396.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-397 Update
+
+- SOURCE-BATCH-397 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-397-candidate-discovery.csv.
+- SOURCE-BATCH-397 implemented the FireworksWand guard repair in Data/Scripts/Items/Weapons/Maces/FireworksWand.cs.
+- SOURCE-BATCH-397 source commit is 14faa7f6; verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-397-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-397-fireworkswand-guard-repair-closeout.md.
+- SOURCE-BATCH-398+ should run fresh candidate discovery after SOURCE-BATCH-397.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-398 Update
+
+- SOURCE-BATCH-398 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-398-candidate-discovery.csv.
+- SOURCE-BATCH-398 implemented the BaseHat cowl hood guard repair in Data/Scripts/Items/Clothing/Hats.cs.
+- SOURCE-BATCH-398 source commit is 183bf23c; verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-398-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-398-basehat-cowl-hood-guard-repair-closeout.md.
+- SOURCE-BATCH-399+ should run fresh candidate discovery after SOURCE-BATCH-398.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-399 Update
+
+- SOURCE-BATCH-399 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-399-candidate-discovery.csv.
+- SOURCE-BATCH-399 implemented the Sextant guard repair in Data/Scripts/Items/Trades/Fishing/Misc/Sextant.cs.
+- SOURCE-BATCH-399 source commit is 86cf559a; verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-399-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-399-sextant-guard-repair-closeout.md.
+- SOURCE-BATCH-400+ should run fresh candidate discovery after SOURCE-BATCH-399.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-400 Update
+
+- SOURCE-BATCH-400 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-400-candidate-discovery.csv.
+- SOURCE-BATCH-400 implemented the BaseKnife guard repair in Data/Scripts/Items/Weapons/Knives/BaseKnife.cs.
+- SOURCE-BATCH-400 source commit is c92a7ac1; verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-400-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-400-baseknife-guard-repair-closeout.md.
+- SOURCE-BATCH-401+ should run fresh candidate discovery after SOURCE-BATCH-400.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-401 Update
+
+- SOURCE-BATCH-401 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-401-candidate-discovery.csv.
+- SOURCE-BATCH-401 implemented the BaseSword guard repair in Data/Scripts/Items/Weapons/Swords/BaseSword.cs.
+- SOURCE-BATCH-401 source commit is 18a59ad1; verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-401-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-401-basesword-guard-repair-closeout.md.
+- SOURCE-BATCH-402+ should run fresh candidate discovery after SOURCE-BATCH-401.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-402 Update
+
+- SOURCE-BATCH-402 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-402-candidate-discovery.csv.
+- SOURCE-BATCH-402 implemented the ThrowingWeapon guard repair in Data/Scripts/Items/Weapons/Marksman/ThrowingWeapon.cs.
+- SOURCE-BATCH-402 source commit is 03599b66; verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-402-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-402-throwingweapon-guard-repair-closeout.md.
+- SOURCE-BATCH-403+ should run fresh candidate discovery after SOURCE-BATCH-402.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-403 Update
+
+- SOURCE-BATCH-403 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-403-candidate-discovery.csv.
+- SOURCE-BATCH-403 implemented the ThrowingGloves guard repair in Data/Scripts/Items/Weapons/Marksman/ThrowingGloves.cs.
+- SOURCE-BATCH-403 source commit is 6b3712c8; verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-403-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-403-throwinggloves-guard-repair-closeout.md.
+- SOURCE-BATCH-404+ should run fresh candidate discovery after SOURCE-BATCH-403.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-404 Update
+
+- SOURCE-BATCH-404 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-404-candidate-discovery.csv.
+- SOURCE-BATCH-404 implemented the LevelThrowingGloves guard repair in Data/Scripts/Items/Magical/God/Weapons/LevelThrowingGloves.cs.
+- SOURCE-BATCH-404 source commit is a5a1fb30; verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-404-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-404-levelthrowinggloves-guard-repair-closeout.md.
+- SOURCE-BATCH-405+ should run fresh candidate discovery after SOURCE-BATCH-404.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-405 Update
+
+- SOURCE-BATCH-405 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-405-candidate-discovery.csv.
+- SOURCE-BATCH-405 implemented the ThrowingDagger guard repair in Data/Scripts/Items/Weapons/Knives/ThrowingDagger.cs.
+- SOURCE-BATCH-405 source commit is adb027dd; verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-405-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-405-throwingdagger-guard-repair-closeout.md.
+- SOURCE-BATCH-406+ should run fresh candidate discovery after SOURCE-BATCH-405.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-406 Update
+
+- SOURCE-BATCH-406 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-406-candidate-discovery.csv.
+- SOURCE-BATCH-406 implemented the Scissors guard repair in Data/Scripts/Items/Trades/Tailor Items/Scissors.cs.
+- SOURCE-BATCH-406 source commit is df625beb; verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-406-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-406-scissors-guard-repair-closeout.md.
+- SOURCE-BATCH-407+ should run fresh candidate discovery after SOURCE-BATCH-406.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-407 Update
+
+- SOURCE-BATCH-407 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-407-candidate-discovery.csv.
+- SOURCE-BATCH-407 implemented the NewPlayerTicket guard repair in Data/Scripts/Items/Deeds/NewPlayerTicket.cs.
+- SOURCE-BATCH-407 source commit is 880a4142; verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-407-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-407-newplayerticket-guard-repair-closeout.md.
+- SOURCE-BATCH-408+ should run fresh candidate discovery after SOURCE-BATCH-407.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-408 Update
+
+- SOURCE-BATCH-408 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-408-candidate-discovery.csv.
+- SOURCE-BATCH-408 implemented the TitleChangeDeed guard repair in Data/Scripts/Items/Books/TitleChangeDeed.cs.
+- SOURCE-BATCH-408 source commit is 420b67a8; verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-408-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-408-titlechangedeed-guard-repair-closeout.md.
+- SOURCE-BATCH-409+ should run fresh candidate discovery after SOURCE-BATCH-408.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-409 Update
+
+- SOURCE-BATCH-409 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-409-candidate-discovery.csv.
+- SOURCE-BATCH-409 implemented the BaseStatue guard repair in Data/Scripts/Trades/Stone/BaseStatue.cs.
+- SOURCE-BATCH-409 source commit is 3d45afed; verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-409-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-409-basestatue-guard-repair-closeout.md.
+- SOURCE-BATCH-410+ should run fresh candidate discovery after SOURCE-BATCH-409.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-410 Update
+
+- SOURCE-BATCH-410 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-410-candidate-discovery.csv.
+- SOURCE-BATCH-410 implemented the BaseBook guard repair in Data/Scripts/Items/Books/BaseBook.cs.
+- SOURCE-BATCH-410 source commit is 2839662e; verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-410-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-410-basebook-guard-repair-closeout.md.
+- SOURCE-BATCH-411+ should run fresh candidate discovery after SOURCE-BATCH-410.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-411 Update
+
+- SOURCE-BATCH-411 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-411-candidate-discovery.csv.
+- SOURCE-BATCH-411 implemented the SackOfHolding guard repair in Data/Scripts/Items/Containers/SackOfHolding.cs.
+- SOURCE-BATCH-411 source commit is e0651a81; verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-411-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-411-sackofholding-guard-repair-closeout.md.
+- SOURCE-BATCH-412+ should run fresh candidate discovery after SOURCE-BATCH-411.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-412 Update
+
+- SOURCE-BATCH-412 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-412-candidate-discovery.csv.
+- SOURCE-BATCH-412 implemented the Watcher guard repair in Data/Scripts/Mobiles/Unusual/Watcher.cs.
+- SOURCE-BATCH-412 source commit is e7767a59; verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-412-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-412-watcher-guard-repair-closeout.md.
+- SOURCE-BATCH-413+ should run fresh candidate discovery after SOURCE-BATCH-412.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-413 Update
+
+- SOURCE-BATCH-413 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-413-candidate-discovery.csv.
+- SOURCE-BATCH-413 implemented the ColoringBook guard repair in Data/Scripts/Items/Magical/Artifacts/Minor/ColoringBook.cs.
+- SOURCE-BATCH-413 source commit is 33d1807f; verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-413-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-413-coloringbook-guard-repair-closeout.md.
+- SOURCE-BATCH-414+ should run fresh candidate discovery after SOURCE-BATCH-413.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-414 Update
+
+- SOURCE-BATCH-414 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-414-candidate-discovery.csv.
+- SOURCE-BATCH-414 implemented the HintItem guard repair in Data/Scripts/Items/Misc/WarningItem.cs.
+- SOURCE-BATCH-414 source commit is b27bb575; verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-414-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-414-hintitem-guard-repair-closeout.md.
+- SOURCE-BATCH-415+ should run fresh candidate discovery after SOURCE-BATCH-414.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-415 Update
+
+- SOURCE-BATCH-415 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-415-candidate-discovery.csv.
+- SOURCE-BATCH-415 implemented the WindChimes guard repair in Data/Scripts/Items/Misc/WindChimes.cs.
+- SOURCE-BATCH-415 source commit is e10d3ed9; verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-415-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-415-windchimes-guard-repair-closeout.md.
+- SOURCE-BATCH-416+ should run fresh candidate discovery after SOURCE-BATCH-415.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-416 Update
+
+- SOURCE-BATCH-416 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-416-candidate-discovery.csv.
+- SOURCE-BATCH-416 implemented the HouseSign rename guard repair in Data/Scripts/Items/Decorations/HouseSign.cs.
+- SOURCE-BATCH-416 source commit is e84ae272; verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-416-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-416-housesign-rename-guard-repair-closeout.md.
+- SOURCE-BATCH-417+ should run fresh candidate discovery after SOURCE-BATCH-416.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-417 Update
+
+- SOURCE-BATCH-417 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-417-candidate-discovery.csv.
+- SOURCE-BATCH-417 implemented the TarotCards guard repair in the nine Data/Scripts/Items/Special/Rares/TarotCards/*.cs files.
+- SOURCE-BATCH-417 source commit is dc9df648; verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-417-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-417-tarotcards-guard-repair-closeout.md.
+- SOURCE-BATCH-418+ should run fresh candidate discovery after SOURCE-BATCH-417.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-418 Update
+
+- SOURCE-BATCH-418 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-418-candidate-discovery.csv.
+- SOURCE-BATCH-418 implemented the HolidayBells guard repair in Data/Scripts/Items/Special/Holiday/HolidayBells.cs.
+- SOURCE-BATCH-418 source commit is 2b86a32f; verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-418-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-418-holidaybells-guard-repair-closeout.md.
+- SOURCE-BATCH-419+ should run fresh candidate discovery after SOURCE-BATCH-418.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-419 Update
+
+- SOURCE-BATCH-419 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-419-candidate-discovery.csv.
+- SOURCE-BATCH-419 implemented the Halloween dart boards guard repair in Data/Scripts/Items/Gifts/Holiday/Halloween/Rewards/MongbatDartBoard.cs and Data/Scripts/Items/Gifts/Holiday/Halloween/Rewards/DaemonDartBoard.cs.
+- SOURCE-BATCH-419 source commit is c8a06efe; verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-419-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-419-dartboards-guard-repair-closeout.md.
+- SOURCE-BATCH-420+ should run fresh candidate discovery after SOURCE-BATCH-419.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-420 Update
+
+- SOURCE-BATCH-420 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-420-candidate-discovery.csv.
+- SOURCE-BATCH-420 implemented the HalloweenGraves rename guard repair in Data/Scripts/Items/Gifts/Holiday/Halloween/Rewards/HalloweenGrave1.cs, Data/Scripts/Items/Gifts/Holiday/Halloween/Rewards/HalloweenGrave2.cs, and Data/Scripts/Items/Gifts/Holiday/Halloween/Rewards/HalloweenGrave3.cs.
+- SOURCE-BATCH-420 source commit is 5e053a11; verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-420-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-420-halloweengraves-rename-guard-repair-closeout.md.
+- SOURCE-BATCH-421+ should run fresh candidate discovery after SOURCE-BATCH-420.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-421 Update
+
+- SOURCE-BATCH-421 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-421-candidate-discovery.csv.
+- SOURCE-BATCH-421 implemented the Guillotine guard repair in Data/Scripts/Items/Misc/Guillotine.cs.
+- SOURCE-BATCH-421 source commit is 217ec173; verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-421-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-421-guillotine-guard-repair-closeout.md.
+- SOURCE-BATCH-422+ should run fresh candidate discovery after SOURCE-BATCH-421.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-422 Update
+
+- SOURCE-BATCH-422 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-422-candidate-discovery.csv.
+- SOURCE-BATCH-422 implemented the BaseImprisonedMobile guard repair in Data/Scripts/Items/Special/BaseImprisonedMobile.cs.
+- SOURCE-BATCH-422 source commit is e7e94692; verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-422-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-422-baseimprisonedmobile-guard-repair-closeout.md.
+- SOURCE-BATCH-423+ should run fresh candidate discovery after SOURCE-BATCH-422.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-423 Update
+
+- SOURCE-BATCH-423 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-423-candidate-discovery.csv.
+- SOURCE-BATCH-423 implemented the PowderOfTranslocation guard repair in Data/Scripts/Items/Special/Solen Items/PowderOfTranslocation.cs.
+- SOURCE-BATCH-423 source commit is 790920b1; verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-423-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-423-powderoftranslocation-guard-repair-closeout.md.
+- SOURCE-BATCH-424+ should run fresh candidate discovery after SOURCE-BATCH-423.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-424 Update
+
+- SOURCE-BATCH-424 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-424-candidate-discovery.csv.
+- SOURCE-BATCH-424 implemented the HairDye guard repair in Data/Scripts/Items/Misc/HairDye.cs.
+- SOURCE-BATCH-424 source commit is 45f03b5a; verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-424-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-424-hairdye-guard-repair-closeout.md.
+- SOURCE-BATCH-425+ should run fresh candidate discovery after SOURCE-BATCH-424.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-425 Update
+
+- SOURCE-BATCH-425 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-425-candidate-discovery.csv.
+- SOURCE-BATCH-425 implemented the SpecialHairDye guard repair in Data/Scripts/Items/Misc/SpecialHairDye.cs.
+- SOURCE-BATCH-425 source commit is 954572a8; verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-425-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-425-specialhairdye-guard-repair-closeout.md.
+- SOURCE-BATCH-426+ should run fresh candidate discovery after SOURCE-BATCH-425.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-426 Update
+
+- SOURCE-BATCH-426 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-426-candidate-discovery.csv.
+- SOURCE-BATCH-426 implemented the SpecialBeardDye guard repair in Data/Scripts/Items/Misc/SpecialBeardDye.cs.
+- SOURCE-BATCH-426 source commit is 9de620cc; verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-426-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-426-specialbearddye-guard-repair-closeout.md.
+- SOURCE-BATCH-427+ should run fresh candidate discovery after SOURCE-BATCH-426.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-427 Update
+
+- SOURCE-BATCH-427 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-427-candidate-discovery.csv.
+- SOURCE-BATCH-427 implemented the RuneOfVirtue guard repair in Data/Scripts/Items/Magical/RuneOfVirtue.cs.
+- SOURCE-BATCH-427 source commit is 22464be5; verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-427-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-427-runeofvirtue-guard-repair-closeout.md.
+- SOURCE-BATCH-428+ should run fresh candidate discovery after SOURCE-BATCH-427.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-428 Update
+
+- SOURCE-BATCH-428 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-428-candidate-discovery.csv.
+- SOURCE-BATCH-428 implemented the SoulLantern guard repair in Data/Scripts/Magic/Death Knight/SoulLantern.cs.
+- SOURCE-BATCH-428 source commit is fe3737e9; verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-428-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-428-soullantern-guard-repair-closeout.md.
+- SOURCE-BATCH-429+ should run fresh candidate discovery after SOURCE-BATCH-428.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-429 Update
+
+- SOURCE-BATCH-429 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-429-candidate-discovery.csv.
+- SOURCE-BATCH-429 implemented the ForgetfulGem guard repair in Data/Scripts/Magic/Base/ForgetfulGem.cs.
+- SOURCE-BATCH-429 source commit is d33ddc40; verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-429-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-429-forgetfulgem-guard-repair-closeout.md.
+- SOURCE-BATCH-430+ should run fresh candidate discovery after SOURCE-BATCH-429.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-430 Update
+
+- SOURCE-BATCH-430 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-430-candidate-discovery.csv.
+- SOURCE-BATCH-430 implemented the SongBook guard repair in Data/Scripts/Magic/Bard/SongBook.cs.
+- SOURCE-BATCH-430 source commit is 6b067895; verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-430-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-430-songbook-guard-repair-closeout.md.
+- SOURCE-BATCH-431+ should run fresh candidate discovery after SOURCE-BATCH-430.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-431 Update
+
+- SOURCE-BATCH-431 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-431-candidate-discovery.csv.
+- SOURCE-BATCH-431 implemented the MagicObjectTarget guard repair in Data/Scripts/Magic/Misc/MagicObjectTarget.cs.
+- SOURCE-BATCH-431 source commit is 7dc34d16; verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-431-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-431-magicobjecttarget-guard-repair-closeout.md.
+- SOURCE-BATCH-432+ should run fresh candidate discovery after SOURCE-BATCH-431.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-432 Update
+
+- SOURCE-BATCH-432 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-432-candidate-discovery.csv.
+- SOURCE-BATCH-432 implemented the RobeOfTeleportation guard repair in Data/Scripts/Items/Magical/Artifacts/Artifact_RobeOfTeleportation.cs.
+- SOURCE-BATCH-432 source commit is 7023f0c7; verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-432-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-432-robeofteleportation-guard-repair-closeout.md.
+- SOURCE-BATCH-433+ should run fresh candidate discovery after SOURCE-BATCH-432.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-433 Update
+
+- SOURCE-BATCH-433 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-433-candidate-discovery.csv.
+- SOURCE-BATCH-433 implemented the RecipeScroll guard repair in Data/Scripts/Items/Trades/Misc/RecipeScroll.cs.
+- SOURCE-BATCH-433 source commit is c08e7e82; verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-433-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-433-recipescroll-guard-repair-closeout.md.
+- SOURCE-BATCH-434+ should run fresh candidate discovery after SOURCE-BATCH-433.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-434 Update
+
+- SOURCE-BATCH-434 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-434-candidate-discovery.csv.
+- SOURCE-BATCH-434 implemented the MysticPack guard repair in Data/Scripts/Magic/Mystic/MysticPack.cs.
+- SOURCE-BATCH-434 source commit is 0dbe8aaa; verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-434-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-434-mysticpack-guard-repair-closeout.md.
+- SOURCE-BATCH-435+ should run fresh candidate discovery after SOURCE-BATCH-434.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-435 Update
+
+- SOURCE-BATCH-435 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-435-candidate-discovery.csv.
+- SOURCE-BATCH-435 implemented the Fukiya guard repair in Data/Scripts/Items/Trades/Ninjitsu/Fukiya.cs.
+- SOURCE-BATCH-435 source commit is 5258080f; verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-435-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-435-fukiya-guard-repair-closeout.md.
+- SOURCE-BATCH-436+ should run fresh candidate discovery after SOURCE-BATCH-435.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-436 Update
+
+- SOURCE-BATCH-436 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-436-candidate-discovery.csv.
+- SOURCE-BATCH-436 implemented the LeatherNinjaBelt guard repair in Data/Scripts/Items/Trades/Ninjitsu/LeatherNinjaBelt.cs.
+- SOURCE-BATCH-436 source commit is 6a463cf2; verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-436-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-436-leatherninjabelt-guard-repair-closeout.md.
+- SOURCE-BATCH-437+ should run fresh candidate discovery after SOURCE-BATCH-436.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-437 Update
+
+- SOURCE-BATCH-437 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-437-candidate-discovery.csv.
+- SOURCE-BATCH-437 implemented the GandalfsStaff guard repair in Data/Scripts/Items/Magical/Artifacts/Artifact_GandalfsStaff.cs.
+- SOURCE-BATCH-437 source commit is e055c0f4; verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-437-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-437-gandalfsstaff-guard-repair-closeout.md.
+- SOURCE-BATCH-438+ should run fresh candidate discovery after SOURCE-BATCH-437.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-438 Update
+
+- SOURCE-BATCH-438 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-438-candidate-discovery.csv.
+- SOURCE-BATCH-438 implemented the StaffofSnakes guard repair in Data/Scripts/Items/Magical/Artifacts/Artifact_StaffofSnakes.cs.
+- SOURCE-BATCH-438 source commit is 491b8903; verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-438-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-438-staffofsnakes-guard-repair-closeout.md.
+- SOURCE-BATCH-439+ should run fresh candidate discovery after SOURCE-BATCH-438.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-439 Update
+
+- SOURCE-BATCH-439 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-439-candidate-discovery.csv.
+- SOURCE-BATCH-439 implemented the Head guard repair in Data/Scripts/Items/Misc/Bodies/Head.cs.
+- SOURCE-BATCH-439 source commit is 03b9a84d; verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-439-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-439-head-guard-repair-closeout.md.
+- SOURCE-BATCH-440+ should run fresh candidate discovery after SOURCE-BATCH-439.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-440 Update
+
+- SOURCE-BATCH-440 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-440-candidate-discovery.csv.
+- SOURCE-BATCH-440 implemented the EssenceOrb guard repair in Data/Scripts/Items/Misc/Dyes/Essence/EssenceOrb.cs.
+- SOURCE-BATCH-440 source commit is e2b9b79a; verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-440-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-440-essenceorb-guard-repair-closeout.md.
+- SOURCE-BATCH-441+ should run fresh candidate discovery after SOURCE-BATCH-440.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-441 Update
+
+- SOURCE-BATCH-441 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-441-candidate-discovery.csv.
+- SOURCE-BATCH-441 implemented the TapestryOfSosaria guard repair in Data/Scripts/Items/Special/TapestryOfSosaria.cs.
+- SOURCE-BATCH-441 source commit is a09b0db1; verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-441-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-441-tapestryofsosaria-guard-repair-closeout.md.
+- SOURCE-BATCH-442+ should run fresh candidate discovery after SOURCE-BATCH-441.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-442 Update
+
+- SOURCE-BATCH-442 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-442-candidate-discovery.csv.
+- SOURCE-BATCH-442 implemented the TowerLanternArtifact guard repair in Data/Scripts/Items/Decorations/Artifacts/SEDecorationArtifacts.cs.
+- SOURCE-BATCH-442 source commit is 1e2b63a4; verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-442-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-442-towerlanternartifact-guard-repair-closeout.md.
+- SOURCE-BATCH-443+ should run fresh candidate discovery after SOURCE-BATCH-442.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-443 Update
+
+- SOURCE-BATCH-443 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-443-candidate-discovery.csv.
+- SOURCE-BATCH-443 implemented the Lockpick guard repair in Data/Scripts/Items/Trades/Thieving/LockPick.cs.
+- SOURCE-BATCH-443 source commit is 7136d0ce; verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-443-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-443-lockpick-guard-repair-closeout.md.
+- SOURCE-BATCH-444+ should run fresh candidate discovery after SOURCE-BATCH-443.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-444 Update
+
+- SOURCE-BATCH-444 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-444-candidate-discovery.csv.
+- SOURCE-BATCH-444 implemented the DoorSwitch guard repair in Data/Scripts/Items/Doors/DoorSwitch.cs.
+- SOURCE-BATCH-444 source commit is b3e72fcd; verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-444-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-444-doorswitch-guard-repair-closeout.md.
+- SOURCE-BATCH-445+ should run fresh candidate discovery after SOURCE-BATCH-444.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-445 Update
+
+- SOURCE-BATCH-445 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-445-candidate-discovery.csv.
+- SOURCE-BATCH-445 implemented the MagicStaffTarget guard repair in Data/Scripts/Items/Wands/MagicStaffTarget.cs.
+- SOURCE-BATCH-445 source commit is c8a6ede1; verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-445-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-445-magicstafftarget-guard-repair-closeout.md.
+- SOURCE-BATCH-446+ should run fresh candidate discovery after SOURCE-BATCH-445.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-446 Update
+
+- SOURCE-BATCH-446 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-446-candidate-discovery.csv.
+- SOURCE-BATCH-446 implemented the CustomHuePickerGump guard repair in Data/Scripts/Items/Misc/Dyes/CustomHuePicker.cs.
+- SOURCE-BATCH-446 source commit is 5198e2bb; verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-446-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-446-customhuepicker-guard-repair-closeout.md.
+- SOURCE-BATCH-447+ should run fresh candidate discovery after SOURCE-BATCH-446.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-447 Update
+
+- SOURCE-BATCH-447 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-447-candidate-discovery.csv.
+- SOURCE-BATCH-447 implemented the BankCheck guard repair in Data/Scripts/Items/Misc/BankCheck.cs.
+- SOURCE-BATCH-447 source commit is 3ff3cc22; verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-447-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-447-bankcheck-guard-repair-closeout.md.
+- SOURCE-BATCH-448+ should run fresh candidate discovery after SOURCE-BATCH-447.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-448 Update
+
+- SOURCE-BATCH-448 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-448-candidate-discovery.csv.
+- SOURCE-BATCH-448 implemented the Wreath guard repair in Data/Scripts/Items/Special/Holiday/Wreath.cs.
+- SOURCE-BATCH-448 source commit is 5ad2808b; verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-448-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-448-wreath-guard-repair-closeout.md.
+- SOURCE-BATCH-449+ should run fresh candidate discovery after SOURCE-BATCH-448.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-449 Update
+
+- SOURCE-BATCH-449 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-449-candidate-discovery.csv.
+- SOURCE-BATCH-449 implemented the Mistletoe guard repair in Data/Scripts/Items/Gifts/Holiday/Christmas/Christmas Gifts/Mistletoe.cs.
+- SOURCE-BATCH-449 source commit is 677e5a1e; verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-449-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-449-mistletoe-guard-repair-closeout.md.
+- SOURCE-BATCH-450+ should run fresh candidate discovery after SOURCE-BATCH-449.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-450 Update
+
+- SOURCE-BATCH-450 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-450-candidate-discovery.csv.
+- SOURCE-BATCH-450 implemented the MountedTrophyHead guard repair in Data/Scripts/Trades/Taxidermy/MountedTrophyHead.cs.
+- SOURCE-BATCH-450 source commit is 469123b8; verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-450-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-450-mountedtrophyhead-guard-repair-closeout.md.
+- SOURCE-BATCH-451+ should run fresh candidate discovery after SOURCE-BATCH-450.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-451 Update
+
+- SOURCE-BATCH-451 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-451-candidate-discovery.csv.
+- SOURCE-BATCH-451 implemented the SomeRandomNote guard repair in Data/Scripts/Quests/SomeRandomNote.cs.
+- SOURCE-BATCH-451 source commit is 72d36986; verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-451-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-451-somerandomnote-guard-repair-closeout.md.
+- SOURCE-BATCH-452+ should run fresh candidate discovery after SOURCE-BATCH-451.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-452 Update
+
+- SOURCE-BATCH-452 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-452-candidate-discovery.csv.
+- SOURCE-BATCH-452 implemented the LearnMiscBook guard repair in Data/Scripts/Items/Books/LearnMisc.cs.
+- SOURCE-BATCH-452 source commit is fc0eb15c; verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-452-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-452-learnmiscbook-guard-repair-closeout.md.
+- SOURCE-BATCH-453+ should run fresh candidate discovery after SOURCE-BATCH-452.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-453 Update
+
+- SOURCE-BATCH-453 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-453-candidate-discovery.csv.
+- SOURCE-BATCH-453 implemented the LearnWoodBook guard repair in Data/Scripts/Items/Books/LearnWood.cs.
+- SOURCE-BATCH-453 source commit is 488bff4a; verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-453-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-453-learnwoodbook-guard-repair-closeout.md.
+- SOURCE-BATCH-454+ should run fresh candidate discovery after SOURCE-BATCH-453.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-454 Update
+
+- SOURCE-BATCH-454 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-454-candidate-discovery.csv.
+- SOURCE-BATCH-454 implemented the LearnTailorBook guard repair in Data/Scripts/Items/Books/LearnTailor.cs.
+- SOURCE-BATCH-454 source commit is d71856ab; verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-454-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-454-learntailorbook-guard-repair-closeout.md.
+- SOURCE-BATCH-455+ should run fresh candidate discovery after SOURCE-BATCH-454.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-455 Update
+
+- SOURCE-BATCH-455 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-455-candidate-discovery.csv.
+- SOURCE-BATCH-455 implemented the LearnStealingBook guard repair in Data/Scripts/Items/Books/LearnStealing.cs.
+- SOURCE-BATCH-455 source commit is 0bbfa8ff; verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-455-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-455-learnstealingbook-guard-repair-closeout.md.
+- SOURCE-BATCH-456+ should run fresh candidate discovery after SOURCE-BATCH-455.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-456 Update
+
+- SOURCE-BATCH-456 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-456-candidate-discovery.csv.
+- SOURCE-BATCH-456 implemented the LearnScalesBook guard repair in Data/Scripts/Items/Books/LearnScales.cs.
+- SOURCE-BATCH-456 source commit is c94040e6; verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-456-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-456-learnscalesbook-guard-repair-closeout.md.
+- SOURCE-BATCH-457+ should run fresh candidate discovery after SOURCE-BATCH-456.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-457 Update
+
+- SOURCE-BATCH-457 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-457-candidate-discovery.csv.
+- SOURCE-BATCH-457 implemented the LearnReagentsBook guard repair in Data/Scripts/Items/Books/LearnReagents.cs.
+- SOURCE-BATCH-457 source commit: f1e4ae5b; verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-457-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-457-learnreagentsbook-guard-repair-closeout.md.
+- SOURCE-BATCH-458+ should run fresh candidate discovery after SOURCE-BATCH-457.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-458 Update
+
+- SOURCE-BATCH-458 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-458-candidate-discovery.csv.
+- SOURCE-BATCH-458 implemented the LearnMetalBook guard repair in Data/Scripts/Items/Books/LearnMetal.cs.
+- SOURCE-BATCH-458 source commit: 7f74b473; verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-458-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-458-learnmetalbook-guard-repair-closeout.md.
+- SOURCE-BATCH-459+ should run fresh candidate discovery after SOURCE-BATCH-458.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-459 Update
+
+- SOURCE-BATCH-459 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-459-candidate-discovery.csv.
+- SOURCE-BATCH-459 implemented the LearnLeatherBook guard repair in Data/Scripts/Items/Books/LearnLeather.cs.
+- SOURCE-BATCH-459 source commit: f16cfa1b; verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-459-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-459-learnleatherbook-guard-repair-closeout.md.
+- SOURCE-BATCH-460+ should run fresh candidate discovery after SOURCE-BATCH-459.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-460 Update
+
+- SOURCE-BATCH-460 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-460-candidate-discovery.csv.
+- SOURCE-BATCH-460 implemented the LearnGraniteBook guard repair in Data/Scripts/Items/Books/LearnGranite.cs.
+- SOURCE-BATCH-460 source commit: e199d125; verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-460-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-460-learngranitebook-guard-repair-closeout.md.
+- SOURCE-BATCH-461+ should run fresh candidate discovery after SOURCE-BATCH-460.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-461 Update
+
+- SOURCE-BATCH-461 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-461-candidate-discovery.csv.
+- SOURCE-BATCH-461 implemented the SearchPage guard repair in Data/Scripts/Quests/Search/SearchPage.cs.
+- SOURCE-BATCH-461 source commit: c3b30c43; verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-461-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-461-searchpage-guard-repair-closeout.md.
+- SOURCE-BATCH-462+ should run fresh candidate discovery after SOURCE-BATCH-461.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-462 Update
+
+- SOURCE-BATCH-462 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-462-candidate-discovery.csv.
+- SOURCE-BATCH-462 implemented the CourierMail guard repair in Data/Scripts/Quests/Epic/CourierMail.cs.
+- SOURCE-BATCH-462 source commit: 753cf941; verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-462-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-462-couriermail-guard-repair-closeout.md.
+- SOURCE-BATCH-463+ should run fresh candidate discovery after SOURCE-BATCH-462.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-463 Update
+
+- SOURCE-BATCH-463 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-463-candidate-discovery.csv.
+- SOURCE-BATCH-463 implemented the BookWitchBrewing guard repair in Data/Scripts/Magic/Witch/BookWitchBrewing.cs.
+- SOURCE-BATCH-463 source commit: 7aecff9f; verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-463-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-463-bookwitchbrewing-guard-repair-closeout.md.
+- SOURCE-BATCH-464+ should run fresh candidate discovery after SOURCE-BATCH-463.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-464 Update
+
+- SOURCE-BATCH-464 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-464-candidate-discovery.csv.
+- SOURCE-BATCH-464 implemented the BookDruidBrewing guard repair in Data/Scripts/Magic/Druidism/BookDruidBrewing.cs.
+- SOURCE-BATCH-464 source commit: 7e7dab8f; verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-464-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-464-bookdruidbrewing-guard-repair-closeout.md.
+- SOURCE-BATCH-465+ should run fresh candidate discovery after SOURCE-BATCH-464.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-465 Update
+
+- SOURCE-BATCH-465 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-465-candidate-discovery.csv.
+- SOURCE-BATCH-465 implemented the BagOfTricks guard repair in Data/Scripts/Magic/Jester/BagOfTricks.cs.
+- SOURCE-BATCH-465 source commit: 452ebfac; verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-465-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-465-bagoftricks-guard-repair-closeout.md.
+- SOURCE-BATCH-466+ should run fresh candidate discovery after SOURCE-BATCH-465.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-466 Update
+
+- SOURCE-BATCH-466 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-466-candidate-discovery.csv.
+- SOURCE-BATCH-466 implemented the ResearchBag guard repair in Data/Scripts/Magic/Research/ResearchBag.cs.
+- SOURCE-BATCH-466 source commit: 470dcd6d; verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-466-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-466-researchbag-guard-repair-closeout.md.
+- SOURCE-BATCH-467+ should run fresh candidate discovery after SOURCE-BATCH-466.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-467 Update
+
+- SOURCE-BATCH-467 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-467-candidate-discovery.csv.
+- SOURCE-BATCH-467 implemented the LandmineSetup guard repair in Data/Scripts/Items/Technology/Landmine.cs.
+- SOURCE-BATCH-467 source commit: 46d02cfb; verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-467-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-467-landminesetup-guard-repair-closeout.md.
+- SOURCE-BATCH-468+ should run fresh candidate discovery after SOURCE-BATCH-467.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-468 Update
+
+- SOURCE-BATCH-468 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-468-candidate-discovery.csv.
+- SOURCE-BATCH-468 implemented the TrapKit guard repair in Data/Scripts/Items/Traps/TrapKit.cs.
+- SOURCE-BATCH-468 source commit: 87368509; verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-468-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-468-trapkit-guard-repair-closeout.md.
+- SOURCE-BATCH-469+ should run fresh candidate discovery after SOURCE-BATCH-468.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-469 Update
+
+- SOURCE-BATCH-469 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-469-candidate-discovery.csv.
+- SOURCE-BATCH-469 implemented the BasePoleArm guard repair in Data/Scripts/Items/Weapons/PoleArms/BasePoleArm.cs.
+- SOURCE-BATCH-469 source commit: 7f638b6b; verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-469-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-469-basepolearm-guard-repair-closeout.md.
+- SOURCE-BATCH-470+ should run fresh candidate discovery after SOURCE-BATCH-469.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-470 Update
+
+- SOURCE-BATCH-470 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-470-candidate-discovery.csv.
+- SOURCE-BATCH-470 implemented the RejuvinationAnkh guard repair in Data/Scripts/Items/Construction/Addons/RejuvinationAnkhs.cs.
+- SOURCE-BATCH-470 source commit: 92a06143; verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-470-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-470-rejuvinationankh-guard-repair-closeout.md.
+- SOURCE-BATCH-471+ should run fresh candidate discovery after SOURCE-BATCH-470.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-471 Update
+
+- SOURCE-BATCH-471 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-471-candidate-discovery.csv.
+- SOURCE-BATCH-471 implemented the Dyes guard repair in Data/Scripts/Items/Trades/Tailor Items/Dyes.cs.
+- SOURCE-BATCH-471 source commit: b8f49b31; verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-471-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-471-dyes-guard-repair-closeout.md.
+- SOURCE-BATCH-472+ should run fresh candidate discovery after SOURCE-BATCH-471.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-472 Update
+
+- SOURCE-BATCH-472 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-472-candidate-discovery.csv.
+- SOURCE-BATCH-472 implemented the Spellbook guard repair in Data/Scripts/Magic/Magery/Spellbook.cs.
+- SOURCE-BATCH-472 source commit: 9c260748; verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-472-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-472-spellbook-guard-repair-closeout.md.
+- SOURCE-BATCH-473+ should run fresh candidate discovery after SOURCE-BATCH-472.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-473 Update
+
+- SOURCE-BATCH-473 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-473-candidate-discovery.csv.
+- SOURCE-BATCH-473 implemented the BaseMagicObject guard repair in Data/Scripts/Magic/Misc/BaseMagicObject.cs.
+- SOURCE-BATCH-473 source commit: 1dcf4fa5; verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-473-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-473-basemagicobject-guard-repair-closeout.md.
+- SOURCE-BATCH-474+ should run fresh candidate discovery after SOURCE-BATCH-473.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-474 Update
+
+- SOURCE-BATCH-474 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-474-candidate-discovery.csv.
+- SOURCE-BATCH-474 implemented the BaseMagicStaff guard repair in Data/Scripts/Items/Wands/BaseMagicStaff.cs.
+- SOURCE-BATCH-474 source commit: 8de48655; verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-474-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-474-basemagicstaff-guard-repair-closeout.md.
+- SOURCE-BATCH-475+ should run fresh candidate discovery after SOURCE-BATCH-474.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-475 Update
+
+- SOURCE-BATCH-475 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-475-candidate-discovery.csv.
+- SOURCE-BATCH-475 implemented the BaseAxe guard repair in Data/Scripts/Items/Weapons/Axes/BaseAxe.cs.
+- SOURCE-BATCH-475 source commit: dddf6f1e; verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-475-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-475-baseaxe-guard-repair-closeout.md.
+- SOURCE-BATCH-476+ should run fresh candidate discovery after SOURCE-BATCH-475.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-476 Update
+
+- SOURCE-BATCH-476 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-476-candidate-discovery.csv.
+- SOURCE-BATCH-476 implemented the BaseStatueDeed guard repair in Data/Scripts/Trades/Stone/BaseStatueDeed.cs.
+- SOURCE-BATCH-476 source commit: b7ec4446; verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-476-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-476-basestatuedeed-guard-repair-closeout.md.
+- SOURCE-BATCH-477+ should run fresh candidate discovery after SOURCE-BATCH-476.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-477 Update
+
+- SOURCE-BATCH-477 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-477-candidate-discovery.csv.
+- SOURCE-BATCH-477 implemented the Dolphin guard repair in Data/Scripts/Mobiles/Animals/Misc/Dolphin.cs.
+- SOURCE-BATCH-477 source commit: a38542e2; verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-477-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-477-dolphin-guard-repair-closeout.md.
+- SOURCE-BATCH-478+ should run fresh candidate discovery after SOURCE-BATCH-477.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-478 Update
+
+- SOURCE-BATCH-478 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-478-candidate-discovery.csv.
+- SOURCE-BATCH-478 implemented the GraveStones rename guard repair in Data/Scripts/Mobiles/Elementals/Necromental.cs.
+- SOURCE-BATCH-478 source commit: dd574cee; verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-478-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-478-gravestones-rename-guard-repair-closeout.md.
+- SOURCE-BATCH-479+ should run fresh candidate discovery after SOURCE-BATCH-478.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+## SOURCE-BATCH-479 Update
+
+- SOURCE-BATCH-479 created fresh candidate discovery in docs/codebase-audit/outputs/source-batch-479-candidate-discovery.csv.
+- SOURCE-BATCH-479 implemented the Furs label guard repair in Data/Scripts/Items/Trades/Tailor Items/Furs.cs.
+- SOURCE-BATCH-479 source commit: 289ea238; verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-479-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-479-furs-label-guard-repair-closeout.md.
+- SOURCE-BATCH-480+ should run fresh candidate discovery after SOURCE-BATCH-479.
+
+### SOURCE-BATCH-480 Update
+
+- SOURCE-BATCH-480 implemented the RunicSewingKit label guard repair in Data/Scripts/Items/Trades/Tools/RunicSewingKit.cs.
+- SOURCE-BATCH-480 source commit: ae0ce2a7; verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-480-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-480-runicsewingkit-label-guard-repair-closeout.md.
+- SOURCE-BATCH-481+ should run fresh candidate discovery after SOURCE-BATCH-480.
+
+### SOURCE-BATCH-481 Update
+
+- SOURCE-BATCH-481 implemented the LightOfTheWinterSolstice label guard repair in Data/Scripts/Items/Gifts/Holiday/Christmas/Christmas Gifts/LightOfTheWinterSolstice.cs.
+- SOURCE-BATCH-481 source commit: 32e9c54b; verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-481-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-481-lightofthewintersolstice-label-guard-repair-closeout.md.
+- SOURCE-BATCH-482+ should run fresh candidate discovery after SOURCE-BATCH-481.
+
+### SOURCE-BATCH-482 Update
+
+- SOURCE-BATCH-482 implemented the Puke label guard repair in Data/Scripts/Items/Misc/Puke.cs.
+- SOURCE-BATCH-482 source commit: b3ef827a; verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-482-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-482-puke-label-guard-repair-closeout.md.
+- SOURCE-BATCH-483+ should run fresh candidate discovery after SOURCE-BATCH-482.
+
+### SOURCE-BATCH-483 Update
+
+- SOURCE-BATCH-483 implemented the BasePiece label guard repair in Data/Scripts/Items/Misc/Games/BasePiece.cs.
+- SOURCE-BATCH-483 source commit: d384adbe; verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-483-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-483-basepiece-label-guard-repair-closeout.md.
+- SOURCE-BATCH-484+ should run fresh candidate discovery after SOURCE-BATCH-483.
+
+### SOURCE-BATCH-484 Update
+
+- SOURCE-BATCH-484 implemented the DecayedCorpse label guard repair in Data/Scripts/Items/Misc/Bodies/Corpses/DecayedCorpse.cs.
+- SOURCE-BATCH-484 source commit: 3408fa32; verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-484-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-484-decayedcorpse-label-guard-repair-closeout.md.
+- SOURCE-BATCH-485+ should run fresh candidate discovery after SOURCE-BATCH-484.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+### SOURCE-BATCH-485 Update
+
+- SOURCE-BATCH-485 implemented the BaseTool guard repair in Data/Scripts/Items/Trades/Tools/BaseTool.cs.
+- SOURCE-BATCH-485 source commit: 44b627f8; verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-485-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-485-basetool-guard-repair-closeout.md.
+- SOURCE-BATCH-486+ should run fresh candidate discovery after SOURCE-BATCH-485.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+### SOURCE-BATCH-486 Update
+
+- SOURCE-BATCH-486 implemented the BrewCauldron guard repair in Data/Scripts/Items/Potions/Special/BrewCauldron.cs.
+- SOURCE-BATCH-486 source commit: 675cfa9b; verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-486-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-486-brewcauldron-guard-repair-closeout.md.
+- SOURCE-BATCH-487+ should run fresh candidate discovery after SOURCE-BATCH-486.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+### SOURCE-BATCH-487 Update
+
+- SOURCE-BATCH-487 implemented the CookableFood guard repair in Data/Scripts/Items/Food/CookableFood.cs.
+- SOURCE-BATCH-487 source commit: 412f3b4d; verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-487-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-487-cookablefood-guard-repair-closeout.md.
+- SOURCE-BATCH-488+ should run fresh candidate discovery after SOURCE-BATCH-487.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+### SOURCE-BATCH-488 Update
+
+- SOURCE-BATCH-488 implemented the WheatSheaf guard repair in Data/Scripts/Items/Food/Cooking.cs.
+- SOURCE-BATCH-488 source commit: 720c28fb; verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-488-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-488-wheatsheaf-guard-repair-closeout.md.
+- SOURCE-BATCH-489+ should run fresh candidate discovery after SOURCE-BATCH-488.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+### SOURCE-BATCH-489 Update
+
+- SOURCE-BATCH-489 implemented the ParagonChest label guard repair in Data/Scripts/Items/Containers/ParagonChest.cs.
+- SOURCE-BATCH-489 source commit: 7fa6fb26; verification passed.
+- The source-batch target is docs/codebase-audit/outputs/source-batch-489-target.md.
+- The source-batch closeout is docs/codebase-audit/outputs/source-batch-489-paragonchest-label-guard-repair-closeout.md.
+- SOURCE-BATCH-490+ should run fresh candidate discovery after SOURCE-BATCH-489.
+- Gated roadmap batches remain blocked pending explicit approval.
+
+### SOURCE-BATCH-490 Update
+
+- SOURCE-BATCH-490+ ran candidate discovery after SOURCE-BATCH-489.
+- No source edit was selected.
+- Discovery found no remaining safe narrow non-gated candidate for automatic sequential repair under the current executive fences.
+- SOURCE-BATCH-490+ closeout commit: c3809769.
+- The discovery closeout is docs/codebase-audit/outputs/source-batch-490-candidate-discovery-closeout.md.
+- The sequential automatic non-gated runner stops until a narrower target or explicit approval is supplied.
+- Gated roadmap batches remain blocked pending explicit approval.

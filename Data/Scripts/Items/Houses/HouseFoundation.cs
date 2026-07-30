@@ -982,9 +982,17 @@ namespace Server.Multis
 
         private static void EventSink_Speech(SpeechEventArgs e)
         {
-            if (DesignContext.Find(e.Mobile) != null)
+            if (e == null)
+                return;
+
+            Mobile from = e.Mobile;
+
+            if (from == null || from.Deleted)
+                return;
+
+            if (DesignContext.Find(from) != null)
             {
-                e.Mobile.SendLocalizedMessage(1061925); // You cannot speak while customizing your house.
+                from.SendLocalizedMessage(1061925); // You cannot speak while customizing your house.
                 e.Blocked = true;
             }
         }

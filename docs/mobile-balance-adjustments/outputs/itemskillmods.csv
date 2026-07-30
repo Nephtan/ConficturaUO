@@ -1,0 +1,74 @@
+SkillModId,ItemId,CanonicalClassName,SkillNameRaw,CanonicalSkillName,Value,ModifierKind,ImplementationSurface,Status,Notes
+ISM-001,ITEM-001,MindOverMatterTalisman,Magery,Magery,100,CustomSignedEquipSkillMod,custom equip/unequip SkillMod,Ready,Negative or more than five skill mods require custom signed handling.
+ISM-002,ITEM-001,MindOverMatterTalisman,Parry,Parry,-100,CustomSignedEquipSkillMod,custom equip/unequip SkillMod,Ready,Negative or more than five skill mods require custom signed handling.
+ISM-003,ITEM-001,MindOverMatterTalisman,Psychology,Psychology,100,CustomSignedEquipSkillMod,custom equip/unequip SkillMod,Ready,Negative or more than five skill mods require custom signed handling.
+ISM-004,ITEM-004,RuneSword,Elementalism,Elementalism,-100,CustomSignedEquipSkillMod,custom equip/unequip SkillMod,Ready,Negative or more than five skill mods require custom signed handling.
+ISM-005,ITEM-004,RuneSword,Magery,Magery,-100,CustomSignedEquipSkillMod,custom equip/unequip SkillMod,Ready,Negative or more than five skill mods require custom signed handling.
+ISM-006,ITEM-004,RuneSword,Necromancy,Necromancy,-100,CustomSignedEquipSkillMod,custom equip/unequip SkillMod,Ready,Negative or more than five skill mods require custom signed handling.
+ISM-007,ITEM-005,TridentofAtlantis,Fencing,Fencing,50,CustomSignedEquipSkillMod,custom equip/unequip SkillMod,Ready,Negative or more than five skill mods require custom signed handling.
+ISM-008,ITEM-005,TridentofAtlantis,Seafaring,Seafaring,100,CustomSignedEquipSkillMod,custom equip/unequip SkillMod,Ready,Negative or more than five skill mods require custom signed handling.
+ISM-009,ITEM-005,TridentofAtlantis,Hiding,Hiding,-100,CustomSignedEquipSkillMod,custom equip/unequip SkillMod,Ready,Negative or more than five skill mods require custom signed handling.
+ISM-010,ITEM-006,SwordofDarkness,Knightship,Knightship,-100,CustomSignedEquipSkillMod,custom equip/unequip SkillMod,Ready,Negative or more than five skill mods require custom signed handling.
+ISM-011,ITEM-006,SwordofDarkness,Necromancy,Necromancy,100,CustomSignedEquipSkillMod,custom equip/unequip SkillMod,Ready,Negative or more than five skill mods require custom signed handling.
+ISM-012,ITEM-006,SwordofDarkness,Herding,Herding,-100,CustomSignedEquipSkillMod,custom equip/unequip SkillMod,Ready,Negative or more than five skill mods require custom signed handling.
+ISM-013,ITEM-007,SwordofLight,Knightship,Knightship,100,CustomSignedEquipSkillMod,custom equip/unequip SkillMod,Ready,Negative or more than five skill mods require custom signed handling.
+ISM-014,ITEM-007,SwordofLight,Snooping,Snooping,-100,CustomSignedEquipSkillMod,custom equip/unequip SkillMod,Ready,Negative or more than five skill mods require custom signed handling.
+ISM-015,ITEM-007,SwordofLight,Stealth,Stealth,-100,CustomSignedEquipSkillMod,custom equip/unequip SkillMod,Ready,Negative or more than five skill mods require custom signed handling.
+ISM-016,ITEM-008,WolfgangSword,Knightship,Knightship,50,StockPositiveSkillBonus,SkillBonuses.SetValues,Ready,
+ISM-017,ITEM-008,WolfgangSword,Bushido,Bushido,50,StockPositiveSkillBonus,SkillBonuses.SetValues,Ready,
+ISM-018,ITEM-009,GuardianShield,Tactics,Tactics,50,CustomSignedEquipSkillMod,custom equip/unequip SkillMod,Ready,Negative or more than five skill mods require custom signed handling.
+ISM-019,ITEM-009,GuardianShield,Anatomy,Anatomy,-100,CustomSignedEquipSkillMod,custom equip/unequip SkillMod,Ready,Negative or more than five skill mods require custom signed handling.
+ISM-020,ITEM-009,GuardianShield,Magic Resist,MagicResist,50,CustomSignedEquipSkillMod,custom equip/unequip SkillMod,Ready,Negative or more than five skill mods require custom signed handling.
+ISM-021,ITEM-010,Weightoftheworld,Anatomy,Anatomy,10,StockPositiveSkillBonus,SkillBonuses.SetValues,Ready,
+ISM-022,ITEM-011,DeathPenalty,Anatomy,Anatomy,30,CustomSignedEquipSkillMod,custom equip/unequip SkillMod,Ready,Negative or more than five skill mods require custom signed handling.
+ISM-023,ITEM-011,DeathPenalty,Parrying,Parry,-10,CustomSignedEquipSkillMod,custom equip/unequip SkillMod,Ready,Negative or more than five skill mods require custom signed handling.
+ISM-024,ITEM-011,DeathPenalty,Taming,Taming,-100,CustomSignedEquipSkillMod,custom equip/unequip SkillMod,Ready,Negative or more than five skill mods require custom signed handling.
+ISM-025,ITEM-011,DeathPenalty,Herding,Herding,-100,CustomSignedEquipSkillMod,custom equip/unequip SkillMod,Ready,Negative or more than five skill mods require custom signed handling.
+ISM-026,ITEM-012,Disintegrator,Anatomy,Anatomy,50,CustomSignedEquipSkillMod,custom equip/unequip SkillMod,Ready,Negative or more than five skill mods require custom signed handling.
+ISM-027,ITEM-012,Disintegrator,Parrying,Parry,-10,CustomSignedEquipSkillMod,custom equip/unequip SkillMod,Ready,Negative or more than five skill mods require custom signed handling.
+ISM-028,ITEM-013,RobeoftheVoid,Taming,Taming,-100,CustomSignedEquipSkillMod,custom equip/unequip SkillMod,Ready,Negative or more than five skill mods require custom signed handling.
+ISM-029,ITEM-013,RobeoftheVoid,Magery,Magery,20,CustomSignedEquipSkillMod,custom equip/unequip SkillMod,Ready,Negative or more than five skill mods require custom signed handling.
+ISM-030,ITEM-013,RobeoftheVoid,Necromancy,Necromancy,20,CustomSignedEquipSkillMod,custom equip/unequip SkillMod,Ready,Negative or more than five skill mods require custom signed handling.
+ISM-031,ITEM-013,RobeoftheVoid,Parrying,Parry,-10,CustomSignedEquipSkillMod,custom equip/unequip SkillMod,Ready,Negative or more than five skill mods require custom signed handling.
+ISM-032,ITEM-013,RobeoftheVoid,Herding,Herding,-100,CustomSignedEquipSkillMod,custom equip/unequip SkillMod,Ready,Negative or more than five skill mods require custom signed handling.
+ISM-033,ITEM-013,RobeoftheVoid,MagicResist,MagicResist,50,CustomSignedEquipSkillMod,custom equip/unequip SkillMod,Ready,Negative or more than five skill mods require custom signed handling.
+ISM-034,ITEM-014,DreadMace,Necromancy,Necromancy,10,CustomSignedEquipSkillMod,custom equip/unequip SkillMod,Ready,Negative or more than five skill mods require custom signed handling.
+ISM-035,ITEM-014,DreadMace,Poisoning,Poisoning,10,CustomSignedEquipSkillMod,custom equip/unequip SkillMod,Ready,Negative or more than five skill mods require custom signed handling.
+ISM-036,ITEM-014,DreadMace,Knightship,Knightship,-10,CustomSignedEquipSkillMod,custom equip/unequip SkillMod,Ready,Negative or more than five skill mods require custom signed handling.
+ISM-037,ITEM-015,ArmoroftheTitans,Knightship,Knightship,10,CustomSignedEquipSkillMod,custom equip/unequip SkillMod,Ready,Negative or more than five skill mods require custom signed handling.
+ISM-038,ITEM-015,ArmoroftheTitans,Hiding,Hiding,-100,CustomSignedEquipSkillMod,custom equip/unequip SkillMod,Ready,Negative or more than five skill mods require custom signed handling.
+ISM-039,ITEM-015,ArmoroftheTitans,Blacksmithing,Blacksmith,50,CustomSignedEquipSkillMod,custom equip/unequip SkillMod,Ready,Negative or more than five skill mods require custom signed handling.
+ISM-040,ITEM-016,ArmorofthefalseGods,Tactics,Tactics,50,CustomSignedEquipSkillMod,custom equip/unequip SkillMod,Ready,Negative or more than five skill mods require custom signed handling.
+ISM-041,ITEM-016,ArmorofthefalseGods,Hiding,Hiding,-10,CustomSignedEquipSkillMod,custom equip/unequip SkillMod,Ready,Negative or more than five skill mods require custom signed handling.
+ISM-042,ITEM-016,ArmorofthefalseGods,Anatomy,Anatomy,50,CustomSignedEquipSkillMod,custom equip/unequip SkillMod,Ready,Negative or more than five skill mods require custom signed handling.
+ISM-043,ITEM-016,ArmorofthefalseGods,Alchemy,Alchemy,50,CustomSignedEquipSkillMod,custom equip/unequip SkillMod,Ready,Negative or more than five skill mods require custom signed handling.
+ISM-044,ITEM-016,ArmorofthefalseGods,Parrying,Parry,100,CustomSignedEquipSkillMod,custom equip/unequip SkillMod,Ready,Negative or more than five skill mods require custom signed handling.
+ISM-045,ITEM-017,ExodusArmor,Parrying,Parry,-20,CustomSignedEquipSkillMod,custom equip/unequip SkillMod,Ready,Negative or more than five skill mods require custom signed handling.
+ISM-046,ITEM-017,ExodusArmor,Necromancy,Necromancy,20,CustomSignedEquipSkillMod,custom equip/unequip SkillMod,Ready,Negative or more than five skill mods require custom signed handling.
+ISM-047,ITEM-017,ExodusArmor,Anatomy,Anatomy,50,CustomSignedEquipSkillMod,custom equip/unequip SkillMod,Ready,Negative or more than five skill mods require custom signed handling.
+ISM-048,ITEM-018,ExodusMaul,Parrying,Parry,-20,CustomSignedEquipSkillMod,custom equip/unequip SkillMod,Ready,Negative or more than five skill mods require custom signed handling.
+ISM-049,ITEM-018,ExodusMaul,Anatomy,Anatomy,20,CustomSignedEquipSkillMod,custom equip/unequip SkillMod,Ready,Negative or more than five skill mods require custom signed handling.
+ISM-050,ITEM-019,ExodusHead,Parrying,Parry,-20,CustomSignedEquipSkillMod,custom equip/unequip SkillMod,Ready,Negative or more than five skill mods require custom signed handling.
+ISM-051,ITEM-019,ExodusHead,Psychology,Psychology,30,CustomSignedEquipSkillMod,custom equip/unequip SkillMod,Ready,Negative or more than five skill mods require custom signed handling.
+ISM-052,ITEM-019,ExodusHead,Taming,Taming,-100,CustomSignedEquipSkillMod,custom equip/unequip SkillMod,Ready,Negative or more than five skill mods require custom signed handling.
+ISM-053,ITEM-020,ExodusHands,Parrying,Parry,-20,CustomSignedEquipSkillMod,custom equip/unequip SkillMod,Ready,Negative or more than five skill mods require custom signed handling.
+ISM-054,ITEM-020,ExodusHands,Anatomy,Anatomy,30,CustomSignedEquipSkillMod,custom equip/unequip SkillMod,Ready,Negative or more than five skill mods require custom signed handling.
+ISM-055,ITEM-021,HeartofFire,Magic Resist,MagicResist,-20,CustomSignedEquipSkillMod,custom equip/unequip SkillMod,Ready,Negative or more than five skill mods require custom signed handling.
+ISM-056,ITEM-021,HeartofFire,Anatomy,Anatomy,20,CustomSignedEquipSkillMod,custom equip/unequip SkillMod,Ready,Negative or more than five skill mods require custom signed handling.
+ISM-057,ITEM-021,HeartofFire,Psychology,Psychology,100,CustomSignedEquipSkillMod,custom equip/unequip SkillMod,Ready,Negative or more than five skill mods require custom signed handling.
+ISM-058,ITEM-021,HeartofFire,Taming,Taming,-100,CustomSignedEquipSkillMod,custom equip/unequip SkillMod,Ready,Negative or more than five skill mods require custom signed handling.
+ISM-059,ITEM-021,HeartofFire,Stealth,Stealth,-100,CustomSignedEquipSkillMod,custom equip/unequip SkillMod,Ready,Negative or more than five skill mods require custom signed handling.
+ISM-060,ITEM-022,LampofBadWishes,Magic Resist,MagicResist,-50,CustomSignedEquipSkillMod,custom equip/unequip SkillMod,Ready,Negative or more than five skill mods require custom signed handling.
+ISM-061,ITEM-022,LampofBadWishes,Parrying,Parry,-10,CustomSignedEquipSkillMod,custom equip/unequip SkillMod,Ready,Negative or more than five skill mods require custom signed handling.
+ISM-062,ITEM-022,LampofBadWishes,Psychology,Psychology,100,CustomSignedEquipSkillMod,custom equip/unequip SkillMod,Ready,Negative or more than five skill mods require custom signed handling.
+ISM-063,ITEM-022,LampofBadWishes,Stealth,Stealth,-100,CustomSignedEquipSkillMod,custom equip/unequip SkillMod,Ready,Negative or more than five skill mods require custom signed handling.
+ISM-064,ITEM-022,LampofBadWishes,Hiding,Hiding,-100,CustomSignedEquipSkillMod,custom equip/unequip SkillMod,Ready,Negative or more than five skill mods require custom signed handling.
+ISM-065,ITEM-022,LampofBadWishes,Herding,Herding,-100,CustomSignedEquipSkillMod,custom equip/unequip SkillMod,Ready,Negative or more than five skill mods require custom signed handling.
+ISM-066,ITEM-022,LampofBadWishes,Aantomy,Anatomy,50,CustomSignedEquipSkillMod,custom equip/unequip SkillMod,Ready,Negative or more than five skill mods require custom signed handling.
+ISM-067,ITEM-022,LampofBadWishes,Tactics,Tactics,100,CustomSignedEquipSkillMod,custom equip/unequip SkillMod,Ready,Negative or more than five skill mods require custom signed handling.
+ISM-068,ITEM-022,LampofBadWishes,Merchantile,Mercantile,50,CustomSignedEquipSkillMod,custom equip/unequip SkillMod,Ready,Negative or more than five skill mods require custom signed handling.
+ISM-069,ITEM-036,DoomBlade,Anatomy,Anatomy,100,CustomSignedEquipSkillMod,custom equip/unequip SkillMod,Ready,Negative or more than five skill mods require custom signed handling.
+ISM-070,ITEM-036,DoomBlade,Magic Resist,MagicResist,-20,CustomSignedEquipSkillMod,custom equip/unequip SkillMod,Ready,Negative or more than five skill mods require custom signed handling.
+ISM-071,ITEM-036,DoomBlade,Parrying,Parry,-50,CustomSignedEquipSkillMod,custom equip/unequip SkillMod,Ready,Negative or more than five skill mods require custom signed handling.
+ISM-072,ITEM-036,DoomBlade,Hiding,Hiding,-100,CustomSignedEquipSkillMod,custom equip/unequip SkillMod,Ready,Negative or more than five skill mods require custom signed handling.
+ISM-073,ITEM-036,DoomBlade,Bushido,Bushido,50,CustomSignedEquipSkillMod,custom equip/unequip SkillMod,Ready,Negative or more than five skill mods require custom signed handling.

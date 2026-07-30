@@ -23,6 +23,9 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
+            if (from == null || from.Deleted || Deleted)
+                return;
+
             if (
                 from.Skills[SkillName.Magery].Base > 0
                 || from.Skills[SkillName.Necromancy].Base > 0
@@ -168,7 +171,14 @@ namespace Server.Items
 
             public override void OnResponse(NetState state, RelayInfo info)
             {
+                if (state == null || info == null)
+                    return;
+
                 Mobile from = state.Mobile;
+
+                if (from == null || from.Deleted)
+                    return;
+
                 from.SendSound(0x5C9);
                 bool magicAct = false;
                 Skill skill = from.Skills[SkillName.Necromancy];

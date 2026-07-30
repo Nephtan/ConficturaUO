@@ -12,15 +12,15 @@ Code-Verified: 2026-05-07
 
 | Script | Namespace | Role |
 | --- | --- | --- |
-| `Data/Scripts/Custom/CloneOfflinePlayerCharacters/CloneOfflinePlayerCharacters.cs` | `Server.Custom.Confictura.CloneOfflinePlayerCharacters` | Entry point, `EventSink.Login`/`EventSink.Logout` hooks, clone creation/deletion, startup/manual synchronization. |
-| `Data/Scripts/Custom/CloneOfflinePlayerCharacters/CharacterClone.cs` | `Server.Custom.Confictura.CloneOfflinePlayerCharacters` | `BaseCreature` replica of a `PlayerMobile`; combat, paperdoll display, hiring, skill teaching, death handling, and serialization. |
-| `Data/Scripts/Custom/CloneOfflinePlayerCharacters/CloneThings.cs` | `Server.Custom.Confictura.CloneOfflinePlayerCharacters` | Reflection-based helper for cloning mobile state, equipped items, backpack trees, and mounts. |
-| `Data/Scripts/Custom/CloneOfflinePlayerCharacters/BackpackClone.cs` | `Server.Custom.Confictura.CloneOfflinePlayerCharacters` | `Backpack` subclass used for cloned pack contents and access denial messaging. |
-| `Data/Scripts/Custom/CloneOfflinePlayerCharacters/MountClone.cs` | `Server.Custom.Confictura.CloneOfflinePlayerCharacters` | `BaseMount` subclass copied from the original player's current mount. |
-| `Data/Scripts/Custom/CloneOfflinePlayerCharacters/EtherealMountClone.cs` | `Server.Custom.Confictura.CloneOfflinePlayerCharacters` | `EtherealMount` subclass copied from the original player's current ethereal mount. |
-| `Data/Scripts/Custom/CloneOfflinePlayerCharacters/CheckClonesCommand.cs` | `Server.Custom.Confictura.CloneOfflinePlayerCharacters` | Administrator command wrapper around startup clone synchronization. |
+| `Data/Scripts/Custom/PvE/CloneOfflinePlayerCharacters/CloneOfflinePlayerCharacters.cs` | `Server.Custom.Confictura.CloneOfflinePlayerCharacters` | Entry point, `EventSink.Login`/`EventSink.Logout` hooks, clone creation/deletion, startup/manual synchronization. |
+| `Data/Scripts/Custom/PvE/CloneOfflinePlayerCharacters/CharacterClone.cs` | `Server.Custom.Confictura.CloneOfflinePlayerCharacters` | `BaseCreature` replica of a `PlayerMobile`; combat, paperdoll display, hiring, skill teaching, death handling, and serialization. |
+| `Data/Scripts/Custom/PvE/CloneOfflinePlayerCharacters/CloneThings.cs` | `Server.Custom.Confictura.CloneOfflinePlayerCharacters` | Reflection-based helper for cloning mobile state, equipped items, backpack trees, and mounts. |
+| `Data/Scripts/Custom/PvE/CloneOfflinePlayerCharacters/BackpackClone.cs` | `Server.Custom.Confictura.CloneOfflinePlayerCharacters` | `Backpack` subclass used for cloned pack contents and access denial messaging. |
+| `Data/Scripts/Custom/PvE/CloneOfflinePlayerCharacters/MountClone.cs` | `Server.Custom.Confictura.CloneOfflinePlayerCharacters` | `BaseMount` subclass copied from the original player's current mount. |
+| `Data/Scripts/Custom/PvE/CloneOfflinePlayerCharacters/EtherealMountClone.cs` | `Server.Custom.Confictura.CloneOfflinePlayerCharacters` | `EtherealMount` subclass copied from the original player's current ethereal mount. |
+| `Data/Scripts/Custom/PvE/CloneOfflinePlayerCharacters/CheckClonesCommand.cs` | `Server.Custom.Confictura.CloneOfflinePlayerCharacters` | Administrator command wrapper around startup clone synchronization. |
 
-`Data/Scripts/Scripts.csproj` currently lists only `CloneOfflinePlayerCharacters.cs` from this folder. The maintained MSBuild workflow therefore omits the sibling classes required by the entry point unless the project file is corrected.
+`Data/Scripts/Scripts.csproj` currently lists all seven C# scripts from this folder for Visual Studio project hygiene. Live runtime script compilation still comes from recursive `.cs` discovery under `Data/Scripts`.
 
 ## Administrator Surface
 
@@ -243,9 +243,89 @@ Other scripts include clone-specific guards:
 
 ## Known Issues
 
-* `Data/Scripts/Scripts.csproj` compiles only `CloneOfflinePlayerCharacters.cs` from this folder. Under the maintained project build workflow, the entry point references `CharacterClone` and `CloneThings` but the project omits `CharacterClone.cs`, `CloneThings.cs`, `BackpackClone.cs`, `MountClone.cs`, `EtherealMountClone.cs`, and `CheckClonesCommand.cs`.
 * `CheckFirstRun()` does not check `PlayerMobile.NetState` or any other offline marker. When `[CheckClones` is run while players are online, it can create clones for online players and then move every alive player-access `PlayerMobile` to `Map.Internal`.
 * `CharacterClone.OnThink()` and `CalculateBaseDamage()` dereference `Original` without a null/deleted guard. Deserialization deletes clones whose `Original` is already null, but a GM property edit, deleted original, or broken reference after load can still leave runtime null-reference paths.
 * Hire accounting is not restored after world load. The clone writes only `Original`; pay rate, held gold, hire flag, pay timer, and `HireTable` are runtime-only, so an already-controlled clone can reload without a restarted pay timer.
 * `CloneThings.CloneItem()` silently swallows cloning exceptions. Unsupported or broken item types disappear from the clone without logging, which makes equipment/backpack copy failures hard to diagnose.
 * `MountClone` and `EtherealMountClone` copy writable properties through reflection without a try/catch. A throwing mount property setter can abort clone creation during logout or synchronization.
+
+## Source Trace
+
+POST-BATCH-T reviewed this page on 2026-06-14T21:09:11.0049244-05:00 against current source and audit registers.
+
+- Canonical status: Canonical.
+- Queue rows: PBN-0013.
+- Backlog rows: RB-06678.
+- Audit registers used: documentation-truth-table.csv, runtime-hook-map.csv, serialization-register.csv, and project-truth-register.csv.
+
+### Source Files Reviewed
+
+- Data/Scripts/Custom/PvE/CloneOfflinePlayerCharacters/CloneOfflinePlayerCharacters.cs (CurrentFile)
+- Data/Scripts/Custom/PvE/CloneOfflinePlayerCharacters/CharacterClone.cs (CurrentFile)
+- Data/Scripts/Custom/PvE/CloneOfflinePlayerCharacters/CloneThings.cs (CurrentFile)
+- Data/Scripts/Custom/PvE/CloneOfflinePlayerCharacters/BackpackClone.cs (CurrentFile)
+- Data/Scripts/Custom/PvE/CloneOfflinePlayerCharacters/MountClone.cs (CurrentFile)
+- Data/Scripts/Custom/PvE/CloneOfflinePlayerCharacters/EtherealMountClone.cs (CurrentFile)
+- Data/Scripts/Custom/PvE/CloneOfflinePlayerCharacters/CheckClonesCommand.cs (CurrentFile)
+- Data/Scripts/Scripts.csproj (CurrentFile)
+- Data/Scripts/System/Skills/Stealing.cs (CurrentFile)
+- Data/Scripts/System/Misc/Logs.cs (CurrentFile)
+- Data/Scripts/Mobiles/Base/Behavior.cs (CurrentFile)
+- Data/Scripts/Custom/NPC Control/CloneCommands.cs (CurrentFile)
+- Data/Scripts/Custom/NPC Control/StaffCommands/CloneMe.cs (CurrentFile)
+
+### Runtime Evidence
+
+- Hook summary: Command=4; Event=4; Gump=9; Initialize=6; Login=1; Logout=1; Speech=3; Timer=5; WorldLoad=1.
+- Data/Scripts/Custom/NPC Control/CloneCommands.cs:L19 Initialize Initialize access=GlobalOrInternal
+- Data/Scripts/Custom/NPC Control/CloneCommands.cs:L21 Command CommandSystem.Register access=Unknown
+- Data/Scripts/Custom/NPC Control/CloneCommands.cs:L22 Command CommandSystem.Register access=Unknown
+- Data/Scripts/Custom/NPC Control/StaffCommands/CloneMe.cs:L15 Initialize Initialize access=GlobalOrInternal
+- Data/Scripts/Custom/NPC Control/StaffCommands/CloneMe.cs:L17 Command CommandSystem.Register access=Unknown
+- Data/Scripts/Custom/PvE/CloneOfflinePlayerCharacters/CharacterClone.cs:L500 Timer CustomTimerSubclass access=GlobalOrInternal
+- Data/Scripts/Custom/PvE/CloneOfflinePlayerCharacters/CheckClonesCommand.cs:L17 Initialize Initialize access=GlobalOrInternal
+- Data/Scripts/Custom/PvE/CloneOfflinePlayerCharacters/CheckClonesCommand.cs:L19 Command CommandSystem.Register access=Unknown
+- Data/Scripts/Custom/PvE/CloneOfflinePlayerCharacters/CloneOfflinePlayerCharacters.cs:L19 Initialize Initialize access=GlobalOrInternal
+- Data/Scripts/Custom/PvE/CloneOfflinePlayerCharacters/CloneOfflinePlayerCharacters.cs:L21 Event EventSink access=GlobalOrInternal
+- Data/Scripts/Custom/PvE/CloneOfflinePlayerCharacters/CloneOfflinePlayerCharacters.cs:L22 Event EventSink access=GlobalOrInternal
+- Data/Scripts/Custom/PvE/CloneOfflinePlayerCharacters/CloneOfflinePlayerCharacters.cs:L200 Logout OnLogout access=Internal
+- Additional hook rows are recorded in runtime-hook-map.csv for this source set.
+
+### Serialization Evidence
+
+- Serialized rows matched: 9.
+- Data/Scripts/Custom/NPC Control/CloneCommands.cs:Server.Commands.CloneItem version=0 serialize=L1179 deserialize=L1189 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Custom/NPC Control/CloneCommands.cs:Server.Commands.ControlItem version=4 serialize=L1413 deserialize=L1443 alignment=CountMatchNeedsTypeReview:UnknownWrites=6
+- Data/Scripts/Custom/PvE/CloneOfflinePlayerCharacters/BackpackClone.cs:Server.Custom.Confictura.CloneOfflinePlayerCharacters.BackpackClone version=0 serialize=L46 deserialize=L52 alignment=CountMismatch:Writes=0;Reads=1
+- Data/Scripts/Custom/PvE/CloneOfflinePlayerCharacters/CharacterClone.cs:Server.Custom.Confictura.CloneOfflinePlayerCharacters.CharacterClone version=0 serialize=L272 deserialize=L279 alignment=CountMismatch:Writes=1;Reads=2
+- Data/Scripts/Custom/PvE/CloneOfflinePlayerCharacters/EtherealMountClone.cs:Server.Custom.Confictura.CloneOfflinePlayerCharacters.EtherealMountClone version=0 serialize=L36 deserialize=L42 alignment=CountMismatch:Writes=0;Reads=1
+- Data/Scripts/Custom/PvE/CloneOfflinePlayerCharacters/MountClone.cs:Server.Custom.Confictura.CloneOfflinePlayerCharacters.MountClone version=0 serialize=L45 deserialize=L51 alignment=CountMismatch:Writes=0;Reads=1
+- Data/Scripts/Mobiles/Base/Behavior.cs:Server.HeldLight version=0 serialize=L1138 deserialize=L1144 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Mobiles/Base/Behavior.cs:Server.TransferItem version=0 serialize=L11753 deserialize=L11760 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/System/Misc/Logs.cs:Unknown version=Unknown serialize=L deserialize=L alignment=AlignedByCountAndKnownTypes
+
+### Project And Runtime Coverage
+
+- Data/Scripts/Custom/NPC Control/CloneCommands.cs=Keep
+- Data/Scripts/Custom/NPC Control/CloneCommands.cs=Keep
+- Data/Scripts/Custom/NPC Control/StaffCommands/CloneMe.cs=Keep
+- Data/Scripts/Custom/NPC Control/StaffCommands/CloneMe.cs=Keep
+- Data/Scripts/Custom/PvE/CloneOfflinePlayerCharacters/BackpackClone.cs=Keep
+- Data/Scripts/Custom/PvE/CloneOfflinePlayerCharacters/BackpackClone.cs=Keep
+- Data/Scripts/Custom/PvE/CloneOfflinePlayerCharacters/CharacterClone.cs=Keep
+- Data/Scripts/Custom/PvE/CloneOfflinePlayerCharacters/CharacterClone.cs=Keep
+- Data/Scripts/Custom/PvE/CloneOfflinePlayerCharacters/CheckClonesCommand.cs=Keep
+- Data/Scripts/Custom/PvE/CloneOfflinePlayerCharacters/CheckClonesCommand.cs=Keep
+- Data/Scripts/Custom/PvE/CloneOfflinePlayerCharacters/CloneOfflinePlayerCharacters.cs=Keep
+- Data/Scripts/Custom/PvE/CloneOfflinePlayerCharacters/CloneOfflinePlayerCharacters.cs=Keep
+- Data/Scripts/Custom/PvE/CloneOfflinePlayerCharacters/CloneThings.cs=Keep
+- Data/Scripts/Custom/PvE/CloneOfflinePlayerCharacters/CloneThings.cs=Keep
+- Data/Scripts/Custom/PvE/CloneOfflinePlayerCharacters/EtherealMountClone.cs=Keep
+- Data/Scripts/Custom/PvE/CloneOfflinePlayerCharacters/EtherealMountClone.cs=Keep
+- Data/Scripts/Custom/PvE/CloneOfflinePlayerCharacters/MountClone.cs=Keep
+- Data/Scripts/Custom/PvE/CloneOfflinePlayerCharacters/MountClone.cs=Keep
+- Data/Scripts/Mobiles/Base/Behavior.cs=Keep
+- Data/Scripts/Mobiles/Base/Behavior.cs=Keep
+- Additional project-truth rows are recorded in project-truth-register.csv for this source set.
+
+No C# source, project files, XML/config/data files, namespaces, serializers, gameplay behavior, or migration policy were changed in POST-BATCH-T.

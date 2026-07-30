@@ -73,65 +73,74 @@ namespace Server.Mobiles
             int CanDie = 0;
             Mobile winner = this;
 
-            foreach (Mobile m in this.GetMobilesInRange(30))
+            IPooledEnumerable eable1 = this.GetMobilesInRange(30);
+
+            try
             {
-                if (m is PlayerMobile && !m.Blessed)
+                foreach (Mobile m in eable1)
                 {
-                    if (this.Name == "Astaroth")
+                    if (m is PlayerMobile && !m.Blessed)
                     {
-                        Item flame = m.Backpack.FindItemByType(typeof(CandleOfLove));
-                        if (flame != null)
+                        if (this.Name == "Astaroth")
                         {
-                            CanDie = 1;
-                            winner = m;
-                            m.SendMessage(
-                                "The Candle of Love has vanished after dispatching the Shadowlord."
-                            );
-                            Server.Items.QuestSouvenir.GiveReward(
-                                m,
-                                flame.Name,
-                                flame.Hue,
-                                flame.ItemID
-                            );
+                            Item flame = m.Backpack.FindItemByType(typeof(CandleOfLove));
+                            if (flame != null)
+                            {
+                                CanDie = 1;
+                                winner = m;
+                                m.SendMessage(
+                                    "The Candle of Love has vanished after dispatching the Shadowlord."
+                                );
+                                Server.Items.QuestSouvenir.GiveReward(
+                                    m,
+                                    flame.Name,
+                                    flame.Hue,
+                                    flame.ItemID
+                                );
+                            }
                         }
-                    }
-                    else if (this.Name == "Faulinei")
-                    {
-                        Item flame = m.Backpack.FindItemByType(typeof(BookOfTruth));
-                        if (flame != null)
+                        else if (this.Name == "Faulinei")
                         {
-                            CanDie = 1;
-                            winner = m;
-                            m.SendMessage(
-                                "The Book of Truth has vanished after dispatching the Shadowlord."
-                            );
-                            Server.Items.QuestSouvenir.GiveReward(
-                                m,
-                                flame.Name,
-                                flame.Hue,
-                                flame.ItemID
-                            );
+                            Item flame = m.Backpack.FindItemByType(typeof(BookOfTruth));
+                            if (flame != null)
+                            {
+                                CanDie = 1;
+                                winner = m;
+                                m.SendMessage(
+                                    "The Book of Truth has vanished after dispatching the Shadowlord."
+                                );
+                                Server.Items.QuestSouvenir.GiveReward(
+                                    m,
+                                    flame.Name,
+                                    flame.Hue,
+                                    flame.ItemID
+                                );
+                            }
                         }
-                    }
-                    else
-                    {
-                        Item flame = m.Backpack.FindItemByType(typeof(BellOfCourage));
-                        if (flame != null)
+                        else
                         {
-                            CanDie = 1;
-                            winner = m;
-                            m.SendMessage(
-                                "The Bell of Courage has vanished after dispatching the Shadowlord."
-                            );
-                            Server.Items.QuestSouvenir.GiveReward(
-                                m,
-                                flame.Name,
-                                flame.Hue,
-                                flame.ItemID
-                            );
+                            Item flame = m.Backpack.FindItemByType(typeof(BellOfCourage));
+                            if (flame != null)
+                            {
+                                CanDie = 1;
+                                winner = m;
+                                m.SendMessage(
+                                    "The Bell of Courage has vanished after dispatching the Shadowlord."
+                                );
+                                Server.Items.QuestSouvenir.GiveReward(
+                                    m,
+                                    flame.Name,
+                                    flame.Hue,
+                                    flame.ItemID
+                                );
+                            }
                         }
                     }
                 }
+            }
+            finally
+            {
+                eable1.Free();
             }
 
             if (CanDie == 0)

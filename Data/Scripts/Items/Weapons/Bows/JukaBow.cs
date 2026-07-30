@@ -38,11 +38,14 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
+            if (from == null || from.Deleted || Deleted)
+                return;
+
             if (IsModified)
             {
                 from.SendMessage("That has already been modified.");
             }
-            else if (!IsChildOf(from.Backpack))
+            else if (from.Backpack == null || !IsChildOf(from.Backpack))
             {
                 from.SendMessage("This must be in your backpack to modify it.");
             }
@@ -64,9 +67,12 @@ namespace Server.Items
 
         public void OnTargetGears(Mobile from, object targ)
         {
+            if (from == null || from.Deleted || Deleted)
+                return;
+
             Gears g = targ as Gears;
 
-            if (g == null || !g.IsChildOf(from.Backpack))
+            if (g == null || g.Deleted || from.Backpack == null || !g.IsChildOf(from.Backpack))
             {
                 from.SendMessage("Those are not gears."); // Apparently gears that aren't in your backpack aren't really gears at all. :-(
             }
@@ -74,7 +80,7 @@ namespace Server.Items
             {
                 from.SendMessage("That has already been modified.");
             }
-            else if (!IsChildOf(from.Backpack))
+            else if (from.Backpack == null || !IsChildOf(from.Backpack))
             {
                 from.SendMessage("This must be in your backpack to modify it.");
             }

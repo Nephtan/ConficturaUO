@@ -150,3 +150,69 @@ The extraordinary guild tools are normal world-save `Item` subclasses. Each has 
 * The gump layout has space for 24 visible entries. A target with more than 24 eligible handlers can wrap back onto column two and overwrite earlier rows/buttons.
 * `AttributeHandler.IsUpgradable` can re-enable `MageArmor` on `BaseArmor` after earlier checks set `allowed = false` when the armor already has `ArmorMeditationAllowance.All`.
 * Target callbacks ignore non-`Item` targets without feedback.
+
+## Source Trace
+
+POST-BATCH-T reviewed this page on 2026-06-14T21:09:11.0049244-05:00 against current source and audit registers.
+
+- Canonical status: Canonical.
+- Queue rows: PBN-0113.
+- Backlog rows: RB-06788.
+- Audit registers used: documentation-truth-table.csv, runtime-hook-map.csv, serialization-register.csv, and project-truth-register.csv.
+
+### Source Files Reviewed
+
+- Data/Scripts/Trades/Guild/EnhancementStoneProcess.cs (CurrentFile)
+- Data/Scripts/Trades/Guild/AttributeHandler.cs (CurrentFile)
+- Data/Scripts/Trades/Guild/Gumps/EnhancementGump.cs (CurrentFile)
+- Data/Scripts/Trades/Guild/GuildHammer.cs (CurrentFile)
+- Data/Scripts/Trades/Guild/GuildCarpentry.cs (CurrentFile)
+- Data/Scripts/Trades/Guild/GuildFletching.cs (CurrentFile)
+- Data/Scripts/Trades/Guild/GuildSewing.cs (CurrentFile)
+- Data/Scripts/Trades/Guild/GuildTinkering.cs (CurrentFile)
+- Data/Scripts/Mobiles/Base/StoreSalesList.cs (CurrentFile)
+- Data/Scripts/Scripts.csproj (CurrentFile)
+
+### Runtime Evidence
+
+- Hook summary: Gump=7; Initialize=1.
+- Data/Scripts/Trades/Guild/AttributeHandler.cs:L37 Initialize Initialize access=GlobalOrInternal
+- Data/Scripts/Trades/Guild/EnhancementStoneProcess.cs:L61 Gump SendGump access=Internal
+- Data/Scripts/Trades/Guild/GuildCarpentry.cs:L128 Gump SendGump access=Internal
+- Data/Scripts/Trades/Guild/GuildFletching.cs:L128 Gump SendGump access=Internal
+- Data/Scripts/Trades/Guild/GuildHammer.cs:L127 Gump SendGump access=Internal
+- Data/Scripts/Trades/Guild/GuildSewing.cs:L132 Gump SendGump access=Internal
+- Data/Scripts/Trades/Guild/GuildTinkering.cs:L128 Gump SendGump access=Internal
+- Data/Scripts/Trades/Guild/Gumps/EnhancementGump.cs:L79 Gump OnResponse access=Internal
+
+### Serialization Evidence
+
+- Serialized rows matched: 5.
+- Data/Scripts/Trades/Guild/GuildCarpentry.cs:Server.Items.GuildCarpentry version=0 serialize=L189 deserialize=L195 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Trades/Guild/GuildFletching.cs:Server.Items.GuildFletching version=0 serialize=L175 deserialize=L181 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Trades/Guild/GuildHammer.cs:Server.Items.GuildHammer version=0 serialize=L188 deserialize=L194 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Trades/Guild/GuildSewing.cs:Server.Items.GuildSewing version=0 serialize=L213 deserialize=L219 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Trades/Guild/GuildTinkering.cs:Server.Items.GuildTinkering version=0 serialize=L177 deserialize=L183 alignment=AlignedByCountAndKnownTypes
+
+### Project And Runtime Coverage
+
+- Data/Scripts/Mobiles/Base/StoreSalesList.cs=Keep
+- Data/Scripts/Mobiles/Base/StoreSalesList.cs=Keep
+- Data/Scripts/Trades/Guild/AttributeHandler.cs=Keep
+- Data/Scripts/Trades/Guild/AttributeHandler.cs=Keep
+- Data/Scripts/Trades/Guild/EnhancementStoneProcess.cs=Keep
+- Data/Scripts/Trades/Guild/EnhancementStoneProcess.cs=Keep
+- Data/Scripts/Trades/Guild/GuildCarpentry.cs=Keep
+- Data/Scripts/Trades/Guild/GuildCarpentry.cs=Keep
+- Data/Scripts/Trades/Guild/GuildFletching.cs=Keep
+- Data/Scripts/Trades/Guild/GuildFletching.cs=Keep
+- Data/Scripts/Trades/Guild/GuildHammer.cs=Keep
+- Data/Scripts/Trades/Guild/GuildHammer.cs=Keep
+- Data/Scripts/Trades/Guild/GuildSewing.cs=Keep
+- Data/Scripts/Trades/Guild/GuildSewing.cs=Keep
+- Data/Scripts/Trades/Guild/GuildTinkering.cs=Keep
+- Data/Scripts/Trades/Guild/GuildTinkering.cs=Keep
+- Data/Scripts/Trades/Guild/Gumps/EnhancementGump.cs=Keep
+- Data/Scripts/Trades/Guild/Gumps/EnhancementGump.cs=Keep
+
+No C# source, project files, XML/config/data files, namespaces, serializers, gameplay behavior, or migration policy were changed in POST-BATCH-T.

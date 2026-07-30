@@ -47,16 +47,25 @@ namespace Server.Items
             )
                 return true;
 
-            foreach (Mobile m in from.GetMobilesInRange(20))
+            IPooledEnumerable eable = from.GetMobilesInRange(20);
+
+            try
             {
-                if (
-                    m is BaseCreature
-                    && !BaseCreature.IsCitizen(m)
-                    && !((BaseCreature)m).Controlled
-                    && !((BaseCreature)m).Summoned
-                    && ((BaseCreature)m).FightMode == FightMode.Closest
-                )
-                    return true;
+                foreach (Mobile m in eable)
+                {
+                    if (
+                        m is BaseCreature
+                        && !BaseCreature.IsCitizen(m)
+                        && !((BaseCreature)m).Controlled
+                        && !((BaseCreature)m).Summoned
+                        && ((BaseCreature)m).FightMode == FightMode.Closest
+                    )
+                        return true;
+                }
+            }
+            finally
+            {
+                eable.Free();
             }
 
             return false;
@@ -81,15 +90,24 @@ namespace Server.Items
 
         private bool CampsNearby()
         {
-            foreach (Item i in GetItemsInRange(20))
-            {
-                if (i is Campfire)
-                {
-                    Campfire fire = (Campfire)i;
+            IPooledEnumerable eable = GetItemsInRange(20);
 
-                    if (fire.Status != CampfireStatus.Off)
-                        return true;
+            try
+            {
+                foreach (Item i in eable)
+                {
+                    if (i is Campfire)
+                    {
+                        Campfire fire = (Campfire)i;
+
+                        if (fire.Status != CampfireStatus.Off)
+                            return true;
+                    }
                 }
+            }
+            finally
+            {
+                eable.Free();
             }
 
             return false;

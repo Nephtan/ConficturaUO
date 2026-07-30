@@ -507,6 +507,9 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile m)
         {
+            if (m == null || m.Deleted || Deleted)
+                return;
+
             m.PlaySound(Utility.Random(0x3A, 3));
 
             if (m.Body.IsHuman && !m.Mounted)

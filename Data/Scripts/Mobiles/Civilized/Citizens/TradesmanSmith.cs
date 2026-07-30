@@ -28,37 +28,45 @@ namespace Server.Mobiles
         {
             if (DateTime.Now >= m_NextTalk)
             {
-                foreach (Item anvil in this.GetItemsInRange(1))
+                IPooledEnumerable eable1 = this.GetItemsInRange(1);
+                try
                 {
-                    if (anvil is AnvilHit)
+                    foreach (Item anvil in eable1)
                     {
-                        if (
-                            this.FindItemOnLayer(Layer.FirstValid) != null
-                            && !(this.FindItemOnLayer(Layer.FirstValid) is Club)
-                        )
+                        if (anvil is AnvilHit)
                         {
-                            this.Delete();
+                            if (
+                                this.FindItemOnLayer(Layer.FirstValid) != null
+                                && !(this.FindItemOnLayer(Layer.FirstValid) is Club)
+                            )
+                            {
+                                this.Delete();
+                            }
+                            else if (
+                                this.FindItemOnLayer(Layer.OneHanded) != null
+                                && !(this.FindItemOnLayer(Layer.OneHanded) is Club)
+                            )
+                            {
+                                this.Delete();
+                            }
+                            else if (
+                                this.FindItemOnLayer(Layer.TwoHanded) != null
+                                && !(this.FindItemOnLayer(Layer.TwoHanded) is Club)
+                            )
+                            {
+                                this.Delete();
+                            }
+                            AnvilHit smith = (AnvilHit)anvil;
+                            smith.OnDoubleClick(this);
+                            m_NextTalk = (
+                                DateTime.Now + TimeSpan.FromSeconds(Utility.RandomMinMax(2, 5))
+                            );
                         }
-                        else if (
-                            this.FindItemOnLayer(Layer.OneHanded) != null
-                            && !(this.FindItemOnLayer(Layer.OneHanded) is Club)
-                        )
-                        {
-                            this.Delete();
-                        }
-                        else if (
-                            this.FindItemOnLayer(Layer.TwoHanded) != null
-                            && !(this.FindItemOnLayer(Layer.TwoHanded) is Club)
-                        )
-                        {
-                            this.Delete();
-                        }
-                        AnvilHit smith = (AnvilHit)anvil;
-                        smith.OnDoubleClick(this);
-                        m_NextTalk = (
-                            DateTime.Now + TimeSpan.FromSeconds(Utility.RandomMinMax(2, 5))
-                        );
                     }
+                }
+                finally
+                {
+                    eable1.Free();
                 }
             }
         }

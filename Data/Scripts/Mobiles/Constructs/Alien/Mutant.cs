@@ -79,12 +79,20 @@ namespace Server.Mobiles
             {
                 int goo = 0;
 
-                foreach (Item splash in this.GetItemsInRange(10))
+                IPooledEnumerable eable1 = this.GetItemsInRange(10);
+                try
                 {
-                    if (splash is MonsterSplatter && splash.Name == "toxic blood")
+                    foreach (Item splash in eable1)
                     {
-                        goo++;
+                        if (splash is MonsterSplatter && splash.Name == "toxic blood")
+                        {
+                            goo++;
+                        }
                     }
+                }
+                finally
+                {
+                    eable1.Free();
                 }
 
                 if (goo == 0)

@@ -104,6 +104,14 @@ namespace Server.Misc
             new AutoRestart().Start();
         }
 
+        private static Mobile GetCommandMobile(CommandEventArgs e)
+        {
+            if (e == null || e.Mobile == null || e.Mobile.Deleted)
+                return null;
+
+            return e.Mobile;
+        }
+
         private static RestartType RestartFrequency = RestartType.Weekly; // The server restarts daily or weekly on a particular day of the week.
         private static DayOfWeek RestartDay = DayOfWeek.Wednesday; // IF the server restarts weekly, the day of week is set here.
         private static TimeSpan RestartDelay = TimeSpan.Zero; // Here we set how long to delay the restart once the timer has finished.
@@ -226,8 +234,12 @@ namespace Server.Misc
 
         private static void AutoRestartLoad_OnCommand(CommandEventArgs e)
         {
-            e.Mobile.SendMessage("Target the AutoRestarter whose settings you would like to load.");
-            e.Mobile.Target = new AutoRestartLoadTarget();
+            Mobile from = GetCommandMobile(e);
+            if (from == null)
+                return;
+
+            from.SendMessage("Target the AutoRestarter whose settings you would like to load.");
+            from.Target = new AutoRestartLoadTarget();
         }
 
         private class AutoRestartLoadTarget : Target
@@ -237,6 +249,9 @@ namespace Server.Misc
 
             protected override void OnTarget(Mobile from, object targeted)
             {
+                if (from == null || from.Deleted)
+                    return;
+
                 if (targeted is AutoRestarter)
                 {
                     AutoRestarter ar = (AutoRestarter)targeted;
@@ -247,11 +262,9 @@ namespace Server.Misc
 
         private static void AutoRestartSave_OnCommand(CommandEventArgs e)
         {
-            if (e.Mobile is PlayerMobile)
+            PlayerMobile pm = GetCommandMobile(e) as PlayerMobile;
+            if (pm != null)
             {
-                PlayerMobile pm = (PlayerMobile)e.Mobile;
-                if (pm == null || pm.Deleted)
-                    return;
                 Server.Items.Container pack = pm.Backpack;
                 if (pack == null || pack.Deleted)
                     return;
@@ -278,10 +291,14 @@ namespace Server.Misc
         [Description("Sets the text for AutoRestart warning messages.")]
         private static void AutoRestartText_OnCommand(CommandEventArgs e)
         {
+            Mobile from = GetCommandMobile(e);
+            if (from == null)
+                return;
+
             try
             {
                 RestartMessage = e.ArgString;
-                e.Mobile.SendAsciiMessage(
+                from.SendAsciiMessage(
                     WarningColor,
                     "New Restart Message: {0}.",
                     RestartMessage
@@ -289,7 +306,7 @@ namespace Server.Misc
             }
             catch
             {
-                e.Mobile.SendMessage(
+                from.SendMessage(
                     "Usage: AR-Text <string> ((  ex:  [AR-Text The Shard will be restarting for a major update  ))"
                 );
             }
@@ -299,14 +316,18 @@ namespace Server.Misc
         [Description("Sets the color for AutoRestart warning messages.")]
         private static void AutoRestartColor_OnCommand(CommandEventArgs e)
         {
+            Mobile from = GetCommandMobile(e);
+            if (from == null)
+                return;
+
             try
             {
                 WarningColor = getWarningColor(e.Arguments[0].ToLower());
-                e.Mobile.SendAsciiMessage(WarningColor, "This is the new Warning Color.");
+                from.SendAsciiMessage(WarningColor, "This is the new Warning Color.");
             }
             catch
             {
-                e.Mobile.SendMessage("Usage: AR-Color <name of color> ((  ex:  [AR-Color Blue  ))");
+                from.SendMessage("Usage: AR-Color <name of color> ((  ex:  [AR-Color Blue  ))");
             }
         }
 
@@ -314,11 +335,15 @@ namespace Server.Misc
         [Description("Sets the time of day for the AutoRestart feature.")]
         private static void AutoRestartTime_OnCommand(CommandEventArgs e)
         {
+            Mobile from = GetCommandMobile(e);
+            if (from == null)
+                return;
+
             try
             {
                 RestartTimeOfDay = TimeSpan.FromHours(double.Parse(e.Arguments[0]));
                 ResetWarningDelayBools(true);
-                e.Mobile.SendMessage(
+                from.SendMessage(
                     "Restart time set to {0} {1}.",
                     m_RestartDateTime.ToShortTimeString(),
                     RestartFrequency == RestartType.Daily ? "Daily" : RestartDay.ToString()
@@ -326,7 +351,7 @@ namespace Server.Misc
             }
             catch
             {
-                e.Mobile.SendMessage(
+                from.SendMessage(
                     "Usage: ARTime <int> ((int is the hour of the day to restart))"
                 );
             }
@@ -336,7 +361,11 @@ namespace Server.Misc
         [Description("Displays the time of day set for AutoRestart.")]
         private static void AutoRestartWhen_OnCommand(CommandEventArgs e)
         {
-            e.Mobile.SendMessage(
+            Mobile from = GetCommandMobile(e);
+            if (from == null)
+                return;
+
+            from.SendMessage(
                 "AutoRestart is {0}scheduled for {1} {2}.",
                 Enabled ? "" : "DISABLED, but if enabled would be ",
                 m_RestartDateTime.ToShortTimeString(),
@@ -348,22 +377,34 @@ namespace Server.Misc
         [Description("Disables the AutoRestart feature.")]
         private static void AutoRestartOff_OnCommand(CommandEventArgs e)
         {
+            Mobile from = GetCommandMobile(e);
+            if (from == null)
+                return;
+
             m_Enabled = false;
-            e.Mobile.SendMessage("AutoRestart is now DISABLED.");
+            from.SendMessage("AutoRestart is now DISABLED.");
         }
 
         [Usage("AutoRestartOn")]
         [Description("Enables the AutoRestart feature.")]
         private static void AutoRestartOn_OnCommand(CommandEventArgs e)
         {
+            Mobile from = GetCommandMobile(e);
+            if (from == null)
+                return;
+
             m_Enabled = true;
-            e.Mobile.SendMessage("AutoRestart is now ENABLED.");
+            from.SendMessage("AutoRestart is now ENABLED.");
         }
 
         [Usage("Restart [x (integer)]")]
         [Description("Restarts the Server now [or in ~x~ minutes].")]
         public static void Restart_OnCommand(CommandEventArgs e)
         {
+            Mobile from = GetCommandMobile(e);
+            if (from == null)
+                return;
+
             double minutes = 0.0;
             try
             {
@@ -372,11 +413,11 @@ namespace Server.Misc
             catch { }
             if (m_Restarting)
             {
-                e.Mobile.SendMessage("The server is already restarting.");
+                from.SendMessage("The server is already restarting.");
             }
             else
             {
-                e.Mobile.SendMessage(
+                from.SendMessage(
                     "You have initiated a server restart{0}.",
                     minutes > 0 ? string.Format(" for {0} minutes from now.", (int)minutes) : ""
                 );

@@ -55,10 +55,19 @@ namespace Server.Spells.Research
 
                 ArrayList targets = new ArrayList();
 
-                foreach (Mobile m in Caster.GetMobilesInRange(3))
+                IPooledEnumerable eable = Caster.GetMobilesInRange(3);
+
+                try
                 {
-                    if (Caster.CanBeBeneficial(m, false, true) && !(m is Golem))
-                        targets.Add(m);
+                    foreach (Mobile m in eable)
+                    {
+                        if (Caster.CanBeBeneficial(m, false, true) && !(m is Golem))
+                            targets.Add(m);
+                    }
+                }
+                finally
+                {
+                    eable.Free();
                 }
 
                 for (int i = 0; i < targets.Count; ++i)

@@ -221,6 +221,9 @@ namespace Server.Items
 
             public override void OnResponse(NetState state, RelayInfo info)
             {
+                if (state == null || info == null || state.Mobile == null || state.Mobile.Deleted)
+                    return;
+
                 Mobile from = state.Mobile;
                 from.SendSound(0x249);
             }
@@ -228,7 +231,10 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile e)
         {
-            if (!IsChildOf(e.Backpack) && this.Weight != -50.0)
+            if (e == null || e.Deleted || Deleted)
+                return;
+
+            if ((e.Backpack == null || !IsChildOf(e.Backpack)) && this.Weight != -50.0)
             {
                 e.SendMessage("This must be in your backpack to read.");
             }

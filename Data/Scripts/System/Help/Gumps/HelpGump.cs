@@ -73,19 +73,27 @@ namespace Server.Engines.Help
 
         private static void EventSink_HelpRequest(HelpRequestEventArgs e)
         {
-            foreach (Gump g in e.Mobile.NetState.Gumps)
+            if (e == null)
+                return;
+
+            Mobile mobile = e.Mobile;
+
+            if (mobile == null || mobile.Deleted || mobile.NetState == null)
+                return;
+
+            foreach (Gump g in mobile.NetState.Gumps)
             {
                 if (g is HelpGump)
                     return;
             }
 
-            if (!PageQueue.CheckAllowedToPage(e.Mobile))
+            if (!PageQueue.CheckAllowedToPage(mobile))
                 return;
 
-            if (PageQueue.Contains(e.Mobile))
-                e.Mobile.SendMenu(new ContainedMenu(e.Mobile));
+            if (PageQueue.Contains(mobile))
+                mobile.SendMenu(new ContainedMenu(mobile));
             else
-                e.Mobile.SendGump(new HelpGump(e.Mobile, 1));
+                mobile.SendGump(new HelpGump(mobile, 1));
         }
 
         private static bool IsYoung(Mobile m)

@@ -925,21 +925,30 @@ namespace Knives.TownHouses
 
         private void HideOtherSigns()
         {
-            foreach (Item item in c_House.Sign.GetItemsInRange(0))
+            IPooledEnumerable eable = c_House.Sign.GetItemsInRange(0);
+
+            try
             {
-                if (!(item is HouseSign))
+                foreach (Item item in eable)
                 {
-                    if (
-                        item.ItemID == 0xB95
-                        || item.ItemID == 0xB96
-                        || item.ItemID == 0xC43
-                        || item.ItemID == 0xC44
-                        || (item.ItemID > 0xBA3 && item.ItemID < 0xC0E)
-                    )
+                    if (!(item is HouseSign))
                     {
-                        item.Visible = false;
+                        if (
+                            item.ItemID == 0xB95
+                            || item.ItemID == 0xB96
+                            || item.ItemID == 0xC43
+                            || item.ItemID == 0xC44
+                            || (item.ItemID > 0xBA3 && item.ItemID < 0xC0E)
+                        )
+                        {
+                            item.Visible = false;
+                        }
                     }
                 }
+            }
+            finally
+            {
+                eable.Free();
             }
         }
 
@@ -954,16 +963,25 @@ namespace Knives.TownHouses
 
             foreach (Rectangle2D rect in c_Blocks)
             {
-                foreach (Item item in Map.GetItemsInBounds(rect))
+                IPooledEnumerable eable = Map.GetItemsInBounds(rect);
+
+                try
                 {
-                    if (
-                        c_House.Region.Contains(item.Location)
-                        && item.RootParent == null
-                        && !items.Contains(item)
-                    )
+                    foreach (Item item in eable)
                     {
-                        items.Add(item);
+                        if (
+                            c_House.Region.Contains(item.Location)
+                            && item.RootParent == null
+                            && !items.Contains(item)
+                        )
+                        {
+                            items.Add(item);
+                        }
                     }
+                }
+                finally
+                {
+                    eable.Free();
                 }
             }
 
@@ -1042,13 +1060,22 @@ namespace Knives.TownHouses
 
             door.Delete();
 
-            foreach (Item inneritem in newdoor.GetItemsInRange(1))
+            IPooledEnumerable eable = newdoor.GetItemsInRange(1);
+
+            try
             {
-                if (inneritem is BaseDoor && inneritem != newdoor && inneritem.Z == newdoor.Z)
+                foreach (Item inneritem in eable)
                 {
-                    ((BaseDoor)inneritem).Link = newdoor;
-                    newdoor.Link = (BaseDoor)inneritem;
+                    if (inneritem is BaseDoor && inneritem != newdoor && inneritem.Z == newdoor.Z)
+                    {
+                        ((BaseDoor)inneritem).Link = newdoor;
+                        newdoor.Link = (BaseDoor)inneritem;
+                    }
                 }
+            }
+            finally
+            {
+                eable.Free();
             }
 
             c_House.Doors.Add(newdoor);
@@ -1086,13 +1113,22 @@ namespace Knives.TownHouses
 
                 door.Delete();
 
-                foreach (Item inneritem in newdoor.GetItemsInRange(1))
+                IPooledEnumerable eable = newdoor.GetItemsInRange(1);
+
+                try
                 {
-                    if (inneritem is BaseDoor && inneritem != newdoor && inneritem.Z == newdoor.Z)
+                    foreach (Item inneritem in eable)
                     {
-                        ((BaseDoor)inneritem).Link = newdoor;
-                        newdoor.Link = (BaseDoor)inneritem;
+                        if (inneritem is BaseDoor && inneritem != newdoor && inneritem.Z == newdoor.Z)
+                        {
+                            ((BaseDoor)inneritem).Link = newdoor;
+                            newdoor.Link = (BaseDoor)inneritem;
+                        }
                     }
+                }
+                finally
+                {
+                    eable.Free();
                 }
 
                 c_House.Doors.Remove(door);

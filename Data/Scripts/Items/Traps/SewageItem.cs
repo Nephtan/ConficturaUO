@@ -31,6 +31,11 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
+            if (from == null || from.Deleted || Deleted)
+            {
+                return;
+            }
+
             from.SendMessage("This item is covered in sewage and cannot be used.");
         }
 

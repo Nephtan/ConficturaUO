@@ -29,7 +29,10 @@ namespace Server.Items
         {
             Target t;
 
-            if (!IsChildOf(from.Backpack))
+            if (from == null || from.Deleted)
+                return;
+
+            if (Deleted || from.Backpack == null || !IsChildOf(from.Backpack))
             {
                 from.SendLocalizedMessage(1060640); // The item must be in your backpack to use it.
             }
@@ -53,38 +56,55 @@ namespace Server.Items
 
             protected override void OnTarget(Mobile from, object targeted)
             {
+                if (from == null || from.Deleted)
+                    return;
+
+                if (
+                    m_Battery == null
+                    || m_Battery.Deleted
+                    || from.Backpack == null
+                    || !m_Battery.IsChildOf(from.Backpack)
+                )
+                {
+                    from.SendLocalizedMessage(1060640); // The item must be in your backpack to use it.
+                    return;
+                }
+
                 Item iBattery = targeted as Item;
 
                 if (iBattery is RobotItem)
                 {
-                    RobotItem xBattery = (RobotItem)iBattery;
-
-                    int myCharges = xBattery.m_Charges;
-
-                    if (!iBattery.IsChildOf(from.Backpack))
+                    if (iBattery.Deleted || !iBattery.IsChildOf(from.Backpack))
                     {
                         from.SendMessage("You can only use this battery on robots in your pack.");
                     }
-                    else if (myCharges < 100)
-                    {
-                        xBattery.m_Charges = xBattery.m_Charges + 1;
-
-                        if (xBattery.m_Charges > 100)
-                        {
-                            xBattery.m_Charges = 100;
-                        }
-
-                        from.SendMessage("You charge your robot with the battery.");
-                        from.RevealingAction();
-                        from.SendSound(0x559);
-
-                        xBattery.InvalidateProperties();
-
-                        m_Battery.Delete();
-                    }
                     else
                     {
-                        from.SendMessage("That robot is already fully charged.");
+                        RobotItem xBattery = (RobotItem)iBattery;
+
+                        int myCharges = xBattery.m_Charges;
+
+                        if (myCharges < 100)
+                        {
+                            xBattery.m_Charges = xBattery.m_Charges + 1;
+
+                            if (xBattery.m_Charges > 100)
+                            {
+                                xBattery.m_Charges = 100;
+                            }
+
+                            from.SendMessage("You charge your robot with the battery.");
+                            from.RevealingAction();
+                            from.SendSound(0x559);
+
+                            xBattery.InvalidateProperties();
+
+                            m_Battery.Delete();
+                        }
+                        else
+                        {
+                            from.SendMessage("That robot is already fully charged.");
+                        }
                     }
                 }
                 else

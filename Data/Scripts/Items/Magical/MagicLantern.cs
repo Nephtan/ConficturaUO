@@ -64,6 +64,9 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
+            if (from == null || from.Deleted || Deleted)
+                return;
+
             Item torch = from.FindItemOnLayer(Layer.TwoHanded);
             if (torch != null && torch == this && (torch.ItemID == 0xA18 || torch.ItemID == 0x647B))
             {

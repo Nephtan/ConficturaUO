@@ -45,6 +45,11 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
+            if (from == null || from.Deleted || Deleted)
+            {
+                return;
+            }
+
             Target t;
 
             if (!IsChildOf(from.Backpack))
@@ -71,9 +76,26 @@ namespace Server.Items
 
             protected override void OnTarget(Mobile from, object targeted)
             {
+                if (from == null || from.Deleted)
+                {
+                    return;
+                }
+
+                if (m_Dye == null || m_Dye.Deleted || !m_Dye.IsChildOf(from.Backpack))
+                {
+                    from.SendLocalizedMessage(1060640); // The item must be in your backpack to use it.
+                    return;
+                }
+
                 if (targeted is Item)
                 {
                     Item iDye = targeted as Item;
+
+                    if (iDye == null || iDye.Deleted)
+                    {
+                        from.SendMessage("You cannot dye that with this.");
+                        return;
+                    }
 
                     if (!iDye.IsChildOf(from.Backpack))
                     {

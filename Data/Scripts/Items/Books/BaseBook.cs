@@ -324,6 +324,9 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
+            if (from == null || from.Deleted || Deleted)
+                return;
+
             if (m_Title == null && m_Author == null && m_Writable == true)
             {
                 Title = "a book";

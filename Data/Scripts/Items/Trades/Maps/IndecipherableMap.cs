@@ -24,6 +24,9 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
+            if (from == null || from.Deleted || Deleted)
+                return;
+
             from.SendLocalizedMessage(1070801); // You cannot decipher this ruined map.
         }
 

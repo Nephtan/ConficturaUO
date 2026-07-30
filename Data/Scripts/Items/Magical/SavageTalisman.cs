@@ -48,6 +48,11 @@ namespace Server.Items
 
         public override bool OnEquip(Mobile from)
         {
+            if (from == null || from.Deleted || Deleted)
+            {
+                return false;
+            }
+
             if (this.ItemOwner != from)
             {
                 from.LocalOverheadMessage(
@@ -63,6 +68,11 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
+            if (from == null || from.Deleted || Deleted)
+            {
+                return;
+            }
+
             from.SendMessage("Talismans are worn in the upper right slot.");
             return;
         }

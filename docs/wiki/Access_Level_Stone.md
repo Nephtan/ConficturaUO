@@ -68,3 +68,32 @@ Deserialization reads version `1` in the same order and restores the stored acce
 * Wiki claimed higher-access staff can claim it and unauthorized users delete it -> traced ownership branches -> code compares against the owner's current access level, can reassign owner, and deletes the item on failed ownership checks.
 * Wiki omitted serialization -> traced `Serialize` and `Deserialize` -> code writes version `1`, stored access level, owner-present flag, and optional owner mobile.
 * Code trace revealed rework risks -> unowned player use can dereference a null owner, and higher-access seizure while the original owner is in player mode can strand the original owner at `Player`.
+
+## Source Trace
+
+POST-BATCH-T reviewed this page on 2026-06-14T21:09:11.0049244-05:00 against current source and audit registers.
+
+- Canonical status: Canonical.
+- Queue rows: PBN-0076.
+- Backlog rows: RB-06646.
+- Audit registers used: documentation-truth-table.csv, runtime-hook-map.csv, serialization-register.csv, and project-truth-register.csv.
+
+### Source Files Reviewed
+
+- Data/Scripts/Custom/Access Level Stone [2.0]/AccessLevelStone.cs (CurrentFile)
+
+### Runtime Evidence
+
+- No runtime hook rows matched the reviewed source set in runtime-hook-map.csv.
+
+### Serialization Evidence
+
+- Serialized rows matched: 1.
+- Data/Scripts/Custom/Access Level Stone [2.0]/AccessLevelStone.cs:Server.Items.AccessLevelStone version=1 serialize=L82 deserialize=L96 alignment=CountMatchNeedsTypeReview:UnknownWrites=2
+
+### Project And Runtime Coverage
+
+- Data/Scripts/Custom/Access Level Stone [2.0]/AccessLevelStone.cs=Keep
+- Data/Scripts/Custom/Access Level Stone [2.0]/AccessLevelStone.cs=Keep
+
+No C# source, project files, XML/config/data files, namespaces, serializers, gameplay behavior, or migration policy were changed in POST-BATCH-T.

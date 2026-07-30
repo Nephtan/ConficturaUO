@@ -85,17 +85,26 @@ namespace Server.Mobiles
 
             TimeSpan duration = TimeSpan.FromSeconds(Utility.RandomMinMax(20, 80));
 
-            foreach (Mobile m in GetMobilesInRange(RangePerception))
-            {
-                PlayerMobile p = m as PlayerMobile;
+            IPooledEnumerable eable = GetMobilesInRange(RangePerception);
 
-                if (IsValidTarget(p))
+            try
+            {
+                foreach (Mobile m in eable)
                 {
-                    p.PeacedUntil = DateTime.Now + duration;
-                    p.SendLocalizedMessage(1072065); // You gaze upon the dryad's beauty, and forget to continue battling!
-                    p.FixedParticles(0x376A, 1, 20, 0x7F5, EffectLayer.Waist);
-                    p.Combatant = null;
+                    PlayerMobile p = m as PlayerMobile;
+
+                    if (IsValidTarget(p))
+                    {
+                        p.PeacedUntil = DateTime.Now + duration;
+                        p.SendLocalizedMessage(1072065); // You gaze upon the dryad's beauty, and forget to continue battling!
+                        p.FixedParticles(0x376A, 1, 20, 0x7F5, EffectLayer.Waist);
+                        p.Combatant = null;
+                    }
                 }
+            }
+            finally
+            {
+                eable.Free();
             }
 
             m_NextPeace = DateTime.Now + TimeSpan.FromSeconds(10);
@@ -131,25 +140,34 @@ namespace Server.Mobiles
             )
                 return;
 
-            foreach (Mobile m in GetMobilesInRange(RangePerception))
-            {
-                if (
-                    m != null
-                    && m.Player
-                    && !m.Female
-                    && !m.Hidden
-                    && m.AccessLevel == AccessLevel.Player
-                    && CanBeHarmful(m)
-                )
-                {
-                    UndressItem(m, Layer.OuterTorso);
-                    UndressItem(m, Layer.InnerTorso);
-                    UndressItem(m, Layer.MiddleTorso);
-                    UndressItem(m, Layer.Pants);
-                    UndressItem(m, Layer.Shirt);
+            IPooledEnumerable eable = GetMobilesInRange(RangePerception);
 
-                    m.SendLocalizedMessage(1072197); // The dryad's beauty makes your blood race. Your clothing is too confining.
+            try
+            {
+                foreach (Mobile m in eable)
+                {
+                    if (
+                        m != null
+                        && m.Player
+                        && !m.Female
+                        && !m.Hidden
+                        && m.AccessLevel == AccessLevel.Player
+                        && CanBeHarmful(m)
+                    )
+                    {
+                        UndressItem(m, Layer.OuterTorso);
+                        UndressItem(m, Layer.InnerTorso);
+                        UndressItem(m, Layer.MiddleTorso);
+                        UndressItem(m, Layer.Pants);
+                        UndressItem(m, Layer.Shirt);
+
+                        m.SendLocalizedMessage(1072197); // The dryad's beauty makes your blood race. Your clothing is too confining.
+                    }
                 }
+            }
+            finally
+            {
+                eable.Free();
             }
 
             m_NextUndress = DateTime.Now + TimeSpan.FromMinutes(1);

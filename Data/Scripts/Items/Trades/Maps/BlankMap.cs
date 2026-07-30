@@ -10,6 +10,11 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
+            if (from == null || from.Deleted || Deleted)
+            {
+                return;
+            }
+
             SendLocalizedMessageTo(from, 500208); // It appears to be blank.
         }
 

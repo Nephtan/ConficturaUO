@@ -19,12 +19,15 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
+            if (from == null || from.Deleted || Deleted)
+                return;
+
             bool soaked;
             Server.Items.DrinkingFunctions.CheckWater(from, 3, out soaked);
 
             if (this.Weight < 1.95 && soaked) // FILL IT IF NEAR WATER AND FLASK IS NOT FULL
             {
-                if (!IsChildOf(from.Backpack))
+                if (from.Backpack == null || !IsChildOf(from.Backpack))
                 {
                     from.SendMessage("This must be in your backpack to fill.");
                     return;
@@ -52,7 +55,7 @@ namespace Server.Items
             }
             else
             {
-                if (!IsChildOf(from.Backpack))
+                if (from.Backpack == null || !IsChildOf(from.Backpack))
                 {
                     from.SendMessage("This must be in your backpack to drink.");
                     return;
@@ -209,10 +212,13 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
+            if (from == null || from.Deleted || Deleted)
+                return;
+
             bool soaked;
             Server.Items.DrinkingFunctions.CheckWater(from, 3, out soaked);
 
-            if (!IsChildOf(from.Backpack))
+            if (from.Backpack == null || !IsChildOf(from.Backpack))
             {
                 from.SendMessage("This must be in your backpack to use.");
                 return;
@@ -390,6 +396,9 @@ namespace Server.Items
         {
             soaked = false;
 
+            if (from == null || from.Deleted)
+                return;
+
             Map map = from.Map;
 
             if (map == null)
@@ -453,7 +462,10 @@ namespace Server.Items
 
         public static void OnDrink(Item drink, Mobile from)
         {
-            if (!drink.IsChildOf(from.Backpack))
+            if (from == null || from.Deleted || drink == null || drink.Deleted)
+                return;
+
+            if (from.Backpack == null || !drink.IsChildOf(from.Backpack))
             {
                 from.SendMessage("This must be in your backpack to drink.");
                 return;
@@ -498,6 +510,9 @@ namespace Server.Items
 
         public static void DrinkBenefits(Mobile from)
         {
+            if (from == null || from.Deleted)
+                return;
+
             int iHeal = (int)from.Skills[SkillName.Tasting].Value;
             int iHurt = from.StamMax - from.Stam;
 

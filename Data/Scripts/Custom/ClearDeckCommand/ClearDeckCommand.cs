@@ -35,25 +35,34 @@ namespace Server.Commands
             List<Corpse> corpsesToDelete = new List<Corpse>();
 
             // Iterate through all items in range
-            foreach (Item item in playerBoat.GetItemsInRange(18)) // Assuming 18 is the max range of a boat
-            {
-                if (item is Corpse)
-                {
-                    Corpse corpse = (Corpse)item;
-                    // Check if the corpse is on the same boat as the player
-                    BaseBoat corpseBoat = BaseBoat.FindBoatAt(corpse, corpse.Map);
+            IPooledEnumerable eable = playerBoat.GetItemsInRange(18); // Assuming 18 is the max range of a boat
 
-                    if (corpseBoat == playerBoat)
+            try
+            {
+                foreach (Item item in eable)
+                {
+                    if (item is Corpse)
                     {
-                        if (
-                            !(corpse.Owner is PlayerMobile)
-                            || (corpse.Owner is PlayerMobile && corpse.Items.Count == 0)
-                        )
+                        Corpse corpse = (Corpse)item;
+                        // Check if the corpse is on the same boat as the player
+                        BaseBoat corpseBoat = BaseBoat.FindBoatAt(corpse, corpse.Map);
+
+                        if (corpseBoat == playerBoat)
                         {
-                            corpsesToDelete.Add(corpse);
+                            if (
+                                !(corpse.Owner is PlayerMobile)
+                                || (corpse.Owner is PlayerMobile && corpse.Items.Count == 0)
+                            )
+                            {
+                                corpsesToDelete.Add(corpse);
+                            }
                         }
                     }
                 }
+            }
+            finally
+            {
+                eable.Free();
             }
 
             // Delete the corpses

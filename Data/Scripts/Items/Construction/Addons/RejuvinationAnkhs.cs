@@ -14,6 +14,9 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
+            if (from == null || from.Deleted || Deleted)
+                return;
+
             if (from.BeginAction(typeof(RejuvinationAddonComponent)))
             {
                 from.FixedEffect(0x373A, 1, 16);
@@ -48,9 +51,16 @@ namespace Server.Items
 
         public virtual void ReleaseUseLock_Callback(object state)
         {
-            object[] states = (object[])state;
+            object[] states = state as object[];
 
-            Mobile from = (Mobile)states[0];
+            if (states == null || states.Length < 2 || !(states[1] is int))
+                return;
+
+            Mobile from = states[0] as Mobile;
+
+            if (from == null || from.Deleted)
+                return;
+
             int random = (int)states[1];
 
             from.EndAction(typeof(RejuvinationAddonComponent));

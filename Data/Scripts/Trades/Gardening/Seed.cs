@@ -134,6 +134,11 @@ namespace Server.Engines.Plants
 
         public override void OnSingleClick(Mobile from)
         {
+            if (from == null || from.Deleted || Deleted)
+            {
+                return;
+            }
+
             PlantHueInfo hueInfo = PlantHueInfo.GetInfo(m_PlantHue);
 
             if (m_ShowType)
@@ -157,7 +162,12 @@ namespace Server.Engines.Plants
 
         public override void OnDoubleClick(Mobile from)
         {
-            if (!IsChildOf(from.Backpack))
+            if (from == null || from.Deleted || Deleted)
+            {
+                return;
+            }
+
+            if (from.Backpack == null || !IsChildOf(from.Backpack))
             {
                 from.SendLocalizedMessage(1042664); // You must have the object in your backpack to use it.
                 return;
@@ -180,10 +190,10 @@ namespace Server.Engines.Plants
 
             protected override void OnTarget(Mobile from, object targeted)
             {
-                if (m_Seed.Deleted)
+                if (from == null || from.Deleted || m_Seed == null || m_Seed.Deleted)
                     return;
 
-                if (!m_Seed.IsChildOf(from.Backpack))
+                if (from.Backpack == null || !m_Seed.IsChildOf(from.Backpack))
                 {
                     from.SendLocalizedMessage(1042664); // You must have the object in your backpack to use it.
                     return;
@@ -192,6 +202,12 @@ namespace Server.Engines.Plants
                 if (targeted is PlantItem)
                 {
                     PlantItem plant = (PlantItem)targeted;
+
+                    if (plant.Deleted)
+                    {
+                        from.SendLocalizedMessage(1061919); // You must use a seed on a bowl of dirt!
+                        return;
+                    }
 
                     plant.PlantSeed(from, m_Seed);
                 }

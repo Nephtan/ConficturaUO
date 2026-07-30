@@ -38,6 +38,9 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
+            if (from == null || from.Deleted || Deleted)
+                return;
+
             if (from.InRange(this.GetWorldLocation(), 1))
             {
                 from.CloseGump(typeof(HairDyeGump));
@@ -148,11 +151,16 @@ namespace Server.Items
 
         public override void OnResponse(NetState from, RelayInfo info)
         {
-            if (m_HairDye.Deleted)
+            if (from == null || info == null || m_HairDye == null || m_HairDye.Deleted)
                 return;
 
             Mobile m = from.Mobile;
+            if (m == null || m.Deleted)
+                return;
+
             int[] switches = info.Switches;
+            if (switches == null)
+                return;
 
             if (!m_HairDye.IsChildOf(m.Backpack))
             {

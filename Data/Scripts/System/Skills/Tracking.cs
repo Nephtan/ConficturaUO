@@ -570,45 +570,53 @@ namespace Server.SkillHandlers
 
             List<Mobile> list = new List<Mobile>();
 
-            foreach (Mobile m in from.GetMobilesInRange(range))
+            IPooledEnumerable eable = from.GetMobilesInRange(range);
+            try
             {
-                bool canTrack = false;
-
-                if (
-                    Worlds.IsPlayerInTheLand(m.Map, m.Location, m.X, m.Y)
-                    && Worlds.IsPlayerInTheLand(from.Map, from.Location, from.X, from.Y)
-                )
+                foreach (Mobile m in eable)
                 {
-                    canTrack = true; // THEY ARE BOTH IN THE MAJOR LAND AREA SO THEY CAN TRACK EACH OTHER
-                }
-                else if (
-                    Server.Misc.Worlds.GetRegionName(m.Map, m.Location)
-                    == Server.Misc.Worlds.GetRegionName(from.Map, from.Location)
-                )
-                {
-                    canTrack = true; // THEY ARE BOTH IN THE SAME CAVE OR DUNGEON SO THEY CAN TRACK EACH OTHER
-                }
-
-                if (canTrack)
-                {
-                    if ((m.WhisperHue == 666 || m.WhisperHue == 999) && m.Hidden && check(m)) // ADD HIDDEN SEA MONSTERS
-                        list.Add(m);
+                    bool canTrack = false;
 
                     if (
-                        m != from
-                        && m.Alive
-                        && !(m is SpellCritter)
-                        && !(m is CorpseCritter)
-                        && (
-                            (!m.Hidden || Server.Misc.MyServerSettings.LineOfSight(m, true))
-                            || m.AccessLevel == AccessLevel.Player
-                            || from.AccessLevel > m.AccessLevel
-                        )
-                        && check(m)
-                        && CheckDifficulty(from, m)
+                        Worlds.IsPlayerInTheLand(m.Map, m.Location, m.X, m.Y)
+                        && Worlds.IsPlayerInTheLand(from.Map, from.Location, from.X, from.Y)
                     )
-                        list.Add(m);
+                    {
+                        canTrack = true; // THEY ARE BOTH IN THE MAJOR LAND AREA SO THEY CAN TRACK EACH OTHER
+                    }
+                    else if (
+                        Server.Misc.Worlds.GetRegionName(m.Map, m.Location)
+                        == Server.Misc.Worlds.GetRegionName(from.Map, from.Location)
+                    )
+                    {
+                        canTrack = true; // THEY ARE BOTH IN THE SAME CAVE OR DUNGEON SO THEY CAN TRACK EACH OTHER
+                    }
+
+                    if (canTrack)
+                    {
+                        if ((m.WhisperHue == 666 || m.WhisperHue == 999) && m.Hidden && check(m)) // ADD HIDDEN SEA MONSTERS
+                            list.Add(m);
+
+                        if (
+                            m != from
+                            && m.Alive
+                            && !(m is SpellCritter)
+                            && !(m is CorpseCritter)
+                            && (
+                                (!m.Hidden || Server.Misc.MyServerSettings.LineOfSight(m, true))
+                                || m.AccessLevel == AccessLevel.Player
+                                || from.AccessLevel > m.AccessLevel
+                            )
+                            && check(m)
+                            && CheckDifficulty(from, m)
+                        )
+                            list.Add(m);
+                    }
                 }
+            }
+            finally
+            {
+                eable.Free();
             }
 
             if (list.Count > 0)

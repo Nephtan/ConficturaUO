@@ -31,6 +31,9 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile e)
         {
+            if (e == null || e.Deleted || Deleted)
+                return;
+
             if (e.InRange(this.GetWorldLocation(), 4))
             {
                 e.CloseGump(typeof(StatusGump));
@@ -341,10 +344,15 @@ namespace Server.Gumps
 
         public override void OnResponse(NetState sender, RelayInfo info)
         {
-            Mobile from = sender.Mobile;
+            if (sender == null || info == null)
+                return;
+
             if (info.ButtonID == 0) // Cancel
                 return;
-            else if (from.Deleted || from.Map == null || from == null)
+
+            Mobile from = sender.Mobile;
+
+            if (from == null || from.Deleted || from.Map == null)
                 return;
 
             switch (info.ButtonID)

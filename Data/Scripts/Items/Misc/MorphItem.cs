@@ -79,6 +79,9 @@ namespace Server.Items
 
         public override void OnMovement(Mobile m, Point3D oldLocation)
         {
+            if (m == null || m.Deleted)
+                return;
+
             if (
                 Utility.InRange(m.Location, Location, CurrentRange)
                 || Utility.InRange(oldLocation, Location, CurrentRange)
@@ -102,13 +105,22 @@ namespace Server.Items
         {
             bool found = false;
 
-            foreach (Mobile mob in GetMobilesInRange(CurrentRange))
-            {
-                if (mob.Hidden && mob.AccessLevel > AccessLevel.Player)
-                    continue;
+            IPooledEnumerable eable = GetMobilesInRange(CurrentRange);
 
-                found = true;
-                break;
+            try
+            {
+                foreach (Mobile mob in eable)
+                {
+                    if (mob.Hidden && mob.AccessLevel > AccessLevel.Player)
+                        continue;
+
+                    found = true;
+                    break;
+                }
+            }
+            finally
+            {
+                eable.Free();
             }
 
             if (found)

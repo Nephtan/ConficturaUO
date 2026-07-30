@@ -20,7 +20,10 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
-            if (IsChildOf(from.Backpack))
+            if (from == null || from.Deleted || Deleted)
+                return;
+
+            if (from.Backpack != null && IsChildOf(from.Backpack))
                 from.SendMessage("You can only ignite this if it is secure in a home.");
             else if (!from.InRange(GetWorldLocation(), 2))
                 from.SendMessage("You will need to get closer to ignite that.");

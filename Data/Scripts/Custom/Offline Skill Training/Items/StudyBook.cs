@@ -256,6 +256,9 @@ namespace Server.Items
 
         public static void OnLogout(LogoutEventArgs args)
         {
+            if (args == null || args.Mobile == null || args.Mobile.Deleted || args.Mobile.Backpack == null)
+                return;
+
             Mobile from = args.Mobile;
             for (int i = 0; i < from.Backpack.Items.Count; i++)
             {
@@ -273,6 +276,9 @@ namespace Server.Items
 
         public static void OnLogin(LoginEventArgs args)
         {
+            if (args == null || args.Mobile == null || args.Mobile.Deleted || args.Mobile.Backpack == null)
+                return;
+
             Mobile from = args.Mobile;
             for (int i = 0; i < from.Backpack.Items.Count; i++)
             {

@@ -45,6 +45,9 @@ namespace Server.Items
 
         public override bool OnMoveOver(Mobile m)
         {
+            if (m == null || m.Deleted)
+                return true;
+
             string sTrapType = "";
 
             string textSay = "";
@@ -3605,6 +3608,9 @@ namespace Server.Items
 
         public override void OnMovement(Mobile m, Point3D oldLocation)
         {
+            if (m == null || m.Deleted)
+                return;
+
             if (m is PlayerMobile && MyServerSettings.EnableDungeonSoundEffects())
             {
                 if (DateTime.Now >= m_NextSound && Utility.InRange(m.Location, this.Location, 10))

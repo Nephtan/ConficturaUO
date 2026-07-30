@@ -243,18 +243,26 @@ namespace Server.SkillHandlers
                             if (!m_Thief.CheckSkill(SkillName.Snooping, 0, 150))
                             {
                                 List<Mobile> spotters = new List<Mobile>();
-                                foreach (Mobile m in m_Thief.GetMobilesInRange(10))
+                                IPooledEnumerable eable = m_Thief.GetMobilesInRange(10);
+                                try
                                 {
-                                    if (m is BaseVendor && m.CanSee(m_Thief) && m.InLOS(m_Thief))
+                                    foreach (Mobile m in eable)
                                     {
-                                        m_Thief.CriminalAction(false);
-                                        m.PublicOverheadMessage(
-                                            MessageType.Regular,
-                                            0,
-                                            false,
-                                            string.Format("Stop! Thief!")
-                                        );
+                                        if (m is BaseVendor && m.CanSee(m_Thief) && m.InLOS(m_Thief))
+                                        {
+                                            m_Thief.CriminalAction(false);
+                                            m.PublicOverheadMessage(
+                                                MessageType.Regular,
+                                                0,
+                                                false,
+                                                string.Format("Stop! Thief!")
+                                            );
+                                        }
                                     }
+                                }
+                                finally
+                                {
+                                    eable.Free();
                                 }
                             }
                         }
@@ -481,10 +489,18 @@ namespace Server.SkillHandlers
                         );
                         m_Thief.RevealingAction(); // REVEALING ONLY WHEN NOTICED
                         Server.Items.DisguiseTimers.RemoveDisguise(m_Thief);
-                        foreach (NetState ns in m_Thief.GetClientsInRange(8))
+                        IPooledEnumerable eable = m_Thief.GetClientsInRange(8);
+                        try
                         {
-                            if (ns.Mobile != m_Thief)
-                                ns.Mobile.SendMessage(message);
+                            foreach (NetState ns in eable)
+                            {
+                                if (ns.Mobile != m_Thief)
+                                    ns.Mobile.SendMessage(message);
+                            }
+                        }
+                        finally
+                        {
+                            eable.Free();
                         }
                     }
                 }

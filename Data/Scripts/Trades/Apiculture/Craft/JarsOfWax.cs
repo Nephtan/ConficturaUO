@@ -28,9 +28,12 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
+            if (from == null || from.Deleted || Deleted)
+                return;
+
             Target t;
 
-            if (!IsChildOf(from.Backpack))
+            if (from.Backpack == null || !IsChildOf(from.Backpack))
             {
                 from.SendLocalizedMessage(1060640); // The item must be in your backpack to use it.
             }
@@ -54,7 +57,27 @@ namespace Server.Items
 
             protected override void OnTarget(Mobile from, object targeted)
             {
+                if (from == null || from.Deleted)
+                    return;
+
+                if (
+                    m_Wax == null
+                    || m_Wax.Deleted
+                    || from.Backpack == null
+                    || !m_Wax.IsChildOf(from.Backpack)
+                )
+                {
+                    from.SendLocalizedMessage(1060640); // The item must be in your backpack to use it.
+                    return;
+                }
+
                 Item iWax = targeted as Item;
+
+                if (iWax == null || iWax.Deleted)
+                {
+                    from.SendMessage("You cannot rub this wax on that.");
+                    return;
+                }
 
                 if (iWax is BaseWeapon)
                 {
@@ -167,9 +190,12 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
+            if (from == null || from.Deleted || Deleted)
+                return;
+
             Target t;
 
-            if (!IsChildOf(from.Backpack))
+            if (from.Backpack == null || !IsChildOf(from.Backpack))
             {
                 from.SendLocalizedMessage(1060640); // The item must be in your backpack to use it.
             }
@@ -193,7 +219,27 @@ namespace Server.Items
 
             protected override void OnTarget(Mobile from, object targeted)
             {
+                if (from == null || from.Deleted)
+                    return;
+
+                if (
+                    m_Wax == null
+                    || m_Wax.Deleted
+                    || from.Backpack == null
+                    || !m_Wax.IsChildOf(from.Backpack)
+                )
+                {
+                    from.SendLocalizedMessage(1060640); // The item must be in your backpack to use it.
+                    return;
+                }
+
                 Item iWax = targeted as Item;
+
+                if (iWax == null || iWax.Deleted)
+                {
+                    from.SendMessage("You cannot rub this wax on that.");
+                    return;
+                }
 
                 if (iWax is BaseArmor)
                 {
@@ -273,9 +319,12 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
+            if (from == null || from.Deleted || Deleted)
+                return;
+
             Target t;
 
-            if (!IsChildOf(from.Backpack))
+            if (from.Backpack == null || !IsChildOf(from.Backpack))
             {
                 from.SendLocalizedMessage(1060640); // The item must be in your backpack to use it.
             }
@@ -299,7 +348,27 @@ namespace Server.Items
 
             protected override void OnTarget(Mobile from, object targeted)
             {
+                if (from == null || from.Deleted)
+                    return;
+
+                if (
+                    m_Wax == null
+                    || m_Wax.Deleted
+                    || from.Backpack == null
+                    || !m_Wax.IsChildOf(from.Backpack)
+                )
+                {
+                    from.SendLocalizedMessage(1060640); // The item must be in your backpack to use it.
+                    return;
+                }
+
                 Item iWax = targeted as Item;
+
+                if (iWax == null || iWax.Deleted)
+                {
+                    from.SendMessage("You cannot rub this wax on that.");
+                    return;
+                }
 
                 if (iWax is BaseInstrument)
                 {

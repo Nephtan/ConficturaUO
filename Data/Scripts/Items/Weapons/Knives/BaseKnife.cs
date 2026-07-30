@@ -51,6 +51,9 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
+            if (from == null || from.Deleted || Deleted)
+                return;
+
             from.SendLocalizedMessage(1010018); // What do you want to use this item on?
 
             from.Target = new BladedItemTarget(this);

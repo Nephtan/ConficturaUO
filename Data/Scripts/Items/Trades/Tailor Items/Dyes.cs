@@ -35,6 +35,9 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
+            if (from == null || from.Deleted || Deleted)
+                return;
+
             from.SendLocalizedMessage(500856); // Select the dye tub to use the dyes on.
             from.Target = new InternalTarget();
         }
@@ -56,22 +59,37 @@ namespace Server.Items
 
                 public override void OnResponse(int hue)
                 {
+                    if (m_Tub == null || m_Tub.Deleted)
+                        return;
+
                     m_Tub.DyedHue = hue;
                 }
             }
 
             private static void SetTubHue(Mobile from, object state, int hue)
             {
-                ((DyeTub)state).DyedHue = hue;
+                DyeTub tub = state as DyeTub;
+
+                if (tub == null || tub.Deleted)
+                    return;
+
+                tub.DyedHue = hue;
             }
 
             protected override void OnTarget(Mobile from, object targeted)
             {
+                if (from == null || from.Deleted)
+                    return;
+
                 if (targeted is DyeTub)
                 {
                     DyeTub tub = (DyeTub)targeted;
 
-                    if (tub.Redyable)
+                    if (tub.Deleted)
+                    {
+                        from.SendLocalizedMessage(500857); // Use this on a dye tub.
+                    }
+                    else if (tub.Redyable)
                     {
                         if (tub.CustomHuePicker == null)
                             from.SendHuePicker(new InternalPicker(tub));

@@ -85,18 +85,27 @@ namespace Server.Items
             {
                 int builder = 0;
 
-                foreach (Mobile m in this.GetMobilesInRange(20))
+                IPooledEnumerable eable = this.GetMobilesInRange(20);
+
+                try
                 {
-                    if (
-                        m is Mage
-                        || m is Witches
-                        || m is Necromancer
-                        || m is NecroMage
-                        || m is HolyMage
-                        || m is MageGuildmaster
-                        || m is NecromancerGuildmaster
-                    )
-                        ++builder;
+                    foreach (Mobile m in eable)
+                    {
+                        if (
+                            m is Mage
+                            || m is Witches
+                            || m is Necromancer
+                            || m is NecroMage
+                            || m is HolyMage
+                            || m is MageGuildmaster
+                            || m is NecromancerGuildmaster
+                        )
+                            ++builder;
+                    }
+                }
+                finally
+                {
+                    eable.Free();
                 }
 
                 if (builder < 1)
@@ -193,6 +202,10 @@ namespace Server.Items
             public override void OnResponse(NetState state, RelayInfo info)
             {
                 Mobile from = state.Mobile;
+
+                if (from == null || from.Deleted)
+                    return;
+
                 from.SendSound(0x4A);
             }
         }

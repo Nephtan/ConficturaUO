@@ -64,17 +64,26 @@ namespace Server.Spells.Song
 
                 ArrayList targets = new ArrayList();
 
-                foreach (Mobile m in Caster.GetMobilesInRange(4))
+                IPooledEnumerable eable = Caster.GetMobilesInRange(4);
+
+                try
                 {
-                    if (m is BaseCreature)
+                    foreach (Mobile m in eable)
                     {
-                        BaseCreature mn = m as BaseCreature;
-                        if (mn.ControlSlots == 666)
+                        if (m is BaseCreature)
+                        {
+                            BaseCreature mn = m as BaseCreature;
+                            if (mn.ControlSlots == 666)
+                                targets.Add(m);
+                        }
+
+                        if (m is BaseCreature && ((BaseCreature)m).Summoned)
                             targets.Add(m);
                     }
-
-                    if (m is BaseCreature && ((BaseCreature)m).Summoned)
-                        targets.Add(m);
+                }
+                finally
+                {
+                    eable.Free();
                 }
 
                 Caster.FixedParticles(0x3709, 1, 30, 9965, 5, 7, EffectLayer.Waist);

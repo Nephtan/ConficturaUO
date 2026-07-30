@@ -124,46 +124,64 @@ namespace Server.Mobiles
             Mobile winner = this;
             int RewardColor = 0xB74;
 
-            foreach (Mobile m in this.GetMobilesInRange(30))
+            IPooledEnumerable eable1 = this.GetMobilesInRange(30);
+
+            try
             {
-                if (m is PlayerMobile && m.Map == this.Map && !m.Blessed)
+                foreach (Mobile m in eable1)
                 {
-                    Item obelisk = m.Backpack.FindItemByType(typeof(ObeliskTip));
-                    if (obelisk != null)
-                    {
-                        ObeliskTip tip = (ObeliskTip)obelisk;
-                        if (tip.ObeliskOwner == m && tip.HasAir > 0 && tip.WonAir < 1)
-                        {
-                            CanDie = 1;
-                            winner = m;
-                            tip.WonAir = 1;
-                            m.SendMessage("You absord the Titan's power into the Breath of Air.");
-                            m.PlaySound(0x65A);
-                            m.FixedParticles(0x375A, 1, 30, 9966, 33, 2, EffectLayer.Head);
-                        }
-                    }
-                }
-            }
-            if (CanDie == 0)
-            {
-                foreach (Mobile m in this.GetMobilesInRange(30))
-                {
-                    if (m is PlayerMobile && m.Map == this.Map && !m.Blessed && m.StatCap >= 300) // TITANS OF ETHER CAN KILL IT
-                    {
-                        CanKillIt = 1;
-                    }
-                    if (m is PlayerMobile && m.Map == this.Map && !m.Blessed) // ANYONE WITH THE BLACKROCK CAN KILL IT
+                    if (m is PlayerMobile && m.Map == this.Map && !m.Blessed)
                     {
                         Item obelisk = m.Backpack.FindItemByType(typeof(ObeliskTip));
                         if (obelisk != null)
                         {
                             ObeliskTip tip = (ObeliskTip)obelisk;
-                            if (tip.ObeliskOwner == m && tip.HasAir > 0 && tip.WonAir > 0)
+                            if (tip.ObeliskOwner == m && tip.HasAir > 0 && tip.WonAir < 1)
                             {
-                                CanKillIt = 1;
+                                CanDie = 1;
+                                winner = m;
+                                tip.WonAir = 1;
+                                m.SendMessage("You absord the Titan's power into the Breath of Air.");
+                                m.PlaySound(0x65A);
+                                m.FixedParticles(0x375A, 1, 30, 9966, 33, 2, EffectLayer.Head);
                             }
                         }
                     }
+                }
+            }
+            finally
+            {
+                eable1.Free();
+            }
+            if (CanDie == 0)
+            {
+                IPooledEnumerable eable2 = this.GetMobilesInRange(30);
+
+                try
+                {
+                    foreach (Mobile m in eable2)
+                    {
+                        if (m is PlayerMobile && m.Map == this.Map && !m.Blessed && m.StatCap >= 300) // TITANS OF ETHER CAN KILL IT
+                        {
+                            CanKillIt = 1;
+                        }
+                        if (m is PlayerMobile && m.Map == this.Map && !m.Blessed) // ANYONE WITH THE BLACKROCK CAN KILL IT
+                        {
+                            Item obelisk = m.Backpack.FindItemByType(typeof(ObeliskTip));
+                            if (obelisk != null)
+                            {
+                                ObeliskTip tip = (ObeliskTip)obelisk;
+                                if (tip.ObeliskOwner == m && tip.HasAir > 0 && tip.WonAir > 0)
+                                {
+                                    CanKillIt = 1;
+                                }
+                            }
+                        }
+                    }
+                }
+                finally
+                {
+                    eable2.Free();
                 }
             }
 

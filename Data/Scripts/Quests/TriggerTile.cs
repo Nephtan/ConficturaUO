@@ -15,6 +15,9 @@ namespace Server.Items
 
         public override void OnMovement(Mobile m, Point3D oldLocation)
         {
+            if (m == null || m.Deleted)
+                return;
+
             if (m is PlayerMobile)
             {
                 PlayerSettings.SetBardsTaleQuest(m, this.Name, true);

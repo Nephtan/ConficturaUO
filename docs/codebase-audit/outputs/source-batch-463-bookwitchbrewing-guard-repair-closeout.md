@@ -1,0 +1,60 @@
+# SOURCE-BATCH-463 BookWitchBrewing Guard Repair Closeout
+
+## Summary
+
+`SOURCE-BATCH-463` implemented `SB463-CAND-001`, a non-gated guard repair for opening the `BookWitchBrewing` gump.
+
+## Source Change
+
+File changed: `Data/Scripts/Magic/Witch/BookWitchBrewing.cs`
+
+Guarded interaction:
+
+- `BookWitchBrewing.OnDoubleClick(Mobile e)`
+
+Added guard coverage:
+
+- null mobile
+- deleted mobile
+- deleted source book
+- missing backpack before `IsChildOf(e.Backpack)`
+
+## Preserved Behavior
+
+- witch brewing book contents
+- `BookGump` construction
+- recipes
+- witch spell/pouch behavior
+- existing backpack-use failure message
+- `Serial` constructor
+- `Serialize` and `Deserialize` layout/versioning
+- namespace/type/file layout
+- project/config/data files
+- staff/access behavior
+- economy/reward tuning
+- region/map policy
+- reorganization state
+
+## Gate Evidence
+
+- POST-BATCH-Y exact-file gate hits for `Data/Scripts/Magic/Witch/BookWitchBrewing.cs`: `0`
+- Active overlay exact-file rows for `Data/Scripts/Magic/Witch/BookWitchBrewing.cs`: `0`
+
+## Verification
+
+Passed:
+
+- candidate CSV import
+- targeted source scan for new guards and preserved book-open behavior
+- exact-file POST-BATCH-Y gate scan
+- exact-file active overlay scan
+- changed-line serializer diff scan
+- forbidden-surface diff scan
+- `git diff --check`
+- `Data/System/Source/Server.csproj` Debug/x86 build
+- `.\ConficturaServer.exe -compileonly -nocache`
+- generated root artifacts restored with `git restore -- ConficturaServer.exe ConficturaServer.exe.config ConficturaServer.pdb`
+
+## Result
+
+`SOURCE-BATCH-463` source commit: `7aecff9f`. `SOURCE-BATCH-464+` should run fresh candidate discovery after `SOURCE-BATCH-463`.

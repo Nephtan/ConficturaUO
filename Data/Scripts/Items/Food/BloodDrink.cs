@@ -26,12 +26,18 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
+            if (from == null || from.Deleted || Deleted)
+                return;
+
             if (!Server.Items.BaseRace.BloodDrinker(from.RaceID))
             {
                 from.SendMessage("This looks like something vampires would drink.");
                 return;
             }
-            if (!IsChildOf(from.Backpack) && Server.Items.BaseRace.BloodDrinker(from.RaceID))
+            if (
+                (from.Backpack == null || !IsChildOf(from.Backpack))
+                && Server.Items.BaseRace.BloodDrinker(from.RaceID)
+            )
             {
                 from.SendMessage("This must be in your backpack to drink.");
                 return;

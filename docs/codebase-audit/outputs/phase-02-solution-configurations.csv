@@ -1,0 +1,5 @@
+"SolutionConfig","ServerConfig","ServerBuilds","ScriptsConfig","ScriptsBuilds","BuildsBoth"
+"Debug|Any CPU","Debug|x86","True","Debug|Any CPU","True","True"
+"Debug|x86","Debug|x86","True","Debug|Any CPU","False","False"
+"Release|Any CPU","Release|x86","True","Release|Any CPU","True","True"
+"Release|x86","Release|x86","True","Release|Any CPU","True","True"

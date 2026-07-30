@@ -24,7 +24,12 @@ namespace Server.Commands
         [Description("Calls AdminAddGump.")]
         private static void AdminAdd_OnCommand(CommandEventArgs e)
         {
-            e.Mobile.SendGump(new AdminAddGump(0, e.Mobile, new ArrayList(), new ArrayList()));
+            if (e == null || e.Mobile == null || e.Mobile.Deleted)
+                return;
+
+            Mobile from = e.Mobile;
+
+            from.SendGump(new AdminAddGump(0, from, new ArrayList(), new ArrayList()));
         }
     }
 }

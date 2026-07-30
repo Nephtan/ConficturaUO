@@ -121,6 +121,9 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
+            if (from == null || from.Deleted || Deleted)
+                return;
+
             from.SendMessage("Please Enter The New Name For This Carving.");
             from.Prompt = new RenamePrompt(this);
         }
@@ -136,6 +139,9 @@ namespace Server.Items
 
             public override void OnResponse(Mobile from, string text)
             {
+                if (from == null || from.Deleted || m_Statue == null || m_Statue.Deleted || text == null)
+                    return;
+
                 m_Statue.Name = text;
                 from.SendMessage("The name has been changed");
             }

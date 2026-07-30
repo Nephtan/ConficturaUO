@@ -88,6 +88,9 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
+            if (from == null || from.Deleted || Deleted)
+                return;
+
             if (IsChildOf(from.Backpack))
             {
                 int cost = Museums.AntiqueTotalValue(ThisValue, from, false);

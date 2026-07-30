@@ -260,3 +260,86 @@ Staff can inspect or edit exposed `[CommandProperty]` values on boats, planks, d
 | `BaseBoat.EndDryDock()` casts the dry-docking caller to `PlayerMobile` while processing lower-deck stowaways. | A non-player administrator/mobile dry-docking a boat with lower-deck players can throw. |
 | `BoatNavigationControl.OnResponse()` does not enforce owner, key, or `CanCommand()` checks before controlling the boat found under the player. | Any player standing on a boat can use the optional `[bc...]` gump to operate it. |
 | `BoatNavigationControl` opens planks by setting `Locked = false` and does not restore the locked state afterward. | The optional navigation gump can permanently unlock planks until another system or staff action changes them. |
+
+## Source Trace
+
+POST-BATCH-T reviewed this page on 2026-06-14T21:09:11.0049244-05:00 against current source and audit registers.
+
+- Canonical status: Canonical.
+- Queue rows: PBN-0005; PBN-0130.
+- Backlog rows: RB-06768; RB-06769.
+- Audit registers used: documentation-truth-table.csv, runtime-hook-map.csv, serialization-register.csv, and project-truth-register.csv.
+
+### Source Files Reviewed
+
+- Data/Scripts/Mobiles/Civilized/Vendors/Shipwright.cs (CurrentFile)
+- Data/Scripts/Mobiles/Civilized/Vendors/DrunkenPirate.cs (CurrentFile)
+- Data/Scripts/System/Misc/Talk.cs (CurrentFile)
+- Data/Scripts/System/Commands/Player/MyChat.cs (CurrentFile)
+- Data/Scripts/Mobiles/Base/StoreSalesList.cs (CurrentFile)
+- Data/Scripts/Items/Boats/BaseBoatDeed.cs (CurrentFile)
+- Data/Scripts/Items/Boats/BaseDockedBoat.cs (CurrentFile)
+- Data/Scripts/Items/Boats/BaseBoat.cs (CurrentFile)
+- Data/Scripts/Items/Boats/TillerMan.cs (CurrentFile)
+- Data/Scripts/Items/Boats/Gumps/TillerManGump.cs (CurrentFile)
+- Data/Scripts/Items/Boats/Gumps/ConfirmDryDockGump.cs (CurrentFile)
+- Data/Scripts/Items/Boats/DockingLantern.cs (CurrentFile)
+- Data/Scripts/Items/Boats/BoatStain.cs (CurrentFile)
+- Data/Scripts/Items/Misc/Dyes/DyeTub.cs (CurrentFile)
+- Data/Scripts/Custom/BoatNavigationTotem/BoatNavigationTotam.cs (CurrentFile)
+
+### Runtime Evidence
+
+- Hook summary: Command=3; Event=1; Gump=42; Initialize=2; Speech=1; Timer=4; WorldSave=1.
+- Data/Scripts/Custom/BoatNavigationTotem/BoatNavigationTotam.cs:L17 Initialize Initialize access=GlobalOrInternal
+- Data/Scripts/Custom/BoatNavigationTotem/BoatNavigationTotam.cs:L19 Command CommandSystem.Register access=Unknown
+- Data/Scripts/Custom/BoatNavigationTotem/BoatNavigationTotam.cs:L24 Command CommandSystem.Register access=Unknown
+- Data/Scripts/Custom/BoatNavigationTotem/BoatNavigationTotam.cs:L29 Command CommandSystem.Register access=Unknown
+- Data/Scripts/Custom/BoatNavigationTotem/BoatNavigationTotam.cs:L43 Gump SendGump access=Internal
+- Data/Scripts/Custom/BoatNavigationTotem/BoatNavigationTotam.cs:L53 Gump SendGump access=Internal
+- Data/Scripts/Custom/BoatNavigationTotem/BoatNavigationTotam.cs:L63 Gump SendGump access=Internal
+- Data/Scripts/Custom/BoatNavigationTotem/BoatNavigationTotam.cs:L197 Gump OnResponse access=Internal
+- Data/Scripts/Custom/BoatNavigationTotem/BoatNavigationTotam.cs:L219 Gump SendGump access=Internal
+- Data/Scripts/Custom/BoatNavigationTotem/BoatNavigationTotam.cs:L227 Gump SendGump access=Internal
+- Data/Scripts/Custom/BoatNavigationTotem/BoatNavigationTotam.cs:L300 Gump SendGump access=Internal
+- Data/Scripts/Custom/BoatNavigationTotem/BoatNavigationTotam.cs:L373 Gump SendGump access=Internal
+- Additional hook rows are recorded in runtime-hook-map.csv for this source set.
+
+### Serialization Evidence
+
+- Serialized rows matched: 9.
+- Data/Scripts/Items/Boats/BaseBoat.cs:Server.Multis.BaseBoat version=3 serialize=L663 deserialize=L688 alignment=CountMatchNeedsTypeReview:UnknownWrites=8
+- Data/Scripts/Items/Boats/BaseBoatDeed.cs:Server.Multis.BaseBoatDeed version=0 serialize=L56 deserialize=L64 alignment=CountMatchNeedsTypeReview:UnknownWrites=2
+- Data/Scripts/Items/Boats/BaseDockedBoat.cs:Server.Multis.BaseDockedBoat version=1 serialize=L71 deserialize=L82 alignment=CountMismatch:Writes=3;Reads=4
+- Data/Scripts/Items/Boats/BoatStain.cs:Server.Items.BoatStain version=0 serialize=L85 deserialize=L91 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Items/Boats/DockingLantern.cs:Server.Items.DockingLantern version=0 serialize=L74 deserialize=L81 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Items/Boats/TillerMan.cs:Server.Items.TillerMan version=0 serialize=L174 deserialize=L183 alignment=CountMatchNeedsTypeReview:UnknownWrites=1
+- Data/Scripts/Items/Misc/Dyes/DyeTub.cs:Server.Items.DyeTub version=1 serialize=L63 deserialize=L74 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Mobiles/Civilized/Vendors/DrunkenPirate.cs:Server.Mobiles.DrunkenPirate version=0 serialize=L99 deserialize=L106 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Mobiles/Civilized/Vendors/Shipwright.cs:Server.Mobiles.Shipwright version=0 serialize=L188 deserialize=L195 alignment=AlignedByCountAndKnownTypes
+
+### Project And Runtime Coverage
+
+- Data/Scripts/Custom/BoatNavigationTotem/BoatNavigationTotam.cs=Keep
+- Data/Scripts/Custom/BoatNavigationTotem/BoatNavigationTotam.cs=Keep
+- Data/Scripts/Items/Boats/BaseBoat.cs=Keep
+- Data/Scripts/Items/Boats/BaseBoat.cs=Keep
+- Data/Scripts/Items/Boats/BaseBoatDeed.cs=Keep
+- Data/Scripts/Items/Boats/BaseBoatDeed.cs=Keep
+- Data/Scripts/Items/Boats/BaseDockedBoat.cs=Keep
+- Data/Scripts/Items/Boats/BaseDockedBoat.cs=Keep
+- Data/Scripts/Items/Boats/BoatStain.cs=Keep
+- Data/Scripts/Items/Boats/BoatStain.cs=Keep
+- Data/Scripts/Items/Boats/DockingLantern.cs=Keep
+- Data/Scripts/Items/Boats/DockingLantern.cs=Keep
+- Data/Scripts/Items/Boats/Gumps/ConfirmDryDockGump.cs=Keep
+- Data/Scripts/Items/Boats/Gumps/ConfirmDryDockGump.cs=Keep
+- Data/Scripts/Items/Boats/Gumps/TillerManGump.cs=Keep
+- Data/Scripts/Items/Boats/Gumps/TillerManGump.cs=Keep
+- Data/Scripts/Items/Boats/TillerMan.cs=Keep
+- Data/Scripts/Items/Boats/TillerMan.cs=Keep
+- Data/Scripts/Items/Misc/Dyes/DyeTub.cs=Keep
+- Data/Scripts/Items/Misc/Dyes/DyeTub.cs=Keep
+- Additional project-truth rows are recorded in project-truth-register.csv for this source set.
+
+No C# source, project files, XML/config/data files, namespaces, serializers, gameplay behavior, or migration policy were changed in POST-BATCH-T.

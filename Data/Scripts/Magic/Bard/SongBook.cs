@@ -37,6 +37,9 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
+            if (from == null || from.Deleted || Deleted)
+                return;
+
             if (from.InRange(GetWorldLocation(), 1))
             {
                 from.CloseGump(typeof(SongBookGump));

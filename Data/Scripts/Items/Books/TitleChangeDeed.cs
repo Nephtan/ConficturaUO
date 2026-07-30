@@ -38,7 +38,10 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
-            if (!IsChildOf(from.Backpack))
+            if (from == null || from.Deleted || Deleted)
+                return;
+
+            if (from.Backpack == null || !IsChildOf(from.Backpack))
             {
                 from.SendLocalizedMessage(1042001); // That must be in your pack for you to use it.
             }
@@ -61,7 +64,11 @@ namespace Server.Items
 
             public override void OnResponse(Mobile from, string text)
             {
-                PlayerMobile pm = (PlayerMobile)from;
+                PlayerMobile pm = from as PlayerMobile;
+
+                if (pm == null || pm.Deleted || m_from == null || m_from.Deleted || from != m_from || text == null)
+                    return;
+
                 pm.Title = text;
                 pm.SendMessage("Your Title be hence forth know as {0}", text);
             }

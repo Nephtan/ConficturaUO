@@ -62,6 +62,11 @@ namespace Server.Items
 
         public override void OnSingleClick(Mobile from)
         {
+            if (from == null || from.Deleted || Deleted)
+            {
+                return;
+            }
+
             base.OnSingleClick(from);
 
             if (m_IsShipwreckedItem)

@@ -341,6 +341,9 @@ namespace Server.Engines.PartySystem
 
         public static void EventSink_PlayerDeath(PlayerDeathEventArgs e)
         {
+            if (e == null || e.Mobile == null || e.Mobile.Deleted)
+                return;
+
             Mobile from = e.Mobile;
             Party p = Party.Get(from);
 
@@ -350,7 +353,7 @@ namespace Server.Engines.PartySystem
 
                 if (m == from)
                     p.SendPublicMessage(from, "I killed myself!");
-                else if (m == null)
+                else if (m == null || m.Deleted)
                     p.SendPublicMessage(from, "I was killed!");
                 else
                     p.SendPublicMessage(from, String.Format("I was killed by {0}!", m.Name));
@@ -369,6 +372,9 @@ namespace Server.Engines.PartySystem
 
             protected override void OnTick()
             {
+                if (m_Mobile == null || m_Mobile.Deleted)
+                    return;
+
                 Party p = Party.Get(m_Mobile);
 
                 if (p == null)
@@ -395,9 +401,12 @@ namespace Server.Engines.PartySystem
 
                 foreach (PartyMemberInfo mi in p.Members)
                 {
+                    if (mi == null)
+                        continue;
+
                     Mobile m = mi.Mobile;
 
-                    if (m != m_Mobile)
+                    if (m != null && !m.Deleted && m != m_Mobile)
                     {
                         m.Send(message);
                         m.Send(new MobileStatusCompact(m_Mobile.CanBeRenamedBy(m), m_Mobile));
@@ -414,6 +423,9 @@ namespace Server.Engines.PartySystem
 
         public static void EventSink_Login(LoginEventArgs e)
         {
+            if (e == null || e.Mobile == null || e.Mobile.Deleted)
+                return;
+
             Mobile from = e.Mobile;
             Party p = Party.Get(from);
 
@@ -425,6 +437,9 @@ namespace Server.Engines.PartySystem
 
         public static void EventSink_Logout(LogoutEventArgs e)
         {
+            if (e == null || e.Mobile == null)
+                return;
+
             Mobile from = e.Mobile;
             Party p = Party.Get(from);
 
@@ -686,34 +701,42 @@ namespace Server.Engines.PartySystem
         {
             Packet p = null;
 
-            foreach (NetState ns in from.GetClientsInRange(8))
+            IPooledEnumerable eable = from.GetClientsInRange(8);
+            try
             {
-                Mobile mob = ns.Mobile;
-
-                if (
-                    mob != null
-                    && mob.AccessLevel >= AccessLevel.GameMaster
-                    && mob.AccessLevel > from.AccessLevel
-                    && mob.Party != this
-                    && !m_Listeners.Contains(mob)
-                )
+                foreach (NetState ns in eable)
                 {
-                    if (p == null)
-                        p = Packet.Acquire(
-                            new UnicodeMessage(
-                                from.Serial,
-                                from.Body,
-                                MessageType.Regular,
-                                from.SpeechHue,
-                                3,
-                                from.Language,
-                                from.Name,
-                                text
-                            )
-                        );
+                    Mobile mob = ns.Mobile;
 
-                    ns.Send(p);
+                    if (
+                        mob != null
+                        && mob.AccessLevel >= AccessLevel.GameMaster
+                        && mob.AccessLevel > from.AccessLevel
+                        && mob.Party != this
+                        && !m_Listeners.Contains(mob)
+                    )
+                    {
+                        if (p == null)
+                            p = Packet.Acquire(
+                                new UnicodeMessage(
+                                    from.Serial,
+                                    from.Body,
+                                    MessageType.Regular,
+                                    from.SpeechHue,
+                                    3,
+                                    from.Language,
+                                    from.Name,
+                                    text
+                                )
+                            );
+
+                        ns.Send(p);
+                    }
                 }
+            }
+            finally
+            {
+                eable.Free();
             }
 
             Packet.Release(p);

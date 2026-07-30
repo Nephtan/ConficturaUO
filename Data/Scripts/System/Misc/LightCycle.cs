@@ -66,6 +66,9 @@ namespace Server
 
         public static void OnLogin(LoginEventArgs args)
         {
+            if (args == null || args.Mobile == null || args.Mobile.Deleted || args.Mobile.Map == null)
+                return;
+
             Mobile m = args.Mobile;
 
             m.CheckLightLevels(true);

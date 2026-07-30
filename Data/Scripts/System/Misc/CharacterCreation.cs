@@ -154,15 +154,19 @@ namespace Server.Misc
 
         private static void EventSink_CharacterCreated(CharacterCreatedEventArgs args)
         {
+            if (args == null || args.State == null)
+                return;
+
+            NetState state = args.State;
+            Account account = args.Account as Account;
+
+            if (account == null)
+                return;
+
             if (!VerifyProfession(args.Profession))
                 args.Profession = 0;
 
-            NetState state = args.State;
-
-            if (state == null)
-                return;
-
-            Mobile newChar = CreateMobile(args.Account as Account);
+            Mobile newChar = CreateMobile(account);
 
             if (newChar == null)
             {
@@ -176,7 +180,7 @@ namespace Server.Misc
             newChar.Player = true;
             newChar.StatCap = 250;
             Server.Misc.MyServerSettings.SkillBegin("default", (PlayerMobile)newChar);
-            newChar.AccessLevel = args.Account.AccessLevel;
+            newChar.AccessLevel = account.AccessLevel;
             newChar.Female = args.Female;
             newChar.Race = Race.Human;
             newChar.RaceMakeSounds = true;
@@ -257,7 +261,7 @@ namespace Server.Misc
             Console.WriteLine(
                 "Login: {0}: New character being created (account={1})",
                 state,
-                args.Account.Username
+                account.Username
             );
 
             new WelcomeTimer(newChar).Start();

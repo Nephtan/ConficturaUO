@@ -60,7 +60,7 @@ namespace Server.Engines.XmlSpawner2
         [Description("Edits XmlDialog entries on an object")]
         public static void XmlEditDialog_OnCommand(CommandEventArgs e)
         {
-            if (e == null || e.Mobile == null)
+            if (e == null || e.Mobile == null || e.Mobile.Deleted)
                 return;
 
             // target an object with the xmldialog attachment

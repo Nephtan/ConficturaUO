@@ -454,9 +454,12 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
+            if (from == null || from.Deleted || Deleted)
+                return;
+
             Target t;
 
-            if (!IsChildOf(from.Backpack) && !(Parent == from))
+            if ((from.Backpack == null || !IsChildOf(from.Backpack)) && !(Parent == from))
             {
                 from.SendMessage("The item must be in your possession to use it.");
             }
@@ -486,21 +489,28 @@ namespace Server.Items
 
             protected override void OnTarget(Mobile from, object targeted)
             {
+                if (from == null || from.Deleted)
+                    return;
+
                 Item iGem = targeted as Item;
 
                 if (
-                    iGem is StarSapphire
-                    || iGem is Emerald
-                    || iGem is Sapphire
-                    || iGem is Ruby
-                    || iGem is Citrine
-                    || iGem is Amethyst
-                    || iGem is Tourmaline
-                    || iGem is Amber
-                    || iGem is Diamond
+                    iGem != null
+                    && !iGem.Deleted
+                    && (
+                        iGem is StarSapphire
+                        || iGem is Emerald
+                        || iGem is Sapphire
+                        || iGem is Ruby
+                        || iGem is Citrine
+                        || iGem is Amethyst
+                        || iGem is Tourmaline
+                        || iGem is Amber
+                        || iGem is Diamond
+                    )
                 )
                 {
-                    if (!iGem.IsChildOf(from.Backpack))
+                    if (from.Backpack == null || !iGem.IsChildOf(from.Backpack))
                     {
                         from.SendMessage("You can only transmorph gems in your pack.");
                     }
@@ -665,6 +675,9 @@ namespace Server.Items
 
         public static bool HasStaff(Mobile from)
         {
+            if (from == null || from.Deleted)
+                return false;
+
             if (from.FindItemOnLayer(Layer.OneHanded) != null)
             {
                 Item oneHand = from.FindItemOnLayer(Layer.OneHanded);
@@ -681,13 +694,18 @@ namespace Server.Items
                     return true;
                 }
             }
-            if (from.Backpack.FindItemByType(typeof(GiftStave)) != null)
+            Container pack = from.Backpack;
+
+            if (pack != null)
             {
-                return true;
-            }
-            if (from.Backpack.FindItemByType(typeof(GiftSceptre)) != null)
-            {
-                return true;
+                if (pack.FindItemByType(typeof(GiftStave)) != null)
+                {
+                    return true;
+                }
+                if (pack.FindItemByType(typeof(GiftSceptre)) != null)
+                {
+                    return true;
+                }
             }
 
             return false;

@@ -194,6 +194,9 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
+            if (from == null || from.Deleted || Deleted)
+                return;
+
             from.SendMessage("You squeeze out the water.");
             from.PlaySound(0x026);
 

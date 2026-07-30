@@ -66,6 +66,9 @@ namespace Server.Gumps
 
         public override void OnResponse(Server.Network.NetState state, RelayInfo info)
         {
+            if (state == null || info == null || state.Mobile == null || state.Mobile.Deleted)
+                return;
+
             if (info.ButtonID == (int)Buttons.Confirm)
             {
                 if (info.IsSwitched((int)Buttons.Break))

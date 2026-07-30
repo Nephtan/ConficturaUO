@@ -173,7 +173,7 @@ namespace Server.Engines.XmlSpawner2
         [Description("Displays the top players in quest points")]
         public static void QuestRanking_OnCommand(CommandEventArgs e)
         {
-            if (e == null || e.Mobile == null)
+            if (e == null || e.Mobile == null || e.Mobile.Deleted)
                 return;
 
             // if this player has an XmlQuestPoints attachment, find it
@@ -432,6 +432,9 @@ namespace Server.Engines.XmlSpawner2
         [Description("Periodically save .xml quest leaderboard information to the specified file")]
         public static void QuestLeaderboardSave_OnCommand(CommandEventArgs e)
         {
+            if (e == null || e.Mobile == null || e.Mobile.Deleted || e.Arguments == null)
+                return;
+
             if (e.Arguments.Length > 0)
             {
                 if (m_QuestLeaderboardTimer != null)

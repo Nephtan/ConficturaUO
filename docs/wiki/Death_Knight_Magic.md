@@ -184,3 +184,65 @@ The spellbook help page also lists Death Knight toolbar commands from the shared
 - `HellfireSpell.DoBurn()` calls `m.Damage(damage, m)`, so burn ticks credit the target as the damager instead of the caster.
 - `WrathSpell` drains souls after a successful point cast even when no valid targets are found in range.
 - `SoulLantern.Deserialize()` reads the version but does not branch on it. Version `1` always reads both `owner` and `TrappedSouls`, so older layouts would not be migrated safely.
+
+## Source Trace
+
+POST-BATCH-T reviewed this page on 2026-06-14T21:09:11.0049244-05:00 against current source and audit registers.
+
+- Canonical status: Canonical.
+- Queue rows: PBN-0034.
+- Backlog rows: RB-06685.
+- Audit registers used: documentation-truth-table.csv, runtime-hook-map.csv, serialization-register.csv, and project-truth-register.csv.
+
+### Source Files Reviewed
+
+- Data/Scripts/Magic/Death Knight/DeathKnightSpell.cs (CurrentFile)
+- Data/Scripts/Magic/Death Knight/DeathKnightSpellBook.cs (CurrentFile)
+- Data/Scripts/Magic/Death Knight/DeathKnightCommands.cs (CurrentFile)
+- Data/Scripts/Magic/Death Knight/DeathSkulls.cs (CurrentFile)
+- Data/Scripts/Magic/Death Knight/SoulLantern.cs (CurrentFile)
+- Data/Scripts/Magic/Death Knight/Gumps/DeathKnightSpellBookGump.cs (CurrentFile)
+
+### Runtime Evidence
+
+- Hook summary: Command=1; Gump=4; Initialize=1.
+- Data/Scripts/Magic/Death Knight/DeathKnightCommands.cs:L15 Initialize Initialize access=GlobalOrInternal
+- Data/Scripts/Magic/Death Knight/DeathKnightCommands.cs:L77 Command CommandSystem.Register access=Unknown
+- Data/Scripts/Magic/Death Knight/DeathKnightSpellBook.cs:L92 Gump SendGump access=Internal
+- Data/Scripts/Magic/Death Knight/Gumps/DeathKnightSpellBookGump.cs:L667 Gump OnResponse access=Internal
+- Data/Scripts/Magic/Death Knight/Gumps/DeathKnightSpellBookGump.cs:L683 Gump SendGump access=Internal
+- Data/Scripts/Magic/Death Knight/Gumps/DeathKnightSpellBookGump.cs:L744 Gump SendGump access=Internal
+
+### Serialization Evidence
+
+- Serialized rows matched: 16.
+- Data/Scripts/Magic/Death Knight/DeathKnightSpellBook.cs:Server.Items.DeathKnightSpellbook version=0 serialize=L110 deserialize=L117 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Magic/Death Knight/DeathSkulls.cs:Server.Items.DeathKnightSkull750 version=0 serialize=L33 deserialize=L39 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Magic/Death Knight/DeathSkulls.cs:Server.Items.DeathKnightSkull751 version=0 serialize=L73 deserialize=L79 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Magic/Death Knight/DeathSkulls.cs:Server.Items.DeathKnightSkull752 version=0 serialize=L113 deserialize=L119 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Magic/Death Knight/DeathSkulls.cs:Server.Items.DeathKnightSkull753 version=0 serialize=L153 deserialize=L159 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Magic/Death Knight/DeathSkulls.cs:Server.Items.DeathKnightSkull754 version=0 serialize=L193 deserialize=L199 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Magic/Death Knight/DeathSkulls.cs:Server.Items.DeathKnightSkull755 version=0 serialize=L233 deserialize=L239 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Magic/Death Knight/DeathSkulls.cs:Server.Items.DeathKnightSkull756 version=0 serialize=L273 deserialize=L279 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Magic/Death Knight/DeathSkulls.cs:Server.Items.DeathKnightSkull757 version=0 serialize=L313 deserialize=L319 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Magic/Death Knight/DeathSkulls.cs:Server.Items.DeathKnightSkull758 version=0 serialize=L353 deserialize=L359 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Magic/Death Knight/DeathSkulls.cs:Server.Items.DeathKnightSkull759 version=0 serialize=L393 deserialize=L399 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Magic/Death Knight/DeathSkulls.cs:Server.Items.DeathKnightSkull760 version=0 serialize=L433 deserialize=L439 alignment=AlignedByCountAndKnownTypes
+- Additional serializer rows are recorded in serialization-register.csv for this source set.
+
+### Project And Runtime Coverage
+
+- Data/Scripts/Magic/Death Knight/DeathKnightCommands.cs=Keep
+- Data/Scripts/Magic/Death Knight/DeathKnightCommands.cs=Keep
+- Data/Scripts/Magic/Death Knight/DeathKnightSpell.cs=Keep
+- Data/Scripts/Magic/Death Knight/DeathKnightSpell.cs=Keep
+- Data/Scripts/Magic/Death Knight/DeathKnightSpellBook.cs=Keep
+- Data/Scripts/Magic/Death Knight/DeathKnightSpellBook.cs=Keep
+- Data/Scripts/Magic/Death Knight/DeathSkulls.cs=Keep
+- Data/Scripts/Magic/Death Knight/DeathSkulls.cs=Keep
+- Data/Scripts/Magic/Death Knight/Gumps/DeathKnightSpellBookGump.cs=Keep
+- Data/Scripts/Magic/Death Knight/Gumps/DeathKnightSpellBookGump.cs=Keep
+- Data/Scripts/Magic/Death Knight/SoulLantern.cs=Keep
+- Data/Scripts/Magic/Death Knight/SoulLantern.cs=Keep
+
+No C# source, project files, XML/config/data files, namespaces, serializers, gameplay behavior, or migration policy were changed in POST-BATCH-T.

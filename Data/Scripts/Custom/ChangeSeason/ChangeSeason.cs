@@ -20,6 +20,9 @@ namespace Server.Commands
         [Description("Changes the season of your current map.")]
         public static void ChangeSeason_OnCommand(CommandEventArgs e)
         {
+            if (e == null || e.Mobile == null || e.Mobile.Deleted)
+                return;
+
             Mobile m = e.Mobile;
 
             if (e.Length != 1)
@@ -54,6 +57,12 @@ namespace Server.Commands
             }
 
             Map map = m.Map;
+            if (map == null)
+            {
+                m.SendMessage("You must be on a map to change its season.");
+                return;
+            }
+
             map.Season = season;
 
             foreach (NetState ns in NetState.Instances)

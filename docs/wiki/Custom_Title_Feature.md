@@ -92,3 +92,64 @@ That means current player saves contain the custom title twice: once in the base
 | The title text is not validated with `NameVerification`, profanity protection, or an explicit server-side length check in `OnResponse()`. | Players can set punctuation, digits, mixed-case reserved words, or longer forged relay text unless blocked elsewhere by the gump packet/client path. |
 | The reserved-word filter only checks specific case variants with trailing spaces. | Words such as a rank at the end of the title, all-caps variants, or punctuation-adjacent variants can bypass the deny list. |
 | `Title` is serialized both by base `Mobile` and by `PlayerMobile`. | The stream is aligned today, but this duplicate field is easy to mishandle during future version upgrades. |
+
+## Source Trace
+
+POST-BATCH-T reviewed this page on 2026-06-14T21:09:11.0049244-05:00 against current source and audit registers.
+
+- Canonical status: Canonical.
+- Queue rows: PBN-0055.
+- Backlog rows: RB-06684.
+- Audit registers used: documentation-truth-table.csv, runtime-hook-map.csv, serialization-register.csv, and project-truth-register.csv.
+
+### Source Files Reviewed
+
+- Data/Scripts/System/Help/Gumps/HelpGump.cs (CurrentFile)
+- Data/Scripts/System/Misc/Naming.cs (CurrentFile)
+- Data/Scripts/System/Help/ServerSettings.cs (CurrentFile)
+- Data/Scripts/System/Misc/Settings.cs (CurrentFile)
+- Data/System/Source/Mobile.cs (CurrentFile)
+- Data/Scripts/Mobiles/Base/PlayerMobile.cs (CurrentFile)
+- Data/Scripts/System/Misc/Titles.cs (CurrentFile)
+
+### Runtime Evidence
+
+- Hook summary: Command=1; Event=15; Gump=96; Initialize=3; Login=1; Logout=1; Movement=3; Speech=8; Timer=21; WorldLoad=1.
+- Data/Scripts/Mobiles/Base/PlayerMobile.cs:L798 Initialize Initialize access=GlobalOrInternal
+- Data/Scripts/Mobiles/Base/PlayerMobile.cs:L806 Event EventSink access=GlobalOrInternal
+- Data/Scripts/Mobiles/Base/PlayerMobile.cs:L807 Event EventSink access=GlobalOrInternal
+- Data/Scripts/Mobiles/Base/PlayerMobile.cs:L808 Event EventSink access=GlobalOrInternal
+- Data/Scripts/Mobiles/Base/PlayerMobile.cs:L809 Event EventSink access=GlobalOrInternal
+- Data/Scripts/Mobiles/Base/PlayerMobile.cs:L813 Timer Timer.DelayCall access=GlobalOrInternal
+- Data/Scripts/Mobiles/Base/PlayerMobile.cs:L1003 Login OnLogin access=Internal
+- Data/Scripts/Mobiles/Base/PlayerMobile.cs:L1030 Timer Timer.DelayCall access=GlobalOrInternal
+- Data/Scripts/Mobiles/Base/PlayerMobile.cs:L1047 Gump SendGump access=Internal
+- Data/Scripts/Mobiles/Base/PlayerMobile.cs:L1068 Timer Timer.DelayCall access=GlobalOrInternal
+- Data/Scripts/Mobiles/Base/PlayerMobile.cs:L1328 Logout OnLogout access=Internal
+- Data/Scripts/Mobiles/Base/PlayerMobile.cs:L1367 Timer Timer.DelayCall access=GlobalOrInternal
+- Additional hook rows are recorded in runtime-hook-map.csv for this source set.
+
+### Serialization Evidence
+
+- Serialized rows matched: 4.
+- Data/Scripts/Mobiles/Base/PlayerMobile.cs:Server.Mobiles.PlayerMobile version=37 serialize=L5042 deserialize=L4577 alignment=CountMismatch:Writes=120;Reads=119
+- Data/Scripts/System/Misc/Naming.cs:Server.CensusRecords version=0 serialize=L408 deserialize=L414 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/System/Misc/Naming.cs:Server.ChangeName version=0 serialize=L897 deserialize=L903 alignment=AlignedByCountAndKnownTypes
+- Data/System/Source/Mobile.cs:Server.Mobile version=35 serialize=L6183 deserialize=L5700 alignment=CountMismatch:Writes=98;Reads=104
+
+### Project And Runtime Coverage
+
+- Data/Scripts/Mobiles/Base/PlayerMobile.cs=Keep
+- Data/Scripts/Mobiles/Base/PlayerMobile.cs=Keep
+- Data/Scripts/System/Help/Gumps/HelpGump.cs=Keep
+- Data/Scripts/System/Help/Gumps/HelpGump.cs=Keep
+- Data/Scripts/System/Help/ServerSettings.cs=Keep
+- Data/Scripts/System/Help/ServerSettings.cs=Keep
+- Data/Scripts/System/Misc/Naming.cs=Keep
+- Data/Scripts/System/Misc/Naming.cs=Keep
+- Data/Scripts/System/Misc/Settings.cs=Keep
+- Data/Scripts/System/Misc/Settings.cs=Keep
+- Data/Scripts/System/Misc/Titles.cs=Keep
+- Data/Scripts/System/Misc/Titles.cs=Keep
+
+No C# source, project files, XML/config/data files, namespaces, serializers, gameplay behavior, or migration policy were changed in POST-BATCH-T.

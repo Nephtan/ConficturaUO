@@ -108,3 +108,59 @@ The spell classes do not serialize state. Runtime effects are held in static `Ha
 | `StrengthOfSteelMagic` applies the stat bonus to the target but removes/adds the buff icon on `Caster`. | Beneficial casts on another Mobile can show or clear the buff on the wrong Mobile. |
 | `HagHandMagic.TargetItem` has no ownership, backpack, Karma, or skill gate before moving contents from a targeted `BookBox` or `CurseItem`. | A valid target in range can have its contents moved to the caster's backpack and the container deleted without the safeguards present in some other curse-removal paths. |
 | All Enchantment spell `SpellInfo` names and mantras are blank, and all per-spell `RequiredSkill` and `RequiredMana` values are zero. | User-facing spell metadata is incomplete, and the base casting path treats the line as zero-mana, zero-skill Magery casts. |
+
+## Source Trace
+
+POST-BATCH-T reviewed this page on 2026-06-14T21:09:11.0049244-05:00 against current source and audit registers.
+
+- Canonical status: Canonical.
+- Queue rows: PBN-0089.
+- Backlog rows: RB-06688.
+- Audit registers used: documentation-truth-table.csv, runtime-hook-map.csv, serialization-register.csv, and project-truth-register.csv.
+
+### Source Files Reviewed
+
+- Data/Scripts/Magic/Enchantments/ (CurrentDirectory)
+- Data/Scripts/Magic/Base/Initializer.cs (CurrentFile)
+- Data/Scripts/Magic/Base/SpellRegistry.cs (CurrentFile)
+
+### Runtime Evidence
+
+- Hook summary: Initialize=1; Timer=5.
+- Data/Scripts/Magic/Base/Initializer.cs:L8 Initialize Initialize access=GlobalOrInternal
+- Data/Scripts/Magic/Enchantments/Spells/GrimReaperMagic..cs:L57 Timer Timer.DelayCall access=GlobalOrInternal
+- Data/Scripts/Magic/Enchantments/Spells/HellfireMagic..cs:L116 Timer CustomTimerSubclass access=GlobalOrInternal
+- Data/Scripts/Magic/Enchantments/Spells/ShieldOfHateMagic..cs:L112 Timer CustomTimerSubclass access=GlobalOrInternal
+- Data/Scripts/Magic/Enchantments/Spells/SoulReaperMagic..cs:L80 Timer CustomTimerSubclass access=GlobalOrInternal
+- Data/Scripts/Magic/Enchantments/Spells/SuccubusSkinMagic..cs:L118 Timer CustomTimerSubclass access=GlobalOrInternal
+
+### Serialization Evidence
+
+- Serialized rows matched: 1.
+- Data/Scripts/Magic/Enchantments/Mobiles/DevilPactMagic.cs:Server.Mobiles.Devil_Pact version=0 serialize=L81 deserialize=L87 alignment=AlignedByCountAndKnownTypes
+
+### Project And Runtime Coverage
+
+- Data/Scripts/Magic/Base/Initializer.cs=Keep
+- Data/Scripts/Magic/Base/Initializer.cs=Keep
+- Data/Scripts/Magic/Base/SpellRegistry.cs=Keep
+- Data/Scripts/Magic/Base/SpellRegistry.cs=Keep
+- Data/Scripts/Magic/Enchantments/EnchantMagic.cs=Keep
+- Data/Scripts/Magic/Enchantments/EnchantMagic.cs=Keep
+- Data/Scripts/Magic/Enchantments/Mobiles/DevilPactMagic.cs=Keep
+- Data/Scripts/Magic/Enchantments/Mobiles/DevilPactMagic.cs=Keep
+- Data/Scripts/Magic/Enchantments/Spells/BanishMagic..cs=Keep
+- Data/Scripts/Magic/Enchantments/Spells/BanishMagic..cs=Keep
+- Data/Scripts/Magic/Enchantments/Spells/DemonicTouchMagic..cs=Keep
+- Data/Scripts/Magic/Enchantments/Spells/DemonicTouchMagic..cs=Keep
+- Data/Scripts/Magic/Enchantments/Spells/DevilPactMagic..cs=Keep
+- Data/Scripts/Magic/Enchantments/Spells/DevilPactMagic..cs=Keep
+- Data/Scripts/Magic/Enchantments/Spells/GrimReaperMagic..cs=Keep
+- Data/Scripts/Magic/Enchantments/Spells/GrimReaperMagic..cs=Keep
+- Data/Scripts/Magic/Enchantments/Spells/HagHandMagic..cs=Keep
+- Data/Scripts/Magic/Enchantments/Spells/HagHandMagic..cs=Keep
+- Data/Scripts/Magic/Enchantments/Spells/HellfireMagic..cs=Keep
+- Data/Scripts/Magic/Enchantments/Spells/HellfireMagic..cs=Keep
+- Additional project-truth rows are recorded in project-truth-register.csv for this source set.
+
+No C# source, project files, XML/config/data files, namespaces, serializers, gameplay behavior, or migration policy were changed in POST-BATCH-T.

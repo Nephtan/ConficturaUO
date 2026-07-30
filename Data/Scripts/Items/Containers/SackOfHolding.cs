@@ -151,6 +151,9 @@ namespace Server.Items
 
             public override void OnResponse(NetState state, RelayInfo info)
             {
+                if (state == null || state.Mobile == null || state.Mobile.Deleted)
+                    return;
+
                 Mobile from = state.Mobile;
                 from.SendSound(0x4A);
             }
@@ -170,6 +173,9 @@ namespace Server.Items
 
             public override void OnClick()
             {
+                if (m_From == null || m_From.Deleted || i_SackOfHolding == null || i_SackOfHolding.Deleted)
+                    return;
+
                 m_From.CloseGump(typeof(BagGump));
                 m_From.SendGump(new BagGump(m_From, i_SackOfHolding));
                 m_From.PlaySound(0x048);
@@ -178,6 +184,9 @@ namespace Server.Items
 
         public override void GetContextMenuEntries(Mobile from, List<ContextMenuEntry> list)
         {
+            if (from == null || from.Deleted || Deleted)
+                return;
+
             base.GetContextMenuEntries(from, list);
 
             if (from.Alive)
@@ -186,6 +195,9 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
+            if (from == null || from.Deleted || Deleted)
+                return;
+
             if (SackOwner == from)
             {
                 Open(from);

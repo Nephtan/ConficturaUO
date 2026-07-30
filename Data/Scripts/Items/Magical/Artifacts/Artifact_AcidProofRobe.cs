@@ -31,6 +31,11 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
+            if (from == null || from.Deleted || Deleted)
+            {
+                return;
+            }
+
             DateTime TimeNow = DateTime.Now;
             long ticksThen = TimeUsed.Ticks;
             long ticksNow = TimeNow.Ticks;
@@ -50,7 +55,7 @@ namespace Server.Items
             }
             else
             {
-                if (!from.Backpack.ConsumeTotal(typeof(Bottle), 1))
+                if (from.Backpack == null || !from.Backpack.ConsumeTotal(typeof(Bottle), 1))
                 {
                     from.SendMessage("You need an empty bottle to squeeze the acid into.");
                 }
@@ -66,6 +71,11 @@ namespace Server.Items
 
         public override bool OnDragLift(Mobile from)
         {
+            if (from == null || from.Deleted || Deleted)
+            {
+                return false;
+            }
+
             if (from is PlayerMobile)
             {
                 from.SendMessage("You can use this robe to sqeeze acid out from its cloth.");

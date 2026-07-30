@@ -56,7 +56,10 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
-            if (!IsChildOf(from.Backpack))
+            if (from == null || from.Deleted || Deleted)
+                return;
+
+            if (from.Backpack == null || !IsChildOf(from.Backpack))
             {
                 from.SendMessage("These tools must be in your backpack to use.");
                 return;
@@ -65,10 +68,19 @@ namespace Server.Items
             {
                 int traps = 0;
 
-                foreach (Item m in from.GetItemsInRange(10))
+                IPooledEnumerable eable = from.GetItemsInRange(10);
+
+                try
                 {
-                    if (m is SetTrap)
-                        ++traps;
+                    foreach (Item m in eable)
+                    {
+                        if (m is SetTrap)
+                            ++traps;
+                    }
+                }
+                finally
+                {
+                    eable.Free();
                 }
 
                 if (traps > 2)

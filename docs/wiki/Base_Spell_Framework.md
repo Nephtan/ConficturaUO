@@ -129,3 +129,77 @@ The base spell framework does not provide a serializer to inherit for individual
 
 The base spell framework has no dedicated staff command.
 For debugging, inspect the caller's active `Mobile.Spell`, `NextSpellTime`, mana, transformation state, equipped spellbook/casting item, and any spell-specific item or timer state involved in the spell family being tested.
+
+## Source Trace
+
+POST-BATCH-T reviewed this page on 2026-06-14T21:09:11.0049244-05:00 against current source and audit registers.
+
+- Canonical status: Canonical.
+- Queue rows: PBN-0071.
+- Backlog rows: RB-06665.
+- Audit registers used: documentation-truth-table.csv, runtime-hook-map.csv, serialization-register.csv, and project-truth-register.csv.
+
+### Source Files Reviewed
+
+- Data/Scripts/Magic/Base/Spell.cs (CurrentFile)
+- Data/Scripts/Magic/Base/SpellInfo.cs (CurrentFile)
+- Data/Scripts/Magic/Base/SpellRegistry.cs (CurrentFile)
+- Data/Scripts/Magic/Base/Initializer.cs (CurrentFile)
+- Data/Scripts/Magic/Base/SpellHelper.cs (CurrentFile)
+- Data/Scripts/Magic/Base/SpellState.cs (CurrentFile)
+- Data/Scripts/Magic/Base/DisturbType.cs (CurrentFile)
+- Data/Scripts/Magic/Base/SpellCircle.cs (CurrentFile)
+- Data/Scripts/Magic/Base/Reagent.cs (CurrentFile)
+- Data/Scripts/Magic/Base/SpecialMove.cs (CurrentFile)
+- Data/Scripts/Magic/Base/UnsummonTimer.cs (CurrentFile)
+- Data/Scripts/Magic/Base/SpellBooks.cs (CurrentFile)
+
+### Runtime Evidence
+
+- Hook summary: Initialize=1; Timer=8.
+- Data/Scripts/Magic/Base/Initializer.cs:L8 Initialize Initialize access=GlobalOrInternal
+- Data/Scripts/Magic/Base/SpecialMove.cs:L325 Timer CustomTimerSubclass access=GlobalOrInternal
+- Data/Scripts/Magic/Base/Spell.cs:L1219 Timer CustomTimerSubclass access=GlobalOrInternal
+- Data/Scripts/Magic/Base/Spell.cs:L1251 Timer CustomTimerSubclass access=GlobalOrInternal
+- Data/Scripts/Magic/Base/SpellHelper.cs:L30 Timer CustomTimerSubclass access=GlobalOrInternal
+- Data/Scripts/Magic/Base/SpellHelper.cs:L1357 Timer CustomTimerSubclass access=GlobalOrInternal
+- Data/Scripts/Magic/Base/SpellHelper.cs:L1392 Timer CustomTimerSubclass access=GlobalOrInternal
+- Data/Scripts/Magic/Base/SpellHelper.cs:L1755 Timer CustomTimerSubclass access=GlobalOrInternal
+- Data/Scripts/Magic/Base/UnsummonTimer.cs:L6 Timer CustomTimerSubclass access=GlobalOrInternal
+
+### Serialization Evidence
+
+- Serialized rows matched: 7.
+- Data/Scripts/Magic/Base/SpellBooks.cs:Server.Items.MyElementalSpellbook version=0 serialize=L186 deserialize=L192 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Magic/Base/SpellBooks.cs:Server.Items.MyNecromancerSpellbook version=0 serialize=L99 deserialize=L105 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Magic/Base/SpellBooks.cs:Server.Items.MyNinjabook version=0 serialize=L359 deserialize=L365 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Magic/Base/SpellBooks.cs:Server.Items.MyPaladinbook version=0 serialize=L502 deserialize=L508 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Magic/Base/SpellBooks.cs:Server.Items.MySamuraibook version=0 serialize=L425 deserialize=L431 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Magic/Base/SpellBooks.cs:Server.Items.MySongbook version=0 serialize=L567 deserialize=L573 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Magic/Base/SpellBooks.cs:Server.Items.MySpellbook version=0 serialize=L297 deserialize=L303 alignment=AlignedByCountAndKnownTypes
+
+### Project And Runtime Coverage
+
+- Data/Scripts/Magic/Base/DisturbType.cs=Keep
+- Data/Scripts/Magic/Base/DisturbType.cs=Keep
+- Data/Scripts/Magic/Base/Initializer.cs=Keep
+- Data/Scripts/Magic/Base/Initializer.cs=Keep
+- Data/Scripts/Magic/Base/Reagent.cs=Keep
+- Data/Scripts/Magic/Base/Reagent.cs=Keep
+- Data/Scripts/Magic/Base/SpecialMove.cs=Keep
+- Data/Scripts/Magic/Base/SpecialMove.cs=Keep
+- Data/Scripts/Magic/Base/Spell.cs=Keep
+- Data/Scripts/Magic/Base/Spell.cs=Keep
+- Data/Scripts/Magic/Base/SpellBooks.cs=Keep
+- Data/Scripts/Magic/Base/SpellBooks.cs=Keep
+- Data/Scripts/Magic/Base/SpellCircle.cs=Keep
+- Data/Scripts/Magic/Base/SpellCircle.cs=Keep
+- Data/Scripts/Magic/Base/SpellHelper.cs=Keep
+- Data/Scripts/Magic/Base/SpellHelper.cs=Keep
+- Data/Scripts/Magic/Base/SpellInfo.cs=Keep
+- Data/Scripts/Magic/Base/SpellInfo.cs=Keep
+- Data/Scripts/Magic/Base/SpellRegistry.cs=Keep
+- Data/Scripts/Magic/Base/SpellRegistry.cs=Keep
+- Additional project-truth rows are recorded in project-truth-register.csv for this source set.
+
+No C# source, project files, XML/config/data files, namespaces, serializers, gameplay behavior, or migration policy were changed in POST-BATCH-T.

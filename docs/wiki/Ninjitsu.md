@@ -149,3 +149,73 @@ Crafting definitions found in source:
 | Mirror Image attack redirection leaks a pooled mobile-range enumerable. | `BaseWeapon` iterates `defender.GetMobilesInRange(4)` while searching for a `Clone`, with no visible `Free()` call. | Repeated combat redirection checks can leak pooled enumerables. |
 | Ninja projectile double-clicks assume `PlayerMobile`. | `Fukiya.OnDoubleClick()` and `LeatherNinjaBelt.OnDoubleClick()` cast `from` directly to `PlayerMobile`. | Non-player Mobile callers can throw instead of failing cleanly. |
 | Ninja projectile combat has a suspicious attacker-skill typo. | `NinjaWeapon.CombatCheck()` assigns `Skill atkSkill = defender.Skills.Ninjitsu` and later calls `attacker.CheckSkill(atkSkill.SkillName, chance)`. | Current behavior still checks the attacker's Ninjitsu skill name, but the defender-sourced skill object is an unnecessary hardcoded band-aid and should be corrected for clarity and safety. |
+
+## Source Trace
+
+POST-BATCH-T reviewed this page on 2026-06-14T21:09:11.0049244-05:00 against current source and audit registers.
+
+- Canonical status: Canonical.
+- Queue rows: PBN-0100.
+- Backlog rows: RB-06729.
+- Audit registers used: documentation-truth-table.csv, runtime-hook-map.csv, serialization-register.csv, and project-truth-register.csv.
+
+### Source Files Reviewed
+
+- Data/Scripts/Magic/Ninjitsu/BookOfNinjitsu.cs (CurrentFile)
+- Data/Scripts/Magic/Ninjitsu/NinjaSpell.cs (CurrentFile)
+- Data/Scripts/Magic/Ninjitsu/NinjaMove.cs (CurrentFile)
+- Data/Scripts/Magic/Ninjitsu/AnimalForm.cs (CurrentFile)
+- Data/Scripts/Magic/Ninjitsu/Backstab.cs (CurrentFile)
+- Data/Scripts/Magic/Ninjitsu/DeathStrike.cs (CurrentFile)
+- Data/Scripts/Magic/Ninjitsu/FocusAttack.cs (CurrentFile)
+- Data/Scripts/Magic/Ninjitsu/KiAttack.cs (CurrentFile)
+- Data/Scripts/Magic/Ninjitsu/MirrorImage.cs (CurrentFile)
+- Data/Scripts/Magic/Ninjitsu/ShadowJump.cs (CurrentFile)
+- Data/Scripts/Magic/Ninjitsu/SurpriseAttack.cs (CurrentFile)
+
+### Runtime Evidence
+
+- Hook summary: Event=1; Gump=2; Initialize=1; Login=1; Timer=6.
+- Data/Scripts/Magic/Ninjitsu/AnimalForm.cs:L15 Initialize Initialize access=GlobalOrInternal
+- Data/Scripts/Magic/Ninjitsu/AnimalForm.cs:L17 Event EventSink access=GlobalOrInternal
+- Data/Scripts/Magic/Ninjitsu/AnimalForm.cs:L20 Login OnLogin access=Internal
+- Data/Scripts/Magic/Ninjitsu/AnimalForm.cs:L146 Gump SendGump access=Internal
+- Data/Scripts/Magic/Ninjitsu/AnimalForm.cs:L718 Gump OnResponse access=Internal
+- Data/Scripts/Magic/Ninjitsu/AnimalForm.cs:L794 Timer CustomTimerSubclass access=GlobalOrInternal
+- Data/Scripts/Magic/Ninjitsu/Backstab.cs:L67 Timer Timer.DelayCall access=GlobalOrInternal
+- Data/Scripts/Magic/Ninjitsu/DeathStrike.cs:L89 Timer Timer.DelayCall access=GlobalOrInternal
+- Data/Scripts/Magic/Ninjitsu/KiAttack.cs:L37 Timer Timer.DelayCall access=GlobalOrInternal
+- Data/Scripts/Magic/Ninjitsu/SurpriseAttack.cs:L60 Timer Timer.DelayCall access=GlobalOrInternal
+- Data/Scripts/Magic/Ninjitsu/SurpriseAttack.cs:L107 Timer Timer.DelayCall access=GlobalOrInternal
+
+### Serialization Evidence
+
+- Serialized rows matched: 2.
+- Data/Scripts/Magic/Ninjitsu/BookOfNinjitsu.cs:Server.Items.BookOfNinjitsu version=1 serialize=L36 deserialize=L43 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Magic/Ninjitsu/MirrorImage.cs:Server.Spells.Ninjitsu.Clone version=Unknown serialize=L256 deserialize=L265 alignment=CountMatchNeedsTypeReview:UnknownWrites=1
+
+### Project And Runtime Coverage
+
+- Data/Scripts/Magic/Ninjitsu/AnimalForm.cs=Keep
+- Data/Scripts/Magic/Ninjitsu/AnimalForm.cs=Keep
+- Data/Scripts/Magic/Ninjitsu/Backstab.cs=Keep
+- Data/Scripts/Magic/Ninjitsu/Backstab.cs=Keep
+- Data/Scripts/Magic/Ninjitsu/BookOfNinjitsu.cs=Keep
+- Data/Scripts/Magic/Ninjitsu/BookOfNinjitsu.cs=Keep
+- Data/Scripts/Magic/Ninjitsu/DeathStrike.cs=Keep
+- Data/Scripts/Magic/Ninjitsu/DeathStrike.cs=Keep
+- Data/Scripts/Magic/Ninjitsu/FocusAttack.cs=Keep
+- Data/Scripts/Magic/Ninjitsu/FocusAttack.cs=Keep
+- Data/Scripts/Magic/Ninjitsu/KiAttack.cs=Keep
+- Data/Scripts/Magic/Ninjitsu/KiAttack.cs=Keep
+- Data/Scripts/Magic/Ninjitsu/MirrorImage.cs=Keep
+- Data/Scripts/Magic/Ninjitsu/MirrorImage.cs=Keep
+- Data/Scripts/Magic/Ninjitsu/NinjaMove.cs=Keep
+- Data/Scripts/Magic/Ninjitsu/NinjaMove.cs=Keep
+- Data/Scripts/Magic/Ninjitsu/NinjaSpell.cs=Keep
+- Data/Scripts/Magic/Ninjitsu/NinjaSpell.cs=Keep
+- Data/Scripts/Magic/Ninjitsu/ShadowJump.cs=Keep
+- Data/Scripts/Magic/Ninjitsu/ShadowJump.cs=Keep
+- Additional project-truth rows are recorded in project-truth-register.csv for this source set.
+
+No C# source, project files, XML/config/data files, namespaces, serializers, gameplay behavior, or migration policy were changed in POST-BATCH-T.

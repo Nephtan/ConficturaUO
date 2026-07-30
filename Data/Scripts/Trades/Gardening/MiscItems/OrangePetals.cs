@@ -36,6 +36,9 @@ namespace Server.Items
 
         public override bool CheckItemUse(Mobile from, Item item)
         {
+            if (from == null || from.Deleted || Deleted)
+                return false;
+
             if (item != this)
                 return base.CheckItemUse(from, item);
 
@@ -50,6 +53,15 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
+            if (from == null || from.Deleted || Deleted)
+                return;
+
+            if (from != RootParent)
+            {
+                from.SendLocalizedMessage(1042038); // You must have the object in your backpack to use it.
+                return;
+            }
+
             OrangePetalsContext context = GetContext(from);
 
             if (context != null)
@@ -73,11 +85,17 @@ namespace Server.Items
 
         private static void AddContext(Mobile m, OrangePetalsContext context)
         {
+            if (m == null || context == null)
+                return;
+
             m_Table[m] = context;
         }
 
         public static void RemoveContext(Mobile m)
         {
+            if (m == null)
+                return;
+
             OrangePetalsContext context = GetContext(m);
 
             if (context != null)
@@ -86,13 +104,20 @@ namespace Server.Items
 
         private static void RemoveContext(Mobile m, OrangePetalsContext context)
         {
+            if (m == null || context == null)
+                return;
+
             m_Table.Remove(m);
 
-            context.Timer.Stop();
+            if (context.Timer != null)
+                context.Timer.Stop();
         }
 
         private static OrangePetalsContext GetContext(Mobile m)
         {
+            if (m == null)
+                return null;
+
             return (m_Table[m] as OrangePetalsContext);
         }
 
@@ -113,7 +138,7 @@ namespace Server.Items
 
             protected override void OnTick()
             {
-                if (!m_Mobile.Deleted)
+                if (m_Mobile != null && !m_Mobile.Deleted)
                 {
                     m_Mobile.LocalOverheadMessage(
                         MessageType.Regular,

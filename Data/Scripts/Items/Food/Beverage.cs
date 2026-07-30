@@ -1024,11 +1024,17 @@ namespace Server.Items
 
         private static void EventSink_Login(LoginEventArgs e)
         {
+            if (e == null)
+                return;
+
             CheckHeaveTimer(e.Mobile);
         }
 
         public static void CheckHeaveTimer(Mobile from)
         {
+            if (from == null || from.Deleted)
+                return;
+
             if (from.BAC > 0 && from.Map != Map.Internal && !from.Deleted)
             {
                 Timer t = (Timer)m_Table[from];

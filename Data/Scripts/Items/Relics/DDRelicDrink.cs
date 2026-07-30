@@ -156,6 +156,9 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
+            if (from == null || from.Deleted || Deleted)
+                return;
+
             from.Stam = 20;
             from.Thirst = 20;
             this.Consume();

@@ -1,7 +1,7 @@
 # Staff Toolbar
 
 ## Overview
-The Staff Toolbar is Joeku's command-toolbar system implemented in `Data/Scripts/Custom/Staff Toolbar [2.0]/Toolbar.cs`. It is compiled through `Data/Scripts/Scripts.csproj` and lives in the `Joeku` namespace.
+The Staff Toolbar is Joeku's command-toolbar system implemented in `Data/Scripts/Custom/ThirdParty/Staff Toolbar [2.0]/Toolbar.cs`. It is compiled through `Data/Scripts/Scripts.csproj` and lives in the `Joeku` namespace.
 
 The system consists of one command/login helper, one persistent storage item, account-keyed toolbar profiles, and two gumps:
 
@@ -78,3 +78,46 @@ Current saves write `ToolbarHelper.Version`, currently `130`, then the number of
 2. Version 1.0 fields: `Account`, `Dimensions`, `Entries`, `Skin`, and `Points`.
 
 Deserialization sets `ToolbarHelper.Infos` to the loaded persistence item and supports version `130` with a fall-through to the legacy `100` layout. Legacy version `100` profiles default to font `0`, phantom enabled, stealth disabled, reverse disabled, and lock enabled.
+
+## Source Trace
+
+POST-BATCH-T reviewed this page on 2026-06-14T21:09:11.0049244-05:00 against current source and audit registers.
+
+- Canonical status: Canonical.
+- Queue rows: PBN-0044; PBN-0072.
+- Backlog rows: RB-06774; RB-06775.
+- Audit registers used: documentation-truth-table.csv, runtime-hook-map.csv, serialization-register.csv, and project-truth-register.csv.
+
+### Source Files Reviewed
+
+- Data/Scripts/Custom/ThirdParty/Staff Toolbar [2.0]/Toolbar.cs (CurrentFile)
+- Data/Scripts/Scripts.csproj (CurrentFile)
+
+### Runtime Evidence
+
+- Hook summary: Event=1; Gump=23; Initialize=1; Login=1.
+- Data/Scripts/Custom/ThirdParty/Staff Toolbar [2.0]/Toolbar.cs:L28 Initialize Initialize access=GlobalOrInternal
+- Data/Scripts/Custom/ThirdParty/Staff Toolbar [2.0]/Toolbar.cs:L38 Event EventSink access=GlobalOrInternal
+- Data/Scripts/Custom/ThirdParty/Staff Toolbar [2.0]/Toolbar.cs:L44 Login OnLogin access=Internal
+- Data/Scripts/Custom/ThirdParty/Staff Toolbar [2.0]/Toolbar.cs:L71 Gump SendGump access=Internal
+- Data/Scripts/Custom/ThirdParty/Staff Toolbar [2.0]/Toolbar.cs:L680 Gump OnResponse access=Internal
+- Data/Scripts/Custom/ThirdParty/Staff Toolbar [2.0]/Toolbar.cs:L687 Gump SendGump access=Internal
+- Data/Scripts/Custom/ThirdParty/Staff Toolbar [2.0]/Toolbar.cs:L708 Gump SendGump access=Internal
+- Data/Scripts/Custom/ThirdParty/Staff Toolbar [2.0]/Toolbar.cs:L710 Gump SendGump access=Internal
+- Data/Scripts/Custom/ThirdParty/Staff Toolbar [2.0]/Toolbar.cs:L932 Gump OnResponse access=Internal
+- Data/Scripts/Custom/ThirdParty/Staff Toolbar [2.0]/Toolbar.cs:L950 Gump SendGump access=Internal
+- Data/Scripts/Custom/ThirdParty/Staff Toolbar [2.0]/Toolbar.cs:L964 Gump SendGump access=Internal
+- Data/Scripts/Custom/ThirdParty/Staff Toolbar [2.0]/Toolbar.cs:L978 Gump SendGump access=Internal
+- Additional hook rows are recorded in runtime-hook-map.csv for this source set.
+
+### Serialization Evidence
+
+- Serialized rows matched: 1.
+- Data/Scripts/Custom/ThirdParty/Staff Toolbar [2.0]/Toolbar.cs:Joeku.ToolbarInfos version=Unknown serialize=L129 deserialize=L167 alignment=CountMismatch:Writes=15;Reads=14
+
+### Project And Runtime Coverage
+
+- Data/Scripts/Custom/ThirdParty/Staff Toolbar [2.0]/Toolbar.cs=Keep
+- Data/Scripts/Custom/ThirdParty/Staff Toolbar [2.0]/Toolbar.cs=Keep
+
+No C# source, project files, XML/config/data files, namespaces, serializers, gameplay behavior, or migration policy were changed in POST-BATCH-T.

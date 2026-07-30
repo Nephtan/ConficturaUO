@@ -209,9 +209,12 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
+            if (from == null || from.Deleted || Deleted)
+                return;
+
             Target t;
 
-            if (!IsChildOf(from.Backpack))
+            if (from.Backpack == null || !IsChildOf(from.Backpack))
             {
                 from.SendLocalizedMessage(1060640); // The item must be in your backpack to use it.
             }
@@ -235,9 +238,29 @@ namespace Server.Items
 
             protected override void OnTarget(Mobile from, object targeted)
             {
+                if (from == null || from.Deleted)
+                    return;
+
+                if (
+                    m_Wax == null
+                    || m_Wax.Deleted
+                    || from.Backpack == null
+                    || !m_Wax.IsChildOf(from.Backpack)
+                )
+                {
+                    from.SendLocalizedMessage(1060640); // The item must be in your backpack to use it.
+                    return;
+                }
+
                 if (targeted is Mobile)
                 {
                     Mobile carving = (Mobile)targeted;
+
+                    if (carving.Deleted)
+                    {
+                        from.SendMessage("This wax sculptor doesn't even look like that.");
+                        return;
+                    }
 
                     if (
                         carving.Body == 606
@@ -260,7 +283,7 @@ namespace Server.Items
                         from.SendMessage("This wax sculptor doesn't even look like that.");
                     }
                 }
-                else if ((Item)targeted == m_Wax)
+                else if (targeted is Item && (Item)targeted == m_Wax)
                 {
                     string fakeName = "";
                     if (Utility.RandomMinMax(1, 2) == 1)

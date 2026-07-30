@@ -61,6 +61,11 @@ namespace Server.Items
 
         public void ConsumeCharge(Mobile from)
         {
+            if (from == null || from.Deleted || Deleted)
+            {
+                return;
+            }
+
             --Charges;
 
             if (Charges == 0)
@@ -75,6 +80,11 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
+            if (from == null || from.Deleted || Deleted)
+            {
+                return;
+            }
+
             if (Charges > 0)
             {
                 ConsumeCharge(from);

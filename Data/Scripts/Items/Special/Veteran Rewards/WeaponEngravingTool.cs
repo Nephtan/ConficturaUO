@@ -63,6 +63,9 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
+            if (from == null || from.Deleted || Deleted)
+                return;
+
             if (m_IsRewardItem && !RewardSystem.CheckIsUsableBy(from, this, null))
                 return;
 
@@ -83,7 +86,10 @@ namespace Server.Items
                 }
                 else
                 {
-                    Item diamond = from.Backpack.FindItemByType(typeof(BlueDiamond));
+                    Item diamond = null;
+
+                    if (from.Backpack != null)
+                        diamond = from.Backpack.FindItemByType(typeof(BlueDiamond));
 
                     if (diamond != null)
                         from.SendGump(new ConfirmGump(this, null));
@@ -128,6 +134,9 @@ namespace Server.Items
 
         public virtual void Recharge(Mobile from, Mobile guildmaster)
         {
+            if (from == null || from.Deleted || Deleted)
+                return;
+
             if (from.Backpack != null)
             {
                 Item diamond = from.Backpack.FindItemByType(typeof(BlueDiamond));
@@ -178,7 +187,7 @@ namespace Server.Items
 
         public static WeaponEngravingTool Find(Mobile from)
         {
-            if (from.Backpack != null)
+            if (from != null && !from.Deleted && from.Backpack != null)
                 return from.Backpack.FindItemByType(typeof(WeaponEngravingTool))
                     as WeaponEngravingTool;
 
@@ -197,13 +206,13 @@ namespace Server.Items
 
             protected override void OnTarget(Mobile from, object targeted)
             {
-                if (m_Tool == null || m_Tool.Deleted)
+                if (from == null || from.Deleted || m_Tool == null || m_Tool.Deleted)
                     return;
 
-                if (targeted is BaseWeapon)
-                {
-                    BaseWeapon item = (BaseWeapon)targeted;
+                BaseWeapon item = targeted as BaseWeapon;
 
+                if (item != null && !item.Deleted)
+                {
                     from.CloseGump(typeof(InternalGump));
                     from.SendGump(new InternalGump(m_Tool, item));
                 }
@@ -254,7 +263,19 @@ namespace Server.Items
 
             public override void OnResponse(Server.Network.NetState state, RelayInfo info)
             {
-                if (m_Tool == null || m_Tool.Deleted || m_Target == null || m_Target.Deleted)
+                if (state == null || info == null)
+                    return;
+
+                Mobile from = state.Mobile;
+
+                if (
+                    from == null
+                    || from.Deleted
+                    || m_Tool == null
+                    || m_Tool.Deleted
+                    || m_Target == null
+                    || m_Target.Deleted
+                )
                     return;
 
                 if (info.ButtonID == (int)Buttons.Okay)
@@ -266,7 +287,7 @@ namespace Server.Items
                         if (String.IsNullOrEmpty(relay.Text))
                         {
                             m_Target.EngravedText = null;
-                            state.Mobile.SendLocalizedMessage(1072362); // You remove the engraving from the object.
+                            from.SendLocalizedMessage(1072362); // You remove the engraving from the object.
                         }
                         else
                         {
@@ -277,7 +298,7 @@ namespace Server.Items
                             else
                                 m_Target.EngravedText = Utility.FixHtml(relay.Text);
 
-                            state.Mobile.SendLocalizedMessage(1072361); // You engraved the object.
+                            from.SendLocalizedMessage(1072361); // You engraved the object.
                             m_Target.InvalidateProperties();
                             m_Tool.UsesRemaining -= 1;
                             m_Tool.InvalidateProperties();
@@ -285,7 +306,7 @@ namespace Server.Items
                     }
                 }
                 else
-                    state.Mobile.SendLocalizedMessage(1072363); // The object was not engraved.
+                    from.SendLocalizedMessage(1072363); // The object was not engraved.
             }
         }
 
@@ -334,11 +355,16 @@ namespace Server.Items
 
             public override void OnResponse(Server.Network.NetState state, RelayInfo info)
             {
-                if (m_Engraver == null || m_Engraver.Deleted)
+                if (state == null || info == null || m_Engraver == null || m_Engraver.Deleted)
+                    return;
+
+                Mobile from = state.Mobile;
+
+                if (from == null || from.Deleted)
                     return;
 
                 if (info.ButtonID == (int)Buttons.Confirm)
-                    m_Engraver.Recharge(state.Mobile, m_Guildmaster);
+                    m_Engraver.Recharge(from, m_Guildmaster);
             }
         }
     }

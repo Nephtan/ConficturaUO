@@ -26,37 +26,45 @@ namespace Server.Mobiles
         {
             if (DateTime.Now >= m_NextTalk)
             {
-                foreach (Item hay in this.GetItemsInRange(6))
+                IPooledEnumerable eable1 = this.GetItemsInRange(6);
+                try
                 {
-                    if (hay is ArcheryButte && (hay.X == X || hay.Y == Y))
+                    foreach (Item hay in eable1)
                     {
-                        if (
-                            this.FindItemOnLayer(Layer.FirstValid) != null
-                            && !(this.FindItemOnLayer(Layer.FirstValid) is BaseRanged)
-                        )
+                        if (hay is ArcheryButte && (hay.X == X || hay.Y == Y))
                         {
-                            this.Delete();
+                            if (
+                                this.FindItemOnLayer(Layer.FirstValid) != null
+                                && !(this.FindItemOnLayer(Layer.FirstValid) is BaseRanged)
+                            )
+                            {
+                                this.Delete();
+                            }
+                            else if (
+                                this.FindItemOnLayer(Layer.TwoHanded) != null
+                                && !(this.FindItemOnLayer(Layer.TwoHanded) is BaseRanged)
+                            )
+                            {
+                                this.Delete();
+                            }
+                            hay.OnDoubleClick(this);
+                            if (hay.X == X)
+                            {
+                                hay.ItemID = 0x100B;
+                            }
+                            else
+                            {
+                                hay.ItemID = 0x100A;
+                            }
+                            m_NextTalk = (
+                                DateTime.Now + TimeSpan.FromSeconds(Utility.RandomMinMax(2, 5))
+                            );
                         }
-                        else if (
-                            this.FindItemOnLayer(Layer.TwoHanded) != null
-                            && !(this.FindItemOnLayer(Layer.TwoHanded) is BaseRanged)
-                        )
-                        {
-                            this.Delete();
-                        }
-                        hay.OnDoubleClick(this);
-                        if (hay.X == X)
-                        {
-                            hay.ItemID = 0x100B;
-                        }
-                        else
-                        {
-                            hay.ItemID = 0x100A;
-                        }
-                        m_NextTalk = (
-                            DateTime.Now + TimeSpan.FromSeconds(Utility.RandomMinMax(2, 5))
-                        );
                     }
+                }
+                finally
+                {
+                    eable1.Free();
                 }
             }
         }

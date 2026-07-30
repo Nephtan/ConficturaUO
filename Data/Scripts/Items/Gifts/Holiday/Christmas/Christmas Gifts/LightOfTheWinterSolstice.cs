@@ -57,6 +57,9 @@ namespace Server.Items
 
         public override void OnSingleClick(Mobile from)
         {
+            if (from == null || from.Deleted || Deleted)
+                return;
+
             base.OnSingleClick(from);
 
             LabelTo(from, 1070881, m_Dipper); // Hand Dipped by ~1_name~

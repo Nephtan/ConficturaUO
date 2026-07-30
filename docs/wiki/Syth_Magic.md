@@ -318,3 +318,71 @@ Button `7` creates a `LevelLaserSword`; button `8` creates a `LevelDoubleLaserSw
 | `SythSpellbook.OnDragDrop()` does not verify `from == owner` before charging, transforming gear, setting gem, or consuming durasteel. | A reachable datacron can be modified by a non-owner. |
 | `DrainLife.DrainTimer.OnTick()` checks `!m_Caster.Alive` before checking `m_Caster == null`. | If the timer ever holds a null caster reference, the null check is too late to prevent a null-reference failure. |
 | `SythProjection.Deserialize()` calls `MirrorImage.AddClone(m_Caster)` without checking whether `m_Caster` is null. | A corrupted or ownerless saved projection can re-register a null caster reference. |
+
+## Source Trace
+
+POST-BATCH-T reviewed this page on 2026-06-14T21:09:11.0049244-05:00 against current source and audit registers.
+
+- Canonical status: Canonical.
+- Queue rows: PBN-0045.
+- Backlog rows: RB-06783.
+- Audit registers used: documentation-truth-table.csv, runtime-hook-map.csv, serialization-register.csv, and project-truth-register.csv.
+
+### Source Files Reviewed
+
+- Data/Scripts/Magic/Syth/SythSpell.cs (CurrentFile)
+- Data/Scripts/Magic/Syth/SythSpellbook.cs (CurrentFile)
+- Data/Scripts/Magic/Syth/SythCommandList.cs (CurrentFile)
+- Data/Scripts/Magic/Syth/SythDatacrons.cs (CurrentFile)
+- Data/Scripts/Magic/Syth/HellShard.cs (CurrentFile)
+- Data/Scripts/Magic/Syth/Gumps/SythSpellBookGump.cs (CurrentFile)
+
+### Runtime Evidence
+
+- Hook summary: Command=1; Gump=14; Initialize=1.
+- Data/Scripts/Magic/Syth/Gumps/SythSpellBookGump.cs:L956 Gump OnResponse access=Internal
+- Data/Scripts/Magic/Syth/Gumps/SythSpellBookGump.cs:L965 Gump SendGump access=Internal
+- Data/Scripts/Magic/Syth/Gumps/SythSpellBookGump.cs:L1012 Gump SendGump access=Internal
+- Data/Scripts/Magic/Syth/Gumps/SythSpellBookGump.cs:L1018 Gump SendGump access=Internal
+- Data/Scripts/Magic/Syth/Gumps/SythSpellBookGump.cs:L1026 Gump SendGump access=Internal
+- Data/Scripts/Magic/Syth/Gumps/SythSpellBookGump.cs:L1033 Gump SendGump access=Internal
+- Data/Scripts/Magic/Syth/Gumps/SythSpellBookGump.cs:L1045 Gump SendGump access=Internal
+- Data/Scripts/Magic/Syth/Gumps/SythSpellBookGump.cs:L1051 Gump SendGump access=Internal
+- Data/Scripts/Magic/Syth/Gumps/SythSpellBookGump.cs:L1088 Gump SendGump access=Internal
+- Data/Scripts/Magic/Syth/SythCommandList.cs:L15 Initialize Initialize access=GlobalOrInternal
+- Data/Scripts/Magic/Syth/SythCommandList.cs:L66 Command CommandSystem.Register access=Unknown
+- Data/Scripts/Magic/Syth/SythSpellbook.cs:L103 Gump SendGump access=Internal
+- Additional hook rows are recorded in runtime-hook-map.csv for this source set.
+
+### Serialization Evidence
+
+- Serialized rows matched: 12.
+- Data/Scripts/Magic/Syth/HellShard.cs:Server.Items.HellShard version=0 serialize=L24 deserialize=L30 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Magic/Syth/SythDatacrons.cs:Server.Items.SythDatacron01 version=0 serialize=L32 deserialize=L38 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Magic/Syth/SythDatacrons.cs:Server.Items.SythDatacron02 version=0 serialize=L71 deserialize=L77 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Magic/Syth/SythDatacrons.cs:Server.Items.SythDatacron03 version=0 serialize=L110 deserialize=L116 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Magic/Syth/SythDatacrons.cs:Server.Items.SythDatacron04 version=0 serialize=L149 deserialize=L155 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Magic/Syth/SythDatacrons.cs:Server.Items.SythDatacron05 version=0 serialize=L188 deserialize=L194 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Magic/Syth/SythDatacrons.cs:Server.Items.SythDatacron06 version=0 serialize=L227 deserialize=L233 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Magic/Syth/SythDatacrons.cs:Server.Items.SythDatacron07 version=0 serialize=L266 deserialize=L272 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Magic/Syth/SythDatacrons.cs:Server.Items.SythDatacron08 version=0 serialize=L305 deserialize=L311 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Magic/Syth/SythDatacrons.cs:Server.Items.SythDatacron09 version=0 serialize=L344 deserialize=L350 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Magic/Syth/SythDatacrons.cs:Server.Items.SythDatacron10 version=0 serialize=L383 deserialize=L389 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Magic/Syth/SythSpellbook.cs:Server.Items.SythSpellbook version=0 serialize=L723 deserialize=L735 alignment=CountMatchNeedsTypeReview:UnknownWrites=5
+
+### Project And Runtime Coverage
+
+- Data/Scripts/Magic/Syth/Gumps/SythSpellBookGump.cs=Keep
+- Data/Scripts/Magic/Syth/Gumps/SythSpellBookGump.cs=Keep
+- Data/Scripts/Magic/Syth/HellShard.cs=Keep
+- Data/Scripts/Magic/Syth/HellShard.cs=Keep
+- Data/Scripts/Magic/Syth/SythCommandList.cs=Keep
+- Data/Scripts/Magic/Syth/SythCommandList.cs=Keep
+- Data/Scripts/Magic/Syth/SythDatacrons.cs=Keep
+- Data/Scripts/Magic/Syth/SythDatacrons.cs=Keep
+- Data/Scripts/Magic/Syth/SythSpell.cs=Keep
+- Data/Scripts/Magic/Syth/SythSpell.cs=Keep
+- Data/Scripts/Magic/Syth/SythSpellbook.cs=Keep
+- Data/Scripts/Magic/Syth/SythSpellbook.cs=Keep
+
+No C# source, project files, XML/config/data files, namespaces, serializers, gameplay behavior, or migration policy were changed in POST-BATCH-T.

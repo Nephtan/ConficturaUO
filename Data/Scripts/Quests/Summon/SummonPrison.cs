@@ -407,12 +407,20 @@ namespace Server.Items
                 }
 
                 // Overrides the spawn location if a PremiumSpawner is within range.
-                foreach (Item i in from.GetItemsInRange(10))
+                IPooledEnumerable eable = from.GetItemsInRange(10);
+                try
                 {
-                    if (i is PremiumSpawner)
+                    foreach (Item i in eable)
                     {
-                        loc = i.Location;
+                        if (i is PremiumSpawner)
+                        {
+                            loc = i.Location;
+                        }
                     }
+                }
+                finally
+                {
+                    eable.Free();
                 }
 
                 // Sets the appearance of the monster.
@@ -530,9 +538,9 @@ namespace Server.Items
             PrisonerHue = reader.ReadInt();
             PrisonerBase = reader.ReadString();
             PrisonerBody = reader.ReadInt();
-            PrisonerSerial = reader.ReadMobile();
             PrisonerFullNameUsed = reader.ReadInt();
             PrisonerClothColorUsed = reader.ReadInt();
+            PrisonerSerial = reader.ReadMobile();
             Jailor = reader.ReadString();
             Dungeon = reader.ReadString();
             RewardID = reader.ReadInt();

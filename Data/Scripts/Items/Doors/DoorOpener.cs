@@ -29,10 +29,19 @@ namespace Server.Items
         public override bool OnMoveOver(Mobile m)
         {
             ArrayList list = new ArrayList();
-            foreach (Item item in m.GetItemsInRange(2))
+            IPooledEnumerable eable = m.GetItemsInRange(2);
+
+            try
             {
-                if (item is BaseDoor)
-                    list.Add(item);
+                foreach (Item item in eable)
+                {
+                    if (item is BaseDoor)
+                        list.Add(item);
+                }
+            }
+            finally
+            {
+                eable.Free();
             }
             foreach (Item item in list)
             {

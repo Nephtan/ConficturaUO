@@ -151,26 +151,35 @@ namespace Server.Mobiles
             int CanDie = 0;
             Mobile winner = this;
 
-            foreach (Mobile m in this.GetMobilesInRange(30))
+            IPooledEnumerable eable1 = this.GetMobilesInRange(30);
+
+            try
             {
-                if (m is PlayerMobile && m.Map == this.Map && !m.Blessed)
+                foreach (Mobile m in eable1)
                 {
-                    Item flame = m.Backpack.FindItemByType(typeof(ScalesOfEthicality));
-                    if (flame != null)
+                    if (m is PlayerMobile && m.Map == this.Map && !m.Blessed)
                     {
-                        CanDie = 1;
-                        winner = m;
-                        m.SendMessage(
-                            "The Scales of Ethicality have vanished after dispatching the Chaos Bane."
-                        );
-                        Server.Items.QuestSouvenir.GiveReward(
-                            m,
-                            flame.Name,
-                            flame.Hue,
-                            flame.ItemID
-                        );
+                        Item flame = m.Backpack.FindItemByType(typeof(ScalesOfEthicality));
+                        if (flame != null)
+                        {
+                            CanDie = 1;
+                            winner = m;
+                            m.SendMessage(
+                                "The Scales of Ethicality have vanished after dispatching the Chaos Bane."
+                            );
+                            Server.Items.QuestSouvenir.GiveReward(
+                                m,
+                                flame.Name,
+                                flame.Hue,
+                                flame.ItemID
+                            );
+                        }
                     }
                 }
+            }
+            finally
+            {
+                eable1.Free();
             }
 
             if (CanDie == 0)

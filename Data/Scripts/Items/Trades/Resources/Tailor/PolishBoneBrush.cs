@@ -37,7 +37,10 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
-            if (IsChildOf(from.Backpack))
+            if (from == null || from.Deleted || Deleted)
+                return;
+
+            if (from.Backpack != null && IsChildOf(from.Backpack))
             {
                 from.SendMessage("Which bones do you want to polish?");
                 from.Target = new PickBones(this);
@@ -60,10 +63,19 @@ namespace Server.Items
 
             protected override void OnTarget(Mobile from, object targeted)
             {
-                if (targeted is Item)
-                {
-                    Item bone = targeted as Item;
+                if (from == null || from.Deleted || m_PolishBoneBrush == null || m_PolishBoneBrush.Deleted)
+                    return;
 
+                if (from.Backpack == null || !m_PolishBoneBrush.IsChildOf(from.Backpack))
+                {
+                    from.SendLocalizedMessage(1042001); // That must be in your pack for you to use it.
+                    return;
+                }
+
+                Item bone = targeted as Item;
+
+                if (bone != null && !bone.Deleted)
+                {
                     int boneCount = 0;
                     int skullCount = 0;
 

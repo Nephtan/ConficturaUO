@@ -52,6 +52,9 @@ namespace Server.Items
 
         public void BeginLaunch(Mobile from, bool useCharges)
         {
+            if (from == null || from.Deleted || Deleted)
+                return;
+
             Map map = from.Map;
 
             if (map == null || map == Map.Internal)

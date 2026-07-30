@@ -234,16 +234,34 @@ namespace Server.Mobiles
             sp2.MoveToWorld(new Point3D(p.X + 2, p.Y, p.Z), map);
             sp2.Respawn();
 
-            foreach (Mobile m in sp1.GetMobilesInRange(0))
+            IPooledEnumerable sp1Mobiles = sp1.GetMobilesInRange(0);
+
+            try
             {
-                m.Frozen = true;
-                m.Direction = Direction.South;
+                foreach (Mobile m in sp1Mobiles)
+                {
+                    m.Frozen = true;
+                    m.Direction = Direction.South;
+                }
+            }
+            finally
+            {
+                sp1Mobiles.Free();
             }
 
-            foreach (Mobile m in sp2.GetMobilesInRange(0))
+            IPooledEnumerable sp2Mobiles = sp2.GetMobilesInRange(0);
+
+            try
             {
-                m.Frozen = true;
-                m.Direction = Direction.South;
+                foreach (Mobile m in sp2Mobiles)
+                {
+                    m.Frozen = true;
+                    m.Direction = Direction.South;
+                }
+            }
+            finally
+            {
+                sp2Mobiles.Free();
             }
 
             m_vendorSpawners.Add(sp1);
@@ -294,10 +312,19 @@ namespace Server.Mobiles
             foreach (PremiumSpawner sp in m_vendorSpawners)
             {
                 sp.Respawn();
-                foreach (Mobile m in sp.GetMobilesInRange(0))
+                IPooledEnumerable vendorMobiles = sp.GetMobilesInRange(0);
+
+                try
                 {
-                    m.Frozen = true;
-                    m.Direction = Direction.South;
+                    foreach (Mobile m in vendorMobiles)
+                    {
+                        m.Frozen = true;
+                        m.Direction = Direction.South;
+                    }
+                }
+                finally
+                {
+                    vendorMobiles.Free();
                 }
 
                 if (m_Sign != null && m_Sign.toDelete != null && !m_Sign.toDelete.Contains(sp))

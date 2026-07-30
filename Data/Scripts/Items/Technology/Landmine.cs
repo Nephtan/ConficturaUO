@@ -24,7 +24,10 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
-            if (!IsChildOf(from.Backpack))
+            if (from == null || from.Deleted || Deleted)
+                return;
+
+            if (from.Backpack == null || !IsChildOf(from.Backpack))
             {
                 from.SendMessage("This mine needs to be in your pack to setup.");
                 return;
@@ -33,10 +36,19 @@ namespace Server.Items
             {
                 int mines = 0;
 
-                foreach (Item m in from.GetItemsInRange(10))
+                IPooledEnumerable eable = from.GetItemsInRange(10);
+
+                try
                 {
-                    if (m is Landmine)
-                        ++mines;
+                    foreach (Item m in eable)
+                    {
+                        if (m is Landmine)
+                            ++mines;
+                    }
+                }
+                finally
+                {
+                    eable.Free();
                 }
 
                 if (mines > 2)

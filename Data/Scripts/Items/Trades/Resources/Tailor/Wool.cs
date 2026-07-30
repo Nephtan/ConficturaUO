@@ -38,7 +38,7 @@ namespace Server.Items
 
         public bool Dye(Mobile from, DyeTub sender)
         {
-            if (Deleted)
+            if (Deleted || from == null || from.Deleted || sender == null || sender.Deleted)
                 return false;
 
             Hue = sender.DyedHue;
@@ -48,7 +48,10 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
-            if (IsChildOf(from.Backpack))
+            if (from == null || from.Deleted || Deleted)
+                return;
+
+            if (from.Backpack != null && IsChildOf(from.Backpack))
             {
                 from.SendLocalizedMessage(502655); // What spinning wheel do you wish to spin this on?
                 from.Target = new PickWheelTarget(this);
@@ -84,7 +87,7 @@ namespace Server.Items
 
             protected override void OnTarget(Mobile from, object targeted)
             {
-                if (m_Wool.Deleted)
+                if (from == null || from.Deleted || m_Wool == null || m_Wool.Deleted)
                     return;
 
                 ISpinningWheel wheel = targeted as ISpinningWheel;
@@ -96,7 +99,7 @@ namespace Server.Items
                 {
                     Item item = (Item)wheel;
 
-                    if (!m_Wool.IsChildOf(from.Backpack))
+                    if (from.Backpack == null || !m_Wool.IsChildOf(from.Backpack))
                     {
                         from.SendLocalizedMessage(1042001); // That must be in your pack for you to use it.
                     }

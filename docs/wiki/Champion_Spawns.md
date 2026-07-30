@@ -80,3 +80,60 @@ The champion spawn system is implemented by `Server.Engines.CannedEvil.ChampionS
 ## Known code issues
 - `RandomizeType` is incomplete. `ChampionSpawn.EndRestart()` only randomizes across five legacy themes and never selects `ForestLord`, `SleepingDragon`, `Glade`, or `Pestilence`.
 - `Mephitis.OnGotMeleeAttack()` still contains a `// TODO: Web ability` stub, so that boss is missing at least one intended special attack in the compiled code.
+
+## Source Trace
+
+POST-BATCH-T reviewed this page on 2026-06-14T21:09:11.0049244-05:00 against current source and audit registers.
+
+- Canonical status: Canonical.
+- Queue rows: PBN-0009.
+- Backlog rows: RB-06672.
+- Audit registers used: documentation-truth-table.csv, runtime-hook-map.csv, serialization-register.csv, and project-truth-register.csv.
+
+### Source Files Reviewed
+
+- Data/Scripts/Custom/Champions/System/CannedEvil/ChampionSpawn.cs (CurrentFile)
+- Data/Scripts/Custom/Champions/System/CannedEvil/ChampionSpawnInfo.cs (CurrentFile)
+- Data/Scripts/Custom/Champions/System/CannedEvil/SliceTimer.cs (CurrentFile)
+- Data/Scripts/Custom/Champions/System/CannedEvil/RestartTimer.cs (CurrentFile)
+- Data/Scripts/Custom/Champions/System/CannedEvil/ChampionAltar.cs (CurrentFile)
+- Data/Scripts/Custom/Champions/System/CannedEvil/ChampionPlatform.cs (CurrentFile)
+- Data/Scripts/Custom/Champions/System/CannedEvil/IdolOfTheChampion.cs (CurrentFile)
+- Data/Scripts/Custom/Champions/System/CannedEvil/ChampionSpawnRegion.cs (CurrentFile)
+
+### Runtime Evidence
+
+- Hook summary: Gump=1; Timer=3.
+- Data/Scripts/Custom/Champions/System/CannedEvil/ChampionSpawn.cs:L938 Gump SendGump access=Internal
+- Data/Scripts/Custom/Champions/System/CannedEvil/ChampionSpawn.cs:L1284 Timer Timer.DelayCall access=GlobalOrInternal
+- Data/Scripts/Custom/Champions/System/CannedEvil/RestartTimer.cs:L7 Timer CustomTimerSubclass access=GlobalOrInternal
+- Data/Scripts/Custom/Champions/System/CannedEvil/SliceTimer.cs:L7 Timer CustomTimerSubclass access=GlobalOrInternal
+
+### Serialization Evidence
+
+- Serialized rows matched: 4.
+- Data/Scripts/Custom/Champions/System/CannedEvil/ChampionAltar.cs:Server.Engines.CannedEvil.ChampionAltar version=0 serialize=L27 deserialize=L36 alignment=CountMatchNeedsTypeReview:UnknownWrites=1
+- Data/Scripts/Custom/Champions/System/CannedEvil/ChampionPlatform.cs:Server.Engines.CannedEvil.ChampionPlatform version=0 serialize=L58 deserialize=L67 alignment=CountMatchNeedsTypeReview:UnknownWrites=1
+- Data/Scripts/Custom/Champions/System/CannedEvil/ChampionSpawn.cs:Server.Engines.CannedEvil.ChampionSpawn version=5 serialize=L1144 deserialize=L1185 alignment=CountMismatch:Writes=19;Reads=20
+- Data/Scripts/Custom/Champions/System/CannedEvil/IdolOfTheChampion.cs:Server.Engines.CannedEvil.IdolOfTheChampion version=0 serialize=L39 deserialize=L48 alignment=CountMatchNeedsTypeReview:UnknownWrites=1
+
+### Project And Runtime Coverage
+
+- Data/Scripts/Custom/Champions/System/CannedEvil/ChampionAltar.cs=Keep
+- Data/Scripts/Custom/Champions/System/CannedEvil/ChampionAltar.cs=Keep
+- Data/Scripts/Custom/Champions/System/CannedEvil/ChampionPlatform.cs=Keep
+- Data/Scripts/Custom/Champions/System/CannedEvil/ChampionPlatform.cs=Keep
+- Data/Scripts/Custom/Champions/System/CannedEvil/ChampionSpawn.cs=Keep
+- Data/Scripts/Custom/Champions/System/CannedEvil/ChampionSpawn.cs=Keep
+- Data/Scripts/Custom/Champions/System/CannedEvil/ChampionSpawnInfo.cs=Keep
+- Data/Scripts/Custom/Champions/System/CannedEvil/ChampionSpawnInfo.cs=Keep
+- Data/Scripts/Custom/Champions/System/CannedEvil/ChampionSpawnRegion.cs=Keep
+- Data/Scripts/Custom/Champions/System/CannedEvil/ChampionSpawnRegion.cs=Keep
+- Data/Scripts/Custom/Champions/System/CannedEvil/IdolOfTheChampion.cs=Keep
+- Data/Scripts/Custom/Champions/System/CannedEvil/IdolOfTheChampion.cs=Keep
+- Data/Scripts/Custom/Champions/System/CannedEvil/RestartTimer.cs=Keep
+- Data/Scripts/Custom/Champions/System/CannedEvil/RestartTimer.cs=Keep
+- Data/Scripts/Custom/Champions/System/CannedEvil/SliceTimer.cs=Keep
+- Data/Scripts/Custom/Champions/System/CannedEvil/SliceTimer.cs=Keep
+
+No C# source, project files, XML/config/data files, namespaces, serializers, gameplay behavior, or migration policy were changed in POST-BATCH-T.

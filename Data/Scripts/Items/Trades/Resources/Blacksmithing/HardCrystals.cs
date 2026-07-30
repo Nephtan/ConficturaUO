@@ -158,11 +158,16 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
+            if (from == null || from.Deleted || Deleted)
+            {
+                return;
+            }
+
             bool anvil,
                 forge;
             Server.Engines.Craft.DefBlacksmithy.CheckAnvilAndForge(from, 2, out anvil, out forge);
 
-            if (!IsChildOf(from.Backpack))
+            if (from.Backpack == null || !IsChildOf(from.Backpack))
             {
                 from.SendLocalizedMessage(1060640); // The item must be in your backpack to use it.
             }

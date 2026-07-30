@@ -71,3 +71,34 @@ There is no custom `Serialize` or `Deserialize` version for the Point Command sy
 
 ### XMLSpawner
 This system does not use XMLSpawner hooks, attachments, spawn definitions, or XMLSpawner configuration references. It is driven entirely by the player command, target handling, a temporary generic item, and a one-shot timer.
+
+## Source Trace
+
+POST-BATCH-T reviewed this page on 2026-06-14T21:09:11.0049244-05:00 against current source and audit registers.
+
+- Canonical status: Canonical.
+- Queue rows: PBN-0104.
+- Backlog rows: RB-06745.
+- Audit registers used: documentation-truth-table.csv, runtime-hook-map.csv, serialization-register.csv, and project-truth-register.csv.
+
+### Source Files Reviewed
+
+- Data/Scripts/Custom/Point Command [2.0]/Point.cs (CurrentFile)
+
+### Runtime Evidence
+
+- Hook summary: Command=1; Initialize=1; Timer=1.
+- Data/Scripts/Custom/Point Command [2.0]/Point.cs:L13 Initialize Initialize access=GlobalOrInternal
+- Data/Scripts/Custom/Point Command [2.0]/Point.cs:L15 Command CommandSystem.Register access=Unknown
+- Data/Scripts/Custom/Point Command [2.0]/Point.cs:L131 Timer CustomTimerSubclass access=GlobalOrInternal
+
+### Serialization Evidence
+
+- No serialized classes matched the reviewed source set in serialization-register.csv.
+
+### Project And Runtime Coverage
+
+- Data/Scripts/Custom/Point Command [2.0]/Point.cs=Keep
+- Data/Scripts/Custom/Point Command [2.0]/Point.cs=Keep
+
+No C# source, project files, XML/config/data files, namespaces, serializers, gameplay behavior, or migration policy were changed in POST-BATCH-T.

@@ -30,6 +30,9 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
+            if (from == null || from.Deleted || Deleted)
+                return;
+
             BankBox box = from.FindBankNoCreate();
 
             if (box != null && IsChildOf(box))

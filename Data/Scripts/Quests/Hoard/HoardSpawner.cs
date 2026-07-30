@@ -72,27 +72,43 @@ namespace Server.Misc
                 ArrayList targets = new ArrayList();
                 bool morePowerfulCreature = false;
 
-                foreach (Mobile creature in from.GetMobilesInRange(15))
+                IPooledEnumerable eable1 = from.GetMobilesInRange(15);
+                try
                 {
-                    if (
-                        creature is BaseCreature
-                        && creature != from
-                        && ((BaseCreature)creature).ControlMaster == null
-                        && creature.Fame >= from.Fame
-                    )
+                    foreach (Mobile creature in eable1)
                     {
-                        morePowerfulCreature = true;
+                        if (
+                            creature is BaseCreature
+                            && creature != from
+                            && ((BaseCreature)creature).ControlMaster == null
+                            && creature.Fame >= from.Fame
+                        )
+                        {
+                            morePowerfulCreature = true;
+                        }
                     }
+                }
+                finally
+                {
+                    eable1.Free();
                 }
 
                 if (!morePowerfulCreature)
                 {
-                    foreach (Item spawner in from.GetItemsInRange(15))
+                    IPooledEnumerable eable2 = from.GetItemsInRange(15);
+                    try
                     {
-                        if (spawner is HoardTile)
+                        foreach (Item spawner in eable2)
                         {
-                            targets.Add(spawner);
+                            if (spawner is HoardTile)
+                            {
+                                targets.Add(spawner);
+                            }
                         }
+                    }
+                    finally
+                    {
+                        eable2.Free();
                     }
 
                     HoardPiles MyHoard = null;
@@ -104,12 +120,20 @@ namespace Server.Misc
                     {
                         bool buildTreasure = true;
 
-                        foreach (Item loot in from.GetItemsInRange(1))
+                        IPooledEnumerable eable3 = from.GetItemsInRange(1);
+                        try
                         {
-                            if (loot is HoardPiles)
+                            foreach (Item loot in eable3)
                             {
-                                buildTreasure = false;
+                                if (loot is HoardPiles)
+                                {
+                                    buildTreasure = false;
+                                }
                             }
+                        }
+                        finally
+                        {
+                            eable3.Free();
                         }
 
                         if (buildTreasure)

@@ -34,7 +34,7 @@ namespace Server.Items
 
         public bool Dye(Mobile from, DyeTub sender)
         {
-            if (Deleted)
+            if (from == null || from.Deleted || sender == null || sender.Deleted || Deleted)
                 return false;
 
             Hue = sender.DyedHue;
@@ -60,7 +60,7 @@ namespace Server.Items
 
         public bool Scissor(Mobile from, Scissors scissors)
         {
-            if (Deleted || !from.CanSee(this))
+            if (from == null || from.Deleted || scissors == null || scissors.Deleted || Deleted || !from.CanSee(this))
                 return false;
 
             base.ScissorHelper(from, new Cloth(), 50);
@@ -70,6 +70,11 @@ namespace Server.Items
 
         public override void OnSingleClick(Mobile from)
         {
+            if (from == null || from.Deleted || Deleted)
+            {
+                return;
+            }
+
             int number = (Amount == 1) ? 1049122 : 1049121;
 
             from.Send(

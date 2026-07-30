@@ -26,36 +26,44 @@ namespace Server.Mobiles
         {
             if (DateTime.Now >= m_NextTalk)
             {
-                foreach (Item water in this.GetItemsInRange(6))
+                IPooledEnumerable eable1 = this.GetItemsInRange(6);
+                try
                 {
-                    if (water is WaterHit)
+                    foreach (Item water in eable1)
                     {
-                        if (
-                            this.FindItemOnLayer(Layer.FirstValid) != null
-                            && !(this.FindItemOnLayer(Layer.FirstValid) is FishingPole)
-                        )
+                        if (water is WaterHit)
                         {
-                            this.Delete();
+                            if (
+                                this.FindItemOnLayer(Layer.FirstValid) != null
+                                && !(this.FindItemOnLayer(Layer.FirstValid) is FishingPole)
+                            )
+                            {
+                                this.Delete();
+                            }
+                            else if (
+                                this.FindItemOnLayer(Layer.OneHanded) != null
+                                && !(this.FindItemOnLayer(Layer.OneHanded) is FishingPole)
+                            )
+                            {
+                                this.Delete();
+                            }
+                            else if (
+                                this.FindItemOnLayer(Layer.TwoHanded) != null
+                                && !(this.FindItemOnLayer(Layer.TwoHanded) is FishingPole)
+                            )
+                            {
+                                this.Delete();
+                            }
+                            water.OnDoubleClick(this);
+                            m_NextTalk = (
+                                DateTime.Now + TimeSpan.FromSeconds(Utility.RandomMinMax(8, 16))
+                            );
                         }
-                        else if (
-                            this.FindItemOnLayer(Layer.OneHanded) != null
-                            && !(this.FindItemOnLayer(Layer.OneHanded) is FishingPole)
-                        )
-                        {
-                            this.Delete();
-                        }
-                        else if (
-                            this.FindItemOnLayer(Layer.TwoHanded) != null
-                            && !(this.FindItemOnLayer(Layer.TwoHanded) is FishingPole)
-                        )
-                        {
-                            this.Delete();
-                        }
-                        water.OnDoubleClick(this);
-                        m_NextTalk = (
-                            DateTime.Now + TimeSpan.FromSeconds(Utility.RandomMinMax(8, 16))
-                        );
                     }
+                }
+                finally
+                {
+                    eable1.Free();
                 }
             }
         }

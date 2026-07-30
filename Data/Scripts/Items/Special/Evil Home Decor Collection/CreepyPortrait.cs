@@ -24,6 +24,9 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
+            if (from == null || from.Deleted || Deleted)
+                return;
+
             if (Utility.InRange(Location, from.Location, 2))
                 Effects.PlaySound(Location, Map, Utility.RandomMinMax(0x565, 0x566));
             else

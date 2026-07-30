@@ -156,11 +156,19 @@ namespace Server.Commands
 
         public static void EventSink_Command(CommandEventArgs e)
         {
+            if (e == null)
+                return;
+
+            Mobile from = e.Mobile;
+
+            if (from == null || from.Deleted)
+                return;
+
             WriteLine(
-                e.Mobile,
+                from,
                 "{0} {1} used command '{2} {3}'",
-                e.Mobile.AccessLevel,
-                Format(e.Mobile),
+                from.AccessLevel,
+                Format(from),
                 e.Command,
                 e.ArgString
             );

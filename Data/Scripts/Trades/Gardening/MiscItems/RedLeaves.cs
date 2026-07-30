@@ -34,7 +34,12 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
-            if (!IsChildOf(from.Backpack))
+            if (from == null || from.Deleted || Deleted)
+            {
+                return;
+            }
+
+            if (from.Backpack == null || !IsChildOf(from.Backpack))
             {
                 from.SendLocalizedMessage(1042664); // You must have the object in your backpack to use it.
                 return;
@@ -56,10 +61,10 @@ namespace Server.Items
 
             protected override void OnTarget(Mobile from, object targeted)
             {
-                if (m_RedLeaves.Deleted)
+                if (from == null || from.Deleted || m_RedLeaves == null || m_RedLeaves.Deleted)
                     return;
 
-                if (!m_RedLeaves.IsChildOf(from.Backpack))
+                if (from.Backpack == null || !m_RedLeaves.IsChildOf(from.Backpack))
                 {
                     from.SendLocalizedMessage(1042664); // You must have the object in your backpack to use it.
                     return;
@@ -67,7 +72,7 @@ namespace Server.Items
 
                 Item item = targeted as Item;
 
-                if (item == null || !item.IsChildOf(from.Backpack))
+                if (item == null || item.Deleted || !item.IsChildOf(from.Backpack))
                 {
                     from.SendLocalizedMessage(1042664); // You must have the object in your backpack to use it.
                 }

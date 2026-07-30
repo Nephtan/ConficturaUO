@@ -22,7 +22,15 @@ namespace Server
                 EventSink.ClientVersionReceived += new ClientVersionReceivedHandler(
                     delegate(ClientVersionReceivedArgs args)
                     {
-                        PlayerMobile pm = args.State.Mobile as PlayerMobile;
+                        if (args == null || args.State == null)
+                            return;
+
+                        Mobile m = args.State.Mobile;
+
+                        if (m == null || m.Deleted)
+                            return;
+
+                        PlayerMobile pm = m as PlayerMobile;
 
                         if (pm != null)
                             Timer.DelayCall(TimeSpan.Zero, pm.ResendBuffs);

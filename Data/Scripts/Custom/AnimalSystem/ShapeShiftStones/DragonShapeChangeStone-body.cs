@@ -72,7 +72,15 @@ namespace Server.Items
 
         public override void OnSpeech(SpeechEventArgs e)
         {
-            if (!e.Handled && this.IsChildOf(e.Mobile.Backpack))
+            Mobile from = e.Mobile;
+
+            if (from == null || from.Deleted || from.Backpack == null)
+            {
+                base.OnSpeech(e);
+                return;
+            }
+
+            if (!e.Handled && this.IsChildOf(from.Backpack))
             {
                 string keyword = e.Speech;
                 switch (keyword)
@@ -81,7 +89,7 @@ namespace Server.Items
                         {
                             if (m_Transformed == 0)
                             {
-                                Transform(e.Mobile);
+                                Transform(from);
                                 e.Handled = true;
                             }
                             break;
@@ -90,7 +98,7 @@ namespace Server.Items
                         {
                             if (m_Transformed == 1)
                             {
-                                UnTransform(e.Mobile);
+                                UnTransform(from);
                                 e.Handled = true;
                             }
                             break;
@@ -103,6 +111,9 @@ namespace Server.Items
 
         public void Transform(Mobile from)
         {
+            if (from == null || from.Deleted)
+                return;
+
             m_Transformed = 1;
             if (from.Female)
                 m_BodyValue = 401;
@@ -113,6 +124,9 @@ namespace Server.Items
 
         public void UnTransform(Mobile from)
         {
+            if (from == null || from.Deleted)
+                return;
+
             m_Transformed = 0;
             from.BodyValue = m_BodyValue;
         }
@@ -181,7 +195,13 @@ namespace Server.Items
 
             public override void OnResponse(NetState sender, RelayInfo info)
             {
+                if (sender == null)
+                    return;
+
                 Mobile from = sender.Mobile;
+
+                if (from == null || from.Deleted || from != user || wss == null || wss.Deleted)
+                    return;
 
                 switch (info.ButtonID)
                 {
@@ -219,6 +239,9 @@ namespace Server.Items
 
             public override void OnClick()
             {
+                if (m_From == null || m_From.Deleted || WSS == null || WSS.Deleted)
+                    return;
+
                 m_From.SendGump(new BodyValueGump(WSS, m_From));
             }
         }

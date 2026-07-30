@@ -93,3 +93,30 @@ Requires a non-empty argument string. Targeting a live mobile calls `Say(text)`.
 4. Original hidden, cant-walk, frozen, and paralyzed flags.
 
 `ControlItem.Deserialize` reads these fields behind version gates for versions `1` through `4`. New control sessions write the old flag fields as `true`, because runtime control no longer supports partial stat, skill, or item copying.
+
+## Source Trace
+
+POST-BATCH-T reviewed this page on 2026-06-14T21:09:11.0049244-05:00 against current source and audit registers.
+
+- Canonical status: Canonical.
+- Queue rows: PBN-0101.
+- Backlog rows: RB-06730.
+- Audit registers used: documentation-truth-table.csv, runtime-hook-map.csv, serialization-register.csv, and project-truth-register.csv.
+
+### Source Files Reviewed
+
+- Data/Scripts/Scripts.csproj (CurrentFile)
+
+### Runtime Evidence
+
+- No runtime hook rows matched the reviewed source set in runtime-hook-map.csv.
+
+### Serialization Evidence
+
+- No serialized classes matched the reviewed source set in serialization-register.csv.
+
+### Project And Runtime Coverage
+
+- No project-truth rows matched the reviewed source set; path existence is recorded above.
+
+No C# source, project files, XML/config/data files, namespaces, serializers, gameplay behavior, or migration policy were changed in POST-BATCH-T.

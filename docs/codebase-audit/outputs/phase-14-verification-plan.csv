@@ -1,0 +1,6 @@
+"Command","AppliesTo","ExpectedResult","RequiredBy"
+"git status --short","Git hygiene","Clean before Phase 14 edits; only intended Phase 14 files pending before commit; clean after commit.","Phase 14.7"
+".\docs\codebase-audit\tools\New-DocumentationTruthAudit.ps1","Documentation truth inventory","Regenerates Phase 7 documentation truth outputs without source/project changes.","Root plan Phase 14 documentation-only workflow"
+"Get-ChildItem -LiteralPath docs/codebase-audit -Recurse -File | Select-String -Pattern '[ \t]+$'","Whitespace check","No trailing whitespace in audit files.","Documentation-only verification"
+"git diff --check","Whitespace and patch sanity","No whitespace errors; known LF-to-CRLF warnings may appear due checkout settings.","Phase 14.2"
+"git diff --cached --check","Staged patch sanity","No whitespace errors in staged Phase 14 batch.","Phase 14.7"

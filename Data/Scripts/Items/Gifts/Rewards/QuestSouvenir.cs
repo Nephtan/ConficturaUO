@@ -49,6 +49,9 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
+            if (from == null || from.Deleted || Deleted)
+                return;
+
             if (this.Name == "Bell of Courage")
             {
                 from.PlaySound(m_Sounds[Utility.Random(m_Sounds.Length)]);

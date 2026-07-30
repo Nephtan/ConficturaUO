@@ -26,7 +26,18 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
-            Item snake = from.Backpack.FindItemByType(typeof(BlackrockSerpentOrder));
+            if (from == null || from.Deleted || Deleted)
+                return;
+
+            Container pack = from.Backpack;
+
+            if (pack == null || pack.Deleted)
+            {
+                from.SendMessage("The statue glows with an eerie blue color.");
+                return;
+            }
+
+            Item snake = pack.FindItemByType(typeof(BlackrockSerpentOrder));
             if (snake != null)
             {
                 BaseCreature monster = new SerpentOfOrder();
@@ -69,7 +80,18 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
-            Item snake = from.Backpack.FindItemByType(typeof(BlackrockSerpentChaos));
+            if (from == null || from.Deleted || Deleted)
+                return;
+
+            Container pack = from.Backpack;
+
+            if (pack == null || pack.Deleted)
+            {
+                from.SendMessage("The statue glows with an eerie red color.");
+                return;
+            }
+
+            Item snake = pack.FindItemByType(typeof(BlackrockSerpentChaos));
             if (snake != null)
             {
                 BaseCreature monster = new SerpentOfChaos();

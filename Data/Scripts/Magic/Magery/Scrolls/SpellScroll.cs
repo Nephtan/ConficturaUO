@@ -71,6 +71,11 @@ namespace Server.Items
 
         public override void GetContextMenuEntries(Mobile from, List<ContextMenuEntry> list)
         {
+            if (from == null || from.Deleted || Deleted || list == null)
+            {
+                return;
+            }
+
             base.GetContextMenuEntries(from, list);
 
             if (from.Alive && this.Movable)
@@ -79,6 +84,11 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
+            if (from == null || from.Deleted || Deleted)
+            {
+                return;
+            }
+
             if (!Multis.DesignContext.Check(from))
                 return; // They are customizing
 

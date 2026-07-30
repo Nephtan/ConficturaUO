@@ -23,6 +23,9 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
+            if (from == null || from.Deleted || Deleted)
+                return;
+
             if (from.InRange(this.GetWorldLocation(), 4) || this.Weight == -50.0)
             {
                 from.CloseGump(typeof(SwordsAndShacklesGump));
@@ -388,6 +391,9 @@ namespace Server.Items
 
             public override void OnResponse(NetState state, RelayInfo info)
             {
+                if (state == null || state.Mobile == null || state.Mobile.Deleted)
+                    return;
+
                 Mobile from = state.Mobile;
                 if (info.ButtonID > 0 || info.ButtonID < 0)
                 {

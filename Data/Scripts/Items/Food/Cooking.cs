@@ -604,6 +604,9 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
+            if (from == null || from.Deleted || Deleted)
+                return;
+
             if (!Movable)
                 return;
 
@@ -612,8 +615,16 @@ namespace Server.Items
 
         public virtual void OnTarget(Mobile from, object obj)
         {
+            if (from == null || from.Deleted || Deleted)
+                return;
+
             if (obj is AddonComponent)
                 obj = (obj as AddonComponent).Addon;
+
+            Item item = obj as Item;
+
+            if (item != null && item.Deleted)
+                return;
 
             IFlourMill mill = obj as IFlourMill;
 

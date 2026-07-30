@@ -21,6 +21,9 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
+            if (from == null || from.Deleted || Deleted)
+                return;
+
             if (from.InRange(Location, 2))
             {
                 switch (ItemID)

@@ -20,6 +20,9 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
+            if (from == null || from.Deleted || Deleted)
+                return;
+
             if (from is PlayerMobile)
             {
                 switch (Utility.RandomMinMax(0, 8))

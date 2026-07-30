@@ -121,7 +121,18 @@ namespace Server.Engines.BulkOrders
 
         public override void OnResponse(Server.Network.NetState sender, RelayInfo info)
         {
+            if (sender == null)
+                return;
+
+            PlayerMobile from = sender.Mobile as PlayerMobile;
+
+            if (from == null || from.Deleted || from != m_From || m_Book == null || m_Book.Deleted)
+                return;
+
             BOBFilter f = (m_From.UseOwnFilter ? m_From.BOBFilter : m_Book.Filter);
+
+            if (f == null)
+                return;
 
             int index = info.ButtonID;
 

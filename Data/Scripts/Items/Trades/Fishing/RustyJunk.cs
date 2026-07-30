@@ -263,7 +263,10 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
-            if (!IsChildOf(from.Backpack))
+            if (from == null || from.Deleted)
+                return;
+
+            if (Deleted || from.Backpack == null || !IsChildOf(from.Backpack))
             {
                 from.SendMessage("This must be in your backpack to use.");
                 return;
@@ -287,8 +290,19 @@ namespace Server.Items
 
             protected override void OnTarget(Mobile from, object targeted)
             {
-                if (m_Rusted.Deleted)
+                if (from == null || from.Deleted)
                     return;
+
+                if (
+                    m_Rusted == null
+                    || m_Rusted.Deleted
+                    || from.Backpack == null
+                    || !m_Rusted.IsChildOf(from.Backpack)
+                )
+                {
+                    from.SendMessage("This must be in your backpack to use.");
+                    return;
+                }
 
                 if (Server.Engines.Craft.DefBlacksmithy.IsForge(targeted))
                 {

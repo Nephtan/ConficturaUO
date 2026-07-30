@@ -3086,6 +3086,11 @@ namespace Server.Items
 
         public override bool OnDragLift(Mobile from)
         {
+            if (from == null || from.Deleted || Deleted)
+            {
+                return false;
+            }
+
             from.SendMessage("Single click this bag to organize it.");
             return base.OnDragLift(from);
         }

@@ -285,10 +285,19 @@ namespace Server.Items
                     }
                 }
 
-                foreach (Mobile m in this.GetMobilesInRange(10))
+                IPooledEnumerable eable = this.GetMobilesInRange(10);
+
+                try
                 {
-                    if (m is AlchemistGuildmaster || m is Alchemist)
-                        ++alchemists;
+                    foreach (Mobile m in eable)
+                    {
+                        if (m is AlchemistGuildmaster || m is Alchemist)
+                            ++alchemists;
+                    }
+                }
+                finally
+                {
+                    eable.Free();
                 }
 
                 if (from.Skills[SkillName.Alchemy].Value < 50)

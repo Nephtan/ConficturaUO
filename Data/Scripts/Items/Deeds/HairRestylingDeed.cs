@@ -41,7 +41,10 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
-            if (!IsChildOf(from.Backpack))
+            if (from == null || from.Deleted || Deleted)
+                return;
+
+            if (from.Backpack == null || !IsChildOf(from.Backpack))
             {
                 from.SendLocalizedMessage(1042001); // That must be in your pack...
             }
@@ -107,11 +110,17 @@ namespace Server.Items
 
             public override void OnResponse(NetState sender, RelayInfo info)
             {
-                if (m_From == null || !m_From.Alive)
+                if (m_From == null || m_From.Deleted || !m_From.Alive)
                     return;
 
-                if (m_Deed.Deleted)
+                if (m_Deed == null || m_Deed.Deleted)
                     return;
+
+                if (m_From.Backpack == null || !m_Deed.IsChildOf(m_From.Backpack))
+                {
+                    m_From.SendLocalizedMessage(1042001); // That must be in your pack...
+                    return;
+                }
 
                 if (info.ButtonID < 1 || info.ButtonID > 10)
                     return;

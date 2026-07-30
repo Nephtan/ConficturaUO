@@ -76,6 +76,9 @@ namespace Server.Items
 
         public override void OnSingleClick(Mobile from)
         {
+            if (from == null || from.Deleted || Deleted)
+                return;
+
             this.LabelTo(from, 1046414, Name); // the remains of ~1_NAME~
         }
 
