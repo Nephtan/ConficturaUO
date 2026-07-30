@@ -288,7 +288,7 @@
 
 // The port you want your server to listen on.
 
-<setting>4506</setting>
+<setting>4508</setting>
 
 // To use special weapon abilities, this is the minimum skill level required (weapon skill and tactics) where the default is 70.0 (minimum of 20.0). Each ability requires 10 additional points above the previous (70, 80, 90, etc).
 
