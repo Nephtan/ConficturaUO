@@ -110,6 +110,7 @@ Guides are grouped by primary audience and use case.
 - [Staff Toolbar](Staff_Toolbar.md)
 - [Static Gump Tool](Static_Gump_Tool.md)
 - [Test Center](Test_Center.md)
+- [Town Crier Discord Bridge](Town_Crier_Discord.md)
 - [XML Spawner Enhancements](XML_Spawner_Enhancements.md)
 
 ## Technical And Engine Reference
