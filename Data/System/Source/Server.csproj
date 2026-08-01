@@ -169,6 +169,7 @@
     <Compile Include="TileMatrix.cs" />
     <Compile Include="TileMatrixPatch.cs" />
     <Compile Include="Timer.cs" />
+    <Compile Include="TurnBasedCombat.cs" />
     <Compile Include="Utility.cs" />
     <Compile Include="VirtueInfo.cs" />
     <Compile Include="World.cs" />

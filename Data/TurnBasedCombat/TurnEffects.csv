@@ -1,0 +1,9 @@
+Key,RuntimeType,MutationKind,ClockPolicy,TickPhase,IntervalPolicy,DurationPolicy,Adapter,AllowedMutations
+Regeneration:Hits,*,Regeneration,ActorClock,StartOfTurn,NativeRate,WhileBelowMaximum,TurnEffectAdapter,Hits
+Regeneration:Stamina,*,Regeneration,ActorClock,StartOfTurn,NativeRate,WhileBelowMaximum,TurnEffectAdapter,Stamina
+Regeneration:Mana,*,Regeneration,ActorClock,StartOfTurn,NativeRate,WhileBelowMaximum,TurnEffectAdapter,Mana
+Status:Poison,Server.PoisonImpl+PoisonTimer,Poison,ActorClock,StartOfTurn,NativeInterval,NativeCount,PoisonTimerAdapter,Damage;Poison
+Status:Paralysis,*,Paralysis,ActorClock,StartOfTurn,OneShot,NativeDuration,StatusDurationAdapter,Paralysis
+Status:Freeze,*,Freeze,ActorClock,StartOfTurn,OneShot,NativeDuration,StatusDurationAdapter,Freeze
+Summon:Expiry,*,Effect,ActorClock,StartOfTurn,OneShot,CanonicalSummonEnd,SummonExpiryAdapter,Delete
+World:Default,*,Unknown,WallClockUnaffected,None,Native,Native,MutationBackstop,None
