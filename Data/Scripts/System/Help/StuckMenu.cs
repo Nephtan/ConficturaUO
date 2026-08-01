@@ -335,7 +335,8 @@ namespace Server.Menus.Questions
                     m_Map
                 ).Start();
 
-                m_Mobile.UsedStuckMenu();
+                if (!TestCenter.Enabled)
+                    m_Mobile.UsedStuckMenu();
             }
             else
             {

@@ -355,4 +355,8 @@
 
 <setting>true</setting>
 
+// Enables Test Center commands, speech stat and skill setting, supplies, self-resurrection, corpse retrieval, and unlimited stuck-menu uses. Requires a server restart.
+
+<setting>true</setting>
+
 </settings>

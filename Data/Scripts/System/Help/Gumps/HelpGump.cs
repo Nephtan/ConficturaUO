@@ -2458,7 +2458,7 @@ namespace Server.Engines.Help
                             from.SendLocalizedMessage(1041530, "", 0x35); // You'll need a better jailbreak plan then that!
                         }
                         else if (
-                            from.CanUseStuckMenu()
+                            (TestCenter.Enabled || from.CanUseStuckMenu())
                             && from.Region.CanUseStuckMenu(from)
                             && !CheckCombat(from)
                             && !from.Frozen

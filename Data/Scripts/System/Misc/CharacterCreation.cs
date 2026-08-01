@@ -258,6 +258,11 @@ namespace Server.Misc
 
             newChar.MoveToWorld(city.Location, city.Map);
 
+            if (TestCenter.Enabled)
+            {
+                TestCenter.GiveSupplies(newChar, false);
+            }
+
             Console.WriteLine(
                 "Login: {0}: New character being created (account={1})",
                 state,

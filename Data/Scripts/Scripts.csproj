@@ -6341,6 +6341,7 @@
     <Compile Include="System\Misc\Spawning.cs" />
     <Compile Include="System\Misc\Statistics.cs" />
     <Compile Include="System\Misc\Talk.cs" />
+    <Compile Include="System\Misc\TestCenter.cs" />
     <Compile Include="System\Misc\Targeting.cs" />
     <Compile Include="System\Misc\Tasks.cs" />
     <Compile Include="System\Misc\TextDefinition.cs" />
