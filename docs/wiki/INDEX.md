@@ -109,6 +109,7 @@ Guides are grouped by primary audience and use case.
 - [Pandora's Gift Box](Pandoras_Gift_Box.md)
 - [Staff Toolbar](Staff_Toolbar.md)
 - [Static Gump Tool](Static_Gump_Tool.md)
+- [Test Center](Test_Center.md)
 - [XML Spawner Enhancements](XML_Spawner_Enhancements.md)
 
 ## Technical And Engine Reference

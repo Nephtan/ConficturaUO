@@ -122,6 +122,7 @@ namespace Server.Misc
         private static int S_FoodCheck = 5;
         private static int S_BondDays = 7;
         private static bool S_BuyCloth = true;
+        private static bool S_TestCenterEnabled = false;
 
         public static void Configure()
         {
@@ -498,6 +499,12 @@ namespace Server.Misc
                         else if (setting == 90)
                         {
                             S_BuyCloth = bool.Parse(node.InnerText);
+                        }
+                        else if (setting == 91)
+                        {
+                            bool enabled;
+
+                            S_TestCenterEnabled = bool.TryParse(node.InnerText, out enabled) && enabled;
                         }
 
                         setting++;
@@ -1472,6 +1479,11 @@ namespace Server.Misc
         public static bool BuyCloth()
         {
             return S_BuyCloth;
+        }
+
+        public static bool TestCenterEnabled()
+        {
+            return S_TestCenterEnabled;
         }
 
         public static string ServerName()
