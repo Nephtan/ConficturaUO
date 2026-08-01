@@ -124,8 +124,6 @@ namespace Server.Custom.Confictura.CloneOfflinePlayerCharacters
                 }
             }
 
-            Console.Write("Cloning Offline Players... ");
-
             foreach (Mobile mobile in new List<Mobile>(World.Mobiles.Values))
             {
                 PlayerMobile playerMobile = mobile as PlayerMobile;
@@ -144,12 +142,14 @@ namespace Server.Custom.Confictura.CloneOfflinePlayerCharacters
                         processedClones++;
                     }
 
-                    Console.CursorLeft = 27;
-                    Console.Write(string.Format("{0}/{1}", processedClones, totalClones));
                 }
             }
 
-            Console.WriteLine();
+            Console.WriteLine(
+                "Cloning Offline Players... {0}/{1}",
+                processedClones,
+                totalClones
+            );
 
             foreach (Mobile mobile in new List<Mobile>(World.Mobiles.Values))
             {
