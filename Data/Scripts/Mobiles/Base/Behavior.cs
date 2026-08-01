@@ -13128,6 +13128,51 @@ namespace Server.Mobiles
 
         private DateTime m_NextSearching;
 
+        public virtual bool ProcessTurnBasedPulse()
+        {
+            m_Mobile.OnThink();
+
+            if (m_Mobile.Deleted || m_Mobile.Map == null || m_Mobile.Map == Map.Internal)
+                return false;
+
+            if (m_Mobile.BardPacified)
+            {
+                DoBardPacified();
+            }
+            else if (m_Mobile.BardProvoked)
+            {
+                DoBardProvoked();
+            }
+            else if (!m_Mobile.Controlled)
+            {
+                if (!Think())
+                    return false;
+            }
+            else if (!Obey())
+            {
+                return false;
+            }
+
+            DateTime actorTime = TurnBasedCombatBridge.GetTime(m_Mobile);
+
+            if (CanSearching && actorTime > m_NextSearching)
+            {
+                Searching();
+
+                int delay = (15000 / m_Mobile.Int);
+
+                if (delay > 60)
+                    delay = 60;
+
+                int min = delay * (9 / 10);
+                int max = delay * (10 / 9);
+
+                m_NextSearching = actorTime + TimeSpan.FromSeconds(Utility.RandomMinMax(min, max));
+            }
+
+            return true;
+        }
+
         public virtual bool CanSearching
         {
             get { return m_Mobile.Skills[SkillName.Searching].Value > 0; }
@@ -13188,62 +13233,11 @@ namespace Server.Mobiles
                     // end PlayerRangeSensitiveMod
                 }
 
-                m_Owner.m_Mobile.OnThink();
+                if (TurnBasedCombatBridge.IsParticipant(m_Owner.m_Mobile))
+                    return;
 
-                if (m_Owner.m_Mobile.Deleted)
-                {
+                if (!m_Owner.ProcessTurnBasedPulse())
                     Stop();
-                    return;
-                }
-                else if (m_Owner.m_Mobile.Map == null || m_Owner.m_Mobile.Map == Map.Internal)
-                {
-                    return;
-                }
-
-                if (m_Owner.m_Mobile.BardPacified)
-                {
-                    m_Owner.DoBardPacified();
-                }
-                else if (m_Owner.m_Mobile.BardProvoked)
-                {
-                    m_Owner.DoBardProvoked();
-                }
-                else
-                {
-                    if (!m_Owner.m_Mobile.Controlled)
-                    {
-                        if (!m_Owner.Think())
-                        {
-                            Stop();
-                            return;
-                        }
-                    }
-                    else
-                    {
-                        if (!m_Owner.Obey())
-                        {
-                            Stop();
-                            return;
-                        }
-                    }
-                }
-
-                if (m_Owner.CanSearching && DateTime.Now > m_Owner.m_NextSearching)
-                {
-                    m_Owner.Searching();
-
-                    // Not exactly OSI style, approximation.
-                    int delay = (15000 / m_Owner.m_Mobile.Int);
-
-                    if (delay > 60)
-                        delay = 60;
-
-                    int min = delay * (9 / 10); // 13s at 1000 int, 33s at 400 int, 54s at <250 int
-                    int max = delay * (10 / 9); // 16s at 1000 int, 41s at 400 int, 66s at <250 int
-
-                    m_Owner.m_NextSearching =
-                        DateTime.Now + TimeSpan.FromSeconds(Utility.RandomMinMax(min, max));
-                }
             }
         }
     }

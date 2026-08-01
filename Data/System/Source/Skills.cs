@@ -1518,13 +1518,61 @@ namespace Server
 
                 if (info.Callback != null)
                 {
-                    if (from.NextSkillTime <= DateTime.Now && from.Spell == null)
+                    DateTime turnTime = TurnBasedCombatBridge.GetTime(from);
+
+                    if (from.NextSkillTime <= turnTime && from.Spell == null)
                     {
+                        TurnActionDecision turnDecision = TurnBasedCombatBridge.BeginAction(
+                            new TurnActionRequest(
+                                from,
+                                null,
+                                info,
+                                TurnActionKind.Skill,
+                                -1,
+                                false,
+                                false
+                            )
+                        );
+
+                        if (!String.IsNullOrEmpty(turnDecision.Message))
+                            from.SendMessage(turnDecision.Message);
+
+                        if (!turnDecision.Allowed)
+                            return false;
+
+                        object originalTarget = from.Target;
+                        bool targetPending = false;
+                        bool turnSucceeded = false;
+
+                        try
+                        {
+                        using (TurnBasedCombatBridge.BeginActionScope(turnDecision.Lease))
+                        {
                         from.DisruptiveAction();
 
-                        from.NextSkillTime = DateTime.Now + info.Callback(from);
+                        from.NextSkillTime = turnTime + info.Callback(from);
+
+                        turnSucceeded = true;
+                        targetPending = from.Target != null && from.Target != originalTarget;
 
                         return true;
+                        }
+                        }
+                        finally
+                        {
+                            if (!targetPending)
+                            {
+                                TurnBasedCombatBridge.CompleteAction(
+                                    turnDecision.Lease,
+                                    new TurnActionResult(
+                                        from,
+                                        null,
+                                        turnSucceeded ? TurnActionPhase.Commit : TurnActionPhase.Refund,
+                                        turnSucceeded
+                                    )
+                                );
+                            }
+                        }
                     }
                     else
                     {

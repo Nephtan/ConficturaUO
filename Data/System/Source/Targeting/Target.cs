@@ -94,6 +94,7 @@ namespace Server.Targeting
 
             OnTargetCancel(from, TargetCancelType.Timeout);
             OnTargetFinish(from);
+            TurnBasedCombatBridge.TargetFinished(from, this, false);
         }
 
         private class TimeoutTimer : Timer
@@ -163,10 +164,17 @@ namespace Server.Targeting
 
             OnTargetCancel(from, type);
             OnTargetFinish(from);
+            TurnBasedCombatBridge.TargetFinished(from, this, false);
         }
 
         public void Invoke(Mobile from, object targeted)
         {
+            bool turnInvoked = false;
+            IDisposable turnTargetScope = TurnBasedCombatBridge.BeginTargetInvocation(from, targeted);
+            IDisposable turnActionScope = TurnBasedCombatBridge.BeginPendingActionScope(from);
+
+            try
+            {
             CancelTimeout();
             from.ClearTarget();
 
@@ -271,10 +279,21 @@ namespace Server.Targeting
                 )
                     OnTargetUntargetable(from, targeted);
                 else if (from.Region.OnTarget(from, this, targeted))
+                {
+                    turnInvoked = true;
                     OnTarget(from, targeted);
+                }
             }
 
             OnTargetFinish(from);
+            }
+            finally
+            {
+                bool validIntent = turnInvoked && TurnBasedCombatBridge.IsTargetIntentValid(from);
+                turnActionScope.Dispose();
+                turnTargetScope.Dispose();
+                TurnBasedCombatBridge.TargetFinished(from, this, validIntent);
+            }
         }
 
         protected virtual void OnTarget(Mobile from, object targeted) { }

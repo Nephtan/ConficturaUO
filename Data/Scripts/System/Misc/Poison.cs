@@ -112,6 +112,14 @@ namespace Server
 
             protected override void OnTick()
             {
+                if (TurnBasedCombatBridge.IsParticipant(m_Mobile))
+                    return;
+
+                ProcessTurnBasedTick();
+            }
+
+            public void ProcessTurnBasedTick()
+            {
                 if (
                     (
                         Core.AOS

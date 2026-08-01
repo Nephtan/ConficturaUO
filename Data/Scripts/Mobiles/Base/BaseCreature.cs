@@ -372,6 +372,54 @@ namespace Server.Mobiles
             set { m_SummonEnd = value; }
         }
 
+        private Timer m_TurnBasedUnsummonTimer;
+
+        internal void RegisterTurnBasedUnsummonTimer(Timer timer)
+        {
+            m_TurnBasedUnsummonTimer = timer;
+        }
+
+        internal void ClearTurnBasedUnsummonTimer(Timer timer)
+        {
+            if (m_TurnBasedUnsummonTimer == timer)
+                m_TurnBasedUnsummonTimer = null;
+        }
+
+        public TimeSpan SuspendTurnBasedUnsummonTimer()
+        {
+            if (!Summoned)
+                return TimeSpan.Zero;
+
+            TimeSpan remaining = m_SummonEnd - DateTime.Now;
+
+            if (m_TurnBasedUnsummonTimer != null)
+            {
+                m_TurnBasedUnsummonTimer.Stop();
+                m_TurnBasedUnsummonTimer = null;
+            }
+
+            return remaining > TimeSpan.Zero ? remaining : TimeSpan.Zero;
+        }
+
+        public void ResumeTurnBasedUnsummonTimer(TimeSpan remaining)
+        {
+            if (Deleted || !Summoned)
+                return;
+
+            if (m_TurnBasedUnsummonTimer != null)
+                m_TurnBasedUnsummonTimer.Stop();
+
+            if (remaining <= TimeSpan.Zero)
+            {
+                Delete();
+                return;
+            }
+
+            m_SummonEnd = DateTime.Now + remaining;
+            m_TurnBasedUnsummonTimer = new UnsummonTimer(m_SummonMaster, this, remaining);
+            m_TurnBasedUnsummonTimer.Start();
+        }
+
         public virtual Faction FactionAllegiance
         {
             get { return null; }

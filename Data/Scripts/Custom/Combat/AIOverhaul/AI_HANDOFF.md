@@ -35,13 +35,23 @@ This file is the living state record for the AI overhaul project. Review it befo
 - Removed the extra tactical `LastMoveTime` chase gate after live testing showed it made skirmisher pursuit feel under-responsive; whitelisted archers now rely on the stock move scheduler while still honoring the tactical spacing band.
 - Corrected the stock `ArcherAI` ammo check so it respects the equipped `BaseRanged` weapon's `AmmoType` instead of assuming `Arrow`, which restores proper chase pressure for `MonsterGloves` throwers without broadening the tactical whitelist.
 - Moved the AI overhaul workspace to `Data/Scripts/Custom/Combat/AIOverhaul` during `POST-BATCH-H-02A`; this was a file-location/project/docs audit move only, with no namespace, type, serializer, whitelist, targeting, movement, or gameplay behavior change.
+- Added a default-off turn-based combat cadence bridge that invokes the live `AIObject` through the stock think/obey pipeline only while its owner is an active turn participant.
 
 ## Files And Seams Touched
 
 - `Data/Scripts/Custom/Combat/AIOverhaul/AITacticalTargeting.cs` now owns the exact-type whitelist rollout guard, active phase-3 profile assignments, bounded scoring helper, and whitelist-bound skirmisher spacing helper.
 - `Data/Scripts/Mobiles/Base/BaseCreature.cs` now exposes GM-visible tactical profile inspection in addition to the guarded tactical profile accessors and event-driven reacquire hooks.
 - `Data/Scripts/Mobiles/Base/Behavior.cs` now layers tactical scoring only after the stock legality and mode filters pass, drives archer-only spacing inside the stock combat branch without replacing the stock move scheduler, and uses weapon-aware ranged ammo checks inside `ArcherAI`.
+- `Data/Scripts/Mobiles/Base/Behavior.cs` also exposes `ProcessTurnBasedPulse()` and makes `AITimer.OnTick()` yield participant cadence to the turn manager. The bridge preserves sector activation/deactivation, `OnThink`, bard handling, `Think`/`Obey`, and searching order; it is inert while turn-based combat is disabled.
 - `Data/Scripts/Custom/Combat/AIOverhaul/AI_HANDOFF.md` refreshed to record the active whitelist, exclusions, rollout guard status, and the new phase-4 movement assumptions.
+
+## Turn-Based Combat Integration Note
+
+- Turn-based cadence is owned by `Data/Scripts/Custom/Combat/TurnBased`, not by the tactical-targeting rollout.
+- `TurnAI.csv` classifies stock `BaseCreature`, live `OmniAI`, current `ForcedAI` mobile families, and runtime shell reevaluation. Missing runtime AI classification ends the NPC turn and logs instead of guessing.
+- The existing AI-overhaul exact-type whitelist, profiles, tactical scoring, skirmisher spacing, movement dispatcher, and legality ordering are unchanged.
+- NPC turns simulate the pulses due across the configured actor interval from the live `CurrentSpeed`, stop on AP exhaustion/no progress/safety limits, and reread `AIObject` before every pulse.
+- No AI owner or shell state is serialized for turn-based combat. Groups, initiative, pulse progress, and actor clocks dissolve on restart.
 
 ## Phase 1 Completion Notes
 
@@ -93,6 +103,7 @@ This file is the living state record for the AI overhaul project. Review it befo
 - No new persisted AI owner-side or shell-side state was introduced in phase 2.
 - No shell assignment, movement, activation, cadence, bard, summon, control-order, or deserialize behavior changed in phase 2.
 - Phase 4 reuses the stock action dispatcher and shared movement helpers rather than replacing global movement, activation, home, or timer systems.
+- Turn-based cadence does not broaden the AI-overhaul whitelist; its catalog is a compatibility policy for combat participation, and the whole feature remains default-off until its separate rollout gates pass.
 
 ## Active Phase 4 Whitelist
 
@@ -163,8 +174,9 @@ This file is the living state record for the AI overhaul project. Review it befo
 - Confirmed non-whitelisted archers still use the stock `RangeFight..Weapon.MaxRange` spacing envelope and `1.0` second movement gate, while the shell-level ammo check now respects the equipped `BaseRanged` weapon's `AmmoType`.
 - Confirmed whitelisted `Skirmisher` archers alone now use a preferred `3..6` tile spacing band clamped by weapon range while relying on the stock move scheduler instead of a separate tactical chase cadence.
 - Confirmed `MeleeAI.DoActionCombat()` remains unchanged and `Bruiser` movement stays stock in phase 4.
-- Confirmed phase 4 does not modify `DoMoveImpl(...)`, `MoveTo(...)`, `WalkRandomInHome(...)`, `Deactivate()`, `Activate()`, `OnCurrentSpeedChanged()`, `AITimer.OnTick()`, `PlayerRangeSensitive`, `ReacquireOnMovement`, or `AggressiveAction(...)`.
+- Confirmed phase 4 did not modify `DoMoveImpl(...)`, `MoveTo(...)`, `WalkRandomInHome(...)`, `Deactivate()`, `Activate()`, `OnCurrentSpeedChanged()`, `PlayerRangeSensitive`, `ReacquireOnMovement`, or `AggressiveAction(...)`; the later turn-based integration changed only the participant handoff inside `AITimer.OnTick()`.
 - Confirmed the `Combat` action path continues to own whitelisted archer repositioning and that `ActionType.Backoff`, `OnActionBackoff()`, and `OnActionChanged()` behavior remain untouched.
+- Rechecked the turn-based `AITimer` handoff and confirmed nonparticipants still follow the existing wall-clock timer path, participant pulses call the same live shell, and no whitelist, serializer, AI assignment, sector lifecycle, or action-state callback contract was changed.
 
 ## Open Risks
 
