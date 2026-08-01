@@ -8,6 +8,7 @@ using Server.Accounting;
 using Server.Commands;
 using Server.Commands.Generic;
 using Server.Custom.Confictura.CloneOfflinePlayerCharacters;
+using Server.Custom.Confictura.Integrations.Discord;
 using Server.Guilds;
 using Server.Gumps;
 using Server.Items;
@@ -130,12 +131,18 @@ namespace Server.Misc
 
                 CreateFile(sPath);
 
+                bool eventWritten = false;
+
                 /// PREPEND THE FILE WITH THE EVENT ///
                 try
                 {
                     UpdateFile(sPath, sEvent);
+                    eventWritten = true;
                 }
                 catch (Exception) { }
+
+                if (eventWritten && sLog != "Logging Server")
+                    TownCrierDiscord.QueueEvent(sLog, sEvent);
 
                 if (sLog != "Logging Server")
                 {
