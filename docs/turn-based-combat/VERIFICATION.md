@@ -10,6 +10,7 @@ The feature is implemented but disabled by default in `Data/TurnBasedCombat/Turn
 | --- | --- | --- |
 | Compatibility regeneration | Pass | `scripts/Generate-TurnBasedCombatCompatibility.ps1` scanned 6,598 runtime scripts and generated a register with zero `Unknown` rows. |
 | Compatibility drift gate | Pass | An isolated runtime configuration load accepted the generated register and current SHA-256 source hashes. |
+| Canonical hash portability | Pass | LF, CRLF, BOM+LF, and BOM+CRLF variants produced one canonical SHA-256 hash, while a source-token change produced a different hash. Register regeneration was byte-for-byte reproducible with zero classification drift. |
 | Deterministic configuration checks | Pass | Loaded defaults were 20 AP, five-second actor interval, eight effect rules, seven AI rules, and a two-AP sample movement action. |
 | Operational core build | Pass | `Data/System/Source/Server.csproj`, `Debug|x86`, built with Visual Studio 2022 MSBuild. |
 | Runtime script compile | Pass | `ConficturaServer.exe -compileonly -nocache` reported `Scripts: Compile-only verification completed successfully.` |

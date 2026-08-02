@@ -13,7 +13,7 @@ Run from the repository root:
 ```
 
 The generator scans every live runtime `.cs` file under `Data/Scripts`, excluding generated `bin` and `obj` trees. `Scripts.csproj` remains IDE/project hygiene rather than the runtime boundary.
-It seeds system ownership from the completed codebase-audit runtime inventory and records a SHA-256 hash for every runtime script. Enable is refused when a script is added, removed, or changed after generation.
+It seeds system ownership from the completed codebase-audit runtime inventory and records a canonical SHA-256 hash for every runtime script. Hashing reads source as text, normalizes CRLF and lone CR to LF, and encodes UTF-8 without a byte-order mark. Line-ending or BOM-only deployment transformations therefore remain compatible, while all other whitespace and source changes still produce drift. Enable is refused when a script is added, removed, or meaningfully changed after generation.
 
 ## Runtime controls
 

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Security.Cryptography;
+using System.Text;
 using Server.Mobiles;
 
 namespace Server.Custom.Confictura
@@ -340,11 +341,14 @@ namespace Server.Custom.Confictura
 
         private static string ComputeFileHash(string path)
         {
+            string content = File.ReadAllText(path);
+            string normalized = content.Replace("\r\n", "\n").Replace("\r", "\n");
+            byte[] source = new UTF8Encoding(false).GetBytes(normalized);
+
             using (SHA256 algorithm = SHA256.Create())
-            using (FileStream stream = File.OpenRead(path))
             {
-                byte[] hash = algorithm.ComputeHash(stream);
-                System.Text.StringBuilder builder = new System.Text.StringBuilder(hash.Length * 2);
+                byte[] hash = algorithm.ComputeHash(source);
+                StringBuilder builder = new StringBuilder(hash.Length * 2);
 
                 for (int i = 0; i < hash.Length; ++i)
                     builder.Append(hash[i].ToString("X2", CultureInfo.InvariantCulture));
