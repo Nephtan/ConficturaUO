@@ -21,6 +21,10 @@ namespace Server.Misc
 {
     class LoggingFunctions
     {
+        private static readonly object m_EnvironmentalDeathSyncRoot = new object();
+        private static readonly Dictionary<Mobile, string> m_EnvironmentalDeathCauses =
+            new Dictionary<Mobile, string>();
+
         public static bool LoggingEvents()
         {
             return true; // SET TO TRUE TO ENABLE LOG SYSTEM FOR GAME EVENTS AND TOWN CRIERS
@@ -88,6 +92,8 @@ namespace Server.Misc
 
         public static string LogEvent(string sEvent, string sLog)
         {
+            string writtenEvent = null;
+
             if (LoggingFunctions.LoggingEvents() == true)
             {
                 if (sLog != "Logging Server")
@@ -138,18 +144,25 @@ namespace Server.Misc
                 {
                     UpdateFile(sPath, sEvent);
                     eventWritten = true;
+                    writtenEvent = sEvent;
                 }
                 catch (Exception) { }
 
-                if (eventWritten && sLog != "Logging Server")
+                if (
+                    eventWritten
+                    && sLog != "Logging Server"
+                    && sLog != "Logging Murderers"
+                )
+                {
                     TownCrierDiscord.QueueEvent(sLog, sEvent);
+                }
 
                 if (sLog != "Logging Server")
                 {
                     LoggingFunctions.LogServer("Done - " + sLog);
                 }
             }
-            return null;
+            return writtenEvent;
         }
 
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1058,30 +1071,55 @@ namespace Server.Misc
 
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-        public static string LogKillTile(Mobile m, string sTrap)
+        public static void ApplyFatalEnvironmentalDamage(Mobile m, string sCause)
         {
-            string sDateString = GetPlayerInfo.GetTodaysDate();
-            string sTitle = "the " + GetPlayerInfo.GetSkillTitle(m);
-            if (m.Title != null)
-            {
-                sTitle = m.Title;
-            }
+            if (m == null || m.Deleted || !m.Alive)
+                return;
 
-            PlayerMobile pm = (PlayerMobile)m;
-            if (pm.PublicMyRunUO == true)
-            {
-                string sEvent =
-                    m.Name
-                    + " "
-                    + sTitle
-                    + " made a fatal mistake from "
-                    + sTrap
-                    + "#"
-                    + sDateString;
-                LoggingFunctions.LogEvent(sEvent, "Logging Journies");
-            }
+            string cause = String.IsNullOrEmpty(sCause) ? String.Empty : sCause.Trim();
 
-            return null;
+            if (cause.Length == 0 || String.Equals(cause, "killer", StringComparison.OrdinalIgnoreCase))
+                cause = "a hidden death trap";
+
+            lock (m_EnvironmentalDeathSyncRoot)
+                m_EnvironmentalDeathCauses[m] = cause;
+
+            try
+            {
+                m.Damage(10000, m);
+            }
+            finally
+            {
+                lock (m_EnvironmentalDeathSyncRoot)
+                {
+                    string currentCause;
+
+                    if (
+                        m_EnvironmentalDeathCauses.TryGetValue(m, out currentCause)
+                        && String.Equals(currentCause, cause, StringComparison.Ordinal)
+                    )
+                    {
+                        m_EnvironmentalDeathCauses.Remove(m);
+                    }
+                }
+            }
+        }
+
+        private static bool TryTakeEnvironmentalDeathCause(Mobile m, out string cause)
+        {
+            cause = null;
+
+            if (m == null)
+                return false;
+
+            lock (m_EnvironmentalDeathSyncRoot)
+            {
+                if (!m_EnvironmentalDeathCauses.TryGetValue(m, out cause))
+                    return false;
+
+                m_EnvironmentalDeathCauses.Remove(m);
+                return true;
+            }
         }
 
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1849,6 +1887,34 @@ namespace Server.Misc
                 if (m.AccessLevel < AccessLevel.GameMaster)
                 {
                     string sEvent = "";
+                    string environmentalCause;
+
+                    if (TryTakeEnvironmentalDeathCause(m, out environmentalCause))
+                    {
+                        if (pm.PublicMyRunUO == true)
+                        {
+                            sEvent =
+                                m.Name
+                                + " "
+                                + sTitle
+                                + " fell victim to "
+                                + environmentalCause
+                                + "#"
+                                + sDateString;
+                        }
+                        else
+                        {
+                            sEvent =
+                                m.Name
+                                + " "
+                                + sTitle
+                                + " met an untimely end#"
+                                + sDateString;
+                        }
+
+                        LoggingFunctions.LogEvent(sEvent, "Logging Deaths");
+                        return null;
+                    }
 
                     if (pm.PublicMyRunUO == true)
                     {
@@ -1988,9 +2054,7 @@ namespace Server.Misc
                 sEvent = m.Name + " " + sTitle + " is wanted for murder.";
             }
 
-            LoggingFunctions.LogEvent(sEvent, "Logging Murderers");
-
-            return null;
+            return LoggingFunctions.LogEvent(sEvent, "Logging Murderers");
         }
 
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2079,6 +2143,7 @@ namespace Server.Misc
             if (LoggingFunctions.LoggingEvents() == true)
             {
                 LoggingFunctions.LogClear("Logging Murderers");
+                List<string> wantedNotices = new List<string>();
 
                 // GET ALL OF THE MURDERERS ///////////////////////////////
                 foreach (Account a in Accounts.GetAccounts())
@@ -2097,12 +2162,17 @@ namespace Server.Misc
 
                         if ((m.Kills > 0) && (m.AccessLevel < AccessLevel.GameMaster))
                         {
-                            LoggingFunctions.LogKillers(m, m.Kills);
+                            string wantedNotice = LoggingFunctions.LogKillers(m, m.Kills);
+
+                            if (!String.IsNullOrEmpty(wantedNotice))
+                                wantedNotices.Add(wantedNotice);
                         }
 
                         ++index;
                     }
                 }
+
+                TownCrierDiscord.QueueWantedRoster(wantedNotices);
             }
         }
     }

@@ -56,8 +56,10 @@ namespace Server.Regions
                         5052
                     );
                     Effects.PlaySound(m.Location, m.Map, 0x225);
-                    m.Damage(10000, m);
-                    LoggingFunctions.LogKillTile(m, "the intense heat of the Moon's core");
+                    LoggingFunctions.ApplyFatalEnvironmentalDamage(
+                        m,
+                        "the intense heat of the Moon's core"
+                    );
                 }
                 else if (this.Name == "the Core of the Moon")
                 {

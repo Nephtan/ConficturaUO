@@ -13,20 +13,29 @@ namespace Server.Custom.Confictura.Integrations.Discord
     {
         private const string ConfigRelativePath = "Data/System/CFG/town-crier-discord.local.cfg";
         private const int DefaultMinimumIntervalMinutes = 5;
+        private const int DefaultExplorationRepeatMinutes = 15;
         private const int MaximumMinimumIntervalMinutes = 1440;
+        private const int MaximumExplorationRepeatMinutes = 1440;
         private const int MaximumPendingEvents = 5;
         private const int MaximumMessageLength = 2000;
         private const int MaximumRetryCount = 3;
+        private static readonly TimeSpan MurdererRepeatInterval = TimeSpan.FromHours(24.0);
 
         private static readonly object m_SyncRoot = new object();
         private static readonly List<TownCrierEvent> m_PendingEvents = new List<TownCrierEvent>();
         private static readonly Dictionary<string, DateTime> m_MurdererDedupe =
-            new Dictionary<string, DateTime>(StringComparer.Ordinal);
+            new Dictionary<string, DateTime>(StringComparer.OrdinalIgnoreCase);
+        private static readonly Dictionary<string, DateTime> m_ExplorationDedupe =
+            new Dictionary<string, DateTime>(StringComparer.OrdinalIgnoreCase);
+        private static readonly Dictionary<string, bool> m_InFlightDedupeKeys =
+            new Dictionary<string, bool>(StringComparer.OrdinalIgnoreCase);
 
         private static bool m_Enabled;
         private static bool m_Configured;
         private static bool m_SessionDisabled;
         private static bool m_SendInProgress;
+        private static bool m_HasObservedWantedRoster;
+        private static bool m_LastObservedWantedRosterHadEntries;
         private static string m_WebhookUrl;
         private static string m_ConfigurationMessage = "Not initialized.";
         private static string m_LastFailure;
@@ -36,8 +45,20 @@ namespace Server.Custom.Confictura.Integrations.Discord
         private static TimeSpan m_MinimumInterval = TimeSpan.FromMinutes(
             DefaultMinimumIntervalMinutes
         );
+        private static TimeSpan m_ExplorationRepeatInterval = TimeSpan.FromMinutes(
+            DefaultExplorationRepeatMinutes
+        );
         private static Server.Timer m_PendingTimer;
         private static int m_ConfigGeneration;
+        private static int m_PendingOmittedCount;
+        private static long m_AcceptedCount;
+        private static long m_CoalescedCount;
+        private static long m_SuppressedCount;
+        private static long m_OverflowDroppedCount;
+        private static long m_SuccessfulPostCount;
+        private static long m_RetryAttemptCount;
+        private static long m_ExhaustedCount;
+        private static long m_PermanentDisableCount;
 
         public static void Initialize()
         {
@@ -70,7 +91,16 @@ namespace Server.Custom.Confictura.Integrations.Discord
                 TownCrierEvent entry = new TownCrierEvent(
                     label,
                     normalizedText,
-                    String.Equals(category, "Logging Murderers", StringComparison.OrdinalIgnoreCase),
+                    String.Equals(category, "Logging Murderers", StringComparison.OrdinalIgnoreCase)
+                        ? TownCrierEventKind.WantedRoster
+                        : String.Equals(
+                            category,
+                            "Logging Journies",
+                            StringComparison.OrdinalIgnoreCase
+                        )
+                            ? TownCrierEventKind.Exploration
+                            : TownCrierEventKind.Normal,
+                    normalizedText,
                     DateTime.UtcNow
                 );
 
@@ -79,10 +109,22 @@ namespace Server.Custom.Confictura.Integrations.Discord
                     if (!CanSendLocked())
                         return;
 
-                    if (entry.IsMurdererNotice && IsDuplicateMurdererNoticeLocked(entry))
-                        return;
+                    DateTime now = DateTime.UtcNow;
 
-                    QueueEventLocked(entry);
+                    if (entry.IsWantedRoster && IsDuplicateWantedRosterLocked(entry, now))
+                    {
+                        ++m_SuppressedCount;
+                        return;
+                    }
+
+                    if (entry.IsExploration && IsDuplicateExplorationLocked(entry, now))
+                    {
+                        ++m_SuppressedCount;
+                        return;
+                    }
+
+                    ++m_AcceptedCount;
+                    QueueEventLocked(entry, now);
                 }
             }
             catch
@@ -91,15 +133,112 @@ namespace Server.Custom.Confictura.Integrations.Discord
             }
         }
 
-        private static void QueueEventLocked(TownCrierEvent entry)
+        public static void QueueWantedRoster(IList<string> notices)
         {
-            DateTime now = DateTime.UtcNow;
+            try
+            {
+                List<string> normalizedNotices = new List<string>();
+                Dictionary<string, bool> uniqueNotices = new Dictionary<string, bool>(
+                    StringComparer.OrdinalIgnoreCase
+                );
 
+                if (notices != null)
+                {
+                    for (int i = 0; i < notices.Count; ++i)
+                    {
+                        string normalizedText = NormalizeEventText(notices[i]);
+
+                        if (
+                            normalizedText.Length > 0
+                            && !uniqueNotices.ContainsKey(normalizedText)
+                        )
+                        {
+                            uniqueNotices[normalizedText] = true;
+                            normalizedNotices.Add(normalizedText);
+                        }
+                    }
+                }
+
+                normalizedNotices.Sort(StringComparer.OrdinalIgnoreCase);
+
+                lock (m_SyncRoot)
+                {
+                    bool hasEntries = normalizedNotices.Count > 0;
+
+                    if (!m_HasObservedWantedRoster)
+                    {
+                        m_HasObservedWantedRoster = true;
+                        m_LastObservedWantedRosterHadEntries = hasEntries;
+
+                        if (!hasEntries)
+                            return;
+                    }
+                    else
+                    {
+                        bool postAllClear = m_LastObservedWantedRosterHadEntries && !hasEntries;
+                        m_LastObservedWantedRosterHadEntries = hasEntries;
+
+                        if (!hasEntries && !postAllClear)
+                            return;
+                    }
+
+                    if (!CanSendLocked())
+                        return;
+
+                    string fingerprint = hasEntries
+                        ? String.Join("\n", normalizedNotices.ToArray())
+                        : "<empty>";
+                    string eventText;
+
+                    if (!hasEntries)
+                    {
+                        eventText = "No one is currently wanted for murder.";
+                    }
+                    else if (normalizedNotices.Count == 1)
+                    {
+                        eventText = normalizedNotices[0];
+                    }
+                    else
+                    {
+                        eventText =
+                            "The wanted register lists "
+                            + normalizedNotices.Count.ToString(CultureInfo.InvariantCulture)
+                            + " outlaws: "
+                            + String.Join(" ", normalizedNotices.ToArray());
+                    }
+
+                    DateTime now = DateTime.UtcNow;
+                    TownCrierEvent entry = new TownCrierEvent(
+                        "Wanted Murderers",
+                        eventText,
+                        TownCrierEventKind.WantedRoster,
+                        fingerprint,
+                        now
+                    );
+
+                    if (IsDuplicateWantedRosterLocked(entry, now))
+                    {
+                        ++m_SuppressedCount;
+                        return;
+                    }
+
+                    ++m_AcceptedCount;
+                    QueueEventLocked(entry, now);
+                }
+            }
+            catch
+            {
+                // Discord must never interrupt the murderer register rebuild.
+            }
+        }
+
+        private static void QueueEventLocked(TownCrierEvent entry, DateTime now)
+        {
             if (!m_SendInProgress && now >= m_NextSendUtc && m_PendingEvents.Count == 0)
             {
                 List<TownCrierEvent> immediate = new List<TownCrierEvent>();
                 immediate.Add(entry);
-                StartSendLocked(immediate, now);
+                StartSendLocked(immediate, 0, now);
                 return;
             }
 
@@ -109,40 +248,55 @@ namespace Server.Custom.Confictura.Integrations.Discord
 
         private static void AddPendingEventLocked(TownCrierEvent entry)
         {
-            for (int i = m_PendingEvents.Count - 1; i >= 0; --i)
+            for (int i = 0; i < m_PendingEvents.Count; ++i)
             {
-                if (m_PendingEvents[i].DedupeKey == entry.DedupeKey)
-                    m_PendingEvents.RemoveAt(i);
+                if (
+                    String.Equals(
+                        m_PendingEvents[i].DedupeKey,
+                        entry.DedupeKey,
+                        StringComparison.OrdinalIgnoreCase
+                    )
+                )
+                {
+                    m_PendingEvents[i].IncrementOccurrence();
+                    ++m_CoalescedCount;
+                    return;
+                }
             }
 
             m_PendingEvents.Add(entry);
 
             while (m_PendingEvents.Count > MaximumPendingEvents)
-                m_PendingEvents.RemoveAt(0);
+            {
+                int removeIndex = 0;
+
+                for (int i = 1; i < m_PendingEvents.Count; ++i)
+                {
+                    TownCrierEvent candidate = m_PendingEvents[i];
+                    TownCrierEvent selected = m_PendingEvents[removeIndex];
+
+                    if (
+                        candidate.Priority < selected.Priority
+                        || (
+                            candidate.Priority == selected.Priority
+                            && candidate.CreatedUtc < selected.CreatedUtc
+                        )
+                    )
+                    {
+                        removeIndex = i;
+                    }
+                }
+
+                m_PendingEvents.RemoveAt(removeIndex);
+                ++m_PendingOmittedCount;
+                ++m_OverflowDroppedCount;
+            }
         }
 
-        private static bool IsDuplicateMurdererNoticeLocked(TownCrierEvent entry)
+        private static bool IsDuplicateWantedRosterLocked(TownCrierEvent entry, DateTime now)
         {
-            DateTime now = DateTime.UtcNow;
-            DateTime cutoff = now - TimeSpan.FromHours(24.0);
-            List<string> expiredKeys = null;
-
-            foreach (KeyValuePair<string, DateTime> pair in m_MurdererDedupe)
-            {
-                if (pair.Value < cutoff)
-                {
-                    if (expiredKeys == null)
-                        expiredKeys = new List<string>();
-
-                    expiredKeys.Add(pair.Key);
-                }
-            }
-
-            if (expiredKeys != null)
-            {
-                for (int i = 0; i < expiredKeys.Count; ++i)
-                    m_MurdererDedupe.Remove(expiredKeys[i]);
-            }
+            DateTime cutoff = now - MurdererRepeatInterval;
+            PruneDedupeLocked(m_MurdererDedupe, cutoff);
 
             DateTime lastSeen;
 
@@ -154,8 +308,75 @@ namespace Server.Custom.Confictura.Integrations.Discord
                 return true;
             }
 
-            m_MurdererDedupe[entry.DedupeKey] = now;
+            return IsOutstandingLocked(entry.DedupeKey);
+        }
+
+        private static bool IsDuplicateExplorationLocked(TownCrierEvent entry, DateTime now)
+        {
+            if (m_ExplorationRepeatInterval <= TimeSpan.Zero)
+                return false;
+
+            DateTime cutoff = now - m_ExplorationRepeatInterval;
+            PruneDedupeLocked(m_ExplorationDedupe, cutoff);
+
+            DateTime lastSeen;
+
+            if (
+                m_ExplorationDedupe.TryGetValue(entry.DedupeKey, out lastSeen)
+                && lastSeen >= cutoff
+            )
+            {
+                return true;
+            }
+
+            return m_InFlightDedupeKeys.ContainsKey(entry.DedupeKey);
+        }
+
+        private static bool IsOutstandingLocked(string dedupeKey)
+        {
+            if (m_InFlightDedupeKeys.ContainsKey(dedupeKey))
+                return true;
+
+            for (int i = 0; i < m_PendingEvents.Count; ++i)
+            {
+                if (
+                    String.Equals(
+                        m_PendingEvents[i].DedupeKey,
+                        dedupeKey,
+                        StringComparison.OrdinalIgnoreCase
+                    )
+                )
+                {
+                    return true;
+                }
+            }
+
             return false;
+        }
+
+        private static void PruneDedupeLocked(
+            Dictionary<string, DateTime> dedupe,
+            DateTime cutoff
+        )
+        {
+            List<string> expiredKeys = null;
+
+            foreach (KeyValuePair<string, DateTime> pair in dedupe)
+            {
+                if (pair.Value < cutoff)
+                {
+                    if (expiredKeys == null)
+                        expiredKeys = new List<string>();
+
+                    expiredKeys.Add(pair.Key);
+                }
+            }
+
+            if (expiredKeys == null)
+                return;
+
+            for (int i = 0; i < expiredKeys.Count; ++i)
+                dedupe.Remove(expiredKeys[i]);
         }
 
         private static void SchedulePendingTimerLocked(DateTime now)
@@ -186,6 +407,7 @@ namespace Server.Custom.Confictura.Integrations.Discord
                 if (!CanSendLocked())
                 {
                     m_PendingEvents.Clear();
+                    m_PendingOmittedCount = 0;
                     return;
                 }
 
@@ -201,33 +423,50 @@ namespace Server.Custom.Confictura.Integrations.Discord
                 }
 
                 List<TownCrierEvent> batch = new List<TownCrierEvent>(m_PendingEvents);
+                int omittedCount = m_PendingOmittedCount;
                 m_PendingEvents.Clear();
-                StartSendLocked(batch, now);
+                m_PendingOmittedCount = 0;
+                StartSendLocked(batch, omittedCount, now);
             }
         }
 
-        private static void StartSendLocked(List<TownCrierEvent> events, DateTime now)
+        private static void StartSendLocked(
+            List<TownCrierEvent> events,
+            int omittedCount,
+            DateTime now
+        )
         {
             if (events == null || events.Count == 0 || !CanSendLocked())
                 return;
 
             events.Sort(new Comparison<TownCrierEvent>(CompareEventsByCreatedUtc));
 
-            string content = BuildMessage(events);
+            string content = BuildMessage(events, omittedCount);
             string payload = BuildPayload(content);
             SendWorkItem work = new SendWorkItem(
                 m_WebhookUrl,
                 payload,
+                events,
+                omittedCount,
                 m_ConfigGeneration,
                 0
             );
 
             m_SendInProgress = true;
             m_NextSendUtc = now + m_MinimumInterval;
+            m_InFlightDedupeKeys.Clear();
+
+            for (int i = 0; i < events.Count; ++i)
+            {
+                if (events[i].IsWantedRoster || events[i].IsExploration)
+                    m_InFlightDedupeKeys[events[i].DedupeKey] = true;
+            }
 
             if (!ThreadPool.QueueUserWorkItem(new WaitCallback(SendCallback), work))
             {
                 m_SendInProgress = false;
+                m_InFlightDedupeKeys.Clear();
+                ++m_ExhaustedCount;
                 RecordFailureLocked("The server thread pool rejected the Discord request.");
                 SchedulePendingTimerLocked(now);
             }
@@ -373,6 +612,22 @@ namespace Server.Custom.Confictura.Integrations.Discord
                 return TimeSpan.FromMilliseconds(Math.Ceiling(seconds * 1000.0));
             }
 
+            DateTime retryUtc;
+
+            if (
+                value != null
+                && DateTime.TryParse(
+                    value,
+                    CultureInfo.InvariantCulture,
+                    DateTimeStyles.AssumeUniversal | DateTimeStyles.AdjustToUniversal,
+                    out retryUtc
+                )
+                && retryUtc > DateTime.UtcNow
+            )
+            {
+                return retryUtc - DateTime.UtcNow;
+            }
+
             return TimeSpan.FromSeconds(5.0);
         }
 
@@ -388,6 +643,7 @@ namespace Server.Custom.Confictura.Integrations.Discord
                 if (result.Work.ConfigGeneration != m_ConfigGeneration)
                 {
                     m_SendInProgress = false;
+                    m_InFlightDedupeKeys.Clear();
                     SchedulePendingTimerLocked(DateTime.UtcNow);
                     return;
                 }
@@ -400,6 +656,9 @@ namespace Server.Custom.Confictura.Integrations.Discord
                     m_LastSuccessUtc = now;
                     m_LastFailure = null;
                     m_LastFailureUtc = DateTime.MinValue;
+                    ++m_SuccessfulPostCount;
+                    RecordSuccessfulDedupeLocked(result.Work.Events, now);
+                    m_InFlightDedupeKeys.Clear();
 
                     DateTime successCooldown = now + m_MinimumInterval;
 
@@ -415,6 +674,9 @@ namespace Server.Custom.Confictura.Integrations.Discord
                     m_SendInProgress = false;
                     m_SessionDisabled = true;
                     m_PendingEvents.Clear();
+                    m_PendingOmittedCount = 0;
+                    m_InFlightDedupeKeys.Clear();
+                    ++m_PermanentDisableCount;
                     StopPendingTimerLocked();
                     RecordFailureLocked(result.FailureMessage);
                     Console.WriteLine(
@@ -432,6 +694,7 @@ namespace Server.Custom.Confictura.Integrations.Discord
                         delay = GetTransientRetryDelay(result.Work.RetryCount);
 
                     SendWorkItem retry = result.Work.CreateRetry();
+                    ++m_RetryAttemptCount;
                     RecordFailureLocked(
                         result.FailureMessage
                             + " Retry "
@@ -450,6 +713,8 @@ namespace Server.Custom.Confictura.Integrations.Discord
                 }
 
                 m_SendInProgress = false;
+                m_InFlightDedupeKeys.Clear();
+                ++m_ExhaustedCount;
                 RecordFailureLocked(result.FailureMessage);
 
                 if (result.RetryAfter > TimeSpan.Zero)
@@ -461,6 +726,25 @@ namespace Server.Custom.Confictura.Integrations.Discord
                 }
 
                 SchedulePendingTimerLocked(DateTime.UtcNow);
+            }
+        }
+
+        private static void RecordSuccessfulDedupeLocked(
+            IList<TownCrierEvent> events,
+            DateTime now
+        )
+        {
+            if (events == null)
+                return;
+
+            for (int i = 0; i < events.Count; ++i)
+            {
+                TownCrierEvent entry = events[i];
+
+                if (entry.IsWantedRoster)
+                    m_MurdererDedupe[entry.DedupeKey] = now;
+                else if (entry.IsExploration && m_ExplorationRepeatInterval > TimeSpan.Zero)
+                    m_ExplorationDedupe[entry.DedupeKey] = now;
             }
         }
 
@@ -504,13 +788,15 @@ namespace Server.Custom.Confictura.Integrations.Discord
                 if (!ThreadPool.QueueUserWorkItem(new WaitCallback(SendCallback), work))
                 {
                     m_SendInProgress = false;
+                    m_InFlightDedupeKeys.Clear();
+                    ++m_ExhaustedCount;
                     RecordFailureLocked("The server thread pool rejected a Discord retry.");
                     SchedulePendingTimerLocked(DateTime.UtcNow);
                 }
             }
         }
 
-        private static string BuildMessage(List<TownCrierEvent> events)
+        private static string BuildMessage(List<TownCrierEvent> events, int omittedCount)
         {
             StringBuilder message = new StringBuilder();
             message.Append("**Hear ye, hear ye!**");
@@ -518,32 +804,86 @@ namespace Server.Custom.Confictura.Integrations.Discord
             if (events.Count > 1)
                 message.Append(" News from across the realm:");
 
+            List<string> prefixes = new List<string>();
+            List<string> eventTexts = new List<string>();
+            List<string> suffixes = new List<string>();
+            int fixedLength = message.Length;
+
             for (int i = 0; i < events.Count; ++i)
             {
                 TownCrierEvent entry = events[i];
-                message.Append("\n- **");
-                message.Append(entry.CategoryLabel);
-                message.Append(":** ");
-                message.Append(EscapeDiscordText(entry.EventText));
+                string prefix = "\n- **" + entry.CategoryLabel + ":** ";
+                string suffix = entry.OccurrenceCount > 1
+                    ? " (reported "
+                        + entry.OccurrenceCount.ToString(CultureInfo.InvariantCulture)
+                        + " times)"
+                    : String.Empty;
+
+                prefixes.Add(prefix);
+                eventTexts.Add(EscapeDiscordText(entry.EventText));
+                suffixes.Add(suffix);
+                fixedLength += prefix.Length + suffix.Length;
             }
 
-            if (message.Length > MaximumMessageLength)
+            string omissionFooter = BuildOmissionFooter(omittedCount);
+            fixedLength += omissionFooter.Length;
+            int remainingTextLength = MaximumMessageLength - fixedLength;
+
+            if (remainingTextLength < events.Count)
+                remainingTextLength = events.Count;
+
+            for (int i = 0; i < events.Count; ++i)
             {
-                int truncatedLength = MaximumMessageLength - 1;
+                int remainingEvents = events.Count - i;
+                int textBudget = remainingTextLength / remainingEvents;
+                string eventText = TruncateEscapedText(eventTexts[i], textBudget);
 
-                if (
-                    Char.IsHighSurrogate(message[truncatedLength - 1])
-                    || message[truncatedLength - 1] == '\\'
-                )
-                {
-                    --truncatedLength;
-                }
-
-                message.Length = truncatedLength;
-                message.Append('\u2026');
+                message.Append(prefixes[i]);
+                message.Append(eventText);
+                message.Append(suffixes[i]);
+                remainingTextLength -= eventText.Length;
             }
+
+            message.Append(omissionFooter);
 
             return message.ToString();
+        }
+
+        private static string BuildOmissionFooter(int omittedCount)
+        {
+            if (omittedCount <= 0)
+                return String.Empty;
+
+            return "\n- *"
+                + omittedCount.ToString(CultureInfo.InvariantCulture)
+                + (omittedCount == 1
+                    ? " lower-priority report was omitted.*"
+                    : " lower-priority reports were omitted.*");
+        }
+
+        private static string TruncateEscapedText(string value, int maximumLength)
+        {
+            if (String.IsNullOrEmpty(value) || maximumLength <= 0)
+                return String.Empty;
+
+            if (value.Length <= maximumLength)
+                return value;
+
+            if (maximumLength == 1)
+                return "\u2026";
+
+            int truncatedLength = maximumLength - 1;
+
+            if (Char.IsHighSurrogate(value[truncatedLength - 1]))
+                --truncatedLength;
+
+            while (truncatedLength > 0 && value[truncatedLength - 1] == '\\')
+                --truncatedLength;
+
+            if (truncatedLength <= 0)
+                return "\u2026";
+
+            return value.Substring(0, truncatedLength) + "\u2026";
         }
 
         private static string BuildPayload(string content)
@@ -686,6 +1026,33 @@ namespace Server.Custom.Confictura.Integrations.Discord
             return null;
         }
 
+        private static int GetCategoryPriority(string categoryLabel)
+        {
+            if (String.Equals(categoryLabel, "Test", StringComparison.OrdinalIgnoreCase))
+                return 4;
+
+            if (
+                String.Equals(
+                    categoryLabel,
+                    "Wanted Murderers",
+                    StringComparison.OrdinalIgnoreCase
+                )
+                || String.Equals(categoryLabel, "Deaths", StringComparison.OrdinalIgnoreCase)
+                || String.Equals(categoryLabel, "Deeds", StringComparison.OrdinalIgnoreCase)
+            )
+            {
+                return 3;
+            }
+
+            if (String.Equals(categoryLabel, "Victories", StringComparison.OrdinalIgnoreCase))
+                return 2;
+
+            if (String.Equals(categoryLabel, "Gossip", StringComparison.OrdinalIgnoreCase))
+                return 1;
+
+            return 0;
+        }
+
         private static bool CanSendLocked()
         {
             return m_Enabled && m_Configured && !m_SessionDisabled;
@@ -712,6 +1079,7 @@ namespace Server.Custom.Confictura.Integrations.Discord
             bool configured = false;
             string webhookUrl = null;
             int minimumIntervalMinutes = DefaultMinimumIntervalMinutes;
+            int explorationRepeatMinutes = DefaultExplorationRepeatMinutes;
             string configurationMessage;
             string path = Path.Combine(Core.BaseDirectory, ConfigRelativePath);
 
@@ -746,6 +1114,14 @@ namespace Server.Custom.Confictura.Integrations.Discord
                             "Disabled; MinimumIntervalMinutes must be between 1 and 1440.";
                         requestedEnabled = false;
                     }
+                    else if (
+                        !TryReadExplorationRepeatInterval(values, out explorationRepeatMinutes)
+                    )
+                    {
+                        configurationMessage =
+                            "Disabled; ExplorationRepeatMinutes must be between 0 and 1440.";
+                        requestedEnabled = false;
+                    }
                     else
                     {
                         values.TryGetValue("WebhookUrl", out webhookUrl);
@@ -777,11 +1153,13 @@ namespace Server.Custom.Confictura.Integrations.Discord
                 m_SessionDisabled = false;
                 m_WebhookUrl = configured ? webhookUrl.Trim() : null;
                 m_MinimumInterval = TimeSpan.FromMinutes(minimumIntervalMinutes);
+                m_ExplorationRepeatInterval = TimeSpan.FromMinutes(explorationRepeatMinutes);
                 m_ConfigurationMessage = configurationMessage;
                 m_LastFailure = null;
                 m_LastFailureUtc = DateTime.MinValue;
                 m_NextSendUtc = DateTime.MinValue;
                 m_PendingEvents.Clear();
+                m_PendingOmittedCount = 0;
                 StopPendingTimerLocked();
             }
 
@@ -859,6 +1237,27 @@ namespace Server.Custom.Confictura.Integrations.Discord
                 && minimumIntervalMinutes <= MaximumMinimumIntervalMinutes;
         }
 
+        private static bool TryReadExplorationRepeatInterval(
+            Dictionary<string, string> values,
+            out int explorationRepeatMinutes
+        )
+        {
+            explorationRepeatMinutes = DefaultExplorationRepeatMinutes;
+            string value;
+
+            if (!values.TryGetValue("ExplorationRepeatMinutes", out value))
+                return true;
+
+            return Int32.TryParse(
+                    value,
+                    NumberStyles.Integer,
+                    CultureInfo.InvariantCulture,
+                    out explorationRepeatMinutes
+                )
+                && explorationRepeatMinutes >= 0
+                && explorationRepeatMinutes <= MaximumExplorationRepeatMinutes;
+        }
+
         private static bool IsValidWebhookUrl(string value)
         {
             if (String.IsNullOrEmpty(value))
@@ -933,11 +1332,37 @@ namespace Server.Custom.Confictura.Integrations.Discord
             {
                 from.SendMessage("Town Crier Discord: {0}", m_ConfigurationMessage);
                 from.SendMessage(
-                    "Webhook configured: {0}; session disabled: {1}; send active: {2}; pending: {3}.",
+                    "Webhook configured: {0}; session disabled: {1}; send active: {2}; pending: {3}; pending omissions: {4}.",
                     m_Configured ? "yes" : "no",
                     m_SessionDisabled ? "yes" : "no",
                     m_SendInProgress ? "yes" : "no",
-                    m_PendingEvents.Count
+                    m_PendingEvents.Count,
+                    m_PendingOmittedCount
+                );
+                from.SendMessage(
+                    "Minimum interval: {0} minute(s); exploration repeat window: {1} minute(s).",
+                    m_MinimumInterval.TotalMinutes.ToString(
+                        "0.##",
+                        CultureInfo.InvariantCulture
+                    ),
+                    m_ExplorationRepeatInterval.TotalMinutes.ToString(
+                        "0.##",
+                        CultureInfo.InvariantCulture
+                    )
+                );
+                from.SendMessage(
+                    "Session events: accepted {0}; coalesced {1}; suppressed {2}; overflow-dropped {3}.",
+                    m_AcceptedCount,
+                    m_CoalescedCount,
+                    m_SuppressedCount,
+                    m_OverflowDroppedCount
+                );
+                from.SendMessage(
+                    "Session delivery: successful {0}; retries {1}; exhausted {2}; permanent disables {3}.",
+                    m_SuccessfulPostCount,
+                    m_RetryAttemptCount,
+                    m_ExhaustedCount,
+                    m_PermanentDisableCount
                 );
 
                 if (m_NextSendUtc > DateTime.UtcNow)
@@ -969,27 +1394,39 @@ namespace Server.Custom.Confictura.Integrations.Discord
                     return;
                 }
 
+                DateTime now = DateTime.UtcNow;
                 TownCrierEvent entry = new TownCrierEvent(
                     "Test",
                     "The Town Crier Discord bridge is working.",
-                    false,
-                    DateTime.UtcNow
+                    TownCrierEventKind.Normal,
+                    "The Town Crier Discord bridge is working.",
+                    now
                 );
 
-                QueueEventLocked(entry);
+                ++m_AcceptedCount;
+                QueueEventLocked(entry, now);
                 from.SendMessage(
                     "Town Crier Discord test queued. It may wait for the current cooldown."
                 );
             }
         }
 
+        private enum TownCrierEventKind
+        {
+            Normal,
+            Exploration,
+            WantedRoster,
+        }
+
         private sealed class TownCrierEvent
         {
             private readonly string m_CategoryLabel;
             private readonly string m_EventText;
-            private readonly bool m_IsMurdererNotice;
+            private readonly TownCrierEventKind m_Kind;
             private readonly DateTime m_CreatedUtc;
             private readonly string m_DedupeKey;
+            private readonly int m_Priority;
+            private int m_OccurrenceCount;
 
             public string CategoryLabel
             {
@@ -1001,9 +1438,14 @@ namespace Server.Custom.Confictura.Integrations.Discord
                 get { return m_EventText; }
             }
 
-            public bool IsMurdererNotice
+            public bool IsWantedRoster
             {
-                get { return m_IsMurdererNotice; }
+                get { return m_Kind == TownCrierEventKind.WantedRoster; }
+            }
+
+            public bool IsExploration
+            {
+                get { return m_Kind == TownCrierEventKind.Exploration; }
             }
 
             public DateTime CreatedUtc
@@ -1016,18 +1458,37 @@ namespace Server.Custom.Confictura.Integrations.Discord
                 get { return m_DedupeKey; }
             }
 
+            public int Priority
+            {
+                get { return m_Priority; }
+            }
+
+            public int OccurrenceCount
+            {
+                get { return m_OccurrenceCount; }
+            }
+
             public TownCrierEvent(
                 string categoryLabel,
                 string eventText,
-                bool isMurdererNotice,
+                TownCrierEventKind kind,
+                string fingerprint,
                 DateTime createdUtc
             )
             {
                 m_CategoryLabel = categoryLabel;
                 m_EventText = eventText;
-                m_IsMurdererNotice = isMurdererNotice;
+                m_Kind = kind;
                 m_CreatedUtc = createdUtc;
-                m_DedupeKey = categoryLabel + "\n" + eventText;
+                m_DedupeKey = categoryLabel + "\n" + fingerprint;
+                m_Priority = GetCategoryPriority(categoryLabel);
+                m_OccurrenceCount = 1;
+            }
+
+            public void IncrementOccurrence()
+            {
+                if (m_OccurrenceCount < Int32.MaxValue)
+                    ++m_OccurrenceCount;
             }
         }
 
@@ -1035,6 +1496,8 @@ namespace Server.Custom.Confictura.Integrations.Discord
         {
             private readonly string m_WebhookUrl;
             private readonly string m_Payload;
+            private readonly List<TownCrierEvent> m_Events;
+            private readonly int m_OmittedCount;
             private readonly int m_ConfigGeneration;
             private readonly int m_RetryCount;
 
@@ -1053,6 +1516,16 @@ namespace Server.Custom.Confictura.Integrations.Discord
                 get { return m_ConfigGeneration; }
             }
 
+            public IList<TownCrierEvent> Events
+            {
+                get { return m_Events; }
+            }
+
+            public int OmittedCount
+            {
+                get { return m_OmittedCount; }
+            }
+
             public int RetryCount
             {
                 get { return m_RetryCount; }
@@ -1061,12 +1534,18 @@ namespace Server.Custom.Confictura.Integrations.Discord
             public SendWorkItem(
                 string webhookUrl,
                 string payload,
+                IList<TownCrierEvent> events,
+                int omittedCount,
                 int configGeneration,
                 int retryCount
             )
             {
                 m_WebhookUrl = webhookUrl;
                 m_Payload = payload;
+                m_Events = events == null
+                    ? new List<TownCrierEvent>()
+                    : new List<TownCrierEvent>(events);
+                m_OmittedCount = omittedCount;
                 m_ConfigGeneration = configGeneration;
                 m_RetryCount = retryCount;
             }
@@ -1076,6 +1555,8 @@ namespace Server.Custom.Confictura.Integrations.Discord
                 return new SendWorkItem(
                     m_WebhookUrl,
                     m_Payload,
+                    m_Events,
+                    m_OmittedCount,
                     m_ConfigGeneration,
                     m_RetryCount + 1
                 );
