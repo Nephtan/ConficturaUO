@@ -63,6 +63,52 @@ namespace Server.Custom.Confictura
                 Assert(manager.Configuration.EffectRuleCount >= 7, "Effect catalog is loaded.", failures);
                 Assert(manager.Configuration.AIRuleCount >= 7, "AI catalog is loaded.", failures);
 
+                TurnEffectRule actorClockPoisonRule = new TurnEffectRule();
+                actorClockPoisonRule.RuntimeType = typeof(PoisonImpl.PoisonTimer).FullName;
+                actorClockPoisonRule.ClockPolicy = "ActorClock";
+                TurnEffectRule wallClockPoisonRule = new TurnEffectRule();
+                wallClockPoisonRule.RuntimeType = typeof(PoisonImpl.PoisonTimer).FullName;
+                wallClockPoisonRule.ClockPolicy = "WallClockUnaffected";
+
+                Assert(
+                    TurnBasedCombatManager.ClassifyPoisonTimerChange(null, null)
+                        == TurnEffectTimerChangeDisposition.Removed,
+                    "A null poison timer is classified as effect removal.",
+                    failures
+                );
+                Assert(
+                    TurnBasedCombatManager.ClassifyPoisonTimerChange(
+                        typeof(PoisonImpl.PoisonTimer),
+                        actorClockPoisonRule
+                    ) == TurnEffectTimerChangeDisposition.ActorClock,
+                    "A cataloged poison timer uses the actor clock.",
+                    failures
+                );
+                Assert(
+                    TurnBasedCombatManager.ClassifyPoisonTimerChange(
+                        typeof(PoisonImpl.PoisonTimer),
+                        wallClockPoisonRule
+                    ) == TurnEffectTimerChangeDisposition.WallClock,
+                    "A cataloged wall-clock poison timer remains native.",
+                    failures
+                );
+                Assert(
+                    TurnBasedCombatManager.ClassifyPoisonTimerChange(
+                        typeof(Timer),
+                        actorClockPoisonRule
+                    ) == TurnEffectTimerChangeDisposition.Unknown,
+                    "An unsupported non-null poison timer remains fail-closed.",
+                    failures
+                );
+                Assert(
+                    TurnBasedCombatManager.ClassifyPoisonTimerChange(
+                        typeof(PoisonImpl.PoisonTimer),
+                        null
+                    ) == TurnEffectTimerChangeDisposition.Unknown,
+                    "An uncataloged non-null poison timer remains fail-closed.",
+                    failures
+                );
+
                 TurnActionRule recallRule = manager.Configuration.FindActionRule(
                     TurnActionKind.Spell,
                     "Server.Spells.Fourth.RecallSpell"

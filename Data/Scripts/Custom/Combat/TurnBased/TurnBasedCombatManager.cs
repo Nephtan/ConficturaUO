@@ -84,6 +84,14 @@ namespace Server.Custom.Confictura
         Reject
     }
 
+    internal enum TurnEffectTimerChangeDisposition
+    {
+        Removed,
+        ActorClock,
+        WallClock,
+        Unknown
+    }
+
     public sealed class TurnBasedCombatManager : ITurnBasedCombatHandler
     {
         private sealed class InitiativeComparer : IComparer<TurnParticipant>
@@ -166,6 +174,26 @@ namespace Server.Custom.Confictura
                 cost = maximum;
 
             return cost;
+        }
+
+        internal static TurnEffectTimerChangeDisposition ClassifyPoisonTimerChange(
+            Type timerType,
+            TurnEffectRule rule
+        )
+        {
+            if (timerType == null)
+                return TurnEffectTimerChangeDisposition.Removed;
+
+            if (
+                rule == null
+                || rule.RuntimeType != timerType.FullName
+                || !typeof(PoisonImpl.PoisonTimer).IsAssignableFrom(timerType)
+            )
+                return TurnEffectTimerChangeDisposition.Unknown;
+
+            return rule.ClockPolicy == "ActorClock"
+                ? TurnEffectTimerChangeDisposition.ActorClock
+                : TurnEffectTimerChangeDisposition.WallClock;
         }
 
         public static void Initialize()
@@ -822,15 +850,31 @@ namespace Server.Custom.Confictura
             if (participant == null || kind != TurnMutationKind.Poison)
                 return;
 
-            TurnEffectRule rule = m_Configuration.ResolveEffect(kind, timer);
+            TurnEffectRule rule = timer == null
+                ? null
+                : m_Configuration.ResolveEffect(kind, timer);
+            TurnEffectTimerChangeDisposition disposition = ClassifyPoisonTimerChange(
+                timer == null ? null : timer.GetType(),
+                rule
+            );
 
-            if (rule == null)
+            if (disposition == TurnEffectTimerChangeDisposition.Removed)
             {
-                EmergencyDisable("Unclassified participant poison timer", null);
+                CapturePoison(participant, null);
+                Log("poison_cleared", participant.Group, mobile, null);
                 return;
             }
 
-            if (rule.ClockPolicy != "ActorClock")
+            if (disposition == TurnEffectTimerChangeDisposition.Unknown)
+            {
+                EmergencyDisable(
+                    "Unclassified participant poison timer: " + timer.GetType().FullName,
+                    null
+                );
+                return;
+            }
+
+            if (disposition == TurnEffectTimerChangeDisposition.WallClock)
                 return;
 
             CapturePoison(participant, timer as PoisonImpl.PoisonTimer);
