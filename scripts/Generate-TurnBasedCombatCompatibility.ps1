@@ -5,6 +5,26 @@ param(
 
 $ErrorActionPreference = "Stop"
 
+$utf8NoBom = New-Object System.Text.UTF8Encoding($false)
+
+function Get-CanonicalSourceHash {
+    param(
+        [AllowEmptyString()]
+        [string]$Content
+    )
+
+    $normalized = $Content.Replace("`r`n", "`n").Replace("`r", "`n")
+    $bytes = $utf8NoBom.GetBytes($normalized)
+    $algorithm = [System.Security.Cryptography.SHA256]::Create()
+
+    try {
+        return ([System.BitConverter]::ToString($algorithm.ComputeHash($bytes))).Replace("-", "")
+    }
+    finally {
+        $algorithm.Dispose()
+    }
+}
+
 $scriptRoot = Join-Path $RepositoryRoot "Data/Scripts"
 $outputRoot = Join-Path $RepositoryRoot $OutputDirectory
 $csvPath = Join-Path $outputRoot "compatibility-register.csv"
@@ -54,7 +74,7 @@ foreach ($file in $files) {
     $auditEntry = $auditByPath[$relative]
     $owner = if ($null -ne $auditEntry -and -not [String]::IsNullOrWhiteSpace($auditEntry.System)) { $auditEntry.System } elseif ($ownerParts.Length -gt 2) { $ownerParts[2] } else { "Unknown" }
     $content = [System.IO.File]::ReadAllText($file.FullName)
-    $sourceHash = (Get-FileHash -LiteralPath $file.FullName -Algorithm SHA256).Hash
+    $sourceHash = Get-CanonicalSourceHash -Content $content
     $matched = $false
 
     foreach ($rule in $rules) {
@@ -121,6 +141,8 @@ $summary.Add("")
 $summary.Add("## Detected Surfaces")
 $summary.Add("")
 foreach ($group in $surfaces) { $summary.Add("- $($group.Name): $($group.Count)") }
+$summary.Add("")
+$summary.Add("Source hashes normalize CRLF, lone CR, and optional byte-order marks to UTF-8 text with LF line endings. Other whitespace and source changes still produce compatibility drift.")
 $summary.Add("")
 $summary.Add("The register distinguishes live runtime script truth from ``Scripts.csproj`` IDE project hygiene. Regenerate it after any runtime-script change and review disposition drift before enabling combat.")
 
