@@ -55,6 +55,7 @@ Guides are grouped by primary audience and use case.
 - [Skill Stone](skill-stone.md)
 - [Syth Magic](Syth_Magic.md)
 - [The One Ring](The_One_Ring.md)
+- [Turn-Based Combat](Turn_Based_Combat.md)
 - [Witchcraft](Witchcraft.md)
 
 ## Crafting, Harvesting, Trades, And Economy
