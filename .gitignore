@@ -1,6 +1,7 @@
 
 /.vs
 /Data/Scripts/obj
+/Data/Scripts/bin/
 /Data/System/Source/obj
 *.log
 /Backups
