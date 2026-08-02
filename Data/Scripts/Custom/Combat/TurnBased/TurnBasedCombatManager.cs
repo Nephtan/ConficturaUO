@@ -73,6 +73,17 @@ namespace Server.Custom.Confictura
         }
     }
 
+    internal enum TurnCombatantIntentDisposition
+    {
+        Native,
+        OpenGroup,
+        JoinActor,
+        JoinTarget,
+        MergeGroups,
+        Select,
+        Reject
+    }
+
     public sealed class TurnBasedCombatManager : ITurnBasedCombatHandler
     {
         private sealed class InitiativeComparer : IComparer<TurnParticipant>
@@ -214,15 +225,147 @@ namespace Server.Custom.Confictura
 
         public TurnParticipant GetParticipant(Mobile mobile)
         {
+            if (mobile == null)
+                return null;
+
             TurnParticipant participant;
             m_Participants.TryGetValue(mobile, out participant);
             return participant;
+        }
+
+        internal static TurnCombatantIntentDisposition ClassifyCombatantIntent(
+            bool enabled,
+            bool actorParticipant,
+            bool targetParticipant,
+            bool sameGroup,
+            bool actorCurrent
+        )
+        {
+            if (!enabled)
+                return TurnCombatantIntentDisposition.Native;
+
+            if (!actorParticipant && !targetParticipant)
+                return TurnCombatantIntentDisposition.OpenGroup;
+
+            if (!actorParticipant)
+                return TurnCombatantIntentDisposition.JoinActor;
+
+            if (!actorCurrent)
+                return TurnCombatantIntentDisposition.Reject;
+
+            if (!targetParticipant)
+                return TurnCombatantIntentDisposition.JoinTarget;
+
+            if (!sameGroup)
+                return TurnCombatantIntentDisposition.MergeGroups;
+
+            return TurnCombatantIntentDisposition.Select;
+        }
+
+        internal static TurnCombatantChangeMode GetCombatantChangeMode(
+            TurnCombatantIntentDisposition disposition
+        )
+        {
+            switch (disposition)
+            {
+                case TurnCombatantIntentDisposition.OpenGroup:
+                case TurnCombatantIntentDisposition.JoinActor:
+                case TurnCombatantIntentDisposition.Reject:
+                    return TurnCombatantChangeMode.Reject;
+                case TurnCombatantIntentDisposition.JoinTarget:
+                case TurnCombatantIntentDisposition.MergeGroups:
+                case TurnCombatantIntentDisposition.Select:
+                    return TurnCombatantChangeMode.SelectionOnly;
+                default:
+                    return TurnCombatantChangeMode.Native;
+            }
         }
 
         public TurnCombatGroup GetGroup(Mobile mobile)
         {
             TurnParticipant participant = GetParticipant(mobile);
             return participant == null ? null : participant.Group;
+        }
+
+        public TurnCombatantChangeMode DecideCombatantChange(TurnCombatantChangeRequest request)
+        {
+            if (!m_RuntimeEnabled || request == null || request.NewCombatant == null)
+                return TurnCombatantChangeMode.Native;
+
+            Mobile actor = request.Actor;
+            Mobile target = request.NewCombatant;
+
+            if (
+                actor == null
+                || actor.Deleted
+                || !actor.Alive
+                || target.Deleted
+                || !target.Alive
+            )
+                return TurnCombatantChangeMode.Reject;
+
+            TurnParticipant actorParticipant = GetParticipant(actor);
+            TurnParticipant targetParticipant = GetParticipant(target);
+            TurnCombatantIntentDisposition disposition = ClassifyCombatantIntent(
+                true,
+                actorParticipant != null,
+                targetParticipant != null,
+                actorParticipant != null
+                    && targetParticipant != null
+                    && actorParticipant.Group == targetParticipant.Group,
+                actorParticipant != null && actorParticipant.Group.Current == actorParticipant
+            );
+
+            switch (disposition)
+            {
+                case TurnCombatantIntentDisposition.OpenGroup:
+                {
+                    TurnCombatGroup group = CreateGroup(actor, target);
+                    Log("combatant_intent_opened", group, actor, "Opening selection rejected until initiative.");
+                    return GetCombatantChangeMode(disposition);
+                }
+                case TurnCombatantIntentDisposition.JoinActor:
+                {
+                    TurnCombatGroup group = targetParticipant.Group;
+                    AddParticipant(group, actor, group.Round + 1);
+                    AddFollowers(group, actor, group.Round + 1);
+                    AddEdge(group, actor, target, false);
+                    RefreshGroup(group);
+                    Log("combatant_actor_joined", group, actor, "EligibleRound=" + (group.Round + 1));
+                    return GetCombatantChangeMode(disposition);
+                }
+                case TurnCombatantIntentDisposition.JoinTarget:
+                {
+                    TurnCombatGroup group = actorParticipant.Group;
+                    AddParticipant(group, target, group.Round + 1);
+                    AddFollowers(group, target, group.Round + 1);
+                    AddEdge(group, actor, target, false);
+                    RefreshGroup(group);
+                    Log("combatant_target_joined", group, target, "EligibleRound=" + (group.Round + 1));
+                    return GetCombatantChangeMode(disposition);
+                }
+                case TurnCombatantIntentDisposition.MergeGroups:
+                {
+                    TurnCombatGroup group = actorParticipant.Group;
+                    MergeGroups(group, targetParticipant.Group);
+                    AddEdge(group, actor, target, false);
+                    RefreshGroup(group);
+                    return GetCombatantChangeMode(disposition);
+                }
+                case TurnCombatantIntentDisposition.Select:
+                {
+                    AddEdge(actorParticipant.Group, actor, target, false);
+                    RefreshGroup(actorParticipant.Group);
+                    return GetCombatantChangeMode(disposition);
+                }
+                case TurnCombatantIntentDisposition.Reject:
+                {
+                    Log("combatant_selection_blocked", actorParticipant.Group, actor, "Not current actor.");
+                    return GetCombatantChangeMode(disposition);
+                }
+                default:
+                    return GetCombatantChangeMode(disposition);
+            }
         }
 
         public bool IsCurrentActor(Mobile mobile)
@@ -311,7 +454,6 @@ namespace Server.Custom.Confictura
                     return null;
 
                 TurnCombatGroup group = CreateGroup(actor, target);
-                SetCombatants(actor, target);
                 Log("group_opened", group, actor, "Opening action deferred until initiative.");
                 return new TurnActionDecision(
                     false,
@@ -388,7 +530,6 @@ namespace Server.Custom.Confictura
             if (actorParticipant == null && targetParticipant == null)
             {
                 TurnCombatGroup group = CreateGroup(actor, target);
-                SetCombatants(actor, target);
                 Log("group_opened", group, actor, "Attack deferred until initiative.");
                 return new TurnActionDecision(
                     false,
@@ -407,7 +548,6 @@ namespace Server.Custom.Confictura
                 );
                 AddFollowers(targetParticipant.Group, actor, targetParticipant.Group.Round + 1);
                 AddEdge(targetParticipant.Group, actor, target, false);
-                SetCombatants(actor, target);
                 RefreshGroup(targetParticipant.Group);
                 return new TurnActionDecision(
                     false,
@@ -435,7 +575,6 @@ namespace Server.Custom.Confictura
             }
 
             AddEdge(actorParticipant.Group, actor, target, false);
-            SetCombatants(actor, target);
 
             string failure;
             ExecuteWeaponAttack(actorParticipant, target, out failure);
@@ -556,7 +695,6 @@ namespace Server.Custom.Confictura
                 )
                 {
                     TurnCombatGroup group = CreateGroup(request.Actor, request.Target);
-                    SetCombatants(request.Actor, request.Target);
                     Log("mutation_opened_group", group, request.Actor, request.Kind.ToString());
                     return false;
                 }
@@ -734,7 +872,7 @@ namespace Server.Custom.Confictura
             string detail = reason;
 
             if (exception != null)
-                detail += ": " + exception.Message;
+                detail += ": " + exception.GetType().FullName + ": " + exception.Message;
 
             Disable(detail);
         }
@@ -742,6 +880,14 @@ namespace Server.Custom.Confictura
         public bool TryEnable(out string reason)
         {
             reason = null;
+
+            if (!TurnBasedCombatBridge.IsHandlerReady(this))
+            {
+                reason = TurnBasedCombatBridge.IsFaulted
+                    ? "Core bridge faulted and requires a server restart: " + TurnBasedCombatBridge.FaultReason
+                    : "Core bridge handler is not registered.";
+                return false;
+            }
 
             if (m_RuntimeEnabled)
                 return true;
@@ -757,7 +903,7 @@ namespace Server.Custom.Confictura
         public void Disable(string reason)
         {
             m_RuntimeEnabled = false;
-            DissolveAll(reason == null ? "disabled" : reason);
+            DissolveAll(reason == null ? "disabled" : reason, true);
             Log("disabled", null, null, reason);
         }
 
@@ -872,7 +1018,7 @@ namespace Server.Custom.Confictura
             if (group == null)
                 return false;
 
-            DissolveGroup(group, reason == null ? "staff dissolve" : reason);
+            DissolveGroup(group, reason == null ? "staff dissolve" : reason, true);
             return true;
         }
 
@@ -1066,7 +1212,7 @@ namespace Server.Custom.Confictura
 
             if (group.Participants.Count == 0 || !HasHostility(group))
             {
-                DissolveGroup(group, "no living hostility edges");
+                DissolveGroup(group, "no living hostility edges", false);
                 return;
             }
 
@@ -1104,7 +1250,7 @@ namespace Server.Custom.Confictura
 
             if (next == null)
             {
-                DissolveGroup(group, "no eligible living actors");
+                DissolveGroup(group, "no eligible living actors", false);
                 return;
             }
 
@@ -1676,6 +1822,7 @@ namespace Server.Custom.Confictura
 
             ResumeEffects(participant);
             RebaseCooldowns(participant);
+            participant.Mobile.Combatant = null;
             participant.Mobile.CloseGump(typeof(TurnBasedCombatGump));
             Log("participant_removed", group, participant.Mobile, reason);
 
@@ -1684,7 +1831,7 @@ namespace Server.Custom.Confictura
 
             if (group.Participants.Count == 0 || !HasHostility(group))
             {
-                DissolveGroup(group, reason);
+                DissolveGroup(group, reason, false);
             }
             else if (wasCurrent && advance)
             {
@@ -1781,7 +1928,11 @@ namespace Server.Custom.Confictura
             );
         }
 
-        private void DissolveGroup(TurnCombatGroup group, string reason)
+        private void DissolveGroup(
+            TurnCombatGroup group,
+            string reason,
+            bool resumeNativeCombat
+        )
         {
             if (group == null || !m_Groups.Contains(group))
                 return;
@@ -1799,6 +1950,12 @@ namespace Server.Custom.Confictura
                 m_Participants.Remove(participant.Mobile);
                 ResumeEffects(participant);
                 RebaseCooldowns(participant);
+
+                if (resumeNativeCombat)
+                    participant.Mobile.ResumeTurnBasedCombatScheduling();
+                else
+                    participant.Mobile.Combatant = null;
+
                 participant.Mobile.CloseGump(typeof(TurnBasedCombatGump));
                 participant.Mobile.SendMessage("Turn-based combat ended: {0}.", reason);
             }
@@ -1809,12 +1966,12 @@ namespace Server.Custom.Confictura
             Log("group_dissolved", group, null, reason);
         }
 
-        private void DissolveAll(string reason)
+        private void DissolveAll(string reason, bool resumeNativeCombat)
         {
             List<TurnCombatGroup> groups = new List<TurnCombatGroup>(m_Groups);
 
             for (int i = 0; i < groups.Count; ++i)
-                DissolveGroup(groups[i], reason);
+                DissolveGroup(groups[i], reason, resumeNativeCombat);
         }
 
         private bool HasHostility(TurnCombatGroup group)
@@ -1854,17 +2011,6 @@ namespace Server.Custom.Confictura
         {
             TimeSpan remaining = timer.Next - DateTime.Now;
             return remaining > TimeSpan.Zero ? remaining : NormalizeRate(timer.Delay);
-        }
-
-        private static void SetCombatants(Mobile actor, Mobile target)
-        {
-            if (actor != null && target != null)
-            {
-                actor.Combatant = target;
-
-                if (target.Combatant == null && target.CanBeHarmful(actor, false))
-                    target.Combatant = actor;
-            }
         }
 
         private void RefreshGroup(TurnCombatGroup group)

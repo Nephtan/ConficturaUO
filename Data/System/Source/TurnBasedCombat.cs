@@ -46,6 +46,35 @@ namespace Server
         Administrative
     }
 
+    public enum TurnCombatantChangeMode
+    {
+        Native,
+        SelectionOnly,
+        Reject
+    }
+
+    public sealed class TurnCombatantChangeRequest
+    {
+        private readonly Mobile m_Actor;
+        private readonly Mobile m_OldCombatant;
+        private readonly Mobile m_NewCombatant;
+
+        public Mobile Actor { get { return m_Actor; } }
+        public Mobile OldCombatant { get { return m_OldCombatant; } }
+        public Mobile NewCombatant { get { return m_NewCombatant; } }
+
+        public TurnCombatantChangeRequest(
+            Mobile actor,
+            Mobile oldCombatant,
+            Mobile newCombatant
+        )
+        {
+            m_Actor = actor;
+            m_OldCombatant = oldCombatant;
+            m_NewCombatant = newCombatant;
+        }
+    }
+
     public sealed class TurnActionLease
     {
         private readonly long m_ID;
@@ -189,6 +218,7 @@ namespace Server
         TurnActionLease GetPendingActionLease(Mobile mobile);
         void CompleteAction(TurnActionLease lease, TurnActionResult result);
         bool AuthorizeMutation(TurnMutationRequest request);
+        TurnCombatantChangeMode DecideCombatantChange(TurnCombatantChangeRequest request);
         DateTime GetActorTime(Mobile mobile, DateTime wallTime);
         TimeSpan GetActorInterval(Mobile mobile);
         void TargetFinished(Mobile mobile, Target target, bool invoked);
@@ -295,7 +325,11 @@ namespace Server
         }
 
         private static readonly EmptyScope m_EmptyScope = new EmptyScope();
+        private static readonly object m_FaultSync = new object();
         private static ITurnBasedCombatHandler m_Handler;
+        private static bool m_Faulted;
+        private static string m_FaultReason;
+        private static bool m_EmergencyDisableScheduled;
 
         [ThreadStatic]
         private static ActionScope m_ActionScope;
@@ -309,6 +343,33 @@ namespace Server
         public static ITurnBasedCombatHandler Handler
         {
             get { return m_Handler; }
+        }
+
+        public static bool IsFaulted
+        {
+            get
+            {
+                lock (m_FaultSync)
+                    return m_Faulted;
+            }
+        }
+
+        public static string FaultReason
+        {
+            get
+            {
+                lock (m_FaultSync)
+                    return m_FaultReason;
+            }
+        }
+
+        public static bool IsHandlerReady(ITurnBasedCombatHandler handler)
+        {
+            if (handler == null)
+                return false;
+
+            lock (m_FaultSync)
+                return m_Handler == handler && !m_Faulted;
         }
 
         public static bool Register(ITurnBasedCombatHandler handler)
@@ -332,7 +393,7 @@ namespace Server
             {
                 ITurnBasedCombatHandler handler = m_Handler;
 
-                if (handler == null)
+                if (handler == null || IsFaulted)
                     return false;
 
                 try
@@ -354,6 +415,18 @@ namespace Server
             if (handler == null || mobile == null)
                 return false;
 
+            if (IsFaulted)
+            {
+                try
+                {
+                    return handler.Enabled;
+                }
+                catch
+                {
+                    return true;
+                }
+            }
+
             try
             {
                 return handler.Enabled && handler.IsParticipant(mobile);
@@ -361,7 +434,7 @@ namespace Server
             catch (Exception ex)
             {
                 Fail(handler, "Participant check", ex);
-                return false;
+                return true;
             }
         }
 
@@ -371,6 +444,9 @@ namespace Server
 
             if (handler == null || request == null)
                 return TurnActionDecision.Allow();
+
+            if (IsFaulted)
+                return TurnActionDecision.Block("Turn-based combat is faulted and requires a server restart.");
 
             try
             {
@@ -402,6 +478,9 @@ namespace Server
             ITurnBasedCombatHandler handler = m_Handler;
 
             if (handler == null || mobile == null)
+                return m_EmptyScope;
+
+            if (IsFaulted)
                 return m_EmptyScope;
 
             try
@@ -471,6 +550,9 @@ namespace Server
             if (handler == null || lease == null || result == null)
                 return;
 
+            if (IsFaulted)
+                return;
+
             try
             {
                 handler.CompleteAction(lease, result);
@@ -487,6 +569,14 @@ namespace Server
 
             if (handler == null || request == null)
                 return m_EmptyScope;
+
+            if (IsFaulted)
+            {
+                if (request.Kind == TurnMutationKind.Administrative)
+                    return PushScope(request.Actor, request.Target);
+
+                return null;
+            }
 
             if (m_ActionScope != null)
                 return PushScope(request.Actor, request.Target);
@@ -520,6 +610,9 @@ namespace Server
             if (handler == null || target == null)
                 return true;
 
+            if (IsFaulted)
+                return false;
+
             if (m_ActionScope != null)
                 return true;
 
@@ -539,6 +632,32 @@ namespace Server
             {
                 Fail(handler, "State mutation authorization", ex);
                 return false;
+            }
+        }
+
+        public static TurnCombatantChangeMode DecideCombatantChange(
+            TurnCombatantChangeRequest request
+        )
+        {
+            ITurnBasedCombatHandler handler = m_Handler;
+
+            if (handler == null || request == null || request.NewCombatant == null)
+                return TurnCombatantChangeMode.Native;
+
+            if (IsFaulted)
+                return TurnCombatantChangeMode.Reject;
+
+            try
+            {
+                if (!handler.Enabled)
+                    return TurnCombatantChangeMode.Native;
+
+                return handler.DecideCombatantChange(request);
+            }
+            catch (Exception ex)
+            {
+                Fail(handler, "Combatant change", ex);
+                return TurnCombatantChangeMode.Reject;
             }
         }
 
@@ -588,6 +707,9 @@ namespace Server
             if (handler == null || mobile == null)
                 return;
 
+            if (IsFaulted)
+                return;
+
             try
             {
                 if (handler.Enabled)
@@ -606,6 +728,9 @@ namespace Server
             if (handler == null || mobile == null)
                 return;
 
+            if (IsFaulted)
+                return;
+
             try
             {
                 if (handler.Enabled)
@@ -622,6 +747,9 @@ namespace Server
             ITurnBasedCombatHandler handler = m_Handler;
 
             if (handler == null || mobile == null)
+                return;
+
+            if (IsFaulted)
                 return;
 
             try
@@ -647,6 +775,9 @@ namespace Server
             if (handler == null || mobile == null)
                 return;
 
+            if (IsFaulted)
+                return;
+
             try
             {
                 if (handler.Enabled)
@@ -663,6 +794,9 @@ namespace Server
             ITurnBasedCombatHandler handler = m_Handler;
 
             if (handler == null || mobile == null)
+                return;
+
+            if (IsFaulted)
                 return;
 
             try
@@ -698,6 +832,33 @@ namespace Server
         {
             Console.WriteLine("Turn-based combat bridge failure during {0}: {1}", operation, exception);
 
+            bool scheduleDisable = false;
+
+            lock (m_FaultSync)
+            {
+                if (m_Handler != handler)
+                    return;
+
+                if (!m_Faulted)
+                {
+                    m_Faulted = true;
+                    m_FaultReason = operation
+                        + ": "
+                        + exception.GetType().FullName
+                        + ": "
+                        + exception.Message;
+                }
+
+                if (!m_EmergencyDisableScheduled)
+                {
+                    m_EmergencyDisableScheduled = true;
+                    scheduleDisable = true;
+                }
+            }
+
+            if (!scheduleDisable)
+                return;
+
             Timer.DelayCall(
                 TimeSpan.Zero,
                 delegate()
@@ -712,9 +873,6 @@ namespace Server
                     }
                 }
             );
-
-            if (m_Handler == handler)
-                m_Handler = null;
         }
     }
 }
