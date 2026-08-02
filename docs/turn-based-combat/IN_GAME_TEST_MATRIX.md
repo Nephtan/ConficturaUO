@@ -6,8 +6,8 @@ Run this matrix on an isolated copy of a current world save with the production 
 
 1. Regenerate the register with `./scripts/Generate-TurnBasedCombatCompatibility.ps1`.
 2. Start the isolated shard with `ConficturaServer.exe -service -nocache`.
-3. Log in as an Administrator and run `[TurnCombat Compatibility` and `[TurnCombat SelfTest`.
-4. Run `[TurnCombat Enable`; verify `[TurnCombat Status` reports enabled and zero groups.
+3. Log in as an Administrator and run `[TurnCombat Status`, `[TurnCombat Compatibility`, and `[TurnCombat SelfTest`; require disabled, zero groups, compatibility pass, and `bridge: ready`.
+4. Run `[TurnCombat Enable`, set your current `Hits` value back to the same value, and wait ten seconds. Verify `[TurnCombat Status` still reports enabled, zero groups, and `bridge: ready`.
 5. Use `[TurnCombat Inspect`, `[TurnCombat ForceEnd`, and `[TurnCombat ForceDissolve` during the scenarios below.
 6. Use `[TurnCombat Disable` as the first rollback action after any unsafe result.
 
@@ -18,6 +18,7 @@ Record the shard build, catalog commit, save backup, tester, timestamp, result, 
 | Test ID | Scenario | Expected result |
 | --- | --- | --- |
 | TBC-GROUP-OPEN | Attack a legal hostile from outside combat. | No pre-initiative hit; one group forms and both actors roll once. |
+| TBC-GROUP-AI-OPEN | Let a stock hostile acquire a player before the player attacks. | Direct AI combatant selection opens one group, is rejected until initiative, and causes no native swing. |
 | TBC-INIT-TIE | Repeat controlled spawns until totals tie. | Higher raw Dexterity wins; equal Dexterity uses lower Serial. |
 | TBC-ROUND-JOIN | Have an outsider attack a participant. | Outsider joins, opening action refunds, and eligibility begins next round. |
 | TBC-GROUP-MERGE | Current actor targets a participant in another group. | Initiating actor finishes; acted/unacted state is retained without duplicate turns. |
@@ -62,7 +63,7 @@ Record the shard build, catalog commit, save backup, tester, timestamp, result, 
 | TBC-RESTART | Stop without another save, restart from that save, and inspect native effects/summons. | Save loads normally with zero groups; canonical fields recreate native scheduling. |
 | TBC-RELOAD | Reload with zero groups and then during combat. | Empty reload succeeds and bumps catalog version; active-combat reload refuses. |
 | TBC-UNKNOWN | Add a temporary uncataloged action/AI/effect in the isolated tree and regenerate/omit as appropriate. | Compatibility drift or runtime fail-closed guard blocks and logs. Remove the temporary test code afterward. |
-| TBC-HANDLER-FAULT | Inject a test-only handler exception. | Triggering action blocks; emergency dissolve is scheduled; adapted timers restore. Remove the injection afterward. |
+| TBC-HANDLER-FAULT | Inject a test-only handler exception. | Triggering action blocks; exactly one emergency dissolve is scheduled; status reports the latched fault; re-enable refuses until restart; adapted timers restore. Remove the injection afterward. |
 | TBC-SOAK | Run uncapped mass combat at representative peak density. | Scheduler stays bounded per slice; no sustained queue growth, timer leak, or unacceptable latency. |
 | TBC-ROLLBACK | Disable, stop, restore previous executable/scripts/catalogs, and load the backed-up save. | Previous build loads because no save contract contains turn-group state. |
 

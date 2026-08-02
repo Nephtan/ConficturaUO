@@ -33,12 +33,23 @@ namespace Server.Custom.Confictura
                 {
                     string gateReason;
                     bool gate = manager.Configuration.CheckCompatibilityGate(out gateReason);
+                    bool bridgeReady = TurnBasedCombatBridge.IsHandlerReady(manager);
+                    string bridgeStatus;
+
+                    if (bridgeReady)
+                        bridgeStatus = "ready";
+                    else if (TurnBasedCombatBridge.IsFaulted)
+                        bridgeStatus = "faulted - " + TurnBasedCombatBridge.FaultReason;
+                    else
+                        bridgeStatus = "unregistered";
+
                     e.Mobile.SendMessage(
-                        "Turn combat: {0}; groups: {1}; catalog: {2}; compatibility: {3}.",
-                        manager.Enabled ? "enabled" : "disabled",
+                        "Turn combat: {0}; groups: {1}; catalog: {2}; compatibility: {3}; bridge: {4}.",
+                        manager.Enabled && bridgeReady ? "enabled" : "disabled",
                         manager.GroupCount,
                         manager.Configuration.CatalogVersion,
-                        gate ? "pass" : "blocked - " + gateReason
+                        gate ? "pass" : "blocked - " + gateReason,
+                        bridgeStatus
                     );
                     break;
                 }
@@ -92,7 +103,7 @@ namespace Server.Custom.Confictura
                 case "selftest":
                 {
                     string report;
-                    bool passed = TurnBasedCombatSelfTest.Run(out report);
+                    bool passed = TurnBasedCombatSelfTest.Run(e.Mobile, out report);
                     e.Mobile.SendMessage(passed ? 0x59 : 0x22, report);
                     manager.Log("self_test", null, e.Mobile, report);
                     break;

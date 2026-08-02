@@ -2361,6 +2361,7 @@ namespace Server
                 if (m_Combatant != value && value != this)
                 {
                     Mobile old = m_Combatant;
+                    TurnCombatantChangeMode turnCombatantMode = TurnCombatantChangeMode.Native;
 
                     ++m_ChangingCombatant;
                     m_Combatant = value;
@@ -2373,6 +2374,20 @@ namespace Server
                         m_Combatant = old;
                         --m_ChangingCombatant;
                         return;
+                    }
+
+                    if (m_Combatant != null)
+                    {
+                        turnCombatantMode = TurnBasedCombatBridge.DecideCombatantChange(
+                            new TurnCombatantChangeRequest(this, old, m_Combatant)
+                        );
+
+                        if (turnCombatantMode == TurnCombatantChangeMode.Reject)
+                        {
+                            m_Combatant = old;
+                            --m_ChangingCombatant;
+                            return;
+                        }
                     }
 
                     if (m_NetState != null)
@@ -2389,7 +2404,7 @@ namespace Server
                         m_ExpireCombatant = null;
                         m_CombatTimer = null;
                     }
-                    else
+                    else if (turnCombatantMode == TurnCombatantChangeMode.Native)
                     {
                         if (m_ExpireCombatant == null)
                             m_ExpireCombatant = new ExpireCombatantTimer(this);
@@ -2402,7 +2417,11 @@ namespace Server
                         m_CombatTimer.Start();
                     }
 
-                    if (m_Combatant != null && CanBeHarmful(m_Combatant, false))
+                    if (
+                        turnCombatantMode == TurnCombatantChangeMode.Native
+                        && m_Combatant != null
+                        && CanBeHarmful(m_Combatant, false)
+                    )
                     {
                         DoHarmful(m_Combatant);
 
@@ -2414,6 +2433,22 @@ namespace Server
                     --m_ChangingCombatant;
                 }
             }
+        }
+
+        public void ResumeTurnBasedCombatScheduling()
+        {
+            if (m_Deleted || !Alive || m_Combatant == null)
+                return;
+
+            if (m_ExpireCombatant == null)
+                m_ExpireCombatant = new ExpireCombatantTimer(this);
+
+            m_ExpireCombatant.Start();
+
+            if (m_CombatTimer == null)
+                m_CombatTimer = new CombatTimer(this);
+
+            m_CombatTimer.Start();
         }
 
         /// <summary>

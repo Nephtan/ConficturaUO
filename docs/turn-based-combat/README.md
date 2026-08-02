@@ -29,9 +29,9 @@ It seeds system ownership from the completed codebase-audit runtime inventory an
 - `[EndTurn`
 - `[EscapeCombat`
 
-Enable is refused when the compatibility register is missing or contains an `Unknown` disposition. Reload is refused while groups exist. Emergency disable dissolves groups and restores adapted native timers.
+Enable is refused when the compatibility register is missing, contains an `Unknown` disposition, or the core bridge is unregistered or faulted. `[TurnCombat Status` reports `bridge: ready` before activation. A bridge fault blocks participant-affecting operations, schedules one emergency dissolve, and requires a process restart before re-enabling. Reload is refused while groups exist. Emergency disable dissolves groups and restores adapted native timers and combat scheduling.
 
-The deterministic command validates locked defaults, AP conversion, initiative math, catalog loading, travel blocking, CSV parsing, and source-hash compatibility. Run the operational scenarios in `IN_GAME_TEST_MATRIX.md` on an isolated world copy before enabling the feature.
+The deterministic command validates bridge health, null-safe mutation handling, combatant-intent decisions, locked defaults, AP conversion, initiative math, catalog loading, travel blocking, CSV parsing, and source-hash compatibility. Run the operational scenarios in `IN_GAME_TEST_MATRIX.md` on an isolated world copy before enabling the feature.
 
 ## Persistence and rollback
 

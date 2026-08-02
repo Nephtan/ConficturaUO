@@ -5,15 +5,52 @@ namespace Server.Custom.Confictura
 {
     public static class TurnBasedCombatSelfTest
     {
-        public static bool Run(out string report)
+        public static bool Run(Mobile testMobile, out string report)
         {
             List<string> failures = new List<string>();
             TurnBasedCombatManager manager = TurnBasedCombatManager.Instance;
 
             Assert(manager != null, "Runtime manager is registered.", failures);
+            Assert(
+                manager != null && TurnBasedCombatBridge.IsHandlerReady(manager),
+                TurnBasedCombatBridge.IsFaulted
+                    ? "Core bridge is faulted: " + TurnBasedCombatBridge.FaultReason
+                    : "Core bridge is not registered to the runtime manager.",
+                failures
+            );
 
             if (manager != null)
             {
+                Assert(manager.GetParticipant(null) == null, "Null participant lookup is safe.", failures);
+
+                bool actorlessMutationCompleted = true;
+
+                if (testMobile != null)
+                {
+                    try
+                    {
+                        manager.AuthorizeMutation(
+                            new TurnMutationRequest(
+                                null,
+                                testMobile,
+                                TurnMutationKind.Hits,
+                                testMobile.Hits,
+                                testMobile.Hits
+                            )
+                        );
+                    }
+                    catch
+                    {
+                        actorlessMutationCompleted = false;
+                    }
+                }
+
+                Assert(
+                    actorlessMutationCompleted,
+                    "Actorless state-mutation authorization is null-safe.",
+                    failures
+                );
+
                 Assert(manager.Configuration.ActionPoints == 20, "Default AP is 20.", failures);
                 Assert(
                     Math.Abs(manager.Configuration.ActorSeconds - 5.0) < 0.001,
@@ -43,6 +80,111 @@ namespace Server.Custom.Confictura
                     failures
                 );
             }
+
+            TurnCombatantIntentDisposition disabledIntent = TurnBasedCombatManager.ClassifyCombatantIntent(
+                false,
+                false,
+                false,
+                false,
+                false
+            );
+            Assert(
+                disabledIntent == TurnCombatantIntentDisposition.Native
+                    && TurnBasedCombatManager.GetCombatantChangeMode(disabledIntent)
+                        == TurnCombatantChangeMode.Native,
+                "Disabled combatant changes remain native.",
+                failures
+            );
+
+            TurnCombatantIntentDisposition openingIntent = TurnBasedCombatManager.ClassifyCombatantIntent(
+                true,
+                false,
+                false,
+                false,
+                false
+            );
+            Assert(
+                openingIntent == TurnCombatantIntentDisposition.OpenGroup
+                    && TurnBasedCombatManager.GetCombatantChangeMode(openingIntent)
+                        == TurnCombatantChangeMode.Reject,
+                "Two outsiders open initiative without native aggression.",
+                failures
+            );
+
+            TurnCombatantIntentDisposition joiningActor = TurnBasedCombatManager.ClassifyCombatantIntent(
+                true,
+                false,
+                true,
+                false,
+                false
+            );
+            Assert(
+                joiningActor == TurnCombatantIntentDisposition.JoinActor
+                    && TurnBasedCombatManager.GetCombatantChangeMode(joiningActor)
+                        == TurnCombatantChangeMode.Reject,
+                "An outsider joins for next round without completing the opening selection.",
+                failures
+            );
+
+            TurnCombatantIntentDisposition joiningTarget = TurnBasedCombatManager.ClassifyCombatantIntent(
+                true,
+                true,
+                false,
+                false,
+                true
+            );
+            Assert(
+                joiningTarget == TurnCombatantIntentDisposition.JoinTarget
+                    && TurnBasedCombatManager.GetCombatantChangeMode(joiningTarget)
+                        == TurnCombatantChangeMode.SelectionOnly,
+                "The current actor may select and join an outsider.",
+                failures
+            );
+
+            TurnCombatantIntentDisposition sameGroup = TurnBasedCombatManager.ClassifyCombatantIntent(
+                true,
+                true,
+                true,
+                true,
+                true
+            );
+            Assert(
+                sameGroup == TurnCombatantIntentDisposition.Select
+                    && TurnBasedCombatManager.GetCombatantChangeMode(sameGroup)
+                        == TurnCombatantChangeMode.SelectionOnly,
+                "The current actor receives selection-only combat targeting.",
+                failures
+            );
+
+            TurnCombatantIntentDisposition mergeIntent = TurnBasedCombatManager.ClassifyCombatantIntent(
+                true,
+                true,
+                true,
+                false,
+                true
+            );
+            Assert(
+                mergeIntent == TurnCombatantIntentDisposition.MergeGroups
+                    && TurnBasedCombatManager.GetCombatantChangeMode(mergeIntent)
+                        == TurnCombatantChangeMode.SelectionOnly,
+                "The current actor may merge groups through combatant intent.",
+                failures
+            );
+
+            TurnCombatantIntentDisposition outOfTurnIntent = TurnBasedCombatManager.ClassifyCombatantIntent(
+                true,
+                true,
+                true,
+                true,
+                false
+            );
+            Assert(
+                outOfTurnIntent == TurnCombatantIntentDisposition.Reject
+                    && TurnBasedCombatManager.GetCombatantChangeMode(outOfTurnIntent)
+                        == TurnCombatantChangeMode.Reject,
+                "Out-of-turn combatant selection is rejected.",
+                failures
+            );
 
             Assert(
                 TurnBasedCombatManager.ComputeInitiativeTotal(20, 100) == 30,

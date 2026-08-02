@@ -178,6 +178,13 @@ namespace Server.Targeting
             CancelTimeout();
             from.ClearTarget();
 
+            if (TurnBasedCombatBridge.IsFaulted)
+            {
+                OnTargetCancel(from, TargetCancelType.Canceled);
+                OnTargetFinish(from);
+                return;
+            }
+
             if (from.Deleted)
             {
                 OnTargetCancel(from, TargetCancelType.Canceled);
