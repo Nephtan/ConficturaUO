@@ -334,6 +334,8 @@ Tips:
 | `post-batch-o-gump-guard-closeout.md` | Post-audit | Close out POST-BATCH-O with source repair summary, decision counts, verification, and queue reconciliation. | Complete |
 | `post-batch-p-runtime-hook-source-review.csv` | Post-audit | Source-review and repair dispositions for all 103 POST-BATCH-N runtime-hook source-batch rows. | Complete |
 | `post-batch-p-runtime-hook-closeout.md` | Post-audit | Close out POST-BATCH-P with source repair summary, decision counts, verification, and queue reconciliation. | Complete |
+| `post-batch-tcd-town-crier-discord-review.csv` | Post-audit | Focused current-source review of Town Crier Discord commands, timers, worker transport, logging/death hooks, privacy, dependencies, and unchanged serializers. | Complete |
+| `post-batch-tcd-town-crier-discord-closeout.md` | Post-audit | Close out POST-BATCH-TCD-01 with curated-feed behavior, compatibility boundaries, local verification, and owner staging checks. | CompleteLocal |
 | `post-batch-q-staff-command-metadata-source-review.csv` | Post-audit | Source-review and repair dispositions for all 92 POST-BATCH-N staff command metadata source-batch rows. | Complete |
 | `post-batch-q-staff-command-metadata-closeout.md` | Post-audit | Close out POST-BATCH-Q with source repair summary, decision counts, verification, and queue reconciliation. | Complete |
 | `post-batch-r-save-constructor-persistence-review.csv` | Post-audit | Source-review dispositions for all 23 POST-BATCH-N save constructor persistence rows. | Complete |

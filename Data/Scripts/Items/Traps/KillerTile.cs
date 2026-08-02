@@ -47,8 +47,7 @@ namespace Server.Items
             )
             {
                 m.LocalOverheadMessage(MessageType.Emote, 0xB1F, true, "You made a fatal mistake!");
-                m.Damage(10000, m);
-                LoggingFunctions.LogKillTile(m, this.Name);
+                LoggingFunctions.ApplyFatalEnvironmentalDamage(m, this.Name);
             }
             return true;
         }
