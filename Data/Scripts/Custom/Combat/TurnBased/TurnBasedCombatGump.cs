@@ -29,8 +29,8 @@ namespace Server.Custom.Confictura
             Resizable = false;
 
             AddPage(0);
-            AddBackground(0, 0, 330, 330, 9270);
-            AddAlphaRegion(12, 12, 306, 306);
+            AddBackground(0, 0, 380, 370, 9270);
+            AddAlphaRegion(12, 12, 356, 346);
             AddLabel(20, 18, 1153, "Turn-Based Combat");
 
             TurnParticipant self = TurnBasedCombatManager.Instance.GetParticipant(from);
@@ -42,33 +42,53 @@ namespace Server.Custom.Confictura
             AddLabel(20, 65, 0x481, "Current: " + currentName);
             AddLabel(20, 85, 0x481, "Your AP: " + ap);
 
+            AddLabel(
+                20,
+                105,
+                0x481,
+                String.Format(
+                    "Hits {0}/{1}  Stam {2}/{3}  Mana {4}/{5}",
+                    from.Hits,
+                    from.HitsMax,
+                    from.Stam,
+                    from.StamMax,
+                    from.Mana,
+                    from.ManaMax
+                )
+            );
+
+            string nextMana = self == null
+                ? "n/a"
+                : Math.Max(0.0, self.Effects.ManaRegenRemaining.TotalSeconds).ToString("0.0") + "s";
+            AddLabel(20, 125, 0x481, "Next mana tick: " + nextMana);
+
             string pending = self != null && self.Pending != null
                 ? self.Pending.Request.Kind.ToString()
                 : "None";
-            AddLabel(20, 105, 0x481, "Pending: " + pending);
+            AddLabel(20, 145, 0x481, "Pending: " + pending);
 
             string effects = self == null
                 ? "None"
                 : BuildEffects(self);
             AddHtml(
                 20,
-                127,
-                285,
+                167,
+                335,
                 35,
                 "<BASEFONT COLOR=#DDDDDD>Effects: " + Utility.FixHtml(effects) + "</BASEFONT>",
                 false,
                 false
             );
 
-            AddLabel(20, 166, 1153, "Initiative");
+            AddLabel(20, 206, 1153, "Initiative");
             DrawInitiative(group);
 
-            AddButton(20, 292, 4005, 4007, 1, GumpButtonType.Reply, 0);
-            AddLabel(52, 294, 0x481, "End Turn");
-            AddButton(130, 292, 4005, 4007, 2, GumpButtonType.Reply, 0);
-            AddLabel(162, 294, 0x481, "Escape");
-            AddButton(238, 292, 4011, 4013, 3, GumpButtonType.Reply, 0);
-            AddLabel(270, 294, 0x481, "Refresh");
+            AddButton(20, 332, 4005, 4007, 1, GumpButtonType.Reply, 0);
+            AddLabel(52, 334, 0x481, "End Turn");
+            AddButton(140, 332, 4005, 4007, 2, GumpButtonType.Reply, 0);
+            AddLabel(172, 334, 0x481, "Escape");
+            AddButton(258, 332, 4011, 4013, 3, GumpButtonType.Reply, 0);
+            AddLabel(290, 334, 0x481, "Refresh");
         }
 
         private void DrawInitiative(TurnCombatGroup group)
@@ -87,7 +107,7 @@ namespace Server.Custom.Confictura
             for (int i = start; i < end; ++i)
             {
                 TurnParticipant participant = group.Participants[i];
-                int y = 187 + ((i - start) * 12);
+                int y = 227 + ((i - start) * 12);
                 string marker = group.Current == participant ? "> " : "  ";
                 string wait = participant.EligibleRound > group.Round ? " (next round)" : "";
                 AddLabel(
@@ -107,10 +127,10 @@ namespace Server.Custom.Confictura
             if (pageCount > 1)
             {
                 if (page > 0)
-                    AddButton(240, 166, 4014, 4016, 1000 + page - 1, GumpButtonType.Reply, 0);
+                    AddButton(290, 206, 4014, 4016, 1000 + page - 1, GumpButtonType.Reply, 0);
 
                 if (page + 1 < pageCount)
-                    AddButton(285, 166, 4005, 4007, 1000 + page + 1, GumpButtonType.Reply, 0);
+                    AddButton(335, 206, 4005, 4007, 1000 + page + 1, GumpButtonType.Reply, 0);
             }
         }
 
@@ -119,13 +139,26 @@ namespace Server.Custom.Confictura
             string effects = "";
 
             if (participant.Mobile.Poisoned)
-                effects = "Poison";
+            {
+                PoisonImpl.PoisonTimer poison = participant.Effects.PoisonTimer;
+                effects = poison == null
+                    ? "Poison"
+                    : "Poison (" + poison.RemainingTicks + " ticks)";
+            }
 
             if (participant.Mobile.Paralyzed)
                 effects += effects.Length == 0 ? "Paralyzed" : ", Paralyzed";
 
             if (participant.Mobile.Frozen)
                 effects += effects.Length == 0 ? "Frozen" : ", Frozen";
+
+            if (participant.Effects.BandageContext != null)
+            {
+                string bandage = "Bandaging ("
+                    + Math.Max(0.0, participant.Effects.BandageRemaining.TotalSeconds).ToString("0.0")
+                    + "s)";
+                effects += effects.Length == 0 ? bandage : ", " + bandage;
+            }
 
             return effects.Length == 0 ? "None" : effects;
         }

@@ -137,7 +137,7 @@ namespace Server.SkillHandlers
                     }
                     else if (m_Creature != creature)
                     {
-                        from.NextSkillTime = DateTime.Now + TimeSpan.FromSeconds(10.0);
+                        from.NextSkillTime = TurnBasedCombatBridge.GetTime(from) + TimeSpan.FromSeconds(10.0);
 
                         double diff =
                             (
@@ -157,7 +157,7 @@ namespace Server.SkillHandlers
                         {
                             if (!BaseInstrument.CheckMusicianship(from))
                             {
-                                from.NextSkillTime = DateTime.Now + TimeSpan.FromSeconds(5.0);
+                                from.NextSkillTime = TurnBasedCombatBridge.GetTime(from) + TimeSpan.FromSeconds(5.0);
                                 from.SendLocalizedMessage(500612); // You play poorly, and there is no effect.
                                 m_Instrument.PlayInstrumentBadly(from);
                                 m_Instrument.ConsumeUse(from);
@@ -176,7 +176,7 @@ namespace Server.SkillHandlers
                                     )
                                 )
                                 {
-                                    from.NextSkillTime = DateTime.Now + TimeSpan.FromSeconds(5.0);
+                                    from.NextSkillTime = TurnBasedCombatBridge.GetTime(from) + TimeSpan.FromSeconds(5.0);
                                     from.SendLocalizedMessage(501599); // Your music fails to incite enough anger.
                                     m_Instrument.PlayInstrumentBadly(from);
                                     m_Instrument.ConsumeUse(from);

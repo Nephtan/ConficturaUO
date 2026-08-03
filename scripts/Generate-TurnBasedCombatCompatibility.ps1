@@ -40,6 +40,7 @@ if (-not (Test-Path -LiteralPath $outputRoot -PathType Container)) {
 }
 
 $rules = @(
+    @{ Surface = "Clock.ParticipantCooldown"; Pattern = "(?s)(Next(Action|Skill|Spell|Combat)Time\s*(=|>=|<=|>|<)[^;]{0,240}DateTime\.Now|DateTime\.Now[^;]{0,240}(>=|<=|>|<|=)\s*[^;]{0,120}Next(Action|Skill|Spell|Combat)Time)"; Disposition = "Unknown"; Adapter = "TurnBasedCombatBridge.GetTime"; Catalog = "Clock:ParticipantCooldown"; Test = "TBC-CLOCK-COOLDOWN"; Rationale = "Direct participant cooldown and wall-clock mixing must be converted or explicitly reviewed before activation." },
     @{ Surface = "AI.OnThink"; Pattern = "\bOnThink\s*\("; Disposition = "ActorClockAdapter"; Adapter = "BaseAI.ProcessTurnBasedPulse"; Catalog = "AI:*"; Test = "TBC-AI-THINK"; Rationale = "Participant AI runs from its personal logical clock." },
     @{ Surface = "AI.ForcedAI"; Pattern = "\bForcedAI\b"; Disposition = "BlockedInCombat"; Adapter = "Compatibility fail-closed guard"; Catalog = "AI:ForcedAI"; Test = "TBC-AI-FORCED"; Rationale = "Forced shells require an explicit TurnAI.csv opt-in before acting in combat." },
     @{ Surface = "Timer.Subclass"; Pattern = ":\s*Timer\b"; Disposition = "WallClockUnaffected"; Adapter = "Mutation backstop and explicit effect adapters"; Catalog = "Effect:*"; Test = "TBC-TIMER-OWNER"; Rationale = "Timers remain wall-clock unless an owner-aware effect catalog entry overrides them." },
@@ -143,6 +144,8 @@ $summary.Add("")
 foreach ($group in $surfaces) { $summary.Add("- $($group.Name): $($group.Count)") }
 $summary.Add("")
 $summary.Add("Source hashes normalize CRLF, lone CR, and optional byte-order marks to UTF-8 text with LF line endings. Other whitespace and source changes still produce compatibility drift.")
+$summary.Add("")
+$summary.Add("Direct participant cooldown expressions may not mix ``NextActionTime``, ``NextSkillTime``, ``NextSpellTime``, or ``NextCombatTime`` with ``DateTime.Now``. Core native timers that explicitly skip turn-combat participants remain wall-clock allowlisted outside the runtime-script register.")
 $summary.Add("")
 $summary.Add("The register distinguishes live runtime script truth from ``Scripts.csproj`` IDE project hygiene. Regenerate it after any runtime-script change and review disposition drift before enabling combat.")
 

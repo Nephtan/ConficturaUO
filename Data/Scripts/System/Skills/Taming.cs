@@ -52,7 +52,7 @@ namespace Server.SkillHandlers
             bool started = TryStartTaming(from, creature);
 
             if (started)
-                from.NextSkillTime = DateTime.Now + TimeSpan.FromHours(6.0);
+                from.NextSkillTime = TurnBasedCombatBridge.GetTime(from) + TimeSpan.FromHours(6.0);
 
             return started;
         }
@@ -71,7 +71,7 @@ namespace Server.SkillHandlers
             if (!from.AllowSkillUse(SkillName.Taming))
                 return false;
 
-            if (from.NextSkillTime > DateTime.Now || from.Spell != null)
+            if (from.NextSkillTime > TurnBasedCombatBridge.GetTime(from) || from.Spell != null)
             {
                 from.SendSkillMessage();
                 return false;
@@ -379,7 +379,7 @@ namespace Server.SkillHandlers
             protected override void OnTargetFinish(Mobile from)
             {
                 if (m_SetSkillTime)
-                    from.NextSkillTime = DateTime.Now;
+                    from.NextSkillTime = TurnBasedCombatBridge.GetTime(from);
             }
 
             protected override void OnTarget(Mobile from, object targeted)
@@ -425,7 +425,7 @@ namespace Server.SkillHandlers
                     if (!m_Tamer.InRange(m_Creature, 6))
                     {
                         m_BeingTamed.Remove(m_Creature);
-                        m_Tamer.NextSkillTime = DateTime.Now;
+                        m_Tamer.NextSkillTime = TurnBasedCombatBridge.GetTime(m_Tamer);
                         m_Creature.PrivateOverheadMessage(
                             MessageType.Regular,
                             0x3B2,
@@ -438,7 +438,7 @@ namespace Server.SkillHandlers
                     else if (!m_Tamer.CheckAlive())
                     {
                         m_BeingTamed.Remove(m_Creature);
-                        m_Tamer.NextSkillTime = DateTime.Now;
+                        m_Tamer.NextSkillTime = TurnBasedCombatBridge.GetTime(m_Tamer);
                         m_Creature.PrivateOverheadMessage(
                             MessageType.Regular,
                             0x3B2,
@@ -455,7 +455,7 @@ namespace Server.SkillHandlers
                     )
                     {
                         m_BeingTamed.Remove(m_Creature);
-                        m_Tamer.NextSkillTime = DateTime.Now;
+                        m_Tamer.NextSkillTime = TurnBasedCombatBridge.GetTime(m_Tamer);
                         m_Creature.PrivateOverheadMessage(
                             MessageType.Regular,
                             0x3B2,
@@ -468,7 +468,7 @@ namespace Server.SkillHandlers
                     else if (!m_Creature.Tamable)
                     {
                         m_BeingTamed.Remove(m_Creature);
-                        m_Tamer.NextSkillTime = DateTime.Now;
+                        m_Tamer.NextSkillTime = TurnBasedCombatBridge.GetTime(m_Tamer);
                         m_Creature.PrivateOverheadMessage(
                             MessageType.Regular,
                             0x3B2,
@@ -481,7 +481,7 @@ namespace Server.SkillHandlers
                     else if (m_Creature.Controlled)
                     {
                         m_BeingTamed.Remove(m_Creature);
-                        m_Tamer.NextSkillTime = DateTime.Now;
+                        m_Tamer.NextSkillTime = TurnBasedCombatBridge.GetTime(m_Tamer);
                         m_Creature.PrivateOverheadMessage(
                             MessageType.Regular,
                             0x3B2,
@@ -497,7 +497,7 @@ namespace Server.SkillHandlers
                     )
                     {
                         m_BeingTamed.Remove(m_Creature);
-                        m_Tamer.NextSkillTime = DateTime.Now;
+                        m_Tamer.NextSkillTime = TurnBasedCombatBridge.GetTime(m_Tamer);
                         m_Creature.PrivateOverheadMessage(
                             MessageType.Regular,
                             0x3B2,
@@ -510,7 +510,7 @@ namespace Server.SkillHandlers
                     else if (MustBeSubdued(m_Creature))
                     {
                         m_BeingTamed.Remove(m_Creature);
-                        m_Tamer.NextSkillTime = DateTime.Now;
+                        m_Tamer.NextSkillTime = TurnBasedCombatBridge.GetTime(m_Tamer);
                         m_Creature.PrivateOverheadMessage(
                             MessageType.Regular,
                             0x3B2,
@@ -523,7 +523,7 @@ namespace Server.SkillHandlers
                     else if (de != null && de.LastDamage > m_StartTime)
                     {
                         m_BeingTamed.Remove(m_Creature);
-                        m_Tamer.NextSkillTime = DateTime.Now;
+                        m_Tamer.NextSkillTime = TurnBasedCombatBridge.GetTime(m_Tamer);
                         m_Creature.PrivateOverheadMessage(
                             MessageType.Regular,
                             0x3B2,
@@ -590,7 +590,7 @@ namespace Server.SkillHandlers
                     else
                     {
                         m_Tamer.RevealingAction();
-                        m_Tamer.NextSkillTime = DateTime.Now;
+                        m_Tamer.NextSkillTime = TurnBasedCombatBridge.GetTime(m_Tamer);
                         m_BeingTamed.Remove(m_Creature);
 
                         if (m_Creature.Paralyzed)

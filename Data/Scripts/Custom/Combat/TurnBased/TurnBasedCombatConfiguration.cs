@@ -8,6 +8,11 @@ using Server.Mobiles;
 
 namespace Server.Custom.Confictura
 {
+    public enum TurnBasedCombatActivationMode
+    {
+        PvPOnly
+    }
+
     public sealed class TurnActionRule
     {
         public string Key;
@@ -47,12 +52,16 @@ namespace Server.Custom.Confictura
         private readonly List<TurnAIRule> m_AIRules;
 
         public bool Enabled;
+        public TurnBasedCombatActivationMode ActivationMode;
         public bool RequireCompatibilityGate;
         public int ActionPoints;
         public double ActorSeconds;
         public int PlayerTimeoutSeconds;
         public int DisconnectGraceSeconds;
         public int EscapeRange;
+        public int NpcJoinRange;
+        public int DisengageRange;
+        public bool RequireJoinLineOfSight;
         public int MaxAIDecisionsPerTurn;
         public int SchedulerSliceMilliseconds;
         public int HudRefreshMilliseconds;
@@ -83,12 +92,16 @@ namespace Server.Custom.Confictura
             m_EffectRules = new Dictionary<TurnMutationKind, List<TurnEffectRule>>();
             m_AIRules = new List<TurnAIRule>();
             Enabled = false;
+            ActivationMode = TurnBasedCombatActivationMode.PvPOnly;
             RequireCompatibilityGate = true;
             ActionPoints = 20;
             ActorSeconds = 5.0;
             PlayerTimeoutSeconds = 30;
             DisconnectGraceSeconds = 300;
             EscapeRange = 18;
+            NpcJoinRange = 12;
+            DisengageRange = 18;
+            RequireJoinLineOfSight = true;
             MaxAIDecisionsPerTurn = 80;
             SchedulerSliceMilliseconds = 25;
             HudRefreshMilliseconds = 1000;
@@ -382,12 +395,16 @@ namespace Server.Custom.Confictura
                 switch (key)
                 {
                     case "Enabled": Enabled = ParseBoolean(key, value); break;
+                    case "ActivationMode": ActivationMode = ParseActivationMode(value); break;
                     case "RequireCompatibilityGate": RequireCompatibilityGate = ParseBoolean(key, value); break;
                     case "ActionPoints": ActionPoints = ParseInteger(key, value); break;
                     case "ActorSeconds": ActorSeconds = ParseDouble(key, value); break;
                     case "PlayerTimeoutSeconds": PlayerTimeoutSeconds = ParseInteger(key, value); break;
                     case "DisconnectGraceSeconds": DisconnectGraceSeconds = ParseInteger(key, value); break;
                     case "EscapeRange": EscapeRange = ParseInteger(key, value); break;
+                    case "NpcJoinRange": NpcJoinRange = ParseInteger(key, value); break;
+                    case "DisengageRange": DisengageRange = ParseInteger(key, value); break;
+                    case "RequireJoinLineOfSight": RequireJoinLineOfSight = ParseBoolean(key, value); break;
                     case "MaxAIDecisionsPerTurn": MaxAIDecisionsPerTurn = ParseInteger(key, value); break;
                     case "SchedulerSliceMilliseconds": SchedulerSliceMilliseconds = ParseInteger(key, value); break;
                     case "HudRefreshMilliseconds": HudRefreshMilliseconds = ParseInteger(key, value); break;
@@ -560,8 +577,17 @@ namespace Server.Custom.Confictura
             if (ActorSeconds <= 0.0 || ActorSeconds > 60.0)
                 throw new FormatException("ActorSeconds must be greater than 0 and at most 60.");
 
-            if (PlayerTimeoutSeconds <= 0 || DisconnectGraceSeconds <= 0 || EscapeRange <= 0)
-                throw new FormatException("Timeouts and EscapeRange must be positive.");
+            if (
+                PlayerTimeoutSeconds <= 0
+                || DisconnectGraceSeconds <= 0
+                || EscapeRange <= 0
+                || NpcJoinRange <= 0
+                || DisengageRange <= 0
+            )
+                throw new FormatException("Timeouts and combat ranges must be positive.");
+
+            if (NpcJoinRange > DisengageRange)
+                throw new FormatException("NpcJoinRange may not exceed DisengageRange.");
 
             if (MaxAIDecisionsPerTurn <= 0 || SchedulerSliceMilliseconds <= 0)
                 throw new FormatException("AI and scheduler safety limits must be positive.");
@@ -636,6 +662,14 @@ namespace Server.Custom.Confictura
                 throw new FormatException(name + " must be true or false.");
 
             return result;
+        }
+
+        private static TurnBasedCombatActivationMode ParseActivationMode(string value)
+        {
+            if (String.Equals(value, "PvPOnly", StringComparison.OrdinalIgnoreCase))
+                return TurnBasedCombatActivationMode.PvPOnly;
+
+            throw new FormatException("ActivationMode must be PvPOnly.");
         }
 
         private static int ParseInteger(string name, string value)

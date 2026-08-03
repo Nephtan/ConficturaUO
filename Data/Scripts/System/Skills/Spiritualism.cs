@@ -128,7 +128,7 @@ namespace Server.SkillHandlers
 
             public override void OnDisturb(DisturbType type, bool message)
             {
-                Caster.NextSkillTime = DateTime.Now;
+                Caster.NextSkillTime = TurnBasedCombatBridge.GetTime(Caster);
 
                 base.OnDisturb(type, message);
             }

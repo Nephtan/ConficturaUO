@@ -17619,7 +17619,7 @@ namespace Server.Factions
                     StartBandage();
             }
 
-            if (m_Mobile.Spell == null && DateTime.Now >= m_Mobile.NextSpellTime)
+            if (m_Mobile.Spell == null && TurnBasedCombatBridge.GetTime(m_Mobile) >= m_Mobile.NextSpellTime)
             {
                 Spell spell = null;
 
@@ -17669,7 +17669,7 @@ namespace Server.Factions
                             (m_Guard.Hits + 10) < m_Guard.HitsMax
                             && (
                                 m_Guard.Mana < 11
-                                || (m_Guard.NextCombatTime - DateTime.Now)
+                                || (m_Guard.NextCombatTime - TurnBasedCombatBridge.GetTime(m_Guard))
                                     > TimeSpan.FromSeconds(2.0)
                             )
                         )

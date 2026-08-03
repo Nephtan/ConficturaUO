@@ -7,7 +7,7 @@ Run this matrix on an isolated copy of a current world save with the production 
 1. Regenerate the register with `./scripts/Generate-TurnBasedCombatCompatibility.ps1`.
 2. Start the isolated shard with `ConficturaServer.exe -service -nocache`.
 3. Log in as an Administrator and run `[TurnCombat Status`, `[TurnCombat Compatibility`, and `[TurnCombat SelfTest`; require disabled, zero groups, compatibility pass, and `bridge: ready`.
-4. Run `[TurnCombat Enable`, set your current `Hits` value back to the same value, and wait ten seconds. Verify `[TurnCombat Status` still reports enabled, zero groups, and `bridge: ready`.
+4. Run `[TurnCombat Enable`, set your current `Hits` value back to the same value, and wait ten seconds. Verify `[TurnCombat Status` reports enabled, mode `PvPOnly`, zero groups, zero test-armed mobiles, and `bridge: ready`.
 5. Use `[TurnCombat Inspect`, `[TurnCombat ForceEnd`, and `[TurnCombat ForceDissolve` during the scenarios below.
 6. Use `[TurnCombat Disable` as the first rollback action after any unsafe result.
 
@@ -17,12 +17,16 @@ Record the shard build, catalog commit, save backup, tester, timestamp, result, 
 
 | Test ID | Scenario | Expected result |
 | --- | --- | --- |
-| TBC-GROUP-OPEN | Attack a legal hostile from outside combat. | No pre-initiative hit; one group forms and both actors roll once. |
-| TBC-GROUP-AI-OPEN | Let a stock hostile acquire a player before the player attacks. | Direct AI combatant selection opens one group, is rejected until initiative, and causes no native swing. |
+| TBC-PVE-NATIVE | Fight an ordinary fox, Orc, and random-encounter creature. | Combat remains fully native, no HUD opens, and group count stays zero. |
+| TBC-GROUP-OPEN | Attack a legal player-controlled opposing side from outside combat, then reverse attack order. | No pre-initiative hit; one group forms and both sides roll once. |
+| TBC-PRINCIPAL | Exercise player/player, player/pet, pet/player, and pet/pet hostile initiation. | Different effective player principals seed one group; masters and eligible followers join without bypassing legality. |
+| TBC-PVE-ARM | Arm one isolated wild NPC with `[TurnCombat ArmTest`, then attack it. | The process-local regression exception seeds one group, appears in Status, and clears on Disable. |
 | TBC-INIT-TIE | Repeat controlled spawns until totals tie. | Higher raw Dexterity wins; equal Dexterity uses lower Serial. |
-| TBC-ROUND-JOIN | Have an outsider attack a participant. | Outsider joins, opening action refunds, and eligibility begins next round. |
+| TBC-ROUND-JOIN | During active PvP, have a wild NPC legally attack within 12 tiles and LOS; repeat outside the boundary. | Nearby intent joins for next round; distant or unseen intent is rejected. |
+| TBC-DISENGAGE | Move hostile endpoints beyond 18 tiles and out of LOS, including a graph with multiple components. | Edges prune without AP or turn ownership; isolated actors leave and disconnected components split without duplicate turns. |
 | TBC-GROUP-MERGE | Current actor targets a participant in another group. | Initiating actor finishes; acted/unacted state is retained without duplicate turns. |
 | TBC-AP-MOVE | Turn, walk, run, mount, fly, and use altered movement speeds. | Turning costs 0 AP; successful steps use rounded native delay; rejected steps refund. |
+| TBC-AP-RUN-STOP | Exhaust AP while sending running movement. | Running flag and fast-walk queue clear; no movement leaks into another actor's turn and the client resynchronizes. |
 | TBC-AP-WEAPON | Swing melee and ranged weapons with several delays. | Cost is native delay divided by 0.25, rounded up and clamped 1..20; ammo/durability stay native. |
 | TBC-AP-SPELL | Cast short and over-five-second spells. | Cast plus recovery determines AP; only excess beyond the actor interval remains as cooldown. |
 | TBC-TARGET | Cancel, timeout, select an invalid target, fizzle, miss, resist, and select a valid target. | Cancel/invalid refunds; legal failure consumes; cursor does not extend the turn deadline. |
@@ -47,7 +51,8 @@ Record the shard build, catalog commit, save backup, tester, timestamp, result, 
 | Test ID | Scenario | Expected result |
 | --- | --- | --- |
 | TBC-EFFECT-REGEN | Damage Hits/Stam/Mana and advance several personal turns. | Due native-rate ticks run chronologically at actor turn start. |
-| TBC-EFFECT-STATUS | Apply poison, paralysis, and freezing before and during combat. | Native timers suspend only for the owner; actor-clock ticks/durations resume correctly on exit/disable. |
+| TBC-EFFECT-BANDAGE | Start bandaging, advance actor turns, then disengage and bandage again. | One AP lease covers every entry path; application uses healer time and exit preserves only the exact remaining delay with no wait-message leak. |
+| TBC-EFFECT-STATUS | Apply poison, paralysis, and freezing before and during combat; test natural poison expiry and a successful cure. | Native timers suspend only for the owner; poison tick counts display/log and clear only on native expiry or cure; all durations resume correctly on exit/disable. |
 | TBC-EFFECT-SUMMON | Enter combat with a near-expiry summon, merge groups, then disable. | Canonical remaining expiry follows the summon actor clock and rebases safely on exit. |
 | TBC-EFFECT-BACKSTOP | Trigger a known direct Hits/Stam/Mana/status mutation outside an action/effect/admin scope. | Mutation blocks and logs instead of changing participant state. |
 | TBC-AI-STOCK | Test stock melee, ranged, mage, controlled `Obey`, barded, passive, and searching actors. | Pulses follow live `CurrentSpeed` and preserve `OnThink`, bard, `Think`/`Obey`, searching, and sector lifecycle order. |

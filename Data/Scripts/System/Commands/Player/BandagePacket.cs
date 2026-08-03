@@ -28,7 +28,7 @@ namespace Server.Network
         {
             Mobile from = state.Mobile;
 
-            if (from.AccessLevel >= AccessLevel.Counselor || DateTime.Now >= from.NextActionTime)
+            if (from.AccessLevel >= AccessLevel.Counselor || TurnBasedCombatBridge.GetTime(from) >= from.NextActionTime)
             {
                 Serial use = pvSrc.ReadInt32();
                 Serial targ = pvSrc.ReadInt32();
@@ -45,8 +45,12 @@ namespace Server.Network
                     {
                         if (from.InRange(bandage.GetWorldLocation(), Core.AOS ? 2 : 1))
                         {
-                            if (BandageContext.BeginHeal(from, to) != null)
+                            if (Bandage.TryApply(from, to, bandage))
+                            {
                                 bandage.Consume();
+                                from.NextActionTime = TurnBasedCombatBridge.GetTime(from)
+                                    + TimeSpan.FromSeconds(0.5);
+                            }
                         }
                         else
                         {
@@ -57,8 +61,6 @@ namespace Server.Network
                     {
                         from.SendLocalizedMessage(500970); // Bandages can not be used on that.
                     }
-
-                    from.NextActionTime = DateTime.Now + TimeSpan.FromSeconds(0.5);
                 }
             }
             else

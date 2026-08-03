@@ -32,6 +32,8 @@ namespace Server.Custom.Confictura
         public TimeSpan PoisonRemaining;
         public TimeSpan PoisonInterval;
         public TimeSpan SummonRemaining;
+        public BandageContext BandageContext;
+        public TimeSpan BandageRemaining;
     }
 
     public sealed class TurnParticipant
@@ -131,6 +133,7 @@ namespace Server.Custom.Confictura
         private readonly Dictionary<Mobile, TurnParticipant> m_Participants;
         private readonly Dictionary<long, TurnPendingAction> m_PendingActions;
         private readonly List<TurnCombatGroup> m_Groups;
+        private readonly List<Mobile> m_TestArmedMobiles;
         private TurnBasedCombatConfiguration m_Configuration;
         private SchedulerTimer m_Scheduler;
         private bool m_RuntimeEnabled;
@@ -154,6 +157,11 @@ namespace Server.Custom.Confictura
             get { return m_Groups.Count; }
         }
 
+        public int TestArmCount
+        {
+            get { return m_TestArmedMobiles.Count; }
+        }
+
         public TurnBasedCombatConfiguration Configuration
         {
             get { return m_Configuration; }
@@ -174,6 +182,37 @@ namespace Server.Custom.Confictura
                 cost = maximum;
 
             return cost;
+        }
+
+        internal static int ComputeDueTickCount(
+            TimeSpan remaining,
+            TimeSpan elapsed,
+            TimeSpan rate,
+            out TimeSpan nextRemaining
+        )
+        {
+            rate = NormalizeRate(rate);
+            remaining -= elapsed;
+            int count = 0;
+
+            while (remaining <= TimeSpan.Zero)
+            {
+                ++count;
+                remaining += rate;
+            }
+
+            nextRemaining = remaining;
+            return count;
+        }
+
+        internal static DateTime ComputeRebasedCooldown(
+            DateTime cooldown,
+            DateTime actorTime,
+            DateTime wallTime
+        )
+        {
+            TimeSpan remaining = cooldown - actorTime;
+            return remaining > TimeSpan.Zero ? wallTime + remaining : wallTime;
         }
 
         internal static TurnEffectTimerChangeDisposition ClassifyPoisonTimerChange(
@@ -239,6 +278,7 @@ namespace Server.Custom.Confictura
             m_Participants = new Dictionary<Mobile, TurnParticipant>();
             m_PendingActions = new Dictionary<long, TurnPendingAction>();
             m_Groups = new List<TurnCombatGroup>();
+            m_TestArmedMobiles = new List<Mobile>();
             m_Configuration = TurnBasedCombatConfiguration.Load();
             m_RuntimeEnabled = false;
             m_NextGroupID = 1;
@@ -266,28 +306,68 @@ namespace Server.Custom.Confictura
             bool actorParticipant,
             bool targetParticipant,
             bool sameGroup,
-            bool actorCurrent
+            bool actorCurrent,
+            bool seedAllowed,
+            bool joinAllowed
         )
         {
             if (!enabled)
                 return TurnCombatantIntentDisposition.Native;
 
             if (!actorParticipant && !targetParticipant)
-                return TurnCombatantIntentDisposition.OpenGroup;
+                return seedAllowed
+                    ? TurnCombatantIntentDisposition.OpenGroup
+                    : TurnCombatantIntentDisposition.Native;
 
             if (!actorParticipant)
-                return TurnCombatantIntentDisposition.JoinActor;
+                return joinAllowed
+                    ? TurnCombatantIntentDisposition.JoinActor
+                    : TurnCombatantIntentDisposition.Reject;
 
             if (!actorCurrent)
                 return TurnCombatantIntentDisposition.Reject;
 
             if (!targetParticipant)
-                return TurnCombatantIntentDisposition.JoinTarget;
+                return joinAllowed
+                    ? TurnCombatantIntentDisposition.JoinTarget
+                    : TurnCombatantIntentDisposition.Reject;
 
             if (!sameGroup)
                 return TurnCombatantIntentDisposition.MergeGroups;
 
             return TurnCombatantIntentDisposition.Select;
+        }
+
+        internal static Mobile ResolveEffectivePlayerPrincipal(Mobile mobile)
+        {
+            List<Mobile> visited = new List<Mobile>();
+            Mobile current = mobile;
+
+            while (current != null && !visited.Contains(current))
+            {
+                visited.Add(current);
+
+                if (current.Player)
+                    return current;
+
+                BaseCreature creature = current as BaseCreature;
+
+                if (creature == null)
+                    return null;
+
+                current = creature.GetMaster();
+            }
+
+            return null;
+        }
+
+        internal static bool IsDifferentPlayerSide(Mobile actor, Mobile target)
+        {
+            Mobile actorPrincipal = ResolveEffectivePlayerPrincipal(actor);
+            Mobile targetPrincipal = ResolveEffectivePlayerPrincipal(target);
+            return actorPrincipal != null
+                && targetPrincipal != null
+                && actorPrincipal != targetPrincipal;
         }
 
         internal static TurnCombatantChangeMode GetCombatantChangeMode(
@@ -313,6 +393,69 @@ namespace Server.Custom.Confictura
         {
             TurnParticipant participant = GetParticipant(mobile);
             return participant == null ? null : participant.Group;
+        }
+
+        public bool ArmTestMobile(Mobile mobile)
+        {
+            if (!IsActive(mobile) || mobile.Player || GetParticipant(mobile) != null)
+                return false;
+
+            bool added = !m_TestArmedMobiles.Contains(mobile);
+
+            if (added)
+                m_TestArmedMobiles.Add(mobile);
+
+            if (added)
+                Log("test_arm_added", null, mobile, "Process-local PvE regression arm.");
+
+            return added;
+        }
+
+        public bool DisarmTestMobile(Mobile mobile)
+        {
+            bool removed = mobile != null && m_TestArmedMobiles.Remove(mobile);
+
+            if (removed)
+                Log("test_arm_removed", null, mobile, null);
+
+            return removed;
+        }
+
+        public bool IsTestArmed(Mobile mobile)
+        {
+            return mobile != null && m_TestArmedMobiles.Contains(mobile);
+        }
+
+        private bool CanSeedGroup(Mobile actor, Mobile target)
+        {
+            return IsDifferentPlayerSide(actor, target)
+                || IsTestArmed(actor)
+                || IsTestArmed(target);
+        }
+
+        private bool CanJoinInteraction(Mobile actor, Mobile target)
+        {
+            if (!IsActive(actor) || !IsActive(target))
+                return false;
+
+            return IsJoinWithinBoundary(
+                actor.Map == target.Map,
+                actor.InRange(target, m_Configuration.NpcJoinRange),
+                actor.InLOS(target),
+                m_Configuration.RequireJoinLineOfSight
+            );
+        }
+
+        internal static bool IsJoinWithinBoundary(
+            bool sameMap,
+            bool withinJoinRange,
+            bool hasLineOfSight,
+            bool requireLineOfSight
+        )
+        {
+            return sameMap
+                && withinJoinRange
+                && (!requireLineOfSight || hasLineOfSight);
         }
 
         public TurnCombatantChangeMode DecideCombatantChange(TurnCombatantChangeRequest request)
@@ -341,7 +484,9 @@ namespace Server.Custom.Confictura
                 actorParticipant != null
                     && targetParticipant != null
                     && actorParticipant.Group == targetParticipant.Group,
-                actorParticipant != null && actorParticipant.Group.Current == actorParticipant
+                actorParticipant != null && actorParticipant.Group.Current == actorParticipant,
+                CanSeedGroup(actor, target),
+                CanJoinInteraction(actor, target)
             );
 
             switch (disposition)
@@ -481,6 +626,9 @@ namespace Server.Custom.Confictura
                 if (!request.Harmful)
                     return null;
 
+                if (!CanSeedGroup(actor, target))
+                    return null;
+
                 TurnCombatGroup group = CreateGroup(actor, target);
                 Log("group_opened", group, actor, "Opening action deferred until initiative.");
                 return new TurnActionDecision(
@@ -493,6 +641,12 @@ namespace Server.Custom.Confictura
 
             if (actorParticipant == null && targetParticipant != null)
             {
+                bool classifiedSupport = request.Beneficial
+                    && ResolveEffectivePlayerPrincipal(actor) != null;
+
+                if ((!request.Harmful && !classifiedSupport) || !CanJoinInteraction(actor, target))
+                    return TurnActionDecision.Block("That outsider cannot join this combat from here.");
+
                 actorParticipant = AddParticipant(
                     targetParticipant.Group,
                     actor,
@@ -514,6 +668,12 @@ namespace Server.Custom.Confictura
             {
                 if (actorParticipant.Group.Current != actorParticipant)
                     return TurnActionDecision.Block("It is not your turn.");
+
+                bool classifiedSupport = request.Beneficial
+                    && ResolveEffectivePlayerPrincipal(target) != null;
+
+                if ((!request.Harmful && !classifiedSupport) || !CanJoinInteraction(actor, target))
+                    return TurnActionDecision.Block("That outsider cannot join this combat from here.");
 
                 targetParticipant = AddParticipant(
                     actorParticipant.Group,
@@ -557,6 +717,9 @@ namespace Server.Custom.Confictura
 
             if (actorParticipant == null && targetParticipant == null)
             {
+                if (!CanSeedGroup(actor, target))
+                    return TurnActionDecision.Allow();
+
                 TurnCombatGroup group = CreateGroup(actor, target);
                 Log("group_opened", group, actor, "Attack deferred until initiative.");
                 return new TurnActionDecision(
@@ -569,6 +732,9 @@ namespace Server.Custom.Confictura
 
             if (actorParticipant == null)
             {
+                if (!CanJoinInteraction(actor, target))
+                    return TurnActionDecision.Block("That outsider cannot join this combat from here.");
+
                 actorParticipant = AddParticipant(
                     targetParticipant.Group,
                     actor,
@@ -590,6 +756,9 @@ namespace Server.Custom.Confictura
 
             if (targetParticipant == null)
             {
+                if (!CanJoinInteraction(actor, target))
+                    return TurnActionDecision.Block("That outsider cannot join this combat from here.");
+
                 targetParticipant = AddParticipant(
                     actorParticipant.Group,
                     target,
@@ -720,6 +889,7 @@ namespace Server.Custom.Confictura
                     && request.Actor.Alive
                     && request.Target.Alive
                     && request.Actor.CanBeHarmful(request.Target, false)
+                    && CanSeedGroup(request.Actor, request.Target)
                 )
                 {
                     TurnCombatGroup group = CreateGroup(request.Actor, request.Target);
@@ -732,7 +902,15 @@ namespace Server.Custom.Confictura
 
             if (targetParticipant != null && actorParticipant == null)
             {
-                if (request.Actor != null && request.Actor != request.Target)
+                if (
+                    request.Actor != null
+                    && request.Actor != request.Target
+                    && CanJoinInteraction(request.Actor, request.Target)
+                    && (
+                        request.Kind == TurnMutationKind.Damage
+                        || ResolveEffectivePlayerPrincipal(request.Actor) != null
+                    )
+                )
                 {
                     AddParticipant(
                         targetParticipant.Group,
@@ -754,7 +932,15 @@ namespace Server.Custom.Confictura
 
             if (actorParticipant != null && targetParticipant == null)
             {
-                if (actorParticipant.Group.Current != actorParticipant || actorParticipant.Pending == null)
+                if (
+                    actorParticipant.Group.Current != actorParticipant
+                    || actorParticipant.Pending == null
+                    || !CanJoinInteraction(request.Actor, request.Target)
+                    || (
+                        request.Kind != TurnMutationKind.Damage
+                        && ResolveEffectivePlayerPrincipal(request.Target) == null
+                    )
+                )
                     return false;
 
                 targetParticipant = AddParticipant(
@@ -847,7 +1033,48 @@ namespace Server.Custom.Confictura
         {
             TurnParticipant participant = GetParticipant(mobile);
 
-            if (participant == null || kind != TurnMutationKind.Poison)
+            if (participant == null)
+                return;
+
+            if (kind == TurnMutationKind.Healing)
+            {
+                if (timer == null)
+                {
+                    participant.Effects.BandageContext = null;
+                    participant.Effects.BandageRemaining = TimeSpan.Zero;
+                    Log("bandage_cleared", participant.Group, mobile, null);
+                    return;
+                }
+
+                TurnEffectRule bandageRule = timer == null
+                    ? null
+                    : m_Configuration.ResolveEffect(kind, timer);
+                BandageContext context = BandageContext.GetContext(mobile);
+
+                if (
+                    timer == null
+                    || bandageRule == null
+                    || bandageRule.RuntimeType != timer.GetType().FullName
+                    || bandageRule.ClockPolicy != "ActorClock"
+                    || context == null
+                )
+                {
+                    EmergencyDisable("Unclassified participant bandage timer.", null);
+                    return;
+                }
+
+                participant.Effects.BandageContext = context;
+                participant.Effects.BandageRemaining = context.SuspendForTurnBased();
+                Log(
+                    "bandage_captured",
+                    participant.Group,
+                    mobile,
+                    "remaining=" + participant.Effects.BandageRemaining
+                );
+                return;
+            }
+
+            if (kind != TurnMutationKind.Poison)
                 return;
 
             TurnEffectRule rule = timer == null
@@ -905,6 +1132,7 @@ namespace Server.Custom.Confictura
 
         public void MobileDeleted(Mobile mobile)
         {
+            m_TestArmedMobiles.Remove(mobile);
             TurnParticipant participant = GetParticipant(mobile);
 
             if (participant != null)
@@ -947,6 +1175,7 @@ namespace Server.Custom.Confictura
         public void Disable(string reason)
         {
             m_RuntimeEnabled = false;
+            m_TestArmedMobiles.Clear();
             DissolveAll(reason == null ? "disabled" : reason, true);
             Log("disabled", null, null, reason);
         }
@@ -998,6 +1227,7 @@ namespace Server.Custom.Confictura
 
             participant.ActionPoints = 0;
             participant.Acted = true;
+            ClearRunningState(mobile);
             Log(voluntary ? "turn_ended" : "turn_exhausted", participant.Group, mobile, null);
             AdvanceTurn(participant.Group);
             return true;
@@ -1137,6 +1367,7 @@ namespace Server.Custom.Confictura
                 if (master != null && master.Map == seed.Map && master.InRange(seed, m_Configuration.EscapeRange))
                 {
                     AddParticipant(group, master, eligibleRound);
+                    AddEdge(group, master, seed, true);
                     masters.Add(master);
                 }
             }
@@ -1163,6 +1394,7 @@ namespace Server.Custom.Confictura
                         if (GetParticipant(creature) == null)
                         {
                             AddParticipant(group, creature, eligibleRound);
+                            AddEdge(group, master, creature, true);
                             masters.Add(creature);
                         }
                     }
@@ -1195,6 +1427,7 @@ namespace Server.Custom.Confictura
                         if (linked)
                         {
                             AddParticipant(group, follower, eligibleRound);
+                            AddEdge(group, master, follower, true);
                             masters.Add(follower);
                         }
                     }
@@ -1253,6 +1486,14 @@ namespace Server.Custom.Confictura
                 return;
 
             RemoveInvalidParticipants(group);
+
+            if (!m_Groups.Contains(group))
+                return;
+
+            PruneDisengagedEdgesAndSplit(group);
+
+            if (!m_Groups.Contains(group))
+                return;
 
             if (group.Participants.Count == 0 || !HasHostility(group))
             {
@@ -1365,6 +1606,12 @@ namespace Server.Custom.Confictura
                     continue;
 
                 RemoveInvalidParticipants(group);
+
+                if (m_Groups.Contains(group))
+                    PruneDisengagedEdgesAndSplit(group);
+
+                if (!m_Groups.Contains(group))
+                    continue;
 
                 TurnParticipant current = group.Current;
 
@@ -1599,9 +1846,11 @@ namespace Server.Custom.Confictura
         private TurnEffectState CaptureEffects(Mobile mobile)
         {
             TurnEffectState effects = new TurnEffectState();
-            effects.HitsRegenRemaining = NormalizeRate(Mobile.GetHitsRegenRate(mobile));
-            effects.StamRegenRemaining = NormalizeRate(Mobile.GetStamRegenRate(mobile));
-            effects.ManaRegenRemaining = NormalizeRate(Mobile.GetManaRegenRate(mobile));
+            mobile.SuspendTurnBasedRegeneration(
+                out effects.HitsRegenRemaining,
+                out effects.StamRegenRemaining,
+                out effects.ManaRegenRemaining
+            );
             effects.ParalyzeRemaining = mobile.GetTurnBasedParalyzeRemaining();
             effects.FreezeRemaining = mobile.GetTurnBasedFreezeRemaining();
 
@@ -1619,6 +1868,14 @@ namespace Server.Custom.Confictura
                 effects.PoisonRemaining = Remaining(poison);
                 effects.PoisonInterval = NormalizeRate(poison.Interval);
                 poison.Stop();
+            }
+
+            BandageContext bandage = BandageContext.GetContext(mobile);
+
+            if (bandage != null)
+            {
+                effects.BandageContext = bandage;
+                effects.BandageRemaining = bandage.SuspendForTurnBased();
             }
 
             return effects;
@@ -1667,27 +1924,27 @@ namespace Server.Custom.Confictura
 
                 if (regenerationEnabled)
                 {
-                ProcessRegeneration(
-                    mobile,
-                    elapsed,
-                    ref effects.HitsRegenRemaining,
-                    Mobile.GetHitsRegenRate(mobile),
-                    TurnMutationKind.Hits
-                );
-                ProcessRegeneration(
-                    mobile,
-                    elapsed,
-                    ref effects.StamRegenRemaining,
-                    Mobile.GetStamRegenRate(mobile),
-                    TurnMutationKind.Stamina
-                );
-                ProcessRegeneration(
-                    mobile,
-                    elapsed,
-                    ref effects.ManaRegenRemaining,
-                    Mobile.GetManaRegenRate(mobile),
-                    TurnMutationKind.Mana
-                );
+                    ProcessRegeneration(
+                        participant,
+                        elapsed,
+                        ref effects.HitsRegenRemaining,
+                        Mobile.GetHitsRegenRate(mobile),
+                        TurnMutationKind.Hits
+                    );
+                    ProcessRegeneration(
+                        participant,
+                        elapsed,
+                        ref effects.StamRegenRemaining,
+                        Mobile.GetStamRegenRate(mobile),
+                        TurnMutationKind.Stamina
+                    );
+                    ProcessRegeneration(
+                        participant,
+                        elapsed,
+                        ref effects.ManaRegenRemaining,
+                        Mobile.GetManaRegenRate(mobile),
+                        TurnMutationKind.Mana
+                    );
                 }
 
                 if (
@@ -1734,7 +1991,14 @@ namespace Server.Custom.Confictura
                     )
                     {
                         PoisonImpl.PoisonTimer timer = effects.PoisonTimer;
+                        int oldTicks = timer.RemainingTicks;
                         timer.ProcessTurnBasedTick();
+                        Log(
+                            "poison_tick",
+                            participant.Group,
+                            mobile,
+                            "old=" + oldTicks + " new=" + timer.RemainingTicks
+                        );
 
                         if (!mobile.Poisoned || mobile.PoisonTimer != timer)
                         {
@@ -1743,6 +2007,29 @@ namespace Server.Custom.Confictura
                         }
 
                         effects.PoisonRemaining += effects.PoisonInterval;
+                    }
+                }
+
+                if (
+                    effects.BandageContext != null
+                    && IsEffectEnabled(
+                        participant,
+                        TurnMutationKind.Healing,
+                        effects.BandageContext.Timer,
+                        tickPhase
+                    )
+                )
+                {
+                    effects.BandageRemaining = BandageContext.AdvanceTurnBasedRemaining(
+                        effects.BandageRemaining,
+                        elapsed
+                    );
+
+                    if (effects.BandageContext.AdvanceTurnBased(elapsed))
+                    {
+                        Log("bandage_completed", participant.Group, mobile, null);
+                        effects.BandageContext = null;
+                        effects.BandageRemaining = TimeSpan.Zero;
                     }
                 }
 
@@ -1792,26 +2079,56 @@ namespace Server.Custom.Confictura
         }
 
         private void ProcessRegeneration(
-            Mobile mobile,
+            TurnParticipant participant,
             TimeSpan elapsed,
             ref TimeSpan remaining,
             TimeSpan rate,
             TurnMutationKind kind
         )
         {
-            remaining -= elapsed;
+            Mobile mobile = participant.Mobile;
             rate = NormalizeRate(rate);
+            TimeSpan nextRemaining;
+            int dueTicks = ComputeDueTickCount(remaining, elapsed, rate, out nextRemaining);
+            remaining = nextRemaining;
 
-            while (remaining <= TimeSpan.Zero)
+            for (int tick = 0; tick < dueTicks; ++tick)
             {
-                if (kind == TurnMutationKind.Hits && mobile.CanRegenHits && mobile.Hits < mobile.HitsMax)
-                    ++mobile.Hits;
-                else if (kind == TurnMutationKind.Stamina && mobile.CanRegenStam && mobile.Stam < mobile.StamMax)
-                    ++mobile.Stam;
-                else if (kind == TurnMutationKind.Mana && mobile.CanRegenMana && mobile.Mana < mobile.ManaMax)
-                    ++mobile.Mana;
+                int oldValue;
+                int newValue;
 
-                remaining += rate;
+                if (kind == TurnMutationKind.Hits && mobile.CanRegenHits && mobile.Hits < mobile.HitsMax)
+                {
+                    oldValue = mobile.Hits;
+                    ++mobile.Hits;
+                    newValue = mobile.Hits;
+                }
+                else if (kind == TurnMutationKind.Stamina && mobile.CanRegenStam && mobile.Stam < mobile.StamMax)
+                {
+                    oldValue = mobile.Stam;
+                    ++mobile.Stam;
+                    newValue = mobile.Stam;
+                }
+                else if (kind == TurnMutationKind.Mana && mobile.CanRegenMana && mobile.Mana < mobile.ManaMax)
+                {
+                    oldValue = mobile.Mana;
+                    ++mobile.Mana;
+                    newValue = mobile.Mana;
+                }
+                else
+                {
+                    oldValue = kind == TurnMutationKind.Hits
+                        ? mobile.Hits
+                        : (kind == TurnMutationKind.Stamina ? mobile.Stam : mobile.Mana);
+                    newValue = oldValue;
+                }
+
+                Log(
+                    "resource_tick",
+                    participant.Group,
+                    mobile,
+                    kind + " old=" + oldValue + " new=" + newValue + " next=" + remaining
+                );
             }
         }
 
@@ -1841,6 +2158,231 @@ namespace Server.Custom.Confictura
                 RemoveParticipant(remove[i], "invalid", false);
         }
 
+        internal static bool ShouldPruneEdge(
+            bool sameMap,
+            bool withinDisengageRange,
+            bool hasLineOfSight
+        )
+        {
+            return !sameMap || (!withinDisengageRange && !hasLineOfSight);
+        }
+
+        internal static int CountConnectedComponents(bool[,] adjacency)
+        {
+            int count = adjacency.GetLength(0);
+
+            if (count != adjacency.GetLength(1))
+                return 0;
+
+            bool[] visited = new bool[count];
+            int components = 0;
+
+            for (int i = 0; i < count; ++i)
+            {
+                if (visited[i])
+                    continue;
+
+                ++components;
+                Queue<int> pending = new Queue<int>();
+                visited[i] = true;
+                pending.Enqueue(i);
+
+                while (pending.Count > 0)
+                {
+                    int current = pending.Dequeue();
+
+                    for (int adjacent = 0; adjacent < count; ++adjacent)
+                    {
+                        if (!visited[adjacent] && adjacency[current, adjacent])
+                        {
+                            visited[adjacent] = true;
+                            pending.Enqueue(adjacent);
+                        }
+                    }
+                }
+            }
+
+            return components;
+        }
+
+        private void PruneDisengagedEdgesAndSplit(TurnCombatGroup group)
+        {
+            for (int i = group.Edges.Count - 1; i >= 0; --i)
+            {
+                TurnHostilityEdge edge = group.Edges[i];
+                bool sameMap = IsActive(edge.Source)
+                    && IsActive(edge.Target)
+                    && edge.Source.Map == edge.Target.Map;
+                bool inRange = sameMap
+                    && edge.Source.InRange(edge.Target, m_Configuration.DisengageRange);
+                bool inLOS = sameMap && edge.Source.InLOS(edge.Target);
+
+                if (!ShouldPruneEdge(sameMap, inRange, inLOS))
+                    continue;
+
+                group.Edges.RemoveAt(i);
+                Log(
+                    "edge_disengaged",
+                    group,
+                    edge.Source,
+                    "target=" + edge.Target.Serial + " support=" + edge.Support
+                );
+            }
+
+            List<TurnParticipant> isolated = new List<TurnParticipant>();
+
+            for (int i = 0; i < group.Participants.Count; ++i)
+            {
+                TurnParticipant participant = group.Participants[i];
+                bool connected = false;
+
+                for (int edgeIndex = 0; edgeIndex < group.Edges.Count; ++edgeIndex)
+                {
+                    TurnHostilityEdge edge = group.Edges[edgeIndex];
+
+                    if (edge.Source == participant.Mobile || edge.Target == participant.Mobile)
+                    {
+                        connected = true;
+                        break;
+                    }
+                }
+
+                if (!connected)
+                    isolated.Add(participant);
+            }
+
+            for (int i = 0; i < isolated.Count && m_Groups.Contains(group); ++i)
+                RemoveParticipant(isolated[i], "automatic disengagement", false);
+
+            if (!m_Groups.Contains(group) || group.Participants.Count < 2)
+                return;
+
+            List<List<TurnParticipant>> components = new List<List<TurnParticipant>>();
+            List<TurnParticipant> visited = new List<TurnParticipant>();
+
+            for (int i = 0; i < group.Participants.Count; ++i)
+            {
+                TurnParticipant seed = group.Participants[i];
+
+                if (visited.Contains(seed))
+                    continue;
+
+                visited.Add(seed);
+
+                List<TurnParticipant> component = new List<TurnParticipant>();
+                Queue<TurnParticipant> pending = new Queue<TurnParticipant>();
+                pending.Enqueue(seed);
+
+                while (pending.Count > 0)
+                {
+                    TurnParticipant current = pending.Dequeue();
+                    component.Add(current);
+
+                    for (int edgeIndex = 0; edgeIndex < group.Edges.Count; ++edgeIndex)
+                    {
+                        TurnHostilityEdge edge = group.Edges[edgeIndex];
+                        Mobile adjacentMobile = null;
+
+                        if (edge.Source == current.Mobile)
+                            adjacentMobile = edge.Target;
+                        else if (edge.Target == current.Mobile)
+                            adjacentMobile = edge.Source;
+
+                        TurnParticipant adjacent = GetParticipant(adjacentMobile);
+
+                        if (
+                            adjacent != null
+                            && adjacent.Group == group
+                            && !visited.Contains(adjacent)
+                        )
+                        {
+                            visited.Add(adjacent);
+                            pending.Enqueue(adjacent);
+                        }
+                    }
+                }
+
+                components.Add(component);
+            }
+
+            if (components.Count <= 1)
+                return;
+
+            List<TurnParticipant> retained = components[0];
+
+            if (group.Current != null)
+            {
+                for (int i = 0; i < components.Count; ++i)
+                {
+                    if (components[i].Contains(group.Current))
+                    {
+                        retained = components[i];
+                        break;
+                    }
+                }
+            }
+
+            List<TurnCombatGroup> created = new List<TurnCombatGroup>();
+
+            for (int i = 0; i < components.Count; ++i)
+            {
+                List<TurnParticipant> component = components[i];
+
+                if (component == retained)
+                    continue;
+
+                TurnCombatGroup split = new TurnCombatGroup();
+                split.ID = m_NextGroupID++;
+                split.Round = group.Round;
+                split.CatalogVersion = group.CatalogVersion;
+                split.TurnDeadline = group.TurnDeadline;
+
+                for (int participantIndex = 0; participantIndex < component.Count; ++participantIndex)
+                {
+                    TurnParticipant participant = component[participantIndex];
+                    group.Participants.Remove(participant);
+                    participant.Group = split;
+                    split.Participants.Add(participant);
+                }
+
+                for (int edgeIndex = group.Edges.Count - 1; edgeIndex >= 0; --edgeIndex)
+                {
+                    TurnHostilityEdge edge = group.Edges[edgeIndex];
+
+                    if (ContainsMobile(component, edge.Source) && ContainsMobile(component, edge.Target))
+                    {
+                        group.Edges.RemoveAt(edgeIndex);
+                        split.Edges.Add(edge);
+                    }
+                }
+
+                split.Participants.Sort(new InitiativeComparer());
+                m_Groups.Add(split);
+                created.Add(split);
+                Log("group_split", split, null, "source=" + group.ID);
+            }
+
+            group.Participants.Sort(new InitiativeComparer());
+            Log("group_split_retained", group, group.Current == null ? null : group.Current.Mobile, null);
+
+            for (int i = 0; i < created.Count; ++i)
+                StartNextActor(created[i]);
+
+            if (m_Groups.Contains(group))
+                RefreshGroup(group);
+        }
+
+        private static bool ContainsMobile(List<TurnParticipant> participants, Mobile mobile)
+        {
+            for (int i = 0; i < participants.Count; ++i)
+            {
+                if (participants[i].Mobile == mobile)
+                    return true;
+            }
+
+            return false;
+        }
+
         private void RemoveParticipant(TurnParticipant participant, string reason, bool advance)
         {
             if (participant == null || !m_Participants.ContainsKey(participant.Mobile))
@@ -1866,6 +2408,7 @@ namespace Server.Custom.Confictura
 
             ResumeEffects(participant);
             RebaseCooldowns(participant);
+            ClearRunningState(participant.Mobile);
             participant.Mobile.Combatant = null;
             participant.Mobile.CloseGump(typeof(TurnBasedCombatGump));
             Log("participant_removed", group, participant.Mobile, reason);
@@ -1932,6 +2475,15 @@ namespace Server.Custom.Confictura
 
                 if (creature != null && creature.Summoned && !creature.Deleted)
                     creature.ResumeTurnBasedUnsummonTimer(effects.SummonRemaining);
+
+                if (effects.BandageContext != null)
+                    effects.BandageContext.ResumeFromTurnBased();
+
+                mobile.ResumeTurnBasedRegeneration(
+                    effects.HitsRegenRemaining,
+                    effects.StamRegenRemaining,
+                    effects.ManaRegenRemaining
+                );
             }
             finally
             {
@@ -1942,23 +2494,26 @@ namespace Server.Custom.Confictura
         private void RebaseCooldowns(TurnParticipant participant)
         {
             DateTime wallTime = DateTime.Now;
-            TimeSpan skillRemaining = participant.Mobile.NextSkillTime - participant.LogicalTime;
-            TimeSpan spellRemaining = participant.Mobile.NextSpellTime - participant.LogicalTime;
-            TimeSpan actionRemaining = participant.Mobile.NextActionTime - participant.LogicalTime;
-            TimeSpan combatRemaining = participant.Mobile.NextCombatTime - participant.LogicalTime;
-
-            participant.Mobile.NextSkillTime = skillRemaining > TimeSpan.Zero
-                ? wallTime + skillRemaining
-                : wallTime;
-            participant.Mobile.NextSpellTime = spellRemaining > TimeSpan.Zero
-                ? wallTime + spellRemaining
-                : wallTime;
-            participant.Mobile.NextActionTime = actionRemaining > TimeSpan.Zero
-                ? wallTime + actionRemaining
-                : wallTime;
-            participant.Mobile.NextCombatTime = combatRemaining > TimeSpan.Zero
-                ? wallTime + combatRemaining
-                : wallTime;
+            participant.Mobile.NextSkillTime = ComputeRebasedCooldown(
+                participant.Mobile.NextSkillTime,
+                participant.LogicalTime,
+                wallTime
+            );
+            participant.Mobile.NextSpellTime = ComputeRebasedCooldown(
+                participant.Mobile.NextSpellTime,
+                participant.LogicalTime,
+                wallTime
+            );
+            participant.Mobile.NextActionTime = ComputeRebasedCooldown(
+                participant.Mobile.NextActionTime,
+                participant.LogicalTime,
+                wallTime
+            );
+            participant.Mobile.NextCombatTime = ComputeRebasedCooldown(
+                participant.Mobile.NextCombatTime,
+                participant.LogicalTime,
+                wallTime
+            );
         }
 
         private void RefundPending(TurnParticipant participant, TurnActionPhase phase)
@@ -1994,6 +2549,7 @@ namespace Server.Custom.Confictura
                 m_Participants.Remove(participant.Mobile);
                 ResumeEffects(participant);
                 RebaseCooldowns(participant);
+                ClearRunningState(participant.Mobile);
 
                 if (resumeNativeCombat)
                     participant.Mobile.ResumeTurnBasedCombatScheduling();
@@ -2044,6 +2600,20 @@ namespace Server.Custom.Confictura
                 && mobile.Alive
                 && mobile.Map != null
                 && mobile.Map != Map.Internal;
+        }
+
+        private static void ClearRunningState(Mobile mobile)
+        {
+            if (mobile == null)
+                return;
+
+            mobile.Direction = ClearRunningDirection(mobile.Direction);
+            mobile.ClearFastwalkStack();
+        }
+
+        internal static Direction ClearRunningDirection(Direction direction)
+        {
+            return direction & Direction.Mask;
         }
 
         private static TimeSpan NormalizeRate(TimeSpan rate)

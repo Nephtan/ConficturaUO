@@ -112,7 +112,7 @@ namespace Server.Spells.Jester
         {
             Caster.PlaySound(Caster.Female ? 816 : 1090);
             Caster.Say("*sigh*");
-            Caster.NextSpellTime = DateTime.Now;
+            Caster.NextSpellTime = TurnBasedCombatBridge.GetTime(Caster);
         }
 
         public override void DoHurtFizzle()

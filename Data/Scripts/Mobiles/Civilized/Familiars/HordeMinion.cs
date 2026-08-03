@@ -101,7 +101,7 @@ namespace Server.Mobiles
                 bool rejected;
                 LRReason reject;
 
-                NextActionTime = DateTime.Now;
+                NextActionTime = TurnBasedCombatBridge.GetTime(this);
 
                 Lift(item, item.Amount, out rejected, out reject);
 
