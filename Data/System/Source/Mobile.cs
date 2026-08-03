@@ -6487,6 +6487,20 @@ namespace Server
             if (m_Deleted)
                 return;
 
+            if (TurnBasedCombatBridge.IsParticipant(this))
+            {
+                if (m_HitsTimer != null)
+                    m_HitsTimer.Stop();
+
+                if (m_StamTimer != null)
+                    m_StamTimer.Stop();
+
+                if (m_ManaTimer != null)
+                    m_ManaTimer.Stop();
+
+                return;
+            }
+
             if (Hits < HitsMax)
             {
                 if (CanRegenHits)
@@ -6543,6 +6557,86 @@ namespace Server
             {
                 Mana = ManaMax;
             }
+        }
+
+        public void SuspendTurnBasedRegeneration(
+            out TimeSpan hitsRemaining,
+            out TimeSpan stamRemaining,
+            out TimeSpan manaRemaining
+        )
+        {
+            hitsRemaining = GetTurnBasedTimerRemaining(m_HitsTimer, GetHitsRegenRate(this));
+            stamRemaining = GetTurnBasedTimerRemaining(m_StamTimer, GetStamRegenRate(this));
+            manaRemaining = GetTurnBasedTimerRemaining(m_ManaTimer, GetManaRegenRate(this));
+
+            if (m_HitsTimer != null)
+                m_HitsTimer.Stop();
+
+            if (m_StamTimer != null)
+                m_StamTimer.Stop();
+
+            if (m_ManaTimer != null)
+                m_ManaTimer.Stop();
+        }
+
+        public void ResumeTurnBasedRegeneration(
+            TimeSpan hitsRemaining,
+            TimeSpan stamRemaining,
+            TimeSpan manaRemaining
+        )
+        {
+            if (!m_Deleted && Hits < HitsMax && CanRegenHits)
+            {
+                if (m_HitsTimer == null)
+                    m_HitsTimer = new HitsTimer(this);
+
+                StartTurnBasedRegenTimer(m_HitsTimer, hitsRemaining, GetHitsRegenRate(this));
+            }
+
+            if (!m_Deleted && Stam < StamMax && CanRegenStam)
+            {
+                if (m_StamTimer == null)
+                    m_StamTimer = new StamTimer(this);
+
+                StartTurnBasedRegenTimer(m_StamTimer, stamRemaining, GetStamRegenRate(this));
+            }
+
+            if (!m_Deleted && Mana < ManaMax && CanRegenMana)
+            {
+                if (m_ManaTimer == null)
+                    m_ManaTimer = new ManaTimer(this);
+
+                StartTurnBasedRegenTimer(m_ManaTimer, manaRemaining, GetManaRegenRate(this));
+            }
+        }
+
+        private static TimeSpan GetTurnBasedTimerRemaining(Timer timer, TimeSpan fallback)
+        {
+            if (timer != null && timer.Running)
+            {
+                TimeSpan remaining = timer.Next - DateTime.Now;
+
+                if (remaining > TimeSpan.Zero)
+                    return remaining;
+            }
+
+            return fallback > TimeSpan.Zero ? fallback : TimeSpan.FromMilliseconds(1.0);
+        }
+
+        private static void StartTurnBasedRegenTimer(Timer timer, TimeSpan remaining, TimeSpan interval)
+        {
+            if (remaining <= TimeSpan.Zero)
+                remaining = interval;
+
+            if (remaining <= TimeSpan.Zero)
+                remaining = TimeSpan.FromMilliseconds(1.0);
+
+            if (interval <= TimeSpan.Zero)
+                interval = TimeSpan.FromMilliseconds(1.0);
+
+            timer.Delay = remaining;
+            timer.Interval = interval;
+            timer.Start();
         }
 
         private DateTime m_CreationTime;
@@ -9053,7 +9147,7 @@ namespace Server
                     m_Str = value;
                     Delta(MobileDelta.Stat | MobileDelta.Hits);
 
-                    if (Hits < HitsMax)
+                    if (Hits < HitsMax && !TurnBasedCombatBridge.IsParticipant(this))
                     {
                         if (m_HitsTimer == null)
                             m_HitsTimer = new HitsTimer(this);
@@ -9122,7 +9216,7 @@ namespace Server
                     m_Dex = value;
                     Delta(MobileDelta.Stat | MobileDelta.Stam);
 
-                    if (Stam < StamMax)
+                    if (Stam < StamMax && !TurnBasedCombatBridge.IsParticipant(this))
                     {
                         if (m_StamTimer == null)
                             m_StamTimer = new StamTimer(this);
@@ -9191,7 +9285,7 @@ namespace Server
                     m_Int = value;
                     Delta(MobileDelta.Stat | MobileDelta.Mana);
 
-                    if (Mana < ManaMax)
+                    if (Mana < ManaMax && !TurnBasedCombatBridge.IsParticipant(this))
                     {
                         if (m_ManaTimer == null)
                             m_ManaTimer = new ManaTimer(this);
@@ -9276,7 +9370,7 @@ namespace Server
 
                 if (value < HitsMax)
                 {
-                    if (CanRegenHits)
+                    if (CanRegenHits && !TurnBasedCombatBridge.IsParticipant(this))
                     {
                         if (m_HitsTimer == null)
                             m_HitsTimer = new HitsTimer(this);
@@ -9337,7 +9431,7 @@ namespace Server
 
                 if (value < StamMax)
                 {
-                    if (CanRegenStam)
+                    if (CanRegenStam && !TurnBasedCombatBridge.IsParticipant(this))
                     {
                         if (m_StamTimer == null)
                             m_StamTimer = new StamTimer(this);
@@ -9404,7 +9498,7 @@ namespace Server
 
                 if (value < ManaMax)
                 {
-                    if (CanRegenMana)
+                    if (CanRegenMana && !TurnBasedCombatBridge.IsParticipant(this))
                     {
                         if (m_ManaTimer == null)
                             m_ManaTimer = new ManaTimer(this);

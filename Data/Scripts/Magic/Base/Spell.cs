@@ -525,7 +525,7 @@ namespace Server.Spells
                 if (Core.AOS && m_Caster.Player && type == DisturbType.Hurt)
                     DoHurtFizzle();
 
-                m_Caster.NextSpellTime = DateTime.Now + GetDisturbRecovery();
+                m_Caster.NextSpellTime = TurnBasedCombatBridge.GetTime(m_Caster) + GetDisturbRecovery();
             }
             else if (m_State == SpellState.Sequencing)
             {

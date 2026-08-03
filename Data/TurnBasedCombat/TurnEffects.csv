@@ -5,5 +5,6 @@ Regeneration:Mana,*,Regeneration,ActorClock,StartOfTurn,NativeRate,WhileBelowMax
 Status:Poison,Server.PoisonImpl+PoisonTimer,Poison,ActorClock,StartOfTurn,NativeInterval,NativeCount,PoisonTimerAdapter,Damage;Poison
 Status:Paralysis,*,Paralysis,ActorClock,StartOfTurn,OneShot,NativeDuration,StatusDurationAdapter,Paralysis
 Status:Freeze,*,Freeze,ActorClock,StartOfTurn,OneShot,NativeDuration,StatusDurationAdapter,Freeze
+Healing:Bandage,Server.Items.BandageContext+InternalTimer,Healing,ActorClock,StartOfTurn,OneShot,NativeDuration,BandageContextAdapter,Healing;Poison
 Summon:Expiry,*,Effect,ActorClock,StartOfTurn,OneShot,CanonicalSummonEnd,SummonExpiryAdapter,Delete
 World:Default,*,Unknown,WallClockUnaffected,None,Native,Native,MutationBackstop,None

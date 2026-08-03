@@ -2,7 +2,7 @@
 
 ## Current Status
 
-Dynamic turn-based combat is implemented but disabled by default. The shard continues to use normal real-time combat unless staff have enabled this system for an isolated test. Production activation remains gated on the gameplay, active-save/restart, rollback, and mass-combat tests in the [in-game verification matrix](../turn-based-combat/IN_GAME_TEST_MATRIX.md).
+PvP-only turn-based combat is implemented but disabled by default. Ordinary PvE remains real time even while the feature is enabled. Production activation remains gated on the gameplay, active-save/restart, rollback, and mass-PvP tests in the [in-game verification matrix](../turn-based-combat/IN_GAME_TEST_MATRIX.md).
 
 The values in this page are the current configured defaults. Staff can change them in the turn-combat configuration, so the values used during a scheduled test may differ.
 
@@ -10,11 +10,13 @@ The values in this page are the current configured defaults. Staff can change th
 
 ### How Combat Starts
 
-A legal hostile attack or other harmful action between two living characters opens a combat group. The opening action does not land before initiative: combat begins, everyone rolls, and the attacker must act again when their turn arrives. Existing shard rules still decide whether an action is legal, including PvP consent, regions, guild relations, pets, summons, and event restrictions.
+A combat group opens only after a legal hostile action crosses two different player-controlled sides. A player resolves to themselves; a controlled pet or summon resolves recursively through its master; a wild NPC has no player principal. This covers player/player, player/pet, pet/player, and pet/pet PvP. Ordinary player-versus-creature and creature-versus-creature combat remains native real-time combat.
 
-Nearby owners and followers can enter with the character or creature that brought them into combat. Someone who attacks, helps, or is targeted after a group has started normally joins for the next round. If an action connects characters from two existing groups, the groups merge without granting duplicate turns.
+The opening action does not land before initiative: combat begins, everyone rolls, and the attacker must act again when their turn arrives. Existing shard rules still decide whether an action is legal, including PvP consent, regions, guild relations, Government, pets, summons, challenge games, and event restrictions.
 
-Combat ends when no living hostile relationship remains. Individual participants also leave when they die, are deleted, escape, remain disconnected beyond the grace period, or are relocated in a way that is not part of a valid short tactical action.
+Nearby owners and followers can enter with the character or creature that brought them into combat. After PvP has seeded a group, a wild NPC joins only through an actual legal hostile interaction on the same map, within the current 12-tile join range, and in line of sight. Distant NPC intent is rejected. If an action connects characters from two existing groups, the groups merge without granting duplicate turns.
+
+Combat ends when no living hostile relationship remains. Hostility and support edges automatically prune when their endpoints change maps or are both farther than the current 18-tile disengage range and out of line of sight. Isolated participants leave immediately, and disconnected graph components split while retaining initiative, eligibility, clocks, and the current actor's component. This automatic disengagement requires neither a turn nor AP.
 
 ### Initiative And Rounds
 
@@ -24,7 +26,7 @@ Each participant rolls initiative once when joining:
 
 Integer division is used for the Dexterity bonus. Higher totals act first. A tied total is resolved by higher raw Dexterity, then by the lower mobile Serial. The initiative order remains visible in the combat HUD; a participant marked `next round` cannot act until the group advances.
 
-At the current defaults, an actor begins each turn with 20 action points (AP), and a player has 30 real-time seconds to act. AP reaching zero, choosing End Turn, disconnecting, or reaching the timeout passes control to the next eligible participant. A timeout cancels any open target cursor before advancing the turn.
+At the current defaults, an actor begins each turn with 20 action points (AP), and a player has 30 real-time seconds to act. AP reaching zero, choosing End Turn, disconnecting, or reaching the timeout passes control to the next eligible participant. A timeout cancels any open target cursor before advancing the turn. Turn completion also strips the running flag and clears queued fast-walk state so movement cannot leak into another actor's turn.
 
 ### Combat HUD
 
@@ -32,8 +34,9 @@ Every connected player in the group receives a HUD that refreshes automatically.
 
 - Group and round number.
 - The current actor.
-- Your remaining AP and pending action.
-- Poison, paralysis, and freezing affecting your character.
+- Your remaining AP, pending action, and current/max Hits, Stamina, and Mana.
+- The next Mana regeneration tick.
+- Poison with remaining ticks, paralysis, and freezing affecting your character.
 - The initiative list and next-round markers.
 
 The HUD buttons are:
@@ -69,7 +72,7 @@ Escape is allowed only during your turn while you still have AP. Every living ho
 
 ### Effects, Pets, And Disconnects
 
-The world outside a combat group stays in real time. For participants, the current five-second actor interval advances that participant's local combat clock as turns return to them. Regeneration, poison, paralysis, freezing, summon expiry, and relevant cooldowns use that actor clock and return safely to native timers when the participant leaves combat or staff disable the system.
+The world outside a combat group stays in real time. For participants, the current five-second actor interval advances that participant's local combat clock as turns return to them. Hits, Stamina, and Mana regeneration preserve their exact native remaining delay and process every due tick. Poison, paralysis, freezing, bandage application, summon expiry, and relevant action/skill/spell/combat cooldowns use actor time and return safely to native scheduling when the participant leaves combat or staff disable the system. Full health does not cure poison; only native expiry or a successful cure clears it.
 
 Creatures and controlled followers receive their own initiative and AP. Their existing AI and legality checks remain authoritative; the turn manager gives classified AI a bounded decision slice rather than replacing its behavior.
 
@@ -79,7 +82,7 @@ Disconnecting during your turn passes the turn immediately. Reconnecting within 
 
 ### Configuration And Catalogs
 
-The system loads [TurnBasedCombat.cfg](../../Data/TurnBasedCombat/TurnBasedCombat.cfg), [TurnActions.csv](../../Data/TurnBasedCombat/TurnActions.csv), [TurnEffects.csv](../../Data/TurnBasedCombat/TurnEffects.csv), and [TurnAI.csv](../../Data/TurnBasedCombat/TurnAI.csv). The configuration owns startup enablement, AP, actor interval, player and disconnect timeouts, escape range, AI/scheduler limits, HUD refresh, compatibility gating, and file logging. The CSV catalogs classify actions, actor-clock effects, and supported AI.
+The system loads [TurnBasedCombat.cfg](../../Data/TurnBasedCombat/TurnBasedCombat.cfg), [TurnActions.csv](../../Data/TurnBasedCombat/TurnActions.csv), [TurnEffects.csv](../../Data/TurnBasedCombat/TurnEffects.csv), and [TurnAI.csv](../../Data/TurnBasedCombat/TurnAI.csv). The configuration owns activation mode, startup enablement, AP, actor interval, player and disconnect timeouts, 12-tile NPC joining, 18-tile disengagement, join LOS, escape range, AI/scheduler limits, HUD refresh, compatibility gating, and file logging. Missing activation mode safely defaults to `PvPOnly`; an invalid mode blocks load or reload.
 
 `Enabled=true` requests activation during server initialization, but activation still must pass the compatibility and bridge gates. `[TurnCombat Enable` and `[TurnCombat Disable` change only the current process state; they do not rewrite the configuration file. `[TurnCombat Reload` rereads the files without changing the current enabled state and is refused while any combat group exists.
 
@@ -91,13 +94,15 @@ The checked-in default remains `Enabled=false` and `RequireCompatibilityGate=tru
 
 | Command | Staff behavior |
 | --- | --- |
-| `[TurnCombat Status` | Reports runtime enabled state, active group count, catalog version, compatibility result, and whether the core bridge is ready, unregistered, or faulted. |
+| `[TurnCombat Status` | Reports runtime enabled state, activation mode, active group count, process-local test-arm count, catalog version, compatibility result, and bridge health. |
 | `[TurnCombat Compatibility` | Runs the compatibility check and reports its result plus loaded effect and AI rule counts. |
 | `[TurnCombat Inspect` | Targets a participant and reports group, round, initiative, eligible round, AP, current-actor state, and pending action. |
 | `[TurnCombat Enable` | Enables the current process only if the bridge is ready and the compatibility gate passes. |
 | `[TurnCombat Disable` | Emergency rollback: disables the current process, dissolves every group, refunds pending actions, and restores native timers and combat scheduling. |
 | `[TurnCombat Reload` | Reloads configuration and catalogs when there are zero active groups. |
 | `[TurnCombat SelfTest` | Runs deterministic bridge, mutation, initiative, AP, catalog, travel, CSV, and compatibility checks. It does not replace the in-game matrix. |
+| `[TurnCombat ArmTest` | Targets one living non-player outside combat and permits it to seed a process-local PvE regression group. |
+| `[TurnCombat DisarmTest` | Removes the process-local PvE regression exception from the targeted mobile. |
 | `[TurnCombat ForceEnd` | Targets the current actor and ends that turn. Targeting a non-current participant is refused. |
 | `[TurnCombat ForceDissolve` | Targets any participant and dissolves that participant's entire group. |
 | `[TurnCombat EndTurn` | Runs the normal End Turn action for the Administrator's own participant. |
@@ -128,7 +133,7 @@ Operational references:
 
 ## Source Trace
 
-Reviewed against the current working tree on 2026-08-02.
+Reviewed against the current working tree on 2026-08-03.
 
 ### Core And Runtime Entry Points
 
@@ -141,10 +146,11 @@ Reviewed against the current working tree on 2026-08-02.
 
 ### Native Action And Effect Adapters
 
-- [Data/System/Source/Mobile.cs](../../Data/System/Source/Mobile.cs): combatant selection, movement, attacks, item/mobile use, inventory actions, participant mutations, relocation, deletion, status timers, and scheduling restoration.
+- [Data/System/Source/Mobile.cs](../../Data/System/Source/Mobile.cs): combatant selection, movement, attacks, item/mobile use, inventory actions, participant mutations, exact regeneration suspension/restoration, relocation, deletion, status timers, and scheduling restoration.
 - [Data/System/Source/Skills.cs](../../Data/System/Source/Skills.cs), [Data/Scripts/Magic/Base/Spell.cs](../../Data/Scripts/Magic/Base/Spell.cs), and [Data/System/Source/Targeting/Target.cs](../../Data/System/Source/Targeting/Target.cs): skill/spell reservations, actor-local cooldown time, target completion, and refunds.
 - [Data/Scripts/Mobiles/Base/Behavior.cs](../../Data/Scripts/Mobiles/Base/Behavior.cs): bounded turn-based AI pulse entry point.
 - [Data/Scripts/System/Misc/Poison.cs](../../Data/Scripts/System/Misc/Poison.cs): participant-local poison ticks.
+- [Data/Scripts/Items/Trades/Misc/Bandage.cs](../../Data/Scripts/Items/Trades/Misc/Bandage.cs) and [Data/Scripts/System/Commands/Player/BandagePacket.cs](../../Data/Scripts/System/Commands/Player/BandagePacket.cs): centralized bandage AP entry and actor-clock application timing.
 - [Data/Scripts/Mobiles/Base/BaseCreature.cs](../../Data/Scripts/Mobiles/Base/BaseCreature.cs) and [Data/Scripts/Magic/Base/UnsummonTimer.cs](../../Data/Scripts/Magic/Base/UnsummonTimer.cs): summon expiry suspension and restoration.
 
 ### Runtime And Persistence Coverage

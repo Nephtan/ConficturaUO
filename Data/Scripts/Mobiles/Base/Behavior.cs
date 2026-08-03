@@ -15107,7 +15107,7 @@ namespace Server.Mobiles
                 if (
                     m_toDisarm != null
                     && m_toDisarm.IsChildOf(combatant.Backpack)
-                    && m_Mobile.NextSkillTime <= DateTime.Now
+                    && m_Mobile.NextSkillTime <= TurnBasedCombatBridge.GetTime(m_Mobile)
                     && (
                         m_toDisarm.LootType != LootType.Blessed
                         && m_toDisarm.LootType != LootType.Newbied
@@ -15119,7 +15119,7 @@ namespace Server.Mobiles
                     if (m_Mobile.Target != null)
                         m_Mobile.Target.Invoke(m_Mobile, m_toDisarm);
                 }
-                else if (m_toDisarm == null && m_Mobile.NextSkillTime <= DateTime.Now)
+                else if (m_toDisarm == null && m_Mobile.NextSkillTime <= TurnBasedCombatBridge.GetTime(m_Mobile))
                 {
                     Container cpack = combatant.Backpack;
 

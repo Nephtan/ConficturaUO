@@ -118,6 +118,16 @@ namespace Server
                 ProcessTurnBasedTick();
             }
 
+            public int RemainingTicks
+            {
+                get { return ComputeRemainingTicks(m_Poison.m_Count, m_Index); }
+            }
+
+            public static int ComputeRemainingTicks(int count, int index)
+            {
+                return Math.Max(0, count - index + 1);
+            }
+
             public void ProcessTurnBasedTick()
             {
                 if (

@@ -1367,7 +1367,7 @@ namespace Server.Items
                     );
             }
 
-            from.NextCombatTime = DateTime.Now + GetDelay(from);
+            from.NextCombatTime = TurnBasedCombatBridge.GetTime(from) + GetDelay(from);
 
             if (UseSkillMod && m_AccuracyLevel != WeaponAccuracyLevel.Regular)
             {
@@ -1435,7 +1435,7 @@ namespace Server.Items
                 m.RemoveStatMod(modName + "Int");
 
                 if (weapon != null)
-                    m.NextCombatTime = DateTime.Now + weapon.GetDelay(m);
+                    m.NextCombatTime = TurnBasedCombatBridge.GetTime(m) + weapon.GetDelay(m);
 
                 if (UseSkillMod && m_SkillMod != null)
                 {

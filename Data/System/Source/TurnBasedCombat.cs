@@ -563,6 +563,34 @@ namespace Server
             }
         }
 
+        public static void RefundPendingAction(Mobile actor, object target)
+        {
+            ITurnBasedCombatHandler handler = m_Handler;
+
+            if (handler == null || actor == null || IsFaulted)
+                return;
+
+            try
+            {
+                if (!handler.Enabled)
+                    return;
+
+                TurnActionLease lease = handler.GetPendingActionLease(actor);
+
+                if (lease != null)
+                {
+                    handler.CompleteAction(
+                        lease,
+                        new TurnActionResult(actor, target, TurnActionPhase.Refund, false)
+                    );
+                }
+            }
+            catch (Exception ex)
+            {
+                Fail(handler, "Pending action refund", ex);
+            }
+        }
+
         public static IDisposable BeginMutation(TurnMutationRequest request)
         {
             ITurnBasedCombatHandler handler = m_Handler;

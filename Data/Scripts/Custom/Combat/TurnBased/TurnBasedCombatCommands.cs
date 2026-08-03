@@ -13,7 +13,7 @@ namespace Server.Custom.Confictura
             CommandSystem.Register("EscapeCombat", AccessLevel.Player, EscapeCombat_OnCommand);
         }
 
-        [Usage("TurnCombat <Status|Compatibility|Inspect|Enable|Disable|Reload|SelfTest|ForceEnd|ForceDissolve|EndTurn|Escape>")]
+        [Usage("TurnCombat <Status|Compatibility|Inspect|Enable|Disable|Reload|SelfTest|ArmTest|DisarmTest|ForceEnd|ForceDissolve|EndTurn|Escape>")]
         [Description("Administers the dynamic turn-based combat system.")]
         private static void TurnCombat_OnCommand(CommandEventArgs e)
         {
@@ -44,9 +44,11 @@ namespace Server.Custom.Confictura
                         bridgeStatus = "unregistered";
 
                     e.Mobile.SendMessage(
-                        "Turn combat: {0}; groups: {1}; catalog: {2}; compatibility: {3}; bridge: {4}.",
+                        "Turn combat: {0}; mode: {1}; groups: {2}; test armed: {3}; catalog: {4}; compatibility: {5}; bridge: {6}.",
                         manager.Enabled && bridgeReady ? "enabled" : "disabled",
+                        manager.Configuration.ActivationMode,
                         manager.GroupCount,
+                        manager.TestArmCount,
                         manager.Configuration.CatalogVersion,
                         gate ? "pass" : "blocked - " + gateReason,
                         bridgeStatus
@@ -106,6 +108,18 @@ namespace Server.Custom.Confictura
                     bool passed = TurnBasedCombatSelfTest.Run(e.Mobile, out report);
                     e.Mobile.SendMessage(passed ? 0x59 : 0x22, report);
                     manager.Log("self_test", null, e.Mobile, report);
+                    break;
+                }
+                case "armtest":
+                {
+                    e.Mobile.SendMessage("Target one non-player mobile to arm for process-local PvE regression testing.");
+                    e.Mobile.Target = new StaffTarget(StaffTargetAction.ArmTest);
+                    break;
+                }
+                case "disarmtest":
+                {
+                    e.Mobile.SendMessage("Target the process-local PvE regression mobile to disarm.");
+                    e.Mobile.Target = new StaffTarget(StaffTargetAction.DisarmTest);
                     break;
                 }
                 case "forceend":
@@ -169,6 +183,8 @@ namespace Server.Custom.Confictura
         private enum StaffTargetAction
         {
             Inspect,
+            ArmTest,
+            DisarmTest,
             ForceEnd,
             ForceDissolve
         }
@@ -191,6 +207,26 @@ namespace Server.Custom.Confictura
                 if (mobile == null || manager == null)
                 {
                     from.SendMessage("That is not a mobile combat participant.");
+                    return;
+                }
+
+                if (m_Action == StaffTargetAction.ArmTest)
+                {
+                    if (manager.ArmTestMobile(mobile))
+                        from.SendMessage("That non-player mobile is armed until disable or restart.");
+                    else
+                        from.SendMessage("That mobile cannot be armed (it must be a living non-player outside combat).");
+
+                    return;
+                }
+
+                if (m_Action == StaffTargetAction.DisarmTest)
+                {
+                    if (manager.DisarmTestMobile(mobile))
+                        from.SendMessage("That mobile is no longer armed for PvE regression testing.");
+                    else
+                        from.SendMessage("That mobile was not armed.");
+
                     return;
                 }
 

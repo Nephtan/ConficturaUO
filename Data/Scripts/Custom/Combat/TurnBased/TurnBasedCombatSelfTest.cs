@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Server.Items;
 
 namespace Server.Custom.Confictura
 {
@@ -53,6 +54,11 @@ namespace Server.Custom.Confictura
 
                 Assert(manager.Configuration.ActionPoints == 20, "Default AP is 20.", failures);
                 Assert(
+                    manager.Configuration.ActivationMode == TurnBasedCombatActivationMode.PvPOnly,
+                    "Activation mode is PvP-only.",
+                    failures
+                );
+                Assert(
                     Math.Abs(manager.Configuration.ActorSeconds - 5.0) < 0.001,
                     "Actor interval is five seconds.",
                     failures
@@ -60,7 +66,10 @@ namespace Server.Custom.Confictura
                 Assert(manager.Configuration.PlayerTimeoutSeconds == 30, "Player timeout is 30 seconds.", failures);
                 Assert(manager.Configuration.DisconnectGraceSeconds == 300, "Disconnect grace is five minutes.", failures);
                 Assert(manager.Configuration.EscapeRange == 18, "Escape range is 18 tiles.", failures);
-                Assert(manager.Configuration.EffectRuleCount >= 7, "Effect catalog is loaded.", failures);
+                Assert(manager.Configuration.NpcJoinRange == 12, "NPC join range is 12 tiles.", failures);
+                Assert(manager.Configuration.DisengageRange == 18, "Disengage range is 18 tiles.", failures);
+                Assert(manager.Configuration.RequireJoinLineOfSight, "NPC joining requires line of sight.", failures);
+                Assert(manager.Configuration.EffectRuleCount >= 8, "Effect catalog is loaded.", failures);
                 Assert(manager.Configuration.AIRuleCount >= 7, "AI catalog is loaded.", failures);
 
                 TurnEffectRule actorClockPoisonRule = new TurnEffectRule();
@@ -132,6 +141,8 @@ namespace Server.Custom.Confictura
                 false,
                 false,
                 false,
+                false,
+                false,
                 false
             );
             Assert(
@@ -147,7 +158,9 @@ namespace Server.Custom.Confictura
                 false,
                 false,
                 false,
-                false
+                false,
+                true,
+                true
             );
             Assert(
                 openingIntent == TurnCombatantIntentDisposition.OpenGroup
@@ -162,7 +175,9 @@ namespace Server.Custom.Confictura
                 false,
                 true,
                 false,
-                false
+                false,
+                true,
+                true
             );
             Assert(
                 joiningActor == TurnCombatantIntentDisposition.JoinActor
@@ -177,6 +192,8 @@ namespace Server.Custom.Confictura
                 true,
                 false,
                 false,
+                true,
+                true,
                 true
             );
             Assert(
@@ -188,6 +205,8 @@ namespace Server.Custom.Confictura
             );
 
             TurnCombatantIntentDisposition sameGroup = TurnBasedCombatManager.ClassifyCombatantIntent(
+                true,
+                true,
                 true,
                 true,
                 true,
@@ -207,6 +226,8 @@ namespace Server.Custom.Confictura
                 true,
                 true,
                 false,
+                true,
+                true,
                 true
             );
             Assert(
@@ -222,7 +243,9 @@ namespace Server.Custom.Confictura
                 true,
                 true,
                 true,
-                false
+                false,
+                true,
+                true
             );
             Assert(
                 outOfTurnIntent == TurnCombatantIntentDisposition.Reject
@@ -231,6 +254,127 @@ namespace Server.Custom.Confictura
                 "Out-of-turn combatant selection is rejected.",
                 failures
             );
+
+            TurnCombatantIntentDisposition ordinaryPvE = TurnBasedCombatManager.ClassifyCombatantIntent(
+                true,
+                false,
+                false,
+                false,
+                false,
+                false,
+                true
+            );
+            Assert(
+                ordinaryPvE == TurnCombatantIntentDisposition.Native,
+                "Ordinary PvE remains native when no two player-controlled sides are present.",
+                failures
+            );
+
+            TurnCombatantIntentDisposition distantNpc = TurnBasedCombatManager.ClassifyCombatantIntent(
+                true,
+                false,
+                true,
+                false,
+                false,
+                false,
+                false
+            );
+            Assert(
+                distantNpc == TurnCombatantIntentDisposition.Reject,
+                "An out-of-bound outsider cannot join an active PvP group.",
+                failures
+            );
+
+            Assert(
+                TurnBasedCombatManager.IsJoinWithinBoundary(true, true, true, true),
+                "An in-range visible NPC may join through hostile intent.",
+                failures
+            );
+            Assert(
+                !TurnBasedCombatManager.IsJoinWithinBoundary(true, false, true, true)
+                    && !TurnBasedCombatManager.IsJoinWithinBoundary(true, true, false, true),
+                "NPC join range and line of sight are both enforced.",
+                failures
+            );
+            Assert(
+                TurnBasedCombatManager.ShouldPruneEdge(false, true, true)
+                    && TurnBasedCombatManager.ShouldPruneEdge(true, false, false)
+                    && !TurnBasedCombatManager.ShouldPruneEdge(true, false, true),
+                "Edges prune across maps or only when both distant and unseen.",
+                failures
+            );
+
+            bool[,] splitGraph = new bool[4, 4];
+            splitGraph[0, 1] = splitGraph[1, 0] = true;
+            splitGraph[2, 3] = splitGraph[3, 2] = true;
+            Assert(
+                TurnBasedCombatManager.CountConnectedComponents(splitGraph) == 2,
+                "Disconnected hostility graphs are classified into separate components.",
+                failures
+            );
+
+            TimeSpan nextTick;
+            int dueTicks = TurnBasedCombatManager.ComputeDueTickCount(
+                TimeSpan.FromSeconds(2.0),
+                TimeSpan.FromSeconds(5.0),
+                TimeSpan.FromSeconds(2.0),
+                out nextTick
+            );
+            Assert(
+                dueTicks == 2 && nextTick == TimeSpan.FromSeconds(1.0),
+                "Actor-clock regeneration processes every exactly due tick.",
+                failures
+            );
+            Assert(
+                BandageContext.AdvanceTurnBasedRemaining(
+                    TimeSpan.FromSeconds(7.0),
+                    TimeSpan.FromSeconds(5.0)
+                ) == TimeSpan.FromSeconds(2.0)
+                    && BandageContext.AdvanceTurnBasedRemaining(
+                        TimeSpan.FromSeconds(2.0),
+                        TimeSpan.FromSeconds(5.0)
+                    ) == TimeSpan.Zero,
+                "Bandage application advances and completes on actor time.",
+                failures
+            );
+            Assert(
+                PoisonImpl.PoisonTimer.ComputeRemainingTicks(10, 0) == 11
+                    && PoisonImpl.PoisonTimer.ComputeRemainingTicks(10, 11) == 0,
+                "Poison exposes every remaining damage or natural-expiry tick.",
+                failures
+            );
+
+            DateTime actorTime = new DateTime(2000, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+            DateTime wallTime = actorTime.AddHours(8.0);
+            Assert(
+                TurnBasedCombatManager.ComputeRebasedCooldown(
+                    actorTime.AddSeconds(3.0),
+                    actorTime,
+                    wallTime
+                ) == wallTime.AddSeconds(3.0),
+                "Cooldown rebasing preserves only actor-relative remaining time.",
+                failures
+            );
+            Assert(
+                TurnBasedCombatManager.ClearRunningDirection(Direction.North | Direction.Running)
+                    == Direction.North,
+                "Turn completion strips the running direction flag.",
+                failures
+            );
+
+            if (testMobile != null && testMobile.Player)
+            {
+                Assert(
+                    TurnBasedCombatManager.ResolveEffectivePlayerPrincipal(testMobile) == testMobile,
+                    "A player resolves to their own effective principal.",
+                    failures
+                );
+                Assert(
+                    !TurnBasedCombatManager.IsDifferentPlayerSide(testMobile, testMobile),
+                    "The same player principal cannot seed PvP against itself.",
+                    failures
+                );
+            }
 
             Assert(
                 TurnBasedCombatManager.ComputeInitiativeTotal(20, 100) == 30,

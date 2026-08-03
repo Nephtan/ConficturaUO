@@ -1488,7 +1488,7 @@ namespace Server.Network
         {
             Mobile from = state.Mobile;
 
-            if (from.AccessLevel >= AccessLevel.Counselor || DateTime.Now >= from.NextActionTime)
+            if (from.AccessLevel >= AccessLevel.Counselor || TurnBasedCombatBridge.GetTime(from) >= from.NextActionTime)
             {
                 int value = pvSrc.ReadInt32();
 
@@ -1516,7 +1516,7 @@ namespace Server.Network
                     }
                 }
 
-                from.NextActionTime = DateTime.Now + TimeSpan.FromSeconds(0.5);
+                from.NextActionTime = TurnBasedCombatBridge.GetTime(from) + TimeSpan.FromSeconds(0.5);
             }
             else
             {

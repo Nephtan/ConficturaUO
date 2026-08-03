@@ -116,7 +116,7 @@ namespace Server.Spells.DeathKnight
             );
             Caster.FixedParticles(0x3735, 1, 30, 9503, EffectLayer.Waist);
             Caster.PlaySound(0x19D);
-            Caster.NextSpellTime = DateTime.Now;
+            Caster.NextSpellTime = TurnBasedCombatBridge.GetTime(Caster);
         }
 
         public override int ComputeKarmaAward()

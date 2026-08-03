@@ -139,7 +139,7 @@ namespace Server.SkillHandlers
             protected override void OnTargetFinish(Mobile from)
             {
                 if (m_SetSkillTime)
-                    from.NextSkillTime = DateTime.Now;
+                    from.NextSkillTime = TurnBasedCombatBridge.GetTime(from);
             }
 
             protected override void OnTarget(Mobile from, object targeted)
@@ -230,7 +230,7 @@ namespace Server.SkillHandlers
                             }
                             else
                             {
-                                from.NextSkillTime = DateTime.Now + TimeSpan.FromSeconds(5.0);
+                                from.NextSkillTime = TurnBasedCombatBridge.GetTime(from) + TimeSpan.FromSeconds(5.0);
                                 if (targ is BaseCreature)
                                 {
                                     BaseCreature bc = (BaseCreature)targ;
@@ -264,7 +264,7 @@ namespace Server.SkillHandlers
                                 }
                             }
                         }
-                        from.NextSkillTime = DateTime.Now + TimeSpan.FromSeconds(10.0);
+                        from.NextSkillTime = TurnBasedCombatBridge.GetTime(from) + TimeSpan.FromSeconds(10.0);
                         m_SetSkillTime = false;
                         if (from.Karma > -2459)
                         {
@@ -338,7 +338,7 @@ namespace Server.SkillHandlers
                             }
                             else
                             {
-                                from.NextSkillTime = DateTime.Now + TimeSpan.FromSeconds(5.0);
+                                from.NextSkillTime = TurnBasedCombatBridge.GetTime(from) + TimeSpan.FromSeconds(5.0);
                                 if (targ is BaseCreature)
                                 {
                                     BaseCreature bc = (BaseCreature)targ;
@@ -382,7 +382,7 @@ namespace Server.SkillHandlers
                                 }
                             }
                         }
-                        from.NextSkillTime = DateTime.Now + TimeSpan.FromSeconds(10.0);
+                        from.NextSkillTime = TurnBasedCombatBridge.GetTime(from) + TimeSpan.FromSeconds(10.0);
                         m_SetSkillTime = false;
                         if (from.Karma > -2459)
                         {
@@ -519,7 +519,7 @@ namespace Server.SkillHandlers
                         m_Target.SendLocalizedMessage(500404); // They seem unwilling to give you any money.
                     }
 
-                    m_From.NextSkillTime = DateTime.Now + TimeSpan.FromSeconds(10.0);
+                    m_From.NextSkillTime = TurnBasedCombatBridge.GetTime(m_From) + TimeSpan.FromSeconds(10.0);
                 }
             }
         }
