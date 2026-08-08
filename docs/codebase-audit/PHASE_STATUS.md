@@ -2,7 +2,7 @@
 
 Initialized: 2026-06-05T16:15:59.8020730-05:00
 
-Last updated: 2026-08-02T10:17:07.3189349-05:00
+Last updated: 2026-08-08T14:47:36.9745801-05:00
 
 Branch: `SAR`
 
@@ -13,6 +13,8 @@ Post-audit live-runtime baseline HEAD: `9dce70de docs: record source build basel
 Post-audit compile-only implementation HEAD: `09b7b7e5 feat: add compile-only script verification`
 
 Post-audit Town Crier Discord repair: `POST-BATCH-TCD-01` aggregates the minute-based wanted register into one memory-only roster event, adds session-only Exploration suppression and priority overflow, exposes sanitized session counters, and routes killer-tile and Moon Core fatalities through the existing death publication hook. `TownHerald`, `PlayerMobile`, namespaces, serialized types, and serializer layouts remain unchanged. Local policy/transport verification passed with 64 assertions; project truth is 6,598 includes and 6,598 sources with zero drift; Release server, solution IDE hygiene, runtime compile-only, and bounded initialization smoke passed. Live Discord and in-game fatality exercises remain owner staging checks because no webhook secret is present in this checkout. Focused evidence: `outputs/post-batch-tcd-town-crier-discord-review.csv` and `outputs/post-batch-tcd-town-crier-discord-closeout.md`.
+
+Post-audit Town Crier startup/Wanted repair: `POST-BATCH-TCD-02` admits journeys only for connected Player-level characters and converts Wanted Discord delivery to a compact memory-only successful-baseline model: initial total/top five, then additions, removals, or murder-count changes, with one replaceable pending snapshot. `TownHerald`, `PlayerMobile`, KillerTile/MoonCore behavior, namespaces, serialized types, serializers, world-save layouts, safe configuration defaults, and public bridge interfaces remain compatible. The focused harness passed 40 assertions; project truth remains 6,598/6,598 with zero drift; Release server, solution and Scripts IDE hygiene, forced runtime compile, and isolated real-save initialization passed. The isolated 150-line journey file remained byte/hash identical through offline mobile rebinding. Live Discord and connected in-game exercises remain owner staging checks. Focused evidence: `outputs/post-batch-tcd-02-town-crier-discord-review.csv` and `outputs/post-batch-tcd-02-town-crier-discord-closeout.md`.
 
 Post-audit latest implemented source batch: `POST-BATCH-E-94A` fixed the Monopoly `DisplayGumpResponse` packet override in `Data/Scripts/Items/Houses/Monopoly/Misc/GumpResponse.cs` by restoring switch/text count bounds and oversized text-entry disconnect behavior without changing server public APIs. Latest reviewed no-change batch: `POST-BATCH-E-100A` reviewed the obsolete legacy chat packet handlers with no source change; those rows remain active-overlay-covered by `POST-BATCH-C-01A` and broader legacy chat policy remains deferred.
 
