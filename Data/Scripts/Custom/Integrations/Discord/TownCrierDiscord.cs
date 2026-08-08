@@ -18,6 +18,8 @@ namespace Server.Custom.Confictura.Integrations.Discord
         private const int MaximumExplorationRepeatMinutes = 1440;
         private const int MaximumPendingEvents = 5;
         private const int MaximumMessageLength = 2000;
+        private const int MaximumWantedEventTextLength = 320;
+        private const int MaximumWantedDisplayEscapedLength = 24;
         private const int MaximumRetryCount = 3;
         private static readonly TimeSpan MurdererRepeatInterval = TimeSpan.FromHours(24.0);
 
@@ -34,8 +36,8 @@ namespace Server.Custom.Confictura.Integrations.Discord
         private static bool m_Configured;
         private static bool m_SessionDisabled;
         private static bool m_SendInProgress;
-        private static bool m_HasObservedWantedRoster;
-        private static bool m_LastObservedWantedRosterHadEntries;
+        private static WantedRosterSnapshot m_LastDeliveredWantedRoster;
+        private static WantedRosterSnapshot m_InFlightWantedRoster;
         private static string m_WebhookUrl;
         private static string m_ConfigurationMessage = "Not initialized.";
         private static string m_LastFailure;
@@ -137,10 +139,7 @@ namespace Server.Custom.Confictura.Integrations.Discord
         {
             try
             {
-                List<string> normalizedNotices = new List<string>();
-                Dictionary<string, bool> uniqueNotices = new Dictionary<string, bool>(
-                    StringComparer.OrdinalIgnoreCase
-                );
+                List<WantedRosterEntry> entries = new List<WantedRosterEntry>();
 
                 if (notices != null)
                 {
@@ -148,82 +147,87 @@ namespace Server.Custom.Confictura.Integrations.Discord
                     {
                         string normalizedText = NormalizeEventText(notices[i]);
 
-                        if (
-                            normalizedText.Length > 0
-                            && !uniqueNotices.ContainsKey(normalizedText)
-                        )
-                        {
-                            uniqueNotices[normalizedText] = true;
-                            normalizedNotices.Add(normalizedText);
-                        }
+                        if (normalizedText.Length > 0)
+                            entries.Add(WantedRosterEntry.FromLegacyNotice(normalizedText));
                     }
                 }
 
-                normalizedNotices.Sort(StringComparer.OrdinalIgnoreCase);
+                QueueWantedRoster(entries);
+            }
+            catch
+            {
+                // Discord must never interrupt the murderer register rebuild.
+            }
+        }
+
+        internal static void QueueWantedRoster(IList<WantedRosterEntry> entries)
+        {
+            try
+            {
+                WantedRosterSnapshot snapshot = WantedRosterSnapshot.Create(entries);
 
                 lock (m_SyncRoot)
                 {
-                    bool hasEntries = normalizedNotices.Count > 0;
-
-                    if (!m_HasObservedWantedRoster)
-                    {
-                        m_HasObservedWantedRoster = true;
-                        m_LastObservedWantedRosterHadEntries = hasEntries;
-
-                        if (!hasEntries)
-                            return;
-                    }
-                    else
-                    {
-                        bool postAllClear = m_LastObservedWantedRosterHadEntries && !hasEntries;
-                        m_LastObservedWantedRosterHadEntries = hasEntries;
-
-                        if (!hasEntries && !postAllClear)
-                            return;
-                    }
-
                     if (!CanSendLocked())
                         return;
 
-                    string fingerprint = hasEntries
-                        ? String.Join("\n", normalizedNotices.ToArray())
-                        : "<empty>";
-                    string eventText;
-
-                    if (!hasEntries)
+                    if (m_InFlightWantedRoster != null)
                     {
-                        eventText = "No one is currently wanted for murder.";
+                        if (snapshot.HasSameCounts(m_InFlightWantedRoster))
+                        {
+                            ReplacePendingWantedLocked(null);
+                            ++m_SuppressedCount;
+                            return;
+                        }
                     }
-                    else if (normalizedNotices.Count == 1)
+                    else if (m_LastDeliveredWantedRoster == null && snapshot.Count == 0)
                     {
-                        eventText = normalizedNotices[0];
+                        ReplacePendingWantedLocked(null);
+                        return;
                     }
-                    else
+                    else if (
+                        m_LastDeliveredWantedRoster != null
+                        && snapshot.HasSameCounts(m_LastDeliveredWantedRoster)
+                    )
                     {
-                        eventText =
-                            "The wanted register lists "
-                            + normalizedNotices.Count.ToString(CultureInfo.InvariantCulture)
-                            + " outlaws: "
-                            + String.Join(" ", normalizedNotices.ToArray());
-                    }
-
-                    DateTime now = DateTime.UtcNow;
-                    TownCrierEvent entry = new TownCrierEvent(
-                        "Wanted Murderers",
-                        eventText,
-                        TownCrierEventKind.WantedRoster,
-                        fingerprint,
-                        now
-                    );
-
-                    if (IsDuplicateWantedRosterLocked(entry, now))
-                    {
+                        // Display-only changes update the baseline without producing Discord noise.
+                        m_LastDeliveredWantedRoster = snapshot;
+                        ReplacePendingWantedLocked(null);
                         ++m_SuppressedCount;
                         return;
                     }
 
+                    DateTime now = DateTime.UtcNow;
+                    TownCrierEvent entry = TownCrierEvent.CreateWantedSnapshot(snapshot, now);
+
+                    if (!m_SendInProgress && now >= m_NextSendUtc && m_PendingEvents.Count == 0)
+                    {
+                        ++m_AcceptedCount;
+                        List<TownCrierEvent> immediate = new List<TownCrierEvent>();
+                        immediate.Add(entry);
+                        StartSendLocked(immediate, 0, now);
+                        return;
+                    }
+
+                    for (int i = 0; i < m_PendingEvents.Count; ++i)
+                    {
+                        TownCrierEvent pending = m_PendingEvents[i];
+
+                        if (
+                            pending.IsWantedSnapshot
+                            && pending.WantedSnapshot.HasSameCounts(snapshot)
+                        )
+                        {
+                            m_PendingEvents[i] = entry;
+                            ++m_SuppressedCount;
+                            SchedulePendingTimerLocked(now);
+                            return;
+                        }
+                    }
+
                     ++m_AcceptedCount;
-                    QueueEventLocked(entry, now);
+                    ReplacePendingWantedLocked(entry);
+                    SchedulePendingTimerLocked(now);
                 }
             }
             catch
@@ -291,6 +295,18 @@ namespace Server.Custom.Confictura.Integrations.Discord
                 ++m_PendingOmittedCount;
                 ++m_OverflowDroppedCount;
             }
+        }
+
+        private static void ReplacePendingWantedLocked(TownCrierEvent replacement)
+        {
+            for (int i = m_PendingEvents.Count - 1; i >= 0; --i)
+            {
+                if (m_PendingEvents[i].IsWantedSnapshot)
+                    m_PendingEvents.RemoveAt(i);
+            }
+
+            if (replacement != null)
+                AddPendingEventLocked(replacement);
         }
 
         private static bool IsDuplicateWantedRosterLocked(TownCrierEvent entry, DateTime now)
@@ -439,6 +455,14 @@ namespace Server.Custom.Confictura.Integrations.Discord
             if (events == null || events.Count == 0 || !CanSendLocked())
                 return;
 
+            PrepareWantedEventsLocked(events);
+
+            if (events.Count == 0)
+            {
+                SchedulePendingTimerLocked(now);
+                return;
+            }
+
             events.Sort(new Comparison<TownCrierEvent>(CompareEventsByCreatedUtc));
 
             string content = BuildMessage(events, omittedCount);
@@ -455,10 +479,13 @@ namespace Server.Custom.Confictura.Integrations.Discord
             m_SendInProgress = true;
             m_NextSendUtc = now + m_MinimumInterval;
             m_InFlightDedupeKeys.Clear();
+            m_InFlightWantedRoster = null;
 
             for (int i = 0; i < events.Count; ++i)
             {
-                if (events[i].IsWantedRoster || events[i].IsExploration)
+                if (events[i].IsWantedSnapshot)
+                    m_InFlightWantedRoster = events[i].WantedSnapshot;
+                else if (events[i].IsWantedRoster || events[i].IsExploration)
                     m_InFlightDedupeKeys[events[i].DedupeKey] = true;
             }
 
@@ -466,9 +493,44 @@ namespace Server.Custom.Confictura.Integrations.Discord
             {
                 m_SendInProgress = false;
                 m_InFlightDedupeKeys.Clear();
+                m_InFlightWantedRoster = null;
                 ++m_ExhaustedCount;
                 RecordFailureLocked("The server thread pool rejected the Discord request.");
                 SchedulePendingTimerLocked(now);
+            }
+        }
+
+        private static void PrepareWantedEventsLocked(List<TownCrierEvent> events)
+        {
+            for (int i = events.Count - 1; i >= 0; --i)
+            {
+                TownCrierEvent entry = events[i];
+
+                if (!entry.IsWantedSnapshot)
+                    continue;
+
+                WantedRosterSnapshot snapshot = entry.WantedSnapshot;
+
+                if (
+                    snapshot == null
+                    || (m_LastDeliveredWantedRoster == null && snapshot.Count == 0)
+                    || (
+                        m_LastDeliveredWantedRoster != null
+                        && snapshot.HasSameCounts(m_LastDeliveredWantedRoster)
+                    )
+                )
+                {
+                    if (snapshot != null && m_LastDeliveredWantedRoster != null)
+                        m_LastDeliveredWantedRoster = snapshot;
+
+                    events.RemoveAt(i);
+                    ++m_SuppressedCount;
+                    continue;
+                }
+
+                entry.SetEventText(
+                    BuildWantedEventText(snapshot, m_LastDeliveredWantedRoster)
+                );
             }
         }
 
@@ -644,6 +706,7 @@ namespace Server.Custom.Confictura.Integrations.Discord
                 {
                     m_SendInProgress = false;
                     m_InFlightDedupeKeys.Clear();
+                    m_InFlightWantedRoster = null;
                     SchedulePendingTimerLocked(DateTime.UtcNow);
                     return;
                 }
@@ -659,6 +722,7 @@ namespace Server.Custom.Confictura.Integrations.Discord
                     ++m_SuccessfulPostCount;
                     RecordSuccessfulDedupeLocked(result.Work.Events, now);
                     m_InFlightDedupeKeys.Clear();
+                    m_InFlightWantedRoster = null;
 
                     DateTime successCooldown = now + m_MinimumInterval;
 
@@ -676,6 +740,7 @@ namespace Server.Custom.Confictura.Integrations.Discord
                     m_PendingEvents.Clear();
                     m_PendingOmittedCount = 0;
                     m_InFlightDedupeKeys.Clear();
+                    m_InFlightWantedRoster = null;
                     ++m_PermanentDisableCount;
                     StopPendingTimerLocked();
                     RecordFailureLocked(result.FailureMessage);
@@ -714,6 +779,7 @@ namespace Server.Custom.Confictura.Integrations.Discord
 
                 m_SendInProgress = false;
                 m_InFlightDedupeKeys.Clear();
+                m_InFlightWantedRoster = null;
                 ++m_ExhaustedCount;
                 RecordFailureLocked(result.FailureMessage);
 
@@ -741,7 +807,9 @@ namespace Server.Custom.Confictura.Integrations.Discord
             {
                 TownCrierEvent entry = events[i];
 
-                if (entry.IsWantedRoster)
+                if (entry.IsWantedSnapshot && entry.WantedSnapshot != null)
+                    m_LastDeliveredWantedRoster = entry.WantedSnapshot;
+                else if (entry.IsWantedRoster)
                     m_MurdererDedupe[entry.DedupeKey] = now;
                 else if (entry.IsExploration && m_ExplorationRepeatInterval > TimeSpan.Zero)
                     m_ExplorationDedupe[entry.DedupeKey] = now;
@@ -781,6 +849,8 @@ namespace Server.Custom.Confictura.Integrations.Discord
                 )
                 {
                     m_SendInProgress = false;
+                    m_InFlightDedupeKeys.Clear();
+                    m_InFlightWantedRoster = null;
                     SchedulePendingTimerLocked(DateTime.UtcNow);
                     return;
                 }
@@ -789,11 +859,236 @@ namespace Server.Custom.Confictura.Integrations.Discord
                 {
                     m_SendInProgress = false;
                     m_InFlightDedupeKeys.Clear();
+                    m_InFlightWantedRoster = null;
                     ++m_ExhaustedCount;
                     RecordFailureLocked("The server thread pool rejected a Discord retry.");
                     SchedulePendingTimerLocked(DateTime.UtcNow);
                 }
             }
+        }
+
+        private static string BuildWantedEventText(
+            WantedRosterSnapshot snapshot,
+            WantedRosterSnapshot baseline
+        )
+        {
+            if (snapshot.Count == 0)
+                return "No one is currently wanted for murder.";
+
+            if (baseline == null)
+                return BuildInitialWantedEventText(snapshot);
+
+            List<WantedRosterMember> additions = new List<WantedRosterMember>();
+            List<WantedRosterMember> removals = new List<WantedRosterMember>();
+            List<WantedCountChange> countChanges = new List<WantedCountChange>();
+
+            foreach (KeyValuePair<string, WantedRosterMember> pair in snapshot.Members)
+            {
+                WantedRosterMember previous;
+
+                if (!baseline.Members.TryGetValue(pair.Key, out previous))
+                    additions.Add(pair.Value);
+                else if (previous.MurderCount != pair.Value.MurderCount)
+                    countChanges.Add(new WantedCountChange(previous, pair.Value));
+            }
+
+            foreach (KeyValuePair<string, WantedRosterMember> pair in baseline.Members)
+            {
+                if (!snapshot.Members.ContainsKey(pair.Key))
+                    removals.Add(pair.Value);
+            }
+
+            additions.Sort(new Comparison<WantedRosterMember>(CompareWantedMembers));
+            removals.Sort(new Comparison<WantedRosterMember>(CompareWantedMembersByName));
+            countChanges.Sort(new Comparison<WantedCountChange>(CompareWantedCountChanges));
+
+            string summary =
+                "The wanted register changed: "
+                + additions.Count.ToString(CultureInfo.InvariantCulture)
+                + " added, "
+                + removals.Count.ToString(CultureInfo.InvariantCulture)
+                + " removed, "
+                + countChanges.Count.ToString(CultureInfo.InvariantCulture)
+                + (countChanges.Count == 1
+                    ? " murder count changed."
+                    : " murder counts changed.");
+            List<string> clauses = new List<string>();
+
+            for (int i = 0; i < additions.Count; ++i)
+            {
+                WantedRosterMember member = additions[i];
+                clauses.Add(
+                    " Added "
+                        + CompactWantedDisplay(member.DisplayName)
+                        + " ("
+                        + FormatMurderCount(member.MurderCount)
+                        + ")."
+                );
+            }
+
+            for (int i = 0; i < removals.Count; ++i)
+            {
+                WantedRosterMember member = removals[i];
+                clauses.Add(
+                    " Removed "
+                        + CompactWantedDisplay(member.DisplayName)
+                        + " (was "
+                        + FormatMurderCount(member.MurderCount)
+                        + ")."
+                );
+            }
+
+            for (int i = 0; i < countChanges.Count; ++i)
+            {
+                WantedCountChange change = countChanges[i];
+                clauses.Add(
+                    " Updated "
+                        + CompactWantedDisplay(change.Current.DisplayName)
+                        + " ("
+                        + change.Previous.MurderCount.ToString(CultureInfo.InvariantCulture)
+                        + " to "
+                        + FormatMurderCount(change.Current.MurderCount)
+                        + ")."
+                );
+            }
+
+            return AppendWantedClauses(summary, clauses);
+        }
+
+        private static string BuildInitialWantedEventText(WantedRosterSnapshot snapshot)
+        {
+            List<WantedRosterMember> ranked = snapshot.GetRankedMembers();
+            int shownCount = Math.Min(5, ranked.Count);
+            StringBuilder text = new StringBuilder();
+
+            text.Append("The wanted register lists ");
+            text.Append(snapshot.Count.ToString(CultureInfo.InvariantCulture));
+            text.Append(snapshot.Count == 1 ? " outlaw. Most wanted: " : " outlaws. Most wanted: ");
+
+            for (int i = 0; i < shownCount; ++i)
+            {
+                if (i > 0)
+                    text.Append("; ");
+
+                WantedRosterMember member = ranked[i];
+                text.Append(CompactWantedDisplay(member.DisplayName));
+                text.Append(" (");
+                text.Append(FormatMurderCount(member.MurderCount));
+                text.Append(')');
+            }
+
+            text.Append('.');
+            return text.ToString();
+        }
+
+        private static string AppendWantedClauses(string summary, IList<string> clauses)
+        {
+            StringBuilder text = new StringBuilder(summary);
+            int appended = 0;
+
+            for (int i = 0; i < clauses.Count; ++i)
+            {
+                int omittedAfterAppend = clauses.Count - i - 1;
+                string omission = BuildWantedChangeOmission(omittedAfterAppend);
+                string candidate = text.ToString() + clauses[i] + omission;
+
+                if (EscapeDiscordText(candidate).Length > MaximumWantedEventTextLength)
+                    break;
+
+                text.Append(clauses[i]);
+                ++appended;
+            }
+
+            int omitted = clauses.Count - appended;
+
+            if (omitted > 0)
+                text.Append(BuildWantedChangeOmission(omitted));
+
+            return text.ToString();
+        }
+
+        private static string BuildWantedChangeOmission(int omitted)
+        {
+            if (omitted <= 0)
+                return String.Empty;
+
+            return " "
+                + omitted.ToString(CultureInfo.InvariantCulture)
+                + (omitted == 1 ? " additional change is omitted." : " additional changes are omitted.");
+        }
+
+        private static string CompactWantedDisplay(string displayName)
+        {
+            string value = String.IsNullOrEmpty(displayName) ? "Unknown outlaw" : displayName;
+
+            if (EscapeDiscordText(value).Length <= MaximumWantedDisplayEscapedLength)
+                return value;
+
+            StringBuilder compact = new StringBuilder();
+            int escapedLength = 0;
+
+            for (int i = 0; i < value.Length; ++i)
+            {
+                char c = value[i];
+                int characterLength = c == '@' || "\\*_~`>|[]()".IndexOf(c) >= 0 ? 2 : 1;
+
+                if (Char.IsHighSurrogate(c) && i + 1 < value.Length && Char.IsLowSurrogate(value[i + 1]))
+                    characterLength = 2;
+
+                if (escapedLength + characterLength + 1 > MaximumWantedDisplayEscapedLength)
+                    break;
+
+                compact.Append(c);
+                escapedLength += characterLength;
+
+                if (Char.IsHighSurrogate(c) && i + 1 < value.Length && Char.IsLowSurrogate(value[i + 1]))
+                {
+                    compact.Append(value[++i]);
+                }
+            }
+
+            compact.Append('\u2026');
+            return compact.ToString();
+        }
+
+        private static string FormatMurderCount(int murderCount)
+        {
+            return murderCount.ToString(CultureInfo.InvariantCulture)
+                + (murderCount == 1 ? " murder" : " murders");
+        }
+
+        private static int CompareWantedMembers(WantedRosterMember left, WantedRosterMember right)
+        {
+            int countComparison = right.MurderCount.CompareTo(left.MurderCount);
+
+            if (countComparison != 0)
+                return countComparison;
+
+            return CompareWantedMembersByName(left, right);
+        }
+
+        private static int CompareWantedMembersByName(
+            WantedRosterMember left,
+            WantedRosterMember right
+        )
+        {
+            int nameComparison = StringComparer.OrdinalIgnoreCase.Compare(
+                left.DisplayName,
+                right.DisplayName
+            );
+
+            if (nameComparison != 0)
+                return nameComparison;
+
+            return StringComparer.Ordinal.Compare(left.Identity, right.Identity);
+        }
+
+        private static int CompareWantedCountChanges(
+            WantedCountChange left,
+            WantedCountChange right
+        )
+        {
+            return CompareWantedMembers(left.Current, right.Current);
         }
 
         private static string BuildMessage(List<TownCrierEvent> events, int omittedCount)
@@ -1416,16 +1711,18 @@ namespace Server.Custom.Confictura.Integrations.Discord
             Normal,
             Exploration,
             WantedRoster,
+            WantedSnapshot,
         }
 
         private sealed class TownCrierEvent
         {
             private readonly string m_CategoryLabel;
-            private readonly string m_EventText;
+            private string m_EventText;
             private readonly TownCrierEventKind m_Kind;
             private readonly DateTime m_CreatedUtc;
             private readonly string m_DedupeKey;
             private readonly int m_Priority;
+            private readonly WantedRosterSnapshot m_WantedSnapshot;
             private int m_OccurrenceCount;
 
             public string CategoryLabel
@@ -1441,6 +1738,11 @@ namespace Server.Custom.Confictura.Integrations.Discord
             public bool IsWantedRoster
             {
                 get { return m_Kind == TownCrierEventKind.WantedRoster; }
+            }
+
+            public bool IsWantedSnapshot
+            {
+                get { return m_Kind == TownCrierEventKind.WantedSnapshot; }
             }
 
             public bool IsExploration
@@ -1468,6 +1770,11 @@ namespace Server.Custom.Confictura.Integrations.Discord
                 get { return m_OccurrenceCount; }
             }
 
+            public WantedRosterSnapshot WantedSnapshot
+            {
+                get { return m_WantedSnapshot; }
+            }
+
             public TownCrierEvent(
                 string categoryLabel,
                 string eventText,
@@ -1485,10 +1792,226 @@ namespace Server.Custom.Confictura.Integrations.Discord
                 m_OccurrenceCount = 1;
             }
 
+            private TownCrierEvent(WantedRosterSnapshot snapshot, DateTime createdUtc)
+            {
+                m_CategoryLabel = "Wanted Murderers";
+                m_EventText = String.Empty;
+                m_Kind = TownCrierEventKind.WantedSnapshot;
+                m_CreatedUtc = createdUtc;
+                m_DedupeKey = "Wanted Murderers\n<latest-state>";
+                m_Priority = GetCategoryPriority(m_CategoryLabel);
+                m_WantedSnapshot = snapshot;
+                m_OccurrenceCount = 1;
+            }
+
+            public static TownCrierEvent CreateWantedSnapshot(
+                WantedRosterSnapshot snapshot,
+                DateTime createdUtc
+            )
+            {
+                return new TownCrierEvent(snapshot, createdUtc);
+            }
+
+            public void SetEventText(string eventText)
+            {
+                m_EventText = eventText == null ? String.Empty : eventText;
+            }
+
             public void IncrementOccurrence()
             {
                 if (m_OccurrenceCount < Int32.MaxValue)
                     ++m_OccurrenceCount;
+            }
+        }
+
+        internal sealed class WantedRosterEntry
+        {
+            private readonly string m_Identity;
+            private readonly string m_DisplayName;
+            private readonly int m_MurderCount;
+
+            public string Identity
+            {
+                get { return m_Identity; }
+            }
+
+            public string DisplayName
+            {
+                get { return m_DisplayName; }
+            }
+
+            public int MurderCount
+            {
+                get { return m_MurderCount; }
+            }
+
+            public WantedRosterEntry(int serial, string displayName, int murderCount)
+                : this(
+                    "serial:" + serial.ToString("X8", CultureInfo.InvariantCulture),
+                    displayName,
+                    murderCount
+                )
+            {
+            }
+
+            private WantedRosterEntry(string identity, string displayName, int murderCount)
+            {
+                m_Identity = identity;
+                m_DisplayName = displayName;
+                m_MurderCount = murderCount;
+            }
+
+            public static WantedRosterEntry FromLegacyNotice(string notice)
+            {
+                int wantedIndex = notice.IndexOf(" is wanted", StringComparison.OrdinalIgnoreCase);
+                string displayName = wantedIndex > 0 ? notice.Substring(0, wantedIndex) : notice;
+                int murderCount = 1;
+                string marker = "for the murder of ";
+                int countIndex = notice.IndexOf(marker, StringComparison.OrdinalIgnoreCase);
+
+                if (countIndex >= 0)
+                {
+                    countIndex += marker.Length;
+                    int endIndex = notice.IndexOf(' ', countIndex);
+                    string countText = endIndex > countIndex
+                        ? notice.Substring(countIndex, endIndex - countIndex)
+                        : notice.Substring(countIndex);
+                    int parsedCount;
+
+                    if (Int32.TryParse(countText, NumberStyles.Integer, CultureInfo.InvariantCulture, out parsedCount))
+                        murderCount = parsedCount;
+                }
+
+                return new WantedRosterEntry("legacy:" + displayName, displayName, murderCount);
+            }
+        }
+
+        private sealed class WantedRosterMember
+        {
+            private readonly string m_Identity;
+            private readonly string m_DisplayName;
+            private readonly int m_MurderCount;
+
+            public string Identity
+            {
+                get { return m_Identity; }
+            }
+
+            public string DisplayName
+            {
+                get { return m_DisplayName; }
+            }
+
+            public int MurderCount
+            {
+                get { return m_MurderCount; }
+            }
+
+            public WantedRosterMember(string identity, string displayName, int murderCount)
+            {
+                m_Identity = identity;
+                m_DisplayName = displayName;
+                m_MurderCount = murderCount;
+            }
+        }
+
+        private sealed class WantedRosterSnapshot
+        {
+            private readonly Dictionary<string, WantedRosterMember> m_Members;
+
+            public int Count
+            {
+                get { return m_Members.Count; }
+            }
+
+            public Dictionary<string, WantedRosterMember> Members
+            {
+                get { return m_Members; }
+            }
+
+            private WantedRosterSnapshot(Dictionary<string, WantedRosterMember> members)
+            {
+                m_Members = members;
+            }
+
+            public static WantedRosterSnapshot Create(IList<WantedRosterEntry> entries)
+            {
+                Dictionary<string, WantedRosterMember> members =
+                    new Dictionary<string, WantedRosterMember>(StringComparer.OrdinalIgnoreCase);
+
+                if (entries != null)
+                {
+                    for (int i = 0; i < entries.Count; ++i)
+                    {
+                        WantedRosterEntry entry = entries[i];
+
+                        if (entry == null || String.IsNullOrEmpty(entry.Identity) || entry.MurderCount <= 0)
+                            continue;
+
+                        string displayName = NormalizeEventText(entry.DisplayName);
+
+                        if (displayName.Length == 0)
+                            displayName = "Unknown outlaw";
+
+                        members[entry.Identity] = new WantedRosterMember(
+                            entry.Identity,
+                            displayName,
+                            entry.MurderCount
+                        );
+                    }
+                }
+
+                return new WantedRosterSnapshot(members);
+            }
+
+            public bool HasSameCounts(WantedRosterSnapshot other)
+            {
+                if (other == null || Count != other.Count)
+                    return false;
+
+                foreach (KeyValuePair<string, WantedRosterMember> pair in m_Members)
+                {
+                    WantedRosterMember otherMember;
+
+                    if (
+                        !other.m_Members.TryGetValue(pair.Key, out otherMember)
+                        || pair.Value.MurderCount != otherMember.MurderCount
+                    )
+                    {
+                        return false;
+                    }
+                }
+
+                return true;
+            }
+
+            public List<WantedRosterMember> GetRankedMembers()
+            {
+                List<WantedRosterMember> members = new List<WantedRosterMember>(m_Members.Values);
+                members.Sort(new Comparison<WantedRosterMember>(CompareWantedMembers));
+                return members;
+            }
+        }
+
+        private sealed class WantedCountChange
+        {
+            private readonly WantedRosterMember m_Previous;
+            private readonly WantedRosterMember m_Current;
+
+            public WantedRosterMember Previous
+            {
+                get { return m_Previous; }
+            }
+
+            public WantedRosterMember Current
+            {
+                get { return m_Current; }
+            }
+
+            public WantedCountChange(WantedRosterMember previous, WantedRosterMember current)
+            {
+                m_Previous = previous;
+                m_Current = current;
             }
         }
 

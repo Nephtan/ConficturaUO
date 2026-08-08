@@ -866,7 +866,7 @@ namespace Server.Misc
                 }
             }
 
-            if ((m is PlayerMobile) && (m.AccessLevel < AccessLevel.GameMaster))
+            if (ShouldRecordJourney(m))
             {
                 if (!m.Alive && m.QuestArrow == null)
                 {
@@ -893,6 +893,13 @@ namespace Server.Misc
                 }
             }
             return null;
+        }
+
+        internal static bool ShouldRecordJourney(Mobile m)
+        {
+            return m is PlayerMobile
+                && m.AccessLevel == AccessLevel.Player
+                && m.NetState != null;
         }
 
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2143,7 +2150,8 @@ namespace Server.Misc
             if (LoggingFunctions.LoggingEvents() == true)
             {
                 LoggingFunctions.LogClear("Logging Murderers");
-                List<string> wantedNotices = new List<string>();
+                List<TownCrierDiscord.WantedRosterEntry> wantedEntries =
+                    new List<TownCrierDiscord.WantedRosterEntry>();
 
                 // GET ALL OF THE MURDERERS ///////////////////////////////
                 foreach (Account a in Accounts.GetAccounts())
@@ -2165,14 +2173,28 @@ namespace Server.Misc
                             string wantedNotice = LoggingFunctions.LogKillers(m, m.Kills);
 
                             if (!String.IsNullOrEmpty(wantedNotice))
-                                wantedNotices.Add(wantedNotice);
+                            {
+                                string wantedDisplayName =
+                                    m.Name + " the " + GetPlayerInfo.GetSkillTitle(m);
+
+                                if (m.Title != null)
+                                    wantedDisplayName = m.Name + " " + m.Title;
+
+                                wantedEntries.Add(
+                                    new TownCrierDiscord.WantedRosterEntry(
+                                        m.Serial.Value,
+                                        wantedDisplayName,
+                                        m.Kills
+                                    )
+                                );
+                            }
                         }
 
                         ++index;
                     }
                 }
 
-                TownCrierDiscord.QueueWantedRoster(wantedNotices);
+                TownCrierDiscord.QueueWantedRoster(wantedEntries);
             }
         }
     }
