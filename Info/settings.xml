@@ -276,7 +276,7 @@
 
 // Set to the number 0 to disable. The other values are 1, 2, or 3 where the default is 1. When greater than 0, you will enable the creature character feature of the game. This allows players to become a creature of the game as their player character. They can play like the game normally plays, but since they would be using creature models their appearance will remain static (some species have options to change appearances to other models). They can equip and use things normally (except cloaks and quivers), but their equipment will be displayed as icons on their paperdoll so they can manage their inventory. They will not be able to start as alien races if that option is enabled, but they can do the other starting area options if their alignment allows. Disabling this option, at a later time, will return all characters back to human upon world restart. The different values indicate the size of creatures allowed to choose from. Option '1' allows for roughly human height humanoids like lizardment, ratmen, trolls, and ogres. Option '2' allows for option '1' and includes larger creatures like ogre lords, ettins, and daemons. Option '3' includes the first two options, but also allows for creatures such as giants and balrons. There is a more details explanation of this system using the gypsy's shelf in her starting tent.
 
-<setting>1</setting>
+<setting>3</setting>
 
 // This setting is the number of days a character must exist before a player can delete them.
 
