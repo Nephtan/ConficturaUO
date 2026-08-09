@@ -1,3 +1,43 @@
+[*]August 9th, 2026
+Nephtan
+Announcements:
+
+A major shard update is now live! This release brings a large special-enemy balance pass, new rare rewards, expanded creature-character choices, Town Crier Discord news, Godfrey's latest dungeon map work, updated launcher components, and extensive stability improvements.
+
+Important launcher update:
+
+- Please run the Confictura launcher before playing so you receive every part of this update.
+- The launcher now distributes the latest versions of ClassicUO and ClassicAssist.
+- The launcher also installs Godfrey's latest dungeon map and static changes. Update before exploring his dungeons so entrances, terrain, walls, decorations, and other world features display correctly.
+
+Special enemies and rewards:
+
+- 35 boss and rare-creature profiles have been rebalanced, including improvements to damage, combat skills, and their ability to detect hidden adventurers.
+- 33 of these special enemies now have refreshed reward profiles, creating opportunities to discover 23 new signature items as well as established rare treasures from new sources.
+- These rewards include unusual weapons, armor, wearables, talismans, trinkets, and trophies. Some powerful equipment carries deliberate drawbacks, so inspect your discoveries carefully.
+- Exact treasure chances and formulas remain hidden for adventurers to discover in-game.
+- The Dark Dragon Avatar, Dragon Hydra, and boss-scaled creatures released through Summon Prison encounters can no longer be tamed.
+
+Character choices:
+
+- All configured creature-character size tiers are now enabled, expanding the available forms through the race-change system to include larger creatures such as ogre lords, ettins, daemons, giants, and balrons.
+- Creature characters retain their creature appearance while using normal equipment, although cloaks and quivers remain restricted and equipped gear is represented on the paperdoll.
+
+Town Crier news:
+
+- The Town Crier's Discord feed is active, sharing curated journeys, victories, deaths, deeds, gossip, and Wanted-list changes with the community.
+- Repeated travel noise and duplicate reports are reduced, while private-player details remain protected.
+
+Stability and reliability:
+
+- Hundreds of safeguards now make item use, tools, deeds, dyes, books, potions, containers, crafting, bulk orders, gardening, guilds, housing, remodeling, boats, quests, magic, combat, creature AI, invasions, champions, and many other systems safer.
+- Actions now handle stale targets, moved or deleted items, changed inventories, outdated menus, invalid selections, and disconnected characters more gracefully.
+- Save and load corrections protect several spell effects, Summon Prison state, and resurrection records.
+- Network actions and nearby-world searches have been hardened to reduce broken interactions, crashes, duplicate reports, and resource buildup during long play sessions.
+- Outside the announced enemy and reward changes, these protections are intended to preserve normal successful behavior, costs, chances, and rewards.
+
+Run the launcher, patch completely, and then enjoy the update. Good hunting!
+
 [*]June 28th, 2026
 Nephtan
 Announcements:
