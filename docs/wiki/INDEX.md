@@ -51,6 +51,7 @@ Guides are grouped by primary audience and use case.
 - [Creature Transformation Guide](Creature_Transformation_Guide.md)
 - [Race Token System](Race_Token_System.md)
 - [Research Magic](Research_Magic.md)
+- [Searching, Hiding, and Stealth](Searching_Hiding_Stealth.md)
 - [Shinobi Magic](Shinobi_Magic.md)
 - [Skill Stone](skill-stone.md)
 - [Syth Magic](Syth_Magic.md)
