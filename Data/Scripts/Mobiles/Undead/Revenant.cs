@@ -179,7 +179,7 @@ namespace Server.Mobiles
             if (
                 m_Target.Hidden
                 && InRange(m_Target, 3)
-                && DateTime.Now >= this.NextSkillTime
+                && TurnBasedCombatBridge.GetTime(this) >= this.NextSkillTime
                 && UseSkill(SkillName.Searching)
             )
             {

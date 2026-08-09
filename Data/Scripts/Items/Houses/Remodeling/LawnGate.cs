@@ -216,17 +216,25 @@ namespace Server.Items
             }
 
             IPooledEnumerable eable = Map.GetItemsInRange(Location, 20);
-            foreach (Item item in eable)
+
+            try
             {
-                if (item is BaseHouse)
+                foreach (Item item in eable)
                 {
-                    BaseHouse house = (BaseHouse)item;
-                    if (house.Owner == Placer)
+                    if (item is BaseHouse)
                     {
-                        House = house;
-                        return;
+                        BaseHouse house = (BaseHouse)item;
+                        if (house.Owner == Placer)
+                        {
+                            House = house;
+                            return;
+                        }
                     }
                 }
+            }
+            finally
+            {
+                eable.Free();
             }
         }
         #endregion

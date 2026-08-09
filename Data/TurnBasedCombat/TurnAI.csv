@@ -1,0 +1,8 @@
+RuntimeType,Strategy,PulsePolicy,SpecialHandling,DispositionReason,TestId
+Server.Mobiles.BaseCreature,StockPulse,CurrentSpeed,Preserve OnThink bard Think Obey and searching order,Generic stock and controlled AI,TBC-AI-STOCK
+Server.Mobiles.OmniAI,StockPulse,CurrentSpeed,Read live AIObject before each decision,OmniAI remains legality-first,TBC-AI-OMNI
+Server.Factions.BaseFactionGuard,StockPulse,CurrentSpeed,Preserve FactionGuardAI shell,Forced AI classified by assignable mobile type,TBC-AI-FACTION-GUARD
+Server.Mobiles.Clone,StockPulse,CurrentSpeed,Preserve CloneAI shell,Mirror image forced AI is explicitly classified,TBC-AI-MIRROR
+Server.Mobiles.Clown,StockPulse,CurrentSpeed,Preserve ClownAI shell,Jester forced AI is explicitly classified,TBC-AI-CLOWN
+Server.Custom.Confictura.CloneOfflinePlayerCharacters.CharacterClone,StockPulse,CurrentSpeed,Use live OmniAI and central AP bridge,Offline clone forced AI is explicitly classified,TBC-AI-CHARACTER-CLONE
+Server.Mobiles.AITester,StockPulse,CurrentSpeed,Use live OmniAI and central AP bridge,Staff tester forced AI is explicitly classified,TBC-AI-TESTER

@@ -372,6 +372,54 @@ namespace Server.Mobiles
             set { m_SummonEnd = value; }
         }
 
+        private Timer m_TurnBasedUnsummonTimer;
+
+        internal void RegisterTurnBasedUnsummonTimer(Timer timer)
+        {
+            m_TurnBasedUnsummonTimer = timer;
+        }
+
+        internal void ClearTurnBasedUnsummonTimer(Timer timer)
+        {
+            if (m_TurnBasedUnsummonTimer == timer)
+                m_TurnBasedUnsummonTimer = null;
+        }
+
+        public TimeSpan SuspendTurnBasedUnsummonTimer()
+        {
+            if (!Summoned)
+                return TimeSpan.Zero;
+
+            TimeSpan remaining = m_SummonEnd - DateTime.Now;
+
+            if (m_TurnBasedUnsummonTimer != null)
+            {
+                m_TurnBasedUnsummonTimer.Stop();
+                m_TurnBasedUnsummonTimer = null;
+            }
+
+            return remaining > TimeSpan.Zero ? remaining : TimeSpan.Zero;
+        }
+
+        public void ResumeTurnBasedUnsummonTimer(TimeSpan remaining)
+        {
+            if (Deleted || !Summoned)
+                return;
+
+            if (m_TurnBasedUnsummonTimer != null)
+                m_TurnBasedUnsummonTimer.Stop();
+
+            if (remaining <= TimeSpan.Zero)
+            {
+                Delete();
+                return;
+            }
+
+            m_SummonEnd = DateTime.Now + remaining;
+            m_TurnBasedUnsummonTimer = new UnsummonTimer(m_SummonMaster, this, remaining);
+            m_TurnBasedUnsummonTimer.Start();
+        }
+
         public virtual Faction FactionAllegiance
         {
             get { return null; }
@@ -2122,32 +2170,42 @@ namespace Server.Mobiles
 
                 if (map != null && target != null)
                 {
-                    foreach (Mobile m in target.GetMobilesInRange(BreathDistance))
+                    IPooledEnumerable eable = target.GetMobilesInRange(BreathDistance);
+
+                    try
                     {
-                        if (
-                            m != this
-                            && m != target
-                            && this.InLOS(m)
-                            && m is PlayerMobile
-                            && m.Alive
-                            && CanBeHarmful(m)
-                            && !m.Blessed
-                        )
-                            targets.Add(m);
-                        if (
-                            m != this
-                            && m != target
-                            && this.InLOS(m)
-                            && m is BaseCreature
-                            && m.Alive
-                            && CanBeHarmful(m)
-                            && !m.Blessed
-                        )
+                        foreach (Mobile m in eable)
                         {
-                            if (((BaseCreature)m).Summoned || ((BaseCreature)m).Controlled)
+                            if (
+                                m != this
+                                && m != target
+                                && this.InLOS(m)
+                                && m is PlayerMobile
+                                && m.Alive
+                                && CanBeHarmful(m)
+                                && !m.Blessed
+                            )
                                 targets.Add(m);
+                            if (
+                                m != this
+                                && m != target
+                                && this.InLOS(m)
+                                && m is BaseCreature
+                                && m.Alive
+                                && CanBeHarmful(m)
+                                && !m.Blessed
+                            )
+                            {
+                                if (((BaseCreature)m).Summoned || ((BaseCreature)m).Controlled)
+                                    targets.Add(m);
+                            }
                         }
                     }
+                    finally
+                    {
+                        eable.Free();
+                    }
+
                     for (int i = 0; i < targets.Count; ++i)
                     {
                         Mobile m = targets[i];
@@ -8150,24 +8208,33 @@ namespace Server.Mobiles
         {
             int iCount = 0;
 
-            foreach (Mobile m in this.GetMobilesInRange(iRange))
+            IPooledEnumerable eable = this.GetMobilesInRange(iRange);
+
+            try
             {
-                if (m is BaseCreature)
+                foreach (Mobile m in eable)
                 {
-                    if (((BaseCreature)m).Team == Team)
+                    if (m is BaseCreature)
                     {
-                        if (!m.Deleted)
+                        if (((BaseCreature)m).Team == Team)
                         {
-                            if (m != this)
+                            if (!m.Deleted)
                             {
-                                if (CanSee(m))
+                                if (m != this)
                                 {
-                                    iCount++;
+                                    if (CanSee(m))
+                                    {
+                                        iCount++;
+                                    }
                                 }
                             }
                         }
                     }
                 }
+            }
+            finally
+            {
+                eable.Free();
             }
 
             return iCount;
@@ -11474,10 +11541,19 @@ namespace Server.Mobiles
             if (EmoteHue > 10000)
             {
                 bool keepMe = false;
-                foreach (Item i in GetItemsInRange(20))
+                IPooledEnumerable eable = GetItemsInRange(20);
+
+                try
                 {
-                    if (i is BaseBoat && i.Serial == EmoteHue)
-                        keepMe = true;
+                    foreach (Item i in eable)
+                    {
+                        if (i is BaseBoat && i.Serial == EmoteHue)
+                            keepMe = true;
+                    }
+                }
+                finally
+                {
+                    eable.Free();
                 }
 
                 if (!keepMe)
@@ -11858,13 +11934,22 @@ namespace Server.Mobiles
         {
             Corpse toRummage = null;
 
-            foreach (Item item in this.GetItemsInRange(2))
+            IPooledEnumerable eable = this.GetItemsInRange(2);
+
+            try
             {
-                if (item is Corpse && item.Items.Count > 0)
+                foreach (Item item in eable)
                 {
-                    toRummage = (Corpse)item;
-                    break;
+                    if (item is Corpse && item.Items.Count > 0)
+                    {
+                        toRummage = (Corpse)item;
+                        break;
+                    }
                 }
+            }
+            finally
+            {
+                eable.Free();
             }
 
             if (toRummage == null)
@@ -12006,38 +12091,47 @@ namespace Server.Mobiles
         {
             List<Mobile> move = new List<Mobile>();
 
-            foreach (Mobile m in master.GetMobilesInRange(10))
-            {
-                if (m is BaseCreature)
-                {
-                    BaseCreature pet = (BaseCreature)m;
+            IPooledEnumerable eable = master.GetMobilesInRange(10);
 
-                    if (pet.Controlled && pet.ControlMaster == master)
+            try
+            {
+                foreach (Mobile m in eable)
+                {
+                    if (m is BaseCreature)
                     {
-                        if (!onlyBonded || pet.IsBonded)
+                        BaseCreature pet = (BaseCreature)m;
+
+                        if (pet.Controlled && pet.ControlMaster == master)
                         {
-                            if (
-                                pet.ControlOrder == OrderType.Guard
-                                || pet.ControlOrder == OrderType.Follow
-                                || pet.ControlOrder == OrderType.Come
+                            if (!onlyBonded || pet.IsBonded)
+                            {
+                                if (
+                                    pet.ControlOrder == OrderType.Guard
+                                    || pet.ControlOrder == OrderType.Follow
+                                    || pet.ControlOrder == OrderType.Come
+                                )
+                                    move.Add(pet);
+                            }
+                            else if (
+                                pet is HenchmanFamiliar
+                                || pet is AerialServant
+                                || pet is PackBeast
+                                || pet is Robot
+                                || pet is GolemPorter
+                                || pet is GolemFighter
+                                || pet is FrankenPorter
+                                || pet is FrankenFighter
                             )
+                            {
                                 move.Add(pet);
-                        }
-                        else if (
-                            pet is HenchmanFamiliar
-                            || pet is AerialServant
-                            || pet is PackBeast
-                            || pet is Robot
-                            || pet is GolemPorter
-                            || pet is GolemFighter
-                            || pet is FrankenPorter
-                            || pet is FrankenFighter
-                        )
-                        {
-                            move.Add(pet);
+                            }
                         }
                     }
                 }
+            }
+            finally
+            {
+                eable.Free();
             }
 
             foreach (Mobile m in move)

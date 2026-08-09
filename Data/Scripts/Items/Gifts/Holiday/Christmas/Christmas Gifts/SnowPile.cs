@@ -46,6 +46,9 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
+            if (from == null || from.Deleted || Deleted)
+                return;
+
             if (!IsChildOf(from.Backpack))
             {
                 from.SendLocalizedMessage(1042010); // You must have the object in your backpack to use it.
@@ -75,7 +78,8 @@ namespace Server.Items
 
             protected override void OnTick()
             {
-                m_From.EndAction(typeof(SnowPile));
+                if (m_From != null && !m_From.Deleted)
+                    m_From.EndAction(typeof(SnowPile));
             }
         }
 
@@ -93,13 +97,22 @@ namespace Server.Items
 
             protected override void OnTarget(Mobile from, object target)
             {
-                if (target == from)
+                if (from == null || from.Deleted || m_Snow == null || m_Snow.Deleted)
+                    return;
+
+                Mobile targ = target as Mobile;
+                Item item = target as Item;
+
+                if ((targ != null && targ.Deleted) || (item != null && item.Deleted))
+                {
+                    from.SendLocalizedMessage(1005577); // You can only throw a snowball at something that can throw one back.
+                }
+                else if (target == from)
                 {
                     from.SendLocalizedMessage(1005576); // You can't throw this at yourself.
                 }
-                else if (target is Mobile)
+                else if (targ != null)
                 {
-                    Mobile targ = (Mobile)target;
                     Container pack = targ.Backpack;
 
                     if (

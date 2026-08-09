@@ -122,6 +122,9 @@ namespace Server.Mobiles
 
         public override void OnMovement(Mobile m, Point3D oldLocation)
         {
+            if (m == null || m.Deleted || Deleted)
+                return;
+
             if (m_Talked == false)
             {
                 if (m.InRange(this, 4))

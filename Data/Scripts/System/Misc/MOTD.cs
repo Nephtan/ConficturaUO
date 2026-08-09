@@ -162,34 +162,43 @@ namespace Joeku.MOTD
     {
         public static void EventSink_OnLogin(LoginEventArgs e)
         {
-            if (CheckLogin(e.Mobile))
-                SendGump(e.Mobile);
-            else if ((e.Mobile).Region is StartRegion)
-            {
-                if (((e.Mobile).Region).Name == "the Forest")
-                    (e.Mobile).SendGump(new WelcomeGump((e.Mobile)));
-                else
-                    (e.Mobile).SendGump(new MonsterGump((e.Mobile)));
-            }
+            if (e == null || e.Mobile == null || e.Mobile.Deleted)
+                return;
 
             Mobile from = e.Mobile;
+            PlayerMobile pm = from as PlayerMobile;
 
-            if (from is PlayerMobile)
+            if (pm == null)
+                return;
+
+            if (CheckLogin(from))
+                SendGump(from);
+            else if (from.Region is StartRegion)
             {
-                if (Server.Misc.PlayerSettings.GetQuickConfig(from, 2))
-                    (from).SendGump(new QuickBar(from));
-
-                if (Server.Misc.PlayerSettings.GetReagentConfig(from, 2))
-                    (from).SendGump(new RegBar(from));
+                if ((from.Region).Name == "the Forest")
+                    from.SendGump(new WelcomeGump(from));
+                else
+                    from.SendGump(new MonsterGump(from));
             }
+
+            if (Server.Misc.PlayerSettings.GetQuickConfig(from, 2))
+                from.SendGump(new QuickBar(from));
+
+            if (Server.Misc.PlayerSettings.GetReagentConfig(from, 2))
+                from.SendGump(new RegBar(from));
         }
 
         public static bool CheckLogin(Mobile m)
         {
+            PlayerMobile pm = m as PlayerMobile;
+
+            if (pm == null || pm.Deleted)
+                return false;
+
             if (m.Region != null && m.Region is StartRegion)
                 return false;
 
-            if (((PlayerMobile)m).CharacterMOTD == 1)
+            if (pm.CharacterMOTD == 1)
                 return false;
 
             return true;
@@ -214,6 +223,11 @@ namespace Joeku.MOTD
 
         public static void SendGump(Mobile mob, bool help, int index, int origin)
         {
+            PlayerMobile pm = mob as PlayerMobile;
+
+            if (pm == null || pm.Deleted)
+                return;
+
             if (!help)
                 CheckFiles();
 

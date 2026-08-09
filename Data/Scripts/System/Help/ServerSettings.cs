@@ -91,6 +91,9 @@ namespace Server.Engines.Help
 
         public override void OnResponse(NetState state, RelayInfo info)
         {
+            if (state == null || info == null || state.Mobile == null || state.Mobile.Deleted)
+                return;
+
             Mobile from = state.Mobile;
 
             from.SendSound(0x4A);
@@ -778,6 +781,9 @@ namespace Server.Gumps
 
         public override void OnResponse(NetState sender, RelayInfo info)
         {
+            if (sender == null || info == null || sender.Mobile == null || sender.Mobile.Deleted)
+                return;
+
             Mobile from = sender.Mobile;
             from.SendSound(0x4A);
             from.CloseGump(typeof(Server.Engines.Help.ServerSettingsGump));

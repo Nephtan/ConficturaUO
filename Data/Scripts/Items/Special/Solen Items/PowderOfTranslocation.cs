@@ -31,6 +31,9 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
+            if (from == null || from.Deleted || Deleted)
+                return;
+
             if (from.InRange(this.GetWorldLocation(), 2))
             {
                 from.Target = new InternalTarget(this);
@@ -53,7 +56,7 @@ namespace Server.Items
 
             protected override void OnTarget(Mobile from, object targeted)
             {
-                if (m_Powder.Deleted)
+                if (from == null || from.Deleted || m_Powder == null || m_Powder.Deleted)
                     return;
 
                 if (!from.InRange(m_Powder.GetWorldLocation(), 2))

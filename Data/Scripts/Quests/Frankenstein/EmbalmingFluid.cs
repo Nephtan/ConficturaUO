@@ -32,7 +32,10 @@ namespace Server.Items
         {
             Target t;
 
-            if (!IsChildOf(from.Backpack))
+            if (from == null || from.Deleted)
+                return;
+
+            if (Deleted || from.Backpack == null || !IsChildOf(from.Backpack))
             {
                 from.SendLocalizedMessage(1060640); // The item must be in your backpack to use it.
             }
@@ -56,45 +59,62 @@ namespace Server.Items
 
             protected override void OnTarget(Mobile from, object targeted)
             {
+                if (from == null || from.Deleted)
+                    return;
+
+                if (
+                    m_Embalming == null
+                    || m_Embalming.Deleted
+                    || from.Backpack == null
+                    || !m_Embalming.IsChildOf(from.Backpack)
+                )
+                {
+                    from.SendLocalizedMessage(1060640); // The item must be in your backpack to use it.
+                    return;
+                }
+
                 Item iFluid = targeted as Item;
 
                 if (iFluid is FrankenPorterItem)
                 {
-                    FrankenPorterItem xFluid = (FrankenPorterItem)iFluid;
-
-                    int myCharges = xFluid.m_Charges;
-
-                    if (!iFluid.IsChildOf(from.Backpack))
+                    if (iFluid.Deleted || !iFluid.IsChildOf(from.Backpack))
                     {
                         from.SendMessage("You can only use this fluid on items in your pack.");
                     }
-                    else if (myCharges < 100)
-                    {
-                        int UpMe = 5;
-                        if (xFluid.PorterType > 0)
-                        {
-                            UpMe = 1;
-                        }
-
-                        xFluid.m_Charges = xFluid.m_Charges + UpMe;
-
-                        if (xFluid.m_Charges > 100)
-                        {
-                            xFluid.m_Charges = 100;
-                        }
-
-                        from.SendMessage("You preserve your reanimation with the embalming fluid.");
-
-                        xFluid.InvalidateProperties();
-
-                        from.RevealingAction();
-                        from.PlaySound(0x23E);
-                        from.AddToBackpack(new Bottle());
-                        m_Embalming.Consume();
-                    }
                     else
                     {
-                        from.SendMessage("That reanimation is already full of fluid.");
+                        FrankenPorterItem xFluid = (FrankenPorterItem)iFluid;
+
+                        int myCharges = xFluid.m_Charges;
+
+                        if (myCharges < 100)
+                        {
+                            int UpMe = 5;
+                            if (xFluid.PorterType > 0)
+                            {
+                                UpMe = 1;
+                            }
+
+                            xFluid.m_Charges = xFluid.m_Charges + UpMe;
+
+                            if (xFluid.m_Charges > 100)
+                            {
+                                xFluid.m_Charges = 100;
+                            }
+
+                            from.SendMessage("You preserve your reanimation with the embalming fluid.");
+
+                            xFluid.InvalidateProperties();
+
+                            from.RevealingAction();
+                            from.PlaySound(0x23E);
+                            from.AddToBackpack(new Bottle());
+                            m_Embalming.Consume();
+                        }
+                        else
+                        {
+                            from.SendMessage("That reanimation is already full of fluid.");
+                        }
                     }
                 }
                 else

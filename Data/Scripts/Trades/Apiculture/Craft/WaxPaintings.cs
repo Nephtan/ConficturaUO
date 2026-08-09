@@ -286,9 +286,12 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
+            if (from == null || from.Deleted || Deleted)
+                return;
+
             Target t;
 
-            if (!IsChildOf(from.Backpack))
+            if (from.Backpack == null || !IsChildOf(from.Backpack))
             {
                 from.SendLocalizedMessage(1060640); // The item must be in your backpack to use it.
             }
@@ -312,9 +315,29 @@ namespace Server.Items
 
             protected override void OnTarget(Mobile from, object targeted)
             {
+                if (from == null || from.Deleted)
+                    return;
+
+                if (
+                    m_Wax == null
+                    || m_Wax.Deleted
+                    || from.Backpack == null
+                    || !m_Wax.IsChildOf(from.Backpack)
+                )
+                {
+                    from.SendLocalizedMessage(1060640); // The item must be in your backpack to use it.
+                    return;
+                }
+
                 if (targeted is Mobile)
                 {
                     Mobile portrait = (Mobile)targeted;
+
+                    if (portrait.Deleted)
+                    {
+                        from.SendMessage("This painting doesn't even look like that.");
+                        return;
+                    }
 
                     if (
                         portrait.Body == 606

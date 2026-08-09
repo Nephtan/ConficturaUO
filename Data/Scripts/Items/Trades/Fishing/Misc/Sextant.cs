@@ -33,6 +33,9 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
+            if (from == null || from.Deleted || Deleted)
+                return;
+
             string world = Worlds.GetMyWorld(from.Map, from.Location, from.X, from.Y);
 
             int xLong = 0,

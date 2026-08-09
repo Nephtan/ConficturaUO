@@ -48,6 +48,9 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
+            if (from == null || from.Deleted || Deleted)
+                return;
+
             if (!IsChildOf(from.Backpack))
             {
                 from.SendMessage("This must be in your backpack to use.");

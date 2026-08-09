@@ -436,6 +436,9 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
+            if (from == null || from.Deleted || Deleted || from.NetState == null)
+                return;
+
             string sThing = "";
             switch (Utility.RandomMinMax(0, 51))
             {

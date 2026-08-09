@@ -267,6 +267,9 @@ namespace Knives.Chat3
 
             public override void OnResponse(int hue)
             {
+                if (c_Gump == null || c_Gump.Owner == null || c_Gump.Owner.Deleted)
+                    return;
+
                 Data.GetData(c_Gump.Owner).MsgC = hue;
 
                 c_Gump.NewGump();

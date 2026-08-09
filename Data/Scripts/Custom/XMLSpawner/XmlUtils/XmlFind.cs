@@ -1036,7 +1036,7 @@ namespace Server.Mobiles
         [Description("Finds objects in the world")]
         public static void XmlFind_OnCommand(CommandEventArgs e)
         {
-            if (e == null || e.Mobile == null)
+            if (e == null || e.Mobile == null || e.Mobile.Deleted || e.Arguments == null)
                 return;
 
             Account acct = e.Mobile.Account as Account;

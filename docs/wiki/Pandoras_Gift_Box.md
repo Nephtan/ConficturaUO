@@ -146,3 +146,35 @@ Both `RandomGiftBox` and `PandorasGiftBox` use versioned RunUO serialization.
 * Account mode stores account usernames as strings rather than `Account` references.
 * Per-character mode stores serialized `Mobile` references.
 * Staff should place only items with zero-parameter constructors inside the box unless the item is known to duplicate safely through this reflection path.
+
+## Source Trace
+
+POST-BATCH-T reviewed this page on 2026-06-14T21:09:11.0049244-05:00 against current source and audit registers.
+
+- Canonical status: Canonical.
+- Queue rows: PBN-0102.
+- Backlog rows: RB-06740.
+- Audit registers used: documentation-truth-table.csv, runtime-hook-map.csv, serialization-register.csv, and project-truth-register.csv.
+
+### Source Files Reviewed
+
+- Data/Scripts/Custom/PandorasGiftBox/PandorasGiftBox.cs (CurrentFile)
+
+### Runtime Evidence
+
+- Hook summary: Event=2.
+- Data/Scripts/Custom/PandorasGiftBox/PandorasGiftBox.cs:L151 Event EventSink access=GlobalOrInternal
+- Data/Scripts/Custom/PandorasGiftBox/PandorasGiftBox.cs:L152 Event EventSink access=GlobalOrInternal
+
+### Serialization Evidence
+
+- Serialized rows matched: 2.
+- Data/Scripts/Custom/PandorasGiftBox/PandorasGiftBox.cs:Server.Items.PandorasGiftBox version=0 serialize=L320 deserialize=L338 alignment=CountMatchNeedsTypeReview:UnknownWrites=5
+- Data/Scripts/Custom/PandorasGiftBox/PandorasGiftBox.cs:Server.Items.RandomGiftBox version=0 serialize=L75 deserialize=L82 alignment=CountMismatch:Writes=0;Reads=1
+
+### Project And Runtime Coverage
+
+- Data/Scripts/Custom/PandorasGiftBox/PandorasGiftBox.cs=Keep
+- Data/Scripts/Custom/PandorasGiftBox/PandorasGiftBox.cs=Keep
+
+No C# source, project files, XML/config/data files, namespaces, serializers, gameplay behavior, or migration policy were changed in POST-BATCH-T.

@@ -37,15 +37,18 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
+            if (from == null || from.Deleted)
+                return;
+
             PlayerMobile pm = from as PlayerMobile;
 
-            if (!IsChildOf(from.Backpack))
+            if (Deleted || from.Backpack == null || !IsChildOf(from.Backpack))
             {
                 from.SendLocalizedMessage(1042001); // That must be in your pack for you to use it.
             }
             else if (pm == null || from.Skills[SkillName.Alchemy].Base < 100.0)
             {
-                pm.SendMessage("Only a Grandmaster Alchemist can learn from this book.");
+                from.SendMessage("Only a Grandmaster Alchemist can learn from this book.");
             }
             else if (pm.Glassblowing)
             {

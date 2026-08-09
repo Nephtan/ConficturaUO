@@ -4,14 +4,14 @@
 OmniAI is a `BaseAI` replacement in `Server.Mobiles` that lets a creature mix standard movement and targeting with optional Bushido, Knightship, Magery, Necromancy, and Ninjitsu actions. It is not a standalone engine with spawners or persistence hooks; it is attached per creature by returning `new OmniAI(this)` from that creature's `ForcedAI` override.
 
 ## Core Scripts
-- `Data/Scripts/Custom/OmniAI/OmniAI Core.cs`
-- `Data/Scripts/Custom/OmniAI/OmniAI Shared.cs`
-- `Data/Scripts/Custom/OmniAI/OmniAI Bushido.cs`
-- `Data/Scripts/Custom/OmniAI/OmniAI Knightship.cs`
-- `Data/Scripts/Custom/OmniAI/OmniAI Magery.cs`
-- `Data/Scripts/Custom/OmniAI/OmniAI Necromancy.cs`
-- `Data/Scripts/Custom/OmniAI/OmniAI Ninjitsu.cs`
-- `Data/Scripts/Custom/OmniAI/AITester.cs`
+- `Data/Scripts/Custom/ThirdParty/OmniAI/OmniAI Core.cs`
+- `Data/Scripts/Custom/ThirdParty/OmniAI/OmniAI Shared.cs`
+- `Data/Scripts/Custom/ThirdParty/OmniAI/OmniAI Bushido.cs`
+- `Data/Scripts/Custom/ThirdParty/OmniAI/OmniAI Knightship.cs`
+- `Data/Scripts/Custom/ThirdParty/OmniAI/OmniAI Magery.cs`
+- `Data/Scripts/Custom/ThirdParty/OmniAI/OmniAI Necromancy.cs`
+- `Data/Scripts/Custom/ThirdParty/OmniAI/OmniAI Ninjitsu.cs`
+- `Data/Scripts/Custom/ThirdParty/OmniAI/AITester.cs`
 
 ## How A Creature Uses It
 Override `ForcedAI` on a `BaseCreature` subclass:
@@ -123,3 +123,55 @@ Ninjitsu supports stealth-first movement and burst tools.
 
 ## Audience
 Staff and developers
+
+## Source Trace
+
+POST-BATCH-T reviewed this page on 2026-06-14T21:09:11.0049244-05:00 against current source and audit registers.
+
+- Canonical status: Canonical.
+- Queue rows: PBN-0052.
+- Backlog rows: RB-06739.
+- Audit registers used: documentation-truth-table.csv, runtime-hook-map.csv, serialization-register.csv, and project-truth-register.csv.
+
+### Source Files Reviewed
+
+- Data/Scripts/Custom/ThirdParty/OmniAI/OmniAI Core.cs (CurrentFile)
+- Data/Scripts/Custom/ThirdParty/OmniAI/OmniAI Shared.cs (CurrentFile)
+- Data/Scripts/Custom/ThirdParty/OmniAI/OmniAI Bushido.cs (CurrentFile)
+- Data/Scripts/Custom/ThirdParty/OmniAI/OmniAI Knightship.cs (CurrentFile)
+- Data/Scripts/Custom/ThirdParty/OmniAI/OmniAI Magery.cs (CurrentFile)
+- Data/Scripts/Custom/ThirdParty/OmniAI/OmniAI Necromancy.cs (CurrentFile)
+- Data/Scripts/Custom/ThirdParty/OmniAI/OmniAI Ninjitsu.cs (CurrentFile)
+- Data/Scripts/Custom/ThirdParty/OmniAI/AITester.cs (CurrentFile)
+
+### Runtime Evidence
+
+- Hook summary: Event=1; Timer=1.
+- Data/Scripts/Custom/ThirdParty/OmniAI/OmniAI Ninjitsu.cs:L90 Timer Timer.DelayCall access=GlobalOrInternal
+- Data/Scripts/Custom/ThirdParty/OmniAI/OmniAI Shared.cs:L227 Event EventSink access=GlobalOrInternal
+
+### Serialization Evidence
+
+- Serialized rows matched: 1.
+- Data/Scripts/Custom/ThirdParty/OmniAI/AITester.cs:Server.Mobiles.AITester version=0 serialize=L123 deserialize=L129 alignment=AlignedByCountAndKnownTypes
+
+### Project And Runtime Coverage
+
+- Data/Scripts/Custom/ThirdParty/OmniAI/AITester.cs=Keep
+- Data/Scripts/Custom/ThirdParty/OmniAI/AITester.cs=Keep
+- Data/Scripts/Custom/ThirdParty/OmniAI/OmniAI Bushido.cs=Keep
+- Data/Scripts/Custom/ThirdParty/OmniAI/OmniAI Bushido.cs=Keep
+- Data/Scripts/Custom/ThirdParty/OmniAI/OmniAI Core.cs=Keep
+- Data/Scripts/Custom/ThirdParty/OmniAI/OmniAI Core.cs=Keep
+- Data/Scripts/Custom/ThirdParty/OmniAI/OmniAI Knightship.cs=Keep
+- Data/Scripts/Custom/ThirdParty/OmniAI/OmniAI Knightship.cs=Keep
+- Data/Scripts/Custom/ThirdParty/OmniAI/OmniAI Magery.cs=Keep
+- Data/Scripts/Custom/ThirdParty/OmniAI/OmniAI Magery.cs=Keep
+- Data/Scripts/Custom/ThirdParty/OmniAI/OmniAI Necromancy.cs=Keep
+- Data/Scripts/Custom/ThirdParty/OmniAI/OmniAI Necromancy.cs=Keep
+- Data/Scripts/Custom/ThirdParty/OmniAI/OmniAI Ninjitsu.cs=Keep
+- Data/Scripts/Custom/ThirdParty/OmniAI/OmniAI Ninjitsu.cs=Keep
+- Data/Scripts/Custom/ThirdParty/OmniAI/OmniAI Shared.cs=Keep
+- Data/Scripts/Custom/ThirdParty/OmniAI/OmniAI Shared.cs=Keep
+
+No C# source, project files, XML/config/data files, namespaces, serializers, gameplay behavior, or migration policy were changed in POST-BATCH-T.

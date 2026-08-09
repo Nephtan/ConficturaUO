@@ -37,21 +37,39 @@ namespace Server.Items
             {
                 int canDo = 0;
 
-                foreach (Mobile m in this.GetMobilesInRange(20))
+                IPooledEnumerable eable = this.GetMobilesInRange(20);
+                try
                 {
-                    if (m is TailorGuildmaster)
-                        ++canDo;
-                }
-                foreach (Item i in this.GetItemsInRange(20))
-                {
-                    if (i is TailorShoppe && !i.Movable)
+                    foreach (Mobile m in eable)
                     {
-                        TailorShoppe b = (TailorShoppe)i;
-
-                        if (b.ShoppeOwner == from)
+                        if (m is TailorGuildmaster)
                             ++canDo;
                     }
                 }
+                finally
+                {
+                    eable.Free();
+                }
+
+                IPooledEnumerable eable2 = this.GetItemsInRange(20);
+                try
+                {
+                    foreach (Item i in eable2)
+                    {
+                        if (i is TailorShoppe && !i.Movable)
+                        {
+                            TailorShoppe b = (TailorShoppe)i;
+
+                            if (b.ShoppeOwner == from)
+                                ++canDo;
+                        }
+                    }
+                }
+                finally
+                {
+                    eable2.Free();
+                }
+
                 if (
                     from.Map == Map.SavagedEmpire
                     && from.X > 1054

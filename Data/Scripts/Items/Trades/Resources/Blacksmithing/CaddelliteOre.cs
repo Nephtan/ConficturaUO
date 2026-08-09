@@ -27,7 +27,12 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
-            if (!IsChildOf(from.Backpack))
+            if (from == null || from.Deleted || Deleted)
+            {
+                return;
+            }
+
+            if (from.Backpack == null || !IsChildOf(from.Backpack))
             {
                 from.SendMessage("This must be in your backpack to use.");
                 return;
@@ -36,7 +41,7 @@ namespace Server.Items
             {
                 from.SendMessage("You must be a master blacksmith to smelt caddellite ore!");
             }
-            else if (from.Region.IsPartOf("the Great Dwarven Forge"))
+            else if (from.Region != null && from.Region.IsPartOf("the Great Dwarven Forge"))
             {
                 from.PlaySound(0x208);
                 from.Animate(11, 5, 1, true, false, 0);

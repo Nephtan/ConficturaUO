@@ -525,7 +525,7 @@ namespace Server.Spells
                 if (Core.AOS && m_Caster.Player && type == DisturbType.Hurt)
                     DoHurtFizzle();
 
-                m_Caster.NextSpellTime = DateTime.Now + GetDisturbRecovery();
+                m_Caster.NextSpellTime = TurnBasedCombatBridge.GetTime(m_Caster) + GetDisturbRecovery();
             }
             else if (m_State == SpellState.Sequencing)
             {
@@ -615,7 +615,7 @@ namespace Server.Spells
 
         public bool Cast()
         {
-            m_StartCastTime = DateTime.Now;
+            m_StartCastTime = TurnBasedCombatBridge.GetTime(m_Caster);
 
             if (
                 Core.AOS
@@ -666,7 +666,7 @@ namespace Server.Spells
             {
                 m_Caster.SendLocalizedMessage(502643); // You can not cast a spell while frozen.
             }
-            else if (CheckNextSpellTime && DateTime.Now < m_Caster.NextSpellTime)
+            else if (CheckNextSpellTime && TurnBasedCombatBridge.GetTime(m_Caster) < m_Caster.NextSpellTime)
             {
                 m_Caster.SendLocalizedMessage(502644); // You have not yet recovered from casting a spell.
             }
@@ -686,6 +686,35 @@ namespace Server.Spells
                     && m_Caster.Region.OnBeginSpellCast(m_Caster, this)
                 )
                 {
+                    TimeSpan castDelay = this.GetCastDelay();
+                    TimeSpan castRecovery = this.GetCastRecovery();
+                    int requestedAP = (int)Math.Ceiling(
+                        (castDelay.TotalSeconds + castRecovery.TotalSeconds) / 0.25
+                    );
+
+                    if (requestedAP < 1)
+                        requestedAP = 1;
+                    else if (requestedAP > 20)
+                        requestedAP = 20;
+
+                    TurnActionDecision turnDecision = TurnBasedCombatBridge.BeginAction(
+                        new TurnActionRequest(
+                            m_Caster,
+                            null,
+                            this,
+                            TurnActionKind.Spell,
+                            requestedAP,
+                            false,
+                            false
+                        )
+                    );
+
+                    if (!String.IsNullOrEmpty(turnDecision.Message))
+                        m_Caster.SendMessage(turnDecision.Message);
+
+                    if (!turnDecision.Allowed)
+                        return false;
+
                     m_State = SpellState.Casting;
                     m_Caster.Spell = this;
 
@@ -693,8 +722,6 @@ namespace Server.Spells
                         m_Caster.RevealingAction();
 
                     SayMantra();
-
-                    TimeSpan castDelay = this.GetCastDelay();
 
                     if (ShowHandMovement && m_Caster.Body.IsHuman)
                     {
@@ -732,10 +759,47 @@ namespace Server.Spells
                     if (Core.ML)
                         WeaponAbility.ClearCurrentAbility(m_Caster);
 
-                    m_CastTimer = new CastTimer(this, castDelay);
-                    m_CastTimer.Start();
+                    using (TurnBasedCombatBridge.BeginActionScope(turnDecision.Lease))
+                    {
+                        OnBeginCast();
+                    }
 
-                    OnBeginCast();
+                    if (turnDecision.Lease != null || TurnBasedCombatBridge.IsParticipant(m_Caster))
+                    {
+                        Target originalTarget = m_Caster.Target;
+                        bool targetPending = false;
+                        bool turnSucceeded = false;
+
+                        try
+                        {
+                            using (TurnBasedCombatBridge.BeginActionScope(turnDecision.Lease))
+                            {
+                            CompleteCast();
+                            turnSucceeded = true;
+                            targetPending = m_Caster.Target != null && m_Caster.Target != originalTarget;
+                            }
+                        }
+                        finally
+                        {
+                            if (!targetPending)
+                            {
+                                TurnBasedCombatBridge.CompleteAction(
+                                    turnDecision.Lease,
+                                    new TurnActionResult(
+                                        m_Caster,
+                                        null,
+                                        turnSucceeded ? TurnActionPhase.Commit : TurnActionPhase.Refund,
+                                        turnSucceeded
+                                    )
+                                );
+                            }
+                        }
+                    }
+                    else
+                    {
+                        m_CastTimer = new CastTimer(this, castDelay);
+                        m_CastTimer.Start();
+                    }
 
                     return true;
                 }
@@ -1185,15 +1249,30 @@ namespace Server.Spells
             if (!target.Alive && !allowDead)
             {
                 m_Caster.SendLocalizedMessage(501857); // This spell won't work on that!
+                TurnBasedCombatBridge.InvalidateTargetIntent(Caster, target);
                 return false;
             }
-            else if (Caster.CanBeBeneficial(target, true, allowDead) && CheckSequence())
+            else if (Caster.CanBeBeneficial(target, true, allowDead))
             {
+                TurnActionDecision turnDecision = TurnBasedCombatBridge.BeginAction(
+                    new TurnActionRequest(Caster, target, this, TurnActionKind.Spell, 0, false, true)
+                );
+
+                if (!turnDecision.Allowed)
+                {
+                    TurnBasedCombatBridge.InvalidateTargetIntent(Caster, target);
+                    return false;
+                }
+
+                if (!CheckSequence())
+                    return false;
+
                 Caster.DoBeneficial(target);
                 return true;
             }
             else
             {
+                TurnBasedCombatBridge.InvalidateTargetIntent(Caster, target);
                 return false;
             }
         }
@@ -1203,15 +1282,30 @@ namespace Server.Spells
             if (!target.Alive)
             {
                 m_Caster.SendLocalizedMessage(501857); // This spell won't work on that!
+                TurnBasedCombatBridge.InvalidateTargetIntent(Caster, target);
                 return false;
             }
-            else if (Caster.CanBeHarmful(target) && CheckSequence())
+            else if (Caster.CanBeHarmful(target))
             {
+                TurnActionDecision turnDecision = TurnBasedCombatBridge.BeginAction(
+                    new TurnActionRequest(Caster, target, this, TurnActionKind.Spell, 0, true, false)
+                );
+
+                if (!turnDecision.Allowed)
+                {
+                    TurnBasedCombatBridge.InvalidateTargetIntent(Caster, target);
+                    return false;
+                }
+
+                if (!CheckSequence())
+                    return false;
+
                 Caster.DoHarmful(target);
                 return true;
             }
             else
             {
+                TurnBasedCombatBridge.InvalidateTargetIntent(Caster, target);
                 return false;
             }
         }
@@ -1248,6 +1342,39 @@ namespace Server.Spells
             }
         }
 
+        private void CompleteCast()
+        {
+            if (m_State != SpellState.Casting || m_Caster.Spell != this)
+                return;
+
+            m_State = SpellState.Sequencing;
+            m_CastTimer = null;
+            m_Caster.OnSpellCast(this);
+            m_Caster.Region.OnSpellCast(m_Caster, this);
+            TimeSpan recovery = GetCastRecovery();
+
+            if (TurnBasedCombatBridge.IsParticipant(m_Caster))
+            {
+                double excessSeconds = GetCastDelay().TotalSeconds
+                    + recovery.TotalSeconds
+                    - TurnBasedCombatBridge.GetActorInterval(m_Caster).TotalSeconds;
+                recovery = excessSeconds > 0.0
+                    ? TimeSpan.FromSeconds(excessSeconds)
+                    : TimeSpan.Zero;
+            }
+
+            m_Caster.NextSpellTime = TurnBasedCombatBridge.GetTime(m_Caster) + recovery;
+
+            Target originalTarget = m_Caster.Target;
+
+            OnCast();
+
+            if (m_Caster.Player && m_Caster.Target != originalTarget && Caster.Target != null)
+                m_Caster.Target.BeginTimeout(m_Caster, TimeSpan.FromSeconds(30.0));
+
+            m_CastTimer = null;
+        }
+
         private class CastTimer : Timer
         {
             private Spell m_Spell;
@@ -1262,30 +1389,7 @@ namespace Server.Spells
 
             protected override void OnTick()
             {
-                if (m_Spell.m_State == SpellState.Casting && m_Spell.m_Caster.Spell == m_Spell)
-                {
-                    m_Spell.m_State = SpellState.Sequencing;
-                    m_Spell.m_CastTimer = null;
-                    m_Spell.m_Caster.OnSpellCast(m_Spell);
-                    m_Spell.m_Caster.Region.OnSpellCast(m_Spell.m_Caster, m_Spell);
-                    m_Spell.m_Caster.NextSpellTime = DateTime.Now + m_Spell.GetCastRecovery(); // Spell.NextSpellDelay;
-
-                    Target originalTarget = m_Spell.m_Caster.Target;
-
-                    m_Spell.OnCast();
-
-                    if (
-                        m_Spell.m_Caster.Player
-                        && m_Spell.m_Caster.Target != originalTarget
-                        && m_Spell.Caster.Target != null
-                    )
-                        m_Spell.m_Caster.Target.BeginTimeout(
-                            m_Spell.m_Caster,
-                            TimeSpan.FromSeconds(30.0)
-                        );
-
-                    m_Spell.m_CastTimer = null;
-                }
+                m_Spell.CompleteCast();
             }
         }
     }

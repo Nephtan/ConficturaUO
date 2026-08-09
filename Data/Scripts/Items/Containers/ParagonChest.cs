@@ -115,6 +115,9 @@ namespace Server.Items
 
         public override void OnSingleClick(Mobile from)
         {
+            if (from == null || from.Deleted || Deleted)
+                return;
+
             LabelTo(from, 1063449, m_Name);
         }
 

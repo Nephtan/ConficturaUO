@@ -117,16 +117,25 @@ namespace Server.Spells.Necromancy
                     if (Caster.CanBeHarmful(m, false))
                         targets.Add(m);
 
-                    foreach (Mobile targ in m.GetMobilesInRange(2))
-                        if (!(Caster is BaseCreature && targ is BaseCreature))
-                            if (
-                                (targ != Caster && m != targ)
-                                && (
-                                    SpellHelper.ValidIndirectTarget(Caster, targ)
-                                    && Caster.CanBeHarmful(targ, false)
+                    IPooledEnumerable eable = m.GetMobilesInRange(2);
+
+                    try
+                    {
+                        foreach (Mobile targ in eable)
+                            if (!(Caster is BaseCreature && targ is BaseCreature))
+                                if (
+                                    (targ != Caster && m != targ)
+                                    && (
+                                        SpellHelper.ValidIndirectTarget(Caster, targ)
+                                        && Caster.CanBeHarmful(targ, false)
+                                    )
                                 )
-                            )
-                                targets.Add(targ);
+                                    targets.Add(targ);
+                    }
+                    finally
+                    {
+                        eable.Free();
+                    }
 
                     for (int i = 0; i < targets.Count; ++i)
                     {

@@ -96,13 +96,23 @@ namespace Server.Items
 
             public override void OnResponse(NetState state, RelayInfo info)
             {
+                if (state == null)
+                    return;
+
                 Mobile from = state.Mobile;
+
+                if (from == null || from.Deleted)
+                    return;
+
                 from.SendSound(0x54D);
             }
         }
 
         public override void OnDoubleClick(Mobile e)
         {
+            if (e == null || e.Deleted || Deleted)
+                return;
+
             e.CloseGump(typeof(MedicalRecordGump));
             e.SendGump(new MedicalRecordGump(e, this));
             e.SendSound(0x54D);

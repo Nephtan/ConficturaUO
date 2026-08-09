@@ -1764,6 +1764,16 @@ namespace Server
             get { return m_Paralyzed; }
             set
             {
+                if (
+                    !TurnBasedCombatBridge.AllowStateMutation(
+                        this,
+                        TurnMutationKind.Paralysis,
+                        m_Paralyzed ? 1 : 0,
+                        value ? 1 : 0
+                    )
+                )
+                    return;
+
                 if (m_Paralyzed != value)
                 {
                     m_Paralyzed = value;
@@ -1807,6 +1817,16 @@ namespace Server
             get { return m_Frozen; }
             set
             {
+                if (
+                    !TurnBasedCombatBridge.AllowStateMutation(
+                        this,
+                        TurnMutationKind.Freeze,
+                        m_Frozen ? 1 : 0,
+                        value ? 1 : 0
+                    )
+                )
+                    return;
+
                 if (m_Frozen != value)
                 {
                     m_Frozen = value;
@@ -1827,7 +1847,10 @@ namespace Server
                 Paralyzed = true;
 
                 m_ParaTimer = new ParalyzedTimer(this, duration);
-                m_ParaTimer.Start();
+                TurnBasedCombatBridge.EffectScheduled(this, TurnMutationKind.Paralysis, duration);
+
+                if (!TurnBasedCombatBridge.IsParticipant(this))
+                    m_ParaTimer.Start();
             }
         }
 
@@ -1838,8 +1861,41 @@ namespace Server
                 m_Frozen = true;
 
                 m_FrozenTimer = new FrozenTimer(this, duration);
-                m_FrozenTimer.Start();
+                TurnBasedCombatBridge.EffectScheduled(this, TurnMutationKind.Freeze, duration);
+
+                if (!TurnBasedCombatBridge.IsParticipant(this))
+                    m_FrozenTimer.Start();
             }
+        }
+
+        public TimeSpan GetTurnBasedParalyzeRemaining()
+        {
+            if (!m_Paralyzed || m_ParaTimer == null)
+                return TimeSpan.Zero;
+
+            TimeSpan remaining = m_ParaTimer.Next - DateTime.Now;
+            return remaining > TimeSpan.Zero ? remaining : m_ParaTimer.Delay;
+        }
+
+        public TimeSpan GetTurnBasedFreezeRemaining()
+        {
+            if (!m_Frozen || m_FrozenTimer == null)
+                return TimeSpan.Zero;
+
+            TimeSpan remaining = m_FrozenTimer.Next - DateTime.Now;
+            return remaining > TimeSpan.Zero ? remaining : m_FrozenTimer.Delay;
+        }
+
+        public void SuspendTurnBasedStatusTimers()
+        {
+            if (m_ParaTimer != null)
+                m_ParaTimer.Stop();
+
+            if (m_FrozenTimer != null)
+                m_FrozenTimer.Stop();
+
+            if (m_PoisonTimer != null)
+                m_PoisonTimer.Stop();
         }
 
         /// <summary>
@@ -2004,6 +2060,9 @@ namespace Server
 
             protected override void OnTick()
             {
+                if (TurnBasedCombatBridge.IsParticipant(m_Owner))
+                    return;
+
                 if (m_Owner.CanRegenMana) // m_Owner.Alive )
                     m_Owner.Mana++;
 
@@ -2024,6 +2083,9 @@ namespace Server
 
             protected override void OnTick()
             {
+                if (TurnBasedCombatBridge.IsParticipant(m_Owner))
+                    return;
+
                 if (m_Owner.CanRegenHits) // m_Owner.Alive && !m_Owner.Poisoned )
                     m_Owner.Hits++;
 
@@ -2044,6 +2106,9 @@ namespace Server
 
             protected override void OnTick()
             {
+                if (TurnBasedCombatBridge.IsParticipant(m_Owner))
+                    return;
+
                 if (m_Owner.CanRegenStam) // m_Owner.Alive )
                     m_Owner.Stam++;
 
@@ -2125,6 +2190,9 @@ namespace Server
 
             protected override void OnTick()
             {
+                if (TurnBasedCombatBridge.IsParticipant(m_Mobile))
+                    return;
+
                 if (DateTime.Now > m_Mobile.m_NextCombatTime)
                 {
                     Mobile combatant = m_Mobile.Combatant;
@@ -2256,8 +2324,20 @@ namespace Server
 
         public virtual void Attack(Mobile m)
         {
-            if (CheckAttack(m))
-                Combatant = m;
+            if (!CheckAttack(m))
+                return;
+
+            TurnActionDecision decision = TurnBasedCombatBridge.BeginAction(
+                new TurnActionRequest(this, m, Weapon, TurnActionKind.Attack, -1, true, false)
+            );
+
+            if (!String.IsNullOrEmpty(decision.Message))
+                SendMessage(decision.Message);
+
+            if (decision.Handled || !decision.Allowed)
+                return;
+
+            Combatant = m;
         }
 
         public virtual bool CheckAttack(Mobile m)
@@ -2281,6 +2361,7 @@ namespace Server
                 if (m_Combatant != value && value != this)
                 {
                     Mobile old = m_Combatant;
+                    TurnCombatantChangeMode turnCombatantMode = TurnCombatantChangeMode.Native;
 
                     ++m_ChangingCombatant;
                     m_Combatant = value;
@@ -2293,6 +2374,20 @@ namespace Server
                         m_Combatant = old;
                         --m_ChangingCombatant;
                         return;
+                    }
+
+                    if (m_Combatant != null)
+                    {
+                        turnCombatantMode = TurnBasedCombatBridge.DecideCombatantChange(
+                            new TurnCombatantChangeRequest(this, old, m_Combatant)
+                        );
+
+                        if (turnCombatantMode == TurnCombatantChangeMode.Reject)
+                        {
+                            m_Combatant = old;
+                            --m_ChangingCombatant;
+                            return;
+                        }
                     }
 
                     if (m_NetState != null)
@@ -2309,7 +2404,7 @@ namespace Server
                         m_ExpireCombatant = null;
                         m_CombatTimer = null;
                     }
-                    else
+                    else if (turnCombatantMode == TurnCombatantChangeMode.Native)
                     {
                         if (m_ExpireCombatant == null)
                             m_ExpireCombatant = new ExpireCombatantTimer(this);
@@ -2322,7 +2417,11 @@ namespace Server
                         m_CombatTimer.Start();
                     }
 
-                    if (m_Combatant != null && CanBeHarmful(m_Combatant, false))
+                    if (
+                        turnCombatantMode == TurnCombatantChangeMode.Native
+                        && m_Combatant != null
+                        && CanBeHarmful(m_Combatant, false)
+                    )
                     {
                         DoHarmful(m_Combatant);
 
@@ -2334,6 +2433,22 @@ namespace Server
                     --m_ChangingCombatant;
                 }
             }
+        }
+
+        public void ResumeTurnBasedCombatScheduling()
+        {
+            if (m_Deleted || !Alive || m_Combatant == null)
+                return;
+
+            if (m_ExpireCombatant == null)
+                m_ExpireCombatant = new ExpireCombatantTimer(this);
+
+            m_ExpireCombatant.Start();
+
+            if (m_CombatTimer == null)
+                m_CombatTimer = new CombatTimer(this);
+
+            m_CombatTimer.Start();
         }
 
         /// <summary>
@@ -3252,6 +3367,32 @@ namespace Server
             if (m_Deleted)
                 return false;
 
+            bool turnStep = ((m_Direction & Direction.Mask) == (d & Direction.Mask));
+            int requestedAP = 0;
+
+            if (turnStep)
+            {
+                requestedAP = (int)Math.Ceiling(ComputeMovementSpeed(d).TotalSeconds / 0.25);
+
+                if (requestedAP < 1)
+                    requestedAP = 1;
+            }
+
+            TurnActionDecision turnDecision = TurnBasedCombatBridge.BeginAction(
+                new TurnActionRequest(this, null, d, TurnActionKind.Movement, requestedAP, false, false)
+            );
+
+            if (!String.IsNullOrEmpty(turnDecision.Message))
+                SendMessage(turnDecision.Message);
+
+            if (!turnDecision.Allowed)
+                return false;
+
+            bool turnSucceeded = false;
+
+            try
+            {
+
             BankBox box = FindBankNoCreate();
 
             if (box != null && box.Opened)
@@ -3613,7 +3754,21 @@ namespace Server
             }
 
             OnAfterMove(oldLocation);
+            turnSucceeded = true;
             return true;
+            }
+            finally
+            {
+                TurnBasedCombatBridge.CompleteAction(
+                    turnDecision.Lease,
+                    new TurnActionResult(
+                        this,
+                        null,
+                        turnSucceeded ? TurnActionPhase.Commit : TurnActionPhase.Refund,
+                        turnSucceeded
+                    )
+                );
+            }
         }
 
         public virtual void OnAfterMove(Point3D oldLocation) { }
@@ -3924,6 +4079,7 @@ namespace Server
                 m_Guild.OnDelete(this);
 
             m_Deleted = true;
+            TurnBasedCombatBridge.MobileDeleted(this);
 
             if (m_Map != null)
             {
@@ -4431,6 +4587,25 @@ namespace Server
             if (item == null || item.Deleted || this.Deleted)
                 return;
 
+            TurnActionDecision turnDecision = TurnBasedCombatBridge.BeginAction(
+                new TurnActionRequest(this, item, item, TurnActionKind.ItemUse, -1, false, false)
+            );
+
+            if (!String.IsNullOrEmpty(turnDecision.Message))
+                SendMessage(turnDecision.Message);
+
+            if (!turnDecision.Allowed)
+                return;
+
+            Target originalTarget = Target;
+            bool turnSucceeded = false;
+            bool targetPending = false;
+
+            try
+            {
+            using (TurnBasedCombatBridge.BeginActionScope(turnDecision.Lease))
+            {
+
             DisruptiveAction();
 
             if (m_Spell != null && !m_Spell.OnCasterUsingObject(item))
@@ -4470,6 +4645,27 @@ namespace Server
 
                 if (!item.Deleted)
                     item.OnDoubleClick(this);
+
+                turnSucceeded = true;
+            }
+
+            targetPending = Target != null && Target != originalTarget;
+            }
+            }
+            finally
+            {
+                if (!targetPending)
+                {
+                    TurnBasedCombatBridge.CompleteAction(
+                        turnDecision.Lease,
+                        new TurnActionResult(
+                            this,
+                            item,
+                            turnSucceeded ? TurnActionPhase.Commit : TurnActionPhase.Refund,
+                            turnSucceeded
+                        )
+                    );
+                }
             }
         }
 
@@ -4477,6 +4673,25 @@ namespace Server
         {
             if (m == null || m.Deleted || this.Deleted)
                 return;
+
+            TurnActionDecision turnDecision = TurnBasedCombatBridge.BeginAction(
+                new TurnActionRequest(this, m, m, TurnActionKind.MobileUse, -1, false, false)
+            );
+
+            if (!String.IsNullOrEmpty(turnDecision.Message))
+                SendMessage(turnDecision.Message);
+
+            if (!turnDecision.Allowed)
+                return;
+
+            Target originalTarget = Target;
+            bool turnSucceeded = false;
+            bool targetPending = false;
+
+            try
+            {
+            using (TurnBasedCombatBridge.BeginActionScope(turnDecision.Lease))
+            {
 
             DisruptiveAction();
 
@@ -4490,7 +4705,30 @@ namespace Server
             else if (!CheckAlive(false))
                 m.OnDoubleClickDead(this);
             else if (this.Region.OnDoubleClick(this, m) && !m.Deleted)
+            {
                 m.OnDoubleClick(this);
+
+                turnSucceeded = true;
+            }
+
+            targetPending = Target != null && Target != originalTarget;
+            }
+            }
+            finally
+            {
+                if (!targetPending)
+                {
+                    TurnBasedCombatBridge.CompleteAction(
+                        turnDecision.Lease,
+                        new TurnActionResult(
+                            this,
+                            m,
+                            turnSucceeded ? TurnActionPhase.Commit : TurnActionPhase.Refund,
+                            turnSucceeded
+                        )
+                    );
+                }
+            }
         }
 
         public virtual void Lift(Item item, int amount, out bool rejected, out LRReason reject)
@@ -4501,10 +4739,26 @@ namespace Server
             if (item == null)
                 return;
 
+            TurnActionDecision turnDecision = TurnBasedCombatBridge.BeginAction(
+                new TurnActionRequest(this, item, item, TurnActionKind.Lift, -1, false, false)
+            );
+
+            if (!String.IsNullOrEmpty(turnDecision.Message))
+                SendMessage(turnDecision.Message);
+
+            if (!turnDecision.Allowed)
+                return;
+
+            try
+            {
+
             Mobile from = this;
             NetState state = m_NetState;
 
-            if (from.AccessLevel >= AccessLevel.GameMaster || DateTime.Now >= from.NextActionTime)
+            if (
+                from.AccessLevel >= AccessLevel.GameMaster
+                || TurnBasedCombatBridge.GetTime(from) >= from.NextActionTime
+            )
             {
                 if (from.CheckAlive())
                 {
@@ -4640,7 +4894,8 @@ namespace Server
                             if (liftSound != -1)
                                 from.Send(new PlaySound(liftSound, from));
 
-                            from.NextActionTime = DateTime.Now + TimeSpan.FromSeconds(0.5);
+                            from.NextActionTime =
+                                TurnBasedCombatBridge.GetTime(from) + TimeSpan.FromSeconds(0.5);
 
                             if (fixMap != null && shouldFix)
                                 fixMap.FixColumn(fixLoc.m_X, fixLoc.m_Y);
@@ -4679,6 +4934,19 @@ namespace Server
 
                 if (ObjectPropertyList.Enabled && item.Parent != null)
                     state.Send(item.OPLPacket);
+            }
+            }
+            finally
+            {
+                TurnBasedCombatBridge.CompleteAction(
+                    turnDecision.Lease,
+                    new TurnActionResult(
+                        this,
+                        item,
+                        rejected ? TurnActionPhase.Refund : TurnActionPhase.Commit,
+                        !rejected
+                    )
+                );
             }
         }
 
@@ -4779,6 +5047,21 @@ namespace Server
             Mobile from = this;
             Item item = from.Holding;
 
+            TurnActionDecision turnDecision = TurnBasedCombatBridge.BeginAction(
+                new TurnActionRequest(this, to, item, TurnActionKind.Drop, -1, false, false)
+            );
+
+            if (!String.IsNullOrEmpty(turnDecision.Message))
+                SendMessage(turnDecision.Message);
+
+            if (!turnDecision.Allowed)
+                return false;
+
+            bool turnSucceeded = false;
+
+            try
+            {
+
             bool valid = (item != null && item.HeldBy == from && item.Map == Map.Internal);
 
             from.Holding = null;
@@ -4802,13 +5085,42 @@ namespace Server
             if (!bounced)
                 SendDropEffect(item);
 
-            return !bounced;
+            turnSucceeded = !bounced;
+            return turnSucceeded;
+            }
+            finally
+            {
+                TurnBasedCombatBridge.CompleteAction(
+                    turnDecision.Lease,
+                    new TurnActionResult(
+                        this,
+                        to,
+                        turnSucceeded ? TurnActionPhase.Commit : TurnActionPhase.Refund,
+                        turnSucceeded
+                    )
+                );
+            }
         }
 
         public virtual bool Drop(Point3D loc)
         {
             Mobile from = this;
             Item item = from.Holding;
+
+            TurnActionDecision turnDecision = TurnBasedCombatBridge.BeginAction(
+                new TurnActionRequest(this, loc, item, TurnActionKind.Drop, -1, false, false)
+            );
+
+            if (!String.IsNullOrEmpty(turnDecision.Message))
+                SendMessage(turnDecision.Message);
+
+            if (!turnDecision.Allowed)
+                return false;
+
+            bool turnSucceeded = false;
+
+            try
+            {
 
             bool valid = (item != null && item.HeldBy == from && item.Map == Map.Internal);
 
@@ -4833,13 +5145,42 @@ namespace Server
             if (!bounced)
                 SendDropEffect(item);
 
-            return !bounced;
+            turnSucceeded = !bounced;
+            return turnSucceeded;
+            }
+            finally
+            {
+                TurnBasedCombatBridge.CompleteAction(
+                    turnDecision.Lease,
+                    new TurnActionResult(
+                        this,
+                        loc,
+                        turnSucceeded ? TurnActionPhase.Commit : TurnActionPhase.Refund,
+                        turnSucceeded
+                    )
+                );
+            }
         }
 
         public virtual bool Drop(Mobile to, Point3D loc)
         {
             Mobile from = this;
             Item item = from.Holding;
+
+            TurnActionDecision turnDecision = TurnBasedCombatBridge.BeginAction(
+                new TurnActionRequest(this, to, item, TurnActionKind.Drop, -1, false, false)
+            );
+
+            if (!String.IsNullOrEmpty(turnDecision.Message))
+                SendMessage(turnDecision.Message);
+
+            if (!turnDecision.Allowed)
+                return false;
+
+            bool turnSucceeded = false;
+
+            try
+            {
 
             bool valid = (item != null && item.HeldBy == from && item.Map == Map.Internal);
 
@@ -4864,7 +5205,21 @@ namespace Server
             if (!bounced)
                 SendDropEffect(item);
 
-            return !bounced;
+            turnSucceeded = !bounced;
+            return turnSucceeded;
+            }
+            finally
+            {
+                TurnBasedCombatBridge.CompleteAction(
+                    turnDecision.Lease,
+                    new TurnActionResult(
+                        this,
+                        to,
+                        turnSucceeded ? TurnActionPhase.Commit : TurnActionPhase.Refund,
+                        turnSucceeded
+                    )
+                );
+            }
         }
 
         private static object m_GhostMutateContext = new object();
@@ -5462,6 +5817,15 @@ namespace Server
 
         public virtual void Damage(int amount, Mobile from, bool informMount)
         {
+            IDisposable turnScope = TurnBasedCombatBridge.BeginMutation(
+                new TurnMutationRequest(from, this, TurnMutationKind.Damage, Hits, Hits - amount)
+            );
+
+            if (turnScope == null)
+                return;
+
+            try
+            {
             if (!CanBeDamaged() || m_Deleted)
                 return;
 
@@ -5573,6 +5937,11 @@ namespace Server
                     Hits = newHits;
                 }
             }
+            }
+            finally
+            {
+                turnScope.Dispose();
+            }
         }
 
         public virtual void SendDamageToAll(int amount)
@@ -5633,6 +6002,15 @@ namespace Server
 
         public void Heal(int amount, Mobile from, bool message)
         {
+            IDisposable turnScope = TurnBasedCombatBridge.BeginMutation(
+                new TurnMutationRequest(from, this, TurnMutationKind.Healing, Hits, Hits + amount)
+            );
+
+            if (turnScope == null)
+                return;
+
+            try
+            {
             int hue = 0x3B2;
             if (RainbowMsg)
             {
@@ -5669,6 +6047,11 @@ namespace Server
                         ""
                     )
                 );
+            }
+            finally
+            {
+                turnScope.Dispose();
+            }
         }
 
         public virtual void OnHeal(ref int amount, Mobile from) { }
@@ -6104,6 +6487,20 @@ namespace Server
             if (m_Deleted)
                 return;
 
+            if (TurnBasedCombatBridge.IsParticipant(this))
+            {
+                if (m_HitsTimer != null)
+                    m_HitsTimer.Stop();
+
+                if (m_StamTimer != null)
+                    m_StamTimer.Stop();
+
+                if (m_ManaTimer != null)
+                    m_ManaTimer.Stop();
+
+                return;
+            }
+
             if (Hits < HitsMax)
             {
                 if (CanRegenHits)
@@ -6160,6 +6557,86 @@ namespace Server
             {
                 Mana = ManaMax;
             }
+        }
+
+        public void SuspendTurnBasedRegeneration(
+            out TimeSpan hitsRemaining,
+            out TimeSpan stamRemaining,
+            out TimeSpan manaRemaining
+        )
+        {
+            hitsRemaining = GetTurnBasedTimerRemaining(m_HitsTimer, GetHitsRegenRate(this));
+            stamRemaining = GetTurnBasedTimerRemaining(m_StamTimer, GetStamRegenRate(this));
+            manaRemaining = GetTurnBasedTimerRemaining(m_ManaTimer, GetManaRegenRate(this));
+
+            if (m_HitsTimer != null)
+                m_HitsTimer.Stop();
+
+            if (m_StamTimer != null)
+                m_StamTimer.Stop();
+
+            if (m_ManaTimer != null)
+                m_ManaTimer.Stop();
+        }
+
+        public void ResumeTurnBasedRegeneration(
+            TimeSpan hitsRemaining,
+            TimeSpan stamRemaining,
+            TimeSpan manaRemaining
+        )
+        {
+            if (!m_Deleted && Hits < HitsMax && CanRegenHits)
+            {
+                if (m_HitsTimer == null)
+                    m_HitsTimer = new HitsTimer(this);
+
+                StartTurnBasedRegenTimer(m_HitsTimer, hitsRemaining, GetHitsRegenRate(this));
+            }
+
+            if (!m_Deleted && Stam < StamMax && CanRegenStam)
+            {
+                if (m_StamTimer == null)
+                    m_StamTimer = new StamTimer(this);
+
+                StartTurnBasedRegenTimer(m_StamTimer, stamRemaining, GetStamRegenRate(this));
+            }
+
+            if (!m_Deleted && Mana < ManaMax && CanRegenMana)
+            {
+                if (m_ManaTimer == null)
+                    m_ManaTimer = new ManaTimer(this);
+
+                StartTurnBasedRegenTimer(m_ManaTimer, manaRemaining, GetManaRegenRate(this));
+            }
+        }
+
+        private static TimeSpan GetTurnBasedTimerRemaining(Timer timer, TimeSpan fallback)
+        {
+            if (timer != null && timer.Running)
+            {
+                TimeSpan remaining = timer.Next - DateTime.Now;
+
+                if (remaining > TimeSpan.Zero)
+                    return remaining;
+            }
+
+            return fallback > TimeSpan.Zero ? fallback : TimeSpan.FromMilliseconds(1.0);
+        }
+
+        private static void StartTurnBasedRegenTimer(Timer timer, TimeSpan remaining, TimeSpan interval)
+        {
+            if (remaining <= TimeSpan.Zero)
+                remaining = interval;
+
+            if (remaining <= TimeSpan.Zero)
+                remaining = TimeSpan.FromMilliseconds(1.0);
+
+            if (interval <= TimeSpan.Zero)
+                interval = TimeSpan.FromMilliseconds(1.0);
+
+            timer.Delay = remaining;
+            timer.Interval = interval;
+            timer.Start();
         }
 
         private DateTime m_CreationTime;
@@ -8670,7 +9147,7 @@ namespace Server
                     m_Str = value;
                     Delta(MobileDelta.Stat | MobileDelta.Hits);
 
-                    if (Hits < HitsMax)
+                    if (Hits < HitsMax && !TurnBasedCombatBridge.IsParticipant(this))
                     {
                         if (m_HitsTimer == null)
                             m_HitsTimer = new HitsTimer(this);
@@ -8739,7 +9216,7 @@ namespace Server
                     m_Dex = value;
                     Delta(MobileDelta.Stat | MobileDelta.Stam);
 
-                    if (Stam < StamMax)
+                    if (Stam < StamMax && !TurnBasedCombatBridge.IsParticipant(this))
                     {
                         if (m_StamTimer == null)
                             m_StamTimer = new StamTimer(this);
@@ -8808,7 +9285,7 @@ namespace Server
                     m_Int = value;
                     Delta(MobileDelta.Stat | MobileDelta.Mana);
 
-                    if (Mana < ManaMax)
+                    if (Mana < ManaMax && !TurnBasedCombatBridge.IsParticipant(this))
                     {
                         if (m_ManaTimer == null)
                             m_ManaTimer = new ManaTimer(this);
@@ -8870,6 +9347,9 @@ namespace Server
                 if (m_Deleted)
                     return;
 
+                if (!TurnBasedCombatBridge.AllowStateMutation(this, TurnMutationKind.Hits, m_Hits, value))
+                    return;
+
                 if (value < 0)
                 {
                     value = 0;
@@ -8890,7 +9370,7 @@ namespace Server
 
                 if (value < HitsMax)
                 {
-                    if (CanRegenHits)
+                    if (CanRegenHits && !TurnBasedCombatBridge.IsParticipant(this))
                     {
                         if (m_HitsTimer == null)
                             m_HitsTimer = new HitsTimer(this);
@@ -8934,6 +9414,9 @@ namespace Server
                 if (m_Deleted)
                     return;
 
+                if (!TurnBasedCombatBridge.AllowStateMutation(this, TurnMutationKind.Stamina, m_Stam, value))
+                    return;
+
                 if (value < 0)
                 {
                     value = 0;
@@ -8948,7 +9431,7 @@ namespace Server
 
                 if (value < StamMax)
                 {
-                    if (CanRegenStam)
+                    if (CanRegenStam && !TurnBasedCombatBridge.IsParticipant(this))
                     {
                         if (m_StamTimer == null)
                             m_StamTimer = new StamTimer(this);
@@ -8992,6 +9475,9 @@ namespace Server
                 if (m_Deleted)
                     return;
 
+                if (!TurnBasedCombatBridge.AllowStateMutation(this, TurnMutationKind.Mana, m_Mana, value))
+                    return;
+
                 if (value < 0)
                 {
                     value = 0;
@@ -9012,7 +9498,7 @@ namespace Server
 
                 if (value < ManaMax)
                 {
-                    if (CanRegenMana)
+                    if (CanRegenMana && !TurnBasedCombatBridge.IsParticipant(this))
                     {
                         if (m_ManaTimer == null)
                             m_ManaTimer = new ManaTimer(this);
@@ -9724,6 +10210,16 @@ namespace Server
             get { return m_Poison; }
             set
             {
+                if (
+                    !TurnBasedCombatBridge.AllowStateMutation(
+                        this,
+                        TurnMutationKind.Poison,
+                        m_Poison == null ? -1 : m_Poison.Level,
+                        value == null ? -1 : value.Level
+                    )
+                )
+                    return;
+
                 /*if ( m_Poison != value && (m_Poison == null || value == null || m_Poison.Level < value.Level) )
                 {*/
                 m_Poison = value;
@@ -9742,6 +10238,12 @@ namespace Server
                     if (m_PoisonTimer != null)
                         m_PoisonTimer.Start();
                 }
+
+                TurnBasedCombatBridge.EffectTimerChanged(
+                    this,
+                    TurnMutationKind.Poison,
+                    m_PoisonTimer
+                );
 
                 CheckStatTimers();
                 /*}*/
@@ -10163,9 +10665,18 @@ namespace Server
             if (m_Deleted)
                 return;
 
+            Point3D turnOldLocation = m_Location;
+            Map turnOldMap = m_Map;
+
             if (m_Map == map)
             {
                 SetLocation(newLocation, true);
+                TurnBasedCombatBridge.MobileRelocated(
+                    this,
+                    turnOldLocation,
+                    turnOldMap,
+                    true
+                );
                 return;
             }
 
@@ -10275,6 +10786,13 @@ namespace Server
 
             if (m_Region != null)
                 m_Region.OnLocationChanged(this, oldLocation);
+
+            TurnBasedCombatBridge.MobileRelocated(
+                this,
+                turnOldLocation,
+                turnOldMap,
+                true
+            );
         }
 
         public virtual void SetLocation(Point3D newLocation, bool isTeleport)
@@ -11554,6 +12072,21 @@ namespace Server
             if (item == null || item.Deleted || !item.CanEquip(this))
                 return false;
 
+            TurnActionDecision turnDecision = TurnBasedCombatBridge.BeginAction(
+                new TurnActionRequest(this, item, item, TurnActionKind.Equip, -1, false, false)
+            );
+
+            if (!String.IsNullOrEmpty(turnDecision.Message))
+                SendMessage(turnDecision.Message);
+
+            if (!turnDecision.Allowed)
+                return false;
+
+            bool turnSucceeded = false;
+
+            try
+            {
+
             if (CheckEquip(item) && OnEquip(item) && item.OnEquip(this))
             {
                 if (m_Spell != null && !m_Spell.OnCasterEquiping(item))
@@ -11563,10 +12096,24 @@ namespace Server
                 //	m_Spell.Disturb( DisturbType.EquipRequest );
 
                 AddItem(item);
+                turnSucceeded = true;
                 return true;
             }
 
             return false;
+            }
+            finally
+            {
+                TurnBasedCombatBridge.CompleteAction(
+                    turnDecision.Lease,
+                    new TurnActionResult(
+                        this,
+                        item,
+                        turnSucceeded ? TurnActionPhase.Commit : TurnActionPhase.Refund,
+                        turnSucceeded
+                    )
+                );
+            }
         }
 
         internal int m_TypeRef;

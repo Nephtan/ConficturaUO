@@ -341,27 +341,44 @@ namespace Server.Mobiles
             m_NextPickup = DateTime.Now + TimeSpan.FromSeconds(Utility.RandomMinMax(1, 2));
 
             enemydirection = Direction.North;
-            foreach (Item enemy in this.GetItemsInRange(200))
-            {
-                if (enemy is BaseBoat && enemy != m_PirateShip_Boat && !(enemy is PirateShip_Boat))
-                {
-                    List<Mobile> targets = new List<Mobile>();
-                    IPooledEnumerable eable = enemy.GetMobilesInRange(16);
+            IPooledEnumerable nearbyItems = this.GetItemsInRange(200);
 
-                    foreach (Mobile m in eable)
+            try
+            {
+                foreach (Item enemy in nearbyItems)
+                {
+                    if (enemy is BaseBoat && enemy != m_PirateShip_Boat && !(enemy is PirateShip_Boat))
                     {
-                        if (m is PlayerMobile)
-                            targets.Add(m);
-                    }
-                    eable.Free();
-                    if (targets.Count > 0)
-                    {
-                        m_enemyboat = enemy as BaseBoat;
-                        enemydirection = this.GetDirectionTo(m_enemyboat);
-                        break;
+                        List<Mobile> targets = new List<Mobile>();
+                        IPooledEnumerable enemyMobiles = enemy.GetMobilesInRange(16);
+
+                        try
+                        {
+                            foreach (Mobile m in enemyMobiles)
+                            {
+                                if (m is PlayerMobile)
+                                    targets.Add(m);
+                            }
+                        }
+                        finally
+                        {
+                            enemyMobiles.Free();
+                        }
+
+                        if (targets.Count > 0)
+                        {
+                            m_enemyboat = enemy as BaseBoat;
+                            enemydirection = this.GetDirectionTo(m_enemyboat);
+                            break;
+                        }
                     }
                 }
             }
+            finally
+            {
+                nearbyItems.Free();
+            }
+
             if (m_enemyboat == null)
             {
                 return;
@@ -462,10 +479,19 @@ namespace Server.Mobiles
 
             int pirates = 0;
 
-            foreach (Mobile m in this.GetMobilesInRange(10))
+            IPooledEnumerable eable = this.GetMobilesInRange(10);
+
+            try
             {
-                if (m is PirateCrewInvader)
-                    ++pirates;
+                foreach (Mobile m in eable)
+                {
+                    if (m is PirateCrewInvader)
+                        ++pirates;
+                }
+            }
+            finally
+            {
+                eable.Free();
             }
 
             if (pirates < 10 && Utility.RandomDouble() <= 0.25)
@@ -524,12 +550,19 @@ namespace Server.Mobiles
                     List<Mobile> targets = new List<Mobile>();
                     IPooledEnumerable eable = m_Boat.GetMobilesInRange(16);
 
-                    foreach (Mobile m in eable)
+                    try
                     {
-                        if (m is PirateCrewInvader)
-                            targets.Add(m);
+                        foreach (Mobile m in eable)
+                        {
+                            if (m is PirateCrewInvader)
+                                targets.Add(m);
+                        }
                     }
-                    eable.Free();
+                    finally
+                    {
+                        eable.Free();
+                    }
+
                     if (targets.Count > 0)
                     {
                         for (int i = 0; i < targets.Count; ++i)

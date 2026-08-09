@@ -136,7 +136,7 @@ namespace Server.Spells.Shinobi
         public override void DoFizzle()
         {
             Caster.PlaySound(Caster.Female ? 0x319 : 0x429);
-            Caster.NextSpellTime = DateTime.Now;
+            Caster.NextSpellTime = TurnBasedCombatBridge.GetTime(Caster);
         }
 
         public override void DoHurtFizzle()

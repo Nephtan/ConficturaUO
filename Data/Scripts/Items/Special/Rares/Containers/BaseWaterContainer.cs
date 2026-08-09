@@ -57,6 +57,11 @@
 
         public override void OnDoubleClick(Mobile from)
         {
+            if (from == null || from.Deleted || Deleted)
+            {
+                return;
+            }
+
             if (IsEmpty)
             {
                 base.OnDoubleClick(from);
@@ -65,6 +70,11 @@
 
         public override void OnSingleClick(Mobile from)
         {
+            if (from == null || from.Deleted || Deleted)
+            {
+                return;
+            }
+
             if (IsEmpty)
             {
                 base.OnDoubleClick(from);
@@ -81,6 +91,11 @@
 
         public override bool OnDragDropInto(Mobile from, Item item, Point3D p)
         {
+            if (from == null || from.Deleted || item == null || item.Deleted || Deleted)
+            {
+                return false;
+            }
+
             if (!IsEmpty)
             {
                 return false;

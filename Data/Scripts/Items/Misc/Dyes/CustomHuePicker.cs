@@ -227,24 +227,39 @@ namespace Server.Items
 
         public override void OnResponse(NetState sender, RelayInfo info)
         {
+            if (
+                sender == null
+                || info == null
+                || m_From == null
+                || m_From.Deleted
+                || m_Definition == null
+                || m_Callback == null
+            )
+                return;
+
+            CustomHueGroup[] groups = m_Definition.Groups;
+
+            if (groups == null || groups.Length == 0)
+                return;
+
             switch (info.ButtonID)
             {
                 case 1: // Okay
                 {
                     int[] switches = info.Switches;
 
-                    if (switches.Length > 0)
+                    if (switches != null && switches.Length > 0)
                     {
                         int index = switches[0];
 
-                        int group = index % m_Definition.Groups.Length;
-                        index /= m_Definition.Groups.Length;
+                        int group = index % groups.Length;
+                        index /= groups.Length;
 
-                        if (group >= 0 && group < m_Definition.Groups.Length)
+                        if (group >= 0 && group < groups.Length && groups[group] != null)
                         {
-                            int[] hues = m_Definition.Groups[group].Hues;
+                            int[] hues = groups[group].Hues;
 
-                            if (index >= 0 && index < hues.Length)
+                            if (hues != null && index >= 0 && index < hues.Length)
                                 m_Callback(m_From, m_State, hues[index]);
                         }
                     }

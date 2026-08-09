@@ -27,10 +27,14 @@ namespace Server.Regions
 
         public static void OnLogin(LoginEventArgs e)
         {
-            BaseHouse house = BaseHouse.FindHouseAt(e.Mobile);
+            if (e == null || e.Mobile == null || e.Mobile.Deleted)
+                return;
 
-            if (house != null && !house.Public && !house.IsFriend(e.Mobile))
-                e.Mobile.Location = house.BanLocation;
+            Mobile mobile = e.Mobile;
+            BaseHouse house = BaseHouse.FindHouseAt(mobile);
+
+            if (house != null && !house.Public && !house.IsFriend(mobile))
+                mobile.Location = house.BanLocation;
         }
 
         public override bool AllowHarmful(Mobile from, Mobile target)
@@ -277,6 +281,9 @@ namespace Server.Regions
             Point3D oldLocation
         )
         {
+            if (from == null || from.Deleted || m_House == null || m_House.Deleted)
+                return false;
+
             if (!base.OnMoveInto(from, d, newLocation, oldLocation))
                 return false;
 
@@ -406,6 +413,18 @@ namespace Server.Regions
 
         public override void OnSpeech(SpeechEventArgs e)
         {
+            if (
+                e == null
+                || e.Mobile == null
+                || e.Mobile.Deleted
+                || e.Speech == null
+                || m_House == null
+                || m_House.Deleted
+                || m_House.Sign == null
+                || m_House.Sign.Deleted
+            )
+                return;
+
             base.OnSpeech(e);
 
             Mobile from = e.Mobile;

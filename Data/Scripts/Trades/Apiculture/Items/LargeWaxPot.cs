@@ -77,6 +77,9 @@ namespace Server.Items
 
         public override void OnSingleClick(Mobile from)
         {
+            if (from == null || from.Deleted || Deleted)
+                return;
+
             DisplayDurabilityTo(from);
 
             base.OnSingleClick(from);
@@ -84,7 +87,10 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
-            if (!IsChildOf(from.Backpack))
+            if (from == null || from.Deleted || Deleted)
+                return;
+
+            if (from.Backpack == null || !IsChildOf(from.Backpack))
                 from.SendLocalizedMessage(1042001); // That must be in your pack for you to use it.
             else
             {
@@ -101,14 +107,22 @@ namespace Server.Items
 
         public void BeginAdd(Mobile from)
         {
+            if (from == null || from.Deleted || Deleted)
+                return;
+
             from.Target = new AddPureWaxTarget(this);
         }
 
         public void EndAdd(Mobile from, object o)
         {
-            if (o is Item && ((Item)o).IsChildOf(from.Backpack))
+            if (from == null || from.Deleted || Deleted)
+                return;
+
+            Item targeted = o as Item;
+
+            if (targeted != null && !targeted.Deleted && from.Backpack != null && targeted.IsChildOf(from.Backpack))
             {
-                if (o is Beeswax)
+                if (targeted is Beeswax)
                 {
                     //error checking
                     if (UsesRemaining < 1)
@@ -145,7 +159,7 @@ namespace Server.Items
                         return;
                     }
 
-                    Beeswax wax = (Beeswax)o;
+                    Beeswax wax = (Beeswax)targeted;
 
                     if ((wax.Amount + MeltedBeeswax) > MaxWax)
                     {
@@ -176,7 +190,7 @@ namespace Server.Items
                     if (MeltedBeeswax < MaxWax)
                         BeginAdd(from);
                 }
-                else if (o == this)
+                else if (targeted == this)
                 {
                     //empty the pot
                     if (MeltedBeeswax < 1)
@@ -277,7 +291,14 @@ namespace Server.Items
 
         protected override void OnTarget(Mobile from, object targeted)
         {
-            if (m_pot.Deleted || !m_pot.IsChildOf(from.Backpack))
+            if (
+                from == null
+                || from.Deleted
+                || m_pot == null
+                || m_pot.Deleted
+                || from.Backpack == null
+                || !m_pot.IsChildOf(from.Backpack)
+            )
                 return;
 
             m_pot.EndAdd(from, targeted);

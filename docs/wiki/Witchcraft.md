@@ -123,3 +123,66 @@ The quickbar does not search inside the pouch. `WitchPouch.castSpell` searches t
 * `VampireGiftSpell` assumes `BaseCreature.GetMaster()` returns a non-null `Mobile` before opening `PetResurrectGump`, so dead untamed or masterless creatures can null-reference.
 * `HellsGateSpell` only decrements runebook charges when the spell is constructed with a non-null `Runebook`; targeting a `Runebook` from the normal target cursor uses its default entry without setting `m_Book`.
 * `UndeadGraveyardGatewaySpell.InternalItem` overrides serialization without writing a version integer; it relies on deleting itself during load instead of restoring state.
+
+## Source Trace
+
+POST-BATCH-T reviewed this page on 2026-06-14T21:09:11.0049244-05:00 against current source and audit registers.
+
+- Canonical status: Canonical.
+- Queue rows: PBN-0118.
+- Backlog rows: RB-06799.
+- Audit registers used: documentation-truth-table.csv, runtime-hook-map.csv, serialization-register.csv, and project-truth-register.csv.
+
+### Source Files Reviewed
+
+- Data/Scripts/Magic/Witch/UndeadSpell.cs (CurrentFile)
+- Data/Scripts/Magic/Witch/WitchBrews.cs (CurrentFile)
+- Data/Scripts/Magic/Witch/WitchPouch.cs (CurrentFile)
+- Data/Scripts/Magic/Witch/BookWitchBrewing.cs (CurrentFile)
+
+### Runtime Evidence
+
+- Hook summary: Gump=16.
+- Data/Scripts/Magic/Witch/BookWitchBrewing.cs:L403 Gump OnResponse access=Internal
+- Data/Scripts/Magic/Witch/BookWitchBrewing.cs:L418 Gump SendGump access=Internal
+- Data/Scripts/Magic/Witch/BookWitchBrewing.cs:L645 Gump SendGump access=Internal
+- Data/Scripts/Magic/Witch/WitchPouch.cs:L437 Gump OnResponse access=Internal
+- Data/Scripts/Magic/Witch/WitchPouch.cs:L447 Gump SendGump access=Internal
+- Data/Scripts/Magic/Witch/WitchPouch.cs:L450 Gump SendGump access=Internal
+- Data/Scripts/Magic/Witch/WitchPouch.cs:L454 Gump SendGump access=Internal
+- Data/Scripts/Magic/Witch/WitchPouch.cs:L461 Gump SendGump access=Internal
+- Data/Scripts/Magic/Witch/WitchPouch.cs:L475 Gump SendGump access=Internal
+- Data/Scripts/Magic/Witch/WitchPouch.cs:L489 Gump SendGump access=Internal
+- Data/Scripts/Magic/Witch/WitchPouch.cs:L672 Gump SendGump access=Internal
+- Data/Scripts/Magic/Witch/WitchPouch.cs:L684 Gump SendGump access=Internal
+- Additional hook rows are recorded in runtime-hook-map.csv for this source set.
+
+### Serialization Evidence
+
+- Serialized rows matched: 18.
+- Data/Scripts/Magic/Witch/BookWitchBrewing.cs:Server.Items.BookWitchBrewing version=0 serialize=L652 deserialize=L658 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Magic/Witch/WitchBrews.cs:Server.Items.BloodPactScroll version=0 serialize=L29 deserialize=L35 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Magic/Witch/WitchBrews.cs:Server.Items.GhostlyImagesScroll version=0 serialize=L62 deserialize=L68 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Magic/Witch/WitchBrews.cs:Server.Items.GhostPhaseScroll version=0 serialize=L95 deserialize=L101 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Magic/Witch/WitchBrews.cs:Server.Items.GraveyardGatewayScroll version=0 serialize=L128 deserialize=L134 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Magic/Witch/WitchBrews.cs:Server.Items.HellsBrandScroll version=0 serialize=L161 deserialize=L167 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Magic/Witch/WitchBrews.cs:Server.Items.HellsGateScroll version=0 serialize=L194 deserialize=L200 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Magic/Witch/WitchBrews.cs:Server.Items.ManaLeechScroll version=0 serialize=L227 deserialize=L233 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Magic/Witch/WitchBrews.cs:Server.Items.NecroCurePoisonScroll version=0 serialize=L260 deserialize=L266 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Magic/Witch/WitchBrews.cs:Server.Items.NecroPoisonScroll version=0 serialize=L293 deserialize=L299 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Magic/Witch/WitchBrews.cs:Server.Items.NecroUnlockScroll version=0 serialize=L326 deserialize=L332 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Magic/Witch/WitchBrews.cs:Server.Items.PhantasmScroll version=0 serialize=L359 deserialize=L365 alignment=AlignedByCountAndKnownTypes
+- Additional serializer rows are recorded in serialization-register.csv for this source set.
+
+### Project And Runtime Coverage
+
+- Data/Scripts/Magic/Witch/BookWitchBrewing.cs=Keep
+- Data/Scripts/Magic/Witch/BookWitchBrewing.cs=Keep
+- Data/Scripts/Magic/Witch/UndeadSpell.cs=Keep
+- Data/Scripts/Magic/Witch/UndeadSpell.cs=Keep
+- Data/Scripts/Magic/Witch/WitchBrews.cs=Keep
+- Data/Scripts/Magic/Witch/WitchBrews.cs=Keep
+- Data/Scripts/Magic/Witch/WitchPouch.cs=Keep
+- Data/Scripts/Magic/Witch/WitchPouch.cs=Keep
+
+No C# source, project files, XML/config/data files, namespaces, serializers, gameplay behavior, or migration policy were changed in POST-BATCH-T.

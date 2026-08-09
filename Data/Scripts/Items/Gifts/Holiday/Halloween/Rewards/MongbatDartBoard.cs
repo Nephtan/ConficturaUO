@@ -21,6 +21,9 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
+            if (from == null || from.Deleted || Deleted)
+                return;
+
             Direction dir;
             if (from.Location != this.Location)
                 dir = from.GetDirectionTo(this);
@@ -52,6 +55,9 @@ namespace Server.Items
 
         public void Throw(Mobile from)
         {
+            if (from == null || from.Deleted || Deleted)
+                return;
+
             BaseKnife knife = from.Weapon as BaseKnife;
 
             if (knife == null)
@@ -126,6 +132,9 @@ namespace Server.Items
 
         public virtual void OnMongbatReset()
         {
+            if (Deleted)
+                return;
+
             if (ItemID != 0x1951 && ItemID != 0x1954)
             {
                 Timer.DelayCall(TimeSpan.FromSeconds(0.1), new TimerCallback(OnMongbatReset));
@@ -142,11 +151,17 @@ namespace Server.Items
 
         public virtual void OnMongbatHit()
         {
+            if (Deleted)
+                return;
+
             Effects.PlaySound(Location, Map, 0x149);
         }
 
         public virtual void OnMongbatNick()
         {
+            if (Deleted)
+                return;
+
             Effects.PlaySound(Location, Map, 0x13A);
         }
 

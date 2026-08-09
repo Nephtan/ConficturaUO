@@ -63,7 +63,10 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile e)
         {
-            if (!IsChildOf(e.Backpack))
+            if (e == null || e.Deleted || Deleted)
+                return;
+
+            if (e.Backpack == null || !IsChildOf(e.Backpack))
             {
                 e.SendMessage("This must be in your backpack to read.");
                 return;

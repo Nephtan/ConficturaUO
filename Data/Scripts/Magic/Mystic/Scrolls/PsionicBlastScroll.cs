@@ -27,6 +27,11 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
+            if (from == null || from.Deleted || Deleted)
+            {
+                return;
+            }
+
             if (from != owner)
             {
                 from.SendMessage("The parchement crumbles in your hand.");
@@ -49,6 +54,11 @@ namespace Server.Items
 
         public override bool OnDragLift(Mobile from)
         {
+            if (from == null || from.Deleted || Deleted)
+            {
+                return false;
+            }
+
             if (from != owner)
             {
                 from.SendMessage("The parchement crumbles in your hand.");

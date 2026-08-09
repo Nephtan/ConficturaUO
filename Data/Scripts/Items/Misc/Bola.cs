@@ -24,7 +24,10 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
-            if (!IsChildOf(from.Backpack))
+            if (from == null || from.Deleted || Deleted)
+                return;
+
+            if (from.Backpack == null || !IsChildOf(from.Backpack))
             {
                 from.SendLocalizedMessage(1040019); // The bola must be in your pack to use it.
             }
@@ -113,14 +116,21 @@ namespace Server.Items
 
             protected override void OnTarget(Mobile from, object obj)
             {
-                if (m_Bola.Deleted)
+                if (from == null || from.Deleted)
+                    return;
+
+                if (m_Bola == null || m_Bola.Deleted)
                     return;
 
                 if (obj is Mobile)
                 {
                     Mobile to = (Mobile)obj;
 
-                    if (!m_Bola.IsChildOf(from.Backpack))
+                    if (to == null || to.Deleted)
+                    {
+                        from.SendLocalizedMessage(1049629); // You cannot throw a bola at that.
+                    }
+                    else if (from.Backpack == null || !m_Bola.IsChildOf(from.Backpack))
                     {
                         from.SendLocalizedMessage(1040019); // The bola must be in your pack to use it.
                     }

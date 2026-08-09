@@ -266,6 +266,11 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
+            if (from == null || from.Deleted || Deleted)
+            {
+                return;
+            }
+
             if (this.ItemID == 0x3544 || this.ItemID == 0x34BC || this.ItemID == 0x34D8)
             {
                 bool anvil,

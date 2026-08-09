@@ -180,3 +180,80 @@ Staff can inspect and edit exposed `[CommandProperty]` values on related objects
 | `BaseBoat.EndDryDock()` sets `DockedBoat.Hue` before checking for a null docked boat item. | Hull classes without a valid `DockedBoat` implementation cannot safely dry dock. |
 | `BaseBoat.CanCommand(Mobile m)` returns `true`, and `BaseBoat.OnSpeech()` accepts commands from any contained mobile. | Any mobile physically on the boat can issue tiller speech commands, not only the owner or key holder. |
 | `TillerMan.OnDoubleClickDead()` opens `TillerManGump` for dead owners/admins on the boat, and `TillerManGump.OnResponse()` does not check `Alive`. | Dead owners/admins can still operate the visual boat controls while onboard. |
+
+## Source Trace
+
+POST-BATCH-T reviewed this page on 2026-06-14T21:09:11.0049244-05:00 against current source and audit registers.
+
+- Canonical status: Canonical.
+- Queue rows: PBN-0004; PBN-0125.
+- Backlog rows: RB-06732; RB-06733.
+- Audit registers used: documentation-truth-table.csv, runtime-hook-map.csv, serialization-register.csv, and project-truth-register.csv.
+
+### Source Files Reviewed
+
+- Data/Scripts/System/Misc/Talk.cs (CurrentFile)
+- Data/Scripts/Mobiles/Civilized/Vendors/Shipwright.cs (CurrentFile)
+- Data/Scripts/Mobiles/Civilized/Vendors/DrunkenPirate.cs (CurrentFile)
+- Data/Scripts/System/Commands/Player/MyChat.cs (CurrentFile)
+- Data/Scripts/Mobiles/Base/StoreSalesList.cs (CurrentFile)
+- Data/Scripts/Items/Boats/BaseBoatDeed.cs (CurrentFile)
+- Data/Scripts/Items/Boats/BaseDockedBoat.cs (CurrentFile)
+- Data/Scripts/Items/Boats/BaseBoat.cs (CurrentFile)
+- Data/Scripts/Items/Boats/TillerMan.cs (CurrentFile)
+- Data/Scripts/Items/Boats/Gumps/TillerManGump.cs (CurrentFile)
+- Data/Scripts/Items/Boats/DockingLantern.cs (CurrentFile)
+
+### Runtime Evidence
+
+- Hook summary: Event=1; Gump=15; Initialize=1; Speech=1; Timer=4; WorldSave=1.
+- Data/Scripts/Items/Boats/BaseBoat.cs:L1447 Timer CustomTimerSubclass access=GlobalOrInternal
+- Data/Scripts/Items/Boats/BaseBoat.cs:L1732 Gump SendGump access=Internal
+- Data/Scripts/Items/Boats/BaseBoat.cs:L2058 Speech OnSpeech access=GlobalOrInternal
+- Data/Scripts/Items/Boats/BaseBoat.cs:L2270 Timer CustomTimerSubclass access=GlobalOrInternal
+- Data/Scripts/Items/Boats/BaseBoat.cs:L2882 Timer CustomTimerSubclass access=GlobalOrInternal
+- Data/Scripts/Items/Boats/BaseBoat.cs:L2906 Initialize Initialize access=GlobalOrInternal
+- Data/Scripts/Items/Boats/BaseBoat.cs:L2909 Event EventSink access=GlobalOrInternal
+- Data/Scripts/Items/Boats/BaseBoat.cs:L2909 WorldSave WorldSave access=GlobalOrInternal
+- Data/Scripts/Items/Boats/BaseBoat.cs:L2917 Timer CustomTimerSubclass access=GlobalOrInternal
+- Data/Scripts/Items/Boats/Gumps/TillerManGump.cs:L56 Gump OnResponse access=Internal
+- Data/Scripts/Items/Boats/Gumps/TillerManGump.cs:L503 Gump SendGump access=Internal
+- Data/Scripts/Items/Boats/TillerMan.cs:L112 Gump SendGump access=Internal
+- Additional hook rows are recorded in runtime-hook-map.csv for this source set.
+
+### Serialization Evidence
+
+- Serialized rows matched: 7.
+- Data/Scripts/Items/Boats/BaseBoat.cs:Server.Multis.BaseBoat version=3 serialize=L663 deserialize=L688 alignment=CountMatchNeedsTypeReview:UnknownWrites=8
+- Data/Scripts/Items/Boats/BaseBoatDeed.cs:Server.Multis.BaseBoatDeed version=0 serialize=L56 deserialize=L64 alignment=CountMatchNeedsTypeReview:UnknownWrites=2
+- Data/Scripts/Items/Boats/BaseDockedBoat.cs:Server.Multis.BaseDockedBoat version=1 serialize=L71 deserialize=L82 alignment=CountMismatch:Writes=3;Reads=4
+- Data/Scripts/Items/Boats/DockingLantern.cs:Server.Items.DockingLantern version=0 serialize=L74 deserialize=L81 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Items/Boats/TillerMan.cs:Server.Items.TillerMan version=0 serialize=L174 deserialize=L183 alignment=CountMatchNeedsTypeReview:UnknownWrites=1
+- Data/Scripts/Mobiles/Civilized/Vendors/DrunkenPirate.cs:Server.Mobiles.DrunkenPirate version=0 serialize=L99 deserialize=L106 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Mobiles/Civilized/Vendors/Shipwright.cs:Server.Mobiles.Shipwright version=0 serialize=L188 deserialize=L195 alignment=AlignedByCountAndKnownTypes
+
+### Project And Runtime Coverage
+
+- Data/Scripts/Items/Boats/BaseBoat.cs=Keep
+- Data/Scripts/Items/Boats/BaseBoat.cs=Keep
+- Data/Scripts/Items/Boats/BaseBoatDeed.cs=Keep
+- Data/Scripts/Items/Boats/BaseBoatDeed.cs=Keep
+- Data/Scripts/Items/Boats/BaseDockedBoat.cs=Keep
+- Data/Scripts/Items/Boats/BaseDockedBoat.cs=Keep
+- Data/Scripts/Items/Boats/DockingLantern.cs=Keep
+- Data/Scripts/Items/Boats/DockingLantern.cs=Keep
+- Data/Scripts/Items/Boats/Gumps/TillerManGump.cs=Keep
+- Data/Scripts/Items/Boats/Gumps/TillerManGump.cs=Keep
+- Data/Scripts/Items/Boats/TillerMan.cs=Keep
+- Data/Scripts/Items/Boats/TillerMan.cs=Keep
+- Data/Scripts/Mobiles/Base/StoreSalesList.cs=Keep
+- Data/Scripts/Mobiles/Base/StoreSalesList.cs=Keep
+- Data/Scripts/Mobiles/Civilized/Vendors/DrunkenPirate.cs=Keep
+- Data/Scripts/Mobiles/Civilized/Vendors/DrunkenPirate.cs=Keep
+- Data/Scripts/Mobiles/Civilized/Vendors/Shipwright.cs=Keep
+- Data/Scripts/Mobiles/Civilized/Vendors/Shipwright.cs=Keep
+- Data/Scripts/System/Commands/Player/MyChat.cs=Keep
+- Data/Scripts/System/Commands/Player/MyChat.cs=Keep
+- Additional project-truth rows are recorded in project-truth-register.csv for this source set.
+
+No C# source, project files, XML/config/data files, namespaces, serializers, gameplay behavior, or migration policy were changed in POST-BATCH-T.

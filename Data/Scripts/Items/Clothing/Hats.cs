@@ -28,6 +28,9 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
+            if (from == null || from.Deleted || Deleted)
+                return;
+
             if (Server.Misc.MaterialInfo.IsCowlHood(this))
             {
                 if (from.FindItemOnLayer(Layer.Helm) != this)
@@ -57,9 +60,20 @@ namespace Server.Items
 
             protected override void OnTarget(Mobile from, object targeted)
             {
+                if (from == null || from.Deleted || m_Hats == null || m_Hats.Deleted)
+                    return;
+
                 if (targeted is Item)
                 {
                     Item iColorHat = targeted as Item;
+
+                    if (iColorHat.Deleted)
+                    {
+                        from.SendMessage(
+                            "You can only match color of certain equipped items that have distinct colors."
+                        );
+                        return;
+                    }
 
                     int color = 0;
 

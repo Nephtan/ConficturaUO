@@ -42,6 +42,9 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
+            if (from == null || from.Deleted || Deleted)
+                return;
+
             if (
                 m_IsRewardItem
                 && !Engines.VeteranRewards.RewardSystem.CheckIsUsableBy(from, this, null)

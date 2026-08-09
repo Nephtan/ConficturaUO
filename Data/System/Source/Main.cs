@@ -58,6 +58,7 @@ namespace Server
         private static bool m_Cache = true;
         private static bool m_HaltOnWarning;
         private static bool m_VBdotNET;
+        private static bool m_CompileOnly;
         private static MultiTextWriter m_MultiConOut;
 
         private static bool m_Profiling;
@@ -153,6 +154,10 @@ namespace Server
         internal static bool VBdotNet
         {
             get { return m_VBdotNET; }
+        }
+        public static bool CompileOnly
+        {
+            get { return m_CompileOnly; }
         }
         public static List<string> DataDirectories
         {
@@ -493,6 +498,8 @@ namespace Server
                     m_HaltOnWarning = true;
                 else if (Insensitive.Equals(args[i], "-vb"))
                     m_VBdotNET = true;
+                else if (Insensitive.Equals(args[i], "-compileonly"))
+                    m_CompileOnly = true;
             }
 
             try
@@ -578,13 +585,23 @@ namespace Server
                     "Scripts: One or more scripts failed to compile or no script files were found."
                 );
 
-                if (m_Service)
+                if (m_Service || m_CompileOnly)
+                {
+                    Environment.ExitCode = 1;
                     return;
+                }
 
                 Console.WriteLine(" - Press return to exit, or R to try again.");
 
                 if (Console.ReadKey(true).Key != ConsoleKey.R)
                     return;
+            }
+
+            if (m_CompileOnly)
+            {
+                Console.WriteLine("Scripts: Compile-only verification completed successfully.");
+                Environment.ExitCode = 0;
+                return;
             }
 
             ScriptCompiler.Invoke("Configure");
@@ -668,6 +685,9 @@ namespace Server
 
                 if (m_VBdotNET)
                     Utility.Separate(sb, "-vb", " ");
+
+                if (m_CompileOnly)
+                    Utility.Separate(sb, "-compileonly", " ");
 
                 return sb.ToString();
             }

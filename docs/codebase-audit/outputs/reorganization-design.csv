@@ -1,0 +1,6 @@
+"Section","Decision","Evidence"
+"OrganizationPrinciples","Runtime role and save risk determine target folder.","Phase 12 plan and Phase 6/8/10 registers."
+"NoImmediateMoves","Phase 12 executes no source moves.","Design phase only; moves require Phase 13 backlog and focused implementation batches."
+"NamespacePolicy","Folder moves do not imply namespace/type rename.","RunUO save compatibility and Phase 6 move/rename risk."
+"ProjectPolicy","Scripts.csproj include edits are required for every executed move.","Phase 2 explicit project truth register."
+"DocsPolicy","Source traces and dependency evidence must move with code.","Phase 7 and Phase 8 outputs."

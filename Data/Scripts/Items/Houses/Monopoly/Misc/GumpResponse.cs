@@ -25,6 +25,7 @@ namespace Knives.TownHouses
 
         public static void DisplayGumpResponse(NetState state, PacketReader pvSrc)
         {
+            int packetStart = pvSrc.Seek(0, System.IO.SeekOrigin.Current);
             int serial = pvSrc.ReadInt32();
             int typeID = pvSrc.ReadInt32();
             int buttonID = pvSrc.ReadInt32();
@@ -39,7 +40,7 @@ namespace Knives.TownHouses
                 {
                     int switchCount = pvSrc.ReadInt32();
 
-                    if (switchCount < 0)
+                    if (switchCount < 0 || switchCount > CountSwitches(gump))
                     {
                         Console.WriteLine(
                             "Client: {0}: Invalid gump response, disconnecting...",
@@ -56,7 +57,7 @@ namespace Knives.TownHouses
 
                     int textCount = pvSrc.ReadInt32();
 
-                    if (textCount < 0)
+                    if (textCount < 0 || textCount > CountTextEntries(gump))
                     {
                         Console.WriteLine(
                             "Client: {0}: Invalid gump response, disconnecting...",
@@ -74,7 +75,14 @@ namespace Knives.TownHouses
                         int textLength = pvSrc.ReadUInt16();
 
                         if (textLength > 239)
+                        {
+                            Console.WriteLine(
+                                "Client: {0}: Invalid gump response, disconnecting...",
+                                state
+                            );
+                            state.Dispose();
                             return;
+                        }
 
                         string text = pvSrc.ReadUnicodeStringSafe(textLength);
                         textEntries[j] = new TextRelay(entryID, text);
@@ -91,6 +99,8 @@ namespace Knives.TownHouses
                 }
             }
 
+            pvSrc.Seek(packetStart, System.IO.SeekOrigin.Begin);
+
             if (m_Successor != null)
             {
                 m_Successor.OnReceive(state, pvSrc);
@@ -99,6 +109,32 @@ namespace Knives.TownHouses
             {
                 PacketHandlers.DisplayGumpResponse(state, pvSrc);
             }
+        }
+
+        private static int CountSwitches(Gump gump)
+        {
+            int count = 0;
+
+            foreach (GumpEntry entry in gump.Entries)
+            {
+                if (entry is GumpCheck || entry is GumpRadio)
+                    ++count;
+            }
+
+            return count;
+        }
+
+        private static int CountTextEntries(Gump gump)
+        {
+            int count = 0;
+
+            foreach (GumpEntry entry in gump.Entries)
+            {
+                if (entry is GumpTextEntry || entry is GumpTextEntryLimited)
+                    ++count;
+            }
+
+            return count;
         }
 
         private static bool CheckResponse(Gump gump, Mobile m, int id)
@@ -110,10 +146,19 @@ namespace Knives.TownHouses
 
             ArrayList list = new ArrayList();
 
-            foreach (Item item in m.GetItemsInRange(20))
+            IPooledEnumerable eable = m.GetItemsInRange(20);
+
+            try
             {
-                if (item is TownHouse)
-                    list.Add(item);
+                foreach (Item item in eable)
+                {
+                    if (item is TownHouse)
+                        list.Add(item);
+                }
+            }
+            finally
+            {
+                eable.Free();
             }
 
             foreach (TownHouse t in list)

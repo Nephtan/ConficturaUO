@@ -600,40 +600,49 @@ namespace Server.Mobiles
                 }
                 else
                 {
-                    foreach (Item act in this.GetItemsInRange(range))
-                    {
-                        if (
-                            act.Map == this.Map
-                            && act is ArcheryButte
-                            && (this is Ranger || this is Bowyer)
-                            && (act.X == X || act.Y == Y)
-                        )
-                        {
-                            Server.Items.Actions.EquipVendor(this, "bow");
-                            ran = true;
-                            if (this is Bowyer)
-                            {
-                                this.Title = "the archer";
-                            }
-                            act.OnDoubleClick(this);
-                        }
-                        else if (act.Map == this.Map && act is TrainingDummy && this is Fighter)
-                        {
-                            ran = true;
-                            act.OnDoubleClick(this);
-                        }
-                        else if (act.Map == this.Map && act is Actions)
-                        {
-                            int z = Z - act.Z;
-                            if (z < 0)
-                                z = act.Z - Z;
+                    IPooledEnumerable eable = this.GetItemsInRange(range);
 
-                            if (z < 15)
+                    try
+                    {
+                        foreach (Item act in eable)
+                        {
+                            if (
+                                act.Map == this.Map
+                                && act is ArcheryButte
+                                && (this is Ranger || this is Bowyer)
+                                && (act.X == X || act.Y == Y)
+                            )
+                            {
+                                Server.Items.Actions.EquipVendor(this, "bow");
+                                ran = true;
+                                if (this is Bowyer)
+                                {
+                                    this.Title = "the archer";
+                                }
+                                act.OnDoubleClick(this);
+                            }
+                            else if (act.Map == this.Map && act is TrainingDummy && this is Fighter)
                             {
                                 ran = true;
                                 act.OnDoubleClick(this);
                             }
+                            else if (act.Map == this.Map && act is Actions)
+                            {
+                                int z = Z - act.Z;
+                                if (z < 0)
+                                    z = act.Z - Z;
+
+                                if (z < 15)
+                                {
+                                    ran = true;
+                                    act.OnDoubleClick(this);
+                                }
+                            }
                         }
+                    }
+                    finally
+                    {
+                        eable.Free();
                     }
                 }
 
@@ -654,18 +663,27 @@ namespace Server.Mobiles
             int players = 0;
             bool enemies = false;
 
-            foreach (Mobile player in GetMobilesInRange(6))
-            {
-                if (player is PlayerMobile)
-                {
-                    if (CanSee(player) && InLOS(player))
-                    {
-                        ++players;
-                    }
-                }
+            IPooledEnumerable eable = GetMobilesInRange(6);
 
-                if (IsEnemy(player))
-                    enemies = true;
+            try
+            {
+                foreach (Mobile player in eable)
+                {
+                    if (player is PlayerMobile)
+                    {
+                        if (CanSee(player) && InLOS(player))
+                        {
+                            ++players;
+                        }
+                    }
+
+                    if (IsEnemy(player))
+                        enemies = true;
+                }
+            }
+            finally
+            {
+                eable.Free();
             }
 
             if (players > 0 && !enemies)

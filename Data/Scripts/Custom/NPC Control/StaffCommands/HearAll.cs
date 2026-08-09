@@ -22,7 +22,7 @@ namespace Server.Commands
 
         public static void HearAllOnSpeech(SpeechEventArgs e)
         {
-            if (e == null || e.Mobile == null || m_HearAll.Count == 0)
+            if (e == null || e.Mobile == null || e.Mobile.Deleted || m_HearAll.Count == 0)
                 return;
 
             string msg = String.Format("({0}): {1}", e.Mobile.RawName, e.Speech);

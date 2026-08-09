@@ -153,20 +153,29 @@ namespace Server.Items
         {
             int itHurts = 0;
 
-            foreach (Mobile mob in GetMobilesInRange(1))
+            IPooledEnumerable eable = GetMobilesInRange(1);
+
+            try
             {
-                if (
-                    mob.Alive
-                    && !mob.IsDeadBondedPet
-                    && mob.AccessLevel == AccessLevel.Player
-                    && mob.Player
-                )
+                foreach (Mobile mob in eable)
                 {
-                    itHurts = (int)(
-                        (Utility.RandomMinMax(50, 200) * (100 - mob.FireResistance)) / 100
-                    );
-                    Spells.SpellHelper.Damage(TimeSpan.FromTicks(1), mob, mob, itHurts);
+                    if (
+                        mob.Alive
+                        && !mob.IsDeadBondedPet
+                        && mob.AccessLevel == AccessLevel.Player
+                        && mob.Player
+                    )
+                    {
+                        itHurts = (int)(
+                            (Utility.RandomMinMax(50, 200) * (100 - mob.FireResistance)) / 100
+                        );
+                        Spells.SpellHelper.Damage(TimeSpan.FromTicks(1), mob, mob, itHurts);
+                    }
                 }
+            }
+            finally
+            {
+                eable.Free();
             }
         }
 

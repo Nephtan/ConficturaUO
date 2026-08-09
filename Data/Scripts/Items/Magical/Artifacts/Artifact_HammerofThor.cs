@@ -35,6 +35,9 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
+            if (from == null || from.Deleted || Deleted)
+                return;
+
             if (Parent != from)
             {
                 from.SendMessage("You must be holding the hammer to unleash a lightning bolt.");

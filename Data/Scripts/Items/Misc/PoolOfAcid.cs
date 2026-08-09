@@ -69,18 +69,27 @@ namespace Server.Items
 
                 List<Mobile> toDamage = new List<Mobile>();
 
-                foreach (Mobile m in GetMobilesInRange(0))
-                {
-                    BaseCreature bc = m as BaseCreature;
+                IPooledEnumerable eable = GetMobilesInRange(0);
 
-                    if (
-                        m.Alive
-                        && !m.IsDeadBondedPet
-                        && (bc == null || bc.Controlled || bc.Summoned)
-                    )
+                try
+                {
+                    foreach (Mobile m in eable)
                     {
-                        toDamage.Add(m);
+                        BaseCreature bc = m as BaseCreature;
+
+                        if (
+                            m.Alive
+                            && !m.IsDeadBondedPet
+                            && (bc == null || bc.Controlled || bc.Summoned)
+                        )
+                        {
+                            toDamage.Add(m);
+                        }
                     }
+                }
+                finally
+                {
+                    eable.Free();
                 }
 
                 for (int i = 0; i < toDamage.Count; i++)

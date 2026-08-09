@@ -39,6 +39,9 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
+            if (from == null || from.Deleted || Deleted)
+                return;
+
             from.SendLocalizedMessage(502434); // What should I use these scissors on?
 
             from.Target = new InternalTarget(this);
@@ -56,7 +59,7 @@ namespace Server.Items
 
             protected override void OnTarget(Mobile from, object targeted)
             {
-                if (m_Item.Deleted)
+                if (from == null || from.Deleted || m_Item == null || m_Item.Deleted)
                     return;
 
                 /*if ( targeted is Item && !((Item)targeted).IsStandardLoot() )
@@ -103,6 +106,9 @@ namespace Server.Items
 
             protected override void OnNonlocalTarget(Mobile from, object targeted)
             {
+                if (from == null || from.Deleted || m_Item == null || m_Item.Deleted)
+                    return;
+
                 if (targeted is IScissorable)
                 {
                     IScissorable obj = (IScissorable)targeted;

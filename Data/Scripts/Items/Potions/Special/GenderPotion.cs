@@ -16,12 +16,15 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
+            if (from == null || from.Deleted || Deleted)
+                return;
+
             if (from.RaceID > 0)
             {
                 from.SendMessage("You don't find this really useful.");
                 return;
             }
-            else if (!IsChildOf(from.Backpack))
+            else if (from.Backpack == null || !IsChildOf(from.Backpack))
             {
                 from.SendMessage("This must be in your backpack to use.");
                 return;

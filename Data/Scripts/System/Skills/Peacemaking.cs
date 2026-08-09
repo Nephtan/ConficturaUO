@@ -29,7 +29,7 @@ namespace Server.SkillHandlers
                 "Choose someone to calm or choose yourself to calm everyone in the nearby area."
             );
             from.Target = new InternalTarget(from, instrument);
-            from.NextSkillTime = DateTime.Now + TimeSpan.FromHours(6.0);
+            from.NextSkillTime = TurnBasedCombatBridge.GetTime(from) + TimeSpan.FromHours(6.0);
         }
 
         private class InternalTarget : Target
@@ -50,7 +50,7 @@ namespace Server.SkillHandlers
             protected override void OnTargetFinish(Mobile from)
             {
                 if (m_SetSkillTime)
-                    from.NextSkillTime = DateTime.Now;
+                    from.NextSkillTime = TurnBasedCombatBridge.GetTime(from);
             }
 
             protected override void OnTarget(Mobile from, object targeted)
@@ -68,7 +68,7 @@ namespace Server.SkillHandlers
                 else if (targeted is Mobile)
                 {
                     m_SetSkillTime = false;
-                    from.NextSkillTime = DateTime.Now + TimeSpan.FromSeconds(10.0);
+                    from.NextSkillTime = TurnBasedCombatBridge.GetTime(from) + TimeSpan.FromSeconds(10.0);
 
                     if (targeted == from)
                     {
@@ -88,7 +88,7 @@ namespace Server.SkillHandlers
                         }
                         else
                         {
-                            from.NextSkillTime = DateTime.Now + TimeSpan.FromSeconds(5.0);
+                            from.NextSkillTime = TurnBasedCombatBridge.GetTime(from) + TimeSpan.FromSeconds(5.0);
                             m_Instrument.PlayInstrumentWell(from);
                             m_Instrument.ConsumeUse(from);
 
@@ -105,27 +105,35 @@ namespace Server.SkillHandlers
 
                                 bool calmed = false;
 
-                                foreach (Mobile m in from.GetMobilesInRange(range))
+                                IPooledEnumerable eable = from.GetMobilesInRange(range);
+                                try
                                 {
-                                    if (
-                                        (m is BaseCreature && ((BaseCreature)m).Uncalmable)
-                                        || (m is BaseCreature && ((BaseCreature)m).AreaPeaceImmune)
-                                        || m == from
-                                        || !from.CanBeHarmful(m, false)
-                                    )
-                                        continue;
+                                    foreach (Mobile m in eable)
+                                    {
+                                        if (
+                                            (m is BaseCreature && ((BaseCreature)m).Uncalmable)
+                                            || (m is BaseCreature && ((BaseCreature)m).AreaPeaceImmune)
+                                            || m == from
+                                            || !from.CanBeHarmful(m, false)
+                                        )
+                                            continue;
 
-                                    calmed = true;
+                                        calmed = true;
 
-                                    m.SendLocalizedMessage(500616); // You hear lovely music, and forget to continue battling!
-                                    m.Combatant = null;
-                                    m.Warmode = false;
+                                        m.SendLocalizedMessage(500616); // You hear lovely music, and forget to continue battling!
+                                        m.Combatant = null;
+                                        m.Warmode = false;
 
-                                    if (m is BaseCreature && !((BaseCreature)m).BardPacified)
-                                        ((BaseCreature)m).Pacify(
-                                            from,
-                                            DateTime.Now + TimeSpan.FromSeconds(seconds)
-                                        );
+                                        if (m is BaseCreature && !((BaseCreature)m).BardPacified)
+                                            ((BaseCreature)m).Pacify(
+                                                from,
+                                                DateTime.Now + TimeSpan.FromSeconds(seconds)
+                                            );
+                                    }
+                                }
+                                finally
+                                {
+                                    eable.Free();
                                 }
 
                                 if (!calmed)
@@ -159,7 +167,7 @@ namespace Server.SkillHandlers
                         else if (!BaseInstrument.CheckMusicianship(from))
                         {
                             from.SendLocalizedMessage(500612); // You play poorly, and there is no effect.
-                            from.NextSkillTime = DateTime.Now + TimeSpan.FromSeconds(5.0);
+                            from.NextSkillTime = TurnBasedCombatBridge.GetTime(from) + TimeSpan.FromSeconds(5.0);
                             m_Instrument.PlayInstrumentBadly(from);
                             m_Instrument.ConsumeUse(from);
                         }
@@ -196,7 +204,7 @@ namespace Server.SkillHandlers
                                 m_Instrument.PlayInstrumentWell(from);
                                 m_Instrument.ConsumeUse(from);
 
-                                from.NextSkillTime = DateTime.Now + TimeSpan.FromSeconds(5.0);
+                                from.NextSkillTime = TurnBasedCombatBridge.GetTime(from) + TimeSpan.FromSeconds(5.0);
                                 if (targ is BaseCreature)
                                 {
                                     BaseCreature bc = (BaseCreature)targ;

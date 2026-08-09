@@ -92,6 +92,9 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
+            if (from == null || from.Deleted || Deleted)
+                return;
+
             if (this.ItemID == 7584)
             {
                 this.ItemID = 7393;

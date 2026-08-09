@@ -204,10 +204,19 @@ namespace Server.Mobiles
         {
             ArrayList toEat = new ArrayList();
 
-            foreach (Mobile m in this.GetMobilesInRange(2))
+            IPooledEnumerable eable = this.GetMobilesInRange(2);
+
+            try
             {
-                if (m is Bogling)
-                    toEat.Add(m);
+                foreach (Mobile m in eable)
+                {
+                    if (m is Bogling)
+                        toEat.Add(m);
+                }
+            }
+            finally
+            {
+                eable.Free();
             }
 
             if (toEat.Count > 0)

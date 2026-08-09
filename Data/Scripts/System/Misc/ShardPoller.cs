@@ -171,6 +171,9 @@ namespace Server.Misc
 
         private static void EventSink_Login(LoginEventArgs e)
         {
+            if (e == null || e.Mobile == null || e.Mobile.Deleted)
+                return;
+
             if (m_ActivePollers.Count == 0)
                 return;
 
@@ -183,7 +186,11 @@ namespace Server.Misc
 
         private static void EventSink_Login_Callback(object state)
         {
-            Mobile from = (Mobile)state;
+            Mobile from = state as Mobile;
+
+            if (from == null || from.Deleted)
+                return;
+
             NetState ns = from.NetState;
 
             if (ns == null)

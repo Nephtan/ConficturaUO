@@ -26,6 +26,9 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
+            if (from == null || from.Deleted || Deleted)
+                return;
+
             if (from.InRange(this.GetWorldLocation(), 2))
             {
                 PlayerMobile pm = (PlayerMobile)from;
@@ -98,6 +101,9 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
+            if (from == null || from.Deleted || Deleted)
+                return;
+
             if (from.InRange(this.GetWorldLocation(), 2))
             {
                 if (PlayerSettings.GetBardsTaleQuest(from, "BardsTaleSilverTriangle"))
@@ -167,6 +173,9 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
+            if (from == null || from.Deleted || Deleted)
+                return;
+
             if (from.InRange(this.GetWorldLocation(), 2))
             {
                 PlayerMobile pm = (PlayerMobile)from;
@@ -238,6 +247,9 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
+            if (from == null || from.Deleted || Deleted)
+                return;
+
             if (from.InRange(this.GetWorldLocation(), 2))
             {
                 PlayerMobile pm = (PlayerMobile)from;
@@ -325,6 +337,9 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
+            if (from == null || from.Deleted || Deleted)
+                return;
+
             if (from.InRange(this.GetWorldLocation(), 2))
             {
                 if (PlayerSettings.GetBardsTaleQuest(from, "BardsTaleBedroomKey"))
@@ -422,6 +437,9 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
+            if (from == null || from.Deleted || Deleted)
+                return;
+
             if (from.InRange(this.GetWorldLocation(), 2))
             {
                 if (PlayerSettings.GetBardsTaleQuest(from, "BardsTaleBedroomKey"))
@@ -517,6 +535,9 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
+            if (from == null || from.Deleted || Deleted)
+                return;
+
             if (from.InRange(this.GetWorldLocation(), 2))
             {
                 if (PlayerSettings.GetKeys(from, "UndermountainKey"))
@@ -578,6 +599,9 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
+            if (from == null || from.Deleted || Deleted)
+                return;
+
             if (from.InRange(this.GetWorldLocation(), 2))
             {
                 if (
@@ -654,6 +678,9 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
+            if (from == null || from.Deleted || Deleted)
+                return;
+
             if (from.InRange(this.GetWorldLocation(), 2))
             {
                 if (PlayerSettings.GetKeys(from, "SerpentPillars"))
@@ -714,6 +741,9 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
+            if (from == null || from.Deleted || Deleted)
+                return;
+
             if (from.InRange(this.GetWorldLocation(), 2))
             {
                 if (PlayerSettings.GetKeys(from, "DragonRiding"))

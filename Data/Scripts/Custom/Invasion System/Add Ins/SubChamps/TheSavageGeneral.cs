@@ -121,10 +121,19 @@ namespace Server.Mobiles
 
             int savages = 0;
 
-            foreach (Mobile m in this.GetMobilesInRange(10))
+            IPooledEnumerable eable = this.GetMobilesInRange(10);
+
+            try
             {
-                if (m is SavageLord)
-                    ++savages;
+                foreach (Mobile m in eable)
+                {
+                    if (m is SavageLord)
+                        ++savages;
+                }
+            }
+            finally
+            {
+                eable.Free();
             }
 
             if (savages < 10)
@@ -163,10 +172,19 @@ namespace Server.Mobiles
 
             int msavages = 0;
 
-            foreach (Mobile m in this.GetMobilesInRange(10))
+            IPooledEnumerable eable = this.GetMobilesInRange(10);
+
+            try
             {
-                if (m is SavageShaman)
-                    ++msavages;
+                foreach (Mobile m in eable)
+                {
+                    if (m is SavageShaman)
+                        ++msavages;
+                }
+            }
+            finally
+            {
+                eable.Free();
             }
 
             if (msavages < 10)

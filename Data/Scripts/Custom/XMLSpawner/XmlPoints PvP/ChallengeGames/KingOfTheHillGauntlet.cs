@@ -159,26 +159,35 @@ namespace Server.Items
             ArrayList elist = new ArrayList();
 
             // who is currently on the hill
-            foreach (Mobile p in this.GetMobilesInRange(0))
+            IPooledEnumerable eable = this.GetMobilesInRange(0);
+
+            try
             {
-                if (p == null)
-                    continue;
-
-                IChallengeEntry entry = GetParticipant(p);
-
-                // if this is not a current participant then move them
-                if (entry == null)
+                foreach (Mobile p in eable)
                 {
-                    // prepare to move them off
-                    mlist.Add(p);
+                    if (p == null)
+                        continue;
+
+                    IChallengeEntry entry = GetParticipant(p);
+
+                    // if this is not a current participant then move them
+                    if (entry == null)
+                    {
+                        // prepare to move them off
+                        mlist.Add(p);
+                    }
+                    else
+                    // dont let players who are in a caution state such as hidden to score
+                    if (entry.Caution == ChallengeStatus.None)
+                    {
+                        // prepare to bump their score
+                        elist.Add(entry);
+                    }
                 }
-                else
-                // dont let players who are in a caution state such as hidden to score
-                if (entry.Caution == ChallengeStatus.None)
-                {
-                    // prepare to bump their score
-                    elist.Add(entry);
-                }
+            }
+            finally
+            {
+                eable.Free();
             }
 
             // move non-participants

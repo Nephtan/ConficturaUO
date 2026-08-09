@@ -109,3 +109,91 @@ The package defines items and helper value logic. It does not register commands,
 
 Relic items are a cross-system loot and economy layer rather than one isolated item family.
 When debugging a relic report, start with the concrete item class, then check `RelicItems` for buyer/value routing and the relevant reward source such as fishing, grave robbing, librarian harvesting, thief loot, or `Loot.RandomRelic()`.
+
+## Source Trace
+
+POST-BATCH-T reviewed this page on 2026-06-14T21:09:11.0049244-05:00 against current source and audit registers.
+
+- Canonical status: Canonical.
+- Queue rows: PBN-0105.
+- Backlog rows: RB-06761.
+- Audit registers used: documentation-truth-table.csv, runtime-hook-map.csv, serialization-register.csv, and project-truth-register.csv.
+
+### Source Files Reviewed
+
+- Data/Scripts/Items/Relics/ (CurrentDirectory)
+- Data/Scripts/Items/Relics/DDIdItems.cs (CurrentFile)
+- Data/Scripts/Items/Relics/DDRelicAlchemy.cs (CurrentFile)
+- Data/Scripts/Items/Relics/DDRelicArmor.cs (CurrentFile)
+- Data/Scripts/Items/Relics/DDRelicArts.cs (CurrentFile)
+- Data/Scripts/Items/Relics/DDRelicBanner.cs (CurrentFile)
+- Data/Scripts/Items/Relics/DDRelicBearRugs.cs (CurrentFile)
+- Data/Scripts/Items/Relics/DDRelicBook.cs (CurrentFile)
+- Data/Scripts/Items/Relics/DDRelicCloth.cs (CurrentFile)
+- Data/Scripts/Items/Relics/DDRelicCoins.cs (CurrentFile)
+- Data/Scripts/Items/Relics/DDRelicDrink.cs (CurrentFile)
+- Data/Scripts/Items/Relics/DDRelicFur.cs (CurrentFile)
+- Data/Scripts/Items/Relics/DDRelicGem.cs (CurrentFile)
+- Data/Scripts/Items/Relics/DDRelicGrave.cs (CurrentFile)
+- Data/Scripts/Items/Relics/DDRelicInstrument.cs (CurrentFile)
+- Data/Scripts/Items/Relics/DDRelicJewels.cs (CurrentFile)
+- Data/Scripts/Items/Relics/DDRelicLeather.cs (CurrentFile)
+- Data/Scripts/Items/Relics/DDRelicLight.cs (CurrentFile)
+- Data/Scripts/Items/Relics/DDRelicMoney.cs (CurrentFile)
+- Data/Scripts/Items/Relics/DDRelicOrbs.cs (CurrentFile)
+- Data/Scripts/Items/Relics/DDRelicPainting.cs (CurrentFile)
+- Data/Scripts/Items/Relics/DDRelicReagent.cs (CurrentFile)
+- Data/Scripts/Items/Relics/DDRelicRug.cs (CurrentFile)
+- Data/Scripts/Items/Relics/DDRelicScrolls.cs (CurrentFile)
+- Data/Scripts/Items/Relics/DDRelicStatue.cs (CurrentFile)
+- Data/Scripts/Items/Relics/DDRelicTablet.cs (CurrentFile)
+- Data/Scripts/Items/Relics/DDRelicVase.cs (CurrentFile)
+- Data/Scripts/Items/Relics/DDRelicWeapon.cs (CurrentFile)
+
+### Runtime Evidence
+
+- Hook summary: Gump=1.
+- Data/Scripts/Items/Relics/DDRelicTablet.cs:L519 Gump SendGump access=Internal
+
+### Serialization Evidence
+
+- Serialized rows matched: 35.
+- Data/Scripts/Items/Relics/DDRelicAlchemy.cs:Server.Items.DDRelicAlchemy version=0 serialize=L72 deserialize=L79 alignment=CountMatchNeedsTypeReview:UnknownWrites=1
+- Data/Scripts/Items/Relics/DDRelicArmor.cs:Server.Items.DDRelicArmor version=0 serialize=L239 deserialize=L248 alignment=CountMatchNeedsTypeReview:UnknownWrites=3
+- Data/Scripts/Items/Relics/DDRelicArts.cs:Server.Items.DDRelicArts version=0 serialize=L140 deserialize=L147 alignment=CountMatchNeedsTypeReview:UnknownWrites=1
+- Data/Scripts/Items/Relics/DDRelicBanner.cs:Server.Items.DDRelicBanner version=0 serialize=L493 deserialize=L502 alignment=CountMatchNeedsTypeReview:UnknownWrites=3
+- Data/Scripts/Items/Relics/DDRelicBearRugs.cs:Server.Items.DDRelicBearRugsAddon version=0 serialize=L774 deserialize=L786 alignment=CountMatchNeedsTypeReview:UnknownWrites=6
+- Data/Scripts/Items/Relics/DDRelicBearRugs.cs:Server.Items.DDRelicBearRugsAddonDeed version=0 serialize=L1082 deserialize=L1094 alignment=CountMatchNeedsTypeReview:UnknownWrites=6
+- Data/Scripts/Items/Relics/DDRelicBook.cs:Server.Items.DDRelicBook version=0 serialize=L42 deserialize=L49 alignment=CountMatchNeedsTypeReview:UnknownWrites=1
+- Data/Scripts/Items/Relics/DDRelicCloth.cs:Server.Items.DDRelicCloth version=0 serialize=L137 deserialize=L144 alignment=CountMatchNeedsTypeReview:UnknownWrites=1
+- Data/Scripts/Items/Relics/DDRelicCoins.cs:Server.Items.DDRelicCoins version=0 serialize=L249 deserialize=L258 alignment=CountMatchNeedsTypeReview:UnknownWrites=3
+- Data/Scripts/Items/Relics/DDRelicDrink.cs:Server.Items.DDRelicDrink version=0 serialize=L184 deserialize=L191 alignment=CountMatchNeedsTypeReview:UnknownWrites=1
+- Data/Scripts/Items/Relics/DDRelicFur.cs:Server.Items.DDRelicFur version=0 serialize=L245 deserialize=L252 alignment=CountMatchNeedsTypeReview:UnknownWrites=1
+- Data/Scripts/Items/Relics/DDRelicGem.cs:Server.Items.DDRelicGem version=0 serialize=L339 deserialize=L347 alignment=CountMatchNeedsTypeReview:UnknownWrites=2
+- Additional serializer rows are recorded in serialization-register.csv for this source set.
+
+### Project And Runtime Coverage
+
+- Data/Scripts/Items/Relics/DDIdItems.cs=Keep
+- Data/Scripts/Items/Relics/DDIdItems.cs=Keep
+- Data/Scripts/Items/Relics/DDRelicAlchemy.cs=Keep
+- Data/Scripts/Items/Relics/DDRelicAlchemy.cs=Keep
+- Data/Scripts/Items/Relics/DDRelicArmor.cs=Keep
+- Data/Scripts/Items/Relics/DDRelicArmor.cs=Keep
+- Data/Scripts/Items/Relics/DDRelicArts.cs=Keep
+- Data/Scripts/Items/Relics/DDRelicArts.cs=Keep
+- Data/Scripts/Items/Relics/DDRelicBanner.cs=Keep
+- Data/Scripts/Items/Relics/DDRelicBanner.cs=Keep
+- Data/Scripts/Items/Relics/DDRelicBearRugs.cs=Keep
+- Data/Scripts/Items/Relics/DDRelicBearRugs.cs=Keep
+- Data/Scripts/Items/Relics/DDRelicBook.cs=Keep
+- Data/Scripts/Items/Relics/DDRelicBook.cs=Keep
+- Data/Scripts/Items/Relics/DDRelicCloth.cs=Keep
+- Data/Scripts/Items/Relics/DDRelicCloth.cs=Keep
+- Data/Scripts/Items/Relics/DDRelicCoins.cs=Keep
+- Data/Scripts/Items/Relics/DDRelicCoins.cs=Keep
+- Data/Scripts/Items/Relics/DDRelicDrink.cs=Keep
+- Data/Scripts/Items/Relics/DDRelicDrink.cs=Keep
+- Additional project-truth rows are recorded in project-truth-register.csv for this source set.
+
+No C# source, project files, XML/config/data files, namespaces, serializers, gameplay behavior, or migration policy were changed in POST-BATCH-T.

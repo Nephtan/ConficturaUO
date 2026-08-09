@@ -61,7 +61,7 @@ namespace Server.Items
             {
                 BaseWeapon.InDoubleStrike = true;
                 attacker.RevealingAction();
-                attacker.NextCombatTime = DateTime.Now + weapon.OnSwing(attacker, defender);
+                attacker.NextCombatTime = TurnBasedCombatBridge.GetTime(attacker) + weapon.OnSwing(attacker, defender);
                 BaseWeapon.InDoubleStrike = false;
             }
         }

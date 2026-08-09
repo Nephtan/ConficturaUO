@@ -19,6 +19,9 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
+            if (from == null || from.Deleted || Deleted || from.Backpack == null)
+                return;
+
             if (from.Backpack.FindItemByType(typeof(BookGuideToAdventure)) != null)
             {
                 from.SendMessage("The other books here seem uninteresting to you.");

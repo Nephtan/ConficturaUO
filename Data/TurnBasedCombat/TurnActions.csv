@@ -1,0 +1,23 @@
+Key,RuntimeType,ActionKind,Allowed,APPolicy,APValue,CooldownPolicy,CommitPolicy,TargetPolicy,Resolver,FailureMessage
+Movement:*,*,Movement,true,NativeDuration,0,None,SuccessfulNativeMove,None,Mobile.Move,You cannot move right now.
+Attack:*,*,Attack,true,WeaponDelay,0,ActorCombat,LegalAttempt,Mobile,BaseWeapon,You cannot attack right now.
+Spell:*,*,Spell,true,SpellDelayAndRecovery,0,ActorSpell,LegalAttempt,Optional,Spell,You cannot cast that right now.
+Travel:Recall,Server.Spells.Fourth.RecallSpell,Spell,false,Blocked,0,None,Refund,None,TravelAdapter,Long-range travel is unavailable during turn-based combat.
+Travel:Gate,Server.Spells.Seventh.GateTravelSpell,Spell,false,Blocked,0,None,Refund,None,TravelAdapter,Long-range travel is unavailable during turn-based combat.
+Travel:SacredJourney,Server.Spells.Chivalry.SacredJourneySpell,Spell,false,Blocked,0,None,Refund,None,TravelAdapter,Long-range travel is unavailable during turn-based combat.
+Travel:NaturesPassage,Server.Spells.Herbalist.NaturesPassageSpell,Spell,false,Blocked,0,None,Refund,None,TravelAdapter,Long-range travel is unavailable during turn-based combat.
+Travel:MushroomGateway,Server.Spells.Herbalist.MushroomGatewaySpell,Spell,false,Blocked,0,None,Refund,None,TravelAdapter,Long-range travel is unavailable during turn-based combat.
+Travel:Ethereal,Server.Spells.Research.ResearchEtherealTravel,Spell,false,Blocked,0,None,Refund,None,TravelAdapter,Long-range travel is unavailable during turn-based combat.
+Travel:Astral,Server.Spells.Mystic.AstralTravel,Spell,false,Blocked,0,None,Refund,None,TravelAdapter,Long-range travel is unavailable during turn-based combat.
+Skill:*,*,Skill,true,Fixed,4,ActorSkill,CallbackOrTarget,Optional,Skills.UseSkill,You cannot use that skill right now.
+ItemUse:*,*,ItemUse,true,Fixed,4,None,CallbackOrTarget,Optional,Mobile.Use,That item cannot be used right now.
+Travel:NaturesPassagePotion,Server.Items.NaturesPassagePotion,ItemUse,false,Blocked,0,None,Refund,None,TravelAdapter,Long-range travel is unavailable during turn-based combat.
+Travel:MushroomGatewayPotion,Server.Items.MushroomGatewayPotion,ItemUse,false,Blocked,0,None,Refund,None,TravelAdapter,Long-range travel is unavailable during turn-based combat.
+Travel:AstralScroll,Server.Items.AstralTravelScroll,ItemUse,false,Blocked,0,None,Refund,None,TravelAdapter,Long-range travel is unavailable during turn-based combat.
+MobileUse:*,*,MobileUse,true,Fixed,4,None,CallbackOrTarget,Optional,Mobile.Use,That cannot be used right now.
+Lift:*,*,Lift,true,Fixed,2,None,SuccessfulNativeAction,None,Mobile.Lift,You cannot lift that right now.
+Drop:*,*,Drop,true,Fixed,2,None,SuccessfulNativeAction,None,Mobile.Drop,You cannot drop that right now.
+Equip:*,*,Equip,true,Fixed,2,None,SuccessfulNativeAction,None,Mobile.EquipItem,You cannot equip that right now.
+Travel:*,*,Travel,false,Blocked,0,None,Refund,None,TravelAdapter,Long-range travel is unavailable during turn-based combat.
+EndTurn:*,*,EndTurn,true,AllRemaining,0,None,Immediate,None,TurnManager,
+Escape:*,*,Escape,true,AllRemaining,0,None,Immediate,None,TurnManager,You cannot escape while a hostile is nearby or visible.

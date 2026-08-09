@@ -121,11 +121,19 @@ namespace Server.Items
 
         public virtual void ReleaseMagicObjectLock_Callback(object state)
         {
-            ((Mobile)state).EndAction(typeof(BaseMagicObject));
+            Mobile from = state as Mobile;
+
+            if (from == null || from.Deleted)
+                return;
+
+            from.EndAction(typeof(BaseMagicObject));
         }
 
         public override void OnDoubleClick(Mobile from)
         {
+            if (from == null || from.Deleted || Deleted)
+                return;
+
             if (!from.CanBeginAction(typeof(BaseMagicObject)))
                 return;
 

@@ -36,6 +36,9 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
+            if (from == null || from.Deleted || Deleted)
+                return;
+
             if (
                 owner == from
                 && from.Skills[SkillName.FistFighting].Value >= 100
@@ -48,6 +51,9 @@ namespace Server.Items
 
         public override bool OnDragDropInto(Mobile from, Item dropped, Point3D p)
         {
+            if (from == null || from.Deleted || Deleted || dropped == null || dropped.Deleted)
+                return false;
+
             if (
                 owner == from
                 && from.Skills[SkillName.FistFighting].Value >= 100
@@ -63,6 +69,9 @@ namespace Server.Items
 
         public override bool OnDragDrop(Mobile from, Item dropped)
         {
+            if (from == null || from.Deleted || Deleted || dropped == null || dropped.Deleted)
+                return false;
+
             if (
                 owner == from
                 && from.Skills[SkillName.FistFighting].Value >= 100

@@ -32,11 +32,14 @@ namespace Server.Items
 
         public override void Drink(Mobile from)
         {
+            if (from == null || from.Deleted || Deleted)
+                return;
+
             if (from.RaceID > 0)
             {
                 from.SendMessage("You don't find this really useful.");
             }
-            else if (!IsChildOf(from.Backpack))
+            else if (from.Backpack == null || !IsChildOf(from.Backpack))
             {
                 from.SendLocalizedMessage(1060640); // The item must be in your backpack to use it.
             }
@@ -227,6 +230,23 @@ namespace Server.Items
 
             public override void OnResponse(NetState sender, RelayInfo info)
             {
+                if (
+                    sender == null
+                    || sender.Mobile == null
+                    || sender.Mobile.Deleted
+                    || info == null
+                    || m_From == null
+                    || m_From.Deleted
+                    || m_Potion == null
+                    || m_Potion.Deleted
+                )
+                {
+                    return;
+                }
+
+                if (m_From.Backpack == null || !m_Potion.IsChildOf(m_From.Backpack))
+                    return;
+
                 if (info.ButtonID > 0)
                 {
                     if (m_From.Backpack.FindItemByType(typeof(HairOilPotion)) != null)

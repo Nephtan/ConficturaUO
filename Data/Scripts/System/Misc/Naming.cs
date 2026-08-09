@@ -392,7 +392,7 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile e)
         {
-            if (Name == "Census Records")
+            if (Name == "Census Records" || Name == "Legendary Registry of Heroes")
             {
                 e.SendGump(new CensusGump(e, true));
             }

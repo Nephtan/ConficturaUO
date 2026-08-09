@@ -123,3 +123,67 @@ The backing commands are player-level commands:
 
 There are no dedicated admin commands for the mage advice dialogue.
 Staff can inspect wand `Charges` and `Effect` through command properties on `BaseMagicStaff` items.
+
+## Source Trace
+
+POST-BATCH-T reviewed this page on 2026-06-14T21:09:11.0049244-05:00 against current source and audit registers.
+
+- Canonical status: Canonical.
+- Queue rows: PBN-0124.
+- Backlog rows: RB-06731.
+- Audit registers used: documentation-truth-table.csv, runtime-hook-map.csv, serialization-register.csv, and project-truth-register.csv.
+
+### Source Files Reviewed
+
+- Data/Scripts/System/Misc/Talk.cs (CurrentFile)
+- Data/Scripts/Mobiles/Civilized/Vendors/Mage.cs (CurrentFile)
+- Data/Scripts/System/Commands/Player/MyChat.cs (CurrentFile)
+- Data/Scripts/Items/Wands/BaseMagicStaff.cs (CurrentFile)
+- Data/Scripts/System/Commands/Player/SpellBarsManage.cs (CurrentFile)
+- Data/Scripts/System/Commands/Player/SpellBarsDisplay.cs (CurrentFile)
+- Data/Scripts/System/Commands/Player/SpellBarsCommands.cs (CurrentFile)
+- Data/Scripts/System/Commands/Player/SpellBarsFunctions.cs (CurrentFile)
+
+### Runtime Evidence
+
+- Hook summary: Command=134; Gump=883; Initialize=67; Timer=1.
+- Data/Scripts/Items/Wands/BaseMagicStaff.cs:L106 Timer Timer.DelayCall access=GlobalOrInternal
+- Data/Scripts/Mobiles/Civilized/Vendors/Mage.cs:L109 Gump SendGump access=Internal
+- Data/Scripts/System/Commands/Player/MyChat.cs:L75 Gump OnResponse access=Internal
+- Data/Scripts/System/Commands/Player/MyChat.cs:L174 Gump OnResponse access=Internal
+- Data/Scripts/System/Commands/Player/MyChat.cs:L183 Gump SendGump access=Internal
+- Data/Scripts/System/Commands/Player/MyChat.cs:L188 Gump SendGump access=Internal
+- Data/Scripts/System/Commands/Player/MyChat.cs:L193 Gump SendGump access=Internal
+- Data/Scripts/System/Commands/Player/MyChat.cs:L198 Gump SendGump access=Internal
+- Data/Scripts/System/Commands/Player/SpellBarsCommands.cs:L32 Initialize Initialize access=GlobalOrInternal
+- Data/Scripts/System/Commands/Player/SpellBarsCommands.cs:L34 Command CommandSystem.Register access=Unknown
+- Data/Scripts/System/Commands/Player/SpellBarsCommands.cs:L43 Command CommandSystem.Register access=Unknown
+- Data/Scripts/System/Commands/Player/SpellBarsCommands.cs:L67 Initialize Initialize access=GlobalOrInternal
+- Additional hook rows are recorded in runtime-hook-map.csv for this source set.
+
+### Serialization Evidence
+
+- Serialized rows matched: 2.
+- Data/Scripts/Items/Wands/BaseMagicStaff.cs:Server.Items.BaseMagicStaff version=0 serialize=L144 deserialize=L152 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Mobiles/Civilized/Vendors/Mage.cs:Server.Mobiles.Mage version=0 serialize=L306 deserialize=L313 alignment=AlignedByCountAndKnownTypes
+
+### Project And Runtime Coverage
+
+- Data/Scripts/Items/Wands/BaseMagicStaff.cs=Keep
+- Data/Scripts/Items/Wands/BaseMagicStaff.cs=Keep
+- Data/Scripts/Mobiles/Civilized/Vendors/Mage.cs=Keep
+- Data/Scripts/Mobiles/Civilized/Vendors/Mage.cs=Keep
+- Data/Scripts/System/Commands/Player/MyChat.cs=Keep
+- Data/Scripts/System/Commands/Player/MyChat.cs=Keep
+- Data/Scripts/System/Commands/Player/SpellBarsCommands.cs=Keep
+- Data/Scripts/System/Commands/Player/SpellBarsCommands.cs=Keep
+- Data/Scripts/System/Commands/Player/SpellBarsDisplay.cs=Keep
+- Data/Scripts/System/Commands/Player/SpellBarsDisplay.cs=Keep
+- Data/Scripts/System/Commands/Player/SpellBarsFunctions.cs=Keep
+- Data/Scripts/System/Commands/Player/SpellBarsFunctions.cs=Keep
+- Data/Scripts/System/Commands/Player/SpellBarsManage.cs=Keep
+- Data/Scripts/System/Commands/Player/SpellBarsManage.cs=Keep
+- Data/Scripts/System/Misc/Talk.cs=Keep
+- Data/Scripts/System/Misc/Talk.cs=Keep
+
+No C# source, project files, XML/config/data files, namespaces, serializers, gameplay behavior, or migration policy were changed in POST-BATCH-T.

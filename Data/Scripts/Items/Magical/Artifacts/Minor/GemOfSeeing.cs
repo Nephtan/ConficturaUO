@@ -59,6 +59,9 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
+            if (from == null || from.Deleted || Deleted)
+                return;
+
             if (from.InRange(this.GetWorldLocation(), 3) && Charges > 0)
             {
                 ConsumeCharge(from);
@@ -97,6 +100,9 @@ namespace Server.Items
 
             protected override void OnTarget(Mobile src, object targ)
             {
+                if (src == null || src.Deleted || src.Map == null)
+                    return;
+
                 bool foundAnyone = false;
 
                 Point3D p;

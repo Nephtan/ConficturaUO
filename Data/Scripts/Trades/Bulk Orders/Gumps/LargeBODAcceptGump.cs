@@ -112,6 +112,14 @@ namespace Server.Engines.BulkOrders
 
         public override void OnResponse(NetState sender, RelayInfo info)
         {
+            if (sender == null)
+                return;
+
+            Mobile from = sender.Mobile;
+
+            if (from == null || from.Deleted || from != m_From || m_Deed == null || m_Deed.Deleted)
+                return;
+
             if (info.ButtonID == 1) // Ok
             {
                 if (m_From.PlaceInBackpack(m_Deed))

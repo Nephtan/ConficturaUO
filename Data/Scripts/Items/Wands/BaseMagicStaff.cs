@@ -112,7 +112,12 @@ namespace Server.Items
 
         public virtual void ReleaseMagicStaffLock_Callback(object state)
         {
-            ((Mobile)state).EndAction(typeof(BaseMagicStaff));
+            Mobile from = state as Mobile;
+
+            if (from == null || from.Deleted)
+                return;
+
+            from.EndAction(typeof(BaseMagicStaff));
         }
 
         public override bool OnEquip(Mobile from)
@@ -123,6 +128,9 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
+            if (from == null || from.Deleted || Deleted)
+                return;
+
             this.Attributes.SpellChanneling = 0;
 
             if (!from.CanBeginAction(typeof(BaseMagicStaff)))

@@ -125,7 +125,7 @@ namespace Server.Spells.HolyMan
             );
             Caster.FixedParticles(0x3735, 1, 30, 9503, EffectLayer.Waist);
             Caster.PlaySound(0x1D6);
-            Caster.NextSpellTime = DateTime.Now;
+            Caster.NextSpellTime = TurnBasedCombatBridge.GetTime(Caster);
         }
 
         public override int GetMana()

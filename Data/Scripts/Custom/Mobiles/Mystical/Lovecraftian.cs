@@ -1,4 +1,5 @@
 using Server;
+using Server.Custom.Confictura.PvE.MobileBalance;
 using Server.Engines.XmlSpawner2;
 using Server.Mobiles;
 
@@ -34,6 +35,7 @@ namespace Server.Custom.Confictura.Mobiles
             // XML attachments that enhance the creature's melee pressure
             XmlAttach.AttachTo(this, new XmlManaDrain(900));
             XmlAttach.AttachTo(this, new XmlStamDrain(900));
+            MobileBalanceCatalog.ApplyProfile(this);
         }
 
         public Lovecraftian(Serial serial)
@@ -44,13 +46,18 @@ namespace Server.Custom.Confictura.Mobiles
         public override void Serialize(GenericWriter writer)
         {
             base.Serialize(writer);
-            writer.Write(0); // version
+            writer.Write(1); // version
         }
 
         public override void Deserialize(GenericReader reader)
         {
             base.Deserialize(reader);
-            reader.ReadInt(); // version
+            int version = reader.ReadInt();
+
+            if (version < 1)
+            {
+                MobileBalanceCatalog.ApplyProfile(this);
+            }
         }
     }
 }

@@ -223,13 +223,19 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
+            if (from == null || from.Deleted || Deleted)
+                return;
+
             if (Check(from))
                 Repair.Do(from, RepairSkillInfo.GetInfo(m_Skill).System, this);
         }
 
         public bool Check(Mobile from)
         {
-            if (!IsChildOf(from.Backpack))
+            if (from == null || from.Deleted || Deleted)
+                return false;
+
+            if (from.Backpack == null || !IsChildOf(from.Backpack))
                 from.SendLocalizedMessage(1047012); // The contract must be in your backpack to use it.
             else if (!VerifyRegion(from))
                 TextDefinition.SendMessageTo(

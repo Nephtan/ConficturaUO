@@ -72,6 +72,9 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile e)
         {
+            if (e == null || e.Deleted || Deleted)
+                return;
+
             if (e.InRange(this.GetWorldLocation(), 4) && e.CanSee(this) && e.InLOS(this))
             {
                 e.CloseGump(typeof(KillGump));

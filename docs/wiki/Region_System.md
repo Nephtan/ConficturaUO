@@ -232,3 +232,67 @@ On load, if an entry ID no longer exists in the current XML, `SpawnEntry.Remove(
 * `BaseRegion.OnExit()` unlocks every locked `BaseDoor` in `World.Items.Values` when the last player leaves any `DungeonRegion` or `BardDungeonRegion`. The door unlock is not scoped to the exited region.
 * `GuardedRegion.MakeGuard()` silently swallows exceptions from guard construction. Bad guard constructors or runtime construction failures produce no diagnostic beyond guard absence.
 * `StartRegion.OnEnter()` and `StartRegion.OnExit()` do not call `base.OnEnter` or `base.OnExit`, so those transitions bypass common `BaseRegion` player maintenance such as buff cleanup, morality checks, ghost helper checks, and skill verification.
+
+## Source Trace
+
+POST-BATCH-T reviewed this page on 2026-06-14T21:09:11.0049244-05:00 against current source and audit registers.
+
+- Canonical status: Canonical.
+- Queue rows: PBN-0031; PBN-0070.
+- Backlog rows: RB-06759; RB-06760.
+- Audit registers used: documentation-truth-table.csv, runtime-hook-map.csv, serialization-register.csv, and project-truth-register.csv.
+
+### Source Files Reviewed
+
+- Data/System/Source/Region.cs (CurrentFile)
+- Data/System/Source/Sector.cs (CurrentFile)
+- Data/System/Source/Map.cs (CurrentFile)
+- Data/Scripts/System/Regions/BaseRegion.cs (CurrentFile)
+- Data/Scripts/System/Regions/GuardedRegion.cs (CurrentFile)
+- Data/Scripts/System/Regions/HouseRegion.cs (CurrentFile)
+- Data/Scripts/System/Regions/RegionMusic.cs (CurrentFile)
+- Data/Scripts/System/Regions/Spawning/SpawnEntry.cs (CurrentFile)
+- Data/Scripts/System/Regions/Spawning/SpawnDefinition.cs (CurrentFile)
+- Data/Scripts/System/Regions/Spawning/SpawnPersistence.cs (CurrentFile)
+
+### Runtime Evidence
+
+- Hook summary: Command=11; Event=1; Gump=3; Initialize=3; Login=1; Region=10; Speech=6; Timer=3.
+- Data/Scripts/System/Regions/BaseRegion.cs:L32 Region RegionOverride access=GlobalOrInternal
+- Data/Scripts/System/Regions/BaseRegion.cs:L123 Region RegionOverride access=GlobalOrInternal
+- Data/Scripts/System/Regions/BaseRegion.cs:L234 Region RegionOverride access=GlobalOrInternal
+- Data/Scripts/System/Regions/BaseRegion.cs:L259 Region RegionOverride access=GlobalOrInternal
+- Data/Scripts/System/Regions/GuardedRegion.cs:L30 Initialize Initialize access=GlobalOrInternal
+- Data/Scripts/System/Regions/GuardedRegion.cs:L32 Command CommandSystem.Register access=Unknown
+- Data/Scripts/System/Regions/GuardedRegion.cs:L37 Command CommandSystem.Register access=Unknown
+- Data/Scripts/System/Regions/GuardedRegion.cs:L42 Command CommandSystem.Register access=Unknown
+- Data/Scripts/System/Regions/GuardedRegion.cs:L234 Region RegionOverride access=GlobalOrInternal
+- Data/Scripts/System/Regions/GuardedRegion.cs:L243 Region RegionOverride access=GlobalOrInternal
+- Data/Scripts/System/Regions/GuardedRegion.cs:L249 Speech OnSpeech access=GlobalOrInternal
+- Data/Scripts/System/Regions/GuardedRegion.cs:L251 Speech OnSpeech access=GlobalOrInternal
+- Additional hook rows are recorded in runtime-hook-map.csv for this source set.
+
+### Serialization Evidence
+
+- Serialized rows matched: 2.
+- Data/Scripts/System/Regions/Spawning/SpawnEntry.cs:Server.Regions.SpawnEntry version=Unknown serialize=L277 deserialize=L alignment=CountMismatch:Writes=6;Reads=0
+- Data/Scripts/System/Regions/Spawning/SpawnPersistence.cs:Server.Regions.SpawnPersistence version=Unknown serialize=L39 deserialize=L54 alignment=AlignedByCountAndKnownTypes
+
+### Project And Runtime Coverage
+
+- Data/Scripts/System/Regions/BaseRegion.cs=Keep
+- Data/Scripts/System/Regions/BaseRegion.cs=Keep
+- Data/Scripts/System/Regions/GuardedRegion.cs=Keep
+- Data/Scripts/System/Regions/GuardedRegion.cs=Keep
+- Data/Scripts/System/Regions/HouseRegion.cs=Keep
+- Data/Scripts/System/Regions/HouseRegion.cs=Keep
+- Data/Scripts/System/Regions/RegionMusic.cs=Keep
+- Data/Scripts/System/Regions/RegionMusic.cs=Keep
+- Data/Scripts/System/Regions/Spawning/SpawnDefinition.cs=Keep
+- Data/Scripts/System/Regions/Spawning/SpawnDefinition.cs=Keep
+- Data/Scripts/System/Regions/Spawning/SpawnEntry.cs=Keep
+- Data/Scripts/System/Regions/Spawning/SpawnEntry.cs=Keep
+- Data/Scripts/System/Regions/Spawning/SpawnPersistence.cs=Keep
+- Data/Scripts/System/Regions/Spawning/SpawnPersistence.cs=Keep
+
+No C# source, project files, XML/config/data files, namespaces, serializers, gameplay behavior, or migration policy were changed in POST-BATCH-T.

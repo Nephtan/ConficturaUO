@@ -51,7 +51,10 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
-            if (!IsChildOf(from.Backpack))
+            if (from == null || from.Deleted || Deleted)
+                return;
+
+            if (from.Backpack == null || !IsChildOf(from.Backpack))
             {
                 from.SendMessage("This must be in your backpack to read.");
                 return;
@@ -75,24 +78,32 @@ namespace Server.Items
 
             protected override void OnTarget(Mobile from, object targeted)
             {
-                if (targeted is Item)
-                {
-                    Item iColor = targeted as Item;
+                if (from == null || from.Deleted)
+                    return;
 
+                if (m_Book == null || m_Book.Deleted)
+                    return;
+
+                if (from.Backpack == null || !m_Book.IsChildOf(from.Backpack))
+                {
+                    from.SendMessage("This must be in your backpack to read.");
+                    return;
+                }
+
+                Item iColor = targeted as Item;
+
+                if (iColor != null && !iColor.Deleted)
+                {
                     if (!iColor.IsChildOf(from.Backpack))
                     {
                         from.SendMessage("You can only color items in your pack.");
                     }
-                    else if (iColor.IsChildOf(from.Backpack))
+                    else
                     {
                         from.RevealingAction();
                         from.PlaySound(0x1FA);
                         iColor.Hue = m_Book.Hue;
                         from.SendMessage("You magically change the color.");
-                    }
-                    else
-                    {
-                        from.SendMessage("You cannot color that!");
                     }
                 }
                 else
@@ -538,7 +549,22 @@ namespace Server.Items
 
             public override void OnResponse(NetState state, RelayInfo info)
             {
+                if (state == null || info == null)
+                    return;
+
                 Mobile from = state.Mobile;
+
+                if (from == null || from.Deleted)
+                    return;
+
+                if (m_Book == null || m_Book.Deleted)
+                    return;
+
+                if (from.Backpack == null || !m_Book.IsChildOf(from.Backpack))
+                {
+                    from.SendMessage("This must be in your backpack to read.");
+                    return;
+                }
 
                 if (info.ButtonID >= 100000)
                 {

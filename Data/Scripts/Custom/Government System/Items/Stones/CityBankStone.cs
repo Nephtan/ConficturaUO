@@ -27,6 +27,9 @@ namespace Server.Items
 
         public override void OnSpeech(SpeechEventArgs e)
         {
+            if (e == null || e.Mobile == null || e.Mobile.Deleted || e.Keywords == null || e.Speech == null)
+                return;
+
             if (!e.Handled && e.Mobile.InLOS(this))
             {
                 for (int i = 0; i < e.Keywords.Length; ++i)

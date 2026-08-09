@@ -119,7 +119,12 @@ namespace Server.Items
 
         private static void EventSink_OpenSpellbookRequest(OpenSpellbookRequestEventArgs e)
         {
+            if (e == null)
+                return;
+
             Mobile from = e.Mobile;
+            if (from == null || from.Deleted)
+                return;
 
             if (!Multis.DesignContext.Check(from))
                 return; // They are customizing
@@ -178,7 +183,12 @@ namespace Server.Items
 
         private static void EventSink_CastSpellRequest(CastSpellRequestEventArgs e)
         {
+            if (e == null)
+                return;
+
             Mobile from = e.Mobile;
+            if (from == null || from.Deleted)
+                return;
 
             if (!Multis.DesignContext.Check(from))
                 return; // They are customizing
@@ -1078,6 +1088,9 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
+            if (from == null || from.Deleted || Deleted)
+                return;
+
             Container pack = from.Backpack;
 
             if (Parent == from || (pack != null && Parent == pack))

@@ -74,7 +74,7 @@ namespace Server.Items
 
             from.RevealingAction();
 
-            if (BandageContext.BeginHeal(from, from) != null)
+            if (TryApply(from, from, (Bandage)m_Bandage))
                 m_Bandage.Consume();
             Server.Gumps.QuickBar.RefreshQuickBar(from);
         }
@@ -90,8 +90,7 @@ namespace Server.Items
 
             from.RevealingAction();
             Bandage band = (Bandage)m_Bandage;
-            from.SendLocalizedMessage(500948); // Who will you use the bandages on?
-            from.Target = new InternalTarget(band);
+            OpenTarget(from, band);
         }
 
         public override void OnDoubleClick(Mobile from)
@@ -99,6 +98,7 @@ namespace Server.Items
             if (from.Blessed)
             {
                 from.SendMessage("You cannot use bandages while in this state.");
+                TurnBasedCombatBridge.RefundPendingAction(from, this);
                 return;
             }
 
@@ -106,14 +106,74 @@ namespace Server.Items
             {
                 from.RevealingAction();
 
-                from.SendLocalizedMessage(500948); // Who will you use the bandages on?
-
-                from.Target = new InternalTarget(this);
+                OpenTarget(from, this);
             }
             else
             {
                 from.SendLocalizedMessage(500295); // You are too far away to do that.
+                TurnBasedCombatBridge.RefundPendingAction(from, this);
             }
+        }
+
+        private static void OpenTarget(Mobile from, Bandage bandage)
+        {
+            TurnActionDecision decision = TurnBasedCombatBridge.BeginAction(
+                new TurnActionRequest(
+                    from,
+                    bandage,
+                    bandage,
+                    TurnActionKind.ItemUse,
+                    -1,
+                    false,
+                    false
+                )
+            );
+
+            if (!String.IsNullOrEmpty(decision.Message))
+                from.SendMessage(decision.Message);
+
+            if (!decision.Allowed)
+                return;
+
+            from.SendLocalizedMessage(500948); // Who will you use the bandages on?
+            from.Target = new InternalTarget(bandage);
+        }
+
+        public static bool TryApply(Mobile from, Mobile patient, Bandage bandage)
+        {
+            TurnActionDecision decision = TurnBasedCombatBridge.BeginAction(
+                new TurnActionRequest(
+                    from,
+                    patient,
+                    bandage,
+                    TurnActionKind.ItemUse,
+                    -1,
+                    false,
+                    true
+                )
+            );
+
+            if (!String.IsNullOrEmpty(decision.Message))
+                from.SendMessage(decision.Message);
+
+            if (!decision.Allowed)
+                return false;
+
+            bool success = false;
+
+            using (TurnBasedCombatBridge.BeginActionScope(decision.Lease))
+                success = BandageContext.BeginHeal(from, patient) != null;
+
+            TurnBasedCombatBridge.CompleteAction(
+                decision.Lease,
+                new TurnActionResult(
+                    from,
+                    patient,
+                    success ? TurnActionPhase.Commit : TurnActionPhase.Refund,
+                    success
+                )
+            );
+            return success;
         }
 
         private class InternalTarget : Target
@@ -129,21 +189,29 @@ namespace Server.Items
             protected override void OnTarget(Mobile from, object targeted)
             {
                 if (m_Bandage.Deleted)
+                {
+                    TurnBasedCombatBridge.InvalidateTargetIntent(from, targeted);
                     return;
+                }
 
                 if (targeted is Mobile)
                 {
                     if (from.InRange(m_Bandage.GetWorldLocation(), Bandage.Range))
                     {
-                        if (BandageContext.BeginHeal(from, (Mobile)targeted) != null)
+                        if (TryApply(from, (Mobile)targeted, m_Bandage))
                         {
                             m_Bandage.Consume();
                             Server.Gumps.QuickBar.RefreshQuickBar(from);
+                        }
+                        else
+                        {
+                            TurnBasedCombatBridge.InvalidateTargetIntent(from, targeted);
                         }
                     }
                     else
                     {
                         from.SendLocalizedMessage(500295); // You are too far away to do that.
+                        TurnBasedCombatBridge.InvalidateTargetIntent(from, targeted);
                     }
                 }
                 else if (
@@ -164,6 +232,7 @@ namespace Server.Items
                     else
                     {
                         from.SendMessage("They are not dead.");
+                        TurnBasedCombatBridge.InvalidateTargetIntent(from, targeted);
                     }
                 }
                 else if (
@@ -184,6 +253,7 @@ namespace Server.Items
                     else
                     {
                         from.SendMessage("They are not dead.");
+                        TurnBasedCombatBridge.InvalidateTargetIntent(from, targeted);
                     }
                 }
                 else if (
@@ -204,6 +274,7 @@ namespace Server.Items
                     else
                     {
                         from.SendMessage("They are not dead.");
+                        TurnBasedCombatBridge.InvalidateTargetIntent(from, targeted);
                     }
                 }
                 else if (
@@ -224,11 +295,13 @@ namespace Server.Items
                     else
                     {
                         from.SendMessage("They are not dead.");
+                        TurnBasedCombatBridge.InvalidateTargetIntent(from, targeted);
                     }
                 }
                 else
                 {
                     from.SendLocalizedMessage(500970); // Bandages can not be used on that.
+                    TurnBasedCombatBridge.InvalidateTargetIntent(from, targeted);
                 }
             }
 
@@ -245,6 +318,8 @@ namespace Server.Items
         private Mobile m_Patient;
         private int m_Slips;
         private Timer m_Timer;
+        private TimeSpan m_TurnBasedRemaining;
+        private bool m_TurnBasedSuspended;
 
         public Mobile Healer
         {
@@ -289,6 +364,62 @@ namespace Server.Items
                 m_Timer.Stop();
 
             m_Timer = null;
+            m_TurnBasedRemaining = TimeSpan.Zero;
+            m_TurnBasedSuspended = false;
+            TurnBasedCombatBridge.EffectTimerChanged(m_Healer, TurnMutationKind.Healing, null);
+        }
+
+        public TimeSpan SuspendForTurnBased()
+        {
+            if (m_Timer == null)
+                return TimeSpan.Zero;
+
+            TimeSpan remaining = m_Timer.Next - DateTime.Now;
+
+            if (remaining <= TimeSpan.Zero)
+                remaining = m_Timer.Delay;
+
+            if (remaining <= TimeSpan.Zero)
+                remaining = TimeSpan.FromMilliseconds(1.0);
+
+            m_Timer.Stop();
+            m_TurnBasedRemaining = remaining;
+            m_TurnBasedSuspended = true;
+            return remaining;
+        }
+
+        public bool AdvanceTurnBased(TimeSpan elapsed)
+        {
+            if (!m_TurnBasedSuspended || m_Timer == null)
+                return false;
+
+            m_TurnBasedRemaining = AdvanceTurnBasedRemaining(m_TurnBasedRemaining, elapsed);
+
+            if (m_TurnBasedRemaining > TimeSpan.Zero)
+                return false;
+
+            m_TurnBasedSuspended = false;
+            EndHeal();
+            return true;
+        }
+
+        public static TimeSpan AdvanceTurnBasedRemaining(TimeSpan remaining, TimeSpan elapsed)
+        {
+            remaining -= elapsed;
+            return remaining > TimeSpan.Zero ? remaining : TimeSpan.Zero;
+        }
+
+        public void ResumeFromTurnBased()
+        {
+            if (!m_TurnBasedSuspended || GetContext(m_Healer) != this)
+                return;
+
+            TimeSpan remaining = m_TurnBasedRemaining > TimeSpan.Zero
+                ? m_TurnBasedRemaining
+                : TimeSpan.FromMilliseconds(1.0);
+            m_Timer = new InternalTimer(this, remaining);
+            m_TurnBasedSuspended = false;
+            m_Timer.Start();
         }
 
         private static Dictionary<Mobile, BandageContext> m_Table =
@@ -664,6 +795,11 @@ namespace Server.Items
                 context = new BandageContext(healer, patient, TimeSpan.FromMilliseconds(seconds));
 
                 m_Table[healer] = context;
+                TurnBasedCombatBridge.EffectTimerChanged(
+                    healer,
+                    TurnMutationKind.Healing,
+                    context.Timer
+                );
 
                 if (!onSelf)
                     patient.SendLocalizedMessage(1008078, false, healer.Name); //  : Attempting to heal you.

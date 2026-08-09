@@ -273,10 +273,19 @@ namespace Server.Mobiles
 
             int monsters = 0;
 
-            foreach (Mobile m in this.GetMobilesInRange(4))
+            IPooledEnumerable eable = this.GetMobilesInRange(4);
+
+            try
             {
-                if (m is BoneKnight || m is SkeletalWarrior || m is Skeleton || m is SkeletalKnight)
-                    ++monsters;
+                foreach (Mobile m in eable)
+                {
+                    if (m is BoneKnight || m is SkeletalWarrior || m is Skeleton || m is SkeletalKnight)
+                        ++monsters;
+                }
+            }
+            finally
+            {
+                eable.Free();
             }
 
             if (monsters < 6)

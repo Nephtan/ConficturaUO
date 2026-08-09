@@ -209,22 +209,31 @@ namespace Server.Mobiles
         {
             ArrayList list = new ArrayList();
 
-            foreach (Mobile m in mobile.GetMobilesInRange(15))
-            {
-                if (m == mobile || !m.CanBeHarmful(m))
-                    continue;
+            IPooledEnumerable eable = mobile.GetMobilesInRange(15);
 
-                if (
-                    m is BaseCreature
-                    && (
-                        ((BaseCreature)m).Controlled
-                        || ((BaseCreature)m).Summoned
-                        || ((BaseCreature)m).Team != mobile.Team
+            try
+            {
+                foreach (Mobile m in eable)
+                {
+                    if (m == mobile || !m.CanBeHarmful(m))
+                        continue;
+
+                    if (
+                        m is BaseCreature
+                        && (
+                            ((BaseCreature)m).Controlled
+                            || ((BaseCreature)m).Summoned
+                            || ((BaseCreature)m).Team != mobile.Team
+                        )
                     )
-                )
-                    list.Add(m);
-                else if (m.Player)
-                    list.Add(m);
+                        list.Add(m);
+                    else if (m.Player)
+                        list.Add(m);
+                }
+            }
+            finally
+            {
+                eable.Free();
             }
 
             foreach (Mobile m in list)
@@ -244,15 +253,24 @@ namespace Server.Mobiles
         {
             ArrayList list = new ArrayList();
 
-            foreach (Mobile m in mobile.GetMobilesInRange(15))
-            {
-                if (m == mobile || !m.CanBeHarmful(m))
-                    continue;
+            IPooledEnumerable eable = mobile.GetMobilesInRange(15);
 
-                if (m is BaseCreature)
-                    list.Add(m);
-                else if (m.Player)
-                    list.Add(m);
+            try
+            {
+                foreach (Mobile m in eable)
+                {
+                    if (m == mobile || !m.CanBeHarmful(m))
+                        continue;
+
+                    if (m is BaseCreature)
+                        list.Add(m);
+                    else if (m.Player)
+                        list.Add(m);
+                }
+            }
+            finally
+            {
+                eable.Free();
             }
 
             foreach (Mobile m in list)
@@ -280,9 +298,20 @@ namespace Server.Mobiles
 
         public static void DoRobotReveal(BaseCreature mobile)
         {
-            foreach (Mobile m in mobile.GetMobilesInRange(10))
-                if (m != null && m.Hidden && m.AccessLevel == AccessLevel.Player)
-                    m.Hidden = false;
+            IPooledEnumerable eable = mobile.GetMobilesInRange(10);
+
+            try
+            {
+                foreach (Mobile m in eable)
+                {
+                    if (m != null && m.Hidden && m.AccessLevel == AccessLevel.Player)
+                        m.Hidden = false;
+                }
+            }
+            finally
+            {
+                eable.Free();
+            }
 
             if (s_RoboTalked == false)
             {
@@ -327,9 +356,20 @@ namespace Server.Mobiles
 
         public static void DoHumanReveal(BaseCreature mobile)
         {
-            foreach (Mobile m in mobile.GetMobilesInRange(10))
-                if (m != null && m.Hidden && m.AccessLevel == AccessLevel.Player)
-                    m.Hidden = false;
+            IPooledEnumerable eable = mobile.GetMobilesInRange(10);
+
+            try
+            {
+                foreach (Mobile m in eable)
+                {
+                    if (m != null && m.Hidden && m.AccessLevel == AccessLevel.Player)
+                        m.Hidden = false;
+                }
+            }
+            finally
+            {
+                eable.Free();
+            }
 
             if (s_HumanTalked == false)
             {
@@ -367,22 +407,31 @@ namespace Server.Mobiles
         {
             ArrayList list = new ArrayList();
 
-            foreach (Mobile m in mobile.GetMobilesInRange(10))
-            {
-                if (m == mobile || !m.CanBeHarmful(m))
-                    continue;
+            IPooledEnumerable eable = mobile.GetMobilesInRange(10);
 
-                if (
-                    m is BaseCreature
-                    && (
-                        ((BaseCreature)m).Controlled
-                        || ((BaseCreature)m).Summoned
-                        || ((BaseCreature)m).Team != mobile.Team
+            try
+            {
+                foreach (Mobile m in eable)
+                {
+                    if (m == mobile || !m.CanBeHarmful(m))
+                        continue;
+
+                    if (
+                        m is BaseCreature
+                        && (
+                            ((BaseCreature)m).Controlled
+                            || ((BaseCreature)m).Summoned
+                            || ((BaseCreature)m).Team != mobile.Team
+                        )
                     )
-                )
-                    list.Add(m);
-                else if (m.Player)
-                    list.Add(m);
+                        list.Add(m);
+                    else if (m.Player)
+                        list.Add(m);
+                }
+            }
+            finally
+            {
+                eable.Free();
             }
 
             foreach (Mobile m in list)
@@ -417,22 +466,31 @@ m.SendMessage( "Your feel the heat of fire!" );
         {
             ArrayList list = new ArrayList();
 
-            foreach (Mobile m in mobile.GetMobilesInRange(10))
-            {
-                if (m == mobile || !m.CanBeHarmful(m))
-                    continue;
+            IPooledEnumerable eable = mobile.GetMobilesInRange(10);
 
-                if (
-                    m is BaseCreature
-                    && (
-                        ((BaseCreature)m).Controlled
-                        || ((BaseCreature)m).Summoned
-                        || ((BaseCreature)m).Team != mobile.Team
+            try
+            {
+                foreach (Mobile m in eable)
+                {
+                    if (m == mobile || !m.CanBeHarmful(m))
+                        continue;
+
+                    if (
+                        m is BaseCreature
+                        && (
+                            ((BaseCreature)m).Controlled
+                            || ((BaseCreature)m).Summoned
+                            || ((BaseCreature)m).Team != mobile.Team
+                        )
                     )
-                )
-                    list.Add(m);
-                else if (m.Player)
-                    list.Add(m);
+                        list.Add(m);
+                    else if (m.Player)
+                        list.Add(m);
+                }
+            }
+            finally
+            {
+                eable.Free();
             }
 
             foreach (Mobile m in list)
@@ -460,22 +518,31 @@ m.SendMessage( "Your feel the heat of fire!" );
         {
             ArrayList list = new ArrayList();
 
-            foreach (Mobile m in mobile.GetMobilesInRange(10))
-            {
-                if (m == mobile || !m.CanBeHarmful(m))
-                    continue;
+            IPooledEnumerable eable = mobile.GetMobilesInRange(10);
 
-                if (
-                    m is BaseCreature
-                    && (
-                        ((BaseCreature)m).Controlled
-                        || ((BaseCreature)m).Summoned
-                        || ((BaseCreature)m).Team != mobile.Team
+            try
+            {
+                foreach (Mobile m in eable)
+                {
+                    if (m == mobile || !m.CanBeHarmful(m))
+                        continue;
+
+                    if (
+                        m is BaseCreature
+                        && (
+                            ((BaseCreature)m).Controlled
+                            || ((BaseCreature)m).Summoned
+                            || ((BaseCreature)m).Team != mobile.Team
+                        )
                     )
-                )
-                    list.Add(m);
-                else if (m.Player)
-                    list.Add(m);
+                        list.Add(m);
+                    else if (m.Player)
+                        list.Add(m);
+                }
+            }
+            finally
+            {
+                eable.Free();
             }
 
             foreach (Mobile m in list)
@@ -499,9 +566,20 @@ m.SendMessage( "Your feel the heat of fire!" );
 
         public static void DoHitsDrainAttack(BaseCreature mobile)
         {
-            foreach (Mobile m in mobile.GetMobilesInRange(3))
-                if (m != null && m.Hits >= 50 && m.AccessLevel == AccessLevel.Player)
-                    mobile.Hits += 2;
+            IPooledEnumerable eable = mobile.GetMobilesInRange(3);
+
+            try
+            {
+                foreach (Mobile m in eable)
+                {
+                    if (m != null && m.Hits >= 50 && m.AccessLevel == AccessLevel.Player)
+                        mobile.Hits += 2;
+                }
+            }
+            finally
+            {
+                eable.Free();
+            }
         }
 
         //END HITS DRAIN ATTACK
@@ -510,9 +588,20 @@ m.SendMessage( "Your feel the heat of fire!" );
 
         public static void DoStamDrainAttack(BaseCreature mobile)
         {
-            foreach (Mobile m in mobile.GetMobilesInRange(3))
-                if (m != null && m.Stam >= 50 && m.AccessLevel == AccessLevel.Player)
-                    mobile.Stam += 5;
+            IPooledEnumerable eable = mobile.GetMobilesInRange(3);
+
+            try
+            {
+                foreach (Mobile m in eable)
+                {
+                    if (m != null && m.Stam >= 50 && m.AccessLevel == AccessLevel.Player)
+                        mobile.Stam += 5;
+                }
+            }
+            finally
+            {
+                eable.Free();
+            }
         }
 
         //END STAM DRAIN ATTACK
@@ -521,9 +610,20 @@ m.SendMessage( "Your feel the heat of fire!" );
 
         public static void DoManaDrainAttack(BaseCreature mobile)
         {
-            foreach (Mobile m in mobile.GetMobilesInRange(3))
-                if (m != null && m.Mana >= 50 && m.AccessLevel == AccessLevel.Player)
-                    mobile.Mana += 5;
+            IPooledEnumerable eable = mobile.GetMobilesInRange(3);
+
+            try
+            {
+                foreach (Mobile m in eable)
+                {
+                    if (m != null && m.Mana >= 50 && m.AccessLevel == AccessLevel.Player)
+                        mobile.Mana += 5;
+                }
+            }
+            finally
+            {
+                eable.Free();
+            }
         }
 
         //END MANA DRAIN ATTACK

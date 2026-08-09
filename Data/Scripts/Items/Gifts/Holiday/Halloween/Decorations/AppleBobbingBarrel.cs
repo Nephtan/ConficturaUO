@@ -29,6 +29,9 @@ namespace Server.Items
         // Called when the item is double-clicked
         public override void OnDoubleClick(Mobile from)
         {
+            if (from == null || from.Deleted || Deleted)
+                return;
+
             // Check if the player is mounted
             if (from.Mounted)
             {
@@ -55,11 +58,15 @@ namespace Server.Items
             Mobile from = state as Mobile;
 
             // Make sure the player is still valid
-            if (from == null)
+            if (from == null || from.Deleted)
                 return;
 
             // Stop the animation and play a splash sound
             from.CantWalk = false;
+
+            if (Deleted)
+                return;
+
             from.Animate(32, 5, 1, false, false, 0);
             from.PlaySound(37);
 

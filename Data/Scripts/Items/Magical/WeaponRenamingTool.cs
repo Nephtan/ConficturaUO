@@ -36,6 +36,9 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
+            if (from == null || from.Deleted || Deleted)
+                return;
+
             if (m_IsRewardItem && !RewardSystem.CheckIsUsableBy(from, this, null))
                 return;
 
@@ -63,6 +66,9 @@ namespace Server.Items
 
         public static WeaponRenamingTool Find(Mobile from)
         {
+            if (from == null || from.Deleted)
+                return null;
+
             if (from.Backpack != null)
                 return from.Backpack.FindItemByType(typeof(WeaponRenamingTool))
                     as WeaponRenamingTool;
@@ -82,13 +88,16 @@ namespace Server.Items
 
             protected override void OnTarget(Mobile from, object targeted)
             {
+                if (from == null || from.Deleted)
+                    return;
+
                 if (m_Tool == null || m_Tool.Deleted)
                     return;
 
-                if (targeted is BaseWeapon)
-                {
-                    BaseWeapon item = (BaseWeapon)targeted;
+                BaseWeapon item = targeted as BaseWeapon;
 
+                if (item != null && !item.Deleted)
+                {
                     from.CloseGump(typeof(InternalGump));
                     from.SendGump(new InternalGump(m_Tool, item));
                 }
@@ -139,6 +148,11 @@ namespace Server.Items
 
             public override void OnResponse(Server.Network.NetState state, RelayInfo info)
             {
+                if (state == null || state.Mobile == null || state.Mobile.Deleted || info == null)
+                    return;
+
+                Mobile from = state.Mobile;
+
                 if (m_Tool == null || m_Tool.Deleted || m_Target == null || m_Target.Deleted)
                     return;
 
@@ -151,7 +165,7 @@ namespace Server.Items
                         if (String.IsNullOrEmpty(relay.Text))
                         {
                             m_Target.Name = null;
-                            state.Mobile.SendLocalizedMessage(1072362); // You remove the engraving from the object.
+                            from.SendLocalizedMessage(1072362); // You remove the engraving from the object.
                         }
                         else
                         {
@@ -160,13 +174,13 @@ namespace Server.Items
                             else
                                 m_Target.Name = relay.Text;
 
-                            state.Mobile.SendLocalizedMessage(1072361); // You engraved the object.
+                            from.SendLocalizedMessage(1072361); // You engraved the object.
                             m_Tool.Delete();
                         }
                     }
                 }
                 else
-                    state.Mobile.SendLocalizedMessage(1072363); // The object was not engraved.
+                    from.SendLocalizedMessage(1072363); // The object was not engraved.
             }
         }
     }

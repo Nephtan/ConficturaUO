@@ -60,6 +60,9 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
+            if (from == null || from.Deleted || Deleted)
+                return;
+
             if (m_To == null)
             {
                 if (this.IsChildOf(from))
@@ -77,11 +80,17 @@ namespace Server.Items
 
         public virtual void OnTarget(Mobile from, object targeted)
         {
+            if (from == null || from.Deleted || Deleted)
+                return;
+
             if (!Deleted)
             {
                 if (targeted != null && targeted is Mobile)
                 {
                     Mobile to = targeted as Mobile;
+
+                    if (to.Deleted)
+                        return;
 
                     if (to is PlayerMobile)
                     {

@@ -43,6 +43,9 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
+            if (from == null || from.Deleted || Deleted)
+                return;
+
             if (!Movable)
                 return;
 
@@ -96,7 +99,7 @@ namespace Server.Items
 
             protected override void OnTarget(Mobile from, object targeted)
             {
-                if (m_Flax.Deleted)
+                if (from == null || from.Deleted || m_Flax == null || m_Flax.Deleted)
                     return;
 
                 ISpinningWheel wheel = targeted as ISpinningWheel;
@@ -108,7 +111,7 @@ namespace Server.Items
                 {
                     Item item = (Item)wheel;
 
-                    if (!m_Flax.IsChildOf(from.Backpack))
+                    if (from.Backpack == null || !m_Flax.IsChildOf(from.Backpack))
                     {
                         from.SendLocalizedMessage(1042001); // That must be in your pack for you to use it.
                     }

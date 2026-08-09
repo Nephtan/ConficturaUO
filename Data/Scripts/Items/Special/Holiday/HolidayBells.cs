@@ -77,6 +77,9 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
+            if (from == null || from.Deleted || Deleted)
+                return;
+
             if (IsOwner(from))
             {
                 OnOffGump onOffGump = new OnOffGump(this);
@@ -115,7 +118,13 @@ namespace Server.Items
 
             public override void OnResponse(NetState sender, RelayInfo info)
             {
+                if (sender == null || info == null)
+                    return;
+
                 Mobile from = sender.Mobile;
+
+                if (from == null || from.Deleted || m_Chimes == null || m_Chimes.Deleted)
+                    return;
 
                 if (info.ButtonID == 1)
                 {

@@ -23,6 +23,11 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
+            if (from == null || from.Deleted || Deleted)
+            {
+                return;
+            }
+
             if (from.InRange(this.GetWorldLocation(), 4) && DateTime.Now >= m_NextFill)
             {
                 m_NextFill = (DateTime.Now + TimeSpan.FromSeconds(60));

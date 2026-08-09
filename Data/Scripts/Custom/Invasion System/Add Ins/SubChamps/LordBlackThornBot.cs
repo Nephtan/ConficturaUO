@@ -134,10 +134,19 @@ namespace Server.Mobiles
 
             int mechs = 0;
 
-            foreach (Mobile m in this.GetMobilesInRange(10))
+            IPooledEnumerable eable = this.GetMobilesInRange(10);
+
+            try
             {
-                if (m is RunicGolemInvader)
-                    ++mechs;
+                foreach (Mobile m in eable)
+                {
+                    if (m is RunicGolemInvader)
+                        ++mechs;
+                }
+            }
+            finally
+            {
+                eable.Free();
             }
 
             if (mechs < 10)

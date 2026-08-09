@@ -178,10 +178,19 @@ namespace Server.Mobiles
 
             int monsters = 0;
 
-            foreach (Mobile m in this.GetMobilesInRange(4))
+            IPooledEnumerable eable = this.GetMobilesInRange(4);
+
+            try
             {
-                if (m is Spectre)
-                    ++monsters;
+                foreach (Mobile m in eable)
+                {
+                    if (m is Spectre)
+                        ++monsters;
+                }
+            }
+            finally
+            {
+                eable.Free();
             }
 
             if (monsters < 6)

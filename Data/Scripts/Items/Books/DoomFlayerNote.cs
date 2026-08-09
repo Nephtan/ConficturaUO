@@ -58,6 +58,9 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile m)
         {
+            if (m == null || m.Deleted || Deleted)
+                return;
+
             if (m.InRange(this.GetWorldLocation(), 2))
             {
                 m.SendGump(new ClueGump(m));

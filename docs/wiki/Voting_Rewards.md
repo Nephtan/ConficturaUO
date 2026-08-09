@@ -199,3 +199,68 @@ Administrators should treat this as a vote-link cooldown system unless another u
 * Cooldown state -> traced `VoteHelper.GetLastVoteTime` and `SetLastVoteTime` to account tags using `VS_LAST_VOTE_` plus the upper-cased vote-site name.
 * Persistence -> traced `VoteConfig` file persistence, `VoteItem` serialization, `VoteSite` serialization, and `VoteStone` serialization.
 * Reward claim check -> searched the Voting directory and found no reward payout, callback verification, or external vote-tracking implementation.
+
+## Source Trace
+
+POST-BATCH-T reviewed this page on 2026-06-14T21:09:11.0049244-05:00 against current source and audit registers.
+
+- Canonical status: Canonical.
+- Queue rows: PBN-0114.
+- Backlog rows: RB-06790.
+- Audit registers used: documentation-truth-table.csv, runtime-hook-map.csv, serialization-register.csv, and project-truth-register.csv.
+
+### Source Files Reviewed
+
+- Data/Scripts/Custom/Voting (CurrentDirectory)
+- Data/Scripts/Custom/Voting/VoteCommand.cs (CurrentFile)
+- Data/Scripts/Custom/Voting/VoteConfig.cs (CurrentFile)
+- Data/Scripts/Custom/Voting/VoteEvents.cs (CurrentFile)
+- Data/Scripts/Custom/Voting/VoteHelper.cs (CurrentFile)
+- Data/Scripts/Custom/Voting/VoteItem.cs (CurrentFile)
+- Data/Scripts/Custom/Voting/VoteSite.cs (CurrentFile)
+- Data/Scripts/Custom/Voting/VoteStatus.cs (CurrentFile)
+- Data/Scripts/Custom/Voting/VoteStone.cs (CurrentFile)
+- Data/Scripts/Scripts.csproj (CurrentFile)
+
+### Runtime Evidence
+
+- Hook summary: Command=3; Event=2; Gump=2; Initialize=2; WorldSave=1.
+- Data/Scripts/Custom/Voting/VoteCommand.cs:L16 Initialize Initialize access=GlobalOrInternal
+- Data/Scripts/Custom/Voting/VoteCommand.cs:L18 Command CommandSystem.Register access=Player
+- Data/Scripts/Custom/Voting/VoteCommand.cs:L19 Command CommandSystem.Register access=GameMaster
+- Data/Scripts/Custom/Voting/VoteCommand.cs:L20 Command CommandSystem.Register access=GameMaster
+- Data/Scripts/Custom/Voting/VoteCommand.cs:L44 Gump SendGump access=Internal
+- Data/Scripts/Custom/Voting/VoteCommand.cs:L56 Gump SendGump access=Internal
+- Data/Scripts/Custom/Voting/VoteConfig.cs:L43 Initialize Initialize access=GlobalOrInternal
+- Data/Scripts/Custom/Voting/VoteConfig.cs:L45 Event EventSink access=GlobalOrInternal
+- Data/Scripts/Custom/Voting/VoteConfig.cs:L45 WorldSave WorldSave access=GlobalOrInternal
+- Data/Scripts/Custom/Voting/VoteConfig.cs:L46 Event EventSink access=GlobalOrInternal
+
+### Serialization Evidence
+
+- Serialized rows matched: 4.
+- Data/Scripts/Custom/Voting/VoteConfig.cs:Unknown version=Unknown serialize=L deserialize=L alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Custom/Voting/VoteItem.cs:Server.Voting.VoteItem version=Unknown serialize=L167 deserialize=L187 alignment=CountMismatch:Writes=2;Reads=1
+- Data/Scripts/Custom/Voting/VoteSite.cs:Server.Voting.VoteSite version=Unknown serialize=L113 deserialize=L133 alignment=CountMismatch:Writes=5;Reads=4
+- Data/Scripts/Custom/Voting/VoteStone.cs:Server.Items.VoteStone version=Unknown serialize=L109 deserialize=L128 alignment=CountMismatch:Writes=2;Reads=1
+
+### Project And Runtime Coverage
+
+- Data/Scripts/Custom/Voting/VoteCommand.cs=Keep
+- Data/Scripts/Custom/Voting/VoteCommand.cs=Keep
+- Data/Scripts/Custom/Voting/VoteConfig.cs=Keep
+- Data/Scripts/Custom/Voting/VoteConfig.cs=Keep
+- Data/Scripts/Custom/Voting/VoteEvents.cs=Keep
+- Data/Scripts/Custom/Voting/VoteEvents.cs=Keep
+- Data/Scripts/Custom/Voting/VoteHelper.cs=Keep
+- Data/Scripts/Custom/Voting/VoteHelper.cs=Keep
+- Data/Scripts/Custom/Voting/VoteItem.cs=Keep
+- Data/Scripts/Custom/Voting/VoteItem.cs=Keep
+- Data/Scripts/Custom/Voting/VoteSite.cs=Keep
+- Data/Scripts/Custom/Voting/VoteSite.cs=Keep
+- Data/Scripts/Custom/Voting/VoteStatus.cs=Keep
+- Data/Scripts/Custom/Voting/VoteStatus.cs=Keep
+- Data/Scripts/Custom/Voting/VoteStone.cs=Keep
+- Data/Scripts/Custom/Voting/VoteStone.cs=Keep
+
+No C# source, project files, XML/config/data files, namespaces, serializers, gameplay behavior, or migration policy were changed in POST-BATCH-T.

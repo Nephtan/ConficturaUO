@@ -131,7 +131,7 @@ When `randomStart` is false, outward searches start at index `0`; inward searche
 
 ## Random Encounter Integration
 
-`Data/Scripts/Custom/RandomEncounters/SpawnFinder.cs` is the only traced consumer outside the search package.
+`Data/Scripts/Custom/PvE/RandomEncounters/SpawnFinder.cs` is the only traced consumer outside the search package.
 
 | SpawnFinder method | Search API used | Purpose |
 | --- | --- | --- |
@@ -156,3 +156,63 @@ The Search System defines no `Item`, `Mobile`, attachment, Gump, or persistent w
 * `CircleSearch.SearchConcentricCircles(...)` also returns false after the first non-empty radius ring, so the public `Search.ConcentricCircles(...)` API does not actually traverse concentric circles.
 * `SpiralSearch.SearchSpiral(...)` uses `Utility.RandomMinMax(0, entries.Count)` for first-ring randomization. `RandomMinMax` is inclusive, so `entries.Count` can be selected and skip the first ring entirely. The random start also does not wrap around to visit entries before the chosen index.
 * `Search.Initialize()` catches construction exceptions, logs a fatal message, but does not rethrow. If initialization fails, later API calls can dereference null helper fields while the server continues running.
+
+## Source Trace
+
+POST-BATCH-T reviewed this page on 2026-06-14T21:09:11.0049244-05:00 against current source and audit registers.
+
+- Canonical status: Canonical.
+- Queue rows: PBN-0064.
+- Backlog rows: RB-06766.
+- Audit registers used: documentation-truth-table.csv, runtime-hook-map.csv, serialization-register.csv, and project-truth-register.csv.
+
+### Source Files Reviewed
+
+- Data/Scripts/Custom/Searches/Searches.cs (CurrentFile)
+- Data/Scripts/Custom/Searches/Types.cs (CurrentFile)
+- Data/Scripts/Custom/Searches/BaseEntry.cs (CurrentFile)
+- Data/Scripts/Custom/Searches/Helpers.cs (CurrentFile)
+- Data/Scripts/Custom/Searches/LineSearch.cs (CurrentFile)
+- Data/Scripts/Custom/Searches/CircleSearch.cs (CurrentFile)
+- Data/Scripts/Custom/Searches/OctantSearch.cs (CurrentFile)
+- Data/Scripts/Custom/Searches/SpiralSearch.cs (CurrentFile)
+- Data/Scripts/Custom/Searches/Commands.cs (CurrentFile)
+- Data/Scripts/Scripts.csproj (CurrentFile)
+- Data/Scripts/Custom/PvE/RandomEncounters/SpawnFinder.cs (CurrentFile)
+- Data/Scripts/Custom/Searches (CurrentDirectory)
+
+### Runtime Evidence
+
+- Hook summary: Command=1; Initialize=2.
+- Data/Scripts/Custom/Searches/Commands.cs:L21 Initialize Initialize access=GlobalOrInternal
+- Data/Scripts/Custom/Searches/Commands.cs:L23 Command CommandSystem.Register access=Unknown
+- Data/Scripts/Custom/Searches/Searches.cs:L92 Initialize Initialize access=GlobalOrInternal
+
+### Serialization Evidence
+
+- No serialized classes matched the reviewed source set in serialization-register.csv.
+
+### Project And Runtime Coverage
+
+- Data/Scripts/Custom/PvE/RandomEncounters/SpawnFinder.cs=Keep
+- Data/Scripts/Custom/PvE/RandomEncounters/SpawnFinder.cs=Keep
+- Data/Scripts/Custom/Searches/BaseEntry.cs=Keep
+- Data/Scripts/Custom/Searches/BaseEntry.cs=Keep
+- Data/Scripts/Custom/Searches/CircleSearch.cs=Keep
+- Data/Scripts/Custom/Searches/CircleSearch.cs=Keep
+- Data/Scripts/Custom/Searches/Commands.cs=Keep
+- Data/Scripts/Custom/Searches/Commands.cs=Keep
+- Data/Scripts/Custom/Searches/Helpers.cs=Keep
+- Data/Scripts/Custom/Searches/Helpers.cs=Keep
+- Data/Scripts/Custom/Searches/LineSearch.cs=Keep
+- Data/Scripts/Custom/Searches/LineSearch.cs=Keep
+- Data/Scripts/Custom/Searches/OctantSearch.cs=Keep
+- Data/Scripts/Custom/Searches/OctantSearch.cs=Keep
+- Data/Scripts/Custom/Searches/Searches.cs=Keep
+- Data/Scripts/Custom/Searches/Searches.cs=Keep
+- Data/Scripts/Custom/Searches/SpiralSearch.cs=Keep
+- Data/Scripts/Custom/Searches/SpiralSearch.cs=Keep
+- Data/Scripts/Custom/Searches/Types.cs=Keep
+- Data/Scripts/Custom/Searches/Types.cs=Keep
+
+No C# source, project files, XML/config/data files, namespaces, serializers, gameplay behavior, or migration policy were changed in POST-BATCH-T.

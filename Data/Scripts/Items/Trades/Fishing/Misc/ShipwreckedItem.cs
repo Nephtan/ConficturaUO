@@ -37,6 +37,11 @@ namespace Server.Items
 
         public override void OnSingleClick(Mobile from)
         {
+            if (from == null || from.Deleted || Deleted)
+            {
+                return;
+            }
+
             this.LabelTo(from, 1050039, String.Format("#{0}\t#1041645", LabelNumber));
         }
 
@@ -66,7 +71,7 @@ namespace Server.Items
 
         public bool Dye(Mobile from, DyeTub sender)
         {
-            if (Deleted)
+            if (from == null || from.Deleted || sender == null || sender.Deleted || Deleted)
                 return false;
 
             if (ItemID >= 0x13A4 && ItemID <= 0x13AE)

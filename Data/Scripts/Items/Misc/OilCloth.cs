@@ -26,7 +26,7 @@ namespace Server.Items
 
         public bool Dye(Mobile from, DyeTub sender)
         {
-            if (Deleted)
+            if (Deleted || from == null || from.Deleted || sender == null || sender.Deleted)
                 return false;
 
             Hue = sender.DyedHue;
@@ -36,7 +36,14 @@ namespace Server.Items
 
         public bool Scissor(Mobile from, Scissors scissors)
         {
-            if (Deleted || !from.CanSee(this))
+            if (
+                Deleted
+                || from == null
+                || from.Deleted
+                || scissors == null
+                || scissors.Deleted
+                || !from.CanSee(this)
+            )
                 return false;
 
             base.ScissorHelper(from, new Bandage(), 1);
@@ -46,24 +53,37 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
-            if (IsChildOf(from.Backpack))
-            {
-                from.BeginTarget(-1, false, TargetFlags.None, new TargetCallback(OnTarget));
-                from.SendLocalizedMessage(1005424); // Select the weapon or armor you wish to use the cloth on.
-            }
-            else
+            if (from == null || from.Deleted)
+                return;
+
+            if (Deleted || from.Backpack == null || !IsChildOf(from.Backpack))
             {
                 from.SendLocalizedMessage(1042001); // That must be in your pack for you to use it.
+                return;
             }
+
+            from.BeginTarget(-1, false, TargetFlags.None, new TargetCallback(OnTarget));
+            from.SendLocalizedMessage(1005424); // Select the weapon or armor you wish to use the cloth on.
         }
 
         public void OnTarget(Mobile from, object obj)
         {
             // TODO: Need details on how oil cloths should get consumed here
 
-            if (!IsChildOf(from.Backpack))
+            if (from == null || from.Deleted)
+                return;
+
+            if (Deleted || from.Backpack == null || !IsChildOf(from.Backpack))
             {
                 from.SendLocalizedMessage(1042001); // That must be in your pack for you to use it.
+            }
+            else if (obj == null)
+            {
+                from.SendLocalizedMessage(1005426); // The cloth will not work on that.
+            }
+            else if (obj is Item && ((Item)obj).Deleted)
+            {
+                from.SendLocalizedMessage(1005426); // The cloth will not work on that.
             }
             else if (obj is BaseWeapon)
             {

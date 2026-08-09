@@ -31,27 +31,43 @@ namespace Server.Commands
 
         public static void OnDeath(PlayerDeathEventArgs e)
         {
-            if (m_AFK.Contains(e.Mobile.Serial.Value))
+            if (e == null)
+                return;
+
+            Mobile mobile = e.Mobile;
+
+            if (mobile == null)
+                return;
+
+            if (m_AFK.Contains(mobile.Serial.Value))
             {
-                AFK afk = (AFK)m_AFK[e.Mobile.Serial.Value];
+                AFK afk = (AFK)m_AFK[mobile.Serial.Value];
                 if (afk == null)
                 {
-                    e.Mobile.SendMessage("Afk object missing!");
+                    mobile.SendMessage("Afk object missing!");
                     return;
                 }
-                e.Mobile.PlaySound(e.Mobile.Female ? 0x32E : 0x440);
+                mobile.PlaySound(mobile.Female ? 0x32E : 0x440);
                 afk.wakeUp();
             }
         }
 
         public static void OnLogout(LogoutEventArgs e)
         {
-            if (m_AFK.Contains(e.Mobile.Serial.Value))
+            if (e == null)
+                return;
+
+            Mobile mobile = e.Mobile;
+
+            if (mobile == null)
+                return;
+
+            if (m_AFK.Contains(mobile.Serial.Value))
             {
-                AFK afk = (AFK)m_AFK[e.Mobile.Serial.Value];
+                AFK afk = (AFK)m_AFK[mobile.Serial.Value];
                 if (afk == null)
                 {
-                    e.Mobile.SendMessage("Afk object missing!");
+                    mobile.SendMessage("Afk object missing!");
                     return;
                 }
                 afk.wakeUp();
@@ -60,12 +76,20 @@ namespace Server.Commands
 
         public static void OnSpeech(SpeechEventArgs e)
         {
-            if (m_AFK.Contains(e.Mobile.Serial.Value))
+            if (e == null)
+                return;
+
+            Mobile mobile = e.Mobile;
+
+            if (mobile == null)
+                return;
+
+            if (m_AFK.Contains(mobile.Serial.Value))
             {
-                AFK afk = (AFK)m_AFK[e.Mobile.Serial.Value];
+                AFK afk = (AFK)m_AFK[mobile.Serial.Value];
                 if (afk == null)
                 {
-                    e.Mobile.SendMessage("Afk object missing!");
+                    mobile.SendMessage("Afk object missing!");
                     return;
                 }
                 afk.wakeUp();

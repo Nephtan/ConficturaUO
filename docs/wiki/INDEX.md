@@ -55,6 +55,7 @@ Guides are grouped by primary audience and use case.
 - [Skill Stone](skill-stone.md)
 - [Syth Magic](Syth_Magic.md)
 - [The One Ring](The_One_Ring.md)
+- [Turn-Based Combat](Turn_Based_Combat.md)
 - [Witchcraft](Witchcraft.md)
 
 ## Crafting, Harvesting, Trades, And Economy
@@ -109,9 +110,12 @@ Guides are grouped by primary audience and use case.
 - [Pandora's Gift Box](Pandoras_Gift_Box.md)
 - [Staff Toolbar](Staff_Toolbar.md)
 - [Static Gump Tool](Static_Gump_Tool.md)
+- [Test Center](Test_Center.md)
+- [Town Crier Discord Bridge](Town_Crier_Discord.md)
 - [XML Spawner Enhancements](XML_Spawner_Enhancements.md)
 
 ## Technical And Engine Reference
+- [AI Overhaul Audit](AI_OVERHAUL_AUDIT.md)
 - [Boat Core Mechanics](Boat_Core_Mechanics.md)
 - [Base Spell Framework](Base_Spell_Framework.md)
 - [Clone Offline Player Characters](Clone_Offline_Player_Characters.md)

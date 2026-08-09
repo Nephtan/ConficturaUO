@@ -179,11 +179,17 @@ namespace Server.Mobiles
 
         public override void OnDoubleClick(Mobile from)
         {
+            if (from == null || from.Deleted || Deleted)
+                return;
+
             PackAnimal.TryPackOpen(this, from);
         }
 
         public override void GetContextMenuEntries(Mobile from, List<ContextMenuEntry> list)
         {
+            if (from == null || from.Deleted || Deleted)
+                return;
+
             base.GetContextMenuEntries(from, list);
 
             PackAnimal.GetContextMenuEntries(this, from, list);

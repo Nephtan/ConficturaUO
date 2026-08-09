@@ -37,11 +37,22 @@ namespace Server.Gumps
 
         public override void OnResponse(NetState state, RelayInfo info)
         {
+            if (state == null || info == null || state.Mobile == null || state.Mobile.Deleted || ds == null)
+                return;
+
             int btd = info.ButtonID;
             Mobile m = state.Mobile;
             if (info.ButtonID == 1)
             {
                 TextRelay entry = info.GetTextEntry(0);
+
+                if (entry == null || entry.Text == null)
+                {
+                    m.Frozen = false;
+                    m.SendMessage("You did not enter a amount of gold to play with, try again.");
+                    return;
+                }
+
                 //parse out the text entry
                 try
                 {

@@ -25,6 +25,9 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
+            if (from == null || from.Deleted || Deleted)
+                return;
+
             if (from.InRange(this.GetWorldLocation(), 4))
             {
                 if (!from.HasGump(typeof(SpeechGump)))
@@ -64,6 +67,9 @@ namespace Server.Items
 
             public override void OnClick()
             {
+                if (m_Mobile == null || m_Mobile.Deleted)
+                    return;
+
                 if (!(m_Mobile is PlayerMobile))
                     return;
 

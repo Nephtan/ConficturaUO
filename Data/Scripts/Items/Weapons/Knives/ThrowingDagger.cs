@@ -39,6 +39,9 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
+            if (from == null || from.Deleted || Deleted)
+                return;
+
             if (from.Items.Contains(this))
             {
                 InternalTarget t = new InternalTarget(this);
@@ -62,7 +65,7 @@ namespace Server.Items
 
             protected override void OnTarget(Mobile from, object targeted)
             {
-                if (m_Dagger.Deleted)
+                if (from == null || from.Deleted || m_Dagger == null || m_Dagger.Deleted)
                 {
                     return;
                 }
@@ -73,6 +76,11 @@ namespace Server.Items
                 else if (targeted is Mobile)
                 {
                     Mobile m = (Mobile)targeted;
+
+                    if (m.Deleted)
+                    {
+                        return;
+                    }
 
                     if (m != from && from.HarmfulCheck(m))
                     {

@@ -31,6 +31,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <PlatformTarget>x86</PlatformTarget>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
@@ -168,6 +169,7 @@
     <Compile Include="TileMatrix.cs" />
     <Compile Include="TileMatrixPatch.cs" />
     <Compile Include="Timer.cs" />
+    <Compile Include="TurnBasedCombat.cs" />
     <Compile Include="Utility.cs" />
     <Compile Include="VirtueInfo.cs" />
     <Compile Include="World.cs" />

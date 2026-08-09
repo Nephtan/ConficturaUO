@@ -155,10 +155,19 @@ namespace Server.Items
             {
                 int hydra = 0;
 
-                foreach (Mobile m in this.GetMobilesInRange(100))
+                IPooledEnumerable eable = this.GetMobilesInRange(100);
+
+                try
                 {
-                    if (m is EnergyHydra)
-                        hydra = 1;
+                    foreach (Mobile m in eable)
+                    {
+                        if (m is EnergyHydra)
+                            hydra = 1;
+                    }
+                }
+                finally
+                {
+                    eable.Free();
                 }
 
                 if (from.Skills[SkillName.Mining].Base < 90)

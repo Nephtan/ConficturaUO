@@ -49,10 +49,15 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
+            if (from == null || from.Deleted || Deleted)
+            {
+                return;
+            }
+
             if (!Movable)
                 return;
 
-            if (!IsChildOf(from.Backpack))
+            if (from.Backpack == null || !IsChildOf(from.Backpack))
             {
                 from.SendMessage("This must be in your backpack to use.");
                 return;
@@ -76,6 +81,17 @@ namespace Server.Items
 
             protected override void OnTarget(Mobile from, object targeted)
             {
+                if (from == null || from.Deleted)
+                {
+                    return;
+                }
+
+                if (m_Tool == null || m_Tool.Deleted || from.Backpack == null || !m_Tool.IsChildOf(from.Backpack))
+                {
+                    from.SendMessage("This must be in your backpack to use.");
+                    return;
+                }
+
                 if (targeted is BaseOre)
                 {
                     BaseOre m_Ore = (BaseOre)targeted;

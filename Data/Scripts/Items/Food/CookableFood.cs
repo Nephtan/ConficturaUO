@@ -56,6 +56,9 @@ namespace Server.Items
         //#if false
         public override void OnDoubleClick(Mobile from)
         {
+            if (from == null || from.Deleted || Deleted)
+                return;
+
             if (!Movable)
                 return;
 
@@ -117,7 +120,7 @@ namespace Server.Items
 
             protected override void OnTarget(Mobile from, object targeted)
             {
-                if (m_Item.Deleted)
+                if (from == null || from.Deleted || m_Item == null || m_Item.Deleted)
                     return;
 
                 if (CookableFood.IsHeatSource(targeted))
@@ -375,7 +378,13 @@ namespace Server.Items
 
                 protected override void OnTick()
                 {
+                    if (m_From == null || m_From.Deleted)
+                        return;
+
                     m_From.EndAction(typeof(CookableFood));
+
+                    if (m_CookableFood == null)
+                        return;
 
                     if (
                         m_From.Map != m_Map

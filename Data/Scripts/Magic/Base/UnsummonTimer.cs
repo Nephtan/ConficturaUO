@@ -13,11 +13,17 @@ namespace Server.Spells
         {
             m_Caster = caster;
             m_Creature = creature;
+            m_Creature.RegisterTurnBasedUnsummonTimer(this);
             Priority = TimerPriority.OneSecond;
         }
 
         protected override void OnTick()
         {
+            m_Creature.ClearTurnBasedUnsummonTimer(this);
+
+            if (TurnBasedCombatBridge.IsParticipant(m_Creature))
+                return;
+
             if (!m_Creature.Deleted)
                 m_Creature.Delete();
         }

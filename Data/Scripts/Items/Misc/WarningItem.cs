@@ -126,10 +126,19 @@ namespace Server.Items
             {
                 List<WarningItem> list = new List<WarningItem>();
 
-                foreach (Item item in GetItemsInRange(NeighborRange))
+                IPooledEnumerable eable = GetItemsInRange(NeighborRange);
+
+                try
                 {
-                    if (item != this && item is WarningItem)
-                        list.Add((WarningItem)item);
+                    foreach (Item item in eable)
+                    {
+                        if (item != this && item is WarningItem)
+                            list.Add((WarningItem)item);
+                    }
+                }
+                finally
+                {
+                    eable.Free();
                 }
 
                 for (int i = 0; i < list.Count; i++)
@@ -236,6 +245,9 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
+            if (from == null || from.Deleted || Deleted)
+                return;
+
             SendMessage(from, true, m_HintString, m_HintNumber);
         }
 

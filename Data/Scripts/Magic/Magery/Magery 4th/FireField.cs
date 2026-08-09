@@ -312,14 +312,23 @@ namespace Server.Spells.Fourth
 
                         if (map != null && caster != null)
                         {
-                            foreach (Mobile m in m_Item.GetMobilesInRange(0))
+                            IPooledEnumerable eable = m_Item.GetMobilesInRange(0);
+
+                            try
                             {
-                                if (
-                                    (m.Z + 16) > m_Item.Z
-                                    && (m_Item.Z + 12) > m.Z
-                                    && !Server.Spells.SpellHelper.isFriend(caster, m)
-                                )
-                                    m_Queue.Enqueue(m);
+                                foreach (Mobile m in eable)
+                                {
+                                    if (
+                                        (m.Z + 16) > m_Item.Z
+                                        && (m_Item.Z + 12) > m.Z
+                                        && !Server.Spells.SpellHelper.isFriend(caster, m)
+                                    )
+                                        m_Queue.Enqueue(m);
+                                }
+                            }
+                            finally
+                            {
+                                eable.Free();
                             }
 
                             while (m_Queue.Count > 0)

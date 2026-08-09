@@ -46,7 +46,10 @@ namespace Server.Items
 
         public override void OnDoubleClick(Mobile from)
         {
-            if (!IsChildOf(from.Backpack))
+            if (from == null || from.Deleted || Deleted)
+                return;
+
+            if (from.Backpack == null || !IsChildOf(from.Backpack))
             {
                 from.SendMessage("This must be in your backpack to use.");
                 return;
@@ -893,10 +896,19 @@ namespace Server.Items
             {
                 int fool = 0;
 
-                foreach (Mobile m in this.GetMobilesInRange(20))
+                IPooledEnumerable eable = this.GetMobilesInRange(20);
+
+                try
                 {
-                    if (m is Jester || m is ChucklesJester)
-                        ++fool;
+                    foreach (Mobile m in eable)
+                    {
+                        if (m is Jester || m is ChucklesJester)
+                            ++fool;
+                    }
+                }
+                finally
+                {
+                    eable.Free();
                 }
 
                 if (fool == 0)

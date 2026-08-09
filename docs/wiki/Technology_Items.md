@@ -93,3 +93,98 @@ The package defines items only. It does not register commands, event sinks, pack
 
 Technology items mix loot flavor, special tools, combat items, and quest objects rather than one unified system.
 When debugging a report, start from the concrete item script and then follow any cross-system entry point, especially `SearchBase` for alien-egg pieces, `BaseVendor.OnDragDrop` for egg hatching, and the normal RunUO targeting callbacks for tools and explosives.
+
+## Source Trace
+
+POST-BATCH-T reviewed this page on 2026-06-14T21:09:11.0049244-05:00 against current source and audit registers.
+
+- Canonical status: Canonical.
+- Queue rows: PBN-0110.
+- Backlog rows: RB-06785.
+- Audit registers used: documentation-truth-table.csv, runtime-hook-map.csv, serialization-register.csv, and project-truth-register.csv.
+
+### Source Files Reviewed
+
+- Data/Scripts/Items/Technology/ (CurrentDirectory)
+- Data/Scripts/Items/Technology/AlienEgg.cs (CurrentFile)
+- Data/Scripts/Items/Technology/BaseKilrathi.cs (CurrentFile)
+- Data/Scripts/Items/Technology/Chainsaw.cs (CurrentFile)
+- Data/Scripts/Items/Technology/ComputerDatabase.cs (CurrentFile)
+- Data/Scripts/Items/Technology/DataPad.cs (CurrentFile)
+- Data/Scripts/Items/Technology/DoubleLaserSword.cs (CurrentFile)
+- Data/Scripts/Items/Technology/DuctTape.cs (CurrentFile)
+- Data/Scripts/Items/Technology/FirstAidKit.cs (CurrentFile)
+- Data/Scripts/Items/Technology/KilrathiGun.cs (CurrentFile)
+- Data/Scripts/Items/Technology/KilrathiHeavyGun.cs (CurrentFile)
+- Data/Scripts/Items/Technology/Krystal.cs (CurrentFile)
+- Data/Scripts/Items/Technology/Landmine.cs (CurrentFile)
+- Data/Scripts/Items/Technology/LightSword.cs (CurrentFile)
+- Data/Scripts/Items/Technology/MaterialLiquifier.cs (CurrentFile)
+- Data/Scripts/Items/Technology/MedicalRecord.cs (CurrentFile)
+- Data/Scripts/Items/Technology/PlasmaGrenade.cs (CurrentFile)
+- Data/Scripts/Items/Technology/PlasmaTorch.cs (CurrentFile)
+- Data/Scripts/Items/Technology/PortableSmelter.cs (CurrentFile)
+- Data/Scripts/Items/Technology/RomulanAle.cs (CurrentFile)
+- Data/Scripts/Items/Technology/SpaceDyes.cs (CurrentFile)
+- Data/Scripts/Items/Technology/SpaceJunk.cs (CurrentFile)
+- Data/Scripts/Items/Technology/ThermalDetonator.cs (CurrentFile)
+
+### Runtime Evidence
+
+- Hook summary: Gump=11; Timer=7.
+- Data/Scripts/Items/Technology/AlienEgg.cs:L65 Gump SendGump access=Internal
+- Data/Scripts/Items/Technology/ComputerDatabase.cs:L25 Gump SendGump access=Internal
+- Data/Scripts/Items/Technology/ComputerDatabase.cs:L154 Gump OnResponse access=Internal
+- Data/Scripts/Items/Technology/ComputerDatabase.cs:L294 Gump SendGump access=Internal
+- Data/Scripts/Items/Technology/ComputerDatabase.cs:L304 Gump SendGump access=Internal
+- Data/Scripts/Items/Technology/DataPad.cs:L113 Gump OnResponse access=Internal
+- Data/Scripts/Items/Technology/DataPad.cs:L123 Gump SendGump access=Internal
+- Data/Scripts/Items/Technology/Landmine.cs:L180 Timer Timer.DelayCall access=GlobalOrInternal
+- Data/Scripts/Items/Technology/MaterialLiquifier.cs:L58 Gump SendGump access=Internal
+- Data/Scripts/Items/Technology/MaterialLiquifier.cs:L439 Gump OnResponse access=Internal
+- Data/Scripts/Items/Technology/MedicalRecord.cs:L97 Gump OnResponse access=Internal
+- Data/Scripts/Items/Technology/MedicalRecord.cs:L107 Gump SendGump access=Internal
+- Additional hook rows are recorded in runtime-hook-map.csv for this source set.
+
+### Serialization Evidence
+
+- Serialized rows matched: 49.
+- Data/Scripts/Items/Technology/AlienEgg.cs:Server.Items.AlienEgg version=1 serialize=L111 deserialize=L127 alignment=CountMatchNeedsTypeReview:UnknownWrites=9
+- Data/Scripts/Items/Technology/BaseKilrathi.cs:Server.Items.BaseKilrathi version=0 serialize=L138 deserialize=L144 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Items/Technology/Chainsaw.cs:Server.Items.Chainsaw version=0 serialize=L227 deserialize=L234 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Items/Technology/ComputerDatabase.cs:Server.Items.ComputerDatabase version=1 serialize=L33 deserialize=L39 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Items/Technology/DataPad.cs:Server.Items.DataPad version=0 serialize=L130 deserialize=L140 alignment=CountMatchNeedsTypeReview:UnknownWrites=4
+- Data/Scripts/Items/Technology/DoubleLaserSword.cs:Server.Items.DoubleLaserSword version=0 serialize=L126 deserialize=L133 alignment=CountMatchNeedsTypeReview:UnknownWrites=1
+- Data/Scripts/Items/Technology/DuctTape.cs:Server.Items.DuctTape version=0 serialize=L24 deserialize=L30 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Items/Technology/FirstAidKit.cs:Server.Items.FirstAidKit version=0 serialize=L127 deserialize=L133 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Items/Technology/KilrathiGun.cs:Server.Items.KilrathiGun version=0 serialize=L110 deserialize=L116 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Items/Technology/KilrathiHeavyGun.cs:Server.Items.KilrathiHeavyGun version=0 serialize=L110 deserialize=L116 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Items/Technology/Krystal.cs:Server.Items.Krystal version=0 serialize=L30 deserialize=L36 alignment=AlignedByCountAndKnownTypes
+- Data/Scripts/Items/Technology/Landmine.cs:Server.Items.Landmine version=0 serialize=L183 deserialize=L192 alignment=CountMatchNeedsTypeReview:UnknownWrites=1
+- Additional serializer rows are recorded in serialization-register.csv for this source set.
+
+### Project And Runtime Coverage
+
+- Data/Scripts/Items/Technology/AlienEgg.cs=Keep
+- Data/Scripts/Items/Technology/AlienEgg.cs=Keep
+- Data/Scripts/Items/Technology/BaseKilrathi.cs=Keep
+- Data/Scripts/Items/Technology/BaseKilrathi.cs=Keep
+- Data/Scripts/Items/Technology/Chainsaw.cs=Keep
+- Data/Scripts/Items/Technology/Chainsaw.cs=Keep
+- Data/Scripts/Items/Technology/ComputerDatabase.cs=Keep
+- Data/Scripts/Items/Technology/ComputerDatabase.cs=Keep
+- Data/Scripts/Items/Technology/DataPad.cs=Keep
+- Data/Scripts/Items/Technology/DataPad.cs=Keep
+- Data/Scripts/Items/Technology/DoubleLaserSword.cs=Keep
+- Data/Scripts/Items/Technology/DoubleLaserSword.cs=Keep
+- Data/Scripts/Items/Technology/DuctTape.cs=Keep
+- Data/Scripts/Items/Technology/DuctTape.cs=Keep
+- Data/Scripts/Items/Technology/FirstAidKit.cs=Keep
+- Data/Scripts/Items/Technology/FirstAidKit.cs=Keep
+- Data/Scripts/Items/Technology/KilrathiGun.cs=Keep
+- Data/Scripts/Items/Technology/KilrathiGun.cs=Keep
+- Data/Scripts/Items/Technology/KilrathiHeavyGun.cs=Keep
+- Data/Scripts/Items/Technology/KilrathiHeavyGun.cs=Keep
+- Additional project-truth rows are recorded in project-truth-register.csv for this source set.
+
+No C# source, project files, XML/config/data files, namespaces, serializers, gameplay behavior, or migration policy were changed in POST-BATCH-T.
