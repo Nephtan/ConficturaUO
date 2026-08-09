@@ -20,6 +20,7 @@ namespace Server.Custom.Confictura.Mobiles
             Name = "Dark Dragon Avatar";
             Title = null; // No title value provided
             Hue = 1590;
+            Tamable = false;
 
             // Survivability overrides
             HitsMaxSeed = 9000;
@@ -73,6 +74,8 @@ namespace Server.Custom.Confictura.Mobiles
         {
             base.Deserialize(reader);
             reader.ReadInt(); // version
+
+            Tamable = false;
         }
     }
 }

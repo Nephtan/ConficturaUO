@@ -21,6 +21,7 @@ namespace Server.Custom.Confictura.Mobiles
             Name = "Dragon Hydra";
             Title = null; // No title specified in the XML entry
             Direction = Direction.South;
+            Tamable = false;
 
             // Health pool overrides
             HitsMaxSeed = 7000;
@@ -65,6 +66,8 @@ namespace Server.Custom.Confictura.Mobiles
             {
                 MobileBalanceCatalog.ApplyProfile(this);
             }
+
+            Tamable = false;
         }
     }
 }

@@ -1563,6 +1563,9 @@ namespace Server.Items
         // Defines a method to adjust the difficulty level of a monster (BaseCreature).
         public static void SetDifficultyForMonster(BaseCreature bc)
         {
+            // Boss-scaled creatures must not inherit tameability from their base mobile type.
+            bc.Tamable = false;
+
             // Calculate the highest stat (strength, intelligence, or dexterity) of the creature.
             int HighestStat = Math.Max(Math.Max(bc.RawStr, bc.RawInt), bc.RawDex);
 
