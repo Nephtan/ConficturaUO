@@ -38,6 +38,7 @@ When a canonical register and a phase-scoped copy have the same purpose, the can
 | Review hooks, commands, packets, gumps, or timers | `runtime-hook-map.csv` | Phase 5 focused registers and relevant `post-batch-*` reviews |
 | Review save compatibility | `serialization-register.csv` | `phase-06-high-risk-serializer-list.csv`, `phase-06-move-rename-risk-list.csv`, `post-batch-b-save-compatibility-triage.csv` |
 | Review documentation truth | `documentation-truth-table.csv` | `phase-07-stale-claim-backlog.csv`, `phase-07-source-trace-coverage-report.csv` |
+| Audit in-game player documentation | `in-game-documentation-audit-summary.md` | `in-game-documentation-style-guide.md`, `player-facing-system-documentation-audit.csv`, `in-game-documentation-backlog.csv` |
 | Review dependencies | `dependency-graph.csv` | `phase-08-hard-dependency-list.csv`, `phase-08-soft-dependency-list.csv`, `phase-08-conflict-edge-list.csv` |
 | Review gameplay synergy or conflicts | `synergy-conflict-matrix.csv` | `phase-09-balance-risk-list.csv`, `phase-09-preservation-notes.csv` |
 | Find actionable repair state | `post-audit-active-backlog-status.csv` | `repair-backlog.csv`, `verification-matrix.csv`, relevant `post-batch-*` artifact |
@@ -172,6 +173,10 @@ Tips:
 | `phase-07-source-trace-coverage-report.csv` | Phase 7 | Source-trace coverage grouped by wiki index category. | Complete |
 | `phase-07-summary.md` | Phase 7 | Summarize Phase 7 inputs, generated outputs, coverage counts, and exit criteria. | Complete |
 | `documentation-truth-table.*` | Phase 7 | Classify docs as canonical, alias, stale, partial, or verified with source traces. | Complete |
+| `in-game-documentation-style-guide.md` | Post-audit player documentation | Describe the current in-game visual, navigation, voice, density, discovery, and surface-routing conventions for later incorporation batches. | Complete |
+| `player-facing-system-documentation-audit.csv` | Post-audit player documentation | Reconcile every current system boundary, canonical wiki topic, direct Player command, teaching surface, checked-in data boundary, and selected high-impact capability to coverage or an explicit exclusion. | Complete |
+| `in-game-documentation-backlog.csv` | Post-audit player documentation | Prioritize only actionable incorporation, refresh, and runtime-evidence work while suppressing boundary/topic duplicates covered by a detailed capability row. | Complete |
+| `in-game-documentation-audit-summary.md` | Post-audit player documentation | Summarize coverage, historical drift after `cbd03db1`, highest-risk gaps, surface recommendations, reproduction, and owner staging acceptance. | Complete |
 | `dependency-graph.csv` | Phase 8 | Canonical dependency graph across source references, runtime hooks, serialization, project includes, config, docs-only links, and conflicts. | Complete |
 | `phase-08-dependency-graph.csv` | Phase 8 | Phase-scoped copy of the dependency graph. | Complete |
 | `phase-08-hard-dependency-list.csv` | Phase 8 | Hard source, runtime, serialization, project, and config dependency edges. | Complete |
