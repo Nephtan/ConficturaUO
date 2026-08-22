@@ -31,6 +31,7 @@ Guides are grouped by primary audience and use case.
 - [Bard Song Magic](Bard_Song_Magic.md)
 - [Barbaric Play Style](Barbaric_Play_Style.md)
 - [Bushido](Bushido.md)
+- [Character Stats And Caps](Character_Stats_And_Caps.md)
 - [Death Knight Magic](Death_Knight_Magic.md)
 - [Druidism](Druidism.md)
 - [Elementalism](Elementalism.md)
