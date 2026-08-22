@@ -89,6 +89,17 @@ namespace Server.Misc
             if (target.AccessLevel > AccessLevel.Player)
                 return false;
 
+            bool invasionAllowed;
+
+            if (
+                Server.Custom.Confictura.Invasions.InvasionService.TryAllowBeneficial(
+                    from,
+                    target,
+                    out invasionAllowed
+                )
+            )
+                return invasionAllowed;
+
             // NPCs can perform beneficial actions towards any target
             if (!from.Player)
                 return true;
@@ -202,6 +213,17 @@ namespace Server.Misc
             // Harmful actions cannot be performed on staff
             if (target.AccessLevel > AccessLevel.Player)
                 return false;
+
+            bool invasionAllowed;
+
+            if (
+                Server.Custom.Confictura.Invasions.InvasionService.TryAllowHarmful(
+                    attacker,
+                    target,
+                    out invasionAllowed
+                )
+            )
+                return invasionAllowed;
 
             // Ensure that if attacker and target are opponents in an Xml Event they may harm each other
             if (XmlPoints.AreChallengers(attacker, target))
