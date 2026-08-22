@@ -31,6 +31,7 @@ Guides are grouped by primary audience and use case.
 - [Bard Song Magic](Bard_Song_Magic.md)
 - [Barbaric Play Style](Barbaric_Play_Style.md)
 - [Bushido](Bushido.md)
+- [Character Stats And Caps](Character_Stats_And_Caps.md)
 - [Death Knight Magic](Death_Knight_Magic.md)
 - [Druidism](Druidism.md)
 - [Elementalism](Elementalism.md)
@@ -51,6 +52,7 @@ Guides are grouped by primary audience and use case.
 - [Creature Transformation Guide](Creature_Transformation_Guide.md)
 - [Race Token System](Race_Token_System.md)
 - [Research Magic](Research_Magic.md)
+- [Searching, Hiding, and Stealth](Searching_Hiding_Stealth.md)
 - [Shinobi Magic](Shinobi_Magic.md)
 - [Skill Stone](skill-stone.md)
 - [Syth Magic](Syth_Magic.md)
@@ -97,6 +99,7 @@ Guides are grouped by primary audience and use case.
 - [Random Encounter Engine](Random_Encounter_Engine.md)
 - [Ranger Survival Training](Ranger_Survival_Training.md)
 - [Region System](Region_System.md)
+- [Town Guards](Town_Guards.md)
 - [NPC Shipwright Sailing Guide](NPC_Shipwright_Sailing_Guide.md)
 - [Shipwright Sailing Tutorial](Shipwright_Sailing_Tutorial.md)
 

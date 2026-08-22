@@ -114,7 +114,7 @@ The current XML contains 7 facets and 419 top-level region nodes. No nested chil
 | `DungeonHomeRegion` | Blocks housing, sets jail light, logs as `a Dungeon Dwelling`, and calls region music. |
 | `DungeonRegion` | Blocks housing, disables young protection, optionally parses an `<entrance>`, sets dungeon light except for named outdoor-style dungeon regions, logs player enter/exit, and calls region music. |
 | `GargoyleRegion` | Blocks housing, sets cave light only in `the Burning Mines`, logs player enter/exit, and calls region music. |
-| `GuardedRegion` | Registers guard commands, blocks housing, blocks town spell casts unless `s.OnCastInTown(this)` succeeds, tracks 15-second guard-call candidates, responds to `*guards*` speech, and creates or reuses `TownGuards`. |
+| `GuardedRegion` | Registers guard commands, blocks housing, blocks town spell casts unless `s.OnCastInTown(this)` succeeds, tracks 15-second guard-call candidates, responds to `*guards*` speech, and creates or reuses [Town Guards](Town_Guards.md). |
 | `HouseRegion` | Dynamic per-house region. Enforces house access, ban/combat restrictions, customization restrictions, secure/container access, lockdown labels, house speech keywords, house decay exemptions, and zero logout for friends inside the house unless recent player combat heat exists. |
 | `Jail` | Plain `BaseRegion` subclass; no additional compiled behavior. |
 | `LunaRegion` | Blocks harmful actions against targets in `HouseRegion`. Applies the same `80.0` Elementalism/Magery/Necromancy moon access gate as `DawnRegion`. |
@@ -146,7 +146,9 @@ The current XML contains 7 facets and 419 top-level region nodes. No nested chil
 | `SetGuarded` | Administrator | `[SetGuarded <true|false>` | Sets `Disabled` to the inverse of the supplied boolean. `true` enables guards, `false` disables them. |
 | `ToggleGuarded` | Administrator | `[ToggleGuarded` | Flips `Disabled` for the caller's current `GuardedRegion`. |
 
-Guard candidates are alive, unblessed player-access mobiles that are either criminal or red when `AllowReds` is false. A candidate timer lasts 15 seconds and sends localized messages when guards can or can no longer be called. Speech with keyword `0x0007` (`*guards*`) searches 14 tiles around the speech location and summons or redirects one guard against the first matching candidate.
+Guard candidates are alive, unblessed player-access mobiles that are either criminal or red when `AllowReds` is false. A candidate timer lasts 15 seconds and sends localized messages when guards can or can no longer be called. Speech with keyword `0x0007` (`*guards*`) searches 14 tiles around the speech location and summons or redirects one guard against the first matching candidate. See [Town Guards](Town_Guards.md) for guard combat, death, replacement, and sentencing behavior.
+
+`CheckGuardCandidate()` owns the pooled mobile enumeration returned by `GetMobilesInRange(8)` and frees it in a `finally` block. The older audit warning that this enumeration was leaked no longer matches the current source.
 
 ## Regional Spawn System
 The current XML declares 195 regional spawn entries, all as `<object>` nodes. The parsed type mix is:
@@ -227,10 +229,9 @@ On load, if an entry ID no longer exists in the current XML, `SpawnEntry.Remove(
 
 ## Known Issues
 * `BaseRegion.InitRectangles()` uses `int ez = rect.End.X` when splitting overlapping rectangles. That value is then used as the Z end for newly generated rectangles, so regional spawn Z bounds can be corrupted whenever overlapping area rectangles are normalized.
-* `GuardedRegion.CheckGuardCandidate()` iterates `m.GetMobilesInRange(8)` directly and never calls `Free()` on the returned `IPooledEnumerable`. Other guard range scans in the same file correctly free their pooled enumerables.
 * `BaseRegion.AllowHarmful()` wraps the PvE/PvP branch in `from is PlayerMobile && target is PlayerMobile`, but the branch then checks whether `from` is a `BaseCreature`. That creature-attacker code is unreachable in this region-layer hook, so controlled, summoned, or provoked creature attacks are not enforced by that intended block.
 * `BaseRegion.OnExit()` unlocks every locked `BaseDoor` in `World.Items.Values` when the last player leaves any `DungeonRegion` or `BardDungeonRegion`. The door unlock is not scoped to the exited region.
-* `GuardedRegion.MakeGuard()` silently swallows exceptions from guard construction. Bad guard constructors or runtime construction failures produce no diagnostic beyond guard absence.
+* `GuardedRegion.MakeGuard()` passes the focus mobile to `Activator.CreateInstance`, but `TownGuards` only has parameterless and serial constructors. The exception is silently swallowed, so emergency construction can fail without a diagnostic; reusing a nearby idle guard still works. This defect is separate from guard killability and remains deferred.
 * `StartRegion.OnEnter()` and `StartRegion.OnExit()` do not call `base.OnEnter` or `base.OnExit`, so those transitions bypass common `BaseRegion` player maintenance such as buff cleanup, morality checks, ghost helper checks, and skill verification.
 
 ## Source Trace

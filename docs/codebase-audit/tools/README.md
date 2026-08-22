@@ -19,6 +19,8 @@ Every script accepts these optional parameters:
 | `RepoRoot` | The repository root, resolved from the script location. |
 | `OutputDir` | `docs/codebase-audit/outputs` under `RepoRoot`. |
 
+`New-InGamePlayerDocumentationAudit.ps1` also accepts `BaselineCommit` (default `cbd03db1`) and `ValidateOnly`. Validation-only mode regenerates all four artifacts in memory and fails without writing if schemas, evidence, reconciliation, XML/catalog integrity, or committed bytes differ.
+
 Example with explicit paths:
 
 ```powershell
@@ -53,6 +55,7 @@ After running:
 | `New-RuntimeHookMap.ps1` | Phase 5 | Runtime marker inventory, cross-tree inventory, source files. | `runtime-hook-map.csv`, command/packet/gump/timer focused registers, `phase-05-summary.md`. | Rebuild hook, command, packet, timer, gump, and region evidence. |
 | `New-SerializationRegister.ps1` | Phase 6 | Serialization markers, runtime inventory, project truth, system owner map, source files. | `serialization-register.csv`, high-risk serializer, move-risk, comment-target, and save-backlog outputs, `phase-06-summary.md`. | Recheck save format, read/write order, version handling, or move/rename risk. |
 | `New-DocumentationTruthAudit.ps1` | Phase 7 | Docs, wiki index/backlog, system cards, hook map, serializer register, project truth. | `documentation-truth-table.csv`, canonical/alias/stale/coverage outputs, `phase-07-summary.md`. | Refresh documentation truth and source-trace coverage. |
+| `New-InGamePlayerDocumentationAudit.ps1` | Post-audit player documentation | Current source/data tree, live wiki index, Phase 3 ownership hints, direct Player command registrations, in-game teaching surfaces, lore/Library catalogs, and git history after `cbd03db1`. | In-game style guide, complete player-facing census, actionable incorporation backlog, and audit summary. | Audit in-game documentation coverage or validate the committed audit byte-for-byte. |
 | `New-DependencyGraph.ps1` | Phase 8 | System cards, owner map, runtime inventory, hook map, serializer register, docs truth, project truth, config references. | `dependency-graph.csv`, hard/soft/conflict/standalone outputs, `phase-08-summary.md`. | Rebuild source-verified system relationship evidence. |
 | `New-SynergyConflictMatrix.ps1` | Phase 9 | Dependency graph, system cards, docs truth, runtime hook map, docs evidence. | `synergy-conflict-matrix.csv`, domain, balance, docs-risk, staff, preservation, objective outputs, `phase-09-summary.md`. | Reassess gameplay, balance, staff, and documentation relationships. |
 | `New-RiskSpecificReviewTracks.ps1` | Phase 10 | Project truth, hook map, serializer register, dependency graph, system cards, synergy matrix, config/reference outputs, source scans. | `risk-track-findings.csv`, repair-backlog candidates, non-issues, accepted risks, comment-target additions, pooled enumerable review, `phase-10-summary.md`. | Generate risk-track findings for manual review. |

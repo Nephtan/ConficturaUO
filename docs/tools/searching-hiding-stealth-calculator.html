@@ -1,0 +1,927 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <title>Confictura Searching, Hiding, and Stealth Calculator</title>
+  <style>
+    :root {
+      --bg: #f1eee6;
+      --paper: #fffdf7;
+      --paper-2: #e9e3d5;
+      --ink: #231f1a;
+      --muted: #685f53;
+      --line: #cbbfa9;
+      --accent: #315d55;
+      --accent-2: #9b6b28;
+      --accent-text: #fffdf7;
+      --good: #256640;
+      --warn: #8b5814;
+      --bad: #9a352d;
+      --focus: #2478ac;
+      --shadow: 0 12px 30px rgba(50, 42, 30, 0.09);
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #151817;
+        --paper: #202522;
+        --paper-2: #2c332f;
+        --ink: #f0ece2;
+        --muted: #bdb5a8;
+        --line: #475048;
+        --accent: #76b9a9;
+        --accent-2: #d4a45c;
+        --accent-text: #10211d;
+        --good: #82c99c;
+        --warn: #e5b365;
+        --bad: #ee8d83;
+        --focus: #77bce4;
+        --shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+      }
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: linear-gradient(135deg, rgba(49, 93, 85, 0.07), transparent 30rem), var(--bg);
+      color: var(--ink);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.5;
+    }
+    a { color: var(--accent); }
+    input, select, button { font: inherit; }
+    input, select, button, summary { outline-color: var(--focus); outline-offset: 3px; }
+    input[type="number"], select {
+      width: 100%;
+      min-height: 2.65rem;
+      padding: 0.5rem 0.65rem;
+      border: 1px solid var(--line);
+      border-radius: 0.45rem;
+      background: var(--paper);
+      color: var(--ink);
+    }
+    input[type="checkbox"] { width: 1.15rem; height: 1.15rem; accent-color: var(--accent); }
+    code, .mono { font-family: ui-monospace, SFMono-Regular, Consolas, monospace; }
+    code { background: var(--paper-2); border-radius: 0.25rem; padding: 0.1rem 0.28rem; }
+    header {
+      background: #13231f;
+      color: #fffaf0;
+      border-bottom: 0.3rem solid #af7f3a;
+    }
+    .hero { width: min(1180px, calc(100% - 2rem)); margin: 0 auto; padding: 2rem 0 1.6rem; }
+    .eyebrow { margin: 0; color: #dbc28e; font-size: 0.78rem; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; }
+    h1 { margin: 0.2rem 0 0.55rem; font-family: Georgia, serif; font-size: clamp(2rem, 5vw, 3.4rem); line-height: 1.05; }
+    .hero p { max-width: 78ch; margin: 0.4rem 0; color: #e3ded4; }
+    .hero a { color: #f0c97e; }
+    nav { background: var(--paper); border-bottom: 1px solid var(--line); position: sticky; top: 0; z-index: 5; }
+    nav ul { width: min(1180px, calc(100% - 2rem)); margin: 0 auto; padding: 0.55rem 0; display: flex; gap: 0.45rem; overflow-x: auto; list-style: none; }
+    nav a { display: block; white-space: nowrap; padding: 0.45rem 0.65rem; border-radius: 0.4rem; text-decoration: none; font-weight: 700; }
+    nav a:hover, nav a:focus-visible { background: var(--paper-2); }
+    main { width: min(1180px, calc(100% - 2rem)); margin: 1.4rem auto 3rem; }
+    section { scroll-margin-top: 5rem; }
+    .panel { background: var(--paper); border: 1px solid var(--line); border-radius: 0.75rem; box-shadow: var(--shadow); padding: clamp(1rem, 3vw, 1.6rem); margin: 1rem 0; }
+    .panel h2 { margin: 0 0 0.25rem; font-family: Georgia, serif; font-size: clamp(1.45rem, 3vw, 2rem); }
+    .panel h3 { margin: 1rem 0 0.35rem; }
+    .lede, .hint { color: var(--muted); }
+    .hint { font-size: 0.9rem; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 0.9rem; margin: 1rem 0; }
+    .field { display: grid; align-content: start; gap: 0.25rem; }
+    .field label { font-weight: 750; }
+    .check { display: flex; align-items: center; gap: 0.55rem; min-height: 2.65rem; }
+    .check label { font-weight: 650; }
+    .results { display: grid; grid-template-columns: repeat(auto-fit, minmax(195px, 1fr)); gap: 0.75rem; margin-top: 1rem; }
+    .result { min-height: 7rem; padding: 0.85rem; background: var(--paper-2); border-left: 0.28rem solid var(--accent); border-radius: 0.4rem; }
+    .result .label { display: block; color: var(--muted); font-size: 0.8rem; font-weight: 800; letter-spacing: 0.05em; text-transform: uppercase; }
+    .result output { display: block; margin-top: 0.2rem; font-size: 1.35rem; font-weight: 850; overflow-wrap: anywhere; }
+    .result small { display: block; margin-top: 0.25rem; color: var(--muted); }
+    .state-good { color: var(--good); }
+    .state-warn { color: var(--warn); }
+    .state-bad { color: var(--bad); }
+    .notice { padding: 0.85rem 1rem; border: 1px solid var(--line); border-left: 0.32rem solid var(--accent-2); border-radius: 0.45rem; background: var(--paper-2); }
+    .formula { overflow-x: auto; padding: 0.75rem; border-radius: 0.45rem; background: var(--paper-2); white-space: pre-wrap; }
+    details { margin-top: 0.8rem; border-top: 1px solid var(--line); padding-top: 0.7rem; }
+    summary { cursor: pointer; color: var(--accent); font-weight: 800; }
+    .table-wrap { overflow-x: auto; margin-top: 0.8rem; }
+    table { width: 100%; border-collapse: collapse; }
+    th, td { padding: 0.6rem; border-bottom: 1px solid var(--line); text-align: left; vertical-align: middle; }
+    th { background: var(--paper-2); font-size: 0.82rem; letter-spacing: 0.03em; text-transform: uppercase; }
+    .armor-table select { min-width: 10rem; }
+    .armor-table .check { justify-content: center; min-width: 8rem; }
+    .armor-table td:last-child { text-align: right; font-variant-numeric: tabular-nums; }
+    .badge { display: inline-flex; align-items: center; gap: 0.4rem; margin-top: 0.7rem; padding: 0.35rem 0.6rem; border: 1px solid currentColor; border-radius: 999px; font-size: 0.86rem; font-weight: 800; }
+    .legend { display: flex; flex-wrap: wrap; gap: 0.5rem 1rem; padding: 0; list-style: none; }
+    .legend li::before { content: "■"; color: var(--accent); margin-right: 0.4rem; }
+    footer { width: min(1180px, calc(100% - 2rem)); margin: 0 auto 2rem; color: var(--muted); font-size: 0.9rem; }
+    [hidden] { display: none !important; }
+    @media (max-width: 600px) {
+      .hero, main, nav ul, footer { width: min(100% - 1rem, 1180px); }
+      .panel { border-radius: 0.5rem; padding: 0.9rem; }
+      .grid, .results { grid-template-columns: 1fr; }
+    }
+    @media print {
+      nav { position: static; }
+      .panel { box-shadow: none; break-inside: avoid; }
+      body { background: #fff; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="hero">
+      <p class="eyebrow">Confictura mechanics lab</p>
+      <h1>Searching, Hiding, and Stealth</h1>
+      <p>Enter the values shown on the character sheet. Results preserve Confictura's compiled max-126 rewrite, integer rolls, armor table, combat quirks, and creature scan clamps.</p>
+      <p><a href="../wiki/Searching_Hiding_Stealth.md">Read the complete player and staff guide</a></p>
+      <div id="self-test-badge" class="badge state-warn" role="status" aria-live="polite">Formula self-tests are starting…</div>
+    </div>
+  </header>
+
+  <nav aria-label="Calculator sections">
+    <ul>
+      <li><a href="#character">Character</a></li>
+      <li><a href="#hiding">Hiding</a></li>
+      <li><a href="#stealth">Stealth</a></li>
+      <li><a href="#searching">Player Search</a></li>
+      <li><a href="#monsters">Monster Search</a></li>
+      <li><a href="#related">Related Methods</a></li>
+      <li><a href="#world">World Discovery</a></li>
+      <li><a href="#powerscrolls">100–125</a></li>
+    </ul>
+  </nav>
+
+  <main>
+    <noscript><p class="notice state-bad">JavaScript is required. This page is entirely offline, but its formulas run in your browser.</p></noscript>
+
+    <section id="character" class="panel">
+      <h2>Your character and repeated attempts</h2>
+      <p class="lede">Use displayed skill unless a field explicitly says base. A cap alone does nothing until the trained value rises.</p>
+      <div class="grid">
+        <div class="field">
+          <label for="skill-searching">Displayed Searching</label>
+          <input id="skill-searching" type="number" min="0" max="150" step="0.1" value="100.0" inputmode="decimal">
+        </div>
+        <div class="field">
+          <label for="skill-hiding">Displayed Hiding</label>
+          <input id="skill-hiding" type="number" min="0" max="150" step="0.1" value="100.0" inputmode="decimal">
+        </div>
+        <div class="field">
+          <label for="skill-stealth">Displayed Stealth</label>
+          <input id="skill-stealth" type="number" min="0" max="150" step="0.1" value="100.0" inputmode="decimal">
+        </div>
+        <div class="field">
+          <label for="skill-base-stealth">Base Stealth</label>
+          <input id="skill-base-stealth" type="number" min="0" max="150" step="0.1" value="100.0" inputmode="decimal">
+          <small class="hint">Used only for the monster-scan power-scroll bonus.</small>
+        </div>
+        <div class="field">
+          <label for="attempts">Attempts or qualifying scans</label>
+          <input id="attempts" type="number" min="1" max="100000" step="1" value="5" inputmode="numeric">
+        </div>
+      </div>
+      <p class="notice"><strong>Result labels:</strong> “exact per attempt” evaluates one eligible roll; “exact repeated” combines independent rolls; “guaranteed” and “impossible” are source gates; creature time projections are approximate.</p>
+    </section>
+
+    <section id="hiding" class="panel">
+      <h2>Hiding attempt</h2>
+      <p class="lede">Combat is evaluated before the final normal or friend-house result. Smoke and Egg Bombs skip those combat blockers.</p>
+      <div class="grid">
+        <div class="field">
+          <label for="hiding-combat">Combat situation</label>
+          <select id="hiding-combat">
+            <option value="clear">No relevant combatant</option>
+            <option value="one-sided">Nearby current combatant, nobody targeting you</option>
+            <option value="attacker">Nearby mobile actively fighting you</option>
+            <option value="override">Smoke/Egg Bomb combat override</option>
+          </select>
+        </div>
+        <div class="check">
+          <input id="hiding-house" type="checkbox">
+          <label for="hiding-house">Inside a house where you are a friend</label>
+        </div>
+      </div>
+      <div class="results" aria-live="polite">
+        <div class="result"><span class="label">Combat inspection radius</span><output id="out-hiding-radius">—</output><small id="out-hiding-radius-note"></small></div>
+        <div class="result"><span class="label">One attempt</span><output id="out-hiding-single">—</output><small id="out-hiding-state"></small></div>
+        <div class="result"><span class="label">At least one success</span><output id="out-hiding-repeat">—</output><small id="out-hiding-repeat-note"></small></div>
+        <div class="result"><span class="label">Quiet interaction survival</span><output id="out-quiet">—</output><small>Exact per door, dungeon chest, or corpse interaction.</small></div>
+      </div>
+      <details>
+        <summary>Show exact Hiding formulas</summary>
+        <pre class="formula">normal final P = Hiding / 126
+friend-house final P = 1 after combat gates
+radius = min(trunc((100 - Hiding) / 2) + 8, 18)
+one-sided combat P = preliminary (Hiding / 126) × final P
+active attacker P = 0
+combat override P = final P
+quiet survival P = clamp(floor(Hiding), 0, 125) / 125</pre>
+      </details>
+    </section>
+
+    <section id="stealth" class="panel">
+      <h2>Stealth activation and movement</h2>
+      <p class="lede">You must already be hidden and have at least 30.0 displayed Hiding. Choose the material occupying each compiled body position. Mage Armor makes that piece contribute zero.</p>
+      <div class="check">
+        <input id="stealth-hidden" type="checkbox" checked>
+        <label for="stealth-hidden">Character is already hidden</label>
+      </div>
+      <div class="check">
+        <input id="stealth-locked" type="checkbox">
+        <label for="stealth-locked">Stealth is action-locked (for example, after Backstab/Surprise Attack)</label>
+      </div>
+      <div class="table-wrap">
+        <table class="armor-table">
+          <thead><tr><th scope="col">Body slot</th><th scope="col">Material</th><th scope="col">Mage Armor</th><th scope="col">Contribution</th></tr></thead>
+          <tbody id="armor-body"></tbody>
+        </table>
+      </div>
+      <div class="grid">
+        <div class="check">
+          <input id="armor-override-enabled" type="checkbox">
+          <label for="armor-override-enabled">Use advanced direct armor-value override</label>
+        </div>
+        <div class="field">
+          <label for="armor-override">Direct armor value</label>
+          <input id="armor-override" type="number" min="0" max="500" step="1" value="0" inputmode="numeric" disabled>
+        </div>
+      </div>
+      <div class="results" aria-live="polite">
+        <div class="result"><span class="label">Stealth armor value A</span><output id="out-armor">—</output><small>Fixed table sum, not displayed physical armor.</small></div>
+        <div class="result"><span class="label">Activation result</span><output id="out-stealth-chance">—</output><small id="out-stealth-gate"></small></div>
+        <div class="result"><span class="label">Allowed quiet steps</span><output id="out-stealth-steps">—</output><small>Granted only after successful activation.</small></div>
+        <div class="result"><span class="label">Movement behavior</span><output id="out-stealth-movement">—</output><small id="out-stealth-movement-note"></small></div>
+      </div>
+      <details>
+        <summary>Show armor table and activation formula</summary>
+        <div class="table-wrap"><table id="armor-matrix"></table></div>
+        <pre class="formula">A >= 42 → impossible and reveals
+minimum = -20 + 2A
+raw maximum = 60 + 2A
+effective maximum = raw maximum when raw maximum &lt; 100, otherwise 126
+P = linear skill chance between minimum and effective maximum
+steps = max(1, floor(Stealth / 5))</pre>
+        <p class="hint">Walking spends one step and auto-rechecks Stealth on the next walking move after zero. Running spends two and reveals when the result reaches zero. Mounted movement reveals. Below 25.0 Stealth, the next movement reveals even after a successful activation.</p>
+      </details>
+    </section>
+
+    <section id="searching" class="panel">
+      <h2>Active Searching against a hidden player or creature</h2>
+      <p class="lede">Distance is from the selected search point. Target Stealth does not affect this ordinary Search contest.</p>
+      <div class="grid">
+        <div class="check">
+          <input id="search-blessed" type="checkbox">
+          <label for="search-blessed">Searcher is Blessed (blocks use)</label>
+        </div>
+        <div class="field">
+          <label for="target-hiding">Target displayed Hiding</label>
+          <input id="target-hiding" type="number" min="0" max="150" step="0.1" value="100.0" inputmode="decimal">
+        </div>
+        <div class="field">
+          <label for="target-stealth">Target displayed Stealth</label>
+          <input id="target-stealth" type="number" min="0" max="150" step="0.1" value="100.0" inputmode="decimal">
+          <small class="hint">Used by related methods, not ordinary Searching.</small>
+        </div>
+        <div class="field">
+          <label for="search-distance">Chebyshev distance from selected point</label>
+          <input id="search-distance" type="number" min="0" max="100" step="1" value="6" inputmode="numeric">
+        </div>
+        <div class="field">
+          <label for="search-house">Friend-house situation</label>
+          <select id="search-house">
+            <option value="none">No friend-house bonus</option>
+            <option value="inside">Searcher is friend; target is inside house</option>
+            <option value="outside">Searcher is friend; target is outside house</option>
+          </select>
+        </div>
+      </div>
+      <div class="results" aria-live="polite">
+        <div class="result"><span class="label">Full / half radius</span><output id="out-search-radii">—</output><small id="out-search-range-roll"></small></div>
+        <div class="result"><span class="label">Target included</span><output id="out-search-inclusion">—</output><small>Exact radius result before the contest.</small></div>
+        <div class="result"><span class="label">Contest if included</span><output id="out-search-contest">—</output><small id="out-search-contest-pairs"></small></div>
+        <div class="result"><span class="label">Overall, one search</span><output id="out-search-overall">—</output><small>Exact inclusion × contest.</small></div>
+        <div class="result"><span class="label">At least once</span><output id="out-search-repeat">—</output><small id="out-search-repeat-note"></small></div>
+      </div>
+      <details>
+        <summary>Show exact Search formula</summary>
+        <pre class="formula">full = floor(Searching / 10)
+P(full) = Searching / 126
+half = floor(full / 2)
+radius 0 = no scan
+contest = count of 441 modifier pairs where
+          Searching + search roll >= target Hiding + target roll
+overall P = P(included at distance) × P(contest)</pre>
+      </details>
+    </section>
+
+    <section id="monsters" class="panel">
+      <h2>Staying hidden from creatures</h2>
+      <p class="lede">This is a different automatic scan. Exact per-scan and N-scan results assume the creature has positive Searching and the player is hidden, alive, within RangePerception, and in line of sight.</p>
+      <div class="grid">
+        <div class="field">
+          <label for="creature-level">Creature level</label>
+          <input id="creature-level" type="number" min="1" max="125" step="1" value="50" inputmode="numeric">
+        </div>
+        <div class="check">
+          <input id="creature-search-override-enabled" type="checkbox">
+          <label for="creature-search-override-enabled">Use explicit creature Searching</label>
+        </div>
+        <div class="field">
+          <label for="creature-search">Explicit creature Searching</label>
+          <input id="creature-search" type="number" min="0" max="500" step="0.1" value="80.0" inputmode="decimal" disabled>
+        </div>
+        <div class="field">
+          <label for="creature-int">Creature Intelligence</label>
+          <input id="creature-int" type="number" min="1" max="10000" step="1" value="100" inputmode="numeric">
+        </div>
+        <div class="field">
+          <label for="creature-minutes">Projection window, minutes</label>
+          <input id="creature-minutes" type="number" min="0" max="1440" step="0.5" value="5" inputmode="decimal">
+        </div>
+        <div class="check"><input id="monster-player-eligible" type="checkbox" checked><label for="monster-player-eligible">Player is alive and hidden</label></div>
+        <div class="check"><input id="monster-in-range" type="checkbox" checked><label for="monster-in-range">Player is within RangePerception</label></div>
+        <div class="check"><input id="monster-los" type="checkbox" checked><label for="monster-los">Creature has line of sight</label></div>
+      </div>
+      <div class="results" aria-live="polite">
+        <div class="result"><span class="label">Creature Searching used</span><output id="out-creature-search">—</output><small id="out-creature-search-source"></small></div>
+        <div class="result"><span class="label">Detected per qualifying scan</span><output id="out-monster-single">—</output><small>Exact; includes the 5%/95% clamp.</small></div>
+        <div class="result"><span class="label">Stay hidden per scan</span><output id="out-monster-stay">—</output><small>Exact complement of detection.</small></div>
+        <div class="result"><span class="label">Detected after N scans</span><output id="out-monster-repeat">—</output><small id="out-monster-repeat-note"></small></div>
+        <div class="result"><span class="label">Random scan delay</span><output id="out-monster-delay">—</output><small>Integer seconds after a scan.</small></div>
+        <div class="result"><span class="label">Time-window projection</span><output id="out-monster-time">—</output><small id="out-monster-time-note"></small></div>
+      </div>
+      <details>
+        <summary>Show exact creature formula and gates</summary>
+        <pre class="formula">concealment = min(Hiding / 4, Stealth / 2.5)
+base-skill bonus = max((BaseStealth - 100) / 5, 0)
+P(detect) = clamp((CreatureSearching - concealment - bonus) / 250, .05, .95)
+P(detect after n scans) = 1 - (1 - P(detect))^n
+delayMaximum = min(floor(15000 / Intelligence), 60)
+random delay = integer 0..delayMaximum</pre>
+        <p class="hint">Level-derived Searching is level + 10 only for processed creatures whose existing Search is 10 or less. An explicit source value above 10 is retained; use the override for those creatures.</p>
+      </details>
+    </section>
+
+    <section id="related" class="panel">
+      <h2>Reveal, Eagle Eye, Mind's Eye, Tracking, and Gem of Seeing</h2>
+      <p class="lede">These methods do not use ordinary Search's 441-pair contest, except the Gem. Skills are converted to stored tenths for compiled integer formulas. Magical results include the target's distance from the selected reveal point.</p>
+      <div class="grid">
+        <div class="field"><label for="related-distance">Target distance from selected reveal point</label><input id="related-distance" type="number" min="0" max="100" step="1" value="0" inputmode="numeric"></div>
+        <div class="field"><label for="related-magery">Caster Magery</label><input id="related-magery" type="number" min="0" max="150" step="0.1" value="100.0" inputmode="decimal"></div>
+        <div class="field"><label for="related-ninjitsu">Caster Ninjitsu</label><input id="related-ninjitsu" type="number" min="0" max="150" step="0.1" value="100.0" inputmode="decimal"></div>
+        <div class="field"><label for="related-psychology">Caster Psychology</label><input id="related-psychology" type="number" min="0" max="150" step="0.1" value="100.0" inputmode="decimal"></div>
+        <div class="field"><label for="related-tactics">Caster Tactics</label><input id="related-tactics" type="number" min="0" max="150" step="0.1" value="100.0" inputmode="decimal"></div>
+        <div class="field"><label for="related-swords">Caster Swords</label><input id="related-swords" type="number" min="0" max="150" step="0.1" value="100.0" inputmode="decimal"></div>
+        <div class="field"><label for="related-karma">Caster Karma</label><input id="related-karma" type="number" min="-20000" max="20000" step="1" value="0" inputmode="numeric"></div>
+        <div class="field"><label for="related-tracking">Tracker Tracking</label><input id="related-tracking" type="number" min="0" max="150" step="0.1" value="100.0" inputmode="decimal"></div>
+        <div class="field">
+          <label for="tracking-form">Target necromancy form</label>
+          <select id="tracking-form">
+            <option value="none">None</option>
+            <option value="horrific">Horrific Beast</option>
+            <option value="vampiric">Vampiric Embrace</option>
+            <option value="wraith">Wraith Form</option>
+          </select>
+        </div>
+        <div class="field"><label for="tracking-distance">Target distance from tracker</label><input id="tracking-distance" type="number" min="0" max="1000" step="1" value="20" inputmode="numeric"></div>
+        <div class="check"><input id="tracking-region" type="checkbox" checked><label for="tracking-region">Same major-land group or named cave/dungeon region</label></div>
+        <div class="field">
+          <label for="gem-house">Gem friend-house situation</label>
+          <select id="gem-house">
+            <option value="none">No friend-house bonus</option>
+            <option value="inside">Gem user is friend; target is inside</option>
+            <option value="outside">Gem user is friend; target is outside</option>
+          </select>
+        </div>
+        <div class="check"><input id="target-invisibility" type="checkbox"><label for="target-invisibility">Target has spell-based Invisibility</label></div>
+      </div>
+      <div class="results" aria-live="polite">
+        <div class="result"><span class="label">Reveal spell</span><output id="out-reveal">—</output><small id="out-reveal-radius"></small></div>
+        <div class="result"><span class="label">Eagle Eye</span><output id="out-eagle">—</output><small id="out-eagle-radius"></small></div>
+        <div class="result"><span class="label">Mind's Eye</span><output id="out-mind">—</output><small id="out-mind-jedi"></small></div>
+        <div class="result"><span class="label">Tracking opening check</span><output id="out-tracking-initial">—</output><small id="out-tracking-range"></small></div>
+        <div class="result"><span class="label">Tracking player contest</span><output id="out-tracking">—</output><small id="out-tracking-divisor"></small></div>
+        <div class="result"><span class="label">Target appears in Tracking list</span><output id="out-tracking-overall">—</output><small>Initial check × range/region gates × player contest.</small></div>
+        <div class="result"><span class="label">Gem of Seeing overall</span><output id="out-gem">—</output><small id="out-gem-note"></small></div>
+      </div>
+      <details>
+        <summary>Show compiled integer formulas</summary>
+        <pre class="formula">Reveal:  floor(50 × (MageryFixed + SearchingFixed) / (HidingFixed + StealthFixed))
+Eagle:   floor(50 × (NinjitsuFixed + SearchingFixed) / (HidingFixed + StealthFixed))
+Mind:    floor(50 × (trunc(JediDamage) + PsychologyFixed) / (HidingFixed + StealthFixed))
+Tracking opening P = linear Tracking check from 0 to 21.1
+Tracking floor(50 × (2 × TrackingFixed + SearchingFixed) / modified divisor)
+Gem:     deterministic radius 10 (friend house 22), then the 441-pair contest with source Searching fixed at 100</pre>
+      </details>
+    </section>
+
+    <section id="world" class="panel">
+      <h2>Hidden traps, doors, chests, and passive discovery</h2>
+      <p class="lede">An eligible item inside the active Search's actual full or half square has no second PvP-style contest. Passive hidden-chest discovery is a different roll made when walking over the marker.</p>
+      <div class="grid">
+        <div class="field"><label for="night-sight">Night Sight item attribute</label><input id="night-sight" type="number" min="0" max="100" step="1" value="0" inputmode="numeric"></div>
+        <div class="check"><input id="positive-light" type="checkbox"><label for="positive-light">Character LightLevel is positive</label></div>
+        <div class="check"><input id="passive-eligible" type="checkbox" checked><label for="passive-eligible">Walker is alive, Player access, and not Blessed</label></div>
+      </div>
+      <div class="results" aria-live="polite">
+        <div class="result"><span class="label">Active item inclusion</span><output id="out-item-active">—</output><small>Same radius probability as the selected Search distance.</small></div>
+        <div class="result"><span class="label">Passive Search roll</span><output id="out-passive-search">—</output><small id="out-passive-note">Exact Searching / 126.</small></div>
+        <div class="result"><span class="label">Night Sight fallback</span><output id="out-passive-night">—</output><small>Runs only when passive Searching fails.</small></div>
+        <div class="result"><span class="label">Combined passive discovery</span><output id="out-passive-combined">—</output><small>Exact Search, then Night Sight fallback.</small></div>
+        <div class="result"><span class="label">Hidden-chest search level</span><output id="out-chest-level">—</output><small id="out-chest-reward"></small></div>
+      </div>
+      <p class="notice">Active eligible types are BaseTrap, configured hidden-door art, HiddenTrap, and HiddenChest. Active Search deletes a found HiddenChest after creating its reward; passively crossing one deletes the marker even on a failed discovery roll. For active Search, the broad reward split is 2/3 currency/resources and 1/3 hidden box; region and further random branches determine the final item.</p>
+    </section>
+
+    <section id="powerscrolls" class="panel">
+      <h2>Actual trained skill from 100 through 125</h2>
+      <p class="lede">This comparison changes the trained value itself. Merely raising the cap while remaining at 100 produces the 100 row.</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th scope="col">Actual skill</th><th scope="col">Normal Hiding</th><th scope="col">Search full-radius roll</th><th scope="col">Full / half radius</th><th scope="col">Unarmored Stealth</th><th scope="col">Quiet steps</th><th scope="col">Quiet interaction</th></tr></thead>
+          <tbody id="powerscroll-body"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>Interpretation and limitations</h2>
+      <ul class="legend">
+        <li>Exact percentages assume the entered values and all stated gates.</li>
+        <li>Repeated calculations assume independent qualifying rolls.</li>
+        <li>Opponent and creature skills must be estimated unless staff inspect them.</li>
+        <li>Approximate time risk cannot predict AI pulses, movement, LOS, or perception.</li>
+        <li>This calculator predicts success, not skill gain.</li>
+      </ul>
+      <p>Source snapshot and all formulas are documented in the <a href="../wiki/Searching_Hiding_Stealth.md">full guide</a>.</p>
+    </section>
+  </main>
+
+  <footer>Self-contained Confictura documentation tool. No data is transmitted and no external scripts, fonts, or styles are loaded.</footer>
+
+  <script>
+  (function () {
+    "use strict";
+
+    var MATERIALS = [
+      ["Cloth",     [0, 0, 0, 0, 0, 0, 0]],
+      ["Leather",   [0, 0, 0, 0, 0, 0, 0]],
+      ["Studded",   [2, 2, 0, 4, 6, 10, 0]],
+      ["Bone",      [0, 5, 10, 10, 15, 25, 0]],
+      ["Spined",    [1, 1, 0, 2, 3, 5, 0]],
+      ["Horned",    [1, 1, 0, 2, 3, 5, 0]],
+      ["Barbed",    [1, 1, 0, 2, 3, 5, 0]],
+      ["Necrotic",  [1, 1, 0, 2, 3, 5, 0]],
+      ["Volcanic",  [1, 1, 0, 2, 3, 5, 0]],
+      ["Frozen",    [1, 1, 0, 2, 3, 5, 0]],
+      ["Goliath",   [2, 2, 0, 4, 6, 10, 0]],
+      ["Draconic",  [2, 2, 0, 4, 6, 10, 0]],
+      ["Hellish",   [2, 2, 0, 4, 6, 10, 0]],
+      ["Dinosaur",  [2, 2, 0, 4, 6, 10, 0]],
+      ["Alien",     [2, 2, 0, 4, 6, 10, 0]],
+      ["Ringmail",  [0, 5, 0, 10, 15, 25, 0]],
+      ["Chainmail", [0, 0, 10, 0, 15, 25, 0]],
+      ["Plate",     [5, 5, 10, 10, 15, 25, 0]],
+      ["Dragon",    [0, 5, 10, 10, 15, 25, 0]]
+    ];
+    var SLOTS = ["Gorget", "Gloves", "Helmet", "Arms", "Legs", "Chest", "Shield"];
+
+    function clamp(value, minimum, maximum) { return Math.max(minimum, Math.min(value, maximum)); }
+    function num(id, fallback) {
+      var value = Number(document.getElementById(id).value);
+      return Number.isFinite(value) ? value : fallback;
+    }
+    function intAtLeast(id, minimum) { return Math.max(minimum, Math.trunc(num(id, minimum))); }
+    function checked(id) { return document.getElementById(id).checked; }
+    function effectiveMaximum(rawMaximum) { return rawMaximum >= 100 ? 126 : rawMaximum; }
+    function skillChance(value, minimum, rawMaximum) {
+      var maximum = effectiveMaximum(rawMaximum);
+      if (value < minimum) { return 0; }
+      if (value >= maximum) { return 1; }
+      return clamp((value - minimum) / (maximum - minimum), 0, 1);
+    }
+    function percent(value, digits) {
+      var safe = clamp(Number.isFinite(value) ? value : 0, 0, 1);
+      return (safe * 100).toFixed(digits === undefined ? 2 : digits) + "%";
+    }
+    function repeatChance(probability, attempts) { return 1 - Math.pow(1 - probability, Math.max(0, attempts)); }
+    function hidingRadius(hiding) { return Math.min(Math.trunc((100 - hiding) / 2) + 8, 18); }
+    function normalHidingChance(hiding) { return skillChance(hiding, 0, 100); }
+    function hidingScenarioChance(hiding, friendHouse, combat) {
+      var finalChance = friendHouse ? 1 : normalHidingChance(hiding);
+      if (combat === "override" || combat === "clear" || hidingRadius(hiding) < 0) { return finalChance; }
+      if (combat === "attacker") { return 0; }
+      if (combat === "one-sided") { return normalHidingChance(hiding) * finalChance; }
+      return finalChance;
+    }
+    function quietChance(hiding) { return clamp(Math.floor(hiding), 0, 125) / 125; }
+    function stealthSteps(stealth) { return Math.max(1, Math.floor(stealth / 5)); }
+    function safeRunningTiles(steps) { return Math.max(0, Math.ceil(steps / 2) - 1); }
+    function stealthRoll(stealth, armor) {
+      if (armor >= 42) { return 0; }
+      return skillChance(stealth, -20 + (2 * armor), 60 + (2 * armor));
+    }
+    function stealthOutcome(hidden, hiding, locked, stealth, armor) {
+      if (!hidden) { return { chance: 0, state: "Impossible: you must hide first." }; }
+      if (hiding < 30) { return { chance: 0, state: "Impossible: displayed Hiding is below 30.0; the attempt reveals you." }; }
+      if (locked) { return { chance: 0, state: "Impossible while action-locked; the attempt reveals you." }; }
+      if (armor >= 42) { return { chance: 0, state: "Impossible at armor 42 or more; the attempt reveals you." }; }
+      return { chance: stealthRoll(stealth, armor), state: "Exact activation roll; failure reveals you." };
+    }
+    function searchContest(searching, hiding) {
+      var wins = 0;
+      for (var sourceRoll = -10; sourceRoll <= 10; sourceRoll += 1) {
+        for (var targetRoll = -10; targetRoll <= 10; targetRoll += 1) {
+          if (searching + sourceRoll >= hiding + targetRoll) { wins += 1; }
+        }
+      }
+      return { wins: wins, probability: wins / 441 };
+    }
+    function searchInclusion(searching, distance, houseMode) {
+      if (houseMode !== "none") { return distance <= 22 ? 1 : 0; }
+      var full = Math.floor(searching / 10);
+      var half = Math.floor(full / 2);
+      if (full <= 0) { return 0; }
+      if (half > 0 && distance <= half) { return 1; }
+      if (distance <= full) { return skillChance(searching, 0, 125); }
+      return 0;
+    }
+    function activeSearch(searching, targetHiding, distance, houseMode, blessed) {
+      if (blessed) { return { inclusion: 0, contest: { wins: 0, probability: 0, blocked: true }, overall: 0 }; }
+      var inclusion = searchInclusion(searching, distance, houseMode);
+      var contest = houseMode === "inside" ? { wins: 441, probability: 1 } : searchContest(searching, targetHiding);
+      return { inclusion: inclusion, contest: contest, overall: inclusion * contest.probability };
+    }
+    function monsterChance(searching, hiding, stealth, baseStealth) {
+      var concealment = Math.min(hiding / 4, stealth / 2.5);
+      var bonus = Math.max((baseStealth - 100) / 5, 0);
+      return clamp((searching - concealment - bonus) / 250, 0.05, 0.95);
+    }
+    function fixedSkill(value) { return Math.round(Math.max(0, value) * 10); }
+    function integerPercent(numerator, divisor) {
+      var chance = divisor > 0 ? Math.trunc(50 * numerator / divisor) : 100;
+      return { integer: chance, probability: clamp(chance, 0, 100) / 100, divisor: divisor };
+    }
+    function revealLike(primary, searching, hiding, stealth, invisible) {
+      if (invisible) { return { integer: 100, probability: 1, divisor: fixedSkill(hiding) + fixedSkill(stealth), automatic: true }; }
+      return integerPercent(fixedSkill(primary) + fixedSkill(searching), fixedSkill(hiding) + fixedSkill(stealth));
+    }
+    function mindEye(psychology, tactics, swords, karma, hiding, stealth, invisible) {
+      var jediDamage = Math.trunc(clamp(karma, 0, 15000) / 120) + tactics + swords;
+      var result = invisible
+        ? { integer: 100, probability: 1, divisor: fixedSkill(hiding) + fixedSkill(stealth), automatic: true }
+        : integerPercent(Math.trunc(jediDamage) + fixedSkill(psychology), fixedSkill(hiding) + fixedSkill(stealth));
+      result.jediDamage = jediDamage;
+      return result;
+    }
+    function trackingChance(tracking, searching, hiding, stealth, form) {
+      var divisor = fixedSkill(hiding) + fixedSkill(stealth);
+      if (form === "horrific") { divisor -= 200; }
+      else if (form === "vampiric" && divisor < 500) { divisor = 500; }
+      else if (form === "wraith" && divisor <= 2000) { divisor += 200; }
+      return integerPercent((2 * fixedSkill(tracking)) + fixedSkill(searching), divisor);
+    }
+    function trackingOpening(tracking, distance, regionEligible) {
+      var range = 25 + Math.floor(tracking / 2);
+      return {
+        probability: skillChance(tracking, 0, 21.1),
+        range: range,
+        arrowRange: range * 2,
+        included: Boolean(regionEligible) && distance <= range
+      };
+    }
+    function gemDetection(targetHiding, distance, houseMode) {
+      var radius = houseMode === "none" ? 10 : 22;
+      var inclusion = distance <= radius ? 1 : 0;
+      var contest = houseMode === "inside" ? { wins: 441, probability: 1 } : searchContest(100, targetHiding);
+      return { radius: radius, inclusion: inclusion, contest: contest, overall: inclusion * contest.probability };
+    }
+    function passiveChest(searching, nightSight, positiveLight, eligible) {
+      if (eligible === false) { return { search: 0, night: 0, combined: 0, blocked: true }; }
+      var search = skillChance(searching, 0, 125);
+      var night = clamp((2 * Math.floor(nightSight)) + (positiveLight ? 2 : 0), 0, 100) / 100;
+      return { search: search, night: night, combined: 1 - ((1 - search) * (1 - night)) };
+    }
+
+    function buildArmorControls() {
+      var body = document.getElementById("armor-body");
+      var options = MATERIALS.map(function (material, index) {
+        return '<option value="' + index + '">' + material[0] + '</option>';
+      }).join("");
+      SLOTS.forEach(function (slot, index) {
+        var row = document.createElement("tr");
+        row.innerHTML = '<th scope="row">' + slot + '</th>' +
+          '<td><label class="sr-only" for="armor-' + index + '">Material for ' + slot + '</label><select id="armor-' + index + '" data-armor-slot="' + index + '">' + options + '</select></td>' +
+          '<td><div class="check"><input id="mage-' + index + '" data-mage-slot="' + index + '" type="checkbox"><label for="mage-' + index + '">Exempt</label></div></td>' +
+          '<td><output id="armor-piece-' + index + '">0</output></td>';
+        body.appendChild(row);
+      });
+      var style = document.createElement("style");
+      style.textContent = ".sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}";
+      document.head.appendChild(style);
+    }
+
+    function buildArmorMatrix() {
+      var table = document.getElementById("armor-matrix");
+      var head = "<thead><tr><th>Material</th>" + SLOTS.map(function (slot) { return "<th>" + slot + "</th>"; }).join("") + "</tr></thead>";
+      var body = "<tbody>" + MATERIALS.map(function (material) {
+        return "<tr><th>" + material[0] + "</th>" + material[1].map(function (value) { return "<td>" + value + "</td>"; }).join("") + "</tr>";
+      }).join("") + "</tbody>";
+      table.innerHTML = head + body;
+    }
+
+    function armorValue() {
+      var total = 0;
+      SLOTS.forEach(function (_, slotIndex) {
+        var materialIndex = Number(document.getElementById("armor-" + slotIndex).value);
+        var mage = document.getElementById("mage-" + slotIndex).checked;
+        var contribution = mage ? 0 : MATERIALS[materialIndex][1][slotIndex];
+        document.getElementById("armor-piece-" + slotIndex).textContent = String(contribution);
+        total += contribution;
+      });
+      if (checked("armor-override-enabled")) { return Math.max(0, Math.trunc(num("armor-override", 0))); }
+      return total;
+    }
+
+    function setOutput(id, value, className) {
+      var output = document.getElementById(id);
+      output.textContent = value;
+      output.className = className || "";
+    }
+
+    function updateHiding(hiding, attempts) {
+      var combat = document.getElementById("hiding-combat").value;
+      var friendHouse = checked("hiding-house");
+      var radius = hidingRadius(hiding);
+      var chance = hidingScenarioChance(hiding, friendHouse, combat);
+      setOutput("out-hiding-radius", String(radius), radius < 0 ? "state-warn" : "");
+      document.getElementById("out-hiding-radius-note").textContent = radius < 0 ? "Compiled negative-radius quirk: combat scans find no eligible mobile." : "Tiles; capped at 18 and not lower-clamped.";
+      var state = "Exact per attempt.";
+      var cls = "";
+      if (chance === 0) { state = "Impossible in the selected active-attacker state."; cls = "state-bad"; }
+      else if (chance === 1) { state = "Guaranteed after the selected combat gates."; cls = "state-good"; }
+      else if (combat === "one-sided" && radius >= 0) { state = "Exact preliminary combat roll × final roll."; }
+      else if (combat === "override") { state = "Exact final roll; combat blockers skipped."; }
+      setOutput("out-hiding-single", percent(chance, 4), cls);
+      document.getElementById("out-hiding-state").textContent = state;
+      setOutput("out-hiding-repeat", percent(repeatChance(chance, attempts), 4));
+      document.getElementById("out-hiding-repeat-note").textContent = "Exact at least once in " + attempts + " independent attempts.";
+      setOutput("out-quiet", percent(quietChance(hiding), 2));
+    }
+
+    function updateStealth(hiding, stealth) {
+      var direct = document.getElementById("armor-override");
+      direct.disabled = !checked("armor-override-enabled");
+      var armor = armorValue();
+      var outcome = stealthOutcome(checked("stealth-hidden"), hiding, checked("stealth-locked"), stealth, armor);
+      var steps = stealthSteps(stealth);
+      setOutput("out-armor", String(armor), armor >= 42 ? "state-bad" : armor >= 20 ? "state-warn" : "");
+      setOutput("out-stealth-chance", percent(outcome.chance, 4), outcome.chance === 0 ? "state-bad" : outcome.chance === 1 ? "state-good" : "");
+      document.getElementById("out-stealth-gate").textContent = outcome.state;
+      setOutput("out-stealth-steps", String(steps));
+      var movement = stealth < 25 ? "Next move reveals" : steps + " walking tiles";
+      var movementNote = stealth < 25
+        ? "Player movement requires 25.0 Stealth even if activation succeeded."
+        : "After manual activation, the next walking tile after these auto-rechecks. Fresh Hiding starts at zero, so its first walk auto-attempts. " + safeRunningTiles(steps) + " running tile(s) can finish while still hidden; mounting reveals on movement.";
+      setOutput("out-stealth-movement", movement, stealth < 25 ? "state-bad" : "");
+      document.getElementById("out-stealth-movement-note").textContent = movementNote;
+    }
+
+    function updateSearch(searching, attempts) {
+      var hiding = num("target-hiding", 0);
+      var distance = Math.max(0, Math.trunc(num("search-distance", 0)));
+      var house = document.getElementById("search-house").value;
+      var blessed = checked("search-blessed");
+      var full = house === "none" ? Math.floor(searching / 10) : 22;
+      var half = house === "none" ? Math.floor(full / 2) : 22;
+      var result = activeSearch(searching, hiding, distance, house, blessed);
+      setOutput("out-search-radii", full + " / " + half + " tiles");
+      document.getElementById("out-search-range-roll").textContent = blessed ? "Impossible: Blessed characters cannot use Searching." : house === "none" ? "Full-radius roll: " + percent(skillChance(searching, 0, 125), 4) : "Guaranteed radius 22 for a friend searcher.";
+      setOutput("out-search-inclusion", percent(result.inclusion, 4), result.inclusion === 0 ? "state-bad" : result.inclusion === 1 ? "state-good" : "");
+      setOutput("out-search-contest", blessed ? "Not rolled" : percent(result.contest.probability, 4), result.contest.probability === 1 ? "state-good" : "");
+      document.getElementById("out-search-contest-pairs").textContent = blessed ? "Use is blocked before targeting." : house === "inside" ? "Guaranteed for a target inside the house." : result.contest.wins + " winning pairs out of 441.";
+      setOutput("out-search-overall", percent(result.overall, 4), result.overall === 0 ? "state-bad" : result.overall === 1 ? "state-good" : "");
+      setOutput("out-search-repeat", percent(repeatChance(result.overall, attempts), 4));
+      document.getElementById("out-search-repeat-note").textContent = "Exact at least once in " + attempts + " independent searches with unchanged state.";
+      setOutput("out-item-active", percent(result.inclusion, 4));
+    }
+
+    function updateMonster(hiding, stealth, baseStealth, attempts) {
+      var override = checked("creature-search-override-enabled");
+      document.getElementById("creature-search").disabled = !override;
+      var level = clamp(Math.trunc(num("creature-level", 1)), 1, 125);
+      var searching = override ? Math.max(0, num("creature-search", 0)) : level + 10;
+      var intelligence = Math.max(1, Math.trunc(num("creature-int", 1)));
+      var minutes = Math.max(0, num("creature-minutes", 0));
+      var chance = monsterChance(searching, hiding, stealth, baseStealth);
+      var maximumDelay = Math.min(Math.floor(15000 / intelligence), 60);
+      var gatesPass = searching > 0 && checked("monster-player-eligible") && checked("monster-in-range") && checked("monster-los");
+      setOutput("out-creature-search", searching.toFixed(1));
+      document.getElementById("out-creature-search-source").textContent = override ? "Explicit source/stat override." : "Derived as creature level + 10.";
+      setOutput("out-monster-delay", "0–" + maximumDelay + " sec");
+      if (!gatesPass) {
+        var failed = searching <= 0 ? "creature Searching is not positive" : !checked("monster-player-eligible") ? "player is not both alive and hidden" : !checked("monster-in-range") ? "player is outside RangePerception" : "line of sight is absent";
+        setOutput("out-monster-single", "No qualifying scan", "state-bad");
+        setOutput("out-monster-stay", "100.0000%", "state-good");
+        setOutput("out-monster-repeat", "0.0000%", "state-good");
+        document.getElementById("out-monster-repeat-note").textContent = "Guaranteed gate: " + failed + ".";
+        setOutput("out-monster-time", "0.00%", "state-good");
+        document.getElementById("out-monster-time-note").textContent = "No scan qualifies while the selected source gate remains false.";
+        return;
+      }
+      setOutput("out-monster-single", percent(chance, 4));
+      setOutput("out-monster-stay", percent(1 - chance, 4));
+      setOutput("out-monster-repeat", percent(repeatChance(chance, attempts), 4));
+      document.getElementById("out-monster-repeat-note").textContent = "Exact after " + attempts + " qualifying scans.";
+      if (maximumDelay === 0) {
+        setOutput("out-monster-time", "AI-pulse limited", "state-warn");
+        document.getElementById("out-monster-time-note").textContent = "The computed delay is zero; elapsed-time risk cannot be estimated without the AI pulse schedule.";
+      } else {
+        var expectedScans = (minutes * 60) / (maximumDelay / 2);
+        var roundedScans = Math.max(0, Math.round(expectedScans));
+        setOutput("out-monster-time", percent(repeatChance(chance, roundedScans), 2));
+        document.getElementById("out-monster-time-note").textContent = "Approximate, using " + roundedScans + " scans from the mean uniform delay over " + minutes + " minute(s). LOS and AI state can dominate.";
+      }
+    }
+
+    function updateRelated(searching) {
+      var hiding = num("target-hiding", 0);
+      var stealth = num("target-stealth", 0);
+      var distance = Math.max(0, Math.trunc(num("related-distance", 0)));
+      var invisible = checked("target-invisibility");
+      var magery = num("related-magery", 0);
+      var reveal = revealLike(magery, searching, hiding, stealth, invisible);
+      var ninjitsu = num("related-ninjitsu", 0);
+      var psychology = num("related-psychology", 0);
+      var eagle = revealLike(ninjitsu, searching, hiding, stealth, invisible);
+      var mind = mindEye(psychology, num("related-tactics", 0), num("related-swords", 0), num("related-karma", 0), hiding, stealth, invisible);
+      var revealRadius = 1 + Math.floor(magery / 20);
+      var eagleRadius = 1 + Math.floor(ninjitsu / 20);
+      var mindMobileRadius = 1 + Math.floor(mind.jediDamage / 20);
+      var mindItemRadius = 1 + Math.floor(psychology / 20);
+      var revealOverall = distance <= revealRadius ? reveal.probability : 0;
+      var eagleOverall = distance <= eagleRadius ? eagle.probability : 0;
+      var mindOverall = distance <= mindMobileRadius ? mind.probability : 0;
+      var trackingSkill = num("related-tracking", 0);
+      var tracking = trackingChance(trackingSkill, searching, hiding, stealth, document.getElementById("tracking-form").value);
+      var trackingOpeningResult = trackingOpening(trackingSkill, Math.max(0, Math.trunc(num("tracking-distance", 0))), checked("tracking-region"));
+      var trackingOverall = trackingOpeningResult.probability * (trackingOpeningResult.included ? 1 : 0) * tracking.probability;
+      var gem = gemDetection(hiding, distance, document.getElementById("gem-house").value);
+      setOutput("out-reveal", percent(revealOverall, 0), revealOverall === 1 ? "state-good" : revealOverall === 0 ? "state-bad" : "");
+      document.getElementById("out-reveal-radius").textContent = "Mobile/item radius " + revealRadius + "; " + (distance > revealRadius ? "target is outside it." : invisible ? "automatic against spell Invisibility within radius." : "compiled chance integer " + reveal.integer + ".");
+      setOutput("out-eagle", percent(eagleOverall, 0), eagleOverall === 1 ? "state-good" : eagleOverall === 0 ? "state-bad" : "");
+      document.getElementById("out-eagle-radius").textContent = "Mobile/item radius " + eagleRadius + "; " + (distance > eagleRadius ? "target is outside it." : invisible ? "automatic against spell Invisibility within radius." : "compiled chance integer " + eagle.integer + ".");
+      setOutput("out-mind", percent(mindOverall, 0), mindOverall === 1 ? "state-good" : mindOverall === 0 ? "state-bad" : "");
+      document.getElementById("out-mind-jedi").textContent = "Jedi damage " + mind.jediDamage.toFixed(1) + "; mobile radius " + mindMobileRadius + ", item radius " + mindItemRadius + "; " + (distance > mindMobileRadius ? "target is outside the mobile radius." : invisible ? "automatic Invisibility result within radius." : "chance integer " + mind.integer + ".");
+      setOutput("out-tracking-initial", percent(trackingOpeningResult.probability, 4));
+      document.getElementById("out-tracking-range").textContent = "List range " + trackingOpeningResult.range + "; selected arrow persists to " + trackingOpeningResult.arrowRange + " tiles.";
+      setOutput("out-tracking", percent(tracking.probability, 0));
+      document.getElementById("out-tracking-divisor").textContent = "Modified fixed-point divisor " + tracking.divisor + "; chance integer " + tracking.integer + ".";
+      setOutput("out-tracking-overall", percent(trackingOverall, 4), trackingOverall === 0 ? "state-bad" : trackingOverall === 1 ? "state-good" : "");
+      setOutput("out-gem", percent(gem.overall, 4), gem.overall === 0 ? "state-bad" : gem.overall === 1 ? "state-good" : "");
+      document.getElementById("out-gem-note").textContent = "Radius " + gem.radius + "; fixed Searching 100; " + (gem.inclusion === 0 ? "target is outside it." : document.getElementById("gem-house").value === "inside" ? "friend-house target is automatic." : gem.contest.wins + " winning contest pairs; target Stealth ignored.");
+    }
+
+    function updateWorld(searching) {
+      var passive = passiveChest(searching, num("night-sight", 0), checked("positive-light"), checked("passive-eligible"));
+      var maximumLevel = clamp(Math.floor(searching / 10), 1, 10);
+      setOutput("out-passive-search", percent(passive.search, 4));
+      setOutput("out-passive-night", percent(passive.night, 2));
+      setOutput("out-passive-combined", percent(passive.combined, 4));
+      document.getElementById("out-passive-note").textContent = passive.blocked ? "Impossible: the walker fails the living Player/non-Blessed gate." : "Exact Searching / 126.";
+      setOutput("out-chest-level", "Uniform 1–" + maximumLevel);
+      document.getElementById("out-chest-reward").textContent = "Chosen level is uniform 1–" + maximumLevel + "; base currency is 100× to 200× the chosen level before regional substitutions.";
+    }
+
+    function buildPowerscrollTable() {
+      var values = [100, 105, 110, 115, 120, 125];
+      document.getElementById("powerscroll-body").innerHTML = values.map(function (value) {
+        var full = Math.floor(value / 10);
+        return "<tr><th scope=\"row\">" + value.toFixed(1) + "</th>" +
+          "<td>" + percent(normalHidingChance(value), 2) + "</td>" +
+          "<td>" + percent(skillChance(value, 0, 125), 2) + "</td>" +
+          "<td>" + full + " / " + Math.floor(full / 2) + "</td>" +
+          "<td>" + percent(stealthRoll(value, 0), 2) + "</td>" +
+          "<td>" + stealthSteps(value) + "</td>" +
+          "<td>" + percent(quietChance(value), 2) + "</td></tr>";
+      }).join("");
+    }
+
+    function updateAll() {
+      var searching = Math.max(0, num("skill-searching", 0));
+      var hiding = Math.max(0, num("skill-hiding", 0));
+      var stealth = Math.max(0, num("skill-stealth", 0));
+      var baseStealth = Math.max(0, num("skill-base-stealth", 0));
+      var attempts = intAtLeast("attempts", 1);
+      updateHiding(hiding, attempts);
+      updateStealth(hiding, stealth);
+      updateSearch(searching, attempts);
+      updateMonster(hiding, stealth, baseStealth, attempts);
+      updateRelated(searching);
+      updateWorld(searching);
+    }
+
+    function nearlyEqual(actual, expected, tolerance) { return Math.abs(actual - expected) <= (tolerance || 1e-12); }
+    function runSelfTests() {
+      var tests = [];
+      function test(name, condition) { tests.push({ name: name, pass: Boolean(condition) }); }
+      test("maximum below 100 retained", skillChance(99, 0, 99) === 1);
+      test("maximum 100 normalized", nearlyEqual(skillChance(100, 0, 100), 100 / 126));
+      test("maximum 125 normalized", nearlyEqual(skillChance(125, 0, 125), 125 / 126));
+      test("126 guaranteed", skillChance(126, 0, 100) === 1);
+      test("equal Search contest", searchContest(100, 100).wins === 231 && nearlyEqual(searchContest(100, 100).probability, 231 / 441));
+      test("Search half boundary", searchInclusion(100, 5, "none") === 1);
+      test("Search full band", nearlyEqual(searchInclusion(100, 6, "none"), 100 / 126));
+      test("Search outside boundary", searchInclusion(100, 11, "none") === 0);
+      test("Search zero radius does not scan", searchInclusion(0, 0, "none") === 0);
+      test("Search failed half-radius zero does not scan", nearlyEqual(searchInclusion(10, 0, "none"), 10 / 126));
+      test("Blessed Search is blocked", activeSearch(125, 0, 0, "inside", true).overall === 0);
+      test("friend-house radius boundary", activeSearch(0, 150, 22, "inside").overall === 1 && activeSearch(150, 0, 23, "inside").overall === 0);
+      test("Hiding clear combat", nearlyEqual(hidingScenarioChance(100, false, "clear"), 100 / 126));
+      test("Hiding one-sided combat", nearlyEqual(hidingScenarioChance(100, false, "one-sided"), Math.pow(100 / 126, 2)));
+      test("Hiding active attacker", hidingScenarioChance(100, false, "attacker") === 0);
+      test("Hiding friend house", hidingScenarioChance(100, true, "clear") === 1);
+      test("Hiding friend one-sided", nearlyEqual(hidingScenarioChance(100, true, "one-sided"), 100 / 126));
+      test("Hiding combat override", nearlyEqual(hidingScenarioChance(100, false, "override"), 100 / 126));
+      test("negative combat radius", hidingRadius(118) < 0 && nearlyEqual(hidingScenarioChance(118, false, "attacker"), 118 / 126));
+      test("quiet interaction floors", nearlyEqual(quietChance(50.9), 50 / 125) && quietChance(125) === 1);
+      for (var armor = 0; armor <= 41; armor += 1) { test("armor " + armor + " produces bounded roll", stealthRoll(100, armor) >= 0 && stealthRoll(100, armor) <= 1); }
+      test("armor 19 curve", nearlyEqual(stealthRoll(90, 19), (90 - 18) / (98 - 18)));
+      test("armor 20 max rewrite", nearlyEqual(stealthRoll(100, 20), 80 / 106));
+      test("armor 41", nearlyEqual(stealthRoll(100, 41), 38 / 64));
+      test("armor 42 impossible", stealthRoll(150, 42) === 0);
+      test("all armor rows and slots", MATERIALS.length === 19 && MATERIALS.every(function (row) { return row[1].length === 7; }));
+      test("step floors", stealthSteps(0) === 1 && stealthSteps(9.9) === 1 && stealthSteps(10) === 2 && stealthSteps(125) === 25);
+      test("running consumption", safeRunningTiles(20) === 9 && safeRunningTiles(1) === 0);
+      test("monster 5 percent floor", monsterChance(1, 150, 150, 125) === 0.05);
+      test("monster 95 percent ceiling", monsterChance(500, 0, 0, 0) === 0.95);
+      test("cumulative scans", nearlyEqual(repeatChance(0.2, 3), 0.488));
+      test("Reveal fixed-point formula", revealLike(100, 100, 100, 100, false).integer === 50);
+      test("Eagle Eye fixed-point formula", revealLike(80, 40, 60, 40, false).integer === 60);
+      test("Reveal Invisibility gate", revealLike(0, 0, 150, 150, true).probability === 1);
+      test("Mind's Eye mixed units", mindEye(100, 100, 100, 0, 100, 100, false).integer === 30);
+      test("Mind's Eye Karma cap", mindEye(0, 0, 0, 20000, 100, 100, false).jediDamage === 125);
+      test("Tracking forms", trackingChance(100, 100, 10, 10, "horrific").divisor === 0 && trackingChance(100, 100, 100, 100, "wraith").divisor === 2200);
+      test("Tracking opening and ranges", nearlyEqual(trackingOpening(10, 20, true).probability, 10 / 21.1) && trackingOpening(100, 75, true).range === 75 && trackingOpening(100, 75, true).arrowRange === 150 && !trackingOpening(100, 76, true).included);
+      test("Gem uses ordinary Search contest", searchContest(100, 100).wins === 231);
+      test("Gem radius and house", nearlyEqual(gemDetection(100, 10, "none").overall, 231 / 441) && gemDetection(0, 11, "none").overall === 0 && gemDetection(150, 22, "inside").overall === 1);
+      test("passive fallback", nearlyEqual(passiveChest(0, 10, true).combined, 0.22));
+      test("passive eligibility gate", passiveChest(125, 100, true, false).combined === 0);
+      var failures = tests.filter(function (entry) { return !entry.pass; });
+      return { total: tests.length, passed: tests.length - failures.length, failures: failures };
+    }
+
+    function initialize() {
+      buildArmorControls();
+      buildArmorMatrix();
+      buildPowerscrollTable();
+      document.querySelectorAll("input, select").forEach(function (control) {
+        control.addEventListener("input", updateAll);
+        control.addEventListener("change", updateAll);
+      });
+      updateAll();
+      var testResult = runSelfTests();
+      var badge = document.getElementById("self-test-badge");
+      if (testResult.failures.length === 0) {
+        badge.textContent = "✓ " + testResult.passed + " embedded formula tests passed";
+        badge.className = "badge state-good";
+      } else {
+        badge.textContent = "✗ " + testResult.failures.length + " formula test(s) failed";
+        badge.className = "badge state-bad";
+        badge.title = testResult.failures.map(function (failure) { return failure.name; }).join(", ");
+      }
+    }
+
+    window.ConficturaSearchStealthCalculator = {
+      MATERIALS: MATERIALS,
+      SLOTS: SLOTS,
+      effectiveMaximum: effectiveMaximum,
+      skillChance: skillChance,
+      hidingRadius: hidingRadius,
+      hidingScenarioChance: hidingScenarioChance,
+      quietChance: quietChance,
+      stealthRoll: stealthRoll,
+      stealthSteps: stealthSteps,
+      safeRunningTiles: safeRunningTiles,
+      searchContest: searchContest,
+      searchInclusion: searchInclusion,
+      activeSearch: activeSearch,
+      monsterChance: monsterChance,
+      repeatChance: repeatChance,
+      revealLike: revealLike,
+      mindEye: mindEye,
+      trackingChance: trackingChance,
+      trackingOpening: trackingOpening,
+      gemDetection: gemDetection,
+      passiveChest: passiveChest,
+      runSelfTests: runSelfTests,
+      updateAll: updateAll
+    };
+
+    if (document.readyState === "loading") { document.addEventListener("DOMContentLoaded", initialize); }
+    else { initialize(); }
+  }());
+  </script>
+</body>
+</html>

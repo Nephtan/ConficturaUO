@@ -2,15 +2,17 @@
 
 Initialized: 2026-06-05T16:15:59.8020730-05:00
 
-Last updated: 2026-08-08T14:47:36.9745801-05:00
+Last updated: 2026-08-10T19:03:13.5826291-05:00
 
-Branch: `SAR`
+Branch: `main`
 
 Audit closeout HEAD: `4120e1be docs: finalize audit phase 14 status`
 
 Post-audit live-runtime baseline HEAD: `9dce70de docs: record source build baseline`
 
 Post-audit compile-only implementation HEAD: `09b7b7e5 feat: add compile-only script verification`
+
+Post-audit in-game player documentation audit: `POST-BATCH-IGD-01` source-reviewed the current runtime/data snapshot at `6b447099977f81d66585e8401e3ef904be7da3d9` against historical synchronization point `cbd03db1f1be73c2fa345ac6b4ee5abfa63ae840`. The reproducible generator reconciles 6,718 current runtime/source C# files into 167 source/data boundaries, 114 live wiki-index topics, 160 direct Player command registrations, 92 relevant checked-in XML files, 58 lore records, 29 static Library entries, and all current or historical post-baseline paths. Durable output is 297 census rows plus a deduplicated 136-item incorporation/refresh/runtime-evidence backlog, an in-game style guide, and an owner staging checklist. Validation-only byte comparison passes. No C#, XML, spawn, book, NPC, gump, world, project, or other player-visible runtime content changed; build and startup compile are intentionally not required for this documentation/tool-only batch. Live placement, vendor stock, player unlock state, server configuration, and ordinary-player accessibility remain owner-run staging gates because this checkout contains no world save. Focused evidence: `outputs/in-game-documentation-audit-summary.md`, `outputs/player-facing-system-documentation-audit.csv`, `outputs/in-game-documentation-backlog.csv`, and `outputs/in-game-documentation-style-guide.md`.
 
 Post-audit Town Crier Discord repair: `POST-BATCH-TCD-01` aggregates the minute-based wanted register into one memory-only roster event, adds session-only Exploration suppression and priority overflow, exposes sanitized session counters, and routes killer-tile and Moon Core fatalities through the existing death publication hook. `TownHerald`, `PlayerMobile`, namespaces, serialized types, and serializer layouts remain unchanged. Local policy/transport verification passed with 64 assertions; project truth is 6,598 includes and 6,598 sources with zero drift; Release server, solution IDE hygiene, runtime compile-only, and bounded initialization smoke passed. Live Discord and in-game fatality exercises remain owner staging checks because no webhook secret is present in this checkout. Focused evidence: `outputs/post-batch-tcd-town-crier-discord-review.csv` and `outputs/post-batch-tcd-town-crier-discord-closeout.md`.
 
