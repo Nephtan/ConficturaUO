@@ -99,6 +99,7 @@ Guides are grouped by primary audience and use case.
 - [Random Encounter Engine](Random_Encounter_Engine.md)
 - [Ranger Survival Training](Ranger_Survival_Training.md)
 - [Region System](Region_System.md)
+- [Town Guards](Town_Guards.md)
 - [NPC Shipwright Sailing Guide](NPC_Shipwright_Sailing_Guide.md)
 - [Shipwright Sailing Tutorial](Shipwright_Sailing_Tutorial.md)
 

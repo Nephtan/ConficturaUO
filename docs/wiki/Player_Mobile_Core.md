@@ -144,7 +144,7 @@ Insurance is enabled when `Core.AOS` is true.
 
 | Stage | Compiled behavior |
 | --- | --- |
-| Guard sentencing | When `MyServerSettings.GuardsSentenceDeath()` is false and the last killer is a town guard or qualifying vendor, death is cancelled. The player is moved to a prison point, pets are teleported, hits/stam/mana refill, and many backpack consumables/tools are deleted. |
+| [Guard sentencing](Town_Guards.md) | When `MyServerSettings.GuardsSentenceDeath()` is false and the last killer is a town guard or qualifying vendor, death is cancelled. The player is moved to a prison point, pets are teleported, hits/stam/mana refill, and many backpack consumables/tools are deleted. |
 | Immortality items | `SeeIfJewelInBag.IHaveAJewel(this)` and `SeeIfGemInBag.IHaveAGem(this)` can cancel death. |
 | Clone control | `CloneCommands.UncontrolDeath(this)` can cancel death when player control/possession is being unwound. |
 | Trade cleanup | Active secure trades are cancelled through `NetState.CancelAllTrades()`, and held items are dropped. |
