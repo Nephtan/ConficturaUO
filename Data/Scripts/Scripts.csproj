@@ -658,6 +658,7 @@
     <Compile Include="Custom\PvE\RandomEncounters\Timers.cs" />
     <Compile Include="Custom\PvE\RandomEncounters\XmlDateCount.cs" />
     <Compile Include="Custom\PvE\RandomEncounters\XmlLinePreservingDoc.cs" />
+    <Compile Include="Custom\PvE\Invasions\InvasionCampScenes.cs" />
     <Compile Include="Custom\PvE\Invasions\InvasionCommands.cs" />
     <Compile Include="Custom\PvE\Invasions\InvasionEntities.cs" />
     <Compile Include="Custom\PvE\Invasions\InvasionLifecycle.cs" />

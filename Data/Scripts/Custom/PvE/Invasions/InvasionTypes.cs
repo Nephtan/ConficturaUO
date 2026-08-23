@@ -57,7 +57,37 @@ namespace Server.Custom.Confictura.Invasions
         Healer,
         Provisioner,
         Fence,
-        Quartermaster
+        Quartermaster,
+        CampProp
+    }
+
+    public enum InvasionCampFacing
+    {
+        North,
+        East,
+        South,
+        West
+    }
+
+    public enum InvasionCampLayout
+    {
+        Roadblock,
+        Open,
+        Compact
+    }
+
+    public enum InvasionCampPropKind
+    {
+        Tent,
+        Fire,
+        Barricade,
+        Supplies,
+        Banner,
+        Machinery,
+        Cage,
+        Bones,
+        SummoningFocus,
+        Light
     }
 
     public enum InvasionContributionType
@@ -86,6 +116,8 @@ namespace Server.Custom.Confictura.Invasions
         private readonly Rectangle2D[] m_RegionBounds;
         private Point3D m_Ritual;
         private Point3D[] m_Camps;
+        private readonly InvasionCampFacing[] m_CampFacings;
+        private readonly InvasionCampLayout[] m_CampLayouts;
         private Point3D[] m_Wards;
         private Point3D m_FinalBattle;
 
@@ -95,6 +127,8 @@ namespace Server.Custom.Confictura.Invasions
         public Rectangle2D[] RegionBounds { get { return m_RegionBounds; } }
         public Point3D Ritual { get { return m_Ritual; } set { m_Ritual = value; } }
         public Point3D[] Camps { get { return m_Camps; } }
+        public InvasionCampFacing[] CampFacings { get { return m_CampFacings; } }
+        public InvasionCampLayout[] CampLayouts { get { return m_CampLayouts; } }
         public Point3D[] Wards { get { return m_Wards; } }
         public Point3D FinalBattle { get { return m_FinalBattle; } set { m_FinalBattle = value; } }
 
@@ -105,6 +139,8 @@ namespace Server.Custom.Confictura.Invasions
             Rectangle2D[] regionBounds,
             Point3D ritual,
             Point3D[] camps,
+            InvasionCampFacing[] campFacings,
+            InvasionCampLayout[] campLayouts,
             Point3D[] wards,
             Point3D finalBattle
         )
@@ -115,6 +151,8 @@ namespace Server.Custom.Confictura.Invasions
             m_RegionBounds = regionBounds;
             m_Ritual = ritual;
             m_Camps = camps;
+            m_CampFacings = campFacings;
+            m_CampLayouts = campLayouts;
             m_Wards = wards;
             m_FinalBattle = finalBattle;
         }
@@ -132,7 +170,7 @@ namespace Server.Custom.Confictura.Invasions
 
         public bool ContainsConflict(Point3D location)
         {
-            if (ContainsTown(location) || InRange2D(location, m_Ritual, 24) || InRange2D(location, m_FinalBattle, 24))
+            if (ContainsTown(location) || InRange2D(location, m_Ritual, 24))
                 return true;
 
             for (int i = 0; i < m_Camps.Length; ++i)
@@ -141,18 +179,14 @@ namespace Server.Custom.Confictura.Invasions
                     return true;
             }
 
-            for (int i = 0; i < m_Wards.Length; ++i)
-            {
-                if (InRange2D(location, m_Wards[i], 24))
-                    return true;
-            }
-
             return false;
         }
 
         private static bool InRange2D(Point3D first, Point3D second, int range)
         {
-            return Math.Abs(first.X - second.X) <= range && Math.Abs(first.Y - second.Y) <= range;
+            int deltaX = first.X - second.X;
+            int deltaY = first.Y - second.Y;
+            return (deltaX * deltaX) + (deltaY * deltaY) <= range * range;
         }
     }
 
@@ -169,40 +203,64 @@ namespace Server.Custom.Confictura.Invasions
                     new Rectangle2D(2929, 985, 127, 143),
                     new Rectangle2D(2940, 886, 156, 105)
                 },
-                new Point3D(3125, 1035, 0),
+                new Point3D(3224, 1088, 0),
                 new Point3D[]
                 {
-                    new Point3D(2914, 1068, 0),
-                    new Point3D(2999, 870, 0),
-                    new Point3D(3115, 1059, 0)
+                    new Point3D(2920, 1010, 0),
+                    new Point3D(3020, 848, 0),
+                    new Point3D(3230, 1048, 0)
+                },
+                new InvasionCampFacing[]
+                {
+                    InvasionCampFacing.East,
+                    InvasionCampFacing.South,
+                    InvasionCampFacing.West
+                },
+                new InvasionCampLayout[]
+                {
+                    InvasionCampLayout.Roadblock,
+                    InvasionCampLayout.Open,
+                    InvasionCampLayout.Compact
                 },
                 new Point3D[]
                 {
-                    new Point3D(2961, 1073, 0),
-                    new Point3D(2995, 936, 0),
-                    new Point3D(3048, 1057, 0)
+                    new Point3D(2968, 1074, 0),
+                    new Point3D(2991, 908, 0),
+                    new Point3D(3042, 1061, 0)
                 },
-                new Point3D(2999, 1053, 0)
+                new Point3D(3000, 1037, 0)
             ),
             new InvasionCityDefinition(
                 InvasionCityId.Montor,
                 "Montor",
                 "the City of Montor",
                 new Rectangle2D[] { new Rectangle2D(3057, 2561, 326, 102) },
-                new Point3D(3243, 2785, 0),
+                new Point3D(3246, 2791, 0),
                 new Point3D[]
                 {
-                    new Point3D(3035, 2607, 0),
-                    new Point3D(3212, 2545, 0),
-                    new Point3D(3400, 2607, 0)
+                    new Point3D(3056, 2666, 0),
+                    new Point3D(3269, 2552, 0),
+                    new Point3D(3392, 2616, 1)
+                },
+                new InvasionCampFacing[]
+                {
+                    InvasionCampFacing.East,
+                    InvasionCampFacing.South,
+                    InvasionCampFacing.West
+                },
+                new InvasionCampLayout[]
+                {
+                    InvasionCampLayout.Roadblock,
+                    InvasionCampLayout.Open,
+                    InvasionCampLayout.Compact
                 },
                 new Point3D[]
                 {
-                    new Point3D(3078, 2610, 0),
-                    new Point3D(3209, 2624, 0),
-                    new Point3D(3356, 2611, 0)
+                    new Point3D(3082, 2610, 0),
+                    new Point3D(3204, 2610, 0),
+                    new Point3D(3352, 2611, 0)
                 },
-                new Point3D(3212, 2610, 0)
+                new Point3D(3186, 2598, 0)
             ),
             new InvasionCityDefinition(
                 InvasionCityId.DevilGuard,
@@ -215,20 +273,32 @@ namespace Server.Custom.Confictura.Invasions
                     new Rectangle2D(1731, 1575, 48, 68),
                     new Rectangle2D(1674, 1584, 19, 21)
                 },
-                new Point3D(1800, 1624, 2),
+                new Point3D(1809, 1662, 2),
                 new Point3D[]
                 {
-                    new Point3D(1565, 1500, 2),
-                    new Point3D(1660, 1425, 2),
-                    new Point3D(1800, 1624, 2)
+                    new Point3D(1560, 1493, 2),
+                    new Point3D(1706, 1438, 5),
+                    new Point3D(1821, 1566, 2)
+                },
+                new InvasionCampFacing[]
+                {
+                    InvasionCampFacing.East,
+                    InvasionCampFacing.South,
+                    InvasionCampFacing.West
+                },
+                new InvasionCampLayout[]
+                {
+                    InvasionCampLayout.Roadblock,
+                    InvasionCampLayout.Open,
+                    InvasionCampLayout.Compact
                 },
                 new Point3D[]
                 {
-                    new Point3D(1605, 1542, 7),
-                    new Point3D(1671, 1463, 2),
-                    new Point3D(1725, 1538, 2)
+                    new Point3D(1610, 1590, 2),
+                    new Point3D(1667, 1463, 2),
+                    new Point3D(1725, 1534, 2)
                 },
-                new Point3D(1691, 1464, 15)
+                new Point3D(1689, 1439, 5)
             )
         };
 
