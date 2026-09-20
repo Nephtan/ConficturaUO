@@ -105,7 +105,8 @@ namespace Server.Spells.HolyMan
                     Caster.Skills[SkillName.Healing].Value
                     + (Caster.Skills[SkillName.Spiritualism].Value / 2)
                 );
-                new InternalTimer(Caster, TimeSpan.FromSeconds((int)span)).Start();
+                TimeSpan duration = TimeSpan.FromSeconds((int)span);
+                new InternalTimer(Caster, duration).Start();
 
                 string args = String.Format(
                     "{0}\t{1}\t{2}\t{3}\t{4}\t{5}",
@@ -124,7 +125,7 @@ namespace Server.Spells.HolyMan
                         BuffIcon.Sanctify,
                         1063536,
                         1063537,
-                        TimeSpan.FromMinutes((int)span),
+                        duration,
                         Caster,
                         args.ToString(),
                         true
