@@ -41,38 +41,18 @@ namespace Knives.TownHouses
 
         public static void UpdateRegion(TownHouseSign sign)
         {
-            if (sign.House == null)
+            if (sign == null || sign.Deleted || sign.House == null || sign.House.Deleted)
             {
                 return;
             }
 
-            sign.House.UpdateRegion();
+            TownHouse house = sign.House;
+            house.UpdateRegion();
 
-            Rectangle3D rect = new Rectangle3D(Point3D.Zero, Point3D.Zero);
-
-            for (int i = 0; i < sign.House.Region.Area.Length; ++i)
+            if (house.Region != null)
             {
-                rect = sign.House.Region.Area[i];
-
-                // Removing the house-location offset keeps the region aligned with the
-                // townhouse's actual world coordinates.  The refreshed housing boundary
-                // definitions rely on the region covering the real-world tiles.  Offsetting
-                // by the multi's origin caused the region to be created near the map origin
-                // instead of the townhouse, so players inside the townhouse were no longer
-                // considered to be in a HouseRegion (breaking logout, hunger, and thirst
-                // behavior).  Preserve the world X/Y values and only clamp the Z range to
-                // the configured townhouse floors.
-                rect = new Rectangle3D(
-                    new Point3D(rect.Start.X, rect.Start.Y, sign.MinZ),
-                    new Point3D(rect.End.X, rect.End.Y, sign.MaxZ)
-                );
-
-                sign.House.Region.Area[i] = rect;
+                house.Region.GoLocation = sign.BanLoc;
             }
-
-            sign.House.Region.Unregister();
-            sign.House.Region.Register();
-            sign.House.Region.GoLocation = sign.BanLoc;
         }
 
         public static bool RegionContains(Region region, Mobile m)
