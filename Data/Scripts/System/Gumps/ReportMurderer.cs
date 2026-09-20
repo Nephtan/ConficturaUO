@@ -32,15 +32,7 @@ namespace Server.Gumps
 
             foreach (AggressorInfo ai in m.Aggressors)
             {
-                if (
-                    ai.Attacker.Player
-                    && ai.CanReportMurder
-                    && !ai.Reported
-                    && !Server.Custom.Confictura.Invasions.InvasionService.IsValidInvasionCombat(
-                        ai.Attacker,
-                        m
-                    )
-                )
+                if (ai.Attacker.Player && ai.CanReportMurder && !ai.Reported)
                 {
                     if (!Core.SE || !((PlayerMobile)m).RecentlyReported.Contains(ai.Attacker))
                     {
@@ -180,11 +172,7 @@ namespace Server.Gumps
 
         public override void OnResponse(NetState state, RelayInfo info)
         {
-            Mobile from = state == null ? null : state.Mobile;
-
-            if (from == null || from.Deleted || info.ButtonID <= 0)
-                return;
-
+            Mobile from = state.Mobile;
             from.SendSound(0x4A);
 
             switch (info.ButtonID)
@@ -196,11 +184,6 @@ namespace Server.Gumps
                     {
                         killer.Kills++;
                         killer.ShortTermMurders++;
-
-                        Server.Custom.Confictura.Invasions.InvasionService.RecordReportedMurder(
-                            killer,
-                            from
-                        );
 
                         if (Core.SE)
                         {

@@ -463,10 +463,6 @@ namespace Server.SkillHandlers
                     from.AddToBackpack(stolen);
 
                     StolenItem.Add(stolen, m_Thief, root as Mobile);
-                    Server.Custom.Confictura.Invasions.InvasionService.RecordTheft(
-                        m_Thief,
-                        root as Mobile
-                    );
                 }
 
                 if (caught)

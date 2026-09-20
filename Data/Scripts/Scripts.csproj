@@ -60,7 +60,6 @@
     <Compile Include="Custom\Combat\TurnBased\TurnBasedCombatGump.cs" />
     <Compile Include="Custom\Combat\TurnBased\TurnBasedCombatManager.cs" />
     <Compile Include="Custom\Combat\TurnBased\TurnBasedCombatSelfTest.cs" />
-    <Compile Include="Custom\Gumps\Invasions\InvasionGumps.cs" />
     <Compile Include="Custom\AnimalSystem\ShapeShiftStones\DragonShapeChangeStone-body.cs" />
     <Compile Include="Custom\AnimalSystem\ShapeShiftStones\FaeryShapeChangeStone.cs" />
     <Compile Include="Custom\AnimalSystem\ShapeShiftStones\FelinusShapeChangeStone.cs" />
@@ -658,12 +657,6 @@
     <Compile Include="Custom\PvE\RandomEncounters\Timers.cs" />
     <Compile Include="Custom\PvE\RandomEncounters\XmlDateCount.cs" />
     <Compile Include="Custom\PvE\RandomEncounters\XmlLinePreservingDoc.cs" />
-    <Compile Include="Custom\PvE\Invasions\InvasionCommands.cs" />
-    <Compile Include="Custom\PvE\Invasions\InvasionEntities.cs" />
-    <Compile Include="Custom\PvE\Invasions\InvasionLifecycle.cs" />
-    <Compile Include="Custom\PvE\Invasions\InvasionService.cs" />
-    <Compile Include="Custom\PvE\Invasions\InvasionTypes.cs" />
-    <Compile Include="Custom\PvE\Invasions\InvasionWorldState.cs" />
     <Compile Include="Custom\Searches\BaseEntry.cs" />
     <Compile Include="Custom\Searches\CircleSearch.cs" />
     <Compile Include="Custom\Searches\Commands.cs" />

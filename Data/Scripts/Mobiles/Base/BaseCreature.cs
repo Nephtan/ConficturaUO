@@ -9930,11 +9930,6 @@ namespace Server.Mobiles
         {
             Region reg = Region.Find(this.Location, this.Map);
 
-            Server.Custom.Confictura.Invasions.InvasionService.RecordNpcCrime(
-                this.LastKiller,
-                this
-            );
-
             SlayerEntry undead = SlayerGroup.GetEntryByName(SlayerName.Silver);
             SlayerEntry exorcism = SlayerGroup.GetEntryByName(SlayerName.Exorcism);
 

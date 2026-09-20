@@ -8,11 +8,14 @@ namespace Server.Gumps
     public class CityInvasion : Gump
     {
         private Mobile m_Mobile;
-        private static bool LegacyInterfaceEnabled { get { return false; } }
 
         public static void Initialize()
         {
-            // The legacy types remain loadable, but the Organic City Invasions console now owns [Invasion].
+            CommandSystem.Register(
+                "invasion",
+                AccessLevel.Administrator,
+                new CommandEventHandler(CityInvasion_OnCommand)
+            );
         }
 
         private static void CityInvasion_OnCommand(CommandEventArgs e)
@@ -24,19 +27,6 @@ namespace Server.Gumps
             : base(0, 0)
         {
             m_Mobile = from;
-
-            if (!LegacyInterfaceEnabled)
-            {
-                Closable = true;
-                Dragable = true;
-                AddPage(0);
-                AddBackground(0, 0, 460, 150, 9270);
-                AddLabel(25, 20, 33, "Legacy invasion controls are retired.");
-                AddHtml(25, 50, 410, 55, "Use the Administrator [Invasion console for Organic City Invasions. This legacy gump remains only so old saves and references can load safely.", false, false);
-                AddButton(405, 110, 4017, 4019, 0, GumpButtonType.Reply, 0);
-                return;
-            }
-
             Closable = false;
             Dragable = true;
 
@@ -203,11 +193,7 @@ namespace Server.Gumps
 
         public override void OnResponse(NetState state, RelayInfo info)
         {
-            Mobile from = state == null ? null : state.Mobile;
-
-            if (from == null || from.Deleted || info == null || !LegacyInterfaceEnabled)
-                return;
-
+            Mobile from = state.Mobile;
             switch (info.ButtonID)
             {
                 case 0:

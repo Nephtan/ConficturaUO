@@ -196,13 +196,10 @@ advance an altar toward a champion boss, reward eligible participants with
 power scrolls or Scrolls of Transcendence, and can drop rare artifacts and
 champion skulls. ?F:docs/wiki/Champion_Spawns.md†L3-L18??
 
-Organic City Invasions are persistent player-driven conflicts for Britain,
-Montor, and Devil Guard. Evil characters build local corruption through bounded
-crime, choose an invading faction, and pursue ritual, siege, occupation, and
-liberation objectives. `[InvasionInfo]` shows the current player-facing state;
-staff use `[Invasion]` for validation and staged administration. See the
-[Organic City Invasions guide](Invasion_System.md) for conflict, occupation,
-and staging rules.
+The invasion system is a staff-run live-event layer. Staff open the invasion
+gump with `[invasion]`, choose a destination city, and start or stop large-scale
+city assaults that create spawners and waypoint chains for coordinated invader
+routes. ?F:docs/wiki/Invasion_System.md†L3-L21??
 
 Monster nests, goliath monsters, relic items, grave robbing, scripted quests,
 and large boss/creature systems are all present in the system audit even where
@@ -300,7 +297,7 @@ Key operational commands include:
 | Random encounters | `[rand init]`, `[rand stop]`, `[rand now <RegionType>]`, `[rand import]` | Load, stop, force-check, or import encounter data. ?F:docs/wiki/Random_Encounter_Engine.md†L20-L28?? |
 | Character level | `[CharLevel]`, `[CharLevelTarget]` | Show canonical level diagnostics for yourself or a targeted mobile. ?F:Data/Scripts/Custom/Progression/CharacterLevel/CharacterLevelCommands.cs†L12-L35?? |
 | Government | `GovHelp`, `AdminAdd`, `FindCities`, `GovTesting`, `UpgradeCitySystem` | Player help, admin item creation, city discovery, testing timers, and city upgrades. ?F:docs/wiki/Government_System.md†L45-L52?? |
-| Invasions | `[Invasion]`, `[InvasionInfo]` | Validate and administer organic city invasions, or view current player-facing invasion status. |
+| Invasions | `[invasion]` | Open the city invasion gump and start or stop city assaults. ?F:docs/wiki/Invasion_System.md†L6-L21?? |
 | XMLSpawner | `[XmlAdd]`, `[XmlEdit]`, `[XmlFind]`, `[XmlHome]`, `[XmlLoad]`, `[XmlLoadHere]`, `[XmlSave]`, `[XmlSaveAll]`, attachment commands | Create, edit, find, load, save, and attach XML-driven spawner content. ?F:docs/wiki/XML_Spawner_Enhancements.md†L3-L18?? |
 | Champion spawns | `[add ChampionSpawn]` plus properties such as `Type`, `RandomizeType`, `SpawnArea`, and `ConfinedRoaming` | Create and configure escalating champion encounters. ?F:docs/wiki/Champion_Spawns.md†L10-L18?? |
 
