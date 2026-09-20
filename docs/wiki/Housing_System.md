@@ -164,6 +164,88 @@ The legacy `HouseGump` exposes owner, storage, co-owner/friend/ban management, o
 | `OnDoubleClick` | Secure containers check `SecureInfo.Level`; inaccessible containers block the double-click. |
 | `OnSingleClick` | Locked-down Items receive `[locked down]`; secure Items receive `[locked down & secure]`. |
 
+### Townhouse Regions And Homeowner Tools
+
+Townhouses, including elevated sky dwellings and `RentalContract` houses, use each
+`TownHouseSign.Blocks` rectangle directly in world coordinates. Their house regions
+include `MinZ` and exclude `MaxZ`, just as `TownHouse.IsInside` does for the configured
+bounds. Separate blocks retain their gaps; zero-sized blocks, missing/deleted signs,
+missing block data, and empty vertical intervals contribute no area. Ordinary houses
+retain the existing component-based interior calculation.
+
+Previously, `HouseRegion.GetArea` sampled all houses at the multi's ground elevation.
+For a sky dwelling whose configured minimum floor was above that elevation, every
+sample failed and the registered region was empty. The subsequent townhouse refresh
+only adjusted existing rectangles, so it could not recover the missing area.
+`InteriorDecorator` could still find the townhouse through `BaseHouse.FindHouseAt` and
+offer movement targets, while its Lock, Secure, Release, and Trash buttons sent speech
+keywords to the player's current region and received no house-command handling.
+
+The townhouse region is now built with its final bounds before registration.
+`RUOVersion.UpdateRegion` rebuilds it once and preserves the sign's configured ban
+location. An active rental house has priority `HousePriority + 1`; other houses retain
+`HousePriority`. Within an overlapping rental volume, the tenant's region receives
+speech. Below or above that volume, the parent region remains selected. This does not
+grant the landlord the tenant's permissions or change the existing owner/co-owner checks.
+
+The Homeowner Tools buttons remain: Lock (8, keyword `0x23`), Secure (9, `0x25`),
+Release (10, `0x24`), and Trash (12, `0x28`). The first three create the existing
+house targets. Trash places a single barrel at the caller's feet, with the existing
+door/step proximity and duplicate-barrel restrictions; it does not open a target cursor.
+
+Existing refresh paths cover purchases, sign floor/block edits, delayed construction
+and deserialization initialization, and the server-started callback. Existing homes
+therefore receive the repaired region after deployment and restart. No house types,
+serialized fields, versions, ownership lists, or saved boundaries change.
+
+Source trace:
+
+- `Data/Scripts/System/Regions/HouseRegion.cs`: constructor, `GetPriority`, `GetTownHouseArea`, `GetArea`, and `OnSpeech`.
+- `Data/Scripts/Items/Houses/Monopoly/RUOVersion.cs`: `UpdateRegion`.
+- `Data/Scripts/Items/Houses/Monopoly/Items/TownHouse.cs`: `IsInside`, `FinishInit`, and `Deserialize` (version 3 unchanged).
+- `Data/Scripts/Items/Houses/Monopoly/Items/TownHouseSign.cs`: `MinZ`, `MaxZ`, `UpdateBlocks`, and `Purchase`.
+- `Data/Scripts/Items/Houses/Monopoly/Misc/General.cs`: `Configure` and `OnStarted`.
+- `Data/Scripts/Items/Houses/InteriorDecorator.cs`: `InternalGump.OnResponse`; version 0 unchanged.
+- `Data/Scripts/Items/Houses/BaseHouse.cs`: `FindHouseAt`, `UpdateRegion`, `AddTrashBarrel`, `LockdownTarget`, and `SecureTarget`.
+
+Verification is reproducible with [Test-TownHouseRegions.ps1](../../scripts/Test-TownHouseRegions.ps1):
+
+```powershell
+.\scripts\Test-TownHouseRegions.ps1
+```
+
+The runner snapshots runtime-visible C# sources into a fresh ignored directory under
+`output/townhouse-region-verification`, builds the Release/x86 server, runs that executable
+with `-compileonly -nocache`, and executes [compiled production-type fixtures](../../tests/TownHouseRegionRegression.cs).
+It reads client tile/multi assets from `Data/Files`, initializes empty in-memory item/mobile
+registries and the relevant SA/house-flag settings, and starts no world load, listener,
+script initialization pass, or timer thread. The tests invoke actual gump responses,
+speech routing, target completion, and lockdown/secure/trash mutations. They also exercise
+floor/block edits, delayed initialization, the server-started callback, malformed bounds,
+rental precedence, and ordinary-house boundaries and actions.
+
+Verification recorded on 2026-09-20:
+
+| Check | Result |
+| --- | --- |
+| Fresh `Server.csproj` Release/x86 build | Passed. |
+| Fresh executable `-compileonly -nocache` | Passed; exited before world loading and listeners. |
+| Production-type regression fixtures | Passed all 307 assertions with the configured SA expansion and post-HS multi format. |
+| Original-source negative control | The same fixtures failed at the elevated-townhouse region assertion before the repair. |
+| Static review | Whitespace and documentation links passed; serialization and project includes are unchanged. |
+
+The successful run's `server-build.log`, `runtime-compile.log`, and `regression.log`
+are under `output/townhouse-region-verification/89825b671d9a47fea8c8cdbe9d51cbf5/`.
+The original-source control is recorded in `baseline-runtime-compile.log` and
+`baseline-regression.stderr.log` under `output/townhouse-region-verification/f9f56db528d948f8a8bd4b5d9ed748ab/`.
+These local generated outputs are ignored; the runner and fixture source are committed.
+
+Client staging acceptance remains: restart a test shard with a copy of the affected sky
+castle, confirm its configured blocks/floor limits and selected `HouseRegion`, and exercise
+the four buttons and spoken commands as owner and co-owner. Check visible cursors, actual
+item interaction, region-based logout/decay behavior, and parent/rental transitions. The
+fixture tests do not constitute a full save-load/restart or connected-client test.
+
 ## Lockdowns, Secures, And Storage
 
 Lockdown is available to co-owners while the house is active. The target must be movable, not already secured, inside the house unless the caller bypasses that parameter, not imbued by `Ethics.Ethic`, and not inside a secure container. If the target has a parent Item, that parent must already be locked down.

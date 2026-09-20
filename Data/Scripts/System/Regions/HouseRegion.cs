@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using Knives.TownHouses;
 using Server;
 using Server.Guilds;
 using Server.Gumps;
@@ -104,7 +105,7 @@ namespace Server.Regions
         }
 
         public HouseRegion(BaseHouse house)
-            : base(null, house.Map, HousePriority, GetArea(house))
+            : base(null, house.Map, GetPriority(house), GetArea(house))
         {
             m_House = house;
 
@@ -113,8 +114,51 @@ namespace Server.Regions
             this.GoLocation = new Point3D(house.X + ban.X, house.Y + ban.Y, house.Z + ban.Z);
         }
 
+        private static int GetPriority(BaseHouse house)
+        {
+            TownHouse townHouse = house as TownHouse;
+
+            if (townHouse != null && townHouse.ForSaleSign is RentalContract
+                && !townHouse.ForSaleSign.Deleted && house.IsActive)
+            {
+                // A tenant's region must receive speech before the overlapping parent house.
+                return HousePriority + 1;
+            }
+
+            return HousePriority;
+        }
+
+        private static Rectangle3D[] GetTownHouseArea(TownHouse house)
+        {
+            TownHouseSign sign = house.ForSaleSign;
+
+            if (sign == null || sign.Deleted || sign.Blocks == null || sign.MinZ >= sign.MaxZ)
+                return new Rectangle3D[0];
+
+            List<Rectangle3D> rects = new List<Rectangle3D>();
+
+            // Townhouse blocks are world coordinates; the multi's ground Z may be below
+            // every configured floor, so sampling its components can produce an empty region.
+            foreach (Rectangle2D block in sign.Blocks)
+            {
+                if (block.Width <= 0 || block.Height <= 0)
+                    continue;
+
+                rects.Add(new Rectangle3D(
+                    new Point3D(block.Start.X, block.Start.Y, sign.MinZ),
+                    new Point3D(block.End.X, block.End.Y, sign.MaxZ)));
+            }
+
+            return rects.ToArray();
+        }
+
         private static Rectangle3D[] GetArea(BaseHouse house)
         {
+            TownHouse townHouse = house as TownHouse;
+
+            if (townHouse != null)
+                return GetTownHouseArea(townHouse);
+
             MultiComponentList mcl = house.Components;
 
             int originX = house.X + mcl.Min.X;
