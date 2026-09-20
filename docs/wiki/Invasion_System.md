@@ -50,8 +50,6 @@ After 15 minutes with no players, ritual/siege timers pause and ordinary field t
 
 The factions are mechanically distinct: Clockwork forces use durable construct bodies and repair artificers, Blood Court troops are fast and use life drain and curses, and Abyssal forces apply fire/poison pressure and summon reinforcements. Ordinary field caps can shrink with recent participation; commander and Civic Warden scaling only rises after the boss manifests.
 
-Each encirclement camp is a reversible faction scene rather than a bare standard. Tents, barriers, supplies, lights, and faction-specific machinery, cages, trophies, or summoning props occupy the rear and flanks. The capture ring and two troop approaches remain clear. Every prop carries exact current-session ownership metadata, so reconciliation can repair a partial scene and cleanup cannot remove ordinary world decoration.
-
 ## Conflict Boundary
 
 The conflict area is the city's existing region rectangles plus 24 tiles around external invasion anchors. Devil Guard's remote farmland region is not included.
@@ -95,7 +93,7 @@ Use `[Invasion]` as an Administrator:
 
 1. Run **Legacy scan**. The console records that the scan was reviewed and displays the exact serial, type, map, and location of every candidate. A city cannot be enabled before this review.
 2. Legacy cleanup has a separate confirmation screen and deletes only the displayed legacy invasion stones and invasion-named spawners/waypoints. It never runs automatically.
-3. Run **Validate all**. Validation checks the configured region chain, constructs every city/faction force and camp-scene combination, snaps each anchor to a legal tile within 12 tiles, checks connected objective footprints, camp approaches, elevation, saved spawner home points, doors, travel objects, working fixtures, and the 32-tile external player-house safety envelope, reports mixed or unresolved civilian-spawner candidates, and blocks a city when an overlapping legacy object remains.
+3. Run **Validate all**. Validation checks the configured region chain, constructs every city/faction force combination, snaps each anchor to a legal tile within 12 tiles, reports mixed or unresolved civilian-spawner candidates, and blocks a city when an overlapping legacy object remains.
 4. Enable the global engine, then enable only one staged city.
 5. Use `+25 corruption`, `Advance`, `Pause`, `Abort`, and `Liberate` only for staged verification or recovery.
 6. Enable the remaining cities only after pathing, services, PvP boundaries, save/restart, and restoration have been accepted.
@@ -114,9 +112,7 @@ The old `Data/Scripts/Custom/Invasion System/` classes remain compiled so existi
 - Lifecycle, objectives, occupation, spawner rollback, validation and legacy scan: `Data/Scripts/Custom/PvE/Invasions/InvasionLifecycle.cs`
 - Versioned singleton and per-city save state: `Data/Scripts/Custom/PvE/Invasions/InvasionWorldState.cs`, `InvasionTypes.cs`
 - Typed objectives, troops, bosses and occupation services: `Data/Scripts/Custom/PvE/Invasions/InvasionEntities.cs`
-- Typed, serialized faction camp scenes: `Data/Scripts/Custom/PvE/Invasions/InvasionCampScenes.cs`
 - Player/staff commands and guarded gumps: `Data/Scripts/Custom/PvE/Invasions/InvasionCommands.cs`, `Data/Scripts/Custom/Gumps/Invasions/InvasionGumps.cs`
-- Current-save map review and accepted coordinates: `docs/wiki/Invasion_Placement_Audit.md`
 - Reported-murder hook: `Data/Scripts/System/Gumps/ReportMurderer.cs`
 - Successful-theft hook: `Data/Scripts/System/Skills/Stealing.cs`
 - NPC crime hook: `Data/Scripts/Mobiles/Base/BaseCreature.cs`
@@ -124,7 +120,7 @@ The old `Data/Scripts/Custom/Invasion System/` classes remain compiled so existi
 
 ## Verification Status
 
-The implementation passes the Visual Studio solution build, exact project/source truth comparison, the server's `-service -nocache -compileonly` runtime-script compiler, and a disposable empty-save `-service -nocache` startup through listener/console readiness on non-production port 4599. Current-save world geometry, pathing, service behavior, save/restart recovery, combat feel, loot balance, and gump layout still require owner-run staging and acceptance before any city is enabled.
+The implementation passes the Visual Studio solution build, exact project/source truth comparison, and the server's `-service -nocache -compileonly` runtime-script compiler. Live world geometry, pathing, service behavior, save/restart recovery, combat feel, loot balance, and gump layout still require disposable staging and owner acceptance before any city is enabled.
 
 ## Audience
 

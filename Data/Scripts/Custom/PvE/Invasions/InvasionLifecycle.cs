@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using Server.Gumps;
 using Server.Items;
 using Server.Mobiles;
-using Server.Multis;
 using Server.Network;
 
 namespace Server.Custom.Confictura.Invasions
@@ -423,9 +422,7 @@ namespace Server.Custom.Confictura.Invasions
             for (int i = 0; i < definition.Camps.Length; ++i)
             {
                 SpawnObjective(city, InvasionRole.CampStandard, i, InvasionSide.Invader, definition.Camps[i]);
-                EnsureCampScene(city, i);
-                Point3D lieutenantLocation = FindCreatureSpawnPoint(city, definition.Camps[i], 7, 3);
-                SpawnCreature(city, InvasionRole.Lieutenant, i, InvasionSide.Invader, lieutenantLocation, city.HighestParticipants);
+                SpawnCreature(city, InvasionRole.Lieutenant, i, InvasionSide.Invader, definition.Camps[i], city.HighestParticipants);
             }
 
             Announce(GetFactionName(city.Faction) + " has encircled " + definition.Name + ". Defenders must break at least two camps.");
@@ -468,10 +465,10 @@ namespace Server.Custom.Confictura.Invasions
             InvasionCreature warden = FindOwnedCreature(city, InvasionRole.CivicWarden, -1);
 
             if (!city.CommanderDead && commander == null)
-                commander = SpawnCreature(city, InvasionRole.Commander, -1, InvasionSide.Invader, FindCreatureSpawnPoint(city, new Point3D(location.X - 4, location.Y, location.Z), 4, 0), city.HighestParticipants);
+                commander = SpawnCreature(city, InvasionRole.Commander, -1, InvasionSide.Invader, FindSpawnPoint(location, 6), city.HighestParticipants);
 
             if (!city.WardenDead && warden == null)
-                warden = SpawnCreature(city, InvasionRole.CivicWarden, -1, InvasionSide.Defender, FindCreatureSpawnPoint(city, new Point3D(location.X + 4, location.Y, location.Z), 4, 0), city.HighestParticipants);
+                warden = SpawnCreature(city, InvasionRole.CivicWarden, -1, InvasionSide.Defender, FindSpawnPoint(new Point3D(location.X + 4, location.Y, location.Z), 6), city.HighestParticipants);
 
             if (commander != null)
                 commander.RaiseBossScale(city.HighestParticipants);
@@ -513,7 +510,7 @@ namespace Server.Custom.Confictura.Invasions
                     SpawnObjective(city, InvasionRole.SupplyAnchor, i, InvasionSide.Invader, definition.Camps[i]);
 
                 if (city.AnchorIntegrity[i] > 0 && !city.CampsCleansed[i] && FindOwnedCreature(city, InvasionRole.AnchorCaptain, i) == null)
-                    SpawnCreature(city, InvasionRole.AnchorCaptain, i, InvasionSide.Invader, FindCreatureSpawnPoint(city, definition.Camps[i], 7, 3), Math.Max(1, city.HighestParticipants));
+                    SpawnCreature(city, InvasionRole.AnchorCaptain, i, InvasionSide.Invader, FindSpawnPoint(definition.Camps[i], 5), Math.Max(1, city.HighestParticipants));
             }
 
             EnsureOccupationVendors(city);
@@ -537,7 +534,7 @@ namespace Server.Custom.Confictura.Invasions
             while (patrolCount < patrolTarget)
             {
                 Point3D anchor = definition.Camps[Utility.Random(definition.Camps.Length)];
-                SpawnCreature(city, InvasionRole.OccupationPatrol, -1, InvasionSide.Invader, FindCreatureSpawnPoint(city, anchor, 12, 3), Math.Max(1, city.HighestParticipants));
+                SpawnCreature(city, InvasionRole.OccupationPatrol, -1, InvasionSide.Invader, FindSpawnPoint(anchor, 10), Math.Max(1, city.HighestParticipants));
                 patrolCount++;
             }
 
@@ -549,19 +546,19 @@ namespace Server.Custom.Confictura.Invasions
             Point3D center = InvasionCities.Get(city.City).FinalBattle;
 
             if (FindOwnedMobile(city, InvasionRole.Banker) == null)
-                RegisterAndMove(city, new InvasionBanker(city.Session, city.City, city.Faction), FindCreatureSpawnPoint(city, new Point3D(center.X - 4, center.Y - 2, center.Z), 5, 0));
+                RegisterAndMove(city, new InvasionBanker(city.Session, city.City, city.Faction), FindSpawnPoint(new Point3D(center.X - 4, center.Y - 2, center.Z), 5));
 
             if (FindOwnedMobile(city, InvasionRole.Healer) == null)
-                RegisterAndMove(city, new InvasionHealer(city.Session, city.City, city.Faction), FindCreatureSpawnPoint(city, new Point3D(center.X - 2, center.Y + 2, center.Z), 5, 0));
+                RegisterAndMove(city, new InvasionHealer(city.Session, city.City, city.Faction), FindSpawnPoint(new Point3D(center.X - 2, center.Y + 2, center.Z), 5));
 
             if (FindOwnedMobile(city, InvasionRole.Provisioner) == null)
-                RegisterAndMove(city, new InvasionOccupationVendor(city.Session, city.City, city.Faction, InvasionRole.Provisioner), FindCreatureSpawnPoint(city, new Point3D(center.X + 2, center.Y - 2, center.Z), 5, 0));
+                RegisterAndMove(city, new InvasionOccupationVendor(city.Session, city.City, city.Faction, InvasionRole.Provisioner), FindSpawnPoint(new Point3D(center.X + 2, center.Y - 2, center.Z), 5));
 
             if (FindOwnedMobile(city, InvasionRole.Fence) == null)
-                RegisterAndMove(city, new InvasionOccupationVendor(city.Session, city.City, city.Faction, InvasionRole.Fence), FindCreatureSpawnPoint(city, new Point3D(center.X + 4, center.Y + 2, center.Z), 5, 0));
+                RegisterAndMove(city, new InvasionOccupationVendor(city.Session, city.City, city.Faction, InvasionRole.Fence), FindSpawnPoint(new Point3D(center.X + 4, center.Y + 2, center.Z), 5));
 
             if (FindOwnedMobile(city, InvasionRole.Quartermaster) == null)
-                RegisterAndMove(city, new InvasionOccupationVendor(city.Session, city.City, city.Faction, InvasionRole.Quartermaster), FindCreatureSpawnPoint(city, new Point3D(center.X, center.Y + 4, center.Z), 5, 0));
+                RegisterAndMove(city, new InvasionOccupationVendor(city.Session, city.City, city.Faction, InvasionRole.Quartermaster), FindSpawnPoint(new Point3D(center.X, center.Y + 4, center.Z), 5));
         }
 
         private static void MaintainSiegeForces(InvasionCityState city, int activePlayers)
@@ -590,7 +587,7 @@ namespace Server.Custom.Confictura.Invasions
             else
                 anchor = InvasionCities.Get(city.City).Camps[Utility.Random(3)];
 
-            SpawnCreature(city, role, -1, InvasionSide.Invader, FindCreatureSpawnPoint(city, anchor, 12, 3), participantScale);
+            SpawnCreature(city, role, -1, InvasionSide.Invader, FindSpawnPoint(anchor, 12), participantScale);
         }
 
         private static void TrimTransientForces(InvasionCityState city, int target)
@@ -878,7 +875,6 @@ namespace Server.Custom.Confictura.Invasions
                 {
                     city.CampsCleansed[index] = true;
                     objective.Delete();
-                    DeleteCampScene(city, index);
                     player.SendMessage(0x59, "The camp standard collapses.");
 
                     int cleansed = 0;
@@ -1098,109 +1094,9 @@ namespace Server.Custom.Confictura.Invasions
             int participantScale
         )
         {
-            if (location.X < 0 || location.Y < 0)
-            {
-                Log("Spawn selection rejected every candidate for " + role + " in " + InvasionCities.Get(city.City).Name + ".");
-                return null;
-            }
-
             InvasionCreature creature = new InvasionCreature(city.Session, city.City, city.Faction, side, role, index, participantScale);
-            Point3D resolved = Map.Sosaria.CanSpawnMobile(location) && !IsSpawnLocationReserved(city, location)
-                ? location
-                : FindCreatureSpawnPoint(city, location, 6, 0);
-
-            if (resolved.X < 0 || resolved.Y < 0)
-            {
-                creature.Delete();
-                Log("Spawn selection rejected every candidate for " + role + " in " + InvasionCities.Get(city.City).Name + ".");
-                return null;
-            }
-
-            RegisterAndMove(city, creature, resolved);
+            RegisterAndMove(city, creature, FindSpawnPoint(location, 6));
             return creature;
-        }
-
-        private static void EnsureCampScene(InvasionCityState city, int campIndex)
-        {
-            InvasionCityDefinition definition = InvasionCities.Get(city.City);
-
-            if (campIndex < 0 || campIndex >= definition.Camps.Length)
-                return;
-
-            InvasionCampFacing facing = definition.CampFacings[campIndex];
-            InvasionCampLayout layout = definition.CampLayouts[campIndex];
-            List<InvasionCampPropSpec> specs = InvasionCampSceneFactory.GetSpecs(city.Faction, layout);
-            bool[] found = new bool[specs.Count];
-
-            for (int i = city.OwnedSerials.Count - 1; i >= 0; --i)
-            {
-                InvasionCampProp prop = World.FindItem((Serial)city.OwnedSerials[i]) as InvasionCampProp;
-
-                if (prop == null
-                    || prop.InvasionSession != city.Session
-                    || prop.InvasionCity != city.City
-                    || prop.InvasionObjectiveIndex != campIndex)
-                {
-                    continue;
-                }
-
-                int propIndex = prop.PropIndex;
-                bool valid = propIndex >= 0 && propIndex < specs.Count;
-
-                if (valid)
-                {
-                    InvasionCampPropSpec spec = specs[propIndex];
-                    Point3D expected = InvasionCampSceneFactory.Transform(definition.Camps[campIndex], spec, facing);
-                    valid = !found[propIndex]
-                        && prop.InvasionFaction == city.Faction
-                        && prop.Facing == facing
-                        && prop.Layout == layout
-                        && prop.PropKind == spec.Kind
-                        && prop.ItemID == spec.ItemID
-                        && prop.Location.X == expected.X
-                        && prop.Location.Y == expected.Y
-                        && prop.Location.Z == expected.Z;
-                }
-
-                if (!valid)
-                {
-                    prop.Delete();
-                    city.OwnedSerials.RemoveAt(i);
-                    Log("Reconciliation removed a duplicate or invalid camp prop for " + definition.Name + " camp " + (campIndex + 1) + ".");
-                    continue;
-                }
-
-                found[propIndex] = true;
-            }
-
-            for (int i = 0; i < specs.Count; ++i)
-            {
-                if (found[i])
-                    continue;
-
-                InvasionCampPropSpec spec = specs[i];
-                InvasionCampProp prop = new InvasionCampProp(city.Session, city.City, city.Faction, campIndex, i, facing, layout, spec.Kind, spec.ItemID);
-                RegisterAndMove(city, prop, InvasionCampSceneFactory.Transform(definition.Camps[campIndex], spec, facing));
-            }
-        }
-
-        private static void DeleteCampScene(InvasionCityState city, int campIndex)
-        {
-            for (int i = city.OwnedSerials.Count - 1; i >= 0; --i)
-            {
-                InvasionCampProp prop = World.FindItem((Serial)city.OwnedSerials[i]) as InvasionCampProp;
-
-                if (prop == null
-                    || prop.InvasionSession != city.Session
-                    || prop.InvasionCity != city.City
-                    || prop.InvasionObjectiveIndex != campIndex)
-                {
-                    continue;
-                }
-
-                prop.Delete();
-                city.OwnedSerials.RemoveAt(i);
-            }
         }
 
         public static void TrySummonAbyssalSupport(InvasionCreature source)
@@ -1230,7 +1126,7 @@ namespace Server.Custom.Confictura.Invasions
                 InvasionRole.RankMelee,
                 -1,
                 InvasionSide.Invader,
-                FindCreatureSpawnPoint(city, source.Location, 4, 1),
+                FindSpawnPoint(source.Location, 4),
                 Math.Max(1, city.HighestParticipants)
             );
         }
@@ -1242,17 +1138,6 @@ namespace Server.Custom.Confictura.Invasions
 
             Item item = entity as Item;
             Mobile mobile = entity as Mobile;
-
-            if (location.X < 0 || location.Y < 0)
-            {
-                if (item != null)
-                    item.Delete();
-                else if (mobile != null)
-                    mobile.Delete();
-
-                Log("Spawn selection rejected every candidate for an invasion entity in " + InvasionCities.Get(city.City).Name + ".");
-                return;
-            }
 
             if (item != null)
                 item.MoveToWorld(location, Map.Sosaria);
@@ -1307,75 +1192,6 @@ namespace Server.Custom.Confictura.Invasions
             }
 
             return preferred;
-        }
-
-        private static Point3D FindCreatureSpawnPoint(InvasionCityState city, Point3D preferred, int radius, int centerExclusion)
-        {
-            List<Point3D> candidates = new List<Point3D>();
-            Map map = Map.Sosaria;
-
-            for (int x = -radius; x <= radius; ++x)
-            {
-                for (int y = -radius; y <= radius; ++y)
-                {
-                    int distanceSquared = (x * x) + (y * y);
-
-                    if (distanceSquared > radius * radius || distanceSquared < centerExclusion * centerExclusion)
-                        continue;
-
-                    int worldX = preferred.X + x;
-                    int worldY = preferred.Y + y;
-                    Point3D candidate = new Point3D(worldX, worldY, map.GetAverageZ(worldX, worldY));
-
-                    if (!map.CanSpawnMobile(candidate) || IsSpawnLocationReserved(city, candidate))
-                        continue;
-
-                    candidates.Add(candidate);
-                }
-            }
-
-            if (candidates.Count > 0)
-                return candidates[Utility.Random(candidates.Count)];
-
-            return new Point3D(-1, -1, 0);
-        }
-
-        private static bool IsSpawnLocationReserved(InvasionCityState city, Point3D location)
-        {
-            IPooledEnumerable items = Map.Sosaria.GetItemsInRange(location, 2);
-
-            try
-            {
-                foreach (Item item in items)
-                {
-                    if (item == null || item.Deleted)
-                        continue;
-
-                    if (item is BaseDoor || item is ISpawner || item is IInvasionOwned)
-                        return true;
-                }
-            }
-            finally
-            {
-                items.Free();
-            }
-
-            IPooledEnumerable mobiles = Map.Sosaria.GetMobilesInRange(location, 2);
-
-            try
-            {
-                foreach (Mobile mobile in mobiles)
-                {
-                    if (mobile != null && !mobile.Deleted && mobile.Alive)
-                        return true;
-                }
-            }
-            finally
-            {
-                mobiles.Free();
-            }
-
-            return false;
         }
 
         private static InvasionObjectiveItem FindOwnedObjective(InvasionCityState city, InvasionRole role, int index)
@@ -1739,17 +1555,8 @@ namespace Server.Custom.Confictura.Invasions
             {
                 for (int i = 0; i < 3; ++i)
                 {
-                    if (!city.CampsCleansed[i])
-                    {
-                        if (FindOwnedObjective(city, InvasionRole.CampStandard, i) == null)
-                            SpawnObjective(city, InvasionRole.CampStandard, i, InvasionSide.Invader, InvasionCities.Get(city.City).Camps[i]);
-
-                        EnsureCampScene(city, i);
-                    }
-                    else
-                    {
-                        DeleteCampScene(city, i);
-                    }
+                    if (!city.CampsCleansed[i] && FindOwnedObjective(city, InvasionRole.CampStandard, i) == null)
+                        SpawnObjective(city, InvasionRole.CampStandard, i, InvasionSide.Invader, InvasionCities.Get(city.City).Camps[i]);
                 }
             }
             else if (city.State == InvasionState.Breach)
@@ -1818,9 +1625,9 @@ namespace Server.Custom.Confictura.Invasions
 
             Point3D resolved;
 
-            if (!TryValidateAnchor(definition.Ritual, 2, 1.0, 2, false, true, out resolved, out reason))
+            if (!TryResolveAnchor(definition.Ritual, out resolved))
             {
-                reason = "Ritual focus: " + reason;
+                reason = "The ritual anchor has no spawnable tile within twelve tiles.";
                 return false;
             }
 
@@ -1828,9 +1635,9 @@ namespace Server.Custom.Confictura.Invasions
 
             for (int i = 0; i < definition.Camps.Length; ++i)
             {
-                if (!TryValidateAnchor(definition.Camps[i], 8, 0.82, 8, true, true, out resolved, out reason))
+                if (!TryResolveAnchor(definition.Camps[i], out resolved))
                 {
-                    reason = "Camp " + (i + 1) + ": " + reason;
+                    reason = "Camp anchor " + (i + 1) + " has no spawnable tile within twelve tiles.";
                     return false;
                 }
 
@@ -1839,28 +1646,22 @@ namespace Server.Custom.Confictura.Invasions
 
             for (int i = 0; i < definition.Wards.Length; ++i)
             {
-                if (!TryValidateAnchor(definition.Wards[i], 3, 0.75, 3, false, false, out resolved, out reason))
+                if (!TryResolveAnchor(definition.Wards[i], out resolved))
                 {
-                    reason = "Civic ward " + (i + 1) + ": " + reason;
+                    reason = "Civic ward " + (i + 1) + " has no spawnable tile within twelve tiles.";
                     return false;
                 }
 
                 definition.Wards[i] = resolved;
             }
 
-            if (!TryValidateAnchor(definition.FinalBattle, 10, 0.65, 10, false, false, out resolved, out reason))
+            if (!TryResolveAnchor(definition.FinalBattle, out resolved))
             {
-                reason = "Final battle: " + reason;
+                reason = "The final-battle anchor has no spawnable tile within twelve tiles.";
                 return false;
             }
 
             definition.FinalBattle = resolved;
-
-            if (!ValidateAnchorCandidate(definition.FinalBattle, 7, 0.65, 3, false, false, out reason))
-            {
-                reason = "Occupation services: " + reason;
-                return false;
-            }
 
             if (HasLegacyOverlap(cityId))
             {
@@ -1893,35 +1694,6 @@ namespace Server.Custom.Confictura.Invasions
                         InvasionCreature creature = new InvasionCreature(0, cityId, faction, InvasionSide.Invader, roles[i], -1, 1);
                         creature.Delete();
                     }
-
-                    InvasionCityDefinition definition = InvasionCities.Get(cityId);
-
-                    for (int campIndex = 0; campIndex < definition.Camps.Length; ++campIndex)
-                    {
-                        InvasionCampFacing facing = definition.CampFacings[campIndex];
-                        InvasionCampLayout layout = definition.CampLayouts[campIndex];
-                        List<InvasionCampPropSpec> specs = InvasionCampSceneFactory.GetSpecs(faction, layout);
-
-                        for (int propIndex = 0; propIndex < specs.Count; ++propIndex)
-                        {
-                            InvasionCampPropSpec spec = specs[propIndex];
-                            Point3D location = InvasionCampSceneFactory.Transform(definition.Camps[campIndex], spec, facing);
-
-                            if (spec.Z == 0)
-                            {
-                                int averageZ = Map.Sosaria.GetAverageZ(location.X, location.Y);
-
-                                if (Math.Abs(averageZ - location.Z) > 4 || !Map.Sosaria.CanSpawnMobile(new Point3D(location.X, location.Y, averageZ)))
-                                {
-                                    reason = GetFactionName(faction) + " camp scene " + (campIndex + 1) + " has an invalid ground prop placement.";
-                                    return false;
-                                }
-                            }
-
-                            InvasionCampProp prop = new InvasionCampProp(0, cityId, faction, campIndex, propIndex, facing, layout, spec.Kind, spec.ItemID);
-                            prop.Delete();
-                        }
-                    }
                 }
             }
             catch (Exception exception)
@@ -1946,320 +1718,10 @@ namespace Server.Custom.Confictura.Invasions
             return false;
         }
 
-        private static bool TryValidateAnchor(
-            Point3D preferred,
-            int halfSize,
-            double minimumConnectedRatio,
-            int spawnerClearance,
-            bool requireTwoApproaches,
-            bool requireHouseSafety,
-            out Point3D resolved,
-            out string reason
-        )
+        private static bool TryResolveAnchor(Point3D preferred, out Point3D resolved)
         {
-            resolved = preferred;
-            reason = null;
-            string nearestRejection = null;
-            bool foundSpawnable = false;
-
-            for (int distance = 0; distance <= 12; ++distance)
-            {
-                for (int x = -distance; x <= distance; ++x)
-                {
-                    for (int y = -distance; y <= distance; ++y)
-                    {
-                        if (distance > 0 && Math.Abs(x) != distance && Math.Abs(y) != distance)
-                            continue;
-
-                        int worldX = preferred.X + x;
-                        int worldY = preferred.Y + y;
-                        Point3D candidate = distance == 0
-                            ? preferred
-                            : new Point3D(worldX, worldY, Map.Sosaria.GetAverageZ(worldX, worldY));
-
-                        if (!Map.Sosaria.CanSpawnMobile(candidate))
-                            continue;
-
-                        foundSpawnable = true;
-                        string candidateReason;
-
-                        if (ValidateAnchorCandidate(candidate, halfSize, minimumConnectedRatio, spawnerClearance, requireTwoApproaches, requireHouseSafety, out candidateReason))
-                        {
-                            resolved = candidate;
-                            return true;
-                        }
-
-                        if (nearestRejection == null)
-                            nearestRejection = candidateReason;
-                    }
-                }
-            }
-
-            reason = foundSpawnable
-                ? "no legal footprint exists within the twelve-tile snap range; nearest candidate failed because " + nearestRejection
-                : "no spawnable tile exists within the twelve-tile snap range.";
-            return false;
-        }
-
-        private static bool ValidateAnchorCandidate(
-            Point3D candidate,
-            int halfSize,
-            double minimumConnectedRatio,
-            int spawnerClearance,
-            bool requireTwoApproaches,
-            bool requireHouseSafety,
-            out string reason
-        )
-        {
-            if (!ValidateConnectedFootprint(candidate, halfSize, minimumConnectedRatio, out reason))
-                return false;
-
-            if (requireTwoApproaches && !HasTwoTraversableApproaches(candidate, halfSize))
-            {
-                reason = "the footprint does not have two traversable approaches.";
-                return false;
-            }
-
-            if (!ValidateSavedWorldClearance(candidate, halfSize, spawnerClearance, out reason))
-                return false;
-
-            if (requireHouseSafety && !ValidatePlayerHouseSafety(candidate, 32, out reason))
-                return false;
-
-            return true;
-        }
-
-        private static bool ValidateConnectedFootprint(Point3D center, int halfSize, double minimumRatio, out string reason)
-        {
-            reason = null;
-            int width = (halfSize * 2) + 1;
-            bool[,] walkable = new bool[width, width];
-            int total = width * width;
-
-            for (int x = 0; x < width; ++x)
-            {
-                for (int y = 0; y < width; ++y)
-                {
-                    walkable[x, y] = IsManageablyWalkable(center.X + x - halfSize, center.Y + y - halfSize, center.Z);
-                }
-            }
-
-            if (!walkable[halfSize, halfSize])
-            {
-                reason = "the objective center is not walkable.";
-                return false;
-            }
-
-            bool[,] visited = new bool[width, width];
-            Queue<Point2D> queue = new Queue<Point2D>();
-            queue.Enqueue(new Point2D(halfSize, halfSize));
-            visited[halfSize, halfSize] = true;
-            int connected = 0;
-            int[] changeX = new int[] { -1, 1, 0, 0 };
-            int[] changeY = new int[] { 0, 0, -1, 1 };
-
-            while (queue.Count > 0)
-            {
-                Point2D point = queue.Dequeue();
-                connected++;
-
-                for (int i = 0; i < changeX.Length; ++i)
-                {
-                    int nextX = point.X + changeX[i];
-                    int nextY = point.Y + changeY[i];
-
-                    if (nextX < 0 || nextY < 0 || nextX >= width || nextY >= width || visited[nextX, nextY] || !walkable[nextX, nextY])
-                        continue;
-
-                    visited[nextX, nextY] = true;
-                    queue.Enqueue(new Point2D(nextX, nextY));
-                }
-            }
-
-            int required = (int)Math.Ceiling(total * minimumRatio);
-
-            if (connected < required)
-            {
-                reason = "only " + connected + " of " + total + " tiles form connected, manageable ground; " + required + " are required.";
-                return false;
-            }
-
-            return true;
-        }
-
-        private static bool IsManageablyWalkable(int x, int y, int centerZ)
-        {
-            int averageZ = Map.Sosaria.GetAverageZ(x, y);
-            return Math.Abs(averageZ - centerZ) <= 8 && Map.Sosaria.CanSpawnMobile(new Point3D(x, y, averageZ));
-        }
-
-        private static bool HasTwoTraversableApproaches(Point3D center, int halfSize)
-        {
-            int[,] directions = new int[,] { { 0, -1 }, { 1, 0 }, { 0, 1 }, { -1, 0 } };
-            int approaches = 0;
-
-            for (int direction = 0; direction < 4; ++direction)
-            {
-                int deltaX = directions[direction, 0];
-                int deltaY = directions[direction, 1];
-                int sideX = deltaY;
-                int sideY = -deltaX;
-                bool open = true;
-
-                for (int depth = halfSize - 1; depth <= halfSize + 2 && open; ++depth)
-                {
-                    for (int width = -1; width <= 1; ++width)
-                    {
-                        int x = center.X + (deltaX * depth) + (sideX * width);
-                        int y = center.Y + (deltaY * depth) + (sideY * width);
-
-                        if (!IsManageablyWalkable(x, y, center.Z))
-                        {
-                            open = false;
-                            break;
-                        }
-                    }
-                }
-
-                if (open)
-                    approaches++;
-            }
-
-            return approaches >= 2;
-        }
-
-        private static bool ValidateSavedWorldClearance(Point3D center, int halfSize, int spawnerClearance, out string reason)
-        {
-            reason = null;
-
-            for (int x = -halfSize; x <= halfSize; ++x)
-            {
-                for (int y = -halfSize; y <= halfSize; ++y)
-                {
-                    if (BaseHouse.FindHouseAt(new Point3D(center.X + x, center.Y + y, center.Z), Map.Sosaria, 64) != null)
-                    {
-                        reason = "a player-house footprint intersects the objective footprint.";
-                        return false;
-                    }
-                }
-            }
-
-            Rectangle2D bounds = new Rectangle2D(center.X - Math.Max(halfSize, spawnerClearance), center.Y - Math.Max(halfSize, spawnerClearance), (Math.Max(halfSize, spawnerClearance) * 2) + 1, (Math.Max(halfSize, spawnerClearance) * 2) + 1);
-            IPooledEnumerable items = Map.Sosaria.GetItemsInBounds(bounds);
-
-            try
-            {
-                foreach (Item item in items)
-                {
-                    if (item == null || item.Deleted || item is IInvasionOwned || item is InvasionWorldState)
-                        continue;
-
-                    ISpawner spawner = item as ISpawner;
-
-                    if (spawner != null)
-                    {
-                        Point3D home = spawner.HomeLocation;
-
-                        if ((Math.Abs(home.X - center.X) <= spawnerClearance && Math.Abs(home.Y - center.Y) <= spawnerClearance)
-                            || (Math.Abs(item.X - center.X) <= spawnerClearance && Math.Abs(item.Y - center.Y) <= spawnerClearance))
-                        {
-                            reason = "a saved spawner home point is inside the required clearance.";
-                            return false;
-                        }
-
-                        continue;
-                    }
-
-                    if (Math.Abs(item.X - center.X) > halfSize || Math.Abs(item.Y - center.Y) > halfSize)
-                        continue;
-
-                    string typeName = item.GetType().Name;
-
-                    if (String.Equals(typeName, "MeetingSpots", StringComparison.OrdinalIgnoreCase))
-                    {
-                        Log("Validation warning: a nonphysical meeting marker remains inside the objective footprint at " + center + ".");
-                        continue;
-                    }
-
-                    if (item is BaseHouse
-                        || item is BaseDoor
-                        || typeName.IndexOf("Teleporter", StringComparison.OrdinalIgnoreCase) >= 0
-                        || typeName.IndexOf("Moongate", StringComparison.OrdinalIgnoreCase) >= 0
-                        || typeName.IndexOf("HouseSign", StringComparison.OrdinalIgnoreCase) >= 0
-                        || typeName.IndexOf("WorkingSpot", StringComparison.OrdinalIgnoreCase) >= 0
-                        || typeName.IndexOf("TrainingDummy", StringComparison.OrdinalIgnoreCase) >= 0
-                        || typeName.IndexOf("ArcheryButte", StringComparison.OrdinalIgnoreCase) >= 0
-                        || typeName.IndexOf("PickpocketDip", StringComparison.OrdinalIgnoreCase) >= 0
-                        || typeName.IndexOf("Bank", StringComparison.OrdinalIgnoreCase) >= 0
-                        || item is Container
-                        || (!item.Movable && item.ItemData.Impassable)
-                        || BaseHouse.FindHouseAt(item) != null)
-                    {
-                        reason = "a saved " + typeName + " conflicts with the objective footprint.";
-                        return false;
-                    }
-                }
-            }
-            finally
-            {
-                items.Free();
-            }
-
-            return true;
-        }
-
-        private static bool ValidatePlayerHouseSafety(Point3D center, int radius, out string reason)
-        {
-            reason = null;
-
-            for (int x = -radius; x <= radius; ++x)
-            {
-                for (int y = -radius; y <= radius; ++y)
-                {
-                    if ((x * x) + (y * y) > radius * radius)
-                        continue;
-
-                    if (BaseHouse.FindHouseAt(new Point3D(center.X + x, center.Y + y, center.Z), Map.Sosaria, 64) != null)
-                    {
-                        reason = "the true conflict radius plus safety buffer intersects a player-house footprint.";
-                        return false;
-                    }
-                }
-            }
-
-            IPooledEnumerable items = Map.Sosaria.GetItemsInRange(center, radius);
-
-            try
-            {
-                foreach (Item item in items)
-                {
-                    if (item == null || item.Deleted)
-                        continue;
-
-                    int deltaX = item.X - center.X;
-                    int deltaY = item.Y - center.Y;
-
-                    if ((deltaX * deltaX) + (deltaY * deltaY) > radius * radius)
-                        continue;
-
-                    string typeName = item.GetType().Name;
-
-                    if (item is BaseHouse
-                        || typeName.IndexOf("PlayersHouseTeleporter", StringComparison.OrdinalIgnoreCase) >= 0
-                        || typeName.IndexOf("HouseSign", StringComparison.OrdinalIgnoreCase) >= 0
-                        || BaseHouse.FindHouseAt(item) != null)
-                    {
-                        reason = "the true conflict radius plus safety buffer intersects a player structure.";
-                        return false;
-                    }
-                }
-            }
-            finally
-            {
-                items.Free();
-            }
-
-            return true;
+            resolved = FindSpawnPoint(preferred, 12);
+            return Map.Sosaria.CanSpawnMobile(resolved);
         }
 
         public static bool TrySetCityEnabled(InvasionCityId cityId, bool enabled, out string reason)
@@ -2552,7 +2014,7 @@ namespace Server.Custom.Confictura.Invasions
 
         private static bool IsLegacyInvasionObject(Item item)
         {
-            if (item == null || item.Deleted || item is InvasionWorldState || item is InvasionObjectiveItem || item is InvasionCampProp)
+            if (item == null || item.Deleted || item is InvasionWorldState || item is InvasionObjectiveItem)
                 return false;
 
             if (item.GetType().Name.EndsWith("InvasionStone", StringComparison.OrdinalIgnoreCase))
