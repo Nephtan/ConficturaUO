@@ -41,7 +41,7 @@ namespace Server.Mobiles
 
             SetDamage(20, 26);
 
-            SetDamageType(ResistanceType.Physical, 65);
+            SetDamageType(ResistanceType.Physical, 75);
             SetDamageType(ResistanceType.Fire, 25);
 
             SetResistance(ResistanceType.Physical, 55, 65);
@@ -140,13 +140,28 @@ namespace Server.Mobiles
         public override void Serialize(GenericWriter writer)
         {
             base.Serialize(writer);
-            writer.Write((int)0);
+            writer.Write((int)1);
         }
 
         public override void Deserialize(GenericReader reader)
         {
             base.Deserialize(reader);
             int version = reader.ReadInt();
+
+            // Repair only the original incomplete profile; preserve customized and newer saves.
+            if (
+                version == 0
+                && PhysicalDamage == 65
+                && FireDamage == 25
+                && ColdDamage == 0
+                && PoisonDamage == 0
+                && EnergyDamage == 0
+                && ChaosDamage == 0
+                && DirectDamage == 0
+            )
+            {
+                PhysicalDamage = 75;
+            }
         }
     }
 }
