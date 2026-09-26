@@ -93,7 +93,8 @@ namespace Server.Mobiles
 
         public void GivePowerScrolls()
         {
-            if (Map != Map.Lodor)
+            // Champion rewards use the same rules on every playable map.
+            if (Map == null || Map == Map.Internal)
                 return;
 
             List<Mobile> toGive = new List<Mobile>();
@@ -253,7 +254,7 @@ namespace Server.Mobiles
 
         public override void OnDeath(Container c)
         {
-            if (Map == Map.Lodor)
+            if (Map != null && Map != Map.Internal)
             {
                 //TODO: Confirm SE change or AoS one too?
                 List<DamageStore> rights = BaseCreature.GetLootingRights(

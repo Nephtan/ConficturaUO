@@ -521,7 +521,8 @@ namespace Server.Engines.CannedEvil
                             #region Scroll of Transcendence
                             if (Core.ML)
                             {
-                                if (Map == Map.Lodor)
+                                // Match Lodor's wave rewards on every playable map.
+                                if (Map != null && Map != Map.Internal)
                                 {
                                     if (Utility.RandomDouble() < 0.001)
                                     {
@@ -538,20 +539,6 @@ namespace Server.Engines.CannedEvil
                                             PowerScroll PS = PowerScroll.CreateRandomNoCraft(5, 5);
                                             GiveScrollTo(pm, (SpecialScroll)PS);
                                         }
-                                    }
-                                }
-
-                                if (
-                                    Map == Map.Underworld
-                                    || Map == Map.IslesDread
-                                    || Map == Map.SerpentIsland
-                                )
-                                {
-                                    if (Utility.RandomDouble() < 0.0015)
-                                    {
-                                        killer.SendLocalizedMessage(1094936); // You have received a Scroll of Transcendence!
-                                        ScrollofTranscendence SoTT = CreateRandomSoT(false);
-                                        killer.AddToBackpack(SoTT);
                                     }
                                 }
                             }
