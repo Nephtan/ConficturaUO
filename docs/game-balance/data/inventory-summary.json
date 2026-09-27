@@ -1,0 +1,29 @@
+{
+  "method": "Lexical census of rg-visible C# under Data/Scripts and Data/System/Source, excluding bin/obj; no execution or item-by-item balance certification",
+  "source_baseline": "6568058a",
+  "source_files": 6718,
+  "source_lines": 1896644,
+  "files_by_root": {
+    "Custom": 1146,
+    "Items": 3029,
+    "Magic": 574,
+    "Mobiles": 1102,
+    "Quests": 117,
+    "ServerCore": 120,
+    "System": 471,
+    "Trades": 159
+  },
+  "families": 162,
+  "skills": 58,
+  "region_facets": 7,
+  "region_definitions": 421,
+  "region_spawn_objects": 195,
+  "settings_exported": 61,
+  "exclusions": [
+    "Generated bin/obj",
+    "Live save contents and deployed state",
+    "Private settings not whitelisted",
+    "Client assets",
+    "Non-C# code outside the stated source roots"
+  ]
+}

@@ -1,0 +1,422 @@
+facet,name,type,priority,rectangles,spawn_objects,source,coverage
+Lodor,the Great Forge of Ice,OutDoorRegion,65,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Lodor,the Ranger Outpost,OutDoorRegion,50,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Lodor,the Glowing Pond,OutDoorRegion,80,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Lodor,the Altar of Golden Rangers,OutDoorRegion,80,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Lodor,the Undersea Pass,DungeonRegion,50,2,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Lodor,the Ancient Elven Mine,DungeonRegion,50,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Lodor,Craghole Cavern,CaveRegion,65,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Lodor,the Lodoria Mine,CaveRegion,65,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Lodor,the Whispering Cavern,CaveRegion,65,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Lodor,Dusklight Mine,CaveRegion,65,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Lodor,the Old Minotaur Caves,CaveRegion,65,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Lodor,the Lost Dwarven Mines,CaveRegion,65,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Lodor,the Ancient Dwarf Mines,CaveRegion,65,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Lodor,the Thunderous Hall Cavern,CaveRegion,65,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Lodor,the One Eyed Tunnel,CaveRegion,65,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Lodor,the Seaside Cavern,CaveRegion,65,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Lodor,the Giant Hold Cave,CaveRegion,65,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Lodor,the Windchill Cavern,CaveRegion,65,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Lodor,the Rockfall Grotto,CaveRegion,65,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Lodor,the Ogredug Grotto,CaveRegion,65,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Lodor,the Springvale Mine,CaveRegion,65,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Lodor,the Lost Canyon Cave,CaveRegion,65,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Lodor,the Oasis Cave,CaveRegion,65,2,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Lodor,the Conjurerer's Cave,CaveRegion,65,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Lodor,the Waters of the Mad Wolf,PirateRegion,50,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Lodor,the Waters of the Shameful Captain,PirateRegion,50,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Lodor,the Waters of the Angry Hangman,PirateRegion,50,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Lodor,the Waters of the Dark Treasure,PirateRegion,50,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Lodor,the Waters of the Privateer's Greed,PirateRegion,50,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Lodor,the Waters of the Rage of the Sea,PirateRegion,50,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Lodor,the Waters of the Screaming Serpent,PirateRegion,50,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Lodor,the Waters of the Hellish Eel,PirateRegion,50,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Lodor,the Waters of the Darkened Sea,PirateRegion,50,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Lodor,the Waters of the Poisoned Blade,PirateRegion,50,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Lodor,the Waters of the Golden Sail,PirateRegion,50,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Lodor,the Waters of the Barge of Poseidon,PirateRegion,50,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Lodor,the Waters of the Demon's Scurvy,PirateRegion,50,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Lodor,the Lodoria Sewers,DungeonRegion,50,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Lodor,the Lizardman Cave,DungeonRegion,50,1,2,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Lodor,the Ratmen Cave,DungeonRegion,50,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Lodor,the Crypt,DungeonRegion,50,1,2,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Lodor,Dungeon Wrong,DungeonRegion,50,2,2,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Lodor,the Volcanic Cave,DungeonRegion,50,1,2,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Lodor,Terathan Keep,DungeonRegion,50,1,2,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Lodor,Dungeon Shame,DungeonRegion,50,2,2,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Lodor,the Ice Fiend Lair,DungeonRegion,50,1,2,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Lodor,the Frozen Hells,DungeonRegion,50,1,2,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Lodor,Dungeon Hythloth,DungeonRegion,50,2,2,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Lodor,the Mind Flayer City,DungeonRegion,50,1,2,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Lodor,the City of Embers,DungeonRegion,50,1,2,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Lodor,Dungeon Destard,DungeonRegion,100,2,3,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Lodor,Dungeon Despise,DungeonRegion,50,4,3,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Lodor,Dungeon Deceit,DungeonRegion,50,1,2,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Lodor,Dungeon Covetous,DungeonRegion,50,5,2,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Lodor,the Lodoria Catacombs,DungeonRegion,50,2,2,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Lodor,the Halls of Undermountain,DungeonRegion,50,1,2,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Lodor,the Vault of the Black Knight,DungeonRegion,50,1,2,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Lodor,the Crypts of Dracula,DungeonRegion,50,1,2,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Lodor,Stonegate Castle,DungeonRegion,20,1,2,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Lodor,the Castle of Dracula,DungeonRegion,50,1,2,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Lodor,the Montor Sewers,DungeonRegion,50,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Lodor,the Depths of Carthax Lake,DungeonRegion,50,3,2,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Lodor,Morgaelin's Inferno,DungeonRegion,50,4,2,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Lodor,the Zealan Tombs,DungeonRegion,50,5,2,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Lodor,the Temple of Osirus,DungeonRegion,50,4,2,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Lodor,Argentrock Castle,DungeonRegion,50,4,2,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Lodor,the Daemon's Crag,DungeonRegion,60,2,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Lodor,the Hall of the Mountain King,DungeonRegion,50,8,2,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Lodor,the Sanctum of Saltmarsh,DungeonRegion,80,8,2,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Lodor,the Ethereal Plane,PublicRegion,50,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Lodor,the Terathan Keep,OutDoorBadRegion,50,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Lodor,the Ratmen Ruins,OutDoorBadRegion,50,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Lodor,the Great Dwarven Forge,OutDoorRegion,50,6,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Lodor,the Graveyard,OutDoorBadRegion,50,4,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Lodor,Nightwood Fort,SafeRegion,100,6,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Lodor,Ravendark Woods,NecromancerRegion,50,2,1,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Lodor,the Ravendark Tomb,SafeRegion,100,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Lodor,the Village of Ravendark,NecromancerRegion,100,5,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Lodor,the Island of Dracula,NecromancerRegion,50,8,1,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Lodor,the Island of Stonegate,OutDoorBadRegion,50,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Lodor,the Village of Whisper,VillageRegion,50,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Lodor,the Town of Glacial Hills,VillageRegion,50,6,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Lodor,the Village of Springvale,VillageRegion,50,5,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Lodor,the City of Elidor,VillageRegion,50,6,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Lodor,the Village of Islegem,VillageRegion,50,4,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Lodor,Greensky Village,VillageRegion,50,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Lodor,the Port of Dusk,VillageRegion,50,3,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Lodor,the Port of Starguide,VillageRegion,50,4,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Lodor,the Village of Portshine,VillageRegion,50,3,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Lodor,the Castle of Knowledge,VillageRegion,55,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Lodor,the City of Lodoria,VillageRegion,50,5,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Lodor,the Lodoria Cemetery,VillageRegion,50,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Lodor,the Chamber of Tyball,PublicRegion,50,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Lodor,the Obsidian Tower,PublicRegion,50,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Lodor,Kraken Reef Docks,SafeRegion,100,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Lodor,Barnacled Cavern,UnderHouseRegion,100,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Lodor,the Kraken Eye Cave,SafeRegion,100,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Lodor,the Lankhmar Lighthouse,SafeRegion,50,5,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Lodor,the Town of Skara Brae,BardTownRegion,50,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Lodor,Mangar's Tower,BardDungeonRegion,50,2,2,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Lodor,Mangar's Chamber,BardDungeonRegion,90,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Lodor,Kylearan's Tower,BardDungeonRegion,50,1,2,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Lodor,Harkyn's Castle,BardDungeonRegion,50,1,2,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Lodor,the Catacombs,BardDungeonRegion,50,1,2,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Lodor,the Lower Catacombs,BardDungeonRegion,50,2,2,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Lodor,the Sewers,BardDungeonRegion,50,1,1,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Lodor,the Mines,BardDungeonRegion,50,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Lodor,the Cellar,BardDungeonRegion,50,1,1,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Lodor,Underground Temple,DungeonRegion,50,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Lodor,Castle Basement,DungeonRegion,50,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,the Fort of Stonewall,SafeRegion,50,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,the Celestial Moon of Luna,LunaRegion,20,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,Moonlight Cavern,MoonCore,100,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,the Moon's Core,MoonCore,100,12,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,the Core of the Moon,MoonCore,90,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,the Island of Poseidon,PirateRegion,50,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,the Castle of Shadowguard,PublicRegion,100,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,the Guardian's Chamber,PublicRegion,100,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,the Tomb of Lethe,PublicRegion,100,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,Seggallions's Cave,PublicRegion,100,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,Garamon's Mansion,PublicRegion,100,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,Shimazu's Dojo,OutDoorRegion,65,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,the Crash Site,CrashRegion,100,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,the Waters of the Blade of Neptune,PirateRegion,50,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,the Waters of the Captain's Whore,PirateRegion,50,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,the Waters of the Pearl of Hades,PirateRegion,50,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,the Waters of the Rage of the Nine,PirateRegion,50,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,the Waters of the Bloody Wave,PirateRegion,50,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,the Waters of the Cruel Mistress,PirateRegion,50,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,the Waters of the Morbid Sail,PirateRegion,50,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,the Waters of the Silver Sun,PirateRegion,50,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,the Waters of the Night's Raid,PirateRegion,50,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,the Waters of the Dragon's Wave,PirateRegion,50,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,the Waters of the Kraken's Heart,PirateRegion,50,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,the Waters of the Damned Skull,PirateRegion,50,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,the Waters of the Whispering Wind,PirateRegion,60,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,the Waters of the Jewel of the Deep,PirateRegion,60,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,the Caddellite Crater,OutDoorBadRegion,50,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,the Barge of the Dead,BargeDeadRegion,50,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,the Brigand Fort,OutDoorBadRegion,50,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,the Ruins of Skara Brae,OutDoorBadRegion,50,6,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,the Powerful Forge of Energy,OutDoorRegion,65,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,the Waters of Ktulu,OutDoorRegion,50,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,the Devil's Mine,CaveRegion,65,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,the Pirate Cave,CaveRegion,65,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,Hot Spring Cave,CaveRegion,65,2,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,the Cave of Virtue,CaveRegion,65,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,Mountain Crest Mine,CaveRegion,65,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,Junglewall Cave,CaveRegion,65,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,Avalanche Grotto,CaveRegion,65,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,the Mines of Moon,CaveRegion,65,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,the Elidor Tunnel,CaveRegion,65,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,the Sorcerer Cave,CaveRegion,65,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,the Twisted Cave,CaveRegion,65,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,the Cavern of Echoes,CaveRegion,65,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,the Cavern of the Deep Ones,CaveRegion,100,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,the Frostwind Grotto,CaveRegion,65,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,the Serpent Pass,CaveRegion,65,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,Coldrock Cavern,CaveRegion,65,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,Nightshadow Cave,CaveRegion,65,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,the Old Grey Mine,CaveRegion,65,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,Fallwater Cavern,CaveRegion,65,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,the Volcanic Pass,CaveRegion,65,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,the Ambrosian Cavern,CaveRegion,65,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,the Britain Mines,CaveRegion,65,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,the Montor Mine,CaveRegion,65,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,the Old Umber Cave,CaveRegion,65,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,the Yew Mines,CaveRegion,65,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,Cavern of Sermillon,CaveRegion,65,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,the Graveyard,OutDoorBadRegion,80,8,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,the Lost Graveyard,DungeonRegion,50,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,the British Family Cemetery,VillageRegion,50,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,the Dark Fortress,OutDoorBadRegion,50,2,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,the Church of the Divine,OutDoorRegion,65,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,Xardok's Castle,PublicRegion,50,5,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,the Hall of Legends,PublicRegion,50,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,the Thieves Guild,PublicRegion,50,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,the Ship's Lower Deck,PublicRegion,50,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,the Camping Tent,PublicRegion,50,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,the Dungeon Room,PublicRegion,50,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,the Black Magic Guild,PublicRegion,50,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,the Dojo,PublicRegion,50,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,the Wizards Guild,PublicRegion,50,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,the Basement,PublicRegion,50,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,the Tavern,PublicRegion,50,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,the Bank,PublicRegion,50,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,the Druid's Glade,PublicRegion,50,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,the Lyceum,PublicRegion,50,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,the Chasm,PublicRegion,50,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,the Port,PublicRegion,80,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,the Tomb of Kas the Bloody Handed,CaveRegion,50,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,the Tomb of Baron Almric,CaveRegion,65,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,the Tomb of Malak the Syth Lord,CaveRegion,100,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,the Tomb of Zoda the Jedi Master,CaveRegion,100,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,the Ruins of the Black Blade,DungeonRegion,50,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,the Caverns of Poseidon,DungeonRegion,100,5,2,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,the Ancient Pyramid,DungeonRegion,50,1,2,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,the Tower of Brass,DungeonRegion,90,12,2,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,Dungeon Clues,DungeonRegion,50,3,2,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,Dardin's Pit,DungeonRegion,50,2,2,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,Frostwall Caverns,DungeonRegion,80,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,Dungeon Doom,DungeonRegion,50,1,2,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,Dungeon Exodus,DungeonRegion,50,1,2,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,the Fires of Hell,DungeonRegion,50,3,2,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,the Frozen Dungeon,DungeonRegion,50,3,2,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,the Mines of Morinia,DungeonRegion,50,3,2,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,Goblin Caves,DungeonRegion,80,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,the Perinian Depths,DungeonRegion,50,1,2,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,the Ratmen Lair,DungeonRegion,50,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,the Dungeon of Time Awaits,DungeonRegion,50,3,2,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,Forgotten Library,DungeonRegion,80,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,the Dragon's Maw,DungeonRegion,100,5,2,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,the Cave of the Zuluu,DungeonRegion,80,3,2,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,the Mausoleum,DungeonRegion,50,1,2,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,Castle Exodus,OutDoorBadRegion,50,1,2,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,the Swamp Ruins of the Dead,OutDoorBadRegion,50,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,Mangar's Tower,OutDoorRegion,50,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,the Lich Tower,OutDoorBadRegion,50,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,the British Family Tomb,CaveRegion,50,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,the Cave of Banished Mages,DungeonRegion,50,7,3,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,the Dark Caves,UnderHouseRegion,50,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,Shipwreck Grotto,UnderHouseRegion,100,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,the Accursed Maze,DungeonRegion,50,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,the Chamber of Bane,DungeonRegion,50,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,Coldhall Depths,DungeonRegion,50,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,the Dark Sanctum,DungeonRegion,50,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,the Forgotten Tombs,DungeonRegion,50,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,the Magma Vaults,DungeonRegion,50,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,the Dark Tombs,DungeonRegion,50,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,the Shrouded Grave,DungeonRegion,50,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,the Orc Fort,OutDoorBadRegion,50,2,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,the Ratmen Fort,OutDoorBadRegion,50,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,the Ratmen Ruins,OutDoorBadRegion,50,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,the Time Lord Chamber,CaveRegion,50,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,the Britain Dungeons,WantedRegion,50,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,the City of the Dead,DeadRegion,90,3,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,Death Gulch,VillageRegion,50,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,the Cabin,ProtectedRegion,50,2,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,the Town of Devil Guard,VillageRegion,50,4,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,the Farmland of Devil Guard,VillageRegion,50,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,the Town of Moon,VillageRegion,50,4,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,the Village of Grey,VillageRegion,49,8,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,the Grey Archeological Dig,VillageRegion,49,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,the City of Montor,VillageRegion,50,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,the Village of Fawn,VillageRegion,50,9,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,the Village of Yew,VillageRegion,50,3,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,the City of Britain,VillageRegion,60,2,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,the Buccaneer's Den,OutDoorRegion,50,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,the Undercity of Umbra,UmbraRegion,70,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,Anchor Rock Docks,SafeRegion,100,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,the Anchored Cave,SafeRegion,100,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,the Forest,StartRegion,50,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,the Swamp,StartRegion,100,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,the Tomb,StartRegion,100,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,the Sea,StartRegion,100,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,the Pits,StartRegion,100,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,the Woods,StartRegion,100,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,the Cave,StartRegion,100,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,the Tundra,StartRegion,100,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,the Desert,StartRegion,100,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,the Mountains,StartRegion,100,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,Shrine of Intelligence,OutDoorRegion,80,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,Shrine of Strength,OutDoorRegion,80,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,Shrine of Wisdom,OutDoorRegion,80,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,Shrine of Dexterity,OutDoorRegion,80,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,the Chamber of Virtue,ProtectedRegion,100,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,the Chamber of Corruption,ProtectedRegion,100,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,Iceclad Fisherman's Village,VillageRegion,50,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,the Town of Mountain Crest,VillageRegion,50,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,Glacial Coast Village,VillageRegion,50,2,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,the Tower,VillageRegion,90,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,the Town of Renika,VillageRegion,50,2,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,the Lunar City of Dawn,DawnRegion,50,2,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,the City of Kuldara,VillageRegion,50,6,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,the Kuldar Cemetery,OutDoorBadRegion,50,2,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,the Valley of Dark Druids,DungeonRegion,50,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,the Castle of Vordo,DungeonRegion,80,4,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,Highrock Mine,CaveRegion,65,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,Waterfall Cavern,CaveRegion,65,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,the Crumbling Cave,CaveRegion,65,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,Steamfire Cave,DungeonRegion,50,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,Vordo's Castle Grounds,DungeonRegion,50,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,the Kuldara Sewers,DungeonRegion,50,1,2,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,the Crypts of Kuldar,DungeonRegion,50,1,2,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,Vordo's Castle,DungeonRegion,50,1,2,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,Vordo's Dungeon,DungeonRegion,50,1,2,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,Tower of Runes,DungeonRegion,50,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,Elemental Chaos,DungeonRegion,50,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,Dark Dragon Temple,DungeonRegion,50,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,Wolfgangs Crypt,DungeonRegion,50,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,Lair of Exodus,DungeonRegion,50,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,Mad Dukes Manor,DungeonRegion,50,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,Buried Ruins,DungeonRegion,50,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,Tree Hollow,DungeonRegion,50,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,Castle Dio,DungeonRegion,50,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Sosaria,Ordain Ruins,DungeonRegion,50,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Underworld,the Fort of Tenebrae,SafeRegion,50,3,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Underworld,the Obsidian Fortress,OutDoorBadRegion,50,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Underworld,the Zealan Graveyard,OutDoorBadRegion,50,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Underworld,the Hall of the Mountain King,OutDoorBadRegion,50,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Underworld,Argentrock Castle,OutDoorBadRegion,50,3,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Underworld,the Tower of Wisdom,OutDoorBadRegion,50,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Underworld,the Stygian Abyss,DungeonRegion,50,2,2,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Underworld,the Chamber of the Codex,ProtectedRegion,100,3,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Underworld,the Glacial Scar,DungeonRegion,50,6,2,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Underworld,The Black Pyramid,DungeonRegion,50,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Underworld,a Dungeon Dwelling,DungeonHomeRegion,70,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+SerpentIsland,Lodoria Prison,PrisonArea,100,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+SerpentIsland,Sosaria Prison,PrisonArea,100,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+SerpentIsland,Renika Prison,PrisonArea,100,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+SerpentIsland,Kuldara Prison,PrisonArea,100,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+SerpentIsland,Ork Prison,PrisonArea,100,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+SerpentIsland,Furnace Prison,PrisonArea,100,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+SerpentIsland,Cimmeran Prison,PrisonArea,100,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+SerpentIsland,the Bridge of Tul'mok,OutDoorRegion,50,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+SerpentIsland,the Great Forge of Fire,OutDoorRegion,65,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+SerpentIsland,Dustwind Tunnel,CaveRegion,65,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+SerpentIsland,the Lone Rock Cave,CaveRegion,65,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+SerpentIsland,the Hateful Cave,CaveRegion,65,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+SerpentIsland,the Lakeside Tunnels,CaveRegion,65,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+SerpentIsland,the Sleepy Gargoyle Cave,CaveRegion,65,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+SerpentIsland,the Great Plain Cave,CaveRegion,65,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+SerpentIsland,the Sosarian Pass,CaveRegion,65,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+SerpentIsland,the Rock Oven Cave,CaveRegion,65,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+SerpentIsland,the Dry Cavern,CaveRegion,65,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+SerpentIsland,the Southside Grotto,CaveRegion,65,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+SerpentIsland,Sunfire Cave,CaveRegion,65,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+SerpentIsland,Teardrop Cave,CaveRegion,65,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+SerpentIsland,the Stonewall Cavern,CaveRegion,65,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+SerpentIsland,the Sand Giant Tunnels,CaveRegion,65,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+SerpentIsland,the Cave of Gods,CaveRegion,65,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+SerpentIsland,the Serpent Spine Grotto,CaveRegion,65,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+SerpentIsland,Mountainside Cavern,CaveRegion,65,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+SerpentIsland,Sandstorm Cave,CaveRegion,65,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+SerpentIsland,Serpent Sail Docks,SafeRegion,100,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+SerpentIsland,the Ethereal Void,PublicRegion,50,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+SerpentIsland,the Ancient Prison,DungeonRegion,50,1,2,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+SerpentIsland,the Cave of Fire,DungeonRegion,50,1,2,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+SerpentIsland,the Cave of Souls,DungeonRegion,50,1,2,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+SerpentIsland,Dungeon Ankh,DungeonRegion,50,1,2,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+SerpentIsland,Dungeon Bane,DungeonRegion,50,2,2,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+SerpentIsland,Dungeon Hate,DungeonRegion,50,1,2,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+SerpentIsland,Dungeon Scorn,DungeonRegion,50,1,2,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+SerpentIsland,Dungeon Torment,DungeonRegion,50,1,2,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+SerpentIsland,Dungeon Vile,DungeonRegion,50,1,2,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+SerpentIsland,Dungeon Wicked,DungeonRegion,50,1,2,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+SerpentIsland,Dungeon Wrath,DungeonRegion,50,1,2,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+SerpentIsland,the Flooded Temple,DungeonRegion,50,1,2,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+SerpentIsland,the Gargoyle Crypts,DungeonRegion,50,1,2,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+SerpentIsland,the Serpent Sanctum,DungeonRegion,50,2,2,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+SerpentIsland,the Tomb of the Fallen Wizard,DungeonRegion,50,1,2,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+SerpentIsland,the Island of the Black Knight,OutDoorBadRegion,50,7,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+SerpentIsland,the Castle of the Black Knight,OutDoorBadRegion,70,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+SerpentIsland,Sky Home,SkyHomeDwelling,50,3,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+SerpentIsland,the Burning Mines,GargoyleRegion,50,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+SerpentIsland,the City of Furnace,GargoyleRegion,50,13,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+SerpentIsland,the Furnace Vorpal Dock,SafeRegion,100,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+SerpentIsland,the Furnace Eye Cave,SafeRegion,100,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+IslesDread,Ice Island Docks,OutDoorBadRegion,50,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+IslesDread,the Altar of the Blood God,OutDoorBadRegion,50,3,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+IslesDread,the Natives' Camp,OutDoorBadRegion,50,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+IslesDread,the Cimmeran Hold,VillageRegion,50,16,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+IslesDread,the Forgotten Lighthouse,SafeRegion,50,2,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+IslesDread,Booty Bay,OutDoorRegion,50,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+IslesDread,the Waters of the Screaming Mermaid,PirateRegion,50,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+IslesDread,the Waters of the Siren's Blood,PirateRegion,50,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+IslesDread,the Waters of the Doom of the Isles,PirateRegion,50,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+IslesDread,the Waters of the Fearful Eye of Neptune,PirateRegion,50,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+IslesDread,the Waters of the Sea's Wrath,PirateRegion,50,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+IslesDread,the Waters of the Plunderer's Skull,PirateRegion,50,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+IslesDread,the Waters of the Maiden's Anchor,PirateRegion,50,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+IslesDread,the Waters of the Bloody Wave,PirateRegion,50,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+IslesDread,the Waters of the Dreams of Gold,PirateRegion,50,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+SavagedEmpire,the Hut,SavageRegion,20,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+SavagedEmpire,the Sickening Forge of Venom,OutDoorRegion,65,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+SavagedEmpire,the Graveyard,OutDoorBadRegion,50,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+SavagedEmpire,the Blood Temple,DungeonRegion,50,1,2,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+SavagedEmpire,the Tombs,DungeonRegion,50,1,2,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+SavagedEmpire,the Corrupt Pass,DungeonRegion,50,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+SavagedEmpire,the Crypt,DungeonRegion,50,1,2,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+SavagedEmpire,the Great Pyramid,DungeonRegion,50,1,2,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+SavagedEmpire,the Altar of the Dragon King,DungeonRegion,50,1,2,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+SavagedEmpire,the Ice Queen Fortress,DungeonRegion,50,1,2,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+SavagedEmpire,the Dungeon of the Lich King,DungeonRegion,50,1,2,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+SavagedEmpire,the Dungeon of the Mad Archmage,DungeonRegion,50,1,2,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+SavagedEmpire,the Halls of Ogrimar,DungeonRegion,50,1,2,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+SavagedEmpire,the Pixie Cave,DungeonRegion,50,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+SavagedEmpire,the Ratmen Mines,DungeonRegion,50,1,2,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+SavagedEmpire,Dungeon Rock,DungeonRegion,50,1,2,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+SavagedEmpire,the Sakkhra Tunnel,DungeonRegion,50,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+SavagedEmpire,the Spider Cave,DungeonRegion,50,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+SavagedEmpire,the Storm Giant Lair,DungeonRegion,50,1,2,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+SavagedEmpire,the Cave of the Ancient Wyrm,DungeonRegion,50,2,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+SavagedEmpire,the Forgotten Halls,DungeonRegion,50,3,2,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+SavagedEmpire,the Enchanted Pass,OutDoorRegion,50,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+SavagedEmpire,the Isle of the Lich,OutDoorBadRegion,50,5,2,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+SavagedEmpire,the Hidden Valley,DungeonRegion,80,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+SavagedEmpire,the Castle of the Mad Archmage,OutDoorBadRegion,50,1,2,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+SavagedEmpire,the Mage Mansion,OutDoorBadRegion,50,2,2,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+SavagedEmpire,the Island of the Storm Giant,OutDoorBadRegion,50,4,2,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+SavagedEmpire,the Undersea Castle,DungeonRegion,50,2,2,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+SavagedEmpire,the Tomb of Kazibal,DungeonRegion,50,1,2,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+SavagedEmpire,the Catacombs of Azerok,DungeonRegion,50,1,2,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+SavagedEmpire,the Azure Castle,DungeonRegion,50,1,2,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+SavagedEmpire,the Scurvy Reef,DungeonRegion,50,1,2,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+SavagedEmpire,the Ancient Sky Ship,DungeonRegion,50,2,2,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+SavagedEmpire,the Ancient Crash Site,DungeonRegion,50,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+SavagedEmpire,the Cimmeran Mines,CaveRegion,50,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+SavagedEmpire,the Barako Mines,CaveRegion,50,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+SavagedEmpire,the Orc Fort,OutDoorBadRegion,50,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+SavagedEmpire,the Village of Barako,VillageRegion,50,3,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+SavagedEmpire,the Village of Kurak,VillageRegion,50,3,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+SavagedEmpire,the Obsidian Fortress,CaveRegion,50,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+SavagedEmpire,the Kurak Mine,CaveRegion,65,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+SavagedEmpire,Dust Air Cavern,CaveRegion,65,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+SavagedEmpire,the Quiet Cave,CaveRegion,65,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+SavagedEmpire,the Tower of Mondain,PublicRegion,50,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+SavagedEmpire,the Crypt of Morphius,PublicRegion,50,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+SavagedEmpire,Savage Sea Docks,SafeRegion,100,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+SavagedEmpire,the Hedge Maze,MazeRegion,95,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified
+Atlantis,the Hall of Ktulu,DungeonRegion,50,1,0,Data/System/XML/Regions.xml,CheckedInDefinition; current world occupancy unverified

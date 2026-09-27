@@ -7,6 +7,11 @@ Guides are grouped by primary audience and use case.
 - [Guide To Adventure Book](Guide_To_Adventure_Book.md)
 - [World Basics And Commands](World_Basics_Commands.md)
 
+## Systems Analysis And Balance
+
+- [Understanding Confictura](../game-balance/README.md) — owner/designer guide to the current mechanics, their interactions, and the evidence needed for a rebalance.
+- [Systems At A Glance](../game-balance/systems-at-a-glance.md) — quick reference for what each major system consumes, rewards, and limits.
+
 ## Player Commands And Account Tools
 - [Auto Sheath](Auto_Sheath.md)
 - [Boat Navigation Control](boat-navigation-control.md)

@@ -1,0 +1,163 @@
+family,domain,files,lines,coverage
+Custom/Access Level Stone [2.0],Cross-system custom packages,1,115,LexicalInventory; see docs/game-balance/coverage-and-evidence.md for review depth
+Custom/AnimalSystem,Cross-system custom packages,5,1138,LexicalInventory; see docs/game-balance/coverage-and-evidence.md for review depth
+Custom/BoatNavigationTotem,Cross-system custom packages,1,959,LexicalInventory; see docs/game-balance/coverage-and-evidence.md for review depth
+Custom/BondInfo,Cross-system custom packages,1,103,LexicalInventory; see docs/game-balance/coverage-and-evidence.md for review depth
+Custom/Book Publisher [2.0],Cross-system custom packages,5,748,LexicalInventory; see docs/game-balance/coverage-and-evidence.md for review depth
+Custom/CEO's GM Hiding Stone [2.0],Cross-system custom packages,1,783,LexicalInventory; see docs/game-balance/coverage-and-evidence.md for review depth
+Custom/Champions,Cross-system custom packages,73,10853,LexicalInventory; see docs/game-balance/coverage-and-evidence.md for review depth
+Custom/ChangeSeason,Cross-system custom packages,1,80,LexicalInventory; see docs/game-balance/coverage-and-evidence.md for review depth
+Custom/Character Swap,Cross-system custom packages,1,567,LexicalInventory; see docs/game-balance/coverage-and-evidence.md for review depth
+Custom/ClearDeckCommand,Cross-system custom packages,1,77,LexicalInventory; see docs/game-balance/coverage-and-evidence.md for review depth
+Custom/Combat/AIOverhaul,Cross-system custom packages,1,182,LexicalInventory; see docs/game-balance/coverage-and-evidence.md for review depth
+Custom/Combat/TurnBased,Cross-system custom packages,5,4324,LexicalInventory; see docs/game-balance/coverage-and-evidence.md for review depth
+Custom/Government System,Cross-system custom packages,207,72134,LexicalInventory; see docs/game-balance/coverage-and-evidence.md for review depth
+Custom/Integrations/Discord,Cross-system custom packages,1,2219,LexicalInventory; see docs/game-balance/coverage-and-evidence.md for review depth
+Custom/Invasion System,Cross-system custom packages,100,23160,LexicalInventory; see docs/game-balance/coverage-and-evidence.md for review depth
+Custom/LOTR - The One Ring,Cross-system custom packages,2,274,LexicalInventory; see docs/game-balance/coverage-and-evidence.md for review depth
+Custom/LoreBooks,Cross-system custom packages,1,812,LexicalInventory; see docs/game-balance/coverage-and-evidence.md for review depth
+Custom/Mobiles,Cross-system custom packages,101,5573,LexicalInventory; see docs/game-balance/coverage-and-evidence.md for review depth
+Custom/NPC Control,Cross-system custom packages,6,1951,LexicalInventory; see docs/game-balance/coverage-and-evidence.md for review depth
+Custom/Offline Skill Training,Cross-system custom packages,7,5682,LexicalInventory; see docs/game-balance/coverage-and-evidence.md for review depth
+Custom/OrbRemoteServer,Cross-system custom packages,15,2866,LexicalInventory; see docs/game-balance/coverage-and-evidence.md for review depth
+Custom/PandorasGiftBox,Cross-system custom packages,1,385,LexicalInventory; see docs/game-balance/coverage-and-evidence.md for review depth
+Custom/Player Range Sensitive Mod,Cross-system custom packages,1,42,LexicalInventory; see docs/game-balance/coverage-and-evidence.md for review depth
+Custom/Point Command [2.0],Cross-system custom packages,1,148,LexicalInventory; see docs/game-balance/coverage-and-evidence.md for review depth
+Custom/Progression/CharacterLevel,Cross-system custom packages,2,810,LexicalInventory; see docs/game-balance/coverage-and-evidence.md for review depth
+Custom/PvE/CloneOfflinePlayerCharacters,Cross-system custom packages,7,1432,LexicalInventory; see docs/game-balance/coverage-and-evidence.md for review depth
+Custom/PvE/MobileBalance,Cross-system custom packages,5,2259,LexicalInventory; see docs/game-balance/coverage-and-evidence.md for review depth
+Custom/PvE/MonsterNests,Cross-system custom packages,6,801,LexicalInventory; see docs/game-balance/coverage-and-evidence.md for review depth
+Custom/PvE/RandomEncounters,Cross-system custom packages,11,5096,LexicalInventory; see docs/game-balance/coverage-and-evidence.md for review depth
+Custom/PvPConsent,Cross-system custom packages,5,1146,LexicalInventory; see docs/game-balance/coverage-and-evidence.md for review depth
+Custom/Searches,Cross-system custom packages,9,3927,LexicalInventory; see docs/game-balance/coverage-and-evidence.md for review depth
+Custom/Skill Stone,Cross-system custom packages,1,521,LexicalInventory; see docs/game-balance/coverage-and-evidence.md for review depth
+Custom/StaffTools/StaticGumpTool,Cross-system custom packages,21,21668,LexicalInventory; see docs/game-balance/coverage-and-evidence.md for review depth
+Custom/TellAFriend,Cross-system custom packages,2,694,LexicalInventory; see docs/game-balance/coverage-and-evidence.md for review depth
+Custom/ThirdParty/OmniAI,Cross-system custom packages,8,2402,LexicalInventory; see docs/game-balance/coverage-and-evidence.md for review depth
+Custom/ThirdParty/Staff Toolbar [2.0],Cross-system custom packages,1,1746,LexicalInventory; see docs/game-balance/coverage-and-evidence.md for review depth
+Custom/Vhaerun's CRL Homestead System [2.0],Cross-system custom packages,388,69926,LexicalInventory; see docs/game-balance/coverage-and-evidence.md for review depth
+Custom/Voting,Cross-system custom packages,8,1199,LexicalInventory; see docs/game-balance/coverage-and-evidence.md for review depth
+Custom/XMLSpawner,Cross-system custom packages,133,95558,LexicalInventory; see docs/game-balance/coverage-and-evidence.md for review depth
+Items/Armor,"Equipment, rewards, objects and property",191,25575,LexicalInventory; see docs/game-balance/coverage-and-evidence.md for review depth
+Items/Boats,"Equipment, rewards, objects and property",29,11926,LexicalInventory; see docs/game-balance/coverage-and-evidence.md for review depth
+Items/Books,"Equipment, rewards, objects and property",40,27907,LexicalInventory; see docs/game-balance/coverage-and-evidence.md for review depth
+Items/Carpets,"Equipment, rewards, objects and property",9,1152,LexicalInventory; see docs/game-balance/coverage-and-evidence.md for review depth
+Items/Clothing,"Equipment, rewards, objects and property",23,7900,LexicalInventory; see docs/game-balance/coverage-and-evidence.md for review depth
+Items/Construction,"Equipment, rewards, objects and property",178,24697,LexicalInventory; see docs/game-balance/coverage-and-evidence.md for review depth
+Items/Containers,"Equipment, rewards, objects and property",52,41964,LexicalInventory; see docs/game-balance/coverage-and-evidence.md for review depth
+Items/Decorations,"Equipment, rewards, objects and property",25,5420,LexicalInventory; see docs/game-balance/coverage-and-evidence.md for review depth
+Items/Deeds,"Equipment, rewards, objects and property",8,1594,LexicalInventory; see docs/game-balance/coverage-and-evidence.md for review depth
+Items/Doors,"Equipment, rewards, objects and property",28,7421,LexicalInventory; see docs/game-balance/coverage-and-evidence.md for review depth
+Items/Explorers,"Equipment, rewards, objects and property",8,2395,LexicalInventory; see docs/game-balance/coverage-and-evidence.md for review depth
+Items/Farming,"Equipment, rewards, objects and property",13,940,LexicalInventory; see docs/game-balance/coverage-and-evidence.md for review depth
+Items/Food,"Equipment, rewards, objects and property",18,7435,LexicalInventory; see docs/game-balance/coverage-and-evidence.md for review depth
+Items/Gems,"Equipment, rewards, objects and property",12,623,LexicalInventory; see docs/game-balance/coverage-and-evidence.md for review depth
+Items/Gifts,"Equipment, rewards, objects and property",109,14735,LexicalInventory; see docs/game-balance/coverage-and-evidence.md for review depth
+Items/Houses,"Equipment, rewards, objects and property",72,44077,LexicalInventory; see docs/game-balance/coverage-and-evidence.md for review depth
+Items/Jewels,"Equipment, rewards, objects and property",7,5337,LexicalInventory; see docs/game-balance/coverage-and-evidence.md for review depth
+Items/Magical,"Equipment, rewards, objects and property",1179,121835,LexicalInventory; see docs/game-balance/coverage-and-evidence.md for review depth
+Items/Misc,"Equipment, rewards, objects and property",146,37073,LexicalInventory; see docs/game-balance/coverage-and-evidence.md for review depth
+Items/Potions,"Equipment, rewards, objects and property",110,22594,LexicalInventory; see docs/game-balance/coverage-and-evidence.md for review depth
+Items/Relics,"Equipment, rewards, objects and property",27,13685,LexicalInventory; see docs/game-balance/coverage-and-evidence.md for review depth
+Items/Special,"Equipment, rewards, objects and property",239,33946,LexicalInventory; see docs/game-balance/coverage-and-evidence.md for review depth
+Items/Technology,"Equipment, rewards, objects and property",22,6050,LexicalInventory; see docs/game-balance/coverage-and-evidence.md for review depth
+Items/Trades,"Equipment, rewards, objects and property",271,42438,LexicalInventory; see docs/game-balance/coverage-and-evidence.md for review depth
+Items/Traps,"Equipment, rewards, objects and property",27,7105,LexicalInventory; see docs/game-balance/coverage-and-evidence.md for review depth
+Items/Unknown,"Equipment, rewards, objects and property",7,2934,LexicalInventory; see docs/game-balance/coverage-and-evidence.md for review depth
+Items/Wands,"Equipment, rewards, objects and property",67,3728,LexicalInventory; see docs/game-balance/coverage-and-evidence.md for review depth
+Items/Weapons,"Equipment, rewards, objects and property",112,21234,LexicalInventory; see docs/game-balance/coverage-and-evidence.md for review depth
+Magic/Bard,Magic and abilities,36,5102,LexicalInventory; see docs/game-balance/coverage-and-evidence.md for review depth
+Magic/Base,Magic and abilities,13,5970,LexicalInventory; see docs/game-balance/coverage-and-evidence.md for review depth
+Magic/Bushido,Magic and abilities,9,1154,LexicalInventory; see docs/game-balance/coverage-and-evidence.md for review depth
+Magic/Death Knight,Magic and abilities,21,4164,LexicalInventory; see docs/game-balance/coverage-and-evidence.md for review depth
+Magic/Druidism,Magic and abilities,20,6331,LexicalInventory; see docs/game-balance/coverage-and-evidence.md for review depth
+Magic/Elementalism,Magic and abilities,61,11974,LexicalInventory; see docs/game-balance/coverage-and-evidence.md for review depth
+Magic/Enchantments,Magic and abilities,16,1915,LexicalInventory; see docs/game-balance/coverage-and-evidence.md for review depth
+Magic/Holy Man,Magic and abilities,21,4492,LexicalInventory; see docs/game-balance/coverage-and-evidence.md for review depth
+Magic/Jedi,Magic and abilities,16,5057,LexicalInventory; see docs/game-balance/coverage-and-evidence.md for review depth
+Magic/Jester,Magic and abilities,15,4024,LexicalInventory; see docs/game-balance/coverage-and-evidence.md for review depth
+Magic/Knight,Magic and abilities,12,1840,LexicalInventory; see docs/game-balance/coverage-and-evidence.md for review depth
+Magic/Magery,Magic and abilities,131,15086,LexicalInventory; see docs/game-balance/coverage-and-evidence.md for review depth
+Magic/Misc,Magic and abilities,12,4379,LexicalInventory; see docs/game-balance/coverage-and-evidence.md for review depth
+Magic/Mystic,Magic and abilities,26,5962,LexicalInventory; see docs/game-balance/coverage-and-evidence.md for review depth
+Magic/Necromancy,Magic and abilities,37,4002,LexicalInventory; see docs/game-balance/coverage-and-evidence.md for review depth
+Magic/Ninjitsu,Magic and abilities,11,2328,LexicalInventory; see docs/game-balance/coverage-and-evidence.md for review depth
+Magic/Research,Magic and abilities,70,24432,LexicalInventory; see docs/game-balance/coverage-and-evidence.md for review depth
+Magic/Shinobi,Magic and abilities,11,3035,LexicalInventory; see docs/game-balance/coverage-and-evidence.md for review depth
+Magic/Syth,Magic and abilities,16,4955,LexicalInventory; see docs/game-balance/coverage-and-evidence.md for review depth
+Magic/Witch,Magic and abilities,20,5284,LexicalInventory; see docs/game-balance/coverage-and-evidence.md for review depth
+Mobiles/Animals,"Characters, creatures and NPCs",129,14452,LexicalInventory; see docs/game-balance/coverage-and-evidence.md for review depth
+Mobiles/Base,"Characters, creatures and NPCs",23,95663,LexicalInventory; see docs/game-balance/coverage-and-evidence.md for review depth
+Mobiles/Civilized,"Characters, creatures and NPCs",175,59225,LexicalInventory; see docs/game-balance/coverage-and-evidence.md for review depth
+Mobiles/Constructs,"Characters, creatures and NPCs",31,6707,LexicalInventory; see docs/game-balance/coverage-and-evidence.md for review depth
+Mobiles/Daemons,"Characters, creatures and NPCs",32,12060,LexicalInventory; see docs/game-balance/coverage-and-evidence.md for review depth
+Mobiles/Dragons,"Characters, creatures and NPCs",52,25725,LexicalInventory; see docs/game-balance/coverage-and-evidence.md for review depth
+Mobiles/Elementals,"Characters, creatures and NPCs",66,11994,LexicalInventory; see docs/game-balance/coverage-and-evidence.md for review depth
+Mobiles/Gargoyles,"Characters, creatures and NPCs",15,1749,LexicalInventory; see docs/game-balance/coverage-and-evidence.md for review depth
+Mobiles/Goliaths,"Characters, creatures and NPCs",41,6639,LexicalInventory; see docs/game-balance/coverage-and-evidence.md for review depth
+Mobiles/Hellish,"Characters, creatures and NPCs",13,1589,LexicalInventory; see docs/game-balance/coverage-and-evidence.md for review depth
+Mobiles/Humanoids,"Characters, creatures and NPCs",181,33202,LexicalInventory; see docs/game-balance/coverage-and-evidence.md for review depth
+Mobiles/Insects,"Characters, creatures and NPCs",41,6953,LexicalInventory; see docs/game-balance/coverage-and-evidence.md for review depth
+Mobiles/Mystical,"Characters, creatures and NPCs",33,5493,LexicalInventory; see docs/game-balance/coverage-and-evidence.md for review depth
+Mobiles/Plants,"Characters, creatures and NPCs",21,4199,LexicalInventory; see docs/game-balance/coverage-and-evidence.md for review depth
+Mobiles/Races,"Characters, creatures and NPCs",3,6583,LexicalInventory; see docs/game-balance/coverage-and-evidence.md for review depth
+Mobiles/Reptilian,"Characters, creatures and NPCs",74,9956,LexicalInventory; see docs/game-balance/coverage-and-evidence.md for review depth
+Mobiles/Slimes,"Characters, creatures and NPCs",15,1905,LexicalInventory; see docs/game-balance/coverage-and-evidence.md for review depth
+Mobiles/Summoned,"Characters, creatures and NPCs",26,3117,LexicalInventory; see docs/game-balance/coverage-and-evidence.md for review depth
+Mobiles/Undead,"Characters, creatures and NPCs",90,16083,LexicalInventory; see docs/game-balance/coverage-and-evidence.md for review depth
+Mobiles/Unique,"Characters, creatures and NPCs",20,6238,LexicalInventory; see docs/game-balance/coverage-and-evidence.md for review depth
+Mobiles/Unusual,"Characters, creatures and NPCs",21,3503,LexicalInventory; see docs/game-balance/coverage-and-evidence.md for review depth
+Quests/Assassin,Adventure and rewards,4,1573,LexicalInventory; see docs/game-balance/coverage-and-evidence.md for review depth
+Quests/Bards Tale,Adventure and rewards,1,163,LexicalInventory; see docs/game-balance/coverage-and-evidence.md for review depth
+Quests/Codex,Adventure and rewards,5,2427,LexicalInventory; see docs/game-balance/coverage-and-evidence.md for review depth
+Quests/Epic,Adventure and rewards,2,871,LexicalInventory; see docs/game-balance/coverage-and-evidence.md for review depth
+Quests/Fishing,Adventure and rewards,2,1591,LexicalInventory; see docs/game-balance/coverage-and-evidence.md for review depth
+Quests/Frankenstein,Adventure and rewards,15,2121,LexicalInventory; see docs/game-balance/coverage-and-evidence.md for review depth
+Quests/Golems,Adventure and rewards,5,2286,LexicalInventory; see docs/game-balance/coverage-and-evidence.md for review depth
+Quests/Hoard,Adventure and rewards,2,858,LexicalInventory; see docs/game-balance/coverage-and-evidence.md for review depth
+Quests/Jester,Adventure and rewards,1,81,LexicalInventory; see docs/game-balance/coverage-and-evidence.md for review depth
+Quests/Magic Pools,Adventure and rewards,1,852,LexicalInventory; see docs/game-balance/coverage-and-evidence.md for review depth
+Quests/Major,Adventure and rewards,2,2327,LexicalInventory; see docs/game-balance/coverage-and-evidence.md for review depth
+Quests/Museum,Adventure and rewards,3,2219,LexicalInventory; see docs/game-balance/coverage-and-evidence.md for review depth
+Quests/Pagan,Adventure and rewards,7,2015,LexicalInventory; see docs/game-balance/coverage-and-evidence.md for review depth
+Quests/Prisoners,Adventure and rewards,1,955,LexicalInventory; see docs/game-balance/coverage-and-evidence.md for review depth
+Quests/Robots,Adventure and rewards,11,1709,LexicalInventory; see docs/game-balance/coverage-and-evidence.md for review depth
+Quests/Root,Adventure and rewards,12,7640,LexicalInventory; see docs/game-balance/coverage-and-evidence.md for review depth
+Quests/Runes,Adventure and rewards,3,874,LexicalInventory; see docs/game-balance/coverage-and-evidence.md for review depth
+Quests/Search,Adventure and rewards,4,4357,LexicalInventory; see docs/game-balance/coverage-and-evidence.md for review depth
+Quests/Serpents,Adventure and rewards,7,834,LexicalInventory; see docs/game-balance/coverage-and-evidence.md for review depth
+Quests/Shadowlords,Adventure and rewards,10,911,LexicalInventory; see docs/game-balance/coverage-and-evidence.md for review depth
+Quests/Standard,Adventure and rewards,2,1238,LexicalInventory; see docs/game-balance/coverage-and-evidence.md for review depth
+Quests/Summon,Adventure and rewards,5,4443,LexicalInventory; see docs/game-balance/coverage-and-evidence.md for review depth
+Quests/Thief,Adventure and rewards,9,2997,LexicalInventory; see docs/game-balance/coverage-and-evidence.md for review depth
+Quests/Underworld,Adventure and rewards,3,239,LexicalInventory; see docs/game-balance/coverage-and-evidence.md for review depth
+ServerCore/ContextMenus,Engine and shared primitives,4,316,LexicalInventory; see docs/game-balance/coverage-and-evidence.md for review depth
+ServerCore/Core,Engine and shared primitives,51,45089,LexicalInventory; see docs/game-balance/coverage-and-evidence.md for review depth
+ServerCore/Diagnostics,Engine and shared primitives,5,465,LexicalInventory; see docs/game-balance/coverage-and-evidence.md for review depth
+ServerCore/Gumps,Engine and shared primitives,21,2847,LexicalInventory; see docs/game-balance/coverage-and-evidence.md for review depth
+ServerCore/Items,Engine and shared primitives,5,2629,LexicalInventory; see docs/game-balance/coverage-and-evidence.md for review depth
+ServerCore/Menus,Engine and shared primitives,3,222,LexicalInventory; see docs/game-balance/coverage-and-evidence.md for review depth
+ServerCore/Network,Engine and shared primitives,14,12491,LexicalInventory; see docs/game-balance/coverage-and-evidence.md for review depth
+ServerCore/Persistence,Engine and shared primitives,11,2124,LexicalInventory; see docs/game-balance/coverage-and-evidence.md for review depth
+ServerCore/Targeting,Engine and shared primitives,6,661,LexicalInventory; see docs/game-balance/coverage-and-evidence.md for review depth
+System/Chat,"Shared rules, skills and world services",63,17096,LexicalInventory; see docs/game-balance/coverage-and-evidence.md for review depth
+System/Commands,"Shared rules, skills and world services",99,85051,LexicalInventory; see docs/game-balance/coverage-and-evidence.md for review depth
+System/Gumps,"Shared rules, skills and world services",87,21824,LexicalInventory; see docs/game-balance/coverage-and-evidence.md for review depth
+System/Help,"Shared rules, skills and world services",10,7043,LexicalInventory; see docs/game-balance/coverage-and-evidence.md for review depth
+System/Misc,"Shared rules, skills and world services",77,161410,LexicalInventory; see docs/game-balance/coverage-and-evidence.md for review depth
+System/Obsolete,"Shared rules, skills and world services",9,47717,LexicalInventory; see docs/game-balance/coverage-and-evidence.md for review depth
+System/Regions,"Shared rules, skills and world services",39,5605,LexicalInventory; see docs/game-balance/coverage-and-evidence.md for review depth
+System/Skills,"Shared rules, skills and world services",87,16668,LexicalInventory; see docs/game-balance/coverage-and-evidence.md for review depth
+Trades/Apiculture,Production and economy,18,6261,LexicalInventory; see docs/game-balance/coverage-and-evidence.md for review depth
+Trades/Bulk Orders,Production and economy,25,5695,LexicalInventory; see docs/game-balance/coverage-and-evidence.md for review depth
+Trades/Core,Production and economy,23,11112,LexicalInventory; see docs/game-balance/coverage-and-evidence.md for review depth
+Trades/Crafting,Production and economy,17,21207,LexicalInventory; see docs/game-balance/coverage-and-evidence.md for review depth
+Trades/Gardening,Production and economy,18,5054,LexicalInventory; see docs/game-balance/coverage-and-evidence.md for review depth
+Trades/Grave Robbing,Production and economy,3,779,LexicalInventory; see docs/game-balance/coverage-and-evidence.md for review depth
+Trades/Guild,Production and economy,8,2691,LexicalInventory; see docs/game-balance/coverage-and-evidence.md for review depth
+Trades/Harvest,Production and economy,13,6107,LexicalInventory; see docs/game-balance/coverage-and-evidence.md for review depth
+Trades/Librarian,Production and economy,3,1233,LexicalInventory; see docs/game-balance/coverage-and-evidence.md for review depth
+Trades/Runics,Production and economy,5,1647,LexicalInventory; see docs/game-balance/coverage-and-evidence.md for review depth
+Trades/Shoppes,Production and economy,14,9948,LexicalInventory; see docs/game-balance/coverage-and-evidence.md for review depth
+Trades/Stone,Production and economy,6,3533,LexicalInventory; see docs/game-balance/coverage-and-evidence.md for review depth
+Trades/Taxidermy,Production and economy,6,3937,LexicalInventory; see docs/game-balance/coverage-and-evidence.md for review depth

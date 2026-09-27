@@ -17,13 +17,14 @@ For the human start-here guide, read [../README.md](../README.md). This file is 
 
 ## How Outputs Are Organized
 
-There are three kinds of files in this directory:
+There are four kinds of files in this directory:
 
 | Kind | Pattern | Meaning |
 | --- | --- | --- |
 | Canonical registers | `project-truth-register.csv`, `runtime-hook-map.csv`, `serialization-register.csv`, and similar unprefixed files. | Current canonical copy produced by a phase or post-audit baseline. Use these first for broad lookups. |
 | Phase-scoped copies | `phase-NN-*`. | Evidence produced for a specific phase. These preserve what the phase generated and are useful for audits, reruns, and traceability. |
 | Post-audit overlays and reviews | `post-audit-*`, `post-batch-*`, compile-only/source-build baseline files. | Current implementation and review state after the full phase audit. Use these to reconcile historical backlog rows. |
+| Supplemental gameplay studies | Dated records under `subagent-findings/`. | Source reviews supporting the gameplay guide; these do not advance historical audit phases or approve repairs. |
 
 When a canonical register and a phase-scoped copy have the same purpose, the canonical file is the easier lookup target and the phase file is the traceable phase artifact. Example: use `serialization-register.csv` for normal serializer lookup, and `phase-06-serialization-register.csv` when proving exactly what Phase 6 generated.
 
@@ -31,6 +32,7 @@ When a canonical register and a phase-scoped copy have the same purpose, the can
 
 | Task | Open First | Then Open |
 | --- | --- | --- |
+| Understand the game and prepare a rebalance | [Understanding Confictura](../../game-balance/README.md) | [Systems at a glance](../../game-balance/systems-at-a-glance.md), [coverage and evidence](../../game-balance/coverage-and-evidence.md) |
 | Understand current post-audit state | `../PHASE_STATUS.md` | `post-audit-next-steps.md`, `post-audit-active-backlog-status.csv` |
 | Find live runtime compile context | `live-build-and-runtime-script-compile-model.md` | `runtime-script-compile-inventory.csv`, `compile-only-verification-baseline.md` |
 | Find Visual Studio project drift | `project-truth-register.csv` | `missing-compile-targets.csv`, `unincluded-source-files.csv`, `project-cleanup-backlog.csv` |
@@ -43,6 +45,16 @@ When a canonical register and a phase-scoped copy have the same purpose, the can
 | Review gameplay synergy or conflicts | `synergy-conflict-matrix.csv` | `phase-09-balance-risk-list.csv`, `phase-09-preservation-notes.csv` |
 | Find actionable repair state | `post-audit-active-backlog-status.csv` | `repair-backlog.csv`, `verification-matrix.csv`, relevant `post-batch-*` artifact |
 | Review reorganization design | `reorganization-design.md` | `phase-12-move-proposal-table.csv`, `phase-12-keep-in-place-decisions.csv` |
+
+## September 2026 Gameplay Study
+
+The [gameplay guide](../../game-balance/README.md) consolidates these dated source reviews into readable chapters:
+
+- [Character and progression](subagent-findings/2026-09-27-gameplay-progression.md), with the [progression and race index](subagent-findings/2026-09-27-gameplay-progression.json).
+- [Combat, magic, equipment, and pets](subagent-findings/2026-09-27-gameplay-combat.md), with the [spell registration index](subagent-findings/2026-09-27-gameplay-combat-spells.json).
+- [Adventure, economy, production, and society](subagent-findings/2026-09-27-gameplay-economy-world.md).
+
+The guide's [coverage statement](../../game-balance/coverage-and-evidence.md) distinguishes detailed review, sampled content, lexical inventories, and unmeasured live behavior. Its [verification record](../../game-balance/VERIFICATION.md) records the reproducible documentation checks. No game changes or historical phase transitions are part of this study.
 
 ## Historical Backlog vs Active Overlay
 

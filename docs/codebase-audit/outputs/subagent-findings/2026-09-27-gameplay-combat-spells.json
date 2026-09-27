@@ -1,0 +1,5552 @@
+{
+  "schema": "confictura-spell-index-v1",
+  "date": "2026-09-27",
+  "baseline": "6568058a",
+  "evidenceKind": "StaticSource",
+  "notes": [
+    "This index enumerates Initializer.Register declarations, not all ways to cast.",
+    "SpellRegistry rejects IDs 700 and above; direct constructors can remain reachable.",
+    "Definition matches use class names; ambiguous matches must be resolved by namespace.",
+    "This index is discovery coverage, not per-spell functional validation."
+  ],
+  "registrationCount": 346,
+  "magicCsFileCount": 574,
+  "entries": [
+    {
+      "family": "Magery",
+      "spellId": 0,
+      "registeredType": "First.ClumsySpell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 11,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Magery/Magery 1st/Clumsy.cs",
+          "line": 7,
+          "baseType": "MagerySpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Magery",
+      "spellId": 1,
+      "registeredType": "First.CreateFoodSpell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 12,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Magery/Magery 1st/CreateFood.cs",
+          "line": 6,
+          "baseType": "MagerySpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Magery",
+      "spellId": 2,
+      "registeredType": "First.FeeblemindSpell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 13,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Magery/Magery 1st/Feeblemind.cs",
+          "line": 7,
+          "baseType": "MagerySpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Magery",
+      "spellId": 3,
+      "registeredType": "First.HealSpell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 14,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Magery/Magery 1st/Heal.cs",
+          "line": 9,
+          "baseType": "MagerySpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Magery",
+      "spellId": 4,
+      "registeredType": "First.MagicArrowSpell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 15,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Magery/Magery 1st/MagicArrow.cs",
+          "line": 8,
+          "baseType": "MagerySpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Magery",
+      "spellId": 5,
+      "registeredType": "First.NightSightSpell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 16,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Magery/Magery 1st/NightSight.cs",
+          "line": 8,
+          "baseType": "MagerySpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Magery",
+      "spellId": 6,
+      "registeredType": "First.ReactiveArmorSpell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 17,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Magery/Magery 1st/ReactiveArmor.cs",
+          "line": 8,
+          "baseType": "MagerySpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Magery",
+      "spellId": 7,
+      "registeredType": "First.WeakenSpell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 18,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Magery/Magery 1st/Weaken.cs",
+          "line": 7,
+          "baseType": "MagerySpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Magery",
+      "spellId": 8,
+      "registeredType": "Second.AgilitySpell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 21,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Magery/Magery 2nd/Agility.cs",
+          "line": 7,
+          "baseType": "MagerySpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Magery",
+      "spellId": 9,
+      "registeredType": "Second.CunningSpell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 22,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Magery/Magery 2nd/Cunning.cs",
+          "line": 7,
+          "baseType": "MagerySpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Magery",
+      "spellId": 10,
+      "registeredType": "Second.CureSpell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 23,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Magery/Magery 2nd/Cure.cs",
+          "line": 7,
+          "baseType": "MagerySpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Magery",
+      "spellId": 11,
+      "registeredType": "Second.HarmSpell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 24,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Magery/Magery 2nd/Harm.cs",
+          "line": 8,
+          "baseType": "MagerySpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Magery",
+      "spellId": 12,
+      "registeredType": "Second.MagicTrapSpell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 25,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Magery/Magery 2nd/MagicTrap.cs",
+          "line": 13,
+          "baseType": "MagerySpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Magery",
+      "spellId": 13,
+      "registeredType": "Second.RemoveTrapSpell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 26,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Magery/Magery 2nd/RemoveTrap.cs",
+          "line": 10,
+          "baseType": "MagerySpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Magery",
+      "spellId": 14,
+      "registeredType": "Second.ProtectionSpell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 27,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Magery/Magery 2nd/Protection.cs",
+          "line": 8,
+          "baseType": "MagerySpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Magery",
+      "spellId": 15,
+      "registeredType": "Second.StrengthSpell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 28,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Magery/Magery 2nd/Strength.cs",
+          "line": 7,
+          "baseType": "MagerySpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Magery",
+      "spellId": 16,
+      "registeredType": "Third.BlessSpell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 31,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Magery/Magery 3rd/Bless.cs",
+          "line": 7,
+          "baseType": "MagerySpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Magery",
+      "spellId": 17,
+      "registeredType": "Third.FireballSpell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 32,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Magery/Magery 3rd/Fireball.cs",
+          "line": 8,
+          "baseType": "MagerySpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Magery",
+      "spellId": 18,
+      "registeredType": "Third.MagicLockSpell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 33,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Magery/Magery 3rd/MagicLock.cs",
+          "line": 12,
+          "baseType": "MagerySpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Magery",
+      "spellId": 19,
+      "registeredType": "Third.PoisonSpell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 34,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Magery/Magery 3rd/Poison.cs",
+          "line": 8,
+          "baseType": "MagerySpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Magery",
+      "spellId": 20,
+      "registeredType": "Third.TelekinesisSpell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 35,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Magery/Magery 3rd/Telekinesis.cs",
+          "line": 9,
+          "baseType": "MagerySpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Magery",
+      "spellId": 21,
+      "registeredType": "Third.TeleportSpell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 36,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Magery/Magery 3rd/Teleport.cs",
+          "line": 10,
+          "baseType": "MagerySpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Magery",
+      "spellId": 22,
+      "registeredType": "Third.UnlockSpell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 37,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Magery/Magery 3rd/Unlock.cs",
+          "line": 8,
+          "baseType": "MagerySpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Magery",
+      "spellId": 23,
+      "registeredType": "Third.WallOfStoneSpell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 38,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Magery/Magery 3rd/WallOfStone.cs",
+          "line": 11,
+          "baseType": "MagerySpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Magery",
+      "spellId": 24,
+      "registeredType": "Fourth.ArchCureSpell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 41,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Magery/Magery 4th/ArchCure.cs",
+          "line": 10,
+          "baseType": "MagerySpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Magery",
+      "spellId": 25,
+      "registeredType": "Fourth.ArchProtectionSpell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 42,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Magery/Magery 4th/ArchProtection.cs",
+          "line": 10,
+          "baseType": "MagerySpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Magery",
+      "spellId": 26,
+      "registeredType": "Fourth.CurseSpell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 43,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Magery/Magery 4th/Curse.cs",
+          "line": 8,
+          "baseType": "MagerySpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Magery",
+      "spellId": 27,
+      "registeredType": "Fourth.FireFieldSpell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 44,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Magery/Magery 4th/FireField.cs",
+          "line": 12,
+          "baseType": "MagerySpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Magery",
+      "spellId": 28,
+      "registeredType": "Fourth.GreaterHealSpell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 45,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Magery/Magery 4th/GreaterHeal.cs",
+          "line": 9,
+          "baseType": "MagerySpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Magery",
+      "spellId": 29,
+      "registeredType": "Fourth.LightningSpell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 46,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Magery/Magery 4th/Lightning.cs",
+          "line": 8,
+          "baseType": "MagerySpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Magery",
+      "spellId": 30,
+      "registeredType": "Fourth.ManaDrainSpell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 47,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Magery/Magery 4th/ManaDrain.cs",
+          "line": 8,
+          "baseType": "MagerySpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Magery",
+      "spellId": 31,
+      "registeredType": "Fourth.RecallSpell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 48,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Magery/Magery 4th/Recall.cs",
+          "line": 13,
+          "baseType": "MagerySpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Magery",
+      "spellId": 32,
+      "registeredType": "Fifth.BladeSpiritsSpell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 51,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Magery/Magery 5th/BladeSpirits.cs",
+          "line": 8,
+          "baseType": "MagerySpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Magery",
+      "spellId": 33,
+      "registeredType": "Fifth.DispelFieldSpell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 52,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Magery/Magery 5th/DispelField.cs",
+          "line": 9,
+          "baseType": "MagerySpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Magery",
+      "spellId": 34,
+      "registeredType": "Fifth.IncognitoSpell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 53,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Magery/Magery 5th/Incognito.cs",
+          "line": 14,
+          "baseType": "MagerySpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Magery",
+      "spellId": 35,
+      "registeredType": "Fifth.MagicReflectSpell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 54,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Magery/Magery 5th/MagicReflect.cs",
+          "line": 10,
+          "baseType": "MagerySpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Magery",
+      "spellId": 36,
+      "registeredType": "Fifth.MindBlastSpell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 55,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Magery/Magery 5th/MindBlast.cs",
+          "line": 8,
+          "baseType": "MagerySpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Magery",
+      "spellId": 37,
+      "registeredType": "Fifth.ParalyzeSpell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 56,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Magery/Magery 5th/Paralyze.cs",
+          "line": 9,
+          "baseType": "MagerySpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Magery",
+      "spellId": 38,
+      "registeredType": "Fifth.PoisonFieldSpell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 57,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Magery/Magery 5th/PoisonField.cs",
+          "line": 11,
+          "baseType": "MagerySpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Magery",
+      "spellId": 39,
+      "registeredType": "Fifth.SummonCreatureSpell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 58,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Magery/Magery 5th/SummonCreature.cs",
+          "line": 8,
+          "baseType": "MagerySpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Magery",
+      "spellId": 40,
+      "registeredType": "Sixth.DispelSpell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 61,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Magery/Magery 6th/Dispel.cs",
+          "line": 10,
+          "baseType": "MagerySpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Magery",
+      "spellId": 41,
+      "registeredType": "Sixth.EnergyBoltSpell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 62,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Magery/Magery 6th/EnergyBolt.cs",
+          "line": 8,
+          "baseType": "MagerySpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Magery",
+      "spellId": 42,
+      "registeredType": "Sixth.ExplosionSpell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 63,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Magery/Magery 6th/Explosion.cs",
+          "line": 8,
+          "baseType": "MagerySpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Magery",
+      "spellId": 43,
+      "registeredType": "Sixth.InvisibilitySpell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 64,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Magery/Magery 6th/Invisibility.cs",
+          "line": 10,
+          "baseType": "MagerySpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Magery",
+      "spellId": 44,
+      "registeredType": "Sixth.MarkSpell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 65,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Magery/Magery 6th/Mark.cs",
+          "line": 10,
+          "baseType": "MagerySpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Magery",
+      "spellId": 45,
+      "registeredType": "Sixth.MassCurseSpell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 66,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Magery/Magery 6th/MassCurse.cs",
+          "line": 10,
+          "baseType": "MagerySpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Magery",
+      "spellId": 46,
+      "registeredType": "Sixth.ParalyzeFieldSpell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 67,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Magery/Magery 6th/ParalyzeField.cs",
+          "line": 10,
+          "baseType": "MagerySpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Magery",
+      "spellId": 47,
+      "registeredType": "Sixth.RevealSpell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 68,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Magery/Magery 6th/Reveal.cs",
+          "line": 14,
+          "baseType": "MagerySpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Magery",
+      "spellId": 48,
+      "registeredType": "Seventh.ChainLightningSpell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 71,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Magery/Magery 7th/ChainLightning.cs",
+          "line": 11,
+          "baseType": "MagerySpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Magery",
+      "spellId": 49,
+      "registeredType": "Seventh.EnergyFieldSpell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 72,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Magery/Magery 7th/EnergyField.cs",
+          "line": 11,
+          "baseType": "MagerySpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Magery",
+      "spellId": 50,
+      "registeredType": "Seventh.FlameStrikeSpell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 73,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Magery/Magery 7th/FlameStrike.cs",
+          "line": 8,
+          "baseType": "MagerySpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Magery",
+      "spellId": 51,
+      "registeredType": "Seventh.GateTravelSpell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 74,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Magery/Magery 7th/GateTravel.cs",
+          "line": 12,
+          "baseType": "MagerySpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Magery",
+      "spellId": 52,
+      "registeredType": "Seventh.ManaVampireSpell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 75,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Magery/Magery 7th/ManaVampire.cs",
+          "line": 7,
+          "baseType": "MagerySpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Magery",
+      "spellId": 53,
+      "registeredType": "Seventh.MassDispelSpell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 76,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Magery/Magery 7th/MassDispel.cs",
+          "line": 11,
+          "baseType": "MagerySpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Magery",
+      "spellId": 54,
+      "registeredType": "Seventh.MeteorSwarmSpell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 77,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Magery/Magery 7th/MeteorSwarm.cs",
+          "line": 10,
+          "baseType": "MagerySpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Magery",
+      "spellId": 55,
+      "registeredType": "Seventh.PolymorphSpell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 78,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Magery/Magery 7th/Polymorph.cs",
+          "line": 12,
+          "baseType": "MagerySpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Magery",
+      "spellId": 56,
+      "registeredType": "Eighth.EarthquakeSpell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 81,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Magery/Magery 8th/Earthquake.cs",
+          "line": 10,
+          "baseType": "MagerySpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Magery",
+      "spellId": 57,
+      "registeredType": "Eighth.EnergyVortexSpell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 82,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Magery/Magery 8th/EnergyVortex.cs",
+          "line": 8,
+          "baseType": "MagerySpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Magery",
+      "spellId": 58,
+      "registeredType": "Eighth.ResurrectionSpell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 83,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Magery/Magery 8th/Resurrection.cs",
+          "line": 12,
+          "baseType": "MagerySpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Magery",
+      "spellId": 59,
+      "registeredType": "Eighth.AirElementalSpell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 84,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Magery/Magery 8th/AirElemental.cs",
+          "line": 8,
+          "baseType": "MagerySpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Magery",
+      "spellId": 60,
+      "registeredType": "Eighth.SummonDaemonSpell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 85,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Magery/Magery 8th/SummonDaemon.cs",
+          "line": 10,
+          "baseType": "MagerySpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Magery",
+      "spellId": 61,
+      "registeredType": "Eighth.EarthElementalSpell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 86,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Magery/Magery 8th/EarthElemental.cs",
+          "line": 8,
+          "baseType": "MagerySpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Magery",
+      "spellId": 62,
+      "registeredType": "Eighth.FireElementalSpell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 87,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Magery/Magery 8th/FireElemental.cs",
+          "line": 8,
+          "baseType": "MagerySpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Magery",
+      "spellId": 63,
+      "registeredType": "Eighth.WaterElementalSpell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 88,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Magery/Magery 8th/WaterElemental.cs",
+          "line": 8,
+          "baseType": "MagerySpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Necromancy",
+      "spellId": 100,
+      "registeredType": "Necromancy.AnimateDeadSpell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 91,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Necromancy/AnimateDeadSpell.cs",
+          "line": 11,
+          "baseType": "NecromancerSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Necromancy",
+      "spellId": 101,
+      "registeredType": "Necromancy.BloodOathSpell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 92,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Necromancy/BloodOathSpell.cs",
+          "line": 9,
+          "baseType": "NecromancerSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Necromancy",
+      "spellId": 102,
+      "registeredType": "Necromancy.CorpseSkinSpell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 93,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Necromancy/CorpseSkin.cs",
+          "line": 9,
+          "baseType": "NecromancerSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Necromancy",
+      "spellId": 103,
+      "registeredType": "Necromancy.CurseWeaponSpell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 94,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Necromancy/CurseWeapon.cs",
+          "line": 10,
+          "baseType": "NecromancerSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Necromancy",
+      "spellId": 104,
+      "registeredType": "Necromancy.EvilOmenSpell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 95,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Necromancy/EvilOmen.cs",
+          "line": 8,
+          "baseType": "NecromancerSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Necromancy",
+      "spellId": 105,
+      "registeredType": "Necromancy.HorrificBeastSpell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 96,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Necromancy/HorrificBeast.cs",
+          "line": 9,
+          "baseType": "TransformationSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Necromancy",
+      "spellId": 106,
+      "registeredType": "Necromancy.LichFormSpell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 97,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Necromancy/LichForm.cs",
+          "line": 9,
+          "baseType": "TransformationSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Necromancy",
+      "spellId": 107,
+      "registeredType": "Necromancy.MindRotSpell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 98,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Necromancy/MindRot.cs",
+          "line": 9,
+          "baseType": "NecromancerSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Necromancy",
+      "spellId": 108,
+      "registeredType": "Necromancy.PainSpikeSpell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 99,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Necromancy/PainSpike.cs",
+          "line": 10,
+          "baseType": "NecromancerSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Necromancy",
+      "spellId": 109,
+      "registeredType": "Necromancy.PoisonStrikeSpell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 100,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Necromancy/PoisonStrike.cs",
+          "line": 10,
+          "baseType": "NecromancerSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Necromancy",
+      "spellId": 110,
+      "registeredType": "Necromancy.StrangleSpell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 101,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Necromancy/Strangle.cs",
+          "line": 10,
+          "baseType": "NecromancerSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Necromancy",
+      "spellId": 111,
+      "registeredType": "Necromancy.SummonFamiliarSpell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 102,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Necromancy/SummonFamiliar.cs",
+          "line": 11,
+          "baseType": "NecromancerSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Necromancy",
+      "spellId": 112,
+      "registeredType": "Necromancy.VampiricEmbraceSpell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 103,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Necromancy/VampiricEmbrace.cs",
+          "line": 9,
+          "baseType": "TransformationSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Necromancy",
+      "spellId": 113,
+      "registeredType": "Necromancy.VengefulSpiritSpell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 104,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Necromancy/VengefulSpirit.cs",
+          "line": 10,
+          "baseType": "NecromancerSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Necromancy",
+      "spellId": 114,
+      "registeredType": "Necromancy.WitherSpell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 105,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Necromancy/Wither.cs",
+          "line": 8,
+          "baseType": "NecromancerSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Necromancy",
+      "spellId": 115,
+      "registeredType": "Necromancy.WraithFormSpell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 106,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Necromancy/WraithForm.cs",
+          "line": 10,
+          "baseType": "TransformationSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Necromancy",
+      "spellId": 116,
+      "registeredType": "Necromancy.ExorcismSpell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 107,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Necromancy/Exorcism.cs",
+          "line": 11,
+          "baseType": "NecromancerSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Undead",
+      "spellId": 131,
+      "registeredType": "Undead.SpectreShadowSpell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 110,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Witch/Effects/SpectreShadow.cs",
+          "line": 9,
+          "baseType": "UndeadSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Undead",
+      "spellId": 132,
+      "registeredType": "Undead.ManaLeechSpell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 111,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Witch/Effects/ManaLeech.cs",
+          "line": 7,
+          "baseType": "UndeadSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Undead",
+      "spellId": 133,
+      "registeredType": "Undead.UndeadCurePoisonSpell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 112,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Witch/Effects/CurePoison.cs",
+          "line": 7,
+          "baseType": "UndeadSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Undead",
+      "spellId": 134,
+      "registeredType": "Undead.HellsBrandSpell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 113,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Witch/Effects/HellsBrand.cs",
+          "line": 11,
+          "baseType": "UndeadSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Undead",
+      "spellId": 135,
+      "registeredType": "Undead.UndeadGraveyardGatewaySpell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 114,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Witch/Effects/GraveyardGateway.cs",
+          "line": 11,
+          "baseType": "UndeadSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Undead",
+      "spellId": 136,
+      "registeredType": "Undead.RetchedAirSpell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 115,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Witch/Effects/RetchedAir.cs",
+          "line": 11,
+          "baseType": "UndeadSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Undead",
+      "spellId": 137,
+      "registeredType": "Undead.UndeadEyesSpell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 116,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Witch/Effects/UndeadEyes.cs",
+          "line": 8,
+          "baseType": "UndeadSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Undead",
+      "spellId": 138,
+      "registeredType": "Undead.UndeadWallOfSpikesSpell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 117,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Witch/Effects/WallOfSpikes.cs",
+          "line": 9,
+          "baseType": "UndeadSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Undead",
+      "spellId": 139,
+      "registeredType": "Undead.VampireGiftSpell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 118,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Witch/Effects/VampireGift.cs",
+          "line": 12,
+          "baseType": "UndeadSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Undead",
+      "spellId": 140,
+      "registeredType": "Undead.UndeadBloodPactSpell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 119,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Witch/Effects/BloodPact.cs",
+          "line": 9,
+          "baseType": "UndeadSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Undead",
+      "spellId": 141,
+      "registeredType": "Undead.NecroPoisonSpell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 120,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Witch/Effects/NecroPoison.cs",
+          "line": 7,
+          "baseType": "UndeadSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Undead",
+      "spellId": 142,
+      "registeredType": "Undead.HellsGateSpell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 121,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Witch/Effects/HellsGate.cs",
+          "line": 12,
+          "baseType": "UndeadSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Undead",
+      "spellId": 143,
+      "registeredType": "Undead.GhostlyImagesSpell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 122,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Witch/Effects/GhostlyImages.cs",
+          "line": 14,
+          "baseType": "UndeadSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Undead",
+      "spellId": 144,
+      "registeredType": "Undead.GhostPhaseSpell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 123,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Witch/Effects/GhostPhase.cs",
+          "line": 10,
+          "baseType": "UndeadSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Undead",
+      "spellId": 145,
+      "registeredType": "Undead.NecroUnlockSpell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 124,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Witch/Effects/NecroUnlock.cs",
+          "line": 8,
+          "baseType": "UndeadSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Undead",
+      "spellId": 146,
+      "registeredType": "Undead.PhantasmSpell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 125,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Witch/Effects/Phantasm.cs",
+          "line": 8,
+          "baseType": "UndeadSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Herbalist",
+      "spellId": 147,
+      "registeredType": "Herbalist.ShieldOfEarthSpell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 128,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Druidism/Effects/ShieldOfEarthSpell.cs",
+          "line": 9,
+          "baseType": "HerbalistSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Herbalist",
+      "spellId": 148,
+      "registeredType": "Herbalist.WoodlandProtectionSpell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 129,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Druidism/Effects/WoodlandProtectionSpell.cs",
+          "line": 9,
+          "baseType": "HerbalistSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Herbalist",
+      "spellId": 149,
+      "registeredType": "Herbalist.ProtectiveFairySpell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 130,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Druidism/Effects/ProtectiveFairySpell.cs",
+          "line": 10,
+          "baseType": "HerbalistSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Herbalist",
+      "spellId": 150,
+      "registeredType": "Herbalist.HerbalHealingSpell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 131,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Druidism/Effects/HerbalHealingSpell.cs",
+          "line": 11,
+          "baseType": "HerbalistSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Herbalist",
+      "spellId": 151,
+      "registeredType": "Herbalist.GraspingRootsSpell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 132,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Druidism/Effects/GraspingRootsSpell.cs",
+          "line": 9,
+          "baseType": "HerbalistSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Herbalist",
+      "spellId": 152,
+      "registeredType": "Herbalist.BlendWithForestSpell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 133,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Druidism/Effects/BlendWithForrestSpell.cs",
+          "line": 10,
+          "baseType": "HerbalistSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Herbalist",
+      "spellId": 153,
+      "registeredType": "Herbalist.SwarmOfInsectsSpell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 134,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Druidism/Effects/SwarmofInsectsSpell.cs",
+          "line": 9,
+          "baseType": "HerbalistSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Herbalist",
+      "spellId": 154,
+      "registeredType": "Herbalist.VolcanicEruptionSpell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 135,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Druidism/Effects/VolcanicEruption.cs",
+          "line": 10,
+          "baseType": "HerbalistSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Herbalist",
+      "spellId": 155,
+      "registeredType": "Herbalist.TreefellowSpell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 136,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Druidism/Effects/TreefellowSpell.cs",
+          "line": 11,
+          "baseType": "HerbalistSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Herbalist",
+      "spellId": 156,
+      "registeredType": "Herbalist.StoneCircleSpell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 137,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Druidism/Effects/StoneCircleSpell.cs",
+          "line": 11,
+          "baseType": "HerbalistSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Herbalist",
+      "spellId": 157,
+      "registeredType": "Herbalist.DruidicRuneSpell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 138,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Druidism/Effects/DruidicRuneSpell.cs",
+          "line": 12,
+          "baseType": "HerbalistSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Herbalist",
+      "spellId": 158,
+      "registeredType": "Herbalist.LureStoneSpell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 139,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Druidism/Effects/LureStoneSpell.cs",
+          "line": 15,
+          "baseType": "HerbalistSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Herbalist",
+      "spellId": 159,
+      "registeredType": "Herbalist.NaturesPassageSpell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 140,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Druidism/Effects/NaturesPassageSpell.cs",
+          "line": 12,
+          "baseType": "HerbalistSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Herbalist",
+      "spellId": 160,
+      "registeredType": "Herbalist.MushroomGatewaySpell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 141,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Druidism/Effects/MushroomGatewaySpell.cs",
+          "line": 11,
+          "baseType": "HerbalistSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Herbalist",
+      "spellId": 161,
+      "registeredType": "Herbalist.RestorativeSoilSpell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 142,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Druidism/Effects/RestorativeSoilSpell.cs",
+          "line": 13,
+          "baseType": "HerbalistSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Herbalist",
+      "spellId": 162,
+      "registeredType": "Herbalist.FireflySpell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 143,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Druidism/Effects/FireflySpell.cs",
+          "line": 8,
+          "baseType": "HerbalistSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Elementalism",
+      "spellId": 300,
+      "registeredType": "Elementalism.Elemental_Armor_Spell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 146,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Elementalism/Sphere 1/Elemental_Armor.cs",
+          "line": 8,
+          "baseType": "ElementalSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Elementalism",
+      "spellId": 301,
+      "registeredType": "Elementalism.Elemental_Bolt_Spell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 147,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Elementalism/Sphere 1/Elemental_Bolt.cs",
+          "line": 8,
+          "baseType": "ElementalSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Elementalism",
+      "spellId": 302,
+      "registeredType": "Elementalism.Elemental_Mend_Spell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 148,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Elementalism/Sphere 1/Elemental_Mend.cs",
+          "line": 9,
+          "baseType": "ElementalSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Elementalism",
+      "spellId": 303,
+      "registeredType": "Elementalism.Elemental_Sanctuary_Spell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 149,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Elementalism/Sphere 1/Elemental_Sanctuary.cs",
+          "line": 10,
+          "baseType": "ElementalSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Elementalism",
+      "spellId": 304,
+      "registeredType": "Elementalism.Elemental_Pain_Spell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 150,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Elementalism/Sphere 2/Elemental_Pain.cs",
+          "line": 8,
+          "baseType": "ElementalSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Elementalism",
+      "spellId": 305,
+      "registeredType": "Elementalism.Elemental_Protection_Spell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 151,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Elementalism/Sphere 2/Elemental_Protection.cs",
+          "line": 8,
+          "baseType": "ElementalSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Elementalism",
+      "spellId": 306,
+      "registeredType": "Elementalism.Elemental_Purge_Spell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 152,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Elementalism/Sphere 2/Elemental_Purge.cs",
+          "line": 7,
+          "baseType": "ElementalSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Elementalism",
+      "spellId": 307,
+      "registeredType": "Elementalism.Elemental_Steed_Spell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 153,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Elementalism/Sphere 2/Elemental_Steed.cs",
+          "line": 10,
+          "baseType": "ElementalSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Elementalism",
+      "spellId": 308,
+      "registeredType": "Elementalism.Elemental_Call_Spell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 154,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Elementalism/Sphere 3/Elemental_Call.cs",
+          "line": 8,
+          "baseType": "ElementalSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Elementalism",
+      "spellId": 309,
+      "registeredType": "Elementalism.Elemental_Force_Spell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 155,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Elementalism/Sphere 3/Elemental_Force.cs",
+          "line": 9,
+          "baseType": "ElementalSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Elementalism",
+      "spellId": 310,
+      "registeredType": "Elementalism.Elemental_Wall_Spell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 156,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Elementalism/Sphere 3/Elemental_Wall.cs",
+          "line": 11,
+          "baseType": "ElementalSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Elementalism",
+      "spellId": 311,
+      "registeredType": "Elementalism.Elemental_Warp_Spell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 157,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Elementalism/Sphere 3/Elemental_Warp.cs",
+          "line": 10,
+          "baseType": "ElementalSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Elementalism",
+      "spellId": 312,
+      "registeredType": "Elementalism.Elemental_Field_Spell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 158,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Elementalism/Sphere 4/Elemental_Field.cs",
+          "line": 12,
+          "baseType": "ElementalSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Elementalism",
+      "spellId": 313,
+      "registeredType": "Elementalism.Elemental_Restoration_Spell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 159,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Elementalism/Sphere 4/Elemental_Restoration.cs",
+          "line": 9,
+          "baseType": "ElementalSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Elementalism",
+      "spellId": 314,
+      "registeredType": "Elementalism.Elemental_Strike_Spell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 160,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Elementalism/Sphere 4/Elemental_Strike.cs",
+          "line": 8,
+          "baseType": "ElementalSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Elementalism",
+      "spellId": 315,
+      "registeredType": "Elementalism.Elemental_Void_Spell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 161,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Elementalism/Sphere 4/Elemental_Void.cs",
+          "line": 13,
+          "baseType": "ElementalSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Elementalism",
+      "spellId": 316,
+      "registeredType": "Elementalism.Elemental_Blast_Spell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 162,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Elementalism/Sphere 5/Elemental_Blast.cs",
+          "line": 8,
+          "baseType": "ElementalSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Elementalism",
+      "spellId": 317,
+      "registeredType": "Elementalism.Elemental_Echo_Spell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 163,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Elementalism/Sphere 5/Elemental_Echo.cs",
+          "line": 10,
+          "baseType": "ElementalSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Elementalism",
+      "spellId": 318,
+      "registeredType": "Elementalism.Elemental_Fiend_Spell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 164,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Elementalism/Sphere 5/Elemental_Fiend.cs",
+          "line": 8,
+          "baseType": "ElementalSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Elementalism",
+      "spellId": 319,
+      "registeredType": "Elementalism.Elemental_Hold_Spell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 165,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Elementalism/Sphere 5/Elemental_Hold.cs",
+          "line": 10,
+          "baseType": "ElementalSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Elementalism",
+      "spellId": 320,
+      "registeredType": "Elementalism.Elemental_Barrage_Spell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 166,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Elementalism/Sphere 6/Elemental_Barrage.cs",
+          "line": 8,
+          "baseType": "ElementalSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Elementalism",
+      "spellId": 321,
+      "registeredType": "Elementalism.Elemental_Rune_Spell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 167,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Elementalism/Sphere 6/Elemental_Rune.cs",
+          "line": 10,
+          "baseType": "ElementalSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Elementalism",
+      "spellId": 322,
+      "registeredType": "Elementalism.Elemental_Storm_Spell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 168,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Elementalism/Sphere 6/Elemental_Storm.cs",
+          "line": 8,
+          "baseType": "ElementalSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Elementalism",
+      "spellId": 323,
+      "registeredType": "Elementalism.Elemental_Summon_Spell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 169,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Elementalism/Sphere 6/Elemental_Summon.cs",
+          "line": 8,
+          "baseType": "ElementalSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Elementalism",
+      "spellId": 324,
+      "registeredType": "Elementalism.Elemental_Devastation_Spell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 170,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Elementalism/Sphere 7/Elemental_Devastation.cs",
+          "line": 11,
+          "baseType": "ElementalSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Elementalism",
+      "spellId": 325,
+      "registeredType": "Elementalism.Elemental_Fall_Spell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 171,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Elementalism/Sphere 7/Elemental_Fall.cs",
+          "line": 10,
+          "baseType": "ElementalSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Elementalism",
+      "spellId": 326,
+      "registeredType": "Elementalism.Elemental_Gate_Spell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 172,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Elementalism/Sphere 7/Elemental_Gate.cs",
+          "line": 12,
+          "baseType": "ElementalSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Elementalism",
+      "spellId": 327,
+      "registeredType": "Elementalism.Elemental_Havoc_Spell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 173,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Elementalism/Sphere 7/Elemental_Havoc.cs",
+          "line": 8,
+          "baseType": "ElementalSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Elementalism",
+      "spellId": 328,
+      "registeredType": "Elementalism.Elemental_Apocalypse_Spell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 174,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Elementalism/Sphere 8/Elemental_Apocalypse.cs",
+          "line": 10,
+          "baseType": "ElementalSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Elementalism",
+      "spellId": 329,
+      "registeredType": "Elementalism.Elemental_Lord_Spell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 175,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Elementalism/Sphere 8/Elemental_Lord.cs",
+          "line": 9,
+          "baseType": "ElementalSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Elementalism",
+      "spellId": 330,
+      "registeredType": "Elementalism.Elemental_Soul_Spell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 176,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Elementalism/Sphere 8/Elemental_Soul.cs",
+          "line": 12,
+          "baseType": "ElementalSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Elementalism",
+      "spellId": 331,
+      "registeredType": "Elementalism.Elemental_Spirit_Spell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 177,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Elementalism/Sphere 8/Elemental_Spirit.cs",
+          "line": 8,
+          "baseType": "ElementalSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Chivalry",
+      "spellId": 200,
+      "registeredType": "Chivalry.CleanseByFireSpell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 180,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Knight/CleanseByFire.cs",
+          "line": 9,
+          "baseType": "PaladinSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Chivalry",
+      "spellId": 201,
+      "registeredType": "Chivalry.CloseWoundsSpell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 181,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Knight/CloseWounds.cs",
+          "line": 10,
+          "baseType": "PaladinSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Chivalry",
+      "spellId": 202,
+      "registeredType": "Chivalry.ConsecrateWeaponSpell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 182,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Knight/ConsecrateWeapon.cs",
+          "line": 9,
+          "baseType": "PaladinSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Chivalry",
+      "spellId": 203,
+      "registeredType": "Chivalry.DispelEvilSpell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 183,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Knight/DispelEvil.cs",
+          "line": 11,
+          "baseType": "PaladinSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Chivalry",
+      "spellId": 204,
+      "registeredType": "Chivalry.DivineFurySpell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 184,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Knight/DivineFury.cs",
+          "line": 9,
+          "baseType": "PaladinSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Chivalry",
+      "spellId": 205,
+      "registeredType": "Chivalry.EnemyOfOneSpell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 185,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Knight/EnemyOfOne.cs",
+          "line": 11,
+          "baseType": "PaladinSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Chivalry",
+      "spellId": 206,
+      "registeredType": "Chivalry.HolyLightSpell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 186,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Knight/HolyLight.cs",
+          "line": 9,
+          "baseType": "PaladinSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Chivalry",
+      "spellId": 207,
+      "registeredType": "Chivalry.NobleSacrificeSpell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 187,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Knight/NobleSacrifice.cs",
+          "line": 15,
+          "baseType": "PaladinSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Chivalry",
+      "spellId": 208,
+      "registeredType": "Chivalry.RemoveCurseSpell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 188,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Knight/RemoveCurse.cs",
+          "line": 14,
+          "baseType": "PaladinSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Chivalry",
+      "spellId": 209,
+      "registeredType": "Chivalry.SacredJourneySpell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 189,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Knight/SacredJourney.cs",
+          "line": 12,
+          "baseType": "PaladinSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Mystic",
+      "spellId": 250,
+      "registeredType": "Mystic.AstralProjection",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 192,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Mystic/Spells/AstralProjection.cs",
+          "line": 10,
+          "baseType": "MysticSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Mystic",
+      "spellId": 251,
+      "registeredType": "Mystic.AstralTravel",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 193,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Mystic/Spells/AstralTravel.cs",
+          "line": 13,
+          "baseType": "MysticSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Mystic",
+      "spellId": 252,
+      "registeredType": "Mystic.CreateRobe",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 194,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Mystic/Spells/CreateRobe.cs",
+          "line": 9,
+          "baseType": "MysticSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Mystic",
+      "spellId": 253,
+      "registeredType": "Mystic.GentleTouch",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 195,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Mystic/Spells/GentleTouch.cs",
+          "line": 9,
+          "baseType": "MysticSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Mystic",
+      "spellId": 254,
+      "registeredType": "Mystic.Leap",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 196,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Mystic/Spells/Leap.cs",
+          "line": 10,
+          "baseType": "MysticSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Mystic",
+      "spellId": 255,
+      "registeredType": "Mystic.PsionicBlast",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 197,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Mystic/Spells/PsionicBlast.cs",
+          "line": 8,
+          "baseType": "MysticSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Mystic",
+      "spellId": 256,
+      "registeredType": "Mystic.PsychicWall",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 198,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Mystic/Spells/PsychicWall.cs",
+          "line": 10,
+          "baseType": "MysticSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Mystic",
+      "spellId": 257,
+      "registeredType": "Mystic.PurityOfBody",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 199,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Mystic/Spells/PurityOfBody.cs",
+          "line": 10,
+          "baseType": "MysticSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Mystic",
+      "spellId": 258,
+      "registeredType": "Mystic.QuiveringPalm",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 200,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Mystic/Spells/QuiveringPalm.cs",
+          "line": 9,
+          "baseType": "MysticSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Mystic",
+      "spellId": 259,
+      "registeredType": "Mystic.WindRunner",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 201,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Mystic/Spells/WindRunner.cs",
+          "line": 11,
+          "baseType": "MysticSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Jester",
+      "spellId": 260,
+      "registeredType": "Jester.CanOfSnakes",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 204,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Jester/Spells/CanOfSnakes.cs",
+          "line": 10,
+          "baseType": "JesterSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Jester",
+      "spellId": 261,
+      "registeredType": "Jester.Clowns",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 205,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Jester/Spells/Clowns.cs",
+          "line": 15,
+          "baseType": "JesterSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Jester",
+      "spellId": 262,
+      "registeredType": "Jester.FlowerPower",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 206,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Jester/Spells/FlowerPower.cs",
+          "line": 12,
+          "baseType": "JesterSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Jester",
+      "spellId": 263,
+      "registeredType": "Jester.Hilarity",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 207,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Jester/Spells/Hilarity.cs",
+          "line": 16,
+          "baseType": "JesterSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Jester",
+      "spellId": 264,
+      "registeredType": "Jester.Insult",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 208,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Jester/Spells/Insult.cs",
+          "line": 11,
+          "baseType": "JesterSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Jester",
+      "spellId": 265,
+      "registeredType": "Jester.JumpAround",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 209,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Jester/Spells/JumpAround.cs",
+          "line": 10,
+          "baseType": "JesterSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Jester",
+      "spellId": 266,
+      "registeredType": "Jester.PoppingBalloon",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 210,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Jester/Spells/PoppingBalloon.cs",
+          "line": 10,
+          "baseType": "JesterSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Jester",
+      "spellId": 267,
+      "registeredType": "Jester.RabbitInAHat",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 211,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Jester/Spells/RabbitInAHat.cs",
+          "line": 10,
+          "baseType": "JesterSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Jester",
+      "spellId": 268,
+      "registeredType": "Jester.SeltzerBottle",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 212,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Jester/Spells/SeltzerBottle.cs",
+          "line": 12,
+          "baseType": "JesterSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Jester",
+      "spellId": 269,
+      "registeredType": "Jester.SurpriseGift",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 213,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Jester/Spells/SurpriseGift.cs",
+          "line": 10,
+          "baseType": "JesterSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Syth",
+      "spellId": 270,
+      "registeredType": "Syth.Psychokinesis",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 216,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Syth/Spells/Psychokinesis.cs",
+          "line": 9,
+          "baseType": "SythSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Syth",
+      "spellId": 271,
+      "registeredType": "Syth.DeathGrip",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 217,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Syth/Spells/DeathGrip.cs",
+          "line": 10,
+          "baseType": "SythSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Syth",
+      "spellId": 272,
+      "registeredType": "Syth.Projection",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 218,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Syth/Spells/Projection.cs",
+          "line": 15,
+          "baseType": "SythSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Syth",
+      "spellId": 273,
+      "registeredType": "Syth.ThrowSword",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 219,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Syth/Spells/ThrowSword.cs",
+          "line": 9,
+          "baseType": "SythSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Syth",
+      "spellId": 274,
+      "registeredType": "Syth.SythSpeed",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 220,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Syth/Spells/Speed.cs",
+          "line": 11,
+          "baseType": "SythSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Syth",
+      "spellId": 275,
+      "registeredType": "Syth.SythLightning",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 221,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Syth/Spells/SythLightning.cs",
+          "line": 11,
+          "baseType": "SythSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Syth",
+      "spellId": 276,
+      "registeredType": "Syth.Absorption",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 222,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Syth/Spells/Absorption.cs",
+          "line": 10,
+          "baseType": "SythSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Syth",
+      "spellId": 277,
+      "registeredType": "Syth.PsychicBlast",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 223,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Syth/Spells/PsychicBlast.cs",
+          "line": 8,
+          "baseType": "SythSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Syth",
+      "spellId": 278,
+      "registeredType": "Syth.DrainLife",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 224,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Syth/Spells/DrainLife.cs",
+          "line": 12,
+          "baseType": "SythSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Syth",
+      "spellId": 279,
+      "registeredType": "Syth.CloneBody",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 225,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Syth/Spells/Clone.cs",
+          "line": 11,
+          "baseType": "SythSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Jedi",
+      "spellId": 280,
+      "registeredType": "Jedi.ForceGrip",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 228,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Jedi/Spells/ForceGrip.cs",
+          "line": 9,
+          "baseType": "JediSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Jedi",
+      "spellId": 281,
+      "registeredType": "Jedi.MindsEye",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 229,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Jedi/Spells/MindsEye.cs",
+          "line": 15,
+          "baseType": "JediSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Jedi",
+      "spellId": 282,
+      "registeredType": "Jedi.Mirage",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 230,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Jedi/Spells/Mirage.cs",
+          "line": 15,
+          "baseType": "JediSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Jedi",
+      "spellId": 283,
+      "registeredType": "Jedi.ThrowSabre",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 231,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Jedi/Spells/ThrowSabre.cs",
+          "line": 9,
+          "baseType": "JediSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Jedi",
+      "spellId": 284,
+      "registeredType": "Jedi.Celerity",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 232,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Jedi/Spells/Celerity.cs",
+          "line": 11,
+          "baseType": "JediSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Jedi",
+      "spellId": 285,
+      "registeredType": "Jedi.PsychicAura",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 233,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Jedi/Spells/PsychicAura.cs",
+          "line": 8,
+          "baseType": "JediSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Jedi",
+      "spellId": 286,
+      "registeredType": "Jedi.Deflection",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 234,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Jedi/Spells/Deflection.cs",
+          "line": 10,
+          "baseType": "JediSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Jedi",
+      "spellId": 287,
+      "registeredType": "Jedi.SoothingTouch",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 235,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Jedi/Spells/SoothingTouch.cs",
+          "line": 10,
+          "baseType": "JediSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Jedi",
+      "spellId": 288,
+      "registeredType": "Jedi.StasisField",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 236,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Jedi/Spells/StasisField.cs",
+          "line": 9,
+          "baseType": "JediSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Jedi",
+      "spellId": 289,
+      "registeredType": "Jedi.Replicate",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 237,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Jedi/Spells/Replicate.cs",
+          "line": 11,
+          "baseType": "JediSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Shinobi",
+      "spellId": 290,
+      "registeredType": "Shinobi.CheetahPaws",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 240,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Shinobi/Spells/CheetahPaws.cs",
+          "line": 11,
+          "baseType": "ShinobiSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Shinobi",
+      "spellId": 291,
+      "registeredType": "Shinobi.Deception",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 241,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Shinobi/Spells/Deception.cs",
+          "line": 14,
+          "baseType": "ShinobiSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Shinobi",
+      "spellId": 292,
+      "registeredType": "Shinobi.EagleEye",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 242,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Shinobi/Spells/EagleEye.cs",
+          "line": 15,
+          "baseType": "ShinobiSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Shinobi",
+      "spellId": 293,
+      "registeredType": "Shinobi.Espionage",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 243,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Shinobi/Spells/Espionage.cs",
+          "line": 8,
+          "baseType": "ShinobiSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Shinobi",
+      "spellId": 294,
+      "registeredType": "Shinobi.FerretFlee",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 244,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Shinobi/Spells/FerretFlee.cs",
+          "line": 14,
+          "baseType": "ShinobiSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Shinobi",
+      "spellId": 295,
+      "registeredType": "Shinobi.MonkeyLeap",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 245,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Shinobi/Spells/MonkeyLeap.cs",
+          "line": 10,
+          "baseType": "ShinobiSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Shinobi",
+      "spellId": 296,
+      "registeredType": "Shinobi.MysticShuriken",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 246,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Shinobi/Spells/MysticShuriken.cs",
+          "line": 8,
+          "baseType": "ShinobiSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Shinobi",
+      "spellId": 297,
+      "registeredType": "Shinobi.TigerStrength",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 247,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Shinobi/Spells/TigerStrength.cs",
+          "line": 8,
+          "baseType": "ShinobiSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Bushido",
+      "spellId": 400,
+      "registeredType": "Bushido.HonorableExecution",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 250,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Bushido/HonorableExecution.cs",
+          "line": 10,
+          "baseType": "SamuraiMove"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Bushido",
+      "spellId": 401,
+      "registeredType": "Bushido.Confidence",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 251,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Bushido/Confidence.cs",
+          "line": 9,
+          "baseType": "SamuraiSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Bushido",
+      "spellId": 402,
+      "registeredType": "Bushido.Evasion",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 252,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Bushido/Evasion.cs",
+          "line": 11,
+          "baseType": "SamuraiSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Bushido",
+      "spellId": 403,
+      "registeredType": "Bushido.CounterAttack",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 253,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Bushido/CounterAttack.cs",
+          "line": 10,
+          "baseType": "SamuraiSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Bushido",
+      "spellId": 404,
+      "registeredType": "Bushido.LightningStrike",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 254,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Bushido/LightningStrike.cs",
+          "line": 10,
+          "baseType": "SamuraiMove"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Bushido",
+      "spellId": 405,
+      "registeredType": "Bushido.MomentumStrike",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 255,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Bushido/MomentumStrike.cs",
+          "line": 10,
+          "baseType": "SamuraiMove"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Ninjitsu",
+      "spellId": 500,
+      "registeredType": "Ninjitsu.FocusAttack",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 258,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Ninjitsu/FocusAttack.cs",
+          "line": 10,
+          "baseType": "NinjaMove"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Ninjitsu",
+      "spellId": 501,
+      "registeredType": "Ninjitsu.DeathStrike",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 259,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Ninjitsu/DeathStrike.cs",
+          "line": 11,
+          "baseType": "NinjaMove"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Ninjitsu",
+      "spellId": 502,
+      "registeredType": "Ninjitsu.AnimalForm",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 260,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Ninjitsu/AnimalForm.cs",
+          "line": 13,
+          "baseType": "NinjaSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Ninjitsu",
+      "spellId": 503,
+      "registeredType": "Ninjitsu.KiAttack",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 261,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Ninjitsu/KiAttack.cs",
+          "line": 10,
+          "baseType": "NinjaMove"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Ninjitsu",
+      "spellId": 504,
+      "registeredType": "Ninjitsu.SurpriseAttack",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 262,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Ninjitsu/SurpriseAttack.cs",
+          "line": 11,
+          "baseType": "NinjaMove"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Ninjitsu",
+      "spellId": 505,
+      "registeredType": "Ninjitsu.Backstab",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 263,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Ninjitsu/Backstab.cs",
+          "line": 11,
+          "baseType": "NinjaMove"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Ninjitsu",
+      "spellId": 506,
+      "registeredType": "Ninjitsu.Shadowjump",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 264,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Ninjitsu/ShadowJump.cs",
+          "line": 10,
+          "baseType": "NinjaSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Ninjitsu",
+      "spellId": 507,
+      "registeredType": "Ninjitsu.MirrorImage",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 265,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Ninjitsu/MirrorImage.cs",
+          "line": 12,
+          "baseType": "NinjaSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Research",
+      "spellId": 600,
+      "registeredType": "Research.ResearchAerialServant",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 267,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Research/Spells/Conjuration/ResearchAerialServant.cs",
+          "line": 13,
+          "baseType": "ResearchSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Research",
+      "spellId": 601,
+      "registeredType": "Research.ResearchAirWalk",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 268,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Research/Spells/Theurgy/ResearchAirWalk.cs",
+          "line": 11,
+          "baseType": "ResearchSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Research",
+      "spellId": 602,
+      "registeredType": "Research.ResearchAvalanche",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 269,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Research/Spells/Wizardry/ResearchAvalanche.cs",
+          "line": 10,
+          "baseType": "ResearchSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Research",
+      "spellId": 603,
+      "registeredType": "Research.ResearchBanishDaemon",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 270,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Research/Spells/Thaumaturgy/ResearchBanishDaemon.cs",
+          "line": 11,
+          "baseType": "ResearchSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Research",
+      "spellId": 604,
+      "registeredType": "Research.ResearchCallDestruction",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 271,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Research/Spells/Thaumaturgy/ResearchCallDestruction.cs",
+          "line": 10,
+          "baseType": "ResearchSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Research",
+      "spellId": 605,
+      "registeredType": "Research.ResearchCauseFear",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 272,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Research/Spells/Enchanting/ResearchCauseFear.cs",
+          "line": 12,
+          "baseType": "ResearchSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Research",
+      "spellId": 606,
+      "registeredType": "Research.ResearchCharm",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 273,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Research/Spells/Enchanting/ResearchCharm.cs",
+          "line": 12,
+          "baseType": "ResearchSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Research",
+      "spellId": 607,
+      "registeredType": "Research.ResearchClone",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 274,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Research/Spells/Conjuration/ResearchClone.cs",
+          "line": 12,
+          "baseType": "ResearchSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Research",
+      "spellId": 608,
+      "registeredType": "Research.ResearchConflagration",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 275,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Research/Spells/Sorcery/ResearchConflagration.cs",
+          "line": 12,
+          "baseType": "ResearchSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Research",
+      "spellId": 609,
+      "registeredType": "Research.ResearchConfusionBlast",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 276,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Research/Spells/Thaumaturgy/ResearchConfusionBlast.cs",
+          "line": 13,
+          "baseType": "ResearchSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Research",
+      "spellId": 610,
+      "registeredType": "Research.ResearchConjure",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 277,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Research/Spells/Conjuration/ResearchConjure.cs",
+          "line": 9,
+          "baseType": "ResearchSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Research",
+      "spellId": 611,
+      "registeredType": "Research.ResearchCreateFire",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 278,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Research/Spells/Sorcery/ResearchCreateFire.cs",
+          "line": 12,
+          "baseType": "ResearchSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Research",
+      "spellId": 612,
+      "registeredType": "Research.ResearchCreateGold",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 279,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Research/Spells/Conjuration/ResearchCreateGold.cs",
+          "line": 8,
+          "baseType": "ResearchSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Research",
+      "spellId": 613,
+      "registeredType": "Research.ResearchCreateGolem",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 280,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Research/Spells/Death/ResearchCreateGolem.cs",
+          "line": 10,
+          "baseType": "ResearchSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Research",
+      "spellId": 614,
+      "registeredType": "Research.ResearchDeathSpeak",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 281,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Research/Spells/Death/ResearchDeathSpeak.cs",
+          "line": 11,
+          "baseType": "ResearchSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Research",
+      "spellId": 615,
+      "registeredType": "Research.ResearchDeathVortex",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 282,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Research/Spells/Conjuration/ResearchDeathVortex.cs",
+          "line": 9,
+          "baseType": "ResearchSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Research",
+      "spellId": 616,
+      "registeredType": "Research.ResearchDevastation",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 283,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Research/Spells/Thaumaturgy/ResearchDevastation.cs",
+          "line": 11,
+          "baseType": "ResearchSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Research",
+      "spellId": 617,
+      "registeredType": "Research.ResearchDivination",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 284,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Research/Spells/Theurgy/ResearchDivination.cs",
+          "line": 14,
+          "baseType": "ResearchSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Research",
+      "spellId": 618,
+      "registeredType": "Research.ResearchEnchant",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 285,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Research/Spells/Enchanting/ResearchEnchant.cs",
+          "line": 16,
+          "baseType": "ResearchSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Research",
+      "spellId": 619,
+      "registeredType": "Research.ResearchEndureCold",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 286,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Research/Spells/Sorcery/ResearchEndureCold.cs",
+          "line": 14,
+          "baseType": "ResearchSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Research",
+      "spellId": 620,
+      "registeredType": "Research.ResearchEndureHeat",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 287,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Research/Spells/Sorcery/ResearchEndureHeat.cs",
+          "line": 14,
+          "baseType": "ResearchSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Research",
+      "spellId": 621,
+      "registeredType": "Research.ResearchGasCloud",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 288,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Research/Spells/Wizardry/ResearchGasCloud.cs",
+          "line": 9,
+          "baseType": "ResearchSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Research",
+      "spellId": 622,
+      "registeredType": "Research.ResearchEtherealTravel",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 289,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Research/Spells/Thaumaturgy/ResearchEtherealTravel.cs",
+          "line": 13,
+          "baseType": "ResearchSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Research",
+      "spellId": 623,
+      "registeredType": "Research.ResearchExplosion",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 290,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Research/Spells/Sorcery/ResearchExplosion.cs",
+          "line": 10,
+          "baseType": "ResearchSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Research",
+      "spellId": 624,
+      "registeredType": "Research.ResearchExtinguish",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 291,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Research/Spells/Conjuration/ResearchExtinguish.cs",
+          "line": 10,
+          "baseType": "ResearchSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Research",
+      "spellId": 625,
+      "registeredType": "Research.ResearchFadefromSight",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 292,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Research/Spells/Theurgy/ResearchFadefromSight.cs",
+          "line": 10,
+          "baseType": "ResearchSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Research",
+      "spellId": 626,
+      "registeredType": "Research.ResearchFlameBolt",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 293,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Research/Spells/Sorcery/ResearchFlameBolt.cs",
+          "line": 9,
+          "baseType": "ResearchSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Research",
+      "spellId": 627,
+      "registeredType": "Research.ResearchFrostField",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 294,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Research/Spells/Wizardry/ResearchFrostField.cs",
+          "line": 12,
+          "baseType": "ResearchSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Research",
+      "spellId": 628,
+      "registeredType": "Research.ResearchFrostStrike",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 295,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Research/Spells/Wizardry/ResearchFrostStrike.cs",
+          "line": 9,
+          "baseType": "ResearchSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Research",
+      "spellId": 629,
+      "registeredType": "Research.ResearchGrantPeace",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 296,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Research/Spells/Death/ResearchGrantPeace.cs",
+          "line": 11,
+          "baseType": "ResearchSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Research",
+      "spellId": 630,
+      "registeredType": "Research.ResearchHailStorm",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 297,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Research/Spells/Wizardry/ResearchHailStorm.cs",
+          "line": 9,
+          "baseType": "ResearchSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Research",
+      "spellId": 631,
+      "registeredType": "Research.ResearchHealingTouch",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 298,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Research/Spells/Theurgy/ResearchHealingTouch.cs",
+          "line": 10,
+          "baseType": "ResearchSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Research",
+      "spellId": 632,
+      "registeredType": "Research.ResearchIcicle",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 299,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Research/Spells/Wizardry/ResearchIcicle.cs",
+          "line": 9,
+          "baseType": "ResearchSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Research",
+      "spellId": 633,
+      "registeredType": "Research.ResearchIgnite",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 300,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Research/Spells/Sorcery/ResearchIgnite.cs",
+          "line": 10,
+          "baseType": "ResearchSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Research",
+      "spellId": 634,
+      "registeredType": "Research.ResearchIntervention",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 301,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Research/Spells/Theurgy/ResearchIntervention.cs",
+          "line": 9,
+          "baseType": "ResearchSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Research",
+      "spellId": 635,
+      "registeredType": "Research.ResearchMagicSteed",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 302,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Research/Spells/Conjuration/ResearchMagicSteed.cs",
+          "line": 10,
+          "baseType": "ResearchSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Research",
+      "spellId": 636,
+      "registeredType": "Research.ResearchMaskofDeath",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 303,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Research/Spells/Death/ResearchMaskofDeath.cs",
+          "line": 11,
+          "baseType": "ResearchSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Research",
+      "spellId": 637,
+      "registeredType": "Research.ResearchMassDeath",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 304,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Research/Spells/Wizardry/ResearchMassDeath.cs",
+          "line": 10,
+          "baseType": "ResearchSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Research",
+      "spellId": 638,
+      "registeredType": "Research.ResearchMassMight",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 305,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Research/Spells/Enchanting/ResearchMassMight.cs",
+          "line": 14,
+          "baseType": "ResearchSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Research",
+      "spellId": 639,
+      "registeredType": "Research.ResearchMassSleep",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 306,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Research/Spells/Enchanting/ResearchMassSleep.cs",
+          "line": 10,
+          "baseType": "ResearchSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Research",
+      "spellId": 640,
+      "registeredType": "Research.ResearchMeteorShower",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 307,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Research/Spells/Thaumaturgy/ResearchMeteorShower.cs",
+          "line": 10,
+          "baseType": "ResearchSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Research",
+      "spellId": 641,
+      "registeredType": "Research.ResearchOpenGround",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 308,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Research/Spells/Death/ResearchOpenGround.cs",
+          "line": 13,
+          "baseType": "ResearchSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Research",
+      "spellId": 642,
+      "registeredType": "Research.ResearchRestoration",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 309,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Research/Spells/Theurgy/ResearchRestoration.cs",
+          "line": 10,
+          "baseType": "ResearchSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Research",
+      "spellId": 643,
+      "registeredType": "Research.ResearchRingofFire",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 310,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Research/Spells/Sorcery/ResearchRingofFire.cs",
+          "line": 11,
+          "baseType": "ResearchSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Research",
+      "spellId": 644,
+      "registeredType": "Research.ResearchRockFlesh",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 311,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Research/Spells/Death/ResearchRockFlesh.cs",
+          "line": 11,
+          "baseType": "ResearchSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Research",
+      "spellId": 645,
+      "registeredType": "Research.ResearchSeeTruth",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 312,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Research/Spells/Theurgy/ResearchSeeTruth.cs",
+          "line": 8,
+          "baseType": "ResearchSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Research",
+      "spellId": 646,
+      "registeredType": "Research.ResearchSleep",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 313,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Research/Spells/Enchanting/ResearchSleep.cs",
+          "line": 12,
+          "baseType": "ResearchSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Research",
+      "spellId": 647,
+      "registeredType": "Research.ResearchSleepField",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 314,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Research/Spells/Enchanting/ResearchSleepField.cs",
+          "line": 10,
+          "baseType": "ResearchSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Research",
+      "spellId": 648,
+      "registeredType": "Research.ResearchSneak",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 315,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Research/Spells/Enchanting/ResearchSneak.cs",
+          "line": 12,
+          "baseType": "ResearchSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Research",
+      "spellId": 649,
+      "registeredType": "Research.ResearchSnowBall",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 316,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Research/Spells/Wizardry/ResearchSnowBall.cs",
+          "line": 9,
+          "baseType": "ResearchSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Research",
+      "spellId": 650,
+      "registeredType": "Research.ResearchSummonAcidElemental",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 317,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Research/Spells/Summoning/ResearchSummonAcidElemental.cs",
+          "line": 10,
+          "baseType": "ResearchSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Research",
+      "spellId": 651,
+      "registeredType": "Research.ResearchSummonBloodElemental",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 318,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Research/Spells/Summoning/ResearchSummonBloodElemental.cs",
+          "line": 10,
+          "baseType": "ResearchSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Research",
+      "spellId": 652,
+      "registeredType": "Research.ResearchSummonCreature",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 319,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Research/Spells/Thaumaturgy/ResearchSummonCreature.cs",
+          "line": 10,
+          "baseType": "ResearchSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Research",
+      "spellId": 653,
+      "registeredType": "Research.ResearchSummonDead",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 320,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Research/Spells/Death/ResearchSummonDead.cs",
+          "line": 10,
+          "baseType": "ResearchSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Research",
+      "spellId": 654,
+      "registeredType": "Research.ResearchSummonDevil",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 321,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Research/Spells/Thaumaturgy/ResearchSummonDevil.cs",
+          "line": 10,
+          "baseType": "ResearchSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Research",
+      "spellId": 655,
+      "registeredType": "Research.ResearchSummonElectricalElemental",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 322,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Research/Spells/Summoning/ResearchSummonElectricalElemental.cs",
+          "line": 10,
+          "baseType": "ResearchSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Research",
+      "spellId": 656,
+      "registeredType": "Research.ResearchSummonGemElemental",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 323,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Research/Spells/Summoning/ResearchSummonGemElemental.cs",
+          "line": 10,
+          "baseType": "ResearchSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Research",
+      "spellId": 657,
+      "registeredType": "Research.ResearchSummonIceElemental",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 324,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Research/Spells/Summoning/ResearchSummonIceElemental.cs",
+          "line": 10,
+          "baseType": "ResearchSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Research",
+      "spellId": 658,
+      "registeredType": "Research.ResearchSummonMudElemental",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 325,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Research/Spells/Summoning/ResearchSummonMudElemental.cs",
+          "line": 10,
+          "baseType": "ResearchSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Research",
+      "spellId": 659,
+      "registeredType": "Research.ResearchSummonPoisonElemental",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 326,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Research/Spells/Summoning/ResearchSummonPoisonElemental.cs",
+          "line": 10,
+          "baseType": "ResearchSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Research",
+      "spellId": 660,
+      "registeredType": "Research.ResearchSummonWeedElemental",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 327,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Research/Spells/Summoning/ResearchSummonWeedElemental.cs",
+          "line": 10,
+          "baseType": "ResearchSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Research",
+      "spellId": 661,
+      "registeredType": "Research.ResearchSwarm",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 328,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Research/Spells/Conjuration/ResearchSwarm.cs",
+          "line": 9,
+          "baseType": "ResearchSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Research",
+      "spellId": 662,
+      "registeredType": "Research.ResearchWithstandDeath",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 329,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Research/Spells/Death/ResearchWithstandDeath.cs",
+          "line": 14,
+          "baseType": "ResearchSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Research",
+      "spellId": 663,
+      "registeredType": "Research.ResearchWizardEye",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 330,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Research/Spells/Theurgy/ResearchWizardEye.cs",
+          "line": 8,
+          "baseType": "ResearchSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Magical",
+      "spellId": 700,
+      "registeredType": "Magical.SummonSnakesSpell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 333,
+      "acceptedByRegistry": false,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Misc/SummonSnakesSpell.cs",
+          "line": 11,
+          "baseType": "MagicalSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Magical",
+      "spellId": 701,
+      "registeredType": "Magical.SummonDragonSpell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 334,
+      "acceptedByRegistry": false,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Misc/SummonDragonSpell.cs",
+          "line": 11,
+          "baseType": "MagicalSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Magical",
+      "spellId": 702,
+      "registeredType": "Magical.ThorLightningSpell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 335,
+      "acceptedByRegistry": false,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Misc/ThorLightningSpell.cs",
+          "line": 7,
+          "baseType": "MagicalSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Magical",
+      "spellId": 703,
+      "registeredType": "Magical.AttackSpells",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 336,
+      "acceptedByRegistry": false,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Misc/AttackSpells.cs",
+          "line": 10,
+          "baseType": "MagicalSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Magical",
+      "spellId": 704,
+      "registeredType": "Magical.SummonSkeletonSpell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 337,
+      "acceptedByRegistry": false,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Misc/SummonSkeleton.cs",
+          "line": 11,
+          "baseType": "MagicalSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Magical",
+      "spellId": 705,
+      "registeredType": "Magical.IdentifySpell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 338,
+      "acceptedByRegistry": false,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Misc/IdentifySpell.cs",
+          "line": 7,
+          "baseType": "MagicalSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Magical",
+      "spellId": 706,
+      "registeredType": "Magical.TravelSpell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 339,
+      "acceptedByRegistry": false,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Misc/TravelSpell.cs",
+          "line": 13,
+          "baseType": "MagicalSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "DeathKnight",
+      "spellId": 750,
+      "registeredType": "DeathKnight.BanishSpell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 342,
+      "acceptedByRegistry": false,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Death Knight/Spells/BanishSpell.cs",
+          "line": 10,
+          "baseType": "DeathKnightSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "DeathKnight",
+      "spellId": 751,
+      "registeredType": "DeathKnight.DemonicTouchSpell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 343,
+      "acceptedByRegistry": false,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Death Knight/Spells/DemonicTouchSpell.cs",
+          "line": 9,
+          "baseType": "DeathKnightSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "DeathKnight",
+      "spellId": 752,
+      "registeredType": "DeathKnight.DevilPactSpell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 344,
+      "acceptedByRegistry": false,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Death Knight/Spells/DevilPactSpell.cs",
+          "line": 8,
+          "baseType": "DeathKnightSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "DeathKnight",
+      "spellId": 753,
+      "registeredType": "DeathKnight.GrimReaperSpell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 345,
+      "acceptedByRegistry": false,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Death Knight/Spells/GrimReaperSpell.cs",
+          "line": 12,
+          "baseType": "DeathKnightSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "DeathKnight",
+      "spellId": 754,
+      "registeredType": "DeathKnight.HagHandSpell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 346,
+      "acceptedByRegistry": false,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Death Knight/Spells/HagHandSpell.cs",
+          "line": 15,
+          "baseType": "DeathKnightSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "DeathKnight",
+      "spellId": 755,
+      "registeredType": "DeathKnight.HellfireSpell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 347,
+      "acceptedByRegistry": false,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Death Knight/Spells/HellfireSpell.cs",
+          "line": 10,
+          "baseType": "DeathKnightSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "DeathKnight",
+      "spellId": 756,
+      "registeredType": "DeathKnight.LucifersBoltSpell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 348,
+      "acceptedByRegistry": false,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Death Knight/Spells/LucifersBoltSpell.cs",
+          "line": 7,
+          "baseType": "DeathKnightSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "DeathKnight",
+      "spellId": 757,
+      "registeredType": "DeathKnight.OrbOfOrcusSpell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 349,
+      "acceptedByRegistry": false,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Death Knight/Spells/OrbOfOrcusSpell.cs",
+          "line": 13,
+          "baseType": "DeathKnightSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "DeathKnight",
+      "spellId": 758,
+      "registeredType": "DeathKnight.ShieldOfHateSpell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 350,
+      "acceptedByRegistry": false,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Death Knight/Spells/ShieldOfHateSpell.cs",
+          "line": 9,
+          "baseType": "DeathKnightSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "DeathKnight",
+      "spellId": 759,
+      "registeredType": "DeathKnight.SoulReaperSpell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 351,
+      "acceptedByRegistry": false,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Death Knight/Spells/SoulReaperSpell.cs",
+          "line": 10,
+          "baseType": "DeathKnightSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "DeathKnight",
+      "spellId": 760,
+      "registeredType": "DeathKnight.StrengthOfSteelSpell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 352,
+      "acceptedByRegistry": false,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Death Knight/Spells/StrengthOfSteelSpell.cs",
+          "line": 7,
+          "baseType": "DeathKnightSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "DeathKnight",
+      "spellId": 761,
+      "registeredType": "DeathKnight.StrikeSpell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 353,
+      "acceptedByRegistry": false,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Death Knight/Spells/StrikeSpell.cs",
+          "line": 10,
+          "baseType": "DeathKnightSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "DeathKnight",
+      "spellId": 762,
+      "registeredType": "DeathKnight.SuccubusSkinSpell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 354,
+      "acceptedByRegistry": false,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Death Knight/Spells/SuccubusSkinSpell.cs",
+          "line": 9,
+          "baseType": "DeathKnightSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "DeathKnight",
+      "spellId": 763,
+      "registeredType": "DeathKnight.WrathSpell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 355,
+      "acceptedByRegistry": false,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Death Knight/Spells/WrathSpell.cs",
+          "line": 11,
+          "baseType": "DeathKnightSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "HolyMan",
+      "spellId": 770,
+      "registeredType": "HolyMan.BanishEvilSpell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 358,
+      "acceptedByRegistry": false,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Holy Man/Spells/BanishEvilSpell.cs",
+          "line": 11,
+          "baseType": "HolyManSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "HolyMan",
+      "spellId": 771,
+      "registeredType": "HolyMan.DampenSpiritSpell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 359,
+      "acceptedByRegistry": false,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Holy Man/Spells/DampenSpiritSpell.cs",
+          "line": 11,
+          "baseType": "HolyManSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "HolyMan",
+      "spellId": 772,
+      "registeredType": "HolyMan.EnchantSpell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 360,
+      "acceptedByRegistry": false,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Holy Man/Spells/EnchantSpell.cs",
+          "line": 14,
+          "baseType": "HolyManSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "HolyMan",
+      "spellId": 773,
+      "registeredType": "HolyMan.HammerOfFaithSpell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 361,
+      "acceptedByRegistry": false,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Holy Man/Spells/HammerOfFaithSpell.cs",
+          "line": 11,
+          "baseType": "HolyManSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "HolyMan",
+      "spellId": 774,
+      "registeredType": "HolyMan.HeavenlyLightSpell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 362,
+      "acceptedByRegistry": false,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Holy Man/Spells/HeavenlyLightSpell.cs",
+          "line": 9,
+          "baseType": "HolyManSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "HolyMan",
+      "spellId": 775,
+      "registeredType": "HolyMan.NourishSpell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 363,
+      "acceptedByRegistry": false,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Holy Man/Spells/NourishSpell.cs",
+          "line": 9,
+          "baseType": "HolyManSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "HolyMan",
+      "spellId": 776,
+      "registeredType": "HolyMan.PurgeSpell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 364,
+      "acceptedByRegistry": false,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Holy Man/Spells/PurgeSpell.cs",
+          "line": 14,
+          "baseType": "HolyManSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "HolyMan",
+      "spellId": 777,
+      "registeredType": "HolyMan.RebirthSpell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 365,
+      "acceptedByRegistry": false,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Holy Man/Spells/RebirthSpell.cs",
+          "line": 12,
+          "baseType": "HolyManSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "HolyMan",
+      "spellId": 778,
+      "registeredType": "HolyMan.SacredBoonSpell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 366,
+      "acceptedByRegistry": false,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Holy Man/Spells/SacredBoonSpell.cs",
+          "line": 10,
+          "baseType": "HolyManSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "HolyMan",
+      "spellId": 779,
+      "registeredType": "HolyMan.SanctifySpell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 367,
+      "acceptedByRegistry": false,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Holy Man/Spells/SanctifySpell.cs",
+          "line": 10,
+          "baseType": "HolyManSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "HolyMan",
+      "spellId": 780,
+      "registeredType": "HolyMan.SeanceSpell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 368,
+      "acceptedByRegistry": false,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Holy Man/Spells/SeanceSpell.cs",
+          "line": 10,
+          "baseType": "HolyManSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "HolyMan",
+      "spellId": 781,
+      "registeredType": "HolyMan.SmiteSpell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 369,
+      "acceptedByRegistry": false,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Holy Man/Spells/SmiteSpell.cs",
+          "line": 11,
+          "baseType": "HolyManSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "HolyMan",
+      "spellId": 782,
+      "registeredType": "HolyMan.TouchOfLifeSpell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 370,
+      "acceptedByRegistry": false,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Holy Man/Spells/TouchOfLifeSpell.cs",
+          "line": 10,
+          "baseType": "HolyManSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "HolyMan",
+      "spellId": 783,
+      "registeredType": "HolyMan.TrialByFireSpell",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 371,
+      "acceptedByRegistry": false,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Holy Man/Spells/TrialByFireSpell.cs",
+          "line": 11,
+          "baseType": "HolyManSpell"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Song",
+      "spellId": 351,
+      "registeredType": "Song.ArmysPaeonSong",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 374,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Bard/Spells/ArmysPaeonSong.cs",
+          "line": 14,
+          "baseType": "Song"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Song",
+      "spellId": 352,
+      "registeredType": "Song.EnchantingEtudeSong",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 375,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Bard/Spells/EnchantingEtudeSong.cs",
+          "line": 14,
+          "baseType": "Song"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Song",
+      "spellId": 353,
+      "registeredType": "Song.EnergyCarolSong",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 376,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Bard/Spells/EnergyCarolSong.cs",
+          "line": 14,
+          "baseType": "Song"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Song",
+      "spellId": 354,
+      "registeredType": "Song.EnergyThrenodySong",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 377,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Bard/Spells/EnergyThrenodySong.cs",
+          "line": 10,
+          "baseType": "Song"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Song",
+      "spellId": 355,
+      "registeredType": "Song.FireCarolSong",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 378,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Bard/Spells/FireCarolSong.cs",
+          "line": 14,
+          "baseType": "Song"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Song",
+      "spellId": 356,
+      "registeredType": "Song.FireThrenodySong",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 379,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Bard/Spells/FireThrenodySong.cs",
+          "line": 10,
+          "baseType": "Song"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Song",
+      "spellId": 357,
+      "registeredType": "Song.FoeRequiemSong",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 380,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Bard/Spells/FoeRequiemSong.cs",
+          "line": 10,
+          "baseType": "Song"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Song",
+      "spellId": 358,
+      "registeredType": "Song.IceCarolSong",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 381,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Bard/Spells/IceCarolSong.cs",
+          "line": 14,
+          "baseType": "Song"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Song",
+      "spellId": 359,
+      "registeredType": "Song.IceThrenodySong",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 382,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Bard/Spells/IceThrenodySong.cs",
+          "line": 10,
+          "baseType": "Song"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Song",
+      "spellId": 360,
+      "registeredType": "Song.KnightsMinneSong",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 383,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Bard/Spells/KnightsMinneSong.cs",
+          "line": 14,
+          "baseType": "Song"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Song",
+      "spellId": 361,
+      "registeredType": "Song.MagesBalladSong",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 384,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Bard/Spells/MagesBalladSong.cs",
+          "line": 14,
+          "baseType": "Song"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Song",
+      "spellId": 362,
+      "registeredType": "Song.MagicFinaleSong",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 385,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Bard/Spells/MagicFinaleSong.cs",
+          "line": 14,
+          "baseType": "Song"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Song",
+      "spellId": 363,
+      "registeredType": "Song.PoisonCarolSong",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 386,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Bard/Spells/PoisonCarolSong.cs",
+          "line": 14,
+          "baseType": "Song"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Song",
+      "spellId": 364,
+      "registeredType": "Song.PoisonThrenodySong",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 387,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Bard/Spells/PoisonThrenodySong.cs",
+          "line": 10,
+          "baseType": "Song"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Song",
+      "spellId": 365,
+      "registeredType": "Song.SheepfoeMamboSong",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 388,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Bard/Spells/SheepfoeMamboSong.cs",
+          "line": 14,
+          "baseType": "Song"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Song",
+      "spellId": 366,
+      "registeredType": "Song.SinewyEtudeSong",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 389,
+      "acceptedByRegistry": true,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Bard/Spells/SinewyEtudeSong.cs",
+          "line": 14,
+          "baseType": "Song"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Enchantments",
+      "spellId": 800,
+      "registeredType": "Enchantments.BanishMagic",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 392,
+      "acceptedByRegistry": false,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Enchantments/Spells/BanishMagic..cs",
+          "line": 10,
+          "baseType": "EnchantMagic"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Enchantments",
+      "spellId": 801,
+      "registeredType": "Enchantments.DemonicTouchMagic",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 393,
+      "acceptedByRegistry": false,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Enchantments/Spells/DemonicTouchMagic..cs",
+          "line": 9,
+          "baseType": "EnchantMagic"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Enchantments",
+      "spellId": 802,
+      "registeredType": "Enchantments.DevilPactMagic",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 394,
+      "acceptedByRegistry": false,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Enchantments/Spells/DevilPactMagic..cs",
+          "line": 8,
+          "baseType": "EnchantMagic"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Enchantments",
+      "spellId": 803,
+      "registeredType": "Enchantments.GrimReaperMagic",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 395,
+      "acceptedByRegistry": false,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Enchantments/Spells/GrimReaperMagic..cs",
+          "line": 12,
+          "baseType": "EnchantMagic"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Enchantments",
+      "spellId": 804,
+      "registeredType": "Enchantments.HagHandMagic",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 396,
+      "acceptedByRegistry": false,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Enchantments/Spells/HagHandMagic..cs",
+          "line": 15,
+          "baseType": "EnchantMagic"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Enchantments",
+      "spellId": 805,
+      "registeredType": "Enchantments.HellfireMagic",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 397,
+      "acceptedByRegistry": false,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Enchantments/Spells/HellfireMagic..cs",
+          "line": 10,
+          "baseType": "EnchantMagic"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Enchantments",
+      "spellId": 806,
+      "registeredType": "Enchantments.LucifersBoltMagic",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 398,
+      "acceptedByRegistry": false,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Enchantments/Spells/LucifersBoltMagic..cs",
+          "line": 7,
+          "baseType": "EnchantMagic"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Enchantments",
+      "spellId": 807,
+      "registeredType": "Enchantments.OrbOfOrcusMagic",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 399,
+      "acceptedByRegistry": false,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Enchantments/Spells/OrbOfOrcusMagic..cs",
+          "line": 13,
+          "baseType": "EnchantMagic"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Enchantments",
+      "spellId": 808,
+      "registeredType": "Enchantments.ShieldOfHateMagic",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 400,
+      "acceptedByRegistry": false,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Enchantments/Spells/ShieldOfHateMagic..cs",
+          "line": 9,
+          "baseType": "EnchantMagic"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Enchantments",
+      "spellId": 809,
+      "registeredType": "Enchantments.SoulReaperMagic",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 401,
+      "acceptedByRegistry": false,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Enchantments/Spells/SoulReaperMagic..cs",
+          "line": 10,
+          "baseType": "EnchantMagic"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Enchantments",
+      "spellId": 810,
+      "registeredType": "Enchantments.StrengthOfSteelMagic",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 402,
+      "acceptedByRegistry": false,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Enchantments/Spells/StrengthOfSteelMagic..cs",
+          "line": 7,
+          "baseType": "EnchantMagic"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Enchantments",
+      "spellId": 811,
+      "registeredType": "Enchantments.StrikeMagic",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 403,
+      "acceptedByRegistry": false,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Enchantments/Spells/StrikeMagic..cs",
+          "line": 10,
+          "baseType": "EnchantMagic"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Enchantments",
+      "spellId": 812,
+      "registeredType": "Enchantments.SuccubusSkinMagic",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 404,
+      "acceptedByRegistry": false,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Enchantments/Spells/SuccubusSkinMagic..cs",
+          "line": 9,
+          "baseType": "EnchantMagic"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    },
+    {
+      "family": "Enchantments",
+      "spellId": 813,
+      "registeredType": "Enchantments.WrathMagic",
+      "initializerPath": "Data/Scripts/Magic/Base/Initializer.cs",
+      "initializerLine": 405,
+      "acceptedByRegistry": false,
+      "definitions": [
+        {
+          "path": "Data/Scripts/Magic/Enchantments/Spells/WrathMagic..cs",
+          "line": 11,
+          "baseType": "EnchantMagic"
+        }
+      ],
+      "reviewStatus": "Indexed; individual effect balance not fully reviewed"
+    }
+  ]
+}
