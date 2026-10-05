@@ -1,0 +1,2 @@
+Path,Line,Text,Classification,ReviewNote
+Info/settings.xml,221,"// If true, then players have a chance for some slight magical properties on crafted exceptional items (armor, weapons, clothing, quivers, jewelry, or instruments) where the better the skill, material, and if they are in the guild will determine effectiveness.",cap-safe,"English comment contains 'skill, material'; no executable property action."

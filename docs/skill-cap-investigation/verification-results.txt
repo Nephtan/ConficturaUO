@@ -1,0 +1,30 @@
+Successful isolated run: output/skill-cap-investigation/823aed05104b40aaabb6db831ff903c9
+Production baseline: 75bc9dfb
+
+[server-build]
+
+  Server -> D:\ConficturaUO-main\output\skill-cap-investigation\823aed05104b40aaabb6db831ff903c9\ConficturaServer.exe
+
+[runtime-compile]
+System Initializing...
+Running on .NET Framework Version 4.0.30319
+Core: Running with arguments: -nocache -compileonly
+Optimizing for 24 processors
+Processing. Please wait...
+Core: Server garbage collection mode enabled
+Scripts: Compile-only verification completed successfully.
+Exiting...done
+
+[fixture-build]
+(No compiler diagnostics; process exit 0.)
+
+[regression]
+IL INVENTORY: methods=112809; bodies=111518; direct mutation references=187; reflection writes=40; NPC SetSkill calls=5297; unresolved=0
+PASS: gain boundary/lock/acceleration matrix; individual-cap overshoots; conditional Player=false bypass
+PASS: all supported cap tiers, unsupported cap, over-cap region entry, staff exemption, collateral stats
+PASS: conditional XML and election total-cap bypasses; disabled reward and repeated voter controls
+PASS: scroll, soulstone, skill stone, teaching boundaries and repeated responses
+PASS: actual Skills serialization/deserialization preserves excess; cap reduction followed by reset
+PASS: actual offline training, Create Food CheckFizzle and mana-regeneration skill checks at cap
+PASS: full-pack food ground output and 96 KiB queue guard (no connected client / no live pile)
+PASS: 335 assertions; isolated production methods; no saves loaded or listeners started.

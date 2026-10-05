@@ -1,0 +1,247 @@
+[
+  {
+    "id": "CORE-BASE", "pattern": "^Server\\.Skill::.*set_Base(?:FixedPoint)?\\(", "classification": "conditional bypass",
+    "trigger": "Public primitive called by reviewed gameplay, staff and XML callers; any Skill owner.",
+    "guards": "Clamps raw base to 0..65535 tenths; ignores skill lock, individual cap and total cap.",
+    "maximum": "Per skill 6553.5 points; aggregate sum of raw bases minus the current cap.",
+    "reason": "Not a player entry point itself. All compiled direct callers and generic reflection writers are registered separately."
+  },
+  {
+    "id": "CORE-INDIVIDUAL-CAP", "pattern": "^Server\\.Skill::.*set_Cap(?:FixedPoint)?\\(", "classification": "cap-safe",
+    "trigger": "Individual skill cap primitive; staff, scrolls and NPC setup.",
+    "guards": "Changes individual cap only, does not grant points or change total cap.",
+    "maximum": "0 new total excess; lowering an individual cap can leave that skill above its individual cap.",
+    "reason": "Individual skill limits and aggregate real skill total are different invariants."
+  },
+  {
+    "id": "CORE-SKILL-LOAD", "pattern": "^Server\\.Skill::.*\\.ctor.*GenericReader", "classification": "conditional bypass",
+    "trigger": "World skill deserialization; raw persisted values.",
+    "guards": "Reads stored base/cap without enforcing the owner's total cap or lock.",
+    "maximum": "Preserves previously stored excess; raw ushort base bounds apply.",
+    "reason": "Import/load is not a new ordinary gain. Skills roundtrip fixture preserves 1000.1 at cap 1000.0."
+  },
+  {
+    "id": "CORE-SKILL-NEW", "pattern": "^Server\\.Skill::.*\\.ctor.*Int32, Int32", "classification": "cap-safe",
+    "trigger": "Lazy Skills indexer creates a zero-base Skill in this baseline.",
+    "guards": "Constructor accepts raw values; the sole compiled non-reader caller supplies base zero.",
+    "maximum": "0 through the current caller; a future caller with nonzero base requires review.",
+    "reason": "Creation of default skill records does not add real points."
+  },
+  {
+    "id": "CORE-TOTAL-CAP", "pattern": "^Server\\.(Skills::.*set_Cap|Mobile::.*set_SkillsCap)\\(", "classification": "conditional bypass",
+    "trigger": "Total-cap primitives called by origin/progression, loading, staff or XML.",
+    "guards": "No reconciliation with existing base points; no lock check.",
+    "maximum": "max(0, existing real total - new cap); arbitrary integer cap has no gameplay lower bound here.",
+    "reason": "Can create over-cap state by lowering the limit, with no skill gain."
+  },
+  {
+    "id": "CORE-CACHE", "pattern": "^Server\\.Skills::.*set_Total\\(", "classification": "conditional bypass",
+    "trigger": "Public cached-total setter; XML nested property assignment is fixture-proven.",
+    "guards": "No recomputation, access annotation or consistency validation inside setter.",
+    "maximum": "Gains can fill any artificial cache deficit, bounded by raw base limits and other callers' guards.",
+    "reason": "Real total 1000.0/cache 999.9 permits normal gain to real 1000.1/cache 1000.0. Serialization recomputes the cache."
+  },
+  {
+    "id": "CORE-COLLECTION-LOAD", "pattern": "^Server\\.Skills::.*\\.ctor.*GenericReader", "classification": "conditional bypass",
+    "trigger": "Skill collection load/migration.",
+    "guards": "Loads cap; sums raw bases; legacy cached total discarded. No cap normalization.",
+    "maximum": "Preserves existing raw excess; cannot itself manufacture raw points from cached total.",
+    "reason": "Restart repairs a falsified cache but retains real points until another policy path changes them."
+  },
+  {
+    "id": "CORE-COLLECTION-NEW", "pattern": "^Server\\.(Skills::.*(?:\\.ctor\\(Server.Mobile\\)|get_Item\\()|Mobile::.*DefaultMobileInit\\()", "classification": "cap-safe",
+    "trigger": "Mobile/Skills default construction or zero-skill lazy initialization.",
+    "guards": "Default total zero, default cap 7000 tenths, base zero.",
+    "maximum": "0.",
+    "reason": "Character creation later sets the shard origin cap before initial skill allocation."
+  },
+  {
+    "id": "CORE-SAVE", "pattern": "^Server\\.Skills::.*Serialize\\(", "classification": "cap-safe",
+    "trigger": "World save or explicit Skills.Serialize.",
+    "guards": "Recomputes cached total from bases; serializes rather than normalizes base/cap state.",
+    "maximum": "0 newly granted points; can reveal an already excessive real total.",
+    "reason": "Fixture proves both cache correction and preservation of excess through Skills save/load. Ordinary save loop pauses network processing."
+  },
+  {
+    "id": "CORE-MOBILE-LOAD", "pattern": "^Server\\.Mobile::.*Deserialize\\(", "classification": "conditional bypass",
+    "trigger": "Mobile load, including persisted Player flag and Skills collection.",
+    "guards": "Does not enforce aggregate cap; Player flag is read from save.",
+    "maximum": "Preserves prior excess or false flag; future gain exposure depends on other guards.",
+    "reason": "PlayerMobile class identity and Mobile.Player boolean are not equivalent checks."
+  },
+  {
+    "id": "CORE-PLAYER-FLAG", "pattern": "^Server\\.Mobile::.*set_Player\\(", "classification": "conditional bypass",
+    "trigger": "Flag primitive; normal character creation sets true; staff/NPC clone paths set false; XML can set public properties.",
+    "guards": "Setter has no class-identity consistency check. Gain waives aggregate check for Player=false.",
+    "maximum": "Up to combined individual-cap headroom (plus per-gain overshoot) over total cap if an actual PlayerMobile has false flag.",
+    "reason": "False flag on a PlayerMobile permits fixture gain past total cap. No normal player source path setting its own flag false was found."
+  },
+  {
+    "id": "PLAYER-LOAD", "pattern": "^Server\\.Mobiles\\.PlayerMobile::.*Deserialize\\(", "classification": "conditional bypass",
+    "trigger": "PlayerMobile load and legacy migration.",
+    "guards": "Reads/migrates SkillStart, SkillBoost and SkillEther, then replaces Skills.Cap with their sum; bases unchanged.",
+    "maximum": "max(0, existing real total - recomputed cap).",
+    "reason": "Inconsistent old cap/components can become excessive on restart. Full PlayerMobile load is source analysis, not the Skills-only roundtrip fixture."
+  },
+  {
+    "id": "PLAYER-COMPONENTS", "pattern": "^Server\\.Mobiles\\.PlayerMobile::.*set_Skill_(?:Start|Boost|Ether)\\(", "classification": "conditional bypass",
+    "trigger": "Progression component setters, staff command properties and XML.",
+    "guards": "Assign component fields only; do not atomically reconcile cap or base points.",
+    "maximum": "Depends on next SkillBegin/load cap recomputation; max(0, total - new component sum).",
+    "reason": "Component drift is possible independently of a gain and may be repaired or rejected by region verification."
+  },
+  {
+    "id": "REGION-RESET", "pattern": "^Server\\.Mobiles\\.PlayerMobile::.*SkillVerification\\(", "classification": "conditional bypass",
+    "trigger": "BaseRegion.OnEnter for PlayerMobile below Counselor, including applicable parent entries.",
+    "guards": "Hard-coded allowed cap tiers, cached Total <= Cap, profession/virtue gate for 1300/1800; ignores locks on failure.",
+    "maximum": "No gain. Erases every base skill on failure, even with an under-cap real total.",
+    "reason": "Also changes origin/profession/components and can reset raw stats. Classification denotes invalid-state handling, not a gain exploit."
+  },
+  {
+    "id": "ORIGIN-CAP", "pattern": "^Server\\.Misc\\.MyServerSettings::.*SkillBegin\\(", "classification": "conditional bypass",
+    "trigger": "Character creation, greeter origin selection, Savage/Wanted/Crash entry, verification reset.",
+    "guards": "Cap = origin start + current configured boost + Ether; does not lower existing skills.",
+    "maximum": "max(0, total - new cap); e.g. total 2000.0/cap 4000.0 becomes cap 1100.0 with 900.0 excess.",
+    "reason": "Established-player access to relevant origin location/gump is required; saved-world reachability is not available."
+  },
+  {
+    "id": "SPACE-RESET", "pattern": "^Server\\.Misc\\.PlayerSettings::.*SetSpaceMan\\(", "classification": "cap-safe",
+    "trigger": "Alien origin setup, including eligible CrashRegion entry.",
+    "guards": "After setting alien cap, explicitly zeros every base skill regardless of locks.",
+    "maximum": "0 final total excess; destructive independent origin reset.",
+    "reason": "Explains a separate way to lose skills, not a source of added real points."
+  },
+  {
+    "id": "ETHER", "pattern": "^Server\\.Items\\.ApproachObsidian::", "classification": "conditional bypass",
+    "trigger": "Pagan quest approach with owned ObeliskTip.",
+    "guards": "Adds 5000 tenths cap and sets Ether=5000; consumes owned tips. Acquisition checks stat cap; handler lacks its own already-Ether check.",
+    "maximum": "No raw gain. Duplicate/stale eligibility can make cap/component state disagree, then later load/reset invalidates it.",
+    "reason": "Ordinary one-time use only raises cap safely. Repeat depends on duplicate/stale quest state; no live evidence supplied."
+  },
+  {
+    "id": "VETERAN", "pattern": "^Server\\.Engines\\.VeteranRewards\\.RewardSystem::", "classification": "conditional bypass",
+    "trigger": "Legacy veteran login rewards, disabled by Enabled=false in this baseline.",
+    "guards": "Only legacy 7000/7050/7100/7150/7200 caps are adjusted; does not compare real total before setting cap.",
+    "maximum": "Up to 20.0 cap reduction from 720.0 to 700.0 for an otherwise valid legacy state; more if state was already excessive.",
+    "reason": "Disabled feature retained as conditional; its legacy cap tiers also conflict with current region whitelist."
+  },
+  {
+    "id": "NORMAL-GAIN", "pattern": "^Server\\.Misc\\.SkillCheck::.*Gain\\(", "classification": "cap-safe",
+    "trigger": "Ordinary skill checks, spells, regeneration, offline training and accelerated gain; normal Player=true and correct cache.",
+    "guards": "Up lock and base below individual cap at entry; optional Down loss; final cached total + final increment <= total cap.",
+    "maximum": "0 new aggregate excess with valid state. Individual overshoot: up to 1.9 points with a low custom cap and acceleration.",
+    "reason": "Production-method fixtures include normal/accelerated boundaries. False Player flag and falsified cached total are separate conditional findings."
+  },
+  {
+    "id": "ELECTION", "pattern": "^Server\\.Gumps\\.VotingStoneGump::", "classification": "conditional bypass",
+    "trigger": "A voter chooses a candidate; candidate receives reward when NeedsForensics is enabled (false in baseline).",
+    "guards": "Unique voter per election; direct candidate Forensics.Base += 0.1 ignores lock and both caps, after ordinary CheckSkill.",
+    "maximum": "Up to 0.1 extra per successful vote; repeated candidates bounded by Forensics reaching 100.0 (floating truncation can reduce increments).",
+    "reason": "Automatic player-triggered configured reward, distinct from staff directly setting skills. Same-voter replay does not grant again."
+  },
+  {
+    "id": "XML", "pattern": "^Server\\.Mobiles\\.BaseXmlSpawner::", "classification": "conditional bypass",
+    "trigger": "Staff-authored spawner/quest/dialog property action, potentially triggered by a player's skill use or other event.",
+    "guards": "SKILL,name writes Base directly. Generic nested property setters lack skill policy; protected list contains only AccessLevel/StaffLevel.",
+    "maximum": "Arbitrary raw base within ushort range, arbitrary integer total cap/cache, or Player flag; depends on configured action.",
+    "reason": "Fixture confirms direct real gain and cached-total bypass. No configured mutation action in available input scan; saved deployed actions unresolved."
+  },
+  {
+    "id": "SCROLL", "pattern": "^Server\\.Items\\.ScrollofTranscendence::", "classification": "cap-safe",
+    "trigger": "Player uses positive-value transcendence scroll in backpack.",
+    "guards": "Up lock, individual cap, final aggregate headroom; sufficient Down loss before addition; consumed scroll cannot replay.",
+    "maximum": "0 new excess from valid state; already invalid state may be retained or rejected.",
+    "reason": "Actual Use fixture covers full total, donor/no donor and repeated use. Staff-invalid item values are not ordinary rewards."
+  },
+  {
+    "id": "SKILL-STONE", "pattern": "^Server\\.Items\\.SetSkillsGump::", "classification": "cap-safe",
+    "trigger": "SkillStone SetSkillsGump response, where a staff-supplied stone exists.",
+    "guards": "Checks requested increase against stone limit, individual cap and current total per entry. Does not honor skill lock.",
+    "maximum": "0 aggregate excess for accepted ordinary finite values.",
+    "reason": "Actual response fixture checks fractional boundary and repeats. Missing response ownership/deletion checks are separate item-use weaknesses."
+  },
+  {
+    "id": "SOULSTONE", "pattern": "^Server\\.Items\\.SoulStone\\+", "classification": "cap-safe",
+    "trigger": "Player soulstone storage/transfer confirmation; account/location/combat checks in CheckUse.",
+    "guards": "Storage clears source; transfer rechecks current locks, individual cap and fixed-point headroom, lowers eligible Down points first.",
+    "maximum": "0 new aggregate excess from valid state; insufficient Down points reject transfer.",
+    "reason": "Actual response fixtures including repeat; only CheckUse eligibility is stubbed in fixtures, transfer arithmetic is production."
+  },
+  {
+    "id": "TEACHING", "pattern": "^Server\\.Mobiles\\.BaseCreature::.*CheckTeachSkills\\(", "classification": "cap-safe",
+    "trigger": "NPC teaches eligible player a supported skill, with payment/teacher constraints in calling path.",
+    "guards": "Up target, individual cap, total free points, enough Down points; final sanity check before target write.",
+    "maximum": "0 new aggregate excess from valid state.",
+    "reason": "Actual CheckTeachSkills fixture covers refusal and sufficient donor lowering."
+  },
+  {
+    "id": "CREATION", "pattern": "^Server\\.Misc\\.CharacterCreation::", "classification": "cap-safe",
+    "trigger": "New character creation packet; newly allocated PlayerMobile, Player=true.",
+    "guards": "Origin cap initialized; initial skill array validates unique skills, 0..50 values and total 100/120, or uses bounded profession presets.",
+    "maximum": "0 against shard minimum origin cap of 1000.0.",
+    "reason": "No existing character's high total is reused for initial allocation."
+  },
+  {
+    "id": "TEST-CENTER", "pattern": "^Server\\.Misc\\.TestCenter::", "classification": "cap-safe",
+    "trigger": "Test-center speech if enabled; player changes skill or receives individual caps.",
+    "guards": "ChangeSkill checks individual cap and fixed-point aggregate resulting total; RaiseCaps only increases individual caps.",
+    "maximum": "0 new aggregate excess from valid state.",
+    "reason": "Lock semantics differ intentionally for test center, but total remains bounded."
+  },
+  {
+    "id": "POWER-SCROLL", "pattern": "^Server\\.Items\\.PowerScroll::", "classification": "cap-safe",
+    "trigger": "Player consumes a power scroll.",
+    "guards": "Raises one individual skill cap; does not add base points or alter total cap.",
+    "maximum": "0.",
+    "reason": "Allows later gain only through ordinary total-checked paths."
+  },
+  {
+    "id": "LOSS", "pattern": "^Server\\.(Misc\\.Death::|Items\\.ForgetfulGem\\+)", "classification": "cap-safe",
+    "trigger": "Death penalty or forgetful-gem confirmation.",
+    "guards": "Only multiplies bases by loss factors or zeros a skill.",
+    "maximum": "0 newly added points.",
+    "reason": "Can remove or retain prior excess, cannot cause it from a valid state."
+  },
+  {
+    "id": "STAFF-DIRECT", "pattern": "^Server\\.(Commands\\.(?:CloneCommands|ConvertPlayers|GmMeCommand|SkillsCommand)(?:\\+[^:]+)?::|Gumps\\.EditSkillGump::)", "classification": "staff-only",
+    "trigger": "Staff clone/conversion, GmMe, SetSkill/SetAllSkills or skill editor; command gates documented in report.",
+    "guards": "Direct writes generally ignore aggregate cap and locks; EditSkill response checks GM access.",
+    "maximum": "Configured value(s), ultimately bounded by raw ushort skill base; GmMe sets every skill to 120.0.",
+    "reason": "Authorized staff actions can deliberately leave a player above cap; staff-clone false flag is not normal player input."
+  },
+  {
+    "id": "NPC-DIRECT", "pattern": "^Server\\.(Mobiles\\.(?:BaseAssembly|Clone|Clown|dj_nc_decoy|FireSteed|Hiryu|IceSteed|JediMirage|LesserHiryu|Paragon|Roc|RuneBeetle|SeaHorse|SilverSteed|SythProjection|YoungRoc)::|Mobiles\\.BaseCreature::.*(?:SetSkill|BeefUp)\\(|Items\\.(?:RunicClockworkAssembly|SummonPrison|BandageContext)::|Gumps\\.(?:ConfirmBreakCrystalGump|PetResurrectGump)::|Misc\\.IntelligentAction::|SkillHandlers\\.Taming::)", "classification": "cap-safe",
+    "trigger": "NPC/pet creation, cloning illusions, balancing, upgrade, migration, taming or resurrection.",
+    "guards": "Receiver proven BaseCreature or its subclass; PlayerMobile is a different Mobile subclass. Some paths intentionally ignore NPC caps.",
+    "maximum": "0 to a player's real skill total.",
+    "reason": "These typed NPC writes do not directly mutate PlayerMobile skills; later staff-control copying is separately classified. 5297 BaseCreature.SetSkill call sites are inventoried."
+  },
+  {
+    "id": "CLONE-STAFF-COPY", "pattern": "^Server\\.Custom\\.Confictura\\.CloneOfflinePlayerCharacters\\.CloneThings::.*CloneMobileProperties\\(", "classification": "staff-only",
+    "trigger": "Normal offline clone creation targets an NPC; staff CloneCommands.CopyMobileState also copies raw skills into the controlling staff PlayerMobile.",
+    "guards": "Helper itself has no aggregate/individual cap or lock guard; player-target callers are staff clone/control/restore workflows.",
+    "maximum": "Copied source total minus recipient cap; source raw values may exceed ordinary player limits.",
+    "reason": "Includes staff possession/restoration, not only offline NPC clones. Counselor access gates initiate the workflow; saved/demoted control ownership would be historical conditional state."
+  },
+  {
+    "id": "OFFLINE-CLONE", "pattern": "^Server\\.Custom\\.Confictura\\.CloneOfflinePlayerCharacters\\.(?:CharacterClone|CloneThings|MountClone|EtherealMountClone)::(?!.*CloneMobileProperties\\()", "classification": "cap-safe",
+    "trigger": "Offline-character NPC clone creation; item/mount property copy.",
+    "guards": "Current skill-copy caller targets CharacterClone : BaseCreature; reflected item attributes and mounts are not player Skills.",
+    "maximum": "0 to the original player's real skill total.",
+    "reason": "Skill-copy helper with staff player targets is classified separately. These remaining clone flag/item/mount writes do not change the original player's base skills."
+  },
+  {
+    "id": "REFLECTION-ITEM", "pattern": "^Server\\.(Commands\\.(?:AddToBank|Dupe)::|Customs\\.PandorasGiftBox::)", "classification": "cap-safe",
+    "trigger": "Item-copy helpers, including staff duplication and gift box.",
+    "guards": "Reflection source and destination are Item instances, not player Skill/Skills collections.",
+    "maximum": "0 directly to real base points; cloned skill bonuses are effective values only.",
+    "reason": "Any later consumable's real-point behavior is covered at its actual mutation sink."
+  },
+  {
+    "id": "REFLECTION-PROPERTIES", "pattern": "^Server\\.(Commands\\.Properties::|Gumps\\.(?:PropertiesGump|SetBodyGump|(?:Xml)?Set(?:Gump|CustomEnumGump|ListOptionGump|ObjectGump|ObjectTarget|Point2DGump|Point3DGump|TimeSpanGump))(?:\\+[^:]+)?::)", "classification": "staff-only",
+    "trigger": "Staff properties/set/increase commands or staff/XML property-edit gumps, with property write access enforced at entry.",
+    "guards": "Primitive reflection writer does not enforce skill cap/locks. Property editors require a writable CommandProperty and its access level.",
+    "maximum": "Arbitrary eligible property value within target setter bounds.",
+    "reason": "No normal player property-editor entry was found. XML automated property actions use separately classified BaseXmlSpawner helpers."
+  }
+]

@@ -1,0 +1,24 @@
+{
+  "baseline": "75bc9dfb",
+  "runtime_script_files": 6598,
+  "core_source_files": 120,
+  "runtime_scripts_omitted_from_project": 0,
+  "missing_project_entries": [],
+  "mutation-path-register.csv": 187,
+  "reflection-write-register.csv": 40,
+  "npc_setter_calls": 5297,
+  "region_types": 47,
+  "reviewed_families": 35,
+  "unmapped_compiled_calls": 0,
+  "text_data_files_scanned": 240,
+  "text_data_mutation_literal_matches": 1,
+  "unresolved_data_matches": 0,
+  "data_pattern": "(?<![A-Za-z])SKILL\\s*,|skills\\.[A-Za-z]+\\.(?:base|cap)|skillscap|skill_start|skill_boost|skill_ether|skills\\.total",
+  "limits": [
+    "No current world saves or incident logs were supplied.",
+    "Text scans do not resolve generated strings or saved XMLSpawner instances.",
+    "IL inventory covers the compiled baseline configuration, not arbitrary future builds or external DLL internals.",
+    "DeclarationLines locate source methods; IL offsets distinguish individual calls and overload signatures.",
+    "Region verification can also run on a newly entered parent; a false handler row is not a whole-transition exemption."
+  ]
+}
