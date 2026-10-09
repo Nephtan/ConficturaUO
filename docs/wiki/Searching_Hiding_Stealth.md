@@ -4,6 +4,8 @@ This is the player and staff reference for Confictura's Searching, Hiding, and S
 
 Use the [offline Searching, Hiding, and Stealth calculator](../tools/searching-hiding-stealth-calculator.html) for exact percentages. Download or open that single HTML file in any modern browser; it has no network dependency.
 
+For trap effects, disarming, defensive equipment, and how avoidance checks combine, see [Traps, Avoidance, and Stacking](Traps_And_Avoidance.md). Detecting a trap does not normally make an invisible trap item visible or targetable.
+
 > **Rules snapshot:** This page describes the current Confictura checkout with Samurai Empire, Mondain's Legacy, and Stygian Abyss-era rules active, plus creature searching enabled. “Exact” means exact for the values and state entered. An opponent's hidden skills and a creature's Searching are normally not visible to players, so PvP and PvM predictions require a scenario estimate.
 
 ## Player guide
