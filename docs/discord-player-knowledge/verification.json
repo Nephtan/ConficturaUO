@@ -1,0 +1,23 @@
+{
+  "review_date": "2026-10-10",
+  "faq_questions": 200,
+  "unique_cited_messages": 659,
+  "citations_by_channel": {
+    "getting-started": 25,
+    "game-help": 486,
+    "general": 148
+  },
+  "markdown_documents": 7,
+  "local_links_checked": 107,
+  "local_anchors_checked": 52,
+  "source_message_ids_unique": true,
+  "short_help_export_replaced_without_duplicate_counting": true,
+  "discord_citation_ids_and_channel_ids_validated": true,
+  "faq_answers_with_evidence": 200,
+  "unresolved_placeholders": false,
+  "errors": [],
+  "remote_links_network_tested": false,
+  "runtime_or_live_gameplay_tested": false,
+  "source_files_changed": false,
+  "note": "Structural checks; source interpretation remains editorial. Git whitespace and scope checks are recorded at delivery."
+}

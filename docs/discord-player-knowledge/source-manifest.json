@@ -1,0 +1,180 @@
+{
+  "review_date": "2026-10-10",
+  "repository_baseline": "03b949d5297dbcaf81fbd631a5d48c1f68ab038f",
+  "total_messages": 51828,
+  "authoritative_inputs": [
+    {
+      "file": "[DiscordKit] getting-started_Confictura_ Legend and Adventure_20261010_141019.json",
+      "sha256": "3e2e225666d3b494b4055374c78cdcb67edd10bafe31abbc4b0ef90777585441",
+      "bytes": 461537,
+      "channel": "getting-started",
+      "channel_id": "1063677605192138842",
+      "guild_id": "1060698288011104358",
+      "exportedAt": "2026-10-10T19:10:03.517+00:00",
+      "dateRange": {
+        "after": "2023-01-01T06:00:00+00:00",
+        "before": "2026-10-10T20:00:00+00:00"
+      },
+      "declaredMessageCount": 251,
+      "messages": 251,
+      "first": "2023-01-14T04:45:53.229+00:00",
+      "last": "2026-08-23T21:53:35.494+00:00",
+      "content_chars": 21628,
+      "with_attachments": 6,
+      "with_embeds": 2,
+      "with_reply_reference": 37,
+      "types": {
+        "ThreadCreated": 4,
+        "Default": 214,
+        "Reply": 33
+      },
+      "years": {
+        "2023": 7,
+        "2025": 36,
+        "2026": 208
+      }
+    },
+    {
+      "file": "[DiscordKit] game-help_Confictura_ Legend and Adventure_20261010_142414.json",
+      "sha256": "cedc7a250ef7a7e83a7167a61c1655ac233e7815196665fda5b88d1a227c24c4",
+      "bytes": 9830817,
+      "channel": "game-help",
+      "channel_id": "1071288553516048431",
+      "guild_id": "1060698288011104358",
+      "exportedAt": "2026-10-10T19:22:10.719+00:00",
+      "dateRange": {
+        "after": "2023-01-01T06:00:00+00:00",
+        "before": "2026-11-12T06:00:00+00:00"
+      },
+      "declaredMessageCount": 5457,
+      "messages": 5457,
+      "first": "2023-02-10T14:45:11.281+00:00",
+      "last": "2026-10-02T13:35:34.703+00:00",
+      "content_chars": 389275,
+      "with_attachments": 109,
+      "with_embeds": 62,
+      "with_reply_reference": 598,
+      "types": {
+        "Default": 4859,
+        "Reply": 594,
+        "ThreadCreated": 2,
+        "ChannelPinnedMessage": 2
+      },
+      "years": {
+        "2023": 1147,
+        "2024": 1097,
+        "2025": 2499,
+        "2026": 714
+      }
+    },
+    {
+      "file": "[DiscordKit] general_Confictura_ Legend and Adventure_20261010_140452.json",
+      "sha256": "e2b8407641ca9391ccd3779ceb2c9fc0a62e01ac518d2e9790ec70055a5c577d",
+      "bytes": 82247344,
+      "channel": "general",
+      "channel_id": "1060698288401154159",
+      "guild_id": "1060698288011104358",
+      "exportedAt": "2026-10-10T18:49:10.010+00:00",
+      "dateRange": {
+        "after": "2023-01-01T06:00:00+00:00",
+        "before": "2026-10-10T18:48:24+00:00"
+      },
+      "declaredMessageCount": 46120,
+      "messages": 46120,
+      "first": "2023-01-05T23:37:25.346+00:00",
+      "last": "2026-10-10T15:32:17.932+00:00",
+      "content_chars": 2468854,
+      "with_attachments": 1678,
+      "with_embeds": 674,
+      "with_reply_reference": 3305,
+      "types": {
+        "Default": 42816,
+        "Reply": 3290,
+        "ChannelPinnedMessage": 11,
+        "46": 3
+      },
+      "years": {
+        "2023": 27934,
+        "2024": 11474,
+        "2025": 4242,
+        "2026": 2470
+      }
+    }
+  ],
+  "superseded_input": {
+    "file": "[DiscordKit] game-help_Confictura_ Legend and Adventure_20261010_141333.json",
+    "sha256": "ee19d52bf30fccfde4f9ea03a2833014ffac4fb680c449646f4a20a658a7a13f",
+    "bytes": 1409153,
+    "channel": "game-help",
+    "channel_id": "1071288553516048431",
+    "guild_id": "1060698288011104358",
+    "exportedAt": "2026-10-10T19:13:02.805+00:00",
+    "dateRange": {
+      "after": "2026-01-01T06:00:00+00:00",
+      "before": "2026-10-10T20:00:00+00:00"
+    },
+    "declaredMessageCount": 714,
+    "messages": 714,
+    "first": "2026-01-02T19:50:53.654+00:00",
+    "last": "2026-10-02T13:35:34.703+00:00",
+    "content_chars": 70649,
+    "with_attachments": 21,
+    "with_embeds": 5,
+    "with_reply_reference": 68,
+    "types": {
+      "Default": 646,
+      "Reply": 68
+    },
+    "years": {
+      "2026": 714
+    }
+  },
+  "replacement_check": {
+    "retained_message_ids": 714,
+    "retained_contents_identical": true,
+    "additional_messages": 4743
+  },
+  "integrity": {
+    "duplicate_ids": 0,
+    "unresolved_reply_references": [
+      {
+        "channel": "game-help",
+        "ordinal": 2545,
+        "message_id": "1358174436842405949",
+        "reply_to": "1358171477366804651"
+      },
+      {
+        "channel": "general",
+        "ordinal": 27279,
+        "message_id": "1180589605221826652",
+        "reply_to": "1180579314627002509"
+      },
+      {
+        "channel": "general",
+        "ordinal": 27280,
+        "message_id": "1180608968775712828",
+        "reply_to": "1180579314627002509"
+      },
+      {
+        "channel": "general",
+        "ordinal": 27303,
+        "message_id": "1181295227403784252",
+        "reply_to": "1181293283729739837"
+      },
+      {
+        "channel": "general",
+        "ordinal": 38663,
+        "message_id": "1262001803629953098",
+        "reply_to": "1262001377190744086"
+      },
+      {
+        "channel": "general",
+        "ordinal": 40636,
+        "message_id": "1384000184194961438",
+        "reply_to": "1383996029896102050"
+      }
+    ]
+  },
+  "attachment_contents_reviewed": false,
+  "external_link_targets_reviewed": false
+}
