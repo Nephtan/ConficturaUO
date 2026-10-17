@@ -45,16 +45,21 @@ namespace Server.Spells.Research
         public ResearchSneak(Mobile caster, Item scroll)
             : base(caster, scroll, m_Info) { }
 
+        public static void Initialize()
+        {
+            EventSink.Logout -= OnLogout;
+            EventSink.Logout += OnLogout;
+        }
+
         public override void OnCast()
         {
             if (CheckSequence())
             {
                 Caster.Target = new InternalTarget(this);
-                EventSink.Logout += OnLogout;
             }
         }
 
-        private void OnLogout(LogoutEventArgs e)
+        private static void OnLogout(LogoutEventArgs e)
         {
             if (e == null)
             {
@@ -68,7 +73,8 @@ namespace Server.Spells.Research
                 return;
             }
 
-            ResearchSneak.RemoveEffect(mobile);
+            if (HasEffect(mobile))
+                ResearchSneak.RemoveEffect(mobile);
         }
 
         private static Hashtable m_Table = new Hashtable();

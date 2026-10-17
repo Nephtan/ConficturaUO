@@ -51,13 +51,18 @@ namespace Server.Spells.Research
         public ResearchEnchant(Mobile caster, Item scroll)
             : base(caster, scroll, m_Info) { }
 
-        public override void OnCast()
+        public static void Initialize()
         {
-            Caster.Target = new InternalTarget(this, spellID);
+            EventSink.Logout -= OnLogout;
             EventSink.Logout += OnLogout;
         }
 
-        private void OnLogout(LogoutEventArgs e)
+        public override void OnCast()
+        {
+            Caster.Target = new InternalTarget(this, spellID);
+        }
+
+        private static void OnLogout(LogoutEventArgs e)
         {
             if (e == null)
                 return;
@@ -151,7 +156,7 @@ namespace Server.Spells.Research
                     if (val > 120)
                         val = 120;
 
-                    new InternalTimer(Caster, TimeSpan.FromMinutes(val)).Start();
+                    new InternalTimer(orb, TimeSpan.FromMinutes(val)).Start();
                 }
             }
             else
@@ -193,21 +198,27 @@ namespace Server.Spells.Research
 
         private class InternalTimer : Timer
         {
-            private Mobile m_m;
+            private ResearchEnchantStone m_Orb;
             private DateTime m_Expire;
 
-            public InternalTimer(Mobile Caster, TimeSpan duration)
+            public InternalTimer(ResearchEnchantStone orb, TimeSpan duration)
                 : base(TimeSpan.Zero, TimeSpan.FromSeconds(0.1))
             {
-                m_m = Caster;
+                m_Orb = orb;
                 m_Expire = DateTime.Now + duration;
             }
 
             protected override void OnTick()
             {
+                if (m_Orb == null || m_Orb.Deleted)
+                {
+                    Stop();
+                    return;
+                }
+
                 if (DateTime.Now >= m_Expire)
                 {
-                    EndEffects(m_m);
+                    EndEffect(m_Orb);
                     Stop();
                 }
             }
@@ -215,52 +226,33 @@ namespace Server.Spells.Research
 
         public static void EndEffects(Mobile m)
         {
-            int serial = 0;
-            string name = "";
-            int hue = 0;
-            int dmg = 0;
-
-            ArrayList targets = new ArrayList();
-            foreach (Item item in World.Items.Values)
-            {
-                if (item is ResearchEnchantStone)
-                {
-                    ResearchEnchantStone orb = (ResearchEnchantStone)item;
-                    if ((orb.EnchantOwner == m && m != null) || m == null)
-                    {
-                        serial = orb.EnchantSerial;
-                        name = orb.EnchantName;
-                        hue = orb.EnchantHue;
-                        dmg = orb.EnchantDmg;
-                        targets.Add(item);
-                    }
-                }
-            }
-
+            List<ResearchEnchantStone> targets = ResearchEnchantStone.FindByOwner(m);
             for (int i = 0; i < targets.Count; ++i)
             {
-                Item item = (Item)targets[i];
-                item.Delete();
+                EndEffect(targets[i]);
+            }
+        }
+
+        internal static void EndEffect(ResearchEnchantStone orb)
+        {
+            if (orb == null || orb.Deleted)
+                return;
+
+            BaseWeapon weapon = World.FindItem((Serial)orb.EnchantSerial) as BaseWeapon;
+            if (weapon != null && !weapon.Deleted && weapon.Name != null && weapon.Name.Contains("[enchanted]"))
+            {
+                weapon.Hue = orb.EnchantHue;
+                weapon.Name = orb.EnchantName;
+                weapon.Attributes.WeaponDamage = orb.EnchantDmg;
             }
 
-            foreach (Item item in World.Items.Values)
-            {
-                if (item.Serial == serial && item is BaseWeapon)
-                {
-                    if ((item.Name).Contains("[enchanted]"))
-                    {
-                        BaseWeapon w = (BaseWeapon)item;
-                        w.Hue = hue;
-                        w.Name = name;
-                        w.Attributes.WeaponDamage = dmg;
-                    }
-                }
-            }
+            Mobile owner = orb.EnchantOwner;
+            orb.Delete();
 
-            if (m != null)
+            if (owner != null && !owner.Deleted)
             {
-                m.PlaySound(0x1F8);
-                BuffInfo.RemoveBuff(m, BuffIcon.EnchantWeapon);
+                owner.PlaySound(0x1F8);
+                BuffInfo.RemoveBuff(owner, BuffIcon.EnchantWeapon);
             }
         }
     }
@@ -270,6 +262,21 @@ namespace Server.Items
 {
     public class ResearchEnchantStone : Item
     {
+        // Track only enchantment orbs; logout must not enumerate the world's items.
+        private static List<ResearchEnchantStone> m_Stones = new List<ResearchEnchantStone>();
+
+        internal static List<ResearchEnchantStone> FindByOwner(Mobile owner)
+        {
+            List<ResearchEnchantStone> matches = new List<ResearchEnchantStone>();
+            for (int i = 0; i < m_Stones.Count; ++i)
+            {
+                ResearchEnchantStone orb = m_Stones[i];
+                if (!orb.Deleted && (owner == null || orb.EnchantOwner == owner))
+                    matches.Add(orb);
+            }
+            return matches;
+        }
+
         [Constructable]
         public ResearchEnchantStone()
             : base(0x3199)
@@ -279,6 +286,13 @@ namespace Server.Items
             Hue = 0x489;
             Name = "Enchantment Power Orb";
             LootType = LootType.Blessed;
+            m_Stones.Add(this);
+        }
+
+        public override void OnAfterDelete()
+        {
+            m_Stones.Remove(this);
+            base.OnAfterDelete();
         }
 
         public override bool DisplayLootType
@@ -312,21 +326,25 @@ namespace Server.Items
             EnchantDmg = reader.ReadInt();
             EnchantHue = reader.ReadInt();
 
+            m_Stones.Add(this);
             RunTime thisTimer = new RunTime(this);
             thisTimer.Start();
         }
 
         public class RunTime : Timer
         {
+            private ResearchEnchantStone m_Orb;
+
             public RunTime(Item task)
                 : base(TimeSpan.FromSeconds(10.0))
             {
+                m_Orb = task as ResearchEnchantStone;
                 Priority = TimerPriority.OneSecond;
             }
 
             protected override void OnTick()
             {
-                Server.Spells.Research.ResearchEnchant.EndEffects(null);
+                Server.Spells.Research.ResearchEnchant.EndEffect(m_Orb);
             }
         }
 
