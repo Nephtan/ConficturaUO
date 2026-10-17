@@ -1,5 +1,12 @@
 # Post-Audit Next Steps
 
+
+## Latest selected repair batch - October 17, 2026
+
+Create Food containment, StatusPage wanted-report batching and both Dice lifecycle repairs are committed locally as 0eb2a07a. Fresh main-source build/runtime compile, focused regressions and isolated full-world startup passed. The user will push and activate the changes; live deployment is not established here.
+
+Review [runtime repair closeout](post-batch-runtime-performance-closeout.md) and [four repair records](post-batch-runtime-performance-review.csv). The active CSV/workbook includes four new post-audit findings, for 6,819 rows and 952 Fixed. Existing historical rows are preserved. The appropriate next step is controlled live rollout/observation; additional performance candidates still require explicit selection. The earlier generated runner history below is retained and does not supersede this dated update.
+
 Generated: 2026-06-07T13:37:53.0802751-05:00
 
 ## Current State

@@ -69,6 +69,8 @@ Use this reconciliation rule:
 3. If no overlay row exists, use `repair-backlog.csv` as the remaining historical backlog source.
 4. Check `../PHASE_STATUS.md` for latest batch-level notes before starting work.
 
+The October 17 runtime repair batch also adds four newly discovered post-audit findings with IDs POST-PERF-20261017-01 through -04. These IDs intentionally have no Phase 13 row; HistoricalStatus Open records their initial finding state. See [runtime repair closeout](post-batch-runtime-performance-closeout.md) and [review rows](post-batch-runtime-performance-review.csv). The active CSV/workbook now has 6,819 records, including 952 Fixed; all original 6,815 records retain their prior values. Fixed records source repair and verification, not live deployment. Source commit 0eb2a07a awaits the user's push/activation.
+
 Do not mark a historical `Ready` row as still actionable until you have checked the active overlay.
 
 ## Common Status Terms
