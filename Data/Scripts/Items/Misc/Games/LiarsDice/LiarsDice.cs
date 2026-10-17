@@ -25,13 +25,7 @@ namespace Server.Items
             this.Name = "Liar's Dice Game";
             this.Weight = 1.0;
             this.Hue = 0xB51;
-            ds = new DiceState(
-                GOLD_PER_GAME,
-                GAME_BALANCE_MIN,
-                GAME_BALANCE_MAX,
-                GAME_PLAYER_TO_ACT_SECONDS,
-                GAME_MAX_PLAYERS
-            );
+            EnsureGameState();
         }
 
         public LiarsDice(Serial serial)
@@ -40,13 +34,22 @@ namespace Server.Items
             this.Name = "Liar's Dice Game";
             this.Weight = 1.0;
             this.Hue = 0xB51;
-            ds = new DiceState(
-                GOLD_PER_GAME,
-                GAME_BALANCE_MIN,
-                GAME_BALANCE_MAX,
-                GAME_PLAYER_TO_ACT_SECONDS,
-                GAME_MAX_PLAYERS
-            );
+            EnsureGameState();
+        }
+
+        private static void EnsureGameState()
+        {
+            // All items share this game; creating or loading another item must not abandon it.
+            if (ds == null)
+            {
+                ds = new DiceState(
+                    GOLD_PER_GAME,
+                    GAME_BALANCE_MIN,
+                    GAME_BALANCE_MAX,
+                    GAME_PLAYER_TO_ACT_SECONDS,
+                    GAME_MAX_PLAYERS
+                );
+            }
         }
 
         public override void OnDoubleClick(Mobile from)

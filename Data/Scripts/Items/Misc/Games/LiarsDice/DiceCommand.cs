@@ -28,13 +28,16 @@ namespace Server.Commands
                 AccessLevel.Player,
                 new CommandEventHandler(DiceCommand_OnCommand)
             );
-            ds = new DiceState(
-                GOLD_PER_GAME,
-                GAME_BALANCE_MIN,
-                GAME_BALANCE_MAX,
-                GAME_PLAYER_TO_ACT_SECONDS,
-                GAME_MAX_PLAYERS
-            );
+            if (ds == null)
+            {
+                ds = new DiceState(
+                    GOLD_PER_GAME,
+                    GAME_BALANCE_MIN,
+                    GAME_BALANCE_MAX,
+                    GAME_PLAYER_TO_ACT_SECONDS,
+                    GAME_MAX_PLAYERS
+                );
+            }
         }
 
         [Usage("mex")]

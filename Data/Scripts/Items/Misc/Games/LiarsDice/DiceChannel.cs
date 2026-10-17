@@ -145,6 +145,9 @@ namespace Server.LiarsDice
 
         //Timer for refreshing status gump
         Timer statusGumpTimer;
+        private Timer m_TurnWarningTimer;
+        private Timer m_TurnKickTimer;
+        private int m_TurnGeneration;
 
         //liars dice roll values
         private int[] Dice1Values = new int[]
@@ -379,6 +382,10 @@ namespace Server.LiarsDice
         public void RemovePlayer(Mobile m, bool exchangeBalance)
         {
             int exitMobileIdx = GetCurrentDicePlayerIdx(m);
+            if (exitMobileIdx < 0 || exitMobileIdx >= dicePlayers.Count)
+                return;
+
+            CancelTurnTimers();
             int prevExitPlayerIdx = GetPrevDicePlayerIdx(exitMobileIdx);
             //make the next updated mobile idx
             MobileDiceStstatus mds = dicePlayers[exitMobileIdx];
@@ -436,6 +443,8 @@ namespace Server.LiarsDice
             if (updatedMobileIdx >= exitMobileIdx && this.playerCnt > 1)
             {
                 updatedMobileIdx -= 1;
+                if (updatedMobileIdx < 0)
+                    updatedMobileIdx = 0;
                 if (dicePlayers.Contains(mds))
                 {
                     dicePlayers.Remove(mds);
@@ -834,22 +843,50 @@ namespace Server.LiarsDice
         /**
             Game timer limit on a player, warn/kick if necessary in the callbacks
         */
+        private void CancelTurnTimers()
+        {
+            // Timer.Stop does not retract callbacks already queued for Timer.Slice.
+            ++m_TurnGeneration;
+            if (m_TurnWarningTimer != null)
+            {
+                m_TurnWarningTimer.Stop();
+                m_TurnWarningTimer = null;
+            }
+            if (m_TurnKickTimer != null)
+            {
+                m_TurnKickTimer.Stop();
+                m_TurnKickTimer = null;
+            }
+        }
+
+        private bool IsCurrentTurn(MobileDiceStstatus player, int generation)
+        {
+            return generation == m_TurnGeneration
+                && this.playerCnt > 1
+                && updatedMobileIdx >= 0
+                && updatedMobileIdx < dicePlayers.Count
+                && dicePlayers[updatedMobileIdx] == player
+                && GetValidDiceMobile(player) != null;
+        }
+
         public void SetTimerAction(MobileDiceStstatus prevPlayer, MobileDiceStstatus currPlayer)
         {
             if (GetValidDiceMobile(prevPlayer) == null || GetValidDiceMobile(currPlayer) == null)
                 return;
 
+            CancelTurnTimers();
+            int generation = m_TurnGeneration;
             prevPlayer.SetTimeStamp(DateTime.Now);
             currPlayer.SetTimeStamp(DateTime.Now);
             //setup the "warning" timer
-            Timer timer = Timer.DelayCall(
+            m_TurnWarningTimer = Timer.DelayCall(
                 TimeSpan.FromSeconds(this.playerToActSeconds - 5),
                 new TimerCallback(
                     delegate()
                     {
-                        Mobile currMobile = GetValidDiceMobile(currPlayer);
-                        if (currMobile == null)
+                        if (!IsCurrentTurn(currPlayer, generation))
                             return;
+                        Mobile currMobile = GetValidDiceMobile(currPlayer);
 
                         TimeSpan timeDiff = (DateTime.Now - currPlayer.GetTimeStamp());
                         //check time in miliseconds
@@ -867,14 +904,14 @@ namespace Server.LiarsDice
                 )
             );
             //setup timer to kick player if applicable
-            Timer timer2 = Timer.DelayCall(
+            m_TurnKickTimer = Timer.DelayCall(
                 TimeSpan.FromSeconds(this.playerToActSeconds),
                 new TimerCallback(
                     delegate()
                     {
-                        Mobile currMobile = GetValidDiceMobile(currPlayer);
-                        if (currMobile == null)
+                        if (!IsCurrentTurn(currPlayer, generation))
                             return;
+                        Mobile currMobile = GetValidDiceMobile(currPlayer);
 
                         TimeSpan timeDiff = (DateTime.Now - currPlayer.GetTimeStamp());
                         //check time in miliseconds

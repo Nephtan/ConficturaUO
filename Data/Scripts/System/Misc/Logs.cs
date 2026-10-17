@@ -2043,6 +2043,11 @@ namespace Server.Misc
 
         public static string LogKillers(Mobile m, int nKills)
         {
+            return LogEvent(GetMurdererNotice(m), "Logging Murderers");
+        }
+
+        internal static string GetMurdererNotice(Mobile m)
+        {
             string sEvent = "";
             string sDateString = GetPlayerInfo.GetTodaysDate();
             string sTitle = "the " + GetPlayerInfo.GetSkillTitle(m);
@@ -2061,7 +2066,7 @@ namespace Server.Misc
                 sEvent = m.Name + " " + sTitle + " is wanted for murder.";
             }
 
-            return LoggingFunctions.LogEvent(sEvent, "Logging Murderers");
+            return sEvent;
         }
 
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2129,6 +2134,88 @@ namespace Server.Misc
             return sb.ToString();
         }
 
+        private static bool[] WriteWantedNotices(List<string> notices)
+        {
+            bool[] written = new bool[notices.Count];
+            if (notices.Count == 0)
+                return written;
+
+            try
+            {
+                // Each legacy write validates the entire notice before any later trim can hide it.
+                Encoding encoding = new UTF8Encoding(false, true);
+                foreach (string notice in notices)
+                {
+                    if (notice != null)
+                        encoding.GetByteCount(notice);
+                }
+            }
+            catch (EncoderFallbackException)
+            {
+                return WriteWantedNoticesLegacy(notices);
+            }
+
+            string report = "";
+            foreach (string notice in notices)
+            {
+                // UpdateFile retains 149 prior physical lines, not 149 roster entries.
+                string priorReport = report.Length > 0 && report[0] == '\uFEFF'
+                    ? report.Substring(1) : report;
+                using (StringWriter writer = new StringWriter())
+                using (StringReader reader = new StringReader(priorReport))
+                {
+                    writer.WriteLine(notice);
+                    for (int line = 0; line < 149; ++line)
+                    {
+                        string prior = reader.ReadLine();
+                        if (prior == null)
+                            break;
+                        writer.WriteLine(prior);
+                    }
+                    report = writer.ToString();
+                }
+            }
+
+            string temporary = null;
+            bool publicationAttempted = false;
+            LoggingFunctions.CreateFile("Info/murderers.txt");
+            try
+            {
+                temporary = Path.GetTempFileName();
+                using (StreamWriter writer = new StreamWriter(temporary))
+                    writer.Write(report);
+
+                publicationAttempted = true;
+                File.Copy(temporary, "Info/murderers.txt", true);
+                File.Delete(temporary);
+                temporary = null;
+                for (int i = 0; i < written.Length; ++i)
+                    written[i] = true;
+            }
+            catch
+            {
+                // Replay only before publication: an uncertain copy must never duplicate notices.
+                if (!publicationAttempted)
+                {
+                    written = WriteWantedNoticesLegacy(notices);
+                }
+            }
+            finally
+            {
+                if (temporary != null)
+                    LoggingFunctions.DeleteFile(temporary);
+            }
+            return written;
+        }
+
+        private static bool[] WriteWantedNoticesLegacy(List<string> notices)
+        {
+            bool[] written = new bool[notices.Count];
+            for (int i = 0; i < notices.Count; ++i)
+                written[i] = LoggingFunctions.LogEvent(notices[i], "Logging Murderers") != null;
+            return written;
+        }
+
         protected override void OnTick()
         {
             using (StreamWriter op = new StreamWriter("Info/online.txt"))
@@ -2149,48 +2236,88 @@ namespace Server.Misc
 
             if (LoggingFunctions.LoggingEvents() == true)
             {
-                LoggingFunctions.LogClear("Logging Murderers");
+                bool cleared = false;
+                try
+                {
+                    File.Delete("Info/murderers.txt");
+                    cleared = true;
+                }
+                catch { }
                 List<TownCrierDiscord.WantedRosterEntry> wantedEntries =
                     new List<TownCrierDiscord.WantedRosterEntry>();
 
-                // GET ALL OF THE MURDERERS ///////////////////////////////
-                foreach (Account a in Accounts.GetAccounts())
+                // A failed clear must retain the legacy prepend behavior over the old file.
+                List<string> batchNotices = cleared ? new List<string>() : null;
+
+                try
                 {
-                    if (a == null)
-                        break;
-
-                    int index = 0;
-
-                    for (int i = 0; i < a.Length; ++i)
+                    foreach (Account a in Accounts.GetAccounts())
                     {
-                        Mobile m = a[i];
+                        if (a == null)
+                            break;
 
-                        if (m == null)
-                            continue;
+                        int index = 0;
 
-                        if ((m.Kills > 0) && (m.AccessLevel < AccessLevel.GameMaster))
+                        for (int i = 0; i < a.Length; ++i)
                         {
-                            string wantedNotice = LoggingFunctions.LogKillers(m, m.Kills);
+                            Mobile m = a[i];
 
-                            if (!String.IsNullOrEmpty(wantedNotice))
+                            if (m == null)
+                                continue;
+
+                            if ((m.Kills > 0) && (m.AccessLevel < AccessLevel.GameMaster))
                             {
-                                string wantedDisplayName =
-                                    m.Name + " the " + GetPlayerInfo.GetSkillTitle(m);
+                                string wantedNotice;
+                                if (batchNotices != null)
+                                {
+                                    wantedNotice = LoggingFunctions.GetMurdererNotice(m);
+                                    batchNotices.Add(wantedNotice);
+                                }
+                                else
+                                {
+                                    wantedNotice = LoggingFunctions.LogKillers(m, m.Kills);
+                                }
 
-                                if (m.Title != null)
-                                    wantedDisplayName = m.Name + " " + m.Title;
+                                if (!String.IsNullOrEmpty(wantedNotice))
+                                {
+                                    string wantedDisplayName =
+                                        m.Name + " the " + GetPlayerInfo.GetSkillTitle(m);
 
-                                wantedEntries.Add(
-                                    new TownCrierDiscord.WantedRosterEntry(
-                                        m.Serial.Value,
-                                        wantedDisplayName,
-                                        m.Kills
-                                    )
-                                );
+                                    if (m.Title != null)
+                                        wantedDisplayName = m.Name + " " + m.Title;
+
+                                    wantedEntries.Add(
+                                        new TownCrierDiscord.WantedRosterEntry(
+                                            m.Serial.Value,
+                                            wantedDisplayName,
+                                            m.Kills
+                                        )
+                                    );
+                                }
                             }
-                        }
 
-                        ++index;
+                            ++index;
+                        }
+                    }
+                }
+                catch
+                {
+                    // Legacy writes precede the next formatter/account failure; preserve that prefix.
+                    if (batchNotices != null)
+                    {
+                        try { WriteWantedNotices(batchNotices); }
+                        catch { }
+                    }
+                    throw;
+                }
+
+                if (batchNotices != null)
+                {
+                    bool[] written = WriteWantedNotices(batchNotices);
+                    for (int i = wantedEntries.Count - 1; i >= 0; --i)
+                    {
+                        if (!written[i])
+                            wantedEntries.RemoveAt(i);
                     }
                 }
 

@@ -37,69 +37,84 @@ namespace Server.Spells.First
             new FoodInfo(typeof(Peach), "a peach")
         };
 
+        private bool PlaceConjuredItem(Item item)
+        {
+            if (item == null)
+                return false;
+
+            bool delivered = false;
+
+            try
+            {
+                delivered = Caster.PlaceInBackpack(item);
+                return delivered;
+            }
+            finally
+            {
+                // Rejected conjurations must not become ground items or orphaned world objects.
+                if (!delivered && !item.Deleted)
+                    item.Delete();
+            }
+        }
+
         public override void OnCast()
         {
-            if (CheckSequence())
+            try
             {
+                if (!CheckSequence())
+                    return;
+
+                bool delivered;
+
                 if (Server.Items.BaseRace.BloodDrinker(Caster.RaceID))
                 {
-                    Caster.AddToBackpack(new BloodyDrink());
-                    Caster.SendMessage("Some fresh blood magically appears in your backpack.");
-
-                    Caster.FixedParticles(
-                        0,
-                        10,
-                        5,
-                        2003,
-                        Server.Misc.PlayerSettings.GetMySpellHue(true, Caster, 0),
-                        0,
-                        EffectLayer.RightHand
-                    );
-                    Caster.PlaySound(0x1E2);
+                    delivered = PlaceConjuredItem(new BloodyDrink());
+                    Caster.SendMessage(delivered
+                        ? "Some fresh blood magically appears in your backpack."
+                        : "Your backpack cannot hold the conjured blood.");
                 }
                 else if (Server.Items.BaseRace.BrainEater(Caster.RaceID))
                 {
-                    Caster.AddToBackpack(new FreshBrain());
-                    Caster.SendMessage("Some fresh brains magically appears in your backpack.");
-
-                    Caster.FixedParticles(
-                        0,
-                        10,
-                        5,
-                        2003,
-                        Server.Misc.PlayerSettings.GetMySpellHue(true, Caster, 0),
-                        0,
-                        EffectLayer.RightHand
-                    );
-                    Caster.PlaySound(0x1E2);
+                    delivered = PlaceConjuredItem(new FreshBrain());
+                    Caster.SendMessage(delivered
+                        ? "Some fresh brains magically appears in your backpack."
+                        : "Your backpack cannot hold the conjured brains.");
                 }
                 else
                 {
                     FoodInfo foodInfo = m_Food[Utility.Random(m_Food.Length)];
-                    Item food = foodInfo.Create();
+                    bool foodDelivered = PlaceConjuredItem(foodInfo.Create());
+                    bool waterDelivered = PlaceConjuredItem(new WaterFlask());
+                    delivered = foodDelivered || waterDelivered;
 
-                    if (food != null)
-                    {
-                        Caster.AddToBackpack(food);
-                        Caster.AddToBackpack(new WaterFlask());
-                        Caster.SendMessage(
-                            "Some food and drink magically appear in your backpack."
-                        );
-                        Caster.FixedParticles(
-                            0,
-                            10,
-                            5,
-                            2003,
-                            Server.Misc.PlayerSettings.GetMySpellHue(true, Caster, 0),
-                            0,
-                            EffectLayer.RightHand
-                        );
-                        Caster.PlaySound(0x1E2);
-                    }
+                    if (foodDelivered && waterDelivered)
+                        Caster.SendMessage("Some food and drink magically appear in your backpack.");
+                    else if (foodDelivered)
+                        Caster.SendMessage("Some food magically appears in your backpack, but there is no room for the drink.");
+                    else if (waterDelivered)
+                        Caster.SendMessage("Some drink magically appears in your backpack, but the food could not be delivered.");
+                    else
+                        Caster.SendMessage("Your backpack cannot hold the conjured food or drink.");
+                }
+
+                if (delivered)
+                {
+                    Caster.FixedParticles(
+                        0,
+                        10,
+                        5,
+                        2003,
+                        Server.Misc.PlayerSettings.GetMySpellHue(true, Caster, 0),
+                        0,
+                        EffectLayer.RightHand
+                    );
+                    Caster.PlaySound(0x1E2);
                 }
             }
-
-            FinishSequence();
+            finally
+            {
+                FinishSequence();
+            }
         }
     }
 
