@@ -1800,3 +1800,9 @@ Next:
 ## Reorganization Status
 
 Reorganization remains deferred. No source file move should be executed until runtime compile verification is available, save compatibility for affected types is reviewed, documentation/source traces are updated, and rollback is recorded.
+
+## FIX-01 protection repair — 2026-10-18
+
+`POST-SKILL-FIX-01` is Fixed. Its implementation is locally committed as `1b49df74e8b972eb53805a790797f1f4872ab001`, **not pushed or deployed**. This evidence/documentation batch accompanies the implementation; commit identities are recorded in the external handoff. It removes destructive region correction and adds exception-contained, bounded background diagnostics. Release source build, forced runtime script compile, 817 protection assertions plus the existing gain matrix, full-world save/restart and 200 world transitions passed. Bounded Player progress acceptance also passed: 30 crossings, normal gains, Recall/gates, logout/save/reload/reconnect and three supervised Qwen choices. Gate-result labeling and inventory lifecycle discrepancies remain documented; complete save/profile restoration and runtime shutdown were verified. No serialization/project/gain policy changes. `POST-SKILL-FIX-02` through `04` are Deferred policy/accounting follow-ups. Original audit phase statuses are unchanged; this is a focused post-audit repair.
+
+Canonical details: [FIX-01 report](../../skill-cap-investigation/FIX-01-REPORT.md), [independent review](subagent-findings/fix01-independent-review.md), and the active CSV/workbook (6,823 rows; original 6,819 preserved). External evidence and rollback: `D:\ConficturaUOTestTools\fix01-20261018`. Local commits are authorized; push and activation remain user-owned. New regression fixtures are intentionally excluded from Git and preserved with hashes under the external `regression-harness/` directory.

@@ -1,5 +1,7 @@
 # Real skill cap and region reset investigation
 
+**Current repair status (2026-10-18):** [FIX-01 protection repair](FIX-01-REPORT.md) is locally verified and implemented in commit `1b49df74e8b972eb53805a790797f1f4872ab001`, not pushed or deployed. This evidence batch accompanies that implementation. Region verification now preserves progress and writes bounded diagnostics. The investigation below describes the historical `75bc9dfb` baseline; its wipe fixtures are historical evidence. FIX-02 through FIX-04 remain separate deferred work. The directly authorized local continuation passed bounded Player/Qwen progress acceptance; the report retains the inventory discrepancy and verified full rollback.
+
 Baseline: `main` at `75bc9dfb`. Investigation date: 2026-10-05. Production source, public APIs, serialization formats, and player saves are unchanged. This is a dedicated investigation, not completion of the repository's separate fourteen-phase reorganization program.
 
 **The region wipe is confirmed, but a wipe does not prove that the player gained too many real points.** The verifier also rejects several caps the configuration supports, and it can reject a character with the wrong profession/virtue state. Normal Create Food training did not cross the total cap in the production-method fixtures. Conditional automatic rewards, XML actions, corrupted accounting/flags, and cap reductions provide other routes to invalid state.
@@ -45,7 +47,7 @@ The core base setter clamps only to the `ushort` storage range, 0..65535 tenths,
 
 Source: `Data/System/Source/Skills.cs:556-618,641-714,1447-1456`; `Data/System/Source/Mobile.cs` properties `SkillsTotal` and `SkillsCap`. `PlayerMobile.OnSkillChange` at `Data/Scripts/Mobiles/Base/PlayerMobile.cs:5703-5713` updates young/MyRunUO state, not another hidden grant. There are 58 skill slots (`Skills.cs:839`); the raw storage limit is much larger than any intended gameplay cap.
 
-## Destructive region verification
+## Destructive region verification (historical baseline)
 
 Source: `Data/Scripts/System/Regions/BaseRegion.cs:234-255` calls `PlayerMobile.SkillVerification`, implemented at `Data/Scripts/Mobiles/Base/PlayerMobile.cs:1774-1901`.
 

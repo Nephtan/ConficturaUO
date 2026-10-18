@@ -1,6 +1,6 @@
 # Prioritized repairs for separate approval and implementation
 
-All items below are recommendations. This investigation changes no gameplay, saves, API or serialization format. The evidence and reproductions are in README, the registers and `tests/SkillCapInvestigation.cs`.
+Historical recommendations follow. **2026-10-18:** FIX-01 is locally verified and implemented in local commit `1b49df74e8b972eb53805a790797f1f4872ab001`, not pushed or deployed; see [repair report](FIX-01-REPORT.md). It preserves state with bounded diagnostics and leaves the existing gain checks unchanged. Shared invalid-grant/accounting/cap policy remains FIX-02 through FIX-04; those active follow-ups are Deferred. The original investigation changed no gameplay or saves. Its evidence remains in README, the registers and `tests/SkillCapInvestigation.cs`. The directly authorized local continuation passed bounded Player/Qwen progress acceptance; the report retains the inventory discrepancy and verified full rollback.
 
 | Priority / ID | Problem and evidence | Recommended behavior | Required acceptance cases |
 | --- | --- | --- | --- |
