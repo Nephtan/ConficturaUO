@@ -1771,133 +1771,128 @@ namespace Server.Mobiles
             return true;
         }
 
+        // Runtime-only diagnostic throttle; no saved state or progression policy is changed.
+        private DateTime m_NextSkillVerificationDiagnostic;
+        private static int m_SkillVerificationDiagnosticPending;
+        private static readonly Action<string> m_SkillVerificationDiagnosticWriter = AppendSkillVerificationDiagnostic;
+
         public static void SkillVerification(Mobile m)
         {
             PlayerMobile pm = m as PlayerMobile;
-            if (pm != null && pm.AccessLevel < AccessLevel.Counselor)
+            if (pm == null || pm.Deleted || pm.AccessLevel >= AccessLevel.Counselor)
+                return;
+
+            if (DateTime.UtcNow < pm.m_NextSkillVerificationDiagnostic)
+                return;
+
+            try
             {
-                bool adjust = true;
+                Skills skills = pm.Skills;
+                long realTotal = 0;
+                for (int i = 0; i < skills.Length; ++i)
+                    realTotal += skills[i].BaseFixedPoint;
 
-                int record = pm.Skill_Start + pm.Skill_Boost + pm.Skill_Ether;
+                int cap = skills.Cap;
+                long record = (long)pm.SkillStart + pm.SkillBoost + pm.SkillEther;
+                bool legacyCap = cap == 10000 || cap == 11000 || cap == 13000
+                    || cap == 15000 || cap == 16000 || cap == 18000
+                    || cap == 40000 || cap == 45000;
 
-                if (
-                    (m.Skills.Cap == 13000 || m.Skills.Cap == 18000)
-                    && m.SkillsTotal <= m.Skills.Cap
-                )
+                // GetKeys normalizes/writes CharacterKeys. Read its tenth (Virtue) slot
+                // directly here so even malformed or uninitialized records are preserved.
+                string keys = pm.CharacterKeys;
+                string[] entries = keys == null ? new string[0] : keys.Split('#');
+                bool virtue = entries.Length > 9 && entries[9] == "1";
+                string reasons = "";
+                if (realTotal > cap)
+                    reasons += "real_total_exceeds_cap;";
+                if (skills.Total != realTotal)
+                    reasons += "cached_total_mismatch;";
+                if (!legacyCap)
+                    reasons += "legacy_cap_unrecognized;";
+                if ((cap == 13000 || cap == 18000) && pm.Profession != 1 && !virtue)
+                    reasons += "legacy_profession_mismatch;";
+                if (record != cap)
+                    reasons += "cap_components_mismatch;";
+                if (!pm.Player)
+                    reasons += "player_flag_false;";
+
+                if (reasons.Length == 0)
+                    return;
+
+                // The legacy whitelist disagrees with configurable caps. Region entry
+                // cannot decide a correction: retain all progress for a reviewed repair.
+                ReportSkillVerification(pm, String.Format(
+                    System.Globalization.CultureInfo.InvariantCulture,
+                    "reasons={0} real={1} cached={2} cap={3} start={4} boost={5} ether={6} "
+                    + "profession={7} virtue={8} player={9} stats={10}/{11}/{12} statCap={13} "
+                    + "map={14} location={15},{16},{17} regionAtCallback={18} skillUnits=tenths action=preserved",
+                    reasons, realTotal, skills.Total, cap, pm.SkillStart, pm.SkillBoost, pm.SkillEther,
+                    pm.Profession, virtue, pm.Player, pm.RawStr, pm.RawDex, pm.RawInt, pm.StatCap,
+                    pm.Map == null ? -1 : pm.Map.MapID, pm.X, pm.Y, pm.Z,
+                    pm.Region == null ? "none" : pm.Region.GetType().Name));
+            }
+            catch (Exception exception)
+            {
+                ReportSkillVerification(pm, "reason=validation_exception type="
+                    + exception.GetType().Name + " action=preserved");
+            }
+        }
+
+        private static void ReportSkillVerification(PlayerMobile pm, string detail)
+        {
+            try
+            {
+                DateTime now = DateTime.UtcNow;
+                if (now < pm.m_NextSkillVerificationDiagnostic)
+                    return;
+
+                // Throttle before output, including failed or dropped writes. One global
+                // work slot bounds memory/workers even if the diagnostic filesystem stalls.
+                pm.m_NextSkillVerificationDiagnostic = now + TimeSpan.FromMinutes(5.0);
+                if (System.Threading.Interlocked.CompareExchange(ref m_SkillVerificationDiagnosticPending, 1, 0) != 0)
+                    return;
+
+                bool queued = false;
+                try
                 {
-                    if (((PlayerMobile)m).Profession == 1)
-                    {
-                        if (record != m.Skills.Cap)
-                        {
-                            pm.Skill_Start = 13000;
-
-                            if (m.Skills.Cap == 18000)
-                            {
-                                pm.Skill_Ether = 5000;
-                            }
-                        }
-
-                        adjust = false;
-                    }
-                    else if (Server.Misc.PlayerSettings.GetKeys(m, "Virtue"))
-                    {
-                        if (record != m.Skills.Cap)
-                        {
-                            pm.Skill_Start = 13000;
-
-                            if (m.Skills.Cap == 18000)
-                            {
-                                pm.Skill_Ether = 5000;
-                            }
-                        }
-
-                        adjust = false;
-                    }
+                    string message = String.Format(System.Globalization.CultureInfo.InvariantCulture,
+                        "[SkillVerification] utc={0:o} serial={1} {2}", now, pm.Serial, detail);
+                    queued = System.Threading.ThreadPool.QueueUserWorkItem(WriteSkillVerificationDiagnostic, message);
                 }
-                else if (
-                    (m.Skills.Cap == 40000 || m.Skills.Cap == 45000)
-                    && m.SkillsTotal <= m.Skills.Cap
-                )
+                finally
                 {
-                    ((PlayerMobile)m).Profession = 0;
-
-                    if (record != m.Skills.Cap)
-                    {
-                        pm.Skill_Start = 40000;
-
-                        if (m.Skills.Cap == 45000)
-                        {
-                            pm.Skill_Ether = 5000;
-                        }
-                    }
-
-                    adjust = false;
-                }
-                else if (
-                    (m.Skills.Cap == 10000 || m.Skills.Cap == 15000)
-                    && m.SkillsTotal <= m.Skills.Cap
-                )
-                {
-                    ((PlayerMobile)m).Profession = 0;
-
-                    if (record != m.Skills.Cap)
-                    {
-                        pm.Skill_Start = 10000;
-
-                        if (m.Skills.Cap == 15000)
-                        {
-                            pm.Skill_Ether = 5000;
-                        }
-                    }
-
-                    adjust = false;
-                }
-                else if (
-                    (m.Skills.Cap == 11000 || m.Skills.Cap == 16000)
-                    && m.SkillsTotal <= m.Skills.Cap
-                )
-                {
-                    ((PlayerMobile)m).Profession = 0;
-
-                    if (record != m.Skills.Cap)
-                    {
-                        pm.Skill_Start = 11000;
-
-                        if (m.Skills.Cap == 16000)
-                        {
-                            pm.Skill_Ether = 5000;
-                        }
-                    }
-
-                    adjust = false;
-                }
-
-                if (adjust)
-                {
-                    Server.Misc.MyServerSettings.SkillBegin("default", pm);
-                    pm.Profession = 0;
-                    for (int i = 0; i < pm.Skills.Length; i++)
-                    {
-                        Skill skill = pm.Skills[i];
-                        skill.Base = 0;
-                    }
-
-                    if (pm.Skill_Ether != 5000 && m.StatCap != 250)
-                    {
-                        m.StatCap = 250;
-                        m.RawStr = 20;
-                        m.RawInt = 20;
-                        m.RawDex = 20;
-                    }
-                    else if (pm.Skill_Ether == 5000 && m.StatCap != 300)
-                    {
-                        m.StatCap = 300;
-                        m.RawStr = 20;
-                        m.RawInt = 20;
-                        m.RawDex = 20;
-                    }
+                    if (!queued)
+                        System.Threading.Interlocked.Exchange(ref m_SkillVerificationDiagnosticPending, 0);
                 }
             }
+            catch (Exception)
+            {
+                // Best-effort reporting: there is no safe corrective action on this path.
+            }
+        }
+
+        private static void WriteSkillVerificationDiagnostic(object state)
+        {
+            try
+            {
+                m_SkillVerificationDiagnosticWriter((string)state);
+            }
+            catch (Exception)
+            {
+                // Do not fall back to the shared console: its writer can block gameplay.
+            }
+            finally
+            {
+                System.Threading.Interlocked.Exchange(ref m_SkillVerificationDiagnosticPending, 0);
+            }
+        }
+
+        private static void AppendSkillVerificationDiagnostic(string message)
+        {
+            string folder = System.IO.Path.Combine(Core.BaseDirectory, "Logs");
+            System.IO.Directory.CreateDirectory(folder);
+            System.IO.File.AppendAllText(System.IO.Path.Combine(folder, "SkillVerification.log"), message + Environment.NewLine);
         }
 
         public override bool CheckMovement(Direction d, out int newZ)
