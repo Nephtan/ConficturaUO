@@ -1,5 +1,9 @@
 # Real skill cap and region reset investigation
 
+**Current FIX-05 checkpoint (2026-10-19):** Required isolated acceptance and independent review passed on candidate004, including client011 house customization entry/rendering/normal exit. Tracker reconciliation and the focused local commit complete this batch. All owned runtimes are stopped; full copied saves/profiles and all 14 protected records were restored and verified. FIX-02, FIX-03 and FIX-04 follow in order. See [current validation](FIX-05-RESUME-VALIDATION.md).
+
+**Ordered continuation (2026-10-18):** The user authorized development, isolated tests and focused local commits in the order FIX-05, FIX-02, FIX-03, FIX-04. See the [durable goal](REPAIR-SEQUENCE-GOAL.md) and [FIX-05 candidate report](FIX-05-REPORT.md). FIX-05 acceptance passed; later repairs await its reviewed local commit. Earlier deferred/no-authorization statements describe the FIX-01 scope. No push, deployment or production-save operation is authorized.
+
 **Current repair status (2026-10-18):** [FIX-01 protection repair](FIX-01-REPORT.md) is locally verified and implemented in commit `1b49df74e8b972eb53805a790797f1f4872ab001`, not pushed or deployed. This evidence batch accompanies that implementation. Region verification now preserves progress and writes bounded diagnostics. The investigation below describes the historical `75bc9dfb` baseline; its wipe fixtures are historical evidence. FIX-02 through FIX-04 remain separate deferred work. The directly authorized local continuation passed bounded Player/Qwen progress acceptance; the report retains the inventory discrepancy and verified full rollback.
 
 Baseline: `main` at `75bc9dfb`. Investigation date: 2026-10-05. Production source, public APIs, serialization formats, and player saves are unchanged. This is a dedicated investigation, not completion of the repository's separate fourteen-phase reorganization program.

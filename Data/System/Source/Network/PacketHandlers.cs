@@ -1773,7 +1773,7 @@ namespace Server.Network
                         && from.CanSee(item)
                         && Utility.InUpdateRange(from.Location, item.GetWorldLocation())
                     )
-                        item.SendPropertiesTo(from);
+                        state.SendItemProperties(item);
                 }
             }
         }
@@ -1804,7 +1804,7 @@ namespace Server.Network
                     && from.CanSee(item)
                     && Utility.InUpdateRange(from.Location, item.GetWorldLocation())
                 )
-                    item.SendPropertiesTo(from);
+                    state.SendItemProperties(item);
             }
         }
 

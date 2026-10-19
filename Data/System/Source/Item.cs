@@ -1703,7 +1703,7 @@ namespace Server
                         Mobile m = state.Mobile;
 
                         if (m.CanSee(this) && m.InRange(m_Location, GetUpdateRange(m)))
-                            SendInfoTo(state);
+                            state.SendWorldItem(this);
                     }
 
                     eable.Free();
@@ -1754,7 +1754,7 @@ namespace Server
                     Mobile m = state.Mobile;
 
                     if (m.CanSee(this) && m.InRange(m_Location, GetUpdateRange(m)))
-                        SendInfoTo(state);
+                        state.SendWorldItem(this);
                 }
 
                 eable.Free();
@@ -5190,7 +5190,7 @@ namespace Server
                         {
                             if (m_Parent == null)
                             {
-                                SendInfoTo(state, ObjectPropertyList.Enabled);
+                                state.SendWorldItem(this, ObjectPropertyList.Enabled);
                             }
                             else
                             {
@@ -5277,7 +5277,14 @@ namespace Server
                         Mobile m = state.Mobile;
 
                         if (m.CanSee(this) && m.InRange(worldLoc, GetUpdateRange(m)))
-                            state.Send(OPLPacket);
+                        {
+                            // MoveToWorld can leave a properties-only delta after queuing
+                            // the incoming item; keep both in the same bounded world stream.
+                            if (m_Parent == null)
+                                state.SendWorldItemProperties(this);
+                            else
+                                state.Send(OPLPacket);
+                        }
                     }
 
                     eable.Free();
@@ -5624,7 +5631,7 @@ namespace Server
                                 Mobile m = state.Mobile;
 
                                 if (m.CanSee(this) && m.InRange(m_Location, GetUpdateRange(m)))
-                                    SendInfoTo(state);
+                                    state.SendWorldItem(this);
                             }
 
                             eable.Free();
