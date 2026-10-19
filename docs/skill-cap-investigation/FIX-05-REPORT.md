@@ -24,6 +24,8 @@ Limits: 65,536 logical deferred entries; 96 KiB copied generic/control backlog; 
 
 No serialized field/type/version/order, namespace, project include or runtime script changed. Item/Mobile Serialize/Deserialize bodies remain identical to baseline after newline normalization. The five changed source files match the frozen candidate004 manifest `b5dea57ac126292044e3e4feeaf14b814e0850f4ff04601a7adebd8d25188412`; core SHA-256 is `36ab5701d188c636db8f9c4abe0b957d42f0228dc9d4d43f2840b9134d492778`.
 
+The user's later matching-executable requirement is reconciled in an additive local follow-up: the tracked root `ConficturaServer.exe` receives that same accepted, uninstrumented Release/x86 artifact. All 125 core snapshot files were compared with accepted commit `ed918c456c0c83839b7b3516184d568d1066bf8e` (text comparisons normalize checkout newlines), and the frozen input/build/assembly hashes were rechecked. Unaccepted FIX-02 source is excluded. Read-only process inspection found no running `ConficturaServer.exe` and no process using the repository executable. No new runtime launch or deployment was performed. Provenance is retained in `D:\ConficturaUOTestTools\ordered-repairs-20261018\resume-20261019\fix05-executable-provenance.json`.
+
 ## Verification
 
 | Scope | Result |
