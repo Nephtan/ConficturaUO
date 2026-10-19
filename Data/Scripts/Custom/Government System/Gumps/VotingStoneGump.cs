@@ -10,11 +10,20 @@ namespace Server.Gumps
     public class VotingStoneGump : Gump
     {
         private CityVotingStone m_Stone;
+        private Mobile m_From;
+        private Mobile m_RunnerOne;
+        private Mobile m_RunnerTwo;
+        private ArrayList m_Voters;
 
         public VotingStoneGump(CityVotingStone stone, Mobile from)
             : base(50, 50)
         {
             m_Stone = stone;
+            m_From = from;
+            m_RunnerOne = stone.RunnerOne;
+            m_RunnerTwo = stone.RunnerTwo;
+            m_Voters = stone.Voters;
+            from.CloseGump(typeof(VotingStoneGump));
 
             Closable = true;
             Disposable = true;
@@ -87,11 +96,18 @@ namespace Server.Gumps
         {
             Mobile from = state.Mobile;
 
-            if (from == null)
+            if (info.ButtonID <= 0 || from == null || from != m_From || from.Deleted || m_Stone == null
+                || m_Stone.Deleted || from.Map != m_Stone.Map || !from.InRange(m_Stone.GetWorldLocation(), 2)
+                || m_Stone.Stone == null || m_Stone.Stone.Deleted || m_Stone.Voters == null
+                || m_Stone.Voters != m_Voters
+                || !(m_Stone.Stone.Citizens.Contains(from) || from == m_Stone.Stone.Mayor
+                    || from.AccessLevel >= AccessLevel.GameMaster))
                 return;
 
             if (info.ButtonID == 1) // Vote
             {
+                if (m_Stone.RunnerOne == null || m_Stone.RunnerOne.Deleted || m_Stone.RunnerOne != m_RunnerOne)
+                    return;
                 if (m_Stone.Voters.Contains(from))
                 {
                     from.SendMessage("You have already voted for this election.");
@@ -110,13 +126,15 @@ namespace Server.Gumps
                             m_Stone.RunnerOne.Skills[SkillName.Forensics].Base >= 0.0
                             && m_Stone.RunnerOne.Skills[SkillName.Forensics].Base <= 99.9
                         )
-                            m_Stone.RunnerOne.Skills[SkillName.Forensics].Base += 0.1;
+                            m_Stone.RunnerOne.Skills.TryGrant(m_Stone.RunnerOne.Skills[SkillName.Forensics], 1, null);
                     }
                 }
             }
 
             if (info.ButtonID == 2) // Vote
             {
+                if (m_Stone.RunnerTwo == null || m_Stone.RunnerTwo.Deleted || m_Stone.RunnerTwo != m_RunnerTwo)
+                    return;
                 if (m_Stone.Voters.Contains(from))
                 {
                     from.SendMessage("You have already voted for this election.");
@@ -135,7 +153,7 @@ namespace Server.Gumps
                             m_Stone.RunnerTwo.Skills[SkillName.Forensics].Base >= 0.0
                             && m_Stone.RunnerTwo.Skills[SkillName.Forensics].Base <= 99.9
                         )
-                            m_Stone.RunnerTwo.Skills[SkillName.Forensics].Base += 0.1;
+                            m_Stone.RunnerTwo.Skills.TryGrant(m_Stone.RunnerTwo.Skills[SkillName.Forensics], 1, null);
                     }
                 }
             }

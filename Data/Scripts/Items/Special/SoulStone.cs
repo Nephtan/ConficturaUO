@@ -497,11 +497,18 @@ namespace Server.Items
         private class ConfirmTransferGump : Gump
         {
             private SoulStone m_Stone;
+            private Mobile m_From;
+            private SkillName m_Skill;
+            private double m_SkillValue;
+            private bool m_Handled;
 
             public ConfirmTransferGump(SoulStone stone, Mobile from)
                 : base(50, 50)
             {
                 m_Stone = stone;
+                m_From = from;
+                m_Skill = stone.Skill;
+                m_SkillValue = stone.SkillValue;
 
                 AddBackground(0, 0, 520, 440, 0x13BE);
 
@@ -565,17 +572,20 @@ namespace Server.Items
 
             public override void OnResponse(NetState sender, RelayInfo info)
             {
-                if (info.ButtonID == 0 || m_Stone.IsEmpty)
+                if ((info.ButtonID != 1 && info.ButtonID != 2) || m_Handled || m_Stone == null || m_Stone.Deleted || m_Stone.IsEmpty)
                     return;
 
-                Mobile from = sender.Mobile;
+                PlayerMobile from = sender.Mobile as PlayerMobile;
 
-                if (!m_Stone.CheckUse(from))
+                if (from == null || from != m_From || from.Deleted || !m_Stone.CheckUse(from)
+                    || m_Stone.Skill != m_Skill || m_Stone.SkillValue != m_SkillValue)
                     return;
+
+                m_Handled = true;
 
                 if (info.ButtonID == 1) // Remove skill points
                 {
-                    from.SendGump(new ConfirmRemovalGump(m_Stone));
+                    from.SendGump(new ConfirmRemovalGump(m_Stone, from));
                     return;
                 }
 
@@ -583,14 +593,18 @@ namespace Server.Items
                 double skillValue = m_Stone.SkillValue;
                 Skill fromSkill = from.Skills[m_Stone.Skill];
 
+                if (fromSkill == null || double.IsNaN(skillValue) || double.IsInfinity(skillValue)
+                    || skillValue <= 0.0 || skillValue > ushort.MaxValue / 10.0)
+                    return;
+
+                int amount = (int)(skillValue * 10) - fromSkill.BaseFixedPoint;
+
                 /* If we have, say, 88.4 in our skill and the stone holds 100, we need
                  * 11.6 free points. Also, if we're below our skillcap by, say, 8.2 points,
                  * we only need 11.6 - 8.2 = 3.4 points.
                  */
                 int requiredAmount =
-                    (int)(skillValue * 10)
-                    - fromSkill.BaseFixedPoint
-                    - (from.SkillsCap - from.SkillsTotal);
+                    amount - (from.SkillsCap - from.Skills.GetBaseTotal());
 
                 bool cannotAbsorb = false;
 
@@ -673,6 +687,8 @@ namespace Server.Items
                 }
                 #endregion
 
+                int[] losses = new int[from.Skills.Length];
+
                 if (requiredAmount > 0)
                 {
                     for (int i = 0; i < from.Skills.Length; ++i)
@@ -680,20 +696,19 @@ namespace Server.Items
                         if (from.Skills[i].Lock != SkillLock.Down)
                             continue;
 
-                        if (requiredAmount >= from.Skills[i].BaseFixedPoint)
-                        {
-                            requiredAmount -= from.Skills[i].BaseFixedPoint;
-                            from.Skills[i].Base = 0.0;
-                        }
-                        else
-                        {
-                            from.Skills[i].BaseFixedPoint -= requiredAmount;
+                        losses[i] = Math.Min(requiredAmount, from.Skills[i].BaseFixedPoint);
+                        requiredAmount -= losses[i];
+                        if (requiredAmount == 0)
                             break;
-                        }
                     }
                 }
 
-                fromSkill.Base = skillValue;
+                if (!from.Skills.TryGrant(fromSkill, amount, losses))
+                {
+                    from.SendGump(new ErrorGump(m_Stone, 1070717, 1070716));
+                    return;
+                }
+
                 m_Stone.SkillValue = 0.0;
 
                 from.SendLocalizedMessage(1070713); // You have successfully absorbed the Soulstone's skill points.
@@ -758,11 +773,18 @@ namespace Server.Items
         private class ConfirmRemovalGump : Gump
         {
             private SoulStone m_Stone;
+            private Mobile m_From;
+            private SkillName m_Skill;
+            private double m_SkillValue;
+            private bool m_Handled;
 
-            public ConfirmRemovalGump(SoulStone stone)
+            public ConfirmRemovalGump(SoulStone stone, Mobile from)
                 : base(50, 50)
             {
                 m_Stone = stone;
+                m_From = from;
+                m_Skill = stone.Skill;
+                m_SkillValue = stone.SkillValue;
 
                 AddBackground(0, 0, 520, 440, 0x13BE);
 
@@ -792,14 +814,16 @@ namespace Server.Items
 
             public override void OnResponse(NetState sender, RelayInfo info)
             {
-                if (info.ButtonID == 0 || m_Stone.IsEmpty)
+                if (info.ButtonID != 1 || m_Handled || m_Stone == null || m_Stone.Deleted || m_Stone.IsEmpty)
                     return;
 
                 Mobile from = sender.Mobile;
 
-                if (!m_Stone.CheckUse(from))
+                if (from == null || from != m_From || from.Deleted || !m_Stone.CheckUse(from)
+                    || m_Stone.Skill != m_Skill || m_Stone.SkillValue != m_SkillValue)
                     return;
 
+                m_Handled = true;
                 m_Stone.SkillValue = 0.0;
                 from.SendLocalizedMessage(1070726); // You have successfully deleted the Soulstone's skill points.
             }

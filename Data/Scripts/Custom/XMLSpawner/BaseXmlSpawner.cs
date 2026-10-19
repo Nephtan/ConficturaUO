@@ -1257,6 +1257,10 @@ namespace Server.Mobiles
                 if (shouldLog)
                     CommandLogging.LogChangeProperty(from, o, p.Name, value);
 
+                Skill skill = o as Skill;
+                if (skill != null && (p.Name == "Base" || p.Name == "BaseFixedPoint"))
+                    return SetSkillBase(skill, Convert.ToDouble(toSet), p.Name == "BaseFixedPoint");
+
                 if (ptype.IsPrimitive)
                 {
                     p.SetValue(o, toSet, null);
@@ -1365,9 +1369,7 @@ namespace Server.Mobiles
                     {
                         Skill skill = ((Mobile)o).Skills[skillname];
 
-                        skill.Base = double.Parse(value);
-
-                        return "Property has been set.";
+                        return SetSkillBase(skill, double.Parse(value), false);
                     }
                     else
                         return "Object is not mobile";
@@ -1512,6 +1514,29 @@ namespace Server.Mobiles
             }
 
             return "Property not found.";
+        }
+
+        private static string SetSkillBase(Skill skill, double value, bool fixedPoint)
+        {
+            double scaled = fixedPoint ? value : value * 10.0;
+            if (skill == null || double.IsNaN(scaled) || double.IsInfinity(scaled)
+                || scaled < 0.0 || scaled > ushort.MaxValue)
+                return "Invalid skill value.";
+
+            int newBase = (int)scaled;
+            Mobile owner = skill.Owner.Owner;
+
+            if (owner is PlayerMobile || owner.Player)
+            {
+                int amount = newBase - skill.BaseFixedPoint;
+                if (amount > 0)
+                    return skill.Owner.TryGrant(skill, amount, null)
+                        ? "Property has been set." : "Skill grant rejected by locks or caps.";
+            }
+
+            // Scripted reductions and NPC initialization remain explicit raw paths.
+            skill.BaseFixedPoint = newBase;
+            return "Property has been set.";
         }
 
         public static string SetPropertyObject(

@@ -195,7 +195,7 @@ namespace Server.Misc
                 return;
             }
 
-            if (value < 0.0 || value > skill.Cap)
+            if (double.IsNaN(value) || double.IsInfinity(value) || value < 0.0 || value > skill.Cap)
             {
                 from.SendMessage("Your skill in {0} is capped at {1:F1}.", skill.Info.Name, skill.Cap);
                 return;
@@ -204,12 +204,13 @@ namespace Server.Misc
             int newFixedPoint = (int)(value * 10.0);
             int oldFixedPoint = skill.BaseFixedPoint;
 
-            if (((skill.Owner.Total - oldFixedPoint) + newFixedPoint) > skill.Owner.Cap)
+            if (((skill.Owner.GetBaseTotal() - oldFixedPoint) + newFixedPoint) > skill.Owner.Cap)
             {
                 from.SendMessage("You can not exceed the skill cap. Try setting another skill lower first.");
                 return;
             }
 
+            // Configured test-center set mode deliberately ignores skill locks.
             skill.BaseFixedPoint = newFixedPoint;
             from.SendMessage("Your skill in {0} is now {1:F1}.", skill.Info.Name, skill.Base);
         }

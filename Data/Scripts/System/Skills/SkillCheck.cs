@@ -662,24 +662,6 @@ namespace Server.Misc
 
                 Skills skills = from.Skills;
 
-                if (from.Player && (skills.Total / skills.Cap) >= Utility.RandomDouble())
-                {
-                    for (int i = 0; i < skills.Length; ++i)
-                    {
-                        Skill toLower = skills[i];
-
-                        if (
-                            toLower != skill
-                            && toLower.Lock == SkillLock.Down
-                            && toLower.BaseFixedPoint >= toGain
-                        )
-                        {
-                            toLower.BaseFixedPoint -= toGain;
-                            break;
-                        }
-                    }
-                }
-
                 #region Scroll of Alacrity
                 PlayerMobile pm = from as PlayerMobile;
 
@@ -692,10 +674,45 @@ namespace Server.Misc
                         toGain *= Utility.RandomMinMax(2, 5);
                 #endregion
 
-                if (!from.Player || (skills.Total + toGain) <= skills.Cap)
-                {
-                    skill.BaseFixedPoint += toGain;
+                bool gained;
 
+                if (from is PlayerMobile || from.Player)
+                {
+                    toGain = Math.Min(toGain, skill.CapFixedPoint - skill.BaseFixedPoint);
+                    int[] losses = new int[skills.Length];
+                    int realTotal = skills.GetBaseTotal();
+
+                    // Preserve the existing atrophy probability, but plan the final
+                    // accelerated amount before touching a donor.
+                    if (skills.Cap > 0 && (realTotal / skills.Cap) >= Utility.RandomDouble())
+                    {
+                        for (int i = 0; i < skills.Length; ++i)
+                        {
+                            Skill toLower = skills[i];
+
+                            if (
+                                toLower != skill
+                                && toLower.Lock == SkillLock.Down
+                                && toLower.BaseFixedPoint >= toGain
+                            )
+                            {
+                                losses[i] = toGain;
+                                break;
+                            }
+                        }
+                    }
+
+                    gained = skills.TryGrant(skill, toGain, losses);
+                }
+                else
+                {
+                    // NPC training retains its existing raw initialization/gain policy.
+                    skill.BaseFixedPoint += toGain;
+                    gained = true;
+                }
+
+                if (gained)
+                {
                     if (
                         skill.SkillName == SkillName.Focus
                         || skill.SkillName == SkillName.Meditation

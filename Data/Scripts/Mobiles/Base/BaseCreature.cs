@@ -8307,7 +8307,7 @@ namespace Server.Mobiles
             bool doTeach
         )
         {
-            if (!CheckTeach(skill, m) || !m.CheckAlive())
+            if (m == null || m.Deleted || Deleted || !CheckTeach(skill, m) || !m.CheckAlive())
                 return TeachResult.Failure;
 
             Skill ourSkill = Skills[skill];
@@ -8343,11 +8343,11 @@ namespace Server.Mobiles
             if (theirSkill.Lock != SkillLock.Up)
                 return TeachResult.SkillNotRaisable;
 
-            int freePoints = m.Skills.Cap - m.Skills.Total;
+            int freePoints = m.Skills.Cap - m.Skills.GetBaseTotal();
             int freeablePoints = 0;
 
-            if (freePoints < 0)
-                freePoints = 0;
+            if (m.Skills.Cap <= 0 || freePoints < 0)
+                return TeachResult.NotEnoughFreePoints;
 
             for (
                 int i = 0;
@@ -8375,6 +8375,7 @@ namespace Server.Mobiles
             if (doTeach)
             {
                 int need = pointsToLearn - freePoints;
+                int[] losses = new int[m.Skills.Length];
 
                 for (int i = 0; need > 0 && i < m.Skills.Length; ++i)
                 {
@@ -8383,26 +8384,12 @@ namespace Server.Mobiles
                     if (sk == theirSkill || sk.Lock != SkillLock.Down)
                         continue;
 
-                    if (sk.BaseFixedPoint < need)
-                    {
-                        need -= sk.BaseFixedPoint;
-                        sk.BaseFixedPoint = 0;
-                    }
-                    else
-                    {
-                        sk.BaseFixedPoint -= need;
-                        need = 0;
-                    }
+                    losses[i] = Math.Min(sk.BaseFixedPoint, need);
+                    need -= losses[i];
                 }
 
-                /* Sanity check */
-                if (
-                    baseToSet > theirSkill.CapFixedPoint
-                    || (m.Skills.Total - theirSkill.BaseFixedPoint + baseToSet) > m.Skills.Cap
-                )
+                if (!m.Skills.TryGrant(theirSkill, pointsToLearn, losses))
                     return TeachResult.NotEnoughFreePoints;
-
-                theirSkill.BaseFixedPoint = baseToSet;
             }
 
             return TeachResult.Success;

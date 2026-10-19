@@ -6,6 +6,8 @@ Started 2026-10-18 on `main`, baseline `ac9546500860482f8c2a37193361b80ae3dcbdd7
 
 **Active continuation:** The current direct human resume supersedes the historical account pause. This chat is the sole controller. The [account handoff](ACCOUNT-HANDOFF.md) records the latest accepted batch and next work.
 
+**FIX-02 checkpoint:** Candidate002 and clean client002 required acceptance/review passed; matching executable is prepared, tracker/local-commit closeout pending. All owned test runtimes stopped and copied saves/profiles plus14protected inputs restored/verified at2026-10-19T15:02:22Z. Finish that commit before FIX-03 source edits. See [FIX-02 report](FIX-02-REPORT.md).
+
 The user authorized development, isolated testing and clean local commits in this exact order: **FIX-05, FIX-02, FIX-03, FIX-04**. Push, deployment, live restart, production-save changes, model training and unrelated Resident/Shardmind changes are excluded. Complete and review each repair before advancing. No empty implementation commit is needed for a repair already satisfied by existing code.
 
 Initial worktree: no tracked modifications; user-owned `Confictura-backlog-review-2026-10-17.html` and intentionally excluded FIX-01 harness files `scripts/Test-SkillVerificationProtection.ps1` and `tests/SkillVerificationProtection.cs` are untracked and preserved. Root `AGENTS.md` and nested audit-output instructions apply. No `.agents/skills` directory was found; the current local shell provides ripgrep. No branch change or source reorganization is planned.
@@ -15,7 +17,7 @@ Initial worktree: no tracked modifications; user-owned `Confictura-backlog-revie
 | Repair | Status | Required outcome and verification |
 | --- | --- | --- |
 | FIX-05 | Committed | Retain existing Create Food rejection containment (`0eb2a07a`). Complete the separately documented crowded nearby/login transmission and staff recovery gaps with bounded work, preserved packet compatibility, no world-item deletion or decay-policy change. Verify existing food variants/full-pack behavior, queue boundaries, stale/deleted/moved entities, login/movement/reconnect/recovery, real Player effects and bounded Qwen choices where useful. |
-| FIX-02 | NotStarted | Source-verified transactional player grant/transfer boundary; route discovered automatic grants and explicit privileged exceptions. Preserve existing points, locks/caps and NPC/load intent. Test all identified grant families, rejection and conservation, repeated/stale responses, and normal valid gains. |
+| FIX-02 | Acceptance passed; commit pending | Source-verified transactional player grant/transfer boundary implemented across ten targets; real-total, caps, locks, donor conservation, callbacks/reentrancy, consumables, stale responses and explicit staff/NPC/load paths verified. Actual client/Qwen and full copied-world save/load passed. |
 | FIX-03 | NotStarted | One source-supported cap calculation, origin eligibility at the action boundary, idempotent Ether completion and non-destructive cap-change handling. Test all origin/boost/Ether combinations, established characters, stale responses and old save compatibility. Ask only if repository evidence cannot resolve a consequential policy choice. |
 | FIX-04 | NotStarted | Reliable player identification and real-total accounting; restrict automatic XML accounting/identity mutation without breaking explicit staff/load semantics. Test false/high/low caches and flags, reflection routes, callbacks and persistence; keep FIX-01 preservation green. |
 
