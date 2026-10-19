@@ -1,12 +1,12 @@
 # Ordered repair controller handoff
 
-Current checkpoint: 2026-10-19. FIX-05 required isolated acceptance and independent review passed on the exact five-file candidate004. Its local implementation commit is recorded in the external closeout handoff after staging verification. Continue **FIX-02 → FIX-03 → FIX-04**, completing and locally committing each accepted batch before advancing. No push or deployment.
+Current checkpoint: 2026-10-19. FIX-05 required isolated acceptance and independent review passed on the exact five-file candidate004. Implementation, evidence and tracker are committed locally as `69cc69b6ac2f7e474a9e2aee4ca5dead7bb95fb7`. Staged scope verification passed. Continue **FIX-02 → FIX-03 → FIX-04**, completing and locally committing each accepted batch before advancing. No push or deployment.
 
 ## Authority and repository
 
 The current direct human resume authorizes this local chat (`01a14f0a-6dfa-7133-a92a-f2f5bef78a02`) as sole native/runtime controller. Native Computer Use was freshly discovered and successfully used; no new authorization or security setting was needed. Earlier account pauses, client003 instructions and client010 activation blocker are historical. Use the verified client004 configuration lineage preserved in client011; never an older client003 recipe.
 
-Work on `main` in `D:\ConficturaUO-main`; pre-FIX-05 HEAD is `ac9546500860482f8c2a37193361b80ae3dcbdd7`. Follow root AGENTS.md, nested audit-output instructions and the [ordered goal](REPAIR-SEQUENCE-GOAL.md). Preserve FIX-01 (`1b49df74`, evidence closeout `ac954650`) and Create Food (`0eb2a07a`). No live restart, production-save changes, live Mira control, model training or original Resident/Shardmind modifications. Use the existing guarded bridge with finite disposable copies. Local commits are authorized; do not push.
+Work on `main` in `D:\ConficturaUO-main`; current accepted implementation is `69cc69b6ac2f7e474a9e2aee4ca5dead7bb95fb7`; pre-FIX-05 HEAD is `ac9546500860482f8c2a37193361b80ae3dcbdd7`. Follow root AGENTS.md, nested audit-output instructions and the [ordered goal](REPAIR-SEQUENCE-GOAL.md). Preserve FIX-01 (`1b49df74`, evidence closeout `ac954650`) and Create Food (`0eb2a07a`). No live restart, production-save changes, live Mira control, model training or original Resident/Shardmind modifications. Use the existing guarded bridge with finite disposable copies. Local commits are authorized; do not push.
 
 Preserved unrelated untracked files: `Confictura-backlog-review-2026-10-17.html`, `scripts/Test-SkillVerificationProtection.ps1`, `tests/SkillVerificationProtection.cs`. Exclude them from commits. No fixture, credentials, runtime or copied saves belong in Git.
 

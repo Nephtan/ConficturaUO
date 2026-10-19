@@ -1,6 +1,6 @@
 # FIX-05 resumed validation
 
-**Current FIX-05 checkpoint (2026-10-19):** Required isolated acceptance and independent review passed on candidate004, including client011 house customization entry/rendering/normal exit. Tracker reconciliation and the focused local commit complete this batch. All owned runtimes are stopped; full copied saves/profiles and all 14 protected records were restored and verified. FIX-02, FIX-03 and FIX-04 follow in order. See [current validation](FIX-05-RESUME-VALIDATION.md).
+**Current FIX-05 checkpoint (2026-10-19):** Required isolated acceptance and independent review passed on candidate004, including client011 house customization entry/rendering/normal exit. Tracker reconciliation passed; the accepted implementation is committed locally as `69cc69b6ac2f7e474a9e2aee4ca5dead7bb95fb7`. All owned runtimes are stopped; full copied saves/profiles and all 14 protected records were restored and verified. FIX-02, FIX-03 and FIX-04 follow in order. See [current validation](FIX-05-RESUME-VALIDATION.md).
 
 External current handoff: `D:\ConficturaUOTestTools\ordered-repairs-20261018\resume-20261019\CONTROLLER-HANDOFF-20261019-FIX05-CLOSEOUT.md`. Evidence labels below supersede earlier pause-era checkpoints.
 

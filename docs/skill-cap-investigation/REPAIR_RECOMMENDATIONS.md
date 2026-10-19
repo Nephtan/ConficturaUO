@@ -1,6 +1,6 @@
 # Prioritized repairs for separate approval and implementation
 
-**Current FIX-05 checkpoint (2026-10-19):** Required isolated acceptance and independent review passed on candidate004, including client011 house customization entry/rendering/normal exit. Tracker reconciliation and the focused local commit complete this batch. All owned runtimes are stopped; full copied saves/profiles and all 14 protected records were restored and verified. FIX-02, FIX-03 and FIX-04 follow in order. See [current validation](FIX-05-RESUME-VALIDATION.md).
+**Current FIX-05 checkpoint (2026-10-19):** Required isolated acceptance and independent review passed on candidate004, including client011 house customization entry/rendering/normal exit. Tracker reconciliation passed; the accepted implementation is committed locally as `69cc69b6ac2f7e474a9e2aee4ca5dead7bb95fb7`. All owned runtimes are stopped; full copied saves/profiles and all 14 protected records were restored and verified. FIX-02, FIX-03 and FIX-04 follow in order. See [current validation](FIX-05-RESUME-VALIDATION.md).
 
 **Ordered continuation (2026-10-18):** The user authorized development, isolated tests and focused local commits in the order FIX-05, FIX-02, FIX-03, FIX-04. See the [durable goal](REPAIR-SEQUENCE-GOAL.md) and [FIX-05 candidate report](FIX-05-REPORT.md). FIX-05 acceptance passed; later repairs await its reviewed local commit. Earlier deferred/no-authorization statements describe the FIX-01 scope. No push, deployment or production-save operation is authorized.
 

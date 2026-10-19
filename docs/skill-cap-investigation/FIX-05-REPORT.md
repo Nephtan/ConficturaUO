@@ -1,6 +1,6 @@
 # FIX-05: bounded crowded-view delivery and recovery
 
-2026-10-19. Candidate004 completed the required isolated build, component, full-world, real-client and supervised Qwen acceptance. Independent review passed; the closeout reconciles the active tracker and records a focused local commit. Baseline is `ac9546500860482f8c2a37193361b80ae3dcbdd7` on `main`. No deployment or live incident attribution follows from these tests.
+2026-10-19. Candidate004 completed the required isolated build, component, full-world, real-client and supervised Qwen acceptance. Independent review and tracker reconciliation passed; implementation/evidence/tracker are committed locally as `69cc69b6ac2f7e474a9e2aee4ca5dead7bb95fb7`. Baseline is `ac9546500860482f8c2a37193361b80ae3dcbdd7` on `main`. No deployment or live incident attribution follows from these tests.
 
 ## Problem and resulting behavior
 

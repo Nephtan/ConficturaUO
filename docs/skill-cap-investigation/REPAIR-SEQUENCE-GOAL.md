@@ -1,6 +1,6 @@
 # Ordered skill-cap repair continuation
 
-**Current FIX-05 checkpoint (2026-10-19):** Required isolated acceptance and independent review passed on candidate004, including client011 house customization entry/rendering/normal exit. Tracker reconciliation and the focused local commit complete this batch. All owned runtimes are stopped; full copied saves/profiles and all 14 protected records were restored and verified. FIX-02, FIX-03 and FIX-04 follow in order. See [current validation](FIX-05-RESUME-VALIDATION.md).
+**Current FIX-05 checkpoint (2026-10-19):** Required isolated acceptance and independent review passed on candidate004, including client011 house customization entry/rendering/normal exit. Tracker reconciliation passed; the accepted implementation is committed locally as `69cc69b6ac2f7e474a9e2aee4ca5dead7bb95fb7`. All owned runtimes are stopped; full copied saves/profiles and all 14 protected records were restored and verified. FIX-02, FIX-03 and FIX-04 follow in order. See [current validation](FIX-05-RESUME-VALIDATION.md).
 
 Started 2026-10-18 on `main`, baseline `ac9546500860482f8c2a37193361b80ae3dcbdd7`.
 
@@ -14,7 +14,7 @@ Initial worktree: no tracked modifications; user-owned `Confictura-backlog-revie
 
 | Repair | Status | Required outcome and verification |
 | --- | --- | --- |
-| FIX-05 | Complete | Retain existing Create Food rejection containment (`0eb2a07a`). Complete the separately documented crowded nearby/login transmission and staff recovery gaps with bounded work, preserved packet compatibility, no world-item deletion or decay-policy change. Verify existing food variants/full-pack behavior, queue boundaries, stale/deleted/moved entities, login/movement/reconnect/recovery, real Player effects and bounded Qwen choices where useful. |
+| FIX-05 | Committed | Retain existing Create Food rejection containment (`0eb2a07a`). Complete the separately documented crowded nearby/login transmission and staff recovery gaps with bounded work, preserved packet compatibility, no world-item deletion or decay-policy change. Verify existing food variants/full-pack behavior, queue boundaries, stale/deleted/moved entities, login/movement/reconnect/recovery, real Player effects and bounded Qwen choices where useful. |
 | FIX-02 | NotStarted | Source-verified transactional player grant/transfer boundary; route discovered automatic grants and explicit privileged exceptions. Preserve existing points, locks/caps and NPC/load intent. Test all identified grant families, rejection and conservation, repeated/stale responses, and normal valid gains. |
 | FIX-03 | NotStarted | One source-supported cap calculation, origin eligibility at the action boundary, idempotent Ether completion and non-destructive cap-change handling. Test all origin/boost/Ether combinations, established characters, stale responses and old save compatibility. Ask only if repository evidence cannot resolve a consequential policy choice. |
 | FIX-04 | NotStarted | Reliable player identification and real-total accounting; restrict automatic XML accounting/identity mutation without breaking explicit staff/load semantics. Test false/high/low caches and flags, reflection routes, callbacks and persistence; keep FIX-01 preservation green. |
